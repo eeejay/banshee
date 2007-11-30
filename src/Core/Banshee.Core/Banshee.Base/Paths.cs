@@ -39,55 +39,55 @@ namespace Banshee.Base
         // TODO: A corlib version of this method will be committed to Mono's Environment.GetFolderPath,
         // so many many Mono versions in the future we will be able to drop this private copy and
         // use the pure .NET API - but it's here to stay for now (compat!)
-        private static string ReadXdgUserDir(string key, string fallback)
+        private static string ReadXdgUserDir (string key, string fallback)
         {
-            string home_dir = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            string config_dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string home_dir = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+            string config_dir = Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData);
             
-            string env_path = Environment.GetEnvironmentVariable(key);
-            if(!String.IsNullOrEmpty(env_path)) {
+            string env_path = Environment.GetEnvironmentVariable (key);
+            if (!String.IsNullOrEmpty (env_path)) {
                 return env_path;
             }
 
             string user_dirs_path = Path.Combine (config_dir, "user-dirs.dirs");
 
-            if(!File.Exists(user_dirs_path)) {
-                return Path.Combine(home_dir, fallback);
+            if (!File.Exists (user_dirs_path)) {
+                return Path.Combine (home_dir, fallback);
             }
 
             try {
-                using(StreamReader reader = new StreamReader (user_dirs_path)) {
+                using (StreamReader reader = new StreamReader (user_dirs_path)) {
                     string line;
-                    while((line = reader.ReadLine ()) != null) {
-                        line = line.Trim();
-                        int delim_index = line.IndexOf('=');
-                        if(delim_index > 8 && line.Substring (0, delim_index) == key) {
-                            string path = line.Substring(delim_index + 1).Trim('"');
+                    while ((line = reader.ReadLine ()) != null) {
+                        line = line.Trim ();
+                        int delim_index = line.IndexOf ('=');
+                        if (delim_index > 8 && line.Substring (0, delim_index) == key) {
+                            string path = line.Substring (delim_index + 1).Trim ('"');
                             bool relative = false;
 
-                            if(path.StartsWith("$HOME/")) {
+                            if (path.StartsWith ("$HOME/")) {
                                 relative = true;
-                                path = path.Substring(6);
-                            } else if(path.StartsWith("~")) {
+                                path = path.Substring (6);
+                            } else if (path.StartsWith ("~")) {
                                 relative = true;
-                                path = path.Substring(1);
-                            } else if(!path.StartsWith("/")) {
+                                path = path.Substring (1);
+                            } else if (!path.StartsWith ("/")) {
                                 relative = true;
                             }
 
-                            return relative ? Path.Combine(home_dir, path) : path;
+                            return relative ? Path.Combine (home_dir, path) : path;
                         }
                     }
                 }
-            } catch(FileNotFoundException) {
+            } catch (FileNotFoundException) {
             }
             
-            return Path.Combine(home_dir, fallback);
+            return Path.Combine (home_dir, fallback);
         }
     
         public static string LegacyApplicationData {
             get {
-                return Environment.GetFolderPath(Environment.SpecialFolder.Personal)
+                return Environment.GetFolderPath (Environment.SpecialFolder.Personal)
                     + Path.DirectorySeparatorChar
                     + ".gnome2"
                     + Path.DirectorySeparatorChar
@@ -96,7 +96,7 @@ namespace Banshee.Base
             }
         }
         
-        private static string application_data = Path.Combine(Environment.GetFolderPath(
+        private static string application_data = Path.Combine (Environment.GetFolderPath (
             Environment.SpecialFolder.ApplicationData), "banshee");
         
         public static string ApplicationData {
@@ -105,21 +105,21 @@ namespace Banshee.Base
         
         public static string DefaultLibraryPath {
             get { 
-                string dir = ReadXdgUserDir("XDG_MUSIC_DIR", "Music");
-                Directory.CreateDirectory(dir);
+                string dir = ReadXdgUserDir ("XDG_MUSIC_DIR", "Music");
+                Directory.CreateDirectory (dir);
                 return dir;
             }
         }
         
         public static string TempDir {
             get {
-                string dir = Path.Combine(Paths.ApplicationData, "temp");
+                string dir = Path.Combine (Paths.ApplicationData, "temp");
         
-                if(File.Exists(dir)) {
-                    File.Delete(dir);
+                if (File.Exists (dir)) {
+                    File.Delete (dir);
                 }
                 
-                Directory.CreateDirectory(dir);
+                Directory.CreateDirectory (dir);
                 return dir;
             }
         }
@@ -127,8 +127,8 @@ namespace Banshee.Base
         private static string cached_library_location;
         public static string LibraryLocation {
              get {
-                string path = LibrarySchema.Location.Get(Paths.DefaultLibraryPath);
-                if(String.IsNullOrEmpty(path)) {
+                string path = LibrarySchema.Location.Get (Paths.DefaultLibraryPath);
+                if (String.IsNullOrEmpty (path)) {
                     path = Paths.DefaultLibraryPath;
                 }
                 
@@ -138,7 +138,7 @@ namespace Banshee.Base
              
              set {
                 cached_library_location = value;
-                LibrarySchema.Location.Set(cached_library_location); 
+                LibrarySchema.Location.Set (cached_library_location); 
             }
         }
         

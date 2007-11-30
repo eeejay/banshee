@@ -57,7 +57,7 @@ namespace Banshee.Base
             }
         }
         
-        public static bool EnvironmentIsSet(string env)
+        public static bool EnvironmentIsSet (string env)
         {
             return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
         }

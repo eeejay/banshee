@@ -39,8 +39,8 @@ namespace Banshee.Base
 {
     public static class FileNamePattern
     {
-        public delegate string ExpandTokenHandler(ITrackInfo track, object replace);
-        public delegate string FilterHandler(string path);
+        public delegate string ExpandTokenHandler (ITrackInfo track, object replace);
+        public delegate string FilterHandler (string path);
         
         private static string invalid_path_characters = "\"\\:'~`!@#$%^&*_-+|?/><[]";
         private static Regex invalid_path_regex;
@@ -53,7 +53,7 @@ namespace Banshee.Base
             private string name;
             private ExpandTokenHandler handler;
             
-            public Conversion(string token, string name, ExpandTokenHandler handler)
+            public Conversion (string token, string name, ExpandTokenHandler handler)
             {
                 this.token = token;
                 this.name = name;
@@ -75,53 +75,53 @@ namespace Banshee.Base
     
         private static SortedList<string, Conversion> conversion_table;
 
-        public static void AddConversion(string token, string name, ExpandTokenHandler handler)
+        public static void AddConversion (string token, string name, ExpandTokenHandler handler)
         {
-            conversion_table.Add(token, new Conversion(token, name, handler));
+            conversion_table.Add (token, new Conversion (token, name, handler));
         }
         
-        static FileNamePattern()
+        static FileNamePattern ()
         {
-            conversion_table = new SortedList<string, Conversion>();
+            conversion_table = new SortedList<string, Conversion> ();
             
-            AddConversion("artist", Catalog.GetString("Artist"),  
-                delegate(ITrackInfo t, object r) {
-                    return Escape(t == null ? (string)r : t.DisplayArtistName);
-            });
-            
-            AddConversion("album", Catalog.GetString("Album"),  
-                delegate(ITrackInfo t, object r) {
-                    return Escape(t == null ? (string)r : t.DisplayAlbumTitle);
+            AddConversion ("artist", Catalog.GetString ("Artist"),  
+                delegate (ITrackInfo t, object r) {
+                    return Escape (t == null ? (string)r : t.DisplayArtistName);
             });
             
-            AddConversion("title", Catalog.GetString("Title"),  
-                delegate(ITrackInfo t, object r) {
-                    return Escape(t == null ? (string)r : t.DisplayTrackTitle);
-            });
-             
-            AddConversion("track_count", Catalog.GetString("Count"),  
-                delegate(ITrackInfo t, object r) {
-                    return String.Format("{0:00}", t == null ? (int)r : t.TrackCount);
-            });
-             
-            AddConversion("track_number", Catalog.GetString("Number"),  
-                delegate(ITrackInfo t, object r) {
-                    return String.Format("{0:00}", t == null ? (int)r : t.TrackNumber);
-            });
-             
-            AddConversion("track_count_nz", Catalog.GetString("Count (unsorted)"),  
-                delegate(ITrackInfo t, object r) {
-                    return String.Format("{0}", t == null ? (int)r : t.TrackCount);
-            });
-             
-            AddConversion("track_number_nz", Catalog.GetString("Number (unsorted)"),  
-                delegate(ITrackInfo t, object r) {
-                    return String.Format("{0}", t == null ? (int)r : t.TrackNumber);
+            AddConversion ("album", Catalog.GetString ("Album"),  
+                delegate (ITrackInfo t, object r) {
+                    return Escape (t == null ? (string)r : t.DisplayAlbumTitle);
             });
             
-            AddConversion("path_sep", Path.DirectorySeparatorChar.ToString(),
-                delegate(ITrackInfo t, object r) {
-                    return Path.DirectorySeparatorChar.ToString();
+            AddConversion ("title", Catalog.GetString ("Title"),  
+                delegate (ITrackInfo t, object r) {
+                    return Escape (t == null ? (string)r : t.DisplayTrackTitle);
+            });
+             
+            AddConversion ("track_count", Catalog.GetString ("Count"),  
+                delegate (ITrackInfo t, object r) {
+                    return String.Format ("{0:00}", t == null ? (int)r : t.TrackCount);
+            });
+             
+            AddConversion ("track_number", Catalog.GetString ("Number"),  
+                delegate (ITrackInfo t, object r) {
+                    return String.Format ("{0:00}", t == null ? (int)r : t.TrackNumber);
+            });
+             
+            AddConversion ("track_count_nz", Catalog.GetString ("Count (unsorted)"),  
+                delegate (ITrackInfo t, object r) {
+                    return String.Format ("{0}", t == null ? (int)r : t.TrackCount);
+            });
+             
+            AddConversion ("track_number_nz", Catalog.GetString ("Number (unsorted)"),  
+                delegate (ITrackInfo t, object r) {
+                    return String.Format ("{0}", t == null ? (int)r : t.TrackNumber);
+            });
+            
+            AddConversion ("path_sep", Path.DirectorySeparatorChar.ToString (),
+                delegate (ITrackInfo t, object r) {
+                    return Path.DirectorySeparatorChar.ToString ();
             });
         }
         
@@ -138,7 +138,7 @@ namespace Banshee.Base
         }
         
         public static string DefaultPattern {
-            get { return CreateFolderFilePattern(DefaultFolder, DefaultFile); }
+            get { return CreateFolderFilePattern (DefaultFolder, DefaultFile); }
         }
         
         private static string [] suggested_folders = new string [] {
@@ -166,100 +166,100 @@ namespace Banshee.Base
             get { return suggested_files; }
         }
         
-        private static string OnFilter(string input)
+        private static string OnFilter (string input)
         {
             string repl_pattern = input;
             
             FilterHandler filter_handler = Filter;
-            if(filter_handler != null) {
-                repl_pattern = filter_handler(repl_pattern);
+            if (filter_handler != null) {
+                repl_pattern = filter_handler (repl_pattern);
             }
             
             return repl_pattern;
         }
 
-        public static string CreateFolderFilePattern(string folder, string file)
+        public static string CreateFolderFilePattern (string folder, string file)
         {
-            return String.Format("{0}%path_sep%{1}", folder, file);
+            return String.Format ("{0}%path_sep%{1}", folder, file);
         }
 
-        public static string CreatePatternDescription(string pattern)
+        public static string CreatePatternDescription (string pattern)
         {
             string repl_pattern = pattern;
-            foreach(Conversion conversion in PatternConversions) {
-                repl_pattern = repl_pattern.Replace("%" + conversion.Token + "%", conversion.Name);
+            foreach (Conversion conversion in PatternConversions) {
+                repl_pattern = repl_pattern.Replace ("%" + conversion.Token + "%", conversion.Name);
             }
-            return OnFilter(repl_pattern);
+            return OnFilter (repl_pattern);
         }
 
-        public static string CreateFromTrackInfo(ITrackInfo track)
+        public static string CreateFromTrackInfo (ITrackInfo track)
         {
             string pattern = null;
 
             try {
-                pattern = CreateFolderFilePattern(
-                    LibrarySchema.FolderPattern.Get(),
-                    LibrarySchema.FilePattern.Get()
+                pattern = CreateFolderFilePattern (
+                    LibrarySchema.FolderPattern.Get (),
+                    LibrarySchema.FilePattern.Get ()
                 );
             } catch {
             }
 
-            return CreateFromTrackInfo(pattern, track);
+            return CreateFromTrackInfo (pattern, track);
         }
 
-        public static string CreateFromTrackInfo(string pattern, ITrackInfo track)
+        public static string CreateFromTrackInfo (string pattern, ITrackInfo track)
         {
             string repl_pattern;
 
-            if(pattern == null || pattern.Trim() == String.Empty) {
+            if (pattern == null || pattern.Trim () == String.Empty) {
                 repl_pattern = DefaultPattern;
             } else {
                 repl_pattern = pattern;
             }
 
-            foreach(Conversion conversion in PatternConversions) {
-                repl_pattern = repl_pattern.Replace("%" + conversion.Token + "%", 
-                    conversion.Handler(track, null));
+            foreach (Conversion conversion in PatternConversions) {
+                repl_pattern = repl_pattern.Replace ("%" + conversion.Token + "%", 
+                    conversion.Handler (track, null));
             }
             
-            return OnFilter(repl_pattern);
+            return OnFilter (repl_pattern);
         }
 
-        public static string BuildFull(ITrackInfo track, string ext)
+        public static string BuildFull (ITrackInfo track, string ext)
         {
-            if(ext == null || ext.Length < 1) {
+            if (ext == null || ext.Length < 1) {
                 ext = String.Empty;
-            } else if(ext[0] != '.') {
-                ext = String.Format(".{0}", ext);
+            } else if (ext[0] != '.') {
+                ext = String.Format (".{0}", ext);
             }
             
-            string songpath = CreateFromTrackInfo(track) + ext;
-            string dir = Path.GetFullPath(Paths.LibraryLocation + 
+            string songpath = CreateFromTrackInfo (track) + ext;
+            string dir = Path.GetFullPath (Paths.LibraryLocation + 
                 Path.DirectorySeparatorChar + 
-                Path.GetDirectoryName(songpath));
+                Path.GetDirectoryName (songpath));
             string filename = dir + Path.DirectorySeparatorChar + 
-                Path.GetFileName(songpath);
+                Path.GetFileName (songpath);
                 
-            if(!Banshee.IO.IOProxy.Directory.Exists(dir)) {
-                Banshee.IO.IOProxy.Directory.Create(dir);
+            if (!Banshee.IO.IOProxy.Directory.Exists (dir)) {
+                Banshee.IO.IOProxy.Directory.Create (dir);
             }
             
             return filename;
         }
 
-        public static string Escape(string input)
+        public static string Escape (string input)
         {
-            if(invalid_path_regex == null) {
+            if (invalid_path_regex == null) {
                 string regex_str = "[";
-                for(int i = 0; i < invalid_path_characters.Length; i++) {
+                for (int i = 0; i < invalid_path_characters.Length; i++) {
                     regex_str += "\\" + invalid_path_characters[i];
                 }
                 regex_str += "]+";
                 
-                invalid_path_regex = new Regex(regex_str);
+                invalid_path_regex = new Regex (regex_str);
             }
             
-            return invalid_path_regex.Replace(input, String.Empty);
+            return invalid_path_regex.Replace (input, String.Empty);
         }
     }
 }

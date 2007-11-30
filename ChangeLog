@@ -1,5 +1,11 @@
 2007-11-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.Base/*:
+	* src/Core/Banshee.Core/Banshee.Collection/*: White space and license
+	header cleanup.
+
+2007-11-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
 	Activate the TrackPopupAction instead of showing the popup manual
 	manually.

@@ -34,83 +34,83 @@ namespace Banshee.Base
 {
     public static class ProductInformation
     {
-        private static SortedList<string, ProductAuthor> authors = new SortedList<string, ProductAuthor>();
+        private static SortedList<string, ProductAuthor> authors = new SortedList<string, ProductAuthor>  ();
         private static SortedList<string, ProductTranslation> translations 
-            = new SortedList<string, ProductTranslation>();
+            = new SortedList<string, ProductTranslation> ();
         private static string [] artists;
         private static string [] contributors;
         
-        static ProductInformation()
+        static ProductInformation ()
         {
             try {
-                LoadContributors();
-                LoadTranslators();
+                LoadContributors ();
+                LoadTranslators ();
             } catch {
             }
         }
         
-        private static void LoadContributors()
+        private static void LoadContributors ()
         {
-            List<string> artists_list = new List<string>();
-            List<string> contributors_list = new List<string>();
+            List<string> artists_list = new List<string> ();
+            List<string> contributors_list = new List<string> ();
         
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(Resource.GetFileContents("contributors.xml"));
+            XmlDocument doc = new XmlDocument ();
+            doc.LoadXml (Resource.GetFileContents ("contributors.xml"));
         
-            foreach(XmlNode node in doc.DocumentElement.ChildNodes) {
-                if(node.FirstChild.Value == null) {
+            foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
+                if (node.FirstChild.Value == null) {
                     continue;
                 }
 
-                string name = node.FirstChild.Value.Trim();
+                string name = node.FirstChild.Value.Trim ();
                 
-                switch(node.Name) {
+                switch (node.Name) {
                     case "author":
-                        authors.Add(name, new ProductAuthor(name, node.Attributes["role"].Value));
+                        authors.Add (name, new ProductAuthor (name, node.Attributes["role"].Value));
                         break;
                     case "contributor":
-                        contributors_list.Add(name);
+                        contributors_list.Add (name);
                         break;
                     case "artist":
-                        artists_list.Add(name);
+                        artists_list.Add (name);
                         break;
                     default:
                         break;
                 }
             }
             
-            artists = artists_list.ToArray();
-            contributors = contributors_list.ToArray();
+            artists = artists_list.ToArray ();
+            contributors = contributors_list.ToArray ();
             
-            Array.Sort(artists);
-            Array.Sort(contributors);
+            Array.Sort (artists);
+            Array.Sort (contributors);
         }
         
-        private static void LoadTranslators()
+        private static void LoadTranslators ()
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(Resource.GetFileContents("translators.xml"));
+            XmlDocument doc = new XmlDocument ();
+            doc.LoadXml (Resource.GetFileContents ("translators.xml"));
         
-            foreach(XmlNode node in doc.DocumentElement.ChildNodes) {
-                if(node.Name != "language") {
+            foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
+                if (node.Name != "language") {
                     continue;
                 }
                 
                 try {
-                    string language_code = node.Attributes["code"].Value.Trim();
-                    string language_name = node.Attributes["name"].Value.Trim();
+                    string language_code = node.Attributes["code"].Value.Trim ();
+                    string language_name = node.Attributes["name"].Value.Trim ();
                     
-                    ProductTranslation translation = new ProductTranslation(language_code, language_name);
+                    ProductTranslation translation = new ProductTranslation (language_code, language_name);
                     
-                    foreach(XmlNode person in node.ChildNodes) {
-                        if(person.Name != "person") {
+                    foreach (XmlNode person in node.ChildNodes) {
+                        if (person.Name != "person") {
                             continue;
                         }
                         
-                        translation.AddTranslator(person.FirstChild.Value.Trim());
+                        translation.AddTranslator (person.FirstChild.Value.Trim ());
                     }
                     
-                    translations.Add(language_name, translation);
+                    translations.Add (language_name, translation);
                 } catch {
                 }
             }
@@ -133,7 +133,7 @@ namespace Banshee.Base
         }
         
         public static string License {
-            get { return Resource.GetFileContents("COPYING"); }
+            get { return Resource.GetFileContents ("COPYING"); }
         }
     }
     
@@ -141,21 +141,21 @@ namespace Banshee.Base
     {
         private string language_code;
         private string language_name;
-        private SortedList<string, string> translators = new SortedList<string, string>();
+        private SortedList<string, string> translators = new SortedList<string, string> ();
         
-        private ProductTranslation()
+        private ProductTranslation ()
         {
         }
         
-        internal ProductTranslation(string languageCode, string languageName)
+        internal ProductTranslation (string languageCode, string languageName)
         {
             language_code = languageCode;
             language_name = languageName;
         }
         
-        internal void AddTranslator(string translator)
+        internal void AddTranslator (string translator)
         {
-            translators.Add(translator, translator);
+            translators.Add (translator, translator);
         }
         
         public string LanguageCode {
@@ -176,14 +176,14 @@ namespace Banshee.Base
         private string name;
         private string role;
         
-        private ProductAuthor()
+        private ProductAuthor ()
         {
         }
         
-        internal ProductAuthor(string name, string role)
+        internal ProductAuthor (string name, string role)
         {
-            if(name == null || role == null) {
-                throw new ArgumentNullException("name or roll cannot be null");
+            if (name == null || role == null) {
+                throw new ArgumentNullException ("name or roll cannot be null");
             }
             
             this.name = name;

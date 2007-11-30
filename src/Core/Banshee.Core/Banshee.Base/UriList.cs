@@ -36,85 +36,85 @@ namespace Banshee.Base
 {
     public class UriList : List<SafeUri> 
     {
-        public UriList(string [] uris)
+        public UriList (string [] uris)
         {    
             // FIXME this is so lame do real chacking at some point
-            foreach(string str in uris) {
+            foreach (string str in uris) {
                 SafeUri uri;
 
-                if(File.Exists(str) || Directory.Exists(str)) {
-                    uri = PathToFileUri(str);
+                if (File.Exists (str) || Directory.Exists (str)) {
+                    uri = PathToFileUri (str);
                 } else {
-                    uri = new SafeUri(str);
+                    uri = new SafeUri (str);
                 }
                 
-                Add(uri);
+                Add (uri);
             }
         }
 
-        public UriList(string data) 
+        public UriList (string data) 
         {
-            LoadFromString(data);
+            LoadFromString (data);
         }
         
-        /*public UriList(Gtk.SelectionData selection) 
+        /*public UriList (Gtk.SelectionData selection) 
         {
             // FIXME this should check the atom etc.
-            LoadFromString(System.Text.Encoding.UTF8.GetString(selection.Data));
+            LoadFromString (System.Text.Encoding.UTF8.GetString (selection.Data));
         }*/
 
-        private void LoadFromString(string data) 
+        private void LoadFromString (string data) 
         {
-            string [] items = data.Split('\n');
+            string [] items = data.Split ('\n');
 
-            foreach(string item in items) {
-                if(item.StartsWith("#")) {
+            foreach (string item in items) {
+                if (item.StartsWith ("#")) {
                     continue;
                 }
                 
                 SafeUri uri;
                 string s = item;
 
-                if(item.EndsWith("\r")) {
-                    s = item.Substring(0, item.Length - 1);
+                if (item.EndsWith ("\r")) {
+                    s = item.Substring (0, item.Length - 1);
                 }
 
                 try {
-                    uri = new SafeUri(s);
+                    uri = new SafeUri (s);
                 } catch {
                     continue;
                 }
                 
-                Add(uri);
+                Add (uri);
             }
         }
 
-        public static SafeUri PathToFileUri(string path)
+        public static SafeUri PathToFileUri (string path)
         {
-            return new SafeUri(Path.GetFullPath(path));
+            return new SafeUri (Path.GetFullPath (path));
         }
         
-        public override string ToString() 
+        public override string ToString () 
         {
-            StringBuilder list = new StringBuilder();
+            StringBuilder list = new StringBuilder ();
 
-            foreach(SafeUri uri in this) {
-                if(uri == null) {
+            foreach (SafeUri uri in this) {
+                if (uri == null) {
                     break;
                 }
                 
-                list.Append(uri.AbsoluteUri + "\r\n");
+                list.Append (uri.AbsoluteUri + "\r\n");
             }
 
-            return list.ToString();
+            return list.ToString ();
         }
         
         public string [] LocalPaths {
             get {
                 int count = 0;
                 
-                foreach(SafeUri uri in this) {
-                    if(uri.IsFile) {
+                foreach (SafeUri uri in this) {
+                    if (uri.IsFile) {
                         count++;
                     }
                 }
@@ -122,8 +122,8 @@ namespace Banshee.Base
                 string [] paths = new string[count];
                 count = 0;
                 
-                foreach(SafeUri uri in this) {
-                    if(uri.IsFile) {
+                foreach (SafeUri uri in this) {
+                    if (uri.IsFile) {
                         paths[count++] = uri.LocalPath;
                     }
                 }

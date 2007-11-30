@@ -64,13 +64,13 @@ namespace Banshee.Collection
         
         private StreamPlaybackError playback_error = StreamPlaybackError.None;
 
-        public TrackInfo()
+        public TrackInfo ()
         {
         }
 
-        public override string ToString()
+        public override string ToString ()
         {
-            return String.Format("{0} - {1} (on {2}) <{3}> [{4}]", ArtistName, TrackTitle, 
+            return String.Format ("{0} - {1} (on {2}) <{3}> [{4}]", ArtistName, TrackTitle, 
                 AlbumTitle, Duration, Uri.AbsoluteUri);
         }
 
@@ -92,7 +92,7 @@ namespace Banshee.Collection
             return ArtistAlbumId.Equals (track.ArtistAlbumId);
         }
 
-        public virtual void Save()
+        public virtual void Save ()
         {
         }
 
@@ -111,19 +111,19 @@ namespace Banshee.Collection
             set { mimetype = value; }
         }
 
-        [ListItemSetup(FieldIndex=2)]
+        [ListItemSetup (FieldIndex=2)]
         public virtual string ArtistName {
             get { return artist_name; }
             set { artist_name = value; }
         }
 
-        [ListItemSetup(FieldIndex=3)]
+        [ListItemSetup (FieldIndex=3)]
         public virtual string AlbumTitle {
             get { return album_title; }
             set { album_title = value; }
         }
 
-        [ListItemSetup(FieldIndex=4)]
+        [ListItemSetup (FieldIndex=4)]
         public virtual string TrackTitle {
             get { return track_title; }
             set { track_title = value; }
@@ -131,24 +131,24 @@ namespace Banshee.Collection
         
         public string DisplayArtistName { 
             get { 
-                return String.IsNullOrEmpty(ArtistName)
-                    ? Catalog.GetString("Unknown Artist") 
+                return String.IsNullOrEmpty (ArtistName)
+                    ? Catalog.GetString ("Unknown Artist") 
                     : ArtistName; 
             } 
         }
 
         public string DisplayAlbumTitle { 
             get { 
-                return String.IsNullOrEmpty(AlbumTitle) 
-                    ? Catalog.GetString("Unknown Album") 
+                return String.IsNullOrEmpty (AlbumTitle) 
+                    ? Catalog.GetString ("Unknown Album") 
                     : AlbumTitle; 
             } 
         }
 
         public string DisplayTrackTitle { 
             get { 
-                return String.IsNullOrEmpty(TrackTitle) 
-                    ? Catalog.GetString("Unknown Title") 
+                return String.IsNullOrEmpty (TrackTitle) 
+                    ? Catalog.GetString ("Unknown Title") 
                     : TrackTitle; 
             } 
         }     
@@ -162,7 +162,7 @@ namespace Banshee.Collection
             set { genre = value; }
         }
 
-        [ListItemSetup(FieldIndex=1)]
+        [ListItemSetup (FieldIndex=1)]
         public virtual int TrackNumber {
             get { return track_number; }
             set { track_number = value; }
@@ -193,7 +193,7 @@ namespace Banshee.Collection
             set { skip_count = value; }
         }
 
-        [ListItemSetup(FieldIndex=5)]
+        [ListItemSetup( FieldIndex=5)]
         public virtual TimeSpan Duration {
             get { return duration; }
             set { duration = value; }
@@ -219,7 +219,7 @@ namespace Banshee.Collection
             set { playback_error = value; }
         }
         
-        [ListItemSetup(FieldIndex=0)]
+        [ListItemSetup (FieldIndex=0)]
         public TrackInfo Self {
             get { return this; }
         }
@@ -233,22 +233,22 @@ namespace Banshee.Collection
         }
         
         // Generates a{sv} of self according to http://wiki.xmms2.xmms.se/index.php/Media_Player_Interfaces#.22Metadata.22
-        public IDictionary<string, object> GenerateExportable()
+        public IDictionary<string, object> GenerateExportable ()
         {
-            Dictionary<string, object> dict = new Dictionary<string, object>();
+            Dictionary<string, object> dict = new Dictionary<string, object> ();
             
             // Properties specified by the XMMS2 player spec
-            dict.Add("URI", Uri == null ? String.Empty : Uri.AbsoluteUri);
-            dict.Add("length", Duration.TotalSeconds);
-            dict.Add("name", TrackTitle);
-            dict.Add("artist", ArtistName);
-            dict.Add("album", AlbumTitle);
+            dict.Add ("URI", Uri == null ? String.Empty : Uri.AbsoluteUri);
+            dict.Add ("length", Duration.TotalSeconds);
+            dict.Add ("name", TrackTitle);
+            dict.Add ("artist", ArtistName);
+            dict.Add ("album", AlbumTitle);
             
             // Our own
-            dict.Add("track-number", TrackNumber);
-            dict.Add("track-count", TrackCount);
-            dict.Add("year", year);
-            dict.Add("rating", rating);
+            dict.Add ("track-number", TrackNumber);
+            dict.Add ("track-count", TrackCount);
+            dict.Add ("year", year);
+            dict.Add ("rating", rating);
             
             return dict;
         }

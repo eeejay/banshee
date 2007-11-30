@@ -62,49 +62,49 @@ namespace Banshee.Collection.Database
             AlbumTitle
         }
 
-        public LibraryTrackInfo(IDataReader reader, int index) : base()
+        public LibraryTrackInfo (IDataReader reader, int index) : base ()
         {
-            LoadFromReader(reader);
+            LoadFromReader (reader);
             DbIndex = index;
         }
 
-        private void LoadFromReader(IDataReader reader)
+        private void LoadFromReader (IDataReader reader)
         {
-            dbid = ReaderGetInt32(reader, Column.TrackID);
+            dbid = ReaderGetInt32 (reader, Column.TrackID);
             
-            Uri = new SafeUri(ReaderGetString(reader, Column.RelativeUri));
+            Uri = new SafeUri (ReaderGetString (reader, Column.RelativeUri));
             
-            ArtistName = ReaderGetString(reader, Column.Artist);
-            AlbumTitle = ReaderGetString(reader, Column.AlbumTitle);
-            TrackTitle = ReaderGetString(reader, Column.Title);
+            ArtistName = ReaderGetString (reader, Column.Artist);
+            AlbumTitle = ReaderGetString (reader, Column.AlbumTitle);
+            TrackTitle = ReaderGetString (reader, Column.Title);
 
-            TrackNumber = ReaderGetInt32(reader, Column.TrackNumber);
-            TrackCount = ReaderGetInt32(reader, Column.TrackCount);
-            Year = ReaderGetInt32(reader, Column.Year);
-            Rating = ReaderGetInt32(reader, Column.Rating);
+            TrackNumber = ReaderGetInt32 (reader, Column.TrackNumber);
+            TrackCount = ReaderGetInt32 (reader, Column.TrackCount);
+            Year = ReaderGetInt32 (reader, Column.Year);
+            Rating = ReaderGetInt32 (reader, Column.Rating);
 
-            Duration = ReaderGetTimeSpan(reader, Column.Duration);
+            Duration = ReaderGetTimeSpan (reader, Column.Duration);
             
             Attributes |= TrackAttributes.CanPlay;
         }
 
-        private string ReaderGetString(IDataReader reader, Column column)
+        private string ReaderGetString (IDataReader reader, Column column)
         {
-            int column_id = (int)column;
-            return !reader.IsDBNull(column_id) 
-                ? String.Intern(reader.GetString(column_id)) 
+            int column_id = (int) column;
+            return !reader.IsDBNull (column_id) 
+                ? String.Intern (reader.GetString (column_id)) 
                 : null;
         }
 
-        private int ReaderGetInt32(IDataReader reader, Column column)
+        private int ReaderGetInt32 (IDataReader reader, Column column)
         {
-            return reader.GetInt32((int)column);
+            return reader.GetInt32 ((int) column);
         }
 
-        private TimeSpan ReaderGetTimeSpan(IDataReader reader, Column column)
+        private TimeSpan ReaderGetTimeSpan (IDataReader reader, Column column)
         {
-            long raw = reader.GetInt64((int)column);
-            return new TimeSpan(raw * TimeSpan.TicksPerSecond);
+            long raw = reader.GetInt64 ((int) column);
+            return new TimeSpan (raw * TimeSpan.TicksPerSecond);
         }
 
         public int DbId {

@@ -38,40 +38,40 @@ namespace Banshee.Base
                 CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace |
                 CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth;
 
-        public static int RelaxedIndexOf(string haystack, string needle)
+        public static int RelaxedIndexOf (string haystack, string needle)
         {
-            return CultureInfo.CurrentCulture.CompareInfo.IndexOf(haystack, needle, compare_options);
+            return CultureInfo.CurrentCulture.CompareInfo.IndexOf (haystack, needle, compare_options);
         }
         
-        public static int RelaxedCompare(string a, string b)
+        public static int RelaxedCompare (string a, string b)
         {
-            if(a == null && b == null) {
+            if (a == null && b == null) {
                 return 0;
-            } else if(a != null && b == null) {
+            } else if (a != null && b == null) {
                 return 1;
-            } else if(a == null && b != null) {
+            } else if (a == null && b != null) {
                 return -1;
             }
             
-            int a_offset = a.StartsWith("the ") ? 4 : 0;
-            int b_offset = b.StartsWith("the ") ? 4 : 0;
+            int a_offset = a.StartsWith ("the ") ? 4 : 0;
+            int b_offset = b.StartsWith ("the ") ? 4 : 0;
 
-            return CultureInfo.CurrentCulture.CompareInfo.Compare(a, a_offset, a.Length - a_offset, 
+            return CultureInfo.CurrentCulture.CompareInfo.Compare (a, a_offset, a.Length - a_offset, 
                 b, b_offset, b.Length - b_offset, compare_options);
         }
         
-        public static string CamelCaseToUnderCase(string s)
+        public static string CamelCaseToUnderCase (string s)
         {
             string undercase = String.Empty;
-            string [] tokens = Regex.Split(s, "([A-Z]{1}[a-z]+)");
+            string [] tokens = Regex.Split (s, "([A-Z]{1}[a-z]+)");
             
-            for(int i = 0; i < tokens.Length; i++) {
-                if(tokens[i] == String.Empty) {
+            for (int i = 0; i < tokens.Length; i++) {
+                if (tokens[i] == String.Empty) {
                     continue;
                 }
 
-                undercase += tokens[i].ToLower();
-                if(i < tokens.Length - 2) {
+                undercase += tokens[i].ToLower ();
+                if (i < tokens.Length - 2) {
                     undercase += "_";
                 }
             }
