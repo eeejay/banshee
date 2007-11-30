@@ -38,86 +38,86 @@ namespace Banshee.Widgets
         private bool pressing;
         private bool can_activate = true;
 
-        public RatingMenuItem() : base()
+        public RatingMenuItem () : base ()
         {
-            HBox box = new HBox();
+            HBox box = new HBox ();
             box.Spacing = 5;
             
-            Label label = new Label();
-            label.Markup = String.Format("<i>{0}</i>", 
-                GLib.Markup.EscapeText(Catalog.GetString("Rating:")));
-            box.PackStart(label, false, false, 0);
+            Label label = new Label ();
+            label.Markup = String.Format ("<i>{0}</i>", 
+                GLib.Markup.EscapeText (Catalog.GetString ("Rating:")));
+            box.PackStart (label, false, false, 0);
             
-            entry = new RatingEntry(0, true);
+            entry = new RatingEntry (0, true);
             entry.Changed += OnEntryChanged;
-            box.PackStart(entry, false, false, 0);
+            box.PackStart (entry, false, false, 0);
             
-            box.ShowAll();
-            Add(box);
+            box.ShowAll ();
+            Add (box);
             
-            ConnectChildExpose(entry);
+            ConnectChildExpose (entry);
         }
 
-        private int TransformX(double inx)
+        private int TransformX (double inx)
         {
             int x = (int)inx - entry.Allocation.X;
 
-            if(x < 0) {
+            if (x < 0) {
                 x = 0;
-            } else if(x > entry.Allocation.Width) {
+            } else if (x > entry.Allocation.Width) {
                 x = entry.Allocation.Width;
             }
 
             return x;
         }
 
-        protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
+        protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
         {
             pressing = true;
-            entry.SetValueFromPosition(TransformX(evnt.X));
+            entry.SetValueFromPosition (TransformX (evnt.X));
             return true;
         }
 
-        protected override bool OnButtonReleaseEvent(Gdk.EventButton evnt)
+        protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
         {
             pressing = false;
             return true;
         }
 
-        protected override bool OnMotionNotifyEvent(Gdk.EventMotion evnt)
+        protected override bool OnMotionNotifyEvent (Gdk.EventMotion evnt)
         {
-            if(!pressing) {
+            if (!pressing) {
                 return false;
             }
 
-            entry.SetValueFromPosition(TransformX(evnt.X));
+            entry.SetValueFromPosition (TransformX (evnt.X));
             return true;
         }
 
-        protected override bool OnLeaveNotifyEvent(Gdk.EventCrossing evnt)
+        protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
         {
             pressing = false;
             return true;
         }
 
-        protected override bool OnScrollEvent(Gdk.EventScroll evnt)
+        protected override bool OnScrollEvent (Gdk.EventScroll evnt)
         {
-            return entry.HandleScroll(evnt);
+            return entry.HandleScroll (evnt);
         }
 
-        protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
+        protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
         {
-            return entry.HandleKeyPress(evnt);
+            return entry.HandleKeyPress (evnt);
         }
         
-        private void OnEntryChanged(object o, EventArgs args)
+        private void OnEntryChanged (object o, EventArgs args)
         {
-            if(can_activate) {
-                Activate();
+            if (can_activate) {
+                Activate ();
             }
         }
         
-        public void Reset(int value)
+        public void Reset (int value)
         {
             can_activate = false;
             Value = value;
