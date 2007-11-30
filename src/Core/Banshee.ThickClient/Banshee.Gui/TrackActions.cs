@@ -134,10 +134,20 @@ namespace Banshee.Gui
 
         private void ResetRating ()
         {
-            if (TrackSelector.TrackSelection.Count == 1)
-                rating_proxy.Reset (3);//TrackSelector.GetSelectedTracks ().Current.Rating;
-            else
-                rating_proxy.Reset (0);
+            bool first = true;
+            int rating = 0;
+
+            // If all the selected tracks have the same rating, show it
+            foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
+                if (first) {
+                    rating = track.Rating;
+                    first = false;
+                } else if (track.Rating != rating) {
+                    rating = 0;
+                    break;
+                }
+            }
+            rating_proxy.Reset (rating);
         }
             
 #region Action Handlers
@@ -219,7 +229,10 @@ namespace Banshee.Gui
 
         private void OnRateTracks (object o, EventArgs args)
         {
-            Console.WriteLine ("OnRateTracks..");
+            int rating = rating_proxy.LastRating;
+            foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
+                track.Rating = rating;
+            }
         }
 
 #endregion

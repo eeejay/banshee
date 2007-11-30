@@ -36,6 +36,7 @@ namespace Banshee.Widgets
     public class RatingActionProxy : CustomActionProxy
     {
         private List<RatingMenuItem> rating_items = new List<RatingMenuItem> ();
+        private int last_rating;
 
         public RatingActionProxy (UIManager ui, Action action) : base (ui, action)
         {
@@ -49,8 +50,14 @@ namespace Banshee.Widgets
         protected override ComplexMenuItem GetNewItem ()
         {
             RatingMenuItem item = new RatingMenuItem ();
+            item.RatingEntry.Changing += HandleChanging;
             rating_items.Add (item);
             return item;
+        }
+
+        private void HandleChanging (object o, EventArgs args)
+        {
+            last_rating = (o as RatingEntry).Value;
         }
 
         public void Reset (int value)
@@ -58,6 +65,10 @@ namespace Banshee.Widgets
             foreach (RatingMenuItem item in rating_items) {
                 item.Reset (value);
             }
+        }
+
+        public int LastRating {
+            get { return last_rating; }
         }
     }
 }

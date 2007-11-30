@@ -48,6 +48,7 @@ namespace Banshee.Widgets
         private int y_offset = 4, x_offset = 4;
         private Gdk.Pixbuf display_pixbuf;
         
+        public event EventHandler Changing;
         public event EventHandler Changed;
         
         public RatingEntry() : this(1) 
@@ -218,6 +219,14 @@ namespace Banshee.Widgets
             return true;
         }
 
+        protected virtual void OnChanging()
+        {
+            EventHandler handler = Changing;
+            if(handler != null) {
+                handler(this, new EventArgs());
+            }
+        }
+
         protected virtual void OnChanged()
         {
             DrawRating(DisplayPixbuf, Value);
@@ -239,6 +248,7 @@ namespace Banshee.Widgets
             set {
                 if(rating != value && value >= min_rating - 1 && value <= max_rating) {
                     rating = value;
+                    OnChanging ();
                     OnChanged();
                 }
             }

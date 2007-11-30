@@ -1,5 +1,13 @@
 2007-11-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingActionProxy.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingEntry.cs: If all the
+	selected tracks have the same rating, prepopulate it.  Actually set the
+	Rating on all the tracks when Activated.
+
+2007-11-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Banshee.Base/*:
 	* src/Core/Banshee.Core/Banshee.Collection/*: White space and license
 	header cleanup.
