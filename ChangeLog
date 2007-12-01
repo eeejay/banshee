@@ -1,5 +1,10 @@
 2007-11-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Prevent
+	crashing when a TrackInfo is null.
+
+2007-11-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingEntry.cs:
 	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingMenuItem.cs: Whitespace.
 

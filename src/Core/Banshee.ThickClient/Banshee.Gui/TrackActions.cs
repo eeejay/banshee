@@ -139,6 +139,9 @@ namespace Banshee.Gui
 
             // If all the selected tracks have the same rating, show it
             foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
+                if (track == null)
+                    continue;
+
                 if (first) {
                     rating = track.Rating;
                     first = false;
@@ -232,6 +235,7 @@ namespace Banshee.Gui
             int rating = rating_proxy.LastRating;
             foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
                 track.Rating = rating;
+                track.Save ();
             }
         }
 
