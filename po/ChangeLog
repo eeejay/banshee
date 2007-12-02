@@ -1,3 +1,7 @@
+2007-12-02  Jordi Mas <jmas@softcatala.org>
+
+	* POTFILES.in: Fixes location of some files
+
 2007-11-28  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
         * es.po: Updated Spanish translation
