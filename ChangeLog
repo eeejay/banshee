@@ -1,5 +1,11 @@
 2007-12-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Whitespace, and add commented out BansheeDbCommand class that will be
+	useful if/when we use Mono.Data.Sqlite and prepared statements.
+
+2007-12-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Don't
 	subclass from QueuedSqliteDatabase.
 

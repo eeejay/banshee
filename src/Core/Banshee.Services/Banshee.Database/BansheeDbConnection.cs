@@ -38,158 +38,160 @@ namespace Banshee.Database
 {
     public class BansheeDbConnection : IService, IDisposable
     {
-        private IDbConnection connection;
+        private SqliteConnection connection;
 
-        public BansheeDbConnection() : this(true)
+        public BansheeDbConnection () : this (true)
         {
         }
 
-        public BansheeDbConnection(bool connect)
+        public BansheeDbConnection (bool connect)
         {
-            if(connect) {
-                Open();
-                BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator(connection);
+            if (connect) {
+                Open ();
+                BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (connection);
                 migrator.SlowStarted += OnMigrationSlowStarted;
                 migrator.SlowPulse += OnMigrationSlowPulse;
                 migrator.SlowFinished += OnMigrationSlowFinished;
-                migrator.Migrate();
+                migrator.Migrate ();
             }
         }
         
         //private Gtk.Window slow_window;
         //private Gtk.ProgressBar slow_progress;
         
-        private void IterateSlow()
+        private void IterateSlow ()
         {
-            /*while(Gtk.Application.EventsPending()) {
-                Gtk.Application.RunIteration();
+            /*while (Gtk.Application.EventsPending ()) {
+                Gtk.Application.RunIteration ();
             }*/
         }
         
-        private void OnMigrationSlowStarted(string title, string message)
+        private void OnMigrationSlowStarted (string title, string message)
         {
-           /* lock(this) {
-                if(slow_window != null) {
-                    slow_window.Destroy();
+           /* lock (this) {
+                if (slow_window != null) {
+                    slow_window.Destroy ();
                 }
                 
-                Gtk.Application.Init();
+                Gtk.Application.Init ();
                 
-                slow_window = new Gtk.Window(String.Empty);
+                slow_window = new Gtk.Window (String.Empty);
                 slow_window.BorderWidth = 10;
                 slow_window.WindowPosition = Gtk.WindowPosition.Center;
-                slow_window.DeleteEvent += delegate(object o, Gtk.DeleteEventArgs args) {
+                slow_window.DeleteEvent += delegate (object o, Gtk.DeleteEventArgs args) {
                     args.RetVal = true;
                 };
                 
-                Gtk.VBox box = new Gtk.VBox();
+                Gtk.VBox box = new Gtk.VBox ();
                 box.Spacing = 5;
                 
-                Gtk.Label title_label = new Gtk.Label();
+                Gtk.Label title_label = new Gtk.Label ();
                 title_label.Xalign = 0.0f;
-                title_label.Markup = String.Format("<b><big>{0}</big></b>",
-                    GLib.Markup.EscapeText(title));
+                title_label.Markup = String.Format ("<b><big>{0}</big></b>",
+                    GLib.Markup.EscapeText (title));
                 
-                Gtk.Label message_label = new Gtk.Label();
+                Gtk.Label message_label = new Gtk.Label ();
                 message_label.Xalign = 0.0f;
                 message_label.Text = message;
                 message_label.Wrap = true;
                 
-                slow_progress = new Gtk.ProgressBar();
+                slow_progress = new Gtk.ProgressBar ();
                 
-                box.PackStart(title_label, false, false, 0);
-                box.PackStart(message_label, false, false, 0);
-                box.PackStart(slow_progress, false, false, 0);
+                box.PackStart (title_label, false, false, 0);
+                box.PackStart (message_label, false, false, 0);
+                box.PackStart (slow_progress, false, false, 0);
                 
-                slow_window.Add(box);
-                slow_window.ShowAll();
+                slow_window.Add (box);
+                slow_window.ShowAll ();
                 
-                IterateSlow();
+                IterateSlow ();
             }*/
         }
         
-        private void OnMigrationSlowPulse(object o, EventArgs args)
+        private void OnMigrationSlowPulse (object o, EventArgs args)
         {
-            /*lock(this) {
-                slow_progress.Pulse();
-                IterateSlow();
+            /*lock (this) {
+                slow_progress.Pulse ();
+                IterateSlow ();
             }*/
         }
         
-        private void OnMigrationSlowFinished(object o, EventArgs args)
+        private void OnMigrationSlowFinished (object o, EventArgs args)
         {
-            /*lock(this) {
-                slow_window.Destroy();
-                IterateSlow();
+            /*lock (this) {
+                slow_window.Destroy ();
+                IterateSlow ();
             }*/
         }
 
-        public void Dispose()
+        public void Dispose ()
         {
-            Close();
+            Close ();
         }
 
-        public void Open()
+        public void Open ()
         {
-            lock(this) {
-                if(connection != null) {
+            lock (this) {
+                if (connection != null) {
                     return;
                 }
 
                 string dbfile = DatabaseFile;
-                Console.WriteLine("Opening connection to Banshee Database: {0}", dbfile);
-                connection = new SqliteConnection(String.Format("Version=3,URI=file:{0}", dbfile));
-                connection.Open();
-                IDbCommand command = connection.CreateCommand();
+                Console.WriteLine ("Opening connection to Banshee Database: {0}", dbfile);
+                connection = new SqliteConnection (String.Format ("Version=3,URI=file:{0}", dbfile));
+                connection.Open ();
+                IDbCommand command = connection.CreateCommand ();
                 command.CommandText = @"
                     PRAGMA synchronous = OFF;
                     PRAGMA cache_size = 32768;
                 ";
-                command.ExecuteNonQuery();
+                command.ExecuteNonQuery ();
             }
         }
 
-        public void Close()
+        public void Close ()
         {
-            lock(this) {
-                if(connection != null) {
-                    connection.Close();
+            lock (this) {
+                if (connection != null) {
+                    connection.Close ();
                     connection = null;
                 }
             }
         }
 
-        public IDbCommand CreateCommand()
+        public IDbCommand CreateCommand ()
         {
-            lock(this) {
-                if(connection == null) {
-                    throw new ApplicationException("Not connected to database");
+            lock (this) {
+                if (connection == null) {
+                    throw new ApplicationException ("Not connected to database");
                 }
 
-                return connection.CreateCommand();
+                return connection.CreateCommand ();
             }
         }
 
-        public IDataReader ExecuteReader(IDbCommand command)
+#region Convenience methods 
+
+        public IDataReader ExecuteReader (SqliteCommand command)
         {
             command.Connection = connection;
             return command.ExecuteReader ();
         }
 
-        public IDataReader ExecuteReader(object command)
+        public IDataReader ExecuteReader (object command)
         {
-            return ExecuteReader (new SqliteCommand (command.ToString()));
+            return ExecuteReader (new SqliteCommand (command.ToString ()));
         }
 
-        public object ExecuteScalar(IDbCommand command)
+        public object ExecuteScalar (SqliteCommand command)
         {
             command.Connection = connection;
             return command.ExecuteScalar ();
         }
 
-        public object ExecuteScalar(object command)
+        public object ExecuteScalar (object command)
         {
-            return ExecuteScalar (new SqliteCommand (command.ToString()));
+            return ExecuteScalar (new SqliteCommand (command.ToString ()));
         }
 
         public Int32 QueryInt32 (object command)
@@ -199,34 +201,36 @@ namespace Banshee.Database
 
         public int Execute (SqliteCommand command)
         {
-            command.Connection = connection as SqliteConnection;
+            command.Connection = connection;
             command.ExecuteNonQuery ();
             return command.LastInsertRowID ();
         }
 
         public int Execute (object command)
         {
-            return Execute (new SqliteCommand (command.ToString()));
+            return Execute (new SqliteCommand (command.ToString ()));
         }
+
+#endregion
 
         public string DatabaseFile {
             get {
                 if (ApplicationContext.CommandLine.Contains ("db"))
                     return ApplicationContext.CommandLine["db"];
 
-                string dbfile = Path.Combine(Path.Combine(Environment.GetFolderPath(
+                string dbfile = Path.Combine (Path.Combine (Environment.GetFolderPath (
                     Environment.SpecialFolder.ApplicationData), 
                     "banshee"), 
                     "banshee.db"); 
 
-                if(!File.Exists(dbfile)) {
-                    string tdbfile = Path.Combine(Path.Combine(Path.Combine(Environment.GetFolderPath(
+                if (!File.Exists (dbfile)) {
+                    string tdbfile = Path.Combine (Path.Combine (Path.Combine (Environment.GetFolderPath (
                         Environment.SpecialFolder.Personal),
                         ".gnome2"),
                         "banshee"),
                         "banshee.db");
 
-                    if(File.Exists(tdbfile)) {
+                    if (File.Exists (tdbfile)) {
                         dbfile = tdbfile;
                     }
                 }
@@ -243,4 +247,44 @@ namespace Banshee.Database
             get { return "DbConnection"; }
         }
     }
+
+    /*public class BansheeDbCommand : SqliteCommand
+    {
+        public BansheeDbCommand (string command) : base (command)
+        {
+        }
+
+        public BansheeDbCommand (string command, int num_params) : this (command)
+        {
+            for (int i = 0; i < num_params; i++) {
+                Parameters.Add (new SqliteParameter ());
+            }
+        }
+
+        // Recommended for commands that will be used more than once and that have named parameters.
+        public BansheeDbCommand (string command, params string [] named_params) : this (command)
+        {
+            foreach (string param in named_params) {
+                Parameters.Add (new SqliteParameter (param));
+            }
+        }
+
+        public BansheeDbCommand (string command, params object [] param_values) : this (command, param_values.Length)
+        {
+            ApplyValues (param_values);
+        }
+
+        public void ApplyValues (params object [] param_values)
+        {
+            if (param_values.Length != Parameters.Count) {
+                throw new ArgumentException (String.Format (
+                    "Command has {0} parameters, but {1} values given.", Parameters.Count, param_values.Length
+                ));
+            }
+
+            for (int i = 0; i < param_values.Length; i++) {
+                Parameters[i].Value = param_values[i];
+            }
+        }
+    }*/
 }
