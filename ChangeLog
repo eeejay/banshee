@@ -1,3 +1,17 @@
+2007-12-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Don't
+	subclass from QueuedSqliteDatabase.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Revert changes made when I switched to QueuedSqliteDatabase.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Sort
+	whitelist in static constructor.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	Temporarily comment out some queries.
+
 2007-11-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Prevent

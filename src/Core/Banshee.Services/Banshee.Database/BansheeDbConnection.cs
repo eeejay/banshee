@@ -36,20 +36,24 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Database
 {
-    public class BansheeDbConnection : QueuedSqliteDatabase, IService, IDisposable
+    public class BansheeDbConnection : IService, IDisposable
     {
         private IDbConnection connection;
 
-        public BansheeDbConnection() : base (DatabaseFile)
+        public BansheeDbConnection() : this(true)
         {
-            BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (this);
-            Execute ("PRAGMA synchronous = OFF;");
-            Execute ("PRAGMA cache_size = 32768;");
+        }
 
-            migrator.SlowStarted += OnMigrationSlowStarted;
-            migrator.SlowPulse += OnMigrationSlowPulse;
-            migrator.SlowFinished += OnMigrationSlowFinished;
-            migrator.Migrate();
+        public BansheeDbConnection(bool connect)
+        {
+            if(connect) {
+                Open();
+                BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator(connection);
+                migrator.SlowStarted += OnMigrationSlowStarted;
+                migrator.SlowPulse += OnMigrationSlowPulse;
+                migrator.SlowFinished += OnMigrationSlowFinished;
+                migrator.Migrate();
+            }
         }
         
         //private Gtk.Window slow_window;
@@ -120,7 +124,92 @@ namespace Banshee.Database
             }*/
         }
 
-        public static string DatabaseFile {
+        public void Dispose()
+        {
+            Close();
+        }
+
+        public void Open()
+        {
+            lock(this) {
+                if(connection != null) {
+                    return;
+                }
+
+                string dbfile = DatabaseFile;
+                Console.WriteLine("Opening connection to Banshee Database: {0}", dbfile);
+                connection = new SqliteConnection(String.Format("Version=3,URI=file:{0}", dbfile));
+                connection.Open();
+                IDbCommand command = connection.CreateCommand();
+                command.CommandText = @"
+                    PRAGMA synchronous = OFF;
+                    PRAGMA cache_size = 32768;
+                ";
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Close()
+        {
+            lock(this) {
+                if(connection != null) {
+                    connection.Close();
+                    connection = null;
+                }
+            }
+        }
+
+        public IDbCommand CreateCommand()
+        {
+            lock(this) {
+                if(connection == null) {
+                    throw new ApplicationException("Not connected to database");
+                }
+
+                return connection.CreateCommand();
+            }
+        }
+
+        public IDataReader ExecuteReader(IDbCommand command)
+        {
+            command.Connection = connection;
+            return command.ExecuteReader ();
+        }
+
+        public IDataReader ExecuteReader(object command)
+        {
+            return ExecuteReader (new SqliteCommand (command.ToString()));
+        }
+
+        public object ExecuteScalar(IDbCommand command)
+        {
+            command.Connection = connection;
+            return command.ExecuteScalar ();
+        }
+
+        public object ExecuteScalar(object command)
+        {
+            return ExecuteScalar (new SqliteCommand (command.ToString()));
+        }
+
+        public Int32 QueryInt32 (object command)
+        {
+            return Convert.ToInt32 (ExecuteScalar (command));
+        }
+
+        public int Execute (SqliteCommand command)
+        {
+            command.Connection = connection as SqliteConnection;
+            command.ExecuteNonQuery ();
+            return command.LastInsertRowID ();
+        }
+
+        public int Execute (object command)
+        {
+            return Execute (new SqliteCommand (command.ToString()));
+        }
+
+        public string DatabaseFile {
             get {
                 if (ApplicationContext.CommandLine.Contains ("db"))
                     return ApplicationContext.CommandLine["db"];
@@ -146,6 +235,10 @@ namespace Banshee.Database
             }
         }
 
+        public IDbConnection Connection {
+            get { return connection; }
+        }
+        
         string IService.ServiceName {
             get { return "DbConnection"; }
         }

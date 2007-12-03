@@ -44,7 +44,6 @@ namespace Banshee.Library
         // used to see if we should allow the file to be processed by TagLib. The
         // point is to rule out, at the path level, files that we won't support.
         
-        private static bool white_list_file_extensions_sorted = false;
         private static string [] white_list_file_extensions = new string [] {
             "3g2",   "3gp",  "3gp2", "3gpp", "aac",  "ac3",  "aif",  "aifc", 
             "aiff",  "al",   "alaw", "ape",  "asf",  "asx",  "au",   "avi", 
@@ -58,14 +57,14 @@ namespace Banshee.Library
             "wave",  "wax",  "wm",   "wma",  "wmd",  "wmv",  "wmx",  "wv",   
             "wvc",   "wvx",  "yuv"
         };
+
+        static LibraryImportManager ()
+        {
+            Array.Sort<string> (white_list_file_extensions);
+        }
         
         public static bool IsWhiteListedFile (string path)
         {
-            if (!white_list_file_extensions_sorted) {
-                Array.Sort<string> (white_list_file_extensions);
-                white_list_file_extensions_sorted = true;
-            }
-            
             if (String.IsNullOrEmpty (path)) {
                 return false;
             }

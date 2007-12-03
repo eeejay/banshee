@@ -63,9 +63,9 @@ namespace Banshee.Database
             }
         }
         
-        private QueuedSqliteDatabase connection;
+        private IDbConnection connection;
         
-        public BansheeDbFormatMigrator(QueuedSqliteDatabase connection)
+        public BansheeDbFormatMigrator(IDbConnection connection)
         {
             this.connection = connection;
         }
@@ -93,12 +93,7 @@ namespace Banshee.Database
                 handler(this, EventArgs.Empty);
             }
         }
-
-        private void Execute (string command)
-        {
-            connection.Execute (command);
-        }
-
+        
         public void Migrate()
         {
             try {
@@ -146,17 +141,44 @@ namespace Banshee.Database
             }
         }
         
+        protected bool TableExists(string tableName)
+        {
+            IDbCommand command = connection.CreateCommand();
+            command.CommandText = @"
+                SELECT COUNT(*)
+                    FROM sqlite_master
+                    WHERE Type='table' AND Name=:table_name";
+            
+            IDbDataParameter table_param = command.CreateParameter();
+            table_param.ParameterName = "table_name";
+            table_param.Value = tableName;
+            
+            command.Parameters.Add(table_param);
+            
+            return Convert.ToInt32(command.ExecuteScalar()) > 0;
+        }
+        
+        protected void Execute(string query)
+        {
+            IDbCommand command = connection.CreateCommand();
+            command.CommandText = query;
+            command.ExecuteNonQuery();
+        }
+            
         protected int DatabaseVersion {
             get {
-                if(!connection.TableExists("CoreConfiguration")) {
+                if(!TableExists("CoreConfiguration")) {
                     return 0;
                 }
                 
-                return connection.QueryInt32 (@"
+                IDbCommand command = connection.CreateCommand();
+                command.CommandText = @"
                     SELECT Value 
                         FROM CoreConfiguration
-                        WHERE Key = 'DatabaseVersion'"
-                );
+                        WHERE Key = 'DatabaseVersion'
+                ";
+                
+                return Convert.ToInt32(command.ExecuteScalar());
             }
         }
         
@@ -170,7 +192,7 @@ namespace Banshee.Database
         [DatabaseVersion(1)]
         private bool Migrate_1()
         {   
-            if(connection.TableExists("Tracks")) {
+            if(TableExists("Tracks")) {
                 InitializeFreshDatabase();
                 
                 using(new Timer("Database Migration")) {

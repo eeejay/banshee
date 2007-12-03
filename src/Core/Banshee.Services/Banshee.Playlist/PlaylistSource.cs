@@ -141,7 +141,7 @@ namespace Banshee.Playlist
             if (dbid == null)
                 return;
 
-            ServiceManager.DbConnection.Execute (
+            /*ServiceManager.DbConnection.Execute (
                 @"UPDATE CorePlaylists
                     SET Name = :playlist_name,
                         SortColumn = :sort_column,
@@ -151,16 +151,17 @@ namespace Banshee.Playlist
                 "sort_column", -1,
                 "sort_type", 0,
                 "playlist_id", dbid
-            );
+            );*/
         }
 
         private static int CreateNewPlaylist (string name)
         {
-            return ServiceManager.DbConnection.Execute (
+            /*return ServiceManager.DbConnection.Execute (
                 @"INSERT INTO CorePlaylists
                     VALUES (NULL, :playlist_name, -1, 0)",
                     "playlist_name", name
-            );
+            );*/
+            return 0;
         }
 
         public static List<PlaylistSource> LoadAll ()
