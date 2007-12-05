@@ -50,7 +50,6 @@ namespace Hyena.Collections
     {
         RangeCollection ranges = new RangeCollection ();
         private int max_index;
-        private object owner;
         
         public event EventHandler Changed;
         
@@ -129,11 +128,6 @@ namespace Hyena.Collections
         
         public int Count {
             get { return ranges.Count; }
-        }
-        
-        public object Owner {
-            get { return owner; }
-            set { owner = value; }
         }
         
         public int MaxIndex {

@@ -1,3 +1,61 @@
+2007-12-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	The main point of this change is to make Selections tied to a specific
+	model, which in turn are already tied to a specific source.  So, if you
+	have some artists and/or albums and/or tracks selected in your Library,
+	switch to a playlist, then switch back, they will still be selected when
+	you get back.
+
+	* src/Core/Hyena/Hyena.Data/IListModel.cs: Add a Selection property.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs: New
+	abstract base class to avoid duplications, implement Selection property of
+	IListModel.
+
+	* src/Core/Banshee.Services/Banshee.Collection/AlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/ArtistListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs: Subclass
+	from BansheeListModel.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs: Add Selection
+	implementation.
+
+	* src/Core/Banshee.Services/Banshee.Collection/IHasTrackSelection.cs:
+	Return a SelectionProxy instead of a Selection, because the Selection will
+	change for the ListView depending on what source is selected, and we only
+	care about the currently displayed one.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	Don't set the selection to the first item automatically; that is done in
+	the model now.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
+	Add method for changing all three models at once.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Listen to the
+	events on the track SelectionProxy not the Selection itself.
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Add SelectionProxy
+	property, use the Selection property everywhere and remove the selection
+	instance variable, since the Selection belongs to the model now, and that
+	can change.
+
+	* src/Core/Hyena/Hyena.Data/Selection.cs:
+	* src/Core/Hyena/Hyena.Collections/Selection.cs: Move to the appropriate
+	folder for its namespace, and remove Owner property.
+
+	* src/Core/Hyena/Makefile.am:
+	* src/Core/Hyena/Hyena.Collections/SelectionProxy.cs: New file that has
+	events for when its selection is updated and for when its selection is
+	changed to a different one.
+
+	* src/Core/Hyena/Hyena.Data/ModelSelection.cs: Comment out unfinished
+	method.
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Updated to new ListView API.
+
 2007-12-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:

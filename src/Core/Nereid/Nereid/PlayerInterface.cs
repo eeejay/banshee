@@ -264,22 +264,20 @@ namespace Nereid
                 view_container.SearchEntry.ActivateFilter((int)source.FilterType);
             }
             
-            // Clear any models previously connected to the views            
-            composite_view.TrackModel = null;
-            composite_view.ArtistModel = null;
-            composite_view.AlbumModel = null;
-            composite_view.TrackView.HeaderVisible = false;
-            
-            if (object_view != null) {
-                object_view.Model = null;
+            // Clear any models previously connected to the views
+            if (!(source is ITrackModelSource)) {
+                composite_view.SetModels (null, null, null);
+                composite_view.TrackView.HeaderVisible = false;
+            } else if (!(source is Hyena.Data.IObjectListModel)) {
+                if (object_view != null) {
+                    object_view.Model = null;
+                }
             }
             
             // Connect the source models to the views if possible
             if (source is ITrackModelSource) {
                 ITrackModelSource track_source = (ITrackModelSource)source;
-                composite_view.TrackModel = track_source.TrackModel;
-                composite_view.ArtistModel = track_source.ArtistModel;
-                composite_view.AlbumModel = track_source.AlbumModel;
+                composite_view.SetModels (track_source.TrackModel, track_source.ArtistModel, track_source.AlbumModel);
                 composite_view.TrackView.HeaderVisible = true;
                 view_container.Content = composite_view;
             } else if (source is Hyena.Data.IObjectListModel) {
@@ -350,8 +348,8 @@ namespace Nereid
             return new ModelSelection<TrackInfo> (composite_view.TrackModel, composite_view.TrackView.Selection);
         }
 
-        public Hyena.Collections.Selection TrackSelection {
-            get { return composite_view.TrackView.Selection; }
+        public Hyena.Collections.SelectionProxy TrackSelectionProxy {
+            get { return composite_view.TrackView.SelectionProxy; }
         }
 
         public TrackListDatabaseModel TrackModel {

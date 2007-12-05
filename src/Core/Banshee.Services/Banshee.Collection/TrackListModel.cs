@@ -34,12 +34,9 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection
 {
-    public class TrackListModel : ExportableModel, IListModel<TrackInfo>
+    public abstract class TrackListModel : BansheeListModel<TrackInfo>
     {
-        public event EventHandler Cleared;
-        public event EventHandler Reloaded;
-        
-        public TrackListModel()
+        public TrackListModel() : base ()
         {
         }
         
@@ -47,39 +44,9 @@ namespace Banshee.Collection
         {
         }
         
-        protected virtual void OnCleared()
-        {
-            EventHandler handler = Cleared;
-            if(handler != null) {
-                handler(this, EventArgs.Empty);
-            }
-        }
-        
-        protected virtual void OnReloaded()
-        {
-            EventHandler handler = Reloaded;
-            if(handler != null) {
-                handler(this, EventArgs.Empty);
-            }
-        }
-        
         public virtual int IndexOf(TrackInfo track)
         {
             throw new NotImplementedException();
-        }
-        
-        public virtual void Clear()
-        {
-            throw new NotImplementedException();
-        }
-        
-        public virtual void Reload()
-        {
-            throw new NotImplementedException();
-        }
-    
-        public virtual TrackInfo this[int index] {
-            get { throw new NotImplementedException(); }
         }
         
         public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
@@ -88,10 +55,6 @@ namespace Banshee.Collection
         
         public virtual IEnumerable<AlbumInfo> AlbumInfoFilter {
             set { throw new NotImplementedException(); }
-        }
-
-        public virtual int Count { 
-            get { throw new NotImplementedException(); } 
         }
     }
 }

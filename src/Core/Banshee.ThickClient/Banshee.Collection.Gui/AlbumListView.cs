@@ -48,13 +48,5 @@ namespace Banshee.Collection.Gui
             
             RowHeight = ColumnCellAlbum.RowHeight;
         }
-        
-        public override IListModel<AlbumInfo> Model {
-            get { return base.Model; }
-            set { 
-                base.Model = value;
-                Selection.Select(0);
-            }
-        }
     }
 }

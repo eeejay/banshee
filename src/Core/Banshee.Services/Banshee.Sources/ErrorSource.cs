@@ -31,12 +31,14 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Hyena.Data;
+using Hyena.Collections;
 
 namespace Banshee.Sources
 {
     public class ErrorSource : Source, IObjectListModel
     {
         private List<Message> messages = new List<Message> ();
+        private Selection selection = new Selection ();
         
         public event EventHandler Cleared;
         public event EventHandler Reloaded;
@@ -122,6 +124,10 @@ namespace Banshee.Sources
                 
                 return null;
             }
+        }
+
+        public Selection Selection {
+            get { return selection; }
         }
         
         public class Message

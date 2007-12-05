@@ -5,6 +5,8 @@ SOURCES =  \
 	Hyena.Collections/IntervalHeap.cs \
 	Hyena.Collections/IStackProvider.cs \
 	Hyena.Collections/RangeCollection.cs \
+	Hyena.Collections/Selection.cs \
+	Hyena.Collections/SelectionProxy.cs \
 	Hyena.CommandLine/CommandLineParser.cs \
 	Hyena.CommandLine/Layout.cs \
 	Hyena.CommandLine/LayoutGroup.cs \
@@ -29,7 +31,6 @@ SOURCES =  \
 	Hyena.Data/ListItemSetup.cs \
 	Hyena.Data/ModelSelection.cs \
 	Hyena.Data/PropertyStore.cs \
-	Hyena.Data/Selection.cs \
 	Hyena.Data/SortType.cs \
 	Hyena/IUndoAction.cs \
 	Hyena/UndoManager.cs \

@@ -1,5 +1,5 @@
 //
-// ModelSelection.cs.cs
+// SelectionProxy.cs
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
@@ -27,63 +27,53 @@
 //
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
-using Hyena.Collections;
-
-namespace Hyena.Data
+namespace Hyena.Collections
 {
-    //public class ModelSelection<T> : IList<T>
-    public class ModelSelection<T> : IEnumerable<T>
+    public class SelectionProxy
     {
-        private IListModel<T> model;
         private Selection selection;
 
-#region Properties
+        public event EventHandler Changed;
+        public event EventHandler SelectionChanged;
 
-        /*public T this [int index] {
-            get {
-                if (index >= selection.Count)
-                    throw new ArgumentOutOfRangeException ("index");
-                //return model [selection [index]];
-                return default(T);
-            }
-        }*/
+        public Selection Selection {
+            get { return selection; }
+            set {
+                if (selection == value)
+                    return;
 
-        public int Count {
-            get { return selection.Count; }
-        }
+                if (selection != null)
+                    selection.Changed -= HandleSelectionChanged;
 
-#endregion
+                selection = value;
 
-        public ModelSelection (IListModel<T> model, Selection selection)
-        {
-            this.model = model;
-            this.selection = selection;
-        }
+                if (selection != null)
+                    selection.Changed += HandleSelectionChanged;
 
-#region Methods
-
-        public int IndexOf (T value)
-        {
-            //selection.IndexOf (model.IndexOf (value));
-            return -1;
-        }
-
-        public IEnumerator<T> GetEnumerator ()
-        {
-            foreach (int i in selection) {
-                yield return model [i];
+                OnSelectionChanged ();
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator ()
+        protected virtual void OnChanged ()
         {
-            return GetEnumerator ();
+            EventHandler handler = Changed;
+            if (handler != null) {
+                handler (selection, EventArgs.Empty);
+            }
         }
 
-#endregion
+        protected virtual void OnSelectionChanged ()
+        {
+            EventHandler handler = SelectionChanged;
+            if (handler != null) {
+                handler (selection, EventArgs.Empty);
+            }
+        }
 
+        private void HandleSelectionChanged (object o, EventArgs args)
+        {
+            OnChanged ();
+        }
     }
 }

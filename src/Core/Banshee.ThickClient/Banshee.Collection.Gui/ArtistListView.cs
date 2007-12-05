@@ -46,13 +46,5 @@ namespace Banshee.Collection.Gui
             
             ColumnController = column_controller;
         }
-        
-        public override IListModel<ArtistInfo> Model {
-            get { return base.Model; }
-            set { 
-                base.Model = value;
-                Selection.Select(0);
-            }
-        }
     }
 }

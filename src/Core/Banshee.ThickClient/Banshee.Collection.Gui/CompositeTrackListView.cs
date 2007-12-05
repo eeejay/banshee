@@ -126,9 +126,6 @@ namespace Banshee.Collection.Gui
             artist_view.HeaderVisible = false;
             album_view.HeaderVisible = false;
             
-            artist_view.Selection.Changed += OnBrowserViewSelectionChanged;
-            album_view.Selection.Changed += OnBrowserViewSelectionChanged;
-            
             artist_scrolled_window = new ScrolledWindow();
             artist_scrolled_window.Add(artist_view);
             artist_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
@@ -144,9 +141,12 @@ namespace Banshee.Collection.Gui
             track_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
             track_scrolled_window.VscrollbarPolicy = PolicyType.Automatic;
             
+            track_view.Model = track_model;
             artist_view.Model = artist_model;
             album_view.Model = album_model;
-            track_view.Model = track_model;
+
+            artist_view.SelectionProxy.Changed += OnBrowserViewSelectionChanged;
+            album_view.SelectionProxy.Changed += OnBrowserViewSelectionChanged;
         }
         
         private void Clean ()
@@ -242,13 +242,12 @@ namespace Banshee.Collection.Gui
         protected virtual void OnBrowserViewSelectionChanged(object o, EventArgs args)
         {
             Hyena.Collections.Selection selection = (Hyena.Collections.Selection)o;
-            object view = selection.Owner;
             TrackListModel model = track_view.Model as TrackListModel;
             
             if(selection.Count == 1 && selection.Contains(0) || selection.AllSelected) {
-                if(view is ArtistListView && model != null) {
+                if(model != null && o == artist_view.Selection ) {
                     model.ArtistInfoFilter = null;
-                } else if(view is AlbumListView && model != null) {
+                } else if(model != null && o == album_view.Selection) {
                     model.AlbumInfoFilter = null;
                 }
                 return;
@@ -258,7 +257,7 @@ namespace Banshee.Collection.Gui
                 selection.Unselect(0);
             }
             
-            if(view is ArtistListView) {
+            if(o == artist_view.Selection) {
                 ArtistInfo [] artists = new ArtistInfo[selection.Count];
                 int i = 0;
             
@@ -271,7 +270,7 @@ namespace Banshee.Collection.Gui
                 
                 album_view.Selection.Select(0);
                 album_view.Selection.Clear();
-            } else if(view is AlbumListView) {
+            } else if(o == album_view.Selection) {
                 AlbumInfo [] albums = new AlbumInfo[selection.Count];
                 int i = 0;
             
@@ -299,26 +298,25 @@ namespace Banshee.Collection.Gui
         
         public TrackListModel TrackModel {
             get { return (TrackListModel)track_view.Model; }
-            set {
-                track_model = value;
-                track_view.Model = value; 
-            }
         }
         
         public ArtistListModel ArtistModel {
             get { return (ArtistListModel)artist_view.Model; }
-            set {
-                artist_model = value;
-                artist_view.Model = value; 
-            }
         }
-        
+
         public AlbumListModel AlbumModel {
             get { return (AlbumListModel)album_view.Model; }
-            set {
-                album_model = value;
-                album_view.Model = value;
-            }
+        }
+
+        public void SetModels (TrackListModel track, ArtistListModel artist, AlbumListModel album)
+        {
+            track_model = track;
+            artist_model = artist;
+            album_model = album;
+
+            track_view.Model = track_model;
+            album_view.Model = album_model;
+            artist_view.Model = artist_model;
         }
         
         public static readonly SchemaEntry<bool> BrowserVisible = new SchemaEntry<bool> (

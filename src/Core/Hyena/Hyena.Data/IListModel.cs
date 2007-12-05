@@ -28,6 +28,8 @@
 
 using System;
 
+using Hyena.Collections;
+
 namespace Hyena.Data
 {
     public interface IListModel<T>
@@ -40,6 +42,7 @@ namespace Hyena.Data
         
         T this[int index] { get; }
         int Count { get; }
+        Selection Selection { get; }
     }
     
     public interface IObjectListModel : IListModel<object>

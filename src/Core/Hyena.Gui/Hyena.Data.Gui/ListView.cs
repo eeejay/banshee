@@ -33,6 +33,7 @@ using Gtk;
 using Cairo;
 
 using Hyena.Data;
+using Hyena.Collections;
 using Selection=Hyena.Collections.Selection;
 
 namespace Hyena.Data.Gui
@@ -123,10 +124,13 @@ namespace Hyena.Data.Gui
         private int focused_row_index = -1;
         private bool rules_hint = false;
         
-        private Selection selection = new Selection();
-        
+        private SelectionProxy selection_proxy = new SelectionProxy ();
+        public SelectionProxy SelectionProxy {
+            get { return selection_proxy; }
+        }
+
         public Selection Selection {
-            get { return selection; }
+            get { return model.Selection; }
         }
         
         private int row_height = 0;
@@ -207,7 +211,11 @@ namespace Hyena.Data.Gui
         public virtual IListModel<T> Model {
             get { return model; }
             set {
-                if(model != value && model != null) {
+                if(model == value) {
+                    return;
+                }
+
+                if(model != null) {
                     model.Cleared -= OnModelClearedHandler;
                     model.Reloaded -= OnModelReloadedHandler;
                 }
@@ -217,11 +225,10 @@ namespace Hyena.Data.Gui
                 if(model != null) {
                     model.Cleared += OnModelClearedHandler;
                     model.Reloaded += OnModelReloadedHandler;
+                    selection_proxy.Selection = model.Selection;
                 }
                 
                 RefreshViewForModel();
-                
-                Selection.Owner = this;
             }
         }
         
@@ -776,11 +783,11 @@ namespace Hyena.Data.Gui
             Stack<SelectionRectangle> cg_s_rects = new Stack<SelectionRectangle>();
             
             for(int ri = first_row; ri < last_row; ri++) {
-                if(ri < 0 || !selection.Contains(ri)) {
+                if(ri < 0 || !Selection.Contains(ri)) {
                     continue;
                 }
                 
-                if(selection.Contains(ri - 1) && cg_s_rects.Count > 0) {
+                if(Selection.Contains(ri - 1) && cg_s_rects.Count > 0) {
                     cg_s_rects.Peek().Height += RowHeight; 
                 } else {
                     cg_s_rects.Push(new SelectionRectangle(list_alloc.Y + 
@@ -810,7 +817,7 @@ namespace Hyena.Data.Gui
                 
                 if (content) {
                     StateType row_state = StateType.Normal;
-                    if(selection.Contains (ri)) {
+                    if(Selection.Contains (ri)) {
                         row_state = StateType.Selected;
                     }
                     
@@ -889,7 +896,7 @@ namespace Hyena.Data.Gui
                 }
             }
         }
-        
+
         private int GetRowAtY(int y)
         {
             int page_offset = (int)vadjustment.Value % RowHeight;
@@ -929,7 +936,7 @@ namespace Hyena.Data.Gui
             vadjustment.Value = 0;
             
             if (Model != null) {
-                selection.MaxIndex = Model.Count;
+                Selection.MaxIndex = Model.Count;
             }
             
             if(Parent is ScrolledWindow) {
@@ -946,7 +953,7 @@ namespace Hyena.Data.Gui
         {
             OnModelReloaded ();
         }
-        
+
         private void OnColumnControllerUpdatedHandler(object o, EventArgs args)
         {
             OnColumnControllerUpdated();

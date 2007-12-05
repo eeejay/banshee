@@ -1,5 +1,5 @@
 //
-// AlbumListModel.cs
+// ListModel.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,27 +27,64 @@
 //
 
 using System;
-using System.Collections.Generic;
 
 using Hyena.Data;
+using Hyena.Collections;
 using Banshee.ServiceStack;
 
 namespace Banshee.Collection
 {
-    public abstract class AlbumListModel : BansheeListModel<AlbumInfo>
+    public abstract class BansheeListModel<T> : ExportableModel, IListModel<T>
     {
-        public AlbumListModel() : base ()
+        protected Selection selection = new Selection ();
+
+        public event EventHandler Cleared;
+        public event EventHandler Reloaded;
+
+        public BansheeListModel () : base ()
         {
-            selection.Select (0);
         }
         
-        public AlbumListModel(IDBusExportable parent) : base(parent)
+        public BansheeListModel (IDBusExportable parent) : base (parent)
         {
-            selection.Select (0);
+        }
+        
+        protected virtual void OnCleared ()
+        {
+            EventHandler handler = Cleared;
+            if(handler != null) {
+                handler(this, EventArgs.Empty);
+            }
+        }
+        
+        protected virtual void OnReloaded ()
+        {
+            EventHandler handler = Reloaded;
+            if(handler != null) {
+                handler(this, EventArgs.Empty);
+            }
+        }
+        
+        public virtual void Clear()
+        {
+            throw new NotImplementedException();
+        }
+        
+        public virtual void Reload()
+        {
+            throw new NotImplementedException();
+        }
+    
+        public virtual T this[int index] {
+            get { throw new NotImplementedException(); }
         }
 
-        public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
-            set { throw new NotImplementedException(); }
+        public virtual int Count { 
+            get { throw new NotImplementedException(); }
+        }
+
+        public virtual Selection Selection {
+            get { return selection; }
         }
     }
 }

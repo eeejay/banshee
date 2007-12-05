@@ -33,51 +33,16 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection
 {
-    public class ArtistListModel : ExportableModel, IListModel<ArtistInfo>
+    public abstract class ArtistListModel : BansheeListModel<ArtistInfo>
     {
-        public event EventHandler Cleared;
-        public event EventHandler Reloaded;
-        
-        public ArtistListModel()
+        public ArtistListModel() : base ()
         {
+            selection.Select (0);
         }
         
         public ArtistListModel(IDBusExportable parent) : base(parent)
         {
-        }
-        
-        protected virtual void OnCleared()
-        {
-            EventHandler handler = Cleared;
-            if(handler != null) {
-                handler(this, EventArgs.Empty);
-            }
-        }
-        
-        protected virtual void OnReloaded()
-        {
-            EventHandler handler = Reloaded;
-            if(handler != null) {
-                handler(this, EventArgs.Empty);
-            }
-        }
-        
-        public virtual void Clear()
-        {
-            throw new NotImplementedException();
-        }
-        
-        public virtual void Reload()
-        {
-            throw new NotImplementedException();
-        }
-    
-        public virtual ArtistInfo this[int index] {
-            get { throw new NotImplementedException(); }
-        }
-
-        public virtual int Count { 
-            get { throw new NotImplementedException(); }
+            selection.Select (0);
         }
     }
 }

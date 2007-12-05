@@ -55,13 +55,16 @@ namespace Banshee.Gui
         public IHasTrackSelection TrackSelector {
             get { return track_selector; }
             set {
-                if (track_selector != null && track_selector != value)
-                    track_selector.TrackSelection.Changed -= HandleSelectionChanged;
+                if (track_selector != null && track_selector != value) {
+                    track_selector.TrackSelectionProxy.Changed -= HandleSelectionChanged;
+                    track_selector.TrackSelectionProxy.SelectionChanged -= HandleSelectionChanged;
+                }
 
                 track_selector = value;
 
                 if (track_selector != null) {
-                    track_selector.TrackSelection.Changed += HandleSelectionChanged;
+                    track_selector.TrackSelectionProxy.Changed += HandleSelectionChanged;
+                    track_selector.TrackSelectionProxy.SelectionChanged += HandleSelectionChanged;
                     Sensitize ();
                 }
             }
@@ -126,7 +129,8 @@ namespace Banshee.Gui
 
         private void Sensitize ()
         {
-            bool has_selection = TrackSelector.TrackSelection.Count > 0;
+            Hyena.Collections.Selection selection = TrackSelector.TrackSelectionProxy.Selection;
+            bool has_selection = (selection != null) && (selection.Count > 0);
             Sensitive = has_selection;
             //foreach (string action in require_selection_actions)
             //    this [action].Sensitive = has_selection;
@@ -209,14 +213,14 @@ namespace Banshee.Gui
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
 
             ThreadAssist.Spawn (delegate {
-                playlist.AddTracks (TrackSelector.TrackModel, TrackSelector.TrackSelection);
+                playlist.AddTracks (TrackSelector.TrackModel, TrackSelector.TrackSelectionProxy.Selection);
             });
         }
 
         private void OnAddToExistingPlaylist (object o, EventArgs args)
         {
             PlaylistSource playlist = playlist_menu_map[o as MenuItem];
-            playlist.AddTracks (TrackSelector.TrackModel, TrackSelector.TrackSelection);
+            playlist.AddTracks (TrackSelector.TrackModel, TrackSelector.TrackSelectionProxy.Selection);
         }
 
         private void OnRemoveTracks (object o, EventArgs args)
@@ -224,10 +228,8 @@ namespace Banshee.Gui
             Source source = ServiceManager.SourceManager.ActiveSource;
 
             if (source is PlaylistSource) {
-                (source as PlaylistSource).RemoveTracks (TrackSelector.TrackSelection);
+                (source as PlaylistSource).RemoveTracks (TrackSelector.TrackSelectionProxy.Selection);
             }
-
-            TrackSelector.TrackSelection.Clear ();
         }
 
         private void OnRateTracks (object o, EventArgs args)
