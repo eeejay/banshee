@@ -81,6 +81,7 @@
     <File name="Banshee.Collection.Database/IDatabaseModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MediaEngine/IPlayerEngineService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MediaEngine/IPlaybackController.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/CoreTracksSchema.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

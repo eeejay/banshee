@@ -33,6 +33,7 @@ using Banshee.Base;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.Streaming;
 
 namespace Banshee.Library
@@ -91,19 +92,18 @@ namespace Banshee.Library
             
             try {
                 TagLib.File file = StreamTagger.ProcessUri (new SafeUri (path));
-                string disp_artist = file.Tag.FirstPerformer;
-                string disp_title = file.Tag.Title;
-                string message = null;
+                LibraryTrackInfo track = new LibraryTrackInfo ();
+                StreamTagger.TrackInfoMerge (track, file);
+                track.Commit ();
                 
-                if (!String.IsNullOrEmpty (disp_artist) && !String.IsNullOrEmpty (disp_title)) {
-                    message = String.Format ("{0} - {1}", disp_artist.Trim (), disp_title.Trim ());
-                }
-                
-                IncrementProcessedCount (message);
+                IncrementProcessedCount (String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle));
             } catch (Exception e) {
-                LogError (path, e);
-                IncrementProcessedCount (null);
+                Console.WriteLine (e);
+                Environment.Exit (1);
             }
+         //       LogError (path, e);
+         //       IncrementProcessedCount (null);
+          //  }
         }
 
         private void LogError (string path, Exception e)

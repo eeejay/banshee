@@ -159,14 +159,16 @@ namespace Banshee.Database
             }
         }
 
-        public IDbCommand CreateCommand ()
+        public DbCommand CreateCommand ()
         {
             lock (this) {
                 if (connection == null) {
                     throw new ApplicationException ("Not connected to database");
                 }
-
-                return connection.CreateCommand ();
+                
+                DbCommand command = new DbCommand ();
+                command.Connection = connection;
+                return command;
             }
         }
 
@@ -245,6 +247,72 @@ namespace Banshee.Database
         
         string IService.ServiceName {
             get { return "DbConnection"; }
+        }
+    }
+    
+    public class DbCommand : SqliteCommand
+    {
+        public DbCommand () : base ()
+        {
+        }
+    
+        public DbCommand(string command) : base(command)
+        {
+        }
+                
+        public DbCommand(string command, params object [] parameters) : this(command)
+        {
+            for(int i = 0; i < parameters.Length;) {
+                SqliteParameter param;
+                
+                if(parameters[i] is SqliteParameter) {
+                    param = (SqliteParameter)parameters[i];
+                    if(i < parameters.Length - 1 && !(parameters[i + 1] is SqliteParameter)) {
+                        param.Value = parameters[i + 1];
+                        i += 2;
+                    } else {
+                        i++;
+                    }
+                } else {
+                    param = new SqliteParameter();
+                    param.ParameterName = (string)parameters[i];
+                    param.Value = parameters[i + 1];
+                    i += 2;
+                }
+                
+                Parameters.Add(param);
+            }
+        }
+        
+        public void AddParameter (object value)
+        {
+            SqliteParameter param = new SqliteParameter ();
+            param.Value = value;
+            Parameters.Add (param);
+        }
+        
+        public void AddParameter<T>(string name, T value)
+        {
+            AddParameter<T>(new DbParameter<T>(name), value);
+        }
+        
+        public void AddParameter<T>(DbParameter<T> param, T value)
+        {
+            param.Value = value;
+            Parameters.Add(param);
+        }
+    }
+    
+    public class DbParameter<T> : SqliteParameter
+    {
+        public DbParameter(string name) : base()
+        {
+            ParameterName = name;
+        }
+        
+        public new T Value {
+            get { return (T)base.Value; }
+            set { base.Value = value; }
         }
     }
 

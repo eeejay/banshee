@@ -1,3 +1,22 @@
+2007-12-06  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/CoreTracksSchema.cs:
+	Schema information about the CoreTracks table and handles any insert
+	and update commands for the table
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Added a Commit method and oved the Columns enum to CoreTracksSchema
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: 
+	Create a LibraryTrackInfo from the files being parsed, call commit
+	to save to database; doesn't actually work yet
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Added
+	the DbParameter/DbCommand stuff back from the old Banshee
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Added a null check
+	in ToString
+
 2007-12-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Highlights: Now remembers scroll position for track/artist/album lists 

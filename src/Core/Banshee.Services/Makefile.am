@@ -6,6 +6,7 @@ SOURCES =  \
 	Banshee.Collection.Database/AlbumListDatabaseModel.cs \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
 	Banshee.Collection.Database/BansheeCacheableModelAdapter.cs \
+	Banshee.Collection.Database/CoreTracksSchema.cs \
 	Banshee.Collection.Database/IDatabaseModel.cs \
 	Banshee.Collection.Database/LibraryAlbumInfo.cs \
 	Banshee.Collection.Database/LibraryArtistInfo.cs \
@@ -23,7 +24,6 @@ SOURCES =  \
 	Banshee.Collection/TrackListModel.cs \
 	Banshee.Database/BansheeDbConnection.cs \
 	Banshee.Database/BansheeDbFormatMigrator.cs \
-	Banshee.Database/QueuedSqliteDatabase.cs \
 	Banshee.Library/HomeDirectoryImportSource.cs \
 	Banshee.Library/IImportSource.cs \
 	Banshee.Library/ImportSourceManager.cs \

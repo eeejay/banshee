@@ -30,6 +30,7 @@ using System;
 using System.Data;
 
 using Banshee.Base;
+using Banshee.Database;
 using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
@@ -38,28 +39,10 @@ namespace Banshee.Collection.Database
     {
         private int dbid;
         private int db_index;
-
-        private enum Column : int {
-            TrackID,
-            ArtistID,
-            AlbumID,
-            TagSetID,
-            MusicBrainzID,
-            RelativeUri,
-            MimeType,
-            Title,
-            TrackNumber,
-            TrackCount,
-            Duration,
-            Year,
-            Rating,
-            PlayCount,
-            SkipCount,
-            LastPlayedStamp,
-            DateAddedStamp,
-            
-            Artist,
-            AlbumTitle
+        
+        public LibraryTrackInfo () : base ()
+        {
+            dbid = -1;
         }
 
         public LibraryTrackInfo (IDataReader reader, int index) : base ()
@@ -70,25 +53,25 @@ namespace Banshee.Collection.Database
 
         private void LoadFromReader (IDataReader reader)
         {
-            dbid = ReaderGetInt32 (reader, Column.TrackID);
+            dbid = ReaderGetInt32 (reader, CoreTracksSchema.Column.TrackID);
             
-            Uri = new SafeUri (ReaderGetString (reader, Column.RelativeUri));
+            Uri = new SafeUri (ReaderGetString (reader, CoreTracksSchema.Column.RelativeUri));
             
-            ArtistName = ReaderGetString (reader, Column.Artist);
-            AlbumTitle = ReaderGetString (reader, Column.AlbumTitle);
-            TrackTitle = ReaderGetString (reader, Column.Title);
+            ArtistName = ReaderGetString (reader, CoreTracksSchema.Column.Artist);
+            AlbumTitle = ReaderGetString (reader, CoreTracksSchema.Column.AlbumTitle);
+            TrackTitle = ReaderGetString (reader, CoreTracksSchema.Column.Title);
 
-            TrackNumber = ReaderGetInt32 (reader, Column.TrackNumber);
-            TrackCount = ReaderGetInt32 (reader, Column.TrackCount);
-            Year = ReaderGetInt32 (reader, Column.Year);
-            Rating = ReaderGetInt32 (reader, Column.Rating);
+            TrackNumber = ReaderGetInt32 (reader, CoreTracksSchema.Column.TrackNumber);
+            TrackCount = ReaderGetInt32 (reader, CoreTracksSchema.Column.TrackCount);
+            Year = ReaderGetInt32 (reader, CoreTracksSchema.Column.Year);
+            Rating = ReaderGetInt32 (reader, CoreTracksSchema.Column.Rating);
 
-            Duration = ReaderGetTimeSpan (reader, Column.Duration);
+            Duration = ReaderGetTimeSpan (reader, CoreTracksSchema.Column.Duration);
             
             Attributes |= TrackAttributes.CanPlay;
         }
 
-        private string ReaderGetString (IDataReader reader, Column column)
+        private string ReaderGetString (IDataReader reader, CoreTracksSchema.Column column)
         {
             int column_id = (int) column;
             return !reader.IsDBNull (column_id) 
@@ -96,15 +79,20 @@ namespace Banshee.Collection.Database
                 : null;
         }
 
-        private int ReaderGetInt32 (IDataReader reader, Column column)
+        private int ReaderGetInt32 (IDataReader reader, CoreTracksSchema.Column column)
         {
             return reader.GetInt32 ((int) column);
         }
 
-        private TimeSpan ReaderGetTimeSpan (IDataReader reader, Column column)
+        private TimeSpan ReaderGetTimeSpan (IDataReader reader, CoreTracksSchema.Column column)
         {
             long raw = reader.GetInt64 ((int) column);
             return new TimeSpan (raw * TimeSpan.TicksPerSecond);
+        }
+        
+        public void Commit ()
+        {
+            CoreTracksSchema.Commit (this);
         }
 
         public int DbId {

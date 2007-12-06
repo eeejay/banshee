@@ -22,8 +22,10 @@ run:
 	pushd .run.tmp; \
 	echo "<Addins><Directory>./Addins</Directory></Addins>" > Nereid.addins; \
 	$(MONO) --debug Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
-	popd; \
-	rm -rf .run.tmp
+	popd;
+
+
+#	rm -rf .run.tmp
 
 MAINTAINERCLEANFILES = Makefile.in
 

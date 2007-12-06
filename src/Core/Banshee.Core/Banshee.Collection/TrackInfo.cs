@@ -71,7 +71,7 @@ namespace Banshee.Collection
         public override string ToString ()
         {
             return String.Format ("{0} - {1} (on {2}) <{3}> [{4}]", ArtistName, TrackTitle, 
-                AlbumTitle, Duration, Uri.AbsoluteUri);
+                AlbumTitle, Duration, Uri == null ? "<unknown>" : Uri.AbsoluteUri);
         }
 
         public virtual bool AudiblyEqual (TrackInfo track)
