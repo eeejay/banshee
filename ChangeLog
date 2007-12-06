@@ -1,3 +1,33 @@
+2007-12-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Highlights: Now remembers scroll position for track/artist/album lists 
+	per source. Selection of track/artist/albums with keyboard now possible.
+
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs: Clear
+	the selection when the model is reloaded.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
+	Keep track of scroll positions on a per-model basis, and restore scroll
+	positions when we switch models.  Changes to selection and artist/album
+	filtering.
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/SearchEntry.cs: Don't trigger
+	the OnChanged timeout if not Ready.
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: 
+	Fix errors in calculating the vadjustment height etc so we can scroll to
+	the last item.  Implement selecting items with they keyboard.  Fix off by
+	one bug in SelectAll that led to NRE when iterating the selection with a
+	ModelSelection (unless you checked for it).  Add option to scroll to a
+	given point when changing the model, used by CompositeTrackListView.
+
+	* src/Core/Hyena/Hyena.Collections/Selection.cs: Keep track of the first
+	index selected, and add method for selecting from that point to another
+	point (used for keyboard and mouse selection on the ListView).
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Fix bug so filter query is
+	actually restored when switching sources.
+
 2007-12-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	The main point of this change is to make Selections tied to a specific

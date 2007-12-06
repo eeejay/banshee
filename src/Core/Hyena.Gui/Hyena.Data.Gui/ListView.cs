@@ -110,8 +110,6 @@ namespace Hyena.Data.Gui
         
         private bool header_visible = true;
         
-        private Adjustment vadjustment;
-        
         private int column_text_y;
         private int column_text_height;
         private Pango.Layout column_layout;
@@ -123,6 +121,11 @@ namespace Hyena.Data.Gui
         
         private int focused_row_index = -1;
         private bool rules_hint = false;
+
+        private Adjustment vadjustment;
+        public Adjustment Vadjustment {
+            get { return vadjustment; }
+        }
         
         private SelectionProxy selection_proxy = new SelectionProxy ();
         public SelectionProxy SelectionProxy {
@@ -187,7 +190,7 @@ namespace Hyena.Data.Gui
         }
         
         private int RowsInView {
-            get { return list_alloc.Height / RowHeight + 3; }
+            get { return (int) Math.Ceiling (list_alloc.Height / (double) RowHeight); }
         }
         
         public ColumnController ColumnController {
@@ -210,26 +213,6 @@ namespace Hyena.Data.Gui
         
         public virtual IListModel<T> Model {
             get { return model; }
-            set {
-                if(model == value) {
-                    return;
-                }
-
-                if(model != null) {
-                    model.Cleared -= OnModelClearedHandler;
-                    model.Reloaded -= OnModelReloadedHandler;
-                }
-                
-                model = value;
-                
-                if(model != null) {
-                    model.Cleared += OnModelClearedHandler;
-                    model.Reloaded += OnModelReloadedHandler;
-                    selection_proxy.Selection = model.Selection;
-                }
-                
-                RefreshViewForModel();
-            }
         }
         
         public ListView()
@@ -444,8 +427,9 @@ namespace Hyena.Data.Gui
             }
            
             if(vadjustment != null) {
-                vadjustment.PageSize = allocation.Height;
+                vadjustment.PageSize = list_alloc.Height;
                 vadjustment.PageIncrement = list_alloc.Height;
+                UpdateAdjustments(null, null);
             }
             
             if(resized_width) {
@@ -464,6 +448,16 @@ namespace Hyena.Data.Gui
 #endregion
         
 #region Widget Interaction
+
+        public void ScrollTo (double val)
+        {
+            vadjustment.Value = Math.Min (val, vadjustment.Upper - vadjustment.PageSize);
+        }
+
+        public void ScrollToRow (int row_index)
+        {
+            ScrollTo (GetYAtRow (row_index));
+        }
         
         protected override bool OnFocusInEvent(Gdk.EventFocus evnt)
         {
@@ -486,37 +480,28 @@ namespace Hyena.Data.Gui
             
             UpdateAdjustments(hadj, vadj);
         }
-        
-        protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
+
+        protected override bool OnKeyPressEvent(Gdk.EventKey press)
         {
-            switch(evnt.Key) {
+            bool handled = false;
+
+            switch(press.Key) {
                 case Gdk.Key.Up:
-                    vadjustment.Value -= vadjustment.StepIncrement;
-                    /*if((evnt.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        focus
-                    }*/
-                    
-                    if(focused_row_index > 0) {
-                        focused_row_index--;
-                        InvalidateListWindow();
-                    }
-                    
+                    handled = KeyboardScroll (press.State, -1, true);
                     break;
+
                 case Gdk.Key.Down:
-                    vadjustment.Value += vadjustment.StepIncrement;
-                    
-                    if(focused_row_index < Model.Count - 1) {
-                        focused_row_index++;
-                        InvalidateListWindow();
-                    }
-                    
+                    handled = KeyboardScroll (press.State, 1, true);
                     break;
+
                 case Gdk.Key.Page_Up:
-                    vadjustment.Value -= vadjustment.PageIncrement;
+                    handled = KeyboardScroll (press.State, (int) (-vadjustment.PageIncrement / (double) RowHeight), false);
                     break;
+
                 case Gdk.Key.Page_Down:
-                    vadjustment.Value += vadjustment.PageIncrement;
+                    handled = KeyboardScroll (press.State, (int) (vadjustment.PageIncrement / (double) RowHeight), false);
                     break;
+
                 case Gdk.Key.Return:
                 case Gdk.Key.KP_Enter:
                 case Gdk.Key.space:
@@ -524,12 +509,68 @@ namespace Hyena.Data.Gui
                         Selection.Clear (false);
                         Selection.Select (focused_row_index);
                         OnRowActivated ();
-                        InvalidateListWindow();
+                        handled = true;
                     }
                     break;
             }
+
+            if (handled)
+                return true;
             
-            return base.OnKeyPressEvent(evnt);
+            return base.OnKeyPressEvent(press);
+        }
+
+        private bool KeyboardScroll (Gdk.ModifierType modifier, int relative_row, bool align_y)
+        {
+            int row_limit;
+            if (relative_row < 0) {
+                if (focused_row_index == -1)
+                    return false;
+                row_limit = 0;
+            } else {
+                row_limit = Model.Count - 1;
+            }
+
+            if (focused_row_index == row_limit)
+                return true;
+
+            int row_index = Math.Min (Model.Count - 1, Math.Max (0, focused_row_index + relative_row));
+
+            if ((modifier & Gdk.ModifierType.ControlMask) != 0) {
+                // Don't change the selection
+            } else if ((modifier & Gdk.ModifierType.ShiftMask) != 0) {
+                // Behave like nautilus: if and arrow key + shift is pressed and the currently focused item
+                // is not selected, select it and don't move the focus or vadjustment.
+                // Otherwise, select the new row and scroll etc as necessary.
+                if ((relative_row * relative_row != 1)) {
+                    Selection.SelectFromFirst(row_index, true);
+                } else if (Selection.Contains (focused_row_index)) {
+                    Selection.SelectFromFirst(row_index, true);
+                } else {
+                    Selection.Select(focused_row_index);
+                    InvalidateListWindow();
+                    return true;
+                }
+            } else {
+                Selection.Clear(false);
+                Selection.Select(row_index);
+            }
+
+            // Scroll if needed
+            double y_at_row = GetYAtRow (row_index);
+            if (align_y) {
+                if (y_at_row < vadjustment.Value) {
+                    ScrollTo (y_at_row);
+                } else if ((y_at_row + RowHeight) > (vadjustment.Value + vadjustment.PageSize)) {
+                    ScrollTo (y_at_row + RowHeight - (vadjustment.PageSize));
+                }
+            } else {
+                ScrollTo (vadjustment.Value + ((row_index - focused_row_index) * RowHeight));
+            }
+
+            focused_row_index = row_index;
+            InvalidateListWindow();
+            return true;
         }
         
         private int last_click_row_index = -1;
@@ -564,9 +605,7 @@ namespace Hyena.Data.Gui
                             Selection.ToggleSelect(row_index);
                         }
                     } else if ((press.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        Selection.Clear(false);
-                        Selection.SelectRange(Math.Min(focused_row_index, row_index), 
-                            Math.Max(focused_row_index, row_index));
+                        Selection.SelectFromFirst(row_index, true);
                     } else {
                         if (press.Button == 3) {
                             if (!Selection.Contains (row_index)) {
@@ -636,7 +675,7 @@ namespace Hyena.Data.Gui
             }
             
             if(vadjustment != null && model != null) {
-                vadjustment.Upper = RowHeight * model.Count + HeaderHeight + FooterHeight;
+                vadjustment.Upper = (RowHeight * (model.Count));
                 vadjustment.StepIncrement = RowHeight;
             }
             
@@ -776,7 +815,8 @@ namespace Hyena.Data.Gui
             }
             
             int rows = RowsInView;
-            int first_row = (int)vadjustment.Value / RowHeight;
+            int vadjustment_value = (int) vadjustment.Value;
+            int first_row = vadjustment_value / RowHeight;
             int last_row = Math.Min(model.Count, first_row + rows);
             
             // Compute a stack of Contiguous Selection Rectangles
@@ -791,29 +831,29 @@ namespace Hyena.Data.Gui
                     cg_s_rects.Peek().Height += RowHeight; 
                 } else {
                     cg_s_rects.Push(new SelectionRectangle(list_alloc.Y + 
-                        (ri * RowHeight - (int)vadjustment.Value), RowHeight));
+                        (ri * RowHeight - vadjustment_value), RowHeight));
                 }
             }
 
             if (rules_hint) {
-                PaintRows (first_row, last_row, clip, false);
+                PaintRows (first_row, last_row, vadjustment_value, clip, false);
             }
             
             foreach(SelectionRectangle selection_rect in cg_s_rects) {
                 graphics.DrawRowSelection(list_cr, list_alloc.X, selection_rect.Y, list_alloc.Width, selection_rect.Height);
             }        
 
-            PaintRows (first_row, last_row, clip, true);
+            PaintRows (first_row, last_row, vadjustment_value, clip, true);
         }
         
-        private void PaintRows (int first_row, int last_row, Gdk.Rectangle clip, bool content) 
+        private void PaintRows (int first_row, int last_row, int vadjustment_value, Gdk.Rectangle clip, bool content)
         {
             for (int ri = first_row; ri < last_row; ri++) {
                 Gdk.Rectangle single_list_alloc = new Gdk.Rectangle ();
                 single_list_alloc.Width = list_alloc.Width;
                 single_list_alloc.Height = RowHeight;
                 single_list_alloc.X = list_alloc.X;
-                single_list_alloc.Y = list_alloc.Y + (ri * single_list_alloc.Height - (int)vadjustment.Value);
+                single_list_alloc.Y = list_alloc.Y + (ri * single_list_alloc.Height - vadjustment_value);
                 
                 if (content) {
                     StateType row_state = StateType.Normal;
@@ -905,6 +945,12 @@ namespace Hyena.Data.Gui
             
             return first_row + row_offset;
         }
+
+        private double GetYAtRow (int row)
+        {
+            double y = (double) RowHeight * row;
+            return y;
+        }
           
         private void FocusRow(int index)
         {
@@ -929,12 +975,42 @@ namespace Hyena.Data.Gui
 #endregion
 
 #region Model Interaction
+        public void SetModel (IListModel<T> model)
+        {
+            SetModel (model, 0.0);
+        }
 
-        private void RefreshViewForModel()
+        public void SetModel (IListModel<T> value, double vpos)
+        {
+            if(model == value) {
+                return;
+            }
+
+            if(model != null) {
+                model.Cleared -= OnModelClearedHandler;
+                model.Reloaded -= OnModelReloadedHandler;
+            }
+            
+            model = value;
+
+            if(model != null) {
+                model.Cleared += OnModelClearedHandler;
+                model.Reloaded += OnModelReloadedHandler;
+                selection_proxy.Selection = model.Selection;
+            }
+            
+            RefreshViewForModel(vpos);
+        }
+
+        private void RefreshViewForModel(double? vpos)
         {
             UpdateAdjustments(null, null);
-            vadjustment.Value = 0;
-            
+
+            if (vpos != null)
+                ScrollTo ((double) vpos);
+            else
+                ScrollTo (vadjustment.Value);
+
             if (Model != null) {
                 Selection.MaxIndex = Model.Count;
             }
@@ -961,12 +1037,12 @@ namespace Hyena.Data.Gui
 
         protected virtual void OnModelCleared()
         {
-            RefreshViewForModel();
+            RefreshViewForModel(null);
         }
         
         protected virtual void OnModelReloaded()
         {
-            RefreshViewForModel();
+            RefreshViewForModel(null);
         }
         
         protected virtual void OnColumnControllerUpdated()
@@ -982,7 +1058,7 @@ namespace Hyena.Data.Gui
         
         private void SelectAll()
         {
-            Selection.SelectRange(0, model.Count);
+            Selection.SelectRange(0, model.Count - 1);
             InvalidateListWindow();
         }
         

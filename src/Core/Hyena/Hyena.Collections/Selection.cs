@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -50,6 +51,7 @@ namespace Hyena.Collections
     {
         RangeCollection ranges = new RangeCollection ();
         private int max_index;
+        private int first_selected_index;
         
         public event EventHandler Changed;
         
@@ -76,35 +78,60 @@ namespace Hyena.Collections
         
         public void Select (int index)
         {
-            Select (index, true);
-        }
-        
-        public void Select (int index, bool raise)
-        { 
             ranges.Add (index);
-            
-            if (raise) {
-                OnChanged ();
-            }
+            if (Count == 1)
+                first_selected_index = index;
+            OnChanged ();
+        }
+
+        public void QuietSelect (int index)
+        {
+            ranges.Add (index);
+            if (Count == 1)
+                first_selected_index = index;
         }
         
         public void Unselect (int index)
         {
-            if (ranges.Remove (index)) {
+            if (ranges.Remove (index))
                 OnChanged ();
-            }
+        }
+
+        public void QuietUnselect (int index)
+        {
+            ranges.Remove (index);
         }
                     
         public bool Contains(int index)
         {
             return ranges.Contains (index);
         }
-        
-        public void SelectRange (int start, int end)
+
+        public void SelectFromFirst (int end, bool clear)
         {
-            for (int i = start; i <= end; i++) {
-                Select (i, false);
+            bool contains = Contains (first_selected_index);
+
+            if (clear)
+                Clear(false);
+
+            if (contains)
+                SelectRange (first_selected_index, end);
+            else
+                Select (end);
+        }
+        
+        public void SelectRange (int a, int b)
+        {
+            int start = Math.Min (a, b);
+            int end = Math.Max (a, b);
+
+            int i;
+            for (i = start; i <= end; i++) {
+                ranges.Add (i);
             }
+
+            if (Count == i)
+                first_selected_index = a;
             
             OnChanged ();
         }

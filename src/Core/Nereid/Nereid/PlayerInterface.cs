@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -259,7 +260,7 @@ namespace Nereid
             view_container.SearchEntry.Ready = false;
             view_container.SearchEntry.CancelSearch ();
 
-            if (source.FilterQuery != null && source.FilterType != TrackFilterType.None) {
+            if (source.FilterQuery != null) {
                 view_container.SearchEntry.Query = source.FilterQuery;
                 view_container.SearchEntry.ActivateFilter((int)source.FilterType);
             }
@@ -270,7 +271,7 @@ namespace Nereid
                 composite_view.TrackView.HeaderVisible = false;
             } else if (!(source is Hyena.Data.IObjectListModel)) {
                 if (object_view != null) {
-                    object_view.Model = null;
+                    object_view.SetModel(null);
                 }
             }
             
@@ -288,7 +289,7 @@ namespace Nereid
                     object_view.Show ();
                 }
                 
-                object_view.Model = (Hyena.Data.IObjectListModel)source;
+                object_view.SetModel((Hyena.Data.IObjectListModel)source);
                 view_container.Content = object_view_scroll;
             }
             

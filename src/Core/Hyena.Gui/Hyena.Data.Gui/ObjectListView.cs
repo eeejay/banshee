@@ -49,7 +49,6 @@ namespace Hyena.Data.Gui
         
         public new IObjectListModel Model {
             get { return (IObjectListModel)base.Model; }
-            set { base.Model = value; }
         }
     }
 }

@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -28,6 +29,7 @@
 
 using System;
 using System.Reflection;
+using System.Collections.Generic;
 
 using Gtk;
 using Mono.Unix;
@@ -51,6 +53,8 @@ namespace Banshee.Collection.Gui
         private ArtistListModel artist_model;
         private AlbumListModel album_model;
         private TrackListModel track_model;
+
+        private Dictionary<object, double> model_positions = new Dictionary<object, double> ();
         
         private ScrolledWindow artist_scrolled_window;
         private ScrolledWindow album_scrolled_window;
@@ -141,9 +145,9 @@ namespace Banshee.Collection.Gui
             track_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
             track_scrolled_window.VscrollbarPolicy = PolicyType.Automatic;
             
-            track_view.Model = track_model;
-            artist_view.Model = artist_model;
-            album_view.Model = album_model;
+            track_view.SetModel (track_model);
+            artist_view.SetModel (artist_model);
+            album_view.SetModel (album_model);
 
             artist_view.SelectionProxy.Changed += OnBrowserViewSelectionChanged;
             album_view.SelectionProxy.Changed += OnBrowserViewSelectionChanged;
@@ -247,14 +251,16 @@ namespace Banshee.Collection.Gui
             if(selection.Count == 1 && selection.Contains(0) || selection.AllSelected) {
                 if(model != null && o == artist_view.Selection ) {
                     model.ArtistInfoFilter = null;
+                    album_model.ArtistInfoFilter = null;
                 } else if(model != null && o == album_view.Selection) {
                     model.AlbumInfoFilter = null;
                 }
                 return;
             } else if(selection.Count == 0) {
                 selection.Select(0);
+                return;
             } else if(selection.Count > 0 && !selection.AllSelected) {
-                selection.Unselect(0);
+                selection.QuietUnselect(0);
             }
             
             if(o == artist_view.Selection) {
@@ -266,10 +272,7 @@ namespace Banshee.Collection.Gui
                 }
             
                 model.ArtistInfoFilter = artists;
-                ((AlbumListModel)album_view.Model).ArtistInfoFilter = artists;
-                
-                album_view.Selection.Select(0);
-                album_view.Selection.Clear();
+                album_model.ArtistInfoFilter = artists;
             } else if(o == album_view.Selection) {
                 AlbumInfo [] albums = new AlbumInfo[selection.Count];
                 int i = 0;
@@ -280,8 +283,6 @@ namespace Banshee.Collection.Gui
             
                 model.AlbumInfoFilter = albums;
             }
-            
-            track_view.Selection.Clear ();
         }
         
         public TrackListView TrackView {
@@ -310,13 +311,30 @@ namespace Banshee.Collection.Gui
 
         public void SetModels (TrackListModel track, ArtistListModel artist, AlbumListModel album)
         {
+            // Save the old vertical positions
+            if (track_model != null)
+                model_positions[track_model] = track_view.Vadjustment.Value;
+            if (artist_model != null)
+                model_positions[artist_model] = artist_view.Vadjustment.Value;
+            if (album_model != null)
+                model_positions[album_model] = album_view.Vadjustment.Value;
+
+            // Set the new models and restore positions
             track_model = track;
             artist_model = artist;
             album_model = album;
 
-            track_view.Model = track_model;
-            album_view.Model = album_model;
-            artist_view.Model = artist_model;
+            // Initialize the new positions if needed
+            if (!model_positions.ContainsKey (track_model))
+                model_positions[track_model] = 0.0;
+            if (!model_positions.ContainsKey (artist_model))
+                model_positions[artist_model] = 0.0;
+            if (!model_positions.ContainsKey (album_model))
+                model_positions[album_model] = 0.0;
+
+            track_view.SetModel(track_model, model_positions[track_model]);
+            album_view.SetModel(album_model, model_positions[album_model]);
+            artist_view.SetModel(artist_model, model_positions[artist_model]);
         }
         
         public static readonly SchemaEntry<bool> BrowserVisible = new SchemaEntry<bool> (
