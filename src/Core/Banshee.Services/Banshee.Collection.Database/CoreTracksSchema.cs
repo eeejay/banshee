@@ -73,8 +73,8 @@ namespace Banshee.Collection.Database
         
         private static MethodInfo binder_method_info = null;
         
-        private static string insert_command_text = null;
-        private static string update_command_text = null;
+        private static BansheeDbCommand insert_command = null;
+        private static BansheeDbCommand update_command = null;
         
         static CoreTracksSchema ()
         {
@@ -101,6 +101,35 @@ namespace Banshee.Collection.Database
             
             column_values = column_values_l.ToArray ();
             column_values_virtual = column_values_virtual_l.ToArray ();
+
+            // Generate INSERT command
+            StringBuilder cols = new StringBuilder ();
+            StringBuilder vals = new StringBuilder ();
+            for (int i = 0, n = ColumnCount; i < n; i++) {
+                cols.AppendFormat ("{0}{1}", column_values[i], (i < n - 1) ? ", " : String.Empty);
+                vals.Append (i < n - 1 ? "?, " : "?");
+            }
+
+            insert_command = new BansheeDbCommand (
+                String.Format (
+                    "INSERT INTO CoreTracks ({0}) VALUES ({1})",
+                    cols.ToString (), vals.ToString ()
+                ), ColumnCount
+            );
+
+            // Generate UPDATE command
+            StringBuilder set = new StringBuilder ();
+            for (int i = 0, n = ColumnCount; i < n; i++) {
+                set.AppendFormat ("{0} = ?{1}", column_values[i],
+                        (i < n - 1) ? ", " : String.Empty);
+            }
+
+            update_command = new BansheeDbCommand (
+                String.Format (
+                    "UPDATE CoreTracks SET {0} WHERE TrackID = :TrackID",
+                    set.ToString ()
+                ), ColumnCount
+            );
         }
         
         public static void Commit (LibraryTrackInfo track)
@@ -114,102 +143,50 @@ namespace Banshee.Collection.Database
         
         private static void InsertCommit (LibraryTrackInfo track)
         {
-            DbCommand command = InsertCommand;
+            insert_command.ApplyValues (
+                null, // TrackID
+                -1, // ArtistID
+                -1, // AlbumID
+                -1, // TagSetID
+                null, // MusicBrainzID
+                track.Uri == null ? null : track.Uri.AbsoluteUri, // RelativeUri
+                track.MimeType, // MimeType
+                track.TrackTitle, // Title
+                track.TrackNumber, // TrackNumber
+                track.TrackCount, // TrackCount
+                track.Duration.TotalMilliseconds, // Duration
+                track.Year, // Year
+                track.Rating, // Rating
+                track.PlayCount, // PlayCount
+                track.SkipCount, // SkipCount
+                DateTimeUtil.FromDateTime (track.LastPlayed), // LastPlayedStamp
+                DateTimeUtil.FromDateTime (track.DateAdded) // DateAddedStamp
+            );
             
-            command.AddParameter (-1); // TrackID
-            command.AddParameter (-1); // ArtistID
-            command.AddParameter (-1); // AlbumID
-            command.AddParameter (-1); // TagSetID
-            command.AddParameter (null); // MusicBrainzID
-            command.AddParameter (track.Uri == null ? null : track.Uri.AbsoluteUri); // RelativeUri
-            command.AddParameter (track.MimeType); // MimeType
-            command.AddParameter (track.TrackTitle); // Title
-            command.AddParameter (track.TrackNumber); // TrackNumber
-            command.AddParameter (track.TrackCount); // TrackCount
-            command.AddParameter (track.Duration.TotalMilliseconds); // Duration
-            command.AddParameter (track.Year); // Year
-            command.AddParameter (track.Rating); // Rating
-            command.AddParameter (track.PlayCount); // PlayCount
-            command.AddParameter (track.SkipCount); // SkipCount
-            command.AddParameter (DateTimeUtil.FromDateTime (track.LastPlayed)); // LastPlayedStamp
-            command.AddParameter (DateTimeUtil.FromDateTime (track.DateAdded)); // DateAddedStamp
-            
-            command.ExecuteNonQuery ();
+            track.DbId = ServiceManager.DbConnection.Execute (insert_command);
         }
         
         private static void UpdateCommit (LibraryTrackInfo track)
         {
-        }
-        
-        private static void BuildInsertCommandText ()
-        {
-            StringBuilder builder = new StringBuilder ();
-            builder.Append ("INSERT INTO CoreTracks (");
-            
-            for (int i = 0, n = ColumnCount; i < n; i++) {
-                builder.AppendFormat ("{0}{1}", column_values[i], i < n - 1 ? ", " : String.Empty);
-            }
-            
-            builder.Append (") VALUES (");
-            
-            for (int i = 0, n = ColumnCount; i < n; i++) {
-                builder.Append (i < n - 1 ? "?, " : "?");
-            }
-            
-            builder.Append (")");
-            insert_command_text = builder.ToString ();
-        }
-        
-        private static void BuildUpdateCommandText ()
-        {
-            StringBuilder builder = new StringBuilder ();
-            builder.Append ("UPDATE CoreTracks SET ");
-            
-            int i = 0;
-            foreach (Column column in Columns) {
-                builder.AppendFormat ("{0} = ?", column);
-                if (i++ < ColumnCount - 1) {
-                    builder.Append (", ");
-                }
-            }
-            
-            builder.Append (" WHERE TrackID = ? LIMIT 1");
-            update_command_text = builder.ToString ();
-            Console.WriteLine (update_command_text);
-        }
-        
-        private static string InsertCommandText {
-            get { 
-                if (insert_command_text == null) {
-                    BuildInsertCommandText ();
-                }
-                return insert_command_text;
-            }
-        }
-        
-        private static string UpdateCommandText {
-            get { 
-                if (update_command_text == null) {
-                    BuildUpdateCommandText ();
-                }
-                return update_command_text;
-            }
-        }
-        
-        public static DbCommand InsertCommand {
-            get { 
-                DbCommand command = ServiceManager.DbConnection.CreateCommand ();
-                command.CommandText = InsertCommandText;
-                return command;
-            }
-        }
-        
-        public static DbCommand UpdateCommand {
-            get { 
-                DbCommand command = ServiceManager.DbConnection.CreateCommand ();
-                command.CommandText = UpdateCommandText;
-                return command;
-            }
+            /*update_command.ApplyValues (
+                track.DbId, // TrackID
+                -1, // ArtistID
+                -1, // AlbumID
+                -1, // TagSetID
+                null, // MusicBrainzID
+                track.Uri == null ? null : track.Uri.AbsoluteUri, // RelativeUri
+                track.MimeType, // MimeType
+                track.TrackTitle, // Title
+                track.TrackNumber, // TrackNumber
+                track.TrackCount, // TrackCount
+                track.Duration.TotalMilliseconds, // Duration
+                track.Year, // Year
+                track.Rating, // Rating
+                track.PlayCount, // PlayCount
+                track.SkipCount, // SkipCount
+                DateTimeUtil.FromDateTime (track.LastPlayed), // LastPlayedStamp
+                DateTimeUtil.FromDateTime (track.DateAdded) // DateAddedStamp
+            );*/
         }
         
         public static int ColumnCount {

@@ -1,3 +1,27 @@
+2007-12-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* build/Common.Makefile:
+	* build/build.environment.mk:
+	* build/m4/banshee/mono-addins.m4: Add Mono.Addins.Setup/Gui dependency
+	check.  Change from Mono.Data.SqliteClient to Mono.Data.Sqlite.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/CoreTracksSchema.cs:
+	Update the generation of the insert_command and update_command so they are
+	reused.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Add setter on DbId so CoreTracksSchema can set it.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Switch to Mono.Data.Sqlite, change DbCommand to BansheeDbCommand.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Rewrite
+	add/remove tracks from playlist queries to be reusable.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	Manage Extensions action.
+
 2007-12-06  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/CoreTracksSchema.cs:

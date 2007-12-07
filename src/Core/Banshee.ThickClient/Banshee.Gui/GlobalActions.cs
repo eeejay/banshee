@@ -31,6 +31,7 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.ServiceStack;
 using Banshee.Streaming;
 using Banshee.Gui.Dialogs;
 
@@ -60,6 +61,10 @@ namespace Banshee.Gui
                 // Edit Menu
                 new ActionEntry("EditMenuAction", null, 
                     Catalog.GetString("_Edit"), null, null, null),
+
+                new ActionEntry ("ExtensionsAction", null, 
+                    Catalog.GetString ("Manage _Extensions"), null,
+                    Catalog.GetString ("Manage extensions to add new features to Banshee"), OnExtensions),
                 
                 // Help Menu
                 new ActionEntry ("HelpMenuAction", null, 
@@ -142,6 +147,15 @@ namespace Banshee.Gui
             Banshee.ServiceStack.Application.Shutdown ();
         }
         
+#endregion
+
+#region Music Menu Actions
+
+        private void OnExtensions (object o, EventArgs args)
+        {
+            Mono.Addins.Gui.AddinManagerWindow.Run (ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow);
+        }
+
 #endregion
         
 #region Help Menu Actions

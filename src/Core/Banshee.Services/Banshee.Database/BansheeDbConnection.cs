@@ -29,7 +29,7 @@
 using System;
 using System.IO;
 using System.Data;
-using Mono.Data.SqliteClient;
+using Mono.Data.Sqlite;
 
 using Banshee.Base;
 using Banshee.ServiceStack;
@@ -140,12 +140,11 @@ namespace Banshee.Database
                 Console.WriteLine ("Opening connection to Banshee Database: {0}", dbfile);
                 connection = new SqliteConnection (String.Format ("Version=3,URI=file:{0}", dbfile));
                 connection.Open ();
-                IDbCommand command = connection.CreateCommand ();
-                command.CommandText = @"
+
+                Execute (@"
                     PRAGMA synchronous = OFF;
                     PRAGMA cache_size = 32768;
-                ";
-                command.ExecuteNonQuery ();
+                ");
             }
         }
 
@@ -159,25 +158,18 @@ namespace Banshee.Database
             }
         }
 
-        public DbCommand CreateCommand ()
-        {
-            lock (this) {
-                if (connection == null) {
-                    throw new ApplicationException ("Not connected to database");
-                }
-                
-                DbCommand command = new DbCommand ();
-                command.Connection = connection;
-                return command;
-            }
-        }
-
 #region Convenience methods 
 
         public IDataReader ExecuteReader (SqliteCommand command)
         {
-            command.Connection = connection;
+            if (command.Connection == null)
+                command.Connection = connection;
             return command.ExecuteReader ();
+        }
+
+        public IDataReader ExecuteReader (BansheeDbCommand command)
+        {
+            return ExecuteReader (command.Command);
         }
 
         public IDataReader ExecuteReader (object command)
@@ -187,8 +179,14 @@ namespace Banshee.Database
 
         public object ExecuteScalar (SqliteCommand command)
         {
-            command.Connection = connection;
+            if (command.Connection == null)
+                command.Connection = connection;
             return command.ExecuteScalar ();
+        }
+
+        public object ExecuteScalar (BansheeDbCommand command)
+        {
+            return ExecuteScalar (command.Command);
         }
 
         public object ExecuteScalar (object command)
@@ -203,9 +201,15 @@ namespace Banshee.Database
 
         public int Execute (SqliteCommand command)
         {
-            command.Connection = connection;
+            if (command.Connection == null)
+                command.Connection = connection;
             command.ExecuteNonQuery ();
             return command.LastInsertRowID ();
+        }
+
+        public int Execute (BansheeDbCommand command)
+        {
+            return Execute (command.Command);
         }
 
         public int Execute (object command)
@@ -250,17 +254,65 @@ namespace Banshee.Database
         }
     }
     
-    public class DbCommand : SqliteCommand
+    public class BansheeDbCommand
     {
-        public DbCommand () : base ()
-        {
+        private SqliteCommand command;
+
+#region Properties
+
+        public SqliteCommand Command {
+            get { return command; }
         }
-    
-        public DbCommand(string command) : base(command)
+
+        public SqliteParameterCollection Parameters {
+            get { return command.Parameters; }
+        }
+
+        public string CommandText {
+            get { return command.CommandText; }
+        }
+
+#endregion
+
+        public BansheeDbCommand(string command)
         {
+            this.command = new SqliteCommand (command);
+        }
+
+        public BansheeDbCommand (string command, int num_params) : this (command)
+        {
+            for (int i = 0; i < num_params; i++) {
+                Parameters.Add (new SqliteParameter ());
+            }
+        }
+
+        // Recommended for commands that will be used more than once and that have named parameters.
+        public BansheeDbCommand (string command, params string [] named_params) : this (command)
+        {
+            foreach (string param in named_params) {
+                Parameters.Add (new SqliteParameter (param));
+            }
+        }
+
+        public BansheeDbCommand (string command, params object [] param_values) : this (command, param_values.Length)
+        {
+            ApplyValues (param_values);
+        }
+
+        public void ApplyValues (params object [] param_values)
+        {
+            if (param_values.Length != Parameters.Count) {
+                throw new ArgumentException (String.Format (
+                    "Command has {0} parameters, but {1} values given.", Parameters.Count, param_values.Length
+                ));
+            }
+
+            for (int i = 0; i < param_values.Length; i++) {
+                Parameters[i].Value = param_values[i];
+            }
         }
                 
-        public DbCommand(string command, params object [] parameters) : this(command)
+        /*public DbCommand(string command, params object [] parameters) : this(command)
         {
             for(int i = 0; i < parameters.Length;) {
                 SqliteParameter param;
@@ -300,59 +352,6 @@ namespace Banshee.Database
         {
             param.Value = value;
             Parameters.Add(param);
-        }
+        }*/
     }
-    
-    public class DbParameter<T> : SqliteParameter
-    {
-        public DbParameter(string name) : base()
-        {
-            ParameterName = name;
-        }
-        
-        public new T Value {
-            get { return (T)base.Value; }
-            set { base.Value = value; }
-        }
-    }
-
-    /*public class BansheeDbCommand : SqliteCommand
-    {
-        public BansheeDbCommand (string command) : base (command)
-        {
-        }
-
-        public BansheeDbCommand (string command, int num_params) : this (command)
-        {
-            for (int i = 0; i < num_params; i++) {
-                Parameters.Add (new SqliteParameter ());
-            }
-        }
-
-        // Recommended for commands that will be used more than once and that have named parameters.
-        public BansheeDbCommand (string command, params string [] named_params) : this (command)
-        {
-            foreach (string param in named_params) {
-                Parameters.Add (new SqliteParameter (param));
-            }
-        }
-
-        public BansheeDbCommand (string command, params object [] param_values) : this (command, param_values.Length)
-        {
-            ApplyValues (param_values);
-        }
-
-        public void ApplyValues (params object [] param_values)
-        {
-            if (param_values.Length != Parameters.Count) {
-                throw new ArgumentException (String.Format (
-                    "Command has {0} parameters, but {1} values given.", Parameters.Count, param_values.Length
-                ));
-            }
-
-            for (int i = 0; i < param_values.Length; i++) {
-                Parameters[i].Value = param_values[i];
-            }
-        }
-    }*/
 }

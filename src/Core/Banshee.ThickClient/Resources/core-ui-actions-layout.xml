@@ -27,6 +27,8 @@
             <menuitem name="RenameSource" action="RenameSourceAction" />
             <!--<menuitem name="UnmapSource" action="UnmapSourceAction" />
             <menuitem name="SelectedSourceProperties" action="SelectedSourcePropertiesAction" />-->
+            <separator />
+            <menuitem name="Extensions" action="ExtensionsAction" />
         </menu>
 
         <menu name="ViewMenu" action="ViewMenuAction">

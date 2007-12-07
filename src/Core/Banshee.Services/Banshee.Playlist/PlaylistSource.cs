@@ -50,7 +50,27 @@ namespace Banshee.Playlist
     {
         private const string TRACK_JOIN = ", CorePlaylistEntries";
         private const string TRACK_CONDITION = " CorePlaylistEntries.TrackID = CoreTracks.TrackID AND CorePlaylistEntries.PlaylistID = {0}";
+
         private int? dbid;
+
+        private static BansheeDbCommand add_tracks_command;
+        private static BansheeDbCommand remove_tracks_command;
+        private static BansheeDbCommand delete_command;
+
+        static PlaylistSource () {
+            add_tracks_command = new BansheeDbCommand (@"
+                INSERT INTO CorePlaylistEntries
+                    SELECT null, ?, ItemID, 0
+                        FROM CoreCache WHERE ModelID = ?
+                        LIMIT ?, ?", 4
+            );
+
+            remove_tracks_command = new BansheeDbCommand (@"
+                DELETE FROM CorePlaylistEntries WHERE TrackID IN
+                    (SELECT ItemID FROM CoreCache
+                        WHERE ModelID = ? LIMIT ?, ?)", 3
+            );
+        }
 
         protected int? DbId {
             get { return dbid; }
@@ -91,17 +111,11 @@ namespace Banshee.Playlist
 
             lock (from) {
                 using (new Timer ("Adding tracks to playlist")) {
-                foreach (RangeCollection.Range range in selection.Ranges) {
-                    DbCommand command = new DbCommand (String.Format (@"
-                        INSERT INTO CorePlaylistEntries
-                            SELECT null, {0}, ItemID, 0
-                                FROM CoreCache WHERE ModelID = {1}
-                                LIMIT {2}, {3}",
-                        DbId, from.CacheId, range.Start, range.End - range.Start + 1
-                    ));
-                    Console.WriteLine ("Adding selection with: {0}\n{1}", command, command.CommandText);
-                    ServiceManager.DbConnection.Execute (command);
-                }
+                    foreach (RangeCollection.Range range in selection.Ranges) {
+                        add_tracks_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
+                        Console.WriteLine ("Adding selection with: {0}\n{1}", add_tracks_command, add_tracks_command.CommandText);
+                        ServiceManager.DbConnection.Execute (add_tracks_command);
+                    }
                 }
                 Reload ();
             }
@@ -114,16 +128,11 @@ namespace Banshee.Playlist
 
             lock (track_model) {
                 using (new Timer ("Removing tracks from playlist")) {
-                foreach (RangeCollection.Range range in selection.Ranges) {
-                    DbCommand command = new DbCommand (String.Format (@"
-                        DELETE FROM CorePlaylistEntries WHERE TrackID IN
-                            (SELECT ItemID FROM CoreCache
-                                WHERE ModelID = {0} LIMIT {1}, {2})",
-                        track_model.CacheId, range.Start, range.End - range.Start + 1
-                    ));
-                    Console.WriteLine ("Removing selection with: {0}\n{1}", command, command.CommandText);
-                    ServiceManager.DbConnection.Execute (command);
-                }
+                    foreach (RangeCollection.Range range in selection.Ranges) {
+                        remove_tracks_command.ApplyValues (track_model.CacheId, range.Start, range.End - range.Start + 1);
+                        Console.WriteLine ("Removing selection with: {0}\n{1}", remove_tracks_command, remove_tracks_command.CommandText);
+                        ServiceManager.DbConnection.Execute (remove_tracks_command);
+                    }
                 }
                 Reload ();
             }
@@ -141,27 +150,23 @@ namespace Banshee.Playlist
             if (dbid == null)
                 return;
 
-            /*ServiceManager.DbConnection.Execute (
+            ServiceManager.DbConnection.Execute (new BansheeDbCommand (
                 @"UPDATE CorePlaylists
-                    SET Name = :playlist_name,
-                        SortColumn = :sort_column,
-                        SortType = :sort_type
-                    WHERE PlaylistID = :playlist_id",
-                "playlist_name", Name,
-                "sort_column", -1,
-                "sort_type", 0,
-                "playlist_id", dbid
-            );*/
+                    SET Name = ?,
+                        SortColumn = ?,
+                        SortType = ?
+                    WHERE PlaylistID = ?",
+                Name, -1, 0, dbid
+            ));
         }
 
         private static int CreateNewPlaylist (string name)
         {
-            /*return ServiceManager.DbConnection.Execute (
+            return ServiceManager.DbConnection.Execute (new BansheeDbCommand (
                 @"INSERT INTO CorePlaylists
-                    VALUES (NULL, :playlist_name, -1, 0)",
-                    "playlist_name", name
-            );*/
-            return 0;
+                    VALUES (NULL, ?, -1, 0)",
+                name
+            ));
         }
 
         public static List<PlaylistSource> LoadAll ()

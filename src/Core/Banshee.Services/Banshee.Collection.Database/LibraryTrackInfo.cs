@@ -97,6 +97,7 @@ namespace Banshee.Collection.Database
 
         public int DbId {
             get { return dbid; }
+            set { dbid = value; }
         }
         
         public int DbIndex {

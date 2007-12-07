@@ -36,7 +36,7 @@ LINK_GTK = $(GTKSHARP_LIBS)
 LINK_CAIRO = -r:Mono.Cairo
 LINK_MONO_UNIX = -r:Mono.Posix
 
-LINK_SQLITE = -r:System.Data -r:Mono.Data.SqliteClient
+LINK_SQLITE = -r:System.Data -r:Mono.Data.Sqlite
 LINK_HAL = -r:$(DIR_HAL)/Hal.dll
 LINK_MONO_ADDINS_CORE = -r:$(DIR_MONO_ADDINS)/Mono.Addins/Mono.Addins.dll
 LINK_LAST_FM = -r:$(DIR_LAST_FM)/Last.FM.dll
