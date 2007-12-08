@@ -39,6 +39,9 @@ namespace Banshee.Collection.Database
     {
         private int dbid;
         private int db_index;
+
+        private int artist_id;
+        private int album_id;
         
         public LibraryTrackInfo () : base ()
         {
@@ -58,7 +61,11 @@ namespace Banshee.Collection.Database
             Uri = new SafeUri (ReaderGetString (reader, CoreTracksSchema.Column.RelativeUri));
             
             ArtistName = ReaderGetString (reader, CoreTracksSchema.Column.Artist);
+            ArtistId = ReaderGetInt32 (reader, CoreTracksSchema.Column.ArtistID);
+
             AlbumTitle = ReaderGetString (reader, CoreTracksSchema.Column.AlbumTitle);
+            AlbumId = ReaderGetInt32 (reader, CoreTracksSchema.Column.AlbumID);
+
             TrackTitle = ReaderGetString (reader, CoreTracksSchema.Column.Title);
 
             TrackNumber = ReaderGetInt32 (reader, CoreTracksSchema.Column.TrackNumber);
@@ -90,7 +97,7 @@ namespace Banshee.Collection.Database
             return new TimeSpan (raw * TimeSpan.TicksPerSecond);
         }
         
-        public void Commit ()
+        public override void Save ()
         {
             CoreTracksSchema.Commit (this);
         }
@@ -103,6 +110,16 @@ namespace Banshee.Collection.Database
         public int DbIndex {
             get { return db_index; }
             internal set { db_index = value; }
+        }
+
+        public int ArtistId {
+            get { return artist_id; }
+            set { artist_id = value; }
+        }
+
+        public int AlbumId {
+            get { return album_id; }
+            set { album_id = value; }
         }
     }
 }

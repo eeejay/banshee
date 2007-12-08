@@ -94,7 +94,7 @@ namespace Banshee.Library
                 TagLib.File file = StreamTagger.ProcessUri (new SafeUri (path));
                 LibraryTrackInfo track = new LibraryTrackInfo ();
                 StreamTagger.TrackInfoMerge (track, file);
-                track.Commit ();
+                track.Save ();
                 
                 IncrementProcessedCount (String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle));
             } catch (Exception e) {

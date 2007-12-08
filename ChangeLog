@@ -1,5 +1,19 @@
 2007-12-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
+	Change select command to be a reusable BansheeDbCommand.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/CoreTracksSchema.cs:
+	Get track update commands working.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Add ArtistId and AlbumId properties.  Change Commit method to Save.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Call
+	Save not Commit.
+
+2007-12-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* build/Common.Makefile:
 	* build/build.environment.mk:
 	* build/m4/banshee/mono-addins.m4: Add Mono.Addins.Setup/Gui dependency

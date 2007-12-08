@@ -126,9 +126,9 @@ namespace Banshee.Collection.Database
 
             update_command = new BansheeDbCommand (
                 String.Format (
-                    "UPDATE CoreTracks SET {0} WHERE TrackID = :TrackID",
+                    "UPDATE CoreTracks SET {0} WHERE TrackID = ?",
                     set.ToString ()
-                ), ColumnCount
+                ), ColumnCount + 1
             );
         }
         
@@ -168,10 +168,10 @@ namespace Banshee.Collection.Database
         
         private static void UpdateCommit (LibraryTrackInfo track)
         {
-            /*update_command.ApplyValues (
+            update_command.ApplyValues (
                 track.DbId, // TrackID
-                -1, // ArtistID
-                -1, // AlbumID
+                track.ArtistId, // ArtistID
+                track.AlbumId, // AlbumID
                 -1, // TagSetID
                 null, // MusicBrainzID
                 track.Uri == null ? null : track.Uri.AbsoluteUri, // RelativeUri
@@ -185,8 +185,12 @@ namespace Banshee.Collection.Database
                 track.PlayCount, // PlayCount
                 track.SkipCount, // SkipCount
                 DateTimeUtil.FromDateTime (track.LastPlayed), // LastPlayedStamp
-                DateTimeUtil.FromDateTime (track.DateAdded) // DateAddedStamp
-            );*/
+                DateTimeUtil.FromDateTime (track.DateAdded), // DateAddedStamp
+                track.DbId // TrackID (again, for WHERE clause)
+            );
+
+            Console.WriteLine ("Updating track with {0}", update_command.CommandText);
+            ServiceManager.DbConnection.Execute (update_command);
         }
         
         public static int ColumnCount {

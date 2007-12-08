@@ -48,6 +48,8 @@ namespace Banshee.Collection.Database
         private string reload_command;
         private string count_command;
 
+        private BansheeDbCommand select_command;
+
         private static bool cache_initialized = false;
 
         public BansheeCacheableModelAdapter (BansheeDbConnection connection, IDatabaseModel<T> model) 
@@ -63,6 +65,19 @@ namespace Banshee.Collection.Database
                 DELETE FROM CoreCache WHERE ModelID = {0};
                     INSERT INTO CoreCache SELECT null, {0}, {1} ",
                 uid, db_model.PrimaryKey
+            );
+
+            select_command = new BansheeDbCommand (
+                String.Format (@"
+                    SELECT {0} FROM {1}
+                        INNER JOIN CoreCache
+                            ON {2} = CoreCache.ItemID
+                        WHERE
+                            CoreCache.ModelID = ? AND
+                            {3}
+                            LIMIT ?, ?",
+                    db_model.FetchColumns, db_model.FetchFrom, db_model.PrimaryKey, db_model.FetchCondition
+                ), 3
             );
 
             if (!cache_initialized) {
@@ -90,30 +105,19 @@ namespace Banshee.Collection.Database
 
         protected override void FetchSet (int offset, int limit)
         {
-            string select_query = String.Format (@"
-                SELECT {0}
-                    FROM {1}
-                    INNER JOIN CoreCache
-                        ON {2} = CoreCache.ItemID
-                    WHERE
-                        CoreCache.ModelID = {3} AND
-                        {4}
-                        LIMIT {5}, {6}",
-                db_model.FetchColumns, db_model.FetchFrom, db_model.PrimaryKey,
-                uid, db_model.FetchCondition, offset, limit
-            );
-
-            using(new Timer(String.Format ("Fetching set for {0}", db_model))) {
-                IDataReader reader = connection.ExecuteReader (select_query);
-
-                int i = offset;
-                while (reader.Read()) {
-                    if (!Cache.ContainsKey(i)) {
-                        T item = db_model.GetItemFromReader (reader, i);
-                        Cache.Add (i, item);
-                    }
-                    i++;
-                }
+            using (new Timer (String.Format ("Fetching set for {0}", db_model))) {
+                select_command.ApplyValues (uid, offset, limit);
+                using (IDataReader reader = connection.ExecuteReader (select_command)) {
+                    int i = offset;
+                    T item;
+                    while (reader.Read ()) {
+                        if (!Cache.ContainsKey (i)) {
+                            item = db_model.GetItemFromReader (reader, i);
+                            Cache.Add (i, item);
+                        }
+                        i++;
+                     }
+                 }
             }
         }
 
