@@ -269,6 +269,18 @@ namespace Banshee.Database
                     LastPlayedStamp     INTEGER,
                     DateAddedStamp      INTEGER
                 )
+                // TODO add these:
+                // DiscNumber (Grouping)
+                // FileSize
+                // Comment
+                // Composer
+                // Copyright
+                // LicenseUri
+                //
+                // Others to consider:
+                // AlbumArtist (TPE2) (in CoreAlbums?)
+                // Conductor (TPE3)
+                // Remixer (TPE4)
             ");
             
             Execute(@"
