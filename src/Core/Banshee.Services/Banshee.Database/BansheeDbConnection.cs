@@ -311,6 +311,13 @@ namespace Banshee.Database
                 Parameters[i].Value = param_values[i];
             }
         }
+        
+        public void AddNamedParameter (string name, object value)
+        {
+            SqliteParameter param = new SqliteParameter (name, DbType.String);
+            param.Value = value;
+            Parameters.Add (param);
+        }
                 
         /*public DbCommand(string command, params object [] parameters) : this(command)
         {

@@ -100,26 +100,15 @@ namespace Banshee.Database
                 Execute("BEGIN");
                 InnerMigrate();
                 Execute("COMMIT");
-            } catch(Exception) {
+            } catch(Exception e) {
                 Console.WriteLine("Rolling back transaction");
+                Console.WriteLine(e);
                 Execute("ROLLBACK");
             }
         }
         
         private void InnerMigrate()
-        {
-            // HACK: Just to make things easy while I'm writing the migration code
-            Execute("DROP TABLE IF EXISTS CoreConfiguration");
-            Execute("DROP TABLE IF EXISTS CoreTracks");
-            Execute("DROP TABLE IF EXISTS CoreArtists");
-            Execute("DROP TABLE IF EXISTS CoreAlbums");
-            Execute("DROP TABLE IF EXISTS CorePlaylists");
-            Execute("DROP TABLE IF EXISTS CorePlaylistEntries");
-            Execute("DROP TABLE IF EXISTS CoreSmartPlaylists");
-            Execute("DROP TABLE IF EXISTS CoreSmartPlaylistEntries");
-            Execute("DROP TABLE IF EXISTS CoreTracksCache");
-            Execute("DROP TABLE IF EXISTS CoreCache");
-            
+        {   
             MethodInfo [] methods = GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
             bool terminate = false;
             
@@ -245,6 +234,19 @@ namespace Banshee.Database
                     VALUES (null, 'DatabaseVersion', '{0}')
             ", CURRENT_VERSION));
             
+            // TODO add these:
+            // DiscNumber (Grouping)
+            // FileSize
+            // Comment
+            // Composer
+            // Copyright
+            // LicenseUri
+            //
+            // Others to consider:
+            // AlbumArtist (TPE2) (in CoreAlbums?)
+            // Conductor (TPE3)
+            // Remixer (TPE4)
+            
             Execute(@"
                 CREATE TABLE CoreTracks (
                     TrackID             INTEGER PRIMARY KEY,
@@ -269,18 +271,6 @@ namespace Banshee.Database
                     LastPlayedStamp     INTEGER,
                     DateAddedStamp      INTEGER
                 )
-                // TODO add these:
-                // DiscNumber (Grouping)
-                // FileSize
-                // Comment
-                // Composer
-                // Copyright
-                // LicenseUri
-                //
-                // Others to consider:
-                // AlbumArtist (TPE2) (in CoreAlbums?)
-                // Conductor (TPE3)
-                // Remixer (TPE4)
             ");
             
             Execute(@"
@@ -402,7 +392,7 @@ namespace Banshee.Database
                         Title,
                         TrackNumber,
                         TrackCount,
-                        Duration,
+                        Duration * 1000,
                         Year,
                         Rating,
                         NumberOfPlays,

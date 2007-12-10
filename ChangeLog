@@ -1,3 +1,21 @@
+2007-12-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/nuke-core-tables:
+	* src/run-banshee: Some scripts to help development
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Moved the insert/update calls from CoreTracksSchema
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Added
+	AddNamedParameter method
+
+	* src/Core/Banshee.Services/Banshee.Database/TableSchema.cs: Generic 
+	table schema code to parse table definitions and generate basic insert
+	update commands
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Fixed some comment junk
+
 2007-12-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:

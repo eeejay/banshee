@@ -37,6 +37,31 @@ namespace Banshee.Collection.Database
 {    
     public class LibraryTrackInfo : TrackInfo
     {
+        public enum Column : int {
+            TrackID,
+            ArtistID,
+            AlbumID,
+            TagSetID,
+            MusicBrainzID,
+            RelativeUri,
+            MimeType,
+            Title,
+            TrackNumber,
+            TrackCount,
+            Duration,
+            Year,
+            Rating,
+            PlayCount,
+            SkipCount,
+            LastPlayedStamp,
+            DateAddedStamp,
+            
+            // These columns are virtual - they are not actually 
+            // in CoreTracks and are returned on join selects
+            Artist,
+            AlbumTitle
+        }
+        
         private int dbid;
         private int db_index;
 
@@ -56,29 +81,29 @@ namespace Banshee.Collection.Database
 
         private void LoadFromReader (IDataReader reader)
         {
-            dbid = ReaderGetInt32 (reader, CoreTracksSchema.Column.TrackID);
+            dbid = ReaderGetInt32 (reader, Column.TrackID);
             
-            Uri = new SafeUri (ReaderGetString (reader, CoreTracksSchema.Column.RelativeUri));
+            Uri = new SafeUri (ReaderGetString (reader, Column.RelativeUri));
             
-            ArtistName = ReaderGetString (reader, CoreTracksSchema.Column.Artist);
-            ArtistId = ReaderGetInt32 (reader, CoreTracksSchema.Column.ArtistID);
+            ArtistName = ReaderGetString (reader, Column.Artist);
+            ArtistId = ReaderGetInt32 (reader, Column.ArtistID);
 
-            AlbumTitle = ReaderGetString (reader, CoreTracksSchema.Column.AlbumTitle);
-            AlbumId = ReaderGetInt32 (reader, CoreTracksSchema.Column.AlbumID);
+            AlbumTitle = ReaderGetString (reader, Column.AlbumTitle);
+            AlbumId = ReaderGetInt32 (reader, Column.AlbumID);
 
-            TrackTitle = ReaderGetString (reader, CoreTracksSchema.Column.Title);
+            TrackTitle = ReaderGetString (reader, Column.Title);
 
-            TrackNumber = ReaderGetInt32 (reader, CoreTracksSchema.Column.TrackNumber);
-            TrackCount = ReaderGetInt32 (reader, CoreTracksSchema.Column.TrackCount);
-            Year = ReaderGetInt32 (reader, CoreTracksSchema.Column.Year);
-            Rating = ReaderGetInt32 (reader, CoreTracksSchema.Column.Rating);
+            TrackNumber = ReaderGetInt32 (reader, Column.TrackNumber);
+            TrackCount = ReaderGetInt32 (reader, Column.TrackCount);
+            Year = ReaderGetInt32 (reader, Column.Year);
+            Rating = ReaderGetInt32 (reader, Column.Rating);
 
-            Duration = ReaderGetTimeSpan (reader, CoreTracksSchema.Column.Duration);
+            Duration = ReaderGetTimeSpan (reader, Column.Duration);
             
             Attributes |= TrackAttributes.CanPlay;
         }
 
-        private string ReaderGetString (IDataReader reader, CoreTracksSchema.Column column)
+        private string ReaderGetString (IDataReader reader, Column column)
         {
             int column_id = (int) column;
             return !reader.IsDBNull (column_id) 
@@ -86,20 +111,76 @@ namespace Banshee.Collection.Database
                 : null;
         }
 
-        private int ReaderGetInt32 (IDataReader reader, CoreTracksSchema.Column column)
+        private int ReaderGetInt32 (IDataReader reader, Column column)
         {
             return reader.GetInt32 ((int) column);
         }
 
-        private TimeSpan ReaderGetTimeSpan (IDataReader reader, CoreTracksSchema.Column column)
+        private TimeSpan ReaderGetTimeSpan (IDataReader reader, Column column)
         {
             long raw = reader.GetInt64 ((int) column);
-            return new TimeSpan (raw * TimeSpan.TicksPerSecond);
+            return new TimeSpan (raw * TimeSpan.TicksPerMillisecond);
         }
         
         public override void Save ()
         {
-            CoreTracksSchema.Commit (this);
+            if (DbId < 0) {
+                InsertCommit ();
+            } else {
+                UpdateCommit ();
+            }
+        }
+        
+        private void InsertCommit ()
+        {
+            TableSchema.CoreTracks.InsertCommand.ApplyValues (
+                null, // TrackID
+                -1, // ArtistID
+                -1, // AlbumID
+                -1, // TagSetID
+                null, // MusicBrainzID
+                Uri == null ? null : Uri.AbsoluteUri, // RelativeUri
+                MimeType, // MimeType
+                TrackTitle, // Title
+                TrackNumber, // TrackNumber
+                TrackCount, // TrackCount
+                Duration.TotalMilliseconds, // Duration
+                Year, // Year
+                Rating, // Rating
+                PlayCount, // PlayCount
+                SkipCount, // SkipCount
+                DateTimeUtil.FromDateTime (LastPlayed), // LastPlayedStamp
+                DateTimeUtil.FromDateTime (DateAdded) // DateAddedStamp
+            );
+            
+            DbId = ServiceManager.DbConnection.Execute (TableSchema.CoreTracks.InsertCommand);
+        }
+        
+        private void UpdateCommit ()
+        {
+            TableSchema.CoreTracks.UpdateCommand.ApplyValues (
+                DbId, // TrackID
+                ArtistId, // ArtistID
+                AlbumId, // AlbumID
+                -1, // TagSetID
+                null, // MusicBrainzID
+                Uri == null ? null : Uri.AbsoluteUri, // RelativeUri
+                MimeType, // MimeType
+                TrackTitle, // Title
+                TrackNumber, // TrackNumber
+                TrackCount, // TrackCount
+                Duration.TotalMilliseconds, // Duration
+                Year, // Year
+                Rating, // Rating
+                PlayCount, // PlayCount
+                SkipCount, // SkipCount
+                DateTimeUtil.FromDateTime (LastPlayed), // LastPlayedStamp
+                DateTimeUtil.FromDateTime (DateAdded), // DateAddedStamp
+                DbId // TrackID (again, for WHERE clause)
+            );
+
+            Console.WriteLine ("Updating: {0}", TableSchema.CoreTracks.UpdateCommand.CommandText);
+            ServiceManager.DbConnection.Execute (TableSchema.CoreTracks.UpdateCommand);
         }
 
         public int DbId {
