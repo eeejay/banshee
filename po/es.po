@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-02 16:19+0000\n"
-"PO-Revision-Date: 2007-12-06 13:28+0100\n"
+"POT-Creation-Date: 2007-12-07 21:05+0000\n"
+"PO-Revision-Date: 2007-12-11 06:23+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -354,7 +354,7 @@ msgid "Delete the active preset"
 msgstr "Borra la preselección activa"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:38
-#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:67
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:69
 msgid "Details"
 msgstr "Detalles"
 
@@ -401,7 +401,7 @@ msgid "Equalizer"
 msgstr "Ecualizador"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:49
-#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:66
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:68
 msgid "Error"
 msgstr "Error"
 
@@ -852,7 +852,7 @@ msgid "Year"
 msgstr "Año"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:65
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:46
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:47
 msgid "_Music"
 msgstr "_Música"
 
@@ -883,22 +883,22 @@ msgid "Import files inside a folder"
 msgstr "Importar los archivos del interior de una carpeta"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:80
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:49
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:50
 msgid "Import _Music..."
 msgstr "_Importar música…"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:81
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:50
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:51
 msgid "Import music from a variety of sources"
 msgstr "Importar música de una variedad de fuentes"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:84
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:53
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:54
 msgid "Open _Location..."
 msgstr "Abrir _ubicación…"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:85
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:54
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:55
 msgid "Open a remote location for playback"
 msgstr "Abre un lugar remoto para reproducir"
 
@@ -929,17 +929,17 @@ msgid "Run available user scripts"
 msgstr "Ejecutar los scripts de usuario disponibles"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:104
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:57
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:58
 msgid "_Quit"
 msgstr "_Salir"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:105
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:58
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:59
 msgid "Quit Banshee"
 msgstr "Salir de Banshee"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:108
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:62
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:63
 msgid "_Edit"
 msgstr "_Editar"
 
@@ -1009,52 +1009,52 @@ msgid "View a detailed log of events"
 msgstr "Ver un registro detallado de los eventos"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:162
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:66
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:71
 msgid "_Help"
 msgstr "Ay_uda"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:165
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:90
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:95
 msgid "_Version Information..."
 msgstr "Información de _versión…"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:166
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:91
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:96
 msgid "View detailed version and configuration information"
 msgstr "Ver información detallada de la versión y la configuración"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:169
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:69
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:74
 msgid "_Web Resources"
 msgstr "Recursos _web"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:172
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:72
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:77
 msgid "Banshee _User Guide (Wiki)"
 msgstr "_Guía del usuario de Banshee (Wiki)"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:173
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:73
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:78
 msgid "Learn about how to use Banshee"
 msgstr "Aprender como usar Banshee"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:178
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:78
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:83
 msgid "Banshee _Home Page"
 msgstr "_Página de Banshee"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:179
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:79
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:84
 msgid "Visit the Banshee Home Page"
 msgstr "Visite la página de Banshee"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:184
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:84
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:89
 msgid "_Get Involved"
 msgstr "_Ivolucrarse"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:185
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:85
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:90
 msgid "Become a contributor to Banshee"
 msgstr "Convertirse en contribuidor a Banshee"
 
@@ -1124,12 +1124,12 @@ msgid "Copy selected song(s) to clipboard"
 msgstr "Copiar las canciones seleccionadas al portapapeles"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:234
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:93
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:96
 msgid "_Remove"
 msgstr "_Quitar"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:235
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:94
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:97
 msgid "Remove selected song(s) from library"
 msgstr "Quitar las canciones seleccionadas de la fonoteca"
 
@@ -1148,7 +1148,7 @@ msgid "_Edit Song Metadata"
 msgstr "_Editar metadatos de la canción"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:243
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:80
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:83
 msgid "Edit metadata on selected songs"
 msgstr "Editar metadatos de las canciones seleccionadas"
 
@@ -1185,12 +1185,12 @@ msgid "Search all songs of this genre"
 msgstr "Buscar todas las canciones de este género"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:262
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:83
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:86
 msgid "Add _to Playlist"
 msgstr "Añadir a la _lista de reproducción"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:263
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:84
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:87
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr ""
 "Agregar las canciones seleccionadas a la lista de reproducción o crear una "
@@ -2541,7 +2541,7 @@ msgstr "Cola local"
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:469
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:475
 #: ../src/Core/Banshee/PlayerInterface.cs:1624
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:88
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:91
 msgid "New Playlist"
 msgstr "Lista de reproducción nueva"
 
@@ -2793,18 +2793,18 @@ msgstr "No se pudo exportar la lista de reproducción"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2127
 #: ../src/Core/Banshee/PlayerInterface.cs:2133
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:128
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:135
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:133
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:140
 msgid "Error opening stream"
 msgstr "Error al abrir el flujo"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2127
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:129
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:134
 msgid "Could not open stream or playlist"
 msgstr "No se puro abrir el flujo o la lista de reproducción"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:2133
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:136
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:141
 msgid "Problem parsing playlist"
 msgstr "Problema al analizar la lista de reproducción"
 
@@ -2903,27 +2903,27 @@ msgstr ""
 "\n"
 " Revise sus propiedades de 'Aplicaciones preferidas'."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:97
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:101
 msgid "Browser On Left"
 msgstr "Examinador en la izquierda"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:98
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:102
 msgid "Show the artist/album browser to the left of the track list"
 msgstr "Mostrar el examinador de artista/álbum a la izquierda de la lista de pistas"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:101
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:105
 msgid "Browser On Top"
 msgstr "Examinador encima"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:102
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:106
 msgid "Show the artist/album browser above the track list"
 msgstr "Mostrar el examinador de artista/álbum encima de la lista de pistas"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:107
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:111
 msgid "Show Browser"
 msgstr "Mostrar el examinador"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:108
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:112
 msgid "Show or hide the artist/album browser"
 msgstr "Mostrar u ocultar el examinador de artista/álbum"
 
@@ -3043,15 +3043,23 @@ msgstr "Editando canción {0} de {1}"
 msgid "Editing {0}"
 msgstr "Editando {0}"
 
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:66
+msgid "Manage _Extensions"
+msgstr "Gestionar _extensiones"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:67
+msgid "Manage extensions to add new features to Banshee"
+msgstr "Gestione las extensiones para añadir nuevas características a Banshee"
+
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:158
 msgid "_Pause"
 msgstr "_Pausar"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:79
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:82
 msgid "_Track Properties"
 msgstr "Propiedades de la pis_ta"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:89
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:92
 msgid "Create new playlist from selected tracks"
 msgstr "Crear nueva lista de reproducción desde las pistas seleccionadas"
 
