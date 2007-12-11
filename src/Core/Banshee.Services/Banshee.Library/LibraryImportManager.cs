@@ -98,12 +98,9 @@ namespace Banshee.Library
                 
                 IncrementProcessedCount (String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle));
             } catch (Exception e) {
-                Console.WriteLine (e);
-                Environment.Exit (1);
+                LogError (path, e);
+                IncrementProcessedCount (null);
             }
-         //       LogError (path, e);
-         //       IncrementProcessedCount (null);
-          //  }
         }
 
         private void LogError (string path, Exception e)

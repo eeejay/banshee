@@ -1,3 +1,12 @@
+2007-12-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	Bring back the exception handling.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
+	Don't assume the new models will be null, fixing bug with viewing the Error
+	Source.
+
 2007-12-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/nuke-core-tables:

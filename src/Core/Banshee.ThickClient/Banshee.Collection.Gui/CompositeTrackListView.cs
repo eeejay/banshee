@@ -325,16 +325,26 @@ namespace Banshee.Collection.Gui
             album_model = album;
 
             // Initialize the new positions if needed
-            if (!model_positions.ContainsKey (track_model))
-                model_positions[track_model] = 0.0;
-            if (!model_positions.ContainsKey (artist_model))
-                model_positions[artist_model] = 0.0;
-            if (!model_positions.ContainsKey (album_model))
-                model_positions[album_model] = 0.0;
+            if (track_model != null) {
+                if (!model_positions.ContainsKey (track_model))
+                    model_positions[track_model] = 0.0;
 
-            track_view.SetModel(track_model, model_positions[track_model]);
-            album_view.SetModel(album_model, model_positions[album_model]);
-            artist_view.SetModel(artist_model, model_positions[artist_model]);
+                track_view.SetModel(track_model, model_positions[track_model]);
+            }
+
+            if (artist_model != null) {
+                if (!model_positions.ContainsKey (artist_model))
+                    model_positions[artist_model] = 0.0;
+
+                artist_view.SetModel(artist_model, model_positions[artist_model]);
+            }
+
+            if (album_model != null) {
+                if (!model_positions.ContainsKey (album_model))
+                    model_positions[album_model] = 0.0;
+
+                album_view.SetModel(album_model, model_positions[album_model]);
+            }
         }
         
         public static readonly SchemaEntry<bool> BrowserVisible = new SchemaEntry<bool> (
