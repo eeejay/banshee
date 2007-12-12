@@ -111,6 +111,9 @@ namespace Nereid
         public Widget Content {
             get { return content; }
             set {
+                if (content == value)
+                    return;
+
                 if (content != null) {
                     content.Hide ();
                     Remove (content);

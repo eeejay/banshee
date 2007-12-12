@@ -1,5 +1,10 @@
 2007-12-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Nereid/Nereid/ViewContainer.cs: If the view content is the
+	same, don't remove and readd it, avoiding flickering.
+
+2007-12-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
 	Bring back the exception handling.
 
