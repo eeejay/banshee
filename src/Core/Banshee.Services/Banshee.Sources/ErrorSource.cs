@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+
 using Mono.Unix;
 
 using Hyena.Data;
@@ -43,7 +44,7 @@ namespace Banshee.Sources
         public event EventHandler Cleared;
         public event EventHandler Reloaded;
 
-        public ErrorSource (string name) : base (name, 0)
+        public ErrorSource (string name) : base (name, name, 0)
         {
             Properties.SetStringList ("IconName", "dialog-error", "gtk-dialog-error");
         }

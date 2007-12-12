@@ -48,7 +48,7 @@ namespace Banshee.Gui
         private RatingActionProxy rating_proxy;
 
         private static readonly string [] require_selection_actions = new string [] {
-            "TrackPopupAction", "TrackPropertiesAction", "AddToPlaylistAction", "RemoveTracksAction", "RateTracksAction"
+            "TrackContextMenuAction", "TrackPropertiesAction", "AddToPlaylistAction", "RemoveTracksAction", "RateTracksAction"
         };
 
         private IHasTrackSelection track_selector;
@@ -75,8 +75,8 @@ namespace Banshee.Gui
             action_service = actionService;
 
             Add (new ActionEntry [] {
-                new ActionEntry("TrackPopupAction", null, 
-                    String.Empty, null, null, OnTrackPopup),
+                new ActionEntry("TrackContextMenuAction", null, 
+                    String.Empty, null, null, OnTrackContextMenu),
 
                 new ActionEntry ("TrackPropertiesAction", Stock.Edit,
                     Catalog.GetString ("_Track Properties"), null,
@@ -107,12 +107,14 @@ namespace Banshee.Gui
             this["AddToPlaylistAction"].HideIfEmpty = false;
         }
 
+#region State Event Handlers
+
         private void HandleActionsChanged (object sender, EventArgs args)
         {
             if (action_service.UIManager.GetAction ("/MainMenu/EditMenu") != null) {
                 rating_proxy = new RatingActionProxy (action_service.UIManager, this["RateTracksAction"]);
                 rating_proxy.AddPath ("/MainMenu/EditMenu", "RemoveTracks");
-                rating_proxy.AddPath ("/TrackPopup", "RemoveTracks");
+                rating_proxy.AddPath ("/TrackContextMenu", "RemoveTracks");
                 action_service.UIManager.ActionsChanged -= HandleActionsChanged;
             }
         }
@@ -126,6 +128,10 @@ namespace Banshee.Gui
         {
             ResetRating ();
         }
+
+#endregion
+
+#region Utility Methods
 
         private void Sensitize ()
         {
@@ -156,14 +162,16 @@ namespace Banshee.Gui
             }
             rating_proxy.Reset (rating);
         }
+
+#endregion
             
 #region Action Handlers
 
-        private void OnTrackPopup (object o, EventArgs args)
+        private void OnTrackContextMenu (object o, EventArgs args)
         {
             ResetRating ();
 
-            Gtk.Menu menu = action_service.UIManager.GetWidget ("/TrackPopup") as Menu;
+            Gtk.Menu menu = action_service.UIManager.GetWidget ("/TrackContextMenu") as Menu;
             menu.Show (); 
             menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
         }

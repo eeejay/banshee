@@ -39,13 +39,13 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Sources
 {
-    public class DatabaseSource : Source, ITrackModelSource
+    public abstract class DatabaseSource : Source, ITrackModelSource
     {
         protected TrackListDatabaseModel track_model;
         protected AlbumListDatabaseModel album_model;
         protected ArtistListDatabaseModel artist_model;
         
-        public DatabaseSource (string name, int order) : base (name, order)
+        public DatabaseSource (string generic_name, string name, int order) : base (generic_name, name, order)
         {
             track_model = new TrackListDatabaseModel (ServiceManager.DbConnection);
             album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection);

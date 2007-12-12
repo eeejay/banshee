@@ -46,13 +46,14 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Playlist
 {
-    public class PlaylistSource : DatabaseSource
+    public class PlaylistSource : DatabaseSource, IUnmapableSource
     {
         private const string TRACK_JOIN = ", CorePlaylistEntries";
         private const string TRACK_CONDITION = " CorePlaylistEntries.TrackID = CoreTracks.TrackID AND CorePlaylistEntries.PlaylistID = {0}";
 
         private int? dbid;
 
+        private static string generic_name = Catalog.GetString ("Playlist");
         private static BansheeDbCommand add_tracks_command;
         private static BansheeDbCommand remove_tracks_command;
         private static BansheeDbCommand delete_command;
@@ -92,17 +93,49 @@ namespace Banshee.Playlist
         {
         }
 
-        public PlaylistSource (string name, int? dbid) : base (name, 500)
+        public PlaylistSource (string name, int? dbid) : base (generic_name, name, 500)
         {
             Properties.SetString ("IconName", "source-playlist");
             DbId = dbid;
         }
+
+#region Source overrides
 
         public override void Rename (string newName)
         {
             base.Rename (newName);
             Commit ();
         }
+
+#endregion
+
+#region IUnmapableSource Implementation
+
+        public bool Unmap ()
+        {
+            if (DbId != null) {
+                ServiceManager.DbConnection.Execute (new BansheeDbCommand (@"
+                    BEGIN TRANSACTION;
+                        DELETE FROM CorePlaylists WHERE PlaylistID = ?;
+                        DELETE FROM CorePlaylistEntries WHERE PlaylistID = ?;
+                    COMMIT TRANSACTION",
+                    DbId, DbId
+                ));
+            }
+
+            Remove ();
+            return true;
+        }
+
+        public bool CanUnmap {
+            get { return true; }
+        }
+
+        public bool ConfirmBeforeUnmap {
+            get { return true; }
+        }
+
+#endregion
 
         public void AddTracks (TrackListDatabaseModel from, Selection selection)
         {

@@ -36,6 +36,7 @@ using Pango;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
+using Banshee.Gui;
 using Banshee.Gui.DragDrop;
 using Banshee.Playlist;
 using Banshee.Collection;
@@ -351,6 +352,7 @@ namespace Banshee.Sources.Gui
             } else if(evnt.Button == 3) {
                 HighlightPath(path);
 
+                OnPopupMenu ();
                 /*ServiceManager.SourceManager.SensitizeActions(source);
 
                 string group_name = source.ActionPath == null ? "/SourceMenu" : source.ActionPath;
@@ -367,6 +369,12 @@ namespace Banshee.Sources.Gui
             }
             
             return base.OnButtonPressEvent(evnt);
+        }
+
+        protected override bool OnPopupMenu ()
+        {
+            ServiceManager.Get<InterfaceActionService> ("InterfaceActionService").SourceActions["SourceContextMenuAction"].Activate ();
+            return true;
         }
 
         protected override void OnCursorChanged()

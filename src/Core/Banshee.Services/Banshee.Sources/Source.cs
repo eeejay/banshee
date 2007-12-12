@@ -49,10 +49,11 @@ namespace Banshee.Sources
         public event SourceEventHandler ChildSourceAdded;
         public event SourceEventHandler ChildSourceRemoved;
         
-        protected Source(string name, int order)
+        protected Source(string generic_name, string name, int order)
         {
-            properties.SetString("Name", name);
-            properties.SetInteger("Order", order);
+            GenericName = generic_name;
+            Name = name;
+            Order = order;
             
             properties.PropertyChanged += OnPropertyChanged;
         }
@@ -72,7 +73,18 @@ namespace Banshee.Sources
                 ServiceManager.DBusServiceManager.RegisterObject(tm_source.AlbumModel);
             }
         }
-        
+
+        protected void Remove ()
+        {
+            if (ServiceManager.SourceManager.ContainsSource (this)) {
+                if (this.Parent != null) {
+                    this.Parent.RemoveChildSource (this);
+                } else {
+                    ServiceManager.SourceManager.RemoveSource (this);
+                }
+            }
+        }
+
 #region Public Methods
         
         public virtual void Activate()
@@ -82,17 +94,12 @@ namespace Banshee.Sources
         public virtual void Deactivate()
         {
         }
-        
+
         public virtual void Rename(string newName)
         {
             properties.SetString("Name", newName);
         }
         
-        public virtual bool Unmap()
-        {
-            return false;
-        }
-
         public void SetParentSource (Source parent)
         {
             this.parent = parent;
@@ -223,15 +230,25 @@ namespace Banshee.Sources
             get { return parent; }
         }
 
+        public virtual bool CanRename {
+            get { return true; }
+        }
+
         public string Name {
             get { return properties.GetString("Name"); }
             set { properties.SetString("Name", value); }
         }
+
+        public string GenericName {
+            get { return properties.GetString("GenericName"); }
+            set { properties.SetString("GenericName", value); }
+        }
         
         public int Order {
             get { return properties.GetInteger("Order"); }
+            set { properties.SetInteger("Order", value); }
         }
-        
+
         public virtual bool ImplementsCustomSearch {
             get { return false; }
         }

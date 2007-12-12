@@ -1,10 +1,10 @@
 //
-// ISource.cs
+// IUnmapableSource.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2005-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,29 +26,12 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.Collections.Generic;
-
-using NDesk.DBus;
-
-using Banshee.ServiceStack;
-
 namespace Banshee.Sources
 {
-    [Interface("org.bansheeproject.Banshee.Sources.Source")]
-    public interface ISource : IDBusExportable
+    public interface IUnmapableSource : ISource
     {
-        void Activate();
-        void Deactivate();
-        void Rename(string name);
-        
-        string Name { get; }
-        string GenericName { get; }
-        int Order { get; }
-        int Count { get; }
-        
-        string [] Children { get; }
-        
-        // DBus Hack
-        string TrackModelPath { get; }
+        bool Unmap();
+        bool CanUnmap { get; }
+        bool ConfirmBeforeUnmap { get; }
     }
 }

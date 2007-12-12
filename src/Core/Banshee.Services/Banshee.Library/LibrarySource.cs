@@ -38,9 +38,10 @@ namespace Banshee.Library
         private ErrorSource error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
         private bool error_source_visible = false;
     
-        public LibrarySource () : base (Catalog.GetString ("Library"), 0)
+        public LibrarySource () : base (Catalog.GetString("Library"), Catalog.GetString ("Library"), 0)
         {
             Properties.SetStringList ("IconName", "audio-x-generic", "go-home", "user-home", "source-library");
+            Properties.SetString ("GtkActionPath", "/LibraryContextMenu");
             AfterInitialized ();
             
             error_source.Updated += OnErrorSourceUpdated;
@@ -60,6 +61,10 @@ namespace Banshee.Library
         
         public ErrorSource ErrorSource {
             get { return error_source; }
+        }
+
+        public override bool CanRename {
+            get { return false; }
         }
     }
 }

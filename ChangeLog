@@ -1,3 +1,54 @@
+2007-12-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Remove named-parameter ctor for BansheeDbCommand - was ambiguous with the
+	ctor where you can pass an object [] of values if your values were all
+	strings.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Update base
+	ctor call, set CanRename = false, set a custom GtkActionPath for our
+	LibraryContextMenu.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Implement
+	IUnmapableSource.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: 
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs: Update base
+	ctor call, passing generic_name.
+
+	* src/Core/Banshee.Services/Banshee.Sources/IImportable.cs: Bring
+	interface over.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ISource.cs: Remove Unmap
+	method, add GenericName property.
+
+	* src/Core/Banshee.Services/Banshee.Sources/IUnmapableSource.cs: New
+	interface for sources that can be unmapped.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add GenericName
+	and CanRename properties.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Remove
+	unused using.
+
+	* src/Core/Banshee.Services/Makefile.am: Add IUnmapableSource and
+	IImportable.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Rename Popup to ContextMenu.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Add
+	and handle SourceContextMenu, add method for setting source actions
+	sensitive/hidden based on the source, and for updating labels.  Copy
+	method for confirming deletion of a source over from AbstractPlaylistSource.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Override
+	OnPopup handler to trigger the SourceContextMenu action.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	LibraryContextMenu.
+
 2007-12-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Nereid/Nereid/ViewContainer.cs: If the view content is the

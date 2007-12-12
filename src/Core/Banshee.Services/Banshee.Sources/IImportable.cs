@@ -1,10 +1,10 @@
 //
-// ISource.cs
+// IImportable.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -25,30 +25,19 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
+ 
+using System;
 using System.Collections.Generic;
 
-using NDesk.DBus;
-
-using Banshee.ServiceStack;
+using Banshee.Base;
+using Banshee.Collection;
+using Banshee.Playlist;
 
 namespace Banshee.Sources
 {
-    [Interface("org.bansheeproject.Banshee.Sources.Source")]
-    public interface ISource : IDBusExportable
+    public interface IImportable
     {
-        void Activate();
-        void Deactivate();
-        void Rename(string name);
-        
-        string Name { get; }
-        string GenericName { get; }
-        int Order { get; }
-        int Count { get; }
-        
-        string [] Children { get; }
-        
-        // DBus Hack
-        string TrackModelPath { get; }
+        void Import(IEnumerable<TrackInfo> tracks);
+        void Import(IEnumerable<TrackInfo> tracks, PlaylistSource playlist);
     }
 }

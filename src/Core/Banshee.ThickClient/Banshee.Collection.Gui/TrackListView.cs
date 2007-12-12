@@ -75,7 +75,7 @@ namespace Banshee.Collection.Gui
 
         protected override bool OnPopupMenu ()
         {
-            ServiceManager.Get<InterfaceActionService> ("InterfaceActionService").TrackActions["TrackPopupAction"].Activate ();
+            ServiceManager.Get<InterfaceActionService> ("InterfaceActionService").TrackActions["TrackContextMenuAction"].Activate ();
             return true;
         }
         

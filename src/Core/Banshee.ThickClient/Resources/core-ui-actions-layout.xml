@@ -25,8 +25,9 @@
             <menuitem name="TrackProperties" action="TrackPropertiesAction" />
             <separator />
             <menuitem name="RenameSource" action="RenameSourceAction" />
-            <!--<menuitem name="UnmapSource" action="UnmapSourceAction" />
-            <menuitem name="SelectedSourceProperties" action="SelectedSourcePropertiesAction" />-->
+            <!--<menuitem name="ExportPlaylist" action="ExportPlaylistAction" />-->
+            <menuitem name="SourceProperties" action="SourcePropertiesAction" />
+            <menuitem name="UnmapSource" action="UnmapSourceAction" />
             <separator />
             <menuitem name="Extensions" action="ExtensionsAction" />
         </menu>
@@ -73,7 +74,30 @@
         </menu>
     </menubar>
 
-    <popup name="TrackPopup" action="TrackPopupAction">
+    <popup name="LibraryContextMenu" action="LibraryContextMenuAction">
+        <menuitem name='NewPlaylist' action='NewPlaylistAction' />
+        <!--<menuitem name='NewSmartPlaylist' action='NewSmartPlaylistAction' />-->
+        <menuitem name='ImportMusic' action='ImportMusicAction' />
+        <menu name='SortPlaylist' action='SortPlaylistAction'>
+            <menuitem name='SortPlaylistNameAsc' action='SortPlaylistNameAscAction' />
+            <menuitem name='SortPlaylistNameDesc' action='SortPlaylistNameDescAction' />
+            <menuitem name='SortPlaylistSizeAsc' action='SortPlaylistSizeAscAction' />
+            <menuitem name='SortPlaylistSizeDesc' action='SortPlaylistSizeDescAction' />
+        </menu>
+    </popup>
+
+    <popup name="SourceContextMenu" action="SourceContextMenuAction">
+        <menuitem name="ImportSource" action="ImportSourceAction" />
+        <separator />
+        <menuitem name="RenameSource" action="RenameSourceAction" />
+        <menuitem name="UnmapSource" action="UnmapSourceAction" />
+        <!--<menuitem name="ExportPlaylist" action="ExportPlaylistAction" />-->
+        <!--<menuitem name="SyncDap" action="SyncDapAction" />-->
+        <separator />
+        <menuitem name="SourceProperties" action="SourcePropertiesAction" />
+    </popup>
+
+    <popup name="TrackContextMenu" action="TrackContextMenuAction">
         <menu name="AddToPlaylist" action="AddToPlaylistAction"></menu>
         <menuitem name="RemoveTracks" action="RemoveTracksAction" />
         <separator />
@@ -139,15 +163,5 @@
             <menuitem name="LoggedEvents" action="LoggedEventsAction" />
         </menu>
     </menubar>
-    <popup name="SourceMenu" action="SourceMenuAction">
-        <menuitem name="ImportSource" action="ImportSourceAction" />
-        <separator />
-        <menuitem name="RenameSource" action="RenameSourceAction" />
-        <menuitem name="UnmapSource" action="UnmapSourceAction" />
-        <menuitem name="ExportPlaylist" action="ExportPlaylistAction" />
-        <menuitem name="SyncDap" action="SyncDapAction" />
-        <separator />
-        <menuitem name="SelectedSourceProperties" action="SelectedSourcePropertiesAction" />
-    </popup>
     <popup name="SongViewPopup" action="SongViewPopupAction">
     </popup>-->

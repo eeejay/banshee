@@ -69,8 +69,10 @@ SOURCES =  \
 	Banshee.ServiceStack/UserJobManager.cs \
 	Banshee.Sources/DatabaseSource.cs \
 	Banshee.Sources/ErrorSource.cs \
+	Banshee.Sources/IImportable.cs \
 	Banshee.Sources/ISource.cs \
 	Banshee.Sources/ISourceManager.cs \
+	Banshee.Sources/IUnmapableSource.cs \
 	Banshee.Sources/ITrackModelSource.cs \
 	Banshee.Sources/Source.cs \
 	Banshee.Sources/SourceManager.cs \

@@ -286,14 +286,6 @@ namespace Banshee.Database
             }
         }
 
-        // Recommended for commands that will be used more than once and that have named parameters.
-        public BansheeDbCommand (string command, params string [] named_params) : this (command)
-        {
-            foreach (string param in named_params) {
-                Parameters.Add (new SqliteParameter (param));
-            }
-        }
-
         public BansheeDbCommand (string command, params object [] param_values) : this (command, param_values.Length)
         {
             ApplyValues (param_values);
