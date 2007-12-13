@@ -105,7 +105,7 @@ namespace Banshee.Collection.Database
 
         protected override void FetchSet (int offset, int limit)
         {
-            using (new Timer (String.Format ("Fetching set for {0}", db_model))) {
+            //using (new Timer (String.Format ("Fetching set for {0}", db_model))) {
                 select_command.ApplyValues (uid, offset, limit);
                 using (IDataReader reader = connection.ExecuteReader (select_command)) {
                     int i = offset;
@@ -118,7 +118,7 @@ namespace Banshee.Collection.Database
                         i++;
                      }
                  }
-            }
+            //}
         }
 
         public int CacheId {

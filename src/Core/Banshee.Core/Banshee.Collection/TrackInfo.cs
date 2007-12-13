@@ -214,10 +214,6 @@ namespace Banshee.Collection
             set { playback_error = value; }
         }
         
-        public TrackInfo Self {
-            get { return this; }
-        }
-
         public bool IsLive {
             get { return (Attributes & TrackAttributes.IsLive) == TrackAttributes.IsLive; }
         }

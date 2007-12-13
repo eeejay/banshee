@@ -1,5 +1,17 @@
 2007-12-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Remove Self
+	property.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs: Do
+	not use Self property, just use null for the property name.  Uncomment all
+	the columns.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
+	Comment out FetchSet logging.
+
+2007-12-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Clean up some code, move
 	Rectangle allocation and setting of common parts to outside of loops.
 

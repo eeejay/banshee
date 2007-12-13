@@ -47,28 +47,20 @@ namespace Banshee.Collection.Gui
             column_controller = new ColumnController();
 
             column_controller.AddRange(
-                new Column(new ColumnCellPlaybackIndicator("Self", true), "indicator", 
-                    new ColumnCellPlaybackIndicator("Self", false), 0.05),
+                new Column(new ColumnCellPlaybackIndicator(null, true), "indicator", 
+                    new ColumnCellPlaybackIndicator(null, false), 0.05),
                 new SortableColumn("Track", new ColumnCellText("TrackNumber", true), 0.10, "track"),
                 new SortableColumn("Artist", new ColumnCellText("ArtistName", true), 0.225, "artist"),
                 new SortableColumn("Album", new ColumnCellText("AlbumTitle", true), 0.225, "album"),
                 new SortableColumn("Title", new ColumnCellText("TrackTitle", true), 0.25, "title"),
-
                 new SortableColumn("Duration", new ColumnCellDuration("Duration", true), 0.15, "Duration"),
-
-                // These are pretty much ready to go (Rating, stamps, and uri probably need a custom ColumnCell)
-                // Waiting on hide/show dialog and better column sizing logic.
-                /*
                 new SortableColumn("Year", new ColumnCellText("Year", true), 0.15, "Year"),
                 new SortableColumn("Play Count", new ColumnCellText("PlayCount", true), 0.15, "PlayCount"),
                 new SortableColumn("Skip Count", new ColumnCellText("SkipCount", true), 0.15, "SkipCount"),
                 new SortableColumn("Rating", new ColumnCellText("Rating", true), 0.15, "Rating"),
-                */
                 new SortableColumn("Last Played", new ColumnCellText("LastPlayed", true), 0.15, "LastPlayedStamp"),
-                new SortableColumn("Added", new ColumnCellText("DateAdded", true), 0.15, "DateAddedStamp")
-                /*
-                new SortableColumn("Location", new ColumnCellText("Uri", true), 0.15, "RelativeUri"),
-                */
+                new SortableColumn("Added", new ColumnCellText("DateAdded", true), 0.15, "DateAddedStamp"),
+                new SortableColumn("Location", new ColumnCellText("Uri", true), 0.15, "RelativeUri")
             );
             
             ColumnController = DefaultColumnController;
