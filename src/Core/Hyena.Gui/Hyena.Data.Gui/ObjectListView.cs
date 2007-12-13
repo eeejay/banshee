@@ -43,7 +43,7 @@ namespace Hyena.Data.Gui
         {
             ColumnController.Clear ();
             foreach (ColumnDescription column_description in Model.ColumnDescriptions) {
-                ColumnController.Append (new Column (column_description));
+                ColumnController.Add (new Column (column_description));
             }
         }
         

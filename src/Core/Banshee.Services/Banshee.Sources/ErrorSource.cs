@@ -66,8 +66,8 @@ namespace Banshee.Sources
         }
         
         private ColumnDescription [] columns = new ColumnDescription [] {
-            new ColumnDescription (Catalog.GetString ("Error"), .35, 0),
-            new ColumnDescription (Catalog.GetString ("Details"), .65, 1)
+            new ColumnDescription ("Error", Catalog.GetString ("Error"), .35),
+            new ColumnDescription ("Details", Catalog.GetString ("Details"), .65)
         };
         
         public ColumnDescription [] ColumnDescriptions {
@@ -142,12 +142,10 @@ namespace Banshee.Sources
                 this.details = details;
             }
             
-            [ListItemSetup (FieldIndex=0)]
             public string Title {
                 get { return title; }
             }
             
-            [ListItemSetup (FieldIndex=1)]
             public string Details {
                 get { return details; }
             }

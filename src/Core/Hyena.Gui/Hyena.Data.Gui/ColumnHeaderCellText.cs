@@ -40,7 +40,7 @@ namespace Hyena.Data.Gui
         private DataHandler data_handler;
         private bool has_sort;
         
-        public ColumnHeaderCellText (DataHandler data_handler) : base(true, -1)
+        public ColumnHeaderCellText (DataHandler data_handler) : base(null, true)
         {
             this.data_handler = data_handler;
         }

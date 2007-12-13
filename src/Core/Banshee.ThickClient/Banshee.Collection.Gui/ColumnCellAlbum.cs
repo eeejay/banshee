@@ -49,7 +49,7 @@ namespace Banshee.Collection.Gui
     
         private ArtworkManager artwork_manager;
 
-        public ColumnCellAlbum () : base (true, 0)
+        public ColumnCellAlbum () : base (null, true)
         {
             artwork_manager = ServiceManager.Get<ArtworkManager> ("ArtworkManager");
         }

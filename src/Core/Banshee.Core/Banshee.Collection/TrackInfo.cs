@@ -111,19 +111,16 @@ namespace Banshee.Collection
             set { mimetype = value; }
         }
 
-        [ListItemSetup (FieldIndex=2)]
         public virtual string ArtistName {
             get { return artist_name; }
             set { artist_name = value; }
         }
 
-        [ListItemSetup (FieldIndex=3)]
         public virtual string AlbumTitle {
             get { return album_title; }
             set { album_title = value; }
         }
 
-        [ListItemSetup (FieldIndex=4)]
         public virtual string TrackTitle {
             get { return track_title; }
             set { track_title = value; }
@@ -162,7 +159,6 @@ namespace Banshee.Collection
             set { genre = value; }
         }
 
-        [ListItemSetup (FieldIndex=1)]
         public virtual int TrackNumber {
             get { return track_number; }
             set { track_number = value; }
@@ -193,7 +189,6 @@ namespace Banshee.Collection
             set { skip_count = value; }
         }
 
-        [ListItemSetup( FieldIndex=5)]
         public virtual TimeSpan Duration {
             get { return duration; }
             set { duration = value; }
@@ -219,7 +214,6 @@ namespace Banshee.Collection
             set { playback_error = value; }
         }
         
-        [ListItemSetup (FieldIndex=0)]
         public TrackInfo Self {
             get { return this; }
         }

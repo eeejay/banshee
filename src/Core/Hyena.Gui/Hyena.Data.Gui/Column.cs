@@ -41,12 +41,12 @@ namespace Hyena.Data.Gui
         private List<ColumnCell> cells = new List<ColumnCell> ();
         
         public Column (ColumnDescription description) :
-            this (description, new ColumnCellText (true, description.FieldIndex))
+            this (description, new ColumnCellText (description.Property, true))
         {
         }
         
-        public Column (ColumnDescription description, ColumnCell cell) 
-            : this (description.Title, cell, description.Width)
+        public Column (ColumnDescription description, ColumnCell cell) :
+            this (description.Title, cell, description.Width)
         {
             Visible = description.Visible;
         }
@@ -56,8 +56,8 @@ namespace Hyena.Data.Gui
             this.header_cell = new ColumnHeaderCellText(HeaderCellDataHandler);
         }
         
-        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width) 
-            : base (title, width, cell.FieldIndex, true)
+        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width) :
+            base (cell.Property, title, width, true)
         {
             this.header_cell = header_cell;
             PackStart(cell);

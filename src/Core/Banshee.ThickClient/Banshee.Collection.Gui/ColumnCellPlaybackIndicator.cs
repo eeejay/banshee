@@ -47,7 +47,7 @@ namespace Banshee.Collection.Gui
         private Gdk.Pixbuf pixbuf;
         private Gdk.Pixbuf pixbuf_paused;
         
-        public ColumnCellPlaybackIndicator (bool isHeader, int fieldIndex) : base (true, fieldIndex)
+        public ColumnCellPlaybackIndicator (string property, bool isHeader) : base (property,true)
         {
             is_header = isHeader;
             LoadPixbuf ();

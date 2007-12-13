@@ -36,47 +36,30 @@ namespace Hyena.Data.Gui
     public abstract class ColumnCell
     {
         private bool expand;
-        private int field_index;
+        private string property;
+        private PropertyInfo property_info;
         private object bound_object;
             
-        public ColumnCell (bool expand, int fieldIndex)
+        public ColumnCell (string property, bool expand)
         {
+            this.property = property;
             this.expand = expand;
-            this.field_index = fieldIndex;
         }
 
         public void BindListItem (object item)
         {
-            if (item == null) {
+            if (item == null)
                 return;
-            }
-            
-            Type type = item.GetType();
-            
-            bound_object = null;
-            
-            object [] class_attributes = type.GetCustomAttributes(typeof (ListItemSetup), true);
-            if (class_attributes != null && class_attributes.Length > 0) {
+
+            if (property != null) {
+                if (property_info == null || property_info.ReflectedType != item.GetType ()) {
+                    property_info = item.GetType ().GetProperty (property);
+                }
+
+                bound_object = property_info.GetValue (item, null);
+            } else {
                 bound_object = item;
-                return;
             }
-            
-            foreach (PropertyInfo info in type.GetProperties ()) {
-                object [] attributes = info.GetCustomAttributes(typeof (ListItemSetup), false);
-                if (attributes == null || attributes.Length == 0) {
-                    continue;
-                }
-            
-                if (((ListItemSetup [])attributes)[0].FieldIndex != field_index) {
-                    continue;
-                }
-                
-                bound_object = info.GetValue(item, null);
-                return;
-            }
-            
-            throw new ApplicationException("Cannot bind IListItem to cell: no ListItemSetup " + 
-                "attributes were found on any properties.");
         }
         
         public virtual void NotifyThemeChange ()
@@ -98,9 +81,9 @@ namespace Hyena.Data.Gui
             set { expand = value; }
         }
         
-        public int FieldIndex {
-            get { return field_index; }
-            set { field_index = value; }
+        public string Property {
+            get { return property; }
+            set { property = value; }
         }
     }
 }

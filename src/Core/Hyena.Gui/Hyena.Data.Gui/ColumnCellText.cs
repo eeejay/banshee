@@ -36,19 +36,13 @@ namespace Hyena.Data.Gui
     {
         public delegate string DataHandler ();
     
-        private DataHandler data_handler;
         private Pango.Weight font_weight = Pango.Weight.Normal;
         private Pango.EllipsizeMode ellipsize_mode = Pango.EllipsizeMode.End;
         private int text_width;
         private int text_height;
         private bool use_cairo_pango = !String.IsNullOrEmpty (Environment.GetEnvironmentVariable ("USE_CAIRO_PANGO"));
-        
-        public ColumnCellText (bool expand, DataHandler data_handler) : base (expand, -1)
-        {
-            this.data_handler = data_handler;
-        }
-    
-        public ColumnCellText (bool expand, int fieldIndex) : base (expand, fieldIndex)
+
+        public ColumnCellText (string property, bool expand) : base (property, expand)
         {
         }
     
@@ -75,12 +69,8 @@ namespace Hyena.Data.Gui
         }
         
         protected virtual string Text {
-            get { 
-                return data_handler == null
-                    ? (BoundObject == null 
-                        ? String.Empty 
-                        : BoundObject.ToString()) 
-                    : data_handler(); 
+            get {
+                return BoundObject == null ? String.Empty : BoundObject.ToString();
             }
         }
         

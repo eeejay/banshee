@@ -149,7 +149,7 @@ namespace Banshee.Gui
         
 #endregion
 
-#region Music Menu Actions
+#region Edit Menu Actions
 
         private void OnExtensions (object o, EventArgs args)
         {

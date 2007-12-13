@@ -136,6 +136,11 @@ namespace Hyena.Collections
             OnChanged ();
         }
 
+        public void SelectAll ()
+        {
+            SelectRange (0, max_index);
+        }
+
         public void Clear () 
         {
             Clear (true);
@@ -165,7 +170,7 @@ namespace Hyena.Collections
             get { 
                 if (ranges.RangeCount == 1) {
                     RangeCollection.Range range = ranges.Ranges[0];
-                    return range.Start == 0 && range.End == max_index - 1;
+                    return range.Start == 0 && range.End == max_index;
                 }
                 
                 return false;

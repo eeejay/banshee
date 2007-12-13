@@ -397,8 +397,8 @@ namespace Banshee.Database
                         Rating,
                         NumberOfPlays,
                         0,
-                        DateAddedStamp,
-                        LastPlayedStamp
+                        LastPlayedStamp,
+                        DateAddedStamp
                         FROM Tracks
             ");
 

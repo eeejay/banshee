@@ -24,6 +24,9 @@
             <menuitem name="RemoveTracks" action="RemoveTracksAction" />
             <menuitem name="TrackProperties" action="TrackPropertiesAction" />
             <separator />
+            <menuitem name="SelectAll" action="SelectAllAction" />
+            <menuitem name="SelectNone" action="SelectNoneAction" />
+            <separator />
             <menuitem name="RenameSource" action="RenameSourceAction" />
             <!--<menuitem name="ExportPlaylist" action="ExportPlaylistAction" />-->
             <menuitem name="SourceProperties" action="SourcePropertiesAction" />

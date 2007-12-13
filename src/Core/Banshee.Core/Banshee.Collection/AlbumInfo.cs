@@ -29,11 +29,8 @@
 using System;
 using System.Text.RegularExpressions;
 
-using Hyena.Data;
-
 namespace Banshee.Collection
 {
-    [ListItemSetup]
     public class AlbumInfo 
     {
         private string title;

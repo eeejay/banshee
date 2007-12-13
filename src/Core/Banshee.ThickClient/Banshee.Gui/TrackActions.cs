@@ -48,7 +48,8 @@ namespace Banshee.Gui
         private RatingActionProxy rating_proxy;
 
         private static readonly string [] require_selection_actions = new string [] {
-            "TrackContextMenuAction", "TrackPropertiesAction", "AddToPlaylistAction", "RemoveTracksAction", "RateTracksAction"
+            "TrackContextMenuAction", "TrackPropertiesAction", "AddToPlaylistAction",
+            "RemoveTracksAction", "RateTracksAction", "SelectNoneAction"
         };
 
         private IHasTrackSelection track_selector;
@@ -77,6 +78,14 @@ namespace Banshee.Gui
             Add (new ActionEntry [] {
                 new ActionEntry("TrackContextMenuAction", null, 
                     String.Empty, null, null, OnTrackContextMenu),
+
+                new ActionEntry("SelectAllAction", null,
+                    Catalog.GetString("Select _All"), "<control>A",
+                    Catalog.GetString("Select all tracks"), OnSelectAll),
+                    
+                new ActionEntry("SelectNoneAction", null,
+                    Catalog.GetString("Select _None"), "<control><shift>A",
+                    Catalog.GetString("Unselect all tracks"), OnSelectNone),
 
                 new ActionEntry ("TrackPropertiesAction", Stock.Edit,
                     Catalog.GetString ("_Track Properties"), null,
@@ -136,10 +145,14 @@ namespace Banshee.Gui
         private void Sensitize ()
         {
             Hyena.Collections.Selection selection = TrackSelector.TrackSelectionProxy.Selection;
-            bool has_selection = (selection != null) && (selection.Count > 0);
-            Sensitive = has_selection;
-            //foreach (string action in require_selection_actions)
-            //    this [action].Sensitive = has_selection;
+
+            if (selection != null) {
+                bool has_selection = selection.Count > 0;
+                foreach (string action in require_selection_actions)
+                    this[action].Sensitive = has_selection;
+
+                this["SelectAllAction"].Sensitive = !selection.AllSelected;
+            }
         }
 
         private void ResetRating ()
@@ -166,6 +179,17 @@ namespace Banshee.Gui
 #endregion
             
 #region Action Handlers
+
+        private void OnSelectAll (object o, EventArgs args)
+        {
+            TrackSelector.TrackSelectionProxy.Selection.SelectAll ();
+        }
+
+        private void OnSelectNone (object o, EventArgs args)
+        {
+            TrackSelector.TrackSelectionProxy.Selection.Clear ();
+        }
+
 
         private void OnTrackContextMenu (object o, EventArgs args)
         {

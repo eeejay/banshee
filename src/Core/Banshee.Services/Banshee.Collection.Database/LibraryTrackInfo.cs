@@ -99,6 +99,12 @@ namespace Banshee.Collection.Database
             Rating = ReaderGetInt32 (reader, Column.Rating);
 
             Duration = ReaderGetTimeSpan (reader, Column.Duration);
+
+            PlayCount = ReaderGetInt32 (reader, Column.PlayCount);
+            SkipCount = ReaderGetInt32 (reader, Column.SkipCount);
+
+            LastPlayed = ReaderGetDateTime (reader, Column.LastPlayedStamp);
+            DateAdded = ReaderGetDateTime (reader, Column.DateAddedStamp);
             
             Attributes |= TrackAttributes.CanPlay;
         }
@@ -121,7 +127,13 @@ namespace Banshee.Collection.Database
             long raw = reader.GetInt64 ((int) column);
             return new TimeSpan (raw * TimeSpan.TicksPerMillisecond);
         }
-        
+
+        private DateTime ReaderGetDateTime (IDataReader reader, Column column)
+        {
+            long raw = reader.GetInt64 ((int) column);
+            return DateTimeUtil.ToDateTime (raw);
+        }
+
         public override void Save ()
         {
             if (DbId < 0) {

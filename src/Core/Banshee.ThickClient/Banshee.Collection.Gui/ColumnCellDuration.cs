@@ -34,7 +34,7 @@ namespace Banshee.Collection.Gui
 {
     public class ColumnCellDuration : ColumnCellText
     {
-        public ColumnCellDuration (bool expand, int fieldIndex) : base (expand, fieldIndex)
+        public ColumnCellDuration (string property, bool expand) : base (property, expand)
         {
         }
         

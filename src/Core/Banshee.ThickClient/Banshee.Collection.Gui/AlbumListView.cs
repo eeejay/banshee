@@ -42,7 +42,7 @@ namespace Banshee.Collection.Gui
         public AlbumListView() : base()
         {
             column_controller = new ColumnController();
-            column_controller.Append(new Column("Album", new ColumnCellAlbum(), 1.0));
+            column_controller.Add(new Column("Album", new ColumnCellAlbum(), 1.0));
             
             ColumnController = column_controller;
             

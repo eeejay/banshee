@@ -54,8 +54,17 @@ namespace Hyena.Data.Gui
             
             OnUpdated ();
         }
-        
-        public void Append (Column column)
+
+        public void AddRange (params Column [] range)
+        {
+            lock (this) {
+                columns.AddRange (range);
+            }
+
+            OnUpdated ();
+        }
+
+        public void Add (Column column)
         {
             lock (this) {
                 columns.Add (column);

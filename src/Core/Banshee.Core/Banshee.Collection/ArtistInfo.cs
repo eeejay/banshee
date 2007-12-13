@@ -26,8 +26,6 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using Hyena.Data;
-
 namespace Banshee.Collection
 {
     public class ArtistInfo 
@@ -39,7 +37,6 @@ namespace Banshee.Collection
             this.name = name;
         }
         
-        [ListItemSetup(FieldIndex=0)]
         public virtual string Name {
             get { return name; }
             set { name = value; }

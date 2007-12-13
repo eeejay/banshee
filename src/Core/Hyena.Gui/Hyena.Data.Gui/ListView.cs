@@ -60,8 +60,6 @@ namespace Hyena.Data.Gui
         }
     }
 
-    [Binding(Gdk.Key.A, Gdk.ModifierType.ControlMask, "SelectAll")]
-    [Binding(Gdk.Key.A, Gdk.ModifierType.ControlMask | Gdk.ModifierType.ShiftMask, "UnselectAll")]
     public class ListView<T> : Container
     {
         private static Gdk.Cursor resize_x_cursor = new Gdk.Cursor(Gdk.CursorType.SbHDoubleArrow);
@@ -219,7 +217,10 @@ namespace Hyena.Data.Gui
         {
             column_layout = new Pango.Layout(PangoContext);
             CanFocus = true;
-        }      
+            selection_proxy.Changed += delegate {
+                InvalidateListWindow ();
+            };
+        }
         
 #region Widget Window Management
 
@@ -486,6 +487,18 @@ namespace Hyena.Data.Gui
             bool handled = false;
 
             switch(press.Key) {
+                case Gdk.Key.a:
+                    if ((press.State & Gdk.ModifierType.ControlMask) != 0) {
+                        SelectionProxy.Selection.SelectAll ();
+                        handled = true;
+                    }
+                    break;
+                case Gdk.Key.A:
+                    if ((press.State & Gdk.ModifierType.ControlMask) != 0) {
+                        SelectionProxy.Selection.Clear ();
+                        handled = true;
+                    }
+                    break;
                 case Gdk.Key.Up:
                     handled = KeyboardScroll (press.State, -1, true);
                     break;
@@ -548,7 +561,6 @@ namespace Hyena.Data.Gui
                     Selection.SelectFromFirst(row_index, true);
                 } else {
                     Selection.Select(focused_row_index);
-                    InvalidateListWindow();
                     return true;
                 }
             } else {
@@ -1012,7 +1024,7 @@ namespace Hyena.Data.Gui
                 ScrollTo (vadjustment.Value);
 
             if (Model != null) {
-                Selection.MaxIndex = Model.Count;
+                Selection.MaxIndex = Model.Count - 1;
             }
             
             if(Parent is ScrolledWindow) {
@@ -1053,24 +1065,6 @@ namespace Hyena.Data.Gui
 
 #endregion
         
-#region Keyboard Shortcut Handlers
-#pragma warning disable 0169
-        
-        private void SelectAll()
-        {
-            Selection.SelectRange(0, model.Count - 1);
-            InvalidateListWindow();
-        }
-        
-        private void UnselectAll()
-        {
-            Selection.Clear();
-            InvalidateListWindow();
-        }
-
-#pragma warning restore 0169
-#endregion
-          
 #region Column Utilities
 
         private void InvalidateColumnCache()

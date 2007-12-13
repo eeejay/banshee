@@ -35,23 +35,19 @@ namespace Hyena.Data
         private string title;
         private double width;
         private bool visible;
-        private int field_index;
+        private string property;
         
         public event EventHandler VisibilityChanged;
         
-        public ColumnDescription (string title, double width) : this (title, width, -1, true)
+        public ColumnDescription (string property, string title, double width) : this (property, title, width, true)
         {
         }
         
-        public ColumnDescription (string title, double width, int fieldIndex) : this (title, width, fieldIndex, true)
+        public ColumnDescription (string property, string title, double width, bool visible)
         {
-        }
-        
-        public ColumnDescription (string title, double width, int fieldIndex, bool visible)
-        {
+            this.property = property;
             this.title = title;
             this.width = width;
-            this.field_index = fieldIndex;
             this.visible = visible;
         }
                 
@@ -73,9 +69,9 @@ namespace Hyena.Data
             set { width = value; }
         }
         
-        public int FieldIndex {
-            get { return field_index; }
-            set { field_index = value; }
+        public string Property {
+            get { return property; }
+            set { property = value; }
         }
         
         public bool Visible {

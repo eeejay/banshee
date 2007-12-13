@@ -28,7 +28,6 @@ SOURCES =  \
 	Hyena.Data/IPropertyStoreExpose.cs \
 	Hyena.Data/ISortable.cs \
 	Hyena.Data/ISortableColumn.cs \
-	Hyena.Data/ListItemSetup.cs \
 	Hyena.Data/ModelSelection.cs \
 	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/SortType.cs \
