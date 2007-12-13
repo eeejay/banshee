@@ -762,12 +762,13 @@ namespace Hyena.Data.Gui
                 return;
             }
                 
+            Gdk.Rectangle cell_area = new Gdk.Rectangle();
+            cell_area.Y = column_text_y;
+            cell_area.Height = HeaderHeight - column_text_y;
+
             for(int ci = 0; ci < column_cache.Length; ci++) {            
-                Gdk.Rectangle cell_area = new Gdk.Rectangle();
                 cell_area.X = column_cache[ci].X1 + left_border_alloc.Width;
-                cell_area.Y = column_text_y;
                 cell_area.Width = column_cache[ci].Width - COLUMN_PADDING;
-                cell_area.Height = HeaderHeight - column_text_y;
                 
                 ColumnCell cell = column_cache[ci].Column.HeaderCell;
                 
@@ -860,18 +861,15 @@ namespace Hyena.Data.Gui
         
         private void PaintRows (int first_row, int last_row, int vadjustment_value, Gdk.Rectangle clip, bool content)
         {
+            Gdk.Rectangle single_list_alloc = new Gdk.Rectangle ();
+            single_list_alloc.Width = list_alloc.Width;
+            single_list_alloc.Height = RowHeight;
+            single_list_alloc.X = list_alloc.X;
+            single_list_alloc.Y = list_alloc.Y - vadjustment_value + (first_row * single_list_alloc.Height);
+
             for (int ri = first_row; ri < last_row; ri++) {
-                Gdk.Rectangle single_list_alloc = new Gdk.Rectangle ();
-                single_list_alloc.Width = list_alloc.Width;
-                single_list_alloc.Height = RowHeight;
-                single_list_alloc.X = list_alloc.X;
-                single_list_alloc.Y = list_alloc.Y + (ri * single_list_alloc.Height - vadjustment_value);
-                
                 if (content) {
-                    StateType row_state = StateType.Normal;
-                    if(Selection.Contains (ri)) {
-                        row_state = StateType.Selected;
-                    }
+                    StateType row_state = Selection.Contains (ri) ? StateType.Selected : StateType.Normal;
                     
                     //PaintRowFocus (ri, clip, single_list_alloc, row_state);
                     PaintRow (ri, clip, single_list_alloc, row_state);
@@ -879,6 +877,8 @@ namespace Hyena.Data.Gui
                     graphics.DrawRowRule (list_cr, single_list_alloc.X, single_list_alloc.Y, 
                         single_list_alloc.Width, single_list_alloc.Height);
                 }
+
+                single_list_alloc.Y += single_list_alloc.Height;
             }
         }
 
@@ -890,12 +890,13 @@ namespace Hyena.Data.Gui
             
             object item = model[row_index];
             
+            Gdk.Rectangle cell_area = new Gdk.Rectangle();
+            cell_area.Height = RowHeight;
+            cell_area.Y = area.Y;
+
             for(int ci = 0; ci < column_cache.Length; ci++) {
-                Gdk.Rectangle cell_area = new Gdk.Rectangle();
                 cell_area.Width = column_cache[ci].Width;
-                cell_area.Height = RowHeight;
                 cell_area.X = column_cache[ci].X1;
-                cell_area.Y = area.Y;
                     
                 PaintCell(item, ci, row_index, cell_area, cell_area, state);
             }

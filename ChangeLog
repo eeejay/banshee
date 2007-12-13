@@ -1,66 +1,71 @@
 2007-12-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Clean up some code, move
+	Rectangle allocation and setting of common parts to outside of loops.
+
+2007-12-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This patch changes the way objects are bound to the ListViews, removing
 	the FieldIndex attributes, instead passing a property name (or null to
 	return the object itself) instead.  SelectAll/None actions are added.
 	Commented out code for the rest of the TrackInfo columns also added.
 
-	 * src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
-	 Load PlayCount, SkipCount, LastPlayed, and DateAdded when loading the
-	 track from the database.
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Load PlayCount, SkipCount, LastPlayed, and DateAdded when loading the
+	track from the database.
 
-	 * src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
-	 Handle sorting on Year, Duration, Rating, PlayCount, SkipCount,
-	 LastPlayed, DateAdded, and RelativeUri.
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Handle sorting on Year, Duration, Rating, PlayCount, SkipCount,
+	LastPlayed, DateAdded, and RelativeUri.
 
-	 * src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
-	 Fix error in our migration - we had DateAdded and LastPlayed swapped.
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Fix error in our migration - we had DateAdded and LastPlayed swapped.
 
-	 * src/Core/Hyena.Gui/Hyena.Data.Gui/Column.cs:
-	 * src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:
-	 * src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
-	 * src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
-	 * src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
-	 Use property names instead of FieldIndexes.
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/Column.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Use property names instead of FieldIndexes.
 
-	 * src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs:
-	 * src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
-	 * src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
-	 * src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
-	 * src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs:
-	 Change ctors to use property name string instead of FieldIndex.
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs:
+	Change ctors to use property name string instead of FieldIndex.
 
-	 * src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Fix typo.
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Fix typo.
 
-	 * src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
-	 * src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
-	 SelectAll/SelectNone actions.
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	SelectAll/SelectNone actions.
 
-	 * src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCell.cs: In BindListItem use
-	 the property name to get the PropertyInfo object instead of iterating
-	 over all properites looking for the right one.
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnCell.cs: In BindListItem use
+	the property name to get the PropertyInfo object instead of iterating
+	over all properites looking for the right one.
 
 
-	 * src/Core/Hyena.Gui/Hyena.Data.Gui/ObjectListView.cs:
-	 * src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs: Change Append to
-	 Add and add AddRange method.
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ObjectListView.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs: Change Append to
+	Add and add AddRange method.
 
-	 * src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Move the
-	 SelectAll/SelectNone handler inside the OnKeyPress method.  Invalidate
-	 the ListWindow whenever the selection is changed.
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Move the
+	SelectAll/SelectNone handler inside the OnKeyPress method.  Invalidate
+	the ListWindow whenever the selection is changed.
 
-	 * src/Core/Hyena/Hyena.Collections/Selection.cs: Add SelectAll method and
-	 change MaxIndex to actually represent the max index, not the max size.
+	* src/Core/Hyena/Hyena.Collections/Selection.cs: Add SelectAll method and
+	change MaxIndex to actually represent the max index, not the max size.
 
-	 * src/Core/Hyena/Hyena.Data/ColumnDescription.cs: Instead of using a
-	 FieldIndex specified by the ListItemSetup attribute, use a string that
-	 gives the name of the property to get the column's value from.
+	* src/Core/Hyena/Hyena.Data/ColumnDescription.cs: Instead of using a
+	FieldIndex specified by the ListItemSetup attribute, use a string that
+	gives the name of the property to get the column's value from.
 
-	 * src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs:
-	 * src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs:
-	 * src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
-	 * src/Core/Hyena/Hyena.Data/ListItemSetup.cs:
-	 * src/Core/Hyena/Makefile.am: Remove ListItemSetup.
+	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Hyena/Hyena.Data/ListItemSetup.cs:
+	* src/Core/Hyena/Makefile.am: Remove ListItemSetup.
 
 2007-12-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
