@@ -1,5 +1,13 @@
 2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Base/Localization.cs:
+	* src/Core/Banshee.Core/Banshee.Base/Localization.cs:
+	* src/Core/Banshee.Core/Makefile.am: Move file/add to build.
+
+	* src/Core/Banshee.Services/Makefile.am: Add Banshee.AudioProfile to build.
+
+2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/*:
 	* src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/*: Move files.
 

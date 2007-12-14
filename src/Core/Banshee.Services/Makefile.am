@@ -3,6 +3,13 @@ TARGET = library
 LINK = $(REF_BANSHEE_SERVICES)
 
 SOURCES =  \
+	$(top_srcdir)/ext/sexp-engine/src/SExpEngine/*.cs \
+	Banshee.AudioProfiles/GConfProfileConfiguration.cs \
+	Banshee.AudioProfiles/Pipeline.cs \
+	Banshee.AudioProfiles/PipelineVariable.cs \
+	Banshee.AudioProfiles/ProfileConfiguration.cs \
+	Banshee.AudioProfiles/Profile.cs \
+	Banshee.AudioProfiles/ProfileManager.cs \
 	Banshee.Collection.Database/AlbumListDatabaseModel.cs \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
 	Banshee.Collection.Database/BansheeCacheableModelAdapter.cs \

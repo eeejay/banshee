@@ -4,6 +4,7 @@ LINK = $(REF_BANSHEE_CORE)
 SOURCES =  \
 	Banshee.Base/ApplicationContext.cs \
 	Banshee.Base/FileNamePattern.cs \
+	Banshee.Base/Localization.cs \
 	Banshee.Base/Log.cs \
 	Banshee.Base/Paths.cs \
 	Banshee.Base/PlatformHacks.cs \
