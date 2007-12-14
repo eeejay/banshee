@@ -1,5 +1,10 @@
 2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Makefile.am: Add Banshee.AudioProfiles.Gui
+	to build.
+
+2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Base/Localization.cs:
 	* src/Core/Banshee.Core/Banshee.Base/Localization.cs:
 	* src/Core/Banshee.Core/Makefile.am: Move file/add to build.
