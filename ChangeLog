@@ -1,6 +1,11 @@
 2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
-	* src/Core/Banshee.Base/Banshee.AudioProfiles/*
+	* src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/*:
+	* src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/*: Move files.
+
+2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/*:
 	* src/Core/Banshee.Services/Banahsee.AudioProfiles/*: Move files.
 
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/*Format.cs: Take
