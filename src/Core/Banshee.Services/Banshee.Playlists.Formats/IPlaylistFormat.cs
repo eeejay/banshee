@@ -39,7 +39,7 @@ namespace Banshee.Playlists.Formats
         void Load(Stream stream, bool validateHeader);
         void Load(StreamReader reader, bool validateHeader);
         
-        void Save(Stream stream, Source source);
+        void Save(Stream stream, ITrackModelSource source);
         
         Dictionary<string, object> Attributes { get; }
         List<Dictionary<string, object>> Elements { get; }

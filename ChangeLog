@@ -1,3 +1,11 @@
+2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Base/Banshee.AudioProfiles/*
+	* src/Core/Banshee.Services/Banahsee.AudioProfiles/*: Move files.
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/*Format.cs: Take
+	ITrackModelSource instead of Source.
+
 2007-12-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Remove Self

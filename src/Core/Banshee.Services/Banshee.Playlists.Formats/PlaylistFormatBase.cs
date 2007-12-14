@@ -56,7 +56,7 @@ namespace Banshee.Playlists.Formats
             
         public abstract void Load(StreamReader reader, bool validateHeader);
         
-        public abstract void Save(Stream stream, Source source);
+        public abstract void Save(Stream stream, ITrackModelSource source);
         
         protected virtual Dictionary<string, object> AddElement()
         {

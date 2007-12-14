@@ -126,7 +126,7 @@ namespace Banshee.Playlists.Formats
             }
         }
         
-        public override void Save(Stream stream, Source source)
+        public override void Save(Stream stream, ITrackModelSource source)
         {
             /*using(StreamWriter writer = new StreamWriter(stream)) {
                 int count = 0;

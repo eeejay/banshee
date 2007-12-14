@@ -120,7 +120,7 @@ namespace Banshee.Playlists.Formats
             }
         }
         
-        public override void Save(Stream stream, Source source)
+        public override void Save(Stream stream, ITrackModelSource source)
         {
             throw new NotImplementedException();
         }
