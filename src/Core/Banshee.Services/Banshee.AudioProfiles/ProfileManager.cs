@@ -33,6 +33,8 @@ using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 
+using Banshee.ServiceStack;
+
 namespace Banshee.AudioProfiles
 {
     public class TestProfileArgs : EventArgs
@@ -57,7 +59,7 @@ namespace Banshee.AudioProfiles
 
     public delegate void TestProfileHandler(object o, TestProfileArgs args);
 
-    public class ProfileManager : IEnumerable<Profile>
+    public class ProfileManager : IEnumerable<Profile>, IService
     {
         private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo("en-US");
         
@@ -247,6 +249,10 @@ namespace Banshee.AudioProfiles
                 }
                 return count;
             }
+        }
+
+        string Banshee.ServiceStack.IService.ServiceName {
+            get { return "ProfileManager"; }
         }
         
         public override string ToString()

@@ -1,5 +1,11 @@
 2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.AudioProfiles/ProfileManager.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Make
+	the ProfileManager an IService and register it with the ServiceManager.
+
+2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Makefile.am: Add Banshee.AudioProfiles.Gui
 	to build.
 
