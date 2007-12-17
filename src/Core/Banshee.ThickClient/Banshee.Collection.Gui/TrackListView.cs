@@ -57,9 +57,9 @@ namespace Banshee.Collection.Gui
                 new SortableColumn("Year", new ColumnCellText("Year", true), 0.15, "Year"),
                 new SortableColumn("Play Count", new ColumnCellText("PlayCount", true), 0.15, "PlayCount"),
                 new SortableColumn("Skip Count", new ColumnCellText("SkipCount", true), 0.15, "SkipCount"),
-                new SortableColumn("Rating", new ColumnCellText("Rating", true), 0.15, "Rating"),
-                new SortableColumn("Last Played", new ColumnCellText("LastPlayed", true), 0.15, "LastPlayedStamp"),
-                new SortableColumn("Added", new ColumnCellText("DateAdded", true), 0.15, "DateAddedStamp"),
+                //new SortableColumn("Rating", new RatingColumnCell(null, true), 0.15, "Rating"),
+                new SortableColumn("Last Played", new ColumnCellDateTime("LastPlayed", true), 0.15, "LastPlayedStamp"),
+                new SortableColumn("Added", new ColumnCellDateTime("DateAdded", true), 0.15, "DateAddedStamp"),
                 new SortableColumn("Location", new ColumnCellText("Uri", true), 0.15, "RelativeUri")
             );
             

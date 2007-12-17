@@ -14,6 +14,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/ArtworkManager.cs \
 	Banshee.Collection.Gui/ArtworkRenderer.cs \
 	Banshee.Collection.Gui/ColumnCellAlbum.cs \
+	Banshee.Collection.Gui/ColumnCellDateTime.cs \
 	Banshee.Collection.Gui/ColumnCellDuration.cs \
 	Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs \
 	Banshee.Collection.Gui/CompositeTrackListView.cs \

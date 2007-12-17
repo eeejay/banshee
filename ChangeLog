@@ -1,5 +1,14 @@
 2007-12-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDateTime.cs:
+	* src/Core/Banshee.ThickClient/Makefile.am: New cell renderer for DateTime
+	objects that returns String.Empty if the DateTime is DateTime.MIN_VALUE.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Use ColumnCellDateTime for date added/last played.
+
+2007-12-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.AudioProfiles/ProfileManager.cs: Fix
 	build.
 
