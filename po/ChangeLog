@@ -1,3 +1,7 @@
+2007-12-17  Nickolay V. Shmyrev  <nshmyrev@yandex.ru>
+
+	* POTFILES.in: fixes problem with renamed files.
+
 2007-12-16  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
         * es.po: Updated Spanish translation
