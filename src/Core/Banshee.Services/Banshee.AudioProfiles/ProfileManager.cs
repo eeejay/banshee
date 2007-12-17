@@ -73,8 +73,10 @@ namespace Banshee.AudioProfiles
 
         public event TestProfileHandler TestProfile;
 
-        public ProfileManager(string path)
+        public ProfileManager()
         {
+            // TODO replace w/ real path code or property
+            string path = "";
             if(File.Exists(path)) {
                 LoadFromFile(path);
             } else if(Directory.Exists(path)) {

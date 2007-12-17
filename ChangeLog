@@ -1,3 +1,8 @@
+2007-12-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.AudioProfiles/ProfileManager.cs: Fix
+	build.
+
 2007-12-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.AudioProfiles/ProfileManager.cs:
