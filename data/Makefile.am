@@ -1,6 +1,6 @@
 SUBDIRS = \
 	audio-profiles \
-	images
+	icon-theme-hicolor
 
 desktopdir = $(datadir)/applications
 desktop_in_files=banshee.desktop.in.in

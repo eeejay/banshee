@@ -79,8 +79,8 @@ SOURCES =  \
 	Banshee.Sources/IImportable.cs \
 	Banshee.Sources/ISource.cs \
 	Banshee.Sources/ISourceManager.cs \
-	Banshee.Sources/IUnmapableSource.cs \
 	Banshee.Sources/ITrackModelSource.cs \
+	Banshee.Sources/IUnmapableSource.cs \
 	Banshee.Sources/Source.cs \
 	Banshee.Sources/SourceManager.cs \
 	Banshee.Streaming/RadioTrackInfo.cs \

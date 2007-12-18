@@ -40,6 +40,11 @@ namespace Hyena.Data.Gui
         private ColumnCell header_cell;
         private List<ColumnCell> cells = new List<ColumnCell> ();
         
+        private int minWidth = 0;
+        private double minRelativeWidth = 0;
+        private double relativeWidth = 0;
+        private bool isVisible = true;
+        
         public Column (ColumnDescription description) :
             this (description, new ColumnCellText (description.Property, true))
         {
@@ -96,6 +101,38 @@ namespace Hyena.Data.Gui
         public ColumnCell HeaderCell {
             get { return header_cell; }
             set { header_cell = value; }
+        }
+        
+         public int MinWidth
+        {
+            get { return minWidth; }
+            set { minWidth = value; }
+        }
+
+        internal double MinRelativeWidth
+        {
+            get { return minRelativeWidth; }
+            set { minRelativeWidth = value; }
+        }
+
+        public double RelativeWidth
+        {
+            get { return relativeWidth; }
+            set { relativeWidth = value; }
+        }
+
+        public bool IsVisible
+        {
+            get { return isVisible; }
+            set
+            {
+                bool old = isVisible;
+                isVisible = value;
+
+                if (value != old) {
+                    OnVisibilityChanged ();
+                }
+            }
         }
     }
 }

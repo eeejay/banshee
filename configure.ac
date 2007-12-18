@@ -103,7 +103,7 @@ build/banshee.pc
 data/Makefile
 data/org.gnome.Banshee.service
 data/audio-profiles/Makefile
-data/images/Makefile
+data/icon-theme-hicolor/Makefile
 
 docs/Makefile
 tests/Makefile
