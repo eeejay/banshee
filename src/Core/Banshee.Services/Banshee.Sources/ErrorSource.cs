@@ -66,7 +66,7 @@ namespace Banshee.Sources
         }
         
         private ColumnDescription [] columns = new ColumnDescription [] {
-            new ColumnDescription ("Error", Catalog.GetString ("Error"), .35),
+            new ColumnDescription ("Title", Catalog.GetString ("Error"), .35),
             new ColumnDescription ("Details", Catalog.GetString ("Details"), .65)
         };
         
