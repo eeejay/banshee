@@ -33,15 +33,17 @@ using Gtk;
 
 using Banshee.Base;
 using Banshee.Sources;
+using Banshee.Library;
 using Banshee.Playlist;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.ServiceStack;
 using Banshee.Widgets;
 using Banshee.Gui.Dialogs;
 
 namespace Banshee.Gui
 {
-    public class TrackActions : ActionGroup
+    public class TrackActions : BansheeActionGroup
     {
         private InterfaceActionService action_service;
         private Dictionary<MenuItem, PlaylistSource> playlist_menu_map = new Dictionary<MenuItem, PlaylistSource> ();
@@ -49,7 +51,8 @@ namespace Banshee.Gui
 
         private static readonly string [] require_selection_actions = new string [] {
             "TrackContextMenuAction", "TrackPropertiesAction", "AddToPlaylistAction",
-            "RemoveTracksAction", "RateTracksAction", "SelectNoneAction"
+            "RemoveTracksAction", "RemoveTracksFromLibraryAction", "DeleteTracksFromDriveAction",
+            "RateTracksAction", "SelectNoneAction"
         };
 
         private IHasTrackSelection track_selector;
@@ -66,7 +69,7 @@ namespace Banshee.Gui
                 if (track_selector != null) {
                     track_selector.TrackSelectionProxy.Changed += HandleSelectionChanged;
                     track_selector.TrackSelectionProxy.SelectionChanged += HandleSelectionChanged;
-                    Sensitize ();
+                    UpdateActions ();
                 }
             }
         }
@@ -88,8 +91,8 @@ namespace Banshee.Gui
                     Catalog.GetString("Unselect all tracks"), OnSelectNone),
 
                 new ActionEntry ("TrackPropertiesAction", Stock.Edit,
-                    Catalog.GetString ("_Track Properties"), null,
-                    Catalog.GetString ("Edit metadata on selected songs"), OnTrackProperties),
+                    Catalog.GetString ("_Edit Track Metadata"), null,
+                    Catalog.GetString ("Edit metadata on selected tracks"), OnTrackProperties),
 
                 new ActionEntry ("AddToPlaylistAction", Stock.Add,
                     Catalog.GetString ("Add _to Playlist"), null,
@@ -103,7 +106,15 @@ namespace Banshee.Gui
 
                 new ActionEntry ("RemoveTracksAction", Stock.Remove,
                     Catalog.GetString("_Remove"), "Delete",
-                    Catalog.GetString("Remove selected song(s) from library"), OnRemoveTracks),
+                    Catalog.GetString("Remove selected track(s) from this source"), OnRemoveTracks),
+
+                new ActionEntry ("RemoveTracksFromLibraryAction", null,
+                    Catalog.GetString("Remove From _Library"), "",
+                    Catalog.GetString("Remove selected track(s) from library"), OnRemoveTracksFromLibrary),
+
+                new ActionEntry ("DeleteTracksFromDriveAction", null,
+                    Catalog.GetString ("_Delete From Drive"), null,
+                    Catalog.GetString ("Permanently delete selected song(s) from medium"), OnDeleteTracksFromDrive),
 
                 new ActionEntry ("RateTracksAction", null,
                     String.Empty, null, null, OnRateTracks),
@@ -112,25 +123,31 @@ namespace Banshee.Gui
             action_service.UIManager.ActionsChanged += HandleActionsChanged;
 
             action_service.GlobalActions["EditMenuAction"].Activated += HandleEditMenuActivated;
+            ServiceManager.SourceManager.ActiveSourceChanged += HandleActiveSourceChanged;
 
             this["AddToPlaylistAction"].HideIfEmpty = false;
         }
 
 #region State Event Handlers
 
+        private void HandleActiveSourceChanged (SourceEventArgs args)
+        {
+            UpdateActions ();
+        }
+
         private void HandleActionsChanged (object sender, EventArgs args)
         {
             if (action_service.UIManager.GetAction ("/MainMenu/EditMenu") != null) {
                 rating_proxy = new RatingActionProxy (action_service.UIManager, this["RateTracksAction"]);
-                rating_proxy.AddPath ("/MainMenu/EditMenu", "RemoveTracks");
-                rating_proxy.AddPath ("/TrackContextMenu", "RemoveTracks");
+                rating_proxy.AddPath ("/MainMenu/EditMenu", "AddToPlaylist");
+                rating_proxy.AddPath ("/TrackContextMenu", "AddToPlaylist");
                 action_service.UIManager.ActionsChanged -= HandleActionsChanged;
             }
         }
 
         private void HandleSelectionChanged (object sender, EventArgs args)
         {
-            Sensitize ();
+            UpdateActions ();
         }
 
         private void HandleEditMenuActivated (object sender, EventArgs args)
@@ -142,9 +159,10 @@ namespace Banshee.Gui
 
 #region Utility Methods
 
-        private void Sensitize ()
+        private void UpdateActions ()
         {
             Hyena.Collections.Selection selection = TrackSelector.TrackSelectionProxy.Selection;
+            Source source = ServiceManager.SourceManager.ActiveSource;
 
             if (selection != null) {
                 bool has_selection = selection.Count > 0;
@@ -152,25 +170,32 @@ namespace Banshee.Gui
                     this[action].Sensitive = has_selection;
 
                 this["SelectAllAction"].Sensitive = !selection.AllSelected;
+
+                if (source != null) {
+                    ITrackModelSource track_source = source as ITrackModelSource;
+                    bool is_track_source = track_source != null;
+
+                    UpdateAction ("RemoveTracksAction", is_track_source,
+                        has_selection && is_track_source && track_source.CanRemoveTracks, source
+                    );
+
+                    UpdateAction ("DeleteTracksFromDriveAction", is_track_source,
+                        has_selection && is_track_source && track_source.CanDeleteTracks, source
+                    );
+
+                    UpdateAction ("RemoveTracksFromLibraryAction", source.Parent is LibrarySource, has_selection, null);
+                }
             }
         }
 
         private void ResetRating ()
         {
-            bool first = true;
             int rating = 0;
 
-            // If all the selected tracks have the same rating, show it
-            foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
-                if (track == null)
-                    continue;
-
-                if (first) {
+            // If there is only one track, get the preset rating
+            if (TrackSelector.TrackSelectionProxy.Selection.Count == 1) {
+                foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
                     rating = track.Rating;
-                    first = false;
-                } else if (track.Rating != rating) {
-                    rating = 0;
-                    break;
                 }
             }
             rating_proxy.Reset (rating);
@@ -257,10 +282,39 @@ namespace Banshee.Gui
 
         private void OnRemoveTracks (object o, EventArgs args)
         {
-            Source source = ServiceManager.SourceManager.ActiveSource;
+            ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
 
-            if (source is PlaylistSource) {
-                (source as PlaylistSource).RemoveTracks (TrackSelector.TrackSelectionProxy.Selection);
+            if (!ConfirmRemove (source, false, source.TrackModel.Selection.Count))
+                return;
+
+            if (source != null && source.CanRemoveTracks) {
+                source.RemoveSelectedTracks ();
+            }
+        }
+
+        private void OnRemoveTracksFromLibrary (object o, EventArgs args)
+        {
+            ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
+
+            if (source != null) {
+                LibrarySource library = source.Parent as LibrarySource;
+                if (library != null) {
+                    if (!ConfirmRemove (library, false, source.TrackModel.Selection.Count))
+                        return;
+                    library.RemoveSelectedTracks (source.TrackModel as TrackListDatabaseModel);
+                }
+            }
+        }
+
+        private void OnDeleteTracksFromDrive (object o, EventArgs args)
+        {
+            ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
+
+            if (!ConfirmRemove (source, true, source.TrackModel.Selection.Count))
+                return;
+
+            if (source != null && source.CanDeleteTracks) {
+                source.DeleteSelectedTracks ();
             }
         }
 
@@ -275,5 +329,49 @@ namespace Banshee.Gui
 
 #endregion
 
+        private static bool ConfirmRemove (ITrackModelSource source, bool delete, int selCount)
+        {
+            bool ret = false;
+            string header = null;
+            string message = null;
+            string button_label = null;
+            
+            if (delete) {
+                header = String.Format (
+                    Catalog.GetPluralString (
+                        "Are you sure you want to permanently delete this song?",
+                        "Are you sure you want to permanently delete the selected {0} songs?", selCount
+                    ), selCount
+                );
+                message = Catalog.GetString ("If you delete the selection, it will be permanently lost.");
+                button_label = "gtk-delete";
+            } else {
+                header = String.Format (Catalog.GetString ("Remove selection from {0}?"), source.Name);
+                message = String.Format (
+                    Catalog.GetPluralString (
+                        "Are you sure you want to remove the selected song from your {1}?",
+                        "Are you sure you want to remove the selected {0} songs from your {1}?", selCount
+                    ), selCount, source.GenericName
+                );
+                button_label = "gtk-remove";
+            }
+                
+            HigMessageDialog md = new HigMessageDialog (
+                ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow,
+                DialogFlags.DestroyWithParent, delete ? MessageType.Warning : MessageType.Question,
+                ButtonsType.None, header, message
+            );
+            md.AddButton ("gtk-cancel", ResponseType.No, false);
+            md.AddButton (button_label, ResponseType.Yes, false);
+            
+            try {
+                if (md.Run () == (int) ResponseType.Yes) {
+                    ret = true;
+                }
+            } finally {
+                md.Destroy ();
+            }
+            return ret;
+        }
     }
 }

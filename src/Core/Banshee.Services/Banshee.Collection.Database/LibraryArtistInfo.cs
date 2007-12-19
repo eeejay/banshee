@@ -29,10 +29,19 @@
 using System;
 using System.Data;
 
+using Mono.Unix;
+
+using Banshee.Database;
+using Banshee.ServiceStack;
+
 namespace Banshee.Collection.Database
 {    
     public class LibraryArtistInfo : ArtistInfo
     {
+        private static BansheeDbCommand select_command = new BansheeDbCommand (
+            "SELECT ArtistID, Name FROM CoreArtists WHERE Name = ?", 1
+        );
+
         private int dbid;
 
         private enum Column : int {
@@ -40,15 +49,69 @@ namespace Banshee.Collection.Database
             Name
         }
 
+        public LibraryArtistInfo (string artistName) : base (null)
+        {
+            if (artistName == null || artistName.Trim () == String.Empty)
+                artistName = Catalog.GetString ("Unknown Artist");
+
+            IDataReader reader = ServiceManager.DbConnection.ExecuteReader (select_command.ApplyValues (artistName));
+
+            if (reader.Read ()) {
+                LoadFromReader (reader);
+            } else {
+                dbid = -1;
+                Name = artistName;
+                Save ();
+            }
+
+            reader.Dispose ();
+        }
+
         public LibraryArtistInfo(IDataReader reader) : base(null)
         {
             LoadFromReader(reader);
         }
 
+        public void Save ()
+        {
+            if (DbId < 0) {
+                InsertCommit ();
+            } else {
+                UpdateCommit ();
+            }
+        }
+
+        private void InsertCommit ()
+        {
+            TableSchema.CoreArtists.InsertCommand.ApplyValues (
+                null, // ArtistID
+                -1, // TagSetID
+                null, // MusicBrainzID
+                Name ?? String.Empty,
+                0 // rating
+            );
+            
+            dbid = ServiceManager.DbConnection.Execute (TableSchema.CoreArtists.InsertCommand);
+        }
+        
+        private void UpdateCommit ()
+        {
+            TableSchema.CoreArtists.UpdateCommand.ApplyValues (
+                DbId,
+                -1, // TagSetID
+                null, // MusicBrainzID
+                Name,
+                0, // rating
+                DbId // ArtistID (again, for WHERE clause)
+            );
+
+            ServiceManager.DbConnection.Execute (TableSchema.CoreArtists.UpdateCommand);
+        }
+
         private void LoadFromReader(IDataReader reader)
         {
             dbid = Convert.ToInt32(reader[(int)Column.ArtistID]);
-            Name = (string)reader[(int)Column.Name];
+            Name = reader[(int)Column.Name] as string;
         }
 
         public int DbId {

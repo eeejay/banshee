@@ -38,6 +38,7 @@ SOURCES =  \
 	Banshee.Gui.Widgets/TrackInfoDisplay.cs \
 	Banshee.Gui.Widgets/UserJobTile.cs \
 	Banshee.Gui.Widgets/UserJobTileHost.cs \
+	Banshee.Gui/BansheeActionGroup.cs \
 	Banshee.Gui/BansheeIconFactory.cs \
 	Banshee.Gui/CommonServices.cs \
 	Banshee.Gui/GlobalActions.cs \

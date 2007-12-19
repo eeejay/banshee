@@ -40,7 +40,7 @@ using Banshee.Gui.Dialogs;
 
 namespace Banshee.Gui
 {
-    public class SourceActions : ActionGroup
+    public class SourceActions : BansheeActionGroup
     {
         private InterfaceActionService action_service;
 
@@ -80,16 +80,15 @@ namespace Banshee.Gui
             //ServiceManager.SourceManager.SourceViewChanged += OnPlayerEngineStateChanged;
             //ServiceManager.SourceManager.SourceAdded += OnPlayerEngineStateChanged;
             //ServiceManager.SourceManager.SourceRemoved += OnPlayerEngineStateChanged;
-            ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
+            ServiceManager.SourceManager.ActiveSourceChanged += HandleActiveSourceChanged;
             action_service.GlobalActions["EditMenuAction"].Activated += HandleEditMenuActivated;
         }
             
 #region State Event Handlers
 
-        private void OnActiveSourceChanged (SourceEventArgs args)
+        private void HandleActiveSourceChanged (SourceEventArgs args)
         {
-            //this ["RenameSourceAction"].Sensitive = true;
-            //action_service
+            UpdateActions ();
         }
 
         private void HandleEditMenuActivated (object sender, EventArgs args)
@@ -149,20 +148,13 @@ namespace Banshee.Gui
         {
             Source source = SourceView.HighlightedSource;
 
-            IUnmapableSource unmapable = source as IUnmapableSource;
-            this ["UnmapSourceAction"].Visible = (unmapable != null);
-            if (unmapable != null) {
-                this ["UnmapSourceAction"].Sensitive = unmapable.CanUnmap;
-                this ["UnmapSourceAction"].Label = String.Format ("Remove {0}", source.Name);
+            if (source != null) {
+                IUnmapableSource unmapable = source as IUnmapableSource;
+                UpdateAction ("UnmapSourceAction", unmapable != null, unmapable != null && unmapable.CanUnmap, source);
+                UpdateAction ("RenameSourceAction", source.CanRename, true, null);
+                UpdateAction ("ImportSourceAction", source is IImportable, true, source);
+                UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
             }
-
-            // In addition to hiding, we set insensitive so any key bindings won't work
-
-            this ["RenameSourceAction"].Visible = source.CanRename;
-            this ["RenameSourceAction"].Sensitive = source.CanRename;
-
-            this ["ImportSourceAction"].Visible = (source is IImportable);
-            this ["ImportSourceAction"].Sensitive = (source is IImportable);
         }
 
         private static bool ConfirmUnmap(IUnmapableSource source)

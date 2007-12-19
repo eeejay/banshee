@@ -27,7 +27,10 @@
 //
 
 using System;
+using System.Collections.Generic;
+
 using NDesk.DBus;
+
 using Banshee.Collection;
 
 namespace Banshee.Sources
@@ -37,5 +40,13 @@ namespace Banshee.Sources
         TrackListModel TrackModel { get; }
         AlbumListModel AlbumModel { get; }
         ArtistListModel ArtistModel { get; }
+
+        void Reload ();
+
+        void RemoveSelectedTracks ();
+        void DeleteSelectedTracks ();
+
+        bool CanRemoveTracks { get; }
+        bool CanDeleteTracks { get; }
     }
 }

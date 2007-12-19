@@ -1,3 +1,63 @@
+2007-12-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* data/icon-theme-hicolor/Makefile:
+	* data/icon-theme-hicolor/Makefile.in: Remove from svn.
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Set TrackInfo.Uri
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	Sort by AlbumTitle, ArtistName, not just AlbumTitle.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
+	Make count_command a static BansheeDbCommand so it's not parsed every time.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	Add constructor that will return the existing album/artist of the given
+	name or create a new one.  Add Save method that inserts/updates.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Add static method for determining if a Uri is already in the Library.
+	Save the ArtistId/AlbumID when inserting/updating.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Return this from ApplyValues to allow chaining.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Don't
+	import files that are already imported.  Set the DateAdded.
+	Find/create/associate artist and album.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Add
+	implementations to remove and delete tracks.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Fix bug
+	where removing tracks would remove them from all playlists.  Add label
+	overrides for Remove/Unmap actions.  Override remove/delete track methods.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add virtual
+	implementations for Remove/Delete methods, and a helper/delegate for
+	iterating over a track selection's ranges (used to efficiently remove
+	tracks, for example). 
+
+	* src/Core/Banshee.Services/Banshee.Sources/ITrackModelSource.cs: Add
+	methods/properties for removing/deleting tracks.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add HasProperties
+	property.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs
+	* src/Core/Banshee.ThickClient/Makefile.am: New base class providing some
+	helper methods.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Use
+	BansheeActionGroup helpers.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	RemoveTracksFromLibraryAction and DeleteTracksFromDriveAction.  If
+	mutliple files are selected, don't preset the rating (so we don't have to
+	scan all files).  Add ConfirmRemove method for confirmation dialogs.
+
 2007-12-19  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* src/Core/Banshee.Base/NetworkManager/Manager.cs: Work around

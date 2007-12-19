@@ -29,6 +29,8 @@
 using System;
 using System.IO;
 
+using Mono.Unix;
+
 using Banshee.Base;
 using Banshee.Sources;
 using Banshee.ServiceStack;
@@ -91,9 +93,23 @@ namespace Banshee.Library
             }
             
             try {
-                TagLib.File file = StreamTagger.ProcessUri (new SafeUri (path));
+                SafeUri uri = new SafeUri (path);
+
+                if (LibraryTrackInfo.ContainsPath (uri.AbsoluteUri)) {
+                    //LogError (path, Catalog.GetString ("Track already in Library"));
+                    IncrementProcessedCount (null);
+                    return;
+                }
+
+                TagLib.File file = StreamTagger.ProcessUri (uri);
                 LibraryTrackInfo track = new LibraryTrackInfo ();
                 StreamTagger.TrackInfoMerge (track, file);
+
+                track.DateAdded = DateTime.Now;
+                LibraryArtistInfo artist = new LibraryArtistInfo (track.ArtistName);
+                track.ArtistId = artist.DbId;
+                track.AlbumId = new LibraryAlbumInfo (artist, track.AlbumTitle).DbId;
+
                 track.Save ();
                 
                 IncrementProcessedCount (String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle));
@@ -105,10 +121,15 @@ namespace Banshee.Library
 
         private void LogError (string path, Exception e)
         {
+            LogError (path, e.Message);
+        }
+
+        private void LogError (string path, string msg)
+        {
             ErrorSource error_source = ((LibrarySource)ServiceManager.SourceManager.DefaultSource).ErrorSource;
-            error_source.AddMessage (Path.GetFileName (path), e.Message);
+            error_source.AddMessage (Path.GetFileName (path), msg);
             
-            Log.Error (path, e.Message, false);
+            Log.Error (path, msg, false);
         }
 
         protected override void OnImportFinished ()

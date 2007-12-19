@@ -46,8 +46,8 @@ namespace Banshee.Collection.Database
         private IDatabaseModel<T> db_model;
         private int uid;
         private string reload_command;
-        private string count_command;
 
+        private static BansheeDbCommand count_command = new BansheeDbCommand ("SELECT COUNT(*) FROM CoreCache WHERE ModelID = ?", 1);
         private BansheeDbCommand select_command;
 
         private static bool cache_initialized = false;
@@ -60,7 +60,6 @@ namespace Banshee.Collection.Database
 
             uid = CacheTable.model_count++;
 
-            count_command = String.Format ("SELECT COUNT(*) FROM CoreCache WHERE ModelID = {0}", uid);
             reload_command = String.Format (@"
                 DELETE FROM CoreCache WHERE ModelID = {0};
                     INSERT INTO CoreCache SELECT null, {0}, {1} ",
@@ -98,7 +97,7 @@ namespace Banshee.Collection.Database
             int rows;
             using (new Timer (String.Format ("Counting items for {0}", db_model))) {
                 //Console.WriteLine("Count query: {0}", count_command);
-                rows = Convert.ToInt32 (connection.ExecuteScalar (count_command));
+                rows = Convert.ToInt32 (connection.ExecuteScalar (count_command.ApplyValues (uid)));
             }
             return rows;
         }

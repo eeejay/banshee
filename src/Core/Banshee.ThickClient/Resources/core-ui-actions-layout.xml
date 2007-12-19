@@ -21,11 +21,14 @@
 
         <menu name="EditMenu" action="EditMenuAction">
             <menu name="AddToPlaylist" action="AddToPlaylistAction"></menu>
-            <menuitem name="RemoveTracks" action="RemoveTracksAction" />
             <menuitem name="TrackProperties" action="TrackPropertiesAction" />
             <separator />
             <menuitem name="SelectAll" action="SelectAllAction" />
             <menuitem name="SelectNone" action="SelectNoneAction" />
+            <separator />
+            <menuitem name="RemoveTracks" action="RemoveTracksAction" />
+            <menuitem name="RemoveTracksFromLibrary" action="RemoveTracksFromLibraryAction" />
+            <menuitem name="DeleteTracksFromDrive" action="DeleteTracksFromDriveAction" />
             <separator />
             <menuitem name="RenameSource" action="RenameSourceAction" />
             <!--<menuitem name="ExportPlaylist" action="ExportPlaylistAction" />-->
@@ -102,10 +105,11 @@
 
     <popup name="TrackContextMenu" action="TrackContextMenuAction">
         <menu name="AddToPlaylist" action="AddToPlaylistAction"></menu>
-        <menuitem name="RemoveTracks" action="RemoveTracksAction" />
         <separator />
-        <!--<menuitem name="CopySongs" action="CopySongsAction" />-->
-        <!--<menuitem name="DeleteSongsFromDrive" action="DeleteSongsFromDriveAction" />
+        <menuitem name="RemoveTracks" action="RemoveTracksAction" />
+        <menuitem name="RemoveTracksFromLibrary" action="RemoveTracksFromLibraryAction" />
+        <menuitem name="DeleteTracksFromDrive" action="DeleteTracksFromDriveAction" />
+        <!--
         <separator />
         <menu name="SearchMenu" action="SearchMenuAction">
             <menuitem name="SearchForSameArtist" action="SearchForSameArtistAction" />

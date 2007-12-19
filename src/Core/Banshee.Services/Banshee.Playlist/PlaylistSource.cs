@@ -67,9 +67,9 @@ namespace Banshee.Playlist
             );
 
             remove_tracks_command = new BansheeDbCommand (@"
-                DELETE FROM CorePlaylistEntries WHERE TrackID IN
-                    (SELECT ItemID FROM CoreCache
-                        WHERE ModelID = ? LIMIT ?, ?)", 3
+                DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND
+                    TrackID IN (SELECT ItemID FROM CoreCache
+                        WHERE ModelID = ? LIMIT ?, ?)", 4
             );
         }
 
@@ -96,6 +96,8 @@ namespace Banshee.Playlist
         public PlaylistSource (string name, int? dbid) : base (generic_name, name, 500)
         {
             Properties.SetString ("IconName", "source-playlist");
+            Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
+            Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
             DbId = dbid;
         }
 
@@ -105,6 +107,24 @@ namespace Banshee.Playlist
         {
             base.Rename (newName);
             Commit ();
+        }
+
+#endregion
+
+#region DatabaseSource overrides
+
+        // We can delete tracks only if our parent can
+        public override bool CanDeleteTracks {
+            get {
+                DatabaseSource ds = Parent as DatabaseSource;
+                return ds != null && ds.CanDeleteTracks;
+            }
+        }
+
+        // Have our parent handle deleting tracks
+        public override void DeleteSelectedTracks (TrackListDatabaseModel model)
+        {
+            (Parent as DatabaseSource).DeleteSelectedTracks (model);
         }
 
 #endregion
@@ -154,28 +174,11 @@ namespace Banshee.Playlist
             }
         }
 
-        public void RemoveTracks (Selection selection)
+        protected override void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
         {
-            if (selection.Count == 0)
-                return;
-
-            lock (track_model) {
-                using (new Timer ("Removing tracks from playlist")) {
-                    foreach (RangeCollection.Range range in selection.Ranges) {
-                        remove_tracks_command.ApplyValues (track_model.CacheId, range.Start, range.End - range.Start + 1);
-                        Console.WriteLine ("Removing selection with: {0}\n{1}", remove_tracks_command, remove_tracks_command.CommandText);
-                        ServiceManager.DbConnection.Execute (remove_tracks_command);
-                    }
-                }
-                Reload ();
-            }
-        }
-
-        private void Reload ()
-        {
-            track_model.Reload ();
-            artist_model.Reload ();
-            album_model.Reload ();
+            remove_tracks_command.ApplyValues (DbId, model.CacheId, range.Start, range.End - range.Start + 1);
+            Console.WriteLine ("Removing selection with: {0}\n{1}", remove_tracks_command, remove_tracks_command.CommandText);
+            ServiceManager.DbConnection.Execute (remove_tracks_command);
         }
 
         protected void Commit ()

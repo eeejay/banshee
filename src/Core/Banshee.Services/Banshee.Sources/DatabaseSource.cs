@@ -28,9 +28,11 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 using Mono.Unix;
 using Hyena.Data;
+using Hyena.Collections;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
@@ -41,6 +43,8 @@ namespace Banshee.Sources
 {
     public abstract class DatabaseSource : Source, ITrackModelSource
     {
+        protected delegate void TrackRangeHandler (TrackListDatabaseModel model, RangeCollection.Range range);
+
         protected TrackListDatabaseModel track_model;
         protected AlbumListDatabaseModel album_model;
         protected ArtistListDatabaseModel artist_model;
@@ -51,27 +55,25 @@ namespace Banshee.Sources
             album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection);
             artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection);
         }
-        
-        protected void AfterInitialized ()
-        {
-            track_model.Reload ();
-            artist_model.Reload ();
-            album_model.Reload ();
-            
-            track_model.Reloaded += OnTrackModelReloaded;
-            
-            OnSetupComplete ();
-        }
 
-        private void OnTrackModelReloaded (object o, EventArgs args)
-        {
-            OnUpdated ();
-        }
+#region Public Properties
 
         public override int Count {
             get { return track_model is IFilterable ? ((IFilterable)track_model).UnfilteredCount : track_model.Count; }
         }
-        
+
+        public virtual bool CanRemoveTracks {
+            get { return true; }
+        }
+
+        public virtual bool CanDeleteTracks {
+            get { return true; }
+        }
+
+        public override string TrackModelPath {
+            get { return DBusServiceManager.MakeObjectPath (track_model); }
+        }
+
         public TrackListModel TrackModel {
             get { return track_model; }
         }
@@ -83,9 +85,98 @@ namespace Banshee.Sources
         public ArtistListModel ArtistModel {
             get { return artist_model; }
         }
-        
-        public override string TrackModelPath {
-            get { return DBusServiceManager.MakeObjectPath (track_model); }
+
+#endregion
+
+#region Public Methods
+
+        public virtual void Reload ()
+        {
+            track_model.Reload ();
+            artist_model.Reload ();
+            album_model.Reload ();
         }
+
+        // Methods for removing tracks from this source
+        /*public virtual void RemoveTracks (IEnumerable<TrackInfo> tracks)
+        {
+            throw new NotImplementedException(); 
+        }*/
+
+        public virtual void RemoveSelectedTracks ()
+        {
+            RemoveSelectedTracks (track_model);
+        }
+
+        public virtual void RemoveSelectedTracks (TrackListDatabaseModel model)
+        {
+            WithTrackSelection (model, RemoveTrackRange);
+        }
+
+        // Methods for deleting tracks from this source
+        /*public virtual void DeleteTracks (IEnumerable<TrackInfo> tracks)
+        {
+            throw new NotImplementedException(); 
+        }*/
+
+        public virtual void DeleteSelectedTracks ()
+        {
+            DeleteSelectedTracks (track_model);
+        }
+
+        public virtual void DeleteSelectedTracks (TrackListDatabaseModel model)
+        {
+            WithTrackSelection (model, DeleteTrackRange);
+        }
+
+#endregion
+        
+#region Protected Methods
+
+        protected void AfterInitialized ()
+        {
+            Reload ();
+            
+            track_model.Reloaded += OnTrackModelReloaded;
+            
+            OnSetupComplete ();
+        }
+
+        protected virtual void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        {
+            throw new NotImplementedException(); 
+        }
+
+
+        protected virtual void DeleteTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        {
+            throw new NotImplementedException(); 
+        }
+
+        protected void WithTrackSelection (TrackListDatabaseModel model, TrackRangeHandler handler)
+        {
+            Selection selection = model.Selection;
+            if (selection.Count == 0)
+                return;
+
+            lock (track_model) {
+                foreach (RangeCollection.Range range in selection.Ranges) {
+                    handler (model, range);
+                }
+                Reload ();
+            }
+        }
+
+#endregion
+
+#region Private Methods
+
+        private void OnTrackModelReloaded (object o, EventArgs args)
+        {
+            OnUpdated ();
+        }
+
+#endregion
+
     }
 }

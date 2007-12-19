@@ -234,6 +234,10 @@ namespace Banshee.Sources
             get { return true; }
         }
 
+        public virtual bool HasProperties {
+            get { return false; }
+        }
+
         public string Name {
             get { return properties.GetString("Name"); }
             set { properties.SetString("Name", value); }

@@ -147,22 +147,22 @@ namespace Banshee.Collection.Database
         {
             TableSchema.CoreTracks.InsertCommand.ApplyValues (
                 null, // TrackID
-                -1, // ArtistID
-                -1, // AlbumID
+                ArtistId,
+                AlbumId,
                 -1, // TagSetID
                 null, // MusicBrainzID
                 Uri == null ? null : Uri.AbsoluteUri, // RelativeUri
-                MimeType, // MimeType
-                TrackTitle, // Title
-                TrackNumber, // TrackNumber
-                TrackCount, // TrackCount
-                Duration.TotalMilliseconds, // Duration
-                Year, // Year
-                Rating, // Rating
-                PlayCount, // PlayCount
-                SkipCount, // SkipCount
-                DateTimeUtil.FromDateTime (LastPlayed), // LastPlayedStamp
-                DateTimeUtil.FromDateTime (DateAdded) // DateAddedStamp
+                MimeType,
+                TrackTitle,
+                TrackNumber,
+                TrackCount,
+                Duration.TotalMilliseconds,
+                Year,
+                Rating,
+                PlayCount,
+                SkipCount,
+                DateTimeUtil.FromDateTime (LastPlayed),
+                DateTimeUtil.FromDateTime (DateAdded)
             );
             
             DbId = ServiceManager.DbConnection.Execute (TableSchema.CoreTracks.InsertCommand);
@@ -172,22 +172,22 @@ namespace Banshee.Collection.Database
         {
             TableSchema.CoreTracks.UpdateCommand.ApplyValues (
                 DbId, // TrackID
-                ArtistId, // ArtistID
-                AlbumId, // AlbumID
+                ArtistId,
+                AlbumId,
                 -1, // TagSetID
                 null, // MusicBrainzID
                 Uri == null ? null : Uri.AbsoluteUri, // RelativeUri
-                MimeType, // MimeType
-                TrackTitle, // Title
-                TrackNumber, // TrackNumber
-                TrackCount, // TrackCount
-                Duration.TotalMilliseconds, // Duration
-                Year, // Year
-                Rating, // Rating
-                PlayCount, // PlayCount
-                SkipCount, // SkipCount
-                DateTimeUtil.FromDateTime (LastPlayed), // LastPlayedStamp
-                DateTimeUtil.FromDateTime (DateAdded), // DateAddedStamp
+                MimeType,
+                TrackTitle,
+                TrackNumber,
+                TrackCount,
+                Duration.TotalMilliseconds,
+                Year,
+                Rating,
+                PlayCount,
+                SkipCount,
+                DateTimeUtil.FromDateTime (LastPlayed),
+                DateTimeUtil.FromDateTime (DateAdded),
                 DbId // TrackID (again, for WHERE clause)
             );
 
@@ -213,6 +213,12 @@ namespace Banshee.Collection.Database
         public int AlbumId {
             get { return album_id; }
             set { album_id = value; }
+        }
+
+        private static BansheeDbCommand check_command = new BansheeDbCommand ("SELECT COUNT(*) FROM CoreTracks WHERE RelativeUri = ?", 1);
+        public static bool ContainsPath (string path)
+        {
+            return Convert.ToInt32 (ServiceManager.DbConnection.ExecuteScalar (check_command.ApplyValues (path))) > 0;
         }
     }
 }

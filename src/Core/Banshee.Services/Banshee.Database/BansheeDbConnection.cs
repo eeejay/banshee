@@ -291,7 +291,7 @@ namespace Banshee.Database
             ApplyValues (param_values);
         }
 
-        public void ApplyValues (params object [] param_values)
+        public BansheeDbCommand ApplyValues (params object [] param_values)
         {
             if (param_values.Length != Parameters.Count) {
                 throw new ArgumentException (String.Format (
@@ -302,6 +302,8 @@ namespace Banshee.Database
             for (int i = 0; i < param_values.Length; i++) {
                 Parameters[i].Value = param_values[i];
             }
+
+            return this;
         }
         
         public void AddNamedParameter (string name, object value)

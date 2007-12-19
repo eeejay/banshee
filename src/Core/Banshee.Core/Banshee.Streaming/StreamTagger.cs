@@ -54,6 +54,7 @@ namespace Banshee.Streaming
         
         public static void TrackInfoMerge(TrackInfo track, TagLib.File file)
         {
+            track.Uri = new SafeUri (file.Name);
             track.ArtistName = Choose(file.Tag.JoinedPerformers, track.ArtistName);
             track.AlbumTitle = Choose(file.Tag.Album, track.AlbumTitle);
             track.TrackTitle = Choose(file.Tag.Title, track.TrackTitle);

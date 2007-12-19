@@ -66,9 +66,9 @@ namespace Banshee.Collection.Database
             bool either = (artist_id_filter_query != null) || (track_model != null);
             bool both = (artist_id_filter_query != null) && (track_model != null);
             reload_fragment = String.Format (@"
-                FROM CoreAlbums
+                FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID 
                     {0} {1} {2} {3}
-                    ORDER BY Title",
+                    ORDER BY CoreAlbums.Title, CoreArtists.Name",
                 either ? "WHERE" : null,
                 artist_id_filter_query,
                 both ? "AND" : null,

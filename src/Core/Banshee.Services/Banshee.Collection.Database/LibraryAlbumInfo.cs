@@ -29,11 +29,21 @@
 using System;
 using System.Data;
 
+using Mono.Unix;
+
+using Banshee.Database;
+using Banshee.ServiceStack;
+
 namespace Banshee.Collection.Database
 {    
     public class LibraryAlbumInfo : AlbumInfo
     {
+        private static BansheeDbCommand select_command = new BansheeDbCommand (
+            "SELECT AlbumID, Title FROM CoreAlbums WHERE ArtistID = ? AND Title = ?", 2
+        );
+
         private int dbid;
+        private int artist_id;
 
         private enum Column : int {
             AlbumID,
@@ -41,20 +51,89 @@ namespace Banshee.Collection.Database
             ArtistName
         }
 
+        public LibraryAlbumInfo (LibraryArtistInfo artist, string title) : base (null)
+        {
+            if (title == null || title.Trim () == String.Empty)
+                title = Catalog.GetString ("Unknown Album");
+
+            IDataReader reader = ServiceManager.DbConnection.ExecuteReader (select_command.ApplyValues (artist.DbId, title));
+
+            if (reader.Read ()) {
+                dbid = Convert.ToInt32 (reader[(int) Column.AlbumID]);
+                Title = reader[(int) Column.Title] as string;
+                ArtistName = artist.Name;
+            } else {
+                dbid = -1;
+                artist_id = artist.DbId;
+                Title = title;
+                Save ();
+            }
+
+            reader.Dispose ();
+        }
+
         public LibraryAlbumInfo(IDataReader reader) : base(null)
         {
             LoadFromReader(reader);
         }
 
+        public void Save ()
+        {
+            if (DbId < 0) {
+                InsertCommit ();
+            } else {
+                UpdateCommit ();
+            }
+        }
+
+        private void InsertCommit ()
+        {
+            TableSchema.CoreAlbums.InsertCommand.ApplyValues (
+                null, // AlbumID
+                ArtistId,
+                -1, // TagSetID
+                null, // MusicBrainzID
+                Title,
+                0,
+                0,
+                0,
+                0
+            );
+            
+            dbid = ServiceManager.DbConnection.Execute (TableSchema.CoreAlbums.InsertCommand);
+        }
+        
+        private void UpdateCommit ()
+        {
+            TableSchema.CoreAlbums.UpdateCommand.ApplyValues (
+                DbId,
+                ArtistId,
+                -1, // TagSetID
+                null, // MusicBrainzID
+                Title,
+                0,
+                0,
+                0,
+                0,
+                DbId // AlbumID (again, for WHERE clause)
+            );
+
+            ServiceManager.DbConnection.Execute (TableSchema.CoreAlbums.UpdateCommand);
+        }
+
         private void LoadFromReader(IDataReader reader)
         {
             dbid = Convert.ToInt32(reader[(int)Column.AlbumID]);
-            Title = (string)reader[(int)Column.Title];
-            ArtistName = (string)reader[(int)Column.ArtistName];
+            Title = reader[(int)Column.Title] as string;
+            ArtistName = reader[(int)Column.ArtistName] as string;
         }
 
         public int DbId {
             get { return dbid; }
+        }
+
+        public int ArtistId {
+            get { return artist_id; }
         }
     }
 }
