@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nautilus\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-08 10:15+0200\n"
-"PO-Revision-Date: 2007-12-08 10:20+0200\n"
+"POT-Creation-Date: 2007-12-19 23:47+0200\n"
+"PO-Revision-Date: 2007-12-19 23:50+0200\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: i18n@mova.org <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
@@ -199,6 +199,14 @@ msgstr "Muzyčny player Banshee"
 msgid "Music Player"
 msgstr "Muzyčny player"
 
+#: ../src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:84
+msgid "No available profiles"
+msgstr "Niama profilaŭ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:72
+msgid "Advanced"
+msgstr "Pašyrany"
+
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:1
 msgid "0"
 msgstr "0"
@@ -349,7 +357,7 @@ msgid "Delete the active preset"
 msgstr "Vydal aktyŭny raskład"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:38
-#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:69
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:70
 msgid "Details"
 msgstr "Detali"
 
@@ -396,7 +404,7 @@ msgid "Equalizer"
 msgstr "Equalizer"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:49
-#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:68
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:69
 msgid "Error"
 msgstr "Pamyłka"
 
@@ -852,12 +860,12 @@ msgid "_Music"
 msgstr "_Muzyka"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:68
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:56
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:59
 msgid "_New Playlist"
 msgstr "_Novy śpis"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:69
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:57
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:60
 msgid "Create a new empty playlist"
 msgstr "Stvary novy pusty śpis"
 
@@ -906,12 +914,12 @@ msgid "Write selection to audio CD"
 msgstr "Zapišy zaznačanyja pieśni na hukavy CD"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:92
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:60
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:66
 msgid "Import Source"
 msgstr "Impartuj krynicu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:93
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:61
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:67
 msgid "Import source to library"
 msgstr "Impartuj krynicu ŭ biblijateku"
 
@@ -939,6 +947,7 @@ msgid "_Edit"
 msgstr "_Redahuj"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:119
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:86
 msgid "Select _All"
 msgstr "Zaznač _usio"
 
@@ -947,6 +956,7 @@ msgid "Select all songs in song list"
 msgstr "Zaznač usie pieśni ŭ śpisie"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:123
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:90
 msgid "Select _None"
 msgstr "_Anuluj zaznačeńnie"
 
@@ -1062,7 +1072,7 @@ msgstr "_Vykanańnie"
 #: ../src/Core/Banshee.Base/ActionManager.cs:195
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:107
 #: ../src/Core/Banshee.Base/Source.cs:322
-#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:106
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:107
 msgid "Source"
 msgstr "Krynica"
 
@@ -1119,16 +1129,16 @@ msgid "Copy selected song(s) to clipboard"
 msgstr "Skapijuj zaznačanyja pieśni ŭ abmienny bufer"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:234
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:96
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:108
 msgid "_Remove"
 msgstr "_Vydal"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:235
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:97
 msgid "Remove selected song(s) from library"
 msgstr "Vydal zaznačanyja pieśni ź biblijateki"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:238
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:116
 msgid "_Delete From Drive"
 msgstr "_Vydal z dysku"
 
@@ -1141,7 +1151,6 @@ msgid "_Edit Song Metadata"
 msgstr "_Redahuj metaźviestki pieśni"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:243
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:83
 msgid "Edit metadata on selected songs"
 msgstr "Redahuj metaźviestki zaznačanych pieśniaŭ"
 
@@ -1178,12 +1187,12 @@ msgid "Search all songs of this genre"
 msgstr "Šukaj usie pieśni ŭ hetym styli"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:262
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:86
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:98
 msgid "Add _to Playlist"
 msgstr "Dadaj _da śpisu"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:263
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:87
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:99
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr "Dadaj zaznačanyja pieśni da śpisu albo stvary novy śpis z zaznačanych"
 
@@ -1336,13 +1345,13 @@ msgstr "Niemahčyma pračytać hukavy CD"
 
 #: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:88
 #: ../src/Core/Banshee.Base/TrackInfo.cs:291
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:135
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:132
 msgid "Unknown Artist"
 msgstr "Nieviadomy vykanaŭca"
 
 #: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:89
 #: ../src/Core/Banshee.Base/TrackInfo.cs:299
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:143
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:140
 msgid "Unknown Album"
 msgstr "Nieviadomy albom"
 
@@ -1414,14 +1423,6 @@ msgstr "Niemahčyma zimpartavać CD"
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "Impartavańnie {0} z {1}"
-
-#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:84
-msgid "No available profiles"
-msgstr "Niama profilaŭ"
-
-#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:72
-msgid "Advanced"
-msgstr "Pašyrany"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:69
 msgid "Audio Disc:"
@@ -2028,6 +2029,7 @@ msgstr "Numar pieśni"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:59
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:56
 msgid "Playlist"
 msgstr "Śpis"
 
@@ -2382,15 +2384,18 @@ msgid "Rename {0}"
 msgstr "Źmiani nazvu {0}"
 
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:54
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:100
 msgid "Delete Playlist"
 msgstr "Vydal śpis"
 
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:156
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:174
 #, csharp-format
 msgid "Are you sure you want to delete this {0}?"
 msgstr "Ty sapraŭdy chočaš vydalić {0}?"
 
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:165
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:183
 #, csharp-format
 msgid "Do not ask me this again"
 msgstr "Bolš nie pytaj mianie"
@@ -2480,7 +2485,7 @@ msgid "Eject {0}"
 msgstr "Vysuń {0}"
 
 #: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:56
-#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:38
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:46
 msgid "Import Errors"
 msgstr "Pamyłki impartavańnia"
 
@@ -2526,7 +2531,7 @@ msgstr "Lakalnaja čarha"
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:469
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:475
 #: ../src/Core/Banshee/PlayerInterface.cs:1624
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:91
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:103
 msgid "New Playlist"
 msgstr "Novy śpis"
 
@@ -2545,7 +2550,7 @@ msgid "Saving tags for {0}"
 msgstr "Zapis tagaŭ dla {0}"
 
 #: ../src/Core/Banshee.Base/TrackInfo.cs:307
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:151
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:148
 msgid "Unknown Title"
 msgstr "Nieviadomaja nazva"
 
@@ -2727,6 +2732,7 @@ msgid "Filter on {0}"
 msgstr "Vybiraj pavodle {0}"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1893
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:342
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -2736,6 +2742,7 @@ msgstr[1] "Ty sapraŭdy chočaš nazaŭždy vydalić hetyja {0} pieśni?"
 msgstr[2] "Ty sapraŭdy chočaš nazaŭždy vydalić hetych {0} pieśniaŭ?"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1897
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:346
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Zaznačanyja pieśni nazaŭždy źniknuć, kali ty vydališ ich."
 
@@ -2845,9 +2852,13 @@ msgstr "Zapišy ručnyja źmieny"
 msgid "Home Directory"
 msgstr "Chatni kataloh"
 
-#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:41
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:67
 msgid "Library"
 msgstr "Biblijateka"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:73
+msgid "Remove From Library"
+msgstr "Vydal ź biblijateki"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:85
 msgid "Default player engine"
@@ -2864,6 +2875,10 @@ msgstr ""
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:225
 msgid "Problem with Player Engine"
 msgstr "Prablema ŭ ruchaviku playera"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:99
+msgid "Remove From Playlist"
+msgstr "Vydal sa śpisu"
 
 #: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
 msgid "Windows Media ASX (*.asx)"
@@ -3044,13 +3059,59 @@ msgstr "Kiruj pašyreńniami, kab dadać novyja mahčymaści Banshee"
 msgid "_Pause"
 msgstr "_Prypyni"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:82
-msgid "_Track Properties"
-msgstr "Ułaścivaści _pieśni"
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:117
+msgid "GtkActionPath"
+msgstr "GtkActionPath"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:92
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:87
+msgid "Select all tracks"
+msgstr "Zaznač usie pieśni"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:91
+msgid "Unselect all tracks"
+msgstr "Admiani zaznačeńnie ŭsich piesień"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:94
+msgid "_Edit Track Metadata"
+msgstr "_Redahuj metaźviestki pieśni"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:95
+msgid "Edit metadata on selected tracks"
+msgstr "Redahuj metaźviestki dla zaznačanych pieśniaŭ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:104
 msgid "Create new playlist from selected tracks"
 msgstr "Stvary novy śpis z zaznačanych pieśniaŭ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:109
+msgid "Remove selected track(s) from this source"
+msgstr "Vydal zaznačanyja pieśni z hetaj krynicy"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:112
+msgid "Remove From _Library"
+msgstr "Vydal ź _biblijateki"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:113
+msgid "Remove selected track(s) from library"
+msgstr "Vydal zaznačanyja pieśni ź biblijateki"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:117
+msgid "Permanently delete selected song(s) from medium"
+msgstr "Nazaŭždy vydal zaznačanyja pieśni z nośbita"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:349
+#, csharp-format
+msgid "Remove selection from {0}?"
+msgstr "Vydalić zaznačanyja z {0}?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:352
+#, csharp-format
+msgid "Are you sure you want to remove the selected song from your {1}?"
+msgid_plural ""
+"Are you sure you want to remove the selected {0} songs from your {1}?"
+msgstr[0] "Ty sapraŭdy chočaš vydalić {0} zaznačanuju pieśniu z {1}?"
+msgstr[1] "Ty sapraŭdy chočaš vydalić {0} zaznačanyja pieśni z {1}?"
+msgstr[2] "Ty sapraŭdy chočaš vydalić {0} zaznačanych pieśniaŭ z {1}?"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:132
 msgid "Stop Operation"
@@ -3099,7 +3160,7 @@ msgstr "Impartuj kataloh u biblijateku"
 msgid "Local Folder"
 msgstr "Lakalny kataloh"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:712
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:720
 msgid "IconName"
 msgstr "Nazva ikony"
 
@@ -4507,6 +4568,9 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs:135
 msgid "Show Recommendations"
 msgstr "Pakažy parady"
+
+#~ msgid "_Track Properties"
+#~ msgstr "Ułaścivaści _pieśni"
 
 #~ msgid "<b>Loading...</b>"
 #~ msgstr "<b>Zahruzka...</b>"
