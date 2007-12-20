@@ -92,7 +92,7 @@ namespace Banshee.Collection.Database
             return sort_column.SortType == SortType.Ascending ? " ASC" : " DESC";
         }
 
-        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.TrackNumber ASC";
+        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.TrackNumber ASC, CoreTracks.RelativeUri ASC";
         private void GenerateSortQueryPart()
         {
             if(sort_column == null) {
@@ -112,21 +112,23 @@ namespace Banshee.Collection.Database
                     sort_query = String.Format (@"
                         lower(CoreArtists.Name) {0}, 
                         lower(CoreAlbums.Title) ASC, 
-                        CoreTracks.TrackNumber ASC", AscDesc ()); 
+                        CoreTracks.TrackNumber ASC,
+                        CoreTracks.RelativeUri ASC", AscDesc ()); 
                     break;
 
                 case "album":
                     sort_query = String.Format (@"
                         lower(CoreAlbums.Title) {0},
                         lower(CoreArtists.Name) ASC,
-                        CoreTracks.TrackNumber ASC", AscDesc ());
+                        CoreTracks.TrackNumber ASC,
+                        CoreTracks.RelativeUri ASC", AscDesc ()); 
                     break;
 
                 case "title":
                     sort_query = String.Format (@"
+                        lower(CoreTracks.Title) {0},
                         lower(CoreArtists.Name) ASC, 
-                        lower(CoreAlbums.Title) ASC, 
-                        lower(CoreTracks.Title) {0}", AscDesc ()); 
+                        lower(CoreAlbums.Title) ASC", AscDesc ()); 
                     break;
 
                 case "Year":
