@@ -40,22 +40,24 @@ namespace Hyena.Data.Query
 
     public class Field
     {
-        public Field (string column, FieldType type, params string [] aliases) : this (column, type, false, aliases)
+        public string Name;
+        public string [] Aliases;
+        public string Column;
+        public bool Default;
+        public FieldType FieldType;
+
+        public Field (string name, string column, FieldType type, params string [] aliases) : this (name, column, type, false, aliases)
         {
         }
 
-        public Field (string column, FieldType type, bool isDefault, params string [] aliases)
+        public Field (string name, string column, FieldType type, bool isDefault, params string [] aliases)
         {
+            Name = name;
             Column = column;
             FieldType = type;
             Default = isDefault;
             Aliases = aliases;
         }
-
-        public string [] Aliases;
-        public string Column;
-        public bool Default;
-        public FieldType FieldType;
     }
 
     public class FieldSet

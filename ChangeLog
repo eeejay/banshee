@@ -1,6 +1,15 @@
 2007-12-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Add rating, plays, skips, path, and type as search fields.  Add translated
+	name, and translate field aliases.
+
+	* src/Core/Hyena/Hyena.Data.Query/SqlQueryGenerator.cs: Add a name field
+	to the Field class.
+
+2007-12-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	Use Hyena.Data.Query to generate SQL from the user's query.  Allows
 	searches such as "by:foo year:2006".
 

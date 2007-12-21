@@ -32,6 +32,7 @@ using System.Data;
 using System.Text;
 using System.Collections.Generic;
 
+using Mono.Unix;
 using Hyena.Data;
 using Hyena.Data.Query;
 
@@ -59,13 +60,6 @@ namespace Banshee.Collection.Database
         private string album_id_filter_query;
         
         private int rows_in_view;
-
-        protected static FieldSet field_set = new FieldSet (
-            new Field ("CoreArtists.Name", FieldType.Text, true, "by", "artist", "artists"),
-            new Field ("CoreAlbums.Title", FieldType.Text, true, "on", "album", "from"),
-            new Field ("CoreTracks.Title", FieldType.Text, true, "title", "titled"),
-            new Field ("CoreTracks.Year", FieldType.Numeric, true, "year", "released")
-        );
 
         public TrackListDatabaseModel (BansheeDbConnection connection)
         {
@@ -382,5 +376,53 @@ namespace Banshee.Collection.Database
         public string FetchCondition {
             get { return "CoreArtists.ArtistID = CoreTracks.ArtistID AND CoreAlbums.AlbumID = CoreTracks.AlbumID"; }
         }
+
+        protected static FieldSet field_set = new FieldSet (
+            new Field (
+                Catalog.GetString ("Artist"), "CoreArtists.Name", FieldType.Text, true,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("by"), Catalog.GetString ("artist"), Catalog.GetString ("artists")
+            ),
+            new Field (
+                Catalog.GetString ("Album"), "CoreAlbums.Title", FieldType.Text, true,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("on"), Catalog.GetString ("album"), Catalog.GetString ("from")
+            ),
+            new Field (
+                Catalog.GetString ("Track Title"), "CoreTracks.Title", FieldType.Text, true,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("title"), Catalog.GetString ("titled")
+            ),
+            new Field (
+                Catalog.GetString ("Year"), "CoreTracks.Year", FieldType.Numeric,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("year"), Catalog.GetString ("released")
+            ),
+            new Field (
+                Catalog.GetString ("Rating"), "CoreTracks.Rating", FieldType.Numeric,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("rating"), Catalog.GetString ("stars")
+            ),
+            new Field (
+                Catalog.GetString ("Play Count"), "CoreTracks.PlayCount", FieldType.Numeric,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("plays"), Catalog.GetString ("playcount")
+            ),
+            new Field (
+                Catalog.GetString ("Skip Count"), "CoreTracks.SkipCount", FieldType.Numeric,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("skips"), Catalog.GetString ("skipcount")
+            ),
+            new Field (
+                Catalog.GetString ("File Path"), "CoreTracks.RelativeUri", FieldType.Text,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("path"), Catalog.GetString ("file")
+            ),
+            new Field (
+                Catalog.GetString ("Mime Type"), "CoreTracks.MimeType", FieldType.Text,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("type"), Catalog.GetString ("mimetype"), Catalog.GetString ("format")
+            )
+        );
     }
 }
