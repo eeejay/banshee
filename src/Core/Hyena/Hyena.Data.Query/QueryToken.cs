@@ -36,6 +36,7 @@ namespace Hyena.Data.Query
         CloseParen,
         Not,
         Or,
+        And,
         Range,
         Term
     }

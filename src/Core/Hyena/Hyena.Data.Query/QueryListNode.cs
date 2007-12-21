@@ -103,7 +103,7 @@ namespace Hyena.Data.Query
         public QueryNode GetRightSibling(QueryNode node)
         {
             int index = IndexOfChild(node);
-            if(index < 0 || index >= ChildCount - 2) {
+            if(index < 0 || index > ChildCount - 2) {
                 return null;
             }
             return Children[index + 1];

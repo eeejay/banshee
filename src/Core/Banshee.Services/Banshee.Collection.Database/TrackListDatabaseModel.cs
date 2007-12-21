@@ -50,7 +50,6 @@ namespace Banshee.Collection.Database
         private ISortableColumn sort_column;
         private string sort_query;
         
-        private Dictionary<string, string> filter_field_map = new Dictionary<string, string>();
         private string reload_fragment;
         private string join_fragment, condition;
 
@@ -61,17 +60,17 @@ namespace Banshee.Collection.Database
         
         private int rows_in_view;
 
+        protected static FieldSet field_set = new FieldSet (
+            new Field ("CoreArtists.Name", FieldType.Text, true, "by", "artist", "artists"),
+            new Field ("CoreAlbums.Title", FieldType.Text, true, "on", "album", "from"),
+            new Field ("CoreTracks.Title", FieldType.Text, true, "title", "titled"),
+            new Field ("CoreTracks.Year", FieldType.Numeric, true, "year", "released")
+        );
+
         public TrackListDatabaseModel (BansheeDbConnection connection)
         {
             cache = new BansheeCacheableModelAdapter<TrackInfo> (connection, this);
-
-            filter_field_map.Add("track", "CoreTracks.TrackNumber");
-            filter_field_map.Add("artist", "CoreArtists.Name");
-            filter_field_map.Add("album", "CoreAlbums.Title");
-            filter_field_map.Add("title", "CoreTracks.Title");
-            
             this.connection = connection;
-
             Refilter ();
         }
         
@@ -80,10 +79,20 @@ namespace Banshee.Collection.Database
             if (String.IsNullOrEmpty(Filter)) {
                 filter_query = null;
             } else {
-                filter_query = String.Format(@"
-                    AND (CoreTracks.Title LIKE '%{0}%' 
-                        OR CoreArtists.Name LIKE '%{0}%'
-                        OR CoreAlbums.Title LIKE '%{0}%')", Filter);
+                Hyena.Data.Query.QueryParser qp = new QueryParser (Filter);
+                QueryListNode n = qp.BuildTree ();
+
+                Console.WriteLine ("query: {0}", Filter);
+                Console.WriteLine ("tree:");
+                n.Dump ();
+
+                SqlQueryGenerator sqg = new SqlQueryGenerator (field_set, n);
+                filter_query = sqg.GenerateQuery ();
+
+                Console.WriteLine ("Sql: {0}", filter_query);
+
+                if (filter_query.Length == 0)
+                    filter_query = null;
             }
         }
         
@@ -200,8 +209,10 @@ namespace Banshee.Collection.Database
                 qb.Append (album_id_filter_query);
             }
             
-            if (filter_query != null)
+            if (filter_query != null) {
+                qb.Append ("AND ");
                 qb.Append (filter_query);
+            }
             
             if (sort_query != null) {
                 qb.Append (" ORDER BY ");

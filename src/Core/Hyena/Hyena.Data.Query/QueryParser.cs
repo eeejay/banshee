@@ -44,6 +44,7 @@ namespace Hyena.Data.Query
         private int current_line;
         private int token_start_column;
         private int token_start_line;
+        private bool eos_consumed;
 
         public QueryParser()
         {
@@ -109,7 +110,7 @@ namespace Hyena.Data.Query
                     break;
                 case TokenID.Not:
                     QueryNode left_sibling = current_parent.LastChild;
-                    if(left_sibling == null || !(left_sibling is QueryKeywordNode)) {
+                    if(left_sibling != null && !(left_sibling is QueryKeywordNode)) {
                         NodePush(new QueryKeywordNode(Keyword.And));
                     }
                     
@@ -117,6 +118,9 @@ namespace Hyena.Data.Query
                     break;
                 case TokenID.Or:
                     NodePush(new QueryKeywordNode(Keyword.Or));
+                    break;
+                case TokenID.And:
+                    NodePush(new QueryKeywordNode(Keyword.And));
                     break;
                 case TokenID.Term:
                     NodePush(new QueryTermNode(token.Term));
@@ -126,8 +130,11 @@ namespace Hyena.Data.Query
 
         private QueryToken Scan()
         {
-            if(reader.EndOfStream) {
-                return new QueryToken(TokenID.Unknown);
+            if (reader.EndOfStream) {
+                if (eos_consumed)
+                    return new QueryToken(TokenID.Unknown);
+                else
+                    eos_consumed = true;
             }
             
             for(; ; ReadChar()) {
@@ -155,8 +162,12 @@ namespace Hyena.Data.Query
                 return new QueryToken(TokenID.Not);
             } else {
                 string token = ScanString();
+
+                if (reader.EndOfStream)
+                    eos_consumed = true;
                 
                 switch(token) {
+                    case "or": 
                     case "OR": 
                         return new QueryToken(TokenID.Or);
                     case "NOT":

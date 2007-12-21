@@ -32,10 +32,58 @@ using System.Collections.Generic;
 
 namespace Hyena.Data.Query
 {
+    public enum FieldType
+    {
+        Text,
+        Numeric
+    }
+
+    public class Field
+    {
+        public Field (string column, FieldType type, params string [] aliases) : this (column, type, false, aliases)
+        {
+        }
+
+        public Field (string column, FieldType type, bool isDefault, params string [] aliases)
+        {
+            Column = column;
+            FieldType = type;
+            Default = isDefault;
+            Aliases = aliases;
+        }
+
+        public string [] Aliases;
+        public string Column;
+        public bool Default;
+        public FieldType FieldType;
+    }
+
+    public class FieldSet
+    {
+        private Dictionary<string, Field> map = new Dictionary<string, Field> ();
+        private IEnumerable<Field> fields;
+
+        public FieldSet (params Field [] fields)
+        {
+            this.fields = fields;
+            foreach (Field field in fields)
+                foreach (string alias in field.Aliases)
+                    map[alias.ToLower ()] = field;
+        }
+
+        public IEnumerable<Field> Fields {
+            get { return fields; }
+        }
+
+        public Dictionary<string, Field> Map {
+            get { return map; }
+        }
+    }
+
     public class SqlQueryGenerator
     {
         private QueryListNode root;
-        private Dictionary<string, string> field_map = new Dictionary<string, string>();
+        private FieldSet field_set;
         
         private Stack<StringBuilder> builder_stack = new Stack<StringBuilder>();
         private StringBuilder builder;
@@ -44,9 +92,9 @@ namespace Hyena.Data.Query
         {
         }
         
-        public SqlQueryGenerator(Dictionary<string, string> fieldMap, QueryListNode query)
+        public SqlQueryGenerator(FieldSet fieldSet, QueryListNode query)
         {
-            this.field_map = fieldMap;
+            this.field_set = fieldSet;
             this.root = query;
         }
         
@@ -95,6 +143,7 @@ namespace Hyena.Data.Query
         private void VisitKeyword(QueryKeywordNode node)
         {
             if(!CheckLogicEmit(node)) {
+                Console.WriteLine ("failed logic check");
                 return;
             }
             
@@ -113,26 +162,30 @@ namespace Hyena.Data.Query
         
         private void VisitTerm(QueryTermNode node)
         {
-            string field = node.Field;
+            QueryNode left = node.Parent.GetLeftSibling(node); 
+            if(left != null && left is QueryListNode) {
+                EmitAnd();
+            }
+
+            string alias = node.Field;
             
-            if(field != null) {
-                field = field.ToLower();
+            if(alias != null) {
+                alias = alias.ToLower();
             }
             
-            if(field == null || !field_map.ContainsKey(field)) {
+            if(alias == null || !field_set.Map.ContainsKey(alias)) {
                 EmitOpenParen();
-                int i = 0;
+                int emitted = 0, i = 0;
                 
-                foreach(KeyValuePair<string, string> map_item in field_map) {
-                    EmitStringMatch(map_item.Value, node.Value);
-                    if(i++ < field_map.Count - 1) {
-                        EmitOr();
-                    }
+                foreach(Field field in field_set.Fields) {
+                    if (field.Default)
+                        if (EmitTermMatch (field, node.Value, emitted > 0))
+                            emitted++;
                 }
                 
                 EmitCloseParen();
-            } else if(field != null && field_map.ContainsKey(field)) {
-                EmitStringMatch(field_map[field], node.Value);
+            } else if(alias != null && field_set.Map.ContainsKey(alias)) {
+                EmitTermMatch (field_set.Map[alias], node.Value, false);
             }
             
             QueryNode right = node.Parent.GetRightSibling(node); 
@@ -149,37 +202,51 @@ namespace Hyena.Data.Query
             }
         }
         
-        private bool CheckLogicEmit(QueryNode node)
+        private bool CheckLogicEmit(QueryKeywordNode node)
         {
-            if(node is QueryKeywordNode && ((QueryKeywordNode)node).Keyword == Keyword.Not) {
+            QueryNode left = node.Parent.GetLeftSibling (node);
+            QueryNode right = node.Parent.GetRightSibling (node);
+            bool right_ok, left_ok;
+
+            switch (node.Keyword) {
+            case Keyword.Not:
                 int index = node.Parent.IndexOfChild(node);
-                if(index < 2) {
+                if(index == node.Parent.ChildCount - 1) {
                     return false;
                 }
                 
-                QueryNode left = node.Parent.Children[index - 1];
-                QueryNode left_left = node.Parent.Children[index - 2];
-                QueryNode right = node.Parent.GetRightSibling(node);
+                QueryNode left_left = (index < 2) ? null : node.Parent.Children[index - 2];
+
+                // If we have a left sibling, it must be a keyword and it's left sibling must not be
+                left_ok = (left == null) || (left is QueryKeywordNode && left_left != null && !(left_left is QueryKeywordNode));
+
+                // Our right sibling cannot be a keyword
+                right_ok = right != null && !(right is QueryKeywordNode);
                 
-                return left is QueryKeywordNode && left_left != null && !(left_left is QueryKeywordNode) &&
-                    right != null && !(right is QueryKeywordNode);
-            }
-            
-            QueryNode _left = node.Parent.GetLeftSibling(node);
-            QueryNode _right = node.Parent.GetRightSibling(node);
-            
-            QueryListNode grandparent = node.Parent.Parent;
-                
-            
-            bool mah = _left != null && !(_left is QueryKeywordNode) && _right != null && !(_right is QueryKeywordNode);
-                if(mah) {
+                return left_ok && right_ok;
+
+            case Keyword.And:
+            case Keyword.Or:
+                // We must have a non-keyword left sibling
+                left_ok = (left != null && !(left is QueryKeywordNode));
+
+                // We must have a right sibling that is either not a keyword or is the Not keyword (and it's right sibling isn't a keyword)
+                QueryNode right_right = (right != null) ? node.Parent.GetRightSibling (right) : null;
+                right_ok = (right != null && (!(right is QueryKeywordNode) ||
+                           (right as QueryKeywordNode).Keyword == Keyword.Not && right_right != null && !(right_right is QueryKeywordNode)));
+
+                if (left_ok && right_ok)
                     return true;
-                }
                 
+                // Not sure what this is for
+                QueryListNode grandparent = node.Parent.Parent;
                 if(grandparent != null && grandparent.LastChild != null) {
                     return true;
                 }
-                return false;
+                break;
+            }
+            
+            return false;
         }
         
         private void EmitNot()
@@ -207,17 +274,40 @@ namespace Hyena.Data.Query
             builder_stack.Peek().Append(" ) ");
         }
         
-        private void EmitStringMatch(string field, string value)
+        private bool EmitTermMatch (Field field, string value, bool emit_or)
+        {
+            if (field.FieldType == FieldType.Text)
+                return EmitStringMatch(field.Column, value, emit_or);
+            else
+                return EmitNumericMatch(field.Column, value, emit_or);
+        }
+
+        private bool EmitStringMatch(string field, string value, bool emit_or)
         {
             string safe_value = value.Replace('"', '\0');
             safe_value = value.Replace('\'', '\0');
             
+            if (emit_or)
+                EmitOr();
             builder_stack.Peek().AppendFormat(" {0} LIKE \"%{1}%\" ", field, safe_value);
+            return true;
+        }
+
+        private bool EmitNumericMatch(string field, string value, bool emit_or)
+        {
+            try {
+                int num = Convert.ToInt32 (value);
+                if (emit_or)
+                    EmitOr();
+                builder_stack.Peek().AppendFormat(" {0} = {1} ", field, num);
+                return true;
+            } catch {}
+            return false;
         }
         
-        public Dictionary<string, string> FieldMap {
-            get { return field_map; }
-            set { field_map = value; }
+        public FieldSet FieldSet {
+            get { return field_set; }
+            set { field_set = value; }
         }
         
         public QueryListNode Query {

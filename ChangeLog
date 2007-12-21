@@ -1,6 +1,23 @@
 2007-12-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Use Hyena.Data.Query to generate SQL from the user's query.  Allows
+	searches such as "by:foo year:2006".
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryListNode.cs: Fix off by one bug.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryParser.cs: Fix parsing bugs.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryToken.cs: Add And token type.
+
+	* src/Core/Hyena/Hyena.Data.Query/SqlQueryGenerator.cs: Add Field and
+	FieldSet classes that define whether a field is Textual or Numeric, and
+	generates a mapping of aliases to Fields.  Fix the SQL generator to work
+	in most cases.
+
+2007-12-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	Fall back to sorting by file path if needed.  Change sort by Title to sort
 	first by title, then artist, then album instead of first by artist.
 
