@@ -30,6 +30,8 @@ using System;
 using System.Collections.Generic;
 
 using Hyena.Data;
+using Hyena.Data.Query;
+
 using Banshee.ServiceStack;
 
 namespace Banshee.Collection
@@ -56,5 +58,8 @@ namespace Banshee.Collection
         public virtual IEnumerable<AlbumInfo> AlbumInfoFilter {
             set { throw new NotImplementedException(); }
         }
+
+        public abstract QueryField ArtistField { get; }
+        public abstract QueryField AlbumField { get; }
     }
 }

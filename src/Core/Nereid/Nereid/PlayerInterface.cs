@@ -228,6 +228,9 @@ namespace Nereid
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
 
+            action_service.TrackActions ["SearchForSameArtistAction"].Activated += OnProgrammaticSearch;
+            action_service.TrackActions ["SearchForSameAlbumAction"].Activated += OnProgrammaticSearch;
+
             // UI events
             view_container.SearchEntry.Changed += OnSearchEntryChanged;
             views_pane.SizeRequested += delegate {
@@ -244,6 +247,14 @@ namespace Nereid
 #endregion
 
 #region Service Event Handlers
+
+        private void OnProgrammaticSearch (object o, EventArgs args)
+        {
+            Source source = ServiceManager.SourceManager.ActiveSource;
+            view_container.SearchEntry.Ready = false;
+            view_container.SearchEntry.Query = source.FilterQuery;
+            view_container.SearchEntry.Ready = true;
+        }
         
         private void OnActiveSourceChanged (SourceEventArgs args)
         {
@@ -303,27 +314,11 @@ namespace Nereid
         private void OnSearchEntryChanged (object o, EventArgs args)
         {
             Source source = ServiceManager.SourceManager.ActiveSource;
-            if (source == null) {
+            if (source == null)
                 return;
-            }
             
-            source.FilterType = (TrackFilterType)view_container.SearchEntry.ActiveFilterID;
+            source.FilterType = (TrackFilterType) view_container.SearchEntry.ActiveFilterID;
             source.FilterQuery = view_container.SearchEntry.Query;
-            
-            if(!(source is ITrackModelSource)) {
-                return;
-            }
-                        
-            TrackListModel track_model = ((ITrackModelSource)source).TrackModel;
-                        
-            if(!(track_model is Hyena.Data.IFilterable)) {
-                return;
-            }
-                        
-            Hyena.Data.IFilterable filterable = (Hyena.Data.IFilterable)track_model;
-            filterable.Filter = view_container.SearchEntry.Query; 
-            filterable.Refilter();
-            track_model.Reload();
         }
         
         private void OnHeaderToolbarExposeEvent (object o, ExposeEventArgs args)

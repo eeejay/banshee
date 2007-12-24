@@ -377,49 +377,57 @@ namespace Banshee.Collection.Database
             get { return "CoreArtists.ArtistID = CoreTracks.ArtistID AND CoreAlbums.AlbumID = CoreTracks.AlbumID"; }
         }
 
-        protected static FieldSet field_set = new FieldSet (
-            new Field (
-                Catalog.GetString ("Artist"), "CoreArtists.Name", FieldType.Text, true,
+        public override QueryField ArtistField {
+            get { return field_set.Fields [0]; }
+        }
+
+        public override QueryField AlbumField {
+            get { return field_set.Fields [1]; }
+        }
+
+        protected static QueryFieldSet field_set = new QueryFieldSet (
+            new QueryField (
+                Catalog.GetString ("Artist"), "CoreArtists.Name", QueryFieldType.Text, true,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("by"), Catalog.GetString ("artist"), Catalog.GetString ("artists")
             ),
-            new Field (
-                Catalog.GetString ("Album"), "CoreAlbums.Title", FieldType.Text, true,
+            new QueryField (
+                Catalog.GetString ("Album"), "CoreAlbums.Title", QueryFieldType.Text, true,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("on"), Catalog.GetString ("album"), Catalog.GetString ("from")
             ),
-            new Field (
-                Catalog.GetString ("Track Title"), "CoreTracks.Title", FieldType.Text, true,
+            new QueryField (
+                Catalog.GetString ("Track Title"), "CoreTracks.Title", QueryFieldType.Text, true,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("title"), Catalog.GetString ("titled")
             ),
-            new Field (
-                Catalog.GetString ("Year"), "CoreTracks.Year", FieldType.Numeric,
+            new QueryField (
+                Catalog.GetString ("Year"), "CoreTracks.Year", QueryFieldType.Numeric,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("year"), Catalog.GetString ("released")
             ),
-            new Field (
-                Catalog.GetString ("Rating"), "CoreTracks.Rating", FieldType.Numeric,
+            new QueryField (
+                Catalog.GetString ("Rating"), "CoreTracks.Rating", QueryFieldType.Numeric,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("rating"), Catalog.GetString ("stars")
             ),
-            new Field (
-                Catalog.GetString ("Play Count"), "CoreTracks.PlayCount", FieldType.Numeric,
+            new QueryField (
+                Catalog.GetString ("Play Count"), "CoreTracks.PlayCount", QueryFieldType.Numeric,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("plays"), Catalog.GetString ("playcount")
             ),
-            new Field (
-                Catalog.GetString ("Skip Count"), "CoreTracks.SkipCount", FieldType.Numeric,
+            new QueryField (
+                Catalog.GetString ("Skip Count"), "CoreTracks.SkipCount", QueryFieldType.Numeric,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("skips"), Catalog.GetString ("skipcount")
             ),
-            new Field (
-                Catalog.GetString ("File Path"), "CoreTracks.RelativeUri", FieldType.Text,
+            new QueryField (
+                Catalog.GetString ("File Path"), "CoreTracks.RelativeUri", QueryFieldType.Text,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("path"), Catalog.GetString ("file")
             ),
-            new Field (
-                Catalog.GetString ("Mime Type"), "CoreTracks.MimeType", FieldType.Text,
+            new QueryField (
+                Catalog.GetString ("Mime Type"), "CoreTracks.MimeType", QueryFieldType.Text,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("type"), Catalog.GetString ("mimetype"), Catalog.GetString ("format")
             )

@@ -12,6 +12,7 @@ SOURCES =  \
 	Hyena.CommandLine/LayoutGroup.cs \
 	Hyena.CommandLine/LayoutGroupAttribute.cs \
 	Hyena.CommandLine/LayoutOption.cs \
+	Hyena.Data.Query/QueryField.cs \
 	Hyena.Data.Query/QueryKeywordNode.cs \
 	Hyena.Data.Query/QueryListNode.cs \
 	Hyena.Data.Query/QueryNode.cs \

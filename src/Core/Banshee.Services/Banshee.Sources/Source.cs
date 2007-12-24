@@ -261,7 +261,7 @@ namespace Banshee.Sources
             get { return true; }
         }
                 
-        public string FilterQuery {
+        public virtual string FilterQuery {
             get { return properties.GetString("FilterQuery"); }
             set { properties.SetString("FilterQuery", value); }
         }
@@ -273,13 +273,7 @@ namespace Banshee.Sources
         
         public virtual bool Expanded {
             get { return properties.GetBoolean("Expanded"); }
-            set {
-                if(Expanded == value) {
-                    return;
-                }
-                
-                properties.SetBoolean("Expanded", value);
-            }
+            set { properties.SetBoolean("Expanded", value); }
         }
         
         public virtual bool? AutoExpand {

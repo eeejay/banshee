@@ -62,6 +62,15 @@ namespace Banshee.Sources
             get { return track_model is IFilterable ? ((IFilterable)track_model).UnfilteredCount : track_model.Count; }
         }
 
+        public override string FilterQuery {
+            set {
+                base.FilterQuery = value;
+                track_model.Filter = value;
+                track_model.Refilter ();
+                track_model.Reload ();
+            }
+        }
+
         public virtual bool CanRemoveTracks {
             get { return true; }
         }

@@ -107,14 +107,16 @@ namespace Hyena.Data
         {
             lock(this) {
                 bool added = false;
-                object old_value = null;
+                T old_value = default(T);
                 
                 if(object_store == null) {
                     object_store = new Dictionary<string, object>();
                 }
                 
                 if(object_store.ContainsKey(name)) {
-                    old_value = object_store[name];
+                    old_value = (T)object_store[name];
+                    if (value.Equals (old_value))
+                        return;
                     object_store[name] = value;
                 } else {
                     added = true;

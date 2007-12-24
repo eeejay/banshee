@@ -54,7 +54,7 @@ namespace Banshee.Gui
             "RemoveTracksAction", "RemoveTracksFromLibraryAction", "DeleteTracksFromDriveAction",
             "RateTracksAction", "SelectNoneAction"
         };
-
+        
         private IHasTrackSelection track_selector;
         public IHasTrackSelection TrackSelector {
             get { return track_selector; }
@@ -118,6 +118,22 @@ namespace Banshee.Gui
 
                 new ActionEntry ("RateTracksAction", null,
                     String.Empty, null, null, OnRateTracks),
+
+                new ActionEntry ("SearchMenuAction", Stock.Find,
+                    Catalog.GetString ("_Search for Songs"), null,
+                    Catalog.GetString ("Search for songs matching certain criteria"), null),
+
+                new ActionEntry ("SearchForSameAlbumAction", null,
+                    Catalog.GetString ("By Matching _Album"), null,
+                    Catalog.GetString ("Search all songs of this album"), OnSearchForSameAlbum),
+
+                new ActionEntry ("SearchForSameArtistAction", null,
+                    Catalog.GetString ("By Matching A_rtist"), null,
+                    Catalog.GetString ("Search all songs of this artist"), OnSearchForSameArtist),
+
+                //new ActionEntry ("JumpToPlayingTrackAction", null,
+                //    Catalog.GetString ("_Jump to playing song"), "<control>J",
+                //    null, OnJumpToPlayingTrack),
             });
 
             action_service.UIManager.ActionsChanged += HandleActionsChanged;
@@ -169,11 +185,17 @@ namespace Banshee.Gui
                 foreach (string action in require_selection_actions)
                     this[action].Sensitive = has_selection;
 
+                bool has_single_selection = selection.Count == 1;
+
                 this["SelectAllAction"].Sensitive = !selection.AllSelected;
 
                 if (source != null) {
                     ITrackModelSource track_source = source as ITrackModelSource;
                     bool is_track_source = track_source != null;
+
+                    UpdateActions (is_track_source && source.CanSearch, has_single_selection,
+                       "SearchMenuAction", "SearchForSameArtistAction", "SearchForSameAlbumAction"
+                    );
 
                     UpdateAction ("RemoveTracksAction", is_track_source,
                         has_selection && is_track_source && track_source.CanRemoveTracks, source
@@ -325,6 +347,30 @@ namespace Banshee.Gui
                 track.Rating = rating;
                 track.Save ();
             }
+        }
+
+        private void OnSearchForSameArtist (object o, EventArgs args)
+        {
+            Source source = ServiceManager.SourceManager.ActiveSource;
+            ITrackModelSource track_source = source as ITrackModelSource;
+            foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
+                source.FilterQuery = track_source.TrackModel.ArtistField.ToTermString (track.ArtistName);
+                break;
+            }
+        }
+
+        private void OnSearchForSameAlbum (object o, EventArgs args)
+        {
+            Source source = ServiceManager.SourceManager.ActiveSource;
+            ITrackModelSource track_source = source as ITrackModelSource;
+            foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
+                source.FilterQuery = track_source.TrackModel.AlbumField.ToTermString (track.AlbumTitle);
+                break;
+            }
+        }
+
+        private void OnJumpToPlayingTrack (object o, EventArgs args)
+        {
         }
 
 #endregion

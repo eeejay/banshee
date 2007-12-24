@@ -1,3 +1,37 @@
+2007-12-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs: Add
+	ArtistField and AlbumField properties that are used for By Matching
+	Artist/Album actions.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Implement ArtistField/AlbumField properties.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Make FilterQuery
+	virtual, and override it to refilter/reload the track model.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Add
+	UpdateActions methods for setting visibility/sensitivity of several
+	actions at once.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Add/handle Search
+	for Songs menu and By Matching Artist/Album items.
+
+	* src/Core/Hyena/Makefile.am:
+	* src/Core/Hyena/Hyena.Data.Query/QueryField.cs: New file for QueryField
+	and QueryFieldSet classes.
+
+	* src/Core/Hyena/Hyena.Data.Query/SqlQueryGenerator.cs: Move
+	Field/FieldSet out of this file.  Fix quote escaping.
+
+	* src/Core/Hyena/Hyena.Data/PropertyStore.cs: Avoid raising Changed event
+	if setting to the current value.
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Listen for programmatic
+	searches (eg By Matching Artist) to update the SearchEntry.
+
 2007-12-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:

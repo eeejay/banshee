@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -32,60 +33,10 @@ using System.Collections.Generic;
 
 namespace Hyena.Data.Query
 {
-    public enum FieldType
-    {
-        Text,
-        Numeric
-    }
-
-    public class Field
-    {
-        public string Name;
-        public string [] Aliases;
-        public string Column;
-        public bool Default;
-        public FieldType FieldType;
-
-        public Field (string name, string column, FieldType type, params string [] aliases) : this (name, column, type, false, aliases)
-        {
-        }
-
-        public Field (string name, string column, FieldType type, bool isDefault, params string [] aliases)
-        {
-            Name = name;
-            Column = column;
-            FieldType = type;
-            Default = isDefault;
-            Aliases = aliases;
-        }
-    }
-
-    public class FieldSet
-    {
-        private Dictionary<string, Field> map = new Dictionary<string, Field> ();
-        private IEnumerable<Field> fields;
-
-        public FieldSet (params Field [] fields)
-        {
-            this.fields = fields;
-            foreach (Field field in fields)
-                foreach (string alias in field.Aliases)
-                    map[alias.ToLower ()] = field;
-        }
-
-        public IEnumerable<Field> Fields {
-            get { return fields; }
-        }
-
-        public Dictionary<string, Field> Map {
-            get { return map; }
-        }
-    }
-
     public class SqlQueryGenerator
     {
         private QueryListNode root;
-        private FieldSet field_set;
+        private QueryFieldSet field_set;
         
         private Stack<StringBuilder> builder_stack = new Stack<StringBuilder>();
         private StringBuilder builder;
@@ -94,7 +45,7 @@ namespace Hyena.Data.Query
         {
         }
         
-        public SqlQueryGenerator(FieldSet fieldSet, QueryListNode query)
+        public SqlQueryGenerator(QueryFieldSet fieldSet, QueryListNode query)
         {
             this.field_set = fieldSet;
             this.root = query;
@@ -179,7 +130,7 @@ namespace Hyena.Data.Query
                 EmitOpenParen();
                 int emitted = 0, i = 0;
                 
-                foreach(Field field in field_set.Fields) {
+                foreach(QueryField field in field_set.Fields) {
                     if (field.Default)
                         if (EmitTermMatch (field, node.Value, emitted > 0))
                             emitted++;
@@ -276,9 +227,9 @@ namespace Hyena.Data.Query
             builder_stack.Peek().Append(" ) ");
         }
         
-        private bool EmitTermMatch (Field field, string value, bool emit_or)
+        private bool EmitTermMatch (QueryField field, string value, bool emit_or)
         {
-            if (field.FieldType == FieldType.Text)
+            if (field.QueryFieldType == QueryFieldType.Text)
                 return EmitStringMatch(field.Column, value, emit_or);
             else
                 return EmitNumericMatch(field.Column, value, emit_or);
@@ -286,12 +237,12 @@ namespace Hyena.Data.Query
 
         private bool EmitStringMatch(string field, string value, bool emit_or)
         {
-            string safe_value = value.Replace('"', '\0');
-            safe_value = value.Replace('\'', '\0');
+            string safe_value = value.Replace("'", "''");
             
             if (emit_or)
                 EmitOr();
-            builder_stack.Peek().AppendFormat(" {0} LIKE \"%{1}%\" ", field, safe_value);
+
+            builder_stack.Peek().AppendFormat(" {0} LIKE '%{1}%' ", field, safe_value);
             return true;
         }
 
@@ -301,13 +252,14 @@ namespace Hyena.Data.Query
                 int num = Convert.ToInt32 (value);
                 if (emit_or)
                     EmitOr();
+
                 builder_stack.Peek().AppendFormat(" {0} = {1} ", field, num);
                 return true;
             } catch {}
             return false;
         }
         
-        public FieldSet FieldSet {
+        public QueryFieldSet QueryFieldSet {
             get { return field_set; }
             set { field_set = value; }
         }

@@ -45,6 +45,23 @@ namespace Banshee.Gui
         {
         }
 
+        protected void UpdateActions (bool visible, bool sensitive, params string [] action_names)
+        {
+            UpdateActions (visible, sensitive, null, action_names);
+        }
+
+        protected void UpdateActions (bool visible, bool sensitive, Source source, params string [] action_names)
+        {
+            foreach (string name in action_names) {
+                UpdateAction (name, visible, sensitive, source);
+            }
+        }
+
+        protected void UpdateAction (string action_name, bool visible, bool sensitive)
+        {
+            UpdateAction (action_name, visible, sensitive, null);
+        }
+
         protected void UpdateAction (string action_name, bool visible, bool sensitive, Source source)
         {
             Action action = this[action_name];

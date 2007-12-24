@@ -109,16 +109,13 @@
         <menuitem name="RemoveTracks" action="RemoveTracksAction" />
         <menuitem name="RemoveTracksFromLibrary" action="RemoveTracksFromLibraryAction" />
         <menuitem name="DeleteTracksFromDrive" action="DeleteTracksFromDriveAction" />
-        <!--
         <separator />
         <menu name="SearchMenu" action="SearchMenuAction">
             <menuitem name="SearchForSameArtist" action="SearchForSameArtistAction" />
             <menuitem name="SearchForSameAlbum" action="SearchForSameAlbumAction" />
-            <menuitem name="SearchForSameGenre" action="SearchForSameGenreAction" />
         </menu>
         <separator />
-        <menuitem name="JumpToPlaying" action="JumpToPlayingAction" />
-        -->
+        <!--<menuitem name="JumpToPlayingTrack" action="JumpToPlayingTrackAction" />-->
         <separator />
         <menuitem name="TrackProperties" action="TrackPropertiesAction" />
     </popup>
