@@ -103,6 +103,7 @@ namespace Banshee.Gui
         private void OnNewPlaylist (object o, EventArgs args)
         {
             PlaylistSource playlist = new PlaylistSource ("New Playlist");
+            playlist.Save ();
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
 
             // TODO should begin editing the name after making it, but this changed

@@ -46,19 +46,19 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Playlist
 {
-    public class PlaylistSource : DatabaseSource, IUnmapableSource
+    public class PlaylistSource : AbstractPlaylistSource
     {
-        private const string TRACK_JOIN = ", CorePlaylistEntries";
-        private const string TRACK_CONDITION = " CorePlaylistEntries.TrackID = CoreTracks.TrackID AND CorePlaylistEntries.PlaylistID = {0}";
-
-        private int? dbid;
-
-        private static string generic_name = Catalog.GetString ("Playlist");
         private static BansheeDbCommand add_tracks_command;
         private static BansheeDbCommand remove_tracks_command;
         private static BansheeDbCommand delete_command;
 
+        private static string generic_name = Catalog.GetString ("Playlist");
+
         static PlaylistSource () {
+            SourceTable = "CorePlaylists";
+            TrackJoinTable = "CorePlaylistEntries";
+            IconName = "source-playlist";
+
             add_tracks_command = new BansheeDbCommand (@"
                 INSERT INTO CorePlaylistEntries
                     SELECT null, ?, ItemID, 0
@@ -73,40 +73,48 @@ namespace Banshee.Playlist
             );
         }
 
-        protected int? DbId {
-            get { return dbid; }
-            set {
-                if (value == null)
-                    return;
-                dbid = value;
-                track_model.JoinFragment = TRACK_JOIN;
-                track_model.Condition = String.Format (TRACK_CONDITION, dbid);
-                AfterInitialized ();
-            }
-        }
+#region Constructors
 
-        public PlaylistSource (int dbid, string name, int sortColumn, int sortType) : this (name, dbid)
+        public PlaylistSource (string name) : this (name, null)
         {
         }
 
-        public PlaylistSource (string name) : this (name, CreateNewPlaylist (name))
+        public PlaylistSource (string name, int? dbid) : this (name, dbid, -1, 0)
         {
         }
 
-        public PlaylistSource (string name, int? dbid) : base (generic_name, name, 500)
+        public PlaylistSource (string name, int? dbid, int sortColumn, int sortType) : base (generic_name, name, dbid, sortColumn, sortType)
         {
-            Properties.SetString ("IconName", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
-            DbId = dbid;
         }
 
-#region Source overrides
+#endregion
 
-        public override void Rename (string newName)
+#region AbstractPlaylist overrides
+
+        protected override void Update ()
         {
-            base.Rename (newName);
-            Commit ();
+            ServiceManager.DbConnection.Execute (new BansheeDbCommand (
+                String.Format (
+                    @"UPDATE {0}
+                        SET Name = ?,
+                            SortColumn = ?,
+                            SortType = ?
+                        WHERE PlaylistID = ?",
+                    SourceTable
+                ), Name, -1, 0, dbid
+            ));
+        }
+
+        protected override void Create ()
+        {
+            DbId = ServiceManager.DbConnection.Execute (new BansheeDbCommand (
+                String.Format (@"INSERT INTO {0}
+                    VALUES (NULL, ?, ?, ?)",
+                    SourceTable
+                ), Name, -1, 0 //SortColumn, SortType
+            ));
         }
 
 #endregion
@@ -157,52 +165,25 @@ namespace Banshee.Playlist
 
 #endregion
 
-        public void AddTracks (TrackListDatabaseModel from, Selection selection)
+        public virtual void AddSelectedTracks (TrackListDatabaseModel from)
         {
-            if (from == track_model || selection.Count == 0)
+            if (from == track_model)
                 return;
 
-            lock (from) {
-                using (new Timer ("Adding tracks to playlist")) {
-                    foreach (RangeCollection.Range range in selection.Ranges) {
-                        add_tracks_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
-                        Console.WriteLine ("Adding selection with: {0}\n{1}", add_tracks_command, add_tracks_command.CommandText);
-                        ServiceManager.DbConnection.Execute (add_tracks_command);
-                    }
-                }
-                Reload ();
-            }
+            WithTrackSelection (from, AddTrackRange);
         }
 
-        protected override void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        protected virtual void AddTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
         {
-            remove_tracks_command.ApplyValues (DbId, model.CacheId, range.Start, range.End - range.Start + 1);
-            Console.WriteLine ("Removing selection with: {0}\n{1}", remove_tracks_command, remove_tracks_command.CommandText);
+            add_tracks_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
+            Console.WriteLine ("adding tracks with {0}", add_tracks_command.CommandText);
+            ServiceManager.DbConnection.Execute (add_tracks_command);
+        }
+
+        protected override void RemoveTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
+        {
+            remove_tracks_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
             ServiceManager.DbConnection.Execute (remove_tracks_command);
-        }
-
-        protected void Commit ()
-        {
-            if (dbid == null)
-                return;
-
-            ServiceManager.DbConnection.Execute (new BansheeDbCommand (
-                @"UPDATE CorePlaylists
-                    SET Name = ?,
-                        SortColumn = ?,
-                        SortType = ?
-                    WHERE PlaylistID = ?",
-                Name, -1, 0, dbid
-            ));
-        }
-
-        private static int CreateNewPlaylist (string name)
-        {
-            return ServiceManager.DbConnection.Execute (new BansheeDbCommand (
-                @"INSERT INTO CorePlaylists
-                    VALUES (NULL, ?, -1, 0)",
-                name
-            ));
         }
 
         public static List<PlaylistSource> LoadAll ()
@@ -215,7 +196,7 @@ namespace Banshee.Playlist
             
             while (reader.Read ()) {
                 PlaylistSource playlist = new PlaylistSource (
-                    Convert.ToInt32 (reader[0]), (string) reader[1], 
+                    reader[1] as string, Convert.ToInt32 (reader[0]),
                     Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3])
                 );
                 sources.Add (playlist);

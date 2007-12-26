@@ -47,6 +47,7 @@ SOURCES =  \
 	Banshee.MediaEngine/PlayerEngineEvent.cs \
 	Banshee.MediaEngine/PlayerEngineService.cs \
 	Banshee.MediaEngine/PlayerEngineState.cs \
+	Banshee.Playlist/AbstractPlaylistSource.cs \
 	Banshee.Playlist/PlaylistSource.cs \
 	Banshee.Playlists.Formats.Xspf/LinkEntry.cs \
 	Banshee.Playlists.Formats.Xspf/MetaEntry.cs \

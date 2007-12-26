@@ -1,3 +1,16 @@
+2007-12-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	New abstract class for playlists (static and smart).
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Subclass
+	from AbstractPlaylistSource; implement Create/Update methods.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Call Save
+	after creating new PlaylistSources.  Use new AddSelectedTracks method.
+
 2007-12-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs: Add

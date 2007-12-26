@@ -289,17 +289,18 @@ namespace Banshee.Gui
         {
             // TODO generate name based on the track selection, or begin editing it
             PlaylistSource playlist = new PlaylistSource ("New Playlist");
+            playlist.Save ();
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
 
             ThreadAssist.Spawn (delegate {
-                playlist.AddTracks (TrackSelector.TrackModel, TrackSelector.TrackSelectionProxy.Selection);
+                playlist.AddSelectedTracks (TrackSelector.TrackModel);
             });
         }
 
         private void OnAddToExistingPlaylist (object o, EventArgs args)
         {
             PlaylistSource playlist = playlist_menu_map[o as MenuItem];
-            playlist.AddTracks (TrackSelector.TrackModel, TrackSelector.TrackSelectionProxy.Selection);
+            playlist.AddSelectedTracks (TrackSelector.TrackModel);
         }
 
         private void OnRemoveTracks (object o, EventArgs args)
