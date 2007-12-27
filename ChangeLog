@@ -1,5 +1,10 @@
 2007-12-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Actually commit it; grr svn.
+
+2007-12-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
 	Add a source primary key property.
 
