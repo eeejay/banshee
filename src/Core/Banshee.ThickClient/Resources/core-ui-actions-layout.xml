@@ -11,6 +11,7 @@
     <menubar name="MainMenu">
         <menu name="MusicMenu" action="MusicMenuAction">
             <menuitem name="NewPlaylist" action="NewPlaylistAction" />
+            <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction" />
             <separator />
             <menuitem name="ImportMusic" action="ImportMusicAction" />
             <menuitem name="OpenLocation" action="OpenLocationAction" />
@@ -82,6 +83,7 @@
 
     <popup name="LibraryContextMenu" action="LibraryContextMenuAction">
         <menuitem name='NewPlaylist' action='NewPlaylistAction' />
+        <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction" />
         <!--<menuitem name='NewSmartPlaylist' action='NewSmartPlaylistAction' />-->
         <menuitem name='ImportMusic' action='ImportMusicAction' />
         <menu name='SortPlaylist' action='SortPlaylistAction'>

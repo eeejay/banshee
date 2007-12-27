@@ -1,3 +1,19 @@
+2007-12-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Add a source primary key property.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Load
+	smart playlists.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Makefile.am: New file, skeleton implementation
+	of the old smart playlist functionality.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Add New Smart
+	Playlist action.
+
 2007-12-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Makefile.am:

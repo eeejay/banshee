@@ -32,6 +32,7 @@ using Mono.Unix;
 
 using Banshee.Library;
 using Banshee.Playlist;
+using Banshee.SmartPlaylist;
 using Banshee.Sources;
 
 namespace Banshee.ServiceStack
@@ -58,7 +59,11 @@ namespace Banshee.ServiceStack
             if (ServiceManager.SourceManager != null) {
                 ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
 
-                foreach (PlaylistSource pl in PlaylistSource.LoadAll ()) {
+                foreach (PlaylistSource pl in PlaylistSource.LoadAll ())
+                    ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
+
+                foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll ()) {
+                    pl.Reload ();
                     ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
                 }
             }

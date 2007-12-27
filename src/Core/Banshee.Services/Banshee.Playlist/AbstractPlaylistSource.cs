@@ -51,12 +51,18 @@ namespace Banshee.Playlist
         protected int? dbid;
 
         private static string source_table;
+        private static string source_pk = "PlaylistID";
         private static string track_join_table;
         private static string icon_name;
 
         protected static string SourceTable {
             get { return source_table; }
             set { source_table = value; }
+        }
+
+        protected static string SourcePrimaryKey {
+            get { return source_pk; }
+            set { source_pk = value; }
         }
 
         protected static string TrackJoinTable {
@@ -71,8 +77,8 @@ namespace Banshee.Playlist
         protected static string TrackCondition {
             get {
                 return String.Format (
-                    " {0}.TrackID = CoreTracks.TrackID AND {0}.PlaylistID = {1}",
-                    TrackJoinTable, "{0}"
+                    " {0}.TrackID = CoreTracks.TrackID AND {0}.{2} = {1}",
+                    TrackJoinTable, "{0}", SourcePrimaryKey
                 );
             }
         }

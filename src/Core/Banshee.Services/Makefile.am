@@ -75,6 +75,7 @@ SOURCES =  \
 	Banshee.ServiceStack/UserJob.cs \
 	Banshee.ServiceStack/UserJobEventHandler.cs \
 	Banshee.ServiceStack/UserJobManager.cs \
+	Banshee.SmartPlaylist/SmartPlaylistSource.cs \
 	Banshee.Sources/DatabaseSource.cs \
 	Banshee.Sources/ErrorSource.cs \
 	Banshee.Sources/IImportable.cs \

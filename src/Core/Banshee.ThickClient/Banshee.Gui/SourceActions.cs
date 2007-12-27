@@ -36,6 +36,7 @@ using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Playlist;
+using Banshee.SmartPlaylist;
 using Banshee.Gui.Dialogs;
 
 namespace Banshee.Gui
@@ -58,6 +59,10 @@ namespace Banshee.Gui
                 new ActionEntry("NewPlaylistAction", Stock.New,
                     Catalog.GetString("_New Playlist"), "<control>N",
                     Catalog.GetString("Create a new empty playlist"), OnNewPlaylist),
+
+                new ActionEntry ("NewSmartPlaylistAction", null,
+                    Catalog.GetString ("New _Smart Playlist"), null,
+                    Catalog.GetString ("Create a new smart playlist"), OnNewSmartPlaylist),
 
                 new ActionEntry("SourceContextMenuAction", null, 
                     String.Empty, null, null, OnSourceContextMenu),
@@ -103,6 +108,17 @@ namespace Banshee.Gui
         private void OnNewPlaylist (object o, EventArgs args)
         {
             PlaylistSource playlist = new PlaylistSource ("New Playlist");
+            playlist.Save ();
+            ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
+
+            // TODO should begin editing the name after making it, but this changed
+            // the ActiveSource to the new playlist and we don't want that.
+            //SourceView.BeginRenameSource (playlist);
+        }
+
+        private void OnNewSmartPlaylist (object o, EventArgs args)
+        {
+            SmartPlaylistSource playlist = new SmartPlaylistSource ("New Playlist");
             playlist.Save ();
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
 
