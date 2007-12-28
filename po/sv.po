@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-11 03:09+0100\n"
-"PO-Revision-Date: 2007-12-11 03:12+0100\n"
+"POT-Creation-Date: 2007-12-28 19:53+0100\n"
+"PO-Revision-Date: 2007-12-28 19:56+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -170,6 +170,14 @@ msgstr "Musikspelaren Banshee"
 msgid "Music Player"
 msgstr "Musikspelare"
 
+#: ../src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:84
+msgid "No available profiles"
+msgstr "Inga tillgängliga profiler"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:72
+msgid "Advanced"
+msgstr "Avancerat"
+
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:1
 msgid "0"
 msgstr "0"
@@ -320,7 +328,7 @@ msgid "Delete the active preset"
 msgstr "Ta bort det aktiva förvalet"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:38
-#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:69
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:70
 msgid "Details"
 msgstr "Detaljer"
 
@@ -368,7 +376,7 @@ msgid "Equalizer"
 msgstr "Equalizer"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:49
-#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:68
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:69
 msgid "Error"
 msgstr "Fel"
 
@@ -440,7 +448,7 @@ msgstr "Markera för användning"
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:66
 #: ../src/Core/Banshee.Base/Banshee.Cdrom.Gui/RecorderSpeedComboBox.cs:64
 #: ../src/Core/Banshee.Base/Dap/Dap.cs:659
-#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:174
+#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:179
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:291
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:314
 msgid "Unknown"
@@ -823,12 +831,12 @@ msgid "_Music"
 msgstr "_Musik"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:68
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:56
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:60
 msgid "_New Playlist"
 msgstr "_Ny spellista"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:69
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:57
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:61
 msgid "Create a new empty playlist"
 msgstr "Skapa en ny tom spellista"
 
@@ -877,12 +885,12 @@ msgid "Write selection to audio CD"
 msgstr "Skriv markering till ljud-cd"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:92
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:60
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:71
 msgid "Import Source"
 msgstr "Importera källa"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:93
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:61
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:72
 msgid "Import source to library"
 msgstr "Importera källa till bibliotek"
 
@@ -910,6 +918,7 @@ msgid "_Edit"
 msgstr "_Redigera"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:119
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:86
 msgid "Select _All"
 msgstr "Markera _alla"
 
@@ -918,6 +927,7 @@ msgid "Select all songs in song list"
 msgstr "Markera alla låtar i låtlista"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:123
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:90
 msgid "Select _None"
 msgstr "Markera _ingen"
 
@@ -1033,7 +1043,7 @@ msgstr "_Uppspelning"
 #: ../src/Core/Banshee.Base/ActionManager.cs:195
 #: ../src/Core/Banshee.Base/Gui/SourceView.cs:107
 #: ../src/Core/Banshee.Base/Source.cs:322
-#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:106
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:107
 msgid "Source"
 msgstr "Källa"
 
@@ -1090,16 +1100,16 @@ msgid "Copy selected song(s) to clipboard"
 msgstr "Kopiera markerade låt(ar) till urklipp"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:234
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:96
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:108
 msgid "_Remove"
 msgstr "_Ta bort"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:235
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:97
 msgid "Remove selected song(s) from library"
 msgstr "Ta bort markerad(e) låt(ar) från bibliotek"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:238
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:116
 msgid "_Delete From Drive"
 msgstr "Ta _bort från enhet"
 
@@ -1112,31 +1122,36 @@ msgid "_Edit Song Metadata"
 msgstr "R_edigera låtens metadata"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:243
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:83
 msgid "Edit metadata on selected songs"
 msgstr "Redigera metadata för de markerade låtarna"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:246
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:123
 msgid "_Search for Songs"
 msgstr "_Sök efter låtar"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:247
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:124
 msgid "Search for songs matching certain criteria"
 msgstr "Sök efter låtar som matchar vissa kriterium"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:250
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:127
 msgid "By Matching _Album"
 msgstr "Efter matchande _album"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:251
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:128
 msgid "Search all songs of this album"
 msgstr "Sök efter alla låtar i detta album"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:254
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:131
 msgid "By Matching A_rtist"
 msgstr "Efter matchande a_rtist"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:255
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:132
 msgid "Search all songs of this artist"
 msgstr "Sök efter alla låtar av denna artist"
 
@@ -1149,12 +1164,12 @@ msgid "Search all songs of this genre"
 msgstr "Sök efter alla låtar i denna genre"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:262
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:86
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:98
 msgid "Add _to Playlist"
 msgstr "Lägg _till i spellista"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:263
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:87
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:99
 msgid "Append selected songs to playlist or create new playlist from selection"
 msgstr "Lägg till de markerade låtarna till spellistan eller skapa en ny spellista från markering"
 
@@ -1307,13 +1322,13 @@ msgstr "Kunde inte läsa ljud-cd"
 
 #: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:88
 #: ../src/Core/Banshee.Base/TrackInfo.cs:291
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:135
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:132
 msgid "Unknown Artist"
 msgstr "Okänd artist"
 
 #: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:89
 #: ../src/Core/Banshee.Base/TrackInfo.cs:299
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:143
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:140
 msgid "Unknown Album"
 msgstr "Okänt album"
 
@@ -1376,14 +1391,6 @@ msgstr "Kan inte importera cd"
 #, csharp-format
 msgid "Importing {0} of {1}"
 msgstr "Importerar {0} av {1}"
-
-#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:84
-msgid "No available profiles"
-msgstr "Inga tillgängliga profiler"
-
-#: ../src/Core/Banshee.Base/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs:72
-msgid "Advanced"
-msgstr "Avancerat"
 
 #: ../src/Core/Banshee.Base/Banshee.Burner/BurnerConfigurationPane.cs:69
 msgid "Audio Disc:"
@@ -1982,6 +1989,7 @@ msgstr "Spårnummer"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:59
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:55
 msgid "Playlist"
 msgstr "Spellista"
 
@@ -2318,15 +2326,18 @@ msgid "Rename {0}"
 msgstr "Byt namn på {0}"
 
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:54
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:89
 msgid "Delete Playlist"
 msgstr "Ta bort spellista"
 
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:156
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:191
 #, csharp-format
 msgid "Are you sure you want to delete this {0}?"
 msgstr "Är du säker på att du vill ta bort denna {0}?"
 
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:165
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:200
 #, csharp-format
 msgid "Do not ask me this again"
 msgstr "Fråga mig inte igen"
@@ -2415,7 +2426,7 @@ msgid "Eject {0}"
 msgstr "Mata ut {0}"
 
 #: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:56
-#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:38
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:46
 msgid "Import Errors"
 msgstr "Importeringsfel"
 
@@ -2461,7 +2472,7 @@ msgstr "Lokal kö"
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:469
 #: ../src/Core/Banshee.Base/Sources/PlaylistSource.cs:475
 #: ../src/Core/Banshee/PlayerInterface.cs:1624
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:91
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:103
 msgid "New Playlist"
 msgstr "Ny spellista"
 
@@ -2480,7 +2491,7 @@ msgid "Saving tags for {0}"
 msgstr "Sparar taggar för {0}"
 
 #: ../src/Core/Banshee.Base/TrackInfo.cs:307
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:151
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:148
 msgid "Unknown Title"
 msgstr "Okänd titel"
 
@@ -2658,6 +2669,7 @@ msgid "Filter on {0}"
 msgstr "Filtrera på {0}"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1893
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:389
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
@@ -2665,6 +2677,7 @@ msgstr[0] "Är du säker på att du vill permanent ta bort denna låt?"
 msgstr[1] "Är du säker på att du vill permanent ta bort de markerade {0} låtarna?"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:1897
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:393
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Om du tar bort markeringen kommer de att permanent förloras."
 
@@ -2763,9 +2776,13 @@ msgstr "Spara manuella ändringar"
 msgid "Home Directory"
 msgstr "Hemkatalog"
 
-#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:41
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:67
 msgid "Library"
 msgstr "Bibliotek"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:73
+msgid "Remove From Library"
+msgstr "Ta bort från bibliotek"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:85
 msgid "Default player engine"
@@ -2778,6 +2795,10 @@ msgstr "Inga uppspelningsmotorer hittades. Kontrollera att Banshee har installer
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:225
 msgid "Problem with Player Engine"
 msgstr "Problem med uppspelningsmotor"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:88
+msgid "Remove From Playlist"
+msgstr "Ta bort från spellista"
 
 #: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
 msgid "Windows Media ASX (*.asx)"
@@ -2948,13 +2969,65 @@ msgstr "Hantera tillägg för att lägga till nya funktioner till Banshee"
 msgid "_Pause"
 msgstr "_Paus"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:82
-msgid "_Track Properties"
-msgstr "Sp_åregenskaper"
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:64
+msgid "New _Smart Playlist"
+msgstr "Ny _smart spellista"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:92
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:65
+msgid "Create a new smart playlist"
+msgstr "Skapa en ny smart spellista"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:134
+msgid "GtkActionPath"
+msgstr "GtkActionPath"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:87
+msgid "Select all tracks"
+msgstr "Markera alla spår"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:91
+msgid "Unselect all tracks"
+msgstr "Avmarkera alla spår"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:94
+msgid "_Edit Track Metadata"
+msgstr "R_edigera spårets metadata"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:95
+msgid "Edit metadata on selected tracks"
+msgstr "Redigera metadata för de markerade spåren"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:104
 msgid "Create new playlist from selected tracks"
 msgstr "Skapa ny spellista från markerade spår"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:109
+msgid "Remove selected track(s) from this source"
+msgstr "Ta bort markerade spår från denna källa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:112
+msgid "Remove From _Library"
+msgstr "Ta bort från _bibliotek"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:113
+msgid "Remove selected track(s) from library"
+msgstr "Ta bort markerade spår från bibliotek"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:117
+msgid "Permanently delete selected song(s) from medium"
+msgstr "Ta permanent bort markerade låtar från lagringsmedia"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:396
+#, csharp-format
+msgid "Remove selection from {0}?"
+msgstr "Ta bort markerade från {0}?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:399
+#, csharp-format
+msgid "Are you sure you want to remove the selected song from your {1}?"
+msgid_plural "Are you sure you want to remove the selected {0} songs from your {1}?"
+msgstr[0] "Är du säker på att du vill ta bort den markerade låten från {1}?"
+msgstr[1] "Är du säker på att du vill ta bort de {0} markerade låtarna från {1}?"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:132
 msgid "Stop Operation"
@@ -3002,7 +3075,7 @@ msgstr "Importera mapp till bibliotek"
 msgid "Local Folder"
 msgstr "Lokal mapp"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:712
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:720
 msgid "IconName"
 msgstr "Ikonnamn"
 
@@ -4327,6 +4400,8 @@ msgstr "Rekommenderar automatiskt musik som du kanske tycker om, baserat på den
 msgid "Show Recommendations"
 msgstr "Visa rekommendationer"
 
+#~ msgid "_Track Properties"
+#~ msgstr "Sp_åregenskaper"
 #~ msgid "<b>Loading...</b>"
 #~ msgstr "<b>Läser in...</b>"
 
@@ -4805,8 +4880,6 @@ msgstr "Visa rekommendationer"
 #~ msgstr "Mata ut den aktiva källan"
 #~ msgid "Rename Device"
 #~ msgstr "Byt namn på enhet"
-#~ msgid "Rename Playlist"
-#~ msgstr "Byt namn på spellista"
 #~ msgid "<small>Burning</small>"
 #~ msgstr "<small>Bränning</small>"
 # Det är en patenterad teknik. Eller?
