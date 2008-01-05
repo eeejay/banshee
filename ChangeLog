@@ -1,5 +1,17 @@
 2008-01-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Tweak debug output.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryTermNode.cs: Add support for other
+	operators (= == > < >= <=).  Implement = or == on a text field as 'starts
+	with'.
+
+	* src/Core/Hyena/Hyena.Data.Query/UserQueryParser.cs: Add support for |
+	and || for OR, and fix a bug with sub clauses.
+
+2008-01-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Hyena/Hyena.Data.Query/QueryKeywordNode.cs: Remove, put
 	functionality in QueryListNode.
 

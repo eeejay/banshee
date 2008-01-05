@@ -36,13 +36,44 @@ namespace Hyena.Data.Query
     {
         private string field;
         private string value;
-        
+        private string op;
+
+        /*public struct Operator
+        {
+            public string [] UserQueryOperators;
+            public string Label;
+            public string Name;
+            public string SqlFormat;
+
+            public Operator (string name, string label, string sqlFormat, string [] operators)
+            {
+                Name = name;
+                Label = label;
+                SqlFormat = sqlFormat;
+                UserQueryOperators = operators;
+            }
+
+            public static Operator 
+        }*/
+
+        // Note, order of these is important since if = was before ==, the value of the
+        // term would start with the second =, etc.
+        private static string [] operators = new string [] {":", "==", "<=", ">=", "=", "<", ">"};
+
         public QueryTermNode(string value) : base()
         {
-            int field_separator = value.IndexOf(':');
+            int field_separator = 0;
+            foreach (string op in operators) {
+                field_separator = value.IndexOf (op);
+                if (field_separator != -1) {
+                    this.op = op;
+                    break;
+                }
+            }
+
             if(field_separator > 0) {
                 field = value.Substring(0, field_separator);
-                this.value = value.Substring(field_separator + 1);
+                this.value = value.Substring(field_separator + op.Length);
             } else {
                 this.value = value;
             }
@@ -69,6 +100,7 @@ namespace Hyena.Data.Query
             XmlElement node = doc.CreateElement ("term");
             if (Field != null)
                 node.SetAttribute ("field", Field);
+            node.SetAttribute ("op", Operator);
             node.SetAttribute ("value", Value);
             parent.AppendChild (node);
         }
@@ -87,43 +119,66 @@ namespace Hyena.Data.Query
                 
                 foreach(QueryField field in fieldSet.Fields) {
                     if (field.Default)
-                        if (EmitTermMatch (sb, field, Value, emitted > 0))
+                        if (EmitTermMatch (sb, field, emitted > 0))
                             emitted++;
                 }
                 
                 sb.Append (")");
             } else if(alias != null && fieldSet.Map.ContainsKey(alias)) {
-                EmitTermMatch (sb, fieldSet.Map[alias], Value, false);
+                EmitTermMatch (sb, fieldSet.Map[alias], false);
             }
         }
 
-        private bool EmitTermMatch (StringBuilder sb, QueryField field, string value, bool emit_or)
+        private bool EmitTermMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
             if (field.QueryFieldType == QueryFieldType.Text)
-                return EmitStringMatch(sb, field.Column, value, emit_or);
+                return EmitStringMatch(sb, field.Column, emit_or);
             else
-                return EmitNumericMatch(sb, field.Column, value, emit_or);
+                return EmitNumericMatch(sb, field.Column, emit_or);
         }
 
-        private bool EmitStringMatch(StringBuilder sb, string field, string value, bool emit_or)
+        private bool EmitStringMatch(StringBuilder sb, string field, bool emit_or)
         {
-            string safe_value = value.Replace("'", "''");
+            string safe_value = Value.Replace("'", "''");
             
             if (emit_or)
                 sb.Append (" OR ");
 
-            sb.AppendFormat(" {0} LIKE '%{1}%' ", field, safe_value);
+            switch (Operator) {
+                case "=": // Treat as starts with
+                case "==":
+                    sb.AppendFormat("{0} LIKE '{1}%'", field, safe_value);
+                    break;
+
+                case ":": // Contains
+                default:
+                    sb.AppendFormat("{0} LIKE '%{1}%'", field, safe_value);
+                    break;
+            }
+
             return true;
         }
 
-        private bool EmitNumericMatch(StringBuilder sb, string field, string value, bool emit_or)
+        private bool EmitNumericMatch(StringBuilder sb, string field, bool emit_or)
         {
             try {
-                int num = Convert.ToInt32 (value);
+                // TODO could add a handler to the Field class so we could preprocess
+                // date queries (and turn them into numbers), etc..
+                int num = Convert.ToInt32 (Value);
                 if (emit_or)
                     sb.Append (" OR ");
 
-                sb.AppendFormat(" {0} = {1} ", field, num);
+                switch (Operator) {
+                    case ":":
+                    case "=":
+                    case "==":
+                        sb.AppendFormat("{0} = {1}", field, num);
+                        break;
+
+                    default:
+                        sb.AppendFormat("{0} {2} {1}", field, num, Operator);
+                        break;
+                }
                 return true;
             } catch {}
             return false;
@@ -131,6 +186,10 @@ namespace Hyena.Data.Query
         
         public string Value {
             get { return value; }
+        }
+
+        public string Operator {
+            get { return op; }
         }
         
         public string Field {

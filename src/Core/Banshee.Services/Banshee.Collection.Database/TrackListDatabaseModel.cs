@@ -76,14 +76,13 @@ namespace Banshee.Collection.Database
                 Hyena.Data.Query.UserQueryParser qp = new UserQueryParser (Filter);
                 QueryNode n = qp.BuildTree ();
 
+                filter_query = n.ToSql (field_set);
+
                 Console.WriteLine ("query: {0}", Filter);
                 //Console.WriteLine ("tree:");
                 //n.Dump ();
-
-                filter_query = n.ToSql (field_set);
-
-                Console.WriteLine ("Sql for Query: {0}", filter_query);
                 Console.WriteLine ("Xml for Query: {0}", n.ToXml ());
+                Console.WriteLine ("Sql for Query: {0}", filter_query);
 
                 if (filter_query.Length == 0)
                     filter_query = null;

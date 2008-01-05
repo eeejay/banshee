@@ -52,6 +52,7 @@ namespace Hyena.Data.Query
         public override QueryNode BuildTree ()
         {
             root = current_parent = new QueryListNode (Keyword.And);
+            bool last_was_term = false;
             
             while (true) {
                 QueryToken token = Scan ();
@@ -63,7 +64,13 @@ namespace Hyena.Data.Query
                 token.Column = token_start_column;
                 token.Line = token_start_line;
                 
+                // If we have two terms in a row, put an AND between them
+                if (last_was_term && token.ID == TokenID.Term)
+                    ParseToken (new QueryToken (TokenID.And));
+
                 ParseToken (token);
+
+                last_was_term = token.ID == TokenID.Term;
             }
 
             return root.Trim ();
@@ -112,18 +119,15 @@ namespace Hyena.Data.Query
                     break;
 
                 case TokenID.Not:
-                    //QueryNode left_sibling = current_parent.LastChild;
-                    /*if (left_sibling != null && ! (left_sibling is QueryListNode)) {
-                        NodePush (new QueryListNode (Keyword.And));
-                    }*/
-                    
                     NodePush (new QueryListNode (Keyword.Not));
                     break;
 
                 case TokenID.Or:
                 case TokenID.And:
-                    QueryListNode list = new QueryListNode (token.ID == TokenID.Or ? Keyword.Or : Keyword.And);
-                    if (current_parent.Keyword == (token.ID == TokenID.Or ? Keyword.And : Keyword.Or)) {
+                    // Only push a node if the current_parent is not the same as this token
+                    if (current_parent.Keyword == Keyword.Not ||
+                            current_parent.Keyword == (token.ID == TokenID.Or ? Keyword.And : Keyword.Or)) {
+                        QueryListNode list = new QueryListNode (token.ID == TokenID.Or ? Keyword.Or : Keyword.And);
                         QueryListNode p = current_parent.Parent;
                         if (p != null) {
                             current_parent.Parent.RemoveChild (current_parent);
@@ -135,8 +139,8 @@ namespace Hyena.Data.Query
                             list.AddChild (current_parent);
                         }
                         current_parent = p;
+                        NodePush (list);
                     }
-                    NodePush (list);
                     break;
 
                 case TokenID.Term:
@@ -177,6 +181,9 @@ namespace Hyena.Data.Query
             } else if (peek == '-') {
                 ReadChar ();
                 return new QueryToken (TokenID.Not);
+            } else if (peek == '|') {
+                ReadChar ();
+                return new QueryToken (TokenID.Or);
             } else {
                 string token = ScanString ();
 
@@ -197,7 +204,7 @@ namespace Hyena.Data.Query
 
         private bool IsStringTerminationChar (char ch, bool allow_whitespace)
         {
-            return (!allow_whitespace && Char.IsWhiteSpace (ch)) || ch == '(' || ch == ')';
+            return (!allow_whitespace && Char.IsWhiteSpace (ch)) || ch == '(' || ch == ')' || ch == '|';
         }
 
         private string ScanString ()
