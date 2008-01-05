@@ -27,10 +27,12 @@
 //
 
 using System;
+using System.Xml;
+using System.Text;
 
 namespace Hyena.Data.Query
 {
-    public class QueryNode
+    public abstract class QueryNode
     {
         private QueryListNode parent;
         private int source_column;
@@ -60,6 +62,26 @@ namespace Hyena.Data.Query
         {
             PrintIndent(depth);
             Console.WriteLine(this);
+        }
+
+        public abstract QueryNode Trim ();
+
+        public abstract void AppendXml (XmlDocument doc, XmlNode parent);
+
+        public virtual string ToXml ()
+        {
+            XmlDocument doc = new XmlDocument ();
+            AppendXml (doc, doc);
+            return doc.OuterXml;
+        }
+
+        public abstract void AppendSql (StringBuilder sb, QueryFieldSet fieldSet);
+
+        public virtual string ToSql (QueryFieldSet fieldSet)
+        {
+            StringBuilder sb = new StringBuilder ();
+            AppendSql (sb, fieldSet);
+            return sb.ToString ();
         }
         
         public QueryListNode Parent {

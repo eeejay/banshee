@@ -27,6 +27,8 @@
 //
 
 using System;
+using System.Xml;
+using System.Text;
 
 namespace Hyena.Data.Query
 {
@@ -45,6 +47,13 @@ namespace Hyena.Data.Query
                 this.value = value;
             }
         }
+
+        public override QueryNode Trim ()
+        {
+            if (value == null || value == String.Empty)
+                Parent.RemoveChild (this);
+            return this;
+        }
         
         public override string ToString()
         {
@@ -53,6 +62,71 @@ namespace Hyena.Data.Query
             } else {
                 return String.Format("\"{0}\"", Value);
             }
+        }
+
+        public override void AppendXml (XmlDocument doc, XmlNode parent)
+        {
+            XmlElement node = doc.CreateElement ("term");
+            if (Field != null)
+                node.SetAttribute ("field", Field);
+            node.SetAttribute ("value", Value);
+            parent.AppendChild (node);
+        }
+
+        public override void AppendSql (StringBuilder sb, QueryFieldSet fieldSet)
+        {
+            string alias = Field;
+            
+            if(alias != null) {
+                alias = alias.ToLower();
+            }
+            
+            if(alias == null || !fieldSet.Map.ContainsKey(alias)) {
+                sb.Append ("(");
+                int emitted = 0, i = 0;
+                
+                foreach(QueryField field in fieldSet.Fields) {
+                    if (field.Default)
+                        if (EmitTermMatch (sb, field, Value, emitted > 0))
+                            emitted++;
+                }
+                
+                sb.Append (")");
+            } else if(alias != null && fieldSet.Map.ContainsKey(alias)) {
+                EmitTermMatch (sb, fieldSet.Map[alias], Value, false);
+            }
+        }
+
+        private bool EmitTermMatch (StringBuilder sb, QueryField field, string value, bool emit_or)
+        {
+            if (field.QueryFieldType == QueryFieldType.Text)
+                return EmitStringMatch(sb, field.Column, value, emit_or);
+            else
+                return EmitNumericMatch(sb, field.Column, value, emit_or);
+        }
+
+        private bool EmitStringMatch(StringBuilder sb, string field, string value, bool emit_or)
+        {
+            string safe_value = value.Replace("'", "''");
+            
+            if (emit_or)
+                sb.Append (" OR ");
+
+            sb.AppendFormat(" {0} LIKE '%{1}%' ", field, safe_value);
+            return true;
+        }
+
+        private bool EmitNumericMatch(StringBuilder sb, string field, string value, bool emit_or)
+        {
+            try {
+                int num = Convert.ToInt32 (value);
+                if (emit_or)
+                    sb.Append (" OR ");
+
+                sb.AppendFormat(" {0} = {1} ", field, num);
+                return true;
+            } catch {}
+            return false;
         }
         
         public string Value {

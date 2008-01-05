@@ -1,3 +1,36 @@
+2008-01-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryKeywordNode.cs: Remove, put
+	functionality in QueryListNode.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryNode.cs: Add ToSql and ToXml
+	methods, and AppendSql, AppendXml, and Trim abstract methods.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryListNode.cs:
+	* src/Core/Hyena/Hyena.Data.Query/QueryTermNode.cs: Implement AppendSql
+	and AppendXml methods.  Change QueryListNode to have a keyword - an operator,
+	eg and/or/not - associated with it.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryParser.cs: Make an abstract class,
+	moving user entered search logic into UserQueryParser.  The idea is to have
+	an XmlQueryParser too, for use with smart playlists.
+
+	* src/Core/Hyena/Hyena.Data.Query/SqlQueryGenerator.cs: Remove, this
+	functionality is available via QueryNode.ToXml.
+
+	* src/Core/Hyena/Hyena.Data.Query/UserQueryParser.cs: New subclass of
+	QueryParser for parsing user-entered searches.  Change the parser to
+	generate a tree of And/Or clauses, instead a tree of lists that contain
+	them and QueryTermNodes inline.  With some post-construction trimming,
+	this ensures that the generated tree is a valid boolean function (and
+	means all the validation code in SqlQueryGenerator is not needed to
+	produce valid SQL anymore).
+
+	* src/Core/Hyena/Makefile.am: Add new files, remove old ones.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Use ToSql instead of the SqlQueryGenerator.
+
 2007-12-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:

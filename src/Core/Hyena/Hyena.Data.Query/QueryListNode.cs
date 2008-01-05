@@ -27,20 +27,31 @@
 //
 
 using System;
+using System.Xml;
+using System.Text;
 using System.Collections.Generic;
 
 namespace Hyena.Data.Query
 {
+    public enum Keyword {
+        Not,
+        Or,
+        And
+    }
+
     public class QueryListNode : QueryNode
     {
         private List<QueryNode> children = new List<QueryNode>();
+        private Keyword keyword;
     
-        public QueryListNode() : base()
+        public QueryListNode(Keyword keyword) : base()
         {
+            this.keyword = keyword;
         }
         
-        public QueryListNode(QueryListNode parent) : base(parent)
+        public QueryListNode(Keyword keyword, QueryListNode parent) : base(parent)
         {
+            this.keyword = keyword;
         }
         
         public void AddChild(QueryNode child)
@@ -53,6 +64,14 @@ namespace Hyena.Data.Query
         {
             child.Parent = null;
             children.Remove(child);
+        }
+
+        public void TakeChildren (QueryListNode from)
+        {
+            foreach (QueryNode child in from.Children) {
+                AddChild (child);
+            }
+            from.Children.Clear ();
         }
         
         public void ReplaceChild(QueryNode old_child, QueryNode new_child)
@@ -80,14 +99,14 @@ namespace Hyena.Data.Query
         internal override void Dump(int depth)
         {
             PrintIndent(depth);
-            Console.WriteLine("{");
+            Console.WriteLine("<{0}>", Keyword);
             
             foreach(QueryNode child in children) {
                 child.Dump(depth + 1);
             }
             
             PrintIndent(depth);
-            Console.WriteLine("}");
+            Console.WriteLine("</{0}>", Keyword);
         }
         
         public QueryNode GetLeftSibling(QueryNode node)
@@ -108,7 +127,72 @@ namespace Hyena.Data.Query
             }
             return Children[index + 1];
         }
-        
+
+        public override QueryNode Trim ()
+        {
+            // Trim depth first
+            List<QueryNode> copy = new List<QueryNode> (Children);
+            foreach (QueryNode child in copy)
+                child.Trim ();
+
+            if (Keyword == Keyword.Not) {
+                if (ChildCount != 1)
+                    Parent.RemoveChild (this);
+            } else {
+                if (ChildCount <= 1) {
+                    if (Parent != null) {
+                        QueryListNode p = Parent;
+                        p.RemoveChild (this);
+                        p.TakeChildren (this);
+                    } else if (ChildCount == 1) {
+                        Children[0].Parent = null;
+                        return Children[0];
+                    }
+                }
+            }
+
+            return this;
+        }
+
+        public override void AppendXml (XmlDocument doc, XmlNode parent)
+        {
+            if (ChildCount == 0)
+                return;
+
+            XmlElement node = doc.CreateElement (Keyword.ToString ());
+            parent.AppendChild (node);
+            foreach (QueryNode child in Children)
+                child.AppendXml (doc, node);
+        }
+
+        public override string ToString()
+        {
+            return String.Format("<{0}>", Keyword);
+        }
+
+        public override void AppendSql (StringBuilder sb, QueryFieldSet fieldSet)
+        {
+            if (ChildCount == 0)
+                return;
+
+            if (Keyword != Keyword.Not) {
+                sb.Append ("(");
+                bool first = true;
+                foreach (QueryNode child in Children) {
+                    if (!first)
+                        sb.AppendFormat (" {0} ", Keyword);
+                    else
+                        first = false;
+                    child.AppendSql (sb, fieldSet);
+                }
+                sb.Append (")");
+            } else {
+                sb.Append ("NOT(");
+                Children [0].AppendSql (sb, fieldSet);
+                sb.Append (")");
+            }
+        }
+
         public bool IsEmpty {
             get { return ChildCount == 0; }
         }
@@ -123,6 +207,11 @@ namespace Hyena.Data.Query
         
         public int ChildCount {
             get { return children.Count; }
+        }
+
+        public Keyword Keyword {
+            get { return keyword; }
+            set { keyword = value; }
         }
     }
 }

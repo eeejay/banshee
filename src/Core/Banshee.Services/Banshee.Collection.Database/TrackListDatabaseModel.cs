@@ -73,17 +73,17 @@ namespace Banshee.Collection.Database
             if (String.IsNullOrEmpty(Filter)) {
                 filter_query = null;
             } else {
-                Hyena.Data.Query.QueryParser qp = new QueryParser (Filter);
-                QueryListNode n = qp.BuildTree ();
+                Hyena.Data.Query.UserQueryParser qp = new UserQueryParser (Filter);
+                QueryNode n = qp.BuildTree ();
 
                 Console.WriteLine ("query: {0}", Filter);
-                Console.WriteLine ("tree:");
-                n.Dump ();
+                //Console.WriteLine ("tree:");
+                //n.Dump ();
 
-                SqlQueryGenerator sqg = new SqlQueryGenerator (field_set, n);
-                filter_query = sqg.GenerateQuery ();
+                filter_query = n.ToSql (field_set);
 
-                Console.WriteLine ("Sql: {0}", filter_query);
+                Console.WriteLine ("Sql for Query: {0}", filter_query);
+                Console.WriteLine ("Xml for Query: {0}", n.ToXml ());
 
                 if (filter_query.Length == 0)
                     filter_query = null;
