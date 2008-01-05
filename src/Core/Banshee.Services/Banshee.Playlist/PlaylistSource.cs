@@ -54,11 +54,23 @@ namespace Banshee.Playlist
 
         private static string generic_name = Catalog.GetString ("Playlist");
 
-        static PlaylistSource () {
-            SourceTable = "CorePlaylists";
-            TrackJoinTable = "CorePlaylistEntries";
-            IconName = "source-playlist";
+        protected override string SourceTable {
+            get { return "CorePlaylists"; }
+        }
 
+        protected override string SourcePrimaryKey {
+            get { return "PlaylistID"; }
+        }
+
+        protected override string TrackJoinTable {
+            get { return "CorePlaylistEntries"; }
+        }
+
+        protected override string IconName {
+            get { return "source-playlist"; }
+        }
+
+        static PlaylistSource () {
             add_tracks_command = new BansheeDbCommand (@"
                 INSERT INTO CorePlaylistEntries
                     SELECT null, ?, ItemID, 0

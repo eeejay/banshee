@@ -49,11 +49,12 @@ namespace Banshee.Sources
         protected AlbumListDatabaseModel album_model;
         protected ArtistListDatabaseModel artist_model;
         
-        public DatabaseSource (string generic_name, string name, int order) : base (generic_name, name, order)
+        public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order)
         {
-            track_model = new TrackListDatabaseModel (ServiceManager.DbConnection);
-            album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection);
-            artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection);
+            string uuid = String.Format ("{0}-{1}", this.GetType().Name, id);
+            track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, uuid);
+            album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
+            artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
         }
 
 #region Public Properties
@@ -145,9 +146,7 @@ namespace Banshee.Sources
         protected void AfterInitialized ()
         {
             Reload ();
-            
             track_model.Reloaded += OnTrackModelReloaded;
-            
             OnSetupComplete ();
         }
 

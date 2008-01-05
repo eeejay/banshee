@@ -314,7 +314,7 @@ namespace Banshee.Database
                 CREATE TABLE CorePlaylistEntries (
                     EntryID             INTEGER PRIMARY KEY,
                     PlaylistID          INTEGER NOT NULL,
-                    TrackID             INTEGER NOT NULL,
+                    TrackID             INTEGER NOT NULL ON CONFLICT IGNORE,
                     ViewOrder           INTEGER NOT NULL DEFAULT 0,
                     UNIQUE (PlaylistID, TrackID) ON CONFLICT IGNORE
                 )
@@ -326,6 +326,7 @@ namespace Banshee.Database
                     Name                TEXT NOT NULL,
                     Condition           TEXT,
                     OrderBy             TEXT,
+                    OrderDir            TEXT,
                     LimitNumber         TEXT,
                     LimitCriterion      INTEGER
                 )
@@ -335,6 +336,13 @@ namespace Banshee.Database
                 CREATE TABLE CoreSmartPlaylistEntries (
                     SmartPlaylistID     INTEGER NOT NULL,
                     TrackID             INTEGER NOT NULL
+                )
+            ");
+
+            Execute(@"
+                CREATE TABLE CoreCacheModels (
+                    CacheID             INTEGER PRIMARY KEY,
+                    ModelID             TEXT
                 )
             ");
             
@@ -410,6 +418,11 @@ namespace Banshee.Database
             Execute(@"
                 INSERT INTO CorePlaylistEntries
                     SELECT * FROM PlaylistEntries
+            ");
+
+            Execute(@"
+                INSERT INTO CoreSmartPlaylists (SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion)
+                    SELECT * FROM SmartPlaylists
             ");
         }
         

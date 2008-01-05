@@ -9,10 +9,11 @@ using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.Sources;
 using Banshee.Database;
+using Banshee.Gui.Dialogs;
 
 namespace Banshee.SmartPlaylist
 {
-    public class Editor : Banshee.Gui.GladeDialog
+    public class Editor : GladeDialog
     {
         private QueryBuilder builder;
         private TracksQueryModel model;
@@ -368,13 +369,13 @@ namespace Banshee.SmartPlaylist
             }
         }
 
-        private int LimitCriterion {
+        private string LimitCriterion {
             get {
-                return builder.LimitCriterion;
+                return (string) builder.LimitCriterion;
             }
             
             set {
-                builder.LimitCriterion = value;
+                builder.LimitCriterion = Convert.ToInt32 (value);
             }
         }
     }

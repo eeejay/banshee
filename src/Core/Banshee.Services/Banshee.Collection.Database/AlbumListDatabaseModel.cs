@@ -50,35 +50,41 @@ namespace Banshee.Collection.Database
         
         private AlbumInfo select_all_album = new AlbumInfo(null);
         
-        public AlbumListDatabaseModel(BansheeDbConnection connection)
+        public AlbumListDatabaseModel(BansheeDbConnection connection, string uuid)
         {
-            cache = new BansheeCacheableModelAdapter<AlbumInfo> (connection, this);
+            cache = new BansheeCacheableModelAdapter<AlbumInfo> (connection, uuid, this);
             this.connection = connection;
         }
 
-        public AlbumListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection) : this (connection)
+        public AlbumListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection, string uuid) : this (connection, uuid)
         {
             this.track_model = trackModel;
         }
 
+        private bool first_reload = true;
         public override void Reload()
         {
-            bool either = (artist_id_filter_query != null) || (track_model != null);
-            bool both = (artist_id_filter_query != null) && (track_model != null);
-            reload_fragment = String.Format (@"
-                FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID 
-                    {0} {1} {2} {3}
-                    ORDER BY CoreAlbums.Title, CoreArtists.Name",
-                either ? "WHERE" : null,
-                artist_id_filter_query,
-                both ? "AND" : null,
-                track_model == null ? null : String.Format(
-                    "CoreAlbums.AlbumID IN (SELECT DISTINCT (CoreTracks.AlbumID) {0})",
-                    track_model.ReloadFragment
-                )
-            );
+            if (!first_reload || !cache.Warm) {
+                bool either = (artist_id_filter_query != null) || (track_model != null);
+                bool both = (artist_id_filter_query != null) && (track_model != null);
+                reload_fragment = String.Format (@"
+                    FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID 
+                        {0} {1} {2} {3}
+                        ORDER BY CoreAlbums.Title, CoreArtists.Name",
+                    either ? "WHERE" : null,
+                    artist_id_filter_query,
+                    both ? "AND" : null,
+                    track_model == null ? null : String.Format(
+                        "CoreAlbums.AlbumID IN (SELECT DISTINCT (CoreTracks.AlbumID) {0})",
+                        track_model.ReloadFragment
+                    )
+                );
 
-            count = cache.Reload () + 1;
+                cache.Reload ();
+            }
+
+            first_reload = false;
+            count = cache.Count + 1;
             select_all_album.Title = String.Format("All Albums ({0})", count - 1);
             OnReloaded();
         }

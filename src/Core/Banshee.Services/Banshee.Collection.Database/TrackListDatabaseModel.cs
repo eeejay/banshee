@@ -61,9 +61,9 @@ namespace Banshee.Collection.Database
         
         private int rows_in_view;
 
-        public TrackListDatabaseModel (BansheeDbConnection connection)
+        public TrackListDatabaseModel (BansheeDbConnection connection, string uuid)
         {
-            cache = new BansheeCacheableModelAdapter<TrackInfo> (connection, this);
+            cache = new BansheeCacheableModelAdapter<TrackInfo> (connection, uuid, this);
             this.connection = connection;
             Refilter ();
         }
@@ -94,43 +94,53 @@ namespace Banshee.Collection.Database
             return sort_column.SortType == SortType.Ascending ? " ASC" : " DESC";
         }
 
-        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.TrackNumber ASC, CoreTracks.RelativeUri ASC";
         private void GenerateSortQueryPart()
         {
             if(sort_column == null) {
                 sort_query = null;
                 return;
             }
-            
-            switch(sort_column.SortKey) {
-                case "track":
+
+            sort_query = GetSort (sort_column.SortKey, AscDesc ());
+        }
+
+        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.TrackNumber ASC, CoreTracks.RelativeUri ASC";
+        public static string GetSort (string key, string ascDesc)
+        {
+            string sort_query = null;
+            switch(key) {
+                case "Track":
                     sort_query = String.Format (@"
                         lower(CoreArtists.Name) ASC, 
                         lower(CoreAlbums.Title) ASC, 
-                        CoreTracks.TrackNumber {0}", AscDesc ()); 
+                        CoreTracks.TrackNumber {0}", ascDesc); 
                     break;
 
-                case "artist":
+                case "Artist":
                     sort_query = String.Format (@"
                         lower(CoreArtists.Name) {0}, 
                         lower(CoreAlbums.Title) ASC, 
                         CoreTracks.TrackNumber ASC,
-                        CoreTracks.RelativeUri ASC", AscDesc ()); 
+                        CoreTracks.RelativeUri ASC", ascDesc); 
                     break;
 
-                case "album":
+                case "Album":
                     sort_query = String.Format (@"
                         lower(CoreAlbums.Title) {0},
                         lower(CoreArtists.Name) ASC,
                         CoreTracks.TrackNumber ASC,
-                        CoreTracks.RelativeUri ASC", AscDesc ()); 
+                        CoreTracks.RelativeUri ASC", ascDesc); 
                     break;
 
-                case "title":
+                case "Title":
                     sort_query = String.Format (@"
                         lower(CoreTracks.Title) {0},
                         lower(CoreArtists.Name) ASC, 
-                        lower(CoreAlbums.Title) ASC", AscDesc ()); 
+                        lower(CoreAlbums.Title) ASC", ascDesc); 
+                    break;
+
+                case "Random":
+                    sort_query = "RANDOM ()";
                     break;
 
                 case "Year":
@@ -143,13 +153,11 @@ namespace Banshee.Collection.Database
                 case "RelativeUri":
                     sort_query = String.Format (
                         "CoreTracks.{0} {1}, {2}",
-                        sort_column.SortKey, AscDesc (), default_sort
+                        key, ascDesc, default_sort
                     );
                     break;
-                default:
-                    sort_query = null;
-                    return;
             }
+            return sort_query;
         }
 
         public void Refilter()
@@ -184,11 +192,19 @@ namespace Banshee.Collection.Database
             OnCleared();
         }
         
+        private bool first_reload = true;
         public override void Reload()
         {
+            string unfiltered_query = String.Format (
+                "FROM CoreTracks, CoreAlbums, CoreArtists{0} WHERE {1} {2}",
+                JoinFragment, FetchCondition, ConditionFragment
+            );
+
+            unfiltered_count = connection.QueryInt32 (String.Format (
+                "SELECT COUNT(*) {0}", unfiltered_query
+            ));
+
             StringBuilder qb = new StringBuilder ();
-            string unfiltered_query = String.Format ("FROM CoreTracks, CoreAlbums, CoreArtists{0} WHERE {1} {2}",
-                JoinFragment, FetchCondition, ConditionFragment);
                 
             qb.Append (unfiltered_query);
             
@@ -213,15 +229,17 @@ namespace Banshee.Collection.Database
             }
                 
             reload_fragment = qb.ToString ();
-            count = cache.Reload ();
 
-            unfiltered_count = connection.QueryInt32 (String.Format (
-                "SELECT COUNT(*) {0}", unfiltered_query
-            ));
+            if (!first_reload || !cache.Warm) {
+                cache.Reload ();
+            }
+
+            count = cache.Count;
+            first_reload = false;
 
             OnReloaded ();
         }
-                
+
         public override int IndexOf (TrackInfo track)
         {
             if (track is LibraryTrackInfo) {

@@ -181,7 +181,7 @@ namespace Hyena.Data.Query
             } else if (peek == '-') {
                 ReadChar ();
                 return new QueryToken (TokenID.Not);
-            } else if (peek == '|') {
+            } else if (peek == '|' || peek == ',') {
                 ReadChar ();
                 return new QueryToken (TokenID.Or);
             } else {
@@ -204,7 +204,7 @@ namespace Hyena.Data.Query
 
         private bool IsStringTerminationChar (char ch, bool allow_whitespace)
         {
-            return (!allow_whitespace && Char.IsWhiteSpace (ch)) || ch == '(' || ch == ')' || ch == '|';
+            return (!allow_whitespace && Char.IsWhiteSpace (ch)) || ch == '(' || ch == ')' || ch == '|' || ch == ',';
         }
 
         private string ScanString ()

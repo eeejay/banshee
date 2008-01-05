@@ -78,5 +78,9 @@ namespace Banshee.Gui
                 //Console.WriteLine ("for source {0} and action {1} got label {2}, so set action.Label = {3}", source.Name, action_name, label, action.Label);
             }
         }
+
+        protected Gtk.Window PrimaryWindow {
+            get { return ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow; }
+        }
     }
 }

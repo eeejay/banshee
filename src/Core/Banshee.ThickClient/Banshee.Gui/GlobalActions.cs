@@ -34,10 +34,12 @@ using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Streaming;
 using Banshee.Gui.Dialogs;
+using Banshee.Widgets;
+using Banshee.Playlist;
 
 namespace Banshee.Gui
 {
-    public class GlobalActions : ActionGroup
+    public class GlobalActions : BansheeActionGroup
     {
         public GlobalActions (InterfaceActionService actionService) : base ("Global")
         {
@@ -141,6 +143,69 @@ namespace Banshee.Gui
                     Catalog.GetString("Problem parsing playlist"));
             }
         }
+
+        private void OnImportPlaylist (object o, EventArgs args)
+        {
+            // Prompt user for location of the playlist.
+            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog(
+                Catalog.GetString("Import Playlist"),
+                PrimaryWindow,
+                FileChooserAction.Open
+            );
+                         
+            chooser.DefaultResponse = ResponseType.Ok;
+            chooser.SelectMultiple = false;
+
+            chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
+            chooser.AddButton(Catalog.GetString("Import"), ResponseType.Ok);
+            
+            string playlist_uri = null;
+            int response = chooser.Run();            
+
+            if(response == (int) ResponseType.Ok) {                    
+                playlist_uri = SafeUri.UriToFilename(chooser.Uri);              
+                chooser.Destroy(); 
+            } else {
+                // User cancelled import.
+                chooser.Destroy();                 
+                return;
+            } 
+
+            // Read the contents of the playlist.
+            string[] uris = null;
+            try {                    
+                uris = PlaylistFileUtil.ImportPlaylist(playlist_uri);                    
+            } catch (Exception e) {
+                HigMessageDialog md = new HigMessageDialog(PrimaryWindow, 
+                    DialogFlags.DestroyWithParent, 
+                    MessageType.Error,  
+                    ButtonsType.Ok,
+                    Catalog.GetString("Unable to Import Playlist"),
+                    e.Message);
+
+                md.Run();
+                md.Destroy();
+                return;
+            }
+
+            // Import the tracks specified in the playlist.
+            if (uris != null) {
+                ImportPlaylistWorker worker = new ImportPlaylistWorker(playlist_uri, uris);
+                worker.Import ();
+            } else {
+                HigMessageDialog md = new HigMessageDialog(PrimaryWindow, 
+                    DialogFlags.DestroyWithParent, 
+                    MessageType.Error,  
+                    ButtonsType.Ok,
+                    Catalog.GetString("Unable to Import Playlist"),
+                    Catalog.GetString("Banshee was unable to find any valid tracks to import.  Please check the playlist and try again.")
+                );
+
+                md.Run();
+                md.Destroy();
+                return;
+            }
+        }
         
         private void OnQuit (object o, EventArgs args)
         {
@@ -153,7 +218,7 @@ namespace Banshee.Gui
 
         private void OnExtensions (object o, EventArgs args)
         {
-            Mono.Addins.Gui.AddinManagerWindow.Run (ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow);
+            Mono.Addins.Gui.AddinManagerWindow.Run (PrimaryWindow);
         }
 
 #endregion

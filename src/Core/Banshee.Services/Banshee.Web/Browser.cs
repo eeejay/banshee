@@ -39,6 +39,7 @@ namespace Banshee.Web
         public static bool Open (string uri)
         {
             try {
+                //return Gnome.Url.Show(uri);
                 throw new ApplicationException ();
             } catch(Exception e) {
                 Log.Warning (Catalog.GetString ("Could not launch URL"),

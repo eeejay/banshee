@@ -47,31 +47,37 @@ namespace Banshee.Collection.Database
         
         private ArtistInfo select_all_artist = new ArtistInfo(null);
         
-        public ArtistListDatabaseModel(BansheeDbConnection connection)
+        public ArtistListDatabaseModel(BansheeDbConnection connection, string uuid)
         {
             this.connection = connection;
-            cache = new BansheeCacheableModelAdapter<ArtistInfo> (connection, this);
+            cache = new BansheeCacheableModelAdapter<ArtistInfo> (connection, uuid, this);
         }
 
-        public ArtistListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection) : this (connection)
+        public ArtistListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection, string uuid) : this (connection, uuid)
         {
             this.track_model = trackModel;
         }
     
+        private bool first_reload = true;
         public override void Reload()
         {
-            reload_fragment = String.Format (@"
-                FROM CoreArtists
-                    {0} {1}
-                    ORDER BY Name",
-                track_model != null ? "WHERE" : null,
-                track_model == null ? null : String.Format(
-                    "CoreArtists.ArtistID IN (SELECT DISTINCT (CoreTracks.ArtistID) {0})",
-                    track_model.ReloadFragment
-                )
-            );
+            if (!first_reload || !cache.Warm) {
+                reload_fragment = String.Format (@"
+                    FROM CoreArtists
+                        {0} {1}
+                        ORDER BY Name",
+                    track_model != null ? "WHERE" : null,
+                    track_model == null ? null : String.Format(
+                        "CoreArtists.ArtistID IN (SELECT DISTINCT (CoreTracks.ArtistID) {0})",
+                        track_model.ReloadFragment
+                    )
+                );
 
-            count = cache.Reload () + 1;
+                cache.Reload ();
+            }
+
+            first_reload = false;
+            count = cache.Count + 1;
             select_all_artist.Name = String.Format("All Artists ({0})", count - 1);
             OnReloaded();
         }

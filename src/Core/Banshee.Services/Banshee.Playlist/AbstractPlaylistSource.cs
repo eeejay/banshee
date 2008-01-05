@@ -49,32 +49,17 @@ namespace Banshee.Playlist
     public abstract class AbstractPlaylistSource : DatabaseSource
     {
         protected int? dbid;
-
-        private static string source_table;
-        private static string source_pk = "PlaylistID";
-        private static string track_join_table;
         private static string icon_name;
 
-        protected static string SourceTable {
-            get { return source_table; }
-            set { source_table = value; }
-        }
+        protected abstract string SourceTable { get; }
+        protected abstract string SourcePrimaryKey { get; }
+        protected abstract string TrackJoinTable { get; }
 
-        protected static string SourcePrimaryKey {
-            get { return source_pk; }
-            set { source_pk = value; }
-        }
-
-        protected static string TrackJoinTable {
-            get { return track_join_table; }
-            set { track_join_table = value; }
-        }
-
-        protected static string TrackJoin {
+        protected virtual string TrackJoin {
             get { return String.Format (", {0}", TrackJoinTable); }
         }
 
-        protected static string TrackCondition {
+        protected virtual string TrackCondition {
             get {
                 return String.Format (
                     " {0}.TrackID = CoreTracks.TrackID AND {0}.{2} = {1}",
@@ -83,14 +68,11 @@ namespace Banshee.Playlist
             }
         }
 
-        protected static string IconName {
-            get { return icon_name; }
-            set { icon_name = value; }
-        }
+        protected abstract string IconName { get; }
 
-        protected int? DbId {
+        public int? DbId {
             get { return dbid; }
-            set {
+            protected set {
                 if (value == null) {
                     Console.WriteLine ("intializing abstract playlist, but dbid = null!");
                     return;
@@ -107,7 +89,7 @@ namespace Banshee.Playlist
         {
         }
 
-        public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType) : base (generic_name, name, 500)
+        public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType) : base (generic_name, name, Convert.ToString (dbid), 500)
         {
             Properties.SetString ("IconName", IconName);
             DbId = dbid;

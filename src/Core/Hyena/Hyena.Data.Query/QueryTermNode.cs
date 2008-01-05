@@ -76,6 +76,7 @@ namespace Hyena.Data.Query
                 this.value = value.Substring(field_separator + op.Length);
             } else {
                 this.value = value;
+                this.op = ":";
             }
         }
 

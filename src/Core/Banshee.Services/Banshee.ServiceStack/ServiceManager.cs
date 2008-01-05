@@ -35,6 +35,7 @@ using Mono.Addins;
 using Banshee.Base;
 using Banshee.AudioProfiles;
 using Banshee.Sources;
+using Banshee.SmartPlaylist;
 using Banshee.Database;
 using Banshee.MediaEngine;
 using Banshee.Library;
@@ -59,6 +60,7 @@ namespace Banshee.ServiceStack
             RegisterService<DBusServiceManager> ();
             RegisterService<BansheeDbConnection> ();
             RegisterService<SourceManager> ();
+            //RegisterService<SmartPlaylistCore> ();
             RegisterService<ProfileManager> ();
             RegisterService<PlayerEngineService> ();
             RegisterService<PlaybackControllerService> ();

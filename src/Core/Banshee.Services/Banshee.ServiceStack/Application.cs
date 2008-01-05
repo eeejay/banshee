@@ -61,11 +61,6 @@ namespace Banshee.ServiceStack
 
                 foreach (PlaylistSource pl in PlaylistSource.LoadAll ())
                     ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
-
-                foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll ()) {
-                    pl.Reload ();
-                    ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
-                }
             }
             
             Banshee.Base.PlatformHacks.RestoreMonoJitSegv ();

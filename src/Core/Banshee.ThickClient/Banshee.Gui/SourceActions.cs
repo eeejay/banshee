@@ -118,9 +118,12 @@ namespace Banshee.Gui
 
         private void OnNewSmartPlaylist (object o, EventArgs args)
         {
-            SmartPlaylistSource playlist = new SmartPlaylistSource ("New Playlist");
-            playlist.Save ();
-            ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
+            //Editor ed = new Editor ();
+            //ed.RunDialog ();
+
+            /*Editor ed = new Editor ();
+            ed.SetQueryFromSearch ();
+            ed.RunDialog ();*/
 
             // TODO should begin editing the name after making it, but this changed
             // the ActiveSource to the new playlist and we don't want that.

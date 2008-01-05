@@ -40,6 +40,9 @@ namespace Banshee.Collection.Gui
         
         protected override string Text {
             get {
+                if (BoundObject == null)
+                    return String.Empty;
+
                 DateTime dt = (DateTime) BoundObject;
                 
                 if (dt == DateTime.MinValue)

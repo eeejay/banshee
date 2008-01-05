@@ -48,12 +48,22 @@ namespace Banshee.Database
         {
             if (connect) {
                 Open ();
-                BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (connection);
-                migrator.SlowStarted += OnMigrationSlowStarted;
-                migrator.SlowPulse += OnMigrationSlowPulse;
-                migrator.SlowFinished += OnMigrationSlowFinished;
-                migrator.Migrate ();
+                Migrate ();
             }
+        }
+
+        private void Migrate ()
+        {
+            BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (connection);
+            migrator.SlowStarted += OnMigrationSlowStarted;
+            migrator.SlowPulse += OnMigrationSlowPulse;
+            migrator.SlowFinished += OnMigrationSlowFinished;
+
+            migrator.Migrate ();
+
+            migrator.SlowStarted -= OnMigrationSlowStarted;
+            migrator.SlowPulse -= OnMigrationSlowPulse;
+            migrator.SlowFinished -= OnMigrationSlowFinished;
         }
         
         //private Gtk.Window slow_window;

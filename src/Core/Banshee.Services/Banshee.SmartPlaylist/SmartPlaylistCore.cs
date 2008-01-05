@@ -2,30 +2,31 @@ using System;
 using System.Data;
 using System.Collections;
 using System.Collections.Generic;
-using Gtk;
 
 using Mono.Unix;
+
+using Hyena.Data.Query;
  
 using Banshee.Base;
 using Banshee.Sources;
+using Banshee.Playlist;
+using Banshee.ServiceStack;
 using Banshee.Database;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 
 namespace Banshee.SmartPlaylist
 {
-    public class SmartPlaylistCore
+    public class SmartPlaylistCore : IService
     {
+        public string ServiceName { get { return "SmartPlaylistCore"; } }
+
         private readonly double RATE_LIMIT_INTERVAL_MS = 1000.0;
         private readonly double RATE_LIMIT_EVENTS_MAX = 5;
         private readonly double RATE_LIMIT_CPU_MAX = 0.10;
         private static int RATE_LIMIT_REFRESH = 5;
 
         private ArrayList playlists = new ArrayList();
-
-        private Menu musicMenu;
-        private MenuItem addItem;
-        private MenuItem addFromSearchItem;
 
         private DateTime last_check = DateTime.MinValue;
         private uint event_counter = 0;
@@ -35,196 +36,51 @@ namespace Banshee.SmartPlaylist
         private DateTime start;
         private uint timeout_id = 0;
 
-        private static SmartPlaylistCore instance = null;
-        public static SmartPlaylistCore Instance {
-            get { 
-                if(instance == null) {
-                    instance = new SmartPlaylistCore();
-                }
-                
-                return instance; 
-            }
-        }
-
         private double cpu_ms_since_last_check = 0;
         public double CpuTime {
             get { return cpu_ms_since_last_check; }
             set { cpu_ms_since_last_check = value; }
         }
 
-        private SmartPlaylistCore()
-        {
-        }
-        
-        public void Initialize()
+        public SmartPlaylistCore()
         {
             Gnome.Vfs.Vfs.Initialize();
+
+            Console.WriteLine ("== Migrating Smart Playlists ==");
+            Migrator.MigrateAll ();
+            Console.WriteLine ("== Done Migrating Smart Playlists ==");
+
+            /*new XmlQueryParser (@"
+                    <foo>
+                    <bar>
+            ");*/
             
-            Timer t = new Timer("PluginInitialize");
-
-            // Check that our SmartPlaylists table exists in the database, otherwise make it
-            if(!Globals.Library.Db.TableExists("SmartPlaylists")) {
-                CreateTable("SmartPlaylists");
-            } else {
-                // Database Schema Updates
-                try {
-                    Globals.Library.Db.QuerySingle("SELECT LimitCriterion FROM SmartPlaylists LIMIT 1");
-                } catch {
-                    LogCore.Instance.PushDebug("Adding new database column", "LimitCriterion INTEGER");
-                    Globals.Library.Db.Execute("ALTER TABLE SmartPlaylists ADD LimitCriterion INTEGER");
-                    Globals.Library.Db.Execute("UPDATE SmartPlaylists SET LimitCriterion = 0");
-                }
-
-                RenameColumn("SmartPlaylists", "PlaylistID", "SmartPlaylistID", "Name, Condition, OrderBy, LimitNumber, LimitCriterion");
-            }
-
-            if(!Globals.Library.Db.TableExists("SmartPlaylistEntries")) {
-                CreateTable("SmartPlaylistEntries");
-            } else {
-                RenameColumn("SmartPlaylistEntries", "PlaylistID", "SmartPlaylistID", "TrackID");
-            }
-
             // Listen for added/removed sources and added/changed songs
-            SourceManager.SourceAdded += HandleSourceAdded;
-            SourceManager.SourceRemoved += HandleSourceRemoved;
+            ServiceManager.SourceManager.SourceAdded += HandleSourceAdded;
+            ServiceManager.SourceManager.SourceRemoved += HandleSourceRemoved;
 
-            if(Globals.Library.IsLoaded) {
-                HandleLibraryReloaded (null, null);
-            } else {
-                Globals.Library.Reloaded += HandleLibraryReloaded;
-            }
-            Globals.Library.TrackAdded += HandleTrackAdded;
-            Globals.Library.TrackRemoved += HandleTrackRemoved;
+            //ServiceManager.SourceManager.DefaultSource.Reloaded += HandleLibraryReloaded;
+            //Globals.Library.TrackAdded += HandleTrackAdded;
+            //Globals.Library.TrackRemoved += HandleTrackRemoved;
 
-            // Load existing smart playlists
-            IDataReader reader = Globals.Library.Db.Query(
-                "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM SmartPlaylists"
-            );
-
-            while (reader.Read()) {
-                try {
-                    SmartPlaylistSource.LoadFromReader (reader);
-                } catch (Exception e) {
-                    LogCore.Instance.PushError (
-                        "Invalid Smart Playlist",
-                        e.ToString(),
-                        false
-                    );
-                }
-            }
-
-            reader.Dispose();
-
-            t.Stop();
-            
-            // Add a menu option to create a new smart playlist
-            if(!Globals.UIManager.IsInitialized) {
-                Globals.UIManager.Initialized += OnUIManagerInitialized;
-            } else {
-                OnUIManagerInitialized (null, null);
-            }
-        }
-
-        private void CreateTable(string table)
-        {
-            switch (table) {
-            case "SmartPlaylists":
-                Globals.Library.Db.Execute(@"
-                    CREATE TABLE SmartPlaylists (
-                        SmartPlaylistID     INTEGER PRIMARY KEY,
-                        Name                TEXT NOT NULL,
-                        Condition           TEXT,
-                        OrderBy             TEXT,
-                        LimitNumber         TEXT,
-                        LimitCriterion      INTEGER)
-                ");
-                break;
-
-            case "SmartPlaylistEntries":
-                Globals.Library.Db.Execute(@"
-                    CREATE TABLE SmartPlaylistEntries (
-                        SmartPlaylistID     INTEGER NOT NULL,
-                        TrackID             INTEGER NOT NULL)
-                ");
-                break;
-            }
-        }
-
-        private void OnUIManagerInitialized(object o, EventArgs args)
-        {
-            Timer t = new Timer ("OnUIManagerInitialized");
-
-            musicMenu = (Globals.ActionManager.GetWidget ("/MainMenu/MusicMenu") as MenuItem).Submenu as Menu;
-            addItem = new MenuItem (Catalog.GetString("New _Smart Playlist..."));
-            addItem.Activated += delegate {
-                Editor ed = new Editor ();
-                ed.RunDialog ();
-            };
-
-            addFromSearchItem = new MenuItem (Catalog.GetString("New Smart Playlist _from Search..."));
-            addFromSearchItem.Activated += delegate {
-                Editor ed = new Editor ();
-                ed.SetQueryFromSearch ();
-                ed.RunDialog ();
-            };
-
-            // Insert it right after the New Playlist item
-            musicMenu.Insert (addFromSearchItem, 2);
-            musicMenu.Insert (addItem, 2);
-            addFromSearchItem.Show ();
-            addItem.Show ();
-
-            t.Stop();
-        }
-
-        public void Dispose()
-        {
-            if (timeout_id != 0)
-                GLib.Source.Remove (timeout_id);
-
-            if (ratelimit_timeout_id != 0)
-                GLib.Source.Remove (ratelimit_timeout_id);
-
-            if (musicMenu != null) {
-                musicMenu.Remove(addItem);
-                musicMenu.Remove(addFromSearchItem);
-            }
-
-            SourceManager.SourceAdded -= HandleSourceAdded;
-            SourceManager.SourceRemoved -= HandleSourceRemoved;
-
-            foreach (SmartPlaylistSource playlist in playlists)
-                LibrarySource.Instance.RemoveChildSource(playlist);
-
-            playlists.Clear();
-
-            instance = null;
-
-            Timer.PrintRunningTotals ();
         }
 
         private void HandleLibraryReloaded (object sender, EventArgs args)
         {
-            //Console.WriteLine ("LibraryReloaded");
-            // Listen for changes to any track to keep our playlists up to date
-            IDataReader reader = Globals.Library.Db.Query(
-                "SELECT TrackID FROM Tracks"
-            );
-
-            while (reader.Read()) {
-                LibraryTrackInfo track = Globals.Library.GetTrack (Convert.ToInt32(reader[0]));
-                // FIXME merge
-                //if (track != null)
-                    //track.Changed += HandleTrackChanged;
-            }
-
-            reader.Dispose();
-
-            Globals.Library.Reloaded -= HandleLibraryReloaded;
+            //Globals.Library.Reloaded -= HandleLibraryReloaded;
         }
 
         private void HandleSourceAdded (SourceEventArgs args)
         {
+            if (args.Source == ServiceManager.SourceManager.DefaultSource) {
+                foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll ()) {
+                    playlists.Add (pl);
+                    //pl.Reload ();
+                    ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
+                }
+                return;
+            }
+
             //Console.WriteLine ("source added: {0}", args.Source.Name);
             if (args.Source is PlaylistSource || args.Source is SmartPlaylistSource) {
                 foreach (SmartPlaylistSource pl in playlists) {
@@ -268,30 +124,30 @@ namespace Banshee.SmartPlaylist
             StopTimer();
         }
 
-        private void HandleTrackAdded (object sender, LibraryTrackAddedArgs args)
-        {
+        //private void HandleTrackAdded (object sender, LibraryTrackAddedArgs args)
+        //{
             // FIXME merge
             //args.Track.Changed += HandleTrackChanged;
 
-            CheckTrack (args.Track);
-        }
+            //CheckTrack (args.Track);
+        //}
 
         private void HandleTrackChanged (object sender, EventArgs args)
         {
-            LibraryTrackInfo track = sender as LibraryTrackInfo;
+            //LibraryTrackInfo track = sender as LibraryTrackInfo;
 
-            if (track != null)
-                CheckTrack (track);
+            //if (track != null)
+                //CheckTrack (track);
         }
 
-        private void HandleTrackRemoved (object sender, LibraryTrackRemovedArgs args)
-        {
+        //private void HandleTrackRemoved (object sender, LibraryTrackRemovedArgs args)
+        //{
             // FIXME merge
             /*foreach (TrackInfo track in args.Tracks)
                 if (track != null)
                     track.Changed -= HandleTrackChanged;
                     */
-        }
+        //}
 
         public bool RateLimit ()
         {
@@ -333,7 +189,7 @@ namespace Banshee.SmartPlaylist
 
                 start = DateTime.Now;
                 foreach (SmartPlaylistSource pl in playlists) {
-                    pl.RefreshMembers ();
+                    pl.Reload ();
                 }
 
                 // In the case the above refresh was very slow, double the time between refreshes
@@ -359,7 +215,7 @@ namespace Banshee.SmartPlaylist
             // Check if the playlist is time-dependent, and if it is,
             // start the auto-refresh timer.
             if (timeout_id == 0 && playlist.TimeDependent) {
-                LogCore.Instance.PushInformation (
+                Log.Information (
                     "Starting Smart Playlist Auto-Refresh",
                     "Time-dependent smart playlist added, so starting one-minute auto-refresh timer.",
                     false
@@ -380,7 +236,7 @@ namespace Banshee.SmartPlaylist
                 }
 
                 // No more time-dependent playlists, so remove the timer
-                LogCore.Instance.PushInformation (
+                Log.Information (
                     "Stopping timer",
                     "There are no time-dependent smart playlists, so stopping auto-refresh timer.",
                     false
@@ -400,7 +256,7 @@ namespace Banshee.SmartPlaylist
 
             foreach (SmartPlaylistSource p in playlists) {
                 if (p.TimeDependent) {
-                    p.RefreshMembers();
+                    p.Reload();
                 }
             }
 
@@ -418,8 +274,8 @@ namespace Banshee.SmartPlaylist
             Timer t = new Timer ("CheckTrack");
             start = DateTime.Now;
 
-            foreach (SmartPlaylistSource playlist in playlists)
-                playlist.Check (track);
+            //foreach (SmartPlaylistSource playlist in playlists)
+                //playlist.Check (track);
 
             CpuTime += (DateTime.Now - start).TotalMilliseconds;
 
@@ -429,21 +285,7 @@ namespace Banshee.SmartPlaylist
         public void SortPlaylists () {
             playlists.Sort(new DependencyComparer());
         }
-
-        public void RenameColumn(string table, string old_name, string new_name, string other_columns)
-        {
-            try {
-                Globals.Library.Db.QuerySingle(String.Format("SELECT {0} FROM {1} LIMIT 1", new_name, table));
-            } catch {
-                LogCore.Instance.PushDebug(String.Format("Renaming column {0} in {1}", old_name, table), "");
-                Globals.Library.Db.Execute(String.Format("ALTER TABLE {0} RENAME TO {0}_tmp", table));
-                CreateTable(table);
-                Globals.Library.Db.Execute(String.Format("INSERT INTO {0} SELECT {1} as {2}, {3} FROM {0}_tmp", table, old_name, new_name, other_columns));
-                Globals.Library.Db.Execute(String.Format("DROP TABLE {0}_tmp", table));
-            }
-        }
     }
-
 
     // Class used for timing different operations.  Commented out for normal operation.
     public class Timer

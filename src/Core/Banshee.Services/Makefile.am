@@ -49,6 +49,7 @@ SOURCES =  \
 	Banshee.MediaEngine/PlayerEngineState.cs \
 	Banshee.Playlist/AbstractPlaylistSource.cs \
 	Banshee.Playlist/PlaylistSource.cs \
+	Banshee.Playlist/PlaylistFileUtil.cs \
 	Banshee.Playlists.Formats.Xspf/LinkEntry.cs \
 	Banshee.Playlists.Formats.Xspf/MetaEntry.cs \
 	Banshee.Playlists.Formats.Xspf/Playlist.cs \
@@ -75,6 +76,8 @@ SOURCES =  \
 	Banshee.ServiceStack/UserJob.cs \
 	Banshee.ServiceStack/UserJobEventHandler.cs \
 	Banshee.ServiceStack/UserJobManager.cs \
+	Banshee.SmartPlaylist/Migrator.cs \
+	Banshee.SmartPlaylist/SmartPlaylistCore.cs \
 	Banshee.SmartPlaylist/SmartPlaylistSource.cs \
 	Banshee.Sources/DatabaseSource.cs \
 	Banshee.Sources/ErrorSource.cs \

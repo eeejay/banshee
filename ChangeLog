@@ -1,5 +1,99 @@
 2008-01-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	This commit makes big strides in porting smart playlists and playlist
+	import/export.  Neither are yet really functional (though smart playlists
+	appear in the sources list).
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	* src/Core/Banshee.Base/Banshee.Playlists/PlaylistFileUtil.cs: Move, update
+	whitespace, start porting (replace verification w/ sqlite on conflict
+	ignore), greatly simplify. 
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
+	Take uuid argument in the constructor to be able to persist the cache
+	across Banshee sessions.  This will mean faster startup because all
+	sources will not have to be reloaded on startup.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Uuid ctor changes.  On first reload, if cache is already warm (from
+	previous session), use it instead of regenerating it.  Make
+	TrackListDatabaseModel's GetSort method public for use by smart playlists.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Put
+	migration code into separate method.  Remove listeners after complete.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add on conflict ignore clause to TrackID in CorePlaylistEntries.  Add
+	OrderDir column to CoreSmartPlaylists.  Create CoreCacheModels table, the
+	basis for persistent cache.  Migrate smart playlists.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: 
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Add uuid in
+	ctor.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Replace static properties with abstract instance properties; static
+	properties from various subclasses conflict; whoops.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Override
+	AbstractPlaylist properties.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Do not
+	load smart playlists here, let the SmartPlaylistCore do that.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Add
+	SmartPlaylistCore service.  Currently commented out.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Start porting, ripping out old code that depended on having references to
+	every TrackInfo in the library.  Currently does not reload when tracks
+	change whatsoever.
+
+	* src/Core/Banshee.Services/Banshee.Web/Browser.cs: Add commented out
+	gnome open call.
+
+	* src/Core/Banshee.Services/Makefile.am: Add ported files.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Add commented
+	out Editor calls for OnNewSmartPlaylist handler.
+
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/Editor.cs:
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilder.cs:
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs: Move
+	files.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs: New file
+	for migrating from the old, very hard to change smart playlist definition
+	format to the new one.  Does not yet actually migrate the condition.
+
+	* src/Core/Banshee.Base/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	Move and start the many changes needed to get smart playlists working.
+	For example, remove all Gtk references, call the Migrator code, and don't
+	listen to every single TrackInfo in the library.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryTermNode.cs: Set default op to ":".
+
+	* src/Core/Hyena/Hyena.Data.Query/UserQueryParser.cs: Support commas for
+	specifying OR terms, eg foo, bar is equivalent to foo OR bar.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDateTime.cs:
+	Avoid crashing when bound object is null.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Use capitalized sort parameters.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Add
+	property for easy access to the main Window.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Add first
+	pass at porting/implementing OnImportPlaylist handler.
+	
+2008-01-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
 	Lower case prepositions fewer than four letters long in menu items.
 

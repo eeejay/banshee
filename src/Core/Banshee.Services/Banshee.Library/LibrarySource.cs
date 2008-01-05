@@ -64,7 +64,7 @@ namespace Banshee.Library
             DELETE FROM CoreSmartPlaylistEntries WHERE TrackID = ?", 3
         );
     
-        public LibrarySource () : base (Catalog.GetString("Library"), Catalog.GetString ("Library"), 0)
+        public LibrarySource () : base (Catalog.GetString("Library"), Catalog.GetString ("Library"), "Library", 0)
         {
             Properties.SetStringList ("IconName", "audio-x-generic", "go-home", "user-home", "source-library");
             Properties.SetString ("GtkActionPath", "/LibraryContextMenu");
