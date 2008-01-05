@@ -98,11 +98,11 @@ namespace Banshee.Collection.Gui
                 
                 browser_view_actions.Add (new RadioActionEntry [] {
                     new RadioActionEntry ("BrowserLeftAction", null, 
-                        Catalog.GetString ("Browser On Left"), null,
+                        Catalog.GetString ("Browser on Left"), null,
                         Catalog.GetString ("Show the artist/album browser to the left of the track list"), 0),
                     
                     new RadioActionEntry ("BrowserTopAction", null,
-                        Catalog.GetString ("Browser On Top"), null,
+                        Catalog.GetString ("Browser on Top"), null,
                         Catalog.GetString ("Show the artist/album browser above the track list"), 1),
                 }, position == "top" ? 1 : 0, OnViewModeChanged);
                 

@@ -1,5 +1,10 @@
 2008-01-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
+	Lower case prepositions fewer than four letters long in menu items.
+
+2008-01-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	Tweak debug output.
 
