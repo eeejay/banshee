@@ -1,8 +1,0 @@
-This patch adds an Xml-based configuration client. All file paths are reletive to
-banshee/src/Core/Banshee.Base
-
-* Added Banshee.Base/Banshee.Configuration/XmlConfigurationClient.cs: Adds an
-  XML-based configuration backend.
-  
-* Modified Banshee.Base/Banshee.Configuration/ConfigurationClient.cs: Now selects
-  the appropriate configuration backed for the system (GConf for Unix, Xml for others).

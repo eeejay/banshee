@@ -1,3 +1,15 @@
+2008-01-05  Aaron Bockover  <abock@gnome.org>
+
+	Merge of Scott Peterson's XML configuration client backend to enable
+	configuration saving on Windows (or any place where GConf is fugly)
+
+	* src/Core/Banshee.Core/Banshee.Configuration/XmlConfigurationClient.cs:
+	The actual XML backend
+
+	* src/Core/Banshee.Core/Banshee.Configuration/ConfigurationClient.cs:
+	Now selects the appropriate configuration backed for the system (GConf 
+	for Unix, Xml for others)
+
 2008-01-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit makes big strides in porting smart playlists and playlist

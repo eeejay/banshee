@@ -29,6 +29,7 @@ SOURCES =  \
 	Banshee.Configuration/GConfConfigurationClient.cs \
 	Banshee.Configuration/IConfigurationClient.cs \
 	Banshee.Configuration/SchemaEntry.cs \
+	Banshee.Configuration/XmlConfigurationClient.cs \
 	Banshee.IO/GnomeVfs.cs \
 	Banshee.IO/Interfaces.cs \
 	Banshee.IO/IOProxy.cs \
