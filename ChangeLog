@@ -1,5 +1,11 @@
 2008-01-10  Aaron Bockover  <abockover@novell.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Show/Hide the cover art popup only when the cursor enters the actual 
+	cover art thumbnail, not the entire widget
+
+2008-01-10  Aaron Bockover  <abockover@novell.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
 	Do some exception handling for crappy invalid pixbufs
 

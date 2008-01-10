@@ -139,42 +139,20 @@ namespace Banshee.Gui.Widgets
 
         protected override bool OnEnterNotifyEvent (Gdk.EventCrossing evnt)
         {
-            in_thumbnail_region = true;
-        
-            if (popup_timeout_id > 0) {
-                return false;
-            }
-            
-            popup_timeout_id = GLib.Timeout.Add (500, delegate {
-                if (in_thumbnail_region) {
-                    UpdatePopup ();
-                }
-                
-                popup_timeout_id = 0;
-                return false;
-            });
-            
-            return true;
+            in_thumbnail_region = evnt.X <= Allocation.Height;
+            return ShowHideCoverArt ();
         }
         
         protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
         {
             in_thumbnail_region = false;
-            
-            if (popup_timeout_id > 0) {
-                GLib.Source.Remove (popup_timeout_id);
-                popup_timeout_id = 0;
-            }
-            
-            GLib.Timeout.Add (100, delegate {
-                if (!in_popup) {
-                    HidePopup ();
-                }
-
-                return false;
-            });
-            
-            return true;
+            return ShowHideCoverArt ();
+        }
+        
+        protected override bool OnMotionNotifyEvent (Gdk.EventMotion evnt)
+        {
+            in_thumbnail_region = evnt.X <= Allocation.Height;
+            return ShowHideCoverArt ();
         }
         
         private void OnPopupEnterNotifyEvent (object o, EnterNotifyEventArgs args)
@@ -186,6 +164,39 @@ namespace Banshee.Gui.Widgets
         {
             in_popup = false;
             HidePopup ();
+        }
+        
+        private bool ShowHideCoverArt ()
+        {
+            if (!in_thumbnail_region) {
+                if (popup_timeout_id > 0) {
+                    GLib.Source.Remove (popup_timeout_id);
+                    popup_timeout_id = 0;
+                }
+                
+                GLib.Timeout.Add (100, delegate {
+                    if (!in_popup) {
+                        HidePopup ();
+                    }
+
+                    return false;
+                });
+            } else {
+                if (popup_timeout_id > 0) {
+                    return false;
+                }
+                
+                popup_timeout_id = GLib.Timeout.Add (500, delegate {
+                    if (in_thumbnail_region) {
+                        UpdatePopup ();
+                    }
+                    
+                    popup_timeout_id = 0;
+                    return false;
+                });
+            }
+            
+            return true;
         }
 
 #endregion
