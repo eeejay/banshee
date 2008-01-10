@@ -356,7 +356,7 @@ namespace Banshee.Gui.Widgets
         
         private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
         {
-            if (args.Event == PlayerEngineEvent.StartOfStream) {
+            if (args.Event == PlayerEngineEvent.StartOfStream || args.Event == PlayerEngineEvent.TrackInfoUpdated) {
                 TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
                 
                 if (track == current_track) {
@@ -378,8 +378,10 @@ namespace Banshee.Gui.Widgets
                 } else {
                     incoming_pixbuf = pixbuf;
                 }
-
-                BeginTransition ();
+                
+                if (transition_id == 0) {
+                    BeginTransition ();
+                }
             }
         }
         

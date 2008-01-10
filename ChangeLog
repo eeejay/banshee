@@ -1,3 +1,13 @@
+2008-01-10  Aaron Bockover  <abockover@novell.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	Do some exception handling for crappy invalid pixbufs
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Handle TrackInfoUpdated events from the player engine and only start
+	the transition when we are already not in one; cover art is now downloaded
+	properly and shown in the track header when the song plays
+
 2008-01-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Hyena/Hyena.Data.Query/QueryNode.cs: Add ToUserQuery method to

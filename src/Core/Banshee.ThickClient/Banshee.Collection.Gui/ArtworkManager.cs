@@ -95,16 +95,27 @@ namespace Banshee.Collection.Gui
             string path = CoverArtSpec.GetPathForSize (id, size);
             if (File.Exists (path)) {
                 if (Path.GetExtension (path) == "cover") {
-                    Pixbuf pixbuf = new Pixbuf (path);
-                    if (pixbuf.Width < 50 || pixbuf.Height < 50) {
+                    try {
+                        Pixbuf pixbuf = new Pixbuf (path);
+                        if (pixbuf.Width < 50 || pixbuf.Height < 50) {
+                            File.Delete (path);
+                            return null;
+                        }
+                        
+                        pixbuf.Save (Path.ChangeExtension (path, "jpg"), "jpeg");
+                        return pixbuf;
+                    } catch {
                         File.Delete (path);
-                        return null;
                     }
-                    pixbuf.Save (Path.ChangeExtension (path, "jpg"), "jpeg");
-                    return pixbuf;
+                    
+                    return null;
                 }
                 
-                return new Pixbuf (path);
+                try {
+                    return new Pixbuf (path);
+                } catch {
+                    return null;
+                }
             }
             
             string orig_path = CoverArtSpec.GetPathForSize (id, 0);
