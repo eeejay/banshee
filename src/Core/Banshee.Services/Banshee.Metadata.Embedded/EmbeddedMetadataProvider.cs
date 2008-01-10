@@ -1,10 +1,11 @@
 //
-// AlbumInfo.cs
+// EmbeddedMetadataProvider.cs
 //
-// Author:
+// Authors:
+//   Trey Ethridge <tale@juno.com>
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,41 +28,23 @@
 //
 
 using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 using Banshee.Base;
+using Banshee.Collection;
+using Banshee.Metadata;
 
-namespace Banshee.Collection
+namespace Banshee.Metadata.Embedded
 {
-    public class AlbumInfo 
+    public class EmbeddedMetadataProvider : BaseMetadataProvider
     {
-        private string title;
-        private string artist_name;
-        private string artwork_id;
-        
-        public AlbumInfo (string title)
+        public EmbeddedMetadataProvider() : base()
         {
-            this.title = title;
         }
         
-        public virtual string ArtistName {
-            get { return artist_name; }
-            set { artist_name = value; }
-        }
-        
-        public virtual string Title {
-            get { return title; }
-            set { title = value; }
-        }
-        
-        public virtual string ArtworkId {
-            get { 
-                if (artwork_id == null) {
-                    artwork_id = CoverArtSpec.CreateArtistAlbumId (ArtistName, Title);
-                }
-                
-                return artwork_id;
-            }
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings)
+        {
+            return new EmbeddedQueryJob(track, settings);
         }
     }
 }

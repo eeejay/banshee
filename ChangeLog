@@ -1,3 +1,22 @@
+2008-01-11  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs: A small API that
+	provides a layer of query/ID generation methods for the local disk cover
+	art cache
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	Updated to use the new CoverArtSpec APIs
+
+	* src/Core/Banshee.Services/Banshee.Metadata:
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz:
+	* src/Core/Banshee.Services/Banshee.Metadata.Embedded:
+	* src/Core/Banshee.Services/Banshee.Metadata.Rhapsody: Ported the 
+	Metadata Services Stack from stable; updated to run in the services layer
+	so no Gdk/GUI libraries are required; use new CoverArtSpec APIs
+
+	* src/Core/Banshee.Services/Banshee.Networking: Ported the networking
+	layer from stable
+
 2008-01-05  Aaron Bockover  <abock@gnome.org>
 
 	Merge of Scott Peterson's XML configuration client backend to enable

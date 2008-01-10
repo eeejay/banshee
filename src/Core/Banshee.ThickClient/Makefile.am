@@ -4,9 +4,9 @@ ASSEMBLY_BUILD_FLAGS = -unsafe
 LINK = $(REF_BANSHEE_THICKCLIENT)
 
 SOURCES =  \
-	Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs \
 	Banshee.AudioProfiles.Gui/ProfileComboBox.cs \
 	Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs \
+	Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs \
 	Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs \
 	Banshee.AudioProfiles.Gui/TextViewLabel.cs \
 	Banshee.Collection.Gui/AlbumListView.cs \

@@ -83,6 +83,33 @@
     <File name="Banshee.MediaEngine/IPlaybackController.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/BansheeListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Database/TableSchema.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles/GConfProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles/Pipeline.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles/PipelineVariable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles/Profile.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles/ProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles/ProfileManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlist/AbstractPlaylistSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlist/PlaylistFileUtil.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.SmartPlaylist/Migrator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.SmartPlaylist/SmartPlaylistCore.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.SmartPlaylist/SmartPlaylistSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/IImportable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/IUnmapableSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata/BaseMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata/IMetadataLookupJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata/IMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata/MetadataService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata/MetadataServiceJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata/MetadataSettings.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata.Embedded/EmbeddedMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata.Embedded/EmbeddedQueryJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Networking/NetworkDetect.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Networking/NetworkManager.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

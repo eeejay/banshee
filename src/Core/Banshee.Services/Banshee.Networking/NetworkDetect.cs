@@ -1,37 +1,37 @@
-/***************************************************************************
- *  NetworkDetect.cs
- *
- *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover (aaron@abock.org)
- ****************************************************************************/
+//
+// NetworkDetect.cs
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2005-2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
- 
 using System;
 using System.Collections;
 using Mono.Unix;
-using NetworkManager;
+using Banshee.Base;
 
-namespace Banshee.Base
+namespace Banshee.Networking
 {
     public delegate void NetworkStateChangedHandler(object o, NetworkStateChangedArgs args);
     
@@ -55,7 +55,7 @@ namespace Banshee.Base
     {
         public event NetworkStateChangedHandler StateChanged;
         
-        private Manager nm_manager;
+        private NetworkManager nm_manager;
         private State current_state;
         
         private static NetworkDetect instance;
@@ -75,7 +75,7 @@ namespace Banshee.Base
                 ConnectToNetworkManager();
             } catch(Exception) {
                 nm_manager = null;
-                LogCore.Instance.PushWarning(
+                Log.Warning(
                     Catalog.GetString("Cannot connect to NetworkManager"),
                     Catalog.GetString("An available, working network connection will be assumed"),
                     false);
@@ -84,7 +84,7 @@ namespace Banshee.Base
 
         private void ConnectToNetworkManager()
         {
-            nm_manager = new Manager();
+            nm_manager = new NetworkManager();
             nm_manager.StateChange += OnNetworkManagerEvent;
             current_state = nm_manager.State;
         }
@@ -103,9 +103,9 @@ namespace Banshee.Base
                     }
                     
                     if(Connected) {
-                        LogCore.Instance.PushDebug("Network Connection Established", "Connected");
+                        Log.Debug("Network Connection Established", "Connected");
                     } else {
-                        LogCore.Instance.PushDebug("Network Connection Unavailable", "Disconnected");
+                        Log.Debug("Network Connection Unavailable", "Disconnected");
                     }
                 }
             } catch(Exception) {
@@ -116,7 +116,7 @@ namespace Banshee.Base
             get { return nm_manager == null ? true : current_state == State.Connected; }
         }
         
-        public Manager Manager {
+        public NetworkManager Manager {
             get { return nm_manager; }
         }
     }

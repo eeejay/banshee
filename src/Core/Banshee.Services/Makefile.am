@@ -7,8 +7,8 @@ SOURCES =  \
 	Banshee.AudioProfiles/GConfProfileConfiguration.cs \
 	Banshee.AudioProfiles/Pipeline.cs \
 	Banshee.AudioProfiles/PipelineVariable.cs \
-	Banshee.AudioProfiles/ProfileConfiguration.cs \
 	Banshee.AudioProfiles/Profile.cs \
+	Banshee.AudioProfiles/ProfileConfiguration.cs \
 	Banshee.AudioProfiles/ProfileManager.cs \
 	Banshee.Collection.Database/AlbumListDatabaseModel.cs \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
@@ -47,9 +47,23 @@ SOURCES =  \
 	Banshee.MediaEngine/PlayerEngineEvent.cs \
 	Banshee.MediaEngine/PlayerEngineService.cs \
 	Banshee.MediaEngine/PlayerEngineState.cs \
+	Banshee.Metadata.Embedded/EmbeddedMetadataProvider.cs \
+	Banshee.Metadata.Embedded/EmbeddedQueryJob.cs \
+	Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs \
+	Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs \
+	Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs \
+	Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs \
+	Banshee.Metadata/BaseMetadataProvider.cs \
+	Banshee.Metadata/IMetadataLookupJob.cs \
+	Banshee.Metadata/IMetadataProvider.cs \
+	Banshee.Metadata/MetadataService.cs \
+	Banshee.Metadata/MetadataServiceJob.cs \
+	Banshee.Metadata/MetadataSettings.cs \
+	Banshee.Networking/NetworkDetect.cs \
+	Banshee.Networking/NetworkManager.cs \
 	Banshee.Playlist/AbstractPlaylistSource.cs \
-	Banshee.Playlist/PlaylistSource.cs \
 	Banshee.Playlist/PlaylistFileUtil.cs \
+	Banshee.Playlist/PlaylistSource.cs \
 	Banshee.Playlists.Formats.Xspf/LinkEntry.cs \
 	Banshee.Playlists.Formats.Xspf/MetaEntry.cs \
 	Banshee.Playlists.Formats.Xspf/Playlist.cs \

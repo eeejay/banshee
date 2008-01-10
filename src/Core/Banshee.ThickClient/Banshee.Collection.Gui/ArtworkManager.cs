@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -53,7 +53,7 @@ namespace Banshee.Collection.Gui
         
         private void MigrateLegacyAlbumArt ()
         {
-            if (Directory.Exists (ArtworkPath)) {
+            if (Directory.Exists (CoverArtSpec.RootPath)) {
                 return;
             }
             
@@ -63,10 +63,10 @@ namespace Banshee.Collection.Gui
             int artwork_count = 0;
             
             if (Directory.Exists (legacy_artwork_path)) {
-                Directory.CreateDirectory (ArtworkPath);
+                Directory.CreateDirectory (CoverArtSpec.RootPath);
                     
                 foreach (string path in Directory.GetFiles (legacy_artwork_path)) {
-                    string dest_path = Path.Combine (ArtworkPath, Path.GetFileName (path));
+                    string dest_path = Path.Combine (CoverArtSpec.RootPath, Path.GetFileName (path));
                         
                     File.Copy (path, dest_path);
                     artwork_count++;
@@ -78,7 +78,7 @@ namespace Banshee.Collection.Gui
         
         public Pixbuf Lookup (string artist, string album)
         {
-            return Lookup (AlbumInfo.CreateArtistAlbumId (artist, album));
+            return Lookup (CoverArtSpec.CreateArtistAlbumId (artist, album));
         }
         
         public Pixbuf Lookup (string id)
@@ -92,12 +92,22 @@ namespace Banshee.Collection.Gui
                 return null;
             }
             
-            string path = GetPathForSize (id, size);
+            string path = CoverArtSpec.GetPathForSize (id, size);
             if (File.Exists (path)) {
+                if (Path.GetExtension (path) == "cover") {
+                    Pixbuf pixbuf = new Pixbuf (path);
+                    if (pixbuf.Width < 50 || pixbuf.Height < 50) {
+                        File.Delete (path);
+                        return null;
+                    }
+                    pixbuf.Save (Path.ChangeExtension (path, "jpg"), "jpeg");
+                    return pixbuf;
+                }
+                
                 return new Pixbuf (path);
             }
             
-            string orig_path = GetPathForSize (id, 0);
+            string orig_path = CoverArtSpec.GetPathForSize (id, 0);
             if (File.Exists (orig_path)) {
                 Pixbuf pixbuf = new Pixbuf (orig_path);
                 Pixbuf scaled_pixbuf = pixbuf.ScaleSimple (size, size, Gdk.InterpType.Bilinear);
@@ -108,20 +118,6 @@ namespace Banshee.Collection.Gui
             }
             
             return null;
-        }
-        
-        private string GetPathForSize (string id, int size)
-        {
-            return size == 0
-                ? Path.Combine (ArtworkPath, String.Format ("{0}.jpg", id))
-                : Path.Combine (ArtworkPath, Path.Combine (size.ToString (), String.Format ("{0}.jpg", id))); 
-        }
-        
-        private static string artwork_path =
-            Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData), "album-art");
-            
-        public static string ArtworkPath {
-            get { return artwork_path; }
         }
         
         string IService.ServiceName {

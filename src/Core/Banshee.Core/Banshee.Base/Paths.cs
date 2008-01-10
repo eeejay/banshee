@@ -84,6 +84,23 @@ namespace Banshee.Base
             
             return Path.Combine (home_dir, fallback);
         }
+        
+        public static string Combine (string first, params string [] components)
+        {
+            if (String.IsNullOrEmpty (first)) {
+                throw new ArgumentException ("First component must not be null or empty", "first");
+            } else if (components == null || components.Length < 1) {
+                throw new ArgumentException ("One or more path components must be provided", "components");
+            }
+            
+            string result = first;
+            
+            foreach (string component in components) {
+                result = Path.Combine (result, component);
+            }
+            
+            return result;
+        }
     
         public static string LegacyApplicationData {
             get {

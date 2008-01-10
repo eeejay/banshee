@@ -53,6 +53,9 @@
     <File name="Resources/contributors.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/translators.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/COPYING" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Base/Localization.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration/XmlConfigurationClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/CoverArtSpec.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />

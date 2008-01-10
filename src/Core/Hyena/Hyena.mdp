@@ -14,16 +14,13 @@
     <File name="Hyena.Data/IListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ISortable.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ISortableColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data/ListItemSetup.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ModelSelection.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/SortType.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Query/QueryKeywordNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/QueryListNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/QueryNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/QueryParser.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/QueryTermNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/QueryToken.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Query/SqlQueryGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/PropertyStore.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.CommandLine/Layout.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.CommandLine/LayoutOption.cs" subtype="Code" buildaction="Compile" />
@@ -35,10 +32,13 @@
     <File name="Hyena.Data/ColumnDescription.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/CacheableModelAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ICacheableModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data/Selection.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Collections/RangeCollection.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Collections/IStackProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Collections/IntervalHeap.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Collections/Selection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Collections/SelectionProxy.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryField.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/UserQueryParser.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

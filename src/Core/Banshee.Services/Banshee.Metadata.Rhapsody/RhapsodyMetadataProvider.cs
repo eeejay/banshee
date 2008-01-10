@@ -1,10 +1,10 @@
 //
-// AlbumInfo.cs
+// RhapsodyMetadataProvider.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,41 +27,23 @@
 //
 
 using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 using Banshee.Base;
+using Banshee.Metadata;
+using Banshee.Collection;
 
-namespace Banshee.Collection
+namespace Banshee.Metadata.Rhapsody
 {
-    public class AlbumInfo 
+    public class RhapsodyMetadataProvider : BaseMetadataProvider
     {
-        private string title;
-        private string artist_name;
-        private string artwork_id;
-        
-        public AlbumInfo (string title)
+        public RhapsodyMetadataProvider() : base()
         {
-            this.title = title;
         }
         
-        public virtual string ArtistName {
-            get { return artist_name; }
-            set { artist_name = value; }
-        }
-        
-        public virtual string Title {
-            get { return title; }
-            set { title = value; }
-        }
-        
-        public virtual string ArtworkId {
-            get { 
-                if (artwork_id == null) {
-                    artwork_id = CoverArtSpec.CreateArtistAlbumId (ArtistName, Title);
-                }
-                
-                return artwork_id;
-            }
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings)
+        {
+            return new RhapsodyQueryJob(track, settings);
         }
     }
 }

@@ -3,6 +3,7 @@ TARGET = library
 LINK = $(REF_BANSHEE_CORE)
 SOURCES =  \
 	Banshee.Base/ApplicationContext.cs \
+	Banshee.Base/CoverArtSpec.cs \
 	Banshee.Base/FileNamePattern.cs \
 	Banshee.Base/Localization.cs \
 	Banshee.Base/Log.cs \

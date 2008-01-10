@@ -1,10 +1,10 @@
 //
-// AlbumInfo.cs
+// MetadataSettings.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,41 +27,21 @@
 //
 
 using System;
-using System.Text.RegularExpressions;
 
-using Banshee.Base;
-
-namespace Banshee.Collection
+namespace Banshee.Metadata
 {
-    public class AlbumInfo 
+    public class MetadataSettings
     {
-        private string title;
-        private string artist_name;
-        private string artwork_id;
-        
-        public AlbumInfo (string title)
+        public virtual void ProxyToMain(EventHandler handler)
         {
-            this.title = title;
-        }
-        
-        public virtual string ArtistName {
-            get { return artist_name; }
-            set { artist_name = value; }
-        }
-        
-        public virtual string Title {
-            get { return title; }
-            set { title = value; }
-        }
-        
-        public virtual string ArtworkId {
-            get { 
-                if (artwork_id == null) {
-                    artwork_id = CoverArtSpec.CreateArtistAlbumId (ArtistName, Title);
-                }
-                
-                return artwork_id;
+            EventHandler handler_c = handler;
+            if(handler_c != null) {
+                handler_c(this, EventArgs.Empty);
             }
+        }
+    
+        public virtual bool NetworkConnected {
+            get { return true; }
         }
     }
 }

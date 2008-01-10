@@ -1,30 +1,30 @@
-/***************************************************************************
- *  EmbeddedQueryJob.cs
- *
- *  Copyright (C) 2006-2007 Novell, Inc.
- *  Written by Trey Ethridge <tale@juno.com>
- ****************************************************************************/
-
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// EmbeddedQueryJob.cs
+//
+// Authors:
+//   Trey Ethridge <tale@juno.com>
+//
+// Copyright (C) 2006-2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
 using System.Collections.Generic;
@@ -34,6 +34,7 @@ using TagLib;
 using Banshee.Base;
 using Banshee.Metadata;
 using Banshee.Collection;
+using Banshee.Streaming;
 
 namespace Banshee.Metadata.Embedded
 {
@@ -50,24 +51,19 @@ namespace Banshee.Metadata.Embedded
         
         public override void Run()
         {
-            if(track == null || track.CoverArtFileName != null) {
+            if(track == null || CoverArtSpec.CoverExists (track.ArtistAlbumId)) {
                 return;
             }
           
-            string embedded_cover_art_file = Fetch();
-            
-            if(embedded_cover_art_file != null) {
-                track.CoverArtFileName = embedded_cover_art_file;
-            }
+            Fetch();
         }
         
-        protected string Fetch()
+        protected void Fetch()
         {
-            string image_path = null;
-            string artist_album_id = AlbumInfo.CreateArtistAlbumId(track.ArtistName, track.AlbumTitle, false);
+            string artist_album_id = track.ArtistAlbumId;
 
             if(artist_album_id == null) {
-                return null;
+                return;
             }
             
             IPicture [] pictures = GetEmbeddedPictures(track.Uri);
@@ -75,7 +71,7 @@ namespace Banshee.Metadata.Embedded
             if(pictures != null && pictures.Length > 0) {
                 int preferred_index = GetPictureIndexToUse(pictures);
                 IPicture picture = pictures[preferred_index];
-                string path = Paths.GetCoverArtPath(artist_album_id);
+                string path = CoverArtSpec.GetPath(artist_album_id);
                 
                 if(SavePicture(picture, path)) {    
                     StreamTag tag = new StreamTag();
@@ -83,12 +79,8 @@ namespace Banshee.Metadata.Embedded
                     tag.Value = artist_album_id;   
                     
                     AddTag(tag);
-                    
-                    image_path = path;
                 } 
             }
-            
-            return image_path;
         }
 
         protected IPicture [] GetEmbeddedPictures(SafeUri uri)

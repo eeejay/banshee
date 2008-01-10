@@ -151,7 +151,7 @@ namespace Banshee.Collection
         }     
         
         public string ArtistAlbumId { 
-            get { return AlbumInfo.CreateArtistAlbumId (ArtistName, AlbumTitle); }
+            get { return CoverArtSpec.CreateArtistAlbumId (ArtistName, AlbumTitle); }
         }
 
         public virtual string Genre {

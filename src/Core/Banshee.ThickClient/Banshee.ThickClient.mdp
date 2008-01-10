@@ -62,6 +62,15 @@
     <File name="Banshee.Gui/ViewActions.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/TrackActions.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/ArtworkPopup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles.Gui/ProfileComboBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioProfiles.Gui/TextViewLabel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/ColumnCellDateTime.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/BansheeActionGroup.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/IHasSourceView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/SourceActions.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />
@@ -77,6 +86,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
+  <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />
@@ -86,5 +96,4 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
-  <Deployment.LinuxDeployData generateScript="False" />
 </Project>

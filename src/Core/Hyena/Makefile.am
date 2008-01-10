@@ -12,13 +12,13 @@ SOURCES =  \
 	Hyena.CommandLine/LayoutGroup.cs \
 	Hyena.CommandLine/LayoutGroupAttribute.cs \
 	Hyena.CommandLine/LayoutOption.cs \
-	Hyena.Data.Query/UserQueryParser.cs \
 	Hyena.Data.Query/QueryField.cs \
 	Hyena.Data.Query/QueryListNode.cs \
 	Hyena.Data.Query/QueryNode.cs \
 	Hyena.Data.Query/QueryParser.cs \
 	Hyena.Data.Query/QueryTermNode.cs \
 	Hyena.Data.Query/QueryToken.cs \
+	Hyena.Data.Query/UserQueryParser.cs \
 	Hyena.Data/CacheableModelAdapter.cs \
 	Hyena.Data/ColumnDescription.cs \
 	Hyena.Data/ICacheableModel.cs \

@@ -1,10 +1,10 @@
 //
-// AlbumInfo.cs
+// IMetadataProvider.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2007 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,41 +27,46 @@
 //
 
 using System;
-using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 
 using Banshee.Base;
+using Banshee.Collection;
+using Banshee.Streaming;
 
-namespace Banshee.Collection
+namespace Banshee.Metadata
 {
-    public class AlbumInfo 
+    public delegate void MetadataLookupResultHandler(object o, MetadataLookupResultArgs args);
+    
+    public class MetadataLookupResultArgs : EventArgs
     {
-        private string title;
-        private string artist_name;
-        private string artwork_id;
+        private IBasicTrackInfo track;
+        private ReadOnlyCollection<StreamTag> tags;
         
-        public AlbumInfo (string title)
+        public MetadataLookupResultArgs(IBasicTrackInfo track, ReadOnlyCollection<StreamTag> tags)
         {
-            this.title = title;
+            this.track = track;
+            this.tags = tags;
         }
         
-        public virtual string ArtistName {
-            get { return artist_name; }
-            set { artist_name = value; }
+        public IBasicTrackInfo Track {
+            get { return track; }
         }
         
-        public virtual string Title {
-            get { return title; }
-            set { title = value; }
+        public ReadOnlyCollection<StreamTag> ResultTags {
+            get { return tags; }
         }
+    }
+    
+    public interface IMetadataProvider
+    {
+        event MetadataLookupResultHandler HaveResult;
         
-        public virtual string ArtworkId {
-            get { 
-                if (artwork_id == null) {
-                    artwork_id = CoverArtSpec.CreateArtistAlbumId (ArtistName, Title);
-                }
-                
-                return artwork_id;
-            }
-        }
+        IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings);
+        
+        void Lookup(IBasicTrackInfo track);
+        void Cancel(IBasicTrackInfo track);
+        void Cancel();
+        
+        MetadataSettings Settings { get; set; }
     }
 }
