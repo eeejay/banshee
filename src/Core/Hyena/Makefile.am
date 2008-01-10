@@ -18,6 +18,7 @@ SOURCES =  \
 	Hyena.Data.Query/QueryParser.cs \
 	Hyena.Data.Query/QueryTermNode.cs \
 	Hyena.Data.Query/QueryToken.cs \
+	Hyena.Data.Query/XmlQueryParser.cs \
 	Hyena.Data.Query/UserQueryParser.cs \
 	Hyena.Data/CacheableModelAdapter.cs \
 	Hyena.Data/ColumnDescription.cs \

@@ -3,8 +3,9 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -159,7 +160,7 @@ namespace Hyena.Data.Query
             if (ChildCount == 0)
                 return;
 
-            XmlElement node = doc.CreateElement (Keyword.ToString ());
+            XmlElement node = doc.CreateElement (Keyword.ToString ().ToLower ());
             parent.AppendChild (node);
             foreach (QueryNode child in Children)
                 child.AppendXml (doc, node);
@@ -168,6 +169,34 @@ namespace Hyena.Data.Query
         public override string ToString()
         {
             return String.Format("<{0}>", Keyword);
+        }
+
+        public override void AppendUserQuery (StringBuilder sb)
+        {
+            if (ChildCount == 0)
+                return;
+
+            if (Keyword != Keyword.Not) {
+                if (ChildCount > 1 && Parent != null)
+                    sb.Append ("(");
+                bool first = true;
+                foreach (QueryNode child in Children) {
+                    if (!first) {
+                        if (Keyword == Keyword.Or)
+                            sb.Append (", ");
+                        else
+                            sb.Append (" ");
+                    } else {
+                        first = false;
+                    }
+                    child.AppendUserQuery (sb);
+                }
+                if (ChildCount > 1 && Parent != null)
+                    sb.Append (")");
+            } else {
+                sb.Append ("-");
+                Children [0].AppendUserQuery (sb);
+            }
         }
 
         public override void AppendSql (StringBuilder sb, QueryFieldSet fieldSet)
@@ -179,10 +208,11 @@ namespace Hyena.Data.Query
                 sb.Append ("(");
                 bool first = true;
                 foreach (QueryNode child in Children) {
-                    if (!first)
+                    if (!first) {
                         sb.AppendFormat (" {0} ", Keyword);
-                    else
+                    } else {
                         first = false;
+                    }
                     child.AppendSql (sb, fieldSet);
                 }
                 sb.Append (")");

@@ -3,8 +3,9 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -66,16 +67,31 @@ namespace Hyena.Data.Query
 
         public abstract QueryNode Trim ();
 
-        public abstract void AppendXml (XmlDocument doc, XmlNode parent);
+        public string ToUserQuery ()
+        {
+            StringBuilder sb = new StringBuilder ();
+            AppendUserQuery (sb);
+            return sb.ToString ();
+        }
+
+        public abstract void AppendUserQuery (StringBuilder sb);
 
         public virtual string ToXml ()
         {
             XmlDocument doc = new XmlDocument ();
-            AppendXml (doc, doc);
+
+            XmlElement request = doc.CreateElement ("request");
+            doc.AppendChild (request);
+
+            XmlElement query = doc.CreateElement ("query");
+            query.SetAttribute ("banshee-version", "1");
+            request.AppendChild (query);
+
+            AppendXml (doc, query);
             return doc.OuterXml;
         }
 
-        public abstract void AppendSql (StringBuilder sb, QueryFieldSet fieldSet);
+        public abstract void AppendXml (XmlDocument doc, XmlNode parent);
 
         public virtual string ToSql (QueryFieldSet fieldSet)
         {
@@ -83,6 +99,8 @@ namespace Hyena.Data.Query
             AppendSql (sb, fieldSet);
             return sb.ToString ();
         }
+
+        public abstract void AppendSql (StringBuilder sb, QueryFieldSet fieldSet);
         
         public QueryListNode Parent {
             get { return parent; }

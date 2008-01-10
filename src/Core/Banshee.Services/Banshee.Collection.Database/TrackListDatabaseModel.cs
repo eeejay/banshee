@@ -83,6 +83,12 @@ namespace Banshee.Collection.Database
                 //n.Dump ();
                 Console.WriteLine ("Xml for Query: {0}", n.ToXml ());
                 Console.WriteLine ("Sql for Query: {0}", filter_query);
+                Hyena.Data.Query.QueryParser qp2 = new XmlQueryParser (n.ToXml ());
+                QueryNode n2 = qp2.BuildTree ();
+                if (n2 != null) {
+                    Console.WriteLine ("User query for Xml: {0}", n2.ToUserQuery ());
+                } else
+                    Console.WriteLine ("n2 is null");
 
                 if (filter_query.Length == 0)
                     filter_query = null;

@@ -1,4 +1,28 @@
-2008-01-11  Aaron Bockover  <abock@gnome.org>
+2008-01-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryNode.cs: Add ToUserQuery method to
+	rebuild what a user would type in the search bar from the object tree.
+	Add AppendXml and AppendUserQuery abstract methods.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	For testing purposes, when a user searches, parse the query into the
+	QueryNode tree, generate XML from that, and then parse the XML.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryListNode.cs: Implement
+	AppendUserQuery.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryTermNode.cs: Add Operator class and
+	implement AppendUserQuery and AppendXml.  Generate XESAM-like XML (with
+	the goal of being compliant).
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryParser.cs:
+	* src/Core/Hyena/Hyena.Data.Query/UserQueryParser.cs: Update copyright.
+
+	* src/Core/Hyena/Makefile.am:
+	* src/Core/Hyena/Hyena.Data.Query/XmlQueryParser.cs: New file for parsing
+	XML queries into QueryNode trees.
+
+2008-01-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:
 	Set CanPlay attribute
@@ -7,7 +31,7 @@
 	Enable all the metadata service glory again now that the services are
 	actually ported over. Awesome.
 
-2008-01-11  Aaron Bockover  <abock@gnome.org>
+2008-01-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs: A small API that
 	provides a layer of query/ID generation methods for the local disk cover
