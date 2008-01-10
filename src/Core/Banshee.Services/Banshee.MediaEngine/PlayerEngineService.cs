@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2006-2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -37,7 +37,7 @@ using Mono.Addins;
 using Banshee.Base;
 using Banshee.Streaming;
 using Banshee.ServiceStack;
-//using Banshee.Metadata;
+using Banshee.Metadata;
 using Banshee.Configuration;
 using Banshee.Collection;
 
@@ -92,7 +92,7 @@ namespace Banshee.MediaEngine
                     "No player engines were found. Please ensure Banshee has been cleanly installed."));
             }
             
-            //MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;
+            MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;
         }
         
         private void LoadEngine(TypeExtensionNode node)
@@ -116,7 +116,7 @@ namespace Banshee.MediaEngine
         {
         }
         
-        /*private void OnMetadataServiceHaveResult(object o, MetadataLookupResultArgs args)
+        private void OnMetadataServiceHaveResult(object o, MetadataLookupResultArgs args)
         {
             if(CurrentTrack != null && args.Track == CurrentTrack) {
                 foreach(StreamTag tag in args.ResultTags) {
@@ -127,7 +127,7 @@ namespace Banshee.MediaEngine
                 eventargs.Event = PlayerEngineEvent.TrackInfoUpdated;
                 OnEngineEventChanged(active_engine, eventargs);
             }
-        }*/
+        }
         
         private void OnEngineStateChanged(object o, PlayerEngineStateArgs args)
         {
@@ -137,7 +137,7 @@ namespace Banshee.MediaEngine
             
             if(args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
                 active_engine.Volume = (ushort)VolumeSchema.Get ();
-                //MetadataService.Instance.Lookup(CurrentTrack);
+                MetadataService.Instance.Lookup(CurrentTrack);
             } 
             
             PlayerEngineStateHandler handler = StateChanged;

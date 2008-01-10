@@ -1,5 +1,14 @@
 2008-01-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:
+	Set CanPlay attribute
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Enable all the metadata service glory again now that the services are
+	actually ported over. Awesome.
+
+2008-01-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs: A small API that
 	provides a layer of query/ID generation methods for the local disk cover
 	art cache

@@ -49,18 +49,21 @@ namespace Banshee.Streaming
         
         public event EventHandler ParsingPlaylistEvent;
         
-        public RadioTrackInfo(Track track) : base()
+        protected RadioTrackInfo()
+        {
+            Attributes |= TrackAttributes.IsLive | TrackAttributes.CanPlay;
+        }
+        
+        public RadioTrackInfo(Track track) : this()
         {
             TrackTitle = track.Title;
             ArtistName = track.Creator;
             this.track = track;
-            Attributes |= TrackAttributes.IsLive;
         }
         
-        public RadioTrackInfo(SafeUri uri) : base()
+        public RadioTrackInfo(SafeUri uri) : this()
         {
             this.single_location = uri;
-            Attributes |= TrackAttributes.IsLive;
         }
         
         public void Play()
