@@ -141,7 +141,8 @@ namespace Banshee.Collection.Database
 
         private bool warm = false;
         public bool Warm {
-            get { return warm; }
+            //get { return warm; }
+            get { return false; }
         }
 
         public int Count {
