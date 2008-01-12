@@ -1,19 +1,19 @@
 # translation of banshee.HEAD.po to Español
 # Spanish translation of es
 # translation of es.po to
-# Copyright © 2002-2003, 2006, 2007 Free Software Foundation, Inc.
+# Copyright © 2002-2003, 2006, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the rhythmbox package.
 #
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Maria Majadas <maria.majadas@hispalinux.es>, 2005.
 # maria <maria.majadas@hispalinux.es>, 2005, 2006, 2007.
-# Jorge González <jorgegonz@svn.gnome.org>, 2007.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-27 21:32+0000\n"
-"PO-Revision-Date: 2007-12-30 01:07+0100\n"
+"POT-Creation-Date: 2008-01-05 03:36+0000\n"
+"PO-Revision-Date: 2008-01-12 21:30+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <<gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2925,16 +2925,16 @@ msgstr ""
 " Revise sus propiedades de 'Aplicaciones preferidas'."
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:101
-msgid "Browser On Left"
-msgstr "Examinador en la izquierda"
+msgid "Browser on Left"
+msgstr "Examinador a la izquierda"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:102
 msgid "Show the artist/album browser to the left of the track list"
 msgstr "Mostrar el examinador de artista/álbum a la izquierda de la lista de pistas"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:105
-msgid "Browser On Top"
-msgstr "Examinador encima"
+msgid "Browser on Top"
+msgstr "Examinador arriba"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:106
 msgid "Show the artist/album browser above the track list"
