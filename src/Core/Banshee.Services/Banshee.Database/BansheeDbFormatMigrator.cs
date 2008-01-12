@@ -235,8 +235,6 @@ namespace Banshee.Database
             ", CURRENT_VERSION));
             
             // TODO add these:
-            // DiscNumber (Grouping)
-            // FileSize
             // Comment
             // Composer
             // Copyright
@@ -256,12 +254,15 @@ namespace Banshee.Database
                     
                     MusicBrainzID       TEXT,
 
-                    RelativeUri         TEXT,
+                    Uri                 TEXT,
+                    UriType             INTEGER,
                     MimeType            TEXT,
+                    FileSize            INTEGER,
                     
                     Title               TEXT,
                     TrackNumber         INTEGER,
                     TrackCount          INTEGER,
+                    DiscNumber          INTEGER,
                     Duration            INTEGER,
                     Year                INTEGER,
 
@@ -396,10 +397,13 @@ namespace Banshee.Database
                         0,
                         null,
                         Uri,
+                        0,
                         MimeType,
+                        0,
                         Title,
                         TrackNumber,
                         TrackCount,
+                        0,
                         Duration * 1000,
                         Year,
                         Rating,
@@ -424,6 +428,9 @@ namespace Banshee.Database
                 INSERT INTO CoreSmartPlaylists (SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion)
                     SELECT * FROM SmartPlaylists
             ");
+            
+            // TODO: Kick off some kind of scanner to find the file size of all the files
+            //       since that information was never in the old Banshee
         }
         
 #endregion

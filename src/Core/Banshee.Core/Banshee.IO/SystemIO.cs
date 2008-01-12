@@ -75,6 +75,15 @@ namespace Banshee.IO.SystemIO
                 ? System.IO.File.Open(uri.LocalPath, FileMode.Create, FileAccess.ReadWrite)
                 : System.IO.File.OpenWrite(uri.LocalPath);
         }
+
+        public long GetSize (SafeUri uri)
+        {
+            try {
+                return new System.IO.FileInfo (uri.LocalPath).Length;
+            } catch {
+                return -1;
+            }
+        }
     }
 
     public class Directory : IDirectory

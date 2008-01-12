@@ -60,7 +60,7 @@ namespace Banshee.Collection.Gui
                 //new SortableColumn("Rating", new RatingColumnCell(null, true), 0.15, "Rating"),
                 new SortableColumn("Last Played", new ColumnCellDateTime("LastPlayed", true), 0.15, "LastPlayedStamp"),
                 new SortableColumn("Added", new ColumnCellDateTime("DateAdded", true), 0.15, "DateAddedStamp"),
-                new SortableColumn("Location", new ColumnCellText("Uri", true), 0.15, "RelativeUri")
+                new SortableColumn("Location", new ColumnCellText("Uri", true), 0.15, "Uri")
             );
             
             ColumnController = DefaultColumnController;

@@ -29,6 +29,7 @@
 using System;
 using System.Data;
 
+using Banshee.IO;
 using Banshee.Base;
 using Banshee.Database;
 using Banshee.ServiceStack;
@@ -43,11 +44,14 @@ namespace Banshee.Collection.Database
             AlbumID,
             TagSetID,
             MusicBrainzID,
-            RelativeUri,
+            Uri,
+            UriType,
             MimeType,
+            FileSize,
             Title,
             TrackNumber,
             TrackCount,
+            DiscNumber,
             Duration,
             Year,
             Rating,
@@ -60,6 +64,12 @@ namespace Banshee.Collection.Database
             // in CoreTracks and are returned on join selects
             Artist,
             AlbumTitle
+        }
+        
+        private enum UriType : int {
+            AbsolutePath,
+            RelativePath,
+            AbsoluteUri
         }
         
         private int dbid;
@@ -83,7 +93,15 @@ namespace Banshee.Collection.Database
         {
             dbid = ReaderGetInt32 (reader, Column.TrackID);
             
-            Uri = new SafeUri (ReaderGetString (reader, Column.RelativeUri));
+            string uri = ReaderGetString (reader, Column.Uri);
+            UriType uri_type = (UriType)ReaderGetInt32 (reader, Column.UriType);
+            
+            if (uri_type == UriType.RelativePath) {
+                uri = System.IO.Path.Combine (Paths.LibraryLocation, uri);
+            }
+            
+            Uri = new SafeUri (uri);
+            FileSize = ReaderGetInt64 (reader, Column.FileSize);
             
             ArtistName = ReaderGetString (reader, Column.Artist);
             ArtistId = ReaderGetInt32 (reader, Column.ArtistID);
@@ -111,26 +129,31 @@ namespace Banshee.Collection.Database
 
         private string ReaderGetString (IDataReader reader, Column column)
         {
-            int column_id = (int) column;
+            int column_id = (int)column;
             return !reader.IsDBNull (column_id) 
                 ? String.Intern (reader.GetString (column_id)) 
                 : null;
         }
-
+        
         private int ReaderGetInt32 (IDataReader reader, Column column)
         {
-            return reader.GetInt32 ((int) column);
+            return reader.GetInt32 ((int)column);
+        }
+
+        private long ReaderGetInt64 (IDataReader reader, Column column)
+        {
+            return reader.GetInt64 ((int)column);
         }
 
         private TimeSpan ReaderGetTimeSpan (IDataReader reader, Column column)
         {
-            long raw = reader.GetInt64 ((int) column);
+            long raw = reader.GetInt64 ((int)column);
             return new TimeSpan (raw * TimeSpan.TicksPerMillisecond);
         }
 
         private DateTime ReaderGetDateTime (IDataReader reader, Column column)
         {
-            long raw = reader.GetInt64 ((int) column);
+            long raw = reader.GetInt64 ((int)column);
             return DateTimeUtil.ToDateTime (raw);
         }
 
@@ -151,11 +174,16 @@ namespace Banshee.Collection.Database
                 AlbumId,
                 -1, // TagSetID
                 null, // MusicBrainzID
-                Uri == null ? null : Uri.AbsoluteUri, // RelativeUri
+                Uri == null ? null : 
+                    (Paths.MakePathRelativeToLibrary (Uri.AbsolutePath) 
+                        ?? Uri.AbsoluteUri),
+                UriType.RelativePath,
                 MimeType,
+                FileSize,
                 TrackTitle,
                 TrackNumber,
                 TrackCount,
+                DiscNumber,
                 Duration.TotalMilliseconds,
                 Year,
                 Rating,
@@ -176,11 +204,16 @@ namespace Banshee.Collection.Database
                 AlbumId,
                 -1, // TagSetID
                 null, // MusicBrainzID
-                Uri == null ? null : Uri.AbsoluteUri, // RelativeUri
+                Uri == null ? null : 
+                    (Paths.MakePathRelativeToLibrary (Uri.AbsolutePath) 
+                        ?? Uri.AbsoluteUri),
+                UriType.RelativePath,
                 MimeType,
+                FileSize,
                 TrackTitle,
                 TrackNumber,
                 TrackCount,
+                DiscNumber,
                 Duration.TotalMilliseconds,
                 Year,
                 Rating,
@@ -215,10 +248,14 @@ namespace Banshee.Collection.Database
             set { album_id = value; }
         }
 
-        private static BansheeDbCommand check_command = new BansheeDbCommand ("SELECT COUNT(*) FROM CoreTracks WHERE RelativeUri = ?", 1);
-        public static bool ContainsPath (string path)
+        private static BansheeDbCommand check_command = new BansheeDbCommand (
+            "SELECT COUNT(*) FROM CoreTracks WHERE Uri = ? OR Uri = ?", 2);
+            
+        public static bool ContainsUri (SafeUri uri)
         {
-            return Convert.ToInt32 (ServiceManager.DbConnection.ExecuteScalar (check_command.ApplyValues (path))) > 0;
+            string relative_path = Paths.MakePathRelativeToLibrary (uri.AbsolutePath) ?? uri.AbsoluteUri;
+            return Convert.ToInt32 (ServiceManager.DbConnection.ExecuteScalar (
+                check_command.ApplyValues (relative_path, uri.AbsoluteUri))) > 0;
         }
     }
 }

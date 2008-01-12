@@ -101,6 +101,19 @@ namespace Banshee.Base
             
             return result;
         }
+        
+        public static string MakePathRelativeToLibrary (string path)
+        {
+            string library_location = LibraryLocation; // TODO: Use CachedLibraryLocation?
+            
+            if (path.Length < library_location.Length + 1) {
+                return null;
+            }
+            
+            return path.StartsWith (library_location)
+                ? path.Substring (library_location.Length + 1)
+                : null;
+        }
     
         public static string LegacyApplicationData {
             get {
@@ -121,11 +134,7 @@ namespace Banshee.Base
         }
         
         public static string DefaultLibraryPath {
-            get { 
-                string dir = ReadXdgUserDir ("XDG_MUSIC_DIR", "Music");
-                Directory.CreateDirectory (dir);
-                return dir;
-            }
+            get { return ReadXdgUserDir ("XDG_MUSIC_DIR", "Music"); }
         }
         
         public static string TempDir {

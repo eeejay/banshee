@@ -55,6 +55,7 @@ namespace Banshee.Streaming
         public static void TrackInfoMerge(TrackInfo track, TagLib.File file)
         {
             track.Uri = new SafeUri (file.Name);
+            track.MimeType = file.MimeType;
             track.ArtistName = Choose(file.Tag.JoinedPerformers, track.ArtistName);
             track.AlbumTitle = Choose(file.Tag.Album, track.AlbumTitle);
             track.TrackTitle = Choose(file.Tag.Title, track.TrackTitle);
@@ -62,9 +63,8 @@ namespace Banshee.Streaming
             track.TrackNumber = file.Tag.Track == 0 ? track.TrackNumber : (int)file.Tag.Track;
             track.TrackCount = file.Tag.TrackCount == 0 ? track.TrackCount : (int)file.Tag.TrackCount;
             track.Year = (int)file.Tag.Year;
-            track.MimeType = file.MimeType;
-            
             track.Duration = file.Properties.Duration;
+            track.FileSize = Banshee.IO.IOProxy.File.GetSize (track.Uri);
         }
     
         public static void TrackInfoMerge(TrackInfo track, StreamTag tag)

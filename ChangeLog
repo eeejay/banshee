@@ -1,3 +1,47 @@
+2008-01-11  Aaron Bockover  <abockover@novell.com>
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Added 
+	MakePathRelativeToLibrary to extract the relative path from a URI for
+	storing into the DB
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Added FileSize
+	and DiscNumber properties
+
+	* src/Core/Banshee.Core/Banshee.IO/Interfaces.cs: 
+	* src/Core/Banshee.Core/Banshee.IO/SystemIO.cs:
+	* src/Core/Banshee.Core/Banshee.IO/Unix.cs:
+	* src/Core/Banshee.Core/Banshee.IO/GnomeVfs.cs: Added File.GetSize
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Use
+	Banshee.IO.IOProxy.File.GetSize to set TrackInfo.FileSize
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Perform two path checks (relative and absolute) in ContainsUri; support
+	FileSize and DiscNumber properties
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Added FileSize and DiscNumber columns to CoreTracks
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	Some minor update
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryField.cs: Added term modifier 
+	support for handling special strings like '50MB' or 'yesterday'
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryTermNode.cs: Fix EmitNumericMatch
+	and EmitStringMatch to use the new QueryField.Modifier support; fix
+	parsing in EmitNumericMatch to support 64 bit integers which are useful
+	for times and file sizes
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Implemented FileSizeModifier and DateTimeModifier methods to support
+	nice file size and date/time string formats like '40MB'; added three
+	new fields (FileSize, DateAddedStamp, LastPlayedStamp)
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Change references from CoreTracks.RelativeUri to CoreTracks.Uri
+
 2008-01-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:

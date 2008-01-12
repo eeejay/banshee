@@ -1,10 +1,11 @@
 //
 // QueryField.cs
 //
-// Author:
+// Authors:
 //   Gabriel Burt <gburt@novell.com>
+//   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -37,25 +38,41 @@ namespace Hyena.Data.Query
         Text,
         Numeric
     }
-
+    
     public class QueryField
     {
+        public delegate string ModifierHandler (string input);
+
         public string Name;
         public string [] Aliases;
         public string Column;
         public bool Default;
         public QueryFieldType QueryFieldType;
+        public ModifierHandler Modifier;
 
-        public QueryField (string name, string column, QueryFieldType type, params string [] aliases) : this (name, column, type, false, aliases)
+        public QueryField (string name, string column, QueryFieldType type, params string [] aliases) 
+            : this (name, column, type, false, null, aliases)
         {
         }
-
+        
+        public QueryField (string name, string column, QueryFieldType type, ModifierHandler modifier, params string [] aliases) 
+            : this (name, column, type, false, modifier, aliases)
+        {
+        }
+        
         public QueryField (string name, string column, QueryFieldType type, bool isDefault, params string [] aliases)
+            : this (name, column, type, isDefault, null, aliases)
+        {
+        }
+        
+        public QueryField (string name, string column, QueryFieldType type, bool isDefault, 
+            ModifierHandler modifier, params string [] aliases)
         {
             Name = name;
             Column = column;
             QueryFieldType = type;
             Default = isDefault;
+            Modifier = modifier;
             Aliases = aliases;
         }
 

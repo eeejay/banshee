@@ -105,6 +105,17 @@ namespace Banshee.IO.Unix
                 ? new UnixFileInfo(uri.LocalPath).Open(FileMode.Create, FileAccess.ReadWrite, FilePermissions.DEFFILEMODE)
                 : new UnixFileInfo(uri.LocalPath).OpenWrite();
         }
+        
+        public long GetSize (SafeUri uri)
+        {
+            try {
+                Mono.Unix.Native.Stat stat;
+                Mono.Unix.Native.Syscall.lstat (uri.LocalPath, out stat);
+                return stat.st_size;
+            } catch {
+                return -1;
+            }
+        }
     }
 
     public class Directory : IDirectory

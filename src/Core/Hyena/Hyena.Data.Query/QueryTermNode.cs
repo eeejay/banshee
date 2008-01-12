@@ -181,56 +181,61 @@ namespace Hyena.Data.Query
         private bool EmitTermMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
             if (field.QueryFieldType == QueryFieldType.Text)
-                return EmitStringMatch(sb, field.Column, emit_or);
+                return EmitStringMatch(sb, field, emit_or);
             else
-                return EmitNumericMatch(sb, field.Column, emit_or);
+                return EmitNumericMatch(sb, field, emit_or);
         }
 
-        private bool EmitStringMatch(StringBuilder sb, string field, bool emit_or)
+        private bool EmitStringMatch(StringBuilder sb, QueryField field, bool emit_or)
         {
-            string safe_value = Value.Replace("'", "''");
+            string safe_value = (field.Modifier == null ? Value : field.Modifier (Value)).Replace("'", "''");
             
             if (emit_or)
                 sb.Append (" OR ");
 
             switch (Operator.UserOperator) {
-                case "=": // Treat as starts with
-                case "==":
-                    sb.AppendFormat("{0} LIKE '{1}%'", field, safe_value);
+                case "=": // Starts with
+                    sb.AppendFormat("{0} LIKE '{1}%'", field.Column, safe_value);
+                    break;
+                    
+                case "==": // Equal to
+                    sb.AppendFormat("{0} LIKE '{1}'", field.Column, safe_value);
                     break;
 
                 case ":": // Contains
                 default:
-                    sb.AppendFormat("{0} LIKE '%{1}%'", field, safe_value);
+                    sb.AppendFormat("{0} LIKE '%{1}%'", field.Column, safe_value);
                     break;
             }
 
             return true;
         }
 
-        private bool EmitNumericMatch(StringBuilder sb, string field, bool emit_or)
+        private bool EmitNumericMatch(StringBuilder sb, QueryField field, bool emit_or)
         {
-            try {
-                // TODO could add a handler to the Field class so we could preprocess
-                // date queries (and turn them into numbers), etc..
-                int num = Convert.ToInt32 (Value);
-                if (emit_or)
-                    sb.Append (" OR ");
+            long num = 0;
+            
+            if (!Int64.TryParse (field.Modifier == null ? Value : field.Modifier (Value), out num)) {
+                return false;
+            }
+            
+            if (emit_or) {
+                sb.Append (" OR ");
+            }
+            
+            switch (Operator.UserOperator) {
+                case ":":
+                case "=":
+                case "==":
+                    sb.AppendFormat("{0} = {1}", field.Column, num);
+                    break;
 
-                switch (Operator.UserOperator) {
-                    case ":":
-                    case "=":
-                    case "==":
-                        sb.AppendFormat("{0} = {1}", field, num);
-                        break;
-
-                    default:
-                        sb.AppendFormat("{0} {2} {1}", field, num, Operator.UserOperator);
-                        break;
-                }
-                return true;
-            } catch {}
-            return false;
+                default:
+                    sb.AppendFormat("{0} {2} {1}", field.Column, num, Operator.UserOperator);
+                    break;
+            }
+            
+            return true;
         }
         
         public string Value {

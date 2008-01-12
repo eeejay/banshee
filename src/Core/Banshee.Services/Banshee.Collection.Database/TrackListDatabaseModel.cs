@@ -36,6 +36,7 @@ using Mono.Unix;
 using Hyena.Data;
 using Hyena.Data.Query;
 
+using Banshee.Base;
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
@@ -110,7 +111,7 @@ namespace Banshee.Collection.Database
             sort_query = GetSort (sort_column.SortKey, AscDesc ());
         }
 
-        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.TrackNumber ASC, CoreTracks.RelativeUri ASC";
+        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
         public static string GetSort (string key, string ascDesc)
         {
             string sort_query = null;
@@ -127,7 +128,7 @@ namespace Banshee.Collection.Database
                         lower(CoreArtists.Name) {0}, 
                         lower(CoreAlbums.Title) ASC, 
                         CoreTracks.TrackNumber ASC,
-                        CoreTracks.RelativeUri ASC", ascDesc); 
+                        CoreTracks.Uri ASC", ascDesc); 
                     break;
 
                 case "Album":
@@ -135,7 +136,7 @@ namespace Banshee.Collection.Database
                         lower(CoreAlbums.Title) {0},
                         lower(CoreArtists.Name) ASC,
                         CoreTracks.TrackNumber ASC,
-                        CoreTracks.RelativeUri ASC", ascDesc); 
+                        CoreTracks.Uri ASC", ascDesc); 
                     break;
 
                 case "Title":
@@ -156,7 +157,7 @@ namespace Banshee.Collection.Database
                 case "SkipCount":
                 case "LastPlayedStamp":
                 case "DateAddedStamp":
-                case "RelativeUri":
+                case "Uri":
                     sort_query = String.Format (
                         "CoreTracks.{0} {1}, {2}",
                         key, ascDesc, default_sort
@@ -445,15 +446,65 @@ namespace Banshee.Collection.Database
                 Catalog.GetString ("skips"), Catalog.GetString ("skipcount")
             ),
             new QueryField (
-                Catalog.GetString ("File Path"), "CoreTracks.RelativeUri", QueryFieldType.Text,
+                Catalog.GetString ("File Size"), "CoreTracks.FileSize", QueryFieldType.Numeric, FileSizeModifier,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
-                Catalog.GetString ("path"), Catalog.GetString ("file")
+                Catalog.GetString ("size"), Catalog.GetString ("filesize")
+            ),
+            new QueryField (
+                Catalog.GetString ("File Path"), "CoreTracks.Uri", QueryFieldType.Text,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("path"), Catalog.GetString ("file"), Catalog.GetString ("uri")
             ),
             new QueryField (
                 Catalog.GetString ("Mime Type"), "CoreTracks.MimeType", QueryFieldType.Text,
                 // Translators: These are search fields.  Please, no spaces. Duplicates ok.
                 Catalog.GetString ("type"), Catalog.GetString ("mimetype"), Catalog.GetString ("format")
+            ),
+            new QueryField (
+                Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", QueryFieldType.Numeric, DateTimeModifier,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("lastplayed"), Catalog.GetString ("played")
+            ),
+            new QueryField (
+                Catalog.GetString ("Imported Date"), "CoreTracks.DateAddedStamp", QueryFieldType.Numeric, DateTimeModifier,
+                // Translators: These are search fields.  Please, no spaces. Duplicates ok.
+                Catalog.GetString ("addedon"), Catalog.GetString ("dateadded"), Catalog.GetString ("importedon")
             )
         );
+        
+        private static string FileSizeModifier (string input)
+        {
+            long value = 0;
+            
+            if (input.Length < 2) {
+                return input;
+            } else if (input[input.Length - 1] == 'b' || input[input.Length - 1] == 'B') {
+                input = input.Substring (0, input.Length - 1);
+            }
+            
+            if (!Int64.TryParse (input.Substring (0, input.Length - 1), out value)) {
+                return input;
+            }
+            
+            switch (input[input.Length - 1]) {
+                case 'k': case 'K': value *= 1024; break;
+                case 'm': case 'M': value *= 1048576; break;
+                case 'g': case 'G': value *= 1073741824; break;
+                case 't': case 'T': value *= 1099511627776; break;
+                default: break;
+            }
+            
+            return Convert.ToString (value);
+        }
+        
+        private static string DateTimeModifier (string input)
+        {
+            // TODO: Add support for relative strings like "yesterday", "3 weeks ago", "5 days ago"
+            try {
+                return DateTimeUtil.ToTimeT (DateTime.Parse (input)).ToString ();
+            } catch {
+                return "0";
+            }
+        }
     }
 }

@@ -113,6 +113,11 @@ namespace Banshee.IO.GnomeVfs
             
             return new VfsStream(uri.AbsoluteUri, System.IO.FileMode.Create);
         }
+        
+        public long GetSize (SafeUri uri)
+        {
+            return 0;
+        }
     }
 
     public class Directory : IDirectory

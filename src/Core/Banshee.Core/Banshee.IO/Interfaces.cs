@@ -50,6 +50,7 @@ namespace Banshee.IO
         void Move(SafeUri from, SafeUri to);
         System.IO.Stream OpenRead(SafeUri uri);
         System.IO.Stream OpenWrite(SafeUri uri, bool overwrite);
+        long GetSize (SafeUri uri);
     }
     
     public interface IDirectory

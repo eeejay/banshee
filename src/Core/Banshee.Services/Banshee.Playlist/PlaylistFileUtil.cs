@@ -174,7 +174,7 @@ namespace Banshee.Playlist
 
             BansheeDbCommand command = new BansheeDbCommand (
                 @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
-                    VALUES (?, (SELECT TrackID FROM CoreTracks WHERE RelativeUri = ?))", 2
+                    VALUES (?, (SELECT TrackID FROM CoreTracks WHERE Uri = ?))", 2
             );
 
             foreach (string uri in uris) {

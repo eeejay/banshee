@@ -95,8 +95,7 @@ namespace Banshee.Library
             try {
                 SafeUri uri = new SafeUri (path);
 
-                if (LibraryTrackInfo.ContainsPath (uri.AbsoluteUri)) {
-                    //LogError (path, Catalog.GetString ("Track already in Library"));
+                if (LibraryTrackInfo.ContainsUri (uri)) {
                     IncrementProcessedCount (null);
                     return;
                 }

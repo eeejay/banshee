@@ -42,6 +42,7 @@ namespace Banshee.Collection
         private SafeUri uri;
         private SafeUri more_info_uri;
         private string mimetype;
+        private long filesize;
 
         private string artist_name;
         private string album_title;
@@ -50,6 +51,7 @@ namespace Banshee.Collection
 
         private int track_number;
         private int track_count;
+        private int disc_number;
         private int year;
         private int rating;
 
@@ -111,6 +113,11 @@ namespace Banshee.Collection
             set { mimetype = value; }
         }
 
+        public long FileSize {
+            get { return filesize; }
+            set { filesize = value; }
+        }
+
         public virtual string ArtistName {
             get { return artist_name; }
             set { artist_name = value; }
@@ -167,6 +174,11 @@ namespace Banshee.Collection
         public virtual int TrackCount {
             get { return track_count; }
             set { track_count = value; }
+        }
+
+        public virtual int DiscNumber {
+            get { return disc_number; }
+            set { disc_number = value; }
         }
 
         public virtual int Year {
