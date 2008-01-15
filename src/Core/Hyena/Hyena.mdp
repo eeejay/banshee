@@ -40,9 +40,14 @@
     <File name="Hyena.Data.Query/QueryField.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/UserQueryParser.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/XmlQueryParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/HyenaDbConnection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/DatabaseModelProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/CacheableDatabaseModelProvider.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Data.SqliteClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">

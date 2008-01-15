@@ -29,228 +29,195 @@
 using System;
 using System.Data;
 
-using Banshee.IO;
+using Hyena.Data;
+
 using Banshee.Base;
 using Banshee.Database;
 using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
-{    
+{
     public class LibraryTrackInfo : TrackInfo
     {
-        public enum Column : int {
-            TrackID,
-            ArtistID,
-            AlbumID,
-            TagSetID,
-            MusicBrainzID,
-            Uri,
-            UriType,
-            MimeType,
-            FileSize,
-            Title,
-            TrackNumber,
-            TrackCount,
-            DiscNumber,
-            Duration,
-            Year,
-            Rating,
-            PlayCount,
-            SkipCount,
-            LastPlayedStamp,
-            DateAddedStamp,
-            
-            // These columns are virtual - they are not actually 
-            // in CoreTracks and are returned on join selects
-            Artist,
-            AlbumTitle
-        }
-        
         private enum UriType : int {
             AbsolutePath,
             RelativePath,
             AbsoluteUri
         }
         
-        private int dbid;
-        private int db_index;
-
-        private int artist_id;
-        private int album_id;
+        private TrackListDatabaseModel model;
         
         public LibraryTrackInfo () : base ()
         {
-            dbid = -1;
         }
 
-        public LibraryTrackInfo (IDataReader reader, int index) : base ()
+        public LibraryTrackInfo (TrackListDatabaseModel model, int index) : base () // Get rid of model
         {
-            LoadFromReader (reader);
-            DbIndex = index;
-        }
-
-        private void LoadFromReader (IDataReader reader)
-        {
-            dbid = ReaderGetInt32 (reader, Column.TrackID);
-            
-            string uri = ReaderGetString (reader, Column.Uri);
-            UriType uri_type = (UriType)ReaderGetInt32 (reader, Column.UriType);
-            
-            if (uri_type == UriType.RelativePath) {
-                uri = System.IO.Path.Combine (Paths.LibraryLocation, uri);
-            }
-            
-            Uri = new SafeUri (uri);
-            FileSize = ReaderGetInt64 (reader, Column.FileSize);
-            
-            ArtistName = ReaderGetString (reader, Column.Artist);
-            ArtistId = ReaderGetInt32 (reader, Column.ArtistID);
-
-            AlbumTitle = ReaderGetString (reader, Column.AlbumTitle);
-            AlbumId = ReaderGetInt32 (reader, Column.AlbumID);
-
-            TrackTitle = ReaderGetString (reader, Column.Title);
-
-            TrackNumber = ReaderGetInt32 (reader, Column.TrackNumber);
-            TrackCount = ReaderGetInt32 (reader, Column.TrackCount);
-            Year = ReaderGetInt32 (reader, Column.Year);
-            Rating = ReaderGetInt32 (reader, Column.Rating);
-
-            Duration = ReaderGetTimeSpan (reader, Column.Duration);
-
-            PlayCount = ReaderGetInt32 (reader, Column.PlayCount);
-            SkipCount = ReaderGetInt32 (reader, Column.SkipCount);
-
-            LastPlayed = ReaderGetDateTime (reader, Column.LastPlayedStamp);
-            DateAdded = ReaderGetDateTime (reader, Column.DateAddedStamp);
-            
+            this.model = model;
             Attributes |= TrackAttributes.CanPlay;
-        }
-
-        private string ReaderGetString (IDataReader reader, Column column)
-        {
-            int column_id = (int)column;
-            return !reader.IsDBNull (column_id) 
-                ? String.Intern (reader.GetString (column_id)) 
-                : null;
-        }
-        
-        private int ReaderGetInt32 (IDataReader reader, Column column)
-        {
-            return reader.GetInt32 ((int)column);
-        }
-
-        private long ReaderGetInt64 (IDataReader reader, Column column)
-        {
-            return reader.GetInt64 ((int)column);
-        }
-
-        private TimeSpan ReaderGetTimeSpan (IDataReader reader, Column column)
-        {
-            long raw = reader.GetInt64 ((int)column);
-            return new TimeSpan (raw * TimeSpan.TicksPerMillisecond);
-        }
-
-        private DateTime ReaderGetDateTime (IDataReader reader, Column column)
-        {
-            long raw = reader.GetInt64 ((int)column);
-            return DateTimeUtil.ToDateTime (raw);
+            DbIndex = index;
         }
 
         public override void Save ()
         {
             if (DbId < 0) {
-                InsertCommit ();
+                DbId = model.Insert(this);
             } else {
-                UpdateCommit ();
+                model.Update(this);
             }
         }
         
-        private void InsertCommit ()
-        {
-            TableSchema.CoreTracks.InsertCommand.ApplyValues (
-                null, // TrackID
-                ArtistId,
-                AlbumId,
-                -1, // TagSetID
-                null, // MusicBrainzID
-                Uri == null ? null : 
-                    (Paths.MakePathRelativeToLibrary (Uri.AbsolutePath) 
-                        ?? Uri.AbsoluteUri),
-                UriType.RelativePath,
-                MimeType,
-                FileSize,
-                TrackTitle,
-                TrackNumber,
-                TrackCount,
-                DiscNumber,
-                Duration.TotalMilliseconds,
-                Year,
-                Rating,
-                PlayCount,
-                SkipCount,
-                DateTimeUtil.FromDateTime (LastPlayed),
-                DateTimeUtil.FromDateTime (DateAdded)
-            );
-            
-            DbId = ServiceManager.DbConnection.Execute (TableSchema.CoreTracks.InsertCommand);
-        }
-        
-        private void UpdateCommit ()
-        {
-            TableSchema.CoreTracks.UpdateCommand.ApplyValues (
-                DbId, // TrackID
-                ArtistId,
-                AlbumId,
-                -1, // TagSetID
-                null, // MusicBrainzID
-                Uri == null ? null : 
-                    (Paths.MakePathRelativeToLibrary (Uri.AbsolutePath) 
-                        ?? Uri.AbsoluteUri),
-                UriType.RelativePath,
-                MimeType,
-                FileSize,
-                TrackTitle,
-                TrackNumber,
-                TrackCount,
-                DiscNumber,
-                Duration.TotalMilliseconds,
-                Year,
-                Rating,
-                PlayCount,
-                SkipCount,
-                DateTimeUtil.FromDateTime (LastPlayed),
-                DateTimeUtil.FromDateTime (DateAdded),
-                DbId // TrackID (again, for WHERE clause)
-            );
-
-            Console.WriteLine ("Updating: {0}", TableSchema.CoreTracks.UpdateCommand.CommandText);
-            ServiceManager.DbConnection.Execute (TableSchema.CoreTracks.UpdateCommand);
+        [DatabaseColumn("TrackID", BindingFlags = DatabaseBindingFlags.PrimaryKey)]
+        private int track_id;
+        public int TrackId {
+            get { return track_id; }
+            internal set { track_id = value; }
         }
 
         public int DbId {
-            get { return dbid; }
-            set { dbid = value; }
+            get { return TrackId; }
+            set { TrackId = value; }
         }
         
+        private int db_index;
         public int DbIndex {
             get { return db_index; }
             internal set { db_index = value; }
         }
 
+        [DatabaseColumn("ArtistID", Index = "CoreTracksArtistIndex")]
+        private int artist_id;
         public int ArtistId {
             get { return artist_id; }
             set { artist_id = value; }
         }
 
+        [DatabaseColumn("AlbumID", Index = "CoreTracksAlbumIndex")]
+        private int album_id;
         public int AlbumId {
             get { return album_id; }
             set { album_id = value; }
         }
 
+        [DatabaseVirtualColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]
+        public override string ArtistName {
+            get { return base.ArtistName; }
+            set { base.ArtistName = value; }
+        }
+        
+        [DatabaseVirtualColumn("Title", "CoreAlbums", "AlbumID", "AlbumID")]
+        public override string AlbumTitle {
+            get { return base.AlbumTitle; }
+            set { base.AlbumTitle = value; }
+        }
+        
+        [DatabaseColumn]
+        private int TagSetID;
+        
+        [DatabaseColumn]
+        private string MusicBrainzID;
+        
+        [DatabaseColumn("Uri")]
+        private string uri;
+        
+        [DatabaseColumn("UriType")]
+        private int uri_type;
+        
+        [DatabaseColumn]
+        public override string MimeType {
+            get { return base.MimeType; }
+            set { base.MimeType = value; }
+        }
+        
+        [DatabaseColumn]
+        public override long FileSize {
+            get { return base.FileSize; }
+            set { base.FileSize = value; }
+        }
+        
+        [DatabaseColumn("Title")]
+        public override string TrackTitle {
+            get { return base.TrackTitle; }
+            set { base.TrackTitle = value; }
+        }
+        
+        [DatabaseColumn]
+        public override int TrackNumber {
+            get { return base.TrackNumber; }
+            set { base.TrackNumber = value; }
+        }
+        
+        [DatabaseColumn]
+        public override int TrackCount {
+            get { return base.TrackCount; }
+            set { base.TrackCount = value; }
+        }
+        
+        [DatabaseColumn]
+        public override int DiscNumber {
+            get { return base.DiscNumber; }
+            set { base.DiscNumber = value; }
+        }
+        
+        [DatabaseColumn("Duration")]
+        private long duration {
+            get { return (long)Duration.TotalMilliseconds; }
+            set { Duration = new TimeSpan (value * TimeSpan.TicksPerMillisecond); }
+        }
+        
+        [DatabaseColumn]
+        public override int Year {
+            get { return base.Year; }
+            set { base.Year = value; }
+        }
+        
+        [DatabaseColumn]
+        public override int Rating {
+            get { return base.Rating; }
+            set { base.Rating = value; }
+        }
+        
+        [DatabaseColumn]
+        public override int PlayCount {
+            get { return base.PlayCount; }
+            set { base.PlayCount = value; }
+        }
+        
+        [DatabaseColumn]
+        public override int SkipCount {
+            get { return base.SkipCount; }
+            set { base.SkipCount = value; }
+        }
+        
+        [DatabaseColumn]
+        private long LastPlayedStamp {
+            get { return DateTimeUtil.FromDateTime(LastPlayed); }
+            set { LastPlayed = DateTimeUtil.ToDateTime(value); }
+        }
+        
+        [DatabaseColumn]
+        private long DateAddedStamp {
+            get { return DateTimeUtil.FromDateTime(DateAdded); }
+            set { DateAdded = DateTimeUtil.ToDateTime(value); }
+        }
+        
+        private bool set_up;
+        public void SetUp()
+        {
+            if(set_up) {
+                return;
+            }
+            set_up = true;
+            
+            if (uri_type == (int)UriType.RelativePath) {
+                uri = System.IO.Path.Combine(Paths.LibraryLocation, uri);
+            }
+            Uri = new SafeUri(uri);
+        }
+
         private static BansheeDbCommand check_command = new BansheeDbCommand (
             "SELECT COUNT(*) FROM CoreTracks WHERE Uri = ? OR Uri = ?", 2);
-            
+        
         public static bool ContainsUri (SafeUri uri)
         {
             string relative_path = Paths.MakePathRelativeToLibrary (uri.AbsolutePath) ?? uri.AbsoluteUri;

@@ -31,39 +31,29 @@ using System.IO;
 using System.Data;
 using Mono.Data.Sqlite;
 
+using Hyena.Data;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
 
 namespace Banshee.Database
 {
-    public class BansheeDbConnection : IService, IDisposable
+    public sealed class BansheeDbConnection : HyenaDbConnection, IService
     {
-        private SqliteConnection connection;
-
         public BansheeDbConnection () : this (true)
         {
         }
 
         public BansheeDbConnection (bool connect)
+            : base(connect)
         {
             if (connect) {
-                Open ();
-                Migrate ();
+                BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (Connection);
+                migrator.SlowStarted += OnMigrationSlowStarted;
+                migrator.SlowPulse += OnMigrationSlowPulse;
+                migrator.SlowFinished += OnMigrationSlowFinished;
+                migrator.Migrate ();
             }
-        }
-
-        private void Migrate ()
-        {
-            BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (connection);
-            migrator.SlowStarted += OnMigrationSlowStarted;
-            migrator.SlowPulse += OnMigrationSlowPulse;
-            migrator.SlowFinished += OnMigrationSlowFinished;
-
-            migrator.Migrate ();
-
-            migrator.SlowStarted -= OnMigrationSlowStarted;
-            migrator.SlowPulse -= OnMigrationSlowPulse;
-            migrator.SlowFinished -= OnMigrationSlowFinished;
         }
         
         //private Gtk.Window slow_window;
@@ -134,102 +124,7 @@ namespace Banshee.Database
             }*/
         }
 
-        public void Dispose ()
-        {
-            Close ();
-        }
-
-        public void Open ()
-        {
-            lock (this) {
-                if (connection != null) {
-                    return;
-                }
-
-                string dbfile = DatabaseFile;
-                Console.WriteLine ("Opening connection to Banshee Database: {0}", dbfile);
-                connection = new SqliteConnection (String.Format ("Version=3,URI=file:{0}", dbfile));
-                connection.Open ();
-
-                Execute (@"
-                    PRAGMA synchronous = OFF;
-                    PRAGMA cache_size = 32768;
-                ");
-            }
-        }
-
-        public void Close ()
-        {
-            lock (this) {
-                if (connection != null) {
-                    connection.Close ();
-                    connection = null;
-                }
-            }
-        }
-
-#region Convenience methods 
-
-        public IDataReader ExecuteReader (SqliteCommand command)
-        {
-            if (command.Connection == null)
-                command.Connection = connection;
-            return command.ExecuteReader ();
-        }
-
-        public IDataReader ExecuteReader (BansheeDbCommand command)
-        {
-            return ExecuteReader (command.Command);
-        }
-
-        public IDataReader ExecuteReader (object command)
-        {
-            return ExecuteReader (new SqliteCommand (command.ToString ()));
-        }
-
-        public object ExecuteScalar (SqliteCommand command)
-        {
-            if (command.Connection == null)
-                command.Connection = connection;
-            return command.ExecuteScalar ();
-        }
-
-        public object ExecuteScalar (BansheeDbCommand command)
-        {
-            return ExecuteScalar (command.Command);
-        }
-
-        public object ExecuteScalar (object command)
-        {
-            return ExecuteScalar (new SqliteCommand (command.ToString ()));
-        }
-
-        public Int32 QueryInt32 (object command)
-        {
-            return Convert.ToInt32 (ExecuteScalar (command));
-        }
-
-        public int Execute (SqliteCommand command)
-        {
-            if (command.Connection == null)
-                command.Connection = connection;
-            command.ExecuteNonQuery ();
-            return command.LastInsertRowID ();
-        }
-
-        public int Execute (BansheeDbCommand command)
-        {
-            return Execute (command.Command);
-        }
-
-        public int Execute (object command)
-        {
-            return Execute (new SqliteCommand (command.ToString ()));
-        }
-
-#endregion
-
-        public string DatabaseFile {
+        public override string DatabaseFile {
             get {
                 if (ApplicationContext.CommandLine.Contains ("db"))
                     return ApplicationContext.CommandLine["db"];
@@ -254,115 +149,27 @@ namespace Banshee.Database
                 return dbfile;
             }
         }
-
-        public IDbConnection Connection {
-            get { return connection; }
-        }
         
         string IService.ServiceName {
             get { return "DbConnection"; }
         }
     }
     
-    public class BansheeDbCommand
+    public sealed class BansheeDbCommand : HyenaDbCommand
     {
-        private SqliteCommand command;
-
-#region Properties
-
-        public SqliteCommand Command {
-            get { return command; }
-        }
-
-        public SqliteParameterCollection Parameters {
-            get { return command.Parameters; }
-        }
-
-        public string CommandText {
-            get { return command.CommandText; }
-        }
-
-#endregion
-
         public BansheeDbCommand(string command)
+            : base(command)
         {
-            this.command = new SqliteCommand (command);
         }
 
-        public BansheeDbCommand (string command, int num_params) : this (command)
+        public BansheeDbCommand (string command, int num_params)
+            : base(command, num_params)
         {
-            for (int i = 0; i < num_params; i++) {
-                Parameters.Add (new SqliteParameter ());
-            }
         }
 
-        public BansheeDbCommand (string command, params object [] param_values) : this (command, param_values.Length)
+        public BansheeDbCommand (string command, params object [] param_values)
+            : base(command, param_values.Length)
         {
-            ApplyValues (param_values);
         }
-
-        public BansheeDbCommand ApplyValues (params object [] param_values)
-        {
-            if (param_values.Length != Parameters.Count) {
-                throw new ArgumentException (String.Format (
-                    "Command has {0} parameters, but {1} values given.", Parameters.Count, param_values.Length
-                ));
-            }
-
-            for (int i = 0; i < param_values.Length; i++) {
-                Parameters[i].Value = param_values[i];
-            }
-
-            return this;
-        }
-        
-        public void AddNamedParameter (string name, object value)
-        {
-            SqliteParameter param = new SqliteParameter (name, DbType.String);
-            param.Value = value;
-            Parameters.Add (param);
-        }
-                
-        /*public DbCommand(string command, params object [] parameters) : this(command)
-        {
-            for(int i = 0; i < parameters.Length;) {
-                SqliteParameter param;
-                
-                if(parameters[i] is SqliteParameter) {
-                    param = (SqliteParameter)parameters[i];
-                    if(i < parameters.Length - 1 && !(parameters[i + 1] is SqliteParameter)) {
-                        param.Value = parameters[i + 1];
-                        i += 2;
-                    } else {
-                        i++;
-                    }
-                } else {
-                    param = new SqliteParameter();
-                    param.ParameterName = (string)parameters[i];
-                    param.Value = parameters[i + 1];
-                    i += 2;
-                }
-                
-                Parameters.Add(param);
-            }
-        }
-        
-        public void AddParameter (object value)
-        {
-            SqliteParameter param = new SqliteParameter ();
-            param.Value = value;
-            Parameters.Add (param);
-        }
-        
-        public void AddParameter<T>(string name, T value)
-        {
-            AddParameter<T>(new DbParameter<T>(name), value);
-        }
-        
-        public void AddParameter<T>(DbParameter<T> param, T value)
-        {
-            param.Value = value;
-            Parameters.Add(param);
-        }*/
     }
 }

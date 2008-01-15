@@ -1,3 +1,26 @@
+2008-01-15  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena/Hyena.Data/HyenaDbConnection.cs: An abstraction of
+	  BansheeDbConnection/COmmand
+	* src/Core/Hyena/Hyena.Data/DatabaseModelProvider.cs: Added.
+	* src/Core/Hyena/Hyena.Data/CacheableDatabaseModelProvider.cs: Added. This
+	  class functionally inherits from both CacheableModelAdapter and
+	  DatabaseModelProvider.
+	* src/Core/Hyena/Hyena.Data/CacheableModelAdapter.cs: Added Add() method.
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeModelProvider.cs:
+	  Added. This will replace BansheeCacheableModelAdapter.
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	  Modified to use new model provider system.
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	  Added Provider inner class which inherits from BansheeModelProvider.
+	  Made to use that inner class.
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	  Abstracted into Hyena.
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Made MimeType and
+	  FileSize virtual.
+	* build/build.environment.mk: Added sql-related dependancies to Hyena's
+	  references.
+
 2008-01-11  Aaron Bockover  <abockover@novell.com>
 
 	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Added 

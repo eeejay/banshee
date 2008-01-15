@@ -108,12 +108,12 @@ namespace Banshee.Collection
             set { more_info_uri = value; }
         }
 
-        public string MimeType {
+        public virtual string MimeType {
             get { return mimetype; }
             set { mimetype = value; }
         }
 
-        public long FileSize {
+        public virtual long FileSize {
             get { return filesize; }
             set { filesize = value; }
         }

@@ -110,6 +110,7 @@
     <File name="Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Networking/NetworkDetect.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Networking/NetworkManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/BansheeModelProvider.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

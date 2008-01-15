@@ -42,10 +42,54 @@ using Banshee.Database;
 namespace Banshee.Collection.Database
 {
     public class TrackListDatabaseModel : TrackListModel, IExportableModel, ICacheableModel, 
-        IDatabaseModel<TrackInfo>, IFilterable, ISortable, ICareAboutView
+        IDatabaseModel<LibraryTrackInfo>, IFilterable, ISortable, ICareAboutView
     {
+        private sealed class Provider : BansheeModelProvider<LibraryTrackInfo>
+        {
+            private BansheeDbConnection connection;
+            private TrackListDatabaseModel model;
+            
+            public Provider(BansheeDbConnection connection, TrackListDatabaseModel model) //FIXME get rid of model
+                : base(connection, model)
+            {
+                this.connection = connection;
+                this.model = model;
+            }
+            
+            protected override LibraryTrackInfo MakeNewObject(int offset)
+            {
+                return new LibraryTrackInfo(model, offset);
+            }
+
+            protected override void Add(int key, LibraryTrackInfo value)
+            {
+                base.Add(key, value);
+                value.SetUp();
+            }
+            
+            protected override string TableName {
+                get { return "CoreTracks"; }
+            }
+            
+            protected override int ModelVersion {
+                get { return 1; }
+            }
+            
+            public string FromFragment {
+                get { return From; }
+            }
+            
+            public string WhereFragment {
+                get { return Where; }
+            }
+            
+            public string SelectFragment {
+                get { return Select; }
+            }
+        }
+        
         private BansheeDbConnection connection;
-        private BansheeCacheableModelAdapter<TrackInfo> cache;
+        private Provider provider;
         private int count;
         private int unfiltered_count;
         
@@ -64,7 +108,7 @@ namespace Banshee.Collection.Database
 
         public TrackListDatabaseModel (BansheeDbConnection connection, string uuid)
         {
-            cache = new BansheeCacheableModelAdapter<TrackInfo> (connection, uuid, this);
+            provider = new Provider(connection, this);
             this.connection = connection;
             Refilter ();
         }
@@ -171,7 +215,7 @@ namespace Banshee.Collection.Database
         {
             lock(this) {
                 GenerateFilterQueryPart();
-                cache.Clear ();
+                provider.Clear ();
             }
         }
         
@@ -187,13 +231,13 @@ namespace Banshee.Collection.Database
                 sort_column = column;
             
                 GenerateSortQueryPart();
-                cache.Clear ();
+                provider.Clear ();
             }
         }
         
         public override void Clear()
         {
-            cache.Clear ();
+            provider.Clear ();
             unfiltered_count = 0;
             count = 0;
             OnCleared();
@@ -203,8 +247,8 @@ namespace Banshee.Collection.Database
         public override void Reload()
         {
             string unfiltered_query = String.Format (
-                "FROM CoreTracks, CoreAlbums, CoreArtists{0} WHERE {1} {2}",
-                JoinFragment, FetchCondition, ConditionFragment
+                "FROM {0}{1} WHERE {2} {3}",
+                FetchFrom, JoinFragment, FetchCondition, ConditionFragment
             );
 
             unfiltered_count = connection.QueryInt32 (String.Format (
@@ -237,11 +281,11 @@ namespace Banshee.Collection.Database
                 
             reload_fragment = qb.ToString ();
 
-            if (!first_reload || !cache.Warm) {
-                cache.Reload ();
+            if (!first_reload || !provider.Warm) {
+                provider.Reload ();
             }
 
-            count = cache.Count;
+            count = provider.Count;
             first_reload = false;
 
             OnReloaded ();
@@ -257,7 +301,7 @@ namespace Banshee.Collection.Database
         }
 
         public override TrackInfo this[int index] {
-            get { return cache.GetValue (index); }
+            get { return provider.GetValue (index); }
         }
         
         public override int Count {
@@ -347,7 +391,7 @@ namespace Banshee.Collection.Database
         }
 
         public int CacheId {
-            get { return cache.CacheId; }
+            get { return provider.CacheId; }
         }
 
         public ISortableColumn SortColumn { 
@@ -375,9 +419,19 @@ namespace Banshee.Collection.Database
         }
 
         // Implement IDatabaseModel
-        public TrackInfo GetItemFromReader (IDataReader reader, int index)
+        public LibraryTrackInfo GetItemFromReader (IDataReader reader, int index)
         {
-            return new LibraryTrackInfo (reader, index);
+            return new LibraryTrackInfo (this, index);
+        }
+        
+        public int Insert(LibraryTrackInfo track)
+        {
+            return provider.Insert(track);
+        }
+        
+        public void Update(LibraryTrackInfo track)
+        {
+            provider.Update(track);
         }
 
         private const string primary_key = "CoreTracks.TrackID";
@@ -390,15 +444,15 @@ namespace Banshee.Collection.Database
         }
 
         public string FetchColumns {
-            get { return "CoreTracks.*, CoreArtists.Name, CoreAlbums.Title"; }
+            get { return provider.SelectFragment; }
         }
 
         public string FetchFrom {
-            get { return "CoreTracks, CoreArtists, CoreAlbums"; }
+            get { return provider.FromFragment; }
         }
 
         public string FetchCondition {
-            get { return "CoreArtists.ArtistID = CoreTracks.ArtistID AND CoreAlbums.AlbumID = CoreTracks.AlbumID"; }
+            get { return provider.WhereFragment; }
         }
 
         public override QueryField ArtistField {

@@ -57,6 +57,11 @@ namespace Hyena.Data
             
             return default (T);
         }
+        
+        protected virtual void Add(int key, T value)
+        {
+            Cache.Add(key, value);
+        }
 
         // Responsible for fetching a set of items and placing them in the cache
         protected abstract void FetchSet (int offset, int limit);

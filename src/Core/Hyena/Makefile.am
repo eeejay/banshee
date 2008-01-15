@@ -20,8 +20,11 @@ SOURCES =  \
 	Hyena.Data.Query/QueryToken.cs \
 	Hyena.Data.Query/UserQueryParser.cs \
 	Hyena.Data.Query/XmlQueryParser.cs \
+	Hyena.Data/CacheableDatabaseModelProvider.cs \
 	Hyena.Data/CacheableModelAdapter.cs \
 	Hyena.Data/ColumnDescription.cs \
+	Hyena.Data/DatabaseModelProvider.cs \
+	Hyena.Data/HyenaDbConnection.cs \
 	Hyena.Data/ICacheableModel.cs \
 	Hyena.Data/ICareAboutView.cs \
 	Hyena.Data/IFilterable.cs \
