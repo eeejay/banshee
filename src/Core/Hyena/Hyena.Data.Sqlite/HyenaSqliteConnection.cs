@@ -1,5 +1,5 @@
 //
-// BansheeDbConnection.cs
+// HyenaSqliteConnection.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -33,15 +33,15 @@ using Mono.Data.Sqlite;
 
 namespace Hyena.Data.Sqlite
 {
-    public abstract class HyenaDbConnection : IDisposable
+    public abstract class HyenaSqliteConnection : IDisposable
     {
         private SqliteConnection connection;
 
-        public HyenaDbConnection() : this(true)
+        public HyenaSqliteConnection() : this(true)
         {
         }
 
-        public HyenaDbConnection(bool connect)
+        public HyenaSqliteConnection(bool connect)
         {
             if (connect) {
                 Open ();
@@ -90,7 +90,7 @@ namespace Hyena.Data.Sqlite
             return command.ExecuteReader ();
         }
 
-        public IDataReader ExecuteReader (HyenaDbCommand command)
+        public IDataReader ExecuteReader (HyenaSqliteCommand command)
         {
             return ExecuteReader (command.Command);
         }
@@ -107,7 +107,7 @@ namespace Hyena.Data.Sqlite
             return command.ExecuteScalar ();
         }
 
-        public object ExecuteScalar (HyenaDbCommand command)
+        public object ExecuteScalar (HyenaSqliteCommand command)
         {
             return ExecuteScalar (command.Command);
         }
@@ -130,7 +130,7 @@ namespace Hyena.Data.Sqlite
             return command.LastInsertRowID ();
         }
 
-        public int Execute (HyenaDbCommand command)
+        public int Execute (HyenaSqliteCommand command)
         {
             return Execute (command.Command);
         }
@@ -147,107 +147,5 @@ namespace Hyena.Data.Sqlite
         public IDbConnection Connection {
             get { return connection; }
         }
-    }
-    
-    public class HyenaDbCommand
-    {
-        private SqliteCommand command;
-
-#region Properties
-
-        public SqliteCommand Command {
-            get { return command; }
-        }
-
-        public SqliteParameterCollection Parameters {
-            get { return command.Parameters; }
-        }
-
-        public string CommandText {
-            get { return command.CommandText; }
-        }
-
-#endregion
-
-        public HyenaDbCommand(string command)
-        {
-            this.command = new SqliteCommand (command);
-        }
-
-        public HyenaDbCommand (string command, int num_params) : this (command)
-        {
-            for (int i = 0; i < num_params; i++) {
-                Parameters.Add (new SqliteParameter ());
-            }
-        }
-
-        public HyenaDbCommand (string command, params object [] param_values) : this (command, param_values.Length)
-        {
-            ApplyValues (param_values);
-        }
-
-        public HyenaDbCommand ApplyValues (params object [] param_values)
-        {
-            if (param_values.Length != Parameters.Count) {
-                throw new ArgumentException (String.Format (
-                    "Command has {0} parameters, but {1} values given.", Parameters.Count, param_values.Length
-                ));
-            }
-
-            for (int i = 0; i < param_values.Length; i++) {
-                Parameters[i].Value = param_values[i];
-            }
-
-            return this;
-        }
-        
-        public void AddNamedParameter (string name, object value)
-        {
-            SqliteParameter param = new SqliteParameter (name, DbType.String);
-            param.Value = value;
-            Parameters.Add (param);
-        }
-                
-        /*public DbCommand(string command, params object [] parameters) : this(command)
-        {
-            for(int i = 0; i < parameters.Length;) {
-                SqliteParameter param;
-                
-                if(parameters[i] is SqliteParameter) {
-                    param = (SqliteParameter)parameters[i];
-                    if(i < parameters.Length - 1 && !(parameters[i + 1] is SqliteParameter)) {
-                        param.Value = parameters[i + 1];
-                        i += 2;
-                    } else {
-                        i++;
-                    }
-                } else {
-                    param = new SqliteParameter();
-                    param.ParameterName = (string)parameters[i];
-                    param.Value = parameters[i + 1];
-                    i += 2;
-                }
-                
-                Parameters.Add(param);
-            }
-        }
-        
-        public void AddParameter (object value)
-        {
-            SqliteParameter param = new SqliteParameter ();
-            param.Value = value;
-            Parameters.Add (param);
-        }
-        
-        public void AddParameter<T>(string name, T value)
-        {
-            AddParameter<T>(new DbParameter<T>(name), value);
-        }
-        
-        public void AddParameter<T>(DbParameter<T> param, T value)
-        {
-            param.Value = value;
-            Parameters.Add(param);
-        }*/
     }
 }

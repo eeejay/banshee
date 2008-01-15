@@ -22,7 +22,8 @@ SOURCES =  \
 	Hyena.Data.Query/XmlQueryParser.cs \
 	Hyena.Data.Sqlite/CacheableDatabaseModelProvider.cs \
 	Hyena.Data.Sqlite/DatabaseModelProvider.cs \
-	Hyena.Data.Sqlite/HyenaDbConnection.cs \
+	Hyena.Data.Sqlite/HyenaSqliteCommand.cs \
+	Hyena.Data.Sqlite/HyenaSqliteConnection.cs \
 	Hyena.Data/CacheableModelAdapter.cs \
 	Hyena.Data/ColumnDescription.cs \
 	Hyena.Data/ICacheableModel.cs \

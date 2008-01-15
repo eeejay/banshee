@@ -317,14 +317,14 @@ namespace Hyena.Data.Sqlite
         private readonly List<VirtualColumn> virtual_columns = new List<VirtualColumn>();
         
         private Column key;
-        private HyenaDbConnection connection;
+        private HyenaSqliteConnection connection;
         
-        private HyenaDbCommand create_command;
-        private HyenaDbCommand insert_command;
-        private HyenaDbCommand update_command;
-        private HyenaDbCommand select_command;
-        private HyenaDbCommand select_range_command;
-        private HyenaDbCommand select_single_command;
+        private HyenaSqliteCommand create_command;
+        private HyenaSqliteCommand insert_command;
+        private HyenaSqliteCommand update_command;
+        private HyenaSqliteCommand select_command;
+        private HyenaSqliteCommand select_range_command;
+        private HyenaSqliteCommand select_single_command;
         
         private string primary_key;
         private string select;
@@ -344,11 +344,11 @@ namespace Hyena.Data.Sqlite
             get { return "HyenaModelVersions"; }
         }
         
-        protected HyenaDbConnection Connection {
+        protected HyenaSqliteConnection Connection {
             get { return connection; }
         }
         
-        protected DatabaseModelProvider(HyenaDbConnection connection)
+        protected DatabaseModelProvider(HyenaSqliteConnection connection)
         {
             foreach(FieldInfo field in typeof(T).GetFields(BindingFlags.Instance | BindingFlags.NonPublic)) {
                 foreach(Attribute attribute in field.GetCustomAttributes(true)) {
@@ -603,7 +603,7 @@ namespace Hyena.Data.Sqlite
             return default(T);
         }
         
-        protected virtual HyenaDbCommand CreateCommand {
+        protected virtual HyenaSqliteCommand CreateCommand {
             get {
                 if(create_command == null) {
                     StringBuilder builder = new StringBuilder();
@@ -620,13 +620,13 @@ namespace Hyena.Data.Sqlite
                         builder.Append(column.Schema);
                     }
                     builder.Append(')');
-                    create_command = new HyenaDbCommand(builder.ToString());
+                    create_command = new HyenaSqliteCommand(builder.ToString());
                 }
                 return create_command;
             }
         }
         
-        protected virtual HyenaDbCommand InsertCommand {
+        protected virtual HyenaSqliteCommand InsertCommand {
             get {
                 // FIXME can this string building be done more nicely?
                 if(insert_command == null) {
@@ -646,7 +646,7 @@ namespace Hyena.Data.Sqlite
                         count++;
                     }
 
-                    insert_command = new HyenaDbCommand(String.Format(
+                    insert_command = new HyenaSqliteCommand(String.Format(
                             "INSERT INTO {0} ({1}) VALUES ({2})",
                             TableName, cols.ToString(), vals.ToString()), count);
                 }
@@ -654,7 +654,7 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual HyenaDbCommand UpdateCommand {
+        protected virtual HyenaSqliteCommand UpdateCommand {
             get {
                 if(update_command == null) {
                     StringBuilder builder = new StringBuilder();
@@ -677,16 +677,16 @@ namespace Hyena.Data.Sqlite
                     builder.Append(key.Name);
                     builder.Append(" = ?");
                     count++;
-                    update_command = new HyenaDbCommand(builder.ToString(), count);
+                    update_command = new HyenaSqliteCommand(builder.ToString(), count);
                 }
                 return update_command;
             }
         }
         
-        protected virtual HyenaDbCommand SelectCommand {
+        protected virtual HyenaSqliteCommand SelectCommand {
             get {
                 if(select_command == null) {
-                    select_command = new HyenaDbCommand(Where.Length > 0
+                    select_command = new HyenaSqliteCommand(Where.Length > 0
                         ? String.Format("SELECT {0} FROM {1} WHERE {2}", Select, From, Where)
                         : String.Format("SELECT {0} FROM {1}", Select, From));
                 }
@@ -694,10 +694,10 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual HyenaDbCommand SelectRangeCommand {
+        protected virtual HyenaSqliteCommand SelectRangeCommand {
             get {
                 if(select_range_command == null) {
-                    select_range_command = new HyenaDbCommand(Where.Length > 0
+                    select_range_command = new HyenaSqliteCommand(Where.Length > 0
                         ? String.Format("SELECT {0} FROM {1} WHERE {2} LIMIT ?, ?", Select, From, Where)
                         : String.Format("SELECT {0} FROM {1} LIMIT ?, ?", Select, From), 2);
                 }
@@ -705,10 +705,10 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual HyenaDbCommand SelectSingleCommand {
+        protected virtual HyenaSqliteCommand SelectSingleCommand {
             get {
                 if(select_single_command == null) {
-                    select_single_command = new HyenaDbCommand(Where.Length > 0
+                    select_single_command = new HyenaSqliteCommand(Where.Length > 0
                         ? String.Format("SELECT {0} FROM {1} WHERE {2} AND {3} = ?", Select, From, Where, PrimaryKey)
                         : String.Format("SELECT {0} FROM {1} WHERE {2} = ?", Select, From, PrimaryKey), 1);
                 }

@@ -1,5 +1,16 @@
 2008-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/CacheableDatabaseModelProvider.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelProvider.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaDbConnection.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs:
+	* src/Core/Hyena/Makefile.am: Rename HyenaDbConnection/Command to
+	HyenaSqliteConnection/Command and split HyenaDbCommand into its own file.
+
+2008-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/CacheableDatabaseModelProvider.cs:
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelProvider.cs:
 	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaDbConnection.cs:

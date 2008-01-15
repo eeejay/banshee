@@ -39,7 +39,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Database
 {
-    public sealed class BansheeDbConnection : HyenaDbConnection, IService
+    public sealed class BansheeDbConnection : HyenaSqliteConnection, IService
     {
         public BansheeDbConnection () : this (true)
         {
@@ -156,7 +156,7 @@ namespace Banshee.Database
         }
     }
     
-    public sealed class BansheeDbCommand : HyenaDbCommand
+    public sealed class BansheeDbCommand : HyenaSqliteCommand
     {
         public BansheeDbCommand(string command)
             : base(command)

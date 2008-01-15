@@ -104,9 +104,9 @@ namespace Hyena.Data.Sqlite
         }
         
         private DatabaseCacheableModelProvider cache;
-        private HyenaDbConnection connection;
-        private HyenaDbCommand select_range_command;
-        private HyenaDbCommand count_command;
+        private HyenaSqliteConnection connection;
+        private HyenaSqliteCommand select_range_command;
+        private HyenaSqliteCommand count_command;
         private string reload_sql;
         private int uid;
         private int rows;
@@ -125,7 +125,7 @@ namespace Hyena.Data.Sqlite
             get { return "HyenaCache"; }
         }
         
-        public CacheableDatabaseModelProvider(HyenaDbConnection connection, ICacheableModel model)
+        public CacheableDatabaseModelProvider(HyenaSqliteConnection connection, ICacheableModel model)
             : base(connection)
         {
             this.connection = connection;
@@ -133,7 +133,7 @@ namespace Hyena.Data.Sqlite
             
             CheckCacheTable();
             
-            count_command = new HyenaDbCommand(String.Format(
+            count_command = new HyenaSqliteCommand(String.Format(
                 "SELECT COUNT(*) FROM {0} WHERE ModelID = ?", CacheTableName), 1);
             
             if(Persistent) {
@@ -142,7 +142,7 @@ namespace Hyena.Data.Sqlite
                 uid = DatabaseCacheTable.ModelCount++;
             }
                 
-            select_range_command = new HyenaDbCommand(Where.Length > 0
+            select_range_command = new HyenaSqliteCommand(Where.Length > 0
                 ? String.Format(@"
                                 SELECT {0} FROM {1}
                                     INNER JOIN {2}
@@ -188,7 +188,7 @@ namespace Hyena.Data.Sqlite
             SelectRangeCommand.ApplyValues(uid, offset, limit);
         }
         
-        protected override HyenaDbCommand SelectRangeCommand {
+        protected override HyenaSqliteCommand SelectRangeCommand {
             get { return select_range_command; }
         }
             
@@ -252,7 +252,7 @@ namespace Hyena.Data.Sqlite
                     ));
                     if(uid == 0) {
                         //Console.WriteLine ("Didn't find existing cache for {0}, creating", id);
-                        uid = connection.Execute(new HyenaDbCommand(String.Format(
+                        uid = connection.Execute(new HyenaSqliteCommand(String.Format(
                             "INSERT INTO {0} (ModelID) VALUES (?)",
                             CacheModelsTableName),
                             id
@@ -268,7 +268,7 @@ namespace Hyena.Data.Sqlite
                     connection.Execute(String.Format(
                         "CREATE TABLE {0} (CacheID INTEGER PRIMARY KEY, ModelID TEXT UNIQUE)",
                         CacheModelsTableName));
-                    uid = connection.Execute(new HyenaDbCommand(String.Format(
+                    uid = connection.Execute(new HyenaSqliteCommand(String.Format(
                         "INSERT INTO {0} (ModelID) VALUES (?)",
                         CacheModelsTableName),
                         id
