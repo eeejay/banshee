@@ -1,3 +1,8 @@
+2008-01-15  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeModelProvider.cs:
+	  Temporarily disabled Persistant caches until we can fix a bug.
+
 2008-01-15  Scott Peterson  <lunchitmemama@gmail.com>
 	* HACKING: Space before parens.
 

@@ -96,7 +96,7 @@ namespace Banshee.Collection.Database
         }
         
         protected override sealed bool Persistent {
-            get { return true; }
+            get { return false; }
         }
         
         protected override sealed string CacheModelsTableName {
