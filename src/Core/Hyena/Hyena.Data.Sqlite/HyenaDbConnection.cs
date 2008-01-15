@@ -31,7 +31,7 @@ using System.IO;
 using System.Data;
 using Mono.Data.Sqlite;
 
-namespace Hyena.Data
+namespace Hyena.Data.Sqlite
 {
     public abstract class HyenaDbConnection : IDisposable
     {

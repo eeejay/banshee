@@ -32,7 +32,7 @@ using System.Data;
 using System.Reflection;
 using System.Text;
 
-namespace Hyena.Data
+namespace Hyena.Data.Sqlite
 {
     [Flags]
     public enum DatabaseBindingFlags

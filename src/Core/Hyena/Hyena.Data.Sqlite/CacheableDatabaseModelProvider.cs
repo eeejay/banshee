@@ -30,7 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-namespace Hyena.Data
+namespace Hyena.Data.Sqlite
 {
     public sealed class DatabaseCacheTable
     {

@@ -30,6 +30,7 @@ using System;
 using System.Data;
 
 using Hyena.Data;
+using Hyena.Data.Sqlite;
 
 using Banshee.Base;
 using Banshee.Database;

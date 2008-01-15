@@ -32,6 +32,7 @@ using System.Data;
 using Mono.Data.Sqlite;
 
 using Hyena.Data;
+using Hyena.Data.Sqlite;
 
 using Banshee.Base;
 using Banshee.ServiceStack;
