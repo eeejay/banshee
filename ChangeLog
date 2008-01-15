@@ -1,3 +1,6 @@
+2008-01-15  Scott Peterson  <lunchitmemama@gmail.com>
+	* HACKING: Space before parens.
+
 2008-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/CacheableDatabaseModel.cs:

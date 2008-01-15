@@ -21,15 +21,15 @@ guidelines. If code is in violation, you will be asked to reformat it.
 
       UpperCaseStartingLetter
 
-  3. No spaces before method/conditional parenthesis, braces:
+  3. A space before method/conditional parenthesis, braces:
 
-      if(condition) {
-         CallSomeFunction(args);
+      if (condition) {
+         CallSomeFunction (args);
       }
 
   4. One space before a brace on the same line as a conditional or property:
 
-      while(condition) {
+      while (condition) {
          ...
       }
 
@@ -39,9 +39,9 @@ guidelines. If code is in violation, you will be asked to reformat it.
       {
           public class Bar
           {
-              private void Method()
+              private void Method ()
               {
-                  if(condition) {
+                  if (condition) {
                       ..
                   }
               }
@@ -61,7 +61,7 @@ guidelines. If code is in violation, you will be asked to reformat it.
      
       public string Something {
           set {
-              DoSomething();
+              DoSomething ();
               something = value;
           }
       }
