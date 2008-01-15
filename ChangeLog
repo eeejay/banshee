@@ -1,5 +1,28 @@
 2008-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Hyena/Hyena.Data.Sqlite/CacheableDatabaseModel.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/CacheableDatabaseModelProvider.cs:
+	Rename, whitespace.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModel.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelProvider.cs:
+	Rename and split inner classes into their own files.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs: 
+	* src/Core/Hyena/Makefile.am: New files containing classes split from
+	DatabaseModelProvider.  Rename DatabaseBindingFlags to
+	DatabaseColumnConstraints.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeModelProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Use new class names.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Whitespace.
+
+2008-01-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
 	* src/Core/Hyena/Hyena.Data.Sqlite/CacheableDatabaseModelProvider.cs:
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelProvider.cs:

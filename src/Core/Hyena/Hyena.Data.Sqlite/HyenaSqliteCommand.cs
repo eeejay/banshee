@@ -54,7 +54,7 @@ namespace Hyena.Data.Sqlite
 
 #endregion
 
-        public HyenaSqliteCommand(string command)
+        public HyenaSqliteCommand (string command)
         {
             this.command = new SqliteCommand (command);
         }

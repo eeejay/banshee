@@ -68,7 +68,7 @@ namespace Banshee.Collection.Database
             }
         }
         
-        [DatabaseColumn("TrackID", BindingFlags = DatabaseBindingFlags.PrimaryKey)]
+        [DatabaseColumn("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
         private int track_id;
         public int TrackId {
             get { return track_id; }

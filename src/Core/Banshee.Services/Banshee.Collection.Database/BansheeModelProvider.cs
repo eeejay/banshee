@@ -37,7 +37,7 @@ using Banshee.Database;
 namespace Banshee.Collection.Database
 {
     
-    public abstract class BansheeModelProvider<T> : CacheableDatabaseModelProvider<T>
+    public abstract class BansheeModelProvider<T> : CacheableDatabaseModel<T>
     {
         private IDatabaseModel<T> model; // FIXME do away with this
         

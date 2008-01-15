@@ -37,11 +37,11 @@ namespace Hyena.Data.Sqlite
     {
         private SqliteConnection connection;
 
-        public HyenaSqliteConnection() : this(true)
+        public HyenaSqliteConnection () : this (true)
         {
         }
 
-        public HyenaSqliteConnection(bool connect)
+        public HyenaSqliteConnection (bool connect)
         {
             if (connect) {
                 Open ();

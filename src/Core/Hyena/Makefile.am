@@ -20,8 +20,10 @@ SOURCES =  \
 	Hyena.Data.Query/QueryToken.cs \
 	Hyena.Data.Query/UserQueryParser.cs \
 	Hyena.Data.Query/XmlQueryParser.cs \
-	Hyena.Data.Sqlite/CacheableDatabaseModelProvider.cs \
-	Hyena.Data.Sqlite/DatabaseModelProvider.cs \
+	Hyena.Data.Sqlite/CacheableDatabaseModel.cs \
+	Hyena.Data.Sqlite/DatabaseColumn.cs \
+	Hyena.Data.Sqlite/DatabaseColumnAttribute.cs \
+	Hyena.Data.Sqlite/DatabaseModel.cs \
 	Hyena.Data.Sqlite/HyenaSqliteCommand.cs \
 	Hyena.Data.Sqlite/HyenaSqliteConnection.cs \
 	Hyena.Data/CacheableModelAdapter.cs \
