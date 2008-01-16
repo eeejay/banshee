@@ -12,9 +12,8 @@ SOURCES =  \
 	Banshee.AudioProfiles/ProfileManager.cs \
 	Banshee.Collection.Database/AlbumListDatabaseModel.cs \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
-	Banshee.Collection.Database/BansheeCacheableModelAdapter.cs \
 	Banshee.Collection.Database/BansheeModelProvider.cs \
-	Banshee.Collection.Database/IDatabaseModel.cs \
+	Banshee.Collection.Database/BansheeDatabaseModelCache.cs \
 	Banshee.Collection.Database/LibraryAlbumInfo.cs \
 	Banshee.Collection.Database/LibraryArtistInfo.cs \
 	Banshee.Collection.Database/LibraryTrackInfo.cs \

@@ -37,73 +37,9 @@ namespace Hyena.Data.Sqlite
         public static int ModelCount;
     }
     
-    public abstract class CacheableDatabaseModel<T> : DatabaseModel<T>
+    public abstract class CacheableDatabaseModel<T> : DatabaseModel<T>, ICacheableDatabaseModel<T>
     {
-        private sealed class DatabaseCacheableModel : CacheableModelAdapter<T>
-        {
-            private CacheableDatabaseModel<T> db;
-            
-            public DatabaseCacheableModel (ICacheableModel model, CacheableDatabaseModel<T> db)
-                : base (model)
-            {
-                this.db = db;
-            }
-            
-            protected override Dictionary<int, T> Cache {
-                get { return db.Cache; }
-            }
-            
-            public Dictionary<int, T> CacheImpl {
-                get { return base.Cache; }
-            }
-            
-            public override T GetValue (int index)
-            {
-                return db.GetValue (index);
-            }
-            
-            public T GetValueImpl (int index)
-            {
-                return base.GetValue (index);
-            }
-            
-            public override void Clear ()
-            {
-                db.Clear ();
-            }
-            
-            public void ClearImpl ()
-            {
-                base.Clear ();
-            }
-            
-            protected override void FetchSet (int offset, int limit)
-            {
-                db.FetchSet (offset, limit);
-            }
-            
-            protected override void Add (int key, T value)
-            {
-                db.Add (key, value);
-            }
-            
-            public void AddImpl (int key, T value)
-            {
-                base.Add (key, value);
-            }
-
-            public override int Reload ()
-            {
-                return db.Reload ();
-            }
-            
-            public void InvalidateManagedCacheImpl ()
-            {
-                InvalidateManagedCache ();
-            }
-        }
-        
-        private DatabaseCacheableModel cache;
+        private DatabaseModelCache cache;
         private HyenaSqliteConnection connection;
         private HyenaSqliteCommand select_range_command;
         private HyenaSqliteCommand count_command;
@@ -117,13 +53,6 @@ namespace Hyena.Data.Sqlite
         protected abstract string ReloadFragment { get; }
         protected abstract bool Persistent { get; }
         
-        protected virtual string CacheModelsTableName {
-            get { return "HyenaCacheModels"; }
-        }
-        
-        protected virtual string CacheTableName {
-            get { return "HyenaCache"; }
-        }
         
         public CacheableDatabaseModel (HyenaSqliteConnection connection, ICacheableModel model)
             : base (connection)
@@ -201,19 +130,9 @@ namespace Hyena.Data.Sqlite
             return cache.GetValueImpl (index);
         }
         
-        public virtual void Clear ()
-        {
-            cache.ClearImpl ();
-        }
-        
         protected void InvalidateManagedCache ()
         {
             cache.InvalidateManagedCacheImpl ();
-        }
-        
-        protected virtual void Add (int key, T value)
-        {
-            cache.AddImpl (key, value);
         }
         
         protected virtual void FetchSet (int offset, int limit)
@@ -227,72 +146,5 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        public virtual int Reload ()
-        {
-            InvalidateManagedCache ();
-            connection.Execute (reload_sql + ReloadFragment);
-            UpdateCount ();
-            return rows;
-        }
-        
-        protected void UpdateCount ()
-        {
-            //using (new Timer (String.Format ("Counting items for {0}", db_model))) {
-                rows = Convert.ToInt32 (connection.ExecuteScalar (count_command.ApplyValues (uid)));
-            //}
-        }
-        
-        private void FindOrCreateCacheModelId (string id)
-        {
-            using (IDataReader reader = connection.ExecuteReader (GetSchemaSql (CacheModelsTableName))) {
-                if (reader.Read ()) {
-                    uid = connection.QueryInt32 (String.Format (
-                        "SELECT CacheID FROM {0} WHERE ModelID = '{1}'",
-                        CacheModelsTableName, id
-                    ));
-                    if (uid == 0) {
-                        //Console.WriteLine ("Didn't find existing cache for {0}, creating", id);
-                        uid = connection.Execute (new HyenaSqliteCommand (String.Format (
-                            "INSERT INTO {0} (ModelID) VALUES (?)",
-                            CacheModelsTableName),
-                            id
-                        ));
-                    } else {
-                        //Console.WriteLine ("Found existing cache for {0}: {1}", id, uid);
-                        warm = true;
-                        InvalidateManagedCache ();
-                        UpdateCount ();
-                    }
-                }
-                else {
-                    connection.Execute (String.Format (
-                        "CREATE TABLE {0} (CacheID INTEGER PRIMARY KEY, ModelID TEXT UNIQUE)",
-                        CacheModelsTableName));
-                    uid = connection.Execute (new HyenaSqliteCommand (String.Format (
-                        "INSERT INTO {0} (ModelID) VALUES (?)",
-                        CacheModelsTableName),
-                        id
-                    ));
-                }
-            }
-        }
-        
-        public bool Warm {
-            //get { return warm; }
-            get { return warm; }
-        }
-
-        public int Count {
-            get { return rows; }
-        }
-        
-        public int CacheId {
-            get { return uid; }
-        }
-        
-        public static implicit operator CacheableModelAdapter<T> (CacheableDatabaseModel<T> cdmp)
-        {
-            return cdmp.cache;
-        }
     }
 }

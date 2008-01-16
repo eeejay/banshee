@@ -83,11 +83,39 @@ namespace Hyena.Data.Sqlite
 
 #region Convenience methods 
 
+        public bool TableExists (string tableName)
+        {
+            IDbCommand command = connection.CreateCommand ();
+            command.CommandText = @"
+                SELECT COUNT(*)
+                    FROM sqlite_master
+                    WHERE Type='table' AND Name=:table_name";
+            
+            IDbDataParameter table_param = command.CreateParameter ();
+            table_param.ParameterName = "table_name";
+            table_param.Value = tableName;
+            
+            command.Parameters.Add (table_param);
+            
+            try {
+                return Convert.ToInt32 (command.ExecuteScalar ()) > 0;
+            } catch (Exception e) {
+                Console.WriteLine ("Caught exception trying to execute {0}", command.CommandText);
+                throw e;
+            }
+        }
+
         public IDataReader ExecuteReader (SqliteCommand command)
         {
             if (command.Connection == null)
                 command.Connection = connection;
-            return command.ExecuteReader ();
+
+            try {
+                return command.ExecuteReader ();
+            } catch (Exception e) {
+                Console.WriteLine ("Caught exception trying to execute {0}", command.CommandText);
+                throw e;
+            }
         }
 
         public IDataReader ExecuteReader (HyenaSqliteCommand command)
@@ -104,7 +132,12 @@ namespace Hyena.Data.Sqlite
         {
             if (command.Connection == null)
                 command.Connection = connection;
-            return command.ExecuteScalar ();
+            try {
+                return command.ExecuteScalar ();
+            } catch (Exception e) {
+                Console.WriteLine ("Caught exception trying to execute {0}", command.CommandText);
+                throw e;
+            }
         }
 
         public object ExecuteScalar (HyenaSqliteCommand command)
@@ -126,7 +159,12 @@ namespace Hyena.Data.Sqlite
         {
             if (command.Connection == null)
                 command.Connection = connection;
-            command.ExecuteNonQuery ();
+            try {
+                command.ExecuteNonQuery ();
+            } catch (Exception e) {
+                Console.WriteLine ("Caught exception trying to execute {0}", command.CommandText);
+                throw e;
+            }
             return command.LastInsertRowID ();
         }
 

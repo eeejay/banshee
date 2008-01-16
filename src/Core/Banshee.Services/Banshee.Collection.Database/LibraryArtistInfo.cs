@@ -31,6 +31,8 @@ using System.Data;
 
 using Mono.Unix;
 
+using Hyena.Data.Sqlite;
+
 using Banshee.Database;
 using Banshee.ServiceStack;
 
@@ -38,6 +40,14 @@ namespace Banshee.Collection.Database
 {    
     public class LibraryArtistInfo : ArtistInfo
     {
+        private static BansheeModelProvider<LibraryArtistInfo> provider = new BansheeModelProvider<LibraryArtistInfo> (
+            "CoreArtists", ServiceManager.DbConnection
+        );
+
+        public static BansheeModelProvider<LibraryArtistInfo> Provider {
+            get { return provider; }
+        }
+
         private static BansheeDbCommand select_command = new BansheeDbCommand (
             "SELECT ArtistID, Name FROM CoreArtists WHERE Name = ?", 1
         );
@@ -75,9 +85,9 @@ namespace Banshee.Collection.Database
         public void Save ()
         {
             if (DbId < 0) {
-                InsertCommit ();
+                dbid = Provider.Insert (this);
             } else {
-                UpdateCommit ();
+                Provider.Update (this);
             }
         }
 
@@ -114,8 +124,16 @@ namespace Banshee.Collection.Database
             Name = reader[(int)Column.Name] as string;
         }
 
+        [DatabaseColumn("ArtistID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
         public int DbId {
             get { return dbid; }
+            internal set { dbid = value; }
+        }
+
+        [DatabaseColumn]
+        public override string Name {
+            get { return base.Name; }
+            set { base.Name = value; }
         }
     }
 }

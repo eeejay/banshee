@@ -1,5 +1,6 @@
+
 //
-// IDatabaseModel.cs
+// BansheeDatabaseModelCache.cs
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
@@ -26,20 +27,28 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.Data;
 
 using Hyena.Data;
+using Hyena.Data.Sqlite;
 
 namespace Banshee.Collection.Database
 {
-    public interface IDatabaseModel<T> : ICacheableModel
+    public class BansheeDatabaseModelCache<T> : DatabaseModelCache<T>
     {
-        T GetItemFromReader (IDataReader reader, int index);
+        public BansheeDatabaseModelCache (HyenaSqliteConnection connection, string uuid, ICacheableDatabaseModel<T> model) : base (connection, uuid, model)
+        {
+        }
 
-        string PrimaryKey { get; }
-        string ReloadFragment { get; }
-        string FetchColumns { get; }
-        string FetchFrom { get; }
-        string FetchCondition { get; }
+        private const string model_table = "CoreCacheModels";
+        protected override string CacheModelsTableName {
+            get { return model_table; }
+        }
+        
+        private const string cache_table = "CoreCache";
+        protected override string CacheTableName {
+            get { return cache_table; }
+        }
     }
 }

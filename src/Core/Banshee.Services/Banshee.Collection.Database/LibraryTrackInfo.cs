@@ -40,21 +40,28 @@ namespace Banshee.Collection.Database
 {
     public class LibraryTrackInfo : TrackInfo
     {
+        private static BansheeModelProvider<LibraryTrackInfo> provider = new BansheeModelProvider<LibraryTrackInfo> (
+            "CoreTracks", ServiceManager.DbConnection
+        );
+
+        public static BansheeModelProvider<LibraryTrackInfo> Provider {
+            get { return provider; }
+        }
+
         private enum UriType : int {
             AbsolutePath,
             RelativePath,
             AbsoluteUri
         }
         
-        private TrackListDatabaseModel model;
+        private int dbid;
         
         public LibraryTrackInfo () : base ()
         {
         }
 
-        public LibraryTrackInfo (TrackListDatabaseModel model, int index) : base () // Get rid of model
+        public LibraryTrackInfo (int index) : base ()
         {
-            this.model = model;
             Attributes |= TrackAttributes.CanPlay;
             DbIndex = index;
         }
@@ -62,22 +69,16 @@ namespace Banshee.Collection.Database
         public override void Save ()
         {
             if (DbId < 0) {
-                DbId = model.Insert(this);
+                DbId = Provider.Insert (this);
             } else {
-                model.Update(this);
+                Provider.Update (this);
             }
         }
         
         [DatabaseColumn("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
-        private int track_id;
-        public int TrackId {
-            get { return track_id; }
-            internal set { track_id = value; }
-        }
-
         public int DbId {
-            get { return TrackId; }
-            set { TrackId = value; }
+            get { return dbid; }
+            internal set { dbid = value; }
         }
         
         private int db_index;

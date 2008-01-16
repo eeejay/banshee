@@ -1,3 +1,54 @@
+2008-01-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Use new provider and cache classes.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeDatabaseModelCache.cs:
+	Override DatabaseModelCache to set Banshee-specific table names.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeModelProvider.cs:
+	Make not abstract, add ctor that takes table name.  Remove cache old
+	properties.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Intantiate a static BansheeModelProvider for each class, and make it
+	available via a public static property.  Use it for insert/update.  Bind
+	columns for Artist/Album.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Get rid of internal Provider class, instead use new provider/cache
+	classes.
+
+	* src/Core/Banshee.Services/Makefile.am: Add BansheeDatabaseModelCache,
+	remove IDatabaseModel and BansheeCacheableModelAdapter.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/CacheableDatabaseModel.cs: Inherit from
+	DatabaseModel<T> and implement ICacheableDatabaseModel<T>.  Move database
+	cache methods into DatabaseModelCache class.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModel.cs: Comment out Fetch*
+	methods for now.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs: New file,
+	very similar to old BansheeCacheableModelAdapter with updates from
+	CacheableDatabaseModel.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add
+	TableExists method.  Wrap database queries in try/catch since otherwise
+	you get neither the full failed query or useful stack trace.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseModel.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/IDatabaseModel.cs: Move to Hyena,
+	rename class to ICachableDatabaseModel (will mv file in next commit).
+
+	* src/Core/Hyena/Hyena.Data/CacheableModelAdapter.cs:
+	* src/Core/Hyena/Hyena.Data/ModelCache.cs: Rename ModelCache.
+
+	* src/Core/Hyena/Makefile.am: Renames, new IDatabaseModel file.
+
 2008-01-15  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeModelProvider.cs:

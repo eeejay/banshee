@@ -31,6 +31,9 @@ using System.Data;
 
 using Mono.Unix;
 
+using Hyena.Data;
+using Hyena.Data.Sqlite;
+
 using Banshee.Database;
 using Banshee.ServiceStack;
 
@@ -38,6 +41,14 @@ namespace Banshee.Collection.Database
 {    
     public class LibraryAlbumInfo : AlbumInfo
     {
+        private static BansheeModelProvider<LibraryAlbumInfo> provider = new BansheeModelProvider<LibraryAlbumInfo> (
+            "CoreAlbums", ServiceManager.DbConnection
+        );
+
+        public static BansheeModelProvider<LibraryAlbumInfo> Provider {
+            get { return provider; }
+        }
+
         private static BansheeDbCommand select_command = new BansheeDbCommand (
             "SELECT AlbumID, Title FROM CoreAlbums WHERE ArtistID = ? AND Title = ?", 2
         );
@@ -51,89 +62,60 @@ namespace Banshee.Collection.Database
             ArtistName
         }
 
+        public LibraryAlbumInfo () : base (null)
+        {
+        }
+
         public LibraryAlbumInfo (LibraryArtistInfo artist, string title) : base (null)
         {
             if (title == null || title.Trim () == String.Empty)
                 title = Catalog.GetString ("Unknown Album");
 
-            IDataReader reader = ServiceManager.DbConnection.ExecuteReader (select_command.ApplyValues (artist.DbId, title));
-
-            if (reader.Read ()) {
-                dbid = Convert.ToInt32 (reader[(int) Column.AlbumID]);
-                Title = reader[(int) Column.Title] as string;
-                ArtistName = artist.Name;
-            } else {
-                dbid = -1;
-                artist_id = artist.DbId;
-                Title = title;
-                Save ();
+            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (select_command.ApplyValues (artist.DbId, title))) {
+                if (reader.Read ()) {
+                    dbid = Convert.ToInt32 (reader[(int) Column.AlbumID]);
+                    Title = reader[(int) Column.Title] as string;
+                    ArtistName = artist.Name;
+                } else {
+                    dbid = -1;
+                    artist_id = artist.DbId;
+                    Title = title;
+                    Save ();
+                }
             }
-
-            reader.Dispose ();
-        }
-
-        public LibraryAlbumInfo(IDataReader reader) : base(null)
-        {
-            LoadFromReader(reader);
         }
 
         public void Save ()
         {
             if (DbId < 0) {
-                InsertCommit ();
+                DbId = Provider.Insert (this);
             } else {
-                UpdateCommit ();
+                Provider.Update (this);
             }
         }
 
-        private void InsertCommit ()
-        {
-            TableSchema.CoreAlbums.InsertCommand.ApplyValues (
-                null, // AlbumID
-                ArtistId,
-                -1, // TagSetID
-                null, // MusicBrainzID
-                Title,
-                0,
-                0,
-                0,
-                0
-            );
-            
-            dbid = ServiceManager.DbConnection.Execute (TableSchema.CoreAlbums.InsertCommand);
-        }
-        
-        private void UpdateCommit ()
-        {
-            TableSchema.CoreAlbums.UpdateCommand.ApplyValues (
-                DbId,
-                ArtistId,
-                -1, // TagSetID
-                null, // MusicBrainzID
-                Title,
-                0,
-                0,
-                0,
-                0,
-                DbId // AlbumID (again, for WHERE clause)
-            );
-
-            ServiceManager.DbConnection.Execute (TableSchema.CoreAlbums.UpdateCommand);
-        }
-
-        private void LoadFromReader(IDataReader reader)
-        {
-            dbid = Convert.ToInt32(reader[(int)Column.AlbumID]);
-            Title = reader[(int)Column.Title] as string;
-            ArtistName = reader[(int)Column.ArtistName] as string;
-        }
-
+        [DatabaseColumn("AlbumID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
         public int DbId {
             get { return dbid; }
+            internal set { dbid = value; }
         }
 
+        [DatabaseColumn("ArtistID")]
         public int ArtistId {
             get { return artist_id; }
+            set { artist_id = value; }
+        }
+
+        [DatabaseColumn]
+        public override string Title {
+            get { return base.Title; }
+            set { base.Title = value; }
+        }
+
+        [DatabaseVirtualColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]
+        public override string ArtistName {
+            get { return base.ArtistName; }
+            set { base.ArtistName = value; }
         }
     }
 }

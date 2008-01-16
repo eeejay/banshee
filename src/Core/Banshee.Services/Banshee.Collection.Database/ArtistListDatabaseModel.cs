@@ -32,15 +32,17 @@ using System.Data;
 using System.Collections.Generic;
 
 using Hyena.Data;
+using Hyena.Data.Sqlite;
 
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class ArtistListDatabaseModel : ArtistListModel, ICacheableModel, IDatabaseModel<ArtistInfo>
+    public class ArtistListDatabaseModel : ArtistListModel, ICacheableDatabaseModel<LibraryArtistInfo>
     {
         private BansheeDbConnection connection;
-        private BansheeCacheableModelAdapter<ArtistInfo> cache;
+        private BansheeModelProvider<LibraryArtistInfo> provider;
+        private BansheeDatabaseModelCache<LibraryArtistInfo> cache;
         private TrackListDatabaseModel track_model;
         private string reload_fragment;
         private int count;
@@ -50,7 +52,8 @@ namespace Banshee.Collection.Database
         public ArtistListDatabaseModel(BansheeDbConnection connection, string uuid)
         {
             this.connection = connection;
-            cache = new BansheeCacheableModelAdapter<ArtistInfo> (connection, uuid, this);
+            provider = LibraryArtistInfo.Provider;
+            cache = new BansheeDatabaseModelCache <LibraryArtistInfo> (connection, uuid, this);
         }
 
         public ArtistListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection, string uuid) : this (connection, uuid)
@@ -101,30 +104,34 @@ namespace Banshee.Collection.Database
         }
 
         // Implement IDatabaseModel
-        public ArtistInfo GetItemFromReader (IDataReader reader, int index)
+        public LibraryArtistInfo GetItemFromReader (IDataReader reader, int index)
         {
             return new LibraryArtistInfo (reader);
         }
 
-        private const string primary_key = "CoreArtists.ArtistID";
+        public BansheeModelProvider<LibraryArtistInfo> Provider {
+            get { return provider; }
+        }
+
         public string PrimaryKey {
-            get { return primary_key; }
+            get { return provider.PrimaryKey; }
         }
 
         public string ReloadFragment {
             get { return reload_fragment; }
         }
 
-        public string FetchColumns {
-            get { return "CoreArtists.ArtistID, CoreArtists.Name"; }
+        public string Select {
+            get { return provider.Select; }
         }
 
-        public string FetchFrom {
-            get { return "CoreArtists"; }
+        public string From {
+            get { return provider.From; }
         }
 
-        public string FetchCondition {
-            get { return String.Format ("1=1"); }
+        public string Where {
+            //get { return String.Format ("1=1"); }
+            get { return provider.Where; }
         }
     }
 }

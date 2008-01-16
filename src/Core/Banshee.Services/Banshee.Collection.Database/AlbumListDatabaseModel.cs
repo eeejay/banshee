@@ -33,15 +33,17 @@ using System.Text;
 using System.Collections.Generic;
 
 using Hyena.Data;
+using Hyena.Data.Sqlite;
 
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class AlbumListDatabaseModel : AlbumListModel, ICacheableModel, IDatabaseModel<AlbumInfo>
+    public class AlbumListDatabaseModel : AlbumListModel, ICacheableDatabaseModel<LibraryAlbumInfo>
     {
         private BansheeDbConnection connection;
-        private BansheeCacheableModelAdapter<AlbumInfo> cache;
+        private BansheeModelProvider<LibraryAlbumInfo> provider;
+        private BansheeDatabaseModelCache<LibraryAlbumInfo> cache;
         private int count;
         private string artist_id_filter_query;
         private string reload_fragment;
@@ -52,7 +54,8 @@ namespace Banshee.Collection.Database
         
         public AlbumListDatabaseModel(BansheeDbConnection connection, string uuid)
         {
-            cache = new BansheeCacheableModelAdapter<AlbumInfo> (connection, uuid, this);
+            provider = LibraryAlbumInfo.Provider;
+            cache = new BansheeDatabaseModelCache <LibraryAlbumInfo> (connection, uuid, this);
             this.connection = connection;
         }
 
@@ -127,30 +130,39 @@ namespace Banshee.Collection.Database
         }
 
         // Implement IDatabaseModel
-        public AlbumInfo GetItemFromReader (IDataReader reader, int index)
+        public LibraryAlbumInfo GetItemFromReader (IDataReader reader, int index)
         {
-            return new LibraryAlbumInfo (reader);
+            LibraryAlbumInfo album = new LibraryAlbumInfo ();
+            provider.Load (album, reader);
+            return album;
         }
 
-        private const string primary_key = "CoreAlbums.AlbumID";
+        public BansheeModelProvider<LibraryAlbumInfo> Provider {
+            get { return provider; }
+        }
+
+        //private const string primary_key = "CoreAlbums.AlbumID";
         public string PrimaryKey {
-            get { return primary_key; }
+            //get { return primary_key; }
+            get { return provider.PrimaryKey; }
         }
 
         public string ReloadFragment {
             get { return reload_fragment; }
         }
 
-        public string FetchColumns {
-            get { return "CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name"; }
+        public string Select {
+            //get { return "CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name"; }
+            get { return provider.Select; }
         }
 
-        public string FetchFrom {
-            get { return "CoreArtists, CoreAlbums"; }
+        public string From {
+            get { return provider.From; }
         }
 
-        public string FetchCondition {
-            get { return "CoreArtists.ArtistID = CoreAlbums.ArtistID"; }
+        public string Where {
+            get { return provider.Where; }
+            //get { return "CoreArtists.ArtistID = CoreAlbums.ArtistID"; }
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Hyena.Data.Sqlite
         protected abstract int DatabaseVersion { get; }
         protected abstract void MigrateTable (int old_version);
         protected abstract void MigrateDatabase (int old_version);
-        protected abstract T MakeNewObject (int offset);
+        //protected abstract T MakeNewObject (int offset);
         
         protected virtual string HyenaTableName {
             get { return "HyenaModelVersions"; }
@@ -72,6 +72,11 @@ namespace Hyena.Data.Sqlite
         }
         
         protected DatabaseModel (HyenaSqliteConnection connection)
+        {
+            this.connection = connection;
+        }
+
+        protected void Init ()
         {
             foreach (FieldInfo field in typeof(T).GetFields (BindingFlags.Instance | BindingFlags.NonPublic)) {
                 foreach (Attribute attribute in field.GetCustomAttributes (true)) {
@@ -93,14 +98,13 @@ namespace Hyena.Data.Sqlite
                 throw new Exception (String.Format ("The {0} table does not have a primary key", TableName));
             }
             
-            this.connection = connection;
-            
             CheckVersion ();
             CheckTable ();
         }
         
         private void CheckTable ()
         {
+            Console.WriteLine ("In {0} checking for table {1}", this, TableName);
             using (IDataReader reader = connection.ExecuteReader (GetSchemaSql (TableName))) {
                 if (reader.Read ()) {
                     Dictionary<string, string> schema = GetSchema (reader);
@@ -278,7 +282,7 @@ namespace Hyena.Data.Sqlite
         {
         }
         
-        public IEnumerable<T> FetchAll ()
+        /*public IEnumerable<T> FetchAll ()
         {
             PrepareSelectCommand ();
             int i = 1;
@@ -289,14 +293,14 @@ namespace Hyena.Data.Sqlite
                     yield return new_object;
                 }
             }
-        }
+        }*/
         
         protected virtual void PrepareSelectRangeCommand (int offset, int limit)
         {
             SelectRangeCommand.ApplyValues (offset, limit);
         }
         
-        public IEnumerable<T> FetchRange (int offset, int limit)
+        /*public IEnumerable<T> FetchRange (int offset, int limit)
         {
             PrepareSelectRangeCommand (offset, limit);
             using (IDataReader reader = connection.ExecuteReader (SelectRangeCommand)) {
@@ -306,14 +310,14 @@ namespace Hyena.Data.Sqlite
                     yield return new_object;
                 }
             }
-        }
+        }*/
         
         protected virtual void PrepareSelectSingleCommand (object id)
         {
             SelectSingleCommand.ApplyValues (id);
         }
         
-        public T FetchSingle (int id)
+        /*public T FetchSingle (int id)
         {
             PrepareSelectSingleCommand (id);
             using (IDataReader reader = connection.ExecuteReader (SelectSingleCommand)) {
@@ -324,7 +328,7 @@ namespace Hyena.Data.Sqlite
                 }
             }
             return default(T);
-        }
+        }*/
         
         protected virtual HyenaSqliteCommand CreateCommand {
             get {
@@ -439,7 +443,7 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual string Select {
+        public virtual string Select {
             get {
                 if (select == null) {
                     BuildQuerySql ();
@@ -448,7 +452,7 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual string From {
+        public virtual string From {
             get {
                 if (from == null) {
                     BuildQuerySql ();
@@ -457,7 +461,7 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual string Where {
+        public virtual string Where {
             get {
                 if (where == null) {
                     BuildQuerySql ();
@@ -466,7 +470,7 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected string PrimaryKey {
+        public string PrimaryKey {
             get {
                 if (primary_key == null) {
                     primary_key = String.Format ("{0}.{1}", TableName, key.Name);

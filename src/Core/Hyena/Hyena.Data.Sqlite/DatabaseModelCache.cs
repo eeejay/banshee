@@ -1,0 +1,180 @@
+//
+// DatabaseModelCache.cs
+//
+// Author:
+//   Scott Peterson <lunchtimemama@gmail.com>
+//
+// Copyright (C) 2007 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+
+namespace Hyena.Data.Sqlite
+{
+    public class DatabaseModelCache<T> : ModelCache<T>
+    {
+        private HyenaSqliteConnection connection;
+        private ICacheableDatabaseModel<T> db_model;
+        private HyenaSqliteCommand select_range_command;
+        private HyenaSqliteCommand count_command;
+
+        private string reload_sql;
+        private int uid;
+        private int rows = 0;
+        private bool warm = false;
+
+        public DatabaseModelCache (HyenaSqliteConnection connection, string uuid, ICacheableDatabaseModel<T> model) : base (model)
+        {
+            this.connection = connection;
+            this.db_model = model;
+            CheckCacheTable ();
+
+            count_command = new HyenaSqliteCommand (
+                String.Format (
+                    "SELECT COUNT(*) FROM {0} WHERE ModelID = ?", CacheTableName
+                ), 1
+            );
+
+            FindOrCreateCacheModelId (String.Format ("{0}-{1}", uuid, typeof(T).Name));
+
+            select_range_command = new HyenaSqliteCommand (
+                String.Format (@"
+                    SELECT {0} FROM {1}
+                        INNER JOIN {2}
+                            ON {3} = {2}.ItemID
+                        WHERE
+                            {2}.ModelID = ? {5}
+                            {4}
+                        LIMIT ?, ?",
+                    db_model.Select, db_model.From, CacheTableName,
+                    db_model.PrimaryKey, db_model.Where,
+                    String.IsNullOrEmpty (db_model.Where) ? String.Empty : "AND"
+                ), 3
+            );
+
+
+            reload_sql = String.Format (@"
+                DELETE FROM {0} WHERE ModelID = {1};
+                    INSERT INTO {0} SELECT null, {1}, {2} ",
+                CacheTableName, uid, db_model.PrimaryKey
+            );
+        }
+
+        public bool Warm {
+            //get { return warm; }
+            get { return false; }
+        }
+
+        public int Count {
+            get { return rows; }
+        }
+        
+        public int CacheId {
+            get { return uid; }
+        }
+
+        protected virtual string CacheModelsTableName {
+            get { return "HyenaCacheModels"; }
+        }
+        
+        protected virtual string CacheTableName {
+            get { return "HyenaCache"; }
+        }
+
+        public override int Reload ()
+        {
+            InvalidateManagedCache ();
+            using (new Timer (String.Format ("Generating cache table for {0}", db_model))) {
+                connection.Execute (reload_sql + db_model.ReloadFragment);
+            }
+            UpdateCount ();
+            return rows;
+        }
+
+        protected override void FetchSet (int offset, int limit)
+        {
+            //using (new Timer (String.Format ("Fetching set for {0}", db_model))) {
+                select_range_command.ApplyValues (uid, offset, limit);
+                using (IDataReader reader = connection.ExecuteReader (select_range_command)) {
+                    int i = offset;
+                    T item;
+                    while (reader.Read ()) {
+                        if (!Cache.ContainsKey (i)) {
+                            item = db_model.GetItemFromReader (reader, i);
+                            Cache.Add (i, item);
+                        }
+                        i++;
+                     }
+                 }
+            //}
+        }
+        
+        protected void UpdateCount ()
+        {
+            //using (new Timer (String.Format ("Counting items for {0}", db_model))) {
+                rows = Convert.ToInt32 (connection.ExecuteScalar (count_command.ApplyValues (uid)));
+            //}
+        }
+        
+        private void FindOrCreateCacheModelId (string id)
+        {
+            uid = connection.QueryInt32 (String.Format (
+                "SELECT CacheID FROM {0} WHERE ModelID = '{1}'",
+                CacheModelsTableName, id
+            ));
+
+            if (uid == 0) {
+                //Console.WriteLine ("Didn't find existing cache for {0}, creating", id);
+                uid = connection.Execute (new HyenaSqliteCommand (String.Format (
+                    "INSERT INTO {0} (ModelID) VALUES (?)", CacheModelsTableName
+                    ), id
+                ));
+            } else {
+                //Console.WriteLine ("Found existing cache for {0}: {1}", id, uid);
+                warm = true;
+                InvalidateManagedCache ();
+                UpdateCount ();
+            }
+        }
+
+        private void CheckCacheTable ()
+        {
+            if (!connection.TableExists(CacheTableName)) {
+                connection.Execute (String.Format (@"
+                    CREATE TABLE {0} (
+                        OrderID INTEGER PRIMARY KEY,
+                        ModelID INTEGER,
+                        ItemID INTEGER)", CacheTableName
+                ));
+            }
+
+            if (!connection.TableExists(CacheModelsTableName)) {
+                connection.Execute (String.Format (
+                    "CREATE TABLE {0} (CacheID INTEGER PRIMARY KEY, ModelID TEXT UNIQUE)",
+                    CacheModelsTableName
+                ));
+            }
+        }
+    }
+}

@@ -36,18 +36,30 @@ using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    
-    public abstract class BansheeModelProvider<T> : CacheableDatabaseModel<T>
+    public class BansheeModelProvider<T> : DatabaseModel<T>
     {
-        private IDatabaseModel<T> model; // FIXME do away with this
+        protected string table_name;
+
+        protected override string TableName {
+            get { return table_name; }
+        }
         
-        public BansheeModelProvider(BansheeDbConnection connection, IDatabaseModel<T> model)
-            : base(connection, model)
+        /*protected BansheeModelProvider (BansheeDbConnection connection) : base(connection)
         {
-            this.model = model;
+        }*/
+
+        public BansheeModelProvider(string table_name, BansheeDbConnection connection) : base(connection)
+        {
+            Console.WriteLine ("Creating banshee model provider, table name = {0}", table_name);
+            this.table_name = table_name;
+            Init ();
         }
         
         protected override sealed int DatabaseVersion {
+            get { return 1; }
+        }
+
+        protected override int ModelVersion {
             get { return 1; }
         }
         
@@ -86,23 +98,6 @@ namespace Banshee.Collection.Database
             }
         }
 
-        
-        protected override string ReloadFragment {
-            get { return model.ReloadFragment; } // FIXME move this elsewhere
-        }
-        
-        protected override sealed string CacheTableName {
-            get { return "CoreCache"; }
-        }
-        
-        protected override sealed bool Persistent {
-            get { return false; }
-        }
-        
-        protected override sealed string CacheModelsTableName {
-            get { return "CoreCacheModels"; }
-        }
-        
         protected override sealed void MigrateDatabase(int old_version)
         {
         }

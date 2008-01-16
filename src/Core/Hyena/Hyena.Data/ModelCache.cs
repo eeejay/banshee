@@ -1,5 +1,5 @@
 //
-// CacheableModelAdapter.cs
+// ModelCache.cs
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
@@ -31,12 +31,12 @@ using System.Collections.Generic;
 
 namespace Hyena.Data
 {
-    public abstract class CacheableModelAdapter<T>
+    public abstract class ModelCache<T>
     {
         private ICacheableModel model;
         private Dictionary<int, T> cache = new Dictionary<int, T> ();
 
-        public CacheableModelAdapter (ICacheableModel model)
+        public ModelCache (ICacheableModel model)
         {
             this.model = model;
         }
