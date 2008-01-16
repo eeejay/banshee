@@ -33,7 +33,7 @@ using System.Data;
 using Hyena.Data;
 using Hyena.Data.Sqlite;
 
-namespace Banshee.Collection.Database
+namespace Banshee.Database
 {
     public class BansheeDatabaseModelCache<T> : DatabaseModelCache<T>
     {

@@ -20,7 +20,7 @@ SOURCES =  \
 	Hyena.Data.Query/QueryToken.cs \
 	Hyena.Data.Query/UserQueryParser.cs \
 	Hyena.Data.Query/XmlQueryParser.cs \
-	Hyena.Data.Sqlite/IDatabaseModel.cs \
+	Hyena.Data.Sqlite/ICacheableDatabaseModel.cs \
 	Hyena.Data.Sqlite/DatabaseModelCache.cs \
 	Hyena.Data.Sqlite/DatabaseColumn.cs \
 	Hyena.Data.Sqlite/DatabaseColumnAttribute.cs \

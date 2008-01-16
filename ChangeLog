@@ -1,5 +1,28 @@
 2008-01-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:
+	Removed.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeDatabaseModelCache.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModelCache.cs:
+	Move from Banshee.Collection.Database to Banshee.Database.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeModelProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModel.cs:
+	Renamed, moved.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	Remove unused methods.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Database/TableSchema.cs: Remove.
+
+	* src/Core/Hyena/Makefile.am:
+	* src/Core/Hyena/Hyena.Data.Sqlite/IDatabaseModel.cs: Rename to
+	ICacheableDatabaseModel.
+
+2008-01-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
 	Use new provider and cache classes.

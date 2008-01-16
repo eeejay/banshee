@@ -32,9 +32,7 @@ using System.Data;
 using Hyena.Data;
 using Hyena.Data.Sqlite;
 
-using Banshee.Database;
-
-namespace Banshee.Collection.Database
+namespace Banshee.Database
 {
     public class BansheeModelProvider<T> : DatabaseModel<T>
     {

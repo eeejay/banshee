@@ -91,33 +91,6 @@ namespace Banshee.Collection.Database
             }
         }
 
-        private void InsertCommit ()
-        {
-            TableSchema.CoreArtists.InsertCommand.ApplyValues (
-                null, // ArtistID
-                -1, // TagSetID
-                null, // MusicBrainzID
-                Name ?? String.Empty,
-                0 // rating
-            );
-            
-            dbid = ServiceManager.DbConnection.Execute (TableSchema.CoreArtists.InsertCommand);
-        }
-        
-        private void UpdateCommit ()
-        {
-            TableSchema.CoreArtists.UpdateCommand.ApplyValues (
-                DbId,
-                -1, // TagSetID
-                null, // MusicBrainzID
-                Name,
-                0, // rating
-                DbId // ArtistID (again, for WHERE clause)
-            );
-
-            ServiceManager.DbConnection.Execute (TableSchema.CoreArtists.UpdateCommand);
-        }
-
         private void LoadFromReader(IDataReader reader)
         {
             dbid = Convert.ToInt32(reader[(int)Column.ArtistID]);
