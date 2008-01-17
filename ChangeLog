@@ -1,18 +1,28 @@
+2008-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/CacheableDatabaseModel.cs: Remove.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs: Time FetchSet.
+
 2008-01-17  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModel.cs: Added new Load
 	  overload, uncommendted some methods
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/ICacheableDatabaseModel.cs,
 	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs,
 	  src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs,
 	  src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs,
 	  src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
 	  Changed GetItemFromReader to Load
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
 	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
 	  Inherited from IDatabaseItem and added DbIndex { set; }
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
 	  Inherited from IDatabaseItem and made DbIndex { set; } public
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModel.cs:
 	  Implemented MakeNewObject
 
@@ -20,6 +30,7 @@
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Eliminated
 	  an unnecessary comparison.
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
 	  Fixed whitespace.
 
@@ -28,8 +39,10 @@
 	* src/Core/Hyena/Hyena.Data/ModelCache.cs,
 	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs: These changes
 	  are already obsolete by Gabriel's work.
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
 	  Fix for correctly translating Uris from the db.
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModelCache.cs:
 	  Made constant strings even more constant.
 
