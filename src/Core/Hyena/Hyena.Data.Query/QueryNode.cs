@@ -76,7 +76,7 @@ namespace Hyena.Data.Query
 
         public abstract void AppendUserQuery (StringBuilder sb);
 
-        public virtual string ToXml ()
+        public virtual string ToXml (QueryFieldSet fieldSet)
         {
             XmlDocument doc = new XmlDocument ();
 
@@ -87,11 +87,16 @@ namespace Hyena.Data.Query
             query.SetAttribute ("banshee-version", "1");
             request.AppendChild (query);
 
-            AppendXml (doc, query);
+            AppendXml (doc, query, fieldSet);
             return doc.OuterXml;
         }
 
-        public abstract void AppendXml (XmlDocument doc, XmlNode parent);
+        public override string ToString ()
+        {
+            return ToUserQuery ();
+        }
+
+        public abstract void AppendXml (XmlDocument doc, XmlNode parent, QueryFieldSet fieldSet);
 
         public virtual string ToSql (QueryFieldSet fieldSet)
         {

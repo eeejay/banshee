@@ -1,5 +1,41 @@
 2008-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Add English aliases to all QueryFields in addition to the translated ones,
+	so English aliases will always be available.  Change the mimetype field to
+	match on both MimeType and Uri columns.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Add
+	SmartPlaylistCore service.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs: Move old
+	smart playlist operator code here for migration purposes.  Migration now
+	works for all conditions except time-based ones (LastPlayed/DateAdded),
+	but the migrated result is only saved during each session until the
+	migrator is finalized.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Explicitly
+	pass the operator to use for 'match similar' actions.
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:
+	Move much old code that will be replaced with Hyena.Data.Query code.  Move
+	code needed to migrate from old format to new format into Migrator.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryField.cs: Add a translated label to
+	Field, split FieldSet off into it's own file.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryListNode.cs:
+	* src/Core/Hyena/Hyena.Data.Query/QueryNode.cs: Change ToXml method to
+	take a QueryFieldSet.  Change ToString to output the user query.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryTermNode.cs: Fix whitespace, change
+	Sql appends to use Field's FormatSql method allowing for a field to map to
+	multiple database columns.
+
+	* src/Core/Hyena/Makefile.am: Add QueryFieldSet.
+
+2008-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/CacheableDatabaseModel.cs: Remove.
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs: Time FetchSet.

@@ -49,7 +49,9 @@ namespace Hyena.Data.Query
             Add (new Operator ("equals", "=="));
             Add (new Operator ("lessThanEquals", "<="));
             Add (new Operator ("greaterThanEquals", ">="));
+            //Add (new Operator ("notEqual", "!="));
             Add (new Operator ("startsWith", "="));
+            //Add (new Operator ("doesNotContain", "!:"));
             Add (new Operator ("contains", ":"));
             Add (new Operator ("lessThan", "<"));
             Add (new Operator ("greaterThan", ">"));
@@ -76,6 +78,10 @@ namespace Hyena.Data.Query
             return (by_name.ContainsKey (name)) ? by_name [name] : null;
         }
 
+        public static Operator DefaultOperator {
+            get { return Operator.GetByUserOperator (":"); }
+        }
+
         public Operator (string name, string userOp)
         {
             Name = name;
@@ -91,11 +97,13 @@ namespace Hyena.Data.Query
 
         //private static string [] operators = new string [] {":", "==", "<=", ">=", "=", "<", ">"};
 
-        public QueryTermNode() : base ()
+        public QueryTermNode () : base ()
         {
+            // Set default operator
+            op = Operator.DefaultOperator;
         }
 
-        public QueryTermNode(string value) : base()
+        public QueryTermNode (string value) : base ()
         {
             int field_separator = 0;
             foreach (Operator op in Operator.Operators) {
@@ -106,12 +114,12 @@ namespace Hyena.Data.Query
                 }
             }
 
-            if(field_separator > 0) {
-                field = value.Substring(0, field_separator);
-                this.field_value = value.Substring(field_separator + op.UserOperator.Length);
+            if (field_separator > 0) {
+                Field = value.Substring (0, field_separator);
+                Value = value.Substring (field_separator + op.UserOperator.Length);
             } else {
                 this.field_value = value;
-                this.op = Operator.GetByUserOperator (":");
+                this.op = Operator.DefaultOperator;
             }
         }
 
@@ -122,31 +130,23 @@ namespace Hyena.Data.Query
             return this;
         }
         
-        public override string ToString()
-        {
-            if(field != null) {
-                return String.Format("[{0}]=\"{1}\"", field, field_value);
-            } else {
-                return String.Format("\"{0}\"", Value);
-            }
-        }
-
         public override void AppendUserQuery (StringBuilder sb)
         {
-            if (Field != null)
-                sb.AppendFormat ("{0}{1}", Field, Operator.UserOperator);
-            sb.Append (Value);
+            sb.Append (
+                QueryField.ToTermString (Field, Operator.UserOperator, Value)
+            );
         }
 
-        public override void AppendXml (XmlDocument doc, XmlNode parent)
+        public override void AppendXml (XmlDocument doc, XmlNode parent, QueryFieldSet fieldSet)
         {
             XmlElement op_node = doc.CreateElement (op.Name);
             parent.AppendChild (op_node);
 
-            if (Field != null) {
-                XmlElement field = doc.CreateElement ("field");
-                field.SetAttribute ("name", Field);
-                op_node.AppendChild (field);
+            QueryField field = fieldSet.GetByAlias (Field);
+            if (field != null) {
+                XmlElement field_node = doc.CreateElement ("field");
+                field_node.SetAttribute ("name", field.Name);
+                op_node.AppendChild (field_node);
             }
 
             XmlElement val_node = doc.CreateElement ("string");
@@ -158,35 +158,31 @@ namespace Hyena.Data.Query
         {
             string alias = Field;
             
-            if(alias != null) {
-                alias = alias.ToLower();
-            }
-            
-            if(alias == null || !fieldSet.Map.ContainsKey(alias)) {
+            if (fieldSet.GetByAlias (alias) == null) {
                 sb.Append ("(");
                 int emitted = 0, i = 0;
                 
-                foreach(QueryField field in fieldSet.Fields) {
+                foreach (QueryField field in fieldSet.Fields) {
                     if (field.Default)
                         if (EmitTermMatch (sb, field, emitted > 0))
                             emitted++;
                 }
                 
                 sb.Append (")");
-            } else if(alias != null && fieldSet.Map.ContainsKey(alias)) {
-                EmitTermMatch (sb, fieldSet.Map[alias], false);
+            } else {
+                EmitTermMatch (sb, fieldSet.GetByAlias (alias), false);
             }
         }
 
         private bool EmitTermMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
             if (field.QueryFieldType == QueryFieldType.Text)
-                return EmitStringMatch(sb, field, emit_or);
+                return EmitStringMatch (sb, field, emit_or);
             else
-                return EmitNumericMatch(sb, field, emit_or);
+                return EmitNumericMatch (sb, field, emit_or);
         }
 
-        private bool EmitStringMatch(StringBuilder sb, QueryField field, bool emit_or)
+        private bool EmitStringMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
             string safe_value = (field.Modifier == null ? Value : field.Modifier (Value)).Replace("'", "''");
             
@@ -195,23 +191,31 @@ namespace Hyena.Data.Query
 
             switch (Operator.UserOperator) {
                 case "=": // Starts with
-                    sb.AppendFormat("{0} LIKE '{1}%'", field.Column, safe_value);
+                    sb.Append (field.FormatSql ("LIKE '{0}%'", safe_value));
                     break;
                     
                 case "==": // Equal to
-                    sb.AppendFormat("{0} LIKE '{1}'", field.Column, safe_value);
+                    sb.Append (field.FormatSql ("= '{0}'", safe_value));
+                    break;
+
+                case "!=": // Not equal to
+                    sb.Append (field.FormatSql ("!= '{0}'", safe_value));
+                    break;
+
+                case "!:": // Doesn't contain
+                    sb.Append (field.FormatSql ("NOT LIKE '%{0}%'", safe_value));
                     break;
 
                 case ":": // Contains
                 default:
-                    sb.AppendFormat("{0} LIKE '%{1}%'", field.Column, safe_value);
+                    sb.Append (field.FormatSql ("LIKE '%{0}%'", safe_value));
                     break;
             }
 
             return true;
         }
 
-        private bool EmitNumericMatch(StringBuilder sb, QueryField field, bool emit_or)
+        private bool EmitNumericMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
             long num = 0;
             
@@ -227,20 +231,20 @@ namespace Hyena.Data.Query
                 case ":":
                 case "=":
                 case "==":
-                    sb.AppendFormat("{0} = {1}", field.Column, num);
+                    sb.Append (field.FormatSql ("= {0}", num));
                     break;
 
                 default:
-                    sb.AppendFormat("{0} {2} {1}", field.Column, num, Operator.UserOperator);
+                    sb.Append (field.FormatSql ("{1} {0}", num, Operator.UserOperator));
                     break;
             }
             
             return true;
         }
         
-        public string Value {
-            get { return field_value; }
-            set { field_value = value; }
+        public string Field {
+            get { return field; }
+            set { field = value; }
         }
 
         public Operator Operator {
@@ -248,9 +252,9 @@ namespace Hyena.Data.Query
             set { op = value; }
         }
         
-        public string Field {
-            get { return field; }
-            set { field = value; }
+        public string Value {
+            get { return field_value; }
+            set { field_value = value; }
         }
     }
 }

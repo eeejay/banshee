@@ -60,7 +60,7 @@ namespace Banshee.ServiceStack
             RegisterService<DBusServiceManager> ();
             RegisterService<BansheeDbConnection> ();
             RegisterService<SourceManager> ();
-            //RegisterService<SmartPlaylistCore> ();
+            RegisterService<SmartPlaylistCore> ();
             RegisterService<ProfileManager> ();
             RegisterService<PlayerEngineService> ();
             RegisterService<PlaybackControllerService> ();

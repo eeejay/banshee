@@ -38,37 +38,39 @@ namespace Hyena.Data.Query
         Text,
         Numeric
     }
-    
+
     public class QueryField
     {
         public delegate string ModifierHandler (string input);
 
         public string Name;
+        public string Label;
         public string [] Aliases;
         public string Column;
         public bool Default;
         public QueryFieldType QueryFieldType;
         public ModifierHandler Modifier;
 
-        public QueryField (string name, string column, QueryFieldType type, params string [] aliases) 
-            : this (name, column, type, false, null, aliases)
+        public QueryField (string name, string label, string column, QueryFieldType type, params string [] aliases) 
+            : this (name, label, column, type, false, null, aliases)
         {
         }
         
-        public QueryField (string name, string column, QueryFieldType type, ModifierHandler modifier, params string [] aliases) 
-            : this (name, column, type, false, modifier, aliases)
+        public QueryField (string name, string label, string column, QueryFieldType type, ModifierHandler modifier, params string [] aliases) 
+            : this (name, label, column, type, false, modifier, aliases)
         {
         }
         
-        public QueryField (string name, string column, QueryFieldType type, bool isDefault, params string [] aliases)
-            : this (name, column, type, isDefault, null, aliases)
+        public QueryField (string name, string label, string column, QueryFieldType type, bool isDefault, params string [] aliases)
+            : this (name, label, column, type, isDefault, null, aliases)
         {
         }
         
-        public QueryField (string name, string column, QueryFieldType type, bool isDefault, 
+        public QueryField (string name, string label, string column, QueryFieldType type, bool isDefault, 
             ModifierHandler modifier, params string [] aliases)
         {
             Name = name;
+            Label = label;
             Column = column;
             QueryFieldType = type;
             Default = isDefault;
@@ -80,33 +82,29 @@ namespace Hyena.Data.Query
             get { return Aliases [0]; }
         }
 
-        public string ToTermString (string value)
+        public string ToTermString (string op, string value)
         {
-            return String.Format ("{0}:{2}{1}{2}",
-                PrimaryAlias, value, value.IndexOf (" ") == -1 ? "" : "\""
+            return ToTermString (PrimaryAlias, op, value);
+        }
+
+        public string FormatSql (string format, params object [] args)
+        {
+            if (Column.IndexOf ("{0}") == -1)
+                return String.Format ("{0} {1}", Column, String.Format (format, args));
+            else
+                return String.Format (Column, String.Format (format, args));
+        }
+
+        public static string ToTermString (string alias, string op, string value)
+        {
+            value = String.Format (
+                "{1}{0}{1}", 
+                value, value.IndexOf (" ") == -1 ? String.Empty : "\""
             );
-        }
-    }
 
-    public class QueryFieldSet
-    {
-        private Dictionary<string, QueryField> map = new Dictionary<string, QueryField> ();
-        private QueryField [] fields;
-
-        public QueryFieldSet (params QueryField [] fields)
-        {
-            this.fields = fields;
-            foreach (QueryField field in fields)
-                foreach (string alias in field.Aliases)
-                    map[alias.ToLower ()] = field;
-        }
-
-        public QueryField [] Fields {
-            get { return fields; }
-        }
-
-        public Dictionary<string, QueryField> Map {
-            get { return map; }
+            return String.IsNullOrEmpty (alias)
+                ? value
+                : String.Format ("{0}{1}{2}", alias, op, value);
         }
     }
 }

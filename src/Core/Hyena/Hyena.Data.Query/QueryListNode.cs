@@ -155,7 +155,7 @@ namespace Hyena.Data.Query
             return this;
         }
 
-        public override void AppendXml (XmlDocument doc, XmlNode parent)
+        public override void AppendXml (XmlDocument doc, XmlNode parent, QueryFieldSet fieldSet)
         {
             if (ChildCount == 0)
                 return;
@@ -163,12 +163,7 @@ namespace Hyena.Data.Query
             XmlElement node = doc.CreateElement (Keyword.ToString ().ToLower ());
             parent.AppendChild (node);
             foreach (QueryNode child in Children)
-                child.AppendXml (doc, node);
-        }
-
-        public override string ToString()
-        {
-            return String.Format("<{0}>", Keyword);
+                child.AppendXml (doc, node, fieldSet);
         }
 
         public override void AppendUserQuery (StringBuilder sb)

@@ -13,6 +13,7 @@ SOURCES =  \
 	Hyena.CommandLine/LayoutGroupAttribute.cs \
 	Hyena.CommandLine/LayoutOption.cs \
 	Hyena.Data.Query/QueryField.cs \
+	Hyena.Data.Query/QueryFieldSet.cs \
 	Hyena.Data.Query/QueryListNode.cs \
 	Hyena.Data.Query/QueryNode.cs \
 	Hyena.Data.Query/QueryParser.cs \
