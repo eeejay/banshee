@@ -120,9 +120,9 @@ namespace Hyena.Data.Sqlite
                     int i = offset;
                     T item;
                     while (reader.Read ()) {
-                        if (!Cache.ContainsKey (i)) {
+                        if (!Contains (i)) {
                             item = db_model.GetItemFromReader (reader, i);
-                            Cache.Add (i, item);
+                            Add (i, item);
                         }
                         i++;
                      }

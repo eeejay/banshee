@@ -119,11 +119,52 @@ namespace Banshee.Collection.Database
         [DatabaseColumn]
         private string MusicBrainzID;
         
+        private string uri_field;
         [DatabaseColumn("Uri")]
-        private string uri;
+        private string uri {
+            get {
+                return
+                    uri_field ??
+                    (Uri == null
+                        ? null
+                        : (Paths.MakePathRelativeToLibrary (Uri.AbsolutePath) ?? Uri.AbsoluteUri)
+                    );
+            }
+            set {
+                uri_field = value;
+                if (uri_type_field.HasValue) {
+                    SetUpUri();
+                }
+            }
+        }
         
+        private int? uri_type_field;
         [DatabaseColumn("UriType")]
-        private int uri_type;
+        private int uri_type {
+            get {
+                return uri_type_field.HasValue
+                    ? uri_type_field.Value
+                    : (Uri == null
+                        ? (int)UriType.RelativePath
+                        : (Paths.MakePathRelativeToLibrary (Uri.AbsolutePath) != null
+                            ? (int)UriType.RelativePath
+                            : (int)UriType.AbsoluteUri));
+            }
+            set {
+                uri_type_field = value;
+                if (uri_field != null) {
+                    SetUpUri();
+                }
+            }
+        }
+        
+        private void SetUpUri()
+        {
+            if (uri_type_field.Value == (int)UriType.RelativePath) {
+                uri_field = System.IO.Path.Combine(Paths.LibraryLocation, uri_field);
+            }
+            Uri = new SafeUri(uri_field);
+        }
         
         [DatabaseColumn]
         public override string MimeType {
@@ -201,20 +242,6 @@ namespace Banshee.Collection.Database
         private long DateAddedStamp {
             get { return DateTimeUtil.FromDateTime(DateAdded); }
             set { DateAdded = DateTimeUtil.ToDateTime(value); }
-        }
-        
-        private bool set_up;
-        public void SetUp()
-        {
-            if(set_up) {
-                return;
-            }
-            set_up = true;
-            
-            if (uri_type == (int)UriType.RelativePath) {
-                uri = System.IO.Path.Combine(Paths.LibraryLocation, uri);
-            }
-            Uri = new SafeUri(uri);
         }
 
         private static BansheeDbCommand check_command = new BansheeDbCommand (

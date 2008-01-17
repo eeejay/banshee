@@ -40,15 +40,13 @@ namespace Banshee.Database
         public BansheeDatabaseModelCache (HyenaSqliteConnection connection, string uuid, ICacheableDatabaseModel<T> model) : base (connection, uuid, model)
         {
         }
-
-        private const string model_table = "CoreCacheModels";
+        
         protected override string CacheModelsTableName {
-            get { return model_table; }
+            get { return "CoreCacheModels"; }
         }
         
-        private const string cache_table = "CoreCache";
         protected override string CacheTableName {
-            get { return cache_table; }
+            get { return "CoreCache"; }
         }
     }
 }

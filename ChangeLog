@@ -1,3 +1,13 @@
+2008-01-17  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena/Hyena.Data/ModelCache.cs,
+	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs: These changes
+	  are already obsolete by Gabriel's work.
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	  Fix for correctly translating Uris from the db.
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModelCache.cs:
+	  Made constant strings even more constant.
+
 2008-01-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/BansheeCacheableModelAdapter.cs:

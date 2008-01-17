@@ -20,14 +20,13 @@ SOURCES =  \
 	Hyena.Data.Query/QueryToken.cs \
 	Hyena.Data.Query/UserQueryParser.cs \
 	Hyena.Data.Query/XmlQueryParser.cs \
-	Hyena.Data.Sqlite/ICacheableDatabaseModel.cs \
-	Hyena.Data.Sqlite/DatabaseModelCache.cs \
 	Hyena.Data.Sqlite/DatabaseColumn.cs \
 	Hyena.Data.Sqlite/DatabaseColumnAttribute.cs \
 	Hyena.Data.Sqlite/DatabaseModel.cs \
+	Hyena.Data.Sqlite/DatabaseModelCache.cs \
 	Hyena.Data.Sqlite/HyenaSqliteCommand.cs \
 	Hyena.Data.Sqlite/HyenaSqliteConnection.cs \
-	Hyena.Data/ModelCache.cs \
+	Hyena.Data.Sqlite/ICacheableDatabaseModel.cs \
 	Hyena.Data/ColumnDescription.cs \
 	Hyena.Data/ICacheableModel.cs \
 	Hyena.Data/ICareAboutView.cs \
@@ -36,6 +35,7 @@ SOURCES =  \
 	Hyena.Data/IPropertyStoreExpose.cs \
 	Hyena.Data/ISortable.cs \
 	Hyena.Data/ISortableColumn.cs \
+	Hyena.Data/ModelCache.cs \
 	Hyena.Data/ModelSelection.cs \
 	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/SortType.cs \

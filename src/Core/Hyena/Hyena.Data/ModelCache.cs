@@ -41,26 +41,27 @@ namespace Hyena.Data
             this.model = model;
         }
 
-        protected virtual Dictionary<int, T> Cache {
-            get { return cache; }
-        }
-
         public virtual T GetValue (int index)
         {
-            if (Cache.ContainsKey (index))
-                return Cache[index];
+            if (cache.ContainsKey (index))
+                return cache[index];
             
             FetchSet (index, model.FetchCount);
             
-            if (Cache.ContainsKey (index))
-                return Cache[index];
+            if (cache.ContainsKey (index))
+                return cache[index];
             
             return default (T);
         }
         
-        protected virtual void Add(int key, T value)
+        protected virtual bool Contains (int key)
         {
-            Cache.Add(key, value);
+            return cache.ContainsKey (key);
+        }
+        
+        protected virtual void Add (int key, T value)
+        {
+            cache.Add (key, value);
         }
 
         // Responsible for fetching a set of items and placing them in the cache
@@ -76,7 +77,7 @@ namespace Hyena.Data
 
         protected void InvalidateManagedCache ()
         {
-            Cache.Clear ();
+            cache.Clear ();
         }
     }
 }
