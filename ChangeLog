@@ -1,5 +1,23 @@
 2008-01-17  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModel.cs: Added new Load
+	  overload, uncommendted some methods
+	* src/Core/Hyena/Hyena.Data.Sqlite/ICacheableDatabaseModel.cs,
+	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	  Changed GetItemFromReader to Load
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	  Inherited from IDatabaseItem and added DbIndex { set; }
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	  Inherited from IDatabaseItem and made DbIndex { set; } public
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModel.cs:
+	  Implemented MakeNewObject
+
+2008-01-17  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Eliminated
 	  an unnecessary comparison.
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:

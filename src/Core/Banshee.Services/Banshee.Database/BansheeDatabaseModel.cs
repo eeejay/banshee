@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 using Hyena.Data;
@@ -34,7 +35,12 @@ using Hyena.Data.Sqlite;
 
 namespace Banshee.Database
 {
-    public class BansheeModelProvider<T> : DatabaseModel<T>
+    public interface IDatabaseItem
+    {
+        int DbIndex { set; }
+    }
+    
+    public class BansheeModelProvider<T> : DatabaseModel<T> where T : IDatabaseItem, new ()
     {
         protected string table_name;
 
@@ -102,6 +108,13 @@ namespace Banshee.Database
         
         protected override void MigrateTable(int old_version)
         {
+        }
+        
+        protected override T MakeNewObject (int index)
+        {
+            T item = new T ();
+            item.DbIndex = index;
+            return item;
         }
     }
 }

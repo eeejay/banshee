@@ -38,7 +38,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
-    public class LibraryTrackInfo : TrackInfo
+    public class LibraryTrackInfo : TrackInfo, IDatabaseItem
     {
         private static BansheeModelProvider<LibraryTrackInfo> provider = new BansheeModelProvider<LibraryTrackInfo> (
             "CoreTracks", ServiceManager.DbConnection
@@ -58,6 +58,7 @@ namespace Banshee.Collection.Database
         
         public LibraryTrackInfo () : base ()
         {
+            Attributes |= TrackAttributes.CanPlay;
         }
 
         public LibraryTrackInfo (int index) : base ()
@@ -84,7 +85,7 @@ namespace Banshee.Collection.Database
         private int db_index;
         public int DbIndex {
             get { return db_index; }
-            internal set { db_index = value; }
+            set { db_index = value; }
         }
 
         [DatabaseColumn("ArtistID", Index = "CoreTracksArtistIndex")]

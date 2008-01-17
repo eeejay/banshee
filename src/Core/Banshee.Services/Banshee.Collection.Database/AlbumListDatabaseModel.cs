@@ -130,11 +130,9 @@ namespace Banshee.Collection.Database
         }
 
         // Implement IDatabaseModel
-        public LibraryAlbumInfo GetItemFromReader (IDataReader reader, int index)
+        public LibraryAlbumInfo Load (IDataReader reader, int index)
         {
-            LibraryAlbumInfo album = new LibraryAlbumInfo ();
-            provider.Load (album, reader);
-            return album;
+            return provider.Load (reader, index);
         }
 
         public BansheeModelProvider<LibraryAlbumInfo> Provider {

@@ -382,11 +382,9 @@ namespace Banshee.Collection.Database
         }
 
         // Implement IDatabaseModel
-        public LibraryTrackInfo GetItemFromReader (IDataReader reader, int index)
+        public LibraryTrackInfo Load (IDataReader reader, int index)
         {
-            LibraryTrackInfo track = new LibraryTrackInfo (index);
-            Provider.Load (track, reader);
-            return track;
+            return provider.Load (reader, index);
         }
         
         public string PrimaryKey {

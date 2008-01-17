@@ -61,7 +61,7 @@ namespace Hyena.Data.Sqlite
         protected abstract int DatabaseVersion { get; }
         protected abstract void MigrateTable (int old_version);
         protected abstract void MigrateDatabase (int old_version);
-        //protected abstract T MakeNewObject (int offset);
+        protected abstract T MakeNewObject (int offset);
         
         protected virtual string HyenaTableName {
             get { return "HyenaModelVersions"; }
@@ -265,7 +265,14 @@ namespace Hyena.Data.Sqlite
             connection.Execute (UpdateCommand);
         }
         
-        public void Load (T target, IDataReader reader)
+        public T Load (IDataReader reader, int index)
+        {
+            T item = MakeNewObject (index);
+            Load (reader, item);
+            return item;
+        }
+        
+        public void Load (IDataReader reader, T target)
         {
             int i = 0;
             
@@ -282,53 +289,47 @@ namespace Hyena.Data.Sqlite
         {
         }
         
-        /*public IEnumerable<T> FetchAll ()
+        public IEnumerable<T> FetchAll ()
         {
             PrepareSelectCommand ();
             int i = 1;
             using (IDataReader reader = connection.ExecuteReader (SelectCommand)) {
                 while (reader.Read ()) {
-                    T new_object = MakeNewObject (i);
-                    Load (new_object, reader);
-                    yield return new_object;
+                    yield return Load (reader, i++);
                 }
             }
-        }*/
+        }
         
         protected virtual void PrepareSelectRangeCommand (int offset, int limit)
         {
             SelectRangeCommand.ApplyValues (offset, limit);
         }
         
-        /*public IEnumerable<T> FetchRange (int offset, int limit)
+        public IEnumerable<T> FetchRange (int offset, int limit)
         {
             PrepareSelectRangeCommand (offset, limit);
             using (IDataReader reader = connection.ExecuteReader (SelectRangeCommand)) {
                 while (reader.Read ()) {
-                    T new_object = MakeNewObject (offset++);
-                    Load (new_object, reader);
-                    yield return new_object;
+                    yield return Load (reader, offset++);
                 }
             }
-        }*/
+        }
         
         protected virtual void PrepareSelectSingleCommand (object id)
         {
             SelectSingleCommand.ApplyValues (id);
         }
         
-        /*public T FetchSingle (int id)
+        public T FetchSingle (int id)
         {
             PrepareSelectSingleCommand (id);
             using (IDataReader reader = connection.ExecuteReader (SelectSingleCommand)) {
                 if (reader.Read ()) {
-                    T new_object = MakeNewObject (id);
-                    Load (new_object, reader);
-                    return new_object;
+                    return Load (reader, id);
                 }
             }
             return default(T);
-        }*/
+        }
         
         protected virtual HyenaSqliteCommand CreateCommand {
             get {

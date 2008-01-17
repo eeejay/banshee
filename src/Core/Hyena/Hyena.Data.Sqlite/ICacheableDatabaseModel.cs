@@ -34,7 +34,7 @@ namespace Hyena.Data.Sqlite
 {
     public interface ICacheableDatabaseModel<T> : ICacheableModel
     {
-        T GetItemFromReader (IDataReader reader, int index);
+        T Load (IDataReader reader, int index);
 
         string PrimaryKey { get; }
         string ReloadFragment { get; }

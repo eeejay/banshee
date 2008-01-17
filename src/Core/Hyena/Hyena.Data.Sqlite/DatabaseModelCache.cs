@@ -121,7 +121,7 @@ namespace Hyena.Data.Sqlite
                     T item;
                     while (reader.Read ()) {
                         if (!Contains (i)) {
-                            item = db_model.GetItemFromReader (reader, i);
+                            item = db_model.Load (reader, i);
                             Add (i, item);
                         }
                         i++;

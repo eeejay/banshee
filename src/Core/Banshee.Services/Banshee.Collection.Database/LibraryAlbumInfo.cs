@@ -39,7 +39,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {    
-    public class LibraryAlbumInfo : AlbumInfo
+    public class LibraryAlbumInfo : AlbumInfo, IDatabaseItem
     {
         private static BansheeModelProvider<LibraryAlbumInfo> provider = new BansheeModelProvider<LibraryAlbumInfo> (
             "CoreAlbums", ServiceManager.DbConnection
@@ -116,6 +116,12 @@ namespace Banshee.Collection.Database
         public override string ArtistName {
             get { return base.ArtistName; }
             set { base.ArtistName = value; }
+        }
+        
+        private int db_index;
+        public int DbIndex {
+            get { return db_index; }
+            set { db_index = value; }
         }
     }
 }
