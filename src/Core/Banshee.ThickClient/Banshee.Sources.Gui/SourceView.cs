@@ -760,7 +760,7 @@ namespace Banshee.Sources.Gui
             if(titleLayoutWidth > maxTitleLayoutWidth) {
                 float ratio = (float)(maxTitleLayoutWidth - ellipsisSize) / (float)titleLayoutWidth;
                 int characters = (int)(ratio * (float)titleText.Length);
-                while(titleLayoutWidth > maxTitleLayoutWidth) {
+                do {
                     if(characters > 0) {
                         titleLayout.SetMarkup(GLib.Markup.EscapeText(
                             titleText.Substring(0, characters--)).Trim() + "...");
@@ -770,7 +770,7 @@ namespace Banshee.Sources.Gui
                         titleLayout.SetMarkup(GLib.Markup.EscapeText(titleText.Trim()));
                         break;
                     }
-                }
+                } while (titleLayoutWidth > maxTitleLayoutWidth);
             }
             
             Gdk.GC mainGC = widget.Style.TextGC(state);

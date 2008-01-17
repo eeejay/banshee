@@ -133,7 +133,7 @@ namespace Banshee.Collection.Database
             set {
                 uri_field = value;
                 if (uri_type_field.HasValue) {
-                    SetUpUri();
+                    SetUpUri ();
                 }
             }
         }
@@ -153,17 +153,23 @@ namespace Banshee.Collection.Database
             set {
                 uri_type_field = value;
                 if (uri_field != null) {
-                    SetUpUri();
+                    SetUpUri ();
                 }
             }
         }
         
-        private void SetUpUri()
+        bool set_up;
+        private void SetUpUri ()
         {
-            if (uri_type_field.Value == (int)UriType.RelativePath) {
-                uri_field = System.IO.Path.Combine(Paths.LibraryLocation, uri_field);
+            if (set_up) {
+                return;
             }
-            Uri = new SafeUri(uri_field);
+            set_up = true;
+            
+            if (uri_type_field.Value == (int)UriType.RelativePath) {
+                uri_field = System.IO.Path.Combine (Paths.LibraryLocation, uri_field);
+            }
+            Uri = new SafeUri (uri_field);
         }
         
         [DatabaseColumn]

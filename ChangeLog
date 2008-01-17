@@ -1,5 +1,12 @@
 2008-01-17  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Eliminated
+	  an unnecessary comparison.
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	  Fixed whitespace.
+
+2008-01-17  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Hyena/Hyena.Data/ModelCache.cs,
 	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs: These changes
 	  are already obsolete by Gabriel's work.
