@@ -1,3 +1,36 @@
+2008-01-17  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/ModelProvider.cs: Renamed from
+	  DatabaseModel for consistancy and rejiggered
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseAttributes.cs: Added
+	  DatabaseTableAttribute
+	* src/Core/Hyena/Hyena.Data.Sqlite/ModelCache.cs: Renamed from
+	  DatabaseModelCache for consistancy and rijiggered
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModel.cs: Renamed
+	  ModelProvider.cs
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs: Renamed to
+	  DatabaseAttributes.cs
+	* src/Core/Hyena/Hyena.Data.Sqlite/ICacheableDatabaseModel.cs: Removed
+	  subsumed and obsolete members
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs: Renamed
+	  ModelCache.cs
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	  Made to use new DatabaseTable attribute
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	  Removal of subsumed and obsolete members
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModel.cs:
+	  Renamed to BansheeModelProvider.cs
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModelCache.cs:
+	  Renamed to BansheeModelCache.cs
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
+	  Whitespace fixes and TableName/ModelVersion removal
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelCache.cs: Generics
+	  changes
+
 2008-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Hyena/Hyena.Data.Query/QueryFieldSet.cs: New file, forgot to commit.

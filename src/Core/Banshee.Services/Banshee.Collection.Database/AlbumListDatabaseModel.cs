@@ -32,18 +32,17 @@ using System.Data;
 using System.Text;
 using System.Collections.Generic;
 
-using Hyena.Data;
 using Hyena.Data.Sqlite;
 
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class AlbumListDatabaseModel : AlbumListModel, ICacheableDatabaseModel<LibraryAlbumInfo>
+    public class AlbumListDatabaseModel : AlbumListModel, ICacheableDatabaseModel
     {
         private BansheeDbConnection connection;
         private BansheeModelProvider<LibraryAlbumInfo> provider;
-        private BansheeDatabaseModelCache<LibraryAlbumInfo> cache;
+        private BansheeModelCache<LibraryAlbumInfo> cache;
         private int count;
         private string artist_id_filter_query;
         private string reload_fragment;
@@ -55,7 +54,7 @@ namespace Banshee.Collection.Database
         public AlbumListDatabaseModel(BansheeDbConnection connection, string uuid)
         {
             provider = LibraryAlbumInfo.Provider;
-            cache = new BansheeDatabaseModelCache <LibraryAlbumInfo> (connection, uuid, this);
+            cache = new BansheeModelCache <LibraryAlbumInfo> (connection, uuid, this, provider);
             this.connection = connection;
         }
 
@@ -129,38 +128,10 @@ namespace Banshee.Collection.Database
             get { return 20; }
         }
 
-        // Implement IDatabaseModel
-        public LibraryAlbumInfo Load (IDataReader reader, int index)
-        {
-            return provider.Load (reader, index);
-        }
-
-        public BansheeModelProvider<LibraryAlbumInfo> Provider {
-            get { return provider; }
-        }
-
         //private const string primary_key = "CoreAlbums.AlbumID";
-        public string PrimaryKey {
-            //get { return primary_key; }
-            get { return provider.PrimaryKey; }
-        }
 
         public string ReloadFragment {
             get { return reload_fragment; }
-        }
-
-        public string Select {
-            //get { return "CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name"; }
-            get { return provider.Select; }
-        }
-
-        public string From {
-            get { return provider.From; }
-        }
-
-        public string Where {
-            get { return provider.Where; }
-            //get { return "CoreArtists.ArtistID = CoreAlbums.ArtistID"; }
         }
     }
 }

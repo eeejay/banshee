@@ -43,11 +43,11 @@ using Banshee.Database;
 namespace Banshee.Collection.Database
 {
     public class TrackListDatabaseModel : TrackListModel, IExportableModel, 
-        ICacheableDatabaseModel<LibraryTrackInfo>, IFilterable, ISortable, ICareAboutView
+        ICacheableDatabaseModel, IFilterable, ISortable, ICareAboutView
     {
         private BansheeDbConnection connection;
         private BansheeModelProvider<LibraryTrackInfo> provider;
-        private BansheeDatabaseModelCache<LibraryTrackInfo> cache;
+        private BansheeModelCache<LibraryTrackInfo> cache;
         private int count;
         private int unfiltered_count;
         
@@ -68,7 +68,7 @@ namespace Banshee.Collection.Database
         {
             this.connection = connection;
             provider = LibraryTrackInfo.Provider;
-            cache = new BansheeDatabaseModelCache <LibraryTrackInfo> (connection, uuid, this);
+            cache = new BansheeModelCache <LibraryTrackInfo> (connection, uuid, this, provider);
             Refilter ();
         }
         
@@ -207,7 +207,7 @@ namespace Banshee.Collection.Database
         {
             string unfiltered_query = String.Format (
                 "FROM {0}{1} WHERE {2} {3}",
-                From, JoinFragment, Where, ConditionFragment
+                provider.From, JoinFragment, provider.Where, ConditionFragment
             );
 
             unfiltered_count = connection.QueryInt32 (String.Format (
@@ -372,39 +372,14 @@ namespace Banshee.Collection.Database
             return this[index].GenerateExportable();
         }
 
-        public BansheeModelProvider<LibraryTrackInfo> Provider {
-            get { return provider; }
-        }
-
         // Implement ICacheableModel
         public int FetchCount {
             get { return RowsInView > 0 ? RowsInView * 5 : 100; }
         }
 
         // Implement IDatabaseModel
-        public LibraryTrackInfo Load (IDataReader reader, int index)
-        {
-            return provider.Load (reader, index);
-        }
-        
-        public string PrimaryKey {
-            get { return provider.PrimaryKey; }
-        }
-
         public string ReloadFragment {
             get { return reload_fragment; }
-        }
-
-        public string Select {
-            get { return provider.Select; }
-        }
-
-        public string From {
-            get { return provider.From; }
-        }
-
-        public string Where {
-            get { return provider.Where; }
         }
 
         public static QueryFieldSet FieldSet {

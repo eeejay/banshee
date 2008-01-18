@@ -77,12 +77,9 @@
     <File name="Banshee.Streaming/RadioTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Services.addins" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Sources/ErrorSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Database/BansheeCacheableModelAdapter.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Database/IDatabaseModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MediaEngine/IPlayerEngineService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MediaEngine/IPlaybackController.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/BansheeListModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Database/TableSchema.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioProfiles/GConfProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioProfiles/Pipeline.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioProfiles/PipelineVariable.cs" subtype="Code" buildaction="Compile" />
@@ -110,7 +107,8 @@
     <File name="Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Networking/NetworkDetect.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Networking/NetworkManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Database/BansheeModelProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Database/BansheeModelProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Database/BansheeModelCache.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

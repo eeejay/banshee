@@ -30,7 +30,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 
-using Hyena.Data;
 using Hyena.Data.Sqlite;
 
 namespace Banshee.Database
@@ -40,73 +39,61 @@ namespace Banshee.Database
         int DbIndex { set; }
     }
     
-    public class BansheeModelProvider<T> : DatabaseModel<T> where T : IDatabaseItem, new ()
+    public class BansheeModelProvider<T> : ModelProvider<T> where T : IDatabaseItem, new ()
     {
-        protected string table_name;
+        private BansheeDbConnection connection;
 
-        protected override string TableName {
-            get { return table_name; }
-        }
-        
-        /*protected BansheeModelProvider (BansheeDbConnection connection) : base(connection)
+        public BansheeModelProvider (BansheeDbConnection connection)
+            : base (connection)
         {
-        }*/
-
-        public BansheeModelProvider(string table_name, BansheeDbConnection connection) : base(connection)
-        {
-            Console.WriteLine ("Creating banshee model provider, table name = {0}", table_name);
-            this.table_name = table_name;
+            this.connection = connection;
             Init ();
         }
         
         protected override sealed int DatabaseVersion {
             get { return 1; }
         }
-
-        protected override int ModelVersion {
-            get { return 1; }
-        }
         
-        protected override sealed void CheckVersion()
+        protected override sealed void CheckVersion ()
         {
-            using(IDataReader reader = Connection.ExecuteReader(String.Format(
+            using (IDataReader reader = connection.ExecuteReader (String.Format (
                 "SELECT Value FROM CoreConfiguration WHERE Key = '{0}ModelVersion'", TableName))) {
-                if(reader.Read()) {
-                    int version = Int32.Parse(reader.GetString(0));
-                    if(version < ModelVersion) {
-                        MigrateTable(version);
-                        Connection.Execute(String.Format(
+                if (reader.Read ()) {
+                    int version = Int32.Parse (reader.GetString (0));
+                    if (version < ModelVersion) {
+                        MigrateTable (version);
+                        connection.Execute (String.Format (
                             "UPDATE CoreConfiguration SET Value = '{0}' WHERE Key = '{0}ModelVersion'",
                             ModelVersion, TableName));
                     }
                 } else {
-                    Connection.Execute(String.Format(
+                    connection.Execute (String.Format (
                         "INSERT INTO CoreConfiguration (Key, Value) VALUES ('{0}ModelVersion', '{1}')",
                         TableName, ModelVersion));
                 }
             }
-            using(IDataReader reader = Connection.ExecuteReader("SELECT Value FROM CoreConfiguration WHERE Key = 'DatabaseVersion'")) {
-                if(reader.Read()) {
-                    int version = Int32.Parse(reader.GetString(0));
-                    if(version < DatabaseVersion) {
-                        MigrateDatabase(version);
-                        Connection.Execute(String.Format(
+            using (IDataReader reader = connection.ExecuteReader ("SELECT Value FROM CoreConfiguration WHERE Key = 'DatabaseVersion'")) {
+                if (reader.Read ()) {
+                    int version = Int32.Parse (reader.GetString (0));
+                    if (version < DatabaseVersion) {
+                        MigrateDatabase (version);
+                        connection.Execute (String.Format (
                             "UPDATE CoreConfiguration SET Value = '{0}' WHERE Key = 'DatabaseVersion'",
                             DatabaseVersion));
                     }
                 } else {
-                    Connection.Execute(String.Format(
+                    connection.Execute (String.Format (
                         "INSERT INTO CoreConfiguration (Key, Value) VALUES ('DatabaseVersion', '{0}')",
                         DatabaseVersion));
                 }
             }
         }
 
-        protected override sealed void MigrateDatabase(int old_version)
+        protected override sealed void MigrateDatabase (int old_version)
         {
         }
         
-        protected override void MigrateTable(int old_version)
+        protected override void MigrateTable (int old_version)
         {
         }
         

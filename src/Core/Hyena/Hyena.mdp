@@ -30,7 +30,6 @@
     <File name="Hyena/IUndoAction.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena/UndoManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ColumnDescription.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data/CacheableModelAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ICacheableModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Collections/RangeCollection.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Collections/IStackProvider.cs" subtype="Code" buildaction="Compile" />
@@ -40,9 +39,15 @@
     <File name="Hyena.Data.Query/QueryField.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/UserQueryParser.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/XmlQueryParser.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data/HyenaDbConnection.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data/DatabaseModelProvider.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data/CacheableDatabaseModelProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryFieldSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/DatabaseColumn.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/DatabaseAttributes.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/ModelProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/ModelCache.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/HyenaSqliteCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/HyenaSqliteConnection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/ICacheableDatabaseModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/ModelCache.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

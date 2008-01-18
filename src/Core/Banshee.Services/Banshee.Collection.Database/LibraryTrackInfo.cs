@@ -29,7 +29,6 @@
 using System;
 using System.Data;
 
-using Hyena.Data;
 using Hyena.Data.Sqlite;
 
 using Banshee.Base;
@@ -38,10 +37,11 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
+    [DatabaseTable("CoreTracks", 1)]
     public class LibraryTrackInfo : TrackInfo, IDatabaseItem
     {
         private static BansheeModelProvider<LibraryTrackInfo> provider = new BansheeModelProvider<LibraryTrackInfo> (
-            "CoreTracks", ServiceManager.DbConnection
+            ServiceManager.DbConnection
         );
 
         public static BansheeModelProvider<LibraryTrackInfo> Provider {

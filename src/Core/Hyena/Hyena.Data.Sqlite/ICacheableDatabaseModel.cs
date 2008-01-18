@@ -32,14 +32,8 @@ using Hyena.Data;
 
 namespace Hyena.Data.Sqlite
 {
-    public interface ICacheableDatabaseModel<T> : ICacheableModel
+    public interface ICacheableDatabaseModel : ICacheableModel
     {
-        T Load (IDataReader reader, int index);
-
-        string PrimaryKey { get; }
         string ReloadFragment { get; }
-        string Select { get; }
-        string From { get; }
-        string Where { get; }
     }
 }

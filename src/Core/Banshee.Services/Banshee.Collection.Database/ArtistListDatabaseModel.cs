@@ -31,18 +31,17 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 
-using Hyena.Data;
 using Hyena.Data.Sqlite;
 
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class ArtistListDatabaseModel : ArtistListModel, ICacheableDatabaseModel<LibraryArtistInfo>
+    public class ArtistListDatabaseModel : ArtistListModel, ICacheableDatabaseModel
     {
         private BansheeDbConnection connection;
         private BansheeModelProvider<LibraryArtistInfo> provider;
-        private BansheeDatabaseModelCache<LibraryArtistInfo> cache;
+        private BansheeModelCache<LibraryArtistInfo> cache;
         private TrackListDatabaseModel track_model;
         private string reload_fragment;
         private int count;
@@ -53,7 +52,7 @@ namespace Banshee.Collection.Database
         {
             this.connection = connection;
             provider = LibraryArtistInfo.Provider;
-            cache = new BansheeDatabaseModelCache <LibraryArtistInfo> (connection, uuid, this);
+            cache = new BansheeModelCache <LibraryArtistInfo> (connection, uuid, this, provider);
         }
 
         public ArtistListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection, string uuid) : this (connection, uuid)
@@ -102,36 +101,9 @@ namespace Banshee.Collection.Database
         public int FetchCount {
             get { return 20; }
         }
-
-        // Implement IDatabaseModel
-        public LibraryArtistInfo Load (IDataReader reader, int index)
-        {
-            return provider.Load (reader, index);
-        }
-
-        public BansheeModelProvider<LibraryArtistInfo> Provider {
-            get { return provider; }
-        }
-
-        public string PrimaryKey {
-            get { return provider.PrimaryKey; }
-        }
-
+        
         public string ReloadFragment {
             get { return reload_fragment; }
-        }
-
-        public string Select {
-            get { return provider.Select; }
-        }
-
-        public string From {
-            get { return provider.From; }
-        }
-
-        public string Where {
-            //get { return String.Format ("1=1"); }
-            get { return provider.Where; }
         }
     }
 }

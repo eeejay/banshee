@@ -38,10 +38,11 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {    
+    [DatabaseTable("CoreArtists", 1)]
     public class LibraryArtistInfo : ArtistInfo, IDatabaseItem
     {
         private static BansheeModelProvider<LibraryArtistInfo> provider = new BansheeModelProvider<LibraryArtistInfo> (
-            "CoreArtists", ServiceManager.DbConnection
+            ServiceManager.DbConnection
         );
 
         public static BansheeModelProvider<LibraryArtistInfo> Provider {

@@ -31,7 +31,6 @@ using System.Data;
 
 using Mono.Unix;
 
-using Hyena.Data;
 using Hyena.Data.Sqlite;
 
 using Banshee.Database;
@@ -39,10 +38,11 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {    
+    [DatabaseTable("CoreAlbums", 1)]
     public class LibraryAlbumInfo : AlbumInfo, IDatabaseItem
     {
         private static BansheeModelProvider<LibraryAlbumInfo> provider = new BansheeModelProvider<LibraryAlbumInfo> (
-            "CoreAlbums", ServiceManager.DbConnection
+            ServiceManager.DbConnection
         );
 
         public static BansheeModelProvider<LibraryAlbumInfo> Provider {

@@ -30,14 +30,17 @@
 using System;
 using System.Data;
 
-using Hyena.Data;
 using Hyena.Data.Sqlite;
 
 namespace Banshee.Database
 {
-    public class BansheeDatabaseModelCache<T> : DatabaseModelCache<T>
+    public class BansheeModelCache<T> : ModelCache<T> where T : IDatabaseItem, new ()
     {
-        public BansheeDatabaseModelCache (HyenaSqliteConnection connection, string uuid, ICacheableDatabaseModel<T> model) : base (connection, uuid, model)
+        public BansheeModelCache (HyenaSqliteConnection connection,
+                                  string uuid,
+                                  ICacheableDatabaseModel model,
+                                  BansheeModelProvider<T> provider)
+            : base (connection, uuid, model, provider)
         {
         }
         

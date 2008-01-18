@@ -34,7 +34,7 @@ using System.Text;
 
 namespace Hyena.Data.Sqlite
 {
-    public abstract class DatabaseModel<T>
+    public abstract class ModelProvider<T>
     {
         private readonly List<DatabaseColumn> columns = new List<DatabaseColumn> ();
         private readonly List<VirtualDatabaseColumn> virtual_columns = new List<VirtualDatabaseColumn> ();
@@ -49,6 +49,9 @@ namespace Hyena.Data.Sqlite
         private HyenaSqliteCommand select_range_command;
         private HyenaSqliteCommand select_single_command;
         
+        private string table_name;
+        private int model_version;
+        
         private string primary_key;
         private string select;
         private string from;
@@ -56,8 +59,6 @@ namespace Hyena.Data.Sqlite
         
         private const string HYENA_DATABASE_NAME = "hyena_database_master";
 
-        protected abstract string TableName { get; }
-        protected abstract int ModelVersion { get; }
         protected abstract int DatabaseVersion { get; }
         protected abstract void MigrateTable (int old_version);
         protected abstract void MigrateDatabase (int old_version);
@@ -67,13 +68,28 @@ namespace Hyena.Data.Sqlite
             get { return "HyenaModelVersions"; }
         }
         
-        protected HyenaSqliteConnection Connection {
-            get { return connection; }
+        protected ModelProvider (HyenaSqliteConnection connection)
+        {
+            foreach (DatabaseTableAttribute attribute in typeof (T).GetCustomAttributes (typeof (DatabaseTableAttribute), true)) {
+                table_name = attribute.Name;
+                model_version = attribute.Version;
+            }
+            
+            if (TableName == null) {
+                throw new Exception (String.Format (
+                    "The type {0} does not have a DatabaseTable attribute",
+                    typeof (T).Name));
+            }
+            
+            this.connection = connection;
         }
         
-        protected DatabaseModel (HyenaSqliteConnection connection)
-        {
-            this.connection = connection;
+        protected string TableName {
+            get { return table_name; }
+        }
+        
+        protected int ModelVersion {
+            get { return model_version; }
         }
 
         protected void Init ()
@@ -186,9 +202,9 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected static string GetSchemaSql (string table_name)
+        protected static string GetSchemaSql (string TableName)
         {
-            return String.Format ("SELECT sql FROM sqlite_master WHERE name = '{0}'", table_name);
+            return String.Format ("SELECT sql FROM sqlite_master WHERE name = '{0}'", TableName);
         }
         
         private void AddColumn (MemberInfo member, Attribute attribute)

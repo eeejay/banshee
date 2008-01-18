@@ -32,10 +32,11 @@ using System.Data;
 
 namespace Hyena.Data.Sqlite
 {
-    public class DatabaseModelCache<T> : ModelCache<T>
+    public class ModelCache<T> : Hyena.Data.ModelCache<T>
     {
         private HyenaSqliteConnection connection;
-        private ICacheableDatabaseModel<T> db_model;
+        private ICacheableDatabaseModel model;
+        private ModelProvider<T> provider;
         private HyenaSqliteCommand select_range_command;
         private HyenaSqliteCommand count_command;
 
@@ -44,10 +45,16 @@ namespace Hyena.Data.Sqlite
         private int rows = 0;
         private bool warm = false;
 
-        public DatabaseModelCache (HyenaSqliteConnection connection, string uuid, ICacheableDatabaseModel<T> model) : base (model)
+        public ModelCache (HyenaSqliteConnection connection,
+                           string uuid,
+                           ICacheableDatabaseModel model,
+                           ModelProvider<T> provider)
+            : base (model)
         {
             this.connection = connection;
-            this.db_model = model;
+            this.model = model;
+            this.provider = provider;
+            
             CheckCacheTable ();
 
             count_command = new HyenaSqliteCommand (
@@ -67,9 +74,9 @@ namespace Hyena.Data.Sqlite
                             {2}.ModelID = ? {5}
                             {4}
                         LIMIT ?, ?",
-                    db_model.Select, db_model.From, CacheTableName,
-                    db_model.PrimaryKey, db_model.Where,
-                    String.IsNullOrEmpty (db_model.Where) ? String.Empty : "AND"
+                    provider.Select, provider.From, CacheTableName,
+                    provider.PrimaryKey, provider.Where,
+                    String.IsNullOrEmpty (provider.Where) ? String.Empty : "AND"
                 ), 3
             );
 
@@ -77,7 +84,7 @@ namespace Hyena.Data.Sqlite
             reload_sql = String.Format (@"
                 DELETE FROM {0} WHERE ModelID = {1};
                     INSERT INTO {0} SELECT null, {1}, {2} ",
-                CacheTableName, uid, db_model.PrimaryKey
+                CacheTableName, uid, provider.PrimaryKey
             );
         }
 
@@ -105,8 +112,8 @@ namespace Hyena.Data.Sqlite
         public override int Reload ()
         {
             InvalidateManagedCache ();
-            using (new Timer (String.Format ("Generating cache table for {0}", db_model))) {
-                connection.Execute (reload_sql + db_model.ReloadFragment);
+            using (new Timer (String.Format ("Generating cache table for {0}", model))) {
+                connection.Execute (reload_sql + model.ReloadFragment);
             }
             UpdateCount ();
             return rows;
@@ -114,17 +121,14 @@ namespace Hyena.Data.Sqlite
 
         protected override void FetchSet (int offset, int limit)
         {
-            using (new Timer (String.Format ("Fetching set for {0}", db_model))) {
+            using (new Timer (String.Format ("Fetching set for {0}", model))) {
                 select_range_command.ApplyValues (uid, offset, limit);
                 using (IDataReader reader = connection.ExecuteReader (select_range_command)) {
-                    int i = offset;
-                    T item;
                     while (reader.Read ()) {
-                        if (!Contains (i)) {
-                            item = db_model.Load (reader, i);
-                            Add (i, item);
+                        if (!Contains (offset)) {
+                            Add (offset, provider.Load (reader, offset));
                         }
-                        i++;
+                        offset++;
                      }
                  }
             }

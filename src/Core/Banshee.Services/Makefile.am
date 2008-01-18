@@ -26,10 +26,10 @@ SOURCES =  \
 	Banshee.Collection/ImportManager.cs \
 	Banshee.Collection/ModelHelper.cs \
 	Banshee.Collection/TrackListModel.cs \
-	Banshee.Database/BansheeDatabaseModel.cs \
-	Banshee.Database/BansheeDatabaseModelCache.cs \
 	Banshee.Database/BansheeDbConnection.cs \
 	Banshee.Database/BansheeDbFormatMigrator.cs \
+	Banshee.Database/BansheeModelCache.cs \
+	Banshee.Database/BansheeModelProvider.cs \
 	Banshee.Library/HomeDirectoryImportSource.cs \
 	Banshee.Library/IImportSource.cs \
 	Banshee.Library/ImportSourceManager.cs \
