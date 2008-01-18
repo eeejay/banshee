@@ -1,5 +1,5 @@
 //
-// DatabaseModel.cs
+// SqliteModelProvider.cs
 //
 // Author:
 //   Scott Peterson  <lunchtimemama@gmail.com>
@@ -34,7 +34,7 @@ using System.Text;
 
 namespace Hyena.Data.Sqlite
 {
-    public abstract class ModelProvider<T>
+    public abstract class SqliteModelProvider<T>
     {
         private readonly List<DatabaseColumn> columns = new List<DatabaseColumn> ();
         private readonly List<VirtualDatabaseColumn> virtual_columns = new List<VirtualDatabaseColumn> ();
@@ -68,7 +68,7 @@ namespace Hyena.Data.Sqlite
             get { return "HyenaModelVersions"; }
         }
         
-        protected ModelProvider (HyenaSqliteConnection connection)
+        protected SqliteModelProvider (HyenaSqliteConnection connection)
         {
             foreach (DatabaseTableAttribute attribute in typeof (T).GetCustomAttributes (typeof (DatabaseTableAttribute), true)) {
                 table_name = attribute.Name;

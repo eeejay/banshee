@@ -39,7 +39,7 @@ namespace Banshee.Database
         int DbIndex { set; }
     }
     
-    public class BansheeModelProvider<T> : ModelProvider<T> where T : IDatabaseItem, new ()
+    public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : IDatabaseItem, new ()
     {
         private BansheeDbConnection connection;
 

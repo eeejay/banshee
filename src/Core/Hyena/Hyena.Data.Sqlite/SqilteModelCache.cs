@@ -1,5 +1,5 @@
 //
-// DatabaseModelCache.cs
+// SqliteModelCache.cs
 //
 // Author:
 //   Scott Peterson <lunchtimemama@gmail.com>
@@ -32,11 +32,11 @@ using System.Data;
 
 namespace Hyena.Data.Sqlite
 {
-    public class ModelCache<T> : Hyena.Data.ModelCache<T>
+    public class SqliteModelCache<T> : ModelCache<T>
     {
         private HyenaSqliteConnection connection;
         private ICacheableDatabaseModel model;
-        private ModelProvider<T> provider;
+        private SqliteModelProvider<T> provider;
         private HyenaSqliteCommand select_range_command;
         private HyenaSqliteCommand count_command;
 
@@ -45,10 +45,10 @@ namespace Hyena.Data.Sqlite
         private int rows = 0;
         private bool warm = false;
 
-        public ModelCache (HyenaSqliteConnection connection,
+        public SqliteModelCache (HyenaSqliteConnection connection,
                            string uuid,
                            ICacheableDatabaseModel model,
-                           ModelProvider<T> provider)
+                           SqliteModelProvider<T> provider)
             : base (model)
         {
             this.connection = connection;
