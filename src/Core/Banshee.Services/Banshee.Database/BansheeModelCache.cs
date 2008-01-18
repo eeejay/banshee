@@ -34,12 +34,12 @@ using Hyena.Data.Sqlite;
 
 namespace Banshee.Database
 {
-    public class BansheeModelCache<T> : ModelCache<T> where T : IDatabaseItem, new ()
+    public class BansheeModelCache <T> : ModelCache <T> where T : IDatabaseItem, new ()
     {
         public BansheeModelCache (HyenaSqliteConnection connection,
                                   string uuid,
                                   ICacheableDatabaseModel model,
-                                  BansheeModelProvider<T> provider)
+                                  BansheeModelProvider <T> provider)
             : base (connection, uuid, model, provider)
         {
         }
