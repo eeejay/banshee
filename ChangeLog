@@ -1,5 +1,9 @@
 2008-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Hyena/Hyena.Data.Query/QueryFieldSet.cs: New file, forgot to commit.
+
+2008-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	Add English aliases to all QueryFields in addition to the translated ones,
 	so English aliases will always be available.  Change the mimetype field to
