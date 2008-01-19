@@ -1,5 +1,10 @@
 2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
+	  Makes sure playback doesn't barf when there is no next track to play.
+
+2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseAttributes.cs,
 	  src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs,
 	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs,

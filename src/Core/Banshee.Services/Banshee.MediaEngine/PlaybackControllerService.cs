@@ -136,6 +136,8 @@ namespace Banshee.MediaEngine
                     if (tmp_track != null) {
                         previous_stack.Push (tmp_track);
                     }
+                } else {
+                    return;
                 }
                 
                 CurrentTrack = next_track;
