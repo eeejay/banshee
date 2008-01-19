@@ -2,14 +2,18 @@
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Implimented
 	  IndexOf() using SQL MAGIC!
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
 	  Removed now superfluous DbIndex
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	  Rejiggered IndexOf
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs: Got
 	  rid of now superfluous IDatabaseItem type
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelCache.cs:
 	  Rejiggered generic constraints
 
