@@ -38,6 +38,8 @@ namespace Hyena.Data.Sqlite
         private ICacheableDatabaseModel model;
         private SqliteModelProvider<T> provider;
         private HyenaSqliteCommand select_range_command;
+        private HyenaSqliteCommand select_single_command;
+        private HyenaSqliteCommand select_first_command;
         private HyenaSqliteCommand count_command;
 
         private string reload_sql;
@@ -71,15 +73,32 @@ namespace Hyena.Data.Sqlite
                         INNER JOIN {2}
                             ON {3} = {2}.ItemID
                         WHERE
-                            {2}.ModelID = ? {5}
-                            {4}
+                            {2}.ModelID = {4} {5}
+                            {6}
                         LIMIT ?, ?",
                     provider.Select, provider.From, CacheTableName,
-                    provider.PrimaryKey, provider.Where,
-                    String.IsNullOrEmpty (provider.Where) ? String.Empty : "AND"
-                ), 3
+                    provider.PrimaryKey, uid,
+                    String.IsNullOrEmpty (provider.Where) ? String.Empty : "AND",
+                    provider.Where
+                ), 2
             );
-
+            
+            select_single_command = new HyenaSqliteCommand (
+                String.Format (@"
+                    SELECT OrderID FROM {0}
+                        WHERE
+                            ModelID = {1} AND
+                            ItemID = ?",
+                    CacheTableName, uid
+                ), 1
+            );
+            
+            select_first_command = new HyenaSqliteCommand (
+                String.Format (
+                    "SELECT OrderID FROM {0} WHERE ModelID = {1} LIMIT 1",
+                    CacheTableName, uid
+                )
+            );
 
             reload_sql = String.Format (@"
                 DELETE FROM {0} WHERE ModelID = {1};
@@ -108,6 +127,20 @@ namespace Hyena.Data.Sqlite
         protected virtual string CacheTableName {
             get { return "HyenaCache"; }
         }
+        
+        public int IndexOf (int id)
+        {
+            select_single_command.ApplyValues (id);
+            using (IDataReader target_reader = connection.ExecuteReader (select_single_command)) {
+                if (!target_reader.Read ()) {
+                    return -1;
+                }
+                int target = target_reader.GetInt32 (0);
+                using (IDataReader first_reader = connection.ExecuteReader (select_first_command)) {
+                    return first_reader.Read () ? first_reader.GetInt32 (0) - target : -1;
+                }
+            }
+        }
 
         public override int Reload ()
         {
@@ -122,7 +155,7 @@ namespace Hyena.Data.Sqlite
         protected override void FetchSet (int offset, int limit)
         {
             using (new Timer (String.Format ("Fetching set for {0}", model))) {
-                select_range_command.ApplyValues (uid, offset, limit);
+                select_range_command.ApplyValues (offset, limit);
                 using (IDataReader reader = connection.ExecuteReader (select_range_command)) {
                     while (reader.Read ()) {
                         if (!Contains (offset)) {

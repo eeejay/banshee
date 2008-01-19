@@ -34,12 +34,7 @@ using Hyena.Data.Sqlite;
 
 namespace Banshee.Database
 {
-    public interface IDatabaseItem
-    {
-        int DbIndex { set; }
-    }
-    
-    public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : IDatabaseItem, new ()
+    public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : new ()
     {
         private BansheeDbConnection connection;
         private string table_name;
@@ -109,9 +104,7 @@ namespace Banshee.Database
         
         protected override T MakeNewObject (int index)
         {
-            T item = new T ();
-            item.DbIndex = index;
-            return item;
+            return new T ();
         }
     }
 }

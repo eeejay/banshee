@@ -34,7 +34,7 @@ using Hyena.Data.Sqlite;
 
 namespace Banshee.Database
 {
-    public class BansheeModelCache <T> : SqliteModelCache <T> where T : IDatabaseItem, new ()
+    public class BansheeModelCache <T> : SqliteModelCache <T> where T : new ()
     {
         public BansheeModelCache (HyenaSqliteConnection connection,
                                   string uuid,

@@ -252,11 +252,8 @@ namespace Banshee.Collection.Database
 
         public override int IndexOf (TrackInfo track)
         {
-            if (track is LibraryTrackInfo) {
-                return ((LibraryTrackInfo)track).DbIndex;
-            }
-            
-            return -1;
+            LibraryTrackInfo library_track = track as LibraryTrackInfo;
+            return library_track == null ? -1 : cache.IndexOf (library_track.DbId);
         }
 
         public override TrackInfo this[int index] {
