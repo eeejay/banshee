@@ -131,11 +131,12 @@ namespace Hyena.Data.Sqlite
         
         public int IndexOf (int item_id)
         {
+            if (rows == 0) {
+                return -1;
+            }
             select_single_command.ApplyValues (item_id);
             using (IDataReader target_reader = connection.ExecuteReader (select_single_command)) {
-                if (!target_reader.Read ()) {
-                    return -1;
-                }
+                target_reader.Read ();
                 if (first_order_id == -1) {
                     using (IDataReader reader = connection.ExecuteReader (select_first_command)) {
                         reader.Read ();

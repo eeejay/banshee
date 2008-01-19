@@ -1,5 +1,10 @@
 2008-01-19  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Now with even more
+	  awesome!
+
+2008-01-19  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Improved IndexOf
 	  with first_order_id caching.
 
