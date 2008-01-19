@@ -1,5 +1,9 @@
 2008-01-19  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Oops.
+
+2008-01-19  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Now with even more
 	  awesome!
 

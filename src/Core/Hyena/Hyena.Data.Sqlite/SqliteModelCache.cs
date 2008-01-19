@@ -136,7 +136,9 @@ namespace Hyena.Data.Sqlite
             }
             select_single_command.ApplyValues (item_id);
             using (IDataReader target_reader = connection.ExecuteReader (select_single_command)) {
-                target_reader.Read ();
+                if (!target_reader.Read ()) {
+                    return -1;
+                }
                 if (first_order_id == -1) {
                     using (IDataReader reader = connection.ExecuteReader (select_first_command)) {
                         reader.Read ();
