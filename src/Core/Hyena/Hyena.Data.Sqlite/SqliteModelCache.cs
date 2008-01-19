@@ -44,8 +44,9 @@ namespace Hyena.Data.Sqlite
 
         private string reload_sql;
         private int uid;
-        private int rows = 0;
+        private int rows;
         private bool warm = false;
+        private int first_order_id;
 
         public SqliteModelCache (HyenaSqliteConnection connection,
                            string uuid,
@@ -128,17 +129,20 @@ namespace Hyena.Data.Sqlite
             get { return "HyenaCache"; }
         }
         
-        public int IndexOf (int id)
+        public int IndexOf (int item_id)
         {
-            select_single_command.ApplyValues (id);
+            select_single_command.ApplyValues (item_id);
             using (IDataReader target_reader = connection.ExecuteReader (select_single_command)) {
                 if (!target_reader.Read ()) {
                     return -1;
                 }
-                int target = target_reader.GetInt32 (0);
-                using (IDataReader first_reader = connection.ExecuteReader (select_first_command)) {;
-                    return first_reader.Read () ? target - first_reader.GetInt32 (0) : -1;
+                if (first_order_id == -1) {
+                    using (IDataReader reader = connection.ExecuteReader (select_first_command)) {
+                        reader.Read ();
+                        first_order_id = reader.GetInt32 (0);
+                    }
                 }
+                return target_reader.GetInt32 (0) - first_order_id;
             }
         }
 
@@ -148,6 +152,7 @@ namespace Hyena.Data.Sqlite
             using (new Timer (String.Format ("Generating cache table for {0}", model))) {
                 connection.Execute (reload_sql + model.ReloadFragment);
             }
+            first_order_id = -1;
             UpdateCount ();
             return rows;
         }
