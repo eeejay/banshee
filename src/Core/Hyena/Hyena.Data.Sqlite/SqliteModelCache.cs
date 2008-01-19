@@ -136,8 +136,8 @@ namespace Hyena.Data.Sqlite
                     return -1;
                 }
                 int target = target_reader.GetInt32 (0);
-                using (IDataReader first_reader = connection.ExecuteReader (select_first_command)) {
-                    return first_reader.Read () ? first_reader.GetInt32 (0) - target : -1;
+                using (IDataReader first_reader = connection.ExecuteReader (select_first_command)) {;
+                    return first_reader.Read () ? target - first_reader.GetInt32 (0) : -1;
                 }
             }
         }

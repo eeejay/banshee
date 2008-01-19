@@ -1,5 +1,10 @@
 2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Minor fix for last
+	  commit.
+
+2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Implimented
 	  IndexOf() using SQL MAGIC!
 
