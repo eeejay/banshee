@@ -34,19 +34,6 @@ using System.Text;
 
 namespace Hyena.Data.Sqlite
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public sealed class DatabaseTableAttribute : Attribute
-    {
-        public readonly string Name;
-        public readonly int Version;
-        
-        public DatabaseTableAttribute(string name, int version)
-        {
-            Name = name;
-            Version = version;
-        }
-    }
-    
     [Flags]
     public enum DatabaseColumnConstraints
     {

@@ -42,12 +42,22 @@ namespace Banshee.Database
     public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : IDatabaseItem, new ()
     {
         private BansheeDbConnection connection;
+        private string table_name;
 
-        public BansheeModelProvider (BansheeDbConnection connection)
+        public BansheeModelProvider (BansheeDbConnection connection, string table_name)
             : base (connection)
         {
             this.connection = connection;
+            this.table_name = table_name;
             Init ();
+        }
+        
+        protected override sealed string TableName {
+            get { return table_name; }
+        }
+        
+        protected override int ModelVersion {
+            get { return 1; }
         }
         
         protected override sealed int DatabaseVersion {

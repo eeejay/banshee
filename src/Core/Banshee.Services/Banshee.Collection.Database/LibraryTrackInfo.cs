@@ -37,11 +37,10 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
-    [DatabaseTable("CoreTracks", 1)]
     public class LibraryTrackInfo : TrackInfo, IDatabaseItem
     {
         private static BansheeModelProvider<LibraryTrackInfo> provider = new BansheeModelProvider<LibraryTrackInfo> (
-            ServiceManager.DbConnection
+            ServiceManager.DbConnection, "CoreTracks"
         );
 
         public static BansheeModelProvider<LibraryTrackInfo> Provider {

@@ -1,3 +1,14 @@
+2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseAttributes.cs,
+	  src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs,
+	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs,
+	  src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs: Got
+	  rid of DatabaseTableAttribute
+
 2008-01-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Hyena/Makefile.am:

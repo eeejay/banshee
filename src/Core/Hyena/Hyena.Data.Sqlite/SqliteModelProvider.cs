@@ -48,9 +48,7 @@ namespace Hyena.Data.Sqlite
         private HyenaSqliteCommand select_command;
         private HyenaSqliteCommand select_range_command;
         private HyenaSqliteCommand select_single_command;
-        
-        private string table_name;
-        private int model_version;
+
         
         private string primary_key;
         private string select;
@@ -59,6 +57,8 @@ namespace Hyena.Data.Sqlite
         
         private const string HYENA_DATABASE_NAME = "hyena_database_master";
 
+        protected abstract string TableName { get; }
+        protected abstract int ModelVersion { get; }
         protected abstract int DatabaseVersion { get; }
         protected abstract void MigrateTable (int old_version);
         protected abstract void MigrateDatabase (int old_version);
@@ -70,26 +70,7 @@ namespace Hyena.Data.Sqlite
         
         protected SqliteModelProvider (HyenaSqliteConnection connection)
         {
-            foreach (DatabaseTableAttribute attribute in typeof (T).GetCustomAttributes (typeof (DatabaseTableAttribute), true)) {
-                table_name = attribute.Name;
-                model_version = attribute.Version;
-            }
-            
-            if (TableName == null) {
-                throw new Exception (String.Format (
-                    "The type {0} does not have a DatabaseTable attribute",
-                    typeof (T).Name));
-            }
-            
             this.connection = connection;
-        }
-        
-        protected string TableName {
-            get { return table_name; }
-        }
-        
-        protected int ModelVersion {
-            get { return model_version; }
         }
 
         protected void Init ()

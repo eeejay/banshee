@@ -41,13 +41,13 @@
     <File name="Hyena.Data.Query/XmlQueryParser.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Query/QueryFieldSet.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Sqlite/DatabaseColumn.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Sqlite/DatabaseAttributes.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/DatabaseColumnAttribute.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Sqlite/SqliteModelProvider.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Sqlite/SqilteModelCache.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Sqlite/HyenaSqliteCommand.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Sqlite/HyenaSqliteConnection.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Sqlite/ICacheableDatabaseModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ModelCache.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/SqliteModelCache.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
