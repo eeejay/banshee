@@ -1,3 +1,9 @@
+2008-01-19  Ruben Vermeersch  <ruben@savanne.be>
+
+	* ext/Makefile.MonoDevelop: Fix the MonoDevelop build on Ubuntu. Ubuntu
+	uses dash instead of bash for the /bin/sh symlink. Dash however doesn't
+	have pushd/popd.
+
 2008-01-19  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Oops.
