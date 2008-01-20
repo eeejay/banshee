@@ -1,3 +1,7 @@
+2008-01-20  Ruben Vermeersch  <ruben@savanne.be>
+
+	* ext/Makefile.MonoDevelop: Do it a bit nicer by using make's $(CURDIR).
+
 2008-01-20  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,

@@ -7,17 +7,15 @@ SUBDIRS = \
 
 all:
 	for subdir in $(SUBDIRS); do \
-		export PREV_PWD=$$(pwd); \
 		cd $$subdir; \
 		make -f Makefile.MonoDevelop; \
-		cd $$PREV_PWD; \
+		cd $(CURDIR); \
 	done
 
 clean:
 	for subdir in $(SUBDIRS); do \
-		export PREV_PWD=$$(pwd); \
 		cd $$subdir; \
 		make -f Makefile.MonoDevelop clean; \
-		cd $$PREV_PWD; \
+		cd $(CURDIR); \
 	done
 
