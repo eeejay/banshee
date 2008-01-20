@@ -45,7 +45,7 @@ namespace Hyena.Data.Sqlite
         private string reload_sql;
         private int uid;
         private int rows;
-        private bool warm = false;
+        private bool warm;
         private int first_order_id;
 
         public SqliteModelCache (HyenaSqliteConnection connection,
@@ -135,18 +135,14 @@ namespace Hyena.Data.Sqlite
                 return -1;
             }
             select_single_command.ApplyValues (item_id);
-            using (IDataReader target_reader = connection.ExecuteReader (select_single_command)) {
-                if (!target_reader.Read ()) {
-                    return -1;
-                }
-                if (first_order_id == -1) {
-                    using (IDataReader reader = connection.ExecuteReader (select_first_command)) {
-                        reader.Read ();
-                        first_order_id = reader.GetInt32 (0);
-                    }
-                }
-                return target_reader.GetInt32 (0) - first_order_id;
+            int target_id = connection.QueryInt32 (select_single_command);
+            if (target_id == 0) {
+                return -1;
             }
+            if (first_order_id == -1) {
+                first_order_id = connection.QueryInt32 (select_first_command);
+            }
+            return target_id - first_order_id;
         }
 
         public override int Reload ()
@@ -205,7 +201,7 @@ namespace Hyena.Data.Sqlite
 
         private void CheckCacheTable ()
         {
-            if (!connection.TableExists(CacheTableName)) {
+            if (!connection.TableExists (CacheTableName)) {
                 connection.Execute (String.Format (@"
                     CREATE TABLE {0} (
                         OrderID INTEGER PRIMARY KEY,
@@ -214,7 +210,7 @@ namespace Hyena.Data.Sqlite
                 ));
             }
 
-            if (!connection.TableExists(CacheModelsTableName)) {
+            if (!connection.TableExists (CacheModelsTableName)) {
                 connection.Execute (String.Format (
                     "CREATE TABLE {0} (CacheID INTEGER PRIMARY KEY, ModelID TEXT UNIQUE)",
                     CacheModelsTableName

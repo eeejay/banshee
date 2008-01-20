@@ -28,6 +28,7 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Data;
 using Mono.Data.Sqlite;
 
@@ -85,24 +86,43 @@ namespace Hyena.Data.Sqlite
 
         public bool TableExists (string tableName)
         {
-            IDbCommand command = connection.CreateCommand ();
-            command.CommandText = @"
-                SELECT COUNT(*)
-                    FROM sqlite_master
-                    WHERE Type='table' AND Name=:table_name";
-            
-            IDbDataParameter table_param = command.CreateParameter ();
-            table_param.ParameterName = "table_name";
-            table_param.Value = tableName;
-            
-            command.Parameters.Add (table_param);
-            
-            try {
-                return Convert.ToInt32 (command.ExecuteScalar ()) > 0;
-            } catch (Exception e) {
-                Console.WriteLine ("Caught exception trying to execute {0}", command.CommandText);
-                throw e;
+            return Exists ("table", tableName);
+        }
+        
+        public bool IndexExists (string indexName)
+        {
+            return Exists ("index", indexName);
+        }
+        
+        private bool Exists (string type, string name)
+        {
+            return
+                QueryInt32 (
+                    String.Format (@"
+                        SELECT COUNT(*)
+                            FROM sqlite_master
+                            WHERE Type='{0}' AND Name='{1}'",
+                        type, name)
+                ) > 0;
+        }
+        
+        private static readonly char [] ws_chars = new char [] { ' ', '\t', '\n', '\r' };
+        public Dictionary<string, string> GetSchema (string name)
+        {
+            string sql = QueryString (String.Format (
+                "SELECT sql FROM sqlite_master WHERE Name='{0}'", name));
+            if (String.IsNullOrEmpty (sql)) {
+                throw new Exception (String.Format (
+                    "Cannot get schema for {0} because it does not exist", name));
             }
+            Dictionary<string, string> schema = new Dictionary<string, string> ();
+            sql = sql.Substring (sql.IndexOf ('(') + 1);
+            foreach (string column_def in sql.Split (',')) {
+                string column_def_t = column_def.Trim ();
+                int ws_index = column_def_t.IndexOfAny (ws_chars);
+                schema.Add (column_def_t.Substring (0, ws_index), null);
+            }
+            return schema;
         }
 
         public IDataReader ExecuteReader (SqliteCommand command)
@@ -149,10 +169,35 @@ namespace Hyena.Data.Sqlite
         {
             return ExecuteScalar (new SqliteCommand (command.ToString ()));
         }
+        
+        public Int32 QueryInt32 (SqliteCommand command)
+        {
+            return Convert.ToInt32 (ExecuteScalar (command));
+        }
+        
+        public Int32 QueryInt32 (HyenaSqliteCommand command)
+        {
+            return QueryInt32 (command.Command);
+        }
 
         public Int32 QueryInt32 (object command)
         {
-            return Convert.ToInt32 (ExecuteScalar (command));
+            return QueryInt32 (new SqliteCommand (command.ToString ()));
+        }
+        
+        public string QueryString (SqliteCommand command)
+        {
+            return Convert.ToString (ExecuteScalar (command));
+        }
+        
+        public string QueryString (HyenaSqliteCommand command)
+        {
+            return QueryString (command.Command);
+        }
+        
+        public string QueryString (object command)
+        {
+            return QueryString (new SqliteCommand (command.ToString ()));
         }
 
         public int Execute (SqliteCommand command)

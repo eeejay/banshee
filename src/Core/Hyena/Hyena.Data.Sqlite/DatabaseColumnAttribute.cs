@@ -42,15 +42,15 @@ namespace Hyena.Data.Sqlite
         Unique = 4
     }
     
-    public abstract class DatabaseColumnBaseAttribute : Attribute
+    public abstract class AbstractDatabaseColumnAttribute : Attribute
     {
         private string column_name;
         
-        public DatabaseColumnBaseAttribute ()
+        public AbstractDatabaseColumnAttribute ()
         {
         }
         
-        public DatabaseColumnBaseAttribute (string column_name)
+        public AbstractDatabaseColumnAttribute (string column_name)
         {
             this.column_name = column_name;
         }
@@ -61,7 +61,7 @@ namespace Hyena.Data.Sqlite
     }
     
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public sealed class DatabaseColumnAttribute : DatabaseColumnBaseAttribute
+    public sealed class DatabaseColumnAttribute : AbstractDatabaseColumnAttribute
     {
         private DatabaseColumnConstraints contraints;
         private string default_value;
@@ -92,14 +92,14 @@ namespace Hyena.Data.Sqlite
     }
     
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public sealed class DatabaseVirtualColumnAttribute : DatabaseColumnBaseAttribute
+    public sealed class VirtualDatabaseColumnAttribute : AbstractDatabaseColumnAttribute
     {
         private string target_table;
         private string target_column;
         private string local_key;
         private string foreign_key;
         
-        public DatabaseVirtualColumnAttribute (string column_name, string target_table, string local_key, string foreign_key)
+        public VirtualDatabaseColumnAttribute (string column_name, string target_table, string local_key, string foreign_key)
             : base (column_name)
         {
             this.target_table = target_table;

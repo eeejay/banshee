@@ -27,7 +27,6 @@
 //
 
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Text;
@@ -36,42 +35,46 @@ namespace Hyena.Data.Sqlite
 {
     internal abstract class AbstractDatabaseColumn
     {
-        private readonly DatabaseColumnBaseAttribute attribute;
+        private readonly AbstractDatabaseColumnAttribute attribute;
         private readonly FieldInfo field_info;
         private readonly PropertyInfo property_info;
         private readonly Type type;
         private readonly string column_type;
         private readonly string name;
         
-        public AbstractDatabaseColumn (FieldInfo field_info, DatabaseColumnBaseAttribute attribute)
+        public AbstractDatabaseColumn (FieldInfo field_info, AbstractDatabaseColumnAttribute attribute)
             : this (attribute, field_info, field_info.FieldType)
         {
             this.field_info = field_info;
         }
         
-        public AbstractDatabaseColumn (PropertyInfo property_info, DatabaseColumnBaseAttribute attribute) :
+        public AbstractDatabaseColumn (PropertyInfo property_info, AbstractDatabaseColumnAttribute attribute) :
             this (attribute, property_info, property_info.PropertyType)
         {
             if (!property_info.CanRead || !property_info.CanWrite) {
-                throw new Exception (String.Format ("{0}: The property {1} must have both a get and a set " +
-                                                  "block in order to be bound to a database column.",
-                                                  property_info.DeclaringType,
-                                                  property_info.Name));
+                throw new Exception (String.Format (
+                    "{0}: The property {1} must have both a get and a set " +
+                    "block in order to be bound to a database column.",
+                    property_info.DeclaringType,
+                    property_info.Name)
+                );
             }
             this.property_info = property_info;
         }
         
-        private AbstractDatabaseColumn (DatabaseColumnBaseAttribute attribute, MemberInfo member_info, Type type)
+        private AbstractDatabaseColumn (AbstractDatabaseColumnAttribute attribute, MemberInfo member_info, Type type)
         {
-            if (type.Equals (typeof (string))) {
+            if (type == typeof (string)) {
                 column_type = "TEXT";
-            } else if (type.Equals (typeof (int)) || type.Equals (typeof (long))) {
+            } else if (type == typeof (int) || type == typeof (long)) {
                 column_type = "INTEGER";
             } else {
-                throw new Exception (String.Format ("{0}.{1}: The type {2} cannot be bound to a database column.",
-                                                  member_info.DeclaringType,
-                                                  member_info.Name,
-                                                  type.FullName));
+                throw new Exception (String.Format (
+                    "{0}.{1}: The type {2} cannot be bound to a database column.",
+                    member_info.DeclaringType,
+                    member_info.Name,
+                    type.Name)
+                );
             }
             this.attribute = attribute;
             this.name = attribute.ColumnName ?? member_info.Name;
@@ -80,18 +83,9 @@ namespace Hyena.Data.Sqlite
         
         public object GetValue (object target)
         {
-            object result;
-            if (field_info != null) {
-                result = field_info.GetValue (target);
-            } else {
-                result = property_info.GetGetMethod (true).Invoke (target, null);
-            }
-            return GetValue (type, result);
-        }
-        
-        protected virtual object GetValue (Type type, object value)
-        {
-            return value;
+            return field_info != null
+                ? field_info.GetValue (target)
+                : property_info.GetGetMethod (true).Invoke (target, null);
         }
         
         public void SetValue (object target, IDataReader reader, int column)
@@ -103,15 +97,15 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual object SetValue (Type type, IDataReader reader, int column)
+        private static object SetValue (Type type, IDataReader reader, int column)
         {
             // FIXME should we insist on nullable types?
             object result;
-            if (type.Equals (typeof (string))) {
+            if (type == typeof (string)) {
                 result = !reader.IsDBNull (column)
                     ? String.Intern (reader.GetString (column))
                     : null;
-            } else if (type.Equals (typeof (int))) {
+            } else if (type == typeof (int)) {
                 result = !reader.IsDBNull (column)
                     ? reader.GetInt32 (column)
                     : 0;
@@ -132,7 +126,7 @@ namespace Hyena.Data.Sqlite
         }
     }
     
-    internal class DatabaseColumn : AbstractDatabaseColumn
+    internal sealed class DatabaseColumn : AbstractDatabaseColumn
     {
         private DatabaseColumnAttribute attribute;
         
@@ -195,17 +189,17 @@ namespace Hyena.Data.Sqlite
         }
     }
     
-    internal class VirtualDatabaseColumn : AbstractDatabaseColumn
+    internal sealed class VirtualDatabaseColumn : AbstractDatabaseColumn
     {
-        private DatabaseVirtualColumnAttribute attribute;
+        private VirtualDatabaseColumnAttribute attribute;
         
-        public VirtualDatabaseColumn (FieldInfo field_info, DatabaseVirtualColumnAttribute attribute)
+        public VirtualDatabaseColumn (FieldInfo field_info, VirtualDatabaseColumnAttribute attribute)
             : base (field_info, attribute)
         {
             this.attribute = attribute;
         }
         
-        public VirtualDatabaseColumn (PropertyInfo property_info, DatabaseVirtualColumnAttribute attribute)
+        public VirtualDatabaseColumn (PropertyInfo property_info, VirtualDatabaseColumnAttribute attribute)
             : base (property_info, attribute)
         {
             this.attribute = attribute;

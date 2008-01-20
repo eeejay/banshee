@@ -99,93 +99,83 @@ namespace Hyena.Data.Sqlite
             CheckTable ();
         }
         
-        private void CheckTable ()
-        {
-            Console.WriteLine ("In {0} checking for table {1}", this, TableName);
-            using (IDataReader reader = connection.ExecuteReader (GetSchemaSql (TableName))) {
-                if (reader.Read ()) {
-                    Dictionary<string, string> schema = GetSchema (reader);
-                    foreach (DatabaseColumn column in columns) {
-                        if (!schema.ContainsKey (column.Name)) {
-                            connection.Execute (String.Format (
-                                "ALTER TABLE {0} ADD {1}", TableName, column.Schema));
-                        }
-                        if (column.Index != null) {
-                            using (IDataReader index_reader = connection.ExecuteReader (GetSchemaSql (column.Index))) {
-                                if (!index_reader.Read ()) {
-                                    connection.Execute (String.Format (
-                                        "CREATE INDEX {0} ON {1}({2})", column.Index, TableName, column.Name));
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    CreateTable ();
-                }
-            }
-        }
-        
-        private static Dictionary<string, string> GetSchema (IDataReader reader)
-        {
-            Dictionary<string, string> schema = new Dictionary<string, string> ();
-            string sql = reader.GetString (0);
-            sql = sql.Substring (sql.IndexOf ('(') + 1);
-            foreach (string column_def in sql.Split (',')) {
-                string column_def_t = column_def.Trim ();
-                int ws_index = column_def_t.IndexOfAny (new char [] { ' ', '\t', '\n', '\r' });
-                schema.Add (column_def_t.Substring (0, ws_index), null);
-            }
-            return schema;
-        }
-        
         protected virtual void CheckVersion ()
         {
-            using (IDataReader reader = connection.ExecuteReader (GetSchemaSql (HyenaTableName))) {
-                if (reader.Read ()) {
-                    using (IDataReader table_reader = connection.ExecuteReader (String.Format (
-                        "SELECT version FROM {0} WHERE name = '{1}'", HyenaTableName, TableName))) {
-                        if (table_reader.Read ()) {
-                            int version = table_reader.GetInt32 (0);
-                            if (version < ModelVersion) {
-                                MigrateTable (version);
-                                connection.Execute (String.Format( 
-                                    "UPDATE {0} SET version = {1} WHERE name = '{3}'",
-                                    HyenaTableName, ModelVersion, TableName));
-                            }
-                        } else {
-                            connection.Execute (String.Format (
-                                "INSERT INTO {0} (name, version) VALUES ('{1}', {2})",
-                                HyenaTableName, TableName, ModelVersion));
+            if (connection.TableExists (HyenaTableName)) {
+                using (IDataReader reader = connection.ExecuteReader (SelectVersionSql (TableName))) {
+                    if (reader.Read ()) {
+                        int table_version = reader.GetInt32 (0);
+                        if (table_version < ModelVersion) {
+                            MigrateTable (table_version);
+                            UpdateVersion (TableName, ModelVersion);
                         }
-                    }
-                    using (IDataReader db_reader = connection.ExecuteReader (String.Format (
-                        "SELECT version FROM {0} WHERE name = '{1}'", HyenaTableName, HYENA_DATABASE_NAME))) {
-                        db_reader.Read ();
-                        int version = db_reader.GetInt32 (0);
-                        if (version < DatabaseVersion) {
-                            MigrateDatabase (version);
-                            connection.Execute (String.Format (
-                                "UPDATE {0} SET version = {1} WHERE name = '{2}'",
-                                HyenaTableName, ModelVersion, HYENA_DATABASE_NAME));
-                        }
+                    } else {
+                        InsertVersion (TableName, ModelVersion);
                     }
                 }
-                else {
-                    connection.Execute (String.Format (
-                        "CREATE TABLE {0} (id INTEGER PRIMARY KEY, name TEXT UNIQUE, version INTEGER)", HyenaTableName));
-                    connection.Execute (String.Format (
-                        "INSERT INTO {0} (name, version) VALUES ('{1}', {2})",
-                        HyenaTableName, HYENA_DATABASE_NAME, DatabaseVersion));
-                    connection.Execute (String.Format (
-                        "INSERT INTO {0} (name, version) VALUES ('{1}', {2})",
-                        HyenaTableName, TableName, ModelVersion));
+                int db_version = connection.QueryInt32 (SelectVersionSql (HYENA_DATABASE_NAME));
+                if (db_version < DatabaseVersion) {
+                    MigrateDatabase (db_version);
+                    UpdateVersion (HYENA_DATABASE_NAME, DatabaseVersion);
                 }
+            }
+            else {
+                connection.Execute (String.Format (
+                    @"CREATE TABLE {0} (
+                        id INTEGER PRIMARY KEY,
+                        name TEXT UNIQUE,
+                        version INTEGER)",
+                    HyenaTableName)
+                );
+                
+                InsertVersion (HYENA_DATABASE_NAME, DatabaseVersion);
+                InsertVersion (TableName, ModelVersion);
             }
         }
         
-        protected static string GetSchemaSql (string TableName)
+        private string SelectVersionSql (string name)
         {
-            return String.Format ("SELECT sql FROM sqlite_master WHERE name = '{0}'", TableName);
+            return String.Format (
+                "SELECT version FROM {0} WHERE name='{1}'",
+                HyenaTableName, name);
+        }
+        
+        private void UpdateVersion (string name, int version)
+        {
+            connection.Execute (String.Format (
+                "UPDATE {0} SET version={1} WHERE name='{2}'",
+                HyenaTableName, version, name));
+        }
+        
+        private void InsertVersion (string name, int version)
+        {
+            connection.Execute (String.Format (
+                "INSERT INTO {0} (name, version) VALUES ('{1}', {2})",
+                HyenaTableName, name, version));
+        }
+        
+        private void CheckTable ()
+        {
+            //Console.WriteLine ("In {0} checking for table {1}", this, TableName);
+            Dictionary<string, string> schema = connection.GetSchema (TableName);
+            if (schema.Count > 0) {
+                foreach (DatabaseColumn column in columns) {
+                    if (!schema.ContainsKey (column.Name)) {
+                        connection.Execute (String.Format (
+                            "ALTER TABLE {0} ADD {1}",
+                            TableName, column.Schema)
+                        );
+                    }
+                    if (column.Index != null && !connection.IndexExists (column.Index)) {
+                        connection.Execute (String.Format (
+                            "CREATE INDEX {0} ON {1}({2})",
+                            column.Index, TableName, column.Name)
+                        );
+                    }
+                }
+            } else {
+                CreateTable ();
+            }
         }
         
         private void AddColumn (MemberInfo member, Attribute attribute)
@@ -198,10 +188,16 @@ namespace Hyena.Data.Sqlite
                 
                 foreach (DatabaseColumn col in columns) {
                     if (col.Name == c.Name) {
-                        throw new Exception (String.Format ("{0} has multiple columns named {1}", TableName, c.Name));
+                        throw new Exception (String.Format (
+                            "{0} has multiple columns named {1}",
+                             TableName, c.Name)
+                        );
                     }
                     if (col.Index != null && col.Index == c.Index) {
-                        throw new Exception (String.Format ("{0} has multiple indecies named {1}", TableName, c.Name));
+                        throw new Exception (String.Format (
+                            "{0} has multiple indecies named {1}",
+                            TableName, c.Name)
+                        );
                     }
                 }
                 
@@ -209,12 +205,14 @@ namespace Hyena.Data.Sqlite
                 
                 if ((c.Constraints & DatabaseColumnConstraints.PrimaryKey) > 0) {
                     if (key != null) {
-                        throw new Exception (String.Format ("Multiple primary keys in the {0} table", TableName));
+                        throw new Exception (String.Format (
+                            "Multiple primary keys in the {0} table", TableName)
+                        );
                     }
                     key = c;
                 }
             }
-            DatabaseVirtualColumnAttribute virtual_column = attribute as DatabaseVirtualColumnAttribute;
+            VirtualDatabaseColumnAttribute virtual_column = attribute as VirtualDatabaseColumnAttribute;
             if (virtual_column != null) {
                 if (member is FieldInfo) {
                     virtual_columns.Add (new VirtualDatabaseColumn ((FieldInfo) member, virtual_column));
@@ -230,7 +228,9 @@ namespace Hyena.Data.Sqlite
             foreach (DatabaseColumn column in columns) {
                 if (column.Index != null) {
                     connection.Execute (String.Format (
-                        "CREATE INDEX {0} ON {1}({2})", column.Index, TableName, column.Name));
+                        "CREATE INDEX {0} ON {1}({2})",
+                        column.Index, TableName, column.Name)
+                    );
                 }
             }
         }
@@ -372,8 +372,9 @@ namespace Hyena.Data.Sqlite
                     }
 
                     insert_command = new HyenaSqliteCommand (String.Format (
-                            "INSERT INTO {0} ({1}) VALUES ({2})",
-                            TableName, cols.ToString (), vals.ToString ()), count);
+                        "INSERT INTO {0} ({1}) VALUES ({2})",
+                        TableName, cols.ToString (), vals.ToString ()), count
+                    );
                 }
                 return insert_command;
             }
@@ -411,9 +412,14 @@ namespace Hyena.Data.Sqlite
         protected virtual HyenaSqliteCommand SelectCommand {
             get {
                 if (select_command == null) {
-                    select_command = new HyenaSqliteCommand (Where.Length > 0
-                        ? String.Format ("SELECT {0} FROM {1} WHERE {2}", Select, From, Where)
-                        : String.Format ("SELECT {0} FROM {1}", Select, From));
+                    select_command = new HyenaSqliteCommand (
+                        String.Format (
+                            "SELECT {0} FROM {1}{2}{3}",
+                            Select, From,
+                            (String.IsNullOrEmpty (Where) ? String.Empty : " WHERE "),
+                            Where
+                        )
+                    );
                 }
                 return select_command;
             }
@@ -422,9 +428,14 @@ namespace Hyena.Data.Sqlite
         protected virtual HyenaSqliteCommand SelectRangeCommand {
             get {
                 if (select_range_command == null) {
-                    select_range_command = new HyenaSqliteCommand (Where.Length > 0
-                        ? String.Format ("SELECT {0} FROM {1} WHERE {2} LIMIT ?, ?", Select, From, Where)
-                        : String.Format ("SELECT {0} FROM {1} LIMIT ?, ?", Select, From), 2);
+                    select_command = new HyenaSqliteCommand (
+                        String.Format (
+                            "SELECT {0} FROM {1}{2}{3} LIMIT ?, ?",
+                            Select, From,
+                            (String.IsNullOrEmpty (Where) ? String.Empty : " WHERE "),
+                            Where
+                        ), 2
+                    );
                 }
                 return select_range_command;
             }
@@ -433,9 +444,14 @@ namespace Hyena.Data.Sqlite
         protected virtual HyenaSqliteCommand SelectSingleCommand {
             get {
                 if (select_single_command == null) {
-                    select_single_command = new HyenaSqliteCommand (Where.Length > 0
-                        ? String.Format ("SELECT {0} FROM {1} WHERE {2} AND {3} = ?", Select, From, Where, PrimaryKey)
-                        : String.Format ("SELECT {0} FROM {1} WHERE {2} = ?", Select, From, PrimaryKey), 1);
+                    select_single_command = new HyenaSqliteCommand (
+                        String.Format (
+                            "SELECT {0} FROM {1} WHERE {2}{3}{4} = ?",
+                            Select, From, Where,
+                            (String.IsNullOrEmpty (Where) ? String.Empty : " AND "),
+                            PrimaryKey
+                        ), 1
+                    );
                 }
                 return select_single_command;
             }

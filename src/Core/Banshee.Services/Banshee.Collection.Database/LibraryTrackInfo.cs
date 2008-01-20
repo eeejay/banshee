@@ -89,13 +89,13 @@ namespace Banshee.Collection.Database
             set { album_id = value; }
         }
 
-        [DatabaseVirtualColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]
+        [VirtualDatabaseColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]
         public override string ArtistName {
             get { return base.ArtistName; }
             set { base.ArtistName = value; }
         }
         
-        [DatabaseVirtualColumn("Title", "CoreAlbums", "AlbumID", "AlbumID")]
+        [VirtualDatabaseColumn("Title", "CoreAlbums", "AlbumID", "AlbumID")]
         public override string AlbumTitle {
             get { return base.AlbumTitle; }
             set { base.AlbumTitle = value; }

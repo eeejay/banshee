@@ -1,3 +1,27 @@
+2008-01-19  Scott Peterson  <lunchtimemama@gmail.com>
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Cleaned up
+	  CheckVersion and CheckTable, beautified
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Dealt with new
+  	  type names and cleaned up.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Reworked
+	  TableExitst and added new convenience methods IndexExitsts,
+	  GetSchema, and QueryString. Also added more overloads to QueryInt32
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Made IndexOf to
+	  use QueryInt32.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs: Renamed
+	  DatabaseColumnBaseAttribute to AbstractDatabaseColumnAttribute and
+	  renamed DatabaseVirtualColumnAttribute to
+	  VirtualDatabaseColumnAttribute.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	  Dealt with new type names
+
 2008-01-19  Ruben Vermeersch  <ruben@savanne.be>
 
 	* ext/Makefile.MonoDevelop: Fix the MonoDevelop build on Ubuntu. Ubuntu

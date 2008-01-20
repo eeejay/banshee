@@ -111,7 +111,7 @@ namespace Banshee.Collection.Database
             set { base.Title = value; }
         }
 
-        [DatabaseVirtualColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]
+        [VirtualDatabaseColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]
         public override string ArtistName {
             get { return base.ArtistName; }
             set { base.ArtistName = value; }
