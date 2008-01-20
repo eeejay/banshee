@@ -1,3 +1,9 @@
+2008-01-20  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs,
+	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs: Got rid of
+	  unnecessary private variables.
+
 2008-01-19  Scott Peterson  <lunchtimemama@gmail.com>
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Cleaned up

@@ -35,7 +35,6 @@ namespace Hyena.Data.Sqlite
 {
     internal abstract class AbstractDatabaseColumn
     {
-        private readonly AbstractDatabaseColumnAttribute attribute;
         private readonly FieldInfo field_info;
         private readonly PropertyInfo property_info;
         private readonly Type type;
@@ -76,7 +75,6 @@ namespace Hyena.Data.Sqlite
                     type.Name)
                 );
             }
-            this.attribute = attribute;
             this.name = attribute.ColumnName ?? member_info.Name;
             this.type = type;
         }

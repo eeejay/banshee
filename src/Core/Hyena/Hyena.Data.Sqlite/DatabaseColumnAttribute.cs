@@ -95,7 +95,6 @@ namespace Hyena.Data.Sqlite
     public sealed class VirtualDatabaseColumnAttribute : AbstractDatabaseColumnAttribute
     {
         private string target_table;
-        private string target_column;
         private string local_key;
         private string foreign_key;
         
