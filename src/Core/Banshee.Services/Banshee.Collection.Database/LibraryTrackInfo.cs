@@ -53,8 +53,6 @@ namespace Banshee.Collection.Database
             AbsoluteUri
         }
         
-        private int dbid;
-        
         public LibraryTrackInfo () : base ()
         {
             Attributes |= TrackAttributes.CanPlay;
@@ -66,9 +64,9 @@ namespace Banshee.Collection.Database
         }
         
         [DatabaseColumn("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
+        private int dbid;
         public int DbId {
             get { return dbid; }
-            internal set { dbid = value; }
         }
 
         [DatabaseColumn("ArtistID", Index = "CoreTracksArtistIndex")]

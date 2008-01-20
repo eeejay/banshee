@@ -52,8 +52,6 @@ namespace Banshee.Collection.Database
             "SELECT ArtistID, Name FROM CoreArtists WHERE Name = ?", 1
         );
 
-        private int dbid;
-
         private enum Column : int {
             ArtistID,
             Name
@@ -98,9 +96,9 @@ namespace Banshee.Collection.Database
         }
 
         [DatabaseColumn("ArtistID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
+        private int dbid;
         public int DbId {
             get { return dbid; }
-            internal set { dbid = value; }
         }
 
         [DatabaseColumn]
