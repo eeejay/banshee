@@ -1,5 +1,14 @@
 2008-01-20  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs,
+	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
+	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	  Consolidated save logic.
+
+2008-01-20  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs,
 	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs: Got rid of
 	  unnecessary private variables.

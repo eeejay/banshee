@@ -62,11 +62,7 @@ namespace Banshee.Collection.Database
 
         public override void Save ()
         {
-            if (DbId < 0) {
-                DbId = Provider.Insert (this);
-            } else {
-                Provider.Update (this);
-            }
+            Provider.Save (this);
         }
         
         [DatabaseColumn("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]

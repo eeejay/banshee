@@ -88,10 +88,15 @@ namespace Hyena.Data.Sqlite
         
         public void SetValue (object target, IDataReader reader, int column)
         {
+            SetValue (target, SetValue (type, reader, column));
+        }
+        
+        public void SetValue (object target, object value)
+        {
             if (field_info != null) {
-                field_info.SetValue (target, SetValue (type, reader, column));
+                field_info.SetValue (target, value);
             } else {
-                property_info.GetSetMethod (true).Invoke (target, new object[] { SetValue (type, reader, column) });
+                property_info.GetSetMethod (true).Invoke (target, new object[] { value });
             }
         }
         

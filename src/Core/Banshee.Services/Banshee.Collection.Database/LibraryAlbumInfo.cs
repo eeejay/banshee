@@ -86,11 +86,7 @@ namespace Banshee.Collection.Database
 
         public void Save ()
         {
-            if (DbId < 0) {
-                DbId = Provider.Insert (this);
-            } else {
-                Provider.Update (this);
-            }
+            Provider.Save (this);
         }
 
         [DatabaseColumn("AlbumID", Constraints = DatabaseColumnConstraints.PrimaryKey)]

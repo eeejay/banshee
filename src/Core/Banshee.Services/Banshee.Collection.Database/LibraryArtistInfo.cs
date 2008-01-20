@@ -88,11 +88,7 @@ namespace Banshee.Collection.Database
 
         public void Save ()
         {
-            if (DbId < 0) {
-                dbid = Provider.Insert (this);
-            } else {
-                Provider.Update (this);
-            }
+            Provider.Save (this);
         }
 
         private void LoadFromReader(IDataReader reader)

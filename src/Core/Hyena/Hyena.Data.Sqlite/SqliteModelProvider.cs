@@ -235,6 +235,15 @@ namespace Hyena.Data.Sqlite
             }
         }
         
+        public void Save (T target)
+        {
+            if (((int)key.GetValue (target)) > 0) {
+                Update (target);
+            } else {
+                key.SetValue (target, Insert (target));
+            }
+        }
+        
         protected virtual void PrepareInsertCommand (T target)
         {
             for (int i = 0; i < columns.Count; i++) {
@@ -242,7 +251,7 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        public int Insert (T target)
+        protected int Insert (T target)
         {
             PrepareInsertCommand (target);
             return connection.Execute (InsertCommand);
@@ -256,7 +265,7 @@ namespace Hyena.Data.Sqlite
             UpdateCommand.Parameters[columns.Count].Value = key.GetValue (target);
         }
         
-        public void Update (T target)
+        protected void Update (T target)
         {
             PrepareUpdateCommand (target);
             connection.Execute (UpdateCommand);
