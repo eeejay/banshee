@@ -91,7 +91,7 @@ namespace Banshee.Collection
                 return false;
             }
             
-            return ArtistAlbumId.Equals (track.ArtistAlbumId);
+            return ArtistAlbumId == track.ArtistAlbumId;
         }
 
         public virtual void Save ()

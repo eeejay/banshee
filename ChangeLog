@@ -1,3 +1,8 @@
+2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Avoid NRE, thanks
+	to Alex Hixon.
+
 2008-01-20  Ruben Vermeersch  <ruben@savanne.be>
 
 	* ext/Makefile.MonoDevelop: Do it a bit nicer by using make's $(CURDIR).
@@ -30,7 +35,7 @@
 	  CheckVersion and CheckTable, beautified
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Dealt with new
-  	  type names and cleaned up.
+	  type names and cleaned up.
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Reworked
 	  TableExitst and added new convenience methods IndexExitsts,
