@@ -1,5 +1,13 @@
 2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Base/Banshee.Equalizer.Gui/*:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/*: Move.
+
+	* src/Core/Banshee.Base/Banshee.Equalizer/*:
+	* src/Core/Banshee.Services/Banshee.Equalizer/*: Move.
+
+2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Avoid NRE, thanks
 	to Alex Hixon.
 
