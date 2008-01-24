@@ -1,5 +1,10 @@
 2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Part of
+	previous patch, forgot to commit.
+
+2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Patch from Alexander Hxion <hixon.alexander@mediati.org>.
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
@@ -19,7 +24,6 @@
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineState.cs:
 	* src/Core/Banshee.Services/Banshee.MediaEngine/IEqualizer.cs:
 	* src/Core/Banshee.Services/Makefile.am:
-	* src/Core/Banshee.Base/banshee-core.schemas.in:
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
 	* libbanshee/gst-playback-0.10.c: Added support for graphical equalizer.
 	  Fixes BGO #426562.
