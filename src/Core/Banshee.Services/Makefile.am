@@ -30,6 +30,9 @@ SOURCES =  \
 	Banshee.Database/BansheeDbFormatMigrator.cs \
 	Banshee.Database/BansheeModelCache.cs \
 	Banshee.Database/BansheeModelProvider.cs \
+	Banshee.Equalizer/EqualizerManager.cs \
+	Banshee.Equalizer/EqualizerSetting.cs \
+	Banshee.Equalizer/EqualizerSettingEvent.cs \
 	Banshee.Library/HomeDirectoryImportSource.cs \
 	Banshee.Library/IImportSource.cs \
 	Banshee.Library/ImportSourceManager.cs \

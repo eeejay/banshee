@@ -1,5 +1,37 @@
 2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patch from Alexander Hxion <hixon.alexander@mediati.org>.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerPresetComboBox.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerBandScale.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerLevelsBox.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerManager.cs:
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerSetting.cs:
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerSettingEvent.cs:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineState.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IEqualizer.cs:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Base/banshee-core.schemas.in:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	* libbanshee/gst-playback-0.10.c: Added support for graphical equalizer.
+	  Fixes BGO #426562.
+	  
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineState.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs: Added
+	  new PlayerEngineState.Initalized state type; fired when engine has
+	  initialized itself. Required for the equalizer to enable the user's last
+	  preset just after the engine starts.
+
+2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Base/Banshee.Equalizer.Gui/*:
 	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/*: Move.
 

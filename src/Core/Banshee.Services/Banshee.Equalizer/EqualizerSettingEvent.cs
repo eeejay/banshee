@@ -1,9 +1,8 @@
 //
-// IEqualizer.cs
+// EqualizerSettingEvent.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
-//   Alexander Hixon <hixon.alexander@mediati.org>
 //
 // Copyright (C) 2006-2007 Novell, Inc.
 //
@@ -29,35 +28,21 @@
 
 using System;
 
-namespace Banshee.MediaEngine
+namespace Banshee.Equalizer
 {
-    public interface IEqualizer
+    public delegate void EqualizerSettingEventHandler(object o, EqualizerSettingEventArgs args);
+    
+    public class EqualizerSettingEventArgs : EventArgs
     {
-        /// <summary>
-        /// Sets the gain of an equalizer band.
-        /// </summary>
-        void SetEqualizerGain(uint band, double value);
+        private EqualizerSetting eq;
         
-        /// <summary>
-        /// Whether or not the engine supports the equalizer.
-        /// </summary>
-        bool SupportsEqualizer {
-            get;
+        public EqualizerSettingEventArgs(EqualizerSetting eq)
+        {
+            this.eq = eq;
         }
         
-        double AmplifierLevel {
-            set;
-        }
-        
-        /// <summary>
-        /// Minimum and maximum dB values for equalizer bands.
-        /// </summary>
-        int [] BandRange {
-            get;
-        }
-        
-        uint [] EqualizerFrequencies {
-            get;
+        public EqualizerSetting EqualizerSetting {
+            get { return eq; }
         }
     }
 }

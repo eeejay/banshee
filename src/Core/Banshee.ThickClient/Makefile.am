@@ -19,6 +19,11 @@ SOURCES =  \
 	Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs \
 	Banshee.Collection.Gui/CompositeTrackListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \
+	Banshee.Equalizer.Gui/EqualizerBandScale.cs \
+	Banshee.Equalizer.Gui/EqualizerLevelsBox.cs \
+	Banshee.Equalizer.Gui/EqualizerPresetComboBox.cs \
+	Banshee.Equalizer.Gui/EqualizerView.cs \
+	Banshee.Equalizer.Gui/EqualizerWindow.cs \
 	Banshee.Gui.Dialogs/AboutDialog.cs \
 	Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs \
 	Banshee.Gui.Dialogs/ErrorListDialog.cs \

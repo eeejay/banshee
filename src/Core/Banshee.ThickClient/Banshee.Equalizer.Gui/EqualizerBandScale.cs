@@ -1,30 +1,30 @@
-/***************************************************************************
- *  EqualizerBandScale.cs
- *
- *  Copyright (C) 2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
- ****************************************************************************/
-
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// EqualizerBandScale.cs
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2006-2007 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
 using Gtk;
@@ -33,15 +33,15 @@ namespace Banshee.Equalizer.Gui
 {
     public class EqualizerBandScale : HBox
     {
-        private uint frequency;
+        private uint band;
         private Scale scale;
         private Label label;
         
         public event EventHandler ValueChanged;
     
-        public EqualizerBandScale(uint frequency, string labelText)
+        public EqualizerBandScale(uint band, int median, int min, int max, string labelText)
         {
-            this.frequency = frequency;
+            this.band = band;
             
             label = new Label();
             label.Markup = String.Format("<small>{0}</small>", GLib.Markup.EscapeText(labelText));
@@ -49,7 +49,8 @@ namespace Banshee.Equalizer.Gui
             label.Yalign = 1.0f;
             label.Angle = 90.0;
 
-            scale = new VScale(new Adjustment(0, -100, 100, 15, 15, 1));
+            // new Adjustment(value, lower, upper, step_incr, page_incr, page_size);
+            scale = new VScale(new Adjustment(median, min, max, max / 10, max / 10, 1));
             scale.DrawValue = false;
             scale.Inverted = true;
             scale.ValueChanged += OnValueChanged;
@@ -79,8 +80,8 @@ namespace Banshee.Equalizer.Gui
             set { label.Visible = value; }
         }
         
-        public uint Frequency {
-            get { return frequency; }
+        public uint Band {
+            get { return band; }
         }
     }   
 }

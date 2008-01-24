@@ -44,6 +44,8 @@
             <placeholder name="BrowserViews" />
             <placeholder name="ViewMenuAdditions" />
             <menuitem name="FullScreen" action="FullScreenAction" />
+            <separator />
+            <menuitem name="ShowEqualizer" action="ShowEqualizerAction" />
         </menu>
 
         <menu name="PlaybackMenu" action="PlaybackMenuAction">

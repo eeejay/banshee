@@ -1,10 +1,11 @@
 //
 // ViewActions.cs
 //
-// Author:
+// Authors:
 //   Aaron Bockover <abockover@novell.com>
+//   Alexander Hixon <hixon.alexander@mediati.org>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -30,15 +31,25 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Banshee.MediaEngine;
+using Banshee.ServiceStack;
+using Banshee.Equalizer.Gui;
+
 namespace Banshee.Gui
 {
     public class ViewActions : ActionGroup
     {
+        private InterfaceActionService action_service;
+    
         public ViewActions (InterfaceActionService actionService) : base ("View")
         {
             Add (new ActionEntry [] {
                 new ActionEntry ("ViewMenuAction", null,
                     Catalog.GetString ("_View"), null, null, null),
+                    
+                new ActionEntry ("ShowEqualizerAction", null,
+                   Catalog.GetString ("_Equalizer"), null,
+                   Catalog.GetString ("View the graphical equalizer"), OnShowEqualizer)
             });
             
             Add (new ToggleActionEntry [] {               
@@ -48,8 +59,24 @@ namespace Banshee.Gui
                 
                 new ToggleActionEntry ("ShowCoverArtAction", null,
                     Catalog.GetString ("Show Cover _Art"), null,
-                    Catalog.GetString ("Toggle display of album cover art"), null, false),              
+                    Catalog.GetString ("Toggle display of album cover art"), null, false),
             });
+            
+            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
+            action_service = actionService;
+        }
+        
+        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
+        {            
+            if (args.State == PlayerEngineState.Initalized && !ServiceManager.PlayerEngine.SupportsEqualizer)
+            {
+                action_service["View.ShowEqualizerAction"].Sensitive = false;
+            }
+        }
+                
+        private void OnShowEqualizer (object o, EventArgs args)
+        {
+            EqualizerWindow eqwin = new EqualizerWindow();
         }
     }
 }

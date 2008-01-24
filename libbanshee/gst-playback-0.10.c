@@ -1,8 +1,9 @@
 /***************************************************************************
  *  gst-playback-0.10.c
  *
- *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Copyright (C) 2005-2007 Novell, Inc.
  *  Written by Aaron Bockover <aaron@abock.org>
+ *  Contributions by Alexander Hixon <hixon.alexander@mediati.org>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -67,6 +68,8 @@ struct GstPlayback {
     GstElement *playbin;
     GstElement *audiotee;
     GstElement *audiobin;
+    GstElement *equalizer;
+    GstElement *preamp;
     
     guint iterate_timeout_id;
     gchar *cdda_device;
@@ -387,6 +390,7 @@ gst_playback_construct(GstPlayback *engine)
     GstElement *fakesink;
     GstElement *audiosink;
     GstElement *audiosinkqueue;
+    GstElement *audioconvert;
     GstPad *teepad;
     
     g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
@@ -412,11 +416,20 @@ gst_playback_construct(GstPlayback *engine)
     audiosinkqueue = gst_element_factory_make("queue", "audiosinkqueue");
     g_return_val_if_fail(audiosinkqueue != NULL, FALSE);
     
+    audioconvert = gst_element_factory_make("audioconvert", "audioconvert");
+    engine->equalizer = gst_element_factory_make("equalizer-10bands", "equalizer-10bands");
+    engine->preamp = gst_element_factory_make("volume", "preamp");
+    
     // add elements to custom audio sink
     gst_bin_add(GST_BIN(engine->audiobin), engine->audiotee);
+    if(engine->equalizer != NULL) {
+        gst_bin_add(GST_BIN(engine->audiobin), audioconvert);
+        gst_bin_add(GST_BIN(engine->audiobin), engine->equalizer);
+        gst_bin_add(GST_BIN(engine->audiobin), engine->preamp);
+    }
     gst_bin_add(GST_BIN(engine->audiobin), audiosinkqueue);
     gst_bin_add(GST_BIN(engine->audiobin), audiosink);
-    
+   
     // ghost pad the audio bin
     teepad = gst_element_get_pad(engine->audiotee, "sink");
     gst_element_add_pad(engine->audiobin, gst_ghost_pad_new("sink", teepad));
@@ -426,8 +439,19 @@ gst_playback_construct(GstPlayback *engine)
     gst_pad_link(gst_element_get_request_pad(engine->audiotee, "src0"), 
         gst_element_get_pad(audiosinkqueue, "sink"));
 
-    // link the queue with the real audio sink
-    gst_element_link(audiosinkqueue, audiosink);
+    if (engine->equalizer != NULL)
+    {
+        // link in equalizer, preamp and audioconvert.
+        gst_element_link(audiosinkqueue, engine->preamp);
+        gst_element_link(engine->preamp, engine->equalizer);
+        gst_element_link(engine->equalizer, audioconvert);
+        gst_element_link(audioconvert, audiosink);
+    }
+    else
+    {
+        // link the queue with the real audio sink
+        gst_element_link(audiosinkqueue, audiosink);
+    }
     
     g_object_set(G_OBJECT(engine->playbin), "audio-sink", engine->audiobin, NULL);
     
@@ -758,4 +782,89 @@ gst_playback_get_error_quarks(GQuark *core, GQuark *library, GQuark *resource, G
     *library = GST_LIBRARY_ERROR;
     *resource = GST_RESOURCE_ERROR;
     *stream = GST_STREAM_ERROR;
+}
+
+gboolean
+gst_equalizer_is_supported(GstPlayback *engine)
+{
+    return (engine != NULL && engine->equalizer != NULL && engine->preamp != NULL);
+}
+
+void
+gst_equalizer_set_preamp_level(GstPlayback *engine, gdouble level)
+{
+    if (engine->equalizer != NULL && engine->preamp != NULL)
+        g_object_set (engine->preamp, "volume", level, NULL);
+}
+
+void
+gst_equalizer_set_gain(GstPlayback *engine, guint bandnum, gdouble gain)
+{
+    if (engine->equalizer != NULL) {
+        GstObject *band;   
+        band = gst_child_proxy_get_child_by_index (GST_CHILD_PROXY (engine->equalizer), bandnum);
+        g_object_set (band, "gain", gain, NULL);
+        g_object_unref (band);
+    }
+}
+
+void
+gst_equalizer_get_bandrange(GstPlayback *engine, gint *min, gint *max)
+{    
+    /*
+     * NOTE: This only refers to the newer version of the equalizer element.
+     *
+     * Yes, I know GStreamer's equalizer goes from -24 to +12, but -12 to +12 is much better for two reasons:
+     * (x) Equal levels on both sides, which means we get a nice linear y=x
+     * (x) This also makes converting other eq presets easier.
+     * (x) We get a nice roud 0 dB in the middle of the band range, instead of -6, which is stupid
+     *     since 0 dB gives us no gain, yet its not in the middle - less sense to the end user.
+     *
+     * If that didn't make any sense, yay for late-night coding. :)
+     */
+    
+    if (engine->equalizer != NULL) {
+        GParamSpecDouble *pspec;
+        
+        // Fetch gain range of first band (since it should be the same for the rest)
+        pspec = (GParamSpecDouble*) g_object_class_find_property (G_OBJECT_GET_CLASS (engine->equalizer), "band0");
+        if (pspec) {
+            // Assume old equalizer.
+            *min = pspec->minimum;
+            *max = pspec->maximum;
+        }
+        else {
+            pspec = (GParamSpecDouble*) g_object_class_find_property (G_OBJECT_GET_CLASS (engine->equalizer), "band0::gain");
+            if (pspec && pspec->maximum == 12) {
+                // New equalizer - return even scale.
+                *min = -12;
+                *max = 12;
+            }
+            else if (pspec) {
+                // Return just the ranges the equalizer supports
+                *min = pspec->minimum;
+                *max = pspec->maximum;
+            }
+            else {
+                g_warning("Could not find valid gain range for equalizer.");
+            }
+        }
+    }
+}
+
+void
+gst_equalizer_get_frequencies(GstPlayback *engine, gdouble *freq[])
+{
+    gint i;
+    gdouble bandfreq[10];
+    
+    for(i = 0; i < 10; i++) {
+        GstObject *band;
+        
+        band = gst_child_proxy_get_child_by_index (GST_CHILD_PROXY (engine->equalizer), i);
+        g_object_get (G_OBJECT (band), "freq", &bandfreq[i], NULL);
+        g_object_unref (band);
+    }
+    
+    *freq = bandfreq;
 }

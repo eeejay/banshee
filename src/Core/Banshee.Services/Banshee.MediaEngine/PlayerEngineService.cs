@@ -40,6 +40,7 @@ using Banshee.ServiceStack;
 using Banshee.Metadata;
 using Banshee.Configuration;
 using Banshee.Collection;
+using Banshee.Equalizer;
 
 namespace Banshee.MediaEngine
 {
@@ -138,7 +139,35 @@ namespace Banshee.MediaEngine
             if(args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
                 active_engine.Volume = (ushort)VolumeSchema.Get ();
                 MetadataService.Instance.Lookup(CurrentTrack);
-            } 
+            } else if (args.State == PlayerEngineState.Initalized) {
+                // Enable our preferred equalizer if it exists and was enabled last time.
+                if (this.SupportsEqualizer && EqualizerSetting.EnabledSchema.Get())
+                {
+                    string name = EqualizerSetting.PresetSchema.Get();
+                    
+                    if (name != "")
+                    {
+                        // Don't use EqualizerManager.Instance - used by the eq dialog window.
+                        EqualizerManager manager = new EqualizerManager(EqualizerManager.Instance.Path);
+                        manager.Load();
+                        EqualizerSetting equalizer = null;
+                        foreach(EqualizerSetting eq in manager)
+                        {
+                            if (eq.Name == name)
+                            {
+                                equalizer = eq;
+                                break;
+                            }
+                        }
+                        
+                        if (equalizer != null)
+                        {
+                            Log.DebugFormat("Enabling equalizer preset: {0}", equalizer.Name);
+                            manager.Enable(equalizer);
+                        }
+                    }
+                }
+            }
             
             PlayerEngineStateHandler handler = StateChanged;
             if(handler != null) {
@@ -391,6 +420,10 @@ namespace Banshee.MediaEngine
         
         public bool CanPause {
             get { return CurrentTrack != null && !CurrentTrack.IsLive; }
+        }
+        
+        public bool SupportsEqualizer {
+            get { return ((active_engine is IEqualizer) && active_engine.SupportsEqualizer); }
         }
         
         public uint Length {

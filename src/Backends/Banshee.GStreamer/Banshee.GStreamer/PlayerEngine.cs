@@ -47,7 +47,7 @@ namespace Banshee.GStreamer
 
     internal delegate void GstTaggerTagFoundCallback(string tagName, ref GLib.Value value, IntPtr userData);        
     
-    public class PlayerEngine : Banshee.MediaEngine.PlayerEngine
+    public class PlayerEngine : Banshee.MediaEngine.PlayerEngine, Banshee.MediaEngine.IEqualizer
     {
         private uint GST_CORE_ERROR = 0;
         private uint GST_LIBRARY_ERROR = 0;
@@ -97,7 +97,7 @@ namespace Banshee.GStreamer
             
             eos_callback = new GstPlaybackEosCallback(OnEos);
             error_callback = new GstPlaybackErrorCallback(OnError);
-            state_changed_callback = new GstPlaybackStateChangedCallback(OnStateChanged);
+            //state_changed_callback = new GstPlaybackStateChangedCallback(OnStateChanged);
             iterate_callback = new GstPlaybackIterateCallback(OnIterate);
             buffering_callback = new GstPlaybackBufferingCallback(OnBuffering);
             tag_found_callback = new GstTaggerTagFoundCallback(OnTagFound);
@@ -108,6 +108,8 @@ namespace Banshee.GStreamer
             gst_playback_set_state_changed_callback(handle, state_changed_callback);
             gst_playback_set_buffering_callback(handle, buffering_callback);
             gst_playback_set_tag_found_callback(handle, tag_found_callback);
+            
+            OnStateChanged(PlayerEngineState.Initalized);
         }
         
         public override void Dispose()
@@ -228,9 +230,9 @@ namespace Banshee.GStreamer
             OnEventChanged(PlayerEngineEvent.Error, error_message);
         }
         
-        private void OnStateChanged(IntPtr engine, int new_state, int old_state, int pending_state)
+        /*private void OnStateChanged(IntPtr engine, int new_state, int old_state, int pending_state)
         {
-        }
+        }*/
         
         private void OnBuffering(IntPtr engine, int progress)
         {
@@ -302,6 +304,48 @@ namespace Banshee.GStreamer
         
         public override string Name {
             get { return "GStreamer 0.10"; }
+        }
+        
+        public override bool SupportsEqualizer {
+            get { return gst_equalizer_is_supported(handle); }
+        }
+    
+        public double AmplifierLevel {
+            set { gst_equalizer_set_preamp_level(handle, value); }
+        }
+        
+        public int [] BandRange {
+            get
+            {
+                int min = -1;
+                int max = -1;
+                
+                gst_equalizer_get_bandrange(handle, out min, out max);
+                
+                return new int[] { min, max };
+            }
+        }
+        
+        public uint [] EqualizerFrequencies {
+            get
+            {
+                double[] freq = new double[10];
+                gst_equalizer_get_frequencies(handle, out freq);
+                
+                uint[] ret = new uint[freq.Length];
+                
+                for(int i = 0; i < freq.Length; i++)
+                {
+                    ret[i] = (uint)freq[i];
+                }
+                
+                return ret;
+            }
+        }
+        
+        public void SetEqualizerGain(uint band, double gain)
+        {
+            gst_equalizer_set_gain(handle, band, gain);
         }
         
         private static string [] source_capabilities = { "file", "http", "cdda" };
@@ -379,5 +423,20 @@ namespace Banshee.GStreamer
         [DllImport("libbanshee")]
         private static extern void gst_playback_get_error_quarks(out uint core, out uint library, 
             out uint resource, out uint stream);
+        
+        [DllImport("libbanshee")]
+        private static extern bool gst_equalizer_is_supported(HandleRef engine);
+        
+        [DllImport("libbanshee")]
+        private static extern void gst_equalizer_set_preamp_level(HandleRef engine, double level);
+        
+        [DllImport("libbanshee")]
+        private static extern void gst_equalizer_set_gain(HandleRef engine, uint bandnum, double gain);
+        
+        [DllImport("libbanshee")]
+        private static extern void gst_equalizer_get_bandrange(HandleRef engine, out int min, out int max);
+        
+        [DllImport("libbanshee")]
+        private static extern void gst_equalizer_get_frequencies(HandleRef engine, [MarshalAs(UnmanagedType.LPArray)] out double[] freq);
     }
 }

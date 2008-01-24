@@ -44,6 +44,7 @@ namespace Banshee.MediaEngine
         Contacting,
         Loaded,
         Playing,
-        Paused
+        Paused,
+        Initalized
     }
 }

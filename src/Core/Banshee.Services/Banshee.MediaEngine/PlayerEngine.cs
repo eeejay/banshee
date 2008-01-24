@@ -249,5 +249,9 @@ namespace Banshee.MediaEngine
         public abstract string Name {
             get;
         }
+        
+        public abstract bool SupportsEqualizer {
+            get;
+        }
     }
 }
