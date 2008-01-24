@@ -1,5 +1,10 @@
 2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Resources/contributors.xml: Credit for previous
+	patch, accidentally not committed.
+
+2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Part of
 	previous patch, forgot to commit.
 
