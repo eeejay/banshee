@@ -10,6 +10,7 @@ SOURCES =  \
 	Banshee.Base/Paths.cs \
 	Banshee.Base/PlatformHacks.cs \
 	Banshee.Base/ProductInformation.cs \
+	Banshee.Base/RateLimiter.cs \
 	Banshee.Base/SafeUri.cs \
 	Banshee.Base/StringUtil.cs \
 	Banshee.Base/UriList.cs \

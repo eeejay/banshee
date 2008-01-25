@@ -95,23 +95,30 @@ namespace Banshee.Library
             try {
                 SafeUri uri = new SafeUri (path);
 
-                if (LibraryTrackInfo.ContainsUri (uri)) {
-                    IncrementProcessedCount (null);
-                    return;
+                LibraryTrackInfo track = null;
+                ThreadAssist.ProxyToMain (delegate {
+                    if (LibraryTrackInfo.ContainsUri (uri)) {
+                        IncrementProcessedCount (null);
+                        return;
+                    }
+
+                    TagLib.File file = StreamTagger.ProcessUri (uri);
+                    track = new LibraryTrackInfo ();
+                    StreamTagger.TrackInfoMerge (track, file);
+
+                    track.DateAdded = DateTime.Now;
+                    LibraryArtistInfo artist = new LibraryArtistInfo (track.ArtistName);
+                    track.ArtistId = artist.DbId;
+                    track.AlbumId = new LibraryAlbumInfo (artist, track.AlbumTitle).DbId;
+
+                    track.Save ();
+                    (ServiceManager.SourceManager.DefaultSource as LibrarySource).Reload ();
+
+                });
+                if (track != null && track.DbId > 0) {
+                    IncrementProcessedCount (String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle));
                 }
 
-                TagLib.File file = StreamTagger.ProcessUri (uri);
-                LibraryTrackInfo track = new LibraryTrackInfo ();
-                StreamTagger.TrackInfoMerge (track, file);
-
-                track.DateAdded = DateTime.Now;
-                LibraryArtistInfo artist = new LibraryArtistInfo (track.ArtistName);
-                track.ArtistId = artist.DbId;
-                track.AlbumId = new LibraryAlbumInfo (artist, track.AlbumTitle).DbId;
-
-                track.Save ();
-                
-                IncrementProcessedCount (String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle));
             } catch (Exception e) {
                 LogError (path, e);
                 IncrementProcessedCount (null);

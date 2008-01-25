@@ -247,7 +247,12 @@ namespace Hyena.Data.Sqlite
         protected virtual void PrepareInsertCommand (T target)
         {
             for (int i = 0; i < columns.Count; i++) {
-                InsertCommand.Parameters[i].Value = columns[i].GetValue (target);
+                if (columns[i] != key) {
+                    InsertCommand.Parameters[i].Value = columns[i].GetValue (target);
+                } else {
+                    // On insert, the key needs to be NULL to be automatically set by Sqlite
+                    InsertCommand.Parameters[i].Value = null;
+                }
             }
         }
         

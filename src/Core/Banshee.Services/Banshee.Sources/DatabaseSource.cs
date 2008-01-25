@@ -34,6 +34,7 @@ using Mono.Unix;
 using Hyena.Data;
 using Hyena.Collections;
 
+using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
@@ -48,6 +49,8 @@ namespace Banshee.Sources
         protected TrackListDatabaseModel track_model;
         protected AlbumListDatabaseModel album_model;
         protected ArtistListDatabaseModel artist_model;
+
+        protected RateLimiter reload_limiter;
         
         public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order)
         {
@@ -55,6 +58,7 @@ namespace Banshee.Sources
             track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, uuid);
             album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
             artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
+            reload_limiter = new RateLimiter (50.0, RateLimitedReload);
         }
 
 #region Public Properties
@@ -101,6 +105,11 @@ namespace Banshee.Sources
 #region Public Methods
 
         public virtual void Reload ()
+        {
+            reload_limiter.Execute ();
+        }
+
+        protected virtual void RateLimitedReload ()
         {
             track_model.Reload ();
             artist_model.Reload ();

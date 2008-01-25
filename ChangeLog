@@ -1,5 +1,29 @@
 2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Makefile.am:
+	* src/Core/Banshee.Core/Banshee.Base/RateLimiter.cs: New class that makes
+	it easy to rate limit a given method.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Do
+	the actual import on the main thread.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Rate limit
+	the Reload method - ensuring no matter how often it's called, it won't
+	actually be executed so much it degrades overall performance.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ISourceManager.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Add setter
+	for ActiveSource.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Use GetValue and
+	SetValue methods of PropertyInfo objects instead of GetGetMethod etc.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: For the Insert
+	command, set the value of the primary key to null so Sqlite will set it
+	appropriately
+
+2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* HACKING: Add link to online version of "Framework Design Guidelines"
 
 2008-01-24  Aaron Bockover  <abockover@novell.com>
@@ -95,9 +119,6 @@
 	* src/Core/Hyena/Hyena.Data.Query/UserQueryParser.cs: Require a
 	QueryFieldSet for BuildTree method so we can user the relevant ValueType
 	for each QueryField as we parse it.
-
-	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Use GetValue and
-	SetValue methods of PropertyInfo objects instead of GetGetMethod etc.
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add temporary
 	debugging messages.

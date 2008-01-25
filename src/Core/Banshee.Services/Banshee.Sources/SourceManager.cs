@@ -213,6 +213,7 @@ namespace Banshee.Sources
         
         ISource ISourceManager.ActiveSource {
             get { return ActiveSource; }
+            set { value.Activate (); }
         }
         
         public void SetActiveSource(Source source)

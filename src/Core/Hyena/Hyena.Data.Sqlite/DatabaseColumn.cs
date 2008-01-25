@@ -83,24 +83,10 @@ namespace Hyena.Data.Sqlite
         {
             return field_info != null
                 ? field_info.GetValue (target)
-                : property_info.GetGetMethod (true).Invoke (target, null);
+                : property_info.GetValue (target, null);
         }
         
         public void SetValue (object target, IDataReader reader, int column)
-        {
-            SetValue (target, SetValue (type, reader, column));
-        }
-        
-        public void SetValue (object target, object value)
-        {
-            if (field_info != null) {
-                field_info.SetValue (target, value);
-            } else {
-                property_info.GetSetMethod (true).Invoke (target, new object[] { value });
-            }
-        }
-        
-        private static object SetValue (Type type, IDataReader reader, int column)
         {
             // FIXME should we insist on nullable types?
             object result;
@@ -117,7 +103,17 @@ namespace Hyena.Data.Sqlite
                     ? reader.GetInt64 (column)
                     : 0;
             }
-            return result;
+
+            SetValue (target, result);
+        }
+        
+        public void SetValue (object target, object value)
+        {
+            if (field_info != null) {
+                field_info.SetValue (target, value);
+            } else {
+                property_info.SetValue (target, value, null);
+            }
         }
         
         public string Name {
