@@ -421,7 +421,7 @@ namespace Banshee.Gui.Widgets
                         transition_frames / ((double)FADE_TIMEOUT / 1000.0));
                 }
                 
-                if (current_pixbuf != incoming_pixbuf) {
+                if (current_pixbuf != incoming_pixbuf && current_pixbuf != missing_pixbuf) {
                     ArtworkRenderer.DisposePixbuf (current_pixbuf);
                 }
                 

@@ -1,3 +1,10 @@
+2008-01-25  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Patch from Alex Hixon to fix the segfault that would sometimes occur
+	when changing tracks; happened when playing a track without cover art,
+	then a track with cover art, then a track without
+
 2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Makefile.am:
