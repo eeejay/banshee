@@ -1,3 +1,7 @@
+2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* HACKING: Add link to online version of "Framework Design Guidelines"
+
 2008-01-24  Aaron Bockover  <abockover@novell.com>
 
 	* src/Core/Banshee.Services/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:

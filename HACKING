@@ -159,7 +159,8 @@ Organization Guidelines
 
 
 [1] http://www.mono-project.com/Coding_Guidelines
-[2] Highly recommended reading: http://www.amazon.com/gp/product/0321246756/
+[2] Highly recommended reading: http://www.amazon.com/gp/product/0321246756/ or
+    view at: http://msdn2.microsoft.com/en-us/library/ms229042.aspx
 [3] This layout pattern is to be followed for new code, but due to limitations
     with GNOME CVS, the older/deprecated directory/file layout is still in
     use too. When GNOME CVS is migrated to Subversion, the entire tree will
