@@ -78,8 +78,13 @@ namespace Banshee.Metadata.Rhapsody
 
             XmlNode art_node = doc.DocumentElement.SelectSingleNode("/album/art/album-art[@size='large']/img");
             if(art_node != null && art_node.Attributes["src"] != null) {
-                Uri art_uri = new Uri(art_node.Attributes["src"].Value);
-                if(SaveHttpStreamCover(art_uri, album_artist_id, null)) {
+                // awesome hack to get high resolution cover art from Rhapsody
+                string second_attempt = art_node.Attributes["src"].Value;
+                string first_attempt = second_attempt.Replace("170x170", "500x500");
+
+                if(SaveHttpStreamCover(new Uri(first_attempt), album_artist_id, null) || 
+                    SaveHttpStreamCover(new Uri(second_attempt), album_artist_id, null)) {
+                    Log.Debug ("Downloaded cover art from Rhapsody", album_artist_id);
                     StreamTag tag = new StreamTag();
                     tag.Name = CommonTags.AlbumCoverId;
                     tag.Value = album_artist_id;

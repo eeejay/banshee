@@ -90,6 +90,7 @@ namespace Banshee.Metadata.MusicBrainz
             
             if(SaveHttpStreamCover(new Uri(String.Format(AmazonUriFormat, asin)), album_artist_id, 
                 new string [] { "image/gif" })) {
+                Log.Debug ("Downloaded cover art from Amazon", album_artist_id);
                 StreamTag tag = new StreamTag();
                 tag.Name = CommonTags.AlbumCoverId;
                 tag.Value = album_artist_id;

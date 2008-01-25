@@ -58,8 +58,8 @@ namespace Banshee.Metadata
         public MetadataService()
         {
             AddProvider(new Banshee.Metadata.Embedded.EmbeddedMetadataProvider());
-            AddProvider(new Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider());
             AddProvider(new Banshee.Metadata.Rhapsody.RhapsodyMetadataProvider());
+            AddProvider(new Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider());
             
             Scheduler.JobFinished += OnSchedulerJobFinished;
             Scheduler.JobUnscheduled += OnSchedulerJobUnscheduled;

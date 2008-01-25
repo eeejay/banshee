@@ -1,3 +1,16 @@
+2008-01-24  Aaron Bockover  <abockover@novell.com>
+
+	* src/Core/Banshee.Services/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:
+	Try to download the 500px and then fall back to the 170px; awesome hires
+	from Rhapsody
+
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataService.cs:
+	Prefer the rhapsody provider over musicbrainz for fetching cover art
+	now that we can get hires from rhapsody
+
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	Print some debug stuff
+
 2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Patch from Alexander Hixon <hixon.alexander@mediati.org>.
