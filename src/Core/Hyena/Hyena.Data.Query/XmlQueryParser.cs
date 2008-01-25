@@ -36,15 +36,18 @@ namespace Hyena.Data.Query
     public class XmlQueryParser : QueryParser
     {
         private string str;
+        private QueryFieldSet field_set;
 
         public XmlQueryParser () : base () {}
+
         public XmlQueryParser (string str)
         {
             this.str = str;
         }
 
-        public override QueryNode BuildTree ()
+        public override QueryNode BuildTree (QueryFieldSet fieldSet)
         {
+            field_set = fieldSet;
             XmlDocument doc = new XmlDocument ();
             try {
                 doc.LoadXml (str);
@@ -70,7 +73,7 @@ namespace Hyena.Data.Query
                 return null;
 
             QueryListNode list = null;
-            Console.WriteLine ("Parsing node: {0}", node.Name);
+            //Console.WriteLine ("Parsing node: {0}", node.Name);
             switch (node.Name.ToLower ()) {
                 case "and":
                     list = new QueryListNode (Keyword.And);
@@ -83,16 +86,21 @@ namespace Hyena.Data.Query
                     break;
                 default:
                     QueryTermNode term = new QueryTermNode ();
+
+                    // Get the operator from the term's name
                     term.Operator = Operator.GetByName (node.Name);
 
+                    // Get the field (if any) that this term applies to
                     if (node["field"] != null)
-                        term.Field = node["field"].GetAttribute ("name");
+                        term.Field = field_set [node["field"].GetAttribute ("name")];
 
-                    if (node["string"] != null)
-                        term.Value = node["string"].InnerText;
+                    // Get the value
+                    term.Value = QueryValue.CreateFromXml (node, term.Field);
 
-                    if (parent != null)
+                    if (parent != null) {
                         parent.AddChild (term);
+                    }
+
                     return term;
             }
 
@@ -100,6 +108,7 @@ namespace Hyena.Data.Query
                 if (parent != null)
                     parent.AddChild (list);
 
+                // Recursively parse the children of a QueryListNode
                 foreach (XmlNode child in node.ChildNodes) {
                     Parse (child as XmlElement, list);
                 }

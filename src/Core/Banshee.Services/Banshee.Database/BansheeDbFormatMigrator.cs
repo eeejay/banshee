@@ -31,6 +31,8 @@ using System.Data;
 using System.Reflection;
 using System.Threading;
 
+using Timer=Hyena.Timer;
+
 namespace Banshee.Database
 {
     public class BansheeDbFormatMigrator

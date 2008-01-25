@@ -66,17 +66,14 @@ namespace Banshee.Collection.Database
             if (artistName == null || artistName.Trim () == String.Empty)
                 artistName = Catalog.GetString ("Unknown Artist");
 
-            IDataReader reader = ServiceManager.DbConnection.ExecuteReader (select_command.ApplyValues (artistName));
-
-            if (reader.Read ()) {
-                LoadFromReader (reader);
-            } else {
-                dbid = -1;
-                Name = artistName;
-                Save ();
+            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (select_command.ApplyValues (artistName))) {
+                if (reader.Read ()) {
+                    LoadFromReader (reader);
+                } else {
+                    Name = artistName;
+                    Save ();
+                }
             }
-
-            reader.Dispose ();
         }
 
         public LibraryArtistInfo(IDataReader reader) : base(null)

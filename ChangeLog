@@ -1,14 +1,81 @@
-2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
+2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Base/Utilities.cs:
+	* src/Core/Hyena/Hyena/Utilities.cs:
+	* src/Core/Hyena/Hyena/Timer.cs: Move Timer and DateTimeUtils to Hyena.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Disambiguate which Timer to use.
+
+	* src/Core/Hyena/Timer.cs: Remove, replaced by Hyena/Timer.cs.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	Remove unnecessary assignment.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	Wrap IDataReader in using.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Add using Hyena for DateTimeUtils.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Pass field_set to BuildTree methods, and update QueryField constructors
+	with new QueryValue setup.  Remove Date and FileSize modifier functions.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs: Use new
+	QueryValue class.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryValue.cs:
+	* src/Core/Hyena/Hyena.Data.Query/StringQueryValue.cs:
+	* src/Core/Hyena/Hyena.Data.Query/IntegerQueryValue.cs:
+	* src/Core/Hyena/Hyena.Data.Query/FileSizeQueryValue.cs:
+	* src/Core/Hyena/Hyena.Data.Query/DateQueryValue.cs: New files/classes
+	that provider parsers and generators for XML/user-query for different data
+	types.  Replace QueryField Modifiers.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryField.cs: Fields now have a
+	ValueType associated with them, one of the four QueryValue subclasses
+	above.  Turn fields into properties.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryFieldSet.cs: Add this [] accessor.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryListNode.cs: Avoid crashing when
+	trimming a QueryNode tree that has only a childless NOT node.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryTermNode.cs: Remove Operator class.
+	Replace string Field and Value fields with QueryField and QueryValue
+	properties.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryOperator.cs: Split into its own
+	file.  Was previously inside QueryTermNode.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryParser.cs:
+	* src/Core/Hyena/Hyena.Data.Query/XmlQueryParser.cs:
+	* src/Core/Hyena/Hyena.Data.Query/UserQueryParser.cs: Require a
+	QueryFieldSet for BuildTree method so we can user the relevant ValueType
+	for each QueryField as we parse it.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Use GetValue and
+	SetValue methods of PropertyInfo objects instead of GetGetMethod etc.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add temporary
+	debugging messages.
+
+	* src/Core/Hyena/Makefile.am: Add new files, remove old Timer.cs.
+
+2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Resources/contributors.xml: Credit for previous
 	patch, accidentally not committed.
 
-2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
+2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Part of
 	previous patch, forgot to commit.
 
-2008-01-22  Gabriel Burt  <gabriel.burt@gmail.com>
+2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Patch from Alexander Hxion <hixon.alexander@mediati.org>.
 

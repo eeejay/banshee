@@ -1,9 +1,8 @@
 //
-// QueryParser.cs
+// Timer.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
-//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -28,39 +27,32 @@
 //
 
 using System;
-using System.IO;
-using System.Text;
 
-namespace Hyena.Data.Query
+namespace Hyena
 {
-    public abstract class QueryParser
+    public class Timer : IDisposable
     {
-        protected StreamReader reader;
+        private DateTime start;
+        private string label;
         
-        public QueryParser()
+        public Timer (string label) 
         {
-            Reset ();
+            this.label = label;
+            start = DateTime.Now;
         }
 
-        public QueryParser(string inputQuery) : this(new MemoryStream(Encoding.UTF8.GetBytes(inputQuery)))
-        {
+        public TimeSpan ElapsedTime {
+            get { return DateTime.Now - start; }
         }
 
-        public QueryParser(Stream stream) : this(new StreamReader(stream))
+        public void WriteElapsed (string message)
         {
+            Console.WriteLine ("{0} {1} {2}", label, message, ElapsedTime);
         }
 
-        public QueryParser(StreamReader reader) : this()
+        public void Dispose ()
         {
-            InputReader = reader;
-        }
-
-        public abstract QueryNode BuildTree (QueryFieldSet fieldSet);
-        public abstract void Reset ();
-        
-        public StreamReader InputReader {
-            get { return reader; }
-            set { reader = value; }
+            WriteElapsed ("timer stopped:");
         }
     }
 }

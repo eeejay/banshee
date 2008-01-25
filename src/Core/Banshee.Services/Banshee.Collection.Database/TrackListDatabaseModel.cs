@@ -78,7 +78,7 @@ namespace Banshee.Collection.Database
                 filter_query = null;
             } else {
                 Hyena.Data.Query.UserQueryParser qp = new UserQueryParser (Filter);
-                QueryNode n = qp.BuildTree ();
+                QueryNode n = qp.BuildTree (field_set);
 
                 filter_query = n.ToSql (field_set);
 
@@ -88,7 +88,7 @@ namespace Banshee.Collection.Database
                 Console.WriteLine ("Xml for Query: {0}", n.ToXml (field_set));
                 Console.WriteLine ("Sql for Query: {0}", filter_query);
                 Hyena.Data.Query.QueryParser qp2 = new XmlQueryParser (n.ToXml (field_set));
-                QueryNode n2 = qp2.BuildTree ();
+                QueryNode n2 = qp2.BuildTree (field_set);
                 if (n2 != null) {
                     Console.WriteLine ("User query for Xml: {0}", n2.ToUserQuery ());
                 } else
@@ -253,7 +253,7 @@ namespace Banshee.Collection.Database
         public override int IndexOf (TrackInfo track)
         {
             LibraryTrackInfo library_track = track as LibraryTrackInfo;
-            return library_track == null ? -1 : cache.IndexOf (library_track.DbId);
+            return library_track == null ? -1 : cache.IndexOf ((int)library_track.DbId);
         }
 
         public override TrackInfo this[int index] {
@@ -393,80 +393,80 @@ namespace Banshee.Collection.Database
 
         protected static QueryFieldSet field_set = new QueryFieldSet (
             new QueryField (
-                "artist", Catalog.GetString ("Artist"), "CoreArtists.Name", QueryFieldType.Text, true,
+                "artist", Catalog.GetString ("Artist"), "CoreArtists.Name", true,
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("by"), Catalog.GetString ("artist"), Catalog.GetString ("artists"),
                 "by", "artist", "artists"
             ),
             new QueryField (
-                "album", Catalog.GetString ("Album"), "CoreAlbums.Title", QueryFieldType.Text, true,
+                "album", Catalog.GetString ("Album"), "CoreAlbums.Title", true,
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("on"), Catalog.GetString ("album"), Catalog.GetString ("from"),
                 "on", "album", "from", "albumtitle"
             ),
             new QueryField (
-                "title", Catalog.GetString ("Track Title"), "CoreTracks.Title", QueryFieldType.Text, true,
+                "title", Catalog.GetString ("Track Title"), "CoreTracks.Title", true,
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("title"), Catalog.GetString ("titled"), Catalog.GetString ("name"), Catalog.GetString ("named"),
                 "title", "titled", "name", "named"
             ),
             new QueryField (
-                "year", Catalog.GetString ("Year"), "CoreTracks.Year", QueryFieldType.Numeric,
+                "year", Catalog.GetString ("Year"), "CoreTracks.Year", typeof(IntegerQueryValue),
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("year"), Catalog.GetString ("released"), Catalog.GetString ("yr"),
                 "year", "released", "yr"
             ),
             new QueryField (
-                "rating", Catalog.GetString ("Rating"), "CoreTracks.Rating", QueryFieldType.Numeric,
+                "rating", Catalog.GetString ("Rating"), "CoreTracks.Rating", typeof(IntegerQueryValue),
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("rating"), Catalog.GetString ("stars"),
                 "rating", "stars"
             ),
             new QueryField (
-                "playcount", Catalog.GetString ("Play Count"), "CoreTracks.PlayCount", QueryFieldType.Numeric,
+                "playcount", Catalog.GetString ("Play Count"), "CoreTracks.PlayCount", typeof(IntegerQueryValue),
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("plays"), Catalog.GetString ("playcount"), Catalog.GetString ("listens"),
                 "plays", "playcount", "numberofplays", "listens"
             ),
             new QueryField (
-                "skipcount", Catalog.GetString ("Skip Count"), "CoreTracks.SkipCount", QueryFieldType.Numeric,
+                "skipcount", Catalog.GetString ("Skip Count"), "CoreTracks.SkipCount", typeof(IntegerQueryValue),
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("skips"), Catalog.GetString ("skipcount"),
                 "skips", "skipcount"
             ),
             new QueryField (
-                "filesize", Catalog.GetString ("File Size"), "CoreTracks.FileSize", QueryFieldType.Numeric, FileSizeModifier,
+                "filesize", Catalog.GetString ("File Size"), "CoreTracks.FileSize", typeof(FileSizeQueryValue),
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("size"), Catalog.GetString ("filesize"),
                 "size", "filesize"
             ),
             new QueryField (
-                "uri", Catalog.GetString ("File Path"), "CoreTracks.Uri", QueryFieldType.Text,
+                "uri", Catalog.GetString ("File Path"), "CoreTracks.Uri",
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("uri"), Catalog.GetString ("path"), Catalog.GetString ("file"), Catalog.GetString ("location"),
                 "uri", "path", "file", "location"
             ),
             new QueryField (
-                "duration", Catalog.GetString ("Duration"), "CoreTracks.Duration", QueryFieldType.Numeric,
+                "duration", Catalog.GetString ("Duration"), "CoreTracks.Duration", typeof(IntegerQueryValue),
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("duration"), Catalog.GetString ("length"), Catalog.GetString ("time"),
                 "duration", "length", "time"
             ),
             new QueryField (
-                "mimetype", Catalog.GetString ("Mime Type"), "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}", QueryFieldType.Text,
+                "mimetype", Catalog.GetString ("Mime Type"), "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}",
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("type"), Catalog.GetString ("mimetype"), Catalog.GetString ("format"), Catalog.GetString ("ext"),
                 "type", "mimetype", "format", "ext", "mime"
             ),
             new QueryField (
                     // (strftime("%s", current_timestamp) - DateAddedStamp + 3600)
-                "lastplayed", Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", QueryFieldType.Numeric, DateTimeModifier,
+                "lastplayed", Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", typeof(DateQueryValue),
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("lastplayed"), Catalog.GetString ("played"), Catalog.GetString ("playedon"),
                 "lastplayed", "played", "playedon"
             ),
             new QueryField (
-                "added", Catalog.GetString ("Imported Date"), "CoreTracks.DateAddedStamp", QueryFieldType.Numeric, DateTimeModifier,
+                "added", Catalog.GetString ("Imported Date"), "CoreTracks.DateAddedStamp", typeof(DateQueryValue),
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("added"), Catalog.GetString ("imported"), Catalog.GetString ("addedon"), Catalog.GetString ("dateadded"), Catalog.GetString ("importedon"),
                 "added", "imported", "addedon", "dateadded", "importedon"
@@ -480,40 +480,5 @@ namespace Banshee.Collection.Database
                 "duration", "length", "time"
             )*/
         );
-        
-        private static string FileSizeModifier (string input)
-        {
-            long value = 0;
-            
-            if (input.Length < 2) {
-                return input;
-            } else if (input[input.Length - 1] == 'b' || input[input.Length - 1] == 'B') {
-                input = input.Substring (0, input.Length - 1);
-            }
-            
-            if (!Int64.TryParse (input.Substring (0, input.Length - 1), out value)) {
-                return input;
-            }
-            
-            switch (input[input.Length - 1]) {
-                case 'k': case 'K': value *= 1024; break;
-                case 'm': case 'M': value *= 1048576; break;
-                case 'g': case 'G': value *= 1073741824; break;
-                case 't': case 'T': value *= 1099511627776; break;
-                default: break;
-            }
-            
-            return Convert.ToString (value);
-        }
-        
-        private static string DateTimeModifier (string input)
-        {
-            // TODO: Add support for relative strings like "yesterday", "3 weeks ago", "5 days ago"
-            try {
-                return DateTimeUtil.ToTimeT (DateTime.Parse (input)).ToString ();
-            } catch {
-                return "0";
-            }
-        }
     }
 }

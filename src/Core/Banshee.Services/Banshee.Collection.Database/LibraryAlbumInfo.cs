@@ -73,7 +73,6 @@ namespace Banshee.Collection.Database
                     Title = reader[(int) Column.Title] as string;
                     ArtistName = artist.Name;
                 } else {
-                    dbid = -1;
                     artist_id = artist.DbId;
                     Title = title;
                     Save ();

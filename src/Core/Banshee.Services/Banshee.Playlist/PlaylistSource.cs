@@ -202,19 +202,17 @@ namespace Banshee.Playlist
         {
             List<PlaylistSource> sources = new List<PlaylistSource> ();
 
-            IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
-                "SELECT PlaylistID, Name, SortColumn, SortType FROM CorePlaylists"
-            );
-            
-            while (reader.Read ()) {
-                PlaylistSource playlist = new PlaylistSource (
-                    reader[1] as string, Convert.ToInt32 (reader[0]),
-                    Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3])
-                );
-                sources.Add (playlist);
+            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
+                "SELECT PlaylistID, Name, SortColumn, SortType FROM CorePlaylists")) {
+                while (reader.Read ()) {
+                    PlaylistSource playlist = new PlaylistSource (
+                        reader[1] as string, Convert.ToInt32 (reader[0]),
+                        Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3])
+                    );
+                    sources.Add (playlist);
+                }
             }
             
-            reader.Dispose();
             return sources;
         }
     }

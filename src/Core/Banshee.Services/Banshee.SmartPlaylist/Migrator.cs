@@ -130,8 +130,12 @@ namespace Banshee.SmartPlaylist
                                 continue;
                             }
                         }
-                        term.Field = field.PrimaryAlias;
-                        term.Value = v1;
+
+                        //if (term.Field.IndexOf ("LastPlayedStamp") != -1) {
+                        //} else if (term.Field.IndexOf ("DateAddedStamp") != -1) {
+                        //}
+                        term.Field = field;
+                        term.Value = QueryValue.CreateFromUserQuery (v1, field);
                         root.AddChild (term);
 
                         switch (op.GetType ().ToString ()) {
@@ -185,10 +189,6 @@ namespace Banshee.SmartPlaylist
                             case "NotInSmartPlaylist":
                                 term.Operator = Operator.GetByUserOperator (">");
                                 break;
-                        }
-
-                        if (term.Field.IndexOf ("LastPlayedStamp") != -1) {
-                        } else if (term.Field.IndexOf ("DateAddedStamp") != -1) {
                         }
 
                         Console.WriteLine ("..{0}\n=>{1}", condition, term.ToString ());

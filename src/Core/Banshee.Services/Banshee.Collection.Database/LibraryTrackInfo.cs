@@ -29,6 +29,7 @@
 using System;
 using System.Data;
 
+using Hyena;
 using Hyena.Data.Sqlite;
 
 using Banshee.Base;

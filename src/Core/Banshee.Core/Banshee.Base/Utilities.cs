@@ -118,66 +118,7 @@ namespace Banshee.Base
             return (Type [])InvokeMethod (assembly, typeName, "GetTypes");
         }
     }
-    
-    public class DateTimeUtil
-    {
-        public static readonly DateTime LocalUnixEpoch = new DateTime (1970, 1, 1).ToLocalTime ();
 
-        public static DateTime ToDateTime (long time)
-        {
-            return FromTimeT (time);
-        }
-
-        public static long FromDateTime (DateTime time)
-        {
-            return ToTimeT (time);
-        }
-
-        public static DateTime FromTimeT (long time)
-        {
-            return LocalUnixEpoch.AddSeconds (time);
-        }
-
-        public static long ToTimeT (DateTime time)
-        {
-            return (long)time.Subtract (LocalUnixEpoch).TotalSeconds;
-        }
-
-        public static string FormatDuration (long time) {
-            return (time > 3600 ? 
-                    String.Format ("{0}:{1:00}:{2:00}", time / 3600, (time / 60) % 60, time % 60) :
-                    String.Format ("{0}:{1:00}", time / 60, time % 60));
-        }
-    }
-
-    public class Timer : IDisposable
-    {
-        private DateTime start;
-        private string label;
-        
-        public Timer (string label) 
-        {
-            this.label = label;
-            start = DateTime.Now;
-        }
-
-        public TimeSpan ElapsedTime {
-            get {
-                return DateTime.Now - start;
-            }
-        }
-
-        public void WriteElapsed (string message)
-        {
-            Console.WriteLine ("{0} {1} {2}", label, message, ElapsedTime);
-        }
-
-        public void Dispose ()
-        {
-            WriteElapsed ("timer stopped:");
-        }
-    }
-    
     public static class ThreadAssist
     {
         private static Thread main_thread;

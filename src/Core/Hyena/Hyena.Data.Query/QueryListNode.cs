@@ -137,8 +137,13 @@ namespace Hyena.Data.Query
                 child.Trim ();
 
             if (Keyword == Keyword.Not) {
-                if (ChildCount != 1)
-                    Parent.RemoveChild (this);
+                if (ChildCount != 1) {
+                    if (Parent != null) {
+                        Parent.RemoveChild (this);
+                    } else {
+                        return null;
+                    }
+                }
             } else {
                 if (ChildCount <= 1) {
                     if (Parent != null) {

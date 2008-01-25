@@ -34,107 +34,50 @@ using System.Collections.Generic;
 
 namespace Hyena.Data.Query
 {
-    public class Operator
-    {
-        public string Name;
-        public string UserOperator;
-        
-        private static List<Operator> operators = new List<Operator> ();
-        private static Dictionary<string, Operator> by_op = new Dictionary<string, Operator> ();
-        private static Dictionary<string, Operator> by_name = new Dictionary<string, Operator> ();
-
-        static Operator () {
-            // Note, order of these is important since if = was before ==, the value of the
-            // term would start with the second =, etc.
-            Add (new Operator ("equals", "=="));
-            Add (new Operator ("lessThanEquals", "<="));
-            Add (new Operator ("greaterThanEquals", ">="));
-            //Add (new Operator ("notEqual", "!="));
-            Add (new Operator ("startsWith", "="));
-            //Add (new Operator ("doesNotContain", "!:"));
-            Add (new Operator ("contains", ":"));
-            Add (new Operator ("lessThan", "<"));
-            Add (new Operator ("greaterThan", ">"));
-        }
-
-        public static IEnumerable<Operator> Operators {
-            get { return operators; }
-        }
-
-        private static void Add (Operator op)
-        {
-            operators.Add (op);
-            by_op.Add (op.UserOperator, op);
-            by_name.Add (op.Name, op);
-        }
-
-        public static Operator GetByUserOperator (string op)
-        {
-            return (by_op.ContainsKey (op)) ? by_op [op] : null;
-        }
-
-        public static Operator GetByName (string name)
-        {
-            return (by_name.ContainsKey (name)) ? by_name [name] : null;
-        }
-
-        public static Operator DefaultOperator {
-            get { return Operator.GetByUserOperator (":"); }
-        }
-
-        public Operator (string name, string userOp)
-        {
-            Name = name;
-            UserOperator = userOp;
-        }
-    }
-
     public class QueryTermNode : QueryNode
     {
-        private string field;
-        private string field_value;
-        private Operator op;
+        private QueryField field;
+        private Operator op = Operator.Default;
+        private QueryValue qvalue;
 
-        //private static string [] operators = new string [] {":", "==", "<=", ">=", "=", "<", ">"};
-
-        public QueryTermNode () : base ()
+        public static QueryTermNode ParseUserQuery (QueryFieldSet field_set, string token)
         {
-            // Set default operator
-            op = Operator.DefaultOperator;
-        }
-
-        public QueryTermNode (string value) : base ()
-        {
+            QueryTermNode node = new QueryTermNode ();
             int field_separator = 0;
             foreach (Operator op in Operator.Operators) {
-                field_separator = value.IndexOf (op.UserOperator);
+                field_separator = token.IndexOf (op.UserOperator);
                 if (field_separator != -1) {
-                    this.op = op;
+                    node.Operator = op;
                     break;
                 }
             }
 
             if (field_separator > 0) {
-                Field = value.Substring (0, field_separator);
-                Value = value.Substring (field_separator + op.UserOperator.Length);
-            } else {
-                this.field_value = value;
-                this.op = Operator.DefaultOperator;
+                node.Field = field_set[token.Substring (0, field_separator)];
+                if (node.Field != null) {
+                    token = token.Substring (field_separator + node.Operator.UserOperator.Length);
+                }
             }
+
+            node.Value = QueryValue.CreateFromUserQuery (token, node.Field);
+
+            return node;
+        }
+
+        public QueryTermNode () : base ()
+        {
         }
 
         public override QueryNode Trim ()
         {
-            if ((field_value == null || field_value == String.Empty) && Parent != null)
+            if ((qvalue == null || qvalue.IsEmpty) && Parent != null)
                 Parent.RemoveChild (this);
             return this;
         }
         
         public override void AppendUserQuery (StringBuilder sb)
         {
-            sb.Append (
-                QueryField.ToTermString (Field, Operator.UserOperator, Value)
-            );
+            sb.Append (Field == null ? Value.ToUserQuery () : Field.ToTermString (Operator.UserOperator, Value.ToUserQuery ()));
         }
 
         public override void AppendXml (XmlDocument doc, XmlNode parent, QueryFieldSet fieldSet)
@@ -142,49 +85,51 @@ namespace Hyena.Data.Query
             XmlElement op_node = doc.CreateElement (op.Name);
             parent.AppendChild (op_node);
 
-            QueryField field = fieldSet.GetByAlias (Field);
+            QueryField field = Field;
             if (field != null) {
                 XmlElement field_node = doc.CreateElement ("field");
                 field_node.SetAttribute ("name", field.Name);
                 op_node.AppendChild (field_node);
             }
 
-            XmlElement val_node = doc.CreateElement ("string");
-            val_node.InnerText = Value;
+            XmlElement val_node = doc.CreateElement (Value.XmlElementName);
+            Value.AppendXml (val_node);
             op_node.AppendChild (val_node);
         }
 
         public override void AppendSql (StringBuilder sb, QueryFieldSet fieldSet)
         {
-            string alias = Field;
-            
-            if (fieldSet.GetByAlias (alias) == null) {
+            if (Field == null) {
                 sb.Append ("(");
-                int emitted = 0, i = 0;
+                int emitted = 0;
                 
                 foreach (QueryField field in fieldSet.Fields) {
-                    if (field.Default)
+                    if (field.IsDefault)
                         if (EmitTermMatch (sb, field, emitted > 0))
                             emitted++;
                 }
                 
                 sb.Append (")");
             } else {
-                EmitTermMatch (sb, fieldSet.GetByAlias (alias), false);
+                EmitTermMatch (sb, Field, false);
             }
         }
 
         private bool EmitTermMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
-            if (field.QueryFieldType == QueryFieldType.Text)
+            if (Value.IsEmpty)
+                return false;
+
+            if (field.ValueType == typeof(StringQueryValue)) {
                 return EmitStringMatch (sb, field, emit_or);
-            else
+            } else {
                 return EmitNumericMatch (sb, field, emit_or);
+            }
         }
 
         private bool EmitStringMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
-            string safe_value = (field.Modifier == null ? Value : field.Modifier (Value)).Replace("'", "''");
+            string safe_value = Value.ToSql ().Replace("'", "''");
             
             if (emit_or)
                 sb.Append (" OR ");
@@ -217,12 +162,6 @@ namespace Hyena.Data.Query
 
         private bool EmitNumericMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
-            long num = 0;
-            
-            if (!Int64.TryParse (field.Modifier == null ? Value : field.Modifier (Value), out num)) {
-                return false;
-            }
-            
             if (emit_or) {
                 sb.Append (" OR ");
             }
@@ -231,18 +170,18 @@ namespace Hyena.Data.Query
                 case ":":
                 case "=":
                 case "==":
-                    sb.Append (field.FormatSql ("= {0}", num));
+                    sb.Append (field.FormatSql ("= {0}", Value.ToSql ()));
                     break;
 
                 default:
-                    sb.Append (field.FormatSql ("{1} {0}", num, Operator.UserOperator));
+                    sb.Append (field.FormatSql ("{1} {0}", Value.ToSql (), Operator.UserOperator));
                     break;
             }
             
             return true;
         }
         
-        public string Field {
+        public QueryField Field {
             get { return field; }
             set { field = value; }
         }
@@ -252,9 +191,9 @@ namespace Hyena.Data.Query
             set { op = value; }
         }
         
-        public string Value {
-            get { return field_value; }
-            set { field_value = value; }
+        public QueryValue Value {
+            get { return qvalue; }
+            set { qvalue = value; }
         }
     }
 }

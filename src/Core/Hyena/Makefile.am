@@ -12,13 +12,19 @@ SOURCES =  \
 	Hyena.CommandLine/LayoutGroup.cs \
 	Hyena.CommandLine/LayoutGroupAttribute.cs \
 	Hyena.CommandLine/LayoutOption.cs \
+	Hyena.Data.Query/DateQueryValue.cs \
+	Hyena.Data.Query/FileSizeQueryValue.cs \
+	Hyena.Data.Query/IntegerQueryValue.cs \
 	Hyena.Data.Query/QueryField.cs \
 	Hyena.Data.Query/QueryFieldSet.cs \
 	Hyena.Data.Query/QueryListNode.cs \
 	Hyena.Data.Query/QueryNode.cs \
+	Hyena.Data.Query/QueryOperator.cs \
 	Hyena.Data.Query/QueryParser.cs \
 	Hyena.Data.Query/QueryTermNode.cs \
 	Hyena.Data.Query/QueryToken.cs \
+	Hyena.Data.Query/QueryValue.cs \
+	Hyena.Data.Query/StringQueryValue.cs \
 	Hyena.Data.Query/UserQueryParser.cs \
 	Hyena.Data.Query/XmlQueryParser.cs \
 	Hyena.Data.Sqlite/DatabaseColumn.cs \
@@ -41,8 +47,9 @@ SOURCES =  \
 	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/SortType.cs \
 	Hyena/IUndoAction.cs \
+	Hyena/Timer.cs \
 	Hyena/UndoManager.cs \
-	Timer.cs
+	Hyena/Utilities.cs
 
 include $(top_srcdir)/build/build.mk
 

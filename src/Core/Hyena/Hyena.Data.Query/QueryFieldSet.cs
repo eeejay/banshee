@@ -59,5 +59,9 @@ namespace Hyena.Data.Query
                 return map[alias.ToLower ()];
             return null;
         }
+
+        public QueryField this [string alias] {
+            get { return GetByAlias (alias); }
+        }
     }
 }

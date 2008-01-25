@@ -1,9 +1,8 @@
 //
-// QueryParser.cs
+// Utilities.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
-//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -28,39 +27,37 @@
 //
 
 using System;
-using System.IO;
-using System.Text;
 
-namespace Hyena.Data.Query
+namespace Hyena
 {
-    public abstract class QueryParser
+    public class DateTimeUtil
     {
-        protected StreamReader reader;
-        
-        public QueryParser()
+        public static readonly DateTime LocalUnixEpoch = new DateTime (1970, 1, 1).ToLocalTime ();
+
+        public static DateTime ToDateTime (long time)
         {
-            Reset ();
+            return FromTimeT (time);
         }
 
-        public QueryParser(string inputQuery) : this(new MemoryStream(Encoding.UTF8.GetBytes(inputQuery)))
+        public static long FromDateTime (DateTime time)
         {
+            return ToTimeT (time);
         }
 
-        public QueryParser(Stream stream) : this(new StreamReader(stream))
+        public static DateTime FromTimeT (long time)
         {
+            return LocalUnixEpoch.AddSeconds (time);
         }
 
-        public QueryParser(StreamReader reader) : this()
+        public static long ToTimeT (DateTime time)
         {
-            InputReader = reader;
+            return (long)time.Subtract (LocalUnixEpoch).TotalSeconds;
         }
 
-        public abstract QueryNode BuildTree (QueryFieldSet fieldSet);
-        public abstract void Reset ();
-        
-        public StreamReader InputReader {
-            get { return reader; }
-            set { reader = value; }
+        public static string FormatDuration (long time) {
+            return (time > 3600 ? 
+                    String.Format ("{0}:{1:00}:{2:00}", time / 3600, (time / 60) % 60, time % 60) :
+                    String.Format ("{0}:{1:00}", time / 60, time % 60));
         }
     }
 }

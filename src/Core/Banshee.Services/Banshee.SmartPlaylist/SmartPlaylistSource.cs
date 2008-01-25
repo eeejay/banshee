@@ -283,21 +283,19 @@ namespace Banshee.SmartPlaylist
         {
             List<SmartPlaylistSource> sources = new List<SmartPlaylistSource> ();
 
-            IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
-                "SELECT SmartPlaylistID, Name, Condition, OrderBy, OrderDir, LimitNumber, LimitCriterion FROM CoreSmartPlaylists"
-            );
-            
-            while (reader.Read ()) {
-                SmartPlaylistSource playlist = new SmartPlaylistSource (
-                    Convert.ToInt32 (reader[0]), reader[1] as string,
-                    reader[2] as string, reader[3] as string,
-                    reader[4] as string, reader[5] as string,
-                    reader[6] as string
-                );
-                sources.Add (playlist);
+            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
+                "SELECT SmartPlaylistID, Name, Condition, OrderBy, OrderDir, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
+                while (reader.Read ()) {
+                    SmartPlaylistSource playlist = new SmartPlaylistSource (
+                        Convert.ToInt32 (reader[0]), reader[1] as string,
+                        reader[2] as string, reader[3] as string,
+                        reader[4] as string, reader[5] as string,
+                        reader[6] as string
+                    );
+                    sources.Add (playlist);
+                }
             }
             
-            reader.Dispose();
             return sources;
         }
 

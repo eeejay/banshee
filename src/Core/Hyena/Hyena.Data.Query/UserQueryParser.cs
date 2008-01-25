@@ -44,14 +44,17 @@ namespace Hyena.Data.Query
         private int token_start_line;
         private bool eos_consumed;
 
+        private QueryListNode root;
+        private QueryFieldSet field_set;
+
         public UserQueryParser () : base () {}
         public UserQueryParser (string inputQuery) : base (inputQuery) {}
         public UserQueryParser (Stream stream) : base (stream) {}
         public UserQueryParser (StreamReader reader) : base (reader) {}
 
-        QueryListNode root;
-        public override QueryNode BuildTree ()
+        public override QueryNode BuildTree (QueryFieldSet fieldSet)
         {
+            field_set = fieldSet;
             root = current_parent = new QueryListNode (Keyword.And);
             bool last_was_term = false;
             
@@ -145,7 +148,7 @@ namespace Hyena.Data.Query
                     break;
 
                 case TokenID.Term:
-                    NodePush (new QueryTermNode (token.Term));
+                    NodePush (QueryTermNode.ParseUserQuery (field_set, token.Term));
                     break;
             }
         }
@@ -203,6 +206,8 @@ namespace Hyena.Data.Query
             }
         }
 
+        // TODO: Allow white space before/after term operators
+
         private bool IsStringTerminationChar (char ch, bool allow_whitespace)
         {
             return (!allow_whitespace && Char.IsWhiteSpace (ch)) || ch == '(' || ch == ')' || ch == '|' || ch == ',';
@@ -216,13 +221,10 @@ namespace Hyena.Data.Query
             while (true) {
                 if (IsStringTerminationChar (peek, in_string)) {
                     break;
-                } else if (!in_string && peek == '"') {
-                    in_string = true;
-                } else if (in_string && peek == '"') {
-                    in_string = false;
+                } else if (peek == '"') {
+                    in_string = !in_string;
                 } else {
                     buffer.Append (peek);
-                    
                     if (reader.EndOfStream) {
                         break;
                     }

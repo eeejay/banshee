@@ -33,53 +33,67 @@ using System.Collections.Generic;
 
 namespace Hyena.Data.Query
 {
-    public enum QueryFieldType
-    {
-        Text,
-        Numeric
-    }
-
     public class QueryField
     {
-        public delegate string ModifierHandler (string input);
+        private Type value_type;
+        public Type ValueType {
+            get { return value_type; }
+        }
 
-        public string Name;
-        public string Label;
-        public string [] Aliases;
-        public string Column;
-        public bool Default;
-        public QueryFieldType QueryFieldType;
-        public ModifierHandler Modifier;
+        private string name;
+        public string Name {
+            get { return name; }
+            set { name = value; }
+        }
 
-        public QueryField (string name, string label, string column, QueryFieldType type, params string [] aliases) 
-            : this (name, label, column, type, false, null, aliases)
-        {
+        private string label;
+        public string Label {
+            get { return label; }
+            set { label = value; }
         }
-        
-        public QueryField (string name, string label, string column, QueryFieldType type, ModifierHandler modifier, params string [] aliases) 
-            : this (name, label, column, type, false, modifier, aliases)
-        {
-        }
-        
-        public QueryField (string name, string label, string column, QueryFieldType type, bool isDefault, params string [] aliases)
-            : this (name, label, column, type, isDefault, null, aliases)
-        {
-        }
-        
-        public QueryField (string name, string label, string column, QueryFieldType type, bool isDefault, 
-            ModifierHandler modifier, params string [] aliases)
-        {
-            Name = name;
-            Label = label;
-            Column = column;
-            QueryFieldType = type;
-            Default = isDefault;
-            Modifier = modifier;
-            Aliases = aliases;
+
+        private string [] aliases;
+        public string [] Aliases {
+            get { return aliases; }
         }
 
         public string PrimaryAlias {
-            get { return Aliases [0]; }
+            get { return aliases[0]; }
+        }
+
+        private string column;
+        public string Column {
+            get { return column; }
+        }
+
+        private bool is_default;
+        public bool IsDefault {
+            get { return is_default; }
+        }
+
+        public QueryField (string name, string label, string column, params string [] aliases)
+            : this (name, label, column, false, aliases)
+        {
+        }
+
+        public QueryField (string name, string label, string column, bool isDefault, params string [] aliases)
+            : this (name, label, column, typeof(StringQueryValue), isDefault, aliases)
+        {
+        }
+
+        public QueryField (string name, string label, string column, Type valueType, params string [] aliases)
+            : this (name, label, column, valueType, false, aliases)
+        {
+        }
+
+        public QueryField (string name, string label, string column, Type valueType, bool isDefault, params string [] aliases)
+        {
+            this.name = name;
+            this.label = label;
+            this.column = column;
+            this.value_type = valueType;
+            this.is_default = isDefault;
+            this.aliases = aliases;
         }
 
         public string ToTermString (string op, string value)
