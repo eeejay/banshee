@@ -38,15 +38,35 @@ namespace Hyena.Data.Query
     {
         public string Name;
         public string UserOperator;
+
+        public Operator Dual {
+            get {
+                string op = UserOperator.Replace ('>', '^');
+                op = op.Replace ('<', '>');
+                op = op.Replace ('^', '<');
+                return GetByUserOperator (op);
+            }
+        }
+
+        private bool is_not;
+        public bool IsNot {
+            get { return is_not; }
+        }
         
         private static List<Operator> operators = new List<Operator> ();
         private static Dictionary<string, Operator> by_op = new Dictionary<string, Operator> ();
         private static Dictionary<string, Operator> by_name = new Dictionary<string, Operator> ();
 
-        protected Operator (string name, string userOp)
+
+        protected Operator (string name, string userOp) : this (name, userOp, false)
+        {
+        }
+
+        protected Operator (string name, string userOp, bool is_not)
         {
             Name = name;
             UserOperator = userOp;
+            this.is_not = is_not;
         }
 
         static Operator () {
@@ -55,9 +75,10 @@ namespace Hyena.Data.Query
             Add (new Operator ("equals", "=="));
             Add (new Operator ("lessThanEquals", "<="));
             Add (new Operator ("greaterThanEquals", ">="));
-            //Add (new Operator ("notEqual", "!="));
+            Add (new Operator ("notEqual", "!=", true));
+            Add (new Operator ("endsWith", ":="));
             Add (new Operator ("startsWith", "="));
-            //Add (new Operator ("doesNotContain", "!:"));
+            Add (new Operator ("doesNotContain", "!:", true));
             Add (new Operator ("contains", ":"));
             Add (new Operator ("lessThan", "<"));
             Add (new Operator ("greaterThan", ">"));

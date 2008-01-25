@@ -134,50 +134,66 @@ namespace Hyena.Data.Query
             if (emit_or)
                 sb.Append (" OR ");
 
+            string format = null;
             switch (Operator.UserOperator) {
                 case "=": // Starts with
-                    sb.Append (field.FormatSql ("LIKE '{0}%'", safe_value));
+                    format = "LIKE '{0}%'";
+                    break;
+
+                case ":=": // Ends with
+                    format = "LIKE '%{0}'";
                     break;
                     
                 case "==": // Equal to
-                    sb.Append (field.FormatSql ("= '{0}'", safe_value));
+                    format = "= '{0}'";
                     break;
 
                 case "!=": // Not equal to
-                    sb.Append (field.FormatSql ("!= '{0}'", safe_value));
+                    format = "!= '{0}'";
                     break;
 
                 case "!:": // Doesn't contain
-                    sb.Append (field.FormatSql ("NOT LIKE '%{0}%'", safe_value));
+                    format = "NOT LIKE '%{0}%'";
                     break;
 
                 case ":": // Contains
                 default:
-                    sb.Append (field.FormatSql ("LIKE '%{0}%'", safe_value));
+                    format = "LIKE '%{0}%'";
                     break;
             }
 
+            sb.Append (field.FormatSql (format, Operator, safe_value));
             return true;
         }
 
         private bool EmitNumericMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
-            if (emit_or) {
-                sb.Append (" OR ");
-            }
-            
+            string format;
             switch (Operator.UserOperator) {
+                // Operators that don't make sense for numeric types
+                case "!:":
+                case ":=":
+                    return false;
+
                 case ":":
                 case "=":
                 case "==":
-                    sb.Append (field.FormatSql ("= {0}", Value.ToSql ()));
+                    format = "= {0}";
                     break;
 
                 default:
-                    sb.Append (field.FormatSql ("{1} {0}", Value.ToSql (), Operator.UserOperator));
+                    format = Operator.UserOperator + " {0}";
                     break;
             }
-            
+
+            if (emit_or) {
+                sb.Append (" OR ");
+            }
+
+            sb.Append (field.FormatSql (format,
+                Operator, Value.ToSql ()
+            ));
+
             return true;
         }
         

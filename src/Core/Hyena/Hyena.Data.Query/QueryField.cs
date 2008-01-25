@@ -101,12 +101,24 @@ namespace Hyena.Data.Query
             return ToTermString (PrimaryAlias, op, value);
         }
 
-        public string FormatSql (string format, params object [] args)
+        public string FormatSql (string format, Operator op, string value)
         {
-            if (Column.IndexOf ("{0}") == -1)
-                return String.Format ("{0} {1}", Column, String.Format (format, args));
-            else
-                return String.Format (Column, String.Format (format, args));
+            if (Column.IndexOf ("{0}") == -1 && Column.IndexOf ("{1}") == -1) {
+                if (ValueType == typeof(StringQueryValue)) {
+                    // Match string values literally and against a lower'd version 
+                    return String.Format ("({0} {1} OR LOWER({0}) {2})", Column,
+                        String.Format (format, value),
+                        String.Format (format, value.ToLower ())
+                    );
+                } else {
+                    return String.Format ("{0} {1}", Column, String.Format (format, value));
+                }
+            } else {
+                return String.Format (
+                    Column, String.Format (format, value),
+                    value, op.IsNot ? "NOT" : null
+                );
+            }
         }
 
         public static string ToTermString (string alias, string op, string value)

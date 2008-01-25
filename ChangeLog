@@ -1,3 +1,45 @@
+2008-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Smart playlists are migrated and saved now.  They should be functional.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Add playlistid and smartplaylistid fields for smart playlist migration.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Call DbId
+	setter from subclasses, not in base ctor.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs: Improve to
+	actually be able to migrate the vast majority of smart playlists
+	including relative date queries and between queries.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	Remove debug output.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Don't allow removing tracks, and change to revolve about Hyena.Data.Query
+	query tree instead of a SQL condition string.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Don't allow
+	overriding of Reload method, since it's really RateLimitedReload
+	subclasses want to override.
+
+	* src/Core/Hyena/Hyena.Data.Query/DateQueryValue.cs: Actually generate
+	relative date queries, and expose relevant properties. 
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryField.cs: For StringQueryValue
+	fields that don't have a custom format, automatically match both literally
+	and against both the column and value lowercased.
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryNode.cs: Add option to print pretty
+	XML (indented).
+
+	* src/Core/Hyena/Hyena.Data.Query/QueryOperator.cs: Add a Dual property
+	that flips < and > characters.
+
+	* src/Core/Hyena/Hyena.Data.Query/XmlQueryParser.cs: Add static
+	convenience method for parsing.
+
 2008-01-25  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:

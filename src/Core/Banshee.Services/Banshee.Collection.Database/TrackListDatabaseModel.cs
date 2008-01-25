@@ -384,11 +384,11 @@ namespace Banshee.Collection.Database
         }
         
         public override QueryField ArtistField {
-            get { return field_set.Fields [0]; }
+            get { return field_set["artist"]; }
         }
 
         public override QueryField AlbumField {
-            get { return field_set.Fields [1]; }
+            get { return field_set["album"]; }
         }
 
         protected static QueryFieldSet field_set = new QueryFieldSet (
@@ -459,7 +459,6 @@ namespace Banshee.Collection.Database
                 "type", "mimetype", "format", "ext", "mime"
             ),
             new QueryField (
-                    // (strftime("%s", current_timestamp) - DateAddedStamp + 3600)
                 "lastplayed", Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", typeof(DateQueryValue),
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("lastplayed"), Catalog.GetString ("played"), Catalog.GetString ("playedon"),
@@ -470,15 +469,17 @@ namespace Banshee.Collection.Database
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("added"), Catalog.GetString ("imported"), Catalog.GetString ("addedon"), Catalog.GetString ("dateadded"), Catalog.GetString ("importedon"),
                 "added", "imported", "addedon", "dateadded", "importedon"
-            )/*,
+            ),
             new QueryField (
-                "playlist", Catalog.GetString ("Playlist"),
-                "CoreTracks.TrackID IN (SELECT TrackID FROM CorePlaylistEntries WHERE PlaylistID {0})",
-                QueryFieldType.Numeric,
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("duration"), Catalog.GetString ("length"), Catalog.GetString ("time"),
-                "duration", "length", "time"
-            )*/
+                "playlistid", Catalog.GetString ("Playlist"),
+                "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CorePlaylistEntries WHERE PlaylistID = {1})", typeof(IntegerQueryValue),
+                "playlistid", "playlist"
+            ),
+            new QueryField (
+                "smartplaylistid", Catalog.GetString ("Smart Playlist"),
+                "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {1})", typeof(IntegerQueryValue),
+                "smartplaylistid", "smartplaylist"
+            )
         );
     }
 }

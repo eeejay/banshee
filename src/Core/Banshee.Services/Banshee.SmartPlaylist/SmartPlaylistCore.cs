@@ -46,15 +46,8 @@ namespace Banshee.SmartPlaylist
         {
             Gnome.Vfs.Vfs.Initialize();
 
-            Console.WriteLine ("== Migrating Smart Playlists ==");
             Migrator.MigrateAll ();
-            Console.WriteLine ("== Done Migrating Smart Playlists ==");
 
-            /*new XmlQueryParser (@"
-                    <foo>
-                    <bar>
-            ");*/
-            
             // Listen for added/removed sources and added/changed songs
             ServiceManager.SourceManager.SourceAdded += HandleSourceAdded;
             ServiceManager.SourceManager.SourceRemoved += HandleSourceRemoved;

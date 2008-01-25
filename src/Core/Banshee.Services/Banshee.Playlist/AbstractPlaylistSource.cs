@@ -74,10 +74,8 @@ namespace Banshee.Playlist
             get { return dbid; }
             protected set {
                 if (value == null) {
-                    Console.WriteLine ("intializing abstract playlist, but dbid = null!");
                     return;
                 }
-                Console.WriteLine ("intializing abstract playlist");
                 dbid = value;
                 track_model.JoinFragment = TrackJoin;
                 track_model.Condition = String.Format (TrackCondition, dbid);
@@ -92,7 +90,6 @@ namespace Banshee.Playlist
         public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType) : base (generic_name, name, Convert.ToString (dbid), 500)
         {
             Properties.SetString ("IconName", IconName);
-            DbId = dbid;
         }
 
         public override void Rename (string newName)
@@ -103,7 +100,7 @@ namespace Banshee.Playlist
 
         public virtual void Save ()
         {
-            if (dbid == null || dbid < 0)
+            if (dbid == null || dbid <= 0)
                 Create ();
             else
                 Update ();

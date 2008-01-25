@@ -99,6 +99,7 @@ namespace Banshee.Playlist
         {
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
+            DbId = dbid;
         }
 
 #endregion

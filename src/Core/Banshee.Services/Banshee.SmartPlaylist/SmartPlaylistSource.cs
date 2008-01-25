@@ -33,6 +33,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 using Mono.Unix;
+
+using Hyena.Data.Query;
  
 using Banshee.Base;
 using Banshee.Sources;
@@ -61,18 +63,20 @@ namespace Banshee.SmartPlaylist
         private static string generic_name = Catalog.GetString ("Smart Playlist");
         private static string properties_label = Catalog.GetString ("Edit Smart Playlist");
     
-        private string condition;
         private string order_by;
         private string order_dir;
         private string limit_number;
         private string limit_criterion;
-
 
 #region Properties
 
         // Source override
         public override bool HasProperties {
             get { return true; }
+        }
+
+        public override bool CanRemoveTracks {
+            get { return false; }
         }
 
         // AbstractPlaylistSource overrides
@@ -93,9 +97,30 @@ namespace Banshee.SmartPlaylist
         }
 
         // Custom properties
-        public string Condition {
+        private QueryNode condition;
+        public QueryNode ConditionTree {
             get { return condition; }
-            set { condition = value; }
+            set {
+                condition = value;
+                if (condition != null) {
+                    condition_sql = condition.ToSql (TrackListDatabaseModel.FieldSet);
+                    condition_xml = condition.ToXml (TrackListDatabaseModel.FieldSet);
+                }
+            }
+        }
+
+        private string condition_sql;
+        public string ConditionSql {
+            get { return condition_sql; }
+        }
+
+        private string condition_xml;
+        public string ConditionXml {
+            get { return condition_xml; }
+            set {
+                condition_xml = value;
+                ConditionTree = XmlQueryParser.Parse (condition_xml, TrackListDatabaseModel.FieldSet);
+            }
         }
 
         public string OrderBy {
@@ -150,15 +175,25 @@ namespace Banshee.SmartPlaylist
         {
         }
 
+        /*public SmartPlaylistSource (SmartPlaylistSource original) : this (original.Name)
+        {
+            ConditionXml = original.ConditionXml;
+            OrderBy = original.OrderBy;
+            OrderDir = original.OrderDir;
+            LimitNumber = original.LimitNumber;
+            LimitCriterion = original.LimitCriterion;
+        }*/
+
         // For existing smart playlists that we're loading from the database
-        public SmartPlaylistSource (int? dbid, string name, string condition, string order_by, string order_dir, string limit_number, string limit_criterion) :
+        public SmartPlaylistSource (int? dbid, string name, string condition_xml, string order_by, string order_dir, string limit_number, string limit_criterion) :
             base (generic_name, name, dbid, -1, 0)
         {
-            Condition = condition;
+            ConditionXml = condition_xml;
             OrderBy = order_by;
             OrderDir = order_dir;
             LimitNumber = limit_number;
             LimitCriterion = limit_criterion;
+            DbId = dbid;
 
             Properties.SetString ("SourcePropertiesActionLabel", properties_label);
 
@@ -194,9 +229,9 @@ namespace Banshee.SmartPlaylist
         {
             DbId = ServiceManager.DbConnection.Execute (new BansheeDbCommand (@"
                 INSERT INTO CoreSmartPlaylists
-                    (Name, Condition, OrderBy, LimitNumber, LimitCriterion)
-                    VALUES (?, ?, ?, ?, ?)",
-                Name, Condition, OrderBy, LimitNumber, LimitCriterion
+                    (Name, Condition, OrderBy, OrderDir, LimitNumber, LimitCriterion)
+                    VALUES (?, ?, ?, ?, ?, ?)",
+                Name, ConditionXml, OrderBy, OrderDir, LimitNumber, LimitCriterion
             ));
         }
 
@@ -207,10 +242,11 @@ namespace Banshee.SmartPlaylist
                     SET Name = ?,
                         Condition = ?,
                         OrderBy = ?,
+                        OrderDir = ?,
                         LimitNumber = ?,
                         LimitCriterion = ?
                     WHERE SmartPlaylistID = ?",
-                Name, Condition, OrderBy, LimitNumber, LimitCriterion, DbId
+                Name, ConditionXml, OrderBy, OrderDir, LimitNumber, LimitCriterion, DbId
             ));
         }
 
@@ -218,24 +254,14 @@ namespace Banshee.SmartPlaylist
 
 #region DatabaseSource overrides
 
-        public override void Reload ()
+        protected override void RateLimitedReload ()
         {
-            // TODO don't actually do this here, do it on a timeout
-
             // Wipe the member list clean
             ServiceManager.DbConnection.Execute (String.Format (
                 "DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {0}", DbId
             ));
 
             // Repopulate it 
-            Console.WriteLine (String.Format (
-                @"INSERT INTO CoreSmartPlaylistEntries 
-                    SELECT {0} as SmartPlaylistID, TrackId
-                        FROM CoreTracks, CoreArtists, CoreAlbums
-                        WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID
-                        {1} {2}",
-                DbId, PrependCondition("AND"), OrderAndLimit
-            ));
             ServiceManager.DbConnection.Execute (String.Format (
                 @"INSERT INTO CoreSmartPlaylistEntries 
                     SELECT {0} as SmartPlaylistID, TrackId
@@ -245,14 +271,14 @@ namespace Banshee.SmartPlaylist
                 DbId, PrependCondition("AND"), OrderAndLimit
             ));
 
-            base.Reload ();
+            base.RateLimitedReload ();
         }
 
 #endregion
 
         private string PrependCondition (string with)
         {
-            return (Condition == null || Condition == String.Empty) ? " " : with + " (" + Condition + ")";
+            return String.IsNullOrEmpty (ConditionSql) ? " " : String.Format ("{0} ({1})", with, ConditionSql);
         }
 
         private static Order [] orders = new Order [] {
@@ -286,18 +312,21 @@ namespace Banshee.SmartPlaylist
             using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
                 "SELECT SmartPlaylistID, Name, Condition, OrderBy, OrderDir, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
                 while (reader.Read ()) {
-                    SmartPlaylistSource playlist = new SmartPlaylistSource (
-                        Convert.ToInt32 (reader[0]), reader[1] as string,
-                        reader[2] as string, reader[3] as string,
-                        reader[4] as string, reader[5] as string,
-                        reader[6] as string
-                    );
-                    sources.Add (playlist);
+                    try {
+                        SmartPlaylistSource playlist = new SmartPlaylistSource (
+                            Convert.ToInt32 (reader[0]), reader[1] as string,
+                            reader[2] as string, reader[3] as string,
+                            reader[4] as string, reader[5] as string,
+                            reader[6] as string
+                        );
+                        sources.Add (playlist);
+                    } catch (Exception e) {
+                        Log.Warning ("Ignoring Smart Playlist", String.Format ("Caught error: {0}", e), false);
+                    }
                 }
             }
             
             return sources;
         }
-
     }
 }

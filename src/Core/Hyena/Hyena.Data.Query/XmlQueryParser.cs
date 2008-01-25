@@ -38,6 +38,11 @@ namespace Hyena.Data.Query
         private string str;
         private QueryFieldSet field_set;
 
+        public static QueryNode Parse (string input, QueryFieldSet fieldSet)
+        {
+            return new XmlQueryParser (input).BuildTree (fieldSet);
+        }
+
         public XmlQueryParser () : base () {}
 
         public XmlQueryParser (string str)
@@ -62,7 +67,6 @@ namespace Hyena.Data.Query
                 QueryNode node = Parse (query.FirstChild as XmlElement, null);
                 return (node != null) ? node.Trim () : null;
             } catch (Exception e) {
-                Console.WriteLine ("Caught exception trying to parse query tree from XML: {0}", e.ToString ());
             }
             return null;
         }

@@ -34,6 +34,16 @@ using Hyena;
 
 namespace Hyena.Data.Query
 {
+    public enum RelativeDateFactor {
+        Second = 1,
+        Minute = 60,
+        Hour   = 3600,
+        Day    = 3600*24,
+        Week   = 3600*24*7,
+        Month  = 3600*24*30,
+        Year   = 3600*24*365
+    }
+
     public class DateQueryValue : QueryValue
     {
         protected DateTime value;
@@ -46,6 +56,16 @@ namespace Hyena.Data.Query
 
         public override object Value {
             get { return value; }
+        }
+
+        public bool Relative {
+            get { return relative; }
+            set { relative = value; }
+        }
+
+        public long RelativeOffset {
+            get { return offset; }
+            set { offset = value; IsEmpty = false; }
         }
 
         public override void ParseUserQuery (string input)
@@ -80,6 +100,16 @@ namespace Hyena.Data.Query
                 IsEmpty = false;
             } catch {
                 IsEmpty = true;
+            }
+        }
+
+        public override void AppendXml (XmlElement node)
+        {
+            if (relative) {
+                node.SetAttribute ("type", "rel");
+                node.InnerText = RelativeOffset.ToString ();
+            } else {
+                base.AppendXml (node);
             }
         }
 

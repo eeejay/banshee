@@ -29,6 +29,7 @@
 
 using System;
 using System.Xml;
+using System.IO;
 using System.Text;
 
 namespace Hyena.Data.Query
@@ -76,7 +77,12 @@ namespace Hyena.Data.Query
 
         public abstract void AppendUserQuery (StringBuilder sb);
 
-        public virtual string ToXml (QueryFieldSet fieldSet)
+        public string ToXml (QueryFieldSet fieldSet)
+        {
+            return ToXml (fieldSet, false);
+        }
+
+        public virtual string ToXml (QueryFieldSet fieldSet, bool pretty)
         {
             XmlDocument doc = new XmlDocument ();
 
@@ -88,7 +94,19 @@ namespace Hyena.Data.Query
             request.AppendChild (query);
 
             AppendXml (doc, query, fieldSet);
-            return doc.OuterXml;
+
+            if (!pretty) {
+                return doc.OuterXml;
+            }
+
+            using (StringWriter sw = new StringWriter ()) {
+                using (XmlTextWriter xtw = new XmlTextWriter (sw)) {
+                    xtw.Formatting = System.Xml.Formatting.Indented;
+                    xtw.Indentation = 2;
+                    doc.WriteTo (xtw);
+                    return sw.ToString ();
+                }
+            }
         }
 
         public override string ToString ()

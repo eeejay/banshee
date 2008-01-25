@@ -104,7 +104,7 @@ namespace Banshee.Sources
 
 #region Public Methods
 
-        public virtual void Reload ()
+        public void Reload ()
         {
             reload_limiter.Execute ();
         }

@@ -28,14 +28,17 @@
 //
 
 using System;
+using System.Data;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
 
 using Hyena.Data;
 using Hyena.Data.Query;
+using Hyena.Data.Sqlite;
 
 using Banshee.Collection.Database;
+using Banshee.ServiceStack;
 
 namespace Banshee.SmartPlaylist
 {
@@ -46,10 +49,24 @@ namespace Banshee.SmartPlaylist
 
         public static void MigrateAll ()
         {
-            Console.WriteLine ("Migrating All.");
+            int version = ServiceManager.DbConnection.QueryInt32 ("SELECT Value FROM CoreConfiguration WHERE Key = 'SmartPlaylistVersion'");
+            if (version == 1)
+                return;
+
             Migrator m = new Migrator ();
-            foreach (SmartPlaylistSource source in SmartPlaylistSource.LoadAll ())
-                m.Migrate (source);
+            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
+                "SELECT SmartPlaylistID, Name, Condition, OrderBy, OrderDir, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
+                while (reader.Read ()) {
+                    m.Migrate (
+                        Convert.ToInt32 (reader[0]), reader[1] as string,
+                        reader[2] as string, reader[3] as string,
+                        reader[4] as string, reader[5] as string,
+                        reader[6] as string
+                    );
+                }
+            }
+
+            ServiceManager.DbConnection.Execute ("INSERT INTO CoreConfiguration (Key, Value) Values ('SmartPlaylistVersion', 1)");
         }
 
         public Migrator ()
@@ -69,19 +86,28 @@ namespace Banshee.SmartPlaylist
             order_hash.Add ("LastPlayedStamp ASC", FindOrder ("LastPlayedStamp", "ASC"));
         }
 
-        private void Migrate (SmartPlaylistSource source)
+        private void Migrate (int dbid, string Name, string Condition, string OrderBy, string OrderDir, string LimitNumber, string LimitCriterion)
         {
-            Console.WriteLine ("migrating {0}, order {1}", source.Name, source.OrderBy);
-            if (source.OrderBy != null && source.OrderBy != String.Empty) {
-                Order order = order_hash [source.OrderBy];
-                source.OrderBy = order.Key;
-                source.OrderDir = order.Dir;
+            if (OrderBy != null && OrderBy != String.Empty) {
+                Order order = order_hash [OrderBy];
+                OrderBy = order.Key;
+                OrderDir = order.Dir;
             }
-            source.LimitCriterion = criteria [Convert.ToInt32 (source.LimitCriterion)];
-            Console.WriteLine ("Befor: {0}", source.Condition);
-            source.Condition = ParseCondition (source.Condition);
-            Console.WriteLine ("After: {0}\n", source.Condition);
-            //source.Save ();
+
+            LimitCriterion = criteria [Convert.ToInt32 (LimitCriterion)];
+            string ConditionXml = ParseCondition (Condition);
+
+            ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
+                UPDATE CoreSmartPlaylists
+                    SET Name = ?,
+                        Condition = ?,
+                        OrderBy = ?,
+                        OrderDir = ?,
+                        LimitNumber = ?,
+                        LimitCriterion = ?
+                    WHERE SmartPlaylistID = ?",
+                Name, ConditionXml, OrderBy, OrderDir, LimitNumber, LimitCriterion, dbid
+            ));
         }
 
         private string ParseCondition (string value)
@@ -117,7 +143,8 @@ namespace Banshee.SmartPlaylist
                 foreach (QueryOperator op in QueryOperator.Operators) {
                     if (op.MatchesCondition (condition, out col, out v1, out v2)) {
                         QueryTermNode term = new QueryTermNode ();
-                        QueryField field = TrackListDatabaseModel.FieldSet.GetByAlias (col);
+                        QueryField field = TrackListDatabaseModel.FieldSet [col];
+                        bool is_relative_date = false;
                         if (field == null) {
                             if (col.IndexOf ("DateAddedStamp") != -1) {
                                 field = TrackListDatabaseModel.FieldSet.GetByAlias ("added");
@@ -125,100 +152,46 @@ namespace Banshee.SmartPlaylist
                                 field = TrackListDatabaseModel.FieldSet.GetByAlias ("lastplayed");
                             }
 
+                            // Fix ugly implementation of playlist/smart playlist conditions
+                            if (op == QueryOperator.InPlaylist || op == QueryOperator.NotInPlaylist) {
+                                field = TrackListDatabaseModel.FieldSet ["playlist"];
+                            } else if (op == QueryOperator.InSmartPlaylist || op == QueryOperator.NotInSmartPlaylist) {
+                                field = TrackListDatabaseModel.FieldSet ["smartplaylist"];
+                            }
+
                             if (field == null) {
-                                Console.WriteLine ("got unknown field {0} so skipping", col);
                                 continue;
                             }
+                            is_relative_date = true;
                         }
 
-                        //if (term.Field.IndexOf ("LastPlayedStamp") != -1) {
-                        //} else if (term.Field.IndexOf ("DateAddedStamp") != -1) {
-                        //}
+                        term.Operator = Operator.GetByUserOperator (op.NewOp);
                         term.Field = field;
-                        term.Value = QueryValue.CreateFromUserQuery (v1, field);
-                        root.AddChild (term);
 
-                        switch (op.GetType ().ToString ()) {
-                            case "EQText":
-                            case "EQ":
-                                term.Operator = Operator.GetByUserOperator ("==");
-                                break;
+                        if (op == QueryOperator.Between) {
+                            QueryListNode and = new QueryListNode (Keyword.And);
+                            QueryTermNode t2 = new QueryTermNode ();
+                            t2.Field = term.Field;
 
-                            case "NotEQText":
-                            case "NotEQ":
-                                term.Operator = Operator.GetByUserOperator ("!=");
-                                break;
-
-                            case "Between":
-                            case "LT":
-                                term.Operator = Operator.GetByUserOperator ("<");
-                                break;
-
-                            case "GT":
-                                term.Operator = Operator.GetByUserOperator (">");
-                                break;
-
-                            case "GTE":
-                                term.Operator = Operator.GetByUserOperator (">=");
-                                break;
-
-                            case "Like":
-                                term.Operator = Operator.GetByUserOperator (":");
-                                break;
-
-                            case "NotLike":
-                                term.Operator = Operator.GetByUserOperator (":");
-                                break;
-
-                            case "StartsWith":
-                                term.Operator = Operator.GetByUserOperator ("=");
-                                break;
-
-                            case "InPlaylist":
-                                term.Operator = Operator.GetByUserOperator (">");
-                                break;
-
-                            case "NotInPlaylist":
-                                term.Operator = Operator.GetByUserOperator (">");
-                                break;
-
-                            case "InSmartPlaylist":
-                                term.Operator = Operator.GetByUserOperator (">");
-                                break;
-
-                            case "NotInSmartPlaylist":
-                                term.Operator = Operator.GetByUserOperator (">");
-                                break;
-                        }
-
-                        Console.WriteLine ("..{0}\n=>{1}", condition, term.ToString ());
-
-                        // Set the column
-                        /*QueryBuilderMatchRow row = matchesBox.Children[count] as QueryBuilderMatchRow;
-                        if (!ComboBoxUtil.SetActiveString (row.FieldBox, model.GetName(col))) {
-                            if (col.IndexOf ("current_timestamp") == -1) {
-                                Console.WriteLine ("Found col that can't place");
-                                break;
+                            if (is_relative_date) {
+                                ParseRelativeDateCondition (term, v1, field, ">=");
+                                ParseRelativeDateCondition (t2, v2, field, "<=");
                             } else {
-                                bool found = false;
-                                foreach (string field in model) {
-                                    if (col.IndexOf (model.GetColumn (field)) != -1) {
-                                        ComboBoxUtil.SetActiveString (row.FieldBox, field);
-                                        found = true;
-                                        break;
-                                    }
-                                }
-
-                                if (!found) {
-                                    Console.WriteLine ("Found col that can't place");
-                                    break;
-                                }
+                                term.Operator = Operator.GetByUserOperator ("<=");
+                                term.Value = QueryValue.CreateFromUserQuery (v1, field);
+                                t2.Operator = Operator.GetByUserOperator (">=");
+                                t2.Value = QueryValue.CreateFromUserQuery (v2, field);
                             }
-                        }*/
-
-                        // Set the values
-                        //v1;
-                        //v2;
+                            and.AddChild (term);
+                            and.AddChild (t2);
+                            root.AddChild (and);
+                        } else if (is_relative_date) {
+                            ParseRelativeDateCondition (term, v1, field, term.Operator.UserOperator);
+                            root.AddChild (term);
+                        } else {
+                            term.Value = QueryValue.CreateFromUserQuery (v1, field);
+                            root.AddChild (term);
+                        }
 
                         break;
                     }
@@ -227,7 +200,25 @@ namespace Banshee.SmartPlaylist
                 count++;
             }
 
-            return root.Trim ().ToXml (TrackListDatabaseModel.FieldSet);
+            QueryNode node = root.Trim ();
+
+            if (node != null) {
+                //Console.WriteLine ("After XML: {0}", node.ToXml (TrackListDatabaseModel.FieldSet, true));
+                //Console.WriteLine ("After SQL: {0}", node.ToSql (TrackListDatabaseModel.FieldSet));
+            }
+
+            return node == null ? String.Empty : node.ToXml (TrackListDatabaseModel.FieldSet);
+        }
+
+        private void ParseRelativeDateCondition (QueryTermNode term, string val, QueryField field, string op)
+        {
+            // Have to flip the operator b/c of how we used to construct the SQL query
+            term.Operator = Operator.GetByUserOperator (op).Dual;
+            DateQueryValue date_value = new DateQueryValue ();
+            // Have to negate the value b/c of how we used to constuct the SQL query
+            date_value.RelativeOffset = -Convert.ToInt64 (val);
+            date_value.Relative = true;
+            term.Value = date_value;
         }
 
         private Order FindOrder (string key)
@@ -246,14 +237,16 @@ namespace Banshee.SmartPlaylist
 
         public sealed class QueryOperator
         {
+            public string NewOp;
             private string format;
 
             public string Format {
                 get { return format; }
             }
 
-            private QueryOperator (string format)
+            private QueryOperator (string new_op, string format)
             {
+                NewOp = new_op;
                 this.format = format;
             }
 
@@ -294,29 +287,30 @@ namespace Banshee.SmartPlaylist
             }
 
             // calling lower() to have case insensitive comparisons with strings
-            public static QueryOperator EQText     = new QueryOperator("lower({1}) = {0}{2}{0}");
-            public static QueryOperator NotEQText  = new QueryOperator("lower({1}) != {0}{2}{0}");
+            public static QueryOperator EQText     = new QueryOperator("==", "lower({1}) = {0}{2}{0}");
+            public static QueryOperator NotEQText  = new QueryOperator("!=", "lower({1}) != {0}{2}{0}");
 
-            public static QueryOperator EQ         = new QueryOperator("{1} = {0}{2}{0}");
-            public static QueryOperator NotEQ      = new QueryOperator("{1} != {0}{2}{0}");
-            public static QueryOperator Between    = new QueryOperator("{1} BETWEEN {0}{2}{0} AND {0}{3}{0}");
-            public static QueryOperator LT         = new QueryOperator("{1} < {0}{2}{0}");
-            public static QueryOperator GT         = new QueryOperator("{1} > {0}{2}{0}");
-            public static QueryOperator GTE        = new QueryOperator("{1} >= {0}{2}{0}");
+            public static QueryOperator EQ         = new QueryOperator("==", "{1} = {0}{2}{0}");
+            public static QueryOperator NotEQ      = new QueryOperator("!=", "{1} != {0}{2}{0}");
+            // TODO how to deal w/ between?
+            public static QueryOperator Between    = new QueryOperator("", "{1} BETWEEN {0}{2}{0} AND {0}{3}{0}");
+            public static QueryOperator LT         = new QueryOperator("<", "{1} < {0}{2}{0}");
+            public static QueryOperator GT         = new QueryOperator(">", "{1} > {0}{2}{0}");
+            public static QueryOperator GTE        = new QueryOperator(">=", "{1} >= {0}{2}{0}");
 
             // Note, the following lower() calls are necessary b/c of a sqlite bug which makes the LIKE
             // command case sensitive with certain characters.
-            public static QueryOperator Like       = new QueryOperator("lower({1}) LIKE '%{2}%'");
-            public static QueryOperator NotLike    = new QueryOperator("lower({1}) NOT LIKE '%{2}%'");
-            public static QueryOperator StartsWith = new QueryOperator("lower({1}) LIKE '{2}%'");
-            public static QueryOperator EndsWith   = new QueryOperator("lower({1}) LIKE '%{2}'");
+            public static QueryOperator Like       = new QueryOperator(":", "lower({1}) LIKE '%{2}%'");
+            public static QueryOperator NotLike    = new QueryOperator("!:", "lower({1}) NOT LIKE '%{2}%'");
+            public static QueryOperator StartsWith = new QueryOperator("=", "lower({1}) LIKE '{2}%'");
+            public static QueryOperator EndsWith   = new QueryOperator(":=", "lower({1}) LIKE '%{2}'");
 
             // TODO these should either be made generic or moved somewhere else since they are Banshee/Track/Playlist specific.
-            public static QueryOperator InPlaylist      = new QueryOperator("TrackID IN (SELECT TrackID FROM PlaylistEntries WHERE {1} = {0}{2}{0})");
-            public static QueryOperator NotInPlaylist   = new QueryOperator("TrackID NOT IN (SELECT TrackID FROM PlaylistEntries WHERE {1} = {0}{2}{0})");
+            public static QueryOperator InPlaylist      = new QueryOperator("==", "TrackID IN (SELECT TrackID FROM PlaylistEntries WHERE {1} = {0}{2}{0})");
+            public static QueryOperator NotInPlaylist   = new QueryOperator("!=", "TrackID NOT IN (SELECT TrackID FROM PlaylistEntries WHERE {1} = {0}{2}{0})");
 
-            public static QueryOperator InSmartPlaylist      = new QueryOperator("TrackID IN (SELECT TrackID FROM SmartPlaylistEntries WHERE {1} = {0}{2}{0})");
-            public static QueryOperator NotInSmartPlaylist   = new QueryOperator("TrackID NOT IN (SELECT TrackID FROM SmartPlaylistEntries WHERE {1} = {0}{2}{0})");
+            public static QueryOperator InSmartPlaylist      = new QueryOperator("==", "TrackID IN (SELECT TrackID FROM SmartPlaylistEntries WHERE {1} = {0}{2}{0})");
+            public static QueryOperator NotInSmartPlaylist   = new QueryOperator("!=", "TrackID NOT IN (SELECT TrackID FROM SmartPlaylistEntries WHERE {1} = {0}{2}{0})");
 
             public static QueryOperator [] Operators = new QueryOperator [] {
                 EQText, NotEQText, EQ, NotEQ, Between, LT, GT, GTE, Like, NotLike,
