@@ -46,158 +46,159 @@ namespace Banshee.MediaEngine
         private PlayerEngineState current_state = PlayerEngineState.Idle;
         private PlayerEngineState last_state = PlayerEngineState.Idle;
         
-        protected abstract void OpenUri(SafeUri uri);
+        protected abstract void OpenUri (SafeUri uri);
         
-        public void Reset()
+        public void Reset ()
         {
             current_track = null;
             current_uri = null;
-            OnStateChanged(PlayerEngineState.Idle);
+            OnStateChanged (PlayerEngineState.Idle);
         }
         
-        public virtual void Close()
+        public virtual void Close ()
         {
-            OnStateChanged(PlayerEngineState.Idle);
+            OnStateChanged (PlayerEngineState.Idle);
         }
         
-        public virtual void Dispose()
+        public virtual void Dispose ()
         {
-            Close();
+            Close ();
         }
         
-        public void Open(TrackInfo track)
+        public void Open (TrackInfo track)
         {
             current_uri = track.Uri;
             current_track = track;
             
-            HandleOpen(track.Uri);
+            HandleOpen (track.Uri);
         }
         
-        public void Open(SafeUri uri)
+        public void Open (SafeUri uri)
         {
             current_uri = uri;
-            current_track = new UnknownTrackInfo(uri);
+            current_track = new UnknownTrackInfo (uri);
             
-            HandleOpen(uri);
+            HandleOpen (uri);
         }
 
-        private void HandleOpen(SafeUri uri)
+        private void HandleOpen (SafeUri uri)
         {
-            if(current_state != PlayerEngineState.Idle) {
-                Close();
+            if (current_state != PlayerEngineState.Idle) {
+                Close ();
             }
         
             try {
-                OpenUri(uri);
-                OnEventChanged(PlayerEngineEvent.StartOfStream);
-                OnStateChanged(PlayerEngineState.Loaded);
-            } catch(Exception e) {
-                Console.WriteLine(e);
-                OnEventChanged(PlayerEngineEvent.Error, e.Message);
+                OpenUri (uri);
+                OnEventChanged (PlayerEngineEvent.StartOfStream);
+                OnStateChanged (PlayerEngineState.Loaded);
+            } catch (Exception e) {
+                Console.WriteLine (e);
+                OnEventChanged (PlayerEngineEvent.Error, e.Message);
             }
         }
         
-        public virtual void Play()
+        public virtual void Play ()
         {
-            OnStateChanged(PlayerEngineState.Playing);
+            OnStateChanged (PlayerEngineState.Playing);
         }
 
-        public virtual void Pause()
+        public virtual void Pause ()
         {
-            OnStateChanged(PlayerEngineState.Paused);
+            OnStateChanged (PlayerEngineState.Paused);
         }
         
-        public virtual IntPtr [] GetBaseElements()
+        public virtual IntPtr [] GetBaseElements ()
         {
             return null;
         }
         
-        protected virtual void OnStateChanged(PlayerEngineState state)
+        protected virtual void OnStateChanged (PlayerEngineState state)
         {
-            if(current_state == state) {
+            if (current_state == state) {
                 return;
             }
         
-            if(ThreadAssist.InMainThread) {
-                RaiseStateChanged(state);
+            if (ThreadAssist.InMainThread) {
+                RaiseStateChanged (state);
             } else {
-                ThreadAssist.ProxyToMain(delegate {
-                    RaiseStateChanged(state);
+                ThreadAssist.ProxyToMain (delegate {
+                    RaiseStateChanged (state);
                 });
             }
         }
         
-        private void RaiseStateChanged(PlayerEngineState state)
+        private void RaiseStateChanged (PlayerEngineState state)
         {
             last_state = current_state;
             current_state = state;
             
             PlayerEngineStateHandler handler = StateChanged;
-            if(handler != null) {
-                PlayerEngineStateArgs args = new PlayerEngineStateArgs();
+            if (handler != null) {
+                PlayerEngineStateArgs args = new PlayerEngineStateArgs ();
                 args.State = state;
-                handler(this, args);
+                handler (this, args);
             }
         }
         
-        protected void OnEventChanged(PlayerEngineEvent evnt)
+        protected void OnEventChanged (PlayerEngineEvent evnt)
         {
-            OnEventChanged(evnt, null, 0.0);
+            OnEventChanged (evnt, null, 0.0);
         }
         
-        protected void OnEventChanged(PlayerEngineEvent evnt, string message)
+        protected void OnEventChanged (PlayerEngineEvent evnt, string message)
         {
-            OnEventChanged(evnt, message, 0.0);
+            OnEventChanged (evnt, message, 0.0);
         }
         
-        protected virtual void OnEventChanged(PlayerEngineEvent evnt, string message, double bufferingPercent)
+        protected virtual void OnEventChanged (PlayerEngineEvent evnt, string message, double bufferingPercent)
         {
-            if(ThreadAssist.InMainThread) {
-                RaiseEventChanged(evnt, message, bufferingPercent);
+            if (ThreadAssist.InMainThread) {
+                RaiseEventChanged (evnt, message, bufferingPercent);
             } else {
-                ThreadAssist.ProxyToMain(delegate {
-                    RaiseEventChanged(evnt, message, bufferingPercent);
+                ThreadAssist.ProxyToMain (delegate {
+                    RaiseEventChanged (evnt, message, bufferingPercent);
                 });
             }
         }
         
-        private void RaiseEventChanged(PlayerEngineEvent evnt, string message, double bufferingPercent)
+        private void RaiseEventChanged (PlayerEngineEvent evnt, string message, double bufferingPercent)
         {
             PlayerEngineEventHandler handler = EventChanged;
-            if(handler != null) {
-                PlayerEngineEventArgs args = new PlayerEngineEventArgs();
+            if (handler != null) {
+                PlayerEngineEventArgs args = new PlayerEngineEventArgs ();
                 args.Event = evnt;
                 args.Message = message;
                 args.BufferingPercent = bufferingPercent;
-                handler(this, args);
+                handler (this, args);
             }
         }
         
         private uint track_info_updated_timeout = 0;
         
-        protected void OnTagFound(StreamTag tag)
+        protected void OnTagFound (StreamTag tag)
         {
-            if(tag.Equals(StreamTag.Zero) || current_track == null || current_track.Attributes & TrackAttributes.IsLive == 0) {
-                return;
+            if (tag.Equals (StreamTag.Zero) || current_track == null || 
+                current_track.Attributes & TrackAttributes.IsLive == 0) {
+                    return;
             }
                         
-            StreamTagger.TrackInfoMerge(current_track, tag);
+            StreamTagger.TrackInfoMerge (current_track, tag);
             
-            if(track_info_updated_timeout <= 0) {
-                track_info_updated_timeout = Application.RunTimeout(500, OnTrackInfoUpdated);
+            if (track_info_updated_timeout <= 0) {
+                track_info_updated_timeout = Application.RunTimeout (500, OnTrackInfoUpdated);
             }
         }
         
-        private bool OnTrackInfoUpdated()
+        private bool OnTrackInfoUpdated ()
         {
-            TrackInfoUpdated();
+            TrackInfoUpdated ();
             track_info_updated_timeout = 0;
             return false;
         }
         
-        public void TrackInfoUpdated()
+        public void TrackInfoUpdated ()
         {
-            OnEventChanged(PlayerEngineEvent.TrackInfoUpdated);
+            OnEventChanged (PlayerEngineEvent.TrackInfoUpdated);
         }
         
         public TrackInfo CurrentTrack {

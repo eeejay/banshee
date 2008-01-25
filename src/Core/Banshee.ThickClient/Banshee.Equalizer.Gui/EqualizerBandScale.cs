@@ -39,40 +39,40 @@ namespace Banshee.Equalizer.Gui
         
         public event EventHandler ValueChanged;
     
-        public EqualizerBandScale(uint band, int median, int min, int max, string labelText)
+        public EqualizerBandScale (uint band, int median, int min, int max, string labelText)
         {
             this.band = band;
             
-            label = new Label();
-            label.Markup = String.Format("<small>{0}</small>", GLib.Markup.EscapeText(labelText));
+            label = new Label ();
+            label.Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (labelText));
             label.Xalign = 0.0f;
             label.Yalign = 1.0f;
             label.Angle = 90.0;
 
-            // new Adjustment(value, lower, upper, step_incr, page_incr, page_size);
-            scale = new VScale(new Adjustment(median, min, max, max / 10, max / 10, 1));
+            // new Adjustment (value, lower, upper, step_incr, page_incr, page_size);
+            scale = new VScale (new Adjustment (median, min, max, max / 10, max / 10, 1));
             scale.DrawValue = false;
             scale.Inverted = true;
             scale.ValueChanged += OnValueChanged;
             
-            scale.Show();
-            label.Show();
+            scale.Show ();
+            label.Show ();
             
-            PackStart(scale, false, false, 0);
-            PackStart(label, false, false, 0);
+            PackStart (scale, false, false, 0);
+            PackStart (label, false, false, 0);
         }
         
-        private void OnValueChanged(object o, EventArgs args)
+        private void OnValueChanged (object o, EventArgs args)
         {
             EventHandler handler = ValueChanged;
             if(handler != null) {
-                handler(this, new EventArgs());
+                handler(this, new EventArgs ());
             }
         }
         
         public int Value {
-            get { return (int)scale.Value; }
-            set { scale.Value = (double)value; }
+            get { return (int) scale.Value; }
+            set { scale.Value = (double) value; }
         }
         
         public bool LabelVisible {

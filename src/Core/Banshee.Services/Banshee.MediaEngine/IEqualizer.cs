@@ -36,7 +36,7 @@ namespace Banshee.MediaEngine
         /// <summary>
         /// Sets the gain of an equalizer band.
         /// </summary>
-        void SetEqualizerGain(uint band, double value);
+        void SetEqualizerGain (uint band, double value);
         
         /// <summary>
         /// Whether or not the engine supports the equalizer.

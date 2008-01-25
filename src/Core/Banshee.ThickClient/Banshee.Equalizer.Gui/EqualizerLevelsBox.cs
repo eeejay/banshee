@@ -35,11 +35,11 @@ namespace Banshee.Equalizer.Gui
 {
     public class EqualizerLevelsBox : VBox
     {
-        public EqualizerLevelsBox(params string [] levels)
+        public EqualizerLevelsBox (params string [] levels)
         {
-            for(int i = 0; i < levels.Length && i < 3; i++) {
-                Label label = CreateLabel(levels[i]);
-                switch(i) {
+            for (int i = 0; i < levels.Length && i < 3; i++) {
+                Label label = CreateLabel (levels[i]);
+                switch (i) {
                     case 0: 
                         label.Yalign = 0.05f;
                          break;
@@ -52,18 +52,18 @@ namespace Banshee.Equalizer.Gui
                         break;
                 }
                 
-                PackStart(label, true, true, 0);
+                PackStart (label, true, true, 0);
             }
         }
         
-        private Label CreateLabel(string value)
+        private Label CreateLabel (string value)
         {
-            Label label = new Label();
+            Label label = new Label ();
             label.Xalign = 1.0f;
-            label.Markup = String.Format("<small>{0}</small>", GLib.Markup.EscapeText(value));
-            label.ModifyFg(StateType.Normal, DrawingUtilities.ColorBlend(
-                Style.Foreground(StateType.Normal), Style.Background(StateType.Normal), 0.5));
-            label.Show();
+            label.Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (value));
+            label.ModifyFg (StateType.Normal, DrawingUtilities.ColorBlend (
+                Style.Foreground (StateType.Normal), Style.Background (StateType.Normal), 0.5));
+            label.Show ();
             return label;
         }
     }

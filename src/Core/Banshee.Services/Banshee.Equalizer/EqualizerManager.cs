@@ -41,7 +41,7 @@ namespace Banshee.Equalizer
 {
     public class EqualizerManager : IEnumerable<EqualizerSetting>, IEnumerable
     {
-        private List<EqualizerSetting> equalizers = new List<EqualizerSetting>();
+        private List<EqualizerSetting> equalizers = new List<EqualizerSetting> ();
         private string path;
         
         public event EqualizerSettingEventHandler EqualizerAdded;
@@ -51,8 +51,8 @@ namespace Banshee.Equalizer
         private static EqualizerManager instance;
         public static EqualizerManager Instance {
             get {
-                if(instance == null) {
-                    instance = new EqualizerManager(System.IO.Path.Combine(
+                if (instance == null) {
+                    instance = new EqualizerManager (System.IO.Path.Combine (
                         Paths.ApplicationData, "equalizers.xml"));
                 }
                 
@@ -60,70 +60,69 @@ namespace Banshee.Equalizer
             }
         }
         
-        public EqualizerManager()
+        public EqualizerManager ()
         {
         }
         
-        public EqualizerManager(string path)
+        public EqualizerManager (string path)
         {
             this.path = path;
             
             try {
-                Load();
+                Load ();
             } catch {
             }
         }
     
-        public void Add(EqualizerSetting eq)
+        public void Add (EqualizerSetting eq)
         {
             eq.Changed += OnEqualizerSettingChanged;
-            equalizers.Add(eq);
-            QueueSave();
-            OnEqualizerAdded(eq);
+            equalizers.Add (eq);
+            QueueSave ();
+            OnEqualizerAdded (eq);
         }
         
-        public void Remove(EqualizerSetting eq)
+        public void Remove (EqualizerSetting eq)
         {
-            Remove(eq, true);
+            Remove (eq, true);
         }
         
-        private void Remove(EqualizerSetting eq, bool shouldQueueSave)
+        private void Remove (EqualizerSetting eq, bool shouldQueueSave)
         {
-            if(eq == null) {
+            if (eq == null) {
                 return;
             }
             
             eq.Changed -= OnEqualizerSettingChanged;
-            equalizers.Remove(eq);
-            OnEqualizerRemoved(eq);
+            equalizers.Remove (eq);
+            OnEqualizerRemoved (eq);
             
-            if(shouldQueueSave) {
-                QueueSave();
+            if (shouldQueueSave) {
+                QueueSave ();
             }
         }
         
-        public void Clear()
+        public void Clear ()
         {
-            while(equalizers.Count > 0) {
-                Remove(equalizers[0], false);
+            while (equalizers.Count > 0) {
+                Remove (equalizers[0], false);
             }
             
-            QueueSave();
+            QueueSave ();
         }
         
-        public void Enable(EqualizerSetting eq)
+        public void Enable (EqualizerSetting eq)
         {
-            if (eq != null)
-            {
+            if (eq != null) {
                 eq.Enabled = true;
                 
                 // Make a copy of the Dictionary first, otherwise it'll become out of sync
                 // when we begin to change the gain on the bands.
-                Dictionary<uint, double> bands = new Dictionary<uint, double>(eq.Bands);
+                Dictionary<uint, double> bands = new Dictionary<uint, double> (eq.Bands);
                 
                 foreach(KeyValuePair<uint, double> band in bands)
                 {
-                    eq.SetGain(band.Key, band.Value);
+                    eq.SetGain (band.Key, band.Value);
                 }
                 
                 // Reset preamp.
@@ -131,154 +130,153 @@ namespace Banshee.Equalizer
             }
         }
         
-        public void Disable(EqualizerSetting eq)
+        public void Disable (EqualizerSetting eq)
         {
-            if (eq != null)
-            {
+            if (eq != null) {
                 eq.Enabled = false;
             
                 // Set the actual equalizer gain on all bands to 0 dB,
                 // but don't change the gain in the dictionary (we can use/change those values
                 // later, but not affect the actual audio stream until we're enabled again).
                 
-                for(uint i = 0; i < eq.BandCount; i++)
+                for (uint i = 0; i < eq.BandCount; i++)
                 {
-                    ((IEqualizer)ServiceManager.PlayerEngine.ActiveEngine).SetEqualizerGain(i, 0);
+                    ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).SetEqualizerGain (i, 0);
                 }
                 
-                ((IEqualizer)ServiceManager.PlayerEngine.ActiveEngine).AmplifierLevel = 1D;
+                ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).AmplifierLevel = 1D;
             }
         }
         
-        public void Load()
+        public void Load ()
         {
-            Load(path);
+            Load (path);
         }
         
-        public void Load(string path)
+        public void Load (string path)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.Load(path);
+            XmlDocument doc = new XmlDocument ();
+            doc.Load (path);
             
-            Clear();
+            Clear ();
             
-            foreach(XmlNode node in doc.DocumentElement.ChildNodes) {
+            foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
                 if(node.Name != "equalizer") {
-                    throw new XmlException("equalizer node was expected");
+                    throw new XmlException ("equalizer node was expected");
                 }
                 
-                EqualizerSetting eq = new EqualizerSetting(node.Attributes["name"].Value);
+                EqualizerSetting eq = new EqualizerSetting (node.Attributes["name"].Value);
                 
-                foreach(XmlNode child in node) {
-                    if(child.Name == "preamp") {
-                        eq.AmplifierLevel = Convert.ToDouble(child.InnerText);
-                    } else if(child.Name == "band") {
-                        eq.SetGain(Convert.ToUInt32(child.Attributes["num"].Value),
-                            Convert.ToDouble(child.InnerText));
+                foreach (XmlNode child in node) {
+                    if (child.Name == "preamp") {
+                        eq.AmplifierLevel = Convert.ToDouble (child.InnerText);
+                    } else if (child.Name == "band") {
+                        eq.SetGain (Convert.ToUInt32 (child.Attributes["num"].Value),
+                            Convert.ToDouble (child.InnerText));
                     } else {
-                        throw new XmlException("Invalid node, expected one of preamp or band");
+                        throw new XmlException ("Invalid node, expected one of preamp or band");
                     }
                 }
                 
-                Add(eq);
+                Add (eq);
             }
         }
         
-        public void Save()
+        public void Save ()
         {
-            Save(path);
+            Save (path);
         }
         
-        public void Save(string path)
+        public void Save (string path)
         {
-            XmlDocument doc = new XmlDocument();
-            XmlNode root = doc.CreateNode(XmlNodeType.Element, "equalizers", null);
-            doc.AppendChild(root);
+            XmlDocument doc = new XmlDocument ();
+            XmlNode root = doc.CreateNode (XmlNodeType.Element, "equalizers", null);
+            doc.AppendChild (root);
             
-            foreach(EqualizerSetting eq in this) {
-                XmlNode root_node = doc.CreateNode(XmlNodeType.Element, "equalizer", null);
+            foreach (EqualizerSetting eq in this) {
+                XmlNode root_node = doc.CreateNode (XmlNodeType.Element, "equalizer", null);
             
-                XmlAttribute name_node = doc.CreateAttribute("name");
+                XmlAttribute name_node = doc.CreateAttribute ("name");
                 name_node.Value = eq.Name;
-                XmlNode preamp_node = doc.CreateNode(XmlNodeType.Element, "preamp", null);
-                XmlNode preamp_node_value = doc.CreateNode(XmlNodeType.Text, "value", null);
-                preamp_node_value.Value = Convert.ToString(eq.AmplifierLevel);
-                preamp_node.AppendChild(preamp_node_value);
+                XmlNode preamp_node = doc.CreateNode (XmlNodeType.Element, "preamp", null);
+                XmlNode preamp_node_value = doc.CreateNode (XmlNodeType.Text, "value", null);
+                preamp_node_value.Value = Convert.ToString (eq.AmplifierLevel);
+                preamp_node.AppendChild (preamp_node_value);
                 
-                root_node.Attributes.Append(name_node);
-                root_node.AppendChild(preamp_node);
+                root_node.Attributes.Append (name_node);
+                root_node.AppendChild (preamp_node);
 
-                foreach(KeyValuePair<uint, double> band in eq.Bands) {
-                    XmlNode band_node = doc.CreateNode(XmlNodeType.Element, "band", null);
-                    XmlNode band_node_value = doc.CreateNode(XmlNodeType.Text, "value", null);
-                    band_node_value.Value = Convert.ToString(band.Value);
-                    band_node.AppendChild(band_node_value);
+                foreach (KeyValuePair<uint, double> band in eq.Bands) {
+                    XmlNode band_node = doc.CreateNode (XmlNodeType.Element, "band", null);
+                    XmlNode band_node_value = doc.CreateNode (XmlNodeType.Text, "value", null);
+                    band_node_value.Value = Convert.ToString (band.Value);
+                    band_node.AppendChild (band_node_value);
                     
-                    XmlAttribute frequency_node = doc.CreateAttribute("num");
-                    frequency_node.Value = Convert.ToString(band.Key);
-                    band_node.Attributes.Append(frequency_node);
+                    XmlAttribute frequency_node = doc.CreateAttribute ("num");
+                    frequency_node.Value = Convert.ToString (band.Key);
+                    band_node.Attributes.Append (frequency_node);
                     
-                    root_node.AppendChild(band_node);
+                    root_node.AppendChild (band_node);
                 }
                 
-                root.AppendChild(root_node);
+                root.AppendChild (root_node);
             }
             
-            doc.Save(path);
+            doc.Save (path);
         }
         
-        protected virtual void OnEqualizerAdded(EqualizerSetting eq)
+        protected virtual void OnEqualizerAdded (EqualizerSetting eq)
         {
             EqualizerSettingEventHandler handler = EqualizerAdded;
-            if(handler != null) {
-                handler(this, new EqualizerSettingEventArgs(eq));
+            if (handler != null) {
+                handler (this, new EqualizerSettingEventArgs (eq));
             }
         }
         
-        protected virtual void OnEqualizerRemoved(EqualizerSetting eq)
+        protected virtual void OnEqualizerRemoved (EqualizerSetting eq)
         {
             EqualizerSettingEventHandler handler = EqualizerRemoved;
-            if(handler != null) {
-                handler(this, new EqualizerSettingEventArgs(eq));
+            if (handler != null) {
+                handler (this, new EqualizerSettingEventArgs (eq));
             }
         }
         
-        protected virtual void OnEqualizerChanged(EqualizerSetting eq)
+        protected virtual void OnEqualizerChanged (EqualizerSetting eq)
         {
             EqualizerSettingEventHandler handler = EqualizerChanged;
-            if(handler != null) {
-                handler(this, new EqualizerSettingEventArgs(eq));
+            if (handler != null) {
+                handler (this, new EqualizerSettingEventArgs (eq));
             }
         }
         
-        private void OnEqualizerSettingChanged(object o, EventArgs args)
+        private void OnEqualizerSettingChanged (object o, EventArgs args)
         {
-            OnEqualizerChanged(o as EqualizerSetting);
-            QueueSave();
+            OnEqualizerChanged (o as EqualizerSetting);
+            QueueSave ();
         }
         
         private uint queue_save_id = 0;
-        private void QueueSave()
+        private void QueueSave ()
         {
-            if(queue_save_id > 0) {
+            if (queue_save_id > 0) {
                 return;
             }
             
-            queue_save_id = GLib.Timeout.Add(2500, delegate {
-                Save();
+            queue_save_id = GLib.Timeout.Add (2500, delegate {
+                Save ();
                 queue_save_id = 0;
                 return false;
             });
         }
         
-        IEnumerator IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator ()
         {
-            return equalizers.GetEnumerator();
+            return equalizers.GetEnumerator ();
         }
         
-        public IEnumerator<EqualizerSetting> GetEnumerator()
+        public IEnumerator<EqualizerSetting> GetEnumerator ()
         {
-            return equalizers.GetEnumerator();
+            return equalizers.GetEnumerator ();
         }
         
         public string Path {

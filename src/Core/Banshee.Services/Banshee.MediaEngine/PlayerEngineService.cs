@@ -46,7 +46,7 @@ namespace Banshee.MediaEngine
 {
     public class PlayerEngineService : IService, IPlayerEngineService
     {   
-        private List<PlayerEngine> engines = new List<PlayerEngine>();
+        private List<PlayerEngine> engines = new List<PlayerEngine> ();
         private PlayerEngine active_engine;
         private PlayerEngine default_engine;
         private PlayerEngine pending_engine;
@@ -69,26 +69,26 @@ namespace Banshee.MediaEngine
             remove { dbus_state_changed -= value; }
         }
         
-        public PlayerEngineService()
+        public PlayerEngineService ()
         {
             preferred_engine_id = EngineSchema.Get();
             
-            if(default_engine == null && engines.Count > 0) {
+            if (default_engine == null && engines.Count > 0) {
                 default_engine = engines[0];
             }
             
-            foreach(TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/PlayerEngines/PlayerEngine")) {
-                LoadEngine(node);
+            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/PlayerEngines/PlayerEngine")) {
+                LoadEngine (node);
             }
             
-            if(default_engine != null) {
+            if (default_engine != null) {
                 active_engine = default_engine;
-                Log.Debug(Catalog.GetString("Default player engine"), active_engine.Name);
+                Log.Debug (Catalog.GetString ("Default player engine"), active_engine.Name);
             } else {
                 default_engine = active_engine;
             }
             
-            if(default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
+            if (default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
                 throw new ApplicationException(Catalog.GetString(
                     "No player engines were found. Please ensure Banshee has been cleanly installed."));
             }
@@ -96,9 +96,9 @@ namespace Banshee.MediaEngine
             MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;
         }
         
-        private void LoadEngine(TypeExtensionNode node)
+        private void LoadEngine (TypeExtensionNode node)
         {
-            PlayerEngine engine = (PlayerEngine)node.CreateInstance(typeof(PlayerEngine));
+            PlayerEngine engine = (PlayerEngine) node.CreateInstance (typeof (PlayerEngine));
             
             engine.StateChanged += OnEngineStateChanged;
             engine.EventChanged += OnEngineEventChanged;
@@ -109,69 +109,64 @@ namespace Banshee.MediaEngine
                 if (active_engine == null) {
                     active_engine = engine;
                 }
-                engines.Add(engine);
+                engines.Add (engine);
             }
         }
 
-        public void Dispose()
+        public void Dispose ()
         {
         }
         
-        private void OnMetadataServiceHaveResult(object o, MetadataLookupResultArgs args)
+        private void OnMetadataServiceHaveResult (object o, MetadataLookupResultArgs args)
         {
-            if(CurrentTrack != null && args.Track == CurrentTrack) {
-                foreach(StreamTag tag in args.ResultTags) {
+            if (CurrentTrack != null && args.Track == CurrentTrack) {
+                foreach (StreamTag tag in args.ResultTags) {
                     StreamTagger.TrackInfoMerge(CurrentTrack, tag);
                 }
                 
-                PlayerEngineEventArgs eventargs = new PlayerEngineEventArgs();
+                PlayerEngineEventArgs eventargs = new PlayerEngineEventArgs ();
                 eventargs.Event = PlayerEngineEvent.TrackInfoUpdated;
-                OnEngineEventChanged(active_engine, eventargs);
+                OnEngineEventChanged (active_engine, eventargs);
             }
         }
         
-        private void OnEngineStateChanged(object o, PlayerEngineStateArgs args)
+        private void OnEngineStateChanged (object o, PlayerEngineStateArgs args)
         {
-            if(o != active_engine) {
+            if (o != active_engine) {
                 return;
             }
             
-            if(args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
-                active_engine.Volume = (ushort)VolumeSchema.Get ();
-                MetadataService.Instance.Lookup(CurrentTrack);
+            if (args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
+                active_engine.Volume = (ushort) VolumeSchema.Get ();
+                MetadataService.Instance.Lookup (CurrentTrack);
             } else if (args.State == PlayerEngineState.Initalized) {
                 // Enable our preferred equalizer if it exists and was enabled last time.
-                if (this.SupportsEqualizer && EqualizerSetting.EnabledSchema.Get())
-                {
+                if (this.SupportsEqualizer && EqualizerSetting.EnabledSchema.Get ()) {
                     string name = EqualizerSetting.PresetSchema.Get();
                     
-                    if (name != "")
-                    {
+                    if (name != "") {
                         // Don't use EqualizerManager.Instance - used by the eq dialog window.
-                        EqualizerManager manager = new EqualizerManager(EqualizerManager.Instance.Path);
-                        manager.Load();
+                        EqualizerManager manager = new EqualizerManager (EqualizerManager.Instance.Path);
+                        manager.Load ();
                         EqualizerSetting equalizer = null;
-                        foreach(EqualizerSetting eq in manager)
-                        {
-                            if (eq.Name == name)
-                            {
+                        foreach (EqualizerSetting eq in manager) {
+                            if (eq.Name == name) {
                                 equalizer = eq;
                                 break;
                             }
                         }
                         
-                        if (equalizer != null)
-                        {
-                            Log.DebugFormat("Enabling equalizer preset: {0}", equalizer.Name);
-                            manager.Enable(equalizer);
+                        if (equalizer != null) {
+                            Log.DebugFormat ("Enabling equalizer preset: {0}", equalizer.Name);
+                            manager.Enable (equalizer);
                         }
                     }
                 }
             }
             
             PlayerEngineStateHandler handler = StateChanged;
-            if(handler != null) {
-                handler(o, args);
+            if (handler != null) {
+                handler (o, args);
             }
             
             DBusPlayerEngineStateHandler dbus_handler = dbus_state_changed;
@@ -180,24 +175,24 @@ namespace Banshee.MediaEngine
             }
         }
 
-        private void OnEngineEventChanged(object o, PlayerEngineEventArgs args)
+        private void OnEngineEventChanged (object o, PlayerEngineEventArgs args)
         {
-            if(o != active_engine) {
+            if (o != active_engine) {
                 return;
             }
             
-            if(CurrentTrack != null) {
-                if(args.Event == PlayerEngineEvent.Error 
+            if (CurrentTrack != null) {
+                if (args.Event == PlayerEngineEvent.Error 
                     && CurrentTrack.PlaybackError == StreamPlaybackError.None) {
                     CurrentTrack.PlaybackError = StreamPlaybackError.Unknown;
-                } else if(args.Event == PlayerEngineEvent.Iterate 
+                } else if (args.Event == PlayerEngineEvent.Iterate 
                     && CurrentTrack.PlaybackError != StreamPlaybackError.None) {
                     CurrentTrack.PlaybackError = StreamPlaybackError.None;
                 }
             }
             
             PlayerEngineEventHandler handler = EventChanged;
-            if(handler != null) {
+            if (handler != null) {
                 handler(o, args);
             }
             
@@ -222,18 +217,18 @@ namespace Banshee.MediaEngine
             }
         }
         
-        public void Open(TrackInfo track)
+        public void Open (TrackInfo track)
         {
-            if(!track.CanPlay) {
+            if (!track.CanPlay) {
                 return;
             }
                
-            OpenCheck(track);
+            OpenCheck (track);
         }
         
-        public void Open(SafeUri uri)
+        public void Open (SafeUri uri)
         {
-            OpenCheck(uri);
+            OpenCheck (uri);
         }
         
         void IPlayerEngineService.Open (string uri)
@@ -241,97 +236,97 @@ namespace Banshee.MediaEngine
             OpenCheck (new SafeUri (uri));
         }
         
-        public void OpenPlay(TrackInfo track)
+        public void OpenPlay (TrackInfo track)
         {
-            if(!track.CanPlay) {
+            if (!track.CanPlay) {
                 return;
             }
         
             try {
-                OpenCheck(track);
-                active_engine.Play();
-            } catch(Exception e) {
-                Log.Error(Catalog.GetString("Problem with Player Engine"), e.Message);
-                Close();
+                OpenCheck (track);
+                active_engine.Play ();
+            } catch (Exception e) {
+                Log.Error (Catalog.GetString ("Problem with Player Engine"), e.Message);
+                Close ();
                 ActiveEngine = default_engine;
             }
         }
         
-        private void OpenCheck(object o)
+        private void OpenCheck (object o)
         {
             SafeUri uri = null;
             TrackInfo track = null;
         
-            if(o is SafeUri) {
+            if (o is SafeUri) {
                 uri = o as SafeUri;
-            } else if(o is TrackInfo) {
+            } else if (o is TrackInfo) {
                 track = o as TrackInfo;
                 uri = track.Uri;
             } else {
                 return;
             }
             
-            FindSupportingEngine(uri);
-            CheckPending();
+            FindSupportingEngine (uri);
+            CheckPending ();
             
-            if(track != null) {
-                active_engine.Open(track);
-            } else if(uri != null) {
-                active_engine.Open(uri);
+            if (track != null) {
+                active_engine.Open (track);
+            } else if (uri != null) {
+                active_engine.Open (uri);
             }
         }
         
-        private void FindSupportingEngine(SafeUri uri)
+        private void FindSupportingEngine (SafeUri uri)
         {
-            foreach(PlayerEngine engine in engines) {
-                foreach(string extension in engine.ExplicitDecoderCapabilities) {
-                    if(!uri.AbsoluteUri.EndsWith(extension)) {
+            foreach (PlayerEngine engine in engines) {
+                foreach (string extension in engine.ExplicitDecoderCapabilities) {
+                    if (!uri.AbsoluteUri.EndsWith (extension)) {
                         continue;
-                    } else if(active_engine != engine) {
-                        Close();
+                    } else if (active_engine != engine) {
+                        Close ();
                         pending_engine = engine;
-                        Console.WriteLine("Switching engine to: " + engine.GetType());
+                        Log.DebugFormat ("Switching engine to: {0}", engine.GetType ());
                     }
                     return;
                 }
             }
         
-            foreach(PlayerEngine engine in engines) {
-                foreach(string scheme in engine.SourceCapabilities) {
+            foreach (PlayerEngine engine in engines) {
+                foreach (string scheme in engine.SourceCapabilities) {
                     bool supported = scheme == uri.Scheme;
-                    if(supported && active_engine != engine) {
-                        Close();
+                    if (supported && active_engine != engine) {
+                        Close ();
                         pending_engine = engine;
-                        Console.WriteLine("Switching engine to: " + engine.GetType());
+                        Log.DebugFormat ("Switching engine to: {0}", engine.GetType ());
                         return;
-                    } else if(supported) {
+                    } else if (supported) {
                         return;
                     }
                 }
             }
         }
         
-        public void Close()
+        public void Close ()
         {
-            active_engine.Reset();
-            active_engine.Close();
+            active_engine.Reset ();
+            active_engine.Close ();
         }
         
-        public void Play()
+        public void Play ()
         {
-            active_engine.Play();
+            active_engine.Play ();
         }
         
-        public void Pause()
+        public void Pause ()
         {
-            if(!CanPause) {
-                Close();
+            if (!CanPause) {
+                Close ();
             } else {
-                active_engine.Pause();
+                active_engine.Pause ();
             }
         }
         
-        public void TogglePlaying()
+        public void TogglePlaying ()
         {
             switch (CurrentState) {
                 case PlayerEngineState.Idle:
@@ -346,9 +341,9 @@ namespace Banshee.MediaEngine
             }
         }
         
-        public void TrackInfoUpdated()
+        public void TrackInfoUpdated ()
         {
-            active_engine.TrackInfoUpdated();
+            active_engine.TrackInfoUpdated ();
         }
         
         public bool IsPlaying (TrackInfo track)
@@ -356,11 +351,11 @@ namespace Banshee.MediaEngine
             return CurrentState != PlayerEngineState.Idle && track.AudiblyEqual (CurrentTrack);
         }
 
-        private void CheckPending()
+        private void CheckPending ()
         {
             if(pending_engine != null && pending_engine != active_engine) {
                 if(active_engine.CurrentState == PlayerEngineState.Idle) {
-                    Close();
+                    Close ();
                 }
                 
                 active_engine = pending_engine;
@@ -403,7 +398,7 @@ namespace Banshee.MediaEngine
         public ushort Volume {
             get { return active_engine.Volume; }
             set { 
-                foreach(PlayerEngine engine in engines) {
+                foreach (PlayerEngine engine in engines) {
                     engine.Volume = value;
                 }
             }
@@ -429,13 +424,13 @@ namespace Banshee.MediaEngine
         public uint Length {
             get { 
                 uint length = active_engine.Length;
-                if(length > 0) {
+                if (length > 0) {
                     return length;
-                } else if(active_engine.CurrentTrack == null) {
+                } else if (active_engine.CurrentTrack == null) {
                     return 0;
                 }
                 
-                return (uint)active_engine.CurrentTrack.Duration.TotalSeconds;
+                return (uint) active_engine.CurrentTrack.Duration.TotalSeconds;
             }
         }
     
@@ -447,14 +442,14 @@ namespace Banshee.MediaEngine
         public PlayerEngine DefaultEngine {
             get { return default_engine; }
             set { 
-                if(engines.Contains(value)) {
-                    engines.Remove(value);
+                if (engines.Contains (value)) {
+                    engines.Remove (value);
                 }
                 
-                engines.Insert(0, value);
+                engines.Insert (0, value);
             
                 default_engine = value;
-                EngineSchema.Set(value.Id);
+                EngineSchema.Set (value.Id);
             }
         }
         
@@ -470,14 +465,14 @@ namespace Banshee.MediaEngine
             get { return null; }
         }
         
-        public static readonly SchemaEntry<int> VolumeSchema = new SchemaEntry<int>(
+        public static readonly SchemaEntry<int> VolumeSchema = new SchemaEntry<int> (
             "player_engine", "volume",
             80,
             "Volume",
             "Volume of playback relative to mixer output"
         );
 
-        public static readonly SchemaEntry<string> EngineSchema = new SchemaEntry<string>(
+        public static readonly SchemaEntry<string> EngineSchema = new SchemaEntry<string> (
             "player_engine", "backend",
             "helix-remote",
             "Backend",

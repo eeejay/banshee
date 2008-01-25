@@ -1,5 +1,27 @@
 2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patch from Alexander Hixon <hixon.alexander@mediati.org>.
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerManager.cs:
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerSetting.cs:
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerSettingEvent.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IEqualizer.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerBandScale.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerLevelsBox.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerPresetComboBox.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: Conform to
+	HACKING.
+
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Make
+	equalizer window a dialog not utility window, ensuring it comes to top.
+
+2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Banshee.Base/Utilities.cs:
 	* src/Core/Hyena/Hyena/Utilities.cs:
 	* src/Core/Hyena/Hyena/Timer.cs: Move Timer and DateTimeUtils to Hyena.
@@ -77,7 +99,7 @@
 
 2008-01-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
-	Patch from Alexander Hxion <hixon.alexander@mediati.org>.
+	Patch from Alexander Hixon <hixon.alexander@mediati.org>.
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerView.cs:

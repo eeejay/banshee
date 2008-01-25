@@ -38,20 +38,19 @@ namespace Banshee.Equalizer
     public class EqualizerSetting
     {
         private string name;
-        private Dictionary<uint, double> bands = new Dictionary<uint, double>();
-        private double amp = 1;    // dB multiplier (0db is mute, 2dB is 2x normal volume?)
+        private Dictionary<uint, double> bands = new Dictionary<uint, double> ();
+        private double amp = 1;    // dB multiplier (0db is mute, 1db is no change - passthrough)
         private bool enabled = true;
         private const uint bandcount = 10;
         
         public event EventHandler Changed;
         
-        public EqualizerSetting(string name)
+        public EqualizerSetting (string name)
         {
             this.name = name;
             
             // Fill in 0 dB for all bands at init.
-            for (uint i = 0; i < bandcount; i++)
-            {
+            for (uint i = 0; i < bandcount; i++) {
                 bands.Add(i, 0);
             }
         }
@@ -64,8 +63,8 @@ namespace Banshee.Equalizer
             set
             {
                 name = value;
-                PresetSchema.Set(this.name);
-                OnChanged();
+                PresetSchema.Set (this.name);
+                OnChanged ();
             }
         }
         
@@ -74,10 +73,10 @@ namespace Banshee.Equalizer
             set
             {
                 enabled = value;
-                EnabledSchema.Set(value);
+                EnabledSchema.Set (value);
                 
                 // Make this the new default preset (last changed).
-                PresetSchema.Set(this.name);
+                PresetSchema.Set (this.name);
             }
         }
         
@@ -93,18 +92,14 @@ namespace Banshee.Equalizer
         /// Sets/gets the preamp gain.
         /// </summary>
         public double AmplifierLevel {
-            get
-            {
-                return amp;
-            }
+            get { return amp; }
             set
             {
                 amp = value;
-                if (enabled)
-                {
-                    ((IEqualizer)ServiceManager.PlayerEngine.ActiveEngine).AmplifierLevel = value;
+                if (enabled) {
+                    ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).AmplifierLevel = value;
                 }
-                OnChanged();
+                OnChanged ();
             }
         }
 
@@ -113,48 +108,43 @@ namespace Banshee.Equalizer
         /// </summary>
         /// <param name="band">The band to adjust gain.</param>
         /// <param name="val">The value in dB to set the band gain to.</param>
-        public void SetGain(uint band, double val)
+        public void SetGain (uint band, double val)
         {
-            if (bands.ContainsKey(band))
-            {
+            if (bands.ContainsKey (band)) {
                 bands[band] = val;
-            }
-            else
-            {
-                bands.Add(band, val);
+            } else {
+                bands.Add (band, val);
             }
             
             // Tell engine that we've changed.
-            if (enabled)
-            {
-                ((IEqualizer)ServiceManager.PlayerEngine.ActiveEngine).SetEqualizerGain(band, val);
+            if (enabled) {
+                ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).SetEqualizerGain (band, val);
             }
             
-            OnChanged();
+            OnChanged ();
         }
         
         public double this[uint band] {
             get { return bands[band]; }
-            set { SetGain(band, value); }
+            set { SetGain (band, value); }
         }
         
-        protected virtual void OnChanged()
+        protected virtual void OnChanged ()
         {
             EventHandler handler = Changed;
-            if (handler != null)
-            {
-                handler(this, new EventArgs());
+            if (handler != null) {
+                handler (this, new EventArgs ());
             }
         }
         
-        public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool> (
             "player", "equalizer_enabled",
             false,
             "Equalizer status",
             "Whether or not the equalizer is set to be enabled."
         );
         
-        public static readonly SchemaEntry<string> PresetSchema = new SchemaEntry<string>(
+        public static readonly SchemaEntry<string> PresetSchema = new SchemaEntry<string> (
             "player", "equalizer_preset",
             "",
             "Equalizer preset",

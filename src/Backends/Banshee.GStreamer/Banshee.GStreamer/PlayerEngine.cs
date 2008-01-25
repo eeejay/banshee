@@ -39,13 +39,13 @@ using Banshee.ServiceStack;
 
 namespace Banshee.GStreamer
 {
-    internal delegate void GstPlaybackEosCallback(IntPtr engine);
-    internal delegate void GstPlaybackErrorCallback(IntPtr engine, uint domain, int code, IntPtr error, IntPtr debug);
-    internal delegate void GstPlaybackStateChangedCallback(IntPtr engine, int old_state, int new_state, int pending_state);
-    internal delegate void GstPlaybackIterateCallback(IntPtr engine);
-    internal delegate void GstPlaybackBufferingCallback(IntPtr engine, int buffering_progress);
+    internal delegate void GstPlaybackEosCallback (IntPtr engine);
+    internal delegate void GstPlaybackErrorCallback (IntPtr engine, uint domain, int code, IntPtr error, IntPtr debug);
+    internal delegate void GstPlaybackStateChangedCallback (IntPtr engine, int old_state, int new_state, int pending_state);
+    internal delegate void GstPlaybackIterateCallback (IntPtr engine);
+    internal delegate void GstPlaybackBufferingCallback (IntPtr engine, int buffering_progress);
 
-    internal delegate void GstTaggerTagFoundCallback(string tagName, ref GLib.Value value, IntPtr userData);        
+    internal delegate void GstTaggerTagFoundCallback (string tagName, ref GLib.Value value, IntPtr userData);        
     
     public class PlayerEngine : Banshee.MediaEngine.PlayerEngine, Banshee.MediaEngine.IEqualizer
     {
@@ -65,66 +65,65 @@ namespace Banshee.GStreamer
         
         private bool buffering_finished;
         
-        public PlayerEngine()
+        public PlayerEngine ()
         {
-            if(ServiceManager.IsInitialized) {
-                Initialize();
+            if (ServiceManager.IsInitialized) {
+                Initialize ();
             } else {
                 ServiceManager.ServiceStarted += OnServiceStarted;
             }
         }
         
-        private void OnServiceStarted(ServiceStartedArgs args)
+        private void OnServiceStarted (ServiceStartedArgs args)
         {
-            if(args.Service is Service) {
+            if (args.Service is Service) {
                 ServiceManager.ServiceStarted -= OnServiceStarted;
-                Initialize();
+                Initialize ();
             }
         }
         
-        private void Initialize()
+        private void Initialize ()
         {
-            IntPtr ptr = gst_playback_new();
+            IntPtr ptr = gst_playback_new ();
             
-            if(ptr == IntPtr.Zero) {
-                throw new ApplicationException(Catalog.GetString("Could not initialize GStreamer library"));
+            if (ptr == IntPtr.Zero) {
+                throw new ApplicationException (Catalog.GetString ("Could not initialize GStreamer library"));
             }
             
-            handle = new HandleRef(this, ptr);
+            handle = new HandleRef (this, ptr);
             
-            gst_playback_get_error_quarks(out GST_CORE_ERROR, out GST_LIBRARY_ERROR, 
+            gst_playback_get_error_quarks (out GST_CORE_ERROR, out GST_LIBRARY_ERROR, 
                 out GST_RESOURCE_ERROR, out GST_STREAM_ERROR);
             
-            eos_callback = new GstPlaybackEosCallback(OnEos);
-            error_callback = new GstPlaybackErrorCallback(OnError);
-            //state_changed_callback = new GstPlaybackStateChangedCallback(OnStateChanged);
-            iterate_callback = new GstPlaybackIterateCallback(OnIterate);
-            buffering_callback = new GstPlaybackBufferingCallback(OnBuffering);
-            tag_found_callback = new GstTaggerTagFoundCallback(OnTagFound);
+            eos_callback = new GstPlaybackEosCallback (OnEos);
+            error_callback = new GstPlaybackErrorCallback (OnError);
+            iterate_callback = new GstPlaybackIterateCallback (OnIterate);
+            buffering_callback = new GstPlaybackBufferingCallback (OnBuffering);
+            tag_found_callback = new GstTaggerTagFoundCallback (OnTagFound);
             
-            gst_playback_set_eos_callback(handle, eos_callback);
-            gst_playback_set_iterate_callback(handle, iterate_callback);
-            gst_playback_set_error_callback(handle, error_callback);
-            gst_playback_set_state_changed_callback(handle, state_changed_callback);
-            gst_playback_set_buffering_callback(handle, buffering_callback);
-            gst_playback_set_tag_found_callback(handle, tag_found_callback);
+            gst_playback_set_eos_callback (handle, eos_callback);
+            gst_playback_set_iterate_callback (handle, iterate_callback);
+            gst_playback_set_error_callback (handle, error_callback);
+            gst_playback_set_state_changed_callback (handle, state_changed_callback);
+            gst_playback_set_buffering_callback (handle, buffering_callback);
+            gst_playback_set_tag_found_callback (handle, tag_found_callback);
             
-            OnStateChanged(PlayerEngineState.Initalized);
+            OnStateChanged (PlayerEngineState.Initalized);
         }
         
-        public override void Dispose()
+        public override void Dispose ()
         {
-            base.Dispose();
-            gst_playback_free(handle);
+            base.Dispose ();
+            gst_playback_free (handle);
         }
         
-        public override void Close()
+        public override void Close ()
         {
-            gst_playback_stop(handle);
-            base.Close();
+            gst_playback_stop (handle);
+            base.Close ();
         }
         
-        protected override void OpenUri(SafeUri uri)
+        protected override void OpenUri (SafeUri uri)
         {
             // The GStreamer engine can use the XID of the main window if it ever
             // needs to bring up the plugin installer so it can be transient to
@@ -135,57 +134,57 @@ namespace Banshee.GStreamer
                 gst_playback_set_gdk_window (handle, service.PropertyStore.Get<IntPtr> ("PrimaryWindow.RawHandle"));
             }
                 
-            IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup(uri.AbsoluteUri);
-            gst_playback_open(handle, uri_ptr);
-            GLib.Marshaller.Free(uri_ptr);
+            IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup (uri.AbsoluteUri);
+            gst_playback_open (handle, uri_ptr);
+            GLib.Marshaller.Free (uri_ptr);
         }
         
-        public override void Play()
+        public override void Play ()
         {
-            gst_playback_play(handle);
-            OnStateChanged(PlayerEngineState.Playing);
+            gst_playback_play (handle);
+            OnStateChanged (PlayerEngineState.Playing);
         }
         
-        public override void Pause()
+        public override void Pause ()
         {
-            gst_playback_pause(handle);
-            OnStateChanged(PlayerEngineState.Paused);
+            gst_playback_pause (handle);
+            OnStateChanged (PlayerEngineState.Paused);
         }
 
-        public override IntPtr [] GetBaseElements()
+        public override IntPtr [] GetBaseElements ()
         {
             IntPtr [] elements = new IntPtr[3];
             
-            if(gst_playback_get_pipeline_elements(handle, out elements[0], out elements[1], out elements[2])) {
+            if (gst_playback_get_pipeline_elements (handle, out elements[0], out elements[1], out elements[2])) {
                 return elements;
             }
             
             return null;
         }
 
-        private void OnEos(IntPtr engine)
+        private void OnEos (IntPtr engine)
         {
-            Close();
-            OnEventChanged(PlayerEngineEvent.EndOfStream);
+            Close ();
+            OnEventChanged (PlayerEngineEvent.EndOfStream);
         }
         
-        private void OnIterate(IntPtr engine)
+        private void OnIterate (IntPtr engine)
         {
-            OnEventChanged(PlayerEngineEvent.Iterate);
+            OnEventChanged (PlayerEngineEvent.Iterate);
         }
         
-        private void OnError(IntPtr engine, uint domain, int code, IntPtr error, IntPtr debug)
+        private void OnError (IntPtr engine, uint domain, int code, IntPtr error, IntPtr debug)
         {
-            Close();
+            Close ();
             
             string error_message = error == IntPtr.Zero
-                ? Catalog.GetString("Unknown Error")
-                : GLib.Marshaller.Utf8PtrToString(error);
+                ? Catalog.GetString ("Unknown Error")
+                : GLib.Marshaller.Utf8PtrToString (error);
 
-            if(domain == GST_RESOURCE_ERROR) {
-                GstResourceError domain_code = (GstResourceError)code;
-                if(CurrentTrack != null) {
-                    switch(domain_code) {
+            if (domain == GST_RESOURCE_ERROR) {
+                GstResourceError domain_code = (GstResourceError) code;
+                if (CurrentTrack != null) {
+                    switch (domain_code) {
                         case GstResourceError.NotFound:
                             CurrentTrack.PlaybackError = StreamPlaybackError.ResourceNotFound;
                             break;
@@ -194,11 +193,11 @@ namespace Banshee.GStreamer
                     }        
                 }
                 
-                Console.WriteLine("GStreamer resource error: {0}", domain_code);
-            } else if(domain == GST_STREAM_ERROR) {
-                GstStreamError domain_code = (GstStreamError)code;
-                if(CurrentTrack != null) {
-                    switch(domain_code) {
+                Log.Error (String.Format ("GStreamer resource error: {0}", domain_code), false);
+            } else if (domain == GST_STREAM_ERROR) {
+                GstStreamError domain_code = (GstStreamError) code;
+                if (CurrentTrack != null) {
+                    switch (domain_code) {
                         case GstStreamError.CodecNotFound:
                             CurrentTrack.PlaybackError = StreamPlaybackError.CodecNotFound;
                             break;
@@ -207,11 +206,11 @@ namespace Banshee.GStreamer
                     }
                 }
                 
-                Console.WriteLine("GStreamer stream error: {0}", domain_code);
-            } else if(domain == GST_CORE_ERROR) {
-                GstCoreError domain_code = (GstCoreError)code;
-                if(CurrentTrack != null) {
-                    switch(domain_code) {
+                Log.Error (String.Format("GStreamer stream error: {0}", domain_code), false);
+            } else if (domain == GST_CORE_ERROR) {
+                GstCoreError domain_code = (GstCoreError) code;
+                if (CurrentTrack != null) {
+                    switch (domain_code) {
                         case GstCoreError.MissingPlugin:
                             CurrentTrack.PlaybackError = StreamPlaybackError.CodecNotFound;
                             break;
@@ -220,38 +219,34 @@ namespace Banshee.GStreamer
                     }
                 }
                 
-                if(domain_code != GstCoreError.MissingPlugin) {
-                    Console.WriteLine("GStreamer core error: {0}", (GstCoreError)code);
+                if (domain_code != GstCoreError.MissingPlugin) {
+                    Log.Error (String.Format("GStreamer core error: {0}", (GstCoreError) code), false);
                 }
-            } else if(domain == GST_LIBRARY_ERROR) {
-                Console.WriteLine("GStreamer library error: {0}", (GstLibraryError)code);
+            } else if (domain == GST_LIBRARY_ERROR) {
+                Log.Error (String.Format("GStreamer library error: {0}", (GstLibraryError) code), false);
             }
             
-            OnEventChanged(PlayerEngineEvent.Error, error_message);
+            OnEventChanged (PlayerEngineEvent.Error, error_message);
         }
         
-        /*private void OnStateChanged(IntPtr engine, int new_state, int old_state, int pending_state)
+        private void OnBuffering (IntPtr engine, int progress)
         {
-        }*/
-        
-        private void OnBuffering(IntPtr engine, int progress)
-        {
-            if(buffering_finished && progress >= 100) {
+            if (buffering_finished && progress >= 100) {
                 return;
             }
             
             buffering_finished = progress >= 100;
-            OnEventChanged(PlayerEngineEvent.Buffering, Catalog.GetString("Buffering"), (double)progress / 100.0);
+            OnEventChanged (PlayerEngineEvent.Buffering, Catalog.GetString ("Buffering"), (double) progress / 100.0);
         }
         
-        private void OnTagFound(string tagName, ref GLib.Value value, IntPtr userData)
+        private void OnTagFound (string tagName, ref GLib.Value value, IntPtr userData)
         {
-            OnTagFound(ProcessNativeTagResult(tagName, ref value));
+            OnTagFound(ProcessNativeTagResult (tagName, ref value));
         }
             
-        private static StreamTag ProcessNativeTagResult(string tagName, ref GLib.Value valueRaw)
+        private static StreamTag ProcessNativeTagResult (string tagName, ref GLib.Value valueRaw)
         {
-            if(tagName == String.Empty || tagName == null) {
+            if (tagName == String.Empty || tagName == null) {
                 return StreamTag.Zero;
             }
         
@@ -263,7 +258,7 @@ namespace Banshee.GStreamer
                 return StreamTag.Zero;
             }
             
-            if(value == null) {
+            if (value == null) {
                 return StreamTag.Zero;
             }
             
@@ -275,27 +270,27 @@ namespace Banshee.GStreamer
         }
         
         public override ushort Volume {
-            get { return (ushort)gst_playback_get_volume(handle); }
+            get { return (ushort) gst_playback_get_volume (handle); }
             set { 
-                gst_playback_set_volume(handle, (int)value);
-                OnEventChanged(PlayerEngineEvent.Volume);
+                gst_playback_set_volume(handle, (int) value);
+                OnEventChanged (PlayerEngineEvent.Volume);
             }
         }
         
         public override uint Position {
-            get { return (uint)gst_playback_get_position(handle); }
+            get { return (uint) gst_playback_get_position(handle); }
             set { 
-                gst_playback_set_position(handle, (ulong)value);
-                OnEventChanged(PlayerEngineEvent.Seek);
+                gst_playback_set_position(handle, (ulong) value);
+                OnEventChanged (PlayerEngineEvent.Seek);
             }
         }
         
         public override bool CanSeek {
-            get { return gst_playback_can_seek(handle); }
+            get { return gst_playback_can_seek (handle); }
         }
         
         public override uint Length {
-            get { return (uint)gst_playback_get_duration(handle); }
+            get { return (uint)gst_playback_get_duration (handle); }
         }
         
         public override string Id {
@@ -307,11 +302,11 @@ namespace Banshee.GStreamer
         }
         
         public override bool SupportsEqualizer {
-            get { return gst_equalizer_is_supported(handle); }
+            get { return gst_equalizer_is_supported (handle); }
         }
     
         public double AmplifierLevel {
-            set { gst_equalizer_set_preamp_level(handle, value); }
+            set { gst_equalizer_set_preamp_level (handle, value); }
         }
         
         public int [] BandRange {
@@ -320,7 +315,7 @@ namespace Banshee.GStreamer
                 int min = -1;
                 int max = -1;
                 
-                gst_equalizer_get_bandrange(handle, out min, out max);
+                gst_equalizer_get_bandrange (handle, out min, out max);
                 
                 return new int[] { min, max };
             }
@@ -330,22 +325,22 @@ namespace Banshee.GStreamer
             get
             {
                 double[] freq = new double[10];
-                gst_equalizer_get_frequencies(handle, out freq);
+                gst_equalizer_get_frequencies (handle, out freq);
                 
                 uint[] ret = new uint[freq.Length];
                 
-                for(int i = 0; i < freq.Length; i++)
+                for (int i = 0; i < freq.Length; i++)
                 {
-                    ret[i] = (uint)freq[i];
+                    ret[i] = (uint) freq[i];
                 }
                 
                 return ret;
             }
         }
         
-        public void SetEqualizerGain(uint band, double gain)
+        public void SetEqualizerGain (uint band, double gain)
         {
-            gst_equalizer_set_gain(handle, band, gain);
+            gst_equalizer_set_gain (handle, band, gain);
         }
         
         private static string [] source_capabilities = { "file", "http", "cdda" };
@@ -359,84 +354,88 @@ namespace Banshee.GStreamer
         }
         
         [DllImport("libbanshee")]
-        private static extern IntPtr gst_playback_new();
+        private static extern IntPtr gst_playback_new ();
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_free(HandleRef engine);
+        private static extern void gst_playback_free (HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_set_eos_callback(HandleRef engine, GstPlaybackEosCallback cb);
+        private static extern void gst_playback_set_eos_callback (HandleRef engine, GstPlaybackEosCallback cb);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_set_error_callback(HandleRef engine, GstPlaybackErrorCallback cb);
+        private static extern void gst_playback_set_error_callback (HandleRef engine, GstPlaybackErrorCallback cb);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_set_state_changed_callback(HandleRef engine, 
+        private static extern void gst_playback_set_state_changed_callback (HandleRef engine, 
             GstPlaybackStateChangedCallback cb);
             
         [DllImport("libbanshee")]
-        private static extern void gst_playback_set_iterate_callback(HandleRef engine, GstPlaybackIterateCallback cb);
+        private static extern void gst_playback_set_iterate_callback (HandleRef engine,
+            GstPlaybackIterateCallback cb);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_set_buffering_callback(HandleRef engine, GstPlaybackBufferingCallback cb);
+        private static extern void gst_playback_set_buffering_callback (HandleRef engine,
+            GstPlaybackBufferingCallback cb);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_set_tag_found_callback(HandleRef engine, GstTaggerTagFoundCallback cb);
+        private static extern void gst_playback_set_tag_found_callback (HandleRef engine,
+            GstTaggerTagFoundCallback cb);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_open(HandleRef engine, IntPtr uri);
+        private static extern void gst_playback_open (HandleRef engine, IntPtr uri);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_stop(HandleRef engine);
+        private static extern void gst_playback_stop (HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_pause(HandleRef engine);
+        private static extern void gst_playback_pause (HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_play(HandleRef engine);
+        private static extern void gst_playback_play (HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_set_volume(HandleRef engine, int volume);
+        private static extern void gst_playback_set_volume (HandleRef engine, int volume);
         
         [DllImport("libbanshee")]
-        private static extern int gst_playback_get_volume(HandleRef engine);
+        private static extern int gst_playback_get_volume (HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern bool gst_playback_can_seek(HandleRef engine);
+        private static extern bool gst_playback_can_seek (HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern void gst_playback_set_position(HandleRef engine, ulong time_ms);
+        private static extern void gst_playback_set_position (HandleRef engine, ulong time_ms);
         
         [DllImport("libbanshee")]
-        private static extern ulong gst_playback_get_position(HandleRef engine);
+        private static extern ulong gst_playback_get_position (HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern ulong gst_playback_get_duration(HandleRef engine);
+        private static extern ulong gst_playback_get_duration (HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern bool gst_playback_get_pipeline_elements(HandleRef engine, out IntPtr playbin,
+        private static extern bool gst_playback_get_pipeline_elements (HandleRef engine, out IntPtr playbin,
             out IntPtr audiobin, out IntPtr audiotee);
             
         [DllImport("libbanshee")]
-        private static extern void gst_playback_set_gdk_window(HandleRef engine, IntPtr window);
+        private static extern void gst_playback_set_gdk_window (HandleRef engine, IntPtr window);
                                                                    
         [DllImport("libbanshee")]
-        private static extern void gst_playback_get_error_quarks(out uint core, out uint library, 
+        private static extern void gst_playback_get_error_quarks (out uint core, out uint library, 
             out uint resource, out uint stream);
         
         [DllImport("libbanshee")]
-        private static extern bool gst_equalizer_is_supported(HandleRef engine);
+        private static extern bool gst_equalizer_is_supported (HandleRef engine);
         
         [DllImport("libbanshee")]
-        private static extern void gst_equalizer_set_preamp_level(HandleRef engine, double level);
+        private static extern void gst_equalizer_set_preamp_level (HandleRef engine, double level);
         
         [DllImport("libbanshee")]
-        private static extern void gst_equalizer_set_gain(HandleRef engine, uint bandnum, double gain);
+        private static extern void gst_equalizer_set_gain (HandleRef engine, uint bandnum, double gain);
         
         [DllImport("libbanshee")]
-        private static extern void gst_equalizer_get_bandrange(HandleRef engine, out int min, out int max);
+        private static extern void gst_equalizer_get_bandrange (HandleRef engine, out int min, out int max);
         
         [DllImport("libbanshee")]
-        private static extern void gst_equalizer_get_frequencies(HandleRef engine, [MarshalAs(UnmanagedType.LPArray)] out double[] freq);
+        private static extern void gst_equalizer_get_frequencies (HandleRef engine,
+            [MarshalAs(UnmanagedType.LPArray)] out double[] freq);
     }
 }
