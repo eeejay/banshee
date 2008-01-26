@@ -18,7 +18,7 @@ run:
 	for dir in $(MONO_ADDINS_PATH); do \
 		cp $$dir/*.{dll,mdb,config} .run.tmp/Addins 2>/dev/null; \
 	done; \
-	cp $(top_builddir)/libbanshee/.libs/libbanshee.so .run.tmp; \
+	cp $(top_builddir)/libbanshee/.libs/libbanshee.so .run.tmp || $(top_builddir)/libbanshee/libbanshee.so; \
 	pushd .run.tmp; \
 	echo "<Addins><Directory>./Addins</Directory></Addins>" > Nereid.addins; \
 	$(MONO) --debug Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \

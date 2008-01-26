@@ -146,6 +146,7 @@ src/Backends/Makefile
 src/Backends/Banshee.GStreamer/Makefile
 
 src/Extensions/Makefile
+src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
 
 src/Extras/Makefile

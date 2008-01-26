@@ -1,3 +1,22 @@
+2008-01-25  Aaron Bockover  <abock@gnome.org>
+
+	Patch adds GNOME/DBus multimedia keys support; ported by Alex Hixon
+
+	* build/build.environment.mk: 
+	* configure.ac:
+	* src/Extensions/Extensions.mds:
+	* src/Extensions/Makefile.am:
+	* src/Core/Makefile.am: 
+	* src/Extensions/Banshee.MultimediaKeys/Makefile.am: 
+	* src/Extensions/Banshee.MultimediaKeys/Banshee.MultimediaKeys.mdp: Build 
+	stuff for the multimedia keys extension
+
+	* src/Extensions/Banshee.MultimediaKeys/Banshee.MultimediaKeys/MultimediaKeysService.cs:
+	* src/Extensions/Banshee.MultimediaKeys/Resources/Banshee.MultimediaKeys.addin.xml: MMKeys plugin code/extension 
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: 
+	Log when a service has started
+
 2008-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:

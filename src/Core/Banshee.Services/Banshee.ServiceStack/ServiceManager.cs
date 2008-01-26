@@ -180,6 +180,7 @@ namespace Banshee.ServiceStack
         
         private static void OnServiceStarted (IService service)
         {
+            Log.Debug ("Started service", service.ServiceName);
             ServiceStartedHandler handler = ServiceStarted;
             if (handler != null) {
                 handler (new ServiceStartedArgs (service));
