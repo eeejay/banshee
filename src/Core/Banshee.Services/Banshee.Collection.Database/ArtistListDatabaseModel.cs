@@ -64,16 +64,19 @@ namespace Banshee.Collection.Database
         public override void Reload()
         {
             if (!first_reload || !cache.Warm) {
-                reload_fragment = String.Format (@"
-                    FROM CoreArtists
-                        {0} {1}
-                        ORDER BY Name",
-                    track_model != null ? "WHERE" : null,
-                    track_model == null ? null : String.Format(
-                        "CoreArtists.ArtistID IN (SELECT DISTINCT (CoreTracks.ArtistID) {0})",
-                        track_model.ReloadFragment
-                    )
+                reload_fragment = String.Format (
+                    @"FROM CoreArtists {0} ORDER BY Name",
+                    track_model != null ? String.Format(@"
+                        WHERE CoreArtists.ArtistID IN
+                            (SELECT DISTINCT (CoreTracks.ArtistID) FROM CoreTracks, CoreArtists, CoreCache
+                                WHERE CoreCache.ModelID = {0} AND
+                                      CoreCache.ItemId = CoreTracks.TrackID AND
+                                      CoreArtists.ArtistId = CoreTracks.ArtistID)",
+                        track_model.CacheId
+                    ) : null
                 );
+
+                //Console.WriteLine ("reload fragment for artists is {0}", reload_fragment);
 
                 cache.Reload ();
             }
@@ -92,7 +95,7 @@ namespace Banshee.Collection.Database
                 return cache.GetValue (index - 1);
             }
         }
-        
+
         public override int Count { 
             get { return count; }
         }

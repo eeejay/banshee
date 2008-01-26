@@ -58,7 +58,8 @@ namespace Banshee.Collection.Database
             this.connection = connection;
         }
 
-        public AlbumListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection, string uuid) : this (connection, uuid)
+        public AlbumListDatabaseModel(TrackListDatabaseModel trackModel, 
+                BansheeDbConnection connection, string uuid) : this (connection, uuid)
         {
             this.track_model = trackModel;
         }
@@ -69,18 +70,24 @@ namespace Banshee.Collection.Database
             if (!first_reload || !cache.Warm) {
                 bool either = (artist_id_filter_query != null) || (track_model != null);
                 bool both = (artist_id_filter_query != null) && (track_model != null);
+
                 reload_fragment = String.Format (@"
-                    FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID 
-                        {0} {1} {2} {3}
-                        ORDER BY CoreAlbums.Title, CoreArtists.Name",
+                    FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID
+                        {0} {1} {2} {3} ORDER BY CoreAlbums.Title, CoreArtists.Name",
                     either ? "WHERE" : null,
-                    artist_id_filter_query,
+                    track_model == null ? null :
+                        String.Format (@"
+                            CoreAlbums.AlbumID IN
+                                (SELECT DISTINCT(CoreTracks.AlbumID) FROM CoreTracks, CoreAlbums, CoreCache
+                                    WHERE CoreCache.ModelID = {0} AND
+                                          CoreCache.ItemId = CoreTracks.TrackID AND
+                                          CoreAlbums.AlbumID = CoreTracks.AlbumID)",
+                            track_model.CacheId
+                        ),
                     both ? "AND" : null,
-                    track_model == null ? null : String.Format(
-                        "CoreAlbums.AlbumID IN (SELECT DISTINCT (CoreTracks.AlbumID) {0})",
-                        track_model.ReloadFragment
-                    )
+                    artist_id_filter_query
                 );
+                //Console.WriteLine ("reload fragment for albums is {0}", reload_fragment);
 
                 cache.Reload ();
             }

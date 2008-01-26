@@ -148,9 +148,9 @@ namespace Hyena.Data.Sqlite
         public override int Reload ()
         {
             InvalidateManagedCache ();
-            using (new Timer (String.Format ("Generating cache table for {0}", model))) {
+            //using (new Timer (String.Format ("Generating cache table for {0}", model))) {
                 connection.Execute (reload_sql + model.ReloadFragment);
-            }
+            //}
             first_order_id = -1;
             UpdateCount ();
             return rows;
@@ -158,7 +158,7 @@ namespace Hyena.Data.Sqlite
 
         protected override void FetchSet (int offset, int limit)
         {
-            using (new Timer (String.Format ("Fetching set for {0}", model))) {
+            //using (new Timer (String.Format ("Fetching set for {0}", model))) {
                 select_range_command.ApplyValues (offset, limit);
                 using (IDataReader reader = connection.ExecuteReader (select_range_command)) {
                     while (reader.Read ()) {
@@ -168,7 +168,7 @@ namespace Hyena.Data.Sqlite
                         offset++;
                      }
                  }
-            }
+            //}
         }
         
         protected void UpdateCount ()

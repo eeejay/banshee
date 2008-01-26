@@ -82,10 +82,9 @@ namespace Banshee.Collection.Database
 
                 filter_query = n.ToSql (field_set);
 
+                /*
                 Console.WriteLine ("query: {0}", Filter);
-                //Console.WriteLine ("tree:");
-                //n.Dump ();
-                Console.WriteLine ("Xml for Query: {0}", n.ToXml (field_set));
+                Console.WriteLine ("Xml for Query: {0}", n.ToXml (field_set, true));
                 Console.WriteLine ("Sql for Query: {0}", filter_query);
                 Hyena.Data.Query.QueryParser qp2 = new XmlQueryParser (n.ToXml (field_set));
                 QueryNode n2 = qp2.BuildTree (field_set);
@@ -93,9 +92,14 @@ namespace Banshee.Collection.Database
                     Console.WriteLine ("User query for Xml: {0}", n2.ToUserQuery ());
                 } else
                     Console.WriteLine ("n2 is null");
+                */
 
                 if (filter_query.Length == 0)
                     filter_query = null;
+                //else {
+                    //artist_id_filter_query = null;
+                    //album_id_filter_query = null;
+                //}
             }
         }
 

@@ -72,7 +72,7 @@ namespace Banshee.Sources
                 base.FilterQuery = value;
                 track_model.Filter = value;
                 track_model.Refilter ();
-                track_model.Reload ();
+                RateLimitedReload ();
             }
         }
 
@@ -114,6 +114,7 @@ namespace Banshee.Sources
             track_model.Reload ();
             artist_model.Reload ();
             album_model.Reload ();
+            OnUpdated ();
         }
 
         // Methods for removing tracks from this source
@@ -155,7 +156,7 @@ namespace Banshee.Sources
         protected void AfterInitialized ()
         {
             Reload ();
-            track_model.Reloaded += OnTrackModelReloaded;
+            //track_model.Reloaded += OnTrackModelReloaded;
             OnSetupComplete ();
         }
 

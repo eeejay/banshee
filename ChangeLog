@@ -1,5 +1,21 @@
 2008-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Use the CoreCache table to filter artists and albums based on the
+	currently matching tracks.  Means the artist/album lists are filtered as
+	you filter you tracks.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Comment out query debugging.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Call
+	OnUpdated after Reloading.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Comment out timers.
+
+2008-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Smart playlists are migrated and saved now.  They should be functional.
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
