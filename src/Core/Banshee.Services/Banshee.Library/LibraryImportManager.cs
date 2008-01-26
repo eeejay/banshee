@@ -111,6 +111,7 @@ namespace Banshee.Library
                     track.ArtistId = artist.DbId;
                     track.AlbumId = new LibraryAlbumInfo (artist, track.AlbumTitle).DbId;
 
+                    artist.Save ();
                     track.Save ();
                     (ServiceManager.SourceManager.DefaultSource as LibrarySource).Reload ();
 
