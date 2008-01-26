@@ -1,3 +1,13 @@
+2008-01-26  Aaron Bockover  <abockover@novell.com>
+
+	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Only show debug message if
+	we are running in --debug mode
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Spew
+	some awesome timing/debug messages
+
+	* src/Core/Makefile.am: Fix a boo-boo
+
 2008-01-25  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: 

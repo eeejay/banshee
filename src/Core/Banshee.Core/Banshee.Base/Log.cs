@@ -96,6 +96,10 @@ namespace Banshee.Base
         
         private static void Commit (LogEntryType type, string message, string details, bool showUser)
         {
+            if (type == LogEntryType.Debug && !ApplicationContext.Debugging) {
+                return;
+            }
+        
             if (type != LogEntryType.Information || (type == LogEntryType.Information && !showUser)) {
                 switch (type) {
                     case LogEntryType.Error: Console.ForegroundColor = ConsoleColor.Red; break;
@@ -133,27 +137,41 @@ namespace Banshee.Base
                                     
         public static void Debug (string message, string details)
         {
-            Commit (LogEntryType.Debug, message, details, false);
+            if (ApplicationContext.Debugging) {
+                Commit (LogEntryType.Debug, message, details, false);
+            }
         }
         
         public static void Debug (string message)
         {
-            Debug (message, null);
+            if (ApplicationContext.Debugging) {
+                Debug (message, null);
+            }
         }
         
         public static void DebugFormat (string format, params object [] args)
         {
-            Debug (String.Format (format, args));
+            if (ApplicationContext.Debugging) {
+                Debug (String.Format (format, args));
+            }
         }
         
         public static uint DebugTimerStart (string message)
         {
+            if (!ApplicationContext.Debugging) {
+                return 0;
+            }
+            
             Debug (message);
             return DebugTimerStart ();
         }
         
         public static uint DebugTimerStart ()
         {
+            if (!ApplicationContext.Debugging) {
+                return 0;
+            }
+            
             uint timer_id = next_timer_id++;
             timers.Add (timer_id, DateTime.Now);
             return timer_id;
@@ -161,11 +179,19 @@ namespace Banshee.Base
         
         public static void DebugTimerPrint (uint id)
         {
+            if (!ApplicationContext.Debugging) {
+                return;
+            }
+            
             DebugTimerPrint (id, "Operation duration: {0}");
         }
         
         public static void DebugTimerPrint (uint id, string message)
         {
+            if (!ApplicationContext.Debugging) {
+                return;
+            }
+            
             DateTime finish = DateTime.Now;
             
             if (!timers.ContainsKey (id)) {
@@ -173,7 +199,14 @@ namespace Banshee.Base
             }
             
             TimeSpan duration = finish - timers[id];
-            DebugFormat (message, duration);
+            string d_message;
+            if (duration.TotalSeconds < 60) {
+                d_message = String.Format ("{0}s", duration.TotalSeconds);
+            } else {
+                d_message = duration.ToString ();
+            }
+            
+            DebugFormat (message, d_message);
         }
         
         #endregion
@@ -187,7 +220,7 @@ namespace Banshee.Base
         
         public static void Information (string message, string details)
         {
-            Information (message, details, true);
+            Information (message, details, false);
         }
         
         public static void Information (string message, string details, bool showUser)

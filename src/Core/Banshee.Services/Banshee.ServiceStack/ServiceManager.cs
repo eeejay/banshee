@@ -83,19 +83,29 @@ namespace Banshee.ServiceStack
             lock (self_mutex) {          
                 OnStartupBegin ();
                 
+                uint cumulative_timer_id = Log.DebugTimerStart ();
+                
                 foreach (Type type in service_types) {
+                    uint timer_id = Log.DebugTimerStart (); 
                     IService service = (IService)Activator.CreateInstance (type);
                     RegisterServiceNoLock (service);
+                    Log.DebugTimerPrint (timer_id, String.Format (
+                        "Core service started ({0}, {{0}})", service.ServiceName));
                     OnServiceStarted (service);
                 }
                 
                 foreach (TypeExtensionNode node in extension_nodes) {
+                    uint timer_id = Log.DebugTimerStart ();
                     IService service = (IService)node.CreateInstance (typeof (IService));
                     RegisterServiceNoLock (service);
+                    Log.DebugTimerPrint (timer_id, String.Format (
+                        "Extension service started ({0}, {{0}})", service.ServiceName));
                     OnServiceStarted (service);
                 }
                 
                 is_initialized = true;
+                
+                Log.DebugTimerPrint (cumulative_timer_id, "All services are started {0}");
                 
                 OnStartupFinished ();
             }
@@ -180,7 +190,6 @@ namespace Banshee.ServiceStack
         
         private static void OnServiceStarted (IService service)
         {
-            Log.Debug ("Started service", service.ServiceName);
             ServiceStartedHandler handler = ServiceStarted;
             if (handler != null) {
                 handler (new ServiceStartedArgs (service));
