@@ -275,6 +275,10 @@ namespace Banshee.Database
                     DateAddedStamp      INTEGER
                 )
             ");
+            Execute("CREATE INDEX CoreTracksArtistIndex ON CoreTracks(ArtistID)");
+            Execute("CREATE INDEX CoreTracksAlbumIndex  ON CoreTracks(AlbumID)");
+            Execute("CREATE INDEX CoreTracksRatingIndex ON CoreTracks(Rating)");
+            Execute("CREATE INDEX CoreTracksTrackNumberIndex ON CoreTracks(AlbumID, TrackNumber)");
             
             Execute(@"
                 CREATE TABLE CoreAlbums (
@@ -293,6 +297,8 @@ namespace Banshee.Database
                     Rating              INTEGER
                 )
             ");
+            Execute("CREATE INDEX CoreAlbumsIndex       ON CoreAlbums(Title)");
+            Execute("CREATE INDEX CoreAlbumsArtistID    ON CoreAlbums(ArtistID)");
             
             Execute(@"
                 CREATE TABLE CoreArtists (
@@ -303,6 +309,7 @@ namespace Banshee.Database
                     Rating              INTEGER
                 )
             ");
+            Execute("CREATE INDEX CoreArtistsIndex      ON CoreArtists(Name)");
             
             Execute(@"
                 CREATE TABLE CorePlaylists (
@@ -356,11 +363,9 @@ namespace Banshee.Database
                     ItemID              INTEGER
                 )
             ");
-
-            Execute("CREATE INDEX CoreTracksArtistIndex ON CoreTracks(ArtistID)");
-            Execute("CREATE INDEX CoreTracksAlbumIndex  ON CoreTracks(AlbumID)");
-            Execute("CREATE INDEX CoreArtistsIndex      ON CoreArtists(Name)");
-            Execute("CREATE INDEX CoreAlbumsIndex       ON CoreAlbums(Title)");
+            // This index slows down queries were we shove data into the CoreCache.
+            // Since we do that frequently, not using it.
+            //Execute("CREATE INDEX CoreCacheModelId      ON CoreCache(ModelID)");
         }
         
         private void MigrateFromLegacyBanshee()

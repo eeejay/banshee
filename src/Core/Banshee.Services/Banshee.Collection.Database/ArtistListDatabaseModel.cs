@@ -68,7 +68,7 @@ namespace Banshee.Collection.Database
                     @"FROM CoreArtists {0} ORDER BY Name",
                     track_model != null ? String.Format(@"
                         WHERE CoreArtists.ArtistID IN
-                            (SELECT DISTINCT (CoreTracks.ArtistID) FROM CoreTracks, CoreArtists, CoreCache
+                            (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreArtists, CoreCache
                                 WHERE CoreCache.ModelID = {0} AND
                                       CoreCache.ItemId = CoreTracks.TrackID AND
                                       CoreArtists.ArtistId = CoreTracks.ArtistID)",

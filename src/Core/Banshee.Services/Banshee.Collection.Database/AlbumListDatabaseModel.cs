@@ -78,7 +78,7 @@ namespace Banshee.Collection.Database
                     track_model == null ? null :
                         String.Format (@"
                             CoreAlbums.AlbumID IN
-                                (SELECT DISTINCT(CoreTracks.AlbumID) FROM CoreTracks, CoreAlbums, CoreCache
+                                (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreAlbums, CoreCache
                                     WHERE CoreCache.ModelID = {0} AND
                                           CoreCache.ItemId = CoreTracks.TrackID AND
                                           CoreAlbums.AlbumID = CoreTracks.AlbumID)",

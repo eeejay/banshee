@@ -2,6 +2,15 @@
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Get rid of unnecessary disctinct () call in query.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add some more indices.
+
+2008-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
 	Use the CoreCache table to filter artists and albums based on the
 	currently matching tracks.  Means the artist/album lists are filtered as
 	you filter you tracks.
