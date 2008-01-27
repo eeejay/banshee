@@ -1,12 +1,7 @@
 SUBDIRS = \
-	Extras \
 	Core \
 	Backends \
 	Extensions
-
-
-#Dap \
-#	Plugins
 
 EXTRA_DIST = AssemblyInfo.cs.in
 
