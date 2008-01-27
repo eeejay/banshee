@@ -1,7 +1,7 @@
 <Project name="Banshee.Widgets" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="." assembly="Banshee.Widgets" />
+      <Output directory="../../../bin" assembly="Banshee.Widgets" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -11,9 +11,6 @@
     <File name="Resources/rating-rated.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/rating-unrated.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Widgets/ActionButton.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/ActiveUserEvent.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/ActiveUserEventsManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/AltProgressBar.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/ComplexMenuItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/CoverArtThumbnail.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/CoverArtView.cs" subtype="Code" buildaction="Compile" />

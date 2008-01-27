@@ -1,7 +1,7 @@
 <Project name="Hyena" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="." assembly="Hyena" />
+      <Output directory="../../../bin" assembly="Hyena" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -55,6 +55,22 @@
     <File name="Hyena.Data.Query/StringQueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena/Timer.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena/Utilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/ArithmeticFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/CastFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/CompareFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/ControlFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/Evaluator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/EvaluatorBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/FunctionFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/FunctionNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/FunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/ListFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/Literals.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/LogicFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/Parser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/StringFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/TreeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.SExpEngine/UtilityFunctionSet.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
