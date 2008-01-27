@@ -48,7 +48,7 @@ namespace Banshee.Collection.Database
             get { return provider; }
         }
 
-        private static BansheeDbCommand select_command = new BansheeDbCommand (
+        private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (
             "SELECT ArtistID, Name FROM CoreArtists WHERE Name = ?", 1
         );
 

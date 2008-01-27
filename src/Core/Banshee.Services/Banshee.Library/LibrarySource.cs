@@ -31,6 +31,7 @@ using System.Collections.Generic;
 
 using Mono.Unix;
 using Hyena.Collections;
+using Hyena.Data.Sqlite;
 
 using Banshee.Base;
 using Banshee.Sources;
@@ -46,7 +47,7 @@ namespace Banshee.Library
         private ErrorSource error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
         private bool error_source_visible = false;
 
-        private BansheeDbCommand remove_range_command = new BansheeDbCommand (@"
+        private HyenaSqliteCommand remove_range_command = new HyenaSqliteCommand (@"
             DELETE FROM CoreTracks WHERE TrackID IN
                 (SELECT ItemID FROM CoreCache
                     WHERE ModelID = ? LIMIT ?, ?);
@@ -58,7 +59,7 @@ namespace Banshee.Library
                     WHERE ModelID = ? LIMIT ?, ?)", 9
         );
 
-        private BansheeDbCommand remove_track_command = new BansheeDbCommand (@"
+        private HyenaSqliteCommand remove_track_command = new HyenaSqliteCommand (@"
             DELETE FROM CoreTracks WHERE TrackID = ?;
             DELETE FROM CorePlaylistEntries WHERE TrackID = ?;
             DELETE FROM CoreSmartPlaylistEntries WHERE TrackID = ?", 3

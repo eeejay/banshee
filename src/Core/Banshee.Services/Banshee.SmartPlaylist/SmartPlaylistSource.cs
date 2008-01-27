@@ -35,6 +35,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Hyena.Data.Query;
+using Hyena.Data.Sqlite;
  
 using Banshee.Base;
 using Banshee.Sources;
@@ -227,7 +228,7 @@ namespace Banshee.SmartPlaylist
 
         protected override void Create ()
         {
-            DbId = ServiceManager.DbConnection.Execute (new BansheeDbCommand (@"
+            DbId = ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
                 INSERT INTO CoreSmartPlaylists
                     (Name, Condition, OrderBy, OrderDir, LimitNumber, LimitCriterion)
                     VALUES (?, ?, ?, ?, ?, ?)",
@@ -237,7 +238,7 @@ namespace Banshee.SmartPlaylist
 
         protected override void Update ()
         {
-            ServiceManager.DbConnection.Execute (new BansheeDbCommand (@"
+            ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
                 UPDATE CoreSmartPlaylists
                     SET Name = ?,
                         Condition = ?,

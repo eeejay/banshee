@@ -35,6 +35,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Hyena.Data;
+using Hyena.Data.Sqlite;
 using Hyena.Collections;
 
 using Banshee.Base;
@@ -48,9 +49,9 @@ namespace Banshee.Playlist
 {
     public class PlaylistSource : AbstractPlaylistSource
     {
-        private static BansheeDbCommand add_tracks_command;
-        private static BansheeDbCommand remove_tracks_command;
-        private static BansheeDbCommand delete_command;
+        private static HyenaSqliteCommand add_tracks_command;
+        private static HyenaSqliteCommand remove_tracks_command;
+        private static HyenaSqliteCommand delete_command;
 
         private static string generic_name = Catalog.GetString ("Playlist");
 
@@ -72,14 +73,14 @@ namespace Banshee.Playlist
 
         static PlaylistSource () 
         {
-            add_tracks_command = new BansheeDbCommand (@"
+            add_tracks_command = new HyenaSqliteCommand (@"
                 INSERT INTO CorePlaylistEntries
                     SELECT null, ?, ItemID, 0
                         FROM CoreCache WHERE ModelID = ?
                         LIMIT ?, ?", 4
             );
 
-            remove_tracks_command = new BansheeDbCommand (@"
+            remove_tracks_command = new HyenaSqliteCommand (@"
                 DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND
                     TrackID IN (SELECT ItemID FROM CoreCache
                         WHERE ModelID = ? LIMIT ?, ?)", 4
@@ -110,7 +111,7 @@ namespace Banshee.Playlist
 
         protected override void Update ()
         {
-            ServiceManager.DbConnection.Execute (new BansheeDbCommand (
+            ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (
                 String.Format (
                     @"UPDATE {0}
                         SET Name = ?,
@@ -124,12 +125,13 @@ namespace Banshee.Playlist
 
         protected override void Create ()
         {
-            DbId = ServiceManager.DbConnection.Execute (new BansheeDbCommand (
-                String.Format (@"INSERT INTO {0}
+            Console.WriteLine ("Creating playlist");
+            DbId = ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (
+                @"INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType)
                     VALUES (NULL, ?, ?, ?)",
-                    SourceTable
-                ), Name, -1, 0 //SortColumn, SortType
+                Name, -1, 1 //SortColumn, SortType
             ));
+            Console.WriteLine ("Done Creating playlist");
         }
 
 #endregion
@@ -157,7 +159,7 @@ namespace Banshee.Playlist
         public bool Unmap ()
         {
             if (DbId != null) {
-                ServiceManager.DbConnection.Execute (new BansheeDbCommand (@"
+                ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
                     BEGIN TRANSACTION;
                         DELETE FROM CorePlaylists WHERE PlaylistID = ?;
                         DELETE FROM CorePlaylistEntries WHERE PlaylistID = ?;

@@ -155,22 +155,4 @@ namespace Banshee.Database
             get { return "DbConnection"; }
         }
     }
-    
-    public sealed class BansheeDbCommand : HyenaSqliteCommand
-    {
-        public BansheeDbCommand(string command)
-            : base(command)
-        {
-        }
-
-        public BansheeDbCommand (string command, int num_params)
-            : base(command, num_params)
-        {
-        }
-
-        public BansheeDbCommand (string command, params object [] param_values)
-            : base(command, param_values.Length)
-        {
-        }
-    }
 }

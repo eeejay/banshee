@@ -5,6 +5,8 @@ using System.Threading;
 
 using Mono.Unix;
 
+using Hyena.Data.Sqlite;
+
 using Banshee.Base;
 using Banshee.Configuration;
 using Banshee.Database;
@@ -172,7 +174,7 @@ namespace Banshee.Playlist
             PlaylistSource playlist = new PlaylistSource (name);
             playlist.Save ();
 
-            BansheeDbCommand command = new BansheeDbCommand (
+            HyenaSqliteCommand command = new HyenaSqliteCommand (
                 @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
                     VALUES (?, (SELECT TrackID FROM CoreTracks WHERE Uri = ?))", 2
             );

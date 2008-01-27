@@ -233,7 +233,7 @@ namespace Banshee.Collection.Database
             set { DateAdded = DateTimeUtil.ToDateTime(value); }
         }
 
-        private static BansheeDbCommand check_command = new BansheeDbCommand (
+        private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (
             "SELECT COUNT(*) FROM CoreTracks WHERE Uri = ? OR Uri = ?", 2);
         
         public static bool ContainsUri (SafeUri uri)

@@ -30,6 +30,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
 using Mono.Data.Sqlite;
 
 namespace Hyena.Data.Sqlite
@@ -37,6 +38,15 @@ namespace Hyena.Data.Sqlite
     public abstract class HyenaSqliteConnection : IDisposable
     {
         private SqliteConnection connection;
+
+        private static Thread main_thread;
+        static HyenaSqliteConnection () {
+            main_thread = Thread.CurrentThread;
+        }
+
+        private static bool InMainThread {
+            get { return main_thread.Equals (Thread.CurrentThread); }
+        }
 
         public HyenaSqliteConnection () : this (true)
         {
@@ -130,6 +140,10 @@ namespace Hyena.Data.Sqlite
             if (command.Connection == null)
                 command.Connection = connection;
 
+            if (!InMainThread) {
+                Console.WriteLine ("About to execute command not in main thread: {0}", command.CommandText);
+            }
+
             try {
                 return command.ExecuteReader ();
             } catch (Exception e) {
@@ -152,6 +166,11 @@ namespace Hyena.Data.Sqlite
         {
             if (command.Connection == null)
                 command.Connection = connection;
+
+            if (!InMainThread) {
+                Console.WriteLine ("About to execute command not in main thread: {0}", command.CommandText);
+            }
+
             try {
                 return command.ExecuteScalar ();
             } catch (Exception e) {
@@ -204,6 +223,11 @@ namespace Hyena.Data.Sqlite
         {
             if (command.Connection == null)
                 command.Connection = connection;
+
+            if (!InMainThread) {
+                Console.WriteLine ("About to execute command not in main thread: {0}", command.CommandText);
+            }
+
             try {
                 command.ExecuteNonQuery ();
             } catch (Exception e) {

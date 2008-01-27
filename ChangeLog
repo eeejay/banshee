@@ -1,3 +1,22 @@
+2008-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Make ms always 3 digits.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:  Get
+	rid of BansheeDbCommand.  It didn't add anything useful, and in fact had a
+	bug that made creating a new playlist not work (and possibly other
+	commands as well).
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add debugging
+	message when executing command out of main thread.
+
 2008-01-27  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: C#'s
