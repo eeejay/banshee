@@ -56,6 +56,7 @@
     <File name="Banshee.Base/Localization.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Configuration/XmlConfigurationClient.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/CoverArtSpec.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/RateLimiter.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />

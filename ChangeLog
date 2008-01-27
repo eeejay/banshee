@@ -1,5 +1,18 @@
 2008-01-26  Aaron Bockover  <abockover@novell.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CellEditEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Classes pulled out of SourceView.cs, changed from public to internal
+	since they are meaningless outside of SourceView
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Minor
+	reorg, audit public API
+
+	* src/Core/Hyena.Gui/Hyena.Gui/GtkUtilities.cs: Added ColorBlend method
+	from the old Banshee.Base.Utilities class to blend two Gdk.Colors
+
+2008-01-26  Aaron Bockover  <abockover@novell.com>
+
 	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Only show debug message if
 	we are running in --debug mode
 

@@ -60,7 +60,6 @@
     <File name="Banshee.Collection.Gui/ColumnCellDuration.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Dialogs/TrackEditor.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/ArtworkRenderer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui/ViewActions.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/TrackActions.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/ArtworkPopup.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioProfiles.Gui/ProfileComboBox.cs" subtype="Code" buildaction="Compile" />
@@ -72,6 +71,13 @@
     <File name="Banshee.Gui/BansheeActionGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/IHasSourceView.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/SourceActions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Equalizer.Gui/EqualizerBandScale.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Equalizer.Gui/EqualizerLevelsBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Equalizer.Gui/EqualizerPresetComboBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Equalizer.Gui/EqualizerView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Equalizer.Gui/EqualizerWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/CellEditEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/SourceRowRenderer.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

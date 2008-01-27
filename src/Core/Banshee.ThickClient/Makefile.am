@@ -59,6 +59,8 @@ SOURCES =  \
 	Banshee.Library.Gui/FileImportSource.cs \
 	Banshee.Library.Gui/FolderImportSource.cs \
 	Banshee.Library.Gui/ImportDialog.cs \
+	Banshee.Sources.Gui/CellEditEntry.cs \
+	Banshee.Sources.Gui/SourceRowRenderer.cs \
 	Banshee.Sources.Gui/SourceView.cs
 
 RESOURCES =  \

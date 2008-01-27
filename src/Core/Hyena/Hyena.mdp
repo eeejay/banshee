@@ -8,7 +8,6 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="Timer.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ICareAboutView.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/IFilterable.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/IListModel.cs" subtype="Code" buildaction="Compile" />
@@ -48,6 +47,14 @@
     <File name="Hyena.Data.Sqlite/ICacheableDatabaseModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ModelCache.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Sqlite/SqliteModelCache.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/DateQueryValue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/FileSizeQueryValue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/IntegerQueryValue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryOperator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/QueryValue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Query/StringQueryValue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena/Timer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena/Utilities.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
