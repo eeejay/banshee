@@ -2,12 +2,10 @@ SUBDIRS = \
 	build \
 	data \
 	libbanshee \
-	ext \
 	src \
 	docs \
 	tests \
 	extras \
-	branding \
 	po
 
 EXTRA_DIST = \

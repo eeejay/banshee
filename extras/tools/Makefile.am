@@ -1,5 +1,3 @@
-include $(top_srcdir)/build/Common.Makefile
-
 BANSHEE_IMPORT = banshee-import
 BANSHEE_IMPORT_ASSEMBLY = $(BANSHEE_IMPORT).exe
 DBUS_CLIENT_ASSEMBLY = dbus-client.exe

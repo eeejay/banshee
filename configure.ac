@@ -106,18 +106,21 @@ data/audio-profiles/Makefile
 data/icon-theme-hicolor/Makefile
 
 docs/Makefile
+docs/Hyena/Makefile
+docs/Banshee/Makefile
+
+po/Makefile.in
+
 tests/Makefile
+
 extras/Makefile
 extras/tools/Makefile
 extras/tools/banshee-import
-branding/Makefile
-po/Makefile.in
 
 libbanshee/Makefile
 
 ext/Makefile
 ext/hal-sharp/Makefile
-ext/taglib-sharp/Makefile
 
 src/Makefile
 src/AssemblyInfo.cs
@@ -133,47 +136,12 @@ src/Core/Banshee.Widgets/Banshee.Widgets.dll.config
 src/Core/Nereid/Makefile
 src/Core/Nereid/banshee2
 
-src/Dap/Makefile
-src/Dap/Banshee.Dap.Ipod/Makefile
-src/Dap/Banshee.Dap.Ipod/ipod-sharp.dll.config
-src/Dap/Banshee.Dap.Karma/Makefile
-src/Dap/Banshee.Dap.MassStorage/Makefile
-src/Dap/Banshee.Dap.Mtp/Makefile
-src/Dap/Banshee.Dap.Njb/Makefile
-src/Dap/Banshee.Dap.Njb/njb-sharp.dll.config
-
 src/Backends/Makefile
 src/Backends/Banshee.GStreamer/Makefile
 
 src/Extensions/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
-
-src/Extras/Makefile
-src/Extras/Boo/Makefile
-src/Extras/BooBuddy/Makefile
-src/Extras/Gnome.Keyring/Makefile
-src/Extras/Last.FM/Makefile
-src/Extras/MusicBrainz/Makefile
-src/Extras/MusicBrainz/MusicBrainz.dll.config
-
-src/Plugins/Makefile
-src/Plugins/Banshee.Plugins.Audioscrobbler/Makefile
-src/Plugins/Banshee.Plugins.Audioscrobbler/Banshee.Plugins.Audioscrobbler.dll.config
-src/Plugins/Banshee.Plugins.Bookmarks/Makefile
-src/Plugins/Banshee.Plugins.Daap/Makefile
-src/Plugins/Banshee.Plugins.Daap/Banshee.Plugins.Daap.dll.config
-src/Plugins/Banshee.Plugins.MetadataSearch/Makefile
-src/Plugins/Banshee.Plugins.MetadataSearch/Banshee.Plugins.MetadataSearch.dll.config
-src/Plugins/Banshee.Plugins.MiniMode/Makefile
-src/Plugins/Banshee.Plugins.MMKeys/Makefile
-src/Plugins/Banshee.Plugins.MMKeys/Banshee.Plugins.MMKeys.dll.config
-src/Plugins/Banshee.Plugins.NotificationAreaIcon/Makefile
-src/Plugins/Banshee.Plugins.NotificationAreaIcon/Banshee.Plugins.NotificationAreaIcon.dll.config
-src/Plugins/Banshee.Plugins.Podcast/Makefile
-src/Plugins/Banshee.Plugins.Radio/Makefile
-src/Plugins/Banshee.Plugins.Recommendation/Makefile
-src/Plugins/Banshee.Plugins.Sample/Makefile
 ])
 
 if test "x${enable_daap}" = "xyes"; then

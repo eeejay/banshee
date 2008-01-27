@@ -1,5 +1,3 @@
-include $(top_srcdir)/build/Common.Makefile 
-
 ASSEMBLY_NAME = Hal
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 

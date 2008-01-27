@@ -1,5 +1,3 @@
-include $(top_srcdir)/build/Common.Makefile
-
 SUBDIRS = m4
 
 GCONF_SCHEMA_EXTRACTOR_ASSEMBLY = gconf-schema-extractor.exe
@@ -21,7 +19,6 @@ $(TRANSLATOR_EXTRACTOR_ASSEMBLY): TranslatorExtract.cs
 		$(top_srcdir)/src/Core/Banshee.Core/Resources/translators.xml
 
 EXTRA_DIST = \
-	Common.Makefile \
 	icon-theme-installer \
 	GConfSchemaExtractor.cs \
 	TranslatorExtractor.cs \
