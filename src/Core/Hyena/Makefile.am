@@ -50,8 +50,8 @@ SOURCES =  \
 	Hyena.SExpEngine/CastFunctionSet.cs \
 	Hyena.SExpEngine/CompareFunctionSet.cs \
 	Hyena.SExpEngine/ControlFunctionSet.cs \
-	Hyena.SExpEngine/EvaluatorBase.cs \
 	Hyena.SExpEngine/Evaluator.cs \
+	Hyena.SExpEngine/EvaluatorBase.cs \
 	Hyena.SExpEngine/FunctionFunctionSet.cs \
 	Hyena.SExpEngine/FunctionNode.cs \
 	Hyena.SExpEngine/FunctionSet.cs \
