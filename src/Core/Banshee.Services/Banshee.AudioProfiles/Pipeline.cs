@@ -33,7 +33,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using SExpEngine;
+using Hyena.SExpEngine;
 using Banshee.Base;
 
 namespace Banshee.AudioProfiles
@@ -164,7 +164,7 @@ namespace Banshee.AudioProfiles
                 
                 Console.WriteLine("-----");
                 Console.WriteLine("Expression Tree:");
-                SExpEngine.TreeNode.DumpTree(eval.ExpressionTree);
+                Hyena.SExpEngine.TreeNode.DumpTree(eval.ExpressionTree);
             }
             
             return null;

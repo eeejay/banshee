@@ -119,9 +119,6 @@ extras/tools/banshee-import
 
 libbanshee/Makefile
 
-ext/Makefile
-ext/hal-sharp/Makefile
-
 src/Makefile
 src/AssemblyInfo.cs
 
