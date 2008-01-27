@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Reflection;
 
 namespace Hyena.SExpEngine
 {

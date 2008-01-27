@@ -46,6 +46,22 @@ SOURCES =  \
 	Hyena.Data/ModelSelection.cs \
 	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/SortType.cs \
+	Hyena.SExpEngine/ArithmeticFunctionSet.cs \
+	Hyena.SExpEngine/CastFunctionSet.cs \
+	Hyena.SExpEngine/CompareFunctionSet.cs \
+	Hyena.SExpEngine/ControlFunctionSet.cs \
+	Hyena.SExpEngine/EvaluatorBase.cs \
+	Hyena.SExpEngine/Evaluator.cs \
+	Hyena.SExpEngine/FunctionFunctionSet.cs \
+	Hyena.SExpEngine/FunctionNode.cs \
+	Hyena.SExpEngine/FunctionSet.cs \
+	Hyena.SExpEngine/ListFunctionSet.cs \
+	Hyena.SExpEngine/Literals.cs \
+	Hyena.SExpEngine/LogicFunctionSet.cs \
+	Hyena.SExpEngine/Parser.cs \
+	Hyena.SExpEngine/StringFunctionSet.cs \
+	Hyena.SExpEngine/TreeNode.cs \
+	Hyena.SExpEngine/UtilityFunctionSet.cs \
 	Hyena/IUndoAction.cs \
 	Hyena/Timer.cs \
 	Hyena/UndoManager.cs \
