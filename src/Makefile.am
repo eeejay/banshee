@@ -6,11 +6,9 @@ SUBDIRS = \
 EXTRA_DIST = AssemblyInfo.cs.in
 
 run:
-	pushd $(top_builddir)/src/Core; \
+	@pushd $(top_builddir); \
 	make run; \
 	popd;
 
-MAINTAINERCLEANFILES = \
-	Makefile.in
+MAINTAINERCLEANFILES = Makefile.in
 
-CLEANFILES = *.mdb *.pidb *.exe *.dll

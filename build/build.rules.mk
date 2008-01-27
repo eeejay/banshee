@@ -23,7 +23,7 @@ all: $(ASSEMBLY_FILE)
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED_FULL)
 	@mkdir -p $(top_builddir)/bin
-	@echo "Compiling $(notdir $@)..."
+	@echo -e "\033[1mCompiling $(notdir $@)...\033[0m"
 	@$(BUILD) -target:$(TARGET) -out:$@ $(LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
 
 EXTRA_DIST = $(SOURCES_BUILD) $(RESOURCES_EXPANDED_FULL)

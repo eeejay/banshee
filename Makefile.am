@@ -45,9 +45,12 @@ MAINTAINERCLEANFILES = \
 	mkinstalldirs
 
 run:
-	pushd $(top_builddir)/src/Core; \
-	make run; \
+	@pushd bin; \
+	$(MONO) Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
 	popd;
+
+clean-local:
+	rm -rf $(top_builddir)/bin
 
 uninstall-hook:
 	if test `find $(pkglibdir) | wc -l` -eq 1; then \

@@ -32,6 +32,11 @@ libbanshee_la_LIBADD = \
 	$(GST_LIBS) \
 	$(LIBNAUTILUS_BURN_LIBS)
 
+all: 
+	@mkdir -p $(top_builddir)/bin
+	@cp $(builddir)/.libs/libbanshee.so $(top_builddir)/bin
+
+CLEANFILES = $(top_builddir)/bin/libbanshee.so
 MAINTAINERCLEANFILES = Makefile.in
 EXTRA_DIST = $(libbanshee_la_SOURCES)
 
