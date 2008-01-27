@@ -1,0 +1,36 @@
+2007-01-21  Aaron Bockover  <abock@gnome.org>
+
+	0.1 'Release' made (creating a tag in subversion)
+
+	* README:
+	* Makefile: Added
+
+2007-01-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/SExpEngine/Parser.cs: Make the number matching regular expression
+	more robust and compile ahead of time and reuse it; use the en-US 
+	culture to parse all numbers
+
+2007-01-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/SExpEngine/Parser.cs: Fixed empty-string parsing bug
+
+	* SExpEngine/EvaluatorBase.cs: Only break evaluation on a function node
+	if a function requires arguments as the function handler will continue
+	parsing
+
+	* SExpEngine/FunctionNode.cs: Added RequiresArguments
+
+2007-01-16  Aaron Bockover  <abock@gnome.org>
+
+	* src/SExpEngine/EvaluatorBase.cs: Support setting variables before 
+	evaluation
+
+	* src/SExpEngine/TreeNode.cs: Added CopyFunctionsFrom and Flatten
+
+2007-01-16  Aaron Bockover  <abock@gnome.org>
+
+	* SExpEngine: Rewote parser; support multiple expressions; support
+	defining functions and 'variables,' added while/foreach and a lot
+	of string and list functions
+

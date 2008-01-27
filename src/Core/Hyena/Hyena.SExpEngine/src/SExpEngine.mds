@@ -1,0 +1,14 @@
+<Combine name="SExpEngine" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="SExpEngine" configuration="Debug" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <StartMode startupentry="src" single="True">
+    <Execute type="None" entry="SExpEngine" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./SExpEngine.mdp" />
+  </Entries>
+</Combine>

@@ -1,0 +1,33 @@
+<Project name="SExpEngine" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./" assembly="SExpEvaluator" />
+      <Build debugmode="True" target="Exe" />
+      <Execution runwithwarnings="True" externalconsole="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <Contents>
+    <File name="./SExpEngine/ArithmeticFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/CastFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/CompareFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/Evaluator.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/EvaluatorBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/FunctionNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/FunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/Literals.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/LogicFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/Parser.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/StringFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/TreeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/UtilityFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEvaluator.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/ListFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/ControlFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SExpEngine/FunctionFunctionSet.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </References>
+</Project>
