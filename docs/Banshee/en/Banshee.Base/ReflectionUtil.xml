@@ -1,0 +1,38 @@
+<Type Name="ReflectionUtil" FullName="Banshee.Base.ReflectionUtil">
+  <TypeSignature Language="C#" Value="public static class ReflectionUtil" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Core</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    <Member MemberName="InvokeMethod">
+      <MemberSignature Language="C#" Value="public static object InvokeMethod (System.Reflection.Assembly assembly, string typeName, string methodName);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Object</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="assembly" Type="System.Reflection.Assembly" /><Parameter Name="typeName" Type="System.String" /><Parameter Name="methodName" Type="System.String" /></Parameters>
+      <Docs><param name="assembly">To be added.</param><param name="typeName">To be added.</param><param name="methodName">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="IsVirtualMethodImplemented">
+      <MemberSignature Language="C#" Value="public static bool IsVirtualMethodImplemented (Type type, string methodName);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="type" Type="System.Type" /><Parameter Name="methodName" Type="System.String" /></Parameters>
+      <Docs><param name="type">To be added.</param><param name="methodName">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ModuleGetTypes">
+      <MemberSignature Language="C#" Value="public static Type[] ModuleGetTypes (System.Reflection.Assembly assembly, string typeName);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Type[]</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="assembly" Type="System.Reflection.Assembly" /><Parameter Name="typeName" Type="System.String" /></Parameters>
+      <Docs><param name="assembly">To be added.</param><param name="typeName">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,29 @@
+<Type Name="PlaybackActions" FullName="Banshee.Gui.PlaybackActions">
+  <TypeSignature Language="C#" Value="public class PlaybackActions : Gtk.ActionGroup" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+    <AssemblyVersion>0.90.1.2321</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Gtk.ActionGroup</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public PlaybackActions (Banshee.Gui.InterfaceActionService actionService);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="actionService" Type="Banshee.Gui.InterfaceActionService" />
+      </Parameters>
+      <Docs>
+        <param name="actionService">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,41 @@
+<Type Name="MetaEntry" FullName="Banshee.Playlists.Formats.Xspf.MetaEntry">
+  <TypeSignature Language="C#" Value="public struct MetaEntry" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public MetaEntry (Uri rel, string value);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="rel" Type="System.Uri" /><Parameter Name="value" Type="System.String" /></Parameters>
+      <Docs><param name="rel">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Rel">
+      <MemberSignature Language="C#" Value="public Uri Rel { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Uri</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Value">
+      <MemberSignature Language="C#" Value="public string Value { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Zero">
+      <MemberSignature Language="C#" Value="public static readonly Banshee.Playlists.Formats.Xspf.MetaEntry Zero;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.MetaEntry</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

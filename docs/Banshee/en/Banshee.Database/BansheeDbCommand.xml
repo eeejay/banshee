@@ -1,0 +1,35 @@
+<Type Name="BansheeDbCommand" FullName="Banshee.Database.BansheeDbCommand">
+  <TypeSignature Language="C#" Value="public sealed class BansheeDbCommand : Hyena.Data.Sqlite.HyenaSqliteCommand" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Hyena.Data.Sqlite.HyenaSqliteCommand</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public BansheeDbCommand (string command);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="command" Type="System.String" /></Parameters>
+      <Docs><param name="command">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public BansheeDbCommand (string command, int num_params);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="command" Type="System.String" /><Parameter Name="num_params" Type="System.Int32" /></Parameters>
+      <Docs><param name="command">To be added.</param><param name="num_params">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public BansheeDbCommand (string command, object[] param_values);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="command" Type="System.String" /><Parameter Name="param_values" Type="System.Object[]"><Attributes><Attribute><AttributeName>System.ParamArray</AttributeName></Attribute></Attributes></Parameter></Parameters>
+      <Docs><param name="command">To be added.</param><param name="param_values">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

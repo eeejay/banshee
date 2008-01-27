@@ -1,0 +1,30 @@
+<Type Name="Resource" FullName="Banshee.Base.Resource">
+  <TypeSignature Language="C#" Value="public class Resource" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Core</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Resource ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="GetFileContents">
+      <MemberSignature Language="C#" Value="public static string GetFileContents (string name);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="name" Type="System.String" /></Parameters>
+      <Docs><param name="name">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

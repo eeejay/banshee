@@ -1,0 +1,289 @@
+<Type Name="W3CDateTime" FullName="Banshee.Playlists.Formats.Xspf.W3CDateTime">
+  <TypeSignature Language="C#" Value="public struct W3CDateTime : IComparable" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.ValueType</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IComparable</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public W3CDateTime (DateTime datetime);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="datetime" Type="System.DateTime" /></Parameters>
+      <Docs><param name="datetime">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public W3CDateTime (DateTime datetime, TimeSpan offset);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="datetime" Type="System.DateTime" /><Parameter Name="offset" Type="System.TimeSpan" /></Parameters>
+      <Docs><param name="datetime">To be added.</param><param name="offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime Add (TimeSpan value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.TimeSpan" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddDays">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime AddDays (double value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Double" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddHours">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime AddHours (double value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Double" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddMilliseconds">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime AddMilliseconds (double value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Double" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddMinutes">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime AddMinutes (double value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Double" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddMonths">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime AddMonths (int value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Int32" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddSeconds">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime AddSeconds (double value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Double" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddTicks">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime AddTicks (long value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Int64" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddYears">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime AddYears (int value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.Int32" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Compare">
+      <MemberSignature Language="C#" Value="public static int Compare (Banshee.Playlists.Formats.Xspf.W3CDateTime a, Banshee.Playlists.Formats.Xspf.W3CDateTime b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="b" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="CompareTo">
+      <MemberSignature Language="C#" Value="public int CompareTo (object o);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="o" Type="System.Object" /></Parameters>
+      <Docs><param name="o">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DateTime">
+      <MemberSignature Language="C#" Value="public DateTime DateTime { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Equals">
+      <MemberSignature Language="C#" Value="public static bool Equals (Banshee.Playlists.Formats.Xspf.W3CDateTime a, Banshee.Playlists.Formats.Xspf.W3CDateTime b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="b" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="LocalTime">
+      <MemberSignature Language="C#" Value="public DateTime LocalTime { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="LocalUtcOffset">
+      <MemberSignature Language="C#" Value="public static TimeSpan LocalUtcOffset { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="MaxValue">
+      <MemberSignature Language="C#" Value="public static readonly Banshee.Playlists.Formats.Xspf.W3CDateTime MaxValue;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="MinValue">
+      <MemberSignature Language="C#" Value="public static readonly Banshee.Playlists.Formats.Xspf.W3CDateTime MinValue;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Now">
+      <MemberSignature Language="C#" Value="public static Banshee.Playlists.Formats.Xspf.W3CDateTime Now { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="op_Addition">
+      <MemberSignature Language="C#" Value="public static Banshee.Playlists.Formats.Xspf.W3CDateTime op_Addition (Banshee.Playlists.Formats.Xspf.W3CDateTime datetime, TimeSpan timespan);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="datetime" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="timespan" Type="System.TimeSpan" /></Parameters>
+      <Docs><param name="datetime">To be added.</param><param name="timespan">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="op_Equality">
+      <MemberSignature Language="C#" Value="public static bool op_Equality (Banshee.Playlists.Formats.Xspf.W3CDateTime a, Banshee.Playlists.Formats.Xspf.W3CDateTime b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="b" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="op_GreaterThan">
+      <MemberSignature Language="C#" Value="public static bool op_GreaterThan (Banshee.Playlists.Formats.Xspf.W3CDateTime a, Banshee.Playlists.Formats.Xspf.W3CDateTime b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="b" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="op_GreaterThanOrEqual">
+      <MemberSignature Language="C#" Value="public static bool op_GreaterThanOrEqual (Banshee.Playlists.Formats.Xspf.W3CDateTime a, Banshee.Playlists.Formats.Xspf.W3CDateTime b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="b" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="op_Inequality">
+      <MemberSignature Language="C#" Value="public static bool op_Inequality (Banshee.Playlists.Formats.Xspf.W3CDateTime a, Banshee.Playlists.Formats.Xspf.W3CDateTime b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="b" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="op_LessThan">
+      <MemberSignature Language="C#" Value="public static bool op_LessThan (Banshee.Playlists.Formats.Xspf.W3CDateTime a, Banshee.Playlists.Formats.Xspf.W3CDateTime b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="b" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="op_LessThanOrEqual">
+      <MemberSignature Language="C#" Value="public static bool op_LessThanOrEqual (Banshee.Playlists.Formats.Xspf.W3CDateTime a, Banshee.Playlists.Formats.Xspf.W3CDateTime b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="b" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="op_Subtraction">
+      <MemberSignature Language="C#" Value="public static TimeSpan op_Subtraction (Banshee.Playlists.Formats.Xspf.W3CDateTime a, Banshee.Playlists.Formats.Xspf.W3CDateTime b);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="a" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="b" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="op_Subtraction">
+      <MemberSignature Language="C#" Value="public static Banshee.Playlists.Formats.Xspf.W3CDateTime op_Subtraction (Banshee.Playlists.Formats.Xspf.W3CDateTime datetime, TimeSpan timespan);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="datetime" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /><Parameter Name="timespan" Type="System.TimeSpan" /></Parameters>
+      <Docs><param name="datetime">To be added.</param><param name="timespan">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Parse">
+      <MemberSignature Language="C#" Value="public static Banshee.Playlists.Formats.Xspf.W3CDateTime Parse (string s);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="s" Type="System.String" /></Parameters>
+      <Docs><param name="s">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Subtract">
+      <MemberSignature Language="C#" Value="public TimeSpan Subtract (Banshee.Playlists.Formats.Xspf.W3CDateTime value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="Banshee.Playlists.Formats.Xspf.W3CDateTime" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Subtract">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime Subtract (TimeSpan value);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="value" Type="System.TimeSpan" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Today">
+      <MemberSignature Language="C#" Value="public static Banshee.Playlists.Formats.Xspf.W3CDateTime Today { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ToLocalTime">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime ToLocalTime ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ToLocalTime">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime ToLocalTime (TimeSpan offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="offset" Type="System.TimeSpan" /></Parameters>
+      <Docs><param name="offset">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ToString">
+      <MemberSignature Language="C#" Value="public string ToString (string format);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="format" Type="System.String" /></Parameters>
+      <Docs><param name="format">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ToUniversalTime">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.W3CDateTime ToUniversalTime ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="UtcNow">
+      <MemberSignature Language="C#" Value="public static Banshee.Playlists.Formats.Xspf.W3CDateTime UtcNow { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.W3CDateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="UtcOffset">
+      <MemberSignature Language="C#" Value="public TimeSpan UtcOffset { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="UtcTime">
+      <MemberSignature Language="C#" Value="public DateTime UtcTime { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

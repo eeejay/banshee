@@ -1,0 +1,34 @@
+<Type Name="DependencyComparer" FullName="Banshee.SmartPlaylist.DependencyComparer">
+  <TypeSignature Language="C#" Value="public class DependencyComparer : System.Collections.IComparer" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Collections.IComparer</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DependencyComparer ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Compare">
+      <MemberSignature Language="C#" Value="public int Compare (object ao, object bo);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="ao" Type="System.Object" /><Parameter Name="bo" Type="System.Object" /></Parameters>
+      <Docs><param name="ao">To be added.</param><param name="bo">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

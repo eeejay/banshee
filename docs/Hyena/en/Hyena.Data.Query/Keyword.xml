@@ -1,0 +1,34 @@
+<Type Name="Keyword" FullName="Hyena.Data.Query.Keyword">
+  <TypeSignature Language="C#" Value="public enum Keyword" />
+  <AssemblyInfo>
+    <AssemblyName>Hyena</AssemblyName>
+    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    <Member MemberName="And">
+      <MemberSignature Language="C#" Value="And" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>Hyena.Data.Query.Keyword</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="Not">
+      <MemberSignature Language="C#" Value="Not" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>Hyena.Data.Query.Keyword</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="Or">
+      <MemberSignature Language="C#" Value="Or" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>Hyena.Data.Query.Keyword</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member>
+  </Members>
+</Type>

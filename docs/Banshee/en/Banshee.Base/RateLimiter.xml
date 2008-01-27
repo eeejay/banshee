@@ -1,0 +1,30 @@
+<Type Name="RateLimiter" FullName="Banshee.Base.RateLimiter">
+  <TypeSignature Language="C#" Value="public class RateLimiter" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Core</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public RateLimiter (double min_interval_ms, Banshee.Base.RateLimiter.RateLimitedMethod method);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="min_interval_ms" Type="System.Double" /><Parameter Name="method" Type="Banshee.Base.RateLimiter+RateLimitedMethod" /></Parameters>
+      <Docs><param name="min_interval_ms">To be added.</param><param name="method">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Execute">
+      <MemberSignature Language="C#" Value="public void Execute ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

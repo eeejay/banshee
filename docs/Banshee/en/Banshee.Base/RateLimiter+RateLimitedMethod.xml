@@ -1,0 +1,18 @@
+<Type Name="RateLimiter+RateLimitedMethod" FullName="Banshee.Base.RateLimiter+RateLimitedMethod">
+  <TypeSignature Language="C#" Value="public delegate void RateLimiter.RateLimitedMethod();" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Core</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters />
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

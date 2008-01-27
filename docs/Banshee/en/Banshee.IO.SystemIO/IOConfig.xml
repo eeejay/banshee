@@ -1,0 +1,58 @@
+<Type Name="IOConfig" FullName="Banshee.IO.SystemIO.IOConfig">
+  <TypeSignature Language="C#" Value="public class IOConfig : Banshee.IO.IIOConfig" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Core</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Banshee.IO.IIOConfig</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    
+    
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public IOConfig ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DemuxVfsBackend">
+      <MemberSignature Language="C#" Value="public Type DemuxVfsBackend { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Type</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DetectMimeType">
+      <MemberSignature Language="C#" Value="public string DetectMimeType (Banshee.Base.SafeUri uri);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="uri" Type="Banshee.Base.SafeUri" /></Parameters>
+      <Docs><param name="uri">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DirectoryBackend">
+      <MemberSignature Language="C#" Value="public Type DirectoryBackend { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Type</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="FileBackend">
+      <MemberSignature Language="C#" Value="public Type FileBackend { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Type</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

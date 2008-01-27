@@ -1,0 +1,59 @@
+<Type Name="DateQueryValue" FullName="Hyena.Data.Query.DateQueryValue">
+  <TypeSignature Language="C#" Value="public class DateQueryValue : Hyena.Data.Query.QueryValue" />
+  <AssemblyInfo>
+    <AssemblyName>Hyena</AssemblyName>
+    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Hyena.Data.Query.QueryValue</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    
+    
+    
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DateQueryValue ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DateTime">
+      <MemberSignature Language="C#" Value="public DateTime DateTime { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="offset">
+      <MemberSignature Language="C#" Value="protected long offset;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="relative">
+      <MemberSignature Language="C#" Value="protected bool relative;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Relative">
+      <MemberSignature Language="C#" Value="public bool Relative { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="RelativeOffset">
+      <MemberSignature Language="C#" Value="public long RelativeOffset { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="value">
+      <MemberSignature Language="C#" Value="protected DateTime value;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

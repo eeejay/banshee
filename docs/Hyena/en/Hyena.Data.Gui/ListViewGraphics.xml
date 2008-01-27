@@ -1,0 +1,124 @@
+<Type Name="ListViewGraphics" FullName="Hyena.Data.Gui.ListViewGraphics">
+  <TypeSignature Language="C#" Value="public class ListViewGraphics" />
+  <AssemblyInfo>
+    <AssemblyName>Hyena.Gui</AssemblyName>
+    <AssemblyVersion>0.90.1.2222</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ListViewGraphics (Gtk.Widget widget);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="widget" Type="Gtk.Widget" /></Parameters>
+      <Docs><param name="widget">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="BorderRadius">
+      <MemberSignature Language="C#" Value="public const int BorderRadius = 3;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <MemberValue>3</MemberValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DrawColumnHighlight">
+      <MemberSignature Language="C#" Value="public void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="cr" Type="Cairo.Context" /><Parameter Name="alloc" Type="Gdk.Rectangle" /><Parameter Name="bottom_offset" Type="System.Int32" /></Parameters>
+      <Docs><param name="cr">To be added.</param><param name="alloc">To be added.</param><param name="bottom_offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DrawFooter">
+      <MemberSignature Language="C#" Value="public void DrawFooter (Cairo.Context cr, Gdk.Rectangle alloc);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="cr" Type="Cairo.Context" /><Parameter Name="alloc" Type="Gdk.Rectangle" /></Parameters>
+      <Docs><param name="cr">To be added.</param><param name="alloc">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DrawHeaderBackground">
+      <MemberSignature Language="C#" Value="public void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset, bool fill);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="cr" Type="Cairo.Context" /><Parameter Name="alloc" Type="Gdk.Rectangle" /><Parameter Name="bottom_offset" Type="System.Int32" /><Parameter Name="fill" Type="System.Boolean" /></Parameters>
+      <Docs><param name="cr">To be added.</param><param name="alloc">To be added.</param><param name="bottom_offset">To be added.</param><param name="fill">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DrawHeaderSeparator">
+      <MemberSignature Language="C#" Value="public void DrawHeaderSeparator (Cairo.Context cr, Gdk.Rectangle alloc, int x, int bottom_offset);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="cr" Type="Cairo.Context" /><Parameter Name="alloc" Type="Gdk.Rectangle" /><Parameter Name="x" Type="System.Int32" /><Parameter Name="bottom_offset" Type="System.Int32" /></Parameters>
+      <Docs><param name="cr">To be added.</param><param name="alloc">To be added.</param><param name="x">To be added.</param><param name="bottom_offset">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DrawLeftBorder">
+      <MemberSignature Language="C#" Value="public void DrawLeftBorder (Cairo.Context cr, Gdk.Rectangle alloc);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="cr" Type="Cairo.Context" /><Parameter Name="alloc" Type="Gdk.Rectangle" /></Parameters>
+      <Docs><param name="cr">To be added.</param><param name="alloc">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DrawRightBorder">
+      <MemberSignature Language="C#" Value="public void DrawRightBorder (Cairo.Context cr, Gdk.Rectangle alloc);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="cr" Type="Cairo.Context" /><Parameter Name="alloc" Type="Gdk.Rectangle" /></Parameters>
+      <Docs><param name="cr">To be added.</param><param name="alloc">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DrawRowRule">
+      <MemberSignature Language="C#" Value="public void DrawRowRule (Cairo.Context cr, int x, int y, int width, int height);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="cr" Type="Cairo.Context" /><Parameter Name="x" Type="System.Int32" /><Parameter Name="y" Type="System.Int32" /><Parameter Name="width" Type="System.Int32" /><Parameter Name="height" Type="System.Int32" /></Parameters>
+      <Docs><param name="cr">To be added.</param><param name="x">To be added.</param><param name="y">To be added.</param><param name="width">To be added.</param><param name="height">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DrawRowSelection">
+      <MemberSignature Language="C#" Value="public void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="cr" Type="Cairo.Context" /><Parameter Name="x" Type="System.Int32" /><Parameter Name="y" Type="System.Int32" /><Parameter Name="width" Type="System.Int32" /><Parameter Name="height" Type="System.Int32" /></Parameters>
+      <Docs><param name="cr">To be added.</param><param name="x">To be added.</param><param name="y">To be added.</param><param name="width">To be added.</param><param name="height">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="GetWidgetColor">
+      <MemberSignature Language="C#" Value="public Cairo.Color GetWidgetColor (Hyena.Data.Gui.GtkColorClass class, Gtk.StateType state);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Cairo.Color</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="class" Type="Hyena.Data.Gui.GtkColorClass" /><Parameter Name="state" Type="Gtk.StateType" /></Parameters>
+      <Docs><param name="class">To be added.</param><param name="state">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="RefreshColors">
+      <MemberSignature Language="C#" Value="public void RefreshColors ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="SelectionFill">
+      <MemberSignature Language="C#" Value="public Cairo.Color SelectionFill { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Cairo.Color</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="SelectionStroke">
+      <MemberSignature Language="C#" Value="public Cairo.Color SelectionStroke { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Cairo.Color</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ViewFill">
+      <MemberSignature Language="C#" Value="public Cairo.Color ViewFill { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Cairo.Color</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ViewFillTransparent">
+      <MemberSignature Language="C#" Value="public Cairo.Color ViewFillTransparent { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Cairo.Color</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,38 @@
+<Type Name="Utilities" FullName="Banshee.Base.Utilities">
+  <TypeSignature Language="C#" Value="public static class Utilities" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Core</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    <Member MemberName="BytesToString">
+      <MemberSignature Language="C#" Value="public static string BytesToString (ulong bytes);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="bytes" Type="System.UInt64" /></Parameters>
+      <Docs><param name="bytes">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ExecProcess">
+      <MemberSignature Language="C#" Value="public static int ExecProcess (string command, string args);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="command" Type="System.String" /><Parameter Name="args" Type="System.String" /></Parameters>
+      <Docs><param name="command">To be added.</param><param name="args">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="GetRealName">
+      <MemberSignature Language="C#" Value="public static string GetRealName ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

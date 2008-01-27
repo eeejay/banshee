@@ -1,0 +1,23 @@
+<Type Name="TestUserJob" FullName="Banshee.ServiceStack.TestUserJob">
+  <TypeSignature Language="C#" Value="public class TestUserJob : Banshee.ServiceStack.UserJob" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Banshee.ServiceStack.UserJob</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public TestUserJob ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

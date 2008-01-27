@@ -1,0 +1,123 @@
+<Type Name="PlaybackControllerService" FullName="Banshee.MediaEngine.PlaybackControllerService">
+  <TypeSignature Language="C#" Value="public class PlaybackControllerService : Banshee.MediaEngine.IPlaybackController" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Banshee.MediaEngine.IPlaybackController</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public PlaybackControllerService ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Banshee.ServiceStack.IDBusExportable.Parent">
+      <MemberSignature Language="C#" Value="Banshee.ServiceStack.IDBusExportable IDBusExportable.Parent { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Banshee.ServiceStack.IDBusExportable</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Banshee.ServiceStack.IService.ServiceName">
+      <MemberSignature Language="C#" Value="string IService.ServiceName { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="CurrentTrack">
+      <MemberSignature Language="C#" Value="public Banshee.Collection.TrackInfo CurrentTrack { protected set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Banshee.Collection.TrackInfo</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="First">
+      <MemberSignature Language="C#" Value="public void First ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="InstantiateStacks">
+      <MemberSignature Language="C#" Value="protected virtual void InstantiateStacks ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Next">
+      <MemberSignature Language="C#" Value="public void Next ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="OnSourceChanged">
+      <MemberSignature Language="C#" Value="protected virtual void OnSourceChanged ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="OnStopped">
+      <MemberSignature Language="C#" Value="protected virtual void OnStopped ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Previous">
+      <MemberSignature Language="C#" Value="public void Previous ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="RepeatMode">
+      <MemberSignature Language="C#" Value="public Banshee.MediaEngine.PlaybackRepeatMode RepeatMode { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Banshee.MediaEngine.PlaybackRepeatMode</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ShuffleMode">
+      <MemberSignature Language="C#" Value="public Banshee.MediaEngine.PlaybackShuffleMode ShuffleMode { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Banshee.MediaEngine.PlaybackShuffleMode</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Source">
+      <MemberSignature Language="C#" Value="public Banshee.Sources.ITrackModelSource Source { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Banshee.Sources.ITrackModelSource</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="SourceChanged">
+      <MemberSignature Language="C#" Value="public event EventHandler SourceChanged;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Stopped">
+      <MemberSignature Language="C#" Value="public event EventHandler Stopped;" />
+      <MemberType>Event</MemberType>
+      <ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="StopWhenFinished">
+      <MemberSignature Language="C#" Value="public bool StopWhenFinished { set; get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

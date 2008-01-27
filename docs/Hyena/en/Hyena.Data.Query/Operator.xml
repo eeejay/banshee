@@ -1,0 +1,79 @@
+<Type Name="Operator" FullName="Hyena.Data.Query.Operator">
+  <TypeSignature Language="C#" Value="public class Operator" />
+  <AssemblyInfo>
+    <AssemblyName>Hyena</AssemblyName>
+    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected Operator (string name, string userOp);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="userOp" Type="System.String" /></Parameters>
+      <Docs><param name="name">To be added.</param><param name="userOp">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="protected Operator (string name, string userOp, bool is_not);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="userOp" Type="System.String" /><Parameter Name="is_not" Type="System.Boolean" /></Parameters>
+      <Docs><param name="name">To be added.</param><param name="userOp">To be added.</param><param name="is_not">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Default">
+      <MemberSignature Language="C#" Value="public static Hyena.Data.Query.Operator Default { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Hyena.Data.Query.Operator</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Dual">
+      <MemberSignature Language="C#" Value="public Hyena.Data.Query.Operator Dual { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>Hyena.Data.Query.Operator</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="GetByName">
+      <MemberSignature Language="C#" Value="public static Hyena.Data.Query.Operator GetByName (string name);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Hyena.Data.Query.Operator</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="name" Type="System.String" /></Parameters>
+      <Docs><param name="name">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="GetByUserOperator">
+      <MemberSignature Language="C#" Value="public static Hyena.Data.Query.Operator GetByUserOperator (string op);" />
+      <MemberType>Method</MemberType>
+      <ReturnValue><ReturnType>Hyena.Data.Query.Operator</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="op" Type="System.String" /></Parameters>
+      <Docs><param name="op">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="IsNot">
+      <MemberSignature Language="C#" Value="public bool IsNot { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Operators">
+      <MemberSignature Language="C#" Value="public static System.Collections.Generic.IEnumerable&lt;Hyena.Data.Query.Operator&gt; Operators { get; };" />
+      <MemberType>Property</MemberType>
+      <ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;Hyena.Data.Query.Operator&gt;</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="UserOperator">
+      <MemberSignature Language="C#" Value="public string UserOperator;" />
+      <MemberType>Field</MemberType>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member>
+  </Members>
+</Type>

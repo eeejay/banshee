@@ -1,0 +1,26 @@
+<Type Name="BansheeIconFactory" FullName="Banshee.Gui.BansheeIconFactory">
+  <TypeSignature Language="C#" Value="public class BansheeIconFactory : Gtk.IconFactory" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+    <AssemblyVersion>0.90.1.2321</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Gtk.IconFactory</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public BansheeIconFactory ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
