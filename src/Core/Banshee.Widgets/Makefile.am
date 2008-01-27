@@ -4,9 +4,6 @@ ASSEMBLY_BUILD_FLAGS = -unsafe
 LINK = $(REF_BANSHEE_WIDGETS)
 SOURCES =  \
 	Banshee.Widgets/ActionButton.cs \
-	Banshee.Widgets/ActiveUserEvent.cs \
-	Banshee.Widgets/ActiveUserEventsManager.cs \
-	Banshee.Widgets/AltProgressBar.cs \
 	Banshee.Widgets/ComplexMenuItem.cs \
 	Banshee.Widgets/CoverArtThumbnail.cs \
 	Banshee.Widgets/CoverArtView.cs \
