@@ -31,6 +31,8 @@ using Gtk;
 using Gdk;
 using Pango;
 
+using Banshee.ServiceStack;
+
 namespace Banshee.Sources.Gui
 {
     internal class SourceRowRenderer : CellRendererText
@@ -46,7 +48,6 @@ namespace Banshee.Sources.Gui
         
         protected SourceRowRenderer(System.IntPtr ptr) : base(ptr)
         {
-        
         }
         
         private StateType RendererStateToWidgetState(CellRendererState flags)
@@ -90,10 +91,6 @@ namespace Banshee.Sources.Gui
             StateType state = RendererStateToWidgetState(flags);
             Pixbuf icon = null;
             
-            if(source == null) {
-                return;
-            }
-
             icon = source.Properties.Get<Gdk.Pixbuf>("IconPixbuf");
             if(icon == null) {
                 Type icon_type = source.Properties.GetType("IconName");
@@ -117,43 +114,24 @@ namespace Banshee.Sources.Gui
             Pango.Layout countLayout = new Pango.Layout(widget.PangoContext);
             
             FontDescription fd = widget.PangoContext.FontDescription.Copy();
-            fd.Weight = Selected ? Pango.Weight.Bold : Pango.Weight.Normal;
-            if(Italicized/* || source.HasEmphasis*/) {
+            fd.Weight = ServiceManager.PlaybackController.Source == source ? Pango.Weight.Bold : Pango.Weight.Normal;
+            
+            if(Italicized) {
                 fd.Style = Pango.Style.Italic;
                 hideCounts = true;
             }
 
-            titleLayout.FontDescription = fd;
             countLayout.FontDescription = fd;
-            
-            titleLayout.SetMarkup("...");
-            titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
-            int ellipsisSize = titleLayoutWidth;
-            
-            string titleText = source.Name;
-            titleLayout.SetMarkup(GLib.Markup.EscapeText(titleText));
             countLayout.SetMarkup("<span size=\"small\">(" + source.Count + ")</span>");
-            
-            titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
             countLayout.GetPixelSize(out countLayoutWidth, out countLayoutHeight);
             
             maxTitleLayoutWidth = cell_area.Width - (icon == null ? 0 : icon.Width) - countLayoutWidth - 10;
             
-            if(titleLayoutWidth > maxTitleLayoutWidth) {
-                float ratio = (float)(maxTitleLayoutWidth - ellipsisSize) / (float)titleLayoutWidth;
-                int characters = (int)(ratio * (float)titleText.Length);
-                do {
-                    if(characters > 0) {
-                        titleLayout.SetMarkup(GLib.Markup.EscapeText(
-                            titleText.Substring(0, characters--)).Trim() + "...");
-                        titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
-                    } else {
-                        hideCounts = true;
-                        titleLayout.SetMarkup(GLib.Markup.EscapeText(titleText.Trim()));
-                        break;
-                    }
-                } while (titleLayoutWidth > maxTitleLayoutWidth);
-            }
+            titleLayout.FontDescription = fd;
+            titleLayout.Width = (int)((maxTitleLayoutWidth) * Pango.Scale.PangoScale);
+            titleLayout.Ellipsize = EllipsizeMode.End;
+            titleLayout.SetText(GLib.Markup.EscapeText(source.Name));
+            titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
             
             Gdk.GC mainGC = widget.Style.TextGC(state);
 

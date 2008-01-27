@@ -1,5 +1,12 @@
 2008-01-26  Aaron Bockover  <abockover@novell.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Remove the old manual ellipize calculations and just let Pango do it now
+	that we can (it wasn't supported in the binding years back); make source
+	text bold if it is the playback source, not the selected source
+
+2008-01-26  Aaron Bockover  <abockover@novell.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CellEditEntry.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
 	Classes pulled out of SourceView.cs, changed from public to internal
