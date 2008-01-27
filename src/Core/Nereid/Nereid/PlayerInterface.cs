@@ -238,16 +238,15 @@ namespace Nereid
             };
             
             composite_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
-                // Set the source from which to play to the current source since
-                // the user manually began playback from this source
-                Source source = ServiceManager.SourceManager.ActiveSource;
-                if (source is ITrackModelSource) {
-                    ServiceManager.PlaybackController.Source = (ITrackModelSource)source;
-                }
-                
+                SetPlaybackControllerSource (ServiceManager.SourceManager.ActiveSource);
                 ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
             };
 
+            source_view.RowActivated += delegate {
+                SetPlaybackControllerSource (ServiceManager.SourceManager.ActiveSource);
+                ServiceManager.PlaybackController.First ();
+            };
+            
             header_toolbar.ExposeEvent += OnHeaderToolbarExposeEvent;
         }
         
@@ -444,6 +443,21 @@ namespace Nereid
             }
             
             return base.OnKeyPressEvent (evnt);
+        }
+
+#endregion
+
+#region Helper Functions
+
+        private void SetPlaybackControllerSource (Source source)
+        {
+            // Set the source from which to play to the current source since
+            // the user manually began playback from this source
+            if (!(source is ITrackModelSource)) {
+                source = ServiceManager.SourceManager.DefaultSource;
+            }
+            
+            ServiceManager.PlaybackController.Source = (ITrackModelSource)source;    
         }
 
 #endregion

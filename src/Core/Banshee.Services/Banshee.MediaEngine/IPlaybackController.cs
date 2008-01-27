@@ -40,6 +40,7 @@ namespace Banshee.MediaEngine
     {
         event PlaybackControllerStoppedHandler Stopped;
     
+        void First ();
         void Next ();
         void Previous ();
         

@@ -1,3 +1,13 @@
+2008-01-26  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlaybackController.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
+	Added First method to play the first song in the source
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: When a source view row
+	is activated, make it the playback source and begin playing the first 
+	track from it
+
 2008-01-26  Aaron Bockover  <abockover@novell.com>
 
 	Ladies, Gentlemen - I present to you playback against a dedicated source...

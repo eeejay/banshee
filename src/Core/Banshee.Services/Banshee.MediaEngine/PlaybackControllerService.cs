@@ -112,6 +112,13 @@ namespace Banshee.MediaEngine
             }       
         }
         
+        public void First ()
+        {
+            if (Source.Count > 0) {
+                player_engine.OpenPlay (Source.TrackModel[0]);
+            }
+        }
+        
         public void Next ()
         {
             TrackInfo tmp_track = CurrentTrack;
