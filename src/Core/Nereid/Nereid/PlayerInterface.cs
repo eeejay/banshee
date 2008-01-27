@@ -5,7 +5,7 @@
 //   Aaron Bockover <abockover@novell.com>
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -177,8 +177,12 @@ namespace Nereid
             source_box.PackStart (new UserJobTileHost (), false, false, 0);
             source_box.Show ();
             
-            views_pane.Add1 (source_box);
-            views_pane.Add2 (view_container);       
+            source_view.SetSizeRequest (125, -1);
+            view_container.SetSizeRequest (425, -1);
+            
+            views_pane.Pack1 (source_box, true, false);
+            views_pane.Pack2 (view_container, true, false);
+            
             source_box.ShowAll ();
             view_container.Show ();
             views_pane.Show ();
@@ -279,7 +283,7 @@ namespace Nereid
 
             if (source.FilterQuery != null) {
                 view_container.SearchEntry.Query = source.FilterQuery;
-                view_container.SearchEntry.ActivateFilter((int)source.FilterType);
+                view_container.SearchEntry.ActivateFilter ((int)source.FilterType);
             }
             
             // Clear any models previously connected to the views
@@ -323,7 +327,7 @@ namespace Nereid
             if (source == null)
                 return;
             
-            source.FilterType = (TrackFilterType) view_container.SearchEntry.ActiveFilterID;
+            source.FilterType = (TrackFilterType)view_container.SearchEntry.ActiveFilterID;
             source.FilterQuery = view_container.SearchEntry.Query;
         }
         
@@ -393,8 +397,8 @@ namespace Nereid
         
         protected override bool OnWindowStateEvent (Gdk.EventWindowState evnt)
         {
-            if((evnt.NewWindowState & Gdk.WindowState.Withdrawn) == 0) {
-                PlayerWindowSchema.Maximized.Set((evnt.NewWindowState & Gdk.WindowState.Maximized) != 0);
+            if ((evnt.NewWindowState & Gdk.WindowState.Withdrawn) == 0) {
+                PlayerWindowSchema.Maximized.Set ((evnt.NewWindowState & Gdk.WindowState.Maximized) != 0);
             }
             
             return base.OnWindowStateEvent (evnt);

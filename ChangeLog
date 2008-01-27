@@ -1,5 +1,16 @@
 2008-01-26  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: use Pack1, Pack2 to on the
+	main hpaned widget to outlaw child shrinkage; set sane minimum width 
+	requests on the source view and view container; fix whitespace issues
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlaybackController.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Updated copyright dates
+
+2008-01-26  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlaybackController.cs:
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
 	Added First method to play the first song in the source
