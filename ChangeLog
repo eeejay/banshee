@@ -1,3 +1,9 @@
+2008-01-27  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: C#'s
+	lock statement is re-entrant. Therefore, there's no need to have both
+	RegisterService and RegisterServiceNoLock.
+
 2008-01-26  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Nereid/Nereid/PlayerInterface.cs: use Pack1, Pack2 to on the

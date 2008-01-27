@@ -88,7 +88,7 @@ namespace Banshee.ServiceStack
                 foreach (Type type in service_types) {
                     uint timer_id = Log.DebugTimerStart (); 
                     IService service = (IService)Activator.CreateInstance (type);
-                    RegisterServiceNoLock (service);
+                    RegisterService (service);
                     Log.DebugTimerPrint (timer_id, String.Format (
                         "Core service started ({0}, {{0}})", service.ServiceName));
                     OnServiceStarted (service);
@@ -97,7 +97,7 @@ namespace Banshee.ServiceStack
                 foreach (TypeExtensionNode node in extension_nodes) {
                     uint timer_id = Log.DebugTimerStart ();
                     IService service = (IService)node.CreateInstance (typeof (IService));
-                    RegisterServiceNoLock (service);
+                    RegisterService (service);
                     Log.DebugTimerPrint (timer_id, String.Format (
                         "Extension service started ({0}, {{0}})", service.ServiceName));
                     OnServiceStarted (service);
@@ -124,19 +124,14 @@ namespace Banshee.ServiceStack
             }
         }
         
-        private static void RegisterServiceNoLock (IService service)
-        {
-            services.Add (service.ServiceName, service);
-            
-            if(service is IDBusExportable) {
-                DBusServiceManager.RegisterObject ((IDBusExportable)service);
-            }
-        }
-                    
         public static void RegisterService (IService service)
         {
             lock (self_mutex) {
-                RegisterServiceNoLock (service);
+                services.Add (service.ServiceName, service);
+                
+                if(service is IDBusExportable) {
+                    DBusServiceManager.RegisterObject ((IDBusExportable)service);
+                }
             }
         }
         
@@ -144,7 +139,7 @@ namespace Banshee.ServiceStack
         {
             lock (self_mutex) {
                 if (is_initialized) {
-                    RegisterServiceNoLock (Activator.CreateInstance <T> ());
+                    RegisterService (Activator.CreateInstance <T> ());
                 } else {
                     service_types.Add (typeof (T));
                 }
