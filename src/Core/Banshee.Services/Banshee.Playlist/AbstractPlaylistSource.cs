@@ -5,7 +5,7 @@
 //   Aaron Bockover <abockover@novell.com>
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2005-2007 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -83,11 +83,13 @@ namespace Banshee.Playlist
             }
         }
 
-        public AbstractPlaylistSource (string generic_name, string name) : this (generic_name, name, null, -1, 0)
+        public AbstractPlaylistSource (string generic_name, string name) 
+            : this (generic_name, name, null, -1, 0)
         {
         }
 
-        public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType) : base (generic_name, name, Convert.ToString (dbid), 500)
+        public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType) 
+            : base (generic_name, name, Convert.ToString (dbid), 500)
         {
             Properties.SetString ("IconName", IconName);
         }

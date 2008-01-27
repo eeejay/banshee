@@ -1,11 +1,11 @@
 //
 // PlaylistSource.cs
 //
-// Author:
+// Authors:
 //   Aaron Bockover <abockover@novell.com>
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2005-2007 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -70,7 +70,8 @@ namespace Banshee.Playlist
             get { return "source-playlist"; }
         }
 
-        static PlaylistSource () {
+        static PlaylistSource () 
+        {
             add_tracks_command = new BansheeDbCommand (@"
                 INSERT INTO CorePlaylistEntries
                     SELECT null, ?, ItemID, 0
@@ -95,7 +96,8 @@ namespace Banshee.Playlist
         {
         }
 
-        public PlaylistSource (string name, int? dbid, int sortColumn, int sortType) : base (generic_name, name, dbid, sortColumn, sortType)
+        public PlaylistSource (string name, int? dbid, int sortColumn, int sortType) 
+            : base (generic_name, name, dbid, sortColumn, sortType)
         {
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
@@ -218,7 +220,7 @@ namespace Banshee.Playlist
         }
     }
 
-    public static class PlaylistUtil
+    internal static class PlaylistUtil
     {
         /*internal static int GetPlaylistID(string name)
         {
