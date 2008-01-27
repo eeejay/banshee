@@ -109,6 +109,10 @@ namespace Banshee.Sources.Gui
                 QueueDraw();
             };
             
+            ServiceManager.PlaybackController.SourceChanged += delegate {
+                QueueDraw ();
+            };
+            
             if(ServiceManager.Contains ("GtkElementsService")) {
                 ServiceManager.Get<Banshee.Gui.GtkElementsService> ("GtkElementsService").ThemeChanged += delegate {
                     QueueDraw();

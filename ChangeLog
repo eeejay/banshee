@@ -1,5 +1,22 @@
 2008-01-26  Aaron Bockover  <abockover@novell.com>
 
+	Ladies, Gentlemen - I present to you playback against a dedicated source...
+	This has been probably in the top 3 requested features for the past 2 years
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
+	Perform all source operations from the public Source property; if no
+	Source has been manually set on the controller, use the default one;
+	raise the new SourceChanged event when Source is set
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Listen
+	to PlaybackController.SourceChanged to refresh the GUI
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Set the source on the
+	playback controller to the active source when the user manually 
+	plays a song
+
+2008-01-26  Aaron Bockover  <abockover@novell.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
 	Remove the old manual ellipize calculations and just let Pango do it now
 	that we can (it wasn't supported in the binding years back); make source

@@ -238,6 +238,13 @@ namespace Nereid
             };
             
             composite_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
+                // Set the source from which to play to the current source since
+                // the user manually began playback from this source
+                Source source = ServiceManager.SourceManager.ActiveSource;
+                if (source is ITrackModelSource) {
+                    ServiceManager.PlaybackController.Source = (ITrackModelSource)source;
+                }
+                
                 ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
             };
 

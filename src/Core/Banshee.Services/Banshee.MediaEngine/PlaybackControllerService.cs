@@ -57,7 +57,6 @@ namespace Banshee.MediaEngine
         private bool stop_when_finished = false;
         
         private PlayerEngineService player_engine;
-        private SourceManager source_manager;
         private ITrackModelSource source;
         
         public event EventHandler Stopped;
@@ -68,12 +67,11 @@ namespace Banshee.MediaEngine
             remove { dbus_stopped -= value; }
         }
         
+        public event EventHandler SourceChanged;
+        
         public PlaybackControllerService ()
         {
             InstantiateStacks ();
-        
-            source_manager = ServiceManager.SourceManager;
-            source_manager.ActiveSourceChanged += OnActiveSourceChanged;
             
             player_engine = ServiceManager.PlayerEngine;
             player_engine.PlayWhenIdleRequest += OnPlayerEnginePlayWhenIdleRequest;
@@ -84,13 +82,6 @@ namespace Banshee.MediaEngine
         {
             previous_stack = new PlaybackControllerDatabaseStack ();
             next_stack = new PlaybackControllerDatabaseStack ();
-        }
-        
-        private void OnActiveSourceChanged (SourceEventArgs args)
-        {
-            if (args.Source is ITrackModelSource) {
-                Source = (ITrackModelSource)args.Source;
-            }
         }
         
         private void OnPlayerEnginePlayWhenIdleRequest (object o, EventArgs args)
@@ -171,13 +162,13 @@ namespace Banshee.MediaEngine
         
         private TrackInfo QueryTrackLinear (Direction direction)
         {
-            int index = source.TrackModel.IndexOf (CurrentTrack);
-            return source.TrackModel[index < 0 ? 0 : index + (direction == Direction.Next ? 1 : -1)];
+            int index = Source.TrackModel.IndexOf (CurrentTrack);
+            return Source.TrackModel[index < 0 ? 0 : index + (direction == Direction.Next ? 1 : -1)];
         }
         
         private TrackInfo QueryTrackRandom ()
         {
-            return source.TrackModel[random.Next (0, source.TrackModel.Count - 1)];
+            return Source.TrackModel[random.Next (0, Source.TrackModel.Count - 1)];
         }
         
         private void QueuePlayTrack ()
@@ -199,14 +190,33 @@ namespace Banshee.MediaEngine
             }
         }
         
+        protected virtual void OnSourceChanged ()
+        {
+            EventHandler handler = SourceChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+        
         public TrackInfo CurrentTrack {
             get { return current_track; }
             protected set { current_track = value; }
         }
         
         public ITrackModelSource Source {
-            get { return source; }
-            set { source = value; }
+            get { 
+                if (source == null && ServiceManager.SourceManager.DefaultSource is ITrackModelSource) {
+                    return (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
+                }
+                return source;
+            }
+            
+            set {
+                if (source != value) {
+                    source = value;
+                    OnSourceChanged ();
+                }
+            }
         }
         
         public PlaybackShuffleMode ShuffleMode {
