@@ -1,5 +1,25 @@
 2008-01-28  Aaron Bockover  <abock@gnome.org>
 
+	Maybe 3% closer
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
+	Implemented most of the required interaction between the playback 
+	controller and the play queue; the play queue will activate if it is
+	populated and playback is transitioning from another source
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlayQueueSource.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:
+	Change the way the play queue singleton is assigned so the playback
+	controller does not require a play queue
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Remove the
+	plus/add icon on add to playlist
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs: 
+	Fix something stupid
+
+2008-01-28  Aaron Bockover  <abock@gnome.org>
+
 	This commit adds about 90% of what's needed for a fully functioning 
 	play queue. Yes, you can has queue. You can has indeed. <3
 

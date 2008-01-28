@@ -187,7 +187,7 @@ namespace Banshee.Collection.Database
         public void Sort(ISortableColumn column)
         {
             lock(this) {
-                if (forced_sort_query != null) {
+                if (forced_sort_query) {
                     return;
                 }
                 

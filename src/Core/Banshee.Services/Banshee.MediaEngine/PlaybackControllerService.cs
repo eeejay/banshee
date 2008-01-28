@@ -50,6 +50,8 @@ namespace Banshee.MediaEngine
     
         private TrackInfo current_track;
         private TrackInfo changing_to_track;
+        private ITrackModelSource current_track_source;
+        
         private Random random = new Random ();
     
         private PlaybackShuffleMode shuffle_mode;
@@ -93,6 +95,8 @@ namespace Banshee.MediaEngine
         {
             switch (args.Event) {
                 case PlayerEngineEvent.EndOfStream:
+                    FondlePlayQueue ();
+                
                     if (!StopWhenFinished) {
                         Next ();
                     } else {
@@ -121,6 +125,8 @@ namespace Banshee.MediaEngine
         
         public void Next ()
         {
+            FondlePlayQueue ();
+            
             TrackInfo tmp_track = CurrentTrack;
 
             if (next_stack.Count > 0) {
@@ -184,6 +190,19 @@ namespace Banshee.MediaEngine
             player_engine.OpenPlay (CurrentTrack);
         }
         
+        private void FondlePlayQueue ()
+        {
+            if (PlayQueue == null || PlayQueue.Count <= 0) {
+                return;
+            }
+            
+            if (current_track_source == PlayQueue) {
+                // TODO: Remove from play queue
+            }
+            
+            Source = PlayQueue;
+        }
+        
         protected virtual void OnStopped ()
         {
             EventHandler handler = Stopped;
@@ -207,7 +226,10 @@ namespace Banshee.MediaEngine
         
         public TrackInfo CurrentTrack {
             get { return current_track; }
-            protected set { current_track = value; }
+            protected set { 
+                current_track = value; 
+                current_track_source = Source;
+            }
         }
         
         public ITrackModelSource Source {
@@ -224,6 +246,10 @@ namespace Banshee.MediaEngine
                     OnSourceChanged ();
                 }
             }
+        }
+        
+        private ITrackModelSource PlayQueue {
+            get { return Banshee.Playlist.PlayQueueSource.Instance; }
         }
         
         public PlaybackShuffleMode ShuffleMode {

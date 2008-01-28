@@ -99,7 +99,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Append selected songs to the play queue"),
                     OnAddToPlayQueue),
                     
-                new ActionEntry ("AddToPlaylistAction", Stock.Add,
+                new ActionEntry ("AddToPlaylistAction", null,
                     Catalog.GetString ("Add _to Playlist"), null,
                     Catalog.GetString ("Append selected songs to playlist or create new playlist from selection"),
                     OnAddToPlaylist),

@@ -44,13 +44,7 @@ namespace Banshee.Playlist
         
         private static PlayQueueSource instance;
         public static PlayQueueSource Instance {
-            get { 
-                if (instance == null) {
-                    instance = new PlayQueueSource ();
-                }
-                
-                return instance;
-            }
+            get { return instance; }
         }
     
         public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null)
@@ -61,6 +55,10 @@ namespace Banshee.Playlist
             Properties.SetString ("IconName", "audio-x-generic");
             
             ((TrackListDatabaseModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID DESC";
+            
+            if (instance == null) {
+                instance = this;
+            }
         }
         
         private void BindToDatabase ()
