@@ -59,8 +59,8 @@ namespace Hyena.Data.Sqlite
             this.command = new SqliteCommand (command);
 
             int num_params = 0;
-            foreach (char c in command) {
-                if (c == '?') {
+            for (int i = 0; i < command.Length; i++) {
+                if (command [i] == '?') {
                     num_params++;
                 }
             }

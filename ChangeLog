@@ -1,5 +1,11 @@
 2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Access each char
+	of the command in place instead of assigning it to a variable, when
+	scanning it for ?'s.
+
+2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Change API.
 	Used to have ctor(command, int) where int was the number of paramters.
 	This was used primarily for stored, reused commands.  But, this ctor was
