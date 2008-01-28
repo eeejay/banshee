@@ -269,7 +269,7 @@ namespace Banshee.Collection.Database
         public override TrackInfo this[int index] {
             get { return cache.GetValue (index); }
         }
-        
+
         public override int Count {
             get { return count; }
         }

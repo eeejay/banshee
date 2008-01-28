@@ -49,8 +49,10 @@ namespace Banshee.Playlist
 {
     public class PlaylistSource : AbstractPlaylistSource
     {
-        private static HyenaSqliteCommand add_tracks_command;
-        private static HyenaSqliteCommand remove_tracks_command;
+        private static HyenaSqliteCommand add_track_command;
+        private static HyenaSqliteCommand remove_track_command;
+        private static HyenaSqliteCommand add_track_range_command;
+        private static HyenaSqliteCommand remove_track_range_command;
         private static HyenaSqliteCommand delete_command;
 
         private static string generic_name = Catalog.GetString ("Playlist");
@@ -69,14 +71,22 @@ namespace Banshee.Playlist
 
         static PlaylistSource () 
         {
-            add_tracks_command = new HyenaSqliteCommand (@"
+            add_track_command = new HyenaSqliteCommand (
+                "INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES (?, ?)", 2
+            );
+
+            remove_track_command = new HyenaSqliteCommand (
+                "DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND TrackID = ?", 2
+            );
+
+            add_track_range_command = new HyenaSqliteCommand (@"
                 INSERT INTO CorePlaylistEntries
                     SELECT null, ?, ItemID, 0
                         FROM CoreCache WHERE ModelID = ?
                         LIMIT ?, ?", 4
             );
 
-            remove_tracks_command = new HyenaSqliteCommand (@"
+            remove_track_range_command = new HyenaSqliteCommand (@"
                 DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND
                     TrackID IN (SELECT ItemID FROM CoreCache
                         WHERE ModelID = ? LIMIT ?, ?)", 4
@@ -179,6 +189,13 @@ namespace Banshee.Playlist
 
 #endregion
 
+        /*public override void AddTrack (LibraryTrackInfo track)
+        {
+            add_track_command.ApplyValues (DbId, track.DbId);
+            ServiceManager.DbConnection.Execute (add_track_command);
+            Reload ();
+        }*/
+
         public virtual void AddSelectedTracks (TrackListDatabaseModel from)
         {
             if (from == track_model)
@@ -189,14 +206,21 @@ namespace Banshee.Playlist
 
         protected virtual void AddTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
         {
-            add_tracks_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
-            ServiceManager.DbConnection.Execute (add_tracks_command);
+            add_track_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
+            ServiceManager.DbConnection.Execute (add_track_range_command);
+        }
+
+        public override void RemoveTrack (LibraryTrackInfo track)
+        {
+            remove_track_command.ApplyValues (DbId, track.DbId);
+            ServiceManager.DbConnection.Execute (remove_track_command);
+            Reload ();
         }
 
         protected override void RemoveTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
         {
-            remove_tracks_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
-            ServiceManager.DbConnection.Execute (remove_tracks_command);
+            remove_track_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
+            ServiceManager.DbConnection.Execute (remove_track_range_command);
         }
 
         public static IEnumerable<PlaylistSource> LoadAll ()

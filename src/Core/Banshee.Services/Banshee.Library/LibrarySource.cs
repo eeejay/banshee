@@ -88,6 +88,14 @@ namespace Banshee.Library
             }
         }
 
+        public override void RemoveTrack (LibraryTrackInfo track)
+        {
+            remove_track_command.ApplyValues (track.DbId);
+            ServiceManager.DbConnection.Execute (remove_track_command);
+            Reload ();
+            ReloadChildren ();
+        }
+
         /*public override void RemoveTracks (IEnumerable<TrackInfo> tracks)
         {
 

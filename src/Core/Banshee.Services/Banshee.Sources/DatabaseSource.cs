@@ -121,6 +121,16 @@ namespace Banshee.Sources
             OnUpdated ();
         }
 
+        public virtual void RemoveTrack (int index)
+        {
+            RemoveTrack (track_model [index] as LibraryTrackInfo);
+        }
+
+        public virtual void RemoveTrack (LibraryTrackInfo track)
+        {
+            throw new NotImplementedException(); 
+        }
+
         // Methods for removing tracks from this source
         /*public virtual void RemoveTracks (IEnumerable<TrackInfo> tracks)
         {

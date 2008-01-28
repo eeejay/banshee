@@ -1,3 +1,10 @@
+2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add
+	RemoveTrack methods (taking either an int or a LibraryTrackInfo).
+
 2008-01-28  Aaron Bockover  <abock@gnome.org>
 
 	Maybe 3% closer
