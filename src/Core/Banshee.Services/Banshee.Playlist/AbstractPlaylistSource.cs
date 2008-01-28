@@ -68,8 +68,6 @@ namespace Banshee.Playlist
             }
         }
 
-        protected abstract string IconName { get; }
-
         public int? DbId {
             get { return dbid; }
             protected set {
@@ -91,7 +89,6 @@ namespace Banshee.Playlist
         public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType) 
             : base (generic_name, name, Convert.ToString (dbid), 500)
         {
-            Properties.SetString ("IconName", IconName);
         }
 
         public override void Rename (string newName)

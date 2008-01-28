@@ -99,6 +99,10 @@ namespace Banshee.Sources
         public ArtistListModel ArtistModel {
             get { return artist_model; }
         }
+        
+        public virtual bool ShowBrowser { 
+            get { return true; }
+        }
 
 #endregion
 

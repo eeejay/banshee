@@ -93,10 +93,6 @@ namespace Banshee.SmartPlaylist
             get { return "CoreSmartPlaylistEntries"; }
         }
 
-        protected override string IconName {
-            get { return "source-smart-playlist"; }
-        }
-
         // Custom properties
         private QueryNode condition;
         public QueryNode ConditionTree {
@@ -196,6 +192,7 @@ namespace Banshee.SmartPlaylist
             LimitCriterion = limit_criterion;
             DbId = dbid;
 
+            Properties.SetString ("IconName", "source-smart-playlist");
             Properties.SetString ("SourcePropertiesActionLabel", properties_label);
 
             //Globals.Library.TrackRemoved += OnLibraryTrackRemoved;

@@ -57,10 +57,12 @@ namespace Banshee.ServiceStack
             ServiceManager.Run ();
             
             if (ServiceManager.SourceManager != null) {
+                ServiceManager.SourceManager.AddSource (PlayQueueSource.Instance, false);
                 ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
 
-                foreach (PlaylistSource pl in PlaylistSource.LoadAll ())
+                foreach (PlaylistSource pl in PlaylistSource.LoadAll ()) {
                     ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
+                }
             }
             
             Banshee.Base.PlatformHacks.RestoreMonoJitSegv ();

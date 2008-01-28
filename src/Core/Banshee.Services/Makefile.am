@@ -66,6 +66,7 @@ SOURCES =  \
 	Banshee.Playlist/AbstractPlaylistSource.cs \
 	Banshee.Playlist/PlaylistFileUtil.cs \
 	Banshee.Playlist/PlaylistSource.cs \
+	Banshee.Playlist/PlayQueueSource.cs \
 	Banshee.Playlists.Formats.Xspf/LinkEntry.cs \
 	Banshee.Playlists.Formats.Xspf/MetaEntry.cs \
 	Banshee.Playlists.Formats.Xspf/Playlist.cs \

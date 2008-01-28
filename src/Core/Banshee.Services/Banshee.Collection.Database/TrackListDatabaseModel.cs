@@ -53,6 +53,7 @@ namespace Banshee.Collection.Database
         
         private ISortableColumn sort_column;
         private string sort_query;
+        private bool forced_sort_query;
         
         private string reload_fragment;
         private string join_fragment, condition;
@@ -63,7 +64,8 @@ namespace Banshee.Collection.Database
         private string album_id_filter_query;
         
         private int rows_in_view;
-
+        
+        
         public TrackListDatabaseModel (BansheeDbConnection connection, string uuid)
         {
             this.connection = connection;
@@ -114,7 +116,7 @@ namespace Banshee.Collection.Database
                 sort_query = null;
                 return;
             }
-
+            
             sort_query = GetSort (sort_column.SortKey, AscDesc ());
         }
 
@@ -185,6 +187,10 @@ namespace Banshee.Collection.Database
         public void Sort(ISortableColumn column)
         {
             lock(this) {
+                if (forced_sort_query != null) {
+                    return;
+                }
+                
                 if(sort_column == column && sort_column != null) {
                     sort_column.SortType = sort_column.SortType == SortType.Ascending 
                         ? SortType.Descending 
@@ -278,6 +284,15 @@ namespace Banshee.Collection.Database
                 lock(this) {
                     filter = value; 
                 }
+            }
+        }
+        
+        public string ForcedSortQuery {
+            get { return forced_sort_query ? sort_query : null; }
+            set { 
+                forced_sort_query = value != null;
+                sort_query = value;
+                cache.Clear ();
             }
         }
 

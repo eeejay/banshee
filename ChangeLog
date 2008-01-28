@@ -1,3 +1,54 @@
+2008-01-28  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds about 90% of what's needed for a fully functioning 
+	play queue. Yes, you can has queue. You can has indeed. <3
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Allow model to have a sort query forced upon it, effectively disabling
+	user sorting
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	CorePlaylists has a new column called Special; Special playlists (not 0)
+	are ignored by the regular static playlist loader
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Get rid of the IconName property
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Use the old
+	home icon again; make the library source order 1
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlayQueueSource.cs: Hot
+	sexy new source for the play queue; it's the world's first special
+	playlist in Banshee
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Do not
+	load special playlists; return mediocre playlists using yield, instead of
+	collecting into a temporary list; cope with the fact that IconName was
+	banished from the base APS
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Load the
+	hot new play queue source - zomg
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Also deal with the fact that IconName was banished from APS
+
+	* src/Core/Banshee.Services/Banshee.Sources/ITrackModelSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Added a 
+	ShowBrowser property that allows track model sources to mandate whether
+	or not the user can see the browser
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
+	Respect ShowBrowser if the active source is an ITrackModelSource, otherwise
+	never show the browser since that doesn't make sense
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Added the sweet new 'Add to Play Queue' action
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Added
+	LastInsertRowId, because that is some useful stuff
+
 2008-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Base/Log.cs: Make ms always 3 digits.

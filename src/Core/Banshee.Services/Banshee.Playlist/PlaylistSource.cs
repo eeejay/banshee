@@ -67,10 +67,6 @@ namespace Banshee.Playlist
             get { return "CorePlaylistEntries"; }
         }
 
-        protected override string IconName {
-            get { return "source-playlist"; }
-        }
-
         static PlaylistSource () 
         {
             add_tracks_command = new HyenaSqliteCommand (@"
@@ -100,6 +96,7 @@ namespace Banshee.Playlist
         public PlaylistSource (string name, int? dbid, int sortColumn, int sortType) 
             : base (generic_name, name, dbid, sortColumn, sortType)
         {
+            Properties.SetString ("IconName", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
             DbId = dbid;
@@ -193,7 +190,6 @@ namespace Banshee.Playlist
         protected virtual void AddTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
         {
             add_tracks_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
-            Console.WriteLine ("adding tracks with {0}", add_tracks_command.CommandText);
             ServiceManager.DbConnection.Execute (add_tracks_command);
         }
 
@@ -203,22 +199,17 @@ namespace Banshee.Playlist
             ServiceManager.DbConnection.Execute (remove_tracks_command);
         }
 
-        public static List<PlaylistSource> LoadAll ()
+        public static IEnumerable<PlaylistSource> LoadAll ()
         {
-            List<PlaylistSource> sources = new List<PlaylistSource> ();
-
             using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
-                "SELECT PlaylistID, Name, SortColumn, SortType FROM CorePlaylists")) {
+                "SELECT PlaylistID, Name, SortColumn, SortType FROM CorePlaylists WHERE Special = 0")) {
                 while (reader.Read ()) {
-                    PlaylistSource playlist = new PlaylistSource (
+                    yield return new PlaylistSource (
                         reader[1] as string, Convert.ToInt32 (reader[0]),
                         Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3])
                     );
-                    sources.Add (playlist);
                 }
             }
-            
-            return sources;
         }
     }
 

@@ -246,6 +246,10 @@ namespace Hyena.Data.Sqlite
         {
             return Execute (new SqliteCommand (command.ToString ()));
         }
+        
+        public int LastInsertRowId {
+            get { return connection.LastInsertRowId; }
+        }
 
 #endregion
 

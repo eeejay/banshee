@@ -316,9 +316,15 @@ namespace Banshee.Database
                     PlaylistID          INTEGER PRIMARY KEY,
                     Name                TEXT,
                     SortColumn          INTEGER NOT NULL DEFAULT -1,
-                    SortType            INTEGER NOT NULL DEFAULT 0
+                    SortType            INTEGER NOT NULL DEFAULT 0,
+                    Special             INTEGER NOT NULL DEFAULT 0
                 )
             ");
+            
+            // Create the special play queue playlist here so we can 
+            // be sure it gets PlaylistID = 0, just for the sake of 
+            // cleanliness (no operations are performed on that assumption)
+            Banshee.Playlist.PlayQueueSource.CreateDatabaseEntry(connection);
             
             Execute(@"
                 CREATE TABLE CorePlaylistEntries (
@@ -422,7 +428,7 @@ namespace Banshee.Database
             ");
 
             Execute(@"
-                INSERT INTO CorePlaylists
+                INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType)
                     SELECT * FROM Playlists
             ");
 

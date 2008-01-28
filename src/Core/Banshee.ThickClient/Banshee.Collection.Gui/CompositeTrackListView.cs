@@ -37,6 +37,8 @@ using Mono.Unix;
 using Hyena.Data;
 using Hyena.Data.Gui;
 
+using Banshee.Sources;
+
 using Banshee.Gui;
 using Banshee.ServiceStack;
 using Banshee.Collection;
@@ -117,6 +119,10 @@ namespace Banshee.Collection.Gui
                 action_merge_id = action_service.UIManager.NewMergeId ();
                 action_service.UIManager.AddUiFromString (menu_xml);
             }
+            
+            ServiceManager.SourceManager.ActiveSourceChanged += delegate {
+                browser_container.Visible = ActiveSourceCanHasBrowser ? BrowserVisible.Get () : false; 
+            };
             
             NoShowAll = true;
         }
@@ -239,7 +245,7 @@ namespace Banshee.Collection.Gui
         {
             ToggleAction action = (ToggleAction)o;
             artist_view.Selection.Clear ();
-            browser_container.Visible = action.Active;
+            browser_container.Visible = action.Active && ActiveSourceCanHasBrowser;
             BrowserVisible.Set (action.Active);
         }
         
@@ -307,6 +313,16 @@ namespace Banshee.Collection.Gui
 
         public AlbumListModel AlbumModel {
             get { return (AlbumListModel)album_view.Model; }
+        }
+
+        private bool ActiveSourceCanHasBrowser {
+            get {
+                if (!(ServiceManager.SourceManager.ActiveSource is ITrackModelSource)) {
+                    return false;
+                }
+                
+                return ((ITrackModelSource)ServiceManager.SourceManager.ActiveSource).ShowBrowser;
+            }
         }
 
         public void SetModels (TrackListModel track, ArtistListModel artist, AlbumListModel album)
