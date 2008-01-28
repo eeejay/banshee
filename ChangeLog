@@ -1,5 +1,15 @@
 2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Implement IUnmapableSource again so Delete Playlist options show up.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	NewSmartPlaylistFromSearch action.  Doesn't yet do anything.
+
+2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Access each char
 	of the command in place instead of assigning it to a variable, when
 	scanning it for ?'s.

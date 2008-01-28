@@ -47,7 +47,7 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Playlist
 {
-    public class PlaylistSource : AbstractPlaylistSource
+    public class PlaylistSource : AbstractPlaylistSource, IUnmapableSource
     {
         private static HyenaSqliteCommand add_track_command;
         private static HyenaSqliteCommand remove_track_command;

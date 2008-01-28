@@ -64,6 +64,10 @@ namespace Banshee.Gui
                     Catalog.GetString ("New _Smart Playlist"), null,
                     Catalog.GetString ("Create a new smart playlist"), OnNewSmartPlaylist),
 
+                new ActionEntry ("NewSmartPlaylistFromSearchAction", null,
+                    Catalog.GetString ("New _Smart Playlist _From Search"), null,
+                    Catalog.GetString ("Create a new smart playlist from the current search"), OnNewSmartPlaylistFromSearch),
+
                 new ActionEntry("SourceContextMenuAction", null, 
                     String.Empty, null, null, OnSourceContextMenu),
 
@@ -117,6 +121,20 @@ namespace Banshee.Gui
         }
 
         private void OnNewSmartPlaylist (object o, EventArgs args)
+        {
+            //Editor ed = new Editor ();
+            //ed.RunDialog ();
+
+            /*Editor ed = new Editor ();
+            ed.SetQueryFromSearch ();
+            ed.RunDialog ();*/
+
+            // TODO should begin editing the name after making it, but this changed
+            // the ActiveSource to the new playlist and we don't want that.
+            //SourceView.BeginRenameSource (playlist);
+        }
+
+        private void OnNewSmartPlaylistFromSearch (object o, EventArgs args)
         {
             //Editor ed = new Editor ();
             //ed.RunDialog ();

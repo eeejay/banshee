@@ -59,7 +59,7 @@ namespace Banshee.SmartPlaylist
         }
     }
 
-    public class SmartPlaylistSource : AbstractPlaylistSource
+    public class SmartPlaylistSource : AbstractPlaylistSource, IUnmapableSource
     {
         private static string generic_name = Catalog.GetString ("Smart Playlist");
         private static string properties_label = Catalog.GetString ("Edit Smart Playlist");
@@ -194,6 +194,7 @@ namespace Banshee.SmartPlaylist
 
             Properties.SetString ("IconName", "source-smart-playlist");
             Properties.SetString ("SourcePropertiesActionLabel", properties_label);
+            Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Smart Playlist"));
 
             //Globals.Library.TrackRemoved += OnLibraryTrackRemoved;
 
@@ -270,6 +271,34 @@ namespace Banshee.SmartPlaylist
             ));
 
             base.RateLimitedReload ();
+        }
+
+#endregion
+
+#region IUnmapableSource Implementation
+
+        public bool Unmap ()
+        {
+            if (DbId != null) {
+                ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
+                    BEGIN TRANSACTION;
+                        DELETE FROM CoreSmartPlaylists WHERE SmartPlaylistID = ?;
+                        DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = ?;
+                    COMMIT TRANSACTION",
+                    DbId, DbId
+                ));
+            }
+
+            Remove ();
+            return true;
+        }
+
+        public bool CanUnmap {
+            get { return true; }
+        }
+
+        public bool ConfirmBeforeUnmap {
+            get { return true; }
         }
 
 #endregion
