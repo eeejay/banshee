@@ -48,8 +48,8 @@ namespace Banshee.Collection.Database
         private BansheeDbConnection connection;
         private BansheeModelProvider<LibraryTrackInfo> provider;
         private BansheeModelCache<LibraryTrackInfo> cache;
+        private int filtered_count;
         private int count;
-        private int unfiltered_count;
         
         private ISortableColumn sort_column;
         private string sort_query;
@@ -207,8 +207,8 @@ namespace Banshee.Collection.Database
         public override void Clear()
         {
             cache.Clear ();
-            unfiltered_count = 0;
             count = 0;
+            filtered_count = 0;
             OnCleared();
         }
         
@@ -220,7 +220,7 @@ namespace Banshee.Collection.Database
                 provider.From, JoinFragment, provider.Where, ConditionFragment
             );
 
-            unfiltered_count = connection.QueryInt32 (String.Format (
+            count = connection.QueryInt32 (String.Format (
                 "SELECT COUNT(*) {0}", unfiltered_query
             ));
 
@@ -254,7 +254,7 @@ namespace Banshee.Collection.Database
                 cache.Reload ();
             }
 
-            count = cache.Count;
+            filtered_count = cache.Count;
             first_reload = false;
 
             OnReloaded ();
@@ -274,8 +274,8 @@ namespace Banshee.Collection.Database
             get { return count; }
         }
         
-        public int UnfilteredCount {
-            get { return unfiltered_count; }
+        public int FilteredCount {
+            get { return filtered_count; }
         }
         
         public string Filter {

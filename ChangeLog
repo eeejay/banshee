@@ -1,5 +1,13 @@
 2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Hyena/Hyena.Data/IFilterable.cs: Keep the meaning of Count
+	consistent as the unfiltered count;  remove UnfilteredCount property, add
+	FilteredCount property to IFilterable.
+
+2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Hyena/Hyena.Data/ModelCache.cs:
 	* src/Core/Hyena/Hyena.Data/ArrayModelCache.cs:
 	* src/Core/Hyena/Hyena.Data/DictionaryModelCache.cs:
