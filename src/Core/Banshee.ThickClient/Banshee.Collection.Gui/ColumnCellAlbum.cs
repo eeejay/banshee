@@ -93,6 +93,7 @@ namespace Banshee.Collection.Gui
             
             first_line_layout.FontDescription.Weight = Pango.Weight.Bold;
             second_line_layout.FontDescription.Size = (int)(second_line_layout.FontDescription.Size * Pango.Scale.Small);
+            second_line_layout.FontDescription.Style = Pango.Style.Italic;
             
             first_line_layout.SetText (album.Title);
             first_line_layout.GetPixelSize (out fl_width, out fl_height);
@@ -109,11 +110,26 @@ namespace Banshee.Collection.Gui
                 context.Area, context.Widget, "text",
                 context.Area.X + x, context.Area.Y + y, first_line_layout);
             
-            if (album.ArtistName != null) {
-                Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
-                    context.Area, context.Widget, "text",
-                    context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
+            if (album.ArtistName == null) {
+                return;
             }
+            
+            Gdk.GC gc = context.Widget.Style.TextGC (state);
+                
+            if (!state.Equals (StateType.Selected)) {
+                gc = new Gdk.GC (context.Drawable);
+                gc.Copy (context.Widget.Style.TextGC (state));
+                Gdk.Color fgcolor = context.Widget.Style.Foreground (state);
+                Gdk.Color bgcolor = context.Widget.Style.Background (state);
+                gc.RgbFgColor = Hyena.Gui.GtkUtilities.ColorBlend (fgcolor, bgcolor);
+                gc.RgbBgColor = fgcolor;
+            }
+            
+            context.Drawable.DrawLayout (gc, context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
+            
+            // Style.PaintLayout (context.Widget.Style, context.Drawable, state, true,
+            //    context.Area, context.Widget, "text",
+            //    context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
         }
     }
 }

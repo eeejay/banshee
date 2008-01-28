@@ -96,16 +96,17 @@ namespace Banshee.Library
                 SafeUri uri = new SafeUri (path);
 
                 LibraryTrackInfo track = null;
+                
+                /*if (LibraryTrackInfo.ContainsUri (uri)) {
+                    IncrementProcessedCount (null);
+                    return;
+                }*/
+
+                TagLib.File file = StreamTagger.ProcessUri (uri);
+                track = new LibraryTrackInfo ();
+                StreamTagger.TrackInfoMerge (track, file);
+
                 ThreadAssist.ProxyToMain (delegate {
-                    if (LibraryTrackInfo.ContainsUri (uri)) {
-                        IncrementProcessedCount (null);
-                        return;
-                    }
-
-                    TagLib.File file = StreamTagger.ProcessUri (uri);
-                    track = new LibraryTrackInfo ();
-                    StreamTagger.TrackInfoMerge (track, file);
-
                     track.DateAdded = DateTime.Now;
                     LibraryArtistInfo artist = new LibraryArtistInfo (track.ArtistName);
                     track.ArtistId = artist.DbId;
@@ -116,10 +117,10 @@ namespace Banshee.Library
                     (ServiceManager.SourceManager.DefaultSource as LibrarySource).Reload ();
 
                 });
+                
                 if (track != null && track.DbId > 0) {
                     IncrementProcessedCount (String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle));
                 }
-
             } catch (Exception e) {
                 LogError (path, e);
                 IncrementProcessedCount (null);
