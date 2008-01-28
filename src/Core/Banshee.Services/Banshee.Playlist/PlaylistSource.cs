@@ -72,24 +72,24 @@ namespace Banshee.Playlist
         static PlaylistSource () 
         {
             add_track_command = new HyenaSqliteCommand (
-                "INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES (?, ?)", 2
+                "INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES (?, ?)"
             );
 
             remove_track_command = new HyenaSqliteCommand (
-                "DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND TrackID = ?", 2
+                "DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND TrackID = ?"
             );
 
             add_track_range_command = new HyenaSqliteCommand (@"
                 INSERT INTO CorePlaylistEntries
                     SELECT null, ?, ItemID, 0
                         FROM CoreCache WHERE ModelID = ?
-                        LIMIT ?, ?", 4
+                        LIMIT ?, ?"
             );
 
             remove_track_range_command = new HyenaSqliteCommand (@"
                 DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND
                     TrackID IN (SELECT ItemID FROM CoreCache
-                        WHERE ModelID = ? LIMIT ?, ?)", 4
+                        WHERE ModelID = ? LIMIT ?, ?)"
             );
         }
 

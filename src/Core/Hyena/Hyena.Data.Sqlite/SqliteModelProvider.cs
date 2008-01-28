@@ -371,7 +371,6 @@ namespace Hyena.Data.Sqlite
                 if (insert_command == null) {
                     StringBuilder cols = new StringBuilder ();
                     StringBuilder vals = new StringBuilder ();
-                    int count = 0;
                     bool first = true;
                     foreach (DatabaseColumn column in columns) {
                         if (first) {
@@ -382,12 +381,11 @@ namespace Hyena.Data.Sqlite
                         }
                         cols.Append (column.Name);
                         vals.Append ('?');
-                        count++;
                     }
 
                     insert_command = new HyenaSqliteCommand (String.Format (
                         "INSERT INTO {0} ({1}) VALUES ({2})",
-                        TableName, cols.ToString (), vals.ToString ()), count
+                        TableName, cols.ToString (), vals.ToString ())
                     );
                 }
                 return insert_command;
@@ -401,7 +399,6 @@ namespace Hyena.Data.Sqlite
                     builder.Append ("UPDATE ");
                     builder.Append (TableName);
                     builder.Append (" SET ");
-                    int count = 0;
                     bool first = true;
                     foreach (DatabaseColumn column in columns) {
                         if (first) {
@@ -411,13 +408,11 @@ namespace Hyena.Data.Sqlite
                         }
                         builder.Append (column.Name);
                         builder.Append (" = ?");
-                        count++;
                     }
                     builder.Append (" WHERE ");
                     builder.Append (key.Name);
                     builder.Append (" = ?");
-                    count++;
-                    update_command = new HyenaSqliteCommand (builder.ToString (), count);
+                    update_command = new HyenaSqliteCommand (builder.ToString ());
                 }
                 return update_command;
             }
@@ -448,7 +443,7 @@ namespace Hyena.Data.Sqlite
                             Select, From,
                             (String.IsNullOrEmpty (Where) ? String.Empty : " WHERE "),
                             Where
-                        ), 2
+                        )
                     );
                 }
                 return select_range_command;
@@ -464,7 +459,7 @@ namespace Hyena.Data.Sqlite
                             Select, From, Where,
                             (String.IsNullOrEmpty (Where) ? String.Empty : " AND "),
                             PrimaryKey
-                        ), 1
+                        )
                     );
                 }
                 return select_single_command;

@@ -57,18 +57,29 @@ namespace Hyena.Data.Sqlite
         public HyenaSqliteCommand (string command)
         {
             this.command = new SqliteCommand (command);
+
+            int num_params = 0;
+            foreach (char c in command) {
+                if (c == '?') {
+                    num_params++;
+                }
+            }
+
+            CreateParameters (num_params);
         }
 
-        public HyenaSqliteCommand (string command, int num_params) : this (command)
+        public HyenaSqliteCommand (string command, params object [] param_values)
+        {
+            this.command = new SqliteCommand (command);
+            CreateParameters (param_values.Length);
+            ApplyValues (param_values);
+        }
+
+        protected void CreateParameters (int num_params)
         {
             for (int i = 0; i < num_params; i++) {
                 Parameters.Add (new SqliteParameter ());
             }
-        }
-
-        public HyenaSqliteCommand (string command, params object [] param_values) : this (command, param_values.Length)
-        {
-            ApplyValues (param_values);
         }
 
         public HyenaSqliteCommand ApplyValues (params object [] param_values)

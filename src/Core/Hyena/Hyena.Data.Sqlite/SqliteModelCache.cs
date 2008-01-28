@@ -63,7 +63,7 @@ namespace Hyena.Data.Sqlite
             count_command = new HyenaSqliteCommand (
                 String.Format (
                     "SELECT COUNT(*) FROM {0} WHERE ModelID = ?", CacheTableName
-                ), 1
+                )
             );
 
             FindOrCreateCacheModelId (String.Format ("{0}-{1}", uuid, typeof(T).Name));
@@ -81,7 +81,7 @@ namespace Hyena.Data.Sqlite
                     provider.PrimaryKey, uid,
                     String.IsNullOrEmpty (provider.Where) ? String.Empty : "AND",
                     provider.Where
-                ), 2
+                )
             );
             
             select_single_command = new HyenaSqliteCommand (
@@ -91,7 +91,7 @@ namespace Hyena.Data.Sqlite
                             ModelID = {1} AND
                             ItemID = ?",
                     CacheTableName, uid
-                ), 1
+                )
             );
             
             select_first_command = new HyenaSqliteCommand (

@@ -49,7 +49,7 @@ namespace Banshee.Collection.Database
         }
 
         private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (
-            "SELECT ArtistID, Name FROM CoreArtists WHERE Name = ?", 1
+            "SELECT ArtistID, Name FROM CoreArtists WHERE Name = ?"
         );
 
         private enum Column : int {

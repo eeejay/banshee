@@ -1,5 +1,24 @@
 2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Change API.
+	Used to have ctor(command, int) where int was the number of paramters.
+	This was used primarily for stored, reused commands.  But, this ctor was
+	ambiguous with the ctor(command, params object [] values), used to create
+	a command and immediately apply values to it.  So, instead of passing the
+	int, you can now just pass the command, and it will be scanned for '?'.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Use new
+	HyenaSqliteCommand API.
+
+2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
 	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add

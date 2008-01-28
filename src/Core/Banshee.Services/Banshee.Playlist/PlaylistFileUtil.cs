@@ -176,7 +176,7 @@ namespace Banshee.Playlist
 
             HyenaSqliteCommand command = new HyenaSqliteCommand (
                 @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
-                    VALUES (?, (SELECT TrackID FROM CoreTracks WHERE Uri = ?))", 2
+                    VALUES (?, (SELECT TrackID FROM CoreTracks WHERE Uri = ?))"
             );
 
             foreach (string uri in uris) {

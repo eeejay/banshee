@@ -234,7 +234,8 @@ namespace Banshee.Collection.Database
         }
 
         private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (
-            "SELECT COUNT(*) FROM CoreTracks WHERE Uri = ? OR Uri = ?", 2);
+            "SELECT COUNT(*) FROM CoreTracks WHERE Uri = ? OR Uri = ?"
+        );
         
         public static bool ContainsUri (SafeUri uri)
         {

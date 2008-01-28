@@ -56,13 +56,13 @@ namespace Banshee.Library
                     WHERE ModelID = ? LIMIT ?, ?);
             DELETE FROM CoreSmartPlaylistEntries WHERE TrackID IN
                 (SELECT ItemID FROM CoreCache
-                    WHERE ModelID = ? LIMIT ?, ?)", 9
+                    WHERE ModelID = ? LIMIT ?, ?)"
         );
 
         private HyenaSqliteCommand remove_track_command = new HyenaSqliteCommand (@"
             DELETE FROM CoreTracks WHERE TrackID = ?;
             DELETE FROM CorePlaylistEntries WHERE TrackID = ?;
-            DELETE FROM CoreSmartPlaylistEntries WHERE TrackID = ?", 3
+            DELETE FROM CoreSmartPlaylistEntries WHERE TrackID = ?"
         );
     
         public LibrarySource () : base (Catalog.GetString("Library"), Catalog.GetString ("Library"), "Library", 1)

@@ -49,7 +49,7 @@ namespace Banshee.Collection.Database
         }
 
         private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (
-            "SELECT AlbumID, Title FROM CoreAlbums WHERE ArtistID = ? AND Title = ?", 2
+            "SELECT AlbumID, Title FROM CoreAlbums WHERE ArtistID = ? AND Title = ?"
         );
 
         private enum Column : int {
