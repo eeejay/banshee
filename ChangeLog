@@ -1,3 +1,18 @@
+2008-01-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlaybackController.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackRepeatMode.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackShuffleMode.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: 
+	Moved playback controller APIs to their own 
+	namespace - Banshee.PlaybackController
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
+	Removed all the play queue stuff I did last night - it was way too late
+	and was a horrible hack design
+
 2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:

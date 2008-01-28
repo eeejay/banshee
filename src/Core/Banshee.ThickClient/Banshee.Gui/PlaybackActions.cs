@@ -34,6 +34,7 @@ using Banshee.Base;
 using Banshee.Collection;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
+using Banshee.PlaybackController;
 using Banshee.Gui.Dialogs;
 
 namespace Banshee.Gui

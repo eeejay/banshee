@@ -34,8 +34,9 @@ using Banshee.Base;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.Collection;
+using Banshee.MediaEngine;
 
-namespace Banshee.MediaEngine
+namespace Banshee.PlaybackController
 {
     public class PlaybackControllerService : IService, IPlaybackController
     {
@@ -95,8 +96,6 @@ namespace Banshee.MediaEngine
         {
             switch (args.Event) {
                 case PlayerEngineEvent.EndOfStream:
-                    FondlePlayQueue ();
-                
                     if (!StopWhenFinished) {
                         Next ();
                     } else {
@@ -125,8 +124,6 @@ namespace Banshee.MediaEngine
         
         public void Next ()
         {
-            FondlePlayQueue ();
-            
             TrackInfo tmp_track = CurrentTrack;
 
             if (next_stack.Count > 0) {
@@ -189,20 +186,7 @@ namespace Banshee.MediaEngine
             changing_to_track = CurrentTrack;
             player_engine.OpenPlay (CurrentTrack);
         }
-        
-        private void FondlePlayQueue ()
-        {
-            if (PlayQueue == null || PlayQueue.Count <= 0) {
-                return;
-            }
-            
-            if (current_track_source == PlayQueue) {
-                // TODO: Remove from play queue
-            }
-            
-            Source = PlayQueue;
-        }
-        
+
         protected virtual void OnStopped ()
         {
             EventHandler handler = Stopped;
@@ -246,10 +230,6 @@ namespace Banshee.MediaEngine
                     OnSourceChanged ();
                 }
             }
-        }
-        
-        private ITrackModelSource PlayQueue {
-            get { return Banshee.Playlist.PlayQueueSource.Instance; }
         }
         
         public PlaybackShuffleMode ShuffleMode {

@@ -38,6 +38,7 @@ using Banshee.Sources;
 using Banshee.SmartPlaylist;
 using Banshee.Database;
 using Banshee.MediaEngine;
+using Banshee.PlaybackController;
 using Banshee.Library;
 
 namespace Banshee.ServiceStack

@@ -31,7 +31,7 @@ using NDesk.DBus;
 
 using Banshee.ServiceStack;
 
-namespace Banshee.MediaEngine
+namespace Banshee.PlaybackController
 {
     public delegate void PlaybackControllerStoppedHandler ();
 
