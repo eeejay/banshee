@@ -1,10 +1,10 @@
-// 
-// IPlaybackController.cs
+//
+// ICanonicalPlaybackController.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,25 +27,13 @@
 //
 
 using System;
-using NDesk.DBus;
-
-using Banshee.ServiceStack;
 
 namespace Banshee.PlaybackController
 {
-    public delegate void PlaybackControllerStoppedHandler ();
-
-    [Interface ("org.bansheeproject.Banshee.PlaybackController")]
-    public interface IPlaybackController : IDBusExportable
+    public interface ICanonicalPlaybackController
     {
-        event PlaybackControllerStoppedHandler Stopped;
-    
         void First ();
         void Next ();
         void Previous ();
-        
-        PlaybackShuffleMode ShuffleMode { get; set; }
-        PlaybackRepeatMode RepeatMode { get; set; }
-        bool StopWhenFinished { get; set; }
     }
 }

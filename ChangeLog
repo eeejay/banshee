@@ -1,3 +1,22 @@
+2008-01-28  Aaron Bockover  <abock@gnome.org>
+	
+	* src/Core/Banshee.Services/Banshee.PlaybackController/ICanonicalPlaybackController.cs:
+	Interface for implementing explicitly inside of the playback controller
+	service that will allow other playback controllers to be used if 
+	defined on a source, yet still allow those controllers to call back
+	into the canonical controller
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/IPlaybackController.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/IPlaybackControllerExportable.cs:
+	Separate the DBus exportable feature of the playback controller into a 
+	separate interface
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Implement ICanonicalPlaybackController explicitly, 
+	IPlaybackControllerExportable, and if the source bound to the controller
+	is itself an IPlaybackController, have the implicit implementation of
+	IPlaybackController in the canonical controller call into the source
+
 2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:

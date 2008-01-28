@@ -42,10 +42,6 @@
     <File name="Banshee.Collection/TrackListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Services.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.MediaEngine/PlayerEngineService.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.MediaEngine/PlaybackControllerService.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.MediaEngine/PlaybackShuffleMode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.MediaEngine/PlaybackRepeatMode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/UserJobManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/IUserJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/UserJobEventHandler.cs" subtype="Code" buildaction="Compile" />
@@ -81,7 +77,6 @@
     <File name="Banshee.Services.addins" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Sources/ErrorSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MediaEngine/IPlayerEngineService.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.MediaEngine/IPlaybackController.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/BansheeListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioProfiles/GConfProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioProfiles/Pipeline.cs" subtype="Code" buildaction="Compile" />
@@ -113,7 +108,13 @@
     <File name="Banshee.Database/BansheeModelProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Database/BansheeModelCache.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Playlist/PlayQueueSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.PlaybackController" subtype="Directory" buildaction="Compile" />
+    <File name="Banshee.PlaybackController/IPlaybackController.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.PlaybackController/PlaybackShuffleMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.PlaybackController/PlaybackRepeatMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.PlaybackController/PlaybackControllerDatabaseStack.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.PlaybackController/PlaybackControllerService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.PlaybackController/IPlaybackControllerExportable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.PlaybackController/ICanonicalPlaybackController.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

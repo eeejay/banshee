@@ -38,7 +38,7 @@ using Banshee.MediaEngine;
 
 namespace Banshee.PlaybackController
 {
-    public class PlaybackControllerService : IService, IPlaybackController
+    public class PlaybackControllerService : IService, ICanonicalPlaybackController, IPlaybackControllerExportable
     {
         private enum Direction
         {
@@ -117,12 +117,39 @@ namespace Banshee.PlaybackController
         
         public void First ()
         {
+            if (Source is IPlaybackController) {
+                ((IPlaybackController)Source).First ();
+            } else {
+                ((ICanonicalPlaybackController)this).First ();
+            }
+        }
+        
+        public void Next ()
+        {
+            if (Source is IPlaybackController) {
+                ((IPlaybackController)Source).Next ();
+            } else {
+                ((ICanonicalPlaybackController)this).Next ();
+            }
+        }
+        
+        public void Previous ()
+        {
+            if (Source is IPlaybackController) {
+                ((IPlaybackController)Source).Previous ();
+            } else {
+                ((ICanonicalPlaybackController)this).Previous ();
+            }
+        }
+        
+        void ICanonicalPlaybackController.First ()
+        {
             if (Source.Count > 0) {
                 player_engine.OpenPlay (Source.TrackModel[0]);
             }
         }
         
-        public void Next ()
+        void ICanonicalPlaybackController.Next ()
         {
             TrackInfo tmp_track = CurrentTrack;
 
@@ -147,7 +174,7 @@ namespace Banshee.PlaybackController
             QueuePlayTrack ();
         }
         
-        public void Previous ()
+        void ICanonicalPlaybackController.Previous ()
         {
             if (CurrentTrack != null && previous_stack.Count > 0) {
                 next_stack.Push (current_track);

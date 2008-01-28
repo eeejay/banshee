@@ -39,12 +39,7 @@ SOURCES =  \
 	Banshee.Library/LibraryImportManager.cs \
 	Banshee.Library/LibrarySource.cs \
 	Banshee.MediaEngine/IEqualizer.cs \
-	Banshee.MediaEngine/IPlaybackController.cs \
 	Banshee.MediaEngine/IPlayerEngineService.cs \
-	Banshee.MediaEngine/PlaybackControllerDatabaseStack.cs \
-	Banshee.MediaEngine/PlaybackControllerService.cs \
-	Banshee.MediaEngine/PlaybackRepeatMode.cs \
-	Banshee.MediaEngine/PlaybackShuffleMode.cs \
 	Banshee.MediaEngine/PlayerEngine.cs \
 	Banshee.MediaEngine/PlayerEngineEvent.cs \
 	Banshee.MediaEngine/PlayerEngineService.cs \
@@ -63,6 +58,13 @@ SOURCES =  \
 	Banshee.Metadata/MetadataSettings.cs \
 	Banshee.Networking/NetworkDetect.cs \
 	Banshee.Networking/NetworkManager.cs \
+	Banshee.PlaybackController/ICanonicalPlaybackController.cs \
+	Banshee.PlaybackController/IPlaybackController.cs \
+	Banshee.PlaybackController/IPlaybackControllerExportable.cs \
+	Banshee.PlaybackController/PlaybackControllerDatabaseStack.cs \
+	Banshee.PlaybackController/PlaybackControllerService.cs \
+	Banshee.PlaybackController/PlaybackRepeatMode.cs \
+	Banshee.PlaybackController/PlaybackShuffleMode.cs \
 	Banshee.Playlist/AbstractPlaylistSource.cs \
 	Banshee.Playlist/PlaylistFileUtil.cs \
 	Banshee.Playlist/PlaylistSource.cs \
