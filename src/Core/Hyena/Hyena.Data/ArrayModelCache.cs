@@ -1,5 +1,5 @@
 //
-// ModelCache.cs
+// ArrayModelCache.cs
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
@@ -27,41 +27,50 @@
 //
 
 using System;
-using System.Collections.Generic;
 
 namespace Hyena.Data
 {
-    public abstract class ModelCache<T>
+    public abstract class ArrayModelCache<T> : ModelCache<T>
     {
-        protected ICacheableModel model;
+        protected T [] cache;
+        protected int offset = -1;
+        protected int limit = 0;
 
-        public ModelCache (ICacheableModel model)
+        public ArrayModelCache (ICacheableModel model) : base (model)
         {
-            this.model = model;
+            cache = new T [model.FetchCount];
         }
 
-        public virtual T GetValue (int index)
+        public override bool ContainsKey (int i)
         {
-            if (ContainsKey (index))
-                return this[index];
-            
-            FetchSet (index, model.FetchCount);
-            
-            if (ContainsKey (index))
-                return this[index];
-            
-            return default (T);
+            return (i >= offset &&
+                    i <= (offset + limit));
         }
-        
-        // Responsible for fetching a set of items and placing them in the cache
-        protected abstract void FetchSet (int offset, int limit);
 
-        // Reset the cache and return the total # of items in the model
-        public abstract int Reload ();
+        public override void Add (int i, T item)
+        {
+            if (cache.Length != model.FetchCount) {
+                cache = new T [model.FetchCount];
+                Clear ();
+            }
 
-        public abstract bool ContainsKey (int i);
-        public abstract void Add (int i, T item);
-        public abstract T this[int i] { get; }
-        public abstract void Clear ();
+            if (offset == -1 || i < offset || i >= (offset + cache.Length)) {
+                offset = i;
+                limit = 0;
+            }
+
+            cache [i - offset] = item;
+            limit++;
+        }
+
+        public override T this [int i] {
+            get { return cache [i - offset]; }
+        }
+
+        public override void Clear ()
+        {
+            offset = -1;
+            limit = 0;
+        }
     }
 }

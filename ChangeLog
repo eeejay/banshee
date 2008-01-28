@@ -1,3 +1,14 @@
+2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Hyena/Hyena.Data/ModelCache.cs:
+	* src/Core/Hyena/Hyena.Data/ArrayModelCache.cs:
+	* src/Core/Hyena/Hyena.Data/DictionaryModelCache.cs:
+	* src/Core/Hyena/Makefile.am: Implement different managed caching
+	strategies in subclasses of ModelCache.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Subclass from
+	DictionaryModelCache for now (no practical change for now).
+
 2008-01-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlaybackController.cs:

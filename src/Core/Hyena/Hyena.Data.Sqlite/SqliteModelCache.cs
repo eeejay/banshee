@@ -32,7 +32,7 @@ using System.Data;
 
 namespace Hyena.Data.Sqlite
 {
-    public class SqliteModelCache<T> : ModelCache<T>
+    public class SqliteModelCache<T> : DictionaryModelCache<T>
     {
         private HyenaSqliteConnection connection;
         private ICacheableDatabaseModel model;
@@ -147,7 +147,7 @@ namespace Hyena.Data.Sqlite
 
         public override int Reload ()
         {
-            InvalidateManagedCache ();
+            Clear ();
             //using (new Timer (String.Format ("Generating cache table for {0}", model))) {
                 connection.Execute (reload_sql + model.ReloadFragment);
             //}
@@ -162,7 +162,7 @@ namespace Hyena.Data.Sqlite
                 select_range_command.ApplyValues (offset, limit);
                 using (IDataReader reader = connection.ExecuteReader (select_range_command)) {
                     while (reader.Read ()) {
-                        if (!Contains (offset)) {
+                        if (!ContainsKey (offset)) {
                             Add (offset, provider.Load (reader, offset));
                         }
                         offset++;
@@ -194,7 +194,7 @@ namespace Hyena.Data.Sqlite
             } else {
                 //Console.WriteLine ("Found existing cache for {0}: {1}", id, uid);
                 warm = true;
-                InvalidateManagedCache ();
+                Clear ();
                 UpdateCount ();
             }
         }

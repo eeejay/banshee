@@ -1,5 +1,5 @@
 //
-// ModelCache.cs
+// DictionaryModelCache.cs
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
@@ -31,37 +31,32 @@ using System.Collections.Generic;
 
 namespace Hyena.Data
 {
-    public abstract class ModelCache<T>
+    public abstract class DictionaryModelCache<T> : ModelCache<T>
     {
-        protected ICacheableModel model;
+        protected Dictionary<int, T> cache;
 
-        public ModelCache (ICacheableModel model)
+        public DictionaryModelCache (ICacheableModel model) : base (model)
         {
-            this.model = model;
+            cache = new Dictionary<int, T> ();
         }
 
-        public virtual T GetValue (int index)
+        public override bool ContainsKey (int i)
         {
-            if (ContainsKey (index))
-                return this[index];
-            
-            FetchSet (index, model.FetchCount);
-            
-            if (ContainsKey (index))
-                return this[index];
-            
-            return default (T);
+            return cache.ContainsKey (i);
         }
-        
-        // Responsible for fetching a set of items and placing them in the cache
-        protected abstract void FetchSet (int offset, int limit);
 
-        // Reset the cache and return the total # of items in the model
-        public abstract int Reload ();
+        public override void Add (int i, T item)
+        {
+            cache.Add (i, item);
+        }
 
-        public abstract bool ContainsKey (int i);
-        public abstract void Add (int i, T item);
-        public abstract T this[int i] { get; }
-        public abstract void Clear ();
+        public override T this [int i] {
+            get { return cache [i]; }
+        }
+
+        public override void Clear ()
+        {
+            cache.Clear ();
+        }
     }
 }
