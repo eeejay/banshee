@@ -291,13 +291,13 @@ namespace Banshee.Sources
         }
         
         public abstract int Count { get; }
-        public virtual int UnfilteredCount { get { return Count; } }
+        public virtual int FilteredCount { get { return Count; } }
 
         public virtual string GetStatusText ()
         {
             StringBuilder builder = new StringBuilder ();
 
-            int count = Count;
+            int count = FilteredCount;
             builder.AppendFormat (Catalog.GetPluralString ("{0} Item", "{0} Items", count), count);
             
             if (this is IDurationAggregator) {

@@ -1,3 +1,10 @@
+2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Fix brokenness of
+	confusing Count/Unfiltered count issue; unfortunately no less confusing
+	though.
+
 2008-01-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:

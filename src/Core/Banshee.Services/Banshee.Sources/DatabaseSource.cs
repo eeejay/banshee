@@ -64,11 +64,11 @@ namespace Banshee.Sources
 #region Public Properties
 
         public override int Count {
-            get { return track_model.Count; }
+            get { return track_model is IFilterable ? ((IFilterable)track_model).UnfilteredCount : track_model.Count; }
         }
 
-        public override int UnfilteredCount {
-            get { return track_model.UnfilteredCount; }
+        public override int FilteredCount {
+            get { return track_model.Count; }
         }
 
         public TimeSpan Duration {
