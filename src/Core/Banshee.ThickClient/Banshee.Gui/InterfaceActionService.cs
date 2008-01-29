@@ -27,10 +27,13 @@
 //
 
 using System;
+using System.IO;
+using System.Reflection;
 using System.Collections.Generic;
 
 using Gtk;
 
+using Banshee.Sources;
 using Banshee.ServiceStack;
 
 namespace Banshee.Gui
@@ -46,6 +49,9 @@ namespace Banshee.Gui
         private TrackActions    track_actions;
         private SourceActions   source_actions;
         
+        private BansheeActionGroup active_source_actions;
+        private uint active_source_uiid = 0;
+        
         public InterfaceActionService ()
         {
             global_actions      = new GlobalActions (this);
@@ -60,7 +66,9 @@ namespace Banshee.Gui
             AddActionGroup (track_actions);
             AddActionGroup (source_actions);
 
-            ui_manager.AddUiFromResource ("core-ui-actions-layout.xml");            
+            ui_manager.AddUiFromResource ("core-ui-actions-layout.xml");    
+            
+            ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
         }
         
         private void InnerAddActionGroup (ActionGroup group)
@@ -146,6 +154,38 @@ namespace Banshee.Gui
             }
         }
         
+        private void OnActiveSourceChanged (SourceEventArgs args)
+        {
+            if (active_source_uiid > 0) {
+                ui_manager.RemoveUi (active_source_uiid);
+                active_source_uiid = 0;
+            }
+                
+            if (active_source_actions != null) {
+                RemoveActionGroup (active_source_actions.Name);
+                active_source_actions = null;
+            }
+            
+            Source active_source = ServiceManager.SourceManager.ActiveSource;
+            if (active_source == null) {
+                return;
+            }
+            
+            active_source_actions = active_source.Properties.Get<BansheeActionGroup> ("ActiveSourceActions");
+            if (active_source_actions != null) {
+                AddActionGroup (active_source_actions);
+            }
+                
+            Assembly assembly = Assembly.GetAssembly (active_source.GetType ());
+            string ui_file = active_source.Properties.GetString ("ActiveSourceUIResource");
+            
+            if (ui_file != null) {
+                using (StreamReader reader = new StreamReader (assembly.GetManifestResourceStream (ui_file))) {
+                    active_source_uiid = ui_manager.AddUiFromString (reader.ReadToEnd ());
+                }
+            }
+        }
+        
         public Action this[string actionId] {
             get { return FindAction (actionId); }
         }
@@ -154,7 +194,7 @@ namespace Banshee.Gui
             get { return ui_manager; }
         }
         
-        public ActionGroup GlobalActions {
+        public GlobalActions GlobalActions {
             get { return global_actions; }
         }
         

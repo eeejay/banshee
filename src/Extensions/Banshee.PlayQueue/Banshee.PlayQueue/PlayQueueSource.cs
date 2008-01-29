@@ -51,6 +51,8 @@ namespace Banshee.PlayQueue
         private static string special_playlist_name = typeof (PlayQueueSource).ToString ();
 
         private LibraryTrackInfo playing_track;
+        private BansheeActionGroup actions;
+        private bool actions_loaded = false;
         
         public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null)
         {
@@ -59,7 +61,6 @@ namespace Banshee.PlayQueue
             Order = 0;
             Properties.SetString ("IconName", "audio-x-generic");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
-            Properties.SetString ("GtkActionPath", "/PlayQueueContextMenu");
             
             ((TrackListDatabaseModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID ASC";
             
@@ -69,7 +70,6 @@ namespace Banshee.PlayQueue
             ServiceManager.SourceManager.AddSource (this);
             
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
-            uia_service.UIManager.AddUiFromResource ("Actions.xml");
             uia_service.TrackActions.Add (new ActionEntry [] {
                 new ActionEntry ("AddToPlayQueueAction", Stock.Add,
                     Catalog.GetString ("Add to Play Queue"), null,
@@ -77,6 +77,7 @@ namespace Banshee.PlayQueue
                     OnAddToPlayQueue)
             });
             
+            actions = new BansheeActionGroup ("PlayQueueSource");
             uia_service.GlobalActions.Add (new ActionEntry [] {
                 new ActionEntry ("ClearPlayQueueAction", Stock.Clear,
                     Catalog.GetString ("Clear Play Queue"), null,
@@ -84,8 +85,14 @@ namespace Banshee.PlayQueue
                     OnClearPlayQueue)
             });
             
-            UpdateActions ();
+            uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
             
+            Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
+            Properties.SetString ("GtkActionPath", "/PlayQueueContextMenu");
+            
+            actions_loaded = true;
+            
+            UpdateActions ();
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
         }
         
@@ -108,7 +115,10 @@ namespace Banshee.PlayQueue
         
         protected override void OnUpdated ()
         {
-            UpdateActions ();
+            if (actions_loaded) {
+                UpdateActions ();
+            }
+            
             base.OnUpdated ();
         }
         
@@ -138,24 +148,15 @@ namespace Banshee.PlayQueue
         }
         
         private void UpdateActions ()
-        {
+        {   
             InterfaceActionService uia_service = ServiceManager.Get <InterfaceActionService> ();
             if (uia_service == null) {
                 return;
             }
             
-            Source source = ServiceManager.SourceManager.ActiveSource;
-            
-            Action clear_action = uia_service.GlobalActions["ClearPlayQueueAction"]; 
-            if (clear_action != null) {
-                clear_action.Visible = ServiceManager.SourceManager.ActiveSource == this;
-                clear_action.Sensitive = Count > 0;
-            }
-            
-            Action add_to_queue_action = uia_service.TrackActions["AddToPlayQueueAction"];
-            if (add_to_queue_action != null) {
-                add_to_queue_action.Visible = ServiceManager.SourceManager.ActiveSource != this;
-            }
+            uia_service.GlobalActions.UpdateAction ("ClearPlayQueueAction", true, Count > 0);
+            uia_service.TrackActions.UpdateAction ("AddToPlayQueueAction", 
+                ServiceManager.SourceManager.ActiveSource != this, true);
         }
         
         void IBasicPlaybackController.First ()

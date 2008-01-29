@@ -10,7 +10,6 @@ SOURCES =  \
 	Hyena.CommandLine/CommandLineParser.cs \
 	Hyena.CommandLine/Layout.cs \
 	Hyena.CommandLine/LayoutGroup.cs \
-	Hyena.CommandLine/LayoutGroupAttribute.cs \
 	Hyena.CommandLine/LayoutOption.cs \
 	Hyena.Data.Query/DateQueryValue.cs \
 	Hyena.Data.Query/FileSizeQueryValue.cs \
@@ -35,8 +34,8 @@ SOURCES =  \
 	Hyena.Data.Sqlite/SqliteModelCache.cs \
 	Hyena.Data.Sqlite/SqliteModelProvider.cs \
 	Hyena.Data/ArrayModelCache.cs \
-	Hyena.Data/DictionaryModelCache.cs \
 	Hyena.Data/ColumnDescription.cs \
+	Hyena.Data/DictionaryModelCache.cs \
 	Hyena.Data/ICacheableModel.cs \
 	Hyena.Data/ICareAboutView.cs \
 	Hyena.Data/IFilterable.cs \

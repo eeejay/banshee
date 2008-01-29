@@ -71,6 +71,8 @@
     <File name="Hyena.SExpEngine/StringFunctionSet.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.SExpEngine/TreeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.SExpEngine/UtilityFunctionSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/ArrayModelCache.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data/DictionaryModelCache.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

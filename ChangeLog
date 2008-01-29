@@ -1,5 +1,31 @@
 2008-01-29  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:
+	Make protected properties public - they should be since they are just
+	wrappers to functionality that can be used via alternate API
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	Automatically load/unload XML UI resources and actions for the active
+	source if actions and UI are set in the source properties
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	Do not crash if the source context menu is null
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	Reset the highlight on left mouse click
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Split the XML UI between two definitions since one needs loading/unloading
+	as the active source changes (the toolbar UI)
+
+	* src/Extensions/Banshee.PlayQueue/Resources/ActiveSourceUI.xml: UI
+	for use when the play queue is the active source
+
+	* src/Extensions/Banshee.PlayQueue/Resources/GlobalUI.xml: UI for the
+	play queue to be loaded at all times
+
+2008-01-29  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/IHasSourceView.cs: Expose
 	ResetHighlight
 

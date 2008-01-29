@@ -3,7 +3,6 @@ TARGET = library
 LINK = $(REF_BANSHEE_SERVICES)
 
 SOURCES =  \
-	$(top_srcdir)/ext/sexp-engine/src/SExpEngine/*.cs \
 	Banshee.AudioProfiles/GConfProfileConfiguration.cs \
 	Banshee.AudioProfiles/Pipeline.cs \
 	Banshee.AudioProfiles/PipelineVariable.cs \

@@ -295,6 +295,10 @@ namespace Banshee.Sources.Gui
         {
             TreePath path;
             
+            if (evnt.Button == 1) {
+                ResetHighlight ();
+            }
+            
             if(!GetPathAtPos((int)evnt.X, (int)evnt.Y, out path)) {
                 return true;
             }
