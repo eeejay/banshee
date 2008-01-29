@@ -59,6 +59,7 @@ namespace Banshee.PlayQueue
             Order = 0;
             Properties.SetString ("IconName", "audio-x-generic");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
+            Properties.SetString ("GtkActionPath", "/PlayQueueContextMenu");
             
             ((TrackListDatabaseModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID ASC";
             

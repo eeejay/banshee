@@ -9,4 +9,7 @@
             <menuitem name="AddToPlayQueue" action="AddToPlayQueueAction"></menuitem>
         </placeholder>
     </popup>
+    <popup name="PlayQueueContextMenu">
+        <menuitem action="ClearPlayQueueAction"></menuitem>
+    </popup>
 </ui>

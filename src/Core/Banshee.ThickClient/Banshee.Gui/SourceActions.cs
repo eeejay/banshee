@@ -156,6 +156,7 @@ namespace Banshee.Gui
             Gtk.Menu menu = action_service.UIManager.GetWidget (path) as Menu;
             menu.Show (); 
             menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
+            menu.SelectionDone += delegate { SourceView.ResetHighlight (); };
         }
             
         private void OnImportSource (object o, EventArgs args)

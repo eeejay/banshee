@@ -402,6 +402,11 @@ namespace Nereid
         {
             source_view.BeginRenameSource (source);
         }
+        
+        public void ResetHighlight ()
+        {
+            source_view.ResetHighlight ();
+        }
 
 #endregion
         

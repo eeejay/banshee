@@ -50,6 +50,7 @@ namespace Banshee.Sources.Gui
         private TreeStore store;
         private TreeViewColumn focus_column;
         private SourceRowRenderer renderer;
+        private TreePath highlight_path;
         private int currentTimeout = -1;
         
         private static TargetEntry [] dnd_source_entries = new TargetEntry [] {
@@ -100,7 +101,7 @@ namespace Banshee.Sources.Gui
             };
             
             ServiceManager.SourceManager.ActiveSourceChanged += delegate(SourceEventArgs args) {
-                ResetHighlight();
+                ResetSelection();
             };
             
             ServiceManager.SourceManager.SourceUpdated += delegate(SourceEventArgs args) {
@@ -110,14 +111,8 @@ namespace Banshee.Sources.Gui
             };
             
             ServiceManager.PlaybackController.SourceChanged += delegate {
-                QueueDraw ();
+                QueueDraw();
             };
-            
-            if(ServiceManager.Contains ("GtkElementsService")) {
-                ServiceManager.Get<Banshee.Gui.GtkElementsService> ("GtkElementsService").ThemeChanged += delegate {
-                    QueueDraw();
-                };
-            }
         }
 
         private TreeIter FindSource(Source source)
@@ -262,6 +257,7 @@ namespace Banshee.Sources.Gui
             SourceRowRenderer renderer = (SourceRowRenderer)cell;
             renderer.view = this;
             renderer.source = (Source)store.GetValue(iter, 0);
+            renderer.path = store.GetPath (iter);
             
             if(renderer.source == null) {
                 return;
@@ -324,20 +320,7 @@ namespace Banshee.Sources.Gui
                 
             } else if(evnt.Button == 3) {
                 HighlightPath(path);
-
                 OnPopupMenu ();
-                /*ServiceManager.SourceManager.SensitizeActions(source);
-
-                string group_name = source.ActionPath == null ? "/SourceMenu" : source.ActionPath;
-                Menu source_menu = Globals.ActionManager.GetWidget(group_name) as Menu;
-                source_menu.SelectionDone += delegate {
-                    ServiceManager.SourceManager.SensitizeActions(ServiceManager.SourceManager.ActiveSource);
-                    ResetHighlight();
-                };
-            
-                source_menu.Popup(null, null, null, 0, evnt.Time);
-                source_menu.Show();*/
-                
                 return true;
             }
             
@@ -346,7 +329,7 @@ namespace Banshee.Sources.Gui
 
         protected override bool OnPopupMenu ()
         {
-            ServiceManager.Get<InterfaceActionService> ("InterfaceActionService").SourceActions["SourceContextMenuAction"].Activate ();
+            ServiceManager.Get<InterfaceActionService> ().SourceActions["SourceContextMenuAction"].Activate ();
             return true;
         }
 
@@ -571,11 +554,6 @@ namespace Banshee.Sources.Gui
             }*/
         }
         
-        public void HighlightPath(TreePath path)
-        {
-            Selection.SelectPath(path);
-        }
-        
         public Source GetSource(TreeIter iter)
         {
             return store.GetValue(iter, 0) as Source;
@@ -592,26 +570,43 @@ namespace Banshee.Sources.Gui
             return null;
         }
         
-        public void ResetHighlight()
+        private void ResetSelection()
         {
             TreeIter iter = FindSource (ServiceManager.SourceManager.ActiveSource);
             
             if(!iter.Equals(TreeIter.Zero)){
                 Selection.SelectIter(iter);
             }
-         }
+        }
+        
+        public void HighlightPath(TreePath path)
+        {
+            //Selection.SelectPath(path);
+            highlight_path = path;
+            QueueDraw ();
+        }
+        
+        public void ResetHighlight()
+        {   
+            highlight_path = null;
+            QueueDraw ();
+        }
         
         public Source HighlightedSource {
             get {
                 TreeModel model;
                 TreeIter iter;
                 
-                if(!Selection.GetSelected(out model, out iter)) {
+                if (highlight_path == null || !store.GetIter (out iter, highlight_path)) {
                     return null;
                 }
                     
                 return store.GetValue(iter, 0) as Source;
             }
+        }
+        
+        internal TreePath HighlightedPath {
+            get { return highlight_path; }
         }
 
         private bool editing_row = false;

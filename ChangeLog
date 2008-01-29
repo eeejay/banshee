@@ -1,3 +1,25 @@
+2008-01-29  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/IHasSourceView.cs: Expose
+	ResetHighlight
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Reset
+	the highlight in the source view when done with the context menu
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Draw a special highlight for the highlight path
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Add
+	a concept of a highlight path which is now different from the selected
+	path to avoid confusion of the selection changing source when using the
+	context menu
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Implement ResetHightlight
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Resources/Actions.xml:
+	Expose a source context menu
+
 2008-01-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Make the status

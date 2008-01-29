@@ -33,6 +33,7 @@ namespace Banshee.Gui
     public interface IHasSourceView
     {
         Source HighlightedSource { get; }
+        void ResetHighlight ();
         void BeginRenameSource (Source source);
     }
 }
