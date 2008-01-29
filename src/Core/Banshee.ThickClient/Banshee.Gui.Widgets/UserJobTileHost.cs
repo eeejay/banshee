@@ -35,19 +35,24 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Gui.Widgets
 {
-    public class UserJobTileHost : VBox
+    public class UserJobTileHost : Alignment
     {
+        private VBox box;
         private Dictionary<IUserJob, UserJobTile> job_tiles = new Dictionary<IUserJob, UserJobTile> ();
         
-        public UserJobTileHost ()
+        public UserJobTileHost () : base (0.0f, 0.0f, 1.0f, 1.0f)
         {
+            TopPadding = 5;
+
+            box = new VBox ();
+            box.Spacing = 8;
+            box.Show ();
+
             if (ServiceManager.Contains ("UserJobManager")) {
                 UserJobManager job_manager = ServiceManager.Get<UserJobManager> ("UserJobManager");
                 job_manager.JobAdded += OnJobAdded;
                 job_manager.JobRemoved += OnJobRemoved;
             }
-            
-            Spacing = 8;
         }
         
         private void AddJob (IUserJob job)
@@ -59,7 +64,7 @@ namespace Banshee.Gui.Widgets
             if ((job.DelayShow && job.Progress < 0.33) || !job.DelayShow) {
                 UserJobTile tile = new UserJobTile (job);
                 job_tiles.Add (job, tile);
-                PackStart (tile, false, false, 0);
+                box.PackStart (tile, false, false, 0);
                 tile.Show ();
                 Show ();
             }
@@ -85,7 +90,7 @@ namespace Banshee.Gui.Widgets
             lock (this) {
                 if (job_tiles.ContainsKey (args.Job)) {
                     UserJobTile tile = job_tiles[args.Job];
-                    Remove (tile);
+                    box.Remove (tile);
                     
                     if (job_tiles.Count <= 0) {
                         Hide ();

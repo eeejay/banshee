@@ -42,7 +42,7 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Sources
 {
-    public abstract class DatabaseSource : Source, ITrackModelSource
+    public abstract class DatabaseSource : Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator
     {
         protected delegate void TrackRangeHandler (TrackListDatabaseModel model, RangeCollection.Range range);
 
@@ -65,6 +65,26 @@ namespace Banshee.Sources
 
         public override int Count {
             get { return track_model.Count; }
+        }
+
+        public override int UnfilteredCount {
+            get { return track_model.UnfilteredCount; }
+        }
+
+        public TimeSpan Duration {
+            get { return track_model.Duration; }
+        }
+
+        public TimeSpan FilteredDuration {
+            get { return track_model.FilteredDuration; }
+        }
+
+        public long FileSize {
+            get { return track_model.FileSize; }
+        }
+
+        public long FilteredFileSize {
+            get { return track_model.FilteredFileSize; }
         }
 
         public override string FilterQuery {

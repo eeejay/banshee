@@ -33,6 +33,7 @@ using System.Text;
 using System.Collections.Generic;
 
 using Mono.Unix;
+using Hyena;
 using Hyena.Data;
 using Hyena.Data.Sqlite;
 using Hyena.Data.Query;
@@ -48,8 +49,13 @@ namespace Banshee.Collection.Database
         private BansheeDbConnection connection;
         private BansheeModelProvider<LibraryTrackInfo> provider;
         private BansheeModelCache<LibraryTrackInfo> cache;
-        private int filtered_count;
         private int count;
+        private TimeSpan duration;
+        private long filesize;
+
+        private int filtered_count;
+        private TimeSpan filtered_duration;
+        private long filtered_filesize;
         
         private ISortableColumn sort_column;
         private string sort_query;
@@ -65,12 +71,12 @@ namespace Banshee.Collection.Database
         
         private int rows_in_view;
         
-        
         public TrackListDatabaseModel (BansheeDbConnection connection, string uuid)
         {
             this.connection = connection;
             provider = LibraryTrackInfo.Provider;
             cache = new BansheeModelCache <LibraryTrackInfo> (connection, uuid, this, provider);
+            cache.AggregatesUpdated += HandleCacheAggregatesUpdated;
             Refilter ();
         }
         
@@ -203,6 +209,12 @@ namespace Banshee.Collection.Database
                 cache.Clear ();
             }
         }
+
+        private void HandleCacheAggregatesUpdated (IDataReader reader)
+        {
+            filtered_duration = TimeSpan.FromMilliseconds (reader.IsDBNull (1) ? 0 : Convert.ToInt64 (reader[1]));
+            filtered_filesize = reader.IsDBNull (2) ? 0 : Convert.ToInt64 (reader[2]);
+        }
         
         public override void Clear()
         {
@@ -220,9 +232,13 @@ namespace Banshee.Collection.Database
                 provider.From, JoinFragment, provider.Where, ConditionFragment
             );
 
-            count = connection.QueryInt32 (String.Format (
-                "SELECT COUNT(*) {0}", unfiltered_query
-            ));
+            using (IDataReader reader = connection.ExecuteReader (String.Format (
+                "SELECT COUNT(*), {0} {1}", SelectAggregates, unfiltered_query)))
+            {
+                count = Convert.ToInt32 (reader[0]);
+                duration = TimeSpan.FromMilliseconds (reader.IsDBNull (1) ? 0 : Convert.ToInt64 (reader[1]));
+                filesize = reader.IsDBNull (2) ? 0 : Convert.ToInt64 (reader[2]);
+            }
 
             StringBuilder qb = new StringBuilder ();
                 
@@ -271,11 +287,27 @@ namespace Banshee.Collection.Database
         }
 
         public override int Count {
-            get { return count; }
+            get { return filtered_count; }
+        }
+
+        public TimeSpan Duration {
+            get { return duration; }
+        }
+
+        public long FileSize {
+            get { return filesize; }
         }
         
-        public int FilteredCount {
-            get { return filtered_count; }
+        public int UnfilteredCount {
+            get { return count; }
+        }
+
+        public TimeSpan FilteredDuration {
+            get { return filtered_duration; }
+        }
+
+        public long FilteredFileSize {
+            get { return filtered_filesize; }
         }
         
         public string Filter {
@@ -391,6 +423,10 @@ namespace Banshee.Collection.Database
         // Implement ICacheableModel
         public int FetchCount {
             get { return RowsInView > 0 ? RowsInView * 5 : 100; }
+        }
+
+        public string SelectAggregates {
+            get { return "SUM(CoreTracks.Duration), SUM(CoreTracks.FileSize)"; }
         }
 
         // Implement IDatabaseModel

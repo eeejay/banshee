@@ -47,7 +47,7 @@ namespace Banshee.Database
             Init ();
         }
         
-        protected override sealed string TableName {
+        public override sealed string TableName {
             get { return table_name; }
         }
         

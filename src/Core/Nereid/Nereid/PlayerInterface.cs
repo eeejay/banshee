@@ -57,6 +57,7 @@ namespace Nereid
         private VBox primary_vbox;
         private Toolbar header_toolbar;
         private HPaned views_pane;
+        private HBox footer_box;
         private ViewContainer view_container;
         
         // Major Interaction Components
@@ -64,6 +65,7 @@ namespace Nereid
         private CompositeTrackListView composite_view;
         private ScrolledWindow object_view_scroll;
         private ObjectListView object_view;
+        private Label status_label;
         
         // Cached service references
         private GtkElementsService elements_service;
@@ -122,6 +124,8 @@ namespace Nereid
            
             BuildHeader ();
             BuildViews ();
+            BuildFooter ();
+
             
             primary_vbox.Show ();
             Add (primary_vbox);
@@ -158,7 +162,6 @@ namespace Nereid
         private void BuildViews ()
         {
             VBox source_box = new VBox ();
-            source_box.Spacing = 5;
             
             views_pane = new HPaned ();
             view_container = new ViewContainer ();
@@ -188,6 +191,25 @@ namespace Nereid
             views_pane.Show ();
             
             primary_vbox.PackStart (views_pane, true, true, 0);
+        }
+
+        private void BuildFooter ()
+        {
+            footer_box = new HBox ();
+            footer_box.Spacing = 2;
+
+            status_label = new Label ();
+            //footer_box.PackStart (shuffle_toggle_button, false, false, 0);
+            //footer_box.PackStart (repeat_toggle_button, false, false, 0);
+            footer_box.PackStart (status_label, true, true, 0);
+            //footer_box.PackStart (song_properties_button, false, false, 0);
+
+            Alignment align = new Alignment (0.5f, 0.5f, 1.0f, 1.0f);
+            align.TopPadding = 5;
+            align.Add (footer_box);
+            align.ShowAll ();
+
+            primary_vbox.PackStart (align, false, true, 0);
         }
 
 #endregion
@@ -269,7 +291,7 @@ namespace Nereid
         private void OnActiveSourceChanged (SourceEventArgs args)
         {
             Source source = ServiceManager.SourceManager.ActiveSource;
-            
+
             view_container.SearchSensitive = source != null && source.CanSearch;
             
             if (source == null) {
@@ -285,7 +307,7 @@ namespace Nereid
                 view_container.SearchEntry.Query = source.FilterQuery;
                 view_container.SearchEntry.ActivateFilter ((int)source.FilterType);
             }
-            
+
             // Clear any models previously connected to the views
             if (!(source is ITrackModelSource)) {
                 composite_view.SetModels (null, null, null);
@@ -298,8 +320,12 @@ namespace Nereid
             
             // Connect the source models to the views if possible
             if (source is ITrackModelSource) {
+                if (composite_view.TrackModel != null) {
+                    composite_view.TrackModel.Reloaded -= HandleTrackModelReloaded;
+                }
                 ITrackModelSource track_source = (ITrackModelSource)source;
                 composite_view.SetModels (track_source.TrackModel, track_source.ArtistModel, track_source.AlbumModel);
+                composite_view.TrackModel.Reloaded += HandleTrackModelReloaded;
                 composite_view.TrackView.HeaderVisible = true;
                 view_container.Content = composite_view;
             } else if (source is Hyena.Data.IObjectListModel) {
@@ -314,6 +340,7 @@ namespace Nereid
                 view_container.Content = object_view_scroll;
             }
             
+            UpdateStatusBar ();
             view_container.SearchEntry.Ready = true;
         }
         
@@ -453,6 +480,11 @@ namespace Nereid
 
 #region Helper Functions
 
+        private void HandleTrackModelReloaded (object sender, EventArgs args)
+        {
+            UpdateStatusBar ();
+        }
+
         private void SetPlaybackControllerSource (Source source)
         {
             // Set the source from which to play to the current source since
@@ -462,6 +494,16 @@ namespace Nereid
             }
             
             ServiceManager.PlaybackController.Source = (ITrackModelSource)source;    
+        }
+
+        private void UpdateStatusBar ()
+        {
+            if (ServiceManager.SourceManager.ActiveSource == null) {
+                status_label.Text = String.Empty;
+                return;
+            }
+
+            status_label.Text = ServiceManager.SourceManager.ActiveSource.GetStatusText ();
         }
 
 #endregion

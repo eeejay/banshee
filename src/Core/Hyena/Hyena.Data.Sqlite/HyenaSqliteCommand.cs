@@ -54,13 +54,13 @@ namespace Hyena.Data.Sqlite
 
 #endregion
 
-        public HyenaSqliteCommand (string command)
+        public HyenaSqliteCommand (string command_str)
         {
-            this.command = new SqliteCommand (command);
+            this.command = new SqliteCommand (command_str);
 
             int num_params = 0;
-            for (int i = 0; i < command.Length; i++) {
-                if (command [i] == '?') {
+            for (int i = 0; i < command_str.Length; i++) {
+                if (command_str [i] == '?') {
                     num_params++;
                 }
             }
@@ -68,9 +68,9 @@ namespace Hyena.Data.Sqlite
             CreateParameters (num_params);
         }
 
-        public HyenaSqliteCommand (string command, params object [] param_values)
+        public HyenaSqliteCommand (string command_str, params object [] param_values)
         {
-            this.command = new SqliteCommand (command);
+            this.command = new SqliteCommand (command_str);
             CreateParameters (param_values.Length);
             ApplyValues (param_values);
         }

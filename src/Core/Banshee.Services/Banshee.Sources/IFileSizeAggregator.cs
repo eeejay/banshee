@@ -1,10 +1,10 @@
 //
-// ICacheableDatabaseModel.cs
+// IFileSizeAggregator.cs
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,15 +26,11 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.Data;
-
-using Hyena.Data;
-
-namespace Hyena.Data.Sqlite
+namespace Banshee.Sources
 {
-    public interface ICacheableDatabaseModel : ICacheableModel
+    public interface IFileSizeAggregator
     {
-        string ReloadFragment { get; }
-        string SelectAggregates { get; }
+        long FileSize { get; }
+        long FilteredFileSize { get; }
     }
 }

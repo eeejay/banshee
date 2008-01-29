@@ -48,6 +48,9 @@ namespace Hyena.Data.Sqlite
         private bool warm;
         private int first_order_id;
 
+        public delegate void AggregatesUpdatedEventHandler (IDataReader reader);
+        public event AggregatesUpdatedEventHandler AggregatesUpdated;
+
         public SqliteModelCache (HyenaSqliteConnection connection,
                            string uuid,
                            ICacheableDatabaseModel model,
@@ -60,11 +63,17 @@ namespace Hyena.Data.Sqlite
             
             CheckCacheTable ();
 
-            count_command = new HyenaSqliteCommand (
-                String.Format (
+            if (model.SelectAggregates != null) {
+                count_command = new HyenaSqliteCommand (String.Format (@"
+                    SELECT COUNT(*), {0} FROM {1} WHERE {2}
+                        IN (SELECT ItemID FROM {3} WHERE ModelID = ?)",
+                    model.SelectAggregates, provider.TableName, provider.PrimaryKey, CacheTableName
+                ));
+            } else {
+                count_command = new HyenaSqliteCommand (String.Format (
                     "SELECT COUNT(*) FROM {0} WHERE ModelID = ?", CacheTableName
-                )
-            );
+                ));
+            }
 
             FindOrCreateCacheModelId (String.Format ("{0}-{1}", uuid, typeof(T).Name));
 
@@ -116,7 +125,7 @@ namespace Hyena.Data.Sqlite
         public int Count {
             get { return rows; }
         }
-        
+
         public int CacheId {
             get { return uid; }
         }
@@ -152,7 +161,7 @@ namespace Hyena.Data.Sqlite
                 connection.Execute (reload_sql + model.ReloadFragment);
             //}
             first_order_id = -1;
-            UpdateCount ();
+            UpdateAggregates ();
             return rows;
         }
 
@@ -171,11 +180,16 @@ namespace Hyena.Data.Sqlite
             //}
         }
         
-        protected void UpdateCount ()
+        protected void UpdateAggregates ()
         {
-            //using (new Timer (String.Format ("Counting items for {0}", db_model))) {
-                rows = Convert.ToInt32 (connection.ExecuteScalar (count_command.ApplyValues (uid)));
-            //}
+            using (IDataReader reader = connection.ExecuteReader (count_command.ApplyValues (uid))) {
+                rows = Convert.ToInt32 (reader[0]);
+
+                AggregatesUpdatedEventHandler handler = AggregatesUpdated;
+                if (handler != null) {
+                    handler (reader);
+                }
+            }
         }
         
         private void FindOrCreateCacheModelId (string id)
@@ -195,7 +209,7 @@ namespace Hyena.Data.Sqlite
                 //Console.WriteLine ("Found existing cache for {0}: {1}", id, uid);
                 warm = true;
                 Clear ();
-                UpdateCount ();
+                UpdateAggregates ();
             }
         }
 

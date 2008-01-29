@@ -1,3 +1,54 @@
+2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Implement SelectAggregates.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Add Duration and FileSize properties.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Sources/IDurationAggregator.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/IFileSizeAggregator.cs: New
+	interfaces for determining if a source has certain properties.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Implement
+	both new interfaces.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: New GetStatusText
+	method that the interface with default implementation that returns count,
+	duration, and file size.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	Place VBox inside of Alignment so we can get our top padding, but only
+	show it when we are shown (instead of spacing in our parent vbox that is
+	always there).
+
+	* src/Core/Hyena/Hyena.Data.Query/FileSizeQueryValue.cs: Add new ctor.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Rename variable
+	for clarity.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/ICacheableDatabaseModel.cs: Add
+	SelectAggregates property, used by models to load aggregate values (eg
+	SUM(FileSize) when the count is taken.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Add support for
+	SelectAggregate properties.  Add AggregatesUpdated event so models can
+	handle the results of the query themselves (except the count, which we
+	still handle).
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Make TableName
+	public.
+
+	* src/Core/Hyena/Hyena.Data/IFilterable.cs: Revert previous
+	UnfilteredCount -> FilteredCount change.
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Add BuildFooter method, add
+	the status label in the footer, keep it updated as the source track model
+	changes.
+
 2008-01-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:

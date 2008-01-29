@@ -49,6 +49,17 @@ namespace Hyena.Data.Query
             get { return factor; }
         }
 
+        public FileSizeQueryValue ()
+        {
+        }
+
+        public FileSizeQueryValue (long bytes)
+        {
+            value = bytes;
+            IsEmpty = false;
+            DetermineFactor ();
+        }
+
         public override void ParseUserQuery (string input)
         {
             if (input.Length > 1 && (input[input.Length - 1] == 'b' || input[input.Length - 1] == 'B')) {
@@ -75,6 +86,11 @@ namespace Hyena.Data.Query
         public override void ParseXml (XmlElement node)
         {
             base.ParseUserQuery (node.InnerText);
+            DetermineFactor ();
+        }
+
+        protected void DetermineFactor ()
+        {
             if (!IsEmpty && value != 0) {
                 foreach (FileSizeFactor factor in Enum.GetValues (typeof(FileSizeFactor))) {
                     if (value >= (long) factor) {

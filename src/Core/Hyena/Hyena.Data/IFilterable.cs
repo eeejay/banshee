@@ -32,6 +32,6 @@ namespace Hyena.Data
     {
         void Refilter();
         string Filter { get; set; }
-        int FilteredCount { get; }
+        int UnfilteredCount { get; }
     }
 }

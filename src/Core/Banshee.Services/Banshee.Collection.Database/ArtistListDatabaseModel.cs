@@ -104,6 +104,8 @@ namespace Banshee.Collection.Database
         public int FetchCount {
             get { return 20; }
         }
+
+        public string SelectAggregates { get { return null; } }
         
         public string ReloadFragment {
             get { return reload_fragment; }

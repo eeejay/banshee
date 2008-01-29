@@ -27,12 +27,14 @@
 //
 
 using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
 using Mono.Unix;
 
 using Hyena.Data;
+using Hyena.Data.Query;
 
 using Banshee.Collection;
 using Banshee.ServiceStack;
@@ -288,8 +290,44 @@ namespace Banshee.Sources
             get { return true; }
         }
         
-        public virtual int Count {
-            get { return 0; }
+        public abstract int Count { get; }
+        public virtual int UnfilteredCount { get { return Count; } }
+
+        public virtual string GetStatusText ()
+        {
+            StringBuilder builder = new StringBuilder ();
+
+            int count = Count;
+            builder.AppendFormat (Catalog.GetPluralString ("{0} Item", "{0} Items", count), count);
+            
+            if (this is IDurationAggregator) {
+                builder.Append (", ");
+
+                TimeSpan span = (this as IDurationAggregator).FilteredDuration; 
+                if (span.Days > 0) {
+                    builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", span.Days), span.Days);
+                    builder.Append (", ");
+                }
+                
+                if (span.Hours > 0) {
+                    builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", span.Hours), span.Hours);
+                    builder.Append (", ");
+                }
+                
+                builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", span.Minutes), span.Minutes);
+                builder.Append (", ");
+                builder.AppendFormat (Catalog.GetPluralString ("{0} second", "{0} seconds", span.Seconds), span.Seconds);
+            }
+
+            if (this is IFileSizeAggregator) {
+                long bytes = (this as IFileSizeAggregator).FileSize;
+                if (bytes > 0) {
+                    builder.Append (", ");
+                    builder.AppendFormat (new FileSizeQueryValue (bytes).ToUserQuery ());
+                }
+            }
+            
+            return builder.ToString ();
         }
         
         string IService.ServiceName {

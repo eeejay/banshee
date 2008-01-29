@@ -57,7 +57,7 @@ namespace Hyena.Data.Sqlite
         
         private const string HYENA_DATABASE_NAME = "hyena_database_master";
 
-        protected abstract string TableName { get; }
+        public abstract string TableName { get; }
         protected abstract int ModelVersion { get; }
         protected abstract int DatabaseVersion { get; }
         protected abstract void MigrateTable (int old_version);

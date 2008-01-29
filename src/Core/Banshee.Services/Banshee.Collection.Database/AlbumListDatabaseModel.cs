@@ -135,6 +135,8 @@ namespace Banshee.Collection.Database
             get { return 20; }
         }
 
+        public string SelectAggregates { get { return null; } }
+
         //private const string primary_key = "CoreAlbums.AlbumID";
 
         public string ReloadFragment {
