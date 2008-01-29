@@ -83,6 +83,10 @@ namespace Banshee.Sources
         public virtual bool CanDeleteTracks {
             get { return true; }
         }
+        
+        public virtual bool ConfirmRemoveTracks {
+            get { return true; }
+        }
 
         public override string TrackModelPath {
             get { return DBusServiceManager.MakeObjectPath (track_model); }

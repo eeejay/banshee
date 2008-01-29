@@ -48,6 +48,7 @@ namespace Banshee.Sources
 
         bool CanRemoveTracks { get; }
         bool CanDeleteTracks { get; }
+        bool ConfirmRemoveTracks { get; }
         
         bool ShowBrowser { get; }
     }

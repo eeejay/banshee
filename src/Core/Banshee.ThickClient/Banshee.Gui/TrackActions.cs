@@ -388,6 +388,10 @@ namespace Banshee.Gui
 
         private static bool ConfirmRemove (ITrackModelSource source, bool delete, int selCount)
         {
+            if (!source.ConfirmRemoveTracks) {
+                return true;
+            }
+            
             bool ret = false;
             string header = null;
             string message = null;

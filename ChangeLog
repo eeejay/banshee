@@ -1,5 +1,19 @@
 2008-01-28  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Playlist/PlayQueueSource.cs: Change
+	the sort order so 'add to play queue' works as expected; override 
+	ConfirmRemoveTracks so a prompt does not invade your life when you 
+	remove from the queue
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: 
+	* src/Core/Banshee.Services/Banshee.Sources/ITrackModelSource.cs:
+	Added ConfirmRemoveTracks
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Do not
+	confirm if the source does not want you to when removing tracks
+
+2008-01-28  Aaron Bockover  <abock@gnome.org>
+
 	Okay, 5% to go with the play queue ... it's working
 
 	* src/Core/Banshee.Services/Banshee.Playlist/PlayQueueSource.cs: Implement

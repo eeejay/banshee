@@ -61,7 +61,7 @@ namespace Banshee.Playlist
             Order = 0;
             Properties.SetString ("IconName", "audio-x-generic");
             
-            ((TrackListDatabaseModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID DESC";
+            ((TrackListDatabaseModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID ASC";
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
             ServiceManager.PlaybackController.Transition += OnCanonicalPlaybackControllerTransition;
@@ -136,6 +136,10 @@ namespace Banshee.Playlist
         }
         
         public override bool ShowBrowser {
+            get { return false; }
+        }
+        
+        public override bool ConfirmRemoveTracks {
             get { return false; }
         }
     
