@@ -62,15 +62,15 @@ namespace Banshee.PlaybackController
         private PlayerEngineService player_engine;
         private ITrackModelSource source;
         
-        public event EventHandler Stopped;
-        
         private event PlaybackControllerStoppedHandler dbus_stopped;
         event PlaybackControllerStoppedHandler IPlaybackController.Stopped {
             add { dbus_stopped += value; }
             remove { dbus_stopped -= value; }
         }
         
+        public event EventHandler Stopped;
         public event EventHandler SourceChanged;
+        public event EventHandler Transition;
         
         public PlaybackControllerService ()
         {
@@ -117,8 +117,10 @@ namespace Banshee.PlaybackController
         
         public void First ()
         {
-            if (Source is IPlaybackController) {
-                ((IPlaybackController)Source).First ();
+            OnTransition ();
+            
+            if (Source is IBasicPlaybackController) {
+                ((IBasicPlaybackController)Source).First ();
             } else {
                 ((ICanonicalPlaybackController)this).First ();
             }
@@ -126,8 +128,10 @@ namespace Banshee.PlaybackController
         
         public void Next ()
         {
-            if (Source is IPlaybackController) {
-                ((IPlaybackController)Source).Next ();
+            OnTransition ();
+            
+            if (Source is IBasicPlaybackController) {
+                ((IBasicPlaybackController)Source).Next ();
             } else {
                 ((ICanonicalPlaybackController)this).Next ();
             }
@@ -135,8 +139,10 @@ namespace Banshee.PlaybackController
         
         public void Previous ()
         {
-            if (Source is IPlaybackController) {
-                ((IPlaybackController)Source).Previous ();
+            OnTransition ();
+            
+            if (Source is IBasicPlaybackController) {
+                ((IBasicPlaybackController)Source).Previous ();
             } else {
                 ((ICanonicalPlaybackController)this).Previous ();
             }
@@ -224,6 +230,14 @@ namespace Banshee.PlaybackController
             PlaybackControllerStoppedHandler dbus_handler = dbus_stopped;
             if (dbus_handler != null) {
                 dbus_handler ();
+            }
+        }
+        
+        protected virtual void OnTransition ()
+        {
+            EventHandler handler = Transition;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
             }
         }
         

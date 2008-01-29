@@ -1,4 +1,21 @@
 2008-01-28  Aaron Bockover  <abock@gnome.org>
+
+	Okay, 5% to go with the play queue ... it's working
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlayQueueSource.cs: Implement
+	the actual play queue logic in the proper place this time; remove the
+	top track when done playing/skipped
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Added a Transition event that the controller will raise before performing	
+	any transition methods (Next, Previous)
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/IBasicPlaybackController.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/ICanonicalPlaybackController.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/IPlaybackController.cs:
+	Fix up interface dependency chain
+
+2008-01-28  Aaron Bockover  <abock@gnome.org>
 	
 	* src/Core/Banshee.Services/Banshee.PlaybackController/ICanonicalPlaybackController.cs:
 	Interface for implementing explicitly inside of the playback controller

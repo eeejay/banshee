@@ -1,10 +1,10 @@
-// 
-// IPlaybackController.cs
+//
+// IBasicPlaybackController.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,14 +28,10 @@
 
 namespace Banshee.PlaybackController
 {
-    public delegate void PlaybackControllerStoppedHandler ();
-
-    public interface IPlaybackController : IBasicPlaybackController
+    public interface IBasicPlaybackController
     {
-        event PlaybackControllerStoppedHandler Stopped;
-    
-        PlaybackShuffleMode ShuffleMode { get; set; }
-        PlaybackRepeatMode RepeatMode { get; set; }
-        bool StopWhenFinished { get; set; }
+        void First ();
+        void Next ();
+        void Previous ();
     }
 }

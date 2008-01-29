@@ -33,20 +33,27 @@ using Mono.Unix;
 using Hyena.Data.Sqlite;
 
 using Banshee.ServiceStack;
+using Banshee.Sources;
 using Banshee.Database;
+using Banshee.Collection;
 using Banshee.Collection.Database;
+using Banshee.PlaybackController;
+using Banshee.MediaEngine;
 
 namespace Banshee.Playlist
 {
-    public class PlayQueueSource : PlaylistSource
+    public class PlayQueueSource : PlaylistSource, IBasicPlaybackController
     {
         private static string special_playlist_name = typeof (PlayQueueSource).ToString ();
         
         private static PlayQueueSource instance;
         public static PlayQueueSource Instance {
-            get { return instance; }
+            get { lock (typeof (PlayQueueSource)) { return instance; } }
+            private set { lock (typeof (PlayQueueSource)) { instance = value; } }
         }
-    
+        
+        private LibraryTrackInfo playing_track;
+        
         public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null)
         {
             BindToDatabase ();
@@ -56,8 +63,11 @@ namespace Banshee.Playlist
             
             ((TrackListDatabaseModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID DESC";
             
-            if (instance == null) {
-                instance = this;
+            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlaybackController.Transition += OnCanonicalPlaybackControllerTransition;
+            
+            if (Instance == null) {
+                Instance = this;
             }
         }
         
@@ -73,6 +83,51 @@ namespace Banshee.Playlist
             } else {
                 CreateDatabaseEntry (ServiceManager.DbConnection.Connection);
                 DbId = ServiceManager.DbConnection.LastInsertRowId;
+            }
+        }
+        
+        private void OnCanonicalPlaybackControllerTransition (object o, EventArgs args)
+        {
+            if (Count > 0) {
+                ServiceManager.PlaybackController.Source = this;
+            }
+        }
+        
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        { 
+            if (args.Event == PlayerEngineEvent.EndOfStream) {
+                RemoveFirstTrack ();
+            }
+        }
+        
+        void IBasicPlaybackController.First ()
+        {
+        }
+        
+        void IBasicPlaybackController.Next ()
+        {
+            RemoveFirstTrack ();
+            
+            if (Count <= 0) {
+                playing_track = null;
+                ServiceManager.PlaybackController.Source = (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
+                ServiceManager.PlaybackController.Next ();
+                return;
+            }
+            
+            playing_track = (LibraryTrackInfo)TrackModel[0];
+            ServiceManager.PlayerEngine.OpenPlay (playing_track);
+        }
+        
+        void IBasicPlaybackController.Previous ()
+        {
+        }
+        
+        private void RemoveFirstTrack ()
+        {
+            if (playing_track != null) {
+                RemoveTrack (playing_track);
+                playing_track = null;
             }
         }
         

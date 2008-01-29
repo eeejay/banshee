@@ -58,6 +58,7 @@ SOURCES =  \
 	Banshee.Metadata/MetadataSettings.cs \
 	Banshee.Networking/NetworkDetect.cs \
 	Banshee.Networking/NetworkManager.cs \
+	Banshee.PlaybackController/IBasicPlaybackController.cs \
 	Banshee.PlaybackController/ICanonicalPlaybackController.cs \
 	Banshee.PlaybackController/IPlaybackController.cs \
 	Banshee.PlaybackController/IPlaybackControllerExportable.cs \
