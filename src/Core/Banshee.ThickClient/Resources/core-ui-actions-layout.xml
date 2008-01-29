@@ -5,6 +5,7 @@
         <toolitem action="NextAction" />
         <placeholder name="SeekSlider" />
         <placeholder name="TrackInfoDisplay" />
+        <placeholder name="SourceActions" />
         <placeholder name="VolumeButton" />
     </toolbar>
 

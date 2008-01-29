@@ -70,10 +70,21 @@ namespace Banshee.PlayQueue
             uia_service.UIManager.AddUiFromResource ("Actions.xml");
             uia_service.TrackActions.Add (new ActionEntry [] {
                 new ActionEntry ("AddToPlayQueueAction", Stock.Add,
-                    Catalog.GetString ("Add _to Play Queue"), null,
+                    Catalog.GetString ("Add to Play Queue"), null,
                     Catalog.GetString ("Append selected songs to the play queue"),
                     OnAddToPlayQueue)
             });
+            
+            uia_service.GlobalActions.Add (new ActionEntry [] {
+                new ActionEntry ("ClearPlayQueueAction", Stock.Clear,
+                    Catalog.GetString ("Clear Play Queue"), null,
+                    Catalog.GetString ("Remove all tracks from the play queue"),
+                    OnClearPlayQueue)
+            });
+            
+            UpdateActions ();
+            
+            ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
         }
         
         private void BindToDatabase ()
@@ -93,6 +104,12 @@ namespace Banshee.PlayQueue
             }
         }
         
+        protected override void OnUpdated ()
+        {
+            UpdateActions ();
+            base.OnUpdated ();
+        }
+        
         private void OnCanonicalPlaybackControllerTransition (object o, EventArgs args)
         {
             if (Count > 0) {
@@ -110,6 +127,33 @@ namespace Banshee.PlayQueue
         private void OnAddToPlayQueue (object o, EventArgs args)
         {
             AddSelectedTracks (ServiceManager.Get<InterfaceActionService> ().TrackActions.TrackSelector.TrackModel);
+        }
+        
+        private void OnClearPlayQueue (object o, EventArgs args)
+        {
+            RemoveTrackRange ((TrackListDatabaseModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
+            Reload ();
+        }
+        
+        private void UpdateActions ()
+        {
+            InterfaceActionService uia_service = ServiceManager.Get <InterfaceActionService> ();
+            if (uia_service == null) {
+                return;
+            }
+            
+            Source source = ServiceManager.SourceManager.ActiveSource;
+            
+            Action clear_action = uia_service.GlobalActions["ClearPlayQueueAction"]; 
+            if (clear_action != null) {
+                clear_action.Visible = ServiceManager.SourceManager.ActiveSource == this;
+                clear_action.Sensitive = Count > 0;
+            }
+            
+            Action add_to_queue_action = uia_service.TrackActions["AddToPlayQueueAction"];
+            if (add_to_queue_action != null) {
+                add_to_queue_action.Visible = ServiceManager.SourceManager.ActiveSource != this;
+            }
         }
         
         void IBasicPlaybackController.First ()

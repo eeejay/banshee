@@ -1,3 +1,14 @@
+2008-01-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Implemented a clear queue action and set visibility and sensitivity of
+	the queue actions properly
+
+	* src/Extensions/Banshee.PlayQueue/Resources/Actions.xml: Added actions
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Added some more placeholders
+
 2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
