@@ -163,7 +163,7 @@ namespace Banshee.Playlist
 
 #region IUnmapableSource Implementation
 
-        public bool Unmap ()
+        public virtual bool Unmap ()
         {
             if (DbId != null) {
                 ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
@@ -179,11 +179,11 @@ namespace Banshee.Playlist
             return true;
         }
 
-        public bool CanUnmap {
+        public virtual bool CanUnmap {
             get { return true; }
         }
 
-        public bool ConfirmBeforeUnmap {
+        public virtual bool ConfirmBeforeUnmap {
             get { return true; }
         }
 

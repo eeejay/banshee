@@ -1,3 +1,11 @@
+2008-01-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	Make the IUnmappable implementation virtual
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Override CanUnmap, return false
+
 2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:

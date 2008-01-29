@@ -199,5 +199,9 @@ namespace Banshee.PlayQueue
         public override bool ConfirmRemoveTracks {
             get { return false; }
         }
+        
+        public override bool CanUnmap {
+            get { return false; }
+        }
     }
 }
