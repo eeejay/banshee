@@ -27,31 +27,29 @@
 //
 
 using System;
-using System.Data;
+
 using Mono.Unix;
+using Gtk;
 
 using Hyena.Data.Sqlite;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
+using Banshee.Playlist;
 using Banshee.Database;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.PlaybackController;
 using Banshee.MediaEngine;
 
-namespace Banshee.Playlist
+using Banshee.Gui;
+
+namespace Banshee.PlayQueue
 {
     public class PlayQueueSource : PlaylistSource, IBasicPlaybackController
     {
         private static string special_playlist_name = typeof (PlayQueueSource).ToString ();
-        
-        private static PlayQueueSource instance;
-        public static PlayQueueSource Instance {
-            get { lock (typeof (PlayQueueSource)) { return instance; } }
-            private set { lock (typeof (PlayQueueSource)) { instance = value; } }
-        }
-        
+
         private LibraryTrackInfo playing_track;
         
         public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null)
@@ -65,10 +63,17 @@ namespace Banshee.Playlist
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
             ServiceManager.PlaybackController.Transition += OnCanonicalPlaybackControllerTransition;
+
+            ServiceManager.SourceManager.AddSource (this);
             
-            if (Instance == null) {
-                Instance = this;
-            }
+            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
+            uia_service.UIManager.AddUiFromResource ("Actions.xml");
+            uia_service.TrackActions.Add (new ActionEntry [] {
+                new ActionEntry ("AddToPlayQueueAction", Stock.Add,
+                    Catalog.GetString ("Add _to Play Queue"), null,
+                    Catalog.GetString ("Append selected songs to the play queue"),
+                    OnAddToPlayQueue)
+            });
         }
         
         private void BindToDatabase ()
@@ -81,7 +86,9 @@ namespace Banshee.Playlist
             if (result != null) {
                 DbId = Convert.ToInt32 (result);
             } else {
-                CreateDatabaseEntry (ServiceManager.DbConnection.Connection);
+                ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
+                    INSERT INTO CorePlaylists VALUES (0, ?, -1, 0, 1)
+                ", special_playlist_name));
                 DbId = ServiceManager.DbConnection.LastInsertRowId;
             }
         }
@@ -98,6 +105,11 @@ namespace Banshee.Playlist
             if (args.Event == PlayerEngineEvent.EndOfStream) {
                 RemoveFirstTrack ();
             }
+        }
+        
+        private void OnAddToPlayQueue (object o, EventArgs args)
+        {
+            AddSelectedTracks (ServiceManager.Get<InterfaceActionService> ().TrackActions.TrackSelector.TrackModel);
         }
         
         void IBasicPlaybackController.First ()
@@ -141,22 +153,6 @@ namespace Banshee.Playlist
         
         public override bool ConfirmRemoveTracks {
             get { return false; }
-        }
-    
-        // We have to use System.Data level API here since this is called inside
-        // of BansheeDbFormatMigrator and thus ServiceManager.DbConnection is not
-        // yet available for use.
-        internal static void CreateDatabaseEntry (IDbConnection connection)
-        {
-            IDbCommand command = connection.CreateCommand ();
-            
-            IDbDataParameter parameter = command.CreateParameter ();
-            parameter.ParameterName = "playlist_name";
-            parameter.Value = special_playlist_name;
-            command.Parameters.Add (parameter);
-            
-            command.CommandText = "INSERT INTO CorePlaylists VALUES (0, :playlist_name, -1, 0, 1)";
-            command.ExecuteNonQuery ();
         }
     }
 }

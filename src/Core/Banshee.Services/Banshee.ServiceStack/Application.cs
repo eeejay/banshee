@@ -57,7 +57,7 @@ namespace Banshee.ServiceStack
             ServiceManager.Run ();
             
             if (ServiceManager.SourceManager != null) {
-                ServiceManager.SourceManager.AddSource (new PlayQueueSource (), false);
+                ServiceManager.SourceManager.LoadExtensionSources ();
                 ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
 
                 foreach (PlaylistSource pl in PlaylistSource.LoadAll ()) {

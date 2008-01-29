@@ -50,7 +50,7 @@ namespace Banshee.Gui
         private RatingActionProxy rating_proxy;
 
         private static readonly string [] require_selection_actions = new string [] {
-            "TrackContextMenuAction", "TrackPropertiesAction", "AddToPlayQueueAction", "AddToPlaylistAction",
+            "TrackContextMenuAction", "TrackPropertiesAction", "AddToPlaylistAction",
             "RemoveTracksAction", "RemoveTracksFromLibraryAction", "DeleteTracksFromDriveAction",
             "RateTracksAction", "SelectNoneAction"
         };
@@ -94,11 +94,6 @@ namespace Banshee.Gui
                     Catalog.GetString ("_Edit Track Metadata"), null,
                     Catalog.GetString ("Edit metadata on selected tracks"), OnTrackProperties),
 
-                new ActionEntry ("AddToPlayQueueAction", Stock.Add,
-                    Catalog.GetString ("Add _to Play Queue"), null,
-                    Catalog.GetString ("Append selected songs to the play queue"),
-                    OnAddToPlayQueue),
-                    
                 new ActionEntry ("AddToPlaylistAction", null,
                     Catalog.GetString ("Add _to Playlist"), null,
                     Catalog.GetString ("Append selected songs to playlist or create new playlist from selection"),
@@ -306,11 +301,6 @@ namespace Banshee.Gui
         {
             PlaylistSource playlist = playlist_menu_map[o as MenuItem];
             playlist.AddSelectedTracks (TrackSelector.TrackModel);
-        }
-        
-        private void OnAddToPlayQueue (object o, EventArgs args)
-        {
-            PlayQueueSource.Instance.AddSelectedTracks (TrackSelector.TrackModel);
         }
 
         private void OnRemoveTracks (object o, EventArgs args)

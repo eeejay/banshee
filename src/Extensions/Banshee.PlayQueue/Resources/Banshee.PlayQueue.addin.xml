@@ -1,0 +1,12 @@
+<Addin id="Banshee.PlayQueue">
+
+  <Dependencies>
+    <Addin id="Banshee.Services" version="1.0"/>
+    <Addin id="Banshee.ThickClient" version="1.0"/>
+  </Dependencies>
+
+  <Extension path="/Banshee/SourceManager/Source">
+    <TypeExtensionNode class="Banshee.PlayQueue.PlayQueueSource"/>
+  </Extension>
+  
+</Addin>

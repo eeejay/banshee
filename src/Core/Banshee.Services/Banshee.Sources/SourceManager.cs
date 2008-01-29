@@ -29,6 +29,8 @@
 using System;
 using System.Collections.Generic;
 
+using Mono.Addins;
+
 using Banshee.ServiceStack;
 
 namespace Banshee.Sources
@@ -57,6 +59,13 @@ namespace Banshee.Sources
         public event SourceAddedHandler SourceAdded;
         public event SourceEventHandler SourceRemoved;
         public event SourceEventHandler ActiveSourceChanged;
+        
+        internal void LoadExtensionSources ()
+        {
+            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/SourceManager/Source")) {
+                node.CreateInstance (typeof (ISource));
+            }
+        }
         
         public void AddSource(Source source, bool isDefault)
         {

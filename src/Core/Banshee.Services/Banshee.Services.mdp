@@ -107,7 +107,6 @@
     <File name="Banshee.Networking/NetworkManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Database/BansheeModelProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Database/BansheeModelCache.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Playlist/PlayQueueSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.PlaybackController/IPlaybackController.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.PlaybackController/PlaybackShuffleMode.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.PlaybackController/PlaybackRepeatMode.cs" subtype="Code" buildaction="Compile" />

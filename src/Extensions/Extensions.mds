@@ -3,6 +3,7 @@
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Banshee.NotificationArea" configuration="Debug" />
       <Entry build="True" name="Banshee.MultimediaKeys" configuration="Debug" />
+      <Entry build="True" name="Banshee.PlayQueue" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee.NotificationArea" single="True">
@@ -11,5 +12,6 @@
   <Entries>
     <Entry filename="Banshee.NotificationArea/Banshee.NotificationArea.mdp" />
     <Entry filename="Banshee.MultimediaKeys/Banshee.MultimediaKeys.mdp" />
+    <Entry filename="Banshee.PlayQueue/Banshee.PlayQueue.mdp" />
   </Entries>
 </Combine>

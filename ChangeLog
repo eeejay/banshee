@@ -1,3 +1,24 @@
+2008-01-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Resources/Actions.xml:
+	* src/Extensions/Banshee.PlayQueue/Resources/Banshee.PlayQueue.addin.xml:
+	Moved the play queue out of core into an extension
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Remove any knowledge of PlayQueue as it's now an extension (awesome)
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml:
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Created
+	a new extension point for sources
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Added a more useful Get method that infers the service name from
+	the generic type argument passed to it ala typeof (T).Name
+
 2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* Makefile.am: add --debug to mono call.

@@ -321,11 +321,6 @@ namespace Banshee.Database
                 )
             ");
             
-            // Create the special play queue playlist here so we can 
-            // be sure it gets PlaylistID = 0, just for the sake of 
-            // cleanliness (no operations are performed on that assumption)
-            Banshee.Playlist.PlayQueueSource.CreateDatabaseEntry(connection);
-            
             Execute(@"
                 CREATE TABLE CorePlaylistEntries (
                     EntryID             INTEGER PRIMARY KEY,

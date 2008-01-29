@@ -22,7 +22,6 @@
         </menu>
 
         <menu name="EditMenu" action="EditMenuAction">
-            <menuitem name="AddToPlayQueue" action="AddToPlayQueueAction"></menuitem>
             <menu name="AddToPlaylist" action="AddToPlaylistAction"></menu>
             <menuitem name="TrackProperties" action="TrackPropertiesAction" />
             <separator />
@@ -110,7 +109,7 @@
     </popup>
 
     <popup name="TrackContextMenu" action="TrackContextMenuAction">
-        <menuitem name="AddToPlayQueue" action="AddToPlayQueueAction"></menuitem>
+        <placeholder name="AboveAddToPlaylist" />
         <menu name="AddToPlaylist" action="AddToPlaylistAction"></menu>
         <separator />
         <menuitem name="RemoveTracks" action="RemoveTracksAction" />

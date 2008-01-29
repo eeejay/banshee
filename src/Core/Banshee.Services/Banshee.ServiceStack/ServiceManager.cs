@@ -168,6 +168,11 @@ namespace Banshee.ServiceStack
             return Get (serviceName) as T;
         }
         
+        public static T Get<T> () where T : class, IService
+        {
+            return Get (typeof (T).Name) as T;
+        }
+        
         private static void OnStartupBegin ()
         {
             EventHandler handler = StartupBegin;
