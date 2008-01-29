@@ -88,10 +88,9 @@ namespace Banshee.Sources.Gui
             }
             
             if(path != null && path.Equals (view.HighlightedPath) && !view.Selection.PathIsSelected (path)) {
-                drawable.DrawRectangle (widget.Style.BackgroundGC (StateType.Normal), true, background_area);
                 drawable.DrawRectangle (widget.Style.BackgroundGC (StateType.Selected), false,
-                    new Gdk.Rectangle (background_area.X, background_area.Y, 
-                        background_area.Width -1, background_area.Height - 1));
+                    new Gdk.Rectangle (background_area.X + 1, background_area.Y + 1, 
+                        background_area.Width - 3, background_area.Height - 4));
             }
             
             bool hideCounts = source.Count <= 0;
