@@ -1,3 +1,7 @@
+2008-01-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* Makefile.am: add --debug to mono call.
+
 2008-01-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Playlist/PlayQueueSource.cs: Change
