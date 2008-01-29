@@ -199,13 +199,17 @@ namespace Nereid
             footer_box.Spacing = 2;
 
             status_label = new Label ();
+            status_label.ModifyFg (StateType.Normal, Hyena.Gui.GtkUtilities.ColorBlend (
+                status_label.Style.Foreground (StateType.Normal), status_label.Style.Background (StateType.Normal)));
+            
             //footer_box.PackStart (shuffle_toggle_button, false, false, 0);
             //footer_box.PackStart (repeat_toggle_button, false, false, 0);
             footer_box.PackStart (status_label, true, true, 0);
             //footer_box.PackStart (song_properties_button, false, false, 0);
 
             Alignment align = new Alignment (0.5f, 0.5f, 1.0f, 1.0f);
-            align.TopPadding = 5;
+            align.TopPadding = 6;
+            align.BottomPadding = 5;
             align.Add (footer_box);
             align.ShowAll ();
 

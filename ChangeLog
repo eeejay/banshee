@@ -1,5 +1,15 @@
 2008-01-28  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Make the status
+	text much less intrusive with less specificity (display only a single
+	time scale); do not display any status if there are no tracks
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Add some padding to the
+	bottom of the status bar; change the text color of the status bar to
+	a nice foreground/background blend to make it less intrusive
+
+2008-01-28  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
 	Make the IUnmappable implementation virtual
 
