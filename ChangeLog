@@ -1,5 +1,14 @@
 2008-01-29  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Draw the same cairo selections that the track list view uses, overriding
+	the crappy GTK selection for the tree view
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: 
+	Set up a cairo context and list view graphics for the renderer
+
+2008-01-29  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:
 	Make protected properties public - they should be since they are just
 	wrappers to functionality that can be used via alternate API

@@ -31,6 +31,10 @@ using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 using Gdk;
+using Cairo;
+
+using Hyena.Gui;
+using Hyena.Data.Gui;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
@@ -46,6 +50,9 @@ namespace Banshee.Sources.Gui
         //private Source newPlaylistSource = new PlaylistSource(-1);
         private TreeIter newPlaylistIter = TreeIter.Zero;
         private bool newPlaylistVisible = false;
+        
+        private ListViewGraphics graphics;
+        private Cairo.Context cr;
         
         private TreeStore store;
         private TreeViewColumn focus_column;
@@ -113,6 +120,29 @@ namespace Banshee.Sources.Gui
             ServiceManager.PlaybackController.SourceChanged += delegate {
                 QueueDraw();
             };
+        }
+        
+        protected override void OnRealized ()
+        {
+            base.OnRealized ();
+            
+            graphics = new ListViewGraphics (this);
+            graphics.RefreshColors ();
+        }
+        
+        protected override bool OnExposeEvent (EventExpose evnt)
+        {
+            cr = Gdk.CairoHelper.Create (evnt.Window);
+            cr.Rectangle (evnt.Area.X, evnt.Area.Y, evnt.Area.Width, evnt.Area.Width);
+            cr.Clip ();
+            
+            try {
+                return base.OnExposeEvent (evnt);
+            } finally {
+                ((IDisposable)cr.Target).Dispose ();
+                ((IDisposable)cr).Dispose ();
+                cr = null;
+            }
         }
 
         private TreeIter FindSource(Source source)
@@ -585,7 +615,6 @@ namespace Banshee.Sources.Gui
         
         public void HighlightPath(TreePath path)
         {
-            //Selection.SelectPath(path);
             highlight_path = path;
             QueueDraw ();
         }
@@ -611,6 +640,14 @@ namespace Banshee.Sources.Gui
         
         internal TreePath HighlightedPath {
             get { return highlight_path; }
+        }
+        
+        internal Cairo.Context Cr {
+            get { return cr; }
+        }
+        
+        internal ListViewGraphics Graphics {
+            get { return graphics; }
         }
 
         private bool editing_row = false;

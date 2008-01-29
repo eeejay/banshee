@@ -87,7 +87,16 @@ namespace Banshee.Sources.Gui
                 return;
             }
             
-            if(path != null && path.Equals (view.HighlightedPath) && !view.Selection.PathIsSelected (path)) {
+            bool path_selected = view.Selection.PathIsSelected (path);
+            
+            if (path_selected) {
+                // clear the standard GTK selection
+                drawable.DrawRectangle (widget.Style.BaseGC (StateType.Normal), true, background_area);
+                
+                // draw the hot cairo selection
+                view.Graphics.DrawRowSelection (view.Cr, background_area.X, background_area.Y + 1, 
+                    background_area.Width, background_area.Height - 2);
+            } else if(path != null && path.Equals (view.HighlightedPath)) {
                 drawable.DrawRectangle (widget.Style.BackgroundGC (StateType.Selected), false,
                     new Gdk.Rectangle (background_area.X + 1, background_area.Y + 1, 
                         background_area.Width - 3, background_area.Height - 4));
