@@ -12,12 +12,12 @@ ASSEMBLY_FILE = $(top_builddir)/bin/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
 
 INSTALL_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_INSTALL_DIR), $(INSTALL_DIR)))
 
-moduledir = $(INSTALL_DIR_RESOLVED)
-module_SCRIPTS = 
-
 OUTPUT_FILES = \
 	$(ASSEMBLY_FILE) \
 	$(ASSEMBLY_FILE).mdb
+
+moduledir = $(INSTALL_DIR_RESOLVED)
+module_SCRIPTS = $(OUTPUT_FILES)
 
 all: $(ASSEMBLY_FILE)
 
