@@ -216,7 +216,7 @@ namespace Hyena.Data.Gui
             cr.LineWidth = 1.0;
             cr.Translate (0.5, 0.5);
             cr.Color = border_color;
-            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height - 1, BorderRadius, corners);
+            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width - 1, alloc.Height - 1, BorderRadius, corners);
             cr.Stroke();
         }
         
