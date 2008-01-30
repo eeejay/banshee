@@ -1,3 +1,21 @@
+2008-01-30  Ruben Vermeersch  <ruben@savanne.be>
+
+	Add the basic files for the Audioscrobbler plugin. Nothing functional yet,
+	just the boilerplate code for the addin.
+
+	* build/build.environment.mk: Add refs for Audioscrobbler.
+
+	* configure.ac: Add the Audioscrobbler Makefile.
+
+	* src/Extensions/Banshee.Audioscrobbler: Added.
+	* src/Extensions/Banshee.Audioscrobbler/Banshee.Audioscrobbler: Added.
+	* src/Extensions/Banshee.Audioscrobbler/Banshee.Audioscrobbler/AudioscrobblerService.cs: Added.
+	* src/Extensions/Banshee.Audioscrobbler/Makefile.am: Added.
+	* src/Extensions/Banshee.Audioscrobbler/Resources: Added.
+	* src/Extensions/Banshee.Audioscrobbler/Resources/Banshee.Audioscrobbler.addin.xml: Added.
+
+	* src/Extensions/Makefile.am: Add Audioscrobbler.
+
 2008-01-29  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
