@@ -138,8 +138,8 @@ namespace Nereid
             toolbar_alignment.BottomPadding = 3;
             
             header_toolbar = (Toolbar)action_service.UIManager.GetWidget ("/HeaderToolbar");
-            header_toolbar.ToolbarStyle = ToolbarStyle.Icons;
             header_toolbar.ShowArrow = false;
+            header_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
             
             toolbar_alignment.Add (header_toolbar);
             toolbar_alignment.ShowAll ();

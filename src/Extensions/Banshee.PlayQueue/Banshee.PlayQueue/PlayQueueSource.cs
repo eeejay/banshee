@@ -70,20 +70,20 @@ namespace Banshee.PlayQueue
             ServiceManager.SourceManager.AddSource (this);
             
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
-            uia_service.TrackActions.Add (new ActionEntry [] {
+            uia_service.TrackActions.Add (
                 new ActionEntry ("AddToPlayQueueAction", Stock.Add,
                     Catalog.GetString ("Add to Play Queue"), null,
                     Catalog.GetString ("Append selected songs to the play queue"),
                     OnAddToPlayQueue)
-            });
+            );
             
             actions = new BansheeActionGroup ("PlayQueueSource");
-            uia_service.GlobalActions.Add (new ActionEntry [] {
+            uia_service.GlobalActions.Add (
                 new ActionEntry ("ClearPlayQueueAction", Stock.Clear,
                     Catalog.GetString ("Clear Play Queue"), null,
                     Catalog.GetString ("Remove all tracks from the play queue"),
                     OnClearPlayQueue)
-            });
+            );
             
             uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
             

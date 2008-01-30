@@ -37,7 +37,7 @@ using Banshee.Equalizer.Gui;
 
 namespace Banshee.Gui
 {
-    public class ViewActions : ActionGroup
+    public class ViewActions : BansheeActionGroup
     {
         private InterfaceActionService action_service;
     

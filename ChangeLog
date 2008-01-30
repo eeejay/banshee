@@ -1,3 +1,20 @@
+2008-01-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: New Add
+	method that takes params ActionEntry [] and sets all the created Actions
+	as IsImportant=true so if they are used in the toolbar their text will
+	appear.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Use new Add(params ActionEntry []) override to add actions.
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Set the toolbar style to
+	BothHoriz.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Inherit
+	from BansheeActionGroup.
+
 2008-01-29  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:

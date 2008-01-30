@@ -39,7 +39,7 @@ using Banshee.Gui.Dialogs;
 
 namespace Banshee.Gui
 {
-    public class PlaybackActions : ActionGroup
+    public class PlaybackActions : BansheeActionGroup
     {
         private InterfaceActionService action_service;
         private Action play_pause_action;
