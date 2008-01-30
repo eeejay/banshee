@@ -1,5 +1,14 @@
 2008-01-30  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Use the new AddImportant method to make the play queue 'clear' text
+	show up in the header
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Fixed
+	Add to be 'new', added AddImportant
+
+2008-01-30  Aaron Bockover  <abock@gnome.org>
+
 	* build/build.rules.mk: Fixed installation. Yay.
 
 2008-01-30  Ruben Vermeersch  <ruben@savanne.be>

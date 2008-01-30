@@ -78,9 +78,9 @@ namespace Banshee.PlayQueue
             );
             
             actions = new BansheeActionGroup ("PlayQueueSource");
-            uia_service.GlobalActions.Add (
+            uia_service.GlobalActions.AddImportant (
                 new ActionEntry ("ClearPlayQueueAction", Stock.Clear,
-                    Catalog.GetString ("Clear Play Queue"), null,
+                    Catalog.GetString ("Clear"), null,
                     Catalog.GetString ("Remove all tracks from the play queue"),
                     OnClearPlayQueue)
             );
