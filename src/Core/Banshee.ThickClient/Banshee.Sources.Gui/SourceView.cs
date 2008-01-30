@@ -132,11 +132,8 @@ namespace Banshee.Sources.Gui
         
         protected override bool OnExposeEvent (EventExpose evnt)
         {
-            cr = Gdk.CairoHelper.Create (evnt.Window);
-            cr.Rectangle (evnt.Area.X, evnt.Area.Y, evnt.Area.Width, evnt.Area.Width);
-            cr.Clip ();
-            
             try {
+                cr = Gdk.CairoHelper.Create (evnt.Window);
                 return base.OnExposeEvent (evnt);
             } finally {
                 ((IDisposable)cr.Target).Dispose ();

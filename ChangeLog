@@ -1,3 +1,9 @@
+2008-01-29  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: 
+	Fix a few minor rendering issues
+
 2008-01-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: New Add

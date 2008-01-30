@@ -90,12 +90,15 @@ namespace Banshee.Sources.Gui
             bool path_selected = view.Selection.PathIsSelected (path);
             
             if (path_selected) {
-                // clear the standard GTK selection
-                drawable.DrawRectangle (widget.Style.BaseGC (StateType.Normal), true, background_area);
+                Gdk.Rectangle rect = background_area;
+                rect.X -= 2;
+                rect.Width += 4;
+                // clear the standard GTK selection and focus
+                drawable.DrawRectangle (widget.Style.BaseGC (StateType.Normal), true, rect);
                 
                 // draw the hot cairo selection
-                view.Graphics.DrawRowSelection (view.Cr, background_area.X, background_area.Y + 1, 
-                    background_area.Width, background_area.Height - 2);
+                view.Graphics.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
+                    background_area.Width - 2, background_area.Height - 2);
             } else if(path != null && path.Equals (view.HighlightedPath)) {
                 drawable.DrawRectangle (widget.Style.BackgroundGC (StateType.Selected), false,
                     new Gdk.Rectangle (background_area.X + 1, background_area.Y + 1, 
@@ -146,7 +149,7 @@ namespace Banshee.Sources.Gui
             titleLayout.FontDescription = fd;
             titleLayout.Width = (int)((maxTitleLayoutWidth) * Pango.Scale.PangoScale);
             titleLayout.Ellipsize = EllipsizeMode.End;
-            titleLayout.SetText(GLib.Markup.EscapeText(source.Name));
+            titleLayout.SetText(source.Name);
             titleLayout.GetPixelSize(out titleLayoutWidth, out titleLayoutHeight);
             
             Gdk.GC mainGC = widget.Style.TextGC(state);
@@ -154,7 +157,7 @@ namespace Banshee.Sources.Gui
             if(icon != null) {
                 drawable.DrawPixbuf(mainGC, icon, 0, 0, 
                     cell_area.X + 0, 
-                    cell_area.Y + ((cell_area.Height - icon.Height) / 2),
+                    cell_area.Y + ((cell_area.Height - icon.Height) / 2) + 1,
                     icon.Width, icon.Height,
                     RgbDither.None, 0, 0);
             }
