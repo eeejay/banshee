@@ -133,7 +133,9 @@ namespace Banshee.Sources.Gui
             Pango.Layout countLayout = new Pango.Layout(widget.PangoContext);
             
             FontDescription fd = widget.PangoContext.FontDescription.Copy();
-            fd.Weight = ServiceManager.PlaybackController.Source == source ? Pango.Weight.Bold : Pango.Weight.Normal;
+            fd.Weight = (ISource)ServiceManager.PlaybackController.Source == (ISource)source 
+                ? Pango.Weight.Bold 
+                : Pango.Weight.Normal;
             
             if(Italicized) {
                 fd.Style = Pango.Style.Italic;

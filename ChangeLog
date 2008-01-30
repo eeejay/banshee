@@ -1,5 +1,10 @@
 2008-01-30  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Stupid cast to work around possible bug in gmcs 1.2.5
+
+2008-01-30  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Added a DrawFrame
 	method to simply draw the entire ListView like frame around a rect
 
