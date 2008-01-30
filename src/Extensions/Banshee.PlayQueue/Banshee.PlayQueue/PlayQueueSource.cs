@@ -161,6 +161,7 @@ namespace Banshee.PlayQueue
         
         void IBasicPlaybackController.First ()
         {
+            ((IBasicPlaybackController)this).Next ();
         }
         
         void IBasicPlaybackController.Next ()
