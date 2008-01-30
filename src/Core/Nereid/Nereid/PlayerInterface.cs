@@ -169,9 +169,8 @@ namespace Nereid
             source_view = new SourceView ();
             composite_view = new CompositeTrackListView ();
             
-            ScrolledWindow source_scroll = new ScrolledWindow ();
-            source_scroll.ShadowType = ShadowType.In;
-            source_scroll.Add (source_view);       
+            Hyena.Widgets.ScrolledWindow source_scroll = new Hyena.Widgets.ScrolledWindow ();
+            source_scroll.AddWithFrame (source_view);       
             
             composite_view.TrackView.HeaderVisible = false;
             view_container.Content = composite_view;

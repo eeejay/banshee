@@ -21,7 +21,9 @@ SOURCES =  \
 	Hyena.Gui/EntryEraseAction.cs \
 	Hyena.Gui/EntryInsertAction.cs \
 	Hyena.Gui/EntryUndoAdapter.cs \
-	Hyena.Gui/GtkUtilities.cs
+	Hyena.Gui/GtkUtilities.cs \
+	Hyena.Widgets/RoundedFrame.cs \
+	Hyena.Widgets/ScrolledWindow.cs
 
 include $(top_srcdir)/build/build.mk
 

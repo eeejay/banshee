@@ -1,5 +1,22 @@
 2008-01-30  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Added a DrawFrame
+	method to simply draw the entire ListView like frame around a rect
+
+	* src/Core/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: A widget like the
+	standard Gtk.Frame, except it uses our ListViewGraphics to draw a sexy
+	rounded frame that blends in with the list views
+
+	* src/Core/Hyena.Gui/Hyena.Widgets/ScrolledWindow.cs: A custom 
+	ScrolledWindow that proxies Hadjustmend and Vadjustment of the child
+	of a RoundedFrame if one is added to the ScrolledWindow
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Use a Hyena ScrolledWindow
+	with AddFrame to make the source view TreeView look like our ListView
+	widgets - dead sexy
+
+2008-01-30  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
 	Use the new AddImportant method to make the play queue 'clear' text
 	show up in the header

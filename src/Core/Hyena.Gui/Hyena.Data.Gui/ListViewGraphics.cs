@@ -203,6 +203,23 @@ namespace Hyena.Data.Gui
             }
         }
         
+        public void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
+        {
+            CairoCorners corners = CairoCorners.All;
+        
+            cr.Color = baseColor 
+                ? GetWidgetColor (GtkColorClass.Base, StateType.Normal)
+                : GetWidgetColor (GtkColorClass.Background, StateType.Normal);
+            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, BorderRadius, corners);
+            cr.Fill ();
+            
+            cr.LineWidth = 1.0;
+            cr.Translate (0.5, 0.5);
+            cr.Color = border_color;
+            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height - 1, BorderRadius, corners);
+            cr.Stroke();
+        }
+        
         public void DrawColumnHighlight(Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset)
         {
             Cairo.Color gtk_selection_color = GetWidgetColor(GtkColorClass.Background, StateType.Selected);
