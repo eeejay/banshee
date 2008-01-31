@@ -132,13 +132,13 @@ namespace Banshee.Playlist
 
         protected override void Create ()
         {
-            Console.WriteLine ("Creating playlist");
             DbId = ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (
                 @"INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType)
                     VALUES (NULL, ?, ?, ?)",
                 Name, -1, 1 //SortColumn, SortType
             ));
-            Console.WriteLine ("Done Creating playlist");
+            
+            OnUserNotifyUpdated ();
         }
 
 #endregion
@@ -236,38 +236,33 @@ namespace Banshee.Playlist
                 }
             }
         }
-    }
-
-    internal static class PlaylistUtil
-    {
-        /*internal static int GetPlaylistID(string name)
+        
+        public static int GetPlaylistId (string name)
         {
-            try {
-                return Convert.ToInt32(Globals.Library.Db.QuerySingle(new DbCommand(
-                @"SELECT PlaylistID
-                    FROM Playlists
-                    WHERE Name = :name
-                    LIMIT 1",
-                    "name", name
-                )));
-            } catch(Exception) {
-                return 0;
+            object result = ServiceManager.DbConnection.ExecuteScalar (new HyenaSqliteCommand (
+                "SELECT PlaylistID FROM Playlists WHERE Name = ? LIMIT 1", name));
+            
+            if (result != null) {
+                return Convert.ToInt32 (result);
             }
-        }*/
-        
-        /*internal static bool PlaylistExists(string name)
-        {
-            return GetPlaylistID(name) > 0;
-        }*/
-        
-        /*public static string UniqueName {
-            get { return NamingUtil.PostfixDuplicate(Catalog.GetString("New Playlist"), PlaylistExists); }
+            
+            return 0;
         }
         
-        public static string GoodUniqueName(IEnumerable tracks)
+        public static bool PlaylistExists (string name)
         {
-            return NamingUtil.PostfixDuplicate(NamingUtil.GenerateTrackCollectionName(
-                tracks, Catalog.GetString("New Playlist")), PlaylistExists);
-        }*/
+            return GetPlaylistId (name) > 0;
+        }
+        
+        public static string CreateUniqueName () 
+        {
+            return NamingUtil.PostfixDuplicate (Catalog.GetString ("New Playlist"), PlaylistExists);
+        }
+        
+        public static string CreateUniqueName (IEnumerable tracks)
+        {
+            return NamingUtil.PostfixDuplicate (NamingUtil.GenerateTrackCollectionName (
+                tracks, Catalog.GetString ("New Playlist")), PlaylistExists);
+        }
     }
 }

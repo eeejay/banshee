@@ -41,12 +41,13 @@ using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.PlaybackController;
 using Banshee.MediaEngine;
+using Banshee.Configuration;
 
 using Banshee.Gui;
 
 namespace Banshee.PlayQueue
 {
-    public class PlayQueueSource : PlaylistSource, IBasicPlaybackController
+    public class PlayQueueSource : PlaylistSource, IBasicPlaybackController, IDisposable
     {
         private static string special_playlist_name = typeof (PlayQueueSource).ToString ();
 
@@ -70,12 +71,12 @@ namespace Banshee.PlayQueue
             ServiceManager.SourceManager.AddSource (this);
             
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
-            uia_service.TrackActions.Add (
+            uia_service.TrackActions.Add (new ActionEntry [] {
                 new ActionEntry ("AddToPlayQueueAction", Stock.Add,
                     Catalog.GetString ("Add to Play Queue"), null,
                     Catalog.GetString ("Append selected songs to the play queue"),
                     OnAddToPlayQueue)
-            );
+            });
             
             actions = new BansheeActionGroup ("PlayQueueSource");
             uia_service.GlobalActions.AddImportant (
@@ -84,6 +85,13 @@ namespace Banshee.PlayQueue
                     Catalog.GetString ("Remove all tracks from the play queue"),
                     OnClearPlayQueue)
             );
+            
+            uia_service.GlobalActions.Add (new ToggleActionEntry [] {
+                new ToggleActionEntry ("ClearPlayQueueOnQuitAction", null,
+                    Catalog.GetString ("Clear on Quit"), null, 
+                    Catalog.GetString ("Clear the play queue when quitting"), 
+                    OnClearPlayQueueOnQuit, ClearOnQuitSchema.Get ())
+            });
             
             uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
             
@@ -94,6 +102,13 @@ namespace Banshee.PlayQueue
             
             UpdateActions ();
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
+        }
+        
+        public void Dispose ()
+        {
+            if (ClearOnQuitSchema.Get ()) {
+                OnClearPlayQueue (this, EventArgs.Empty);
+            }
         }
         
         private void BindToDatabase ()
@@ -147,9 +162,20 @@ namespace Banshee.PlayQueue
             Reload ();
         }
         
+        private void OnClearPlayQueueOnQuit (object o, EventArgs args)
+        {
+            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
+            if (uia_service == null) {
+                return;
+            }
+            
+            ToggleAction action = (ToggleAction)uia_service.GlobalActions["ClearPlayQueueOnQuitAction"];
+            ClearOnQuitSchema.Set (action.Active);
+        }
+        
         private void UpdateActions ()
         {   
-            InterfaceActionService uia_service = ServiceManager.Get <InterfaceActionService> ();
+            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             if (uia_service == null) {
                 return;
             }
@@ -206,5 +232,12 @@ namespace Banshee.PlayQueue
         public override bool CanUnmap {
             get { return false; }
         }
+        
+        public static readonly SchemaEntry<bool> ClearOnQuitSchema = new SchemaEntry<bool> (
+            "plugins.play_queue", "clear_on_quit",
+            false,
+            "Clear on Quit",
+            "Clear the play queue when quitting"
+        );
     }
 }

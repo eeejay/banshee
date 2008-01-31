@@ -48,7 +48,7 @@ namespace Banshee.Sources
         public int Position;
     }
     
-    public class SourceManager : ISourceManager
+    public class SourceManager : ISourceManager, IDisposable
     {
         private List<Source> sources = new List<Source>();
         private Source active_source;
@@ -64,6 +64,15 @@ namespace Banshee.Sources
         {
             foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/SourceManager/Source")) {
                 node.CreateInstance (typeof (ISource));
+            }
+        }
+        
+        public void Dispose ()
+        {
+            foreach (Source source in sources) {
+                if (source is IDisposable) {
+                    ((IDisposable)source).Dispose ();
+                }
             }
         }
         

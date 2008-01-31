@@ -45,11 +45,6 @@ namespace Banshee.Gui
         {
         }
         
-        public new void Add (params ActionEntry [] action_entries)
-        {
-            base.Add (action_entries);
-        }
-
         public void AddImportant (params ActionEntry [] action_entries)
         {
             base.Add (action_entries);

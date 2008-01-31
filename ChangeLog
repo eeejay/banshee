@@ -1,5 +1,27 @@
 2008-01-31  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Push IDisposable services into a dispose stack on startup; unwind this
+	stack on shutdown, disposing services in the proper (safe) order
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Make 
+	IDisposable and dispose all sources if they are in turn IDisposable
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Resources/GlobalUI.xml:
+	Added 'clear on quit' support; make IDisposable, clearing the queue
+	if set on Dipose
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Finish
+	porting the naming utility stuff to create proper playlist names; not
+	actually in use yet
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Get
+	rid of the params Add method since there are many more ActionEntry
+	arrays that won't work with params
+
+2008-01-31  Aaron Bockover  <abock@gnome.org>
+
 	Patch that adds sorting by Disc number and editing it as well from
 	Will Farrington. Awesomeness.
 

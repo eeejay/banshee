@@ -46,6 +46,7 @@ namespace Banshee.ServiceStack
     public static class ServiceManager
     {
         private static Dictionary<string, IService> services = new Dictionary<string, IService> ();
+        private static Stack<IService> dispose_services = new Stack<IService> ();
         private static List<Type> service_types = new List<Type> ();
         private static ExtensionNodeList extension_nodes;
         
@@ -90,18 +91,30 @@ namespace Banshee.ServiceStack
                     uint timer_id = Log.DebugTimerStart (); 
                     IService service = (IService)Activator.CreateInstance (type);
                     RegisterService (service);
+                    
                     Log.DebugTimerPrint (timer_id, String.Format (
                         "Core service started ({0}, {{0}})", service.ServiceName));
+                    
                     OnServiceStarted (service);
+                    
+                    if (service is IDisposable) {
+                        dispose_services.Push (service);
+                    }
                 }
                 
                 foreach (TypeExtensionNode node in extension_nodes) {
                     uint timer_id = Log.DebugTimerStart ();
                     IService service = (IService)node.CreateInstance (typeof (IService));
                     RegisterService (service);
+                    
                     Log.DebugTimerPrint (timer_id, String.Format (
                         "Extension service started ({0}, {{0}})", service.ServiceName));
+                    
                     OnServiceStarted (service);
+                    
+                    if (service is IDisposable) {
+                        dispose_services.Push (service);
+                    }
                 }
                 
                 is_initialized = true;
@@ -115,10 +128,10 @@ namespace Banshee.ServiceStack
         public static void Shutdown ()
         {
             lock (self_mutex) {
-                foreach (IService service in services.Values) {
-                    if (service is IDisposable) {
-                        ((IDisposable)service).Dispose ();
-                    }
+                while (dispose_services.Count > 0) {
+                    IService service = dispose_services.Pop ();
+                    ((IDisposable)service).Dispose ();
+                    Log.DebugFormat ("Service disposed ({0})", service.ServiceName);
                 }
                 
                 services.Clear ();
