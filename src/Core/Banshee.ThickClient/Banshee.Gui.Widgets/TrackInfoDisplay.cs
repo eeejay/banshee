@@ -35,6 +35,7 @@ using Gtk;
 using Cairo;
 
 using Hyena.Gui;
+using Hyena.Gui.Theatrics;
 
 using Banshee.Base;
 using Banshee.Collection;
@@ -46,8 +47,6 @@ namespace Banshee.Gui.Widgets
 {
     public class TrackInfoDisplay : Bin
     {
-        private const int FADE_TIMEOUT = 1500;
-    
         private ArtworkManager artwork_manager;
         private Gdk.Pixbuf current_pixbuf;
         private Gdk.Pixbuf incoming_pixbuf;
@@ -59,11 +58,8 @@ namespace Banshee.Gui.Widgets
         
         private TrackInfo current_track;
         private TrackInfo incoming_track;        
-        
-        private DateTime transition_start; 
-        private double transition_percent;
-        private double transition_frames;
-        private uint transition_id;
+
+        private SingleActorStage stage = new SingleActorStage ();
         
         private ArtworkPopup popup;
         private uint popup_timeout_id;
@@ -72,6 +68,8 @@ namespace Banshee.Gui.Widgets
         
         public TrackInfoDisplay ()
         {
+            stage.Iteration += OnStageIteration;
+        
             if (ServiceManager.Contains ("ArtworkManager")) {
                 artwork_manager = ServiceManager.Get<ArtworkManager> ("ArtworkManager");
             }
@@ -244,7 +242,7 @@ namespace Banshee.Gui.Widgets
             Cairo.Surface ps;
             Cairo.Context pcr;
             
-            if (transition_percent >= 1.0) {
+            if (stage.Actor == null) {
                 // We are not in a transition, just render
                 RenderStage (cr, current_track, current_pixbuf);
                 return;
@@ -256,7 +254,7 @@ namespace Banshee.Gui.Widgets
                 RenderStage (cr, incoming_track, incoming_pixbuf);
                 CairoExtensions.PopGroupToSource (cr);
                 
-                cr.PaintWithAlpha (transition_percent);
+                cr.PaintWithAlpha (stage.Actor.Percent);
                 return;
             }
             
@@ -270,33 +268,33 @@ namespace Banshee.Gui.Widgets
             RenderCoverArt (cr, current_pixbuf);
             CairoExtensions.PopGroupToSource (cr);
             
-            cr.PaintWithAlpha (1.0 - transition_percent);
+            cr.PaintWithAlpha (1.0 - stage.Actor.Percent);
             
             // Fade in/out the text
             cr.ResetClip ();
             cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cr.Clip ();
             
-            bool same_artist_album = incoming_track.ArtistAlbumEqual (current_track);
+            bool same_artist_album = incoming_track != null ? incoming_track.ArtistAlbumEqual (current_track) : false;
             
             if (same_artist_album) {
                 RenderTrackInfo (cr, incoming_track, false, true);
             }
                    
-            if (transition_percent <= 0.5) {
+            if (stage.Actor.Percent <= 0.5) {
                 // Fade out old text
                 CairoExtensions.PushGroup (cr);
                 RenderTrackInfo (cr, current_track, true, !same_artist_album);
                 CairoExtensions.PopGroupToSource (cr);
                
-                cr.PaintWithAlpha (1.0 - (transition_percent * 2.0));
+                cr.PaintWithAlpha (1.0 - (stage.Actor.Percent * 2.0));
             } else {
                 // Fade in new text
                 CairoExtensions.PushGroup (cr);
                 RenderTrackInfo (cr, incoming_track, true, !same_artist_album);
                 CairoExtensions.PopGroupToSource (cr);
                 
-                cr.PaintWithAlpha ((transition_percent - 0.5) * 2.0);
+                cr.PaintWithAlpha ((stage.Actor.Percent - 0.5) * 2.0);
             }
         }
         
@@ -390,53 +388,37 @@ namespace Banshee.Gui.Widgets
                     incoming_pixbuf = pixbuf;
                 }
                 
-                if (transition_id == 0) {
-                    BeginTransition ();
+                if (stage.Actor == null) {
+                    stage.Reset ();
                 }
             }
         }
         
-        private void BeginTransition ()
-        {
-            transition_start = DateTime.Now;
-            transition_percent = 0.0;
-            transition_frames = 0.0;
-            
-            if (transition_id == 0) {
-                transition_id = GLib.Timeout.Add (30, ComputeTransition);
-            }
-        }
+        private double last_fps = 0.0;
         
-        private bool ComputeTransition ()
+        private void OnStageIteration (object o, EventArgs args)
         {
-            double elapsed = (DateTime.Now - transition_start).TotalMilliseconds;
-            transition_percent = elapsed / FADE_TIMEOUT;
-            transition_frames++;
-            
             QueueDraw ();
             
-            if (elapsed > FADE_TIMEOUT) {
-                if (ApplicationContext.Debugging) {
-                    Log.DebugFormat ("TrackInfoDisplay RenderAnimation: {0:0.00} FPS", 
-                        transition_frames / ((double)FADE_TIMEOUT / 1000.0));
-                }
-                
-                if (current_pixbuf != incoming_pixbuf && current_pixbuf != missing_pixbuf) {
-                    ArtworkRenderer.DisposePixbuf (current_pixbuf);
-                }
-                
-                current_pixbuf = incoming_pixbuf;
-                current_track = incoming_track;
-                
-                incoming_track = null;
-                
-                transition_id = 0;
-                
-                UpdatePopup ();
-                return false;
+            if (stage.Actor != null) {
+                last_fps = stage.Actor.FramesPerSecond;
+                return;
             }
             
-            return true;
+            if (ApplicationContext.Debugging) {
+                Log.DebugFormat ("TrackInfoDisplay RenderAnimation: {0:0.00} FPS", last_fps);
+            }
+            
+            if (current_pixbuf != incoming_pixbuf && current_pixbuf != missing_pixbuf) {
+                ArtworkRenderer.DisposePixbuf (current_pixbuf);
+            }
+            
+            current_pixbuf = incoming_pixbuf;
+            current_track = incoming_track;
+            
+            incoming_track = null;
+            
+            UpdatePopup ();
         }
         
         private string GetFirstLineText (TrackInfo track)

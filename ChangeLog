@@ -1,5 +1,13 @@
 2008-01-30  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Ported the animation/timeline code to use Hyena.Gui.Theatrics
+	
+	* src/Core/Hyena.Gui/Hyena.Gui.Theatrics/SingleActorStage.cs:
+	A helper stage that will only have up to one actor at a time
+
+2008-01-30  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
 	Added UserNotifyUpdated event that sources can use to trigger 

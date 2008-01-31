@@ -17,6 +17,7 @@ SOURCES =  \
 	Hyena.Gui.Dialogs/ExceptionDialog.cs \
 	Hyena.Gui.Dialogs/VersionInformationDialog.cs \
 	Hyena.Gui.Theatrics/Actor.cs \
+	Hyena.Gui.Theatrics/SingleActorStage.cs \
 	Hyena.Gui.Theatrics/Stage.cs \
 	Hyena.Gui/CairoExtensions.cs \
 	Hyena.Gui/CleanRoomStartup.cs \
