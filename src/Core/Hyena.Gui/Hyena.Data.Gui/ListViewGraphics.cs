@@ -305,6 +305,13 @@ namespace Hyena.Data.Gui
             CairoExtensions.RoundedRectangle(cr, x + 0.5, y + 0.5, width - 1, height - 1, BorderRadius);
             cr.Stroke();
         }
+        
+        public void DrawFlatRowHighlight(Cairo.Context cr, int x, int y, int width, int height, Cairo.Color color)
+        {
+            cr.Color = color;
+            CairoExtensions.RoundedRectangle(cr, x, y, width, height, BorderRadius);
+            cr.Fill();
+        }
                 
         public void DrawRowRule(Cairo.Context cr, int x, int y, int width, int height)
         {

@@ -1,5 +1,30 @@
 2008-01-30  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: 
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	Added UserNotifyUpdated event that sources can use to trigger 
+	notifications or visual cues in the source view
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	Use the new Hyena theatre stage/actors to animate update notifications on 
+	source rows in the source views
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Added a method
+	for drawing a flat row highlight
+
+	* src/Core/Hyena.Gui/Hyena.Gui.Theatre/Stage.cs: An object that manages
+	timeouts for a set of Actors bound to targets of T; used for animating
+	collections of objects bound to actors
+
+	* src/Core/Hyena.Gui/Hyena.Gui.Theatre/Actor.cs: An object bound to
+	a target of T with life span and percentage properties used for animations
+
+	* src/Core/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Remove redundant
+	BorderWidth property
+
+2008-01-30  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
 	Use the list view theme engine to draw the highlight selection
 

@@ -39,7 +39,6 @@ namespace Hyena.Widgets
     {
         private ListViewGraphics graphics;
         private int frame_width = 4;
-        private int border_width = 0;
         
         private Widget child;
         private Gdk.Rectangle child_allocation;
@@ -73,8 +72,8 @@ namespace Hyena.Widgets
                 width = height = 80;
             }
                 
-            SetSizeRequest (width + (border_width + frame_width) * 2, 
-                height + (border_width + frame_width) * 2);
+            SetSizeRequest (width + ((int)BorderWidth + frame_width) * 2, 
+                height + ((int)BorderWidth + frame_width) * 2);
         }
 
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
@@ -87,11 +86,11 @@ namespace Hyena.Widgets
                 return;
             }
                 
-            child_allocation.X = border_width + frame_width;
-            child_allocation.Y = border_width + frame_width;
+            child_allocation.X = (int)BorderWidth + frame_width;
+            child_allocation.Y = (int)BorderWidth + frame_width;
             child_allocation.Width = (int)Math.Max (1, Allocation.Width - child_allocation.X * 2);
             child_allocation.Height = (int)Math.Max (1, Allocation.Height - child_allocation.Y - 
-                border_width - frame_width);
+                (int)BorderWidth - frame_width);
                 
             child_allocation.X += Allocation.X;
             child_allocation.Y += Allocation.Y;
@@ -147,12 +146,5 @@ namespace Hyena.Widgets
 
 #endregion
 
-        public int BorderWidth {
-            get { return border_width; }
-            set { 
-                border_width = value;
-                QueueResize ();
-            }
-        }
     }
 }

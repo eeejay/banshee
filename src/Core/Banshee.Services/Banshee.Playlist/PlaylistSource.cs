@@ -202,6 +202,7 @@ namespace Banshee.Playlist
                 return;
 
             WithTrackSelection (from, AddTrackRange);
+            OnUserNotifyUpdated ();
         }
 
         protected virtual void AddTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)

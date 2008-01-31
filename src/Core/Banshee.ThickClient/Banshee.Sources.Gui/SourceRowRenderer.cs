@@ -31,6 +31,9 @@ using Gtk;
 using Gdk;
 using Pango;
 
+using Hyena.Data.Gui;
+using Hyena.Gui.Theatre;
+
 using Banshee.ServiceStack;
 
 namespace Banshee.Sources.Gui
@@ -93,6 +96,16 @@ namespace Banshee.Sources.Gui
             } else if (path != null && path.Equals (view.HighlightedPath)) {
                 view.Graphics.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
                     background_area.Width - 2, background_area.Height - 2, false);
+            } else if (view.NotifyStage.ActorCount > 0) {
+                TreeIter iter;
+                if (view.Model.GetIter (out iter, path) && view.NotifyStage.Contains (iter)) {
+                    Actor<TreeIter> actor = view.NotifyStage[iter];
+                    Cairo.Color color = view.Graphics.GetWidgetColor (GtkColorClass.Background, StateType.Selected);
+                    color.A = 1.0 - actor.Percent; 
+                    
+                    view.Graphics.DrawFlatRowHighlight (view.Cr, background_area.X + 1, background_area.Y + 1, 
+                        background_area.Width - 2, background_area.Height - 2, color);
+                }
             }
             
             int title_layout_width = 0, title_layout_height = 0;

@@ -48,6 +48,7 @@ namespace Banshee.Sources
         private List<Source> child_sources = new List<Source>();
 
         public event EventHandler Updated;
+        public event EventHandler UserNotifyUpdated;
         public event SourceEventHandler ChildSourceAdded;
         public event SourceEventHandler ChildSourceRemoved;
         
@@ -200,6 +201,14 @@ namespace Banshee.Sources
         protected virtual void OnUpdated()
         {
             EventHandler handler = Updated;
+            if(handler != null) {
+                handler(this, EventArgs.Empty);
+            }
+        }
+        
+        protected virtual void OnUserNotifyUpdated()
+        {
+            EventHandler handler = UserNotifyUpdated;
             if(handler != null) {
                 handler(this, EventArgs.Empty);
             }

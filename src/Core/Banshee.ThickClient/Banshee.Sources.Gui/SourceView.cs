@@ -27,10 +27,12 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Cairo;
 
 using Hyena.Data.Gui;
+using Hyena.Gui.Theatre;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
@@ -52,6 +54,9 @@ namespace Banshee.Sources.Gui
         private SourceRowRenderer renderer;
         private ListViewGraphics graphics;
         private Cairo.Context cr;
+        
+        private uint user_update_timeout_id = 0;
+        private Stage<TreeIter> notify_stage = new Stage<TreeIter> ();
         
         private TreeStore store;
         private TreeViewColumn focus_column;
@@ -119,6 +124,11 @@ namespace Banshee.Sources.Gui
             
             ServiceManager.PlaybackController.SourceChanged += delegate {
                 QueueDraw();
+            };
+            
+            notify_stage.ActorStep += delegate (Actor<TreeIter> actor) {
+                Gdk.Rectangle rect = GetBackgroundArea (store.GetPath (actor.Target), focus_column);
+                QueueDrawArea (rect.X, rect.Y, rect.Width, rect.Height);
             };
         }
         
@@ -326,8 +336,12 @@ namespace Banshee.Sources.Gui
                 }
             }
 
-            source.ChildSourceAdded += delegate (SourceEventArgs e) { AddSource (e.Source, iter); };
-            source.ChildSourceRemoved += delegate (SourceEventArgs e) { RemoveSource(e.Source); };
+            // delegate (SourceEventArgs e) { AddSource (e.Source, iter); };
+            // delegate (SourceEventArgs e) { RemoveSource(e.Source); };
+            
+            source.ChildSourceAdded += OnSourceChildSourceAdded; 
+            source.ChildSourceRemoved += OnSourceChildSourceRemoved;
+            source.UserNotifyUpdated += OnSourceUserNotifyUpdated;
            
             if (source.Expanded || (source.AutoExpand != null && source.AutoExpand.Value)) {
                 Expand (iter);
@@ -348,6 +362,10 @@ namespace Banshee.Sources.Gui
             if (!iter.Equals (TreeIter.Zero)) {
                 store.Remove (ref iter);
             }
+            
+            source.ChildSourceAdded -= OnSourceChildSourceAdded;
+            source.ChildSourceRemoved -= OnSourceChildSourceRemoved;
+            source.UserNotifyUpdated -= OnSourceUserNotifyUpdated;
 
             UpdateView ();
         }
@@ -365,7 +383,27 @@ namespace Banshee.Sources.Gui
                 AddSource (source);
             }
         }
+        
+        private void OnSourceChildSourceAdded (SourceEventArgs args)
+        {
+            AddSource (args.Source, FindSource (args.Source.Parent));
+        }
+        
+        private void OnSourceChildSourceRemoved (SourceEventArgs args)
+        {
+            RemoveSource (args.Source);
+        }
 
+        private void OnSourceUserNotifyUpdated (object o, EventArgs args)
+        {
+            TreeIter iter = FindSource ((Source)o);
+            if (iter.Equals (TreeIter.Zero)) {
+                return;
+            }
+            
+            notify_stage.AddOrReset (iter);
+        }
+        
 #endregion
 
 #region List/View Utility Methods
@@ -501,6 +539,10 @@ namespace Banshee.Sources.Gui
         
         internal ListViewGraphics Graphics {
             get { return graphics; }
+        }
+        
+        internal Stage<TreeIter> NotifyStage {
+            get { return notify_stage; }
         }
 
 #endregion        
