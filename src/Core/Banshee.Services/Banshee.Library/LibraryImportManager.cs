@@ -105,6 +105,11 @@ namespace Banshee.Library
                 TagLib.File file = StreamTagger.ProcessUri (uri);
                 track = new LibraryTrackInfo ();
                 StreamTagger.TrackInfoMerge (track, file);
+                
+                SafeUri newpath = track.CopyToLibrary ();
+                if (newpath != null) {
+                    track.Uri = newpath;
+                }
 
                 ThreadAssist.ProxyToMain (delegate {
                     track.DateAdded = DateTime.Now;
@@ -113,11 +118,6 @@ namespace Banshee.Library
                     track.AlbumId = new LibraryAlbumInfo (artist, track.AlbumTitle).DbId;
 
                     artist.Save ();
-
-                    SafeUri newpath = track.CopyToLibrary ();
-                    if (newpath != null) {
-                        track.Uri = newpath;
-                    }
 
                     track.Save ();
                     (ServiceManager.SourceManager.DefaultSource as LibrarySource).Reload ();

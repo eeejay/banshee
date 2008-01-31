@@ -247,11 +247,6 @@ namespace Banshee.Collection.Database
                 check_command.ApplyValues (relative_path, uri.AbsoluteUri))) > 0;
         }
         
-        /// <summary>
-        /// Copies the file references in the current LibraryTrackInfo instance to a location
-        /// inside of the user's current library path.
-        /// </summary>
-        /// <returns>New SafeUri pointing to the newly copied file.</returns>
         public SafeUri CopyToLibrary ()
         {
             SafeUri old_uri = this.Uri;
@@ -280,8 +275,8 @@ namespace Banshee.Collection.Database
                     
                     // Return new SafeUri after copy
                     return new_uri;
-                } catch (Exception ex) {
-                    Log.Error (String.Format("Exception copying into library: {0}", ex), false);
+                } catch (Exception e) {
+                    Log.Error (String.Format("Exception copying into library: {0}", e), false);
                     return null;
                 }
             }
