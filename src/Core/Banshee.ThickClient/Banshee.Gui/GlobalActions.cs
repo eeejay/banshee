@@ -61,8 +61,12 @@ namespace Banshee.Gui
                     Catalog.GetString ("Quit Banshee"), OnQuit),
 
                 // Edit Menu
-                new ActionEntry("EditMenuAction", null, 
+                new ActionEntry ("EditMenuAction", null, 
                     Catalog.GetString("_Edit"), null, null, null),
+
+                new ActionEntry ("PreferencesAction", null,
+                    Catalog.GetString ("_Preferences"), null,
+                    Catalog.GetString ("Modify your personal preferences"), OnPreferences),
 
                 new ActionEntry ("ExtensionsAction", null, 
                     Catalog.GetString ("Manage _Extensions"), null,
@@ -215,6 +219,13 @@ namespace Banshee.Gui
 #endregion
 
 #region Edit Menu Actions
+
+        private void OnPreferences (object o, EventArgs args)
+        {
+            Dialogs.PreferencesDialog dialog = new Dialogs.PreferencesDialog ();
+            dialog.Run ();
+            dialog.Destroy ();
+        }
 
         private void OnExtensions (object o, EventArgs args)
         {

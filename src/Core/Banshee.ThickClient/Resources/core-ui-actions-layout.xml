@@ -38,6 +38,7 @@
             <menuitem name="SourceProperties" action="SourcePropertiesAction" />
             <menuitem name="UnmapSource" action="UnmapSourceAction" />
             <separator />
+            <menuitem name="Preferences" action="PreferencesAction" />
             <menuitem name="Extensions" action="ExtensionsAction" />
         </menu>
 

@@ -1,3 +1,19 @@
+2008-01-31  Aaron Bockover  <abock@gnome.org>
+
+	Patch to enable the preferences dialog by Alex Hixon
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	Copy track to library directory if it's not already there and the user
+	has opted to copy files
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:
+	Port the preferences dialog from stable
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Added preferences actions
+
 2008-01-30  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:

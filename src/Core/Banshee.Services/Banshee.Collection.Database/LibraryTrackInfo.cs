@@ -28,12 +28,15 @@
 
 using System;
 using System.Data;
+using System.IO;
 
 using Hyena;
 using Hyena.Data.Sqlite;
 
 using Banshee.Base;
+using Banshee.Configuration.Schema;
 using Banshee.Database;
+using Banshee.IO;
 using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
@@ -242,6 +245,48 @@ namespace Banshee.Collection.Database
             string relative_path = Paths.MakePathRelativeToLibrary (uri.AbsolutePath) ?? uri.AbsoluteUri;
             return Convert.ToInt32 (ServiceManager.DbConnection.ExecuteScalar (
                 check_command.ApplyValues (relative_path, uri.AbsoluteUri))) > 0;
+        }
+        
+        /// <summary>
+        /// Copies the file references in the current LibraryTrackInfo instance to a location
+        /// inside of the user's current library path.
+        /// </summary>
+        /// <returns>New SafeUri pointing to the newly copied file.</returns>
+        public SafeUri CopyToLibrary ()
+        {
+            SafeUri old_uri = this.Uri;
+            if (old_uri == null) {
+                // Get out quick, no URI set yet.
+                return null;
+            }
+            
+            SafeUri library_check = new SafeUri (Paths.LibraryLocation + Path.DirectorySeparatorChar);
+        
+            bool in_library = old_uri.ToString ().StartsWith (library_check.ToString ());
+            //Console.WriteLine ("{0} is{1}in library.", old_uri.ToString (), in_library ? " " : " not ");
+
+            if (!in_library && LibrarySchema.CopyOnImport.Get ()) {
+                string new_filename = FileNamePattern.BuildFull (this,
+                    Path.GetExtension (old_uri.ToString ()).Substring (1));
+                SafeUri new_uri = new SafeUri (new_filename);
+
+                try {
+                    if (IOProxy.File.Exists (new_uri)) {
+                        return null;
+                    }
+                    
+                    // TODO: Once GnomeVfs and Unix have proper Copy providers, use IOProxy.File.Copy instead.
+                    File.Copy (old_uri.LocalPath, new_uri.LocalPath);
+                    
+                    // Return new SafeUri after copy
+                    return new_uri;
+                } catch (Exception ex) {
+                    Log.Error (String.Format("Exception copying into library: {0}", ex), false);
+                    return null;
+                }
+            }
+            
+            return null;
         }
     }
 }

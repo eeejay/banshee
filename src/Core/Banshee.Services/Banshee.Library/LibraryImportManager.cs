@@ -92,7 +92,7 @@ namespace Banshee.Library
                 return;
             }
             
-            try {
+            try {            
                 SafeUri uri = new SafeUri (path);
 
                 LibraryTrackInfo track = null;
@@ -113,9 +113,14 @@ namespace Banshee.Library
                     track.AlbumId = new LibraryAlbumInfo (artist, track.AlbumTitle).DbId;
 
                     artist.Save ();
+
+                    SafeUri newpath = track.CopyToLibrary ();
+                    if (newpath != null) {
+                        track.Uri = newpath;
+                    }
+
                     track.Save ();
                     (ServiceManager.SourceManager.DefaultSource as LibrarySource).Reload ();
-
                 });
                 
                 if (track != null && track.DbId > 0) {

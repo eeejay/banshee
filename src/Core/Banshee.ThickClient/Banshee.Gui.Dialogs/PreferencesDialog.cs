@@ -1,30 +1,30 @@
-/***************************************************************************
- *  PreferencesDialog.cs
- *
- *  Copyright (C) 2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
- ****************************************************************************/
-
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// PreferencesDialog.cs
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2006-2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
 using System.IO;
@@ -34,6 +34,7 @@ using Glade;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Widgets;
 using Banshee.AudioProfiles;
@@ -71,7 +72,7 @@ namespace Banshee.Gui.Dialogs
             (Glade["library_location_label"] as Label).MnemonicWidget = library_location_chooser;
             library_location_chooser.Show();
             
-            cd_importing_profile_box = new ProfileComboBoxConfigurable(Globals.AudioProfileManager, "cd-importing", 
+            cd_importing_profile_box = new ProfileComboBoxConfigurable(ServiceManager.ProfileManager, "cd-importing", 
                 Glade["cd_importing_profile_description"] as Box);
             (Glade["cd_importing_profile_container"] as Box).PackStart(cd_importing_profile_box, false, false, 0);  
             (Glade["cd_importing_profile_label"] as Label).MnemonicWidget = cd_importing_profile_box.Combo;        
@@ -125,6 +126,8 @@ namespace Banshee.Gui.Dialogs
                 "Error correction tries to work around problem areas on a disc, such " +
                 "as surface scratches, but will slow down importing substantially."),
                 "error-correction");
+                
+            //(Glade["error_correction"] as CheckButton).Sensitive = (Glade["cd_importing_profile_label"] as Label).Sensitive;
         }
         
         private void LoadPreferences()
@@ -154,7 +157,7 @@ namespace Banshee.Gui.Dialogs
             
             library_location_chooser.SelectionChanged += delegate {
                 Paths.LibraryLocation = library_location_chooser.Filename;
-                InterfaceElements.PlaylistView.QueueDraw();
+                //InterfaceElements.PlaylistView.QueueDraw();
             };
             
             copy_on_import.Toggled += delegate {
@@ -176,7 +179,7 @@ namespace Banshee.Gui.Dialogs
         private void OnFolderFileChanged(object o, EventArgs args)
         {
             (Glade["example_path"] as Label).Markup = String.Format("<small><i>{0}.ogg</i></small>",
-                GLib.Markup.EscapeText(FileNamePattern.CreateFromITrackInfo(
+                GLib.Markup.EscapeText(FileNamePattern.CreateFromTrackInfo(
                     FileNamePattern.CreateFolderFilePattern(folder_box.ActiveValue, file_box.ActiveValue),
                     new SampleTrackInfo())));
                         
