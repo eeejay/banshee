@@ -284,12 +284,23 @@ namespace Hyena.Data.Gui
         
         public void DrawRowSelection(Cairo.Context cr, int x, int y, int width, int height, bool filled)
         {
-            Cairo.Color selection_color = GetWidgetColor(GtkColorClass.Background, StateType.Selected);
+            DrawRowSelection(cr, x, y, width, height, filled, true, 
+                GetWidgetColor(GtkColorClass.Background, StateType.Selected));
+        }
+        
+        public void DrawRowSelection(Cairo.Context cr, int x, int y, int width, int height, 
+            bool filled, bool stroked, Cairo.Color color)
+        {
+            Cairo.Color selection_color = color;
             Cairo.Color selection_stroke = CairoExtensions.ColorShade(selection_color, 0.85);
+            selection_stroke.A = color.A;
             
             if (filled) {
                 Cairo.Color selection_fill_light = CairoExtensions.ColorShade(selection_color, 1.1);
                 Cairo.Color selection_fill_dark = CairoExtensions.ColorShade(selection_color, 0.90);
+                
+                selection_fill_light.A = color.A;
+                selection_fill_dark.A = color.A;
                 
                 LinearGradient grad = new LinearGradient(x, y, x, y + height);
                 grad.AddColorStop(0, selection_fill_light);
@@ -300,19 +311,14 @@ namespace Hyena.Data.Gui
                 cr.Fill();
             }
             
-            cr.LineWidth = 1.0;
-            cr.Color = selection_stroke;
-            CairoExtensions.RoundedRectangle(cr, x + 0.5, y + 0.5, width - 1, height - 1, BorderRadius);
-            cr.Stroke();
+            if (stroked) {
+                cr.LineWidth = 1.0;
+                cr.Color = selection_stroke;
+                CairoExtensions.RoundedRectangle(cr, x + 0.5, y + 0.5, width - 1, height - 1, BorderRadius);
+                cr.Stroke();
+            }
         }
         
-        public void DrawFlatRowHighlight(Cairo.Context cr, int x, int y, int width, int height, Cairo.Color color)
-        {
-            cr.Color = color;
-            CairoExtensions.RoundedRectangle(cr, x, y, width, height, BorderRadius);
-            cr.Fill();
-        }
-                
         public void DrawRowRule(Cairo.Context cr, int x, int y, int width, int height)
         {
             cr.Color = rule_color;

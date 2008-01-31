@@ -1,5 +1,16 @@
 2008-01-30  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Make the notification highlight extra sexy with some fade in and out
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	Set the stage duration to 1.5s
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: DrawRowSelection
+	has a few new overrides including taking a color
+
+2008-01-30  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
 	Ported the animation/timeline code to use Hyena.Gui.Theatrics
 	
