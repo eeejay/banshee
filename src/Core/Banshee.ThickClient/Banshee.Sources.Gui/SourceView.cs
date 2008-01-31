@@ -123,7 +123,7 @@ namespace Banshee.Sources.Gui
             };
             
             ServiceManager.PlaybackController.SourceChanged += delegate {
-                QueueDraw();
+                QueueDraw ();
             };
             
             notify_stage.ActorStep += delegate (Actor<TreeIter> actor) {
