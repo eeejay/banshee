@@ -47,8 +47,7 @@ namespace Banshee.Collection.Gui
             column_controller = new ColumnController();
 
             column_controller.AddRange(
-                new Column(new ColumnCellPlaybackIndicator(null, true), "indicator", 
-                    new ColumnCellPlaybackIndicator(null, false), 0.05),
+                new Column(null, "indicator", new ColumnCellPlaybackIndicator(null), 0.05),
                 new SortableColumn("Track", new ColumnCellText("TrackNumber", true), 0.10, "Track"),
                 new SortableColumn("Artist", new ColumnCellText("ArtistName", true), 0.225, "Artist"),
                 new SortableColumn("Album", new ColumnCellText("AlbumTitle", true), 0.225, "Album"),
@@ -71,7 +70,10 @@ namespace Banshee.Collection.Gui
             if (ServiceManager.Contains ("GtkElementsService")) {
                 ServiceManager.Get<Banshee.Gui.GtkElementsService> ("GtkElementsService").ThemeChanged += delegate {
                     foreach (Column column in column_controller) {
-                        column.HeaderCell.NotifyThemeChange ();
+                        if (column.HeaderCell != null) {
+                            column.HeaderCell.NotifyThemeChange ();
+                        }
+                        
                         foreach (ColumnCell cell in column) {
                             cell.NotifyThemeChange ();
                         }

@@ -43,13 +43,11 @@ namespace Banshee.Collection.Gui
         private const int pixbuf_size = 16;
         private const int pixbuf_spacing = 4;
         
-        private bool is_header;
         private Gdk.Pixbuf pixbuf;
         private Gdk.Pixbuf pixbuf_paused;
         
-        public ColumnCellPlaybackIndicator (string property, bool isHeader) : base (property,true)
+        public ColumnCellPlaybackIndicator (string property) : base (property, true)
         {
-            is_header = isHeader;
             LoadPixbuf ();
         }
         
@@ -65,13 +63,8 @@ namespace Banshee.Collection.Gui
                 pixbuf_paused = null;
             }
             
-            pixbuf = is_header 
-                ? IconThemeUtils.LoadIcon (pixbuf_size, "audio-volume-high")
-                : IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-start");
-                
-            if (!is_header) {
-                pixbuf_paused = IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-pause");
-            }
+            pixbuf = IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-start");
+            pixbuf_paused = IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-pause");
         }
         
         public override void NotifyThemeChange ()
@@ -81,21 +74,16 @@ namespace Banshee.Collection.Gui
 
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
-            if (!is_header && !ServiceManager.PlayerEngine.IsPlaying ((TrackInfo)BoundObject)) {
+            if (!ServiceManager.PlayerEngine.IsPlaying ((TrackInfo)BoundObject)) {
                 return;
             }
             
             Gdk.Pixbuf render_pixbuf = pixbuf;
-            if (!is_header && ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Paused) {
+            if (ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Paused) {
                 render_pixbuf = pixbuf_paused;
             }
             
-            // No idea why this is necessary
-            if (is_header) {
-                context.Context.Translate (0.5, -0.5);
-            } else {
-                context.Context.Translate (0, 0.5);
-            }
+            context.Context.Translate (0, 0.5);
             
             Cairo.Rectangle pixbuf_area = new Cairo.Rectangle (pixbuf_spacing, 
                 (cellHeight - render_pixbuf.Height) / 2, render_pixbuf.Width, render_pixbuf.Height);

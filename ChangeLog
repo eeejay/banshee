@@ -1,5 +1,17 @@
 2008-01-31  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Remove the little speaker icon in the header of the list view that
+	represents the column which can hold the playback indicator; apparently
+	this is confusing and may lead to the expectation of it being clickable
+	and have it do something; fixes BNC #188717
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Do not try to render
+	a null cell
+
+2008-01-31  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
 	Push IDisposable services into a dispose stack on startup; unwind this
 	stack on shutdown, disposing services in the proper (safe) order

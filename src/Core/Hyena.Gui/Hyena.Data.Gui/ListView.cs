@@ -781,11 +781,13 @@ namespace Hyena.Data.Gui
                     }
                 }
                 
-                header_cr.Save ();
-                header_cr.Translate (cell_area.X, cell_area.Y);
-                cell.Render (new CellContext (header_cr, header_pango_layout, this, header_window, 
-                    graphics, cell_area), StateType.Normal, cell_area.Width, cell_area.Height);
-                header_cr.Restore ();
+                if (cell != null) {
+                    header_cr.Save ();
+                    header_cr.Translate (cell_area.X, cell_area.Y);
+                    cell.Render (new CellContext (header_cr, header_pango_layout, this, header_window, 
+                        graphics, cell_area), StateType.Normal, cell_area.Width, cell_area.Height);
+                    header_cr.Restore ();
+                }
                 
                 if(ci < column_cache.Length - 1) {
                     graphics.DrawHeaderSeparator(header_cr, header_alloc, 
