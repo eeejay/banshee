@@ -56,7 +56,7 @@ namespace Banshee.Sources.Gui
         private Cairo.Context cr;
         
         private uint user_update_timeout_id = 0;
-        private Stage<TreeIter> notify_stage = new Stage<TreeIter> (1500);
+        private Stage<TreeIter> notify_stage = new Stage<TreeIter> (2000);
         
         private TreeStore store;
         private TreeViewColumn focus_column;

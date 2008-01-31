@@ -102,7 +102,7 @@ namespace Banshee.Sources.Gui
                     Actor<TreeIter> actor = view.NotifyStage[iter];
                     Cairo.Color color = view.Graphics.GetWidgetColor (GtkColorClass.Background, StateType.Active);
                     
-                    double s = 0.2;
+                    double s = 0.15;
                     double p = actor.Percent;
                     
                     color.A = p <= s 
