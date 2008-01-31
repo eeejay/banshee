@@ -150,7 +150,6 @@ namespace Banshee.Collection.Database
                 case "Album":
                     sort_query = String.Format (@"
                         lower(CoreAlbums.Title) {0},
-                        lower(CoreArtists.Name) ASC,
                         CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber ASC,
                         CoreTracks.Uri ASC", ascDesc); 

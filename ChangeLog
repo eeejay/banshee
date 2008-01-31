@@ -1,3 +1,10 @@
+2008-01-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Within sort by album, do not sort by artist because it messes up
+	multi-artist albums.  This change will mess up albums that have the same
+	name however.  Should have a sort by album-artist in here though.
+
 2008-01-31  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
