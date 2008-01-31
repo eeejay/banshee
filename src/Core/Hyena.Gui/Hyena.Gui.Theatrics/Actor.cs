@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Hyena.Gui.Theatre
+namespace Hyena.Gui.Theatrics
 {
     public class Actor<T>
     {

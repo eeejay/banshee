@@ -30,8 +30,8 @@
     <File name="Hyena.Data.Gui/IHeaderCell.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Widgets/ScrolledWindow.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Widgets/RoundedFrame.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Gui.Theatre/Actor.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Gui.Theatre/Stage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui.Theatrics/Actor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui.Theatrics/Stage.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

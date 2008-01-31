@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Hyena.Gui.Theatre
+namespace Hyena.Gui.Theatrics
 {
     public class Stage<T>
     {   

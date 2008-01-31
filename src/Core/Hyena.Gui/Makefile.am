@@ -16,8 +16,8 @@ SOURCES =  \
 	Hyena.Data.Gui/SortableColumn.cs \
 	Hyena.Gui.Dialogs/ExceptionDialog.cs \
 	Hyena.Gui.Dialogs/VersionInformationDialog.cs \
-	Hyena.Gui.Theatre/Actor.cs \
-	Hyena.Gui.Theatre/Stage.cs \
+	Hyena.Gui.Theatrics/Actor.cs \
+	Hyena.Gui.Theatrics/Stage.cs \
 	Hyena.Gui/CairoExtensions.cs \
 	Hyena.Gui/CleanRoomStartup.cs \
 	Hyena.Gui/EntryEraseAction.cs \

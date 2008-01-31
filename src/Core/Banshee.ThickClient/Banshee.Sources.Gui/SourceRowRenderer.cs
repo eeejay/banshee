@@ -32,7 +32,7 @@ using Gdk;
 using Pango;
 
 using Hyena.Data.Gui;
-using Hyena.Gui.Theatre;
+using Hyena.Gui.Theatrics;
 
 using Banshee.ServiceStack;
 
