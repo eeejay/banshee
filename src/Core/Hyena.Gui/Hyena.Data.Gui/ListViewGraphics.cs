@@ -279,18 +279,26 @@ namespace Hyena.Data.Gui
         
         public void DrawRowSelection(Cairo.Context cr, int x, int y, int width, int height)
         {
+            DrawRowSelection(cr, x, y, width, height, true);
+        }
+        
+        public void DrawRowSelection(Cairo.Context cr, int x, int y, int width, int height, bool filled)
+        {
             Cairo.Color selection_color = GetWidgetColor(GtkColorClass.Background, StateType.Selected);
             Cairo.Color selection_stroke = CairoExtensions.ColorShade(selection_color, 0.85);
-            Cairo.Color selection_fill_light = CairoExtensions.ColorShade(selection_color, 1.1);
-            Cairo.Color selection_fill_dark = CairoExtensions.ColorShade(selection_color, 0.90);
             
-            LinearGradient grad = new LinearGradient(x, y, x, y + height);
-            grad.AddColorStop(0, selection_fill_light);
-            grad.AddColorStop(1, selection_fill_dark);
-            
-            cr.Pattern = grad;
-            CairoExtensions.RoundedRectangle(cr, x, y, width, height, BorderRadius);
-            cr.Fill();
+            if (filled) {
+                Cairo.Color selection_fill_light = CairoExtensions.ColorShade(selection_color, 1.1);
+                Cairo.Color selection_fill_dark = CairoExtensions.ColorShade(selection_color, 0.90);
+                
+                LinearGradient grad = new LinearGradient(x, y, x, y + height);
+                grad.AddColorStop(0, selection_fill_light);
+                grad.AddColorStop(1, selection_fill_dark);
+                
+                cr.Pattern = grad;
+                CairoExtensions.RoundedRectangle(cr, x, y, width, height, BorderRadius);
+                cr.Fill();
+            }
             
             cr.LineWidth = 1.0;
             cr.Color = selection_stroke;

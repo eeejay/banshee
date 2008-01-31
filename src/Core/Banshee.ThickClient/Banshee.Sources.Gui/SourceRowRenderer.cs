@@ -91,9 +91,8 @@ namespace Banshee.Sources.Gui
                         background_area.Width - 2, background_area.Height - 2);
                 }
             } else if (path != null && path.Equals (view.HighlightedPath)) {
-                drawable.DrawRectangle (widget.Style.BackgroundGC (StateType.Selected), false,
-                    new Gdk.Rectangle (background_area.X + 1, background_area.Y + 1, 
-                        background_area.Width - 3, background_area.Height - 4));
+                    view.Graphics.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
+                        background_area.Width - 2, background_area.Height - 2, false);
             }
             
             int title_layout_width = 0, title_layout_height = 0;

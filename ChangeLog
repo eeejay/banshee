@@ -1,5 +1,13 @@
 2008-01-30  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Use the list view theme engine to draw the highlight selection
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Make it optional
+	to draw the row selection fill
+
+2008-01-30  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CellEditEntry.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
