@@ -48,10 +48,6 @@ namespace Banshee.Sources.Gui
             MaxLength = 256;
         }
         
-        protected CellEditEntry (System.IntPtr ptr) : base (ptr)
-        {
-        }
-        
         protected override bool OnFocusOutEvent (Gdk.EventFocus focus)
         {
             FinishEditing ();

@@ -1,5 +1,15 @@
 2008-01-30  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CellEditEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Lots of clean up/reorg of the SourceView code to make it easier to 
+	read and manage; split all of the drag and drop code into a separate
+	file and SourceView is now a partial class
+
+2008-01-30  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
 	Stupid cast to work around possible bug in gmcs 1.2.5
 

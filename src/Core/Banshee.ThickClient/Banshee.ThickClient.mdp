@@ -78,6 +78,7 @@
     <File name="Banshee.Equalizer.Gui/EqualizerWindow.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources.Gui/CellEditEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources.Gui/SourceRowRenderer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/SourceView_DragAndDrop.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

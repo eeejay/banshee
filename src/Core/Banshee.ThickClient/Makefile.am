@@ -61,7 +61,8 @@ SOURCES =  \
 	Banshee.Library.Gui/ImportDialog.cs \
 	Banshee.Sources.Gui/CellEditEntry.cs \
 	Banshee.Sources.Gui/SourceRowRenderer.cs \
-	Banshee.Sources.Gui/SourceView.cs
+	Banshee.Sources.Gui/SourceView.cs \
+	Banshee.Sources.Gui/SourceView_DragAndDrop.cs
 
 RESOURCES =  \
 	Banshee.ThickClient.addin.xml \
