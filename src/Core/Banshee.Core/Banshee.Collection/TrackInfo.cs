@@ -51,7 +51,7 @@ namespace Banshee.Collection
 
         private int track_number;
         private int track_count;
-        private int disc_number;
+        private int disc;
         private int year;
         private int rating;
 
@@ -176,9 +176,9 @@ namespace Banshee.Collection
             set { track_count = value; }
         }
 
-        public virtual int DiscNumber {
-            get { return disc_number; }
-            set { disc_number = value; }
+        public virtual int Disc {
+            get { return disc; }
+            set { disc = value; }
         }
 
         public virtual int Year {
@@ -249,6 +249,7 @@ namespace Banshee.Collection
             // Our own
             dict.Add ("track-number", TrackNumber);
             dict.Add ("track-count", TrackCount);
+            dict.Add ("disc", Disc);
             dict.Add ("year", year);
             dict.Add ("rating", rating);
             

@@ -299,7 +299,7 @@ namespace Banshee.Database
             ");
             Execute("CREATE INDEX CoreAlbumsIndex       ON CoreAlbums(Title)");
             Execute("CREATE INDEX CoreAlbumsArtistID    ON CoreAlbums(ArtistID)");
-            
+
             Execute(@"
                 CREATE TABLE CoreArtists (
                     ArtistID            INTEGER PRIMARY KEY,

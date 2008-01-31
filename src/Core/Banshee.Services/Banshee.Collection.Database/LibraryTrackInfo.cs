@@ -189,9 +189,9 @@ namespace Banshee.Collection.Database
         }
         
         [DatabaseColumn]
-        public override int DiscNumber {
-            get { return base.DiscNumber; }
-            set { base.DiscNumber = value; }
+        public override int Disc {
+            get { return base.Disc; }
+            set { base.Disc = value; }
         }
         
         [DatabaseColumn("Duration")]

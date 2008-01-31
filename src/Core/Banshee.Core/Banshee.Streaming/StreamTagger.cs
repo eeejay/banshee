@@ -58,6 +58,7 @@ namespace Banshee.Streaming
             track.MimeType = file.MimeType;
             track.ArtistName = Choose(file.Tag.JoinedPerformers, track.ArtistName);
             track.AlbumTitle = Choose(file.Tag.Album, track.AlbumTitle);
+            track.Disc = file.Tag.Disc == 0 ? track.Disc : (int)file.Tag.Disc;
             track.TrackTitle = Choose(file.Tag.Title, track.TrackTitle);
             track.Genre = Choose(file.Tag.FirstGenre, track.Genre);
             track.TrackNumber = file.Tag.Track == 0 ? track.TrackNumber : (int)file.Tag.Track;
@@ -79,6 +80,10 @@ namespace Banshee.Streaming
                         break;
                     case CommonTags.Album:
                         track.AlbumTitle = Choose((string)tag.Value, track.AlbumTitle);
+                        break;
+                    case CommonTags.Disc:
+                        int disc = (int)tag.Value;
+                        track.Disc = disc == 0 ? track.Disc : disc;
                         break;
                     case CommonTags.Genre:
                         track.Genre = Choose((string)tag.Value, track.Genre);

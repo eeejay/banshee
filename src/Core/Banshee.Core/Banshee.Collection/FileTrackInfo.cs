@@ -54,6 +54,7 @@ namespace Banshee.Collection
             AlbumTitle = Choose(file.Tag.Album, AlbumTitle);
             TrackTitle = Choose(file.Tag.Title, TrackTitle);
             Genre = Choose(file.Tag.FirstGenre, Genre);
+            Disc = file.Tag.Disc == 0 ? (int)Disc : (int)file.Tag.Disc;
             TrackNumber = file.Tag.Track == 0 ? (int)TrackNumber : (int)file.Tag.Track;
             TrackCount = file.Tag.TrackCount == 0 ? (int)TrackCount : (int)file.Tag.TrackCount;
             Duration = file.Properties.Duration;

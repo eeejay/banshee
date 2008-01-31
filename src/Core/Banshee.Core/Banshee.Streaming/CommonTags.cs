@@ -37,6 +37,7 @@ namespace Banshee.Streaming
         public const string Album             = "album";
         public const string Date              = "date";
         public const string Genre             = "genre";
+        public const string Disc              = "disc";
         public const string Comment           = "comment";
         public const string TrackNumber       = "track-number";
         public const string TrackCount        = "track-count";

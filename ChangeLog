@@ -1,5 +1,26 @@
 2008-01-31  Aaron Bockover  <abock@gnome.org>
 
+	Patch that adds sorting by Disc number and editing it as well from
+	Will Farrington. Awesomeness.
+
+	* src/Core/Banshee.Core/Banshee.Collection/FileTrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/CommonTags.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	Add backend support for having Track.Disc as a column in TrackInfo
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Set default sorting, artist, and album sorting to sort with respect to the
+	disc number; Add QueryField: searchable keywords are "disc" "cd" 
+	and "discnum"
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialog-ui.xml:
+	Add Disc field to the Track Editor
+
+2008-01-31  Aaron Bockover  <abock@gnome.org>
+
 	Patch to enable the preferences dialog by Alex Hixon
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:

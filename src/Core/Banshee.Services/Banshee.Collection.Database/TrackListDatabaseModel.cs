@@ -126,7 +126,7 @@ namespace Banshee.Collection.Database
             sort_query = GetSort (sort_column.SortKey, AscDesc ());
         }
 
-        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
+        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
         public static string GetSort (string key, string ascDesc)
         {
             string sort_query = null;
@@ -141,7 +141,8 @@ namespace Banshee.Collection.Database
                 case "Artist":
                     sort_query = String.Format (@"
                         lower(CoreArtists.Name) {0}, 
-                        lower(CoreAlbums.Title) ASC, 
+                        lower(CoreAlbums.Title) ASC,
+                        CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber ASC,
                         CoreTracks.Uri ASC", ascDesc); 
                     break;
@@ -150,6 +151,7 @@ namespace Banshee.Collection.Database
                     sort_query = String.Format (@"
                         lower(CoreAlbums.Title) {0},
                         lower(CoreArtists.Name) ASC,
+                        CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber ASC,
                         CoreTracks.Uri ASC", ascDesc); 
                     break;
@@ -166,6 +168,7 @@ namespace Banshee.Collection.Database
                     break;
 
                 case "Year":
+                case "Disc":
                 case "Duration":
                 case "Rating":
                 case "PlayCount":
@@ -458,6 +461,12 @@ namespace Banshee.Collection.Database
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("on"), Catalog.GetString ("album"), Catalog.GetString ("from"),
                 "on", "album", "from", "albumtitle"
+            ),
+            new QueryField (
+                "disc", Catalog.GetString ("Disc"), "CoreTracks.Disc", typeof(IntegerQueryValue),
+                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+                Catalog.GetString ("disc"), Catalog.GetString ("cd"), Catalog.GetString ("discnum"),
+                "disc", "cd", "discnum"
             ),
             new QueryField (
                 "title", Catalog.GetString ("Track Title"), "CoreTracks.Title", true,
