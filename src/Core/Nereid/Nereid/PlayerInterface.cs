@@ -469,7 +469,7 @@ namespace Nereid
                         focus_search = true;
                     }
                     break;
-                case Gdk.Key.J:  case Gdk.Key.j: 
+
                 case Gdk.Key.S:  case Gdk.Key.s:
                 case Gdk.Key.F3: case Gdk.Key.slash:
                     focus_search = true;

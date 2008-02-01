@@ -105,6 +105,11 @@ namespace Banshee.Playlist
                 Update ();
         }
 
+        public void UserNotifyUpdated ()
+        {
+            OnUserNotifyUpdated ();
+        }
+
         protected abstract void Create ();
         protected abstract void Update ();
     }

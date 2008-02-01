@@ -137,8 +137,6 @@ namespace Banshee.Playlist
                     VALUES (NULL, ?, ?, ?)",
                 Name, -1, 1 //SortColumn, SortType
             ));
-            
-            OnUserNotifyUpdated ();
         }
 
 #endregion

@@ -1,3 +1,22 @@
+2008-01-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commits adds j, k, Home, and End key support for scrolling list
+	views.  Also fixes issue with not fading newly created playlist.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Add public UserNotifyUpdated method so extensions etc can use it.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Call
+	UserNotifyUpdated in the action handler when creating a playlist.
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Add j and k as key
+	bindings for down/up respectively.  Add Home/End key support.  Handle all
+	relevant key pad keys.
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Don't have j or J focus the
+	search any more, it's now used for scrolling the ListViews.
+
 2008-01-31  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/IExtensionService.cs:

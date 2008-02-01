@@ -493,26 +493,46 @@ namespace Hyena.Data.Gui
                         handled = true;
                     }
                     break;
+
                 case Gdk.Key.A:
                     if ((press.State & Gdk.ModifierType.ControlMask) != 0) {
                         SelectionProxy.Selection.Clear ();
                         handled = true;
                     }
                     break;
+
+                case Gdk.Key.k:
+                case Gdk.Key.K:
                 case Gdk.Key.Up:
+                case Gdk.Key.KP_Up:
                     handled = KeyboardScroll (press.State, -1, true);
                     break;
 
+                case Gdk.Key.j:
+                case Gdk.Key.J:
                 case Gdk.Key.Down:
+                case Gdk.Key.KP_Down:
                     handled = KeyboardScroll (press.State, 1, true);
                     break;
 
                 case Gdk.Key.Page_Up:
+                case Gdk.Key.KP_Page_Up:
                     handled = KeyboardScroll (press.State, (int) (-vadjustment.PageIncrement / (double) RowHeight), false);
                     break;
 
                 case Gdk.Key.Page_Down:
+                case Gdk.Key.KP_Page_Down:
                     handled = KeyboardScroll (press.State, (int) (vadjustment.PageIncrement / (double) RowHeight), false);
+                    break;
+
+                case Gdk.Key.Home:
+                case Gdk.Key.KP_Home:
+                    handled = KeyboardScroll (press.State, -10000000, false);
+                    break;
+
+                case Gdk.Key.End:
+                case Gdk.Key.KP_End:
+                    handled = KeyboardScroll (press.State, 10000000, false);
                     break;
 
                 case Gdk.Key.Return:
