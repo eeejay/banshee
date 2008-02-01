@@ -1,4 +1,15 @@
-<Addin id="Banshee.NotificationArea">
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.NotificationArea"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2005-2008 Novell Inc. Licensed under the MIT X11 license."
+    name="Notification Area Icon"
+    category="User Interface"
+    description="Displays an icon in the notification area and allows Banshee to be controlled through it."
+    author="Sebastian Dröge, Aaron Bockover, Gabriel Burt, Ruben Vermeersch"
+    url="http://banshee-project.org/"
+    defaultEnabled="true">
 
   <Dependencies>
     <Addin id="Banshee.Services" version="1.0"/>
