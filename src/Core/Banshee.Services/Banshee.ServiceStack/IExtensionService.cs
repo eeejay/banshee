@@ -1,10 +1,10 @@
-// 
-// Service.cs
+//
+// IExtensionService.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,28 +27,11 @@
 //
 
 using System;
-using System.Runtime.InteropServices;
 
-using Banshee.ServiceStack;
-
-namespace Banshee.GStreamer
+namespace Banshee.ServiceStack
 {
-    public class Service : IExtensionService
+    public interface IExtensionService : IService
     {
-        public Service ()
-        {
-        }
-        
-        void IExtensionService.Initialize ()
-        {
-            gstreamer_initialize ();
-        }
-        
-        string IService.ServiceName {
-            get { return "GStreamerCoreService"; }
-        }
-        
-        [DllImport("libbanshee")]
-        private static extern void gstreamer_initialize ();
+        void Initialize ();
     }
 }

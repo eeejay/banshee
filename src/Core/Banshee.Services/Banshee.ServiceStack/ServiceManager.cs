@@ -103,17 +103,26 @@ namespace Banshee.ServiceStack
                 }
                 
                 foreach (TypeExtensionNode node in extension_nodes) {
-                    uint timer_id = Log.DebugTimerStart ();
-                    IService service = (IService)node.CreateInstance (typeof (IService));
-                    RegisterService (service);
+                    IExtensionService service = null;
                     
-                    Log.DebugTimerPrint (timer_id, String.Format (
-                        "Extension service started ({0}, {{0}})", service.ServiceName));
+                    try {
+                        uint timer_id = Log.DebugTimerStart ();
+                        
+                        service = (IExtensionService)node.CreateInstance (typeof (IExtensionService));
+                        service.Initialize ();
+                        RegisterService (service);
                     
-                    OnServiceStarted (service);
+                        Log.DebugTimerPrint (timer_id, String.Format (
+                            "Extension service started ({0}, {{0}})", service.ServiceName));
                     
-                    if (service is IDisposable) {
-                        dispose_services.Push (service);
+                        OnServiceStarted (service);
+                    
+                        if (service is IDisposable) {
+                            dispose_services.Push (service);
+                        }
+                    } catch (Exception e) {
+                        Log.Warning (String.Format ("Extension `{0}' not started: {1}", 
+                            service == null ? node.Path : service.GetType ().FullName, e.Message));
                     }
                 }
                 

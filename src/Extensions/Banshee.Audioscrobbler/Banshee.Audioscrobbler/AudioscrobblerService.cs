@@ -33,9 +33,13 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Audioscrobbler 
 {
-    public class AudioscrobblerService : IService
+    public class AudioscrobblerService : IExtensionService
     {
         public AudioscrobblerService ()
+        {
+        }
+        
+        void IExtensionService.Initialize ()
         {
         }
         

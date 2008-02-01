@@ -1,3 +1,27 @@
+2008-01-31  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IExtensionService.cs:
+	Added a simple method that extension services must implement; extension
+	services should do nothing in their constructors so we can get type
+	information from them at runtime at a minimum
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Require extension services to be IExtensionService; catch all exceptions
+	from them, do not bail if an extension explodes and log the error
+
+	* src/Extensions/Banshee.MultimediaKeys/Banshee.MultimediaKeys/MultimediaKeysService.cs:
+	Extreme hack to support both GNOME Settings Daemon 2.20 and 2.22; I just
+	love how pointless API breakage is a common theme in GNOME - the price
+	of being an ISV and not 'in GNOME' is high - too high
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Use 'q' as a shortcut for adding stuff to the play queue
+	
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/Service.cs:
+	* src/Extensions/Banshee.Audioscrobbler/Banshee.Audioscrobbler/AudioscrobblerService.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Implement IExtensionService
+
 2008-01-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:

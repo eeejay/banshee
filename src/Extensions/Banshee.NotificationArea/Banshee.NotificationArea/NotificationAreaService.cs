@@ -42,29 +42,28 @@ using NotificationAreaIcon = NotificationArea;
 
 namespace Banshee.NotificationArea 
 {
-    public class NotificationAreaService : IService
+    public class NotificationAreaService : IExtensionService
     {
         private NotificationAreaIcon notif_area;
         private EventBox event_box;
     
         public NotificationAreaService ()
         {
+        }
+        
+        void IExtensionService.Initialize ()
+        {
             // TODO: Add something like ServiceManager.NotifyStartup ("InterfaceActionService", Initialize);
             
             if (ServiceManager.Contains ("InterfaceActionService")) {
-                Initialize ();
+                BuildNotificationArea ();
             } else {
                 ServiceManager.ServiceStarted += delegate (ServiceStartedArgs args) {
                    if (args.Service is Banshee.Gui.InterfaceActionService) {
-                       Initialize ();
+                       BuildNotificationArea ();
                    }
                 };
             }
-        }
-        
-        private void Initialize ()
-        {
-            BuildNotificationArea ();
         }
         
         private void BuildNotificationArea () 

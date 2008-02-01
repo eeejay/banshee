@@ -73,7 +73,7 @@ namespace Banshee.PlayQueue
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             uia_service.TrackActions.Add (new ActionEntry [] {
                 new ActionEntry ("AddToPlayQueueAction", Stock.Add,
-                    Catalog.GetString ("Add to Play Queue"), null,
+                    Catalog.GetString ("Add to Play Queue"), "q",
                     Catalog.GetString ("Append selected songs to the play queue"),
                     OnAddToPlayQueue)
             });
