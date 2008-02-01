@@ -1,3 +1,13 @@
+2008-02-01  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs: Made
+	  to use DatabaseConfigurationClient when checking for version.
+
+	* src/Core/Banshee.Services/Banshee.Configuration:
+	* src/Core/Banshee.Services/Banshee.Configuration/DatabaseConfigurationClient.cs:
+	  Added DatabaseConfigurationClient, an IConfigurationClient wrapper for
+	  the CoreConfiguration table.
+
 2008-01-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commits adds j, k, Home, and End key support for scrolling list

@@ -118,6 +118,8 @@
     <File name="Banshee.Sources/IDurationAggregator.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/IFileSizeAggregator.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/IExtensionService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration" subtype="Directory" buildaction="Compile" />
+    <File name="Banshee.Configuration/DatabaseConfigurationClient.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

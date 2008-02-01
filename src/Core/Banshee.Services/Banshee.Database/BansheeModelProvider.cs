@@ -32,6 +32,8 @@ using System.Data;
 
 using Hyena.Data.Sqlite;
 
+using Banshee.Configuration;
+
 namespace Banshee.Database
 {
     public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : new ()
@@ -61,36 +63,22 @@ namespace Banshee.Database
         
         protected override sealed void CheckVersion ()
         {
-            using (IDataReader reader = connection.ExecuteReader (String.Format (
-                "SELECT Value FROM CoreConfiguration WHERE Key = '{0}ModelVersion'", TableName))) {
-                if (reader.Read ()) {
-                    int version = Int32.Parse (reader.GetString (0));
-                    if (version < ModelVersion) {
-                        MigrateTable (version);
-                        connection.Execute (String.Format (
-                            "UPDATE CoreConfiguration SET Value = '{0}' WHERE Key = '{0}ModelVersion'",
-                            ModelVersion, TableName));
-                    }
-                } else {
-                    connection.Execute (String.Format (
-                        "INSERT INTO CoreConfiguration (Key, Value) VALUES ('{0}ModelVersion', '{1}')",
-                        TableName, ModelVersion));
-                }
+            CheckVersion (TableName, "ModelVersion", ModelVersion, MigrateTable);
+            CheckVersion ("Database", "Version", DatabaseVersion, MigrateDatabase);
+        }
+        
+        private delegate void MigrateDel (int version);
+        
+        private static void CheckVersion (string namespce, string key, int new_version, MigrateDel func)
+        {
+            int old_version = DatabaseConfigurationClient.Client.Get <int> (
+                namespce, key, -1);
+            if (old_version != -1 && old_version < new_version) {
+                func (old_version);
             }
-            using (IDataReader reader = connection.ExecuteReader ("SELECT Value FROM CoreConfiguration WHERE Key = 'DatabaseVersion'")) {
-                if (reader.Read ()) {
-                    int version = Int32.Parse (reader.GetString (0));
-                    if (version < DatabaseVersion) {
-                        MigrateDatabase (version);
-                        connection.Execute (String.Format (
-                            "UPDATE CoreConfiguration SET Value = '{0}' WHERE Key = 'DatabaseVersion'",
-                            DatabaseVersion));
-                    }
-                } else {
-                    connection.Execute (String.Format (
-                        "INSERT INTO CoreConfiguration (Key, Value) VALUES ('DatabaseVersion', '{0}')",
-                        DatabaseVersion));
-                }
+            if (old_version != new_version) {
+                DatabaseConfigurationClient.Client.Set <int> (
+                    namespce, key, new_version);
             }
         }
 
