@@ -1,3 +1,12 @@
+2008-02-02  Aaron Bockover  <aaron@abock.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Use smarter calculations for computing the row height and middle-aligning
+	contents in a row; should look better across all font sizes now
+
+	* src/Core/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Reduce the inner border
+	width to the correct size to be consistent with the ListView
+
 2008-02-01  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs: Made

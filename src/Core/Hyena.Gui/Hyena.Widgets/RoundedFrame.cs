@@ -38,7 +38,7 @@ namespace Hyena.Widgets
     public class RoundedFrame : Bin
     {
         private ListViewGraphics graphics;
-        private int frame_width = 4;
+        private int frame_width = 3;
         
         private Widget child;
         private Gdk.Rectangle child_allocation;

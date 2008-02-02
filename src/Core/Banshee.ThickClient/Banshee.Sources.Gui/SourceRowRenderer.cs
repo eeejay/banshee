@@ -67,7 +67,7 @@ namespace Banshee.Sources.Gui
             x_offset = 0;
             y_offset = 0;
             width = text_w;
-            height = text_h + 5;
+            height = (int)Math.Max (22, text_h) + 1;
         }
         
         protected override void Render (Gdk.Drawable drawable, Widget widget, Gdk.Rectangle background_area, 
@@ -154,13 +154,13 @@ namespace Banshee.Sources.Gui
 
             if (icon != null) {
                 drawable.DrawPixbuf (main_gc, icon, 0, 0, 
-                    cell_area.X + 0, cell_area.Y + ((cell_area.Height - icon.Height) / 2) + 1,
+                    cell_area.X, Middle (cell_area, icon.Height),
                     icon.Width, icon.Height, RgbDither.None, 0, 0);
             }
             
             drawable.DrawLayout (main_gc, 
                 cell_area.X + (icon == null ? 0 : icon.Width) + 6, 
-                cell_area.Y + ((cell_area.Height - title_layout_height) / 2) + 1, 
+                Middle (cell_area, title_layout_height),
                 title_layout);
             
             if (hide_counts) {
@@ -179,9 +179,14 @@ namespace Banshee.Sources.Gui
             } 
             
             drawable.DrawLayout (mod_gc,
-                (cell_area.X + cell_area.Width) - count_layout_width - 2,
-                cell_area.Y + ((cell_area.Height - count_layout_height) / 2) + 1,
+                cell_area.X + cell_area.Width - count_layout_width - 2,
+                Middle (cell_area, count_layout_height),
                 count_layout);
+        }
+        
+        private int Middle (Gdk.Rectangle area, int height)
+        {
+            return area.Y + (int)Math.Round ((double)(area.Height - height) / 2.0) + 1;
         }
         
         private Gdk.Pixbuf ResolveSourceIcon (Source source)
