@@ -17,6 +17,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/ColumnCellDateTime.cs \
 	Banshee.Collection.Gui/ColumnCellDuration.cs \
 	Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs \
+	Banshee.Collection.Gui/ColumnCellTrackNumber.cs \
 	Banshee.Collection.Gui/CompositeTrackListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \
 	Banshee.Equalizer.Gui/EqualizerBandScale.cs \

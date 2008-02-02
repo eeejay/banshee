@@ -48,7 +48,7 @@ namespace Banshee.Collection.Gui
 
             column_controller.AddRange(
                 new Column(null, "indicator", new ColumnCellPlaybackIndicator(null), 0.05),
-                new SortableColumn("Track", new ColumnCellText("TrackNumber", true), 0.10, "Track"),
+                new SortableColumn("Track", new ColumnCellTrackNumber("TrackNumber", true), 0.10, "Track"),
                 new SortableColumn("Artist", new ColumnCellText("ArtistName", true), 0.225, "Artist"),
                 new SortableColumn("Album", new ColumnCellText("AlbumTitle", true), 0.225, "Album"),
                 new SortableColumn("Title", new ColumnCellText("TrackTitle", true), 0.25, "Title"),

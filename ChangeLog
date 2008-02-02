@@ -1,3 +1,11 @@
+2008-02-02  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackNumber.cs: Added.
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	* src/Core/Banshee.ThickClient/Makefile.am: Fix a regression from old
+	Banshee, don't show the track number if it's zero. Just show empty space.
+
 2008-02-02  Aaron Bockover  <aaron@abock.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
