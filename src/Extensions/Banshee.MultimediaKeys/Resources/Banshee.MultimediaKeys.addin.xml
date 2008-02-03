@@ -9,7 +9,7 @@
   </Dependencies>
 
   <Extension path="/Banshee/ServiceManager/Service">
-    <TypeExtensionNode class="Banshee.MultimediaKeys.MultimediaKeysService"/>
+    <Service class="Banshee.MultimediaKeys.MultimediaKeysService"/>
   </Extension>
   
 </Addin>

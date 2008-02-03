@@ -6,7 +6,7 @@
   </Dependencies>
 
   <Extension path="/Banshee/SourceManager/Source">
-    <TypeExtensionNode class="Banshee.PlayQueue.PlayQueueSource"/>
+    <Source class="Banshee.PlayQueue.PlayQueueSource"/>
   </Extension>
   
 </Addin>

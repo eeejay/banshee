@@ -17,7 +17,7 @@
   </Dependencies>
 
   <Extension path="/Banshee/ServiceManager/Service">
-    <TypeExtensionNode class="Banshee.NotificationArea.NotificationAreaService"/>
+    <Service class="Banshee.NotificationArea.NotificationAreaService"/>
   </Extension>
   
 </Addin>

@@ -5,8 +5,8 @@
   </Dependencies>
 
   <Extension path="/Banshee/Library/ImportSource">
-    <TypeExtensionNode class="Banshee.Library.Gui.FolderImportSource"/>
-    <TypeExtensionNode class="Banshee.Library.Gui.FileImportSource"/>
+    <ImportSource class="Banshee.Library.Gui.FolderImportSource"/>
+    <ImportSource class="Banshee.Library.Gui.FileImportSource"/>
   </Extension>
   
 </Addin>

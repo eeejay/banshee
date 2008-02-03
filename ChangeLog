@@ -1,3 +1,20 @@
+2008-02-03  Ruben Vermeersch  <ruben@savanne.be>
+	
+	Rename extension types into more meaningful names. TypeExtensionNode is an
+	implementation detail.
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml: Rename the four
+	different TypeExtensionNodes (which all had different functionality into):
+		Service, Source, ImportSource and PlayerEngine.
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.addin.xml:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml:
+	* src/Extensions/Banshee.Audioscrobbler/Resources/Banshee.Audioscrobbler.addin.xml:
+	* src/Extensions/Banshee.MultimediaKeys/Resources/Banshee.MultimediaKeys.addin.xml:
+	* src/Extensions/Banshee.NotificationArea/Resources/Banshee.NotificationArea.addin.xml:
+	* src/Extensions/Banshee.PlayQueue/Resources/Banshee.PlayQueue.addin.xml:
+	Adjust addin.xml files accordingly.
+
 2008-02-02  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
