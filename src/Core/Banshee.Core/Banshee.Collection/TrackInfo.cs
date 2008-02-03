@@ -134,26 +134,29 @@ namespace Banshee.Collection
         }
         
         public string DisplayArtistName { 
-            get { 
-                return String.IsNullOrEmpty (ArtistName)
+            get {
+                string name = ArtistName == null ? null : ArtistName.Trim ();
+                return String.IsNullOrEmpty (name)
                     ? Catalog.GetString ("Unknown Artist") 
-                    : ArtistName; 
+                    : name; 
             } 
         }
 
         public string DisplayAlbumTitle { 
             get { 
-                return String.IsNullOrEmpty (AlbumTitle) 
+                string title = AlbumTitle == null ? null : AlbumTitle.Trim ();
+                return String.IsNullOrEmpty (title) 
                     ? Catalog.GetString ("Unknown Album") 
-                    : AlbumTitle; 
+                    : title; 
             } 
         }
 
         public string DisplayTrackTitle { 
             get { 
-                return String.IsNullOrEmpty (TrackTitle) 
+                string title = TrackTitle == null ? null : TrackTitle.Trim ();
+                return String.IsNullOrEmpty (title) 
                     ? Catalog.GetString ("Unknown Title") 
-                    : TrackTitle; 
+                    : title; 
             } 
         }     
         
