@@ -32,6 +32,7 @@ using Gtk;
 using Hyena.Data.Gui;
 
 using Banshee.Gui;
+using Banshee.Gui.DragDrop;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.Collection;
@@ -82,6 +83,8 @@ namespace Banshee.Collection.Gui
                     QueueDraw ();
                 };
             }
+            
+            ConfigureDragAndDrop ();
         }
 
         protected override bool OnPopupMenu ()
@@ -94,6 +97,32 @@ namespace Banshee.Collection.Gui
         {
             QueueDraw ();
         }
+        
+#region Drag and Drop
+
+        private static TargetEntry [] dnd_source_entries = new TargetEntry [] {
+            DragDropTarget.ModelSelection
+        };
+
+        private void ConfigureDragAndDrop ()
+        {
+            Gtk.Drag.SourceSet (this, Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask, 
+                dnd_source_entries, Gdk.DragAction.Copy | Gdk.DragAction.Move);
+                
+            Drag.SourceSetIconName (this, "audio-x-generic");
+        }
+
+        protected override void OnDragDataGet (Gdk.DragContext context, SelectionData selection_data, uint info, uint time)
+        {
+            byte [] selection_data_raw;
+            DragDropTargetType type = (DragDropTargetType)info;
+            
+            if (type != DragDropTargetType.ModelSelection || Selection.Count <= 0) {
+                return;
+            }
+        }
+
+#endregion
         
         public ColumnController DefaultColumnController {
             get { return column_controller; }

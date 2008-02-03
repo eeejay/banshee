@@ -114,6 +114,26 @@ namespace Banshee.Playlist
 
 #endregion
 
+#region Source Overrides
+
+        public override bool AcceptsInputFromSource (Source source)
+        {
+            // TODO: Probably should be more restrictive than this
+            return source is DatabaseSource;
+        }
+        
+        public override void MergeSourceInput (Source from, bool selected)
+        {
+            DatabaseSource source = from as DatabaseSource;
+            if (source == null || !(source.TrackModel is TrackListDatabaseModel)) {
+                return;
+            }
+            
+            AddSelectedTracks ((TrackListDatabaseModel)source.TrackModel);
+        }
+
+#endregion
+
 #region AbstractPlaylist overrides
 
         protected override void Update ()
@@ -193,7 +213,7 @@ namespace Banshee.Playlist
             ServiceManager.DbConnection.Execute (add_track_command);
             Reload ();
         }*/
-
+        
         public virtual void AddSelectedTracks (TrackListDatabaseModel from)
         {
             if (from == track_model)

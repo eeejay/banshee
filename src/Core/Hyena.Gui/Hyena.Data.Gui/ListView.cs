@@ -606,6 +606,7 @@ namespace Hyena.Data.Gui
         }
         
         private int last_click_row_index = -1;
+        
         protected override bool OnButtonPressEvent(Gdk.EventButton press)
         {
             HasFocus = true;
@@ -617,8 +618,13 @@ namespace Hyena.Data.Gui
                 }
             } else if (press.Window == list_window && model != null) {
                 GrabFocus ();
-                    
+                
                 int row_index = GetRowAtY ((int) press.Y);
+                
+                if (Selection.Count > 1 && Selection.Contains (row_index)) {
+                    return true;
+                }
+                
                 object item = model[row_index];
                 if (item == null) {
                     return true;
@@ -668,6 +674,7 @@ namespace Hyena.Data.Gui
         
         protected override bool OnButtonReleaseEvent(Gdk.EventButton evnt)
         {
+           // Console.WriteLine 
             if(evnt.Window == header_window) {
                 if(resizing_column_index >= 0) {
                     resizing_column_index = -1;
@@ -681,7 +688,23 @@ namespace Hyena.Data.Gui
                     Model.Reload();
                     InvalidateHeaderWindow();
                 }
+            } else if (evnt.Window == list_window && model != null && evnt.State == Gdk.ModifierType.None) {
+                GrabFocus ();
+                
+                int row_index = GetRowAtY ((int)evnt.Y);
+                object item = model[row_index];
+                if (item == null) {
+                    return true;
+                }
+                
+                if (Selection.Count > 1 && Selection.Contains (row_index)) {
+                    Selection.Clear(false);
+                    Selection.Select(row_index);
+                    FocusRow (row_index);
+                    return true;
+                }
             }
+
             
             return true;
         }

@@ -30,12 +30,14 @@ using System;
 using System.Collections.Generic;
 using Gtk;
 using Cairo;
+using Mono.Unix;
 
 using Hyena.Data.Gui;
 using Hyena.Gui.Theatrics;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
+using Banshee.Playlist;
 
 using Banshee.Gui;
 
@@ -47,7 +49,7 @@ namespace Banshee.Sources.Gui
 
     public partial class SourceView : TreeView
     {
-        //private Source new_playlist_source = new PlaylistSource(-1);
+        private Source new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"));
         private TreeIter new_playlist_iter = TreeIter.Zero;
         private bool new_playlist_visible = false;
         
@@ -336,9 +338,6 @@ namespace Banshee.Sources.Gui
                 }
             }
 
-            // delegate (SourceEventArgs e) { AddSource (e.Source, iter); };
-            // delegate (SourceEventArgs e) { RemoveSource(e.Source); };
-            
             source.ChildSourceAdded += OnSourceChildSourceAdded; 
             source.ChildSourceRemoved += OnSourceChildSourceRemoved;
             source.UserNotifyUpdated += OnSourceUserNotifyUpdated;
@@ -462,8 +461,6 @@ namespace Banshee.Sources.Gui
                 return;
             }
             
-            renderer.Selected = renderer.source.Equals (ServiceManager.SourceManager.ActiveSource);
-            //renderer.Italicized = renderer.source.Equals (new_playlist_source);
             renderer.Sensitive = renderer.source.CanActivate;
         }
         
@@ -506,7 +503,6 @@ namespace Banshee.Sources.Gui
                 
         public Source HighlightedSource {
             get {
-                TreeModel model;
                 TreeIter iter;
                 
                 if (highlight_path == null || !store.GetIter (out iter, highlight_path)) {
@@ -543,6 +539,10 @@ namespace Banshee.Sources.Gui
         
         internal Stage<TreeIter> NotifyStage {
             get { return notify_stage; }
+        }
+        
+        internal Source NewPlaylistSource {
+            get { return new_playlist_source; }
         }
 
 #endregion        

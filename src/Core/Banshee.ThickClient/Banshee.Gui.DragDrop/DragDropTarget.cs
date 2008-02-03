@@ -33,26 +33,21 @@ namespace Banshee.Gui.DragDrop
 {
     public enum DragDropTargetType {
         Source,
-        PlaylistRows,
-        TrackInfoObjects,
+        ModelSelection,
         UriList
     };
         
     public static class DragDropTarget
     {
         public static readonly TargetEntry Source = 
-            new TargetEntry("application/x-banshee-source", TargetFlags.App, 
+            new TargetEntry ("application/x-banshee-source", TargetFlags.App, 
                 (uint)DragDropTargetType.Source);
 
-        public static readonly TargetEntry PlaylistRows = 
-            new TargetEntry("application/x-banshee-playlist-rows", TargetFlags.App, 
-                (uint)DragDropTargetType.PlaylistRows);
-
-        public static readonly TargetEntry TrackInfoObjects = 
-            new TargetEntry("application/x-banshee-track-info-objects", TargetFlags.App, 
-                (uint)DragDropTargetType.TrackInfoObjects);
+        public static readonly TargetEntry ModelSelection =
+            new TargetEntry ("application/x-banshee-model-selection", TargetFlags.App,
+                (uint)DragDropTargetType.ModelSelection);
 
         public static readonly TargetEntry UriList = 
-            new TargetEntry("text/uri-list", 0, (uint)DragDropTargetType.UriList);
+            new TargetEntry ("text/uri-list", 0, (uint)DragDropTargetType.UriList);
     }
 }

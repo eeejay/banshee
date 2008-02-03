@@ -40,8 +40,6 @@ namespace Banshee.Sources.Gui
 {
     internal class SourceRowRenderer : CellRendererText
     {
-        public bool Selected = false;
-        public bool Italicized = false;
         public Source source;
         public SourceView view;
         public TreePath path;
@@ -67,7 +65,7 @@ namespace Banshee.Sources.Gui
             x_offset = 0;
             y_offset = 0;
             width = text_w;
-            height = (int)Math.Max (22, text_h) + 1;
+            height = (int)Math.Max (22, text_h) + 5;
         }
         
         protected override void Render (Gdk.Drawable drawable, Widget widget, Gdk.Rectangle background_area, 
@@ -127,7 +125,7 @@ namespace Banshee.Sources.Gui
                 ? Pango.Weight.Bold 
                 : Pango.Weight.Normal;
 
-            if (Italicized) {
+            if (source == view.NewPlaylistSource) {
                 fd.Style = Pango.Style.Italic;
                 hide_counts = true;
             }

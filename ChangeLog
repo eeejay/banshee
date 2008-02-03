@@ -1,5 +1,35 @@
 2008-02-03  Aaron Bockover  <abock@gnome.org>
 
+	This commit adds Drag and Drop support from the track list to the source
+	view; i.e. you can drag tracks to the play queue or playlists
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Added
+	and implemented AcceptsInputFromSource and MergeSourceInput methods
+	that allows source to see if they are 'compatible' with other sources; 
+	for instance, copying some tracks from one source to another
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Implemented source-mode drag and drop for the track list
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Implemented dest-mode drag and drop for track contexts (cannot DnD to/from
+	source view yet)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.DragDrop/DragDropTarget.cs:
+	Modernized the drop targets we'll start with for trunk
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Remove some obsolete properties
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Started fixing up 
+	click behavior for selections to work properly with multi-row DnD; 
+	currently there is still some bad behavior and it needs work - almost
+	done though
+
+2008-02-03  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Do some trimming
 	in the Display* properties
 

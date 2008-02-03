@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using Gtk;
 using Gdk;
 
+using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Playlist;
 
@@ -46,11 +47,12 @@ namespace Banshee.Sources.Gui
         };
             
         private static TargetEntry [] dnd_dest_entries = new TargetEntry [] {
-            Banshee.Gui.DragDrop.DragDropTarget.TrackInfoObjects,
-            Banshee.Gui.DragDrop.DragDropTarget.Source
+            Banshee.Gui.DragDrop.DragDropTarget.ModelSelection
         };
-    
-            
+        
+        private Source final_drag_source = null;
+        private uint final_drag_start_time = 0;
+        
         private void ConfigureDragAndDrop ()
         {
             EnableModelDragSource (Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
@@ -59,109 +61,87 @@ namespace Banshee.Sources.Gui
             EnableModelDragDest (dnd_dest_entries, DragAction.Copy | DragAction.Move);
         }
         
-        protected override void OnDragBegin (Gdk.DragContext context)
-        {
-            /*if(HighlightedSource.IsDragSource || HighlightedSource is IImportSource) {
-                base.OnDragBegin(context);
-            }*/
-        }
-        
-        protected override void OnDragDataGet (Gdk.DragContext context, SelectionData selectionData,
-            uint info, uint time)
-        {
-            switch ((DragDropTargetType)info) {
-                case DragDropTargetType.Source:
-                    new DragDropList<Source> (HighlightedSource, selectionData, context.Targets[0]);
-                    break;
-                default:
-                    return;
-            }
-            
-            base.OnDragDataGet (context, selectionData, info, time);
-        }
-        
         protected override bool OnDragMotion (Gdk.DragContext context, int x, int y, uint time)
         {
-            /*if(Gtk.Drag.GetSourceWidget(context) == this 
-                && !HighlightedSource.IsDragSource && !(HighlightedSource is IImportSource)) {
-                return false;
-            }
+            base.OnDragMotion (context, x, y, time);
+            SetDragDestRow (null, TreeViewDropPosition.IntoOrAfter);
+            Gdk.Drag.Status (context, Gdk.DragAction.Copy, time);
         
-            base.OnDragMotion(context, x, y, time);
-            SetDragDestRow(null, TreeViewDropPosition.IntoOrAfter);
-            Gdk.Drag.Status(context, Gdk.DragAction.Copy, time);
-
-            // FIXME: We need to handle this nicer
-            if(Gtk.Drag.GetSourceWidget(context) != this && 
-                !(ServiceManager.SourceManager.ActiveSource is LibrarySource ||
-                ServiceManager.SourceManager.ActiveSource is PlaylistSource ||
-                ServiceManager.SourceManager.ActiveSource is Banshee.SmartPlaylist.SmartPlaylistSource ||
-                ServiceManager.SourceManager.ActiveSource is IImportable)) {
-                return false;
-            }
-        
-            if(!new_playlist_visible && Gtk.Drag.GetSourceWidget(context) != this) {
-                TreeIter library = FindSource(LibrarySource.Instance);
-                new_playlist_iter = store.AppendNode(library);
-                store.SetValue(new_playlist_iter, 0, new_playlist_source);
-                store.SetValue(new_playlist_iter, 1, 999);
+            if (!new_playlist_visible && Gtk.Drag.GetSourceWidget (context) != this) {
+                TreeIter library = FindSource (ServiceManager.SourceManager.DefaultSource);
+                new_playlist_iter = store.AppendNode (library);
+                store.SetValue (new_playlist_iter, 0, new_playlist_source);
+                store.SetValue (new_playlist_iter, 1, 999);
                 new_playlist_visible = true;
 
-                UpdateView();
-                Expand(library);
+                UpdateView ();
+                Expand (library);
             }
         
             TreePath path;
             TreeViewDropPosition pos;
             
-            if(GetDestRowAtPos(x, y, out path, out pos)) {
-                Source source = GetSource(path);
-                
-                if(source == ServiceManager.SourceManager.ActiveSource) {
-                    return false;
-                }
-                
-                SetDragDestRow(path, TreeViewDropPosition.IntoOrAfter);
-                
-                if((source is LibrarySource && (ServiceManager.SourceManager.ActiveSource is IImportable 
-                    || ServiceManager.SourceManager.ActiveSource is IImportSource)) ||
-                    (source is PlaylistSource) || (source is DapSource) || source.AcceptsInput) {
-                    return true;
-                }
-
-                Gdk.Drag.Status(context, 0, time);
+            if (!GetDestRowAtPos (x, y, out path, out pos)) {
+                Gdk.Drag.Status (context, 0, time);
                 return true;
-            }*/
+            }
             
+            Source drop_source = GetSource (path);
+            Source active_source = ServiceManager.SourceManager.ActiveSource;
+
+            if (drop_source == null || drop_source == active_source 
+                || !drop_source.AcceptsInputFromSource (active_source)) {
+                return false;
+            }
+
+            SetDragDestRow (path, TreeViewDropPosition.IntoOrAfter);
             return true;
         }
         
-        private Source final_drag_source = null;
-        private uint final_drag_start_time = 0;
-    
         protected override void OnDragLeave (Gdk.DragContext context, uint time)
         {
-            /*TreePath path;
+            TreePath path;
             TreeViewDropPosition pos;
             GetDragDestRow (out path, out pos);
 
-            if(path == null) {
-                path = store.GetPath(new_playlist_iter);
+            if (path == null) {
+                path = store.GetPath (new_playlist_iter);
             }
             
             final_drag_source = GetSource (path);
             final_drag_start_time = context.StartTime;
         
-            if(new_playlist_visible) {
-                store.Remove(ref new_playlist_iter);
+            if (new_playlist_visible) {
+                store.Remove (ref new_playlist_iter);
                 new_playlist_visible = false;
-                UpdateView();
-            }*/
+                UpdateView ();
+            }
         }
 
         protected override void OnDragDataReceived (Gdk.DragContext context, int x, int y,
             Gtk.SelectionData selectionData, uint info, uint time)
         {
+            if (final_drag_start_time == context.StartTime && final_drag_source != null) {
+                Source drop_source = final_drag_source;
+                
+                if (final_drag_source == new_playlist_source) {
+                    PlaylistSource playlist = new PlaylistSource ("New Playlist");
+                    playlist.Save ();
+                    ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
+                    drop_source = playlist;
+                }
+                
+                drop_source.MergeSourceInput (ServiceManager.SourceManager.ActiveSource, true);
+            }
+            
+            if (new_playlist_visible) {
+                store.Remove (ref new_playlist_iter);
+                new_playlist_visible = false;
+                UpdateView ();
+            }
+        
+            Gtk.Drag.Finish (context, true, false, time);
+            
             /*if(Gtk.Drag.GetSourceWidget(context) == this) {
                 DragDropList<Source> sources = selectionData;
                 if(sources.Count <= 0) { 
@@ -182,63 +162,28 @@ namespace Banshee.Sources.Gui
                 }
                 
                 return;
-            }
-            
-            if(final_drag_start_time == context.StartTime) {
-                PlaylistSource playlist_remove_on_failure = null;
-                try {
-                    DragDropList<TrackInfo> dnd_transfer = selectionData;
-                    TrackDropOperation(final_drag_source, dnd_transfer, out playlist_remove_on_failure);
-                } catch(Exception e) {
-                    if(playlist_remove_on_failure != null) {
-                        playlist_remove_on_failure.Unmap();
-                        playlist_remove_on_failure = null;
-                    }
-                    
-                    LogCore.Instance.PushError(Catalog.GetString("Could not import tracks"), e.Message);
-                }
-            }
-            
-            if(new_playlist_visible) {
-                store.Remove(ref new_playlist_iter);
-                new_playlist_visible = false;
-                UpdateView();
-            }
-        
-            Gtk.Drag.Finish(context, true, false, time);*/
-        }
-        
-        private void TrackDropOperation (Source source, IList<TrackInfo> tracks, out PlaylistSource newPlaylist)
-        {
-            newPlaylist = null;
-            
-            /*if(source is LibrarySource && ServiceManager.SourceManager.ActiveSource is IImportable) {
-                IImportable import_source = ServiceManager.SourceManager.ActiveSource as IImportable;
-                import_source.Import(tracks);
-            } else if(source is PlaylistSource && ServiceManager.SourceManager.ActiveSource is IImportable) {
-                IImportable import_source = ServiceManager.SourceManager.ActiveSource as IImportable;
-                PlaylistSource playlist = null;
-                    
-                if(source == new_playlist_source) {
-                    playlist = new PlaylistSource();
-                    LibrarySource.Instance.AddChildSource(playlist);
-                    newPlaylist = playlist;
-                } else {
-                    playlist = source as PlaylistSource;
-                }
-                    
-                import_source.Import(tracks, playlist);
-            } else if(source == new_playlist_source) {
-                PlaylistSource playlist = new PlaylistSource();
-                playlist.AddTrack(tracks);
-                playlist.Rename(PlaylistUtil.GoodUniqueName(playlist.Tracks));
-                playlist.Commit();
-                LibrarySource.Instance.AddChildSource(playlist);
-                UpdateView();
-            } else if(source is PlaylistSource || source is DapSource || source.AcceptsInput) {
-                source.AddTrack(tracks);
-                source.Commit();
             }*/
         }
+                
+        /*protected override void OnDragBegin (Gdk.DragContext context)
+        {
+            if (HighlightedSource.IsDragSource || HighlightedSource is IImportSource) {
+                base.OnDragBegin (context);
+            }
+        }
+        
+        protected override void OnDragDataGet (Gdk.DragContext context, SelectionData selectionData,
+            uint info, uint time)
+        {
+            switch ((DragDropTargetType)info) {
+                case DragDropTargetType.Source:
+                    new DragDropList<Source> (HighlightedSource, selectionData, context.Targets[0]);
+                    break;
+                default:
+                    return;
+            }
+            
+            base.OnDragDataGet (context, selectionData, info, time);
+        }*/
     }
 }

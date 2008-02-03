@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2005-2007 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -101,6 +101,16 @@ namespace Banshee.Sources
         public virtual void Rename(string newName)
         {
             properties.SetString("Name", newName);
+        }
+        
+        public virtual bool AcceptsInputFromSource (Source source)
+        {
+            return false;
+        }
+        
+        public virtual void MergeSourceInput (Source source, bool selection)
+        {
+            throw new NotImplementedException ();
         }
         
         public void SetParentSource (Source parent)
