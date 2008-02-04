@@ -1,3 +1,17 @@
+2008-02-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: 
+	* src/Core/Hyena/Hyena.mdp:
+	* src/Core/Hyena/Makefile.am:
+	* src/Core/Hyena/Hyena.Data.Query/*:
+	* src/Core/Hyena/Hyena.Query/*: Change Hyena.Data.Query namespace to
+	Hyena.Query.
+
 2008-02-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:

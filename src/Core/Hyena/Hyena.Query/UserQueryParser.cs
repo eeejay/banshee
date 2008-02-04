@@ -31,7 +31,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Hyena.Data.Query
+namespace Hyena.Query
 {
     public class UserQueryParser : QueryParser
     {

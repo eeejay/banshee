@@ -1,11 +1,10 @@
 //
-// QueryParser.cs
+// StringQueryValue.cs
 //
-// Author:
-//   Aaron Bockover <abockover@novell.com>
+// Authors:
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,39 +27,35 @@
 //
 
 using System;
-using System.IO;
+using System.Xml;
 using System.Text;
 
-namespace Hyena.Data.Query
+using Hyena;
+
+namespace Hyena.Query
 {
-    public abstract class QueryParser
+    public class StringQueryValue : QueryValue
     {
-        protected StreamReader reader;
-        
-        public QueryParser()
-        {
-            Reset ();
+        protected string value;
+
+        public override string XmlElementName {
+            get { return "string"; }
         }
 
-        public QueryParser(string inputQuery) : this(new MemoryStream(Encoding.UTF8.GetBytes(inputQuery)))
-        {
+        public override object Value {
+            get { return value; }
         }
 
-        public QueryParser(Stream stream) : this(new StreamReader(stream))
+        public override void ParseUserQuery (string input)
         {
+            value = input;
+            IsEmpty = String.IsNullOrEmpty (value);
         }
 
-        public QueryParser(StreamReader reader) : this()
+        public override void ParseXml (XmlElement node)
         {
-            InputReader = reader;
-        }
-
-        public abstract QueryNode BuildTree (QueryFieldSet fieldSet);
-        public abstract void Reset ();
-        
-        public StreamReader InputReader {
-            get { return reader; }
-            set { reader = value; }
+            value = node.InnerText;
+            IsEmpty = String.IsNullOrEmpty (value);
         }
     }
 }

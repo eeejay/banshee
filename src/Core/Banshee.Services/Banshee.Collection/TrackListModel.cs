@@ -30,7 +30,7 @@ using System;
 using System.Collections.Generic;
 
 using Hyena.Data;
-using Hyena.Data.Query;
+using Hyena.Query;
 
 using Banshee.ServiceStack;
 

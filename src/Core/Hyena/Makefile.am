@@ -11,21 +11,21 @@ SOURCES =  \
 	Hyena.CommandLine/Layout.cs \
 	Hyena.CommandLine/LayoutGroup.cs \
 	Hyena.CommandLine/LayoutOption.cs \
-	Hyena.Data.Query/DateQueryValue.cs \
-	Hyena.Data.Query/FileSizeQueryValue.cs \
-	Hyena.Data.Query/IntegerQueryValue.cs \
-	Hyena.Data.Query/QueryField.cs \
-	Hyena.Data.Query/QueryFieldSet.cs \
-	Hyena.Data.Query/QueryListNode.cs \
-	Hyena.Data.Query/QueryNode.cs \
-	Hyena.Data.Query/QueryOperator.cs \
-	Hyena.Data.Query/QueryParser.cs \
-	Hyena.Data.Query/QueryTermNode.cs \
-	Hyena.Data.Query/QueryToken.cs \
-	Hyena.Data.Query/QueryValue.cs \
-	Hyena.Data.Query/StringQueryValue.cs \
-	Hyena.Data.Query/UserQueryParser.cs \
-	Hyena.Data.Query/XmlQueryParser.cs \
+	Hyena.Query/DateQueryValue.cs \
+	Hyena.Query/FileSizeQueryValue.cs \
+	Hyena.Query/IntegerQueryValue.cs \
+	Hyena.Query/QueryField.cs \
+	Hyena.Query/QueryFieldSet.cs \
+	Hyena.Query/QueryListNode.cs \
+	Hyena.Query/QueryNode.cs \
+	Hyena.Query/QueryOperator.cs \
+	Hyena.Query/QueryParser.cs \
+	Hyena.Query/QueryTermNode.cs \
+	Hyena.Query/QueryToken.cs \
+	Hyena.Query/QueryValue.cs \
+	Hyena.Query/StringQueryValue.cs \
+	Hyena.Query/UserQueryParser.cs \
+	Hyena.Query/XmlQueryParser.cs \
 	Hyena.Data.Sqlite/DatabaseColumn.cs \
 	Hyena.Data.Sqlite/DatabaseColumnAttribute.cs \
 	Hyena.Data.Sqlite/HyenaSqliteCommand.cs \

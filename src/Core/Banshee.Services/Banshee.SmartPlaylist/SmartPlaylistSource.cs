@@ -34,7 +34,7 @@ using System.Collections.Generic;
 
 using Mono.Unix;
 
-using Hyena.Data.Query;
+using Hyena.Query;
 using Hyena.Data.Sqlite;
  
 using Banshee.Base;

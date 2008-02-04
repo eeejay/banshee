@@ -31,7 +31,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Hyena.Data.Query
+namespace Hyena.Query
 {
     public class QueryField
     {

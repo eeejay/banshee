@@ -36,7 +36,7 @@ using Mono.Unix;
 using Hyena;
 using Hyena.Data;
 using Hyena.Data.Sqlite;
-using Hyena.Data.Query;
+using Hyena.Query;
 
 using Banshee.Base;
 using Banshee.Database;
@@ -85,7 +85,7 @@ namespace Banshee.Collection.Database
             if (String.IsNullOrEmpty(Filter)) {
                 filter_query = null;
             } else {
-                Hyena.Data.Query.UserQueryParser qp = new UserQueryParser (Filter);
+                Hyena.Query.UserQueryParser qp = new UserQueryParser (Filter);
                 QueryNode n = qp.BuildTree (field_set);
 
                 filter_query = n.ToSql (field_set);
@@ -94,7 +94,7 @@ namespace Banshee.Collection.Database
                 Console.WriteLine ("query: {0}", Filter);
                 Console.WriteLine ("Xml for Query: {0}", n.ToXml (field_set, true));
                 Console.WriteLine ("Sql for Query: {0}", filter_query);
-                Hyena.Data.Query.QueryParser qp2 = new XmlQueryParser (n.ToXml (field_set));
+                Hyena.Query.QueryParser qp2 = new XmlQueryParser (n.ToXml (field_set));
                 QueryNode n2 = qp2.BuildTree (field_set);
                 if (n2 != null) {
                     Console.WriteLine ("User query for Xml: {0}", n2.ToUserQuery ());

@@ -1,8 +1,9 @@
 //
-// IntegerQueryValue.cs
+// QueryFieldSet.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
+//   Aaron Bockover <abockover@novell.com>
 //
 // Copyright (C) 2007-2008 Novell, Inc.
 //
@@ -27,37 +28,40 @@
 //
 
 using System;
-using System.Xml;
 using System.Text;
+using System.Collections.Generic;
 
-using Hyena;
-
-namespace Hyena.Data.Query
+namespace Hyena.Query
 {
-    public class IntegerQueryValue : QueryValue
+    public class QueryFieldSet
     {
-        protected long value;
+        private Dictionary<string, QueryField> map = new Dictionary<string, QueryField> ();
+        private QueryField [] fields;
 
-        public override string XmlElementName {
-            get { return "int"; }
-        }
-
-        public override void ParseUserQuery (string input)
+        public QueryFieldSet (params QueryField [] fields)
         {
-            IsEmpty = !Int64.TryParse (input, out value);
+            this.fields = fields;
+            foreach (QueryField field in fields) {
+                map[field.Name.ToLower ()] = field;
+                foreach (string alias in field.Aliases)
+                    if (!String.IsNullOrEmpty (alias) && alias.IndexOf (" ") == -1)
+                        map[alias.ToLower ()] = field;
+            }
         }
 
-        public override void ParseXml (XmlElement node)
+        public QueryField [] Fields {
+            get { return fields; }
+        }
+
+        public QueryField GetByAlias (string alias)
         {
-            ParseUserQuery (node.InnerText);
+            if (!String.IsNullOrEmpty (alias) && map.ContainsKey (alias.ToLower ()))
+                return map[alias.ToLower ()];
+            return null;
         }
 
-        public override object Value {
-            get { return value; }
-        }
-
-        public long IntValue {
-            get { return value; }
+        public QueryField this [string alias] {
+            get { return GetByAlias (alias); }
         }
     }
 }

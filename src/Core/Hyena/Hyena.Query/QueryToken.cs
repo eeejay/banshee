@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Hyena.Data.Query
+namespace Hyena.Query
 {
     public enum TokenID {
         Unknown,

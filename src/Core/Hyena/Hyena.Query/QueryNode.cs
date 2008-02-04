@@ -32,7 +32,7 @@ using System.Xml;
 using System.IO;
 using System.Text;
 
-namespace Hyena.Data.Query
+namespace Hyena.Query
 {
     public abstract class QueryNode
     {

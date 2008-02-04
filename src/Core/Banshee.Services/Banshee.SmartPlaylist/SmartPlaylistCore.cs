@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using Mono.Unix;
 
-using Hyena.Data.Query;
+using Hyena.Query;
  
 using Banshee.Base;
 using Banshee.Sources;

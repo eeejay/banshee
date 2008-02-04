@@ -33,7 +33,7 @@ using System.Text;
 
 using Hyena;
 
-namespace Hyena.Data.Query
+namespace Hyena.Query
 {
     public enum FileSizeFactor {
         None = 1,
