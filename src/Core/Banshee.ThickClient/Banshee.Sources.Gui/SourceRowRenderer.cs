@@ -99,13 +99,7 @@ namespace Banshee.Sources.Gui
                 if (view.Model.GetIter (out iter, path) && view.NotifyStage.Contains (iter)) {
                     Actor<TreeIter> actor = view.NotifyStage[iter];
                     Cairo.Color color = view.Graphics.GetWidgetColor (GtkColorClass.Background, StateType.Active);
-                    
-                    double s = 0.15;
-                    double p = actor.Percent;
-                    
-                    color.A = p <= s 
-                        ? p * (1.0 / s)
-                        : 1.0 - (p + s) * (p - s);
+                    color.A = Math.Sin (actor.Percent * Math.PI);
                         
                     view.Graphics.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
                         background_area.Width - 2, background_area.Height - 2, true, true, color);
