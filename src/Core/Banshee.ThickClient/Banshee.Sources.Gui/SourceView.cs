@@ -129,8 +129,13 @@ namespace Banshee.Sources.Gui
             };
             
             notify_stage.ActorStep += delegate (Actor<TreeIter> actor) {
+                if (!store.IterIsValid (actor.Target)) {
+                    return false;
+                }
+                
                 Gdk.Rectangle rect = GetBackgroundArea (store.GetPath (actor.Target), focus_column);
                 QueueDrawArea (rect.X, rect.Y, rect.Width, rect.Height);
+                return true;
             };
         }
         

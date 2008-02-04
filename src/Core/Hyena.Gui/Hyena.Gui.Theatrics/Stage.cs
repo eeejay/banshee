@@ -33,7 +33,7 @@ namespace Hyena.Gui.Theatrics
 {
     public class Stage<T>
     {   
-        public delegate void ActorStepHandler (Actor<T> actor);
+        public delegate bool ActorStepHandler (Actor<T> actor);
     
         private Dictionary<T, Actor<T>> actors = new Dictionary<T, Actor<T>> ();
         private uint timeout_id;
@@ -144,9 +144,9 @@ namespace Hyena.Gui.Theatrics
             
             foreach (KeyValuePair<T, Actor<T>> entry in actors) {
                 entry.Value.Step ();
-                OnActorStep (entry.Value);
                 
-                if (entry.Value.Expired) {
+                if (!OnActorStep (entry.Value) || entry.Value.Expired) {
+                    Console.WriteLine ("EXPIRED");
                     expired_actors.Enqueue (entry.Value);
                 }
             }
@@ -160,12 +160,13 @@ namespace Hyena.Gui.Theatrics
             return true;
         }
         
-        protected virtual void OnActorStep (Actor<T> actor)
+        protected virtual bool OnActorStep (Actor<T> actor)
         {
             ActorStepHandler handler = ActorStep;
             if (handler != null) {
-                handler (actor);
+                return handler (actor);
             }
+            return false;
         }
         
         protected virtual void OnIteration ()
