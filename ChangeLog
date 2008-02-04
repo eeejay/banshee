@@ -1,5 +1,11 @@
 2008-02-04  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Only draw the hot cairo stuff if we have a cairo context (and we don't
+	when the row is being dragged)
+
+2008-02-04  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Check
 	to see if the actor TreeIter is valid in notify_stage.ActorStep - expire
 	the actor if it is not

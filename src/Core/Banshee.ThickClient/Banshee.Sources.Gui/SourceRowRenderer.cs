@@ -78,7 +78,7 @@ namespace Banshee.Sources.Gui
             bool path_selected = view.Selection.PathIsSelected (path);            
             StateType state = RendererStateToWidgetState (flags);
             
-            if (path_selected) {
+            if (path_selected && view.Cr != null) {
                 Gdk.Rectangle rect = background_area;
                 rect.X -= 2;
                 rect.Width += 4;
@@ -91,10 +91,10 @@ namespace Banshee.Sources.Gui
                     view.Graphics.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
                         background_area.Width - 2, background_area.Height - 2);
                 }
-            } else if (path != null && path.Equals (view.HighlightedPath)) {
+            } else if (path != null && path.Equals (view.HighlightedPath) && view.Cr != null) {
                 view.Graphics.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
                     background_area.Width - 2, background_area.Height - 2, false);
-            } else if (view.NotifyStage.ActorCount > 0) {
+            } else if (view.NotifyStage.ActorCount > 0 && view.Cr != null) {
                 TreeIter iter;
                 if (view.Model.GetIter (out iter, path) && view.NotifyStage.Contains (iter)) {
                     Actor<TreeIter> actor = view.NotifyStage[iter];
