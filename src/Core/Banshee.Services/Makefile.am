@@ -110,6 +110,7 @@ SOURCES =  \
 	Banshee.Sources/IUnmapableSource.cs \
 	Banshee.Sources/Source.cs \
 	Banshee.Sources/SourceManager.cs \
+	Banshee.Sources/SourceMergeType.cs \
 	Banshee.Streaming/RadioTrackInfo.cs \
 	Banshee.Web/Browser.cs
 

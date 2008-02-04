@@ -1,3 +1,26 @@
+2008-02-04  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds source merge behavior and the ability to drag and drop
+	sources in the source view; i.e. drag the play queue to a new playlist
+	to save it
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/SourceMergeType.cs:
+	Added some stuff to advertise how sources can interact with eachother;
+	concept of merging sources into sources
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	Implement merge behaviors
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Finished the drag and drop support for the source view internally
+
+	* src/Core/Hyena.Gui/Hyena.Gui.Theatrics/SingleActorStage.cs: Override
+	OnActorStep so that single actor stages work again
+
+	* src/Core/Hyena.Gui/Hyena.Gui.Theatrics/Stage.cs: Nuke ugly writeline
+
 2008-02-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:

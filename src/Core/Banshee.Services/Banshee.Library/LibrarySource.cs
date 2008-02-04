@@ -177,6 +177,20 @@ namespace Banshee.Library
             }
         }
         
+        public override bool AcceptsInputFromSource (Source source)
+        {
+            return source is IImportSource;
+        }
+
+        public override void MergeSourceInput (Source source, SourceMergeType mergeType)
+        {
+            if (!(source is IImportSource) || mergeType != SourceMergeType.Source) {
+                return;
+            }
+            
+            ((IImportSource)source).Import ();
+        }
+        
         public ErrorSource ErrorSource {
             get { return error_source; }
         }

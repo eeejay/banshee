@@ -146,7 +146,6 @@ namespace Hyena.Gui.Theatrics
                 entry.Value.Step ();
                 
                 if (!OnActorStep (entry.Value) || entry.Value.Expired) {
-                    Console.WriteLine ("EXPIRED");
                     expired_actors.Enqueue (entry.Value);
                 }
             }

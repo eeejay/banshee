@@ -1,5 +1,5 @@
 //
-// SingleActorStage.cs
+// SourceMergeType.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -28,32 +28,14 @@
 
 using System;
 
-namespace Hyena.Gui.Theatrics
+namespace Banshee.Sources
 {
-    public class SingleActorStage : Stage<object>
+    [Flags]
+    public enum SourceMergeType
     {
-        private object target = new object ();
-        
-        public SingleActorStage () : base ()
-        {
-        }
-        
-        public SingleActorStage (uint actorDuration) : base (actorDuration)
-        {
-        }
-        
-        protected override bool OnActorStep (Actor<object> actor)
-        {
-            return true;
-        }
-        
-        public void Reset ()
-        {
-            AddOrReset (target);
-        }
-        
-        public Actor<object> Actor {
-            get { return this[target]; }
-        }
+        None = (0 << 0),
+        Source = (1 << 0),
+        ModelSelection = (1 << 1),
+        All = (Source | ModelSelection)
     }
 }

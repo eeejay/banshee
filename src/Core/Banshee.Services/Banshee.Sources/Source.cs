@@ -108,9 +108,13 @@ namespace Banshee.Sources
             return false;
         }
         
-        public virtual void MergeSourceInput (Source source, bool selection)
+        public virtual void MergeSourceInput (Source source, SourceMergeType mergeType)
         {
             throw new NotImplementedException ();
+        }
+        
+        public virtual SourceMergeType SupportedMergeTypes {
+            get { return SourceMergeType.None; }
         }
         
         public void SetParentSource (Source parent)

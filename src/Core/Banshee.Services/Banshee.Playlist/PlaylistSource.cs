@@ -122,14 +122,28 @@ namespace Banshee.Playlist
             return source is DatabaseSource;
         }
         
-        public override void MergeSourceInput (Source from, bool selected)
+        public override void MergeSourceInput (Source from, SourceMergeType mergeType)
         {
             DatabaseSource source = from as DatabaseSource;
             if (source == null || !(source.TrackModel is TrackListDatabaseModel)) {
                 return;
             }
             
-            AddSelectedTracks ((TrackListDatabaseModel)source.TrackModel);
+            TrackListDatabaseModel model = (TrackListDatabaseModel)source.TrackModel;
+            
+            switch (mergeType) {
+                case SourceMergeType.ModelSelection:
+                    AddSelectedTracks (model);
+                    break;
+                case SourceMergeType.Source:
+                    AddTrackRange (model, new RangeCollection.Range (0, model.Count));
+                    Reload ();
+                    break;
+            }
+        }
+        
+        public override SourceMergeType SupportedMergeTypes {
+            get { return SourceMergeType.All; }
         }
 
 #endregion
