@@ -37,7 +37,7 @@ namespace Hyena.Data
 
         public DictionaryModelCache (ICacheableModel model) : base (model)
         {
-            cache = new Dictionary<int, T> ();
+            cache = new Dictionary<int, T> (model.FetchCount);
         }
 
         public override bool ContainsKey (int i)

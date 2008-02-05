@@ -1,3 +1,8 @@
+2008-02-04  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena/Hyena.Data/DictionaryModelCache.cs: Initialize the cache
+	  dictionary to the proper capacity (since we know it).
+
 2008-02-04  Aaron Bockover  <abock@gnome.org>
 
 	This commit adds source merge behavior and the ability to drag and drop
