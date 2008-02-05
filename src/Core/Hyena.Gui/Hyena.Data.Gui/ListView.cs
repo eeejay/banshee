@@ -871,17 +871,11 @@ namespace Hyena.Data.Gui
             if (model == null) {
                 return;
             }
-            
-            int rows = RowsInView;
+
             int vadjustment_value = (int) vadjustment.Value;
             int first_row = vadjustment_value / RowHeight;
-            int last_row = Math.Min (model.Count, first_row + rows);     
+            int last_row = Math.Min (model.Count, first_row + RowsInView);     
 
-            PaintRows (first_row, last_row, vadjustment_value, clip);
-        }
-        
-        private void PaintRows (int first_row, int last_row, int vadjustment_value, Gdk.Rectangle clip)
-        {
             Gdk.Rectangle single_list_alloc = new Gdk.Rectangle ();
             single_list_alloc.Width = list_alloc.Width;
             single_list_alloc.Height = RowHeight;
