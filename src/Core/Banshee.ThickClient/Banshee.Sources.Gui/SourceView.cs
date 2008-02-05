@@ -28,9 +28,9 @@
 
 using System;
 using System.Collections.Generic;
+
 using Gtk;
 using Cairo;
-using Mono.Unix;
 
 using Hyena.Data.Gui;
 using Hyena.Gui.Theatrics;
@@ -49,10 +49,6 @@ namespace Banshee.Sources.Gui
 
     public partial class SourceView : TreeView
     {
-        private Source new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"));
-        private TreeIter new_playlist_iter = TreeIter.Zero;
-        private bool new_playlist_visible = false;
-        
         private SourceRowRenderer renderer;
         private ListViewGraphics graphics;
         private Cairo.Context cr;

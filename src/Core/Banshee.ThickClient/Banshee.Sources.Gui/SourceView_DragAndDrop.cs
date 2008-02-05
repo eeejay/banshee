@@ -29,6 +29,8 @@
 using System;
 using System.Collections.Generic;
 
+using Mono.Unix;
+
 using Gtk;
 using Gdk;
 
@@ -52,6 +54,10 @@ namespace Banshee.Sources.Gui
             Banshee.Gui.DragDrop.DragDropTarget.ModelSelection
         };
         
+        private Source new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"));
+        private TreeIter new_playlist_iter = TreeIter.Zero;
+        private bool new_playlist_visible = false;
+        
         private Source final_drag_source = null;
         private uint final_drag_start_time = 0;
         
@@ -61,6 +67,35 @@ namespace Banshee.Sources.Gui
                 dnd_source_entries, DragAction.Copy | DragAction.Move);
         
             EnableModelDragDest (dnd_dest_entries, DragAction.Copy | DragAction.Copy);
+        }
+        
+        private void HideNewPlaylistRow ()
+        {
+            if (!new_playlist_visible) {
+                return;
+            }
+            
+            store.Remove (ref new_playlist_iter);
+            new_playlist_visible = false;
+            
+            UpdateView ();
+        }
+        
+        private void ShowNewPlaylistRow ()
+        {
+            if (new_playlist_visible) {
+                return;
+            }
+            
+            TreeIter library = FindSource (ServiceManager.SourceManager.DefaultSource);
+            new_playlist_iter = store.AppendNode (library);
+            
+            store.SetValue (new_playlist_iter, 0, new_playlist_source);
+            store.SetValue (new_playlist_iter, 1, 999);
+            new_playlist_visible = true;
+
+            UpdateView ();
+            Expand (library);
         }
         
         protected override bool OnDragMotion (Gdk.DragContext context, int x, int y, uint time)
@@ -74,14 +109,7 @@ namespace Banshee.Sources.Gui
             if (!new_playlist_visible && active_source != null && 
                 new_playlist_source.AcceptsInputFromSource (active_source) &&
                 ((self_drag && active_source.SupportedMergeTypes != SourceMergeType.None) || !self_drag)) {
-                TreeIter library = FindSource (ServiceManager.SourceManager.DefaultSource);
-                new_playlist_iter = store.AppendNode (library);
-                store.SetValue (new_playlist_iter, 0, new_playlist_source);
-                store.SetValue (new_playlist_iter, 1, 999);
-                new_playlist_visible = true;
-
-                UpdateView ();
-                Expand (library);
+                ShowNewPlaylistRow ();
             }
             
             if (!GetDestRowAtPos (x, y, out path, out pos)) {
@@ -117,10 +145,13 @@ namespace Banshee.Sources.Gui
             final_drag_source = GetSource (path);
             final_drag_start_time = context.StartTime;
         
-            if (new_playlist_visible) {
-                store.Remove (ref new_playlist_iter);
-                new_playlist_visible = false;
-                UpdateView ();
+            HideNewPlaylistRow ();
+        }
+        
+        protected override void OnDragBegin (Gdk.DragContext context)
+        {
+            if (ServiceManager.SourceManager.ActiveSource.SupportedMergeTypes != SourceMergeType.None) {
+                base.OnDragBegin (context);
             }
         }
 
@@ -154,18 +185,7 @@ namespace Banshee.Sources.Gui
                 
                 Gtk.Drag.Finish (context, true, false, time);
             } finally {
-                 if (new_playlist_visible) {
-                    store.Remove (ref new_playlist_iter);
-                    new_playlist_visible = false;
-                    UpdateView ();
-                }
-            }
-        }
-                
-        protected override void OnDragBegin (Gdk.DragContext context)
-        {
-            if (ServiceManager.SourceManager.ActiveSource.SupportedMergeTypes != SourceMergeType.None) {
-                base.OnDragBegin (context);
+                HideNewPlaylistRow ();
             }
         }
         

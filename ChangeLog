@@ -1,3 +1,9 @@
+2008-02-05  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Some minor reorg, finish the DnD split
+
 2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Got rid of obsolete type.
