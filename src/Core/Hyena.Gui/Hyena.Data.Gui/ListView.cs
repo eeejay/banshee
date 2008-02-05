@@ -868,62 +868,64 @@ namespace Hyena.Data.Gui
         
         private void PaintList(Gdk.EventExpose evnt, Gdk.Rectangle clip)
         {
-            if(model == null) {
+            if (model == null) {
                 return;
             }
             
             int rows = RowsInView;
             int vadjustment_value = (int) vadjustment.Value;
             int first_row = vadjustment_value / RowHeight;
-            int last_row = Math.Min(model.Count, first_row + rows);
-            
-            // Compute a stack of Contiguous Selection Rectangles
-            Stack<SelectionRectangle> cg_s_rects = new Stack<SelectionRectangle>();
-            
-            for(int ri = first_row; ri < last_row; ri++) {
-                if(ri < 0 || !Selection.Contains(ri)) {
-                    continue;
-                }
-                
-                if(Selection.Contains(ri - 1) && cg_s_rects.Count > 0) {
-                    cg_s_rects.Peek().Height += RowHeight; 
-                } else {
-                    cg_s_rects.Push(new SelectionRectangle(list_alloc.Y + 
-                        (ri * RowHeight - vadjustment_value), RowHeight));
-                }
-            }
+            int last_row = Math.Min (model.Count, first_row + rows);     
 
-            if (rules_hint) {
-                PaintRows (first_row, last_row, vadjustment_value, clip, false);
-            }
-            
-            foreach(SelectionRectangle selection_rect in cg_s_rects) {
-                graphics.DrawRowSelection(list_cr, list_alloc.X, selection_rect.Y, list_alloc.Width, selection_rect.Height);
-            }        
-
-            PaintRows (first_row, last_row, vadjustment_value, clip, true);
+            PaintRows (first_row, last_row, vadjustment_value, clip);
         }
         
-        private void PaintRows (int first_row, int last_row, int vadjustment_value, Gdk.Rectangle clip, bool content)
+        private void PaintRows (int first_row, int last_row, int vadjustment_value, Gdk.Rectangle clip)
         {
             Gdk.Rectangle single_list_alloc = new Gdk.Rectangle ();
             single_list_alloc.Width = list_alloc.Width;
             single_list_alloc.Height = RowHeight;
             single_list_alloc.X = list_alloc.X;
             single_list_alloc.Y = list_alloc.Y - vadjustment_value + (first_row * single_list_alloc.Height);
+            
+            int selection_height = 0;
+            int selection_y = 0;
+            List<int> selected_rows = new List<int> ();
 
             for (int ri = first_row; ri < last_row; ri++) {
-                if (content) {
-                    StateType row_state = Selection.Contains (ri) ? StateType.Selected : StateType.Normal;
+                if (Selection.Contains (ri)) {
+                    if (selection_height == 0) {
+                        selection_y = single_list_alloc.Y;
+                    }
+                    selection_height += single_list_alloc.Height;
+                    selected_rows.Add (ri);
+                } else {
+                    if (selection_height > 0) {
+                        graphics.DrawRowSelection (
+                            list_cr, list_alloc.X, list_alloc.Y + selection_y, list_alloc.Width, selection_height);
+                        selection_height = 0;
+                        selection_y = 0;
+                    }
                     
-                    //PaintRowFocus (ri, clip, single_list_alloc, row_state);
-                    PaintRow (ri, clip, single_list_alloc, row_state);
-                } else if (ri % 2 != 0) {
-                    graphics.DrawRowRule (list_cr, single_list_alloc.X, single_list_alloc.Y, 
-                        single_list_alloc.Width, single_list_alloc.Height);
+                    if (rules_hint && ri % 2 != 0) {
+                        graphics.DrawRowRule (list_cr, single_list_alloc.X, single_list_alloc.Y, 
+                            single_list_alloc.Width, single_list_alloc.Height);
+                    }
+                    
+                    PaintRow (ri, clip, single_list_alloc, StateType.Normal);
                 }
-
+                
                 single_list_alloc.Y += single_list_alloc.Height;
+            }
+            
+            if (selection_height > 0) {
+                graphics.DrawRowSelection(
+                    list_cr, list_alloc.X, list_alloc.Y + selection_y, list_alloc.Width, selection_height);
+            }
+            
+            foreach (int ri in selected_rows) {
+                single_list_alloc.Y = ri * single_list_alloc.Height - vadjustment_value;
+                PaintRow (ri, clip, single_list_alloc, StateType.Selected);
             }
         }
 

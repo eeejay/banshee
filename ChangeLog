@@ -1,3 +1,16 @@
+2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: A rework of PaintList and
+	  PaintRows. Previously, all rows needed to be iterated over three times:
+	  once to calculate the selection blocks, once to draw the rule, and once
+	  to draw the content. Now it is only iterated over once - rules, content
+	  for unselected rows, and selection blocks are drawn during iteration
+	  while selected rows are put into a list and their content is drawn at
+	  the end. This exploits the fact that the most common numbers of visible
+	  selected rows are 0 and 1. The actual performance gains for this patch
+	  are rather modest, but tangeble (a millisecond or two for the execution
+	  time of PaintList acording to the profiler).
+
 2008-02-04  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
