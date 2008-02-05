@@ -904,7 +904,6 @@ namespace Hyena.Data.Gui
                         graphics.DrawRowSelection (
                             list_cr, list_alloc.X, list_alloc.Y + selection_y, list_alloc.Width, selection_height);
                         selection_height = 0;
-                        selection_y = 0;
                     }
                     
                     if (rules_hint && ri % 2 != 0) {

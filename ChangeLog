@@ -1,5 +1,10 @@
 2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Very minor change - removed
+	  unnessisary assignment.
+
+2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: A rework of PaintList and
 	  PaintRows. Previously, all rows needed to be iterated over three times:
 	  once to calculate the selection blocks, once to draw the rule, and once
