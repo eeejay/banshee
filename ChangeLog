@@ -1,5 +1,12 @@
 2008-02-04  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	  Made some private fields readonly.
+
+2008-02-04  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	* src/Core/Banshee.Core/Banshee.Configuration.Schema/LibrarySchema.cs:
 	* src/Core/Banshee.Core/Banshee.Base/SafeUri.cs: Standardized venacular

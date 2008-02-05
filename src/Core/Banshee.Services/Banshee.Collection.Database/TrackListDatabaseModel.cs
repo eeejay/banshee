@@ -46,9 +46,9 @@ namespace Banshee.Collection.Database
     public class TrackListDatabaseModel : TrackListModel, IExportableModel, 
         ICacheableDatabaseModel, IFilterable, ISortable, ICareAboutView
     {
-        private BansheeDbConnection connection;
-        private BansheeModelProvider<LibraryTrackInfo> provider;
-        private BansheeModelCache<LibraryTrackInfo> cache;
+        private readonly BansheeDbConnection connection;
+        private readonly BansheeModelProvider<LibraryTrackInfo> provider;
+        private readonly BansheeModelCache<LibraryTrackInfo> cache;
         private int count;
         private TimeSpan duration;
         private long filesize;

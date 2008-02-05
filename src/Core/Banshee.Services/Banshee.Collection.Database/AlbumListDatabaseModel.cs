@@ -40,16 +40,15 @@ namespace Banshee.Collection.Database
 {
     public class AlbumListDatabaseModel : AlbumListModel, ICacheableDatabaseModel
     {
-        private BansheeDbConnection connection;
-        private BansheeModelProvider<LibraryAlbumInfo> provider;
-        private BansheeModelCache<LibraryAlbumInfo> cache;
+        private readonly BansheeDbConnection connection;
+        private readonly BansheeModelProvider<LibraryAlbumInfo> provider;
+        private readonly BansheeModelCache<LibraryAlbumInfo> cache;
+        private readonly TrackListDatabaseModel track_model;
         private int count;
         private string artist_id_filter_query;
         private string reload_fragment;
-
-        private TrackListDatabaseModel track_model;
         
-        private AlbumInfo select_all_album = new AlbumInfo(null);
+        private readonly AlbumInfo select_all_album = new AlbumInfo(null);
         
         public AlbumListDatabaseModel(BansheeDbConnection connection, string uuid)
         {
