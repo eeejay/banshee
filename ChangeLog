@@ -1,5 +1,10 @@
 2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Got rid of obsolete type.
+	  Last commit, I swear.
+
+2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Merged PaintRows into
 	  PaintList since PaintList had become a withered shell of its former
 	  self, not worth the method call.

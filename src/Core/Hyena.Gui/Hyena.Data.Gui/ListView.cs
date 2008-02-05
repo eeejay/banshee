@@ -854,18 +854,6 @@ namespace Hyena.Data.Gui
             graphics.DrawFooter(footer_cr, footer_alloc);
         }
         
-        private class SelectionRectangle
-        {
-            public SelectionRectangle(int y, int height)
-            {
-                Y = y;
-                Height = height;
-            }
-            
-            public int Y;
-            public int Height;
-        }
-        
         private void PaintList(Gdk.EventExpose evnt, Gdk.Rectangle clip)
         {
             if (model == null) {
