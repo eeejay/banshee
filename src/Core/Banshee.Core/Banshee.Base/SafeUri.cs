@@ -95,7 +95,7 @@ namespace Banshee.Base
             GLib.Marshaller.Free (uri_ptr);
             
             if (path_ptr == IntPtr.Zero) {
-                throw new ApplicationException ("URI could not be converted to local file path");
+                throw new ApplicationException ("URI could not be converted to local file location");
             }
             
             string path = GLib.Marshaller.Utf8PtrToString (path_ptr);

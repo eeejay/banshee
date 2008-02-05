@@ -1,5 +1,13 @@
 2008-02-04  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Core/Banshee.Configuration.Schema/LibrarySchema.cs:
+	* src/Core/Banshee.Core/Banshee.Base/SafeUri.cs: Standardized venacular
+	  around "Location" rather than "Path" when refering to the file URI in
+	  user-facing strings (BGO 436453)
+
+2008-02-04  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Hyena/Hyena.Data/DictionaryModelCache.cs: Initialize the cache
 	  dictionary to the proper capacity (since we know it).
 

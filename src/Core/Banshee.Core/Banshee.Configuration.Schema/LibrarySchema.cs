@@ -45,7 +45,7 @@ namespace Banshee.Configuration.Schema
             Banshee.Base.FileNamePattern.DefaultFolder,
             "Library Folder Pattern",
             "Format for creating a track folder inside the library. Do not create an absolute path. " +
-                "Path here is relative to the Banshee music directory. See LibraryLocation. Legal tokens: " +
+                "Location here is relative to the Banshee music directory. See LibraryLocation. Legal tokens: " +
                 "%artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), " + 
                 "%track_count_nz% (No prefixed zero), %path_sep% (portable directory separator (/))."
         );

@@ -504,7 +504,7 @@ namespace Banshee.Collection.Database
                 "size", "filesize"
             ),
             new QueryField (
-                "uri", Catalog.GetString ("File Path"), "CoreTracks.Uri",
+                "uri", Catalog.GetString ("File Location"), "CoreTracks.Uri",
                 // Translators: These are unique search fields.  Please, no spaces. Blank ok.
                 Catalog.GetString ("uri"), Catalog.GetString ("path"), Catalog.GetString ("file"), Catalog.GetString ("location"),
                 "uri", "path", "file", "location"
