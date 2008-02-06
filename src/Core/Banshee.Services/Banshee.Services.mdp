@@ -78,7 +78,6 @@
     <File name="Banshee.Sources/ErrorSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MediaEngine/IPlayerEngineService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/BansheeListModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles/GConfProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioProfiles/Pipeline.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioProfiles/PipelineVariable.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioProfiles/Profile.cs" subtype="Code" buildaction="Compile" />
@@ -120,6 +119,9 @@
     <File name="Banshee.ServiceStack/IExtensionService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Configuration/DatabaseConfigurationClient.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/SourceMergeType.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base" subtype="Directory" buildaction="Compile" />
+    <File name="Banshee.Base/RateLimiter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/ThreadAssist.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

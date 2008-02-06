@@ -1,10 +1,10 @@
 //
-// Client.cs
+// File.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,42 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+
+using Banshee.Base;
+
+namespace Banshee.IO
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public static class File
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
-        
-        protected override void OnRegisterServices ()
-        {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+    	public static void Delete (SafeUri uri)
+    	{
+    	    Provider.File.Delete (uri);
+    	}
+
+    	public static bool Exists (SafeUri uri)
+    	{
+    	    return Provider.File.Exists (uri);
+    	}
+
+    	public static void Move (SafeUri from, SafeUri to)
+    	{
+    	    Provider.File.Move (from, to);
+    	}
+
+    	public static long GetSize (SafeUri uri)
+    	{
+    	    return Provider.File.GetSize (uri);
+    	}
+
+    	public static System.IO.Stream OpenRead (SafeUri uri)
+    	{
+    	    return Provider.File.OpenRead (uri);
+    	}
+
+    	public static System.IO.Stream OpenWrite (SafeUri uri, bool overwrite)
+    	{
+    	    return Provider.File.OpenWrite (uri, overwrite);
+    	}
     }
 }
-

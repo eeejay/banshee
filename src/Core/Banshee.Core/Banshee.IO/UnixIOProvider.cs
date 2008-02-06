@@ -25,7 +25,7 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
-
+/*
 using System;
 using System.IO;
 using System.Collections;
@@ -134,7 +134,7 @@ namespace Banshee.IO.Unix
                     throw new Exception("Failed to allocate native directory string");
                 }
             
-                if(g_mkdir_with_parents(path_ptr, 493 /*0755 - C# doesn't do octal literals*/) == -1) {
+                if(g_mkdir_with_parents(path_ptr, 493 /*0755 - C# doesn't do octal literals*//*) == -1) {
                     Mono.Unix.UnixMarshal.ThrowExceptionForLastError();
                 }
             } catch(EntryPointNotFoundException) {
@@ -229,3 +229,4 @@ namespace Banshee.IO.Unix
         }
     }
 }
+*/

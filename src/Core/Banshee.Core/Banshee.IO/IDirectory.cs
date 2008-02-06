@@ -1,10 +1,10 @@
 //
-// Client.cs
+// IDirectory.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,25 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using System.Collections.Generic;
+
+using Banshee.Base;
+
+namespace Banshee.IO
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public interface IDirectory
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
+        bool Exists (string directory);
         
-        protected override void OnRegisterServices ()
-        {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+        void Create (string directory);
+        void Move (SafeUri from, SafeUri to);
+        
+        void Delete (string directory);
+        void Delete (string directory, bool recursive);
+        
+        // FIXME: These probably need to normalize to SafeUri
+        IEnumerable<string> GetFiles (string directory);
+        IEnumerable<string> GetDirectories (string directory);
     }
 }
-

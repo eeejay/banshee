@@ -58,7 +58,7 @@ namespace Banshee.Playlists.Formats
                 Stream stream = null;
                 
                 if(uri.Scheme == "file") {
-                    stream = Banshee.IO.IOProxy.File.OpenRead(uri);
+                    stream = Banshee.IO.File.OpenRead(uri);
                 } else if(uri.Scheme == "http") {
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri.AbsoluteUri);
                     request.UserAgent = Banshee.Web.Browser.UserAgent;

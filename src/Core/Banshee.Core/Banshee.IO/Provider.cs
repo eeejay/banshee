@@ -1,10 +1,10 @@
 //
-// Client.cs
+// Provider.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,44 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using System.Reflection;
+
+using Banshee.Base;
+using Banshee.Configuration;
+
+namespace Banshee.IO
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    internal static class Provider
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
+        private static IProvider provider;
+        private static IDirectory directory;
+        private static IFile file;
+        
+        private static void LoadProvider ()
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
+            lock (typeof (Provider)) {
+                if (provider != null) {
+                    return;
+                }
+                
+                provider = new Banshee.IO.SystemIO.Provider ();
+                directory = (IDirectory)Activator.CreateInstance (provider.DirectoryProvider);
+                file = (IFile)Activator.CreateInstance (provider.FileProvider);
+            }
         }
         
-        protected override void OnRegisterServices ()
+        public static IDirectory Directory {
+            get { LoadProvider (); return directory; }
+        }
+        
+        public static IFile File {
+            get { LoadProvider (); return file; }
+        }
+        
+        public static IDemuxVfs CreateDemuxVfs (string file)
         {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+            return (IDemuxVfs)Activator.CreateInstance (provider.DemuxVfsProvider, new object [] { file });
         }
     }
 }
-

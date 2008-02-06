@@ -7,10 +7,11 @@ SOURCES =  \
 	Banshee.Base/FileNamePattern.cs \
 	Banshee.Base/Localization.cs \
 	Banshee.Base/Log.cs \
+	Banshee.Base/NamingUtil.cs \
 	Banshee.Base/Paths.cs \
 	Banshee.Base/PlatformHacks.cs \
 	Banshee.Base/ProductInformation.cs \
-	Banshee.Base/RateLimiter.cs \
+	Banshee.Base/Resource.cs \
 	Banshee.Base/SafeUri.cs \
 	Banshee.Base/StringUtil.cs \
 	Banshee.Base/UriList.cs \
@@ -28,15 +29,25 @@ SOURCES =  \
 	Banshee.Configuration.Schema/ImportSchema.cs \
 	Banshee.Configuration.Schema/LibrarySchema.cs \
 	Banshee.Configuration/ConfigurationClient.cs \
-	Banshee.Configuration/GConfConfigurationClient.cs \
 	Banshee.Configuration/IConfigurationClient.cs \
 	Banshee.Configuration/SchemaEntry.cs \
 	Banshee.Configuration/XmlConfigurationClient.cs \
-	Banshee.IO/GnomeVfs.cs \
-	Banshee.IO/Interfaces.cs \
-	Banshee.IO/IOProxy.cs \
-	Banshee.IO/SystemIO.cs \
-	Banshee.IO/Unix.cs \
+	Banshee.I18n/AssemblyCatalogAttribute.cs \
+	Banshee.I18n/Catalog.cs \
+	Banshee.IO.SystemIO/DemuxVfs.cs \
+	Banshee.IO.SystemIO/Directory.cs \
+	Banshee.IO.SystemIO/File.cs \
+	Banshee.IO.SystemIO/Provider.cs \
+	Banshee.IO/DemuxVfs.cs \
+	Banshee.IO/Directory.cs \
+	Banshee.IO/File.cs \
+	Banshee.IO/IDemuxVfs.cs \
+	Banshee.IO/IDirectory.cs \
+	Banshee.IO/IFile.cs \
+	Banshee.IO/IProvider.cs \
+	Banshee.IO/Provider.cs \
+	Banshee.IO/StreamAssist.cs \
+	Banshee.IO/UnixIOProvider.cs \
 	Banshee.IO/Utilities.cs \
 	Banshee.Kernel/IInstanceCriticalJob.cs \
 	Banshee.Kernel/IJob.cs \

@@ -191,8 +191,8 @@ namespace Banshee.Collection
             SafeUri source_uri = new SafeUri (source);
             
             try {
-                is_regular_file = IOProxy.File.Exists (source_uri);
-                is_directory = !is_regular_file && IOProxy.Directory.Exists (source);
+                is_regular_file = Banshee.IO.File.Exists (source_uri);
+                is_directory = !is_regular_file && Banshee.IO.Directory.Exists (source);
             } catch {
                 Interlocked.Decrement (ref scan_ref_count);
                 return;
@@ -210,11 +210,11 @@ namespace Banshee.Collection
                 try {
                     if (!Path.GetFileName (Path.GetDirectoryName (source)).StartsWith (".")) {
                         try {
-                            foreach (string file in IOProxy.Directory.GetFiles (source)) {
+                            foreach (string file in Banshee.IO.Directory.GetFiles (source)) {
                                 ScanForFiles (file);
                             }
 
-                            foreach (string directory in IOProxy.Directory.GetDirectories (source)) {
+                            foreach (string directory in Banshee.IO.Directory.GetDirectories (source)) {
                                 ScanForFiles (directory);
                             }
                         } catch {

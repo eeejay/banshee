@@ -1,10 +1,10 @@
 //
-// Client.cs
+// DemuxVfs.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,21 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using TagLib;
+
+namespace Banshee.IO
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public static class DemuxVfs
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
+        public static TagLib.File OpenFile (string file, string mimetype, TagLib.ReadStyle readStyle)
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
+            return TagLib.File.Create (Provider.CreateDemuxVfs (file), mimetype, readStyle); 
         }
         
-        protected override void OnRegisterServices ()
+        public static TagLib.File OpenFile (string file)
         {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+            return TagLib.File.Create (Provider.CreateDemuxVfs (file)); 
         }
     }
 }
-

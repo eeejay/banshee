@@ -16,4 +16,12 @@
     <ExtensionNode name="PlayerEngine"/>
   </ExtensionPoint>
 
+  <ExtensionPoint path="/Banshee/Platform/IOProvider">
+    <ExtensionNode name="IOProvider"/>
+  </ExtensionPoint>
+
+  <ExtensionPoint path="/Banshee/Platform/ConfigurationProvider">
+    <ExtensionNode name="ConfigurationProvider"/>
+  </ExtensionPoint>
+
 </Addin>

@@ -1,10 +1,10 @@
 //
-// Client.cs
+// File.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,49 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using System.IO;
+
+using Banshee.Base;
+
+namespace Banshee.IO.SystemIO
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public class File : Banshee.IO.IFile
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
+        public void Delete (SafeUri uri)
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
+            System.IO.File.Delete (uri.LocalPath);
+        }
+
+        public bool Exists (SafeUri uri)
+        {
+            return System.IO.File.Exists (uri.LocalPath);
+        }
+
+        public void Move (SafeUri from, SafeUri to)
+        {
+            System.IO.File.Move (from.LocalPath, to.LocalPath);
         }
         
-        protected override void OnRegisterServices ()
+        public long GetSize (SafeUri uri)
         {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+            try {
+                return new System.IO.FileInfo (uri.LocalPath).Length;
+            } catch {
+                return -1;
+            }
+        }
+        
+        public System.IO.Stream OpenRead (SafeUri uri)
+        {
+            return System.IO.File.OpenRead (uri.LocalPath);
+        }
+        
+        public System.IO.Stream OpenWrite (SafeUri uri, bool overwrite)
+        {
+            return overwrite 
+                ? System.IO.File.Open (uri.LocalPath, FileMode.Create, FileAccess.ReadWrite)
+                : System.IO.File.OpenWrite (uri.LocalPath);
         }
     }
 }
-

@@ -57,3 +57,10 @@ uninstall-hook:
 		rmdir $(pkglibdir); \
 	fi
 
+dist-windows: all
+	rm -rf banshee-windows; \
+	mkdir banshee-windows; \
+	cp -rf bin/*.{dll,exe} banshee-windows; \
+	zip banshee-windows.zip -r banshee-windows; \
+	rm -rf banshee-windows
+

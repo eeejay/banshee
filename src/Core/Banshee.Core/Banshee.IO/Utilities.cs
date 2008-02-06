@@ -36,7 +36,7 @@ namespace Banshee.IO
     {
         public static void DeleteFileTrimmingParentDirectories(SafeUri uri)
         {
-            Banshee.IO.IOProxy.File.Delete(uri);
+            /*Banshee.IO.IOProxy.File.Delete(uri);
             
             try {
                 string old_dir = System.IO.Path.GetDirectoryName(uri.LocalPath);
@@ -45,7 +45,7 @@ namespace Banshee.IO
                     old_dir = System.IO.Path.GetDirectoryName(old_dir);
                 }
             } catch {
-            }
+            }*/
         }
     }
 }

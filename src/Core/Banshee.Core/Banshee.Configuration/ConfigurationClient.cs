@@ -36,9 +36,7 @@ namespace Banshee.Configuration
         private static IConfigurationClient Client {
             get {
                 if(client == null) {
-                    client = Environment.OSVersion.Platform == PlatformID.Unix
-                        ? (IConfigurationClient) new GConfConfigurationClient()
-                        : new XmlConfigurationClient();
+                    client = new XmlConfigurationClient();
                 }
                 return client;
             }

@@ -1,10 +1,10 @@
 //
-// Client.cs
+// Directory.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,48 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using System.Collections.Generic;
+
+using Banshee.Base;
+
+namespace Banshee.IO
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public static class Directory
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
-        
-        protected override void OnRegisterServices ()
-        {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+        public static bool Exists (string directory)
+    	{
+    	    return Provider.Directory.Exists (directory);
+    	}
+
+    	public static void Create (string directory)
+    	{
+    	    Provider.Directory.Create (directory);
+    	}
+
+    	public static void Move (SafeUri from, SafeUri to)
+    	{
+    	    Provider.Directory.Move (from, to);
+    	}
+
+    	public static void Delete (string directory)
+    	{
+    	    Provider.Directory.Delete (directory);
+    	}
+
+    	public static void Delete (string directory, bool recursive)
+    	{
+    	    Provider.Directory.Delete (directory, recursive);
+    	}
+
+    	public static IEnumerable<string> GetFiles (string directory)
+    	{
+    	    return Provider.Directory.GetFiles (directory);
+    	}
+
+    	public static IEnumerable<string> GetDirectories (string directory)
+    	{
+    	    return Provider.Directory.GetDirectories (directory);
+    	}
     }
 }
-

@@ -101,6 +101,11 @@ namespace Banshee.ServiceStack
             RunIdle (delegate { handler (); return false; });
         }
         
+        public static void Invoke (EventHandler handler)
+        {
+            RunIdle (delegate { handler (null, EventArgs.Empty); return false; });
+        }
+        
         public static uint RunIdle (IdleHandler handler)
         {
             if (idle_handler == null) {

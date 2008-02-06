@@ -1,10 +1,10 @@
 //
-// Client.cs
+// Resource.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,24 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using System.IO;
+using System.Reflection;
+
+namespace Banshee.Base
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public static class Resource
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
+        public static string GetFileContents (string name)
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
+            return GetFileContents (Assembly.GetCallingAssembly (), name);
         }
         
-        protected override void OnRegisterServices ()
+        public static string GetFileContents (Assembly assembly, string name)
         {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+            using (StreamReader reader = new StreamReader (assembly.GetManifestResourceStream (name))) {
+                return reader.ReadToEnd ();
+            }
         }
     }
 }
-

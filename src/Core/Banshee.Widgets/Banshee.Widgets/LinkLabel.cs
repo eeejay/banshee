@@ -72,7 +72,7 @@ namespace Banshee.Widgets
         
         protected virtual void OnClicked()
         {
-            if(uri != null) {
+            if(uri != null && Open != null) {
                 Open(uri.AbsoluteUri);
             }
         
@@ -230,14 +230,7 @@ namespace Banshee.Widgets
         }
         
         public static UriOpenHandler DefaultOpen {
-            get {
-                if(default_open_handler == null) {
-                    default_open_handler = new UriOpenHandler(Gnome.Url.Show);
-                }
-                
-                return default_open_handler;
-            }
-            
+            get { return default_open_handler; }
             set { default_open_handler = value; }
         }
     }

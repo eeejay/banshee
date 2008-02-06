@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2006-2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -37,7 +37,7 @@ namespace Banshee.Streaming
     {
         public static TagLib.File ProcessUri (SafeUri uri)
         {
-            TagLib.File file = Banshee.IO.IOProxy.OpenFile (uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
+            TagLib.File file = Banshee.IO.DemuxVfs.OpenFile (uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
                 null, TagLib.ReadStyle.Average);
 
             if (file.Properties.MediaTypes != TagLib.MediaTypes.Audio) {
@@ -65,7 +65,7 @@ namespace Banshee.Streaming
             track.TrackCount = file.Tag.TrackCount == 0 ? track.TrackCount : (int)file.Tag.TrackCount;
             track.Year = (int)file.Tag.Year;
             track.Duration = file.Properties.Duration;
-            track.FileSize = Banshee.IO.IOProxy.File.GetSize (track.Uri);
+            track.FileSize = Banshee.IO.File.GetSize (track.Uri);
         }
     
         public static void TrackInfoMerge(TrackInfo track, StreamTag tag)

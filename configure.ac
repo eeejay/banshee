@@ -132,6 +132,7 @@ src/Core/Nereid/Makefile
 src/Core/Nereid/banshee2
 
 src/Backends/Makefile
+src/Backends/Banshee.Gnome/Makefile
 src/Backends/Banshee.GStreamer/Makefile
 
 src/Extensions/Makefile

@@ -4,7 +4,7 @@ LINK = $(REF_FIXME)
 
 SOURCES =
 
-RESOURCES =
+RESOURCES = @EXTENSION_NAME@.addin.xml
 
 include $(top_srcdir)/build/build.mk
 

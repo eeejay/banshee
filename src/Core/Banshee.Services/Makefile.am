@@ -3,12 +3,13 @@ TARGET = library
 LINK = $(REF_BANSHEE_SERVICES)
 
 SOURCES =  \
-	Banshee.AudioProfiles/GConfProfileConfiguration.cs \
 	Banshee.AudioProfiles/Pipeline.cs \
 	Banshee.AudioProfiles/PipelineVariable.cs \
 	Banshee.AudioProfiles/Profile.cs \
 	Banshee.AudioProfiles/ProfileConfiguration.cs \
 	Banshee.AudioProfiles/ProfileManager.cs \
+	Banshee.Base/RateLimiter.cs \
+	Banshee.Base/ThreadAssist.cs \
 	Banshee.Collection.Database/AlbumListDatabaseModel.cs \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
 	Banshee.Collection.Database/LibraryAlbumInfo.cs \

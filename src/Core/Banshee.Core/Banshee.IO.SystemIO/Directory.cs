@@ -1,10 +1,10 @@
 //
-// Client.cs
+// Directory.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,48 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using System.Collections.Generic;
+
+using Banshee.Base;
+
+namespace Banshee.IO.SystemIO
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public class Directory : Banshee.IO.IDirectory
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
+        public void Create (string directory)
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
+            System.IO.Directory.CreateDirectory (directory);
         }
         
-        protected override void OnRegisterServices ()
+        public void Delete (string directory)
         {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+            Delete (directory, false);
+        }
+        
+        public void Delete (string directory, bool recursive)
+        {
+            System.IO.Directory.Delete (directory, recursive);
+        }
+        
+        public bool Exists (string directory)
+        {
+            return System.IO.Directory.Exists (directory);
+        }
+        
+        public IEnumerable<string> GetFiles (string directory)
+        {
+            return System.IO.Directory.GetFiles (directory);
+        }
+        
+        public IEnumerable<string> GetDirectories (string directory)
+        {
+            return System.IO.Directory.GetDirectories (directory);
+        }
+
+        public void Move (SafeUri from, SafeUri to)
+        {
+            System.IO.Directory.Move (from.LocalPath, to.LocalPath);
         }
     }
 }
-

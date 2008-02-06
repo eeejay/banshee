@@ -1,10 +1,10 @@
 //
-// Client.cs
+// StreamAssist.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,32 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using System.IO;
+
+namespace Banshee.IO
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public static class StreamAssist
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
+        public static void Save (Stream from, Stream to)
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
+            Save (from, to, 8192);
         }
-        
-        protected override void OnRegisterServices ()
+
+        public static void Save (Stream from, Stream to, int bufferSize)
         {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+            using (from) {
+                long bytes_read = 0;
+                using (to) {
+                    byte [] buffer = new byte[bufferSize];
+                    int chunk_bytes_read = 0;
+
+                    while ((chunk_bytes_read = from.Read (buffer, 0, buffer.Length)) > 0) {
+                        to.Write (buffer, 0, chunk_bytes_read);
+                        bytes_read += chunk_bytes_read;
+                    }
+                }
+            }
         }
     }
 }
-

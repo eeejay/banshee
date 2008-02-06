@@ -1,3 +1,90 @@
+2008-02-06  Aaron Bockover  <abock@gnome.org>
+
+	Okay, so this is a big one. Probably nasty. This commit temporarily breaks
+	settings saving/loading from GConf and the POSIX IO layer is disabled
+	for now as well; these features will be reimplemented as platform 
+	extensions in my next commit;
+
+	This commit puts us very close to being able to run the managed Banshee
+	core out of the box on Windows and probably OS X.
+
+	* src/Core/Banshee.Services/Banshee.AudioProfiles/ProfileConfiguration.cs:
+	Applied Scott's from SoC that makes this configuration layer just use
+	the standard configuration APIs in Banshee, so profile configuration 
+	is stored using whatever provider is active (GConf, XML); Scott rules.
+
+	* src/Backends/Banshee.Gnome: Moved out GNOME specific code (GConf,
+	GnomeVFS) into this new platform extension, but it's not complete
+
+	* src/Core/Banshee.Core/Banshee.Base/RateLimiter.cs:
+	* src/Core/Banshee.Services/Banshee.Base/ThreadAssist.cs: Moved to
+	the service layer since these depend on Application
+
+	* src/Core/Banshee.Core/Banshee.Base/Resource.cs:
+	* src/Core/Banshee.Core/Banshee.Base/NamingUtil.cs: Moved/fixed these
+	classes out of the old Utilities.cs dumping grounds
+	
+	* src/Core/Banshee.Core/Banshee.Configuration/ConfigurationClient.cs:
+	Do not reference the GConfConfigurationClient; for now the Xml one
+	is hard coded to use until I finish turning the GConf support into
+	a provider - no complaining - the next commit will address it
+
+	* src/Core/Banshee.Core/Banshee.I18n/AssemblyCatalogAttribute.cs:
+	* src/Core/Banshee.Core/Banshee.I18n/Catalog.cs: Moved/cleaned up the
+	internal Banshee gettext wrapper
+
+	* src/Core/Banshee.Core/Banshee.IO: Redesigned the IO layer to be easier
+	to extend (soon) through extensions and it now provides a cleaner API
+	to use (no more IOProxy)
+	
+	* src/Core/Banshee.Core/Banshee.IO.SystemIO: Fixed up System.IO provider
+	to implement the new Banshee.IO design changes
+
+	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/FileTrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistParser.cs:
+	Updated to consume the nicer Banshee.IO APIs
+
+	* src/Core/Banshee.Core/Banshee.IO/StreamAssist.cs: Added a class that
+	makes doing some common stream operations (currently, just saving one
+	stream to another) easier
+
+	* src/Core/Banshee.Services/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs:
+	Updated to use the new Banshee.IO APIs and also StreamAssist.Save to
+	reduce so much duplication of stream code
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Added
+	another Inovke method that takes an EventHandler delegate to stay 
+	compatible with Gtk.Application.Invoke
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml: Added a few
+	platform extension points
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	Removed unnecessary Gnome.Vfs call
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/LinkLabel.cs: Removed 
+	default Gnome.Open implementation; users must set a handle at all times
+	so the widget is not bound to a platform
+	
+	* src/Core/Nereid/Nereid/Client.cs: Removed crappy Gnome.Program stuff
+	since it really doesn't provide anything for us
+
+	* src/Extensions/Template/Makefile.am: Small fix
+
+	* src/Core/Banshee.Core/Banshee.Base/Utilities.cs:
+	* src/Core/Banshee.Services/Banshee.AudioProfiles/GConfProfileConfiguration.cs:
+	Nuked, finally
+
+	* build/build.environment.mk:
+	* build/m4/banshee/gtk-sharp.m4: Removed gnome-sharp and gconf-sharp
+	dependencies
+
 2008-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:

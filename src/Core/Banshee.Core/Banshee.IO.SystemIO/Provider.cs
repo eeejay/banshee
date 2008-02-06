@@ -1,10 +1,10 @@
 //
-// Client.cs
+// Provider.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,22 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+
+namespace Banshee.IO.SystemIO
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public class Provider : Banshee.IO.IProvider
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
-        {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
-        }
-        
-        protected override void OnRegisterServices ()
-        {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
-        }
+    	public Type FileProvider { 
+    	    get { return typeof (File); }
+    	}
+
+    	public Type DirectoryProvider {
+    	    get { return typeof (Directory); }
+    	}
+
+    	public Type DemuxVfsProvider {
+    	    get { return typeof (DemuxVfs); }
+    	}
     }
 }
-

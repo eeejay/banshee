@@ -266,12 +266,12 @@ namespace Banshee.Collection.Database
                 SafeUri new_uri = new SafeUri (new_filename);
 
                 try {
-                    if (IOProxy.File.Exists (new_uri)) {
+                    if (Banshee.IO.File.Exists (new_uri)) {
                         return null;
                     }
                     
                     // TODO: Once GnomeVfs and Unix have proper Copy providers, use IOProxy.File.Copy instead.
-                    File.Copy (old_uri.LocalPath, new_uri.LocalPath);
+                    System.IO.File.Copy (old_uri.LocalPath, new_uri.LocalPath);
                     
                     // Return new SafeUri after copy
                     return new_uri;

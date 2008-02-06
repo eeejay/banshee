@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 using TagLib;
@@ -108,17 +109,16 @@ namespace Banshee.Metadata.Embedded
             return preferred_index;
         }
         
-        protected bool SavePicture(IPicture picture, string image_path)
+        protected bool SavePicture (IPicture picture, string image_path)
         {
-            if(picture == null || picture.Data == null || picture.Data.Count == 0) {
+            if (picture == null || picture.Data == null || picture.Data.Count == 0) {
                 return false;
             }
             
-            using(System.IO.MemoryStream stream = new System.IO.MemoryStream(picture.Data.Data)) {
-                Gdk.Pixbuf pixbuf = new Gdk.Pixbuf(stream);
-                pixbuf.Save(image_path, "jpeg");
-            }
-            
+            Banshee.IO.StreamAssist.Save (new MemoryStream (picture.Data.Data), 
+                new FileStream (Path.ChangeExtension (image_path, "cover"), 
+                    FileMode.Create, FileAccess.ReadWrite));
+                
             return true;
         }
     }

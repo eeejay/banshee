@@ -139,20 +139,9 @@ namespace Banshee.Metadata
                 return false;
             }
             
-            using(from_stream) {
-                long bytes_read = 0;
-
-                using(FileStream to_stream = new FileStream(path, FileMode.Create, FileAccess.ReadWrite)) {
-                    byte [] buffer = new byte[8192];
-                    int chunk_bytes_read = 0;
-
-                    while((chunk_bytes_read = from_stream.Read(buffer, 0, buffer.Length)) > 0) {
-                        to_stream.Write(buffer, 0, chunk_bytes_read);
-                        bytes_read += chunk_bytes_read;
-                    }
-                }
-            }
-            
+            Banshee.IO.StreamAssist.Save (from_stream, new FileStream (path, 
+                FileMode.Create, FileAccess.ReadWrite));
+                
             return true;
         }
         

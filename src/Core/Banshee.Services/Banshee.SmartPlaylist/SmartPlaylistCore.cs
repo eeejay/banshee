@@ -44,8 +44,6 @@ namespace Banshee.SmartPlaylist
 
         public SmartPlaylistCore()
         {
-            Gnome.Vfs.Vfs.Initialize();
-
             Migrator.MigrateAll ();
 
             // Listen for added/removed sources and added/changed songs

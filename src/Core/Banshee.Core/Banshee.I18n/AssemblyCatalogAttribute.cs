@@ -1,10 +1,10 @@
 //
-// Client.cs
+// AssemblyCatalogAttribute.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,28 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+
+namespace Banshee.I18n
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    [AttributeUsage (AttributeTargets.Assembly, AllowMultiple = false, Inherited = true)]
+    public class AssemblyCatalogAttribute : Attribute
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
+        private string domain;
+        private string localedir;
+        
+        public AssemblyCatalogAttribute (string domain, string localedir)
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
+            this.domain = domain;
+            this.localedir = localedir;
         }
         
-        protected override void OnRegisterServices ()
-        {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+        public string Domain {
+            get { return domain; }
+        }
+        
+        public string LocaleDir {
+            get { return localedir; }
         }
     }
 }
-

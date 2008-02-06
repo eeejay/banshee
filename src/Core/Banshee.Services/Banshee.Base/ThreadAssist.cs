@@ -1,10 +1,10 @@
 //
-// Client.cs
+// ThreadAssist.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,21 +26,46 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Nereid
+using System;
+using System.Threading;
+
+namespace Banshee.Base
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public static class ThreadAssist
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
-        public static void Main ()
+        private static Thread main_thread;
+        
+        static ThreadAssist ()
         {
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
+            main_thread = Thread.CurrentThread;
         }
         
-        protected override void OnRegisterServices ()
+        public static bool InMainThread {
+            get { return main_thread.Equals (Thread.CurrentThread); }
+        }
+        
+        public static void ProxyToMain (EventHandler handler)
         {
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+            if (!InMainThread) {
+                Banshee.ServiceStack.Application.Invoke (handler);
+            } else {
+                handler (null, new EventArgs ());
+            }
+        }
+        
+        public static Thread Spawn (ThreadStart threadedMethod, bool autoStart)
+        {
+            Thread thread = new Thread (threadedMethod);
+            thread.IsBackground = true;
+            if (autoStart) {
+                thread.Start ();
+            }
+            return thread;
+        }
+        
+        public static Thread Spawn (ThreadStart threadedMethod)
+        {
+            return Spawn (threadedMethod, true);
         }
     }
 }
-

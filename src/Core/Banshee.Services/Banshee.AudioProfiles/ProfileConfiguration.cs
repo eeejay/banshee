@@ -32,9 +32,11 @@ using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 
+using Banshee.Configuration;
+
 namespace Banshee.AudioProfiles
 {
-    public abstract class ProfileConfiguration : IEnumerable<KeyValuePair<string, string>>
+    public class ProfileConfiguration : IEnumerable<KeyValuePair<string, string>>
     {
         private Dictionary<string, string> variable_values = new Dictionary<string, string>();
         private string id;
@@ -42,38 +44,31 @@ namespace Banshee.AudioProfiles
         
         public static ProfileConfiguration Load(Profile profile, string id)
         {
-            ProfileConfiguration configuration = new GConfProfileConfiguration(profile,
-                Banshee.Configuration.GConfConfigurationClient.BaseKey + 
-                    "audio_profiles/" + id + "/" + profile.ID + "/", id);
+            ProfileConfiguration configuration = new ProfileConfiguration(profile, id);
             configuration.Load();
             return configuration;
         }
-        
+
         public static Profile LoadActiveProfile(ProfileManager manager, string id)
         {
-            try {
-                string profile_id = GConfProfileConfiguration.LoadActiveProfile(
-                    Banshee.Configuration.GConfConfigurationClient.BaseKey + "audio_profiles/", id);
-                
-                if(profile_id == null) {
-                    return null;
-                }
-            
-                foreach(Profile profile in manager.GetAvailableProfiles()) {
-                    if(profile.ID == profile_id) {
-                        return profile;
-                    }
-                }
-            } catch {
+            string profile_id = ConfigurationClient.Get<string>(MakeConfNamespace(id), "active_profile", string.Empty);
+
+            if(profile_id == string.Empty) {
+                return null;
             }
-            
+
+            foreach(Profile profile in manager.GetAvailableProfiles()) {
+                if(profile.ID == profile_id) {
+                    return profile;
+                }
+            }
+
             return null;
         }
         
         public static void SaveActiveProfile(Profile profile, string id)
         {
-            GConfProfileConfiguration.SaveActiveProfile(profile,
-                Banshee.Configuration.GConfConfigurationClient.BaseKey + "audio_profiles/", id);
+            ConfigurationClient.Set<string>(MakeConfNamespace(id), "active_profile", profile.ID);
         }
         
         public ProfileConfiguration(Profile profile, string id)
@@ -82,8 +77,22 @@ namespace Banshee.AudioProfiles
             this.id = id;
         }
 
-        protected abstract void Load();
-        public abstract void Save();
+        protected virtual void Load()
+        {
+            foreach(string variable in ConfigurationClient.Get<string[]>(ConfNamespace, "variables", new string[0])) {
+                Add(variable, ConfigurationClient.Get<string>(ConfNamespace, variable, string.Empty));
+            }
+        }
+
+        public virtual void Save()
+        {
+            List<string> variable_names = new List<string>(Count);
+            foreach(KeyValuePair<string, string> variable in this) {
+                variable_names.Add(variable.Key);
+                ConfigurationClient.Set<string>(ConfNamespace, variable.Key, variable.Value);
+            }
+            ConfigurationClient.Set<string[]>(ConfNamespace, "variables", variable_names.ToArray());
+        }
         
         public void Add(string variable, string value)
         {
@@ -117,6 +126,19 @@ namespace Banshee.AudioProfiles
         
         public string ID {
             get { return id; }
+        }
+
+        public int Count {
+            get { return variable_values.Count; }
+        }
+
+        protected string ConfNamespace {
+            get { return MakeConfNamespace(id); }
+        }
+
+        protected static string MakeConfNamespace(string id)
+        {
+            return String.Format("audio_profiles.{0}", id);
         }
     }
 }
