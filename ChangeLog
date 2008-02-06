@@ -1,5 +1,17 @@
 2008-02-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/create-extension: A simple script that will create some of the
+	files necessary for creating new extensions; it allows you to specify
+	the extension name extension points that will be implemented and it
+	tries to build at least most of the necessary shell for the extension
+
+	* src/Extensions/Template/Makefile.am:
+	* src/Extensions/Template/Template.addin.xml:
+	* src/Extensions/Template/Template.mdp: Files to use as the base for
+	generated extensions
+
+2008-02-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
 	Some minor reorg, finish the DnD split
