@@ -35,7 +35,7 @@ namespace Banshee.Widgets
 {
     public abstract class CustomActionProxy
     {
-        protected Action action;
+        protected Gtk.Action action;
         protected string [] paths;
         protected UIManager ui;
 
@@ -54,7 +54,7 @@ namespace Banshee.Widgets
 
 #region Public API
 
-        public CustomActionProxy (UIManager ui, Action proxiedAction)
+        public CustomActionProxy (UIManager ui, Gtk.Action proxiedAction)
         {
             this.action = proxiedAction;
             this.ui = ui;
@@ -92,7 +92,7 @@ namespace Banshee.Widgets
             }
         }
 
-        protected virtual void InsertProxy (Action menuAction, Widget menu, MenuItem afterItem)
+        protected virtual void InsertProxy (Gtk.Action menuAction, Widget menu, MenuItem afterItem)
         {
             Menu parent_menu = ((menu is MenuItem) ? (menu as MenuItem).Submenu : menu) as Menu;
             int position = (afterItem != null) ? Array.IndexOf (parent_menu.Children, afterItem) + 1 : 0;

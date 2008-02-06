@@ -348,7 +348,7 @@ namespace Banshee.Sources.Gui
             }
             
             if (source.Parent != null) {
-                if (source.Parent.AutoExpand) {
+                if (source.Parent.AutoExpand == true) {
                     Expand (FindSource (source.Parent));
                 }
             }

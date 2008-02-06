@@ -42,7 +42,7 @@ namespace Banshee.Gui
     public class PlaybackActions : BansheeActionGroup
     {
         private InterfaceActionService action_service;
-        private Action play_pause_action;
+        private Gtk.Action play_pause_action;
         
         public PlaybackActions (InterfaceActionService actionService) : base ("Playback")
         {

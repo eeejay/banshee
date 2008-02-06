@@ -1,3 +1,17 @@
+2008-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/ActionButton.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/CustomActionProxy.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingActionProxy.cs: Fix mono
+	1.9 compiler error with amibuous Action references.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Fix mono
+	1.9 compiler error with if (bool?) statement.
+
 2008-02-05  Aaron Bockover  <abock@gnome.org>
 
 	* src/create-extension: A simple script that will create some of the

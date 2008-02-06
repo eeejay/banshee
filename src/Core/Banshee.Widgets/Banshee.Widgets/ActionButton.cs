@@ -37,18 +37,18 @@ namespace Banshee.Widgets
     {
         private static ArrayList buttons = new ArrayList();
 
-        private Action action;
+        private Gtk.Action action;
         private HBox box = new HBox();
         private Image image = new Image();
         private Label label = new Label();
         private Gdk.Pixbuf pixbuf;
         private IconSize default_size;
         
-        public ActionButton(Action action) : this(action, IconSize.SmallToolbar)
+        public ActionButton(Gtk.Action action) : this(action, IconSize.SmallToolbar)
         {
         }
         
-        public ActionButton(Action action, IconSize defaultSize) : base()
+        public ActionButton(Gtk.Action action, IconSize defaultSize) : base()
         {
             this.action = action;
             default_size = defaultSize;
@@ -97,7 +97,7 @@ namespace Banshee.Widgets
             }
         }
         
-        public new Action Action {
+        public new Gtk.Action Action {
             get {
                 return action;
             }
@@ -148,16 +148,16 @@ namespace Banshee.Widgets
     {
         private static ArrayList buttons = new ArrayList();
 
-        private Action action;
+        private Gtk.Action action;
         private HBox box = new HBox();
         private Image image = new Image();
         private IconSize default_size;
         
-        public ActionToggleButton(Action action) : this(action, IconSize.SmallToolbar)
+        public ActionToggleButton(Gtk.Action action) : this(action, IconSize.SmallToolbar)
         {
         }
     
-        public ActionToggleButton(Action action, IconSize defaultSize) : base()
+        public ActionToggleButton(Gtk.Action action, IconSize defaultSize) : base()
         {
             this.action = action;
             
@@ -202,7 +202,7 @@ namespace Banshee.Widgets
             }
         }
         
-        public new Action Action {
+        public new Gtk.Action Action {
             get {
                 return action;
             }

@@ -73,7 +73,7 @@ namespace Banshee.Gui
 
         public void UpdateAction (string action_name, bool visible, bool sensitive, Source source)
         {
-            Action action = this[action_name];
+            Gtk.Action action = this[action_name];
             action.Visible = visible;
             action.Sensitive = visible && sensitive;
 

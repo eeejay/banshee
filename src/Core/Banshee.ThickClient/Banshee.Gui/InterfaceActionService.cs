@@ -32,6 +32,7 @@ using System.Reflection;
 using System.Collections.Generic;
 
 using Gtk;
+using Action = Gtk.Action;
 
 using Banshee.Sources;
 using Banshee.ServiceStack;

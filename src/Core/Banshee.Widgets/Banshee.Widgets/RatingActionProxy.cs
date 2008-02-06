@@ -38,7 +38,7 @@ namespace Banshee.Widgets
         private List<RatingMenuItem> rating_items = new List<RatingMenuItem> ();
         private int last_rating;
 
-        public RatingActionProxy (UIManager ui, Action action) : base (ui, action)
+        public RatingActionProxy (UIManager ui, Gtk.Action action) : base (ui, action)
         {
         }
 

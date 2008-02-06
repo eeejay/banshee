@@ -264,7 +264,7 @@ namespace Banshee.Gui
             Source active_source = ServiceManager.SourceManager.ActiveSource;
 
             // TODO find just the menu that was activated instead of modifying all proxies
-            foreach (MenuItem menu in (o as Action).Proxies) {
+            foreach (MenuItem menu in (o as Gtk.Action).Proxies) {
                 Menu submenu = new Menu ();
                 menu.Submenu = submenu;
 
