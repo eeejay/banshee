@@ -1,5 +1,11 @@
 2008-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Patch from Alex Hixon adding
+	the track properties button to the bottom bar.  Tweaked to be not quite as
+	tall.
+
+2008-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This commit fixes the last big hack in Hyena.Query - operators.
 	Operaters are now defined per QueryValue subclass, so you you will never
 	get a contains operator on an int field, for example.  A new Hyena.Query.Gui
