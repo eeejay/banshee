@@ -28,6 +28,7 @@
 
 using System;
 using System.Reflection;
+using Mono.Addins;
 
 using Banshee.Base;
 using Banshee.Configuration;
@@ -47,7 +48,22 @@ namespace Banshee.IO
                     return;
                 }
                 
-                provider = new Banshee.IO.SystemIO.Provider ();
+                foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/Platform/IOProvider")) {
+                    try {
+                        if (node.HasId && node.Id == ProviderSchema.Get ()) {
+                            provider = (IProvider)node.CreateInstance (typeof (IProvider));
+                        }
+                    } catch (Exception e) {
+                        Log.Warning ("IO provider extension failed to load", e.Message);
+                    }
+                }
+                
+                if (provider == null) {
+                    provider = new Banshee.IO.SystemIO.Provider ();
+                }
+                
+                Log.DebugFormat ("IO provider extension loaded ({0})", provider.GetType ().FullName);
+                
                 directory = (IDirectory)Activator.CreateInstance (provider.DirectoryProvider);
                 file = (IFile)Activator.CreateInstance (provider.FileProvider);
             }
@@ -65,5 +81,15 @@ namespace Banshee.IO
         {
             return (IDemuxVfs)Activator.CreateInstance (provider.DemuxVfsProvider, new object [] { file });
         }
+        
+        public static readonly SchemaEntry<string> ProviderSchema = new SchemaEntry<string> (
+            "core", "io_provider",
+            "Banshee.IO.Unix.Provider",
+            "Set the IO provider backend in Banshee",
+            "Can be either \"Banshee.IO.SystemIO.Provider\" (.NET System.IO), " + 
+                "\"Banshee.IO.Unix.Provider\" (Native Unix/POSIX), or " +
+                "\"Banshee.IO.GnomeVfs.Provider\" (GNOME VFS); " +
+                "takes effect on Banshee start (restart necessary)"
+        );
     }
 }

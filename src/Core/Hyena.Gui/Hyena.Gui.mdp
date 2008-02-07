@@ -33,6 +33,12 @@
     <File name="Hyena.Gui.Theatrics/Actor.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui.Theatrics/Stage.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui.Theatrics/SingleActorStage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/DateQueryValueEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/IntegerQueryValueEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/QueryBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/QueryTermBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/QueryValueEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/StringQueryValueEntry.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

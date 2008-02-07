@@ -81,6 +81,10 @@
     <File name="Banshee.Sources.Gui/SourceView_DragAndDrop.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Dialogs/PreferencesDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/ColumnCellTrackNumber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Query.Gui/BansheeQueryBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Query.Gui/RatingQueryValueEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Query.Gui/PlaylistQueryValueEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.SmartPlaylist.Gui/Editor.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

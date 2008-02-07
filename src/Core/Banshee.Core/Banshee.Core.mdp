@@ -13,8 +13,6 @@
     <File name="Banshee.Kernel/Job.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Kernel/JobPriority.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Kernel/Scheduler.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Configuration/ConfigurationClient.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Configuration/IConfigurationClient.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Configuration/SchemaEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/FileNamePattern.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/Paths.cs" subtype="Code" buildaction="Compile" />
@@ -58,7 +56,6 @@
     <File name="Banshee.IO/IFile.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.IO/IDirectory.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.IO/Directory.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.IO.SystemIO" subtype="Directory" buildaction="Compile" />
     <File name="Banshee.IO.SystemIO/Directory.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.IO.SystemIO/File.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.IO.SystemIO/Provider.cs" subtype="Code" buildaction="Compile" />
@@ -69,11 +66,15 @@
     <File name="Banshee.IO/DemuxVfs.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.IO/StreamAssist.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/NamingUtil.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration/ConfigurationClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Configuration/IConfigurationClient.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Core.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />
     <ProjectReference type="Gac" localcopy="True" refto="TagLib, Version=0.0.0.0, Culture=neutral" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Addins, Version=0.3.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </References>
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />

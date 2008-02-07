@@ -6,21 +6,17 @@
     copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
     name="GNOME Providers"
     category="Platform"
-    description="Backend providers for the GNOME platform. Includes GConf and GNOME-VFS support."
+    description="Backend providers for the GNOME platform. Includes GConf and GIO support."
     author="Aaron Bockover"
     url="http://banshee-project.org/"
     defaultEnabled="true">
 
   <Dependencies>
-    <Addin id="Banshee.Services" version="1.0"/>
+    <Addin id="Banshee.Core" version="1.0"/>
   </Dependencies>
 
-  <Extension path="/Banshee/Platform/IOProvider">
-    <IOProvider class=""/>
-  </Extension>
-
-  <Extension path="/Banshee/Platform/ConfigurationProvider">
-    <ConfigurationProvider class=""/>
+  <Extension path="/Banshee/Platform/ConfigurationClient">
+    <ConfigurationClient class="Banshee.Gnome.GConfConfigurationClient"/>
   </Extension>
 
 </Addin>

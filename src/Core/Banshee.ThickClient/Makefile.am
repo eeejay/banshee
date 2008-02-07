@@ -62,8 +62,8 @@ SOURCES =  \
 	Banshee.Library.Gui/FolderImportSource.cs \
 	Banshee.Library.Gui/ImportDialog.cs \
 	Banshee.Query.Gui/BansheeQueryBox.cs \
-	Banshee.Query.Gui/RatingQueryValueEntry.cs \
 	Banshee.Query.Gui/PlaylistQueryValueEntry.cs \
+	Banshee.Query.Gui/RatingQueryValueEntry.cs \
 	Banshee.SmartPlaylist.Gui/Editor.cs \
 	Banshee.Sources.Gui/CellEditEntry.cs \
 	Banshee.Sources.Gui/SourceRowRenderer.cs \

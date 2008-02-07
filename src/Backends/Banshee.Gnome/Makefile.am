@@ -1,12 +1,10 @@
 ASSEMBLY = Banshee.Gnome
 TARGET = library
-LINK = $(REF_FIXME)
+LINK = $(REF_BACKEND_GNOME)
 
-SOURCES =  \
-	Banshee.Gnome/GConfConfigurationClient.cs \
-	Banshee.Gnome/GnomeVfs.cs
+SOURCES = Banshee.Gnome/GConfConfigurationClient.cs
 
 RESOURCES = Banshee.Gnome.addin.xml
 
-#include $(top_srcdir)/build/build.mk
+include $(top_srcdir)/build/build.mk
 

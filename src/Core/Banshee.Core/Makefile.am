@@ -61,6 +61,7 @@ SOURCES =  \
 	Banshee.Streaming/StreamTagger.cs
 
 RESOURCES =  \
+	Banshee.Core.addin.xml \
 	Resources/contributors.xml \
 	Resources/COPYING \
 	Resources/translators.xml

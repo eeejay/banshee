@@ -1,3 +1,40 @@
+2008-02-07  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds GConf support back, inside the new GNOME platform 
+	extension; yay cross-platform
+
+	* build/build.environment.mk:
+	* build/m4/banshee/gtk-sharp.m4: Added build foo for gconf and the 
+	gnome platform extension
+
+	* src/Backends/Banshee.Gnome/Banshee.Gnome.addin.xml: Implement the
+	configuration client extension
+
+	* src/Backends/Banshee.Gnome/Banshee.Gnome/GConfConfigurationClient.cs:
+	A little cleanup
+
+	* src/Backends/Banshee.Gnome/Banshee.Gnome/GnomeVfs.cs: Removed since
+	it's never really worked well and we'll be adding GIO support soon anyway
+
+	* src/Core/Banshee.Core/Banshee.Configuration/ConfigurationClient.cs:
+	Whitespace and header fixes, use Mono.Addins to load an configuration
+	client extension, falling back to the built-in XML client
+	
+	* src/Core/Banshee.Core/Banshee.Configuration/IConfigurationClient.cs:
+	* src/Core/Banshee.Core/Banshee.Configuration/SchemaEntry.cs:
+	* src/Core/Banshee.Core/Banshee.Configuration/XmlConfigurationClient.cs:
+	Whitespace and header fixes, just cosmetics
+
+	* src/Core/Banshee.Core/Banshee.Core.addin.xml: Core now has two extension
+	points (ConfigurationClient and IOProvider)
+
+	* src/Core/Banshee.Core/Banshee.IO/Provider.cs: Use Mono.Addins to load
+	the preferred IO provider extension, falling back to the internal
+	System.IO provider
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Initialize the configuration layer before booting services
+
 2008-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Nereid/Nereid/PlayerInterface.cs: Patch from Alex Hixon adding

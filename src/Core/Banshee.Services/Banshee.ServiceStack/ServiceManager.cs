@@ -73,6 +73,8 @@ namespace Banshee.ServiceStack
             AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
                 ? "." : UserAddinCachePath);
             
+            Banshee.Configuration.ConfigurationClient.Initialize ();
+        
             if (ApplicationContext.Debugging) {
                 AddinManager.Registry.Rebuild (null /*new ConsoleProgressStatus (true)*/);
             }
