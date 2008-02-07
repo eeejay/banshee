@@ -1,3 +1,8 @@
+2008-02-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Fix bug that prevented using
+	keybindings while in the search entry.
+
 2008-02-07  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs: Use 

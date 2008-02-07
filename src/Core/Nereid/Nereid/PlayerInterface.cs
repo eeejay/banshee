@@ -457,7 +457,8 @@ namespace Nereid
         {
             bool focus_search = false;
             
-            if (Focus is Entry && GtkUtilities.NoImportantModifiersAreSet ()) {
+            if (Focus is Entry && (GtkUtilities.NoImportantModifiersAreSet () && 
+                evnt.Key != Gdk.Key.Control_L && evnt.Key != Gdk.Key.Control_R)) {
                 if (accel_group_active) {
                     RemoveAccelGroup (action_service.UIManager.AccelGroup);
                     accel_group_active = false;
