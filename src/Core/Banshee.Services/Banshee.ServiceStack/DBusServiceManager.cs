@@ -111,9 +111,9 @@ namespace Banshee.ServiceStack
         {
             if(dbus_enabled && Bus.Session != null) {
                 Bus.Session.Register(BusName, new ObjectPath(objectName), o);
-                if (Banshee.Base.ApplicationContext.Debugging) {
+                /*if (Banshee.Base.ApplicationContext.Debugging) {
                     Banshee.Base.Log.DebugFormat ("Registered {0} on {1}", objectName, BusName);
-                }
+                }*/
             }
         }
 

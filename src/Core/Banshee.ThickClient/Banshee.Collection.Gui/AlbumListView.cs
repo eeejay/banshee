@@ -32,6 +32,8 @@ using Hyena.Data;
 using Hyena.Data.Gui;
 
 using Banshee.Collection;
+using Banshee.ServiceStack;
+using Banshee.Gui;
 
 namespace Banshee.Collection.Gui
 {
@@ -47,6 +49,18 @@ namespace Banshee.Collection.Gui
             ColumnController = column_controller;
             
             RowHeight = ColumnCellAlbum.RowHeight;
+        }
+
+        protected override bool OnFocusInEvent(Gdk.EventFocus evnt)
+        {
+            ServiceManager.Get<InterfaceActionService> ().TrackActions.SuppressSelectActions ();
+            return base.OnFocusInEvent(evnt);
+        }
+        
+        protected override bool OnFocusOutEvent(Gdk.EventFocus evnt)
+        {
+            ServiceManager.Get<InterfaceActionService> ().TrackActions.UnsuppressSelectActions ();
+            return base.OnFocusOutEvent(evnt);
         }
     }
 }

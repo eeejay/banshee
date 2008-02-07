@@ -176,6 +176,25 @@ namespace Banshee.Gui
 
 #region Utility Methods
 
+        private bool select_actions_suppressed = false;
+        public void SuppressSelectActions ()
+        {
+            if (!select_actions_suppressed) {
+                this ["SelectAllAction"].DisconnectAccelerator ();
+                this ["SelectNoneAction"].DisconnectAccelerator ();
+                select_actions_suppressed = true;
+            }
+        }
+
+        public void UnsuppressSelectActions ()
+        {
+            if (select_actions_suppressed) {
+                this ["SelectAllAction"].ConnectAccelerator ();
+                this ["SelectNoneAction"].ConnectAccelerator ();
+                select_actions_suppressed = false;
+            }
+        }
+
         private void UpdateActions ()
         {
             Hyena.Collections.Selection selection = TrackSelector.TrackSelectionProxy.Selection;

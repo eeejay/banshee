@@ -1,5 +1,16 @@
 2008-02-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Comment out super-verbose logging.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Sweet little
+	patch that disconnects the [shift]ctrl-a keybindings while focused in the
+	Artist and Album views.
+
+2008-02-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Fix bugs with
 	source actions being out of sync with what's highlighted/active.  Open
 	Editor for smart playlists when OnSourceProperties.
