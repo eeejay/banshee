@@ -47,7 +47,6 @@ namespace Banshee.Gui
     public class TrackActions : BansheeActionGroup
     {
         private InterfaceActionService action_service;
-        private Dictionary<MenuItem, PlaylistSource> playlist_menu_map = new Dictionary<MenuItem, PlaylistSource> ();
         private RatingActionProxy rating_proxy;
 
         private static readonly string [] require_selection_actions = new string [] {
@@ -280,7 +279,6 @@ namespace Banshee.Gui
         private void OnAddToPlaylist (object o, EventArgs args)
         {
             Gdk.Pixbuf pl_pb = Gdk.Pixbuf.LoadFromResource ("source-playlist-16.png");
-            playlist_menu_map.Clear ();
             Source active_source = ServiceManager.SourceManager.ActiveSource;
 
             // TODO find just the menu that was activated instead of modifying all proxies
@@ -289,18 +287,25 @@ namespace Banshee.Gui
                 menu.Submenu = submenu;
 
                 submenu.Append (this ["AddToNewPlaylistAction"].CreateMenuItem ());
-                submenu.Append (new SeparatorMenuItem ());
+                bool separator_added = false;
+                
                 foreach (Source child in ServiceManager.SourceManager.DefaultSource.Children) {
                     PlaylistSource playlist = child as PlaylistSource;
                     if (playlist != null) {
+                        if (!separator_added) {
+                            submenu.Append (new SeparatorMenuItem ());
+                            separator_added = true;
+                        }
+                        
                         ImageMenuItem item = new ImageMenuItem (playlist.Name);
                         item.Image = new Gtk.Image (pl_pb);
                         item.Activated += OnAddToExistingPlaylist;
                         item.Sensitive = playlist != active_source;
-                        playlist_menu_map[item] = playlist;
+                        item.Data.Add ("playlist", playlist);
                         submenu.Append (item);
                     }
                 }
+                
                 submenu.ShowAll ();
             }
         }
@@ -319,8 +324,10 @@ namespace Banshee.Gui
 
         private void OnAddToExistingPlaylist (object o, EventArgs args)
         {
-            PlaylistSource playlist = playlist_menu_map[o as MenuItem];
-            playlist.AddSelectedTracks (TrackSelector.TrackModel);
+            MenuItem item = (MenuItem)o;
+            if (item.Data != null && item.Data.ContainsKey ("playlist")) {
+                ((PlaylistSource)item.Data["playlist"]).AddSelectedTracks (TrackSelector.TrackModel);
+            }
         }
 
         private void OnRemoveTracks (object o, EventArgs args)

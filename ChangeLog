@@ -1,3 +1,10 @@
+2008-02-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Only add
+	the separator to the add to playlist menu if there are actually playlists
+	that can be added to; remove the playlist map and pass the source through
+	the .Data property of the object
+
 2008-02-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
