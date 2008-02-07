@@ -1,5 +1,18 @@
 2008-02-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Fix bugs with
+	source actions being out of sync with what's highlighted/active.  Open
+	Editor for smart playlists when OnSourceProperties.
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs: If
+	given a smart playlist, set the Hyena.Query.Gui condition.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs: 
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs: Add a QueryNode setter
+	so can initialize with an existing query/smart playlist.
+
+2008-02-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Nereid/Nereid/PlayerInterface.cs: Fix bug that prevented using
 	keybindings while in the search entry.
 

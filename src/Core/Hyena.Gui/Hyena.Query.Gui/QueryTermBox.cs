@@ -165,13 +165,23 @@ namespace Hyena.Query.Gui
             set { remove_button.Sensitive = value; }
         }
         
-        public QueryNode GetTermNode ()
-        {
-            QueryTermNode node = new QueryTermNode ();
-            node.Field = field;
-            node.Operator = op;
-            node.Value = value_entry.QueryValue;
-            return node;
+        public QueryTermNode QueryNode {
+            get {
+                QueryTermNode node = new QueryTermNode ();
+                node.Field = field;
+                node.Operator = op;
+                node.Value = value_entry.QueryValue;
+                return node;
+            }
+            set {
+                if (value == null) {
+                    return;
+                }
+
+                field_chooser.Active = Array.IndexOf (sorted_fields, value.Field);
+                value_entry.QueryValue = value.Value;
+                op_chooser.Active = Array.IndexOf (value.Value.OperatorSet.Objects, value.Operator);
+            }
         }
     }
 }

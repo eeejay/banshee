@@ -50,8 +50,40 @@ namespace Hyena.Query.Gui
             this.field_set = fieldSet;
             CreateRow (false);
         }
-        
-        public void CreateRow (bool canDelete)
+
+        public QueryNode QueryNode {
+            get {
+                QueryListNode and = new QueryListNode (Keyword.And);
+                for (int i = 0, n = Children.Length; i < n; i++) {
+                    QueryTermBox term_box = Children [i] as QueryTermBox;
+                    and.AddChild (term_box.QueryNode);
+                }
+                return and.Trim ();
+            }
+            set {
+                if (value is QueryListNode) {
+                    // type = value.Keyword
+                    foreach (QueryNode child in (value as QueryListNode).Children) {
+                        AddNode (child);
+                    }
+                } else {
+                    // type = 'and'
+                    AddNode (value);
+                }
+            }
+        }
+
+        private void AddNode (QueryNode node)
+        {
+            if (node is QueryTermNode) {
+                QueryTermBox box = CreateRow (false);
+                box.QueryNode = node as QueryTermNode;
+            } else {
+                Console.WriteLine ("Query Gui cannot handle child node: {0}", node.ToString ());
+            }
+        }
+
+        public QueryTermBox CreateRow (bool canDelete)
         {
             QueryTermBox row = new QueryTermBox (field_set);
             row.Show();
@@ -64,6 +96,7 @@ namespace Hyena.Query.Gui
                 first_row = row;
                 //row.FieldBox.GrabFocus();
             }
+            return row;
         }
         
         public void OnRowAddRequest(object o, EventArgs args)
@@ -83,17 +116,5 @@ namespace Hyena.Query.Gui
             ((QueryTermBox) Children[0]).CanDelete = Children.Length > 1;
         }
         
-        public QueryNode BuildQuery ()
-        {
-            QueryListNode and = new QueryListNode (Keyword.And);
-
-            for (int i = 0, n = Children.Length; i < n; i++) {
-                QueryTermBox term_box = Children [i] as QueryTermBox;
-
-                and.AddChild (term_box.GetTermNode ());
-            }
-
-            return and.Trim ();
-        }
     }
 }

@@ -50,6 +50,10 @@ namespace Banshee.Gui
             get { return source_view; }
             set { source_view = value; }
         }
+
+        public Source ActionSource {
+            get { return SourceView.HighlightedSource ?? ServiceManager.SourceManager.ActiveSource; }
+        }
         
         public SourceActions (InterfaceActionService actionService) : base ("Source")
         {
@@ -153,7 +157,7 @@ namespace Banshee.Gui
         {
             UpdateActions ();
 
-            string path = SourceView.HighlightedSource.Properties.GetString ("GtkActionPath") ?? "/SourceContextMenu";
+            string path = ActionSource.Properties.GetString ("GtkActionPath") ?? "/SourceContextMenu";
             Gtk.Menu menu = action_service.UIManager.GetWidget (path) as Menu;
             if (menu == null) {
                 return;
@@ -161,7 +165,10 @@ namespace Banshee.Gui
 
             menu.Show (); 
             menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
-            menu.SelectionDone += delegate { SourceView.ResetHighlight (); };
+            menu.SelectionDone += delegate {
+                SourceView.ResetHighlight ();
+                UpdateActions ();
+            };
         }
             
         private void OnImportSource (object o, EventArgs args)
@@ -170,34 +177,41 @@ namespace Banshee.Gui
 
         private void OnRenameSource (object o, EventArgs args)
         {
-            SourceView.BeginRenameSource (SourceView.HighlightedSource);
+            SourceView.BeginRenameSource (ActionSource);
         }
 
         private void OnUnmapSource (object o, EventArgs args)
         {
-            IUnmapableSource source = SourceView.HighlightedSource as IUnmapableSource;
+            IUnmapableSource source = ActionSource as IUnmapableSource;
             if (source != null && source.CanUnmap && (!source.ConfirmBeforeUnmap || ConfirmUnmap (source)))
                 source.Unmap ();
         }
 
         private void OnSourceProperties (object o, EventArgs args)
         {
+            Source source = ActionSource;
+            if (source is SmartPlaylistSource) {
+                Editor ed = new Editor (source as SmartPlaylistSource);
+                ed.RunDialog ();
+            }
         }
 
 #endregion
 
 #region Utility Methods
 
+        private Source last_source = null;
         private void UpdateActions ()
         {
-            Source source = SourceView.HighlightedSource;
+            Source source = ActionSource;
 
-            if (source != null) {
+            if (source != last_source && source != null) {
                 IUnmapableSource unmapable = source as IUnmapableSource;
                 UpdateAction ("UnmapSourceAction", unmapable != null, unmapable != null && unmapable.CanUnmap, source);
                 UpdateAction ("RenameSourceAction", source.CanRename, true, null);
                 UpdateAction ("ImportSourceAction", source is IImportable, true, source);
                 UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
+                last_source = source;
             }
         }
 

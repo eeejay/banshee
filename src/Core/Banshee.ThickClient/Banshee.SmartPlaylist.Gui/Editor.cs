@@ -35,6 +35,8 @@ namespace Banshee.SmartPlaylist
         public Editor (SmartPlaylistSource playlist) : base("SmartPlaylistEditorDialog")
         {
             this.playlist = playlist;
+            Console.WriteLine ("Loading smart playlist into editor: {0}",
+                playlist.ConditionTree == null ? "" : playlist.ConditionTree.ToXml (BansheeQuery.FieldSet, true));
 
             Initialize();
 
@@ -59,6 +61,11 @@ namespace Banshee.SmartPlaylist
             // Add the QueryBuilder widget
             //model = new TracksQueryModel(this.playlist);
             builder = new BansheeQueryBox ();
+
+            if (playlist != null) {
+                builder.QueryNode = playlist.ConditionTree;
+            }
+
             builder.Show();
             builder.Spacing = 4;
 
@@ -204,7 +211,7 @@ namespace Banshee.SmartPlaylist
             //dialog.GetSize (out w, out h);
             //Console.WriteLine ("w = {0}, h = {1}", w, h);
 
-            QueryNode node = builder.BuildQuery ();
+            QueryNode node = builder.QueryNode;
             if (node == null) {
                 Console.WriteLine ("Editor query is null");
             } else {
