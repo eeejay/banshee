@@ -134,6 +134,7 @@ src/Core/Nereid/banshee2
 src/Backends/Makefile
 src/Backends/Banshee.Gnome/Makefile
 src/Backends/Banshee.GStreamer/Makefile
+src/Backends/Banshee.Unix/Makefile
 
 src/Extensions/Makefile
 src/Extensions/Banshee.Audioscrobbler/Makefile

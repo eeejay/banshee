@@ -1,5 +1,24 @@
 2008-02-07  Aaron Bockover  <abock@gnome.org>
 
+	This commit adds Mono.Unix IO support back, inside the new Unix/POSIX
+	extension; yay cross-platform
+
+	* src/Backends/Banshee.Unix/Banshee.IO.Unix: Added the Unix IO backend
+
+	* src/Backends/Banshee.Unix/Banshee.Unix.addin.xml: Extension file for
+	the unix backend
+	
+	* src/Core/Banshee.Core/Banshee.IO/UnixIOProvider.cs: Removed
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml: Removed extension
+	points that belonged in core, not services
+	
+	* build/build.environment.mk:
+	* build/build.rules.mk:
+	* configure.ac: Build foo
+
+2008-02-07  Aaron Bockover  <abock@gnome.org>
+
 	This commit adds GConf support back, inside the new GNOME platform 
 	extension; yay cross-platform
 

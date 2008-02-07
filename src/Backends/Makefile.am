@@ -1,6 +1,7 @@
 SUBDIRS = \
 	Banshee.Gnome \
-	Banshee.GStreamer
+	Banshee.GStreamer \
+	Banshee.Unix
 
 MAINTAINERCLEANFILES = Makefile.in
 
