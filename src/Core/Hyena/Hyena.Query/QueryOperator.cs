@@ -34,79 +34,49 @@ using System.Collections.Generic;
 
 namespace Hyena.Query
 {
-    public class Operator
+    public class Operator : IAliasedObject
     {
-        public string Name;
-        public string UserOperator;
-
-        public Operator Dual {
-            get {
-                string op = UserOperator.Replace ('>', '^');
-                op = op.Replace ('<', '>');
-                op = op.Replace ('^', '<');
-                return GetByUserOperator (op);
-            }
+        public string name;
+        public string Name {
+            get { return name; }
         }
 
+        public string label;
+        public string Label {
+            get { return label; }
+            set { label = value; }
+        }
+
+        private string [] aliases;
+        public string [] Aliases {
+            get { return aliases; }
+        }
+
+        public string PrimaryAlias {
+            get { return aliases [0]; }
+        }
+
+        private string sql_format;
+        public string SqlFormat {
+            get { return sql_format; }
+        }
+
+        // FIXME get rid of this
         private bool is_not;
         public bool IsNot {
             get { return is_not; }
         }
         
-        private static List<Operator> operators = new List<Operator> ();
-        private static Dictionary<string, Operator> by_op = new Dictionary<string, Operator> ();
-        private static Dictionary<string, Operator> by_name = new Dictionary<string, Operator> ();
-
-
-        protected Operator (string name, string userOp) : this (name, userOp, false)
+        internal Operator (string name, string sql_format, params string [] userOps) : this (name, sql_format, false, userOps)
         {
         }
 
-        protected Operator (string name, string userOp, bool is_not)
+        internal Operator (string name, string sql_format, bool is_not, params string [] userOps)
         {
-            Name = name;
-            UserOperator = userOp;
+            this.name = name;
+            this.sql_format = sql_format;
+            this.aliases = userOps;
             this.is_not = is_not;
-        }
-
-        static Operator () {
-            // Note, order of these is important since if = was before ==, the value of the
-            // term would start with the second =, etc.
-            Add (new Operator ("equals", "=="));
-            Add (new Operator ("lessThanEquals", "<="));
-            Add (new Operator ("greaterThanEquals", ">="));
-            Add (new Operator ("notEqual", "!=", true));
-            Add (new Operator ("endsWith", ":="));
-            Add (new Operator ("startsWith", "="));
-            Add (new Operator ("doesNotContain", "!:", true));
-            Add (new Operator ("contains", ":"));
-            Add (new Operator ("lessThan", "<"));
-            Add (new Operator ("greaterThan", ">"));
-        }
-
-        public static IEnumerable<Operator> Operators {
-            get { return operators; }
-        }
-
-        private static void Add (Operator op)
-        {
-            operators.Add (op);
-            by_op.Add (op.UserOperator, op);
-            by_name.Add (op.Name, op);
-        }
-
-        public static Operator GetByUserOperator (string op)
-        {
-            return (by_op.ContainsKey (op)) ? by_op [op] : null;
-        }
-
-        public static Operator GetByName (string name)
-        {
-            return (by_name.ContainsKey (name)) ? by_name [name] : null;
-        }
-
-        public static Operator Default {
-            get { return Operator.GetByUserOperator (":"); }
         }
     }
 }

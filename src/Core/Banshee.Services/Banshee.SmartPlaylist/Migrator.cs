@@ -39,6 +39,7 @@ using Hyena.Data.Sqlite;
 
 using Banshee.Collection.Database;
 using Banshee.ServiceStack;
+using Banshee.Query;
 
 namespace Banshee.SmartPlaylist
 {
@@ -143,20 +144,20 @@ namespace Banshee.SmartPlaylist
                 foreach (QueryOperator op in QueryOperator.Operators) {
                     if (op.MatchesCondition (condition, out col, out v1, out v2)) {
                         QueryTermNode term = new QueryTermNode ();
-                        QueryField field = TrackListDatabaseModel.FieldSet [col];
+                        QueryField field = BansheeQuery.FieldSet [col];
                         bool is_relative_date = false;
                         if (field == null) {
                             if (col.IndexOf ("DateAddedStamp") != -1) {
-                                field = TrackListDatabaseModel.FieldSet.GetByAlias ("added");
+                                field = BansheeQuery.FieldSet ["added"];
                             } else if (col.IndexOf ("LastPlayedStamp") != -1) {
-                                field = TrackListDatabaseModel.FieldSet.GetByAlias ("lastplayed");
+                                field = BansheeQuery.FieldSet ["lastplayed"];
                             }
 
                             // Fix ugly implementation of playlist/smart playlist conditions
                             if (op == QueryOperator.InPlaylist || op == QueryOperator.NotInPlaylist) {
-                                field = TrackListDatabaseModel.FieldSet ["playlist"];
+                                field = BansheeQuery.FieldSet ["playlist"];
                             } else if (op == QueryOperator.InSmartPlaylist || op == QueryOperator.NotInSmartPlaylist) {
-                                field = TrackListDatabaseModel.FieldSet ["smartplaylist"];
+                                field = BansheeQuery.FieldSet ["smartplaylist"];
                             }
 
                             if (field == null) {
@@ -165,7 +166,6 @@ namespace Banshee.SmartPlaylist
                             is_relative_date = true;
                         }
 
-                        term.Operator = Operator.GetByUserOperator (op.NewOp);
                         term.Field = field;
 
                         if (op == QueryOperator.Between) {
@@ -177,19 +177,21 @@ namespace Banshee.SmartPlaylist
                                 ParseRelativeDateCondition (term, v1, field, ">=");
                                 ParseRelativeDateCondition (t2, v2, field, "<=");
                             } else {
-                                term.Operator = Operator.GetByUserOperator ("<=");
                                 term.Value = QueryValue.CreateFromUserQuery (v1, field);
-                                t2.Operator = Operator.GetByUserOperator (">=");
+                                term.Operator = term.Value.OperatorSet ["<="];
+
                                 t2.Value = QueryValue.CreateFromUserQuery (v2, field);
+                                t2.Operator = t2.Value.OperatorSet [">="];
                             }
                             and.AddChild (term);
                             and.AddChild (t2);
                             root.AddChild (and);
                         } else if (is_relative_date) {
-                            ParseRelativeDateCondition (term, v1, field, term.Operator.UserOperator);
+                            ParseRelativeDateCondition (term, v1, field, op.NewOp);
                             root.AddChild (term);
                         } else {
                             term.Value = QueryValue.CreateFromUserQuery (v1, field);
+                            term.Operator = term.Value.OperatorSet [op.NewOp];
                             root.AddChild (term);
                         }
 
@@ -203,21 +205,26 @@ namespace Banshee.SmartPlaylist
             QueryNode node = root.Trim ();
 
             if (node != null) {
-                //Console.WriteLine ("After XML: {0}", node.ToXml (TrackListDatabaseModel.FieldSet, true));
-                //Console.WriteLine ("After SQL: {0}", node.ToSql (TrackListDatabaseModel.FieldSet));
+                //Console.WriteLine ("After XML: {0}", node.ToXml (BansheeQuery.FieldSet, true));
+                //Console.WriteLine ("After SQL: {0}", node.ToSql (BansheeQuery.FieldSet));
             }
 
-            return node == null ? String.Empty : node.ToXml (TrackListDatabaseModel.FieldSet);
+            return node == null ? String.Empty : node.ToXml (BansheeQuery.FieldSet);
         }
 
         private void ParseRelativeDateCondition (QueryTermNode term, string val, QueryField field, string op)
         {
-            // Have to flip the operator b/c of how we used to construct the SQL query
-            term.Operator = Operator.GetByUserOperator (op).Dual;
+            string new_op = op.Replace ('>', '^');
+            new_op = new_op.Replace ('<', '>');
+            new_op = new_op.Replace ('^', '<');
+
             DateQueryValue date_value = new DateQueryValue ();
+
+            // Have to flip the operator b/c of how we used to construct the SQL query
+            term.Operator = date_value.OperatorSet [new_op];
+
             // Have to negate the value b/c of how we used to constuct the SQL query
-            date_value.RelativeOffset = -Convert.ToInt64 (val);
-            date_value.Relative = true;
+            date_value.SetRelativeValue (-Convert.ToInt64 (val), RelativeDateFactor.Second);
             term.Value = date_value;
         }
 

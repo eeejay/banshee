@@ -37,31 +37,35 @@ namespace Hyena.Query
     public class QueryTermNode : QueryNode
     {
         private QueryField field;
-        private Operator op = Operator.Default;
+        private Operator op;
         private QueryValue qvalue;
 
         public static QueryTermNode ParseUserQuery (QueryFieldSet field_set, string token)
         {
-            QueryTermNode node = new QueryTermNode ();
-            int field_separator = 0;
-            foreach (Operator op in Operator.Operators) {
-                field_separator = token.IndexOf (op.UserOperator);
-                if (field_separator != -1) {
-                    node.Operator = op;
-                    break;
+            QueryTermNode term = new QueryTermNode ();
+
+            // See if the query specifies a field, and if so, pull out the operator as well
+            string field_alias = field_set.FindAlias (token);
+            if (field_alias != null) {
+                term.Field = field_set [field_alias];
+                term.Value = term.Field.CreateQueryValue ();
+                string op_alias = term.Value.OperatorSet.FindAlias (token);
+                if (op_alias != null) {
+                    term.Operator = term.Value.OperatorSet [op_alias];
+                    int field_separator = token.IndexOf (op_alias);
+                    token = token.Substring (field_separator + op_alias.Length);
+                    term.Value.ParseUserQuery (token);
+                } else {
+                    term.Value = null;
+                    term.Field = null;
                 }
             }
 
-            if (field_separator > 0) {
-                node.Field = field_set[token.Substring (0, field_separator)];
-                if (node.Field != null) {
-                    token = token.Substring (field_separator + node.Operator.UserOperator.Length);
-                }
+            if (term.Value == null) {
+                term.Value = QueryValue.CreateFromUserQuery (token, term.Field);
             }
 
-            node.Value = QueryValue.CreateFromUserQuery (token, node.Field);
-
-            return node;
+            return term;
         }
 
         public QueryTermNode () : base ()
@@ -70,19 +74,19 @@ namespace Hyena.Query
 
         public override QueryNode Trim ()
         {
-            if ((qvalue == null || qvalue.IsEmpty) && Parent != null)
+            if (Parent != null && (qvalue == null || qvalue.IsEmpty || (field != null && op == null)))
                 Parent.RemoveChild (this);
             return this;
         }
         
         public override void AppendUserQuery (StringBuilder sb)
         {
-            sb.Append (Field == null ? Value.ToUserQuery () : Field.ToTermString (Operator.UserOperator, Value.ToUserQuery ()));
+            sb.Append (Field == null ? Value.ToUserQuery () : Field.ToTermString (Operator.PrimaryAlias, Value.ToUserQuery ()));
         }
 
         public override void AppendXml (XmlDocument doc, XmlNode parent, QueryFieldSet fieldSet)
         {
-            XmlElement op_node = doc.CreateElement (op.Name);
+            XmlElement op_node = doc.CreateElement (op == null ? "contains" : op.Name);
             parent.AppendChild (op_node);
 
             QueryField field = Field;
@@ -120,83 +124,14 @@ namespace Hyena.Query
             if (Value.IsEmpty)
                 return false;
 
-            if (field.ValueType == typeof(StringQueryValue)) {
-                return EmitStringMatch (sb, field, emit_or);
-            } else {
-                return EmitNumericMatch (sb, field, emit_or);
-            }
-        }
-
-        private bool EmitStringMatch (StringBuilder sb, QueryField field, bool emit_or)
-        {
-            string safe_value = Value.ToSql ().Replace("'", "''");
-            
-            if (emit_or)
-                sb.Append (" OR ");
-
-            string format = null;
-            switch (Operator.UserOperator) {
-                case "=": // Starts with
-                    format = "LIKE '{0}%'";
-                    break;
-
-                case ":=": // Ends with
-                    format = "LIKE '%{0}'";
-                    break;
-                    
-                case "==": // Equal to
-                    format = "= '{0}'";
-                    break;
-
-                case "!=": // Not equal to
-                    format = "!= '{0}'";
-                    break;
-
-                case "!:": // Doesn't contain
-                    format = "NOT LIKE '%{0}%'";
-                    break;
-
-                case ":": // Contains
-                default:
-                    format = "LIKE '%{0}%'";
-                    break;
-            }
-
-            sb.Append (field.FormatSql (format, Operator, safe_value));
-            return true;
-        }
-
-        private bool EmitNumericMatch (StringBuilder sb, QueryField field, bool emit_or)
-        {
-            string format;
-            switch (Operator.UserOperator) {
-                // Operators that don't make sense for numeric types
-                case "!:":
-                case ":=":
-                    return false;
-
-                case ":":
-                case "=":
-                case "==":
-                    format = "= {0}";
-                    break;
-
-                default:
-                    format = Operator.UserOperator + " {0}";
-                    break;
-            }
-
             if (emit_or) {
                 sb.Append (" OR ");
             }
 
-            sb.Append (field.FormatSql (format,
-                Operator, Value.ToSql ()
-            ));
-
+            sb.Append (field.ToSql (Operator, Value));
             return true;
         }
-        
+
         public QueryField Field {
             get { return field; }
             set { field = value; }

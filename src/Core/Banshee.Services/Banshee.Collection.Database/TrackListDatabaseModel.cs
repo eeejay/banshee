@@ -39,6 +39,7 @@ using Hyena.Data.Sqlite;
 using Hyena.Query;
 
 using Banshee.Base;
+using Banshee.Query;
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
@@ -86,21 +87,21 @@ namespace Banshee.Collection.Database
                 filter_query = null;
             } else {
                 Hyena.Query.UserQueryParser qp = new UserQueryParser (Filter);
-                QueryNode n = qp.BuildTree (field_set);
+                QueryNode n = qp.BuildTree (BansheeQuery.FieldSet);
 
-                filter_query = n.ToSql (field_set);
+                filter_query = n.ToSql (BansheeQuery.FieldSet);
 
                 /*
                 Console.WriteLine ("query: {0}", Filter);
-                Console.WriteLine ("Xml for Query: {0}", n.ToXml (field_set, true));
+                Console.WriteLine ("Xml for Query: {0}", n.ToXml (BansheeQuery.FieldSet, true));
                 Console.WriteLine ("Sql for Query: {0}", filter_query);
-                Hyena.Query.QueryParser qp2 = new XmlQueryParser (n.ToXml (field_set));
-                QueryNode n2 = qp2.BuildTree (field_set);
+                Hyena.Query.QueryParser qp2 = new XmlQueryParser (n.ToXml (BansheeQuery.FieldSet));
+                QueryNode n2 = qp2.BuildTree (BansheeQuery.FieldSet);
                 if (n2 != null) {
                     Console.WriteLine ("User query for Xml: {0}", n2.ToUserQuery ());
                 } else
                     Console.WriteLine ("n2 is null");
-                */
+                    */
 
                 if (filter_query.Length == 0)
                     filter_query = null;
@@ -435,114 +436,5 @@ namespace Banshee.Collection.Database
         public string ReloadFragment {
             get { return reload_fragment; }
         }
-
-        public static QueryFieldSet FieldSet {
-            get { return field_set; }
-        }
-        
-        public override QueryField ArtistField {
-            get { return field_set["artist"]; }
-        }
-
-        public override QueryField AlbumField {
-            get { return field_set["album"]; }
-        }
-
-        protected static QueryFieldSet field_set = new QueryFieldSet (
-            new QueryField (
-                "artist", Catalog.GetString ("Artist"), "CoreArtists.Name", true,
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("by"), Catalog.GetString ("artist"), Catalog.GetString ("artists"),
-                "by", "artist", "artists"
-            ),
-            new QueryField (
-                "album", Catalog.GetString ("Album"), "CoreAlbums.Title", true,
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("on"), Catalog.GetString ("album"), Catalog.GetString ("from"),
-                "on", "album", "from", "albumtitle"
-            ),
-            new QueryField (
-                "disc", Catalog.GetString ("Disc"), "CoreTracks.Disc", typeof(IntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("disc"), Catalog.GetString ("cd"), Catalog.GetString ("discnum"),
-                "disc", "cd", "discnum"
-            ),
-            new QueryField (
-                "title", Catalog.GetString ("Track Title"), "CoreTracks.Title", true,
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("title"), Catalog.GetString ("titled"), Catalog.GetString ("name"), Catalog.GetString ("named"),
-                "title", "titled", "name", "named"
-            ),
-            new QueryField (
-                "year", Catalog.GetString ("Year"), "CoreTracks.Year", typeof(IntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("year"), Catalog.GetString ("released"), Catalog.GetString ("yr"),
-                "year", "released", "yr"
-            ),
-            new QueryField (
-                "rating", Catalog.GetString ("Rating"), "CoreTracks.Rating", typeof(IntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("rating"), Catalog.GetString ("stars"),
-                "rating", "stars"
-            ),
-            new QueryField (
-                "playcount", Catalog.GetString ("Play Count"), "CoreTracks.PlayCount", typeof(IntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("plays"), Catalog.GetString ("playcount"), Catalog.GetString ("listens"),
-                "plays", "playcount", "numberofplays", "listens"
-            ),
-            new QueryField (
-                "skipcount", Catalog.GetString ("Skip Count"), "CoreTracks.SkipCount", typeof(IntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("skips"), Catalog.GetString ("skipcount"),
-                "skips", "skipcount"
-            ),
-            new QueryField (
-                "filesize", Catalog.GetString ("File Size"), "CoreTracks.FileSize", typeof(FileSizeQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("size"), Catalog.GetString ("filesize"),
-                "size", "filesize"
-            ),
-            new QueryField (
-                "uri", Catalog.GetString ("File Location"), "CoreTracks.Uri",
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("uri"), Catalog.GetString ("path"), Catalog.GetString ("file"), Catalog.GetString ("location"),
-                "uri", "path", "file", "location"
-            ),
-            new QueryField (
-                "duration", Catalog.GetString ("Duration"), "CoreTracks.Duration", typeof(IntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("duration"), Catalog.GetString ("length"), Catalog.GetString ("time"),
-                "duration", "length", "time"
-            ),
-            new QueryField (
-                "mimetype", Catalog.GetString ("Mime Type"), "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}",
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("type"), Catalog.GetString ("mimetype"), Catalog.GetString ("format"), Catalog.GetString ("ext"),
-                "type", "mimetype", "format", "ext", "mime"
-            ),
-            new QueryField (
-                "lastplayed", Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", typeof(DateQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("lastplayed"), Catalog.GetString ("played"), Catalog.GetString ("playedon"),
-                "lastplayed", "played", "playedon"
-            ),
-            new QueryField (
-                "added", Catalog.GetString ("Imported Date"), "CoreTracks.DateAddedStamp", typeof(DateQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("added"), Catalog.GetString ("imported"), Catalog.GetString ("addedon"), Catalog.GetString ("dateadded"), Catalog.GetString ("importedon"),
-                "added", "imported", "addedon", "dateadded", "importedon"
-            ),
-            new QueryField (
-                "playlistid", Catalog.GetString ("Playlist"),
-                "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CorePlaylistEntries WHERE PlaylistID = {1})", typeof(IntegerQueryValue),
-                "playlistid", "playlist"
-            ),
-            new QueryField (
-                "smartplaylistid", Catalog.GetString ("Smart Playlist"),
-                "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {1})", typeof(IntegerQueryValue),
-                "smartplaylistid", "smartplaylist"
-            )
-        );
     }
 }

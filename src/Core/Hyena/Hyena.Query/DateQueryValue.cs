@@ -46,12 +46,25 @@ namespace Hyena.Query
 
     public class DateQueryValue : QueryValue
     {
+        public static readonly Operator Equal              = new Operator ("equals", "= {0}", "==", "=", ":");
+        public static readonly Operator NotEqual           = new Operator ("notEqual", "!= {0}", true, "!=", "!:");
+        public static readonly Operator LessThanEqual      = new Operator ("lessThanEquals", "<= {0}", "<=");
+        public static readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", ">= {0}", ">=");
+        public static readonly Operator LessThan           = new Operator ("lessThan", "< {0}", "<");
+        public static readonly Operator GreaterThan        = new Operator ("greaterThan", "> {0}", ">");
+
         protected DateTime value;
         protected bool relative = false;
         protected long offset = 0;
+        protected RelativeDateFactor factor;
 
         public override string XmlElementName {
             get { return "date"; }
+        }
+
+        protected static AliasedObjectSet<Operator> operators = new AliasedObjectSet<Operator> (Equal, NotEqual, LessThan, GreaterThan, LessThanEqual, GreaterThanEqual);
+        public override AliasedObjectSet<Operator> OperatorSet {
+            get { return operators; }
         }
 
         public override object Value {
@@ -60,12 +73,16 @@ namespace Hyena.Query
 
         public bool Relative {
             get { return relative; }
-            set { relative = value; }
+            //set { relative = value; }
+        }
+
+        public RelativeDateFactor Factor {
+            get { return factor; }
         }
 
         public long RelativeOffset {
             get { return offset; }
-            set { offset = value; IsEmpty = false; }
+            //set { offset = value; IsEmpty = false; }
         }
 
         public override void ParseUserQuery (string input)
@@ -88,16 +105,38 @@ namespace Hyena.Query
             }
         }
 
+        public void SetValue (DateTime date)
+        {
+            value = date;
+            relative = false;
+            IsEmpty = false;
+        }
+
+        public void SetRelativeValue (long offset, RelativeDateFactor factor)
+        {
+            this.factor = factor;
+            this.offset = offset * (long) factor;
+            relative = true;
+            IsEmpty = false;
+        }
+
+        public void LoadString (string val, bool isRelative)
+        {
+            try {
+                if (isRelative) {
+                    SetRelativeValue (Convert.ToInt64 (val), RelativeDateFactor.Second);
+                } else {
+                    SetValue (DateTime.Parse (val));
+                }
+            } catch {
+                IsEmpty = true;
+            }
+        }
+
         public override void ParseXml (XmlElement node)
         {
             try {
-                if (node.HasAttribute ("type") && node.GetAttribute ("type") == "rel") {
-                    relative = true;
-                    offset = Convert.ToInt64 (node.InnerText);
-                } else {
-                    value = DateTime.Parse (node.InnerText);
-                }
-                IsEmpty = false;
+                LoadString (node.InnerText, node.HasAttribute ("type") && node.GetAttribute ("type") == "rel");
             } catch {
                 IsEmpty = true;
             }

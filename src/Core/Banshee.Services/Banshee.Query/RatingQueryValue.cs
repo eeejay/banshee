@@ -1,11 +1,10 @@
 //
-// QueryFieldSet.cs
+// RatingQueryValue.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
-//   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,20 +26,22 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Text;
-using System.Collections.Generic;
+using Hyena.Query;
 
-namespace Hyena.Query
+namespace Banshee.Query
 {
-    public class QueryFieldSet : AliasedObjectSet<QueryField>
+    public class RatingQueryValue : IntegerQueryValue
     {
-        public QueryFieldSet (params QueryField [] fields) : base (fields)
-        {
+        public override long DefaultValue {
+            get { return 5; }
         }
 
-        public QueryField [] Fields {
-            get { return Objects; }
+        public override long MinValue {
+            get { return 0; }
+        }
+
+        public override long MaxValue {
+            get { return 5; }
         }
     }
 }

@@ -1,11 +1,10 @@
 //
-// QueryFieldSet.cs
+// StringQueryValueEntry.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
-//   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,19 +27,37 @@
 //
 
 using System;
-using System.Text;
-using System.Collections.Generic;
 
-namespace Hyena.Query
+using Hyena.Query;
+using Gtk;
+
+namespace Hyena.Query.Gui
 {
-    public class QueryFieldSet : AliasedObjectSet<QueryField>
+    public class StringQueryValueEntry : QueryValueEntry
     {
-        public QueryFieldSet (params QueryField [] fields) : base (fields)
+        protected Gtk.Entry entry;
+        protected StringQueryValue query_value;
+
+        public StringQueryValueEntry () : base ()
         {
+            entry = new Entry ();
+            entry.Changed += HandleChanged;
+            Add (entry);
         }
 
-        public QueryField [] Fields {
-            get { return Objects; }
+        public override QueryValue QueryValue {
+            get { return query_value; }
+            set { 
+                entry.Changed -= HandleChanged;
+                query_value = value as StringQueryValue;
+                entry.Text = (query_value.Value as string) ?? String.Empty;
+                entry.Changed += HandleChanged;
+            }
+        }
+
+        protected void HandleChanged (object o, EventArgs args)
+        {
+            query_value.SetValue (entry.Text);
         }
     }
 }

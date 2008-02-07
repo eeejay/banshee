@@ -32,6 +32,7 @@ SOURCES =  \
 	Hyena.Data/ModelSelection.cs \
 	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/SortType.cs \
+	Hyena.Query/AliasedObjectSet.cs \
 	Hyena.Query/DateQueryValue.cs \
 	Hyena.Query/FileSizeQueryValue.cs \
 	Hyena.Query/IntegerQueryValue.cs \

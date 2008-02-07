@@ -38,6 +38,7 @@ using Hyena.Query;
 using Hyena.Data.Sqlite;
  
 using Banshee.Base;
+using Banshee.Query;
 using Banshee.Sources;
 using Banshee.Database;
 using Banshee.Playlist;
@@ -100,8 +101,8 @@ namespace Banshee.SmartPlaylist
             set {
                 condition = value;
                 if (condition != null) {
-                    condition_sql = condition.ToSql (TrackListDatabaseModel.FieldSet);
-                    condition_xml = condition.ToXml (TrackListDatabaseModel.FieldSet);
+                    condition_sql = condition.ToSql (BansheeQuery.FieldSet);
+                    condition_xml = condition.ToXml (BansheeQuery.FieldSet);
                 }
             }
         }
@@ -116,7 +117,7 @@ namespace Banshee.SmartPlaylist
             get { return condition_xml; }
             set {
                 condition_xml = value;
-                ConditionTree = XmlQueryParser.Parse (condition_xml, TrackListDatabaseModel.FieldSet);
+                ConditionTree = XmlQueryParser.Parse (condition_xml, BansheeQuery.FieldSet);
             }
         }
 

@@ -1,3 +1,95 @@
+2008-02-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit fixes the last big hack in Hyena.Query - operators.
+	Operaters are now defined per QueryValue subclass, so you you will never
+	get a contains operator on an int field, for example.  A new Hyena.Query.Gui
+	layer provides widegtry for editing queries while allowing custom types to
+	be integrated seamlessly (see RatingQueryValueEntry and
+	PlaylistQueryValueEntry).  You can see the progress of reimplementing
+	smart playlist editing by trying to create a new one.  It is not by any
+	means finished, so it doesn't actually save yet.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: 
+	Move FieldSet, AlbumField, and ArtistField from TrackListDatabaseModel to
+	BansheeQuery.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Show the
+	smart playlist dialog on New Smart Playlist action.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Get
+	ArtistField and AlbumField from BansheeQuery, not the
+	TrackListDatabaseModel.
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs: Get
+	somewhat working with new Hyena.Query.Gui code.
+
+	* src/Core/Banshee.Services/Makefile.am: New Banshee.Query classes.
+
+	* src/Core/Banshee.Services/Banshee.Query/NaturalIntegerQueryValue.cs:
+	* src/Core/Banshee.Services/Banshee.Query/YearQueryValue.cs:
+	* src/Core/Banshee.Services/Banshee.Query/RatingQueryValue.cs:
+	* src/Core/Banshee.Services/Banshee.Query/PlaylistQueryValue.cs:
+	* src/Core/Banshee.Services/Banshee.Query/SmartPlaylistQueryValue.cs:
+	Subclasses of existing Hyena.Query QueryValue types, providing limits
+	and/or default values.
+
+	* src/Core/Hyena.Gui/Makefile.am: New Hyena.Query.Gui classes.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryValueEntry.cs:
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/StringQueryValueEntry.cs:
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/IntegerQueryValueEntry.cs:
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs: New gui
+	classes that define the gui for editing a QueryValue type.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs: New VBox subclass that
+	contains multiple QueryTermBoxes.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs: New class that
+	represents one QueryTermNode, and one row/condition in the smart playlist
+	editor.
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/RatingQueryValueEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/BansheeQueryBox.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/PlaylistQueryValueEntry.cs:
+	New Banshee-specific query gui classes.
+
+	* src/Core/Hyena/Makefile.am: 
+	* src/Core/Hyena/Hyena.Query/AliasedObjectSet.cs: New generic class for
+	containing a set of of aliased objects.  Used by QueryFieldSet and
+	QueryValue's OperatorSet.
+
+	* src/Core/Hyena/Hyena.Query/QueryValue.cs: Define an OperatorSet for each
+	QueryValue type.
+
+	* src/Core/Hyena/Hyena.Query/StringQueryValue.cs: Define OperatorSet.
+
+	* src/Core/Hyena/Hyena.Query/IntegerQueryValue.cs: Add Min/Max/Default
+	value properties, define OperatorSet.
+
+	* src/Core/Hyena/Hyena.Query/DateQueryValue.cs: Actually use the
+	RelativeDateFactor property.
+
+	* src/Core/Hyena/Hyena.Query/QueryField.cs: Implement IAliasedObject.
+
+	* src/Core/Hyena/Hyena.Query/QueryFieldSet.cs: Factor most of the set
+	logic into AliasedObjectSet so it can be reused for Operators.
+
+	* src/Core/Hyena/Hyena.Query/QueryOperator.cs: Add SqlFormat property
+	instead of doing a switch in QueryTermNode to produce the right SQL for an
+	operator.  Get rid of cruft.  Add ability to have multiple 'aliases'
+	(user-entered query operators, eg :).
+
+	* src/Core/Hyena/Hyena.Query/QueryTermNode.cs: Operators are scoped to
+	value types, and have SqlFormat properties; use them.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:  
+	* src/Core/Hyena/Hyena.Query/XmlQueryParser.cs: Operators are scoped to
+	value types now.
+
 2008-02-06  Aaron Bockover  <abock@gnome.org>
 
 	Okay, so this is a big one. Probably nasty. This commit temporarily breaks

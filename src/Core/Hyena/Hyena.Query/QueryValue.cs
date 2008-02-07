@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
@@ -36,11 +37,17 @@ namespace Hyena.Query
 {
     public abstract class QueryValue
     {
-        private static Type [] subtypes = new Type [] {typeof(StringQueryValue), typeof(IntegerQueryValue), typeof(FileSizeQueryValue), typeof(DateQueryValue)};
+        private static List<Type> subtypes = new List<Type> ();
+        public static void AddValueType (Type type)
+        {
+            if (!subtypes.Contains (type)) {
+                subtypes.Add (type);
+            }
+        }
 
         public static QueryValue CreateFromUserQuery (string input, QueryField field)
         {
-            QueryValue val = (field == null) ? new StringQueryValue () : Activator.CreateInstance (field.ValueType) as QueryValue;
+            QueryValue val = (field == null) ? new StringQueryValue () : field.CreateQueryValue ();
             val.ParseUserQuery (input);
             return val;
         }
@@ -48,7 +55,7 @@ namespace Hyena.Query
         public static QueryValue CreateFromXml (XmlElement parent, QueryField field)
         {
             if (field != null) {
-                QueryValue val = Activator.CreateInstance (field.ValueType) as QueryValue;
+                QueryValue val = field.CreateQueryValue ();
                 return CreateFromXml (val, parent) ? val : null;
             } else {
                 foreach (Type subtype in subtypes) {
@@ -79,23 +86,22 @@ namespace Hyena.Query
 
         public abstract object Value { get; }
         public abstract string XmlElementName { get; }
+        public abstract AliasedObjectSet<Operator> OperatorSet { get; }
+
+        public abstract void ParseXml (XmlElement node);
 
         public virtual void AppendXml (XmlElement node)
         {
             node.InnerText = Value.ToString ();
         }
 
+        public abstract void ParseUserQuery (string input);
+
         public virtual string ToUserQuery ()
         {
             return Value.ToString ();
         }
 
-        public virtual string ToSql ()
-        {
-            return Value.ToString ();
-        }
-
-        public abstract void ParseUserQuery (string input);
-        public abstract void ParseXml (XmlElement node);
+        public abstract string ToSql ();
     }
 }

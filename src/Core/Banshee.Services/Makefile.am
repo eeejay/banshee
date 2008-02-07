@@ -85,6 +85,12 @@ SOURCES =  \
 	Banshee.Playlists.Formats/PlaylistFormatDescription.cs \
 	Banshee.Playlists.Formats/PlaylistParser.cs \
 	Banshee.Playlists.Formats/PlsPlaylistFormat.cs \
+	Banshee.Query/BansheeQuery.cs \
+	Banshee.Query/NaturalIntegerQueryValue.cs \
+	Banshee.Query/PlaylistQueryValue.cs \
+	Banshee.Query/RatingQueryValue.cs \
+	Banshee.Query/SmartPlaylistQueryValue.cs \
+	Banshee.Query/YearQueryValue.cs \
 	Banshee.ServiceStack/Application.cs \
 	Banshee.ServiceStack/DBusServiceManager.cs \
 	Banshee.ServiceStack/IDBusExportable.cs \

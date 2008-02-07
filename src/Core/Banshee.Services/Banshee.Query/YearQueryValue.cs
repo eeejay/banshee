@@ -1,11 +1,10 @@
 //
-// QueryFieldSet.cs
+// YearQueryValue.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
-//   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,19 +27,14 @@
 //
 
 using System;
-using System.Text;
-using System.Collections.Generic;
+using Hyena.Query;
 
-namespace Hyena.Query
+namespace Banshee.Query
 {
-    public class QueryFieldSet : AliasedObjectSet<QueryField>
+    public class YearQueryValue : IntegerQueryValue
     {
-        public QueryFieldSet (params QueryField [] fields) : base (fields)
-        {
-        }
-
-        public QueryField [] Fields {
-            get { return Objects; }
+        public override long DefaultValue {
+            get { return (long) DateTime.Now.Year; }
         }
     }
 }

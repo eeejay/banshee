@@ -36,6 +36,13 @@ namespace Hyena.Query
 {
     public class StringQueryValue : QueryValue
     {
+        public static readonly Operator Contains       = new Operator ("contains", "LIKE '%{0}%'", ":");
+        public static readonly Operator DoesNotContain = new Operator ("doesNotContain", "NOT LIKE '%{0}%'", true, "!:");
+        public static readonly Operator Equal          = new Operator ("equals", "= '{0}'", "==");
+        public static readonly Operator NotEqual       = new Operator ("notEqual", "!= '{0}'", true, "!=");
+        public static readonly Operator StartsWith     = new Operator ("startsWith", "LIKE '{0}%'", "=");
+        public static readonly Operator EndsWith       = new Operator ("endsWith", "LIKE '%{0}'", ":=");
+
         protected string value;
 
         public override string XmlElementName {
@@ -44,6 +51,11 @@ namespace Hyena.Query
 
         public override object Value {
             get { return value; }
+        }
+
+        protected static AliasedObjectSet<Operator> operators = new AliasedObjectSet<Operator> (Contains, DoesNotContain, Equal, NotEqual, StartsWith, EndsWith);
+        public override AliasedObjectSet<Operator> OperatorSet {
+            get { return operators; }
         }
 
         public override void ParseUserQuery (string input)
@@ -56,6 +68,17 @@ namespace Hyena.Query
         {
             value = node.InnerText;
             IsEmpty = String.IsNullOrEmpty (value);
+        }
+
+        public void SetValue (string str)
+        {
+            value = str;
+            IsEmpty = String.IsNullOrEmpty (value);
+        }
+
+        public override string ToSql ()
+        {
+            return String.IsNullOrEmpty (value) ? null : value.Replace ("'", "''");
         }
     }
 }

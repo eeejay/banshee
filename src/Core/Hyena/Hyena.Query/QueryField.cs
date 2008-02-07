@@ -33,7 +33,7 @@ using System.Collections.Generic;
 
 namespace Hyena.Query
 {
-    public class QueryField
+    public class QueryField : IAliasedObject
     {
         private Type value_type;
         public Type ValueType {
@@ -94,6 +94,13 @@ namespace Hyena.Query
             this.value_type = valueType;
             this.is_default = isDefault;
             this.aliases = aliases;
+
+            QueryValue.AddValueType (value_type);
+        }
+
+        public QueryValue CreateQueryValue ()
+        {
+            return Activator.CreateInstance (ValueType) as QueryValue;
         }
 
         public string ToTermString (string op, string value)
@@ -101,21 +108,23 @@ namespace Hyena.Query
             return ToTermString (PrimaryAlias, op, value);
         }
 
-        public string FormatSql (string format, Operator op, string value)
+        public string ToSql (Operator op, QueryValue qv)
         {
+            string value = qv.ToSql ();
+            if (op == null) op = qv.OperatorSet.First;
             if (Column.IndexOf ("{0}") == -1 && Column.IndexOf ("{1}") == -1) {
                 if (ValueType == typeof(StringQueryValue)) {
                     // Match string values literally and against a lower'd version 
                     return String.Format ("({0} {1} OR LOWER({0}) {2})", Column,
-                        String.Format (format, value),
-                        String.Format (format, value.ToLower ())
+                        String.Format (op.SqlFormat, value),
+                        String.Format (op.SqlFormat, value.ToLower ())
                     );
                 } else {
-                    return String.Format ("{0} {1}", Column, String.Format (format, value));
+                    return String.Format ("{0} {1}", Column, String.Format (op.SqlFormat, value));
                 }
             } else {
                 return String.Format (
-                    Column, String.Format (format, value),
+                    Column, String.Format (op.SqlFormat, value),
                     value, op.IsNot ? "NOT" : null
                 );
             }

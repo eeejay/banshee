@@ -25,6 +25,12 @@ SOURCES =  \
 	Hyena.Gui/EntryInsertAction.cs \
 	Hyena.Gui/EntryUndoAdapter.cs \
 	Hyena.Gui/GtkUtilities.cs \
+	Hyena.Query.Gui/DateQueryValueEntry.cs \
+	Hyena.Query.Gui/IntegerQueryValueEntry.cs \
+	Hyena.Query.Gui/QueryBox.cs \
+	Hyena.Query.Gui/QueryTermBox.cs \
+	Hyena.Query.Gui/QueryValueEntry.cs \
+	Hyena.Query.Gui/StringQueryValueEntry.cs \
 	Hyena.Widgets/RoundedFrame.cs \
 	Hyena.Widgets/ScrolledWindow.cs
 

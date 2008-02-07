@@ -1,11 +1,10 @@
 //
-// QueryFieldSet.cs
+// RatingQueryValueEntry.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
-//   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,19 +27,42 @@
 //
 
 using System;
-using System.Text;
-using System.Collections.Generic;
+using Gtk;
 
-namespace Hyena.Query
+using Hyena.Query;
+using Hyena.Query.Gui;
+
+using Banshee.Widgets;
+using Banshee.Query;
+
+namespace Banshee.Query.Gui
 {
-    public class QueryFieldSet : AliasedObjectSet<QueryField>
+    public class RatingQueryValueEntry : QueryValueEntry
     {
-        public QueryFieldSet (params QueryField [] fields) : base (fields)
+        protected RatingEntry entry;
+        protected RatingQueryValue query_value;
+
+        public RatingQueryValueEntry () : base ()
         {
+            entry = new RatingEntry ();
+            entry.Changed += HandleValueChanged;
+
+            Add (entry);
         }
 
-        public QueryField [] Fields {
-            get { return Objects; }
+        public override QueryValue QueryValue {
+            get { return query_value; }
+            set { 
+                entry.Changed -= HandleValueChanged;
+                query_value = value as RatingQueryValue;
+                entry.Value = (int) (query_value.IsEmpty ? query_value.DefaultValue : query_value.IntValue);
+                entry.Changed += HandleValueChanged;
+            }
+        }
+
+        protected void HandleValueChanged (object o, EventArgs args)
+        {
+            query_value.SetValue (entry.Value);
         }
     }
 }

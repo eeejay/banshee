@@ -32,6 +32,7 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.Query;
 using Banshee.Sources;
 using Banshee.Library;
 using Banshee.Playlist;
@@ -355,7 +356,7 @@ namespace Banshee.Gui
             Source source = ServiceManager.SourceManager.ActiveSource;
             ITrackModelSource track_source = source as ITrackModelSource;
             foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
-                source.FilterQuery = track_source.TrackModel.ArtistField.ToTermString (":", track.ArtistName);
+                source.FilterQuery = BansheeQuery.ArtistField.ToTermString (":", track.ArtistName);
                 break;
             }
         }
@@ -365,7 +366,7 @@ namespace Banshee.Gui
             Source source = ServiceManager.SourceManager.ActiveSource;
             ITrackModelSource track_source = source as ITrackModelSource;
             foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
-                source.FilterQuery = track_source.TrackModel.AlbumField.ToTermString (":", track.AlbumTitle);
+                source.FilterQuery = BansheeQuery.AlbumField.ToTermString (":", track.AlbumTitle);
                 break;
             }
         }

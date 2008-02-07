@@ -123,8 +123,8 @@ namespace Banshee.Gui
 
         private void OnNewSmartPlaylist (object o, EventArgs args)
         {
-            //Editor ed = new Editor ();
-            //ed.RunDialog ();
+            Editor ed = new Editor ();
+            ed.RunDialog ();
 
             /*Editor ed = new Editor ();
             ed.SetQueryFromSearch ();

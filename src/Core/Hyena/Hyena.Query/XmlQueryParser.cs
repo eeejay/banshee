@@ -91,15 +91,16 @@ namespace Hyena.Query
                 default:
                     QueryTermNode term = new QueryTermNode ();
 
-                    // Get the operator from the term's name
-                    term.Operator = Operator.GetByName (node.Name);
-
                     // Get the field (if any) that this term applies to
                     if (node["field"] != null)
                         term.Field = field_set [node["field"].GetAttribute ("name")];
 
                     // Get the value
                     term.Value = QueryValue.CreateFromXml (node, term.Field);
+
+                    // Get the operator from the term's name
+                    term.Operator = term.Value.OperatorSet [node.Name];
+
 
                     if (parent != null) {
                         parent.AddChild (term);

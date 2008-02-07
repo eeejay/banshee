@@ -4,19 +4,24 @@ using Gtk;
 using Glade;
 
 using Mono.Unix;
+
+using Hyena.Query;
+using Hyena.Query.Gui;
  
 using Banshee.Base;
+using Banshee.Query;
 using Banshee.Widgets;
 using Banshee.Sources;
 using Banshee.Database;
 using Banshee.Gui.Dialogs;
+using Banshee.Query.Gui;
 
 namespace Banshee.SmartPlaylist
 {
     public class Editor : GladeDialog
     {
-        private QueryBuilder builder;
-        private TracksQueryModel model;
+        private BansheeQueryBox builder;
+        //private TracksQueryModel model;
 
         private SmartPlaylistSource playlist = null;
 
@@ -36,10 +41,10 @@ namespace Banshee.SmartPlaylist
             Dialog.Title = Catalog.GetString ("Edit Smart Playlist");
 
             name_entry.Text = playlist.Name;
-            Condition = playlist.Condition;
-            OrderBy = playlist.OrderBy;
-            LimitNumber = playlist.LimitNumber;
-            LimitCriterion = playlist.LimitCriterion;
+            //Condition = playlist.Condition;
+            //OrderBy = playlist.OrderBy;
+            //LimitNumber = playlist.LimitNumber;
+            //LimitCriterion = playlist.LimitCriterion;
         }
     
         public Editor () : base("SmartPlaylistEditorDialog")
@@ -52,8 +57,8 @@ namespace Banshee.SmartPlaylist
             Dialog.Title = Catalog.GetString ("New Smart Playlist");
 
             // Add the QueryBuilder widget
-            model = new TracksQueryModel(this.playlist);
-            builder = new QueryBuilder(model);
+            //model = new TracksQueryModel(this.playlist);
+            builder = new BansheeQueryBox ();
             builder.Show();
             builder.Spacing = 4;
 
@@ -126,7 +131,7 @@ namespace Banshee.SmartPlaylist
             name_entry.GrabFocus();
         }
 
-        public void SetQueryFromSearch()
+        /*public void SetQueryFromSearch()
         {
             Banshee.Widgets.SearchEntry search_entry = InterfaceElements.SearchEntry;
 
@@ -177,11 +182,11 @@ namespace Banshee.SmartPlaylist
                 }
             }
 
-            Condition = condition;
+            //Condition = condition;
 
             Dialog.Title = Catalog.GetString ("Create Smart Playlist from Search");
             name_entry.Text = search_entry.GetLabelForFilterID(search_entry.ActiveFilterID) + ": " + query;
-        }
+        }*/
 
         public void RunDialog()
         {
@@ -199,26 +204,35 @@ namespace Banshee.SmartPlaylist
             //dialog.GetSize (out w, out h);
             //Console.WriteLine ("w = {0}, h = {1}", w, h);
 
+            QueryNode node = builder.BuildQuery ();
+            if (node == null) {
+                Console.WriteLine ("Editor query is null");
+            } else {
+                Console.WriteLine ("Editor query is: {0}", node.ToXml (BansheeQuery.FieldSet, true));
+            }
+
             if (response == ResponseType.Ok) {
                 string name = PlaylistName;
-                string condition = Condition;
-                string order_by = OrderBy;
-                string limit_number = LimitNumber;
-                int limit_criterion = LimitCriterion;
+                //string condition = Condition;
+                //string order_by = OrderBy;
+                //string limit_number = LimitNumber;
+                //int limit_criterion = LimitCriterion;
 
                 ThreadAssist.Spawn (delegate {
                     //Console.WriteLine ("Name = {0}, Cond = {1}, OrderAndLimit = {2}", name, condition, order_by, limit_number);
                     if (playlist == null) {
+                    /*
                         Timer t = new Timer ("Create/Add new Playlist");
-                        playlist = new SmartPlaylistSource(name, condition, order_by, limit_number, limit_criterion);
-                        Banshee.Sources.LibrarySource.Instance.AddChildSource(playlist);
+                        //playlist = new SmartPlaylistSource(name, condition, order_by, limit_number, limit_criterion);
+                        //Banshee.Sources.LibrarySource.Instance.AddChildSource(playlist);
                         SmartPlaylistCore.Instance.StartTimer(playlist);
 
                         // Add this source to the source manager, otherwise it will be ignored until we restart
                         SourceManager.AddSource (playlist, false);
                         t.Stop();
+                        */
                     } else {
-                        playlist.Rename(name);
+                        /*playlist.Rename(name);
                         playlist.Condition = condition;
                         playlist.OrderBy = order_by;
                         playlist.LimitNumber = limit_number;
@@ -233,7 +247,7 @@ namespace Banshee.SmartPlaylist
                             SmartPlaylistCore.Instance.StopTimer();
 
                         playlist.ListenToPlaylists();
-                        SmartPlaylistCore.Instance.SortPlaylists();
+                        SmartPlaylistCore.Instance.SortPlaylists();*/
                     }
                 });
             }
@@ -257,7 +271,7 @@ namespace Banshee.SmartPlaylist
         {
             TreePath [] paths = adv_tree_view.Selection.GetSelectedRows ();
 
-            foreach (TreePath path in paths) {
+            /*foreach (TreePath path in paths) {
                 TreeIter iter;
                 if (adv_tree_view.Model.GetIter (out iter, path)) {
                     string name            = adv_tree_view.Model.GetValue (iter, 0) as string;
@@ -270,7 +284,7 @@ namespace Banshee.SmartPlaylist
                     Banshee.Sources.LibrarySource.Instance.AddChildSource (pl);
                     SmartPlaylistCore.Instance.StartTimer (pl);
                 }
-            }
+            }*/
 
             Dialog.Destroy();
         }
@@ -283,13 +297,14 @@ namespace Banshee.SmartPlaylist
                 return;
 
             TreeIter iter;
+            /*
             if (adv_tree_view.Model.GetIter (out iter, paths[0])) {
                 PlaylistName    = adv_tree_view.Model.GetValue (iter, 0) as string;
                 Condition       = adv_tree_view.Model.GetValue (iter, 1) as string;
                 OrderBy         = adv_tree_view.Model.GetValue (iter, 2) as string;
                 LimitNumber     = adv_tree_view.Model.GetValue (iter, 3) as string;
                 LimitCriterion  = (int) adv_tree_view.Model.GetValue (iter, 4);
-            }
+            }*/
         }
 
         private void HandleNameChanged(object sender, EventArgs args)
@@ -303,7 +318,7 @@ namespace Banshee.SmartPlaylist
                 ok_button.Sensitive = false;
                 //already_in_use_label.Markup = "";
             } else {
-                object res = Globals.Library.Db.QuerySingle(new DbCommand(
+                /*object res = Globals.Library.Db.QuerySingle(new DbCommand(
                     "SELECT Name FROM SmartPlaylists WHERE lower(Name) = lower(:name)",
                     "name", name_entry.Text
                 ));
@@ -315,6 +330,7 @@ namespace Banshee.SmartPlaylist
                     ok_button.Sensitive = true;
                     //already_in_use_label.Markup = "";
                 }
+                */
             }
         }
 
@@ -328,7 +344,7 @@ namespace Banshee.SmartPlaylist
             }
         }
 
-        private string Condition {
+        /*private string Condition {
             get {
                 return builder.MatchesEnabled
                     ? builder.MatchQuery
@@ -377,6 +393,6 @@ namespace Banshee.SmartPlaylist
             set {
                 builder.LimitCriterion = Convert.ToInt32 (value);
             }
-        }
+        }*/
     }
 }

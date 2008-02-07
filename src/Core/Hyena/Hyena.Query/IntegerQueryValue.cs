@@ -36,6 +36,13 @@ namespace Hyena.Query
 {
     public class IntegerQueryValue : QueryValue
     {
+        public static readonly Operator Equal              = new Operator ("equals", "= {0}", "==", "=", ":");
+        public static readonly Operator NotEqual           = new Operator ("notEqual", "!= {0}", true, "!=", "!:");
+        public static readonly Operator LessThanEqual      = new Operator ("lessThanEquals", "<= {0}", "<=");
+        public static readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", ">= {0}", ">=");
+        public static readonly Operator LessThan           = new Operator ("lessThan", "< {0}", "<");
+        public static readonly Operator GreaterThan        = new Operator ("greaterThan", "> {0}", ">");
+
         protected long value;
 
         public override string XmlElementName {
@@ -52,12 +59,45 @@ namespace Hyena.Query
             ParseUserQuery (node.InnerText);
         }
 
+        public void SetValue (int value)
+        {
+            SetValue ((long) value);
+        }
+
+        public void SetValue (long value)
+        {
+            this.value = value;
+            IsEmpty = false;
+        }
+
+        protected static AliasedObjectSet<Operator> operators = new AliasedObjectSet<Operator> (Equal, NotEqual, LessThan, GreaterThan, LessThanEqual, GreaterThanEqual);
+        public override AliasedObjectSet<Operator> OperatorSet {
+            get { return operators; }
+        }
+
         public override object Value {
             get { return value; }
         }
 
         public long IntValue {
             get { return value; }
+        }
+
+        public virtual long DefaultValue {
+            get { return 0; }
+        }
+
+        public virtual long MinValue {
+            get { return Int64.MinValue; }
+        }
+
+        public virtual long MaxValue {
+            get { return Int64.MaxValue; }
+        }
+
+        public override string ToSql ()
+        {
+            return Convert.ToString (value);
         }
     }
 }

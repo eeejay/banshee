@@ -58,8 +58,5 @@ namespace Banshee.Collection
         public virtual IEnumerable<AlbumInfo> AlbumInfoFilter {
             set { throw new NotImplementedException(); }
         }
-
-        public abstract QueryField ArtistField { get; }
-        public abstract QueryField AlbumField { get; }
     }
 }
