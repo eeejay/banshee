@@ -145,23 +145,31 @@ namespace Hyena.Gui.Dialogs
             };
             
             msg.Append("\n");
-            msg.Append(".NET Version: " + Environment.Version.ToString());
-            msg.Append("\n\nAssembly Version Information:\n\n");
+            msg.AppendFormat(".NET Version: {0}\n", Environment.Version);
+            msg.AppendFormat("OS Version: {0}\n", Environment.OSVersion);
+            msg.Append("\nAssembly Version Information:\n\n");
             
             foreach(Assembly asm in AppDomain.CurrentDomain.GetAssemblies()) {
 				AssemblyName name = asm.GetName();
-                msg.Append(name.Name + " (" + name.Version.ToString() + ")\n");
+                msg.AppendFormat("{0} ({1})\n", name.Name, name.Version);
 			}
-            
-            msg.Append("\nPlatform Information: " + BuildPlatformString());
-            
-            msg.Append("\n\nDisribution Information:\n\n");
-            
-            Dictionary<string, string> lsb = LsbVersionInfo.Harvest;
-            
-            foreach(string lsbfile in lsb.Keys) {
-                msg.Append("[" + lsbfile + "]\n");
-                msg.Append(lsb[lsbfile] + "\n");
+			
+			if(Environment.OSVersion.Platform != PlatformID.Unix) {
+			    return msg.ToString();
+			}
+			
+			try {
+                msg.AppendFormat("\nPlatform Information: {0}", BuildPlatformString());
+                
+                msg.Append("\n\nDisribution Information:\n\n");
+                
+                Dictionary<string, string> lsb = LsbVersionInfo.Harvest;
+                
+                foreach(string lsbfile in lsb.Keys) {
+                    msg.AppendFormat("[{0}]\n", lsbfile);
+                    msg.AppendFormat("{0}\n", lsb[lsbfile]);
+                }
+            } catch {
             }
             
             return msg.ToString();

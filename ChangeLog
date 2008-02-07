@@ -1,5 +1,13 @@
 2008-02-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs: Use 
+	AppendFormat instead of allocating a bunch of separate strings; added
+	a platform check to skip collecting kernel, distro, and LSB information
+	if the platform is not Unix; added some exception handling when gathering
+	this information just in case
+
+2008-02-07  Aaron Bockover  <abock@gnome.org>
+
 	This commit adds Mono.Unix IO support back, inside the new Unix/POSIX
 	extension; yay cross-platform
 
