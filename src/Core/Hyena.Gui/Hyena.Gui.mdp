@@ -13,7 +13,6 @@
     <File name="Hyena.Data.Gui/ColumnCellText.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ColumnController.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ColumnHeaderCellText.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ListView.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ListViewGraphics.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/SortableColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui/CleanRoomStartup.cs" subtype="Code" buildaction="Compile" />
@@ -39,6 +38,14 @@
     <File name="Hyena.Query.Gui/QueryTermBox.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Query.Gui/QueryValueEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Query.Gui/StringQueryValueEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Gui/ListView" subtype="Directory" buildaction="Compile" />
+    <File name="Hyena.Data.Gui/ListView/ListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Gui/ListView/ListView_Windowing.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Gui/ListView/ListView_Rendering.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Gui/ListView/ListView_Header.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Gui/ListView/ListView_Model.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Gui/ListView/ListView_Interaction.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Gui/RowActivatedHandler.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

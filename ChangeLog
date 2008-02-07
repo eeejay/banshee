@@ -1,5 +1,20 @@
 2008-02-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Split ListView.cs into several partial class implementations so
+	maintaining and reading the code is a lot easier since this is a huge
+	class; lots of cosmetic cleanup
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/RowActivatedHandler.cs: Moved to
+	its own file from ListView.cs
+
+2008-02-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
 	Implement OnDragSourceSet; the ListView will call this when it's okay
 	for drag sources to be enabled

@@ -10,9 +10,15 @@ SOURCES =  \
 	Hyena.Data.Gui/ColumnController.cs \
 	Hyena.Data.Gui/ColumnHeaderCellText.cs \
 	Hyena.Data.Gui/IHeaderCell.cs \
-	Hyena.Data.Gui/ListView.cs \
+	Hyena.Data.Gui/ListView/ListView.cs \
+	Hyena.Data.Gui/ListView/ListView_Header.cs \
+	Hyena.Data.Gui/ListView/ListView_Interaction.cs \
+	Hyena.Data.Gui/ListView/ListView_Model.cs \
+	Hyena.Data.Gui/ListView/ListView_Rendering.cs \
+	Hyena.Data.Gui/ListView/ListView_Windowing.cs \
 	Hyena.Data.Gui/ListViewGraphics.cs \
 	Hyena.Data.Gui/ObjectListView.cs \
+	Hyena.Data.Gui/RowActivatedHandler.cs \
 	Hyena.Data.Gui/SortableColumn.cs \
 	Hyena.Gui.Dialogs/ExceptionDialog.cs \
 	Hyena.Gui.Dialogs/VersionInformationDialog.cs \
