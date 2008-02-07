@@ -83,8 +83,6 @@ namespace Banshee.Collection.Gui
                     QueueDraw ();
                 };
             }
-            
-            ConfigureDragAndDrop ();
         }
 
         protected override bool OnPopupMenu ()
@@ -104,11 +102,11 @@ namespace Banshee.Collection.Gui
             DragDropTarget.ModelSelection
         };
 
-        private void ConfigureDragAndDrop ()
+        protected override void OnDragSourceSet ()
         {
             Gtk.Drag.SourceSet (this, Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask, 
                 dnd_source_entries, Gdk.DragAction.Copy | Gdk.DragAction.Move);
-                
+            
             Drag.SourceSetIconName (this, "audio-x-generic");
         }
 

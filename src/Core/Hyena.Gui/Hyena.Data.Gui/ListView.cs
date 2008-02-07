@@ -337,6 +337,8 @@ namespace Hyena.Data.Gui
             // graphics context for drawing theme parts
             graphics = new ListViewGraphics(this);
             graphics.RefreshColors();
+            
+            OnDragSourceSet ();
         }
         
         protected override void OnUnrealized()
@@ -612,6 +614,7 @@ namespace Hyena.Data.Gui
             HasFocus = true;
             
             if (press.Window == header_window) {
+                Gtk.Drag.SourceUnset (this);
                 Column column = GetColumnForResizeHandle ((int) press.X);
                 if (column != null) {
                     resizing_column_index = GetCachedColumnForColumn (column).Index;
@@ -676,6 +679,8 @@ namespace Hyena.Data.Gui
         {
            // Console.WriteLine 
             if(evnt.Window == header_window) {
+                OnDragSourceSet ();
+                
                 if(resizing_column_index >= 0) {
                     resizing_column_index = -1;
                     header_window.Cursor = null;
@@ -1227,6 +1232,14 @@ namespace Hyena.Data.Gui
         }
         
 #endregion  
+
+#region Drag and Drop
+        
+        protected virtual void OnDragSourceSet ()
+        {
+        }
+        
+#endregion
 
     }
 }

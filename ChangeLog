@@ -1,5 +1,16 @@
 2008-02-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Implement OnDragSourceSet; the ListView will call this when it's okay
+	for drag sources to be enabled
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Added a virtual
+	OnDragSourceSet method that the view will call when drag and drop from
+	the widget is allowed (i.e. when not playing with the header); remove
+	drag sources when the header is pressed, add them back when released
+
+2008-02-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Only add
 	the separator to the add to playlist menu if there are actually playlists
 	that can be added to; remove the playlist map and pass the source through
