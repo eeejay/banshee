@@ -32,6 +32,8 @@ using System.Collections.Generic;
 using Gtk;
 using Cairo;
 
+using Hyena.Gui;
+
 namespace Hyena.Data.Gui
 {
     public partial class ListView<T> : Container
@@ -153,7 +155,9 @@ namespace Hyena.Data.Gui
             int first_row = vadjustment_value / RowHeight;
             int last_row = Math.Min (model.Count, first_row + RowsInView);     
 
+            Gdk.Rectangle selected_focus_alloc = Gdk.Rectangle.Zero;;
             Gdk.Rectangle single_list_alloc = new Gdk.Rectangle ();
+            
             single_list_alloc.Width = list_alloc.Width;
             single_list_alloc.Height = RowHeight;
             single_list_alloc.X = list_alloc.X;
@@ -168,18 +172,39 @@ namespace Hyena.Data.Gui
                     if (selection_height == 0) {
                         selection_y = single_list_alloc.Y;
                     }
+                    
                     selection_height += single_list_alloc.Height;
                     selected_rows.Add (ri);
+                    
+                    if (focused_row_index == ri) {
+                        selected_focus_alloc = single_list_alloc;
+                    }
                 } else {
+                    if (rules_hint && ri % 2 != 0) {
+                        graphics.DrawRowRule (list_cr, single_list_alloc.X, single_list_alloc.Y, 
+                            single_list_alloc.Width, single_list_alloc.Height);
+                    }
+                    
+                    if (focused_row_index == ri && !Selection.Contains (ri)) {
+                        CairoCorners corners = CairoCorners.All;
+                        
+                        if (Selection.Contains (ri - 1)) {
+                            corners ^= CairoCorners.TopLeft | CairoCorners.TopRight;
+                        }
+                        
+                        if (Selection.Contains (ri + 1)) {
+                            corners ^= CairoCorners.BottomLeft | CairoCorners.BottomRight;
+                        }
+                        
+                        graphics.DrawRowSelection (list_cr, single_list_alloc.X, single_list_alloc.Y, 
+                            single_list_alloc.Width, single_list_alloc.Height, false, true, 
+                            graphics.GetWidgetColor (GtkColorClass.Background, StateType.Selected), corners);
+                    }
+                    
                     if (selection_height > 0) {
                         graphics.DrawRowSelection (
                             list_cr, list_alloc.X, list_alloc.Y + selection_y, list_alloc.Width, selection_height);
                         selection_height = 0;
-                    }
-                    
-                    if (rules_hint && ri % 2 != 0) {
-                        graphics.DrawRowRule (list_cr, single_list_alloc.X, single_list_alloc.Y, 
-                            single_list_alloc.Width, single_list_alloc.Height);
                     }
                     
                     PaintRow (ri, clip, single_list_alloc, StateType.Normal);
@@ -189,8 +214,14 @@ namespace Hyena.Data.Gui
             }
             
             if (selection_height > 0) {
-                graphics.DrawRowSelection(
-                    list_cr, list_alloc.X, list_alloc.Y + selection_y, list_alloc.Width, selection_height);
+                graphics.DrawRowSelection (list_cr, list_alloc.X, list_alloc.Y + selection_y, 
+                    list_alloc.Width, selection_height);
+            }
+            
+            if (Selection.Count > 1 && !selected_focus_alloc.Equals (Gdk.Rectangle.Zero)) {
+                graphics.DrawRowSelection (list_cr, selected_focus_alloc.X, selected_focus_alloc.Y, 
+                    selected_focus_alloc.Width, selected_focus_alloc.Height, false, true, 
+                    graphics.GetWidgetColor (GtkColorClass.Dark, StateType.Selected));
             }
             
             foreach (int ri in selected_rows) {

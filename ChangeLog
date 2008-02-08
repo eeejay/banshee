@@ -1,5 +1,15 @@
 2008-02-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs: 
+	Draw the focus row again, make it really sexy by merging it into the
+	selection if it borders one
+
+	* src/Core/Hyena.Gui/Hyena.Gui/CairoExtensions.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Support drawing
+	selections/rounded rectangles that fall through to others
+
+2008-02-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView.cs:
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:

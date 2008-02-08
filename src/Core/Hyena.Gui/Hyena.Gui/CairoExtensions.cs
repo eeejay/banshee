@@ -191,45 +191,71 @@ namespace Hyena.Gui
 
         public static void RoundedRectangle(Cairo.Context cr, double x, double y, double w, double h, double r)
         {
-            RoundedRectangle(cr, x, y, w, h, r, CairoCorners.All);
+            RoundedRectangle(cr, x, y, w, h, r, CairoCorners.All, false);
         }
         
-        public static void RoundedRectangle(Cairo.Context cr, double x, double y, double w, double h, 
+        public static void RoundedRectangle(Cairo.Context cr, double x, double y, double w, double h,
             double r, CairoCorners corners)
         {
-            if(r < 0.0001 || corners == CairoCorners.None) {
+            RoundedRectangle(cr, x, y, w, h, r, corners, false);
+        }
+        
+        public static void RoundedRectangle(Cairo.Context cr, double x, double y, double w, double h,
+            double r, CairoCorners corners, bool topBottomFallsThrough)
+        {
+            if(topBottomFallsThrough && corners == CairoCorners.None) {
+                cr.MoveTo(x, y - r);
+                cr.LineTo(x, y + h + r);
+                cr.MoveTo(x + w, y - r);
+                cr.LineTo(x + w, y + h + r);
+                return;
+            } else if(r < 0.0001 || corners == CairoCorners.None) {
                 cr.Rectangle(x, y, w, h);
                 return;
             }
             
-            if((corners & CairoCorners.TopLeft) != 0) {
-                cr.MoveTo(x + r, y);
+            if((corners & (CairoCorners.TopLeft | CairoCorners.TopRight)) == 0 && topBottomFallsThrough) {
+                y -= r;
+                h += r;
+                cr.MoveTo(x + w, y);
             } else {
-                cr.MoveTo(x, y);
+                if((corners & CairoCorners.TopLeft) != 0) {
+                    cr.MoveTo(x + r, y);
+                } else {
+                    cr.MoveTo(x, y);
+                }
+            
+                if((corners & CairoCorners.TopRight) != 0) {
+                    cr.Arc(x + w - r, y + r, r, Math.PI * 1.5, Math.PI * 2);
+                } else {
+                    cr.LineTo(x + w, y);
+                }
             }
             
-            if((corners & CairoCorners.TopRight) != 0) {
-                cr.Arc(x + w - r, y + r, r, Math.PI * 1.5, Math.PI * 2);
-            } else {
-                cr.LineTo(x + w, y);
-            }
-            
-            if((corners & CairoCorners.BottomRight) != 0) {
-                cr.Arc(x + w - r, y + h - r, r, 0, Math.PI * 0.5);
-            } else {
+            if((corners & (CairoCorners.BottomLeft | CairoCorners.BottomRight)) == 0 && topBottomFallsThrough) {
+                h += r;
                 cr.LineTo(x + w, y + h);
-            }
-            
-            if((corners & CairoCorners.BottomLeft) != 0) {
-                cr.Arc(x + r, y + h - r, r, Math.PI * 0.5, Math.PI);
-            } else {
-                cr.LineTo(x, y + h);
-            }
-            
-            if((corners & CairoCorners.TopLeft) != 0) {
+                cr.MoveTo(x, y + h);
+                cr.LineTo(x, y + r);
                 cr.Arc(x + r, y + r, r, Math.PI, Math.PI * 1.5);
             } else {
-                cr.LineTo(x, y);
+                if((corners & CairoCorners.BottomRight) != 0) {
+                    cr.Arc(x + w - r, y + h - r, r, 0, Math.PI * 0.5);
+                } else {
+                    cr.LineTo(x + w, y + h);
+                }
+                
+                if((corners & CairoCorners.BottomLeft) != 0) {
+                    cr.Arc(x + r, y + h - r, r, Math.PI * 0.5, Math.PI);
+                } else {
+                    cr.LineTo(x, y + h);
+                }
+                
+                if((corners & CairoCorners.TopLeft) != 0) {
+                    cr.Arc(x + r, y + r, r, Math.PI, Math.PI * 1.5);
+                } else {
+                    cr.LineTo(x, y);
+                }
             }
         }
 
