@@ -1,3 +1,8 @@
+2008-02-08  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs: Got rid
+	  of extra semicolon;
+
 2008-02-07  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:

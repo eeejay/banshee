@@ -155,7 +155,7 @@ namespace Hyena.Data.Gui
             int first_row = vadjustment_value / RowHeight;
             int last_row = Math.Min (model.Count, first_row + RowsInView);     
 
-            Gdk.Rectangle selected_focus_alloc = Gdk.Rectangle.Zero;;
+            Gdk.Rectangle selected_focus_alloc = Gdk.Rectangle.Zero;
             Gdk.Rectangle single_list_alloc = new Gdk.Rectangle ();
             
             single_list_alloc.Width = list_alloc.Width;
