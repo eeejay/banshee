@@ -98,6 +98,13 @@ namespace Hyena.Widgets
             child.SizeAllocate (child_allocation);
         }
         
+        protected override void OnSetScrollAdjustments (Adjustment hadj, Adjustment vadj)
+        {
+            // This is to satisfy the gtk_widget_set_scroll_adjustments 
+            // inside of GtkScrolledWindow so it doesn't complain about 
+            // its child not being scrollable.
+        }
+        
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
             if (!IsDrawable) {

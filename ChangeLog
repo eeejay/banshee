@@ -1,3 +1,8 @@
+2008-02-08  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Make GtkScrolledWindow
+	happy by overriding OnSetScrollAdjustments to avoid g_warning spewage
+
 2008-02-08  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs: Got rid
