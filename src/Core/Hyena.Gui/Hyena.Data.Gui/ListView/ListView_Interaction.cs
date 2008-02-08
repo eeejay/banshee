@@ -170,11 +170,17 @@ namespace Hyena.Data.Gui
 
                 case Gdk.Key.Return:
                 case Gdk.Key.KP_Enter:
-                case Gdk.Key.space:
                     if (focused_row_index != -1) {
                         Selection.Clear (false);
                         Selection.Select (focused_row_index);
                         OnRowActivated ();
+                        handled = true;
+                    }
+                    break;
+                
+                case Gdk.Key.space:
+                    if (focused_row_index != 1) {
+                        Selection.ToggleSelect (focused_row_index);
                         handled = true;
                     }
                     break;
