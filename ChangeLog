@@ -1,5 +1,12 @@
 2008-02-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Fixes to mouse/button behavior: context menu works on multiple selection
+	again and a single row can be selected (clearing all other rows) inside
+	of a multi-row selection
+
+2008-02-08  Aaron Bockover  <abock@gnome.org>
+
 	This commit adds child source sorting on the library and gets rid of any
 	remaining gobject/gtk warnings and other ugly debug spew
 

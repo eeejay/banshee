@@ -208,7 +208,8 @@ namespace Hyena.Data.Gui
                 
                 int row_index = GetRowAtY ((int) press.Y);
                 
-                if (Selection.Count > 1 && Selection.Contains (row_index)) {
+                if (press.Button == 1 && (press.State & Gdk.ModifierType.ControlMask) == 0 && 
+                    Selection.Contains (row_index)) {
                     return true;
                 }
                 
@@ -277,7 +278,8 @@ namespace Hyena.Data.Gui
                     Model.Reload ();
                     InvalidateHeaderWindow ();
                 }
-            } else if (evnt.Window == list_window && model != null && evnt.State == Gdk.ModifierType.None) {
+            } else if (evnt.Window == list_window && model != null &&
+                (evnt.State & (Gdk.ModifierType.ShiftMask | Gdk.ModifierType.ControlMask)) == 0) {
                 GrabFocus ();
                 
                 int row_index = GetRowAtY ((int)evnt.Y);
@@ -286,7 +288,7 @@ namespace Hyena.Data.Gui
                     return true;
                 }
                 
-                if (Selection.Count > 1 && Selection.Contains (row_index)) {
+                if (Selection.Contains (row_index)) {
                     Selection.Clear (false);
                     Selection.Select (row_index);
                     FocusRow (row_index);
