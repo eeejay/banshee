@@ -173,9 +173,9 @@ namespace Banshee.Sources
             }
         }
 
-        /*public virtual void SortChildSources (IComparer<Source> comparer, bool asc)
+        public virtual void SortChildSources (IComparer<Source> comparer, bool asc)
         {
-            lock(Children) {
+            lock (Children) {
                 child_sources.Sort (comparer);
                 if (!asc) {
                     child_sources.Reverse ();
@@ -186,7 +186,7 @@ namespace Banshee.Sources
                     child.Order = i++;
                 }
             }
-        }*/
+        }
         
 #endregion
         

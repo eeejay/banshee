@@ -88,6 +88,27 @@ namespace Banshee.Gui
                 new ActionEntry("SourcePropertiesAction", Stock.Properties,
                     "Source Properties", null, null, OnSourceProperties),
             });
+            
+            Add (new Gtk.ActionEntry [] {
+                new Gtk.ActionEntry ("SortChildrenAction", null, 
+                    Catalog.GetString ("Sort Children"), null, null, null),
+                    
+                new Gtk.ActionEntry ("SortChildrenNameAscAction", null, 
+                    Catalog.GetString ("Name Ascending"), null, null, 
+                    delegate { ActionSource.SortChildSources (new Source.NameComparer (), true); }),
+                    
+                new Gtk.ActionEntry ("SortChildrenNameDescAction", null, 
+                    Catalog.GetString ("Name Descending"), null, null, 
+                    delegate { ActionSource.SortChildSources (new Source.NameComparer (), false); }),
+                    
+                new Gtk.ActionEntry ("SortChildrenSizeAscAction", null, 
+                    Catalog.GetString ("Size Ascending"), null, null, 
+                    delegate { ActionSource.SortChildSources (new Source.SizeComparer (), true); }),
+                    
+                new Gtk.ActionEntry ("SortChildrenSizeDescAction", null, 
+                    Catalog.GetString ("Size Descending"), null, null, 
+                    delegate { ActionSource.SortChildSources (new Source.SizeComparer (), false); })
+            });
                 
             //ServiceManager.SourceManager.SourceUpdated += OnPlayerEngineStateChanged;
             //ServiceManager.SourceManager.SourceViewChanged += OnPlayerEngineStateChanged;

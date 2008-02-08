@@ -127,7 +127,6 @@ src/Core/Banshee.Core/Makefile
 src/Core/Banshee.Services/Makefile
 src/Core/Banshee.ThickClient/Makefile
 src/Core/Banshee.Widgets/Makefile
-src/Core/Banshee.Widgets/Banshee.Widgets.dll.config
 src/Core/Nereid/Makefile
 src/Core/Nereid/banshee2
 

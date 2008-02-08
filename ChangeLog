@@ -1,5 +1,33 @@
 2008-02-08  Aaron Bockover  <abock@gnome.org>
 
+	This commit adds child source sorting on the library and gets rid of any
+	remaining gobject/gtk warnings and other ugly debug spew
+
+	* build/build.rules.mk: Copy .config files to the output directory if
+	they exist in the source directory
+
+	* configure.ac: Do not generate the .config for Banshee.Widgets
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	If Volume is changed before the engine is initialized then store it
+	temporarily and perform the actual set after initialization
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Use Log to print messages instead of Console.WriteLine
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Added child source
+	sorting back
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Connect the UI and actions to allow child source sorting
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets.dll.config.in: Remove obsolete
+	maps - the only one we need (and it's not even required) is for 
+	libgobject inside of the bacon volume widget
+
+2008-02-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Make GtkScrolledWindow
 	happy by overriding OnSetScrollAdjustments to avoid g_warning spewage
 
