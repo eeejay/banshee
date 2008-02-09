@@ -14,7 +14,7 @@ SOURCES =  \
 REFERENCES =  \
 	Banshee.Core
 	
-RESOURCES = Resources/Banshee.DapCore.addin.xml
+RESOURCES = Banshee.DapCore.addin.xml
 
 include $(top_srcdir)/build/build.mk
 
