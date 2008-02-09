@@ -1,5 +1,31 @@
 2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
 
+	Moved the Banshee.DapCore extension out of src/Extensions/ and into
+	src/Dap/. This folder will house all media device addins.
+
+	* configure.ac: 
+	* src/Dap: Added.
+	* src/Dap/Banshee.DapCore: Copied from src/Extensions/Banshee.DapCore.
+	* src/Dap/Banshee.DapCore/Banshee.DapCore/DeviceClassNode.cs: Removed.
+	* src/Dap/Makefile.am: Added.
+	* src/Extensions/Banshee.DapCore: Removed.
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore: Removed.
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore.mdp: Removed.
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/DapCore.cs: Removed.
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/HalCore.cs: Removed.
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/IDevice.cs: Removed.
+	* src/Extensions/Banshee.DapCore/Makefile.am: Removed.
+	* src/Extensions/Banshee.DapCore/Resources: Removed.
+	* src/Extensions/Banshee.DapCore/Resources/Banshee.DapCore.addin.xml: Removed.
+	* src/Extensions/Banshee.DapCore/hal-sharp: Removed.
+	* src/Extensions/Banshee.DapCore/hal-sharp/Device.cs: Removed.
+	* src/Extensions/Banshee.DapCore/hal-sharp/Manager.cs: Removed.
+	* src/Extensions/Banshee.DapCore/hal-sharp/Volume.cs: Removed.
+	* src/Extensions/Makefile.am:
+	* src/Makefile.am:
+
+2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
+
 	* src/Extensions/Banshee.DapCore/Banshee.DapCore/DapCore.cs: Get the type
 	from TypeExtensionNode. Use Aaron's trick to get the class name from the
 	node.

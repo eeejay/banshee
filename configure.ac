@@ -130,6 +130,9 @@ src/Core/Banshee.Widgets/Makefile
 src/Core/Nereid/Makefile
 src/Core/Nereid/banshee2
 
+src/Dap/Makefile
+src/Dap/Banshee.DapCore/Makefile
+
 src/Backends/Makefile
 src/Backends/Banshee.Gnome/Makefile
 src/Backends/Banshee.GStreamer/Makefile
@@ -137,7 +140,6 @@ src/Backends/Banshee.Unix/Makefile
 
 src/Extensions/Makefile
 src/Extensions/Banshee.Audioscrobbler/Makefile
-src/Extensions/Banshee.DapCore/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
 src/Extensions/Banshee.PlayQueue/Makefile

@@ -1,5 +1,6 @@
 SUBDIRS = \
 	Core \
+	Dap \
 	Backends \
 	Extensions
 
