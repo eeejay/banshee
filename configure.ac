@@ -137,6 +137,7 @@ src/Backends/Banshee.Unix/Makefile
 
 src/Extensions/Makefile
 src/Extensions/Banshee.Audioscrobbler/Makefile
+src/Extensions/Banshee.DapCore/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
 src/Extensions/Banshee.PlayQueue/Makefile

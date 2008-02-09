@@ -1,3 +1,27 @@
+2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
+
+	Add the groundwork for the DapCore plugin. Currently does... nothing.
+	Contains a copy of hal-sharp until we have a properly abstracted HAL.
+
+	* build/build.environment.mk: Add the dependencies for DapCore.
+
+	* configure.ac: Generate build files for the new addin.
+
+	* src/Extensions/Banshee.DapCore: Added.
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore: Added.
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore.mdp: Added.
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/DapCore.cs: Added.
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/HalCore.cs: Added.
+	* src/Extensions/Banshee.DapCore/Makefile.am: Added.
+	* src/Extensions/Banshee.DapCore/Resources: Added.
+	* src/Extensions/Banshee.DapCore/Resources/Banshee.DapCore.addin.xml: Added.
+	* src/Extensions/Banshee.DapCore/hal-sharp: Added.
+	* src/Extensions/Banshee.DapCore/hal-sharp/Device.cs: Added.
+	* src/Extensions/Banshee.DapCore/hal-sharp/Manager.cs: Added.
+	* src/Extensions/Banshee.DapCore/hal-sharp/Volume.cs: Added.
+
+	* src/Extensions/Makefile.am: Add Banshee.DapCore.
+
 2008-02-09  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
