@@ -55,6 +55,7 @@ namespace Hyena.Data.Gui
         private int resizing_column_index = -1;
         private int pressed_column_index = -1;
         private int pressed_column_x_start = -1;
+        private int pressed_column_x_offset = -1;
         private int pressed_column_x_drag = -1;
         private bool pressed_column_is_dragging = false;
         

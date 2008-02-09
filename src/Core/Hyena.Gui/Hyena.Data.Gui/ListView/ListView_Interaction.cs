@@ -206,8 +206,10 @@ namespace Hyena.Data.Gui
                 } else {
                     column = GetColumnAt ((int)press.X);
                     if (column != null) {
-                        pressed_column_index = GetCachedColumnForColumn (column).Index;
+                        CachedColumn column_c = GetCachedColumnForColumn (column);
+                        pressed_column_index = column_c.Index;
                         pressed_column_x_start = (int)press.X;
+                        pressed_column_x_offset = pressed_column_x_start - column_c.X1;
                     }
                 }
                 
@@ -220,7 +222,7 @@ namespace Hyena.Data.Gui
             
             GrabFocus ();
             
-            int row_index = GetRowAtY ((int) press.Y);
+            int row_index = GetRowAtY ((int)press.Y);
             
             if (press.Button == 1 && press.Type != Gdk.EventType.TwoButtonPress && 
                 (press.State & Gdk.ModifierType.ControlMask) == 0 && Selection.Contains (row_index)) {
@@ -243,7 +245,7 @@ namespace Hyena.Data.Gui
                             Selection.Select (row_index);
                         }
                     } else {
-                        Selection.ToggleSelect(row_index);
+                        Selection.ToggleSelect (row_index);
                     }
                 } else if ((press.State & Gdk.ModifierType.ShiftMask) != 0) {
                     Selection.SelectFromFirst (row_index, true);
@@ -337,16 +339,30 @@ namespace Hyena.Data.Gui
                 if (pressed_column_is_dragging) {
                     header_window.Cursor = drag_cursor;
                     
-                    /*Column swap_column = GetColumnAt ((int)evnt.X);
-                    if (swap_column != null) {
-                        int index = GetCachedColumnForColumn (swap_column).Index;
-                        ColumnController.Reorder (pressed_column_index, index);
-                        pressed_column_index = index;
-                        RegenerateColumnCache ();
-                    }*/
+                    Column swap_column = GetColumnAt ((int)evnt.X);
+                    bool x_drag_updated = false;
                     
-                    pressed_column_x_drag = (int)evnt.X - pressed_column_x_start + 
-                        column_cache[pressed_column_index].X1;
+                    if (swap_column != null) {
+                        CachedColumn swap_column_c = GetCachedColumnForColumn (swap_column);
+                        bool reorder = false;
+                        
+                        if (swap_column_c.Index < pressed_column_index) {
+                            // Moving from right to left
+                            reorder = pressed_column_x_drag <= swap_column_c.X1 + swap_column_c.Width / 2;
+                        } else if (swap_column_c.Index > pressed_column_index) {
+                            // Moving from left to right
+                            reorder = pressed_column_x_drag + column_cache[pressed_column_index].Width >= 
+                                swap_column_c.X1 + swap_column_c.Width / 2;
+                        }
+                        
+                        if (reorder) {
+                            ColumnController.Reorder (pressed_column_index, swap_column_c.Index);
+                            pressed_column_index = swap_column_c.Index;
+                            RegenerateColumnCache ();
+                        }
+                    }
+                    
+                    pressed_column_x_drag = (int)evnt.X - pressed_column_x_offset;
                     
                     InvalidateHeaderWindow ();
                     InvalidateListWindow ();
