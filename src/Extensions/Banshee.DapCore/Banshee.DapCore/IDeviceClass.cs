@@ -26,9 +26,33 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
+
 namespace Banshee.Dap
 {
-    public interface IDeviceClass {
-        // Add device specific methods here!
-    }
+    public interface IDeviceClass : IDisposable {
+		
+		event EventHandler Ejected;
+		event EventHandler Initialized; // EventArgs should contain the InitializeResult
+		event EventHandler MetadataUpdated;
+		event EventHandler TrackAdded;
+		event EventHandler TracksLoaded;
+		event EventHandler TrackRemoved;
+		
+		void AddTrack (object track);         // Should be TrackInfo, not 'object'
+		void Eject ();
+		void Initialize (object halDevice);   // Should be a Hal.Device, not 'object'
+		void LoadTracks ();
+		void RemoveTrack (object track);      // Should be TrackInfo, not 'object'
+		void UpdateMetadata (object track);   // Should be TrackInfo, not 'object'
+		
+		//bool CanSetName { get; }
+		//bool CanSetOwner { get; }
+		string Name { get; set; }
+		string Owner { get; set; }
+		ulong Capacity { get; }
+		ulong FreeSpace { get; }
+		bool IsReadOnly { get; }
+		bool IsPlaybackSupported { get; }
+	}
 }
