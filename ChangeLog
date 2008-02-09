@@ -1,5 +1,18 @@
 2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
 
+	* src/Extensions/Banshee.DapCore/Resources/Banshee.DapCore.addin.xml:
+	Register a new Extension point /Banshee/Dap/DeviceClass. This will be used
+	to register new DAP plugins. Each plugin provides a family of devices
+	(e.g. iPod or MTP).
+
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/DapCore.cs: Handle the
+	new extension point. Still need to hook up the initialization code.
+
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/IDeviceClass.cs: Added.
+	Currently empty.
+
+2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
+
 	Add the groundwork for the DapCore plugin. Currently does... nothing.
 	Contains a copy of hal-sharp until we have a properly abstracted HAL.
 

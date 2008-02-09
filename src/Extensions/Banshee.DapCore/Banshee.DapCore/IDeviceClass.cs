@@ -1,8 +1,7 @@
 //
-// DapCore.cs
+// IDeviceClass.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
 //   Ruben Vermeersch <ruben@savanne.be>
 //
 // Copyright (C) 2007-2008 Novell, Inc.
@@ -27,31 +26,9 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using Banshee.ServiceStack;
-
-using Mono.Addins;
-
 namespace Banshee.Dap
 {
-
-    public class DapCore : IExtensionService
-    {
-        void IExtensionService.Initialize() {
-            AddinManager.AddExtensionNodeHandler ("/Banshee/Dap/Device", OnExtensionChanged);
-        }
-
-        private void OnExtensionChanged (object s, ExtensionNodeEventArgs args) {
-            IDeviceClass device_class = (IDeviceClass) args.ExtensionObject;
-            if (args.Change == ExtensionChange.Add) {
-                // Register device plugin
-            } else {
-                // Unregister device plugin
-            }
-        }
-
-
-        string IService.ServiceName {
-            get { return "DapCore"; }
-        }
+    public interface IDeviceClass {
+        // Add device specific methods here!
     }
 }

@@ -20,4 +20,8 @@
     <Service class="Banshee.Dap.DapCore"/>
   </Extension>
 
+  <ExtensionPoint path="/Banshee/Dap/DeviceClass">
+    <ExtensionNode name="DeviceClass"/>
+  </ExtensionPoint>
+
 </Addin>

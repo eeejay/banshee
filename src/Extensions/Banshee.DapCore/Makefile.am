@@ -5,6 +5,7 @@ LINK = $(REF_EXTENSION_DAPCORE)
 SOURCES = \
 	Banshee.DapCore/DapCore.cs \
 	Banshee.DapCore/HalCore.cs \
+	Banshee.DapCore/IDeviceClass.cs \
 	hal-sharp/Device.cs \
 	hal-sharp/Manager.cs \
 	hal-sharp/Volume.cs
