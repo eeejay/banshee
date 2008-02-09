@@ -48,10 +48,16 @@ namespace Hyena.Data.Gui
         
         private const int COLUMN_PADDING = 1;
         private static Gdk.Cursor resize_x_cursor = new Gdk.Cursor (Gdk.CursorType.SbHDoubleArrow);
+        private static Gdk.Cursor drag_cursor = new Gdk.Cursor (Gdk.CursorType.Fleur);
         
         private int column_text_y;
         private int column_text_height;
         private int resizing_column_index = -1;
+        private int pressed_column_index = -1;
+        private int pressed_column_x_start = -1;
+        private int pressed_column_x_drag = -1;
+        private bool pressed_column_is_dragging = false;
+        
         private Pango.Layout column_layout;
         
         private CachedColumn [] column_cache;

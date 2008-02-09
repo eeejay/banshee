@@ -100,6 +100,17 @@ namespace Hyena.Data.Gui
             OnUpdated ();
         }
         
+        public void Reorder (int index, int newIndex)
+        {
+            lock (this) {
+                Column column = columns[index];
+                columns.RemoveAt (index);
+                columns.Insert (newIndex, column);
+            }
+            
+            OnUpdated ();
+        }
+        
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return columns.GetEnumerator ();
@@ -111,7 +122,7 @@ namespace Hyena.Data.Gui
         }
         
         public Column this[int index] {
-            get { return columns[index] as Column; }
+            get { return columns[index]; }
         }
         
         public int Count {

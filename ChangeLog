@@ -1,5 +1,19 @@
 2008-02-08  Aaron Bockover  <abock@gnome.org>
 
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Implemented most of what is required for column reordering, but not
+	100% complete yet
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: DrawColumnHighlight
+	now can have an override color
+	
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs: Added Reorder
+
+2008-02-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
 	Fixes to mouse/button behavior: context menu works on multiple selection
 	again and a single row can be selected (clearing all other rows) inside

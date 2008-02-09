@@ -115,33 +115,71 @@ namespace Hyena.Data.Gui
             cell_area.Y = column_text_y;
             cell_area.Height = HeaderHeight - column_text_y;
 
-            for (int ci = 0; ci < column_cache.Length; ci++) {            
+            for (int ci = 0; ci < column_cache.Length; ci++) {
+                if (pressed_column_is_dragging && pressed_column_index == ci) {
+                    continue;
+                }
+                
                 cell_area.X = column_cache[ci].X1 + left_border_alloc.Width;
                 cell_area.Width = column_cache[ci].Width - COLUMN_PADDING;
-                
-                ColumnCell cell = column_cache[ci].Column.HeaderCell;
-                
-                if (cell is ColumnHeaderCellText && Model is ISortable) {
-                    bool has_sort = ((ISortable)Model).SortColumn == column_cache[ci].Column as ISortableColumn 
-                        && column_cache[ci].Column is ISortableColumn;
-                    ((ColumnHeaderCellText)cell).HasSort = has_sort;
-                    if (has_sort) {
-                        graphics.DrawColumnHighlight (header_cr, cell_area, 3);
-                    }
-                }
-                
-                if (cell != null) {
-                    header_cr.Save ();
-                    header_cr.Translate (cell_area.X, cell_area.Y);
-                    cell.Render (new CellContext (header_cr, header_pango_layout, this, header_window, 
-                        graphics, cell_area), StateType.Normal, cell_area.Width, cell_area.Height);
-                    header_cr.Restore ();
-                }
-                
+                PaintHeaderCell (cell_area, clip, ci, false);
+            }
+            
+            if (pressed_column_is_dragging && pressed_column_index >= 0) {
+                cell_area.X = pressed_column_x_drag + left_border_alloc.Width;
+                cell_area.Width = column_cache[pressed_column_index].Width - COLUMN_PADDING;
+                PaintHeaderCell (cell_area, clip, pressed_column_index, true);
+            }
+        }
+        
+        private void PaintHeaderCell (Gdk.Rectangle area, Gdk.Rectangle clip, int ci, bool dragging)
+        {
+            ColumnCell cell = column_cache[ci].Column.HeaderCell;
+            
+            if (dragging) {
                 if (ci < column_cache.Length - 1) {
                     graphics.DrawHeaderSeparator (header_cr, header_alloc, 
                         column_cache[ci].ResizeX1 - 1 + left_border_alloc.Width, 2);
                 }
+            
+                graphics.DrawColumnHighlight (header_cr, area, 3, 
+                    CairoExtensions.ColorShade (graphics.GetWidgetColor (GtkColorClass.Dark, StateType.Normal), 0.9));
+                    
+                Cairo.Color stroke_color = CairoExtensions.ColorShade (graphics.GetWidgetColor (
+                    GtkColorClass.Base, StateType.Normal), 0.0);
+                stroke_color.A = 0.5;
+                
+                header_cr.Color = stroke_color;
+                
+                header_cr.MoveTo (area.X - 1, area.Y + 1);
+                header_cr.LineTo (area.X - 1, area.Y + area.Height - 1);
+                header_cr.Stroke ();
+                
+                header_cr.MoveTo (area.X + area.Width, area.Y + 1);
+                header_cr.LineTo (area.X + area.Width, area.Y + area.Height - 1);
+                header_cr.Stroke ();
+            }
+            
+            if (cell is ColumnHeaderCellText && Model is ISortable) {
+                bool has_sort = ((ISortable)Model).SortColumn == column_cache[ci].Column as ISortableColumn 
+                    && column_cache[ci].Column is ISortableColumn;
+                ((ColumnHeaderCellText)cell).HasSort = has_sort;
+                if (has_sort) {
+                    graphics.DrawColumnHighlight (header_cr, area, 3);
+                }
+            }
+            
+            if (cell != null) {
+                header_cr.Save ();
+                header_cr.Translate (area.X, area.Y);
+                cell.Render (new CellContext (header_cr, header_pango_layout, this, header_window, 
+                    graphics, area), StateType.Normal, area.Width, area.Height);
+                header_cr.Restore ();
+            }
+            
+            if (!dragging && ci < column_cache.Length - 1) {
+                graphics.DrawHeaderSeparator (header_cr, header_alloc, 
+                    column_cache[ci].ResizeX1 - 1 + left_border_alloc.Width, 2);
             }
         }
 
@@ -228,6 +266,8 @@ namespace Hyena.Data.Gui
                 single_list_alloc.Y = ri * single_list_alloc.Height - vadjustment_value;
                 PaintRow (ri, clip, single_list_alloc, StateType.Selected);
             }
+            
+            PaintDraggingColumn (evnt, clip);
         }
 
         private void PaintRow (int row_index, Gdk.Rectangle clip, Gdk.Rectangle area, StateType state)
@@ -241,26 +281,75 @@ namespace Hyena.Data.Gui
             Gdk.Rectangle cell_area = new Gdk.Rectangle ();
             cell_area.Height = RowHeight;
             cell_area.Y = area.Y;
-
+            
             for (int ci = 0; ci < column_cache.Length; ci++) {
+                if (pressed_column_is_dragging && pressed_column_index == ci) {
+                    continue;
+                }
+                
                 cell_area.Width = column_cache[ci].Width;
                 cell_area.X = column_cache[ci].X1;
-                    
-                PaintCell (item, ci, row_index, cell_area, cell_area, state);
+                PaintCell (item, ci, row_index, cell_area, cell_area, state, false);
+            }
+            
+            if (pressed_column_is_dragging && pressed_column_index >= 0) {   
+                cell_area.Width = column_cache[pressed_column_index].Width;
+                cell_area.X = pressed_column_x_drag;
+                PaintCell (item, pressed_column_index, row_index, cell_area, cell_area, state, true);
             }
         }
         
         private void PaintCell (object item, int column_index, int row_index, Gdk.Rectangle area, 
-            Gdk.Rectangle clip, StateType state)
+            Gdk.Rectangle clip, StateType state, bool dragging)
         {
             ColumnCell cell = column_cache[column_index].Column.GetCell (0);
             cell.BindListItem (item);
             
+            if (dragging) {
+                Cairo.Color fill_color = graphics.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
+                fill_color.A = 0.5;
+                list_cr.Color = fill_color;
+                list_cr.Rectangle (area.X, area.Y, area.Width, area.Height);
+                list_cr.Fill ();
+            }
+            
             list_cr.Save ();
             list_cr.Translate (clip.X, clip.Y);
             cell.Render (new CellContext (list_cr, list_pango_layout, this, list_window, graphics, area), 
-                state, area.Width, area.Height);
+                dragging? StateType.Normal : state, area.Width, area.Height);
             list_cr.Restore ();
+        }
+        
+        private void PaintDraggingColumn (Gdk.EventExpose evnt, Gdk.Rectangle clip)
+        {
+            if (!pressed_column_is_dragging || pressed_column_index < 0) {
+                return;
+            }
+            
+            CachedColumn column = column_cache[pressed_column_index];
+            
+            int x = pressed_column_x_drag;
+            
+            Cairo.Color fill_color = graphics.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
+            fill_color.A = 0.6;
+            
+            Cairo.Color stroke_color = CairoExtensions.ColorShade (graphics.GetWidgetColor (
+                GtkColorClass.Base, StateType.Normal), 0.0);
+            stroke_color.A = 0.4;
+            
+            list_cr.Rectangle (x, list_alloc.Y, column.Width, list_alloc.Height);
+            list_cr.Color = fill_color;
+            list_cr.Fill ();
+            
+            list_cr.MoveTo (x, list_alloc.Y);
+            list_cr.LineTo (x, list_alloc.Y + list_alloc.Height);
+            list_cr.MoveTo (x + column.Width, list_alloc.Y);
+            list_cr.LineTo (x + column.Width, list_alloc.Y + list_alloc.Height);
+            
+            list_cr.Color = stroke_color;
+            list_cr.Antialias = Cairo.Antialias.None;
+            list_cr.LineWidth = 1.0;
+            list_cr.Stroke ();
         }
         
         private void PaintLeftBorder (Gdk.EventExpose evnt, Gdk.Rectangle clip)

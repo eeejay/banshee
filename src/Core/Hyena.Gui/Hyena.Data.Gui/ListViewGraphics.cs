@@ -222,9 +222,13 @@ namespace Hyena.Data.Gui
         
         public void DrawColumnHighlight(Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset)
         {
-            Cairo.Color gtk_selection_color = GetWidgetColor(GtkColorClass.Background, StateType.Selected);
-            Cairo.Color light_color = CairoExtensions.ColorShade(gtk_selection_color, 1.6);
-            Cairo.Color dark_color = CairoExtensions.ColorShade(gtk_selection_color, 1.3);
+            DrawColumnHighlight(cr, alloc, bottom_offset, GetWidgetColor(GtkColorClass.Background, StateType.Selected));
+        }
+        
+        public void DrawColumnHighlight(Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset, Cairo.Color color)
+        {
+            Cairo.Color light_color = CairoExtensions.ColorShade(color, 1.6);
+            Cairo.Color dark_color = CairoExtensions.ColorShade(color, 1.3);
             
             LinearGradient grad = new LinearGradient(alloc.X, alloc.Y + 2, alloc.X, alloc.Y + alloc.Height - 3 - bottom_offset);
             grad.AddColorStop(0, light_color);
