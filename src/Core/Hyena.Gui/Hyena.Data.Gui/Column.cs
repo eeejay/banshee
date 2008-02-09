@@ -31,6 +31,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gtk;
 
+using Hyena;
 using Hyena.Data;
 
 namespace Hyena.Data.Gui
@@ -133,6 +134,10 @@ namespace Hyena.Data.Gui
                     OnVisibilityChanged ();
                 }
             }
+        }
+        
+        public string Id {
+            get { return StringUtil.CamelCaseToUnderCase (GetCell (0).Property); }
         }
     }
 }

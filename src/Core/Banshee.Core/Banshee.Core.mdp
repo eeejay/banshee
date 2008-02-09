@@ -18,7 +18,6 @@
     <File name="Banshee.Base/Paths.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/SafeUri.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/UriList.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Base/Utilities.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/AlbumInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/ArtistInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/ITrackInfo.cs" subtype="Code" buildaction="Compile" />
@@ -41,7 +40,6 @@
     <File name="Banshee.Collection/IBasicTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Configuration.Schema/ImportSchema.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Configuration.Schema/LibrarySchema.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Base/StringUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/Log.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/ProductInformation.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/contributors.xml" subtype="Code" buildaction="EmbedAsResource" />

@@ -31,6 +31,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GConf;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.Configuration;
 

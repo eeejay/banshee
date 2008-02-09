@@ -36,6 +36,10 @@ namespace Hyena.Data.Gui
     {
         private List<Column> columns = new List<Column> ();
         
+        protected List<Column> Columns {
+            get { return columns; }
+        }
+        
         public event EventHandler Updated;
         
         protected virtual void OnUpdated ()
@@ -121,12 +125,23 @@ namespace Hyena.Data.Gui
             return columns.GetEnumerator ();
         }
         
+        public int IndexOf (Column column)
+        {
+            lock (this) {
+                return columns.IndexOf (column);
+            }
+        }
+        
         public Column this[int index] {
             get { return columns[index]; }
         }
         
         public int Count {
             get { return columns.Count; }
+        }
+        
+        public virtual bool EnableColumnMenu {
+            get { return false; }
         }
     }
 }

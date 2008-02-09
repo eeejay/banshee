@@ -65,6 +65,7 @@ SOURCES =  \
 	Hyena.SExpEngine/TreeNode.cs \
 	Hyena.SExpEngine/UtilityFunctionSet.cs \
 	Hyena/IUndoAction.cs \
+	Hyena/StringUtil.cs \
 	Hyena/Timer.cs \
 	Hyena/UndoManager.cs \
 	Hyena/Utilities.cs

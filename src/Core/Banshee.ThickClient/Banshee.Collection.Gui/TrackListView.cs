@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -41,27 +41,29 @@ namespace Banshee.Collection.Gui
 {
     public class TrackListView : ListView<TrackInfo>
     {
-        private ColumnController column_controller;
+        private PersistentColumnController column_controller;
         
-        public TrackListView() : base()
+        public TrackListView () : base ()
         {
-            column_controller = new ColumnController();
+            column_controller = new PersistentColumnController ("track_view_columns");
 
-            column_controller.AddRange(
-                new Column(null, "indicator", new ColumnCellPlaybackIndicator(null), 0.05),
-                new SortableColumn("Track", new ColumnCellTrackNumber("TrackNumber", true), 0.10, "Track"),
-                new SortableColumn("Artist", new ColumnCellText("ArtistName", true), 0.225, "Artist"),
-                new SortableColumn("Album", new ColumnCellText("AlbumTitle", true), 0.225, "Album"),
-                new SortableColumn("Title", new ColumnCellText("TrackTitle", true), 0.25, "Title"),
-                new SortableColumn("Duration", new ColumnCellDuration("Duration", true), 0.15, "Duration"),
-                new SortableColumn("Year", new ColumnCellText("Year", true), 0.15, "Year"),
-                new SortableColumn("Play Count", new ColumnCellText("PlayCount", true), 0.15, "PlayCount"),
-                new SortableColumn("Skip Count", new ColumnCellText("SkipCount", true), 0.15, "SkipCount"),
-                //new SortableColumn("Rating", new RatingColumnCell(null, true), 0.15, "Rating"),
-                new SortableColumn("Last Played", new ColumnCellDateTime("LastPlayed", true), 0.15, "LastPlayedStamp"),
-                new SortableColumn("Added", new ColumnCellDateTime("DateAdded", true), 0.15, "DateAddedStamp"),
-                new SortableColumn("Location", new ColumnCellText("Uri", true), 0.15, "Uri")
+            column_controller.AddRange (
+                new Column (null, "indicator", new ColumnCellPlaybackIndicator (null), 0.05),
+                new SortableColumn ("Track", new ColumnCellTrackNumber ("TrackNumber", true), 0.10, "Track"),
+                new SortableColumn ("Artist", new ColumnCellText ("ArtistName", true), 0.225, "Artist"),
+                new SortableColumn ("Album", new ColumnCellText ("AlbumTitle", true), 0.225, "Album"),
+                new SortableColumn ("Title", new ColumnCellText ("TrackTitle", true), 0.25, "Title"),
+                new SortableColumn ("Duration", new ColumnCellDuration ("Duration", true), 0.15, "Duration"),
+                new SortableColumn ("Year", new ColumnCellText ("Year", true), 0.15, "Year"),
+                new SortableColumn ("Play Count", new ColumnCellText ("PlayCount", true), 0.15, "PlayCount"),
+                new SortableColumn ("Skip Count", new ColumnCellText ("SkipCount", true), 0.15, "SkipCount"),
+                //new SortableColumn ("Rating", new RatingColumnCell (null, true), 0.15, "Rating"),
+                new SortableColumn ("Last Played", new ColumnCellDateTime ("LastPlayed", true), 0.15, "LastPlayedStamp"),
+                new SortableColumn ("Added", new ColumnCellDateTime ("DateAdded", true), 0.15, "DateAddedStamp"),
+                new SortableColumn ("Location", new ColumnCellText ("Uri", true), 0.15, "Uri")
             );
+            
+            column_controller.Load ();
             
             ColumnController = DefaultColumnController;
             RulesHint = true;
@@ -69,7 +71,7 @@ namespace Banshee.Collection.Gui
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
             
             if (ServiceManager.Contains ("GtkElementsService")) {
-                ServiceManager.Get<Banshee.Gui.GtkElementsService> ("GtkElementsService").ThemeChanged += delegate {
+                ServiceManager.Get<Banshee.Gui.GtkElementsService> ().ThemeChanged += delegate {
                     foreach (Column column in column_controller) {
                         if (column.HeaderCell != null) {
                             column.HeaderCell.NotifyThemeChange ();
@@ -87,7 +89,7 @@ namespace Banshee.Collection.Gui
 
         protected override bool OnPopupMenu ()
         {
-            ServiceManager.Get<InterfaceActionService> ("InterfaceActionService").TrackActions["TrackContextMenuAction"].Activate ();
+            ServiceManager.Get<InterfaceActionService> ().TrackActions["TrackContextMenuAction"].Activate ();
             return true;
         }
         

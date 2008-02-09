@@ -198,6 +198,16 @@ namespace Hyena.Data.Gui
             HasFocus = true;
             
             if (press.Window == header_window) {
+                if (press.Button == 3 && ColumnController.EnableColumnMenu) {
+                    Column menu_column = GetColumnAt ((int)press.X);
+                    if (menu_column != null) {
+                        OnColumnRightClicked (menu_column, (int)press.X, (int)press.Y);
+                    }
+                    return true;
+                } else if (press.Button != 1) {
+                    return true;
+                }
+                
                 Gtk.Drag.SourceUnset (this);
                 
                 Column column = GetColumnForResizeHandle ((int)press.X);
@@ -356,7 +366,9 @@ namespace Hyena.Data.Gui
                         }
                         
                         if (reorder) {
-                            ColumnController.Reorder (pressed_column_index, swap_column_c.Index);
+                            int actual_pressed_index = ColumnController.IndexOf (column_cache[pressed_column_index].Column);
+                            int actual_swap_index = ColumnController.IndexOf (swap_column_c.Column);
+                            ColumnController.Reorder (actual_pressed_index, actual_swap_index);
                             pressed_column_index = swap_column_c.Index;
                             RegenerateColumnCache ();
                         }

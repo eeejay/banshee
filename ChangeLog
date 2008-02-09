@@ -1,3 +1,34 @@
+2008-02-09  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds initial support to load/save the column settings in 
+	the track list; it is not yet complete, also it adds a popup menu for
+	the columns, but it's not done yet and doesn't work
+
+	* src/Core/Hyena/Hyena/StringUtil.cs:
+	* src/Backends/Banshee.Gnome/Banshee.Gnome/GConfConfigurationClient.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Base/StringUtil.cs: Moved StringUtil
+	into Hyena
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:
+	A wrapper around ColumnController that loads and saves through 
+	Banshee.Configuration
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Use PersistentColumnController to load and save settings
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/Column.cs: Added an Id property
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs: Added IndexOf
+	and EnableColumnMenu
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs: Added
+	a popup menu for selecting which columns are visible
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Fixed reordering logic to work with columns which aren't visible 
+	and added right click on the header
+
 2008-02-10  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Dap/Banshee.Dap.MassStorage: Added.

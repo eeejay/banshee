@@ -27,6 +27,7 @@
 //
 
 using System;
+using Mono.Unix;
 using Gtk;
 
 namespace Hyena.Data.Gui
@@ -122,6 +123,63 @@ namespace Hyena.Data.Gui
         {
             RegenerateColumnCache ();
             QueueDraw ();
+        }
+        
+        protected virtual void OnColumnRightClicked (Column clickedColumn, int x, int y)
+        {
+            Menu menu = new Menu ();
+            
+            if (clickedColumn.Id != null) { // FIXME: Also restrict if the column vis can't be changed
+                MenuItem hide_item = new MenuItem (String.Format (Catalog.GetString ("Hide {0}"), clickedColumn.Title));
+                hide_item.Data.Add ("column", clickedColumn);
+                hide_item.Data.Add ("hide", true);
+                hide_item.Activated += OnColumnMenuItemActivated;
+                menu.Append (hide_item);
+                menu.Append (new SeparatorMenuItem ());
+            }
+            
+            foreach (Column column in ColumnController) {
+                if (column.Id == null) {
+                    continue;
+                }
+                
+                CheckMenuItem item = new CheckMenuItem (column.Title);
+                item.Active = column.Visible;
+                item.Data.Add ("column", column);
+                item.Activated += OnColumnMenuItemActivated;
+                menu.Append (item);
+            }
+            
+            menu.ShowAll ();
+            menu.Popup (null, null, delegate (Menu popup, out int pos_x, out int pos_y, out bool push_in) {
+                int win_x, win_y;
+                header_window.GetOrigin (out win_x, out win_y);
+                pos_x = win_x + x;
+                pos_y = win_y + y;
+                push_in = true;
+            }, 3, Gtk.Global.CurrentEventTime);
+        }
+        
+        private void OnColumnMenuItemActivated (object o, EventArgs args)
+        {
+            MenuItem item = (MenuItem)o;
+            CheckMenuItem toggle_item = item as CheckMenuItem;
+            Column column = null;
+            
+            if (item.Data.Contains ("column")) {
+                column = item.Data["column"] as Column;
+            }
+            
+            if (column == null) {
+                return;
+            }
+            
+            if (item.Data.Contains ("hide")) {
+                column.Visible = false;
+                return;
+            } else if (toggle_item != null) {
+                column.Visible = toggle_item.Active;
+            }
         }
         
         private void ResizeColumn (double x)
