@@ -222,8 +222,8 @@ namespace Hyena.Data.Gui
             
             int row_index = GetRowAtY ((int) press.Y);
             
-            if (press.Button == 1 && (press.State & Gdk.ModifierType.ControlMask) == 0 && 
-                Selection.Contains (row_index)) {
+            if (press.Button == 1 && press.Type != Gdk.EventType.TwoButtonPress && 
+                (press.State & Gdk.ModifierType.ControlMask) == 0 && Selection.Contains (row_index)) {
                 return true;
             }
             
@@ -336,8 +336,18 @@ namespace Hyena.Data.Gui
                 
                 if (pressed_column_is_dragging) {
                     header_window.Cursor = drag_cursor;
+                    
+                    /*Column swap_column = GetColumnAt ((int)evnt.X);
+                    if (swap_column != null) {
+                        int index = GetCachedColumnForColumn (swap_column).Index;
+                        ColumnController.Reorder (pressed_column_index, index);
+                        pressed_column_index = index;
+                        RegenerateColumnCache ();
+                    }*/
+                    
                     pressed_column_x_drag = (int)evnt.X - pressed_column_x_start + 
                         column_cache[pressed_column_index].X1;
+                    
                     InvalidateHeaderWindow ();
                     InvalidateListWindow ();
                     return true;

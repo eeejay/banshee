@@ -1,5 +1,9 @@
 2008-02-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Fixed double clicking again
+
+2008-02-08  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
