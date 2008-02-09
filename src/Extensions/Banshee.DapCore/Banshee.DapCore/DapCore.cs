@@ -27,28 +27,128 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using Banshee.Base;
+using Banshee.Hal;
 using Banshee.ServiceStack;
 
+using Hal;
 using Mono.Addins;
+
+using System;
+using System.Collections.Generic;
 
 namespace Banshee.Dap
 {
 
     public class DapCore : IExtensionService
     {
-        void IExtensionService.Initialize() {
-            AddinManager.AddExtensionNodeHandler ("/Banshee/Dap/Device", OnExtensionChanged);
+        private HalCore halCore;
+        private List<Type> supported_dap_types = new List<Type>();
+        private Dictionary<string, IDevice> device_table = new Dictionary<string, IDevice>();
+
+        private HalCore HalCore {
+            get { return halCore; }
         }
 
-        private void OnExtensionChanged (object s, ExtensionNodeEventArgs args) {
-            IDeviceClass device_class = (IDeviceClass) args.ExtensionObject;
-            if (args.Change == ExtensionChange.Add) {
-                // Register device plugin
+        void IExtensionService.Initialize () {
+            // TODO: This is the same construct as in NotificationAreaService.cs's Initialize.
+            
+            if (ServiceManager.Contains ("HalCore")) {
+                ContinueInitialize ();
             } else {
-                // Unregister device plugin
+                ServiceManager.ServiceStarted += delegate (ServiceStartedArgs args) {
+                   if (args.Service is Banshee.Hal.HalCore) {
+                       ContinueInitialize ();
+                   }
+                };
             }
         }
 
+        private void OnExtensionChanged (object s, ExtensionNodeEventArgs args) {
+            Type device_type = ((DeviceClassNode) args.ExtensionNode).Type;
+            if (args.Change == ExtensionChange.Add) {
+                // Register device plugin
+                supported_dap_types.Add (device_type);
+            } else {
+                // Unregister device plugin
+                supported_dap_types.Remove (device_type);
+            }
+        }
+
+        private void ContinueInitialize () {
+            // TODO: Hack!
+            AddinManager.AddExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
+            halCore = ServiceManager.Get<HalCore> ("HalCore");
+            HalCore.Manager.DeviceAdded += OnHalDeviceAdded;
+            HalCore.Manager.DeviceRemoved += OnHalDeviceRemoved;
+
+            BuildDeviceTable();
+        }
+
+        private void BuildDeviceTable ()
+        {
+            // All volume devices, should cover all storage based players
+            foreach(string udi in HalCore.Manager.FindDeviceByStringMatch ("info.category", "volume")) {
+                Device device = new Device (udi);
+                if(device.PropertyExists ("volume.fsusage") && 
+                    device["volume.fsusage"] == "filesystem") {
+                    if((device.PropertyExists ("volume.is_disc") && 
+                        device.GetPropertyBoolean ("volume.is_disc")) || 
+                        (device.PropertyExists ("volume.ignore") &&
+                        device.GetPropertyBoolean ("volume.ignore"))) {
+                        continue;
+                    }
+                    
+                    AddDeviceThreaded (device);
+                }
+            }
+
+            // Non-storage based players
+            foreach(string udi in HalCore.Manager.FindDeviceByStringMatch ("info.category", "portable_audio_player")) {
+                AddDeviceThreaded (new Device (udi));
+            }
+        }
+
+        private void OnHalDeviceAdded(object o, DeviceAddedArgs args)
+        {
+            Device device = args.Device;
+            if(device["info.category"] == "portable_audio_player" ||
+                (device["info.category"] == "volume" &&
+                device.PropertyExists("volume.fsusage") &&
+                device["volume.fsusage"] == "filesystem" &&
+                (!device.PropertyExists("volume.is_disc") || 
+                !device.GetPropertyBoolean("volume.is_disc")))) {
+                AddDeviceThreaded (device);
+            }
+        }
+
+        private void AddDeviceThreaded (Device device)
+        {
+            ThreadAssist.Spawn (delegate {
+                AddDevice (device);
+            });
+        }
+
+        private void AddDevice(Device device)
+        {
+            lock (device_table) {
+                if (device_table.ContainsKey (device.Udi)) {
+                    return;
+                }
+
+                try {
+                    DapDevice dap_device = new DapDevice (device);
+                    device_table.Add (device.Udi, dap_device);
+                } catch (Exception e) {
+                    Console.WriteLine (e);
+                }
+            }
+        }
+        
+        private void OnHalDeviceRemoved(object o, DeviceRemovedArgs args)
+        {
+            // TODO: RemoveDevice(args.Udi);
+        }
 
         string IService.ServiceName {
             get { return "DapCore"; }

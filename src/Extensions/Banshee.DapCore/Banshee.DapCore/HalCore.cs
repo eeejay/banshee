@@ -34,7 +34,7 @@ namespace Banshee.Hal
 {
     public class HalCore : IExtensionService
     {
-        private Manager manager;
+        private static Manager manager;
 
         public void Initialize ()
         {

@@ -1,3 +1,23 @@
+2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/DapCore.cs: Start porting
+	the device initialization code.
+
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/DeviceClassNode.cs:
+	Added. Provides an extension node wich offers types, not instances (this
+	could be useful outside of this extension as well).
+
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/HalCore.cs: Don't make
+	manager static (not needed).
+
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/IDeviceClass.cs: Will
+	soon be renamed to IDevice.
+
+	* src/Extensions/Banshee.DapCore/Makefile.am: Add DeviceClassNode.
+
+	* src/Extensions/Banshee.DapCore/Resources/Banshee.DapCore.addin.xml: Use
+	DeviceClassNode instead of TypeExtensionNode.
+
 2008-02-09  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* src/Extensions/Banshee.DapCore/IDeviceClass.cs:
