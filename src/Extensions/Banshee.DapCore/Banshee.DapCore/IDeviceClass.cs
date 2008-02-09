@@ -27,6 +27,7 @@
 //
 
 using System;
+using Banshee.Collection;
 
 namespace Banshee.Dap
 {
@@ -42,11 +43,11 @@ namespace Banshee.Dap
 		event EventHandler TrackUploaded;
 
 		
-		void DownloadTrack (object track);       // Should be TrackInfo, not 'object'
+		void DownloadTrack (TrackInfo track);       // Should be TrackInfo, not 'object'
 		void LoadTracks ();                      // Should be TrackInfo, not 'object'
-		void RemoveTrack (object track);         // Should be TrackInfo, not 'object'
-		void UpdateMetadata (object track);      // Should be TrackInfo, not 'object'
-		void UploadTrack (object track);         // Should be TrackInfo, not 'object'
+		void RemoveTrack (TrackInfo track);         // Should be TrackInfo, not 'object'
+		void UpdateMetadata (TrackInfo track);      // Should be TrackInfo, not 'object'
+		void UploadTrack (TrackInfo track);         // Should be TrackInfo, not 'object'
 
 		void Eject ();
 		void Initialize (object halDevice);   // Should be a Hal.Device, not 'object'

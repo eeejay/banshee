@@ -38,7 +38,6 @@
     <File name="Hyena.Query.Gui/QueryTermBox.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Query.Gui/QueryValueEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Query.Gui/StringQueryValueEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ListView" subtype="Directory" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ListView/ListView.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ListView/ListView_Windowing.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ListView/ListView_Rendering.cs" subtype="Code" buildaction="Compile" />
