@@ -65,7 +65,10 @@ namespace Banshee.Dap
         }
 
         private void OnExtensionChanged (object s, ExtensionNodeEventArgs args) {
-            Type device_type = ((DeviceClassNode) args.ExtensionNode).Type;
+            TypeExtensionNode node = (TypeExtensionNode) args.ExtensionNode;
+            Console.WriteLine(">>> Found Node ID: {0}", node.Id);
+            Type device_type = Type.GetType (node.Id);
+
             if (args.Change == ExtensionChange.Add) {
                 // Register device plugin
                 supported_dap_types.Add (device_type);
@@ -137,8 +140,8 @@ namespace Banshee.Dap
                 }
 
                 try {
-                    DapDevice dap_device = new DapDevice (device);
-                    device_table.Add (device.Udi, dap_device);
+                    //DapDevice dap_device = new DapDevice (device);
+                    //device_table.Add (device.Udi, dap_device);
                 } catch (Exception e) {
                     Console.WriteLine (e);
                 }

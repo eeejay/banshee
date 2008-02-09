@@ -28,6 +28,7 @@
 
 using System;
 using Banshee.Collection;
+using Hal;
 
 namespace Banshee.Dap
 {
@@ -50,7 +51,7 @@ namespace Banshee.Dap
 		void UploadTrack (TrackInfo track);         // Should be TrackInfo, not 'object'
 
 		void Eject ();
-		bool Initialize (Hal.Device device);
+		bool Initialize (Device device);
 		
 		//bool CanSetName { get; }
 		//bool CanSetOwner { get; }

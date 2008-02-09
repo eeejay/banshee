@@ -21,7 +21,7 @@
   </Extension>
 
   <ExtensionPoint path="/Banshee/Dap/DeviceClass">
-    <ExtensionNode name="DeviceClass" type="Banshee.Dap.DeviceClassNode" />
+    <ExtensionNode name="DeviceClass"/>
   </ExtensionPoint>
 
 </Addin>

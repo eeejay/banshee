@@ -1,5 +1,19 @@
 2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
 
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/DapCore.cs: Get the type
+	from TypeExtensionNode. Use Aaron's trick to get the class name from the
+	node.
+
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/DeviceClassNode.cs: Removed.
+
+	* src/Extensions/Banshee.DapCore/Banshee.DapCore/IDevice.cs: Fix
+	namespace issue.
+
+	* src/Extensions/Banshee.DapCore/Resources/Banshee.DapCore.addin.xml: Back
+	to TypeExtensionNode.
+
+2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
+
 	* src/Extensions/Banshee.DapCore/Banshee.DapCore/DapCore.cs: Start porting
 	the device initialization code.
 
