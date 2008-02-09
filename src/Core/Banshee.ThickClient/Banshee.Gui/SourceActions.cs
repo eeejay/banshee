@@ -234,6 +234,10 @@ namespace Banshee.Gui
                 UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
                 last_source = source;
             }
+            
+            if (source != null) {
+                UpdateAction ("SortChildrenAction", source.Children.Count > 0, true, null);
+            }
         }
 
         private static bool ConfirmUnmap(IUnmapableSource source)

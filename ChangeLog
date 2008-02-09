@@ -1,5 +1,11 @@
 2008-02-09  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Do not
+	show the 'sort children' menu item if the source does not have children
+	(thanks Scott)
+
+2008-02-09  Aaron Bockover  <abock@gnome.org>
+
 	This commit adds initial support to load/save the column settings in 
 	the track list; it is not yet complete, also it adds a popup menu for
 	the columns, but it's not done yet and doesn't work
