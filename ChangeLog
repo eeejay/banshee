@@ -1,10 +1,15 @@
 2008-02-09  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* src/Extensions/Banshee.DapCore/IDeviceClass.cs:
 	Updated the interface
 
 2008-02-09  Alan McGovern <alan.mcgovern@gmail.com> 
 
-	
+	* Banshee.DapCore/IDeviceClass.cs: Slight refactor
+
+2008-02-09  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* Banshee.DapCore/IDeviceClass.cs: Initial ideas for the interface
 
 2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
 

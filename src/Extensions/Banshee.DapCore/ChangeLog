@@ -1,8 +1,0 @@
-2008-02-09  Alan McGovern <alan.mcgovern@gmail.com> 
-
-	* Banshee.DapCore/IDeviceClass.cs: Slight refactor
-
-2008-02-09  Alan McGovern <alan.mcgovern@gmail.com> 
-
-	* Banshee.DapCore/IDeviceClass.cs: Initial ideas for the interface
-
