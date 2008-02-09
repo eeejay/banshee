@@ -33,18 +33,23 @@ namespace Banshee.Dap
     public interface IDeviceClass : IDisposable {
 		
 		event EventHandler Ejected;
-		event EventHandler Initialized; // EventArgs should contain the InitializeResult
+		event EventHandler Initialized;
+
 		event EventHandler MetadataUpdated;
-		event EventHandler TrackAdded;
+		event EventHandler TrackDownloaded;
 		event EventHandler TracksLoaded;
 		event EventHandler TrackRemoved;
+		event EventHandler TrackUploaded;
+
 		
-		void AddTrack (object track);         // Should be TrackInfo, not 'object'
+		void DownloadTrack (object track);       // Should be TrackInfo, not 'object'
+		void LoadTracks ();                      // Should be TrackInfo, not 'object'
+		void RemoveTrack (object track);         // Should be TrackInfo, not 'object'
+		void UpdateMetadata (object track);      // Should be TrackInfo, not 'object'
+		void UploadTrack (object track);         // Should be TrackInfo, not 'object'
+
 		void Eject ();
 		void Initialize (object halDevice);   // Should be a Hal.Device, not 'object'
-		void LoadTracks ();
-		void RemoveTrack (object track);      // Should be TrackInfo, not 'object'
-		void UpdateMetadata (object track);   // Should be TrackInfo, not 'object'
 		
 		//bool CanSetName { get; }
 		//bool CanSetOwner { get; }
