@@ -132,6 +132,7 @@ src/Core/Nereid/banshee2
 
 src/Dap/Makefile
 src/Dap/Banshee.DapCore/Makefile
+src/Dap/Banshee.Dap.MassStorage/Makefile
 
 src/Backends/Makefile
 src/Backends/Banshee.Gnome/Makefile

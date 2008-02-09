@@ -27,6 +27,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+
 using Banshee.Base;
 using Banshee.Hal;
 using Banshee.ServiceStack;
@@ -43,8 +44,8 @@ namespace Banshee.Dap
     public class DapCore : IExtensionService
     {
         private HalCore halCore;
-        private List<Type> supported_dap_types = new List<Type>();
-        private Dictionary<string, IDevice> device_table = new Dictionary<string, IDevice>();
+        private List<TypeExtensionNode> supported_dap_types = new List<TypeExtensionNode>();
+        private Dictionary<string, AbstractDevice> device_table = new Dictionary<string, AbstractDevice>();
 
         private HalCore HalCore {
             get { return halCore; }
@@ -66,15 +67,13 @@ namespace Banshee.Dap
 
         private void OnExtensionChanged (object s, ExtensionNodeEventArgs args) {
             TypeExtensionNode node = (TypeExtensionNode) args.ExtensionNode;
-            Console.WriteLine(">>> Found Node ID: {0}", node.Id);
-            Type device_type = Type.GetType (node.Id);
 
             if (args.Change == ExtensionChange.Add) {
                 // Register device plugin
-                supported_dap_types.Add (device_type);
+                supported_dap_types.Add (node);
             } else {
                 // Unregister device plugin
-                supported_dap_types.Remove (device_type);
+                supported_dap_types.Remove (node);
             }
         }
 
@@ -132,20 +131,33 @@ namespace Banshee.Dap
             });
         }
 
-        private void AddDevice(Device device)
+        private void AddDevice (Device device)
         {
             lock (device_table) {
                 if (device_table.ContainsKey (device.Udi)) {
                     return;
                 }
 
+                AbstractDevice dap_device = FindDeviceType (device);
+                if (dap_device != null) {
+                    device_table.Add (device.Udi, dap_device);
+                }
+            }
+        }
+
+        private AbstractDevice FindDeviceType (Device device)
+        {
+            foreach (TypeExtensionNode node in supported_dap_types) {
                 try {
-                    //DapDevice dap_device = new DapDevice (device);
-                    //device_table.Add (device.Udi, dap_device);
+                    AbstractDevice dap_device = (AbstractDevice) node.CreateInstance ();
+                   /* if (dap_device.Initialize (device)) {
+                        return dap_device;
+                    }*/
                 } catch (Exception e) {
                     Console.WriteLine (e);
                 }
             }
+            return null;
         }
         
         private void OnHalDeviceRemoved(object o, DeviceRemovedArgs args)

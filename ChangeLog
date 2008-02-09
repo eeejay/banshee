@@ -1,3 +1,20 @@
+2008-02-10  Ruben Vermeersch  <ruben@savanne.be>
+
+	* src/Dap/Banshee.Dap.MassStorage: Added.
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage: Added.
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.addin.xml: Added.
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.mdp: Added.
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/Device.cs: Added.
+	* src/Dap/Banshee.Dap.MassStorage/Makefile.am: Added.
+
+	Added a basic Banshee.Dap.MassStorage extension which will be the first
+	device class to be ported, used to test the stack.
+
+	* src/Dap/Banshee.DapCore/Banshee.DapCore/AbstractDevice.cs: Added.
+
+	* src/Dap/Banshee.DapCore/Banshee.DapCore/DapCore.cs: Store the extension
+	nodes, not the types themselves.
+
 2008-02-09  Ruben Vermeersch  <ruben@savanne.be>
 
 	Moved the Banshee.DapCore extension out of src/Extensions/ and into

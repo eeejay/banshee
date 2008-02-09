@@ -1,10 +1,10 @@
 ASSEMBLY = Banshee.DapCore
 TARGET = library
-LINK = $(REF_EXTENSION_DAPCORE)
+LINK = $(REF_DAP_DAPCORE)
 
 SOURCES =  \
+	Banshee.DapCore/AbstractDevice.cs \
 	Banshee.DapCore/DapCore.cs \
-	Banshee.DapCore/DeviceClassNode.cs \
 	Banshee.DapCore/HalCore.cs \
 	Banshee.DapCore/IDevice.cs \
 	hal-sharp/Device.cs \

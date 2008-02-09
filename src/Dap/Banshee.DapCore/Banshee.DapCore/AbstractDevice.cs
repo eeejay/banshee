@@ -1,5 +1,5 @@
 //
-// IDevice.cs
+// Device.cs
 //
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -26,41 +26,10 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using Banshee.Collection;
-using Hal;
-
 namespace Banshee.Dap
 {
-    public interface IDevice: IDisposable 
+    public abstract class AbstractDevice/*: IDevice*/
     {
-		
-		event EventHandler Ejected;
-		event EventHandler Initialized;
 
-		event EventHandler MetadataUpdated;
-		event EventHandler TrackDownloaded;
-		event EventHandler TracksLoaded;
-		event EventHandler TrackRemoved;
-		event EventHandler TrackUploaded;
-
-		
-		void DownloadTrack (TrackInfo track);       // Should be TrackInfo, not 'object'
-		void LoadTracks ();                      // Should be TrackInfo, not 'object'
-		void RemoveTrack (TrackInfo track);         // Should be TrackInfo, not 'object'
-		void UpdateMetadata (TrackInfo track);      // Should be TrackInfo, not 'object'
-		void UploadTrack (TrackInfo track);         // Should be TrackInfo, not 'object'
-
-		void Eject ();
-		bool Initialize (Device device);
-		
-		//bool CanSetName { get; }
-		//bool CanSetOwner { get; }
-		string Name { get; set; }
-		string Owner { get; set; }
-		ulong Capacity { get; }
-		ulong FreeSpace { get; }
-		bool IsReadOnly { get; }
-		bool IsPlaybackSupported { get; }
-	}
+    }
 }
