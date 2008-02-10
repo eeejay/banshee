@@ -38,13 +38,11 @@ namespace Banshee.Database
 {
     public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : new ()
     {
-        private BansheeDbConnection connection;
         private string table_name;
 
         public BansheeModelProvider (BansheeDbConnection connection, string table_name)
             : base (connection)
         {
-            this.connection = connection;
             this.table_name = table_name;
             Init ();
         }

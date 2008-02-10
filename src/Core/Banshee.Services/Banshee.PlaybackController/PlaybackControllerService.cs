@@ -51,7 +51,6 @@ namespace Banshee.PlaybackController
     
         private TrackInfo current_track;
         private TrackInfo changing_to_track;
-        private ITrackModelSource current_track_source;
         
         private Random random = new Random ();
     
@@ -251,10 +250,7 @@ namespace Banshee.PlaybackController
         
         public TrackInfo CurrentTrack {
             get { return current_track; }
-            protected set { 
-                current_track = value; 
-                current_track_source = Source;
-            }
+            protected set { current_track = value; }
         }
         
         public ITrackModelSource Source {

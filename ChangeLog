@@ -1,3 +1,11 @@
+2008-02-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats.Xspf/Playlist.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
+	Fixed more compiler warnings
+
 2008-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:

@@ -55,7 +55,6 @@ namespace Banshee.Sources
         private Source default_source;
         
         public event SourceEventHandler SourceUpdated;
-        public event SourceEventHandler SourceViewChanged;
         public event SourceAddedHandler SourceAdded;
         public event SourceEventHandler SourceRemoved;
         public event SourceEventHandler ActiveSourceChanged;

@@ -50,8 +50,6 @@ namespace Banshee.Playlists.Formats.Xspf
         private Uri license;
         private DateTime date;
         
-        private XmlDocument doc;
-
         private List<Track> tracks = new List<Track>();
         
         public Playlist()
@@ -59,9 +57,7 @@ namespace Banshee.Playlists.Formats.Xspf
         }
         
         private void Load(XmlDocument doc)
-        {
-            this.doc = doc;
-            
+        {   
             XmlNamespaceManager xmlns = new XmlNamespaceManager(doc.NameTable);
             xmlns.AddNamespace("xspf", XspfNamespace);
             
