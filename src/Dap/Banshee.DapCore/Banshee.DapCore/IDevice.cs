@@ -34,7 +34,6 @@ namespace Banshee.Dap
 {
     public interface IDevice: IDisposable 
     {
-		
 		event EventHandler Ejected;
 		event EventHandler Initialized;
 
@@ -45,17 +44,17 @@ namespace Banshee.Dap
 		event EventHandler TrackUploaded;
 
 		
-		void DownloadTrack (TrackInfo track);       // Should be TrackInfo, not 'object'
-		void LoadTracks ();                      // Should be TrackInfo, not 'object'
-		void RemoveTrack (TrackInfo track);         // Should be TrackInfo, not 'object'
-		void UpdateMetadata (TrackInfo track);      // Should be TrackInfo, not 'object'
-		void UploadTrack (TrackInfo track);         // Should be TrackInfo, not 'object'
+		void DownloadTrack (TrackInfo track, string destination);
+		void LoadTracks ();
+		void RemoveTrack (TrackInfo track);
+		void UpdateMetadata (TrackInfo track);
+		void UploadTrack (TrackInfo track);
 
 		void Eject ();
 		bool Initialize (Device device);
 		
-		//bool CanSetName { get; }
-		//bool CanSetOwner { get; }
+		bool CanSetName { get; }
+		bool CanSetOwner { get; }
 		string Name { get; set; }
 		string Owner { get; set; }
 		ulong Capacity { get; }

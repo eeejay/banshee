@@ -29,7 +29,42 @@
 using Banshee.Dap;
 
 namespace Banshee.Dap.MassStorage {
-    class Device /*: IDevice*/ {
+    public class Device : AbstractDevice {
+		
+		public override void DownloadTrack (TrackInfo track, string destination)
+		{
+			// Transfer the specified track from the device to the specified file path
+			throw new System.NotImplementedException ();
+		}
 
+		public override bool Initialize (Device device)
+		{
+			// Initialize the MassStorage from the hal device
+			throw new System.NotImplementedException ();
+		}
+
+		public override void LoadTracks ()
+		{
+			// Load all tracks from the device library 
+			throw new System.NotImplementedException ();
+		}
+
+		public override void RemoveTrack (TrackInfo track)
+		{
+			// Remove the specified track from the device
+			throw new System.NotImplementedException ();
+		}
+
+		public override void UpdateMetadata (TrackInfo track)
+		{
+			// Update the metadata for the specified track
+			throw new System.NotImplementedException ();
+		}
+
+		public override void UploadTrack (TrackInfo track)
+		{
+			// Transfer the specified track onto the device
+			throw new System.NotImplementedException ();
+		}
     }
 }

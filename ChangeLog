@@ -1,3 +1,11 @@
+2008-02-10  Alan McGovern <alan.mcgovern@gmail.com> 
+
+	* src/Dap/Banshee.DapCore/Banshee.DapCore/IDevice.cs
+	* src/Dap/Banshee.DapCore/Banshee.DapCore/AbstractDevice.cs
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/Device.cs:
+	  Updated the interface, implemented the abstract class and made
+	  MassStorage inherit from AbstractDevice.
+	  
 2008-02-10  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs: Assures
