@@ -1,3 +1,8 @@
+2008-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	Fixed/disabled more compiler warnings.
+
 2008-02-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:

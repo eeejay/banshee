@@ -15,6 +15,8 @@ using Banshee.Database;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 
+#pragma warning disable 0169
+
 namespace Banshee.SmartPlaylist
 {
     public class SmartPlaylistCore : IService
@@ -32,7 +34,7 @@ namespace Banshee.SmartPlaylist
         private uint event_counter = 0;
         private bool rate_limited = false;
         private uint seconds_ratelimited = 0;
-        private uint ratelimit_timeout_id = 0;
+        //private uint ratelimit_timeout_id = 0;
         private DateTime start;
         private uint timeout_id = 0;
 
@@ -157,7 +159,7 @@ namespace Banshee.SmartPlaylist
                     //Console.WriteLine ("rate limited");
                     rate_limited = true;
                     seconds_ratelimited = 0;
-                    ratelimit_timeout_id = GLib.Timeout.Add((uint)RATE_LIMIT_INTERVAL_MS, OnRateLimitTimer);
+                    //ratelimit_timeout_id = GLib.Timeout.Add((uint)RATE_LIMIT_INTERVAL_MS, OnRateLimitTimer);
                     retval = true;
                 }
 
@@ -193,7 +195,7 @@ namespace Banshee.SmartPlaylist
             if (!rate_limited) {
                 //Console.WriteLine ("NOT rate limited");
                 last_check = DateTime.Now;
-                ratelimit_timeout_id = 0;
+                //ratelimit_timeout_id = 0;
             }
 
             CpuTime = 0;
@@ -344,3 +346,5 @@ namespace Banshee.SmartPlaylist
         }
     }
 }
+
+#pragma warning restore 0169
