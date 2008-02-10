@@ -1,5 +1,10 @@
 2008-02-10  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/Device.cs:
+	  Commented out my changes because i can't make em compile ;)
+	 
+2008-02-10  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* src/Dap/Banshee.DapCore/Banshee.DapCore/IDevice.cs
 	* src/Dap/Banshee.DapCore/Banshee.DapCore/AbstractDevice.cs
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/Device.cs:
