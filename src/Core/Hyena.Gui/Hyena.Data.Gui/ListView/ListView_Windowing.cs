@@ -272,7 +272,7 @@ namespace Hyena.Data.Gui
         }
         
         private int RowsInView {
-            get { return (int) Math.Ceiling (list_alloc.Height / (double) RowHeight); }
+            get { return (int) Math.Ceiling (list_alloc.Height / (double) RowHeight) + 1; }
         }
     }
 }

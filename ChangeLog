@@ -1,3 +1,8 @@
+2008-02-10  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs: Assures
+	  that all rows in view are rendered.
+
 2008-02-09  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Do not
