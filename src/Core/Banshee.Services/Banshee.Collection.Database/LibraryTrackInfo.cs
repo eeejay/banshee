@@ -39,6 +39,13 @@ using Banshee.Database;
 using Banshee.IO;
 using Banshee.ServiceStack;
 
+// Disabling "is never used" warnings here because there are a lot
+// of properties/fields that are set via reflection at the database
+// layer - that is, they really are used, but the compiler doesn't
+// think so.
+
+#pragma warning disable 0169
+
 namespace Banshee.Collection.Database
 {
     public class LibraryTrackInfo : TrackInfo
@@ -67,46 +74,54 @@ namespace Banshee.Collection.Database
             Provider.Save (this);
         }
         
-        [DatabaseColumn("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
+        [DatabaseColumn ("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
         private int dbid;
         public int DbId {
             get { return dbid; }
         }
 
-        [DatabaseColumn("ArtistID", Index = "CoreTracksArtistIndex")]
+        [DatabaseColumn ("ArtistID", Index = "CoreTracksArtistIndex")]
         private int artist_id;
         public int ArtistId {
             get { return artist_id; }
             set { artist_id = value; }
         }
 
-        [DatabaseColumn("AlbumID", Index = "CoreTracksAlbumIndex")]
+        [DatabaseColumn ("AlbumID", Index = "CoreTracksAlbumIndex")]
         private int album_id;
         public int AlbumId {
             get { return album_id; }
             set { album_id = value; }
         }
 
-        [VirtualDatabaseColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]
+        [VirtualDatabaseColumn ("Name", "CoreArtists", "ArtistID", "ArtistID")]
         public override string ArtistName {
             get { return base.ArtistName; }
             set { base.ArtistName = value; }
         }
         
-        [VirtualDatabaseColumn("Title", "CoreAlbums", "AlbumID", "AlbumID")]
+        [VirtualDatabaseColumn ("Title", "CoreAlbums", "AlbumID", "AlbumID")]
         public override string AlbumTitle {
             get { return base.AlbumTitle; }
             set { base.AlbumTitle = value; }
         }
         
+        private int tag_set_id;
         [DatabaseColumn]
-        private int TagSetID;
+        public int TagSetID {
+            get { return tag_set_id; }
+            set { tag_set_id = value; }
+        }
         
+        private string music_brainz_id;
         [DatabaseColumn]
-        private string MusicBrainzID;
+        public string MusicBrainzID {
+            get { return music_brainz_id; }
+            set { music_brainz_id = value; }
+        }
         
         private string uri_field;
-        [DatabaseColumn("Uri")]
+        [DatabaseColumn ("Uri")]
         private string uri {
             get {
                 return
@@ -125,7 +140,7 @@ namespace Banshee.Collection.Database
         }
         
         private int? uri_type_field;
-        [DatabaseColumn("UriType")]
+        [DatabaseColumn ("UriType")]
         private int uri_type {
             get {
                 return uri_type_field.HasValue
@@ -170,7 +185,7 @@ namespace Banshee.Collection.Database
             set { base.FileSize = value; }
         }
         
-        [DatabaseColumn("Title")]
+        [DatabaseColumn ("Title")]
         public override string TrackTitle {
             get { return base.TrackTitle; }
             set { base.TrackTitle = value; }
@@ -194,7 +209,7 @@ namespace Banshee.Collection.Database
             set { base.Disc = value; }
         }
         
-        [DatabaseColumn("Duration")]
+        [DatabaseColumn ("Duration")]
         private long duration {
             get { return (long)Duration.TotalMilliseconds; }
             set { Duration = new TimeSpan (value * TimeSpan.TicksPerMillisecond); }
@@ -285,3 +300,6 @@ namespace Banshee.Collection.Database
         }
     }
 }
+
+#pragma warning restore 0169
+

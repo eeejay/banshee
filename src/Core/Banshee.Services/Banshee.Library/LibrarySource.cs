@@ -156,8 +156,9 @@ namespace Banshee.Library
                     // Remove from file system
                     try {
                         Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
-                    } catch (System.IO.FileNotFoundException e) {
-                    } catch (System.IO.DirectoryNotFoundException e) {}
+                    } catch (System.IO.FileNotFoundException) {
+                    } catch (System.IO.DirectoryNotFoundException) {
+                    }
 
                     // Remove from database
                     remove_track_command.ApplyValues (track.DbId, track.DbId, track.DbId);

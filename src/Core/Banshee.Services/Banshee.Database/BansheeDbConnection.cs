@@ -60,12 +60,12 @@ namespace Banshee.Database
         //private Gtk.Window slow_window;
         //private Gtk.ProgressBar slow_progress;
         
-        private void IterateSlow ()
+        /*private void IterateSlow ()
         {
-            /*while (Gtk.Application.EventsPending ()) {
+            while (Gtk.Application.EventsPending ()) {
                 Gtk.Application.RunIteration ();
-            }*/
-        }
+            }
+        }*/
         
         private void OnMigrationSlowStarted (string title, string message)
         {

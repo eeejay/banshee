@@ -40,7 +40,6 @@ namespace Banshee.Collection.Database
 {
     public class AlbumListDatabaseModel : AlbumListModel, ICacheableDatabaseModel
     {
-        private readonly BansheeDbConnection connection;
         private readonly BansheeModelProvider<LibraryAlbumInfo> provider;
         private readonly BansheeModelCache<LibraryAlbumInfo> cache;
         private readonly TrackListDatabaseModel track_model;
@@ -54,7 +53,6 @@ namespace Banshee.Collection.Database
         {
             provider = LibraryAlbumInfo.Provider;
             cache = new BansheeModelCache <LibraryAlbumInfo> (connection, uuid, this, provider);
-            this.connection = connection;
         }
 
         public AlbumListDatabaseModel(TrackListDatabaseModel trackModel, 
