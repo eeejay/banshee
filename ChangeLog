@@ -1,5 +1,11 @@
 2008-02-10  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* src/Dap/Banshee.DapCore/Makefile.am
+	* src/Dap/Banshee.DapCore/Banshee.DapCore/AsyncDevice.cs:
+	Added wrapper to make the calls to devices asynchronous
+	  
+2008-02-10  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/Device.cs:
 	  Commented out my changes because i can't make em compile ;)
 	 

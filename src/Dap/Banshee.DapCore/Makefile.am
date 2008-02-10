@@ -4,6 +4,7 @@ LINK = $(REF_DAP_DAPCORE)
 
 SOURCES =  \
 	Banshee.DapCore/AbstractDevice.cs \
+	Banshee.DapCore/AsyncDevice.cs \
 	Banshee.DapCore/DapCore.cs \
 	Banshee.DapCore/HalCore.cs \
 	Banshee.DapCore/IDevice.cs \

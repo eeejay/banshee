@@ -30,7 +30,7 @@ using Banshee.Dap;
 using Banshee.Collection;
 
 namespace Banshee.Dap.MassStorage {
-    public class Device : AbstractDevice {
+    public class Device  { //: AbstractDevice {
 		/*
 		public override void DownloadTrack (TrackInfo track, string destination)
 		{
