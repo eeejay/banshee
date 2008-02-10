@@ -1,5 +1,10 @@
 2008-02-10  Alan McGovern <alan.mcgovern@gmail.com> 
 
+	* src/Dap/Banshee.DapCore/Banshee.DapCore/AsyncDevice.cs:
+	Cosmetic changes and fixed a typo in UploadTrack
+	
+2008-02-10  Alan McGovern <alan.mcgovern@gmail.com> 
+
 	* src/Dap/Banshee.DapCore/Makefile.am
 	* src/Dap/Banshee.DapCore/Banshee.DapCore/AsyncDevice.cs:
 	Added wrapper to make the calls to devices asynchronous

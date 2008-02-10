@@ -48,67 +48,71 @@ namespace Banshee.Dap
 		}
 
 		
-		public AsyncDevice(IDevice device)
+		public AsyncDevice (IDevice device)
 		{
+			if (device == null)
+				throw new ArgumentNullException ("device");
+			
 			this.device = device;
-			device.Ejected += delegate { RaiseEjected(); };
-			device.Initialized += delegate { RaiseInitialized(); };
-			device.MetadataUpdated += delegate { RaiseMetadataUpdated(); };
-			device.TrackDownloaded += delegate { RaiseTrackDownloaded(); };
-			device.TrackRemoved += delegate { RaiseTrackRemoved(); };
-			device.TracksLoaded += delegate { RaiseTracksLoaded(); };
-			device.TrackUploaded += delegate { RaiseTrackUploaded(); };
+			device.Ejected += delegate { RaiseEjected (); };
+			device.Initialized += delegate { RaiseInitialized (); };
+			device.MetadataUpdated += delegate { RaiseMetadataUpdated (); };
+			device.TrackDownloaded += delegate { RaiseTrackDownloaded (); };
+			device.TrackRemoved += delegate { RaiseTrackRemoved (); };
+			device.TracksLoaded += delegate { RaiseTracksLoaded (); };
+			device.TrackUploaded += delegate { RaiseTrackUploaded (); };
 		}
 
 		public override void Dispose ()
 		{
-			device.Dispose();
+			device.Dispose ();
 		}
 
 		public override void DownloadTrack (Banshee.Collection.TrackInfo track, string destination)
 		{
-			ThreadPool.QueueUserWorkItem(delegate {
-				device.DownloadTrack(track, destination);
+			ThreadPool.QueueUserWorkItem (delegate {
+				device.DownloadTrack (track, destination);
 			});
 		}
 
 		public override void LoadTracks ()
 		{
-			ThreadPool.QueueUserWorkItem(delegate {
-				device.LoadTracks();
+			ThreadPool.QueueUserWorkItem (delegate {
+				device.LoadTracks ();
 			});
 		}
 
 		public override void RemoveTrack (Banshee.Collection.TrackInfo track)
 		{
-			ThreadPool.QueueUserWorkItem(delegate {
-				device.RemoveTrack(track);
+			ThreadPool.QueueUserWorkItem (delegate {
+				device.RemoveTrack (track);
 			});
 		}
 
 		public override void UpdateMetadata (Banshee.Collection.TrackInfo track)
 		{
-			device.UpdateMetadata(track);
+			ThreadPool.QueueUserWorkItem (delegate {
+				device.UpdateMetadata (track);
+			});
 		}
 
 		public override void UploadTrack (Banshee.Collection.TrackInfo track)
 		{
-			ThreadPool.QueueUserWorkItem(delegate {
-				device.UpdateMetadata(track);
+			ThreadPool.QueueUserWorkItem (delegate {
+				device.UploadTrack (track);
 			});
-			
 		}
 
 		public override void Eject ()
 		{
-			ThreadPool.QueueUserWorkItem(delegate {
-				device.Eject();
+			ThreadPool.QueueUserWorkItem (delegate {
+				device.Eject ();
 			});
 		}
 
-		public override bool Initialize (global::Hal.Device halDevice)
+		public override bool Initialize (Hal.Device halDevice)
 		{
-			return device.Initialize(halDevice);
+			return device.Initialize (halDevice);
 		}
 	}
 }
