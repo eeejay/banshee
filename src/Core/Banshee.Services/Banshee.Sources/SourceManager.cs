@@ -177,16 +177,6 @@ namespace Banshee.Sources
                 handler(evargs);
             }
         }
-        
-//        private void OnSourceViewChanged(object o, EventArgs args)
-//        {
-//            SourceEventHandler handler = SourceViewChanged;
-//            if(handler != null) {
-//                SourceEventArgs evargs = new SourceEventArgs();
-//                evargs.Source = o as Source;
-//                handler(evargs);
-//            }
-//        }
 
         private void OnChildSourceAdded(SourceEventArgs args)
         {

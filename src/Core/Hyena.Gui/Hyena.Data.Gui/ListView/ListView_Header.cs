@@ -73,7 +73,6 @@ namespace Hyena.Data.Gui
             }
         
             for (int i = 0; i < column_cache.Length; i++) {
-                column_cache[i].Column.VisibilityChanged -= OnColumnVisibilityChanged;
                 column_cache[i] = CachedColumn.Zero;
             }
             
@@ -98,7 +97,6 @@ namespace Hyena.Data.Gui
                 
                 column_cache[i] = new CachedColumn ();
                 column_cache[i].Column = column;
-                column.VisibilityChanged += OnColumnVisibilityChanged;
                 
                 column_cache[i].Width = (int)Math.Round (((double)list_alloc.Width * column.Width));
                 column_cache[i].X1 = i == 0 ? 0 : column_cache[i - 1].X2;
@@ -113,12 +111,6 @@ namespace Hyena.Data.Gui
             Array.Resize (ref column_cache, i);
         }
         
-        private void OnColumnVisibilityChanged (object o, EventArgs args)
-        {
-            RegenerateColumnCache ();
-            QueueDraw ();
-        }
-        
         protected virtual void OnColumnControllerUpdated ()
         {
             RegenerateColumnCache ();
@@ -130,24 +122,21 @@ namespace Hyena.Data.Gui
             Menu menu = new Menu ();
             
             if (clickedColumn.Id != null) { // FIXME: Also restrict if the column vis can't be changed
-                MenuItem hide_item = new MenuItem (String.Format (Catalog.GetString ("Hide {0}"), clickedColumn.Title));
-                hide_item.Data.Add ("column", clickedColumn);
-                hide_item.Data.Add ("hide", true);
-                hide_item.Activated += OnColumnMenuItemActivated;
-                menu.Append (hide_item);
+                menu.Append (new ColumnHideMenuItem (clickedColumn));
                 menu.Append (new SeparatorMenuItem ());
             }
             
-            foreach (Column column in ColumnController) {
+            Column [] columns = ColumnController.ToArray ();
+            Array.Sort (columns, delegate (Column a, Column b) {
+                return String.Compare (a.Title, b.Title);
+            });
+            
+            foreach (Column column in columns) {
                 if (column.Id == null) {
                     continue;
                 }
                 
-                CheckMenuItem item = new CheckMenuItem (column.Title);
-                item.Active = column.Visible;
-                item.Data.Add ("column", column);
-                item.Activated += OnColumnMenuItemActivated;
-                menu.Append (item);
+                menu.Append (new ColumnToggleMenuItem (column));
             }
             
             menu.ShowAll ();
@@ -158,28 +147,6 @@ namespace Hyena.Data.Gui
                 pos_y = win_y + y;
                 push_in = true;
             }, 3, Gtk.Global.CurrentEventTime);
-        }
-        
-        private void OnColumnMenuItemActivated (object o, EventArgs args)
-        {
-            MenuItem item = (MenuItem)o;
-            CheckMenuItem toggle_item = item as CheckMenuItem;
-            Column column = null;
-            
-            if (item.Data.Contains ("column")) {
-                column = item.Data["column"] as Column;
-            }
-            
-            if (column == null) {
-                return;
-            }
-            
-            if (item.Data.Contains ("hide")) {
-                column.Visible = false;
-                return;
-            } else if (toggle_item != null) {
-                column.Visible = toggle_item.Active;
-            }
         }
         
         private void ResizeColumn (double x)
@@ -327,6 +294,50 @@ namespace Hyena.Data.Gui
             }
         }
         
+#endregion
+
+#region Gtk.MenuItem Wrappers for the column context menu
+
+        private class ColumnToggleMenuItem : CheckMenuItem
+        {
+            private Column column;
+            private bool ready = false;
+            
+            public ColumnToggleMenuItem (Column column) : base (column.Title)
+            {
+                this.column = column;
+                Active = column.Visible; 
+                ready = true;
+            }
+            
+            protected override void OnActivated ()
+            {
+                base.OnActivated ();
+                
+                if (!ready) {
+                    return;
+                }
+                
+                column.Visible = Active;
+            }
+        }
+        
+        private class ColumnHideMenuItem : MenuItem
+        {
+            private Column column;
+            
+            public ColumnHideMenuItem (Column column) 
+                : base (String.Format (Catalog.GetString ("Hide {0}"), column.Title))
+            {
+                this.column = column;
+            }
+            
+            protected override void OnActivated ()
+            {
+                column.Visible = false;
+            }
+        }
+
 #endregion
 
     }

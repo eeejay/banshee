@@ -32,16 +32,18 @@ namespace Hyena.SExpEngine
 {
     public class ListFunctionSet : FunctionSet
     {
-        private TreeNode EvaluateList(TreeNode node)
-        {
-            TreeNode list = new TreeNode();
-            
-            foreach(TreeNode child in node.Children) {
-                list.AddChild(Evaluate(child));
-            }
-            
-            return list;
-        }
+        // FIXME: Why is this here? --Aaron
+        //
+        // private TreeNode EvaluateList(TreeNode node)
+        // {
+        //    TreeNode list = new TreeNode();
+        //    
+        //    foreach(TreeNode child in node.Children) {
+        //        list.AddChild(Evaluate(child));
+        //    }
+        //    
+        //    return list;
+        // }
     
         private bool IsList(TreeNode node)
         {

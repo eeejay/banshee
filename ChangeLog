@@ -1,3 +1,20 @@
+2008-02-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Fixed some really bad compiler warnings and made more progress on column
+	show/hide support through the columns menu; visibility now persists
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs:
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ObjectListView.cs:
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	* src/Core/Hyena/Hyena.Query/XmlQueryParser.cs:
+	* src/Core/Hyena/Hyena.SExpEngine/ListFunctionSet.cs: Cleaned up
+	more compiler warnings
+
 2008-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:

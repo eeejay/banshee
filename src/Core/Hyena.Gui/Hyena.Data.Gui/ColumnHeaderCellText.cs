@@ -36,7 +36,6 @@ namespace Hyena.Data.Gui
     {
         public delegate Column DataHandler ();
         
-        private Pango.Layout layout;
         private DataHandler data_handler;
         private bool has_sort;
         

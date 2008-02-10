@@ -53,7 +53,7 @@ namespace Hyena.Query.Gui
         private Operator op;
 
         private QueryField [] sorted_fields;
-        private Operator [] operators;
+        //private Operator [] operators; FIXME: not used --Aaron
 
         public QueryTermBox (QueryFieldSet fieldSet) : base ()
         {

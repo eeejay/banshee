@@ -31,9 +31,7 @@ using System;
 namespace Hyena.Data.Gui
 {
     public class ObjectListView : ListView<object>
-    {
-        private ColumnController column_controller;
-        
+    {   
         public ObjectListView () : base ()
         {
             ColumnController = new ColumnController();

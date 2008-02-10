@@ -66,7 +66,7 @@ namespace Hyena.Query
 
                 QueryNode node = Parse (query.FirstChild as XmlElement, null);
                 return (node != null) ? node.Trim () : null;
-            } catch (Exception e) {
+            } catch (Exception) {
             }
             return null;
         }

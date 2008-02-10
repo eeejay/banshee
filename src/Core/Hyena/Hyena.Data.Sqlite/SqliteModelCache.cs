@@ -45,7 +45,7 @@ namespace Hyena.Data.Sqlite
         private string reload_sql;
         private int uid;
         private int rows;
-        private bool warm;
+        // private bool warm;
         private int first_order_id;
 
         public delegate void AggregatesUpdatedEventHandler (IDataReader reader);
@@ -207,7 +207,7 @@ namespace Hyena.Data.Sqlite
                 ));
             } else {
                 //Console.WriteLine ("Found existing cache for {0}: {1}", id, uid);
-                warm = true;
+                //warm = true;
                 Clear ();
                 UpdateAggregates ();
             }

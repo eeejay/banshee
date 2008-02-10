@@ -53,6 +53,9 @@ namespace Hyena.Data.Gui
         public void Clear ()
         {
             lock (this) {
+                foreach (Column column in columns) {
+                    column.VisibilityChanged -= OnColumnVisibilityChanged;
+                }
                 columns.Clear ();
             }
             
@@ -62,6 +65,9 @@ namespace Hyena.Data.Gui
         public void AddRange (params Column [] range)
         {
             lock (this) {
+                foreach (Column column in range) {
+                    column.VisibilityChanged += OnColumnVisibilityChanged;
+                }
                 columns.AddRange (range);
             }
 
@@ -71,6 +77,7 @@ namespace Hyena.Data.Gui
         public void Add (Column column)
         {
             lock (this) {
+                column.VisibilityChanged += OnColumnVisibilityChanged;
                 columns.Add (column);
             }
             
@@ -80,6 +87,7 @@ namespace Hyena.Data.Gui
         public void Insert (Column column, int index)
         {
             lock (this) {
+                column.VisibilityChanged += OnColumnVisibilityChanged;
                 columns.Insert (index, column);
             }
             
@@ -89,6 +97,7 @@ namespace Hyena.Data.Gui
         public void Remove (Column column)
         {
             lock (this) {
+                column.VisibilityChanged -= OnColumnVisibilityChanged;
                 columns.Remove (column);
             }
             
@@ -98,6 +107,8 @@ namespace Hyena.Data.Gui
         public void Remove (int index)
         {
             lock (this) {
+                Column column = columns[index];
+                column.VisibilityChanged -= OnColumnVisibilityChanged;
                 columns.RemoveAt (index);
             }
             
@@ -130,6 +141,16 @@ namespace Hyena.Data.Gui
             lock (this) {
                 return columns.IndexOf (column);
             }
+        }
+        
+        public Column [] ToArray ()
+        {
+            return columns.ToArray ();
+        }
+        
+        private void OnColumnVisibilityChanged (object o, EventArgs args)
+        {
+            OnUpdated ();
         }
         
         public Column this[int index] {

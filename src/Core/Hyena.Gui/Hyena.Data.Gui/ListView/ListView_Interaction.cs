@@ -350,7 +350,6 @@ namespace Hyena.Data.Gui
                     header_window.Cursor = drag_cursor;
                     
                     Column swap_column = GetColumnAt ((int)evnt.X);
-                    bool x_drag_updated = false;
                     
                     if (swap_column != null) {
                         CachedColumn swap_column_c = GetCachedColumnForColumn (swap_column);
