@@ -49,7 +49,6 @@ namespace Banshee.Playlist
     public abstract class AbstractPlaylistSource : DatabaseSource
     {
         protected int? dbid;
-        private static string icon_name;
 
         protected abstract string SourceTable { get; }
         protected abstract string SourcePrimaryKey { get; }
@@ -105,7 +104,7 @@ namespace Banshee.Playlist
                 Update ();
         }
 
-        public void UserNotifyUpdated ()
+        public void NotifyUpdated ()
         {
             OnUserNotifyUpdated ();
         }

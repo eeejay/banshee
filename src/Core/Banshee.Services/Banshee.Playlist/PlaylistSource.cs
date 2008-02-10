@@ -49,11 +49,10 @@ namespace Banshee.Playlist
 {
     public class PlaylistSource : AbstractPlaylistSource, IUnmapableSource
     {
-        private static HyenaSqliteCommand add_track_command;
+        //private static HyenaSqliteCommand add_track_command;
         private static HyenaSqliteCommand remove_track_command;
         private static HyenaSqliteCommand add_track_range_command;
         private static HyenaSqliteCommand remove_track_range_command;
-        private static HyenaSqliteCommand delete_command;
 
         private static string generic_name = Catalog.GetString ("Playlist");
 
@@ -71,9 +70,9 @@ namespace Banshee.Playlist
 
         static PlaylistSource () 
         {
-            add_track_command = new HyenaSqliteCommand (
-                "INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES (?, ?)"
-            );
+            //add_track_command = new HyenaSqliteCommand (
+            //    "INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES (?, ?)"
+            //);
 
             remove_track_command = new HyenaSqliteCommand (
                 "DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND TrackID = ?"

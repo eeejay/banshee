@@ -139,7 +139,7 @@ namespace Banshee.Gui
             PlaylistSource playlist = new PlaylistSource ("New Playlist");
             playlist.Save ();
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
-            playlist.UserNotifyUpdated ();
+            playlist.NotifyUpdated ();
 
             // TODO should begin editing the name after making it, but this changed
             // the ActiveSource to the new playlist and we don't want that.

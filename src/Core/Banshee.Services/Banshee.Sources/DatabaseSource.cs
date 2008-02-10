@@ -194,7 +194,6 @@ namespace Banshee.Sources
         protected void AfterInitialized ()
         {
             Reload ();
-            //track_model.Reloaded += OnTrackModelReloaded;
             OnSetupComplete ();
         }
 
@@ -221,15 +220,6 @@ namespace Banshee.Sources
                 }
                 Reload ();
             }
-        }
-
-#endregion
-
-#region Private Methods
-
-        private void OnTrackModelReloaded (object o, EventArgs args)
-        {
-            OnUpdated ();
         }
 
 #endregion
