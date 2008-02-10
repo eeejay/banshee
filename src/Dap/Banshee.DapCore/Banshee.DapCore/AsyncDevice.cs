@@ -110,7 +110,7 @@ namespace Banshee.Dap
 			});
 		}
 
-		public override bool Initialize (Hal.Device halDevice)
+		public override bool Initialize (global::Hal.Device halDevice)
 		{
 			return device.Initialize (halDevice);
 		}
