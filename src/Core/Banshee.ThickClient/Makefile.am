@@ -43,10 +43,10 @@ SOURCES =  \
 	Banshee.Gui.Widgets/ArtworkPopup.cs \
 	Banshee.Gui.Widgets/ConnectedSeekSlider.cs \
 	Banshee.Gui.Widgets/ConnectedVolumeButton.cs \
+	Banshee.Gui.Widgets/PlaylistMenuItem.cs \
 	Banshee.Gui.Widgets/TrackInfoDisplay.cs \
 	Banshee.Gui.Widgets/UserJobTile.cs \
 	Banshee.Gui.Widgets/UserJobTileHost.cs \
-	Banshee.Gui.Widgets/PlaylistMenuItem.cs \
 	Banshee.Gui/BansheeActionGroup.cs \
 	Banshee.Gui/BansheeIconFactory.cs \
 	Banshee.Gui/CommonServices.cs \
@@ -65,8 +65,8 @@ SOURCES =  \
 	Banshee.Library.Gui/ImportDialog.cs \
 	Banshee.Query.Gui/BansheeQueryBox.cs \
 	Banshee.Query.Gui/PlaylistQueryValueEntry.cs \
-	Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs \
 	Banshee.Query.Gui/RatingQueryValueEntry.cs \
+	Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs \
 	Banshee.SmartPlaylist.Gui/Editor.cs \
 	Banshee.Sources.Gui/CellEditEntry.cs \
 	Banshee.Sources.Gui/SourceRowRenderer.cs \
