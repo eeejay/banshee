@@ -43,7 +43,11 @@ namespace Hyena.Gui.Theatrics
         private bool playing = true;
         
         public event ActorStepHandler ActorStep;
+        
+        #pragma warning disable 0067
+        // FIXME: This is to mute gmcs: https://bugzilla.novell.com/show_bug.cgi?id=360455
         public event EventHandler Iteration;
+        #pragma warning restore 0067
         
         public Stage ()
         {
