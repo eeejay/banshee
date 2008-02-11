@@ -37,7 +37,7 @@ using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Playlists.Formats.Xspf;
 
-namespace Banshee.LastFM
+namespace Banshee.Lastfm
 {
     public class LastFMTrackInfo : TrackInfo
     {

@@ -42,7 +42,7 @@ using Banshee.MediaEngine;
 
 using Last.FM.Gui;
  
-namespace Banshee.LastFM
+namespace Banshee.Lastfm
 {   
     public class LastFMSource : Source
     {

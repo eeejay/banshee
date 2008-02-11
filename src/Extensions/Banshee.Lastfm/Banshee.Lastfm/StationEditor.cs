@@ -39,7 +39,7 @@ using Banshee.Database;
 using Banshee.Widgets;
 using Banshee.Gui.Dialogs;
 
-namespace Banshee.LastFM
+namespace Banshee.Lastfm
 {
     public class StationEditor : GladeDialog
     {

@@ -42,7 +42,7 @@ using Banshee.Base;
 using Banshee.Playlists.Formats.Xspf;
 using Last.FM;
 
-namespace Banshee.LastFM
+namespace Banshee.Lastfm
 {
     public class ConnectionStateChangedArgs : EventArgs
     {

@@ -42,7 +42,7 @@ using Banshee.Metadata;
 using Banshee.MediaEngine;
 using Banshee.Playlists.Formats.Xspf;
  
-namespace Banshee.LastFM
+namespace Banshee.Lastfm
 {
     public class StationSource : Source
     {

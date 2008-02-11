@@ -1,5 +1,10 @@
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* configure.ac:
+	* src/Extensions/Banshee.LastFM/*: Rename to Banshee.Lastfm.
+
+2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/*: Update svn:ignore
 
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>

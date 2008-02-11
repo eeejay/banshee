@@ -50,7 +50,7 @@ public static class PluginModuleEntry
     }
 }
 
-namespace Banshee.LastFM
+namespace Banshee.Lastfm
 {
     public class LastFMPlugin : Banshee.Plugins.Plugin
     {
