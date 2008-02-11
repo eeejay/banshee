@@ -1,4 +1,5 @@
 SUBDIRS = \
+   Mono.Media \
    Lastfm \
    Lastfm.Gui
 

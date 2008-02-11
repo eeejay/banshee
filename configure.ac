@@ -140,6 +140,7 @@ src/Backends/Banshee.GStreamer/Makefile
 src/Backends/Banshee.Unix/Makefile
 
 src/Libraries/Makefile
+src/Libraries/Mono.Media/Makefile
 src/Libraries/Lastfm/Makefile
 src/Libraries/Lastfm.Gui/Makefile
 

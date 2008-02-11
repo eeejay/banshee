@@ -1,5 +1,16 @@
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* build/build.environment.mk:
+	* configure.ac:
+	* src/Libraries/Makefile.am:
+	* src/Libraries/Mono.Media/Makefile.am: Create Mono.Media library.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats.Xspf/*: Move to
+	Mono.Media, so it can be used by Lastfm library.
+
+2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* configure.ac:
 	* src/Extensions/Banshee.LastFM/*: Rename to Banshee.Lastfm.
 

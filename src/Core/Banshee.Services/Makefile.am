@@ -70,13 +70,6 @@ SOURCES =  \
 	Banshee.Playlist/AbstractPlaylistSource.cs \
 	Banshee.Playlist/PlaylistFileUtil.cs \
 	Banshee.Playlist/PlaylistSource.cs \
-	Banshee.Playlists.Formats.Xspf/LinkEntry.cs \
-	Banshee.Playlists.Formats.Xspf/MetaEntry.cs \
-	Banshee.Playlists.Formats.Xspf/Playlist.cs \
-	Banshee.Playlists.Formats.Xspf/Track.cs \
-	Banshee.Playlists.Formats.Xspf/W3CDateTime.cs \
-	Banshee.Playlists.Formats.Xspf/XmlUtil.cs \
-	Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs \
 	Banshee.Playlists.Formats/AsxPlaylistFormat.cs \
 	Banshee.Playlists.Formats/InvalidPlaylistException.cs \
 	Banshee.Playlists.Formats/IPlaylistFormat.cs \
