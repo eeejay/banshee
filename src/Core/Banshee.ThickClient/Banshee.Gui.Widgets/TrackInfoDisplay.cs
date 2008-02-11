@@ -239,9 +239,6 @@ namespace Banshee.Gui.Widgets
         
         private void RenderAnimation (Cairo.Context cr, Gdk.Rectangle clip)
         {
-            Cairo.Surface ps;
-            Cairo.Context pcr;
-            
             if (stage.Actor == null) {
                 // We are not in a transition, just render
                 RenderStage (cr, current_track, current_pixbuf);

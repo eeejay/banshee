@@ -148,7 +148,7 @@ namespace Banshee.Gui
             }
         }
 
-        private void OnImportPlaylist (object o, EventArgs args)
+        /*private void OnImportPlaylist (object o, EventArgs args)
         {
             // Prompt user for location of the playlist.
             Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog(
@@ -209,7 +209,7 @@ namespace Banshee.Gui
                 md.Destroy();
                 return;
             }
-        }
+        }*/
         
         private void OnQuit (object o, EventArgs args)
         {

@@ -91,8 +91,6 @@ namespace Banshee.Equalizer.Gui
             }
             
             eq_enabled_checkbox.Clicked += OnEnableDisable;
-            
-            Window.Show ();
         }
          
         private void OnNewPreset (object o, EventArgs args)

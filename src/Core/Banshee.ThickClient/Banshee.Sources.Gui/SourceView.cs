@@ -53,7 +53,6 @@ namespace Banshee.Sources.Gui
         private ListViewGraphics graphics;
         private Cairo.Context cr;
         
-        private uint user_update_timeout_id = 0;
         private Stage<TreeIter> notify_stage = new Stage<TreeIter> (2000);
         
         private TreeStore store;

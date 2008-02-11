@@ -66,7 +66,6 @@ namespace Banshee.Collection.Gui
         private Widget browser_container;
         private InterfaceActionService action_service;
         private ActionGroup browser_view_actions;
-        private uint action_merge_id;
         
         private static string menu_xml = @"
             <ui>
@@ -116,7 +115,7 @@ namespace Banshee.Collection.Gui
                 });
                 
                 action_service.AddActionGroup (browser_view_actions);
-                action_merge_id = action_service.UIManager.NewMergeId ();
+                //action_merge_id = action_service.UIManager.NewMergeId ();
                 action_service.UIManager.AddUiFromString (menu_xml);
             }
             

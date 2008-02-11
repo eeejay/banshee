@@ -38,7 +38,6 @@ namespace Banshee.Collection.Gui
 {
     public class ColumnCellAlbum : ColumnCell
     {
-        private static int pixbuf_size = 48;
         private static int pixbuf_spacing = 4;
         
         private static Gdk.Pixbuf default_cover_pixbuf = IconThemeUtils.LoadIcon (48, "media-optical");

@@ -52,7 +52,7 @@ namespace Banshee.Library.Gui
             accel_group = new AccelGroup ();
 
             if (ServiceManager.Contains ("GtkElementsService")) {
-                Dialog.TransientFor = ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow;
+                Dialog.TransientFor = ServiceManager.Get<GtkElementsService> ().PrimaryWindow;
             }
             
             Dialog.WindowPosition = WindowPosition.CenterOnParent;
@@ -93,10 +93,9 @@ namespace Banshee.Library.Gui
             source_combo_box.SetAttributes (text_cr, "text", 1);
             
             TreeIter active_iter = TreeIter.Zero;
-            TreeIter migration_iter = TreeIter.Zero;
             
             // Add the standalone import sources
-            foreach (IImportSource source in ServiceManager.Get<ImportSourceManager> ("ImportSourceManager")) {
+            foreach (IImportSource source in ServiceManager.Get<ImportSourceManager> ()) {
                 AddSource (source);
             }
             

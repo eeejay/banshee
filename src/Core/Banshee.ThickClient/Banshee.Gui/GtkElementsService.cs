@@ -103,6 +103,10 @@ namespace Banshee.Gui
             }
         }
         
+        public BansheeIconFactory IconFactory {
+            get { return icon_factory; }
+        }
+        
         PropertyStore IPropertyStoreExpose.PropertyStore {
             get { return property_store; }
         }

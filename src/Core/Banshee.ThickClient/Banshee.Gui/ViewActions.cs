@@ -76,6 +76,7 @@ namespace Banshee.Gui
         private void OnShowEqualizer (object o, EventArgs args)
         {
             EqualizerWindow eqwin = new EqualizerWindow ();
+            eqwin.Window.Show ();
         }
     }
 }

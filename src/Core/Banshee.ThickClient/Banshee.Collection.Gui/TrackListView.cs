@@ -116,7 +116,6 @@ namespace Banshee.Collection.Gui
 
         protected override void OnDragDataGet (Gdk.DragContext context, SelectionData selection_data, uint info, uint time)
         {
-            byte [] selection_data_raw;
             DragDropTargetType type = (DragDropTargetType)info;
             
             if (type != DragDropTargetType.ModelSelection || Selection.Count <= 0) {

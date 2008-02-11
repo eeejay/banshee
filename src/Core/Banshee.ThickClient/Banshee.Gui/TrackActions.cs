@@ -41,6 +41,7 @@ using Banshee.Collection.Database;
 using Banshee.ServiceStack;
 using Banshee.Widgets;
 using Banshee.Gui.Dialogs;
+using Banshee.Gui.Widgets;
 
 namespace Banshee.Gui
 {
@@ -297,11 +298,10 @@ namespace Banshee.Gui
                             separator_added = true;
                         }
                         
-                        ImageMenuItem item = new ImageMenuItem (playlist.Name);
+                        PlaylistMenuItem item = new PlaylistMenuItem (playlist);
                         item.Image = new Gtk.Image (pl_pb);
                         item.Activated += OnAddToExistingPlaylist;
                         item.Sensitive = playlist != active_source;
-                        item.Data.Add ("playlist", playlist);
                         submenu.Append (item);
                     }
                 }
@@ -324,10 +324,7 @@ namespace Banshee.Gui
 
         private void OnAddToExistingPlaylist (object o, EventArgs args)
         {
-            MenuItem item = (MenuItem)o;
-            if (item.Data != null && item.Data.ContainsKey ("playlist")) {
-                ((PlaylistSource)item.Data["playlist"]).AddSelectedTracks (TrackSelector.TrackModel);
-            }
+            ((PlaylistMenuItem)o).Playlist.AddSelectedTracks (TrackSelector.TrackModel);
         }
 
         private void OnRemoveTracks (object o, EventArgs args)
@@ -380,7 +377,7 @@ namespace Banshee.Gui
         private void OnSearchForSameArtist (object o, EventArgs args)
         {
             Source source = ServiceManager.SourceManager.ActiveSource;
-            ITrackModelSource track_source = source as ITrackModelSource;
+            // ITrackModelSource track_source = source as ITrackModelSource; FIXME: What? --Aaron
             foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
                 source.FilterQuery = BansheeQuery.ArtistField.ToTermString (":", track.ArtistName);
                 break;
@@ -390,16 +387,16 @@ namespace Banshee.Gui
         private void OnSearchForSameAlbum (object o, EventArgs args)
         {
             Source source = ServiceManager.SourceManager.ActiveSource;
-            ITrackModelSource track_source = source as ITrackModelSource;
+            // ITrackModelSource track_source = source as ITrackModelSource; FIXME: What? --Aaron
             foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
                 source.FilterQuery = BansheeQuery.AlbumField.ToTermString (":", track.AlbumTitle);
                 break;
             }
         }
 
-        private void OnJumpToPlayingTrack (object o, EventArgs args)
+        /*private void OnJumpToPlayingTrack (object o, EventArgs args)
         {
-        }
+        }*/
 
 #endregion
 
