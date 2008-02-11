@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 using Hyena.Data.Gui;
 using Banshee.Configuration;
@@ -56,10 +57,16 @@ namespace Banshee.Collection.Gui
                             "visible", column.Visible);
                     }
                 }
+                
+                // Create a copy so we can read the original index
+                List<Column> columns = new List<Column> (Columns);
             
                 Columns.Sort (delegate (Column a, Column b) {
-                    int a_order = a.Id == null ? -1 : ConfigurationClient.Get<int> (MakeNamespace (a.Id), "order", 1);
-                    int b_order = b.Id == null ? -1 : ConfigurationClient.Get<int> (MakeNamespace (b.Id), "order", 1);
+                    int a_order = a.Id == null ? -1 : ConfigurationClient.Get<int> (
+                        MakeNamespace (a.Id), "order", columns.IndexOf (a));
+                    int b_order = b.Id == null ? -1 : ConfigurationClient.Get<int> (
+                        MakeNamespace (b.Id), "order", columns.IndexOf (b));
+                    
                     return a_order.CompareTo (b_order);
                 });
                 
