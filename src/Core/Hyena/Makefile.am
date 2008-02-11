@@ -38,9 +38,11 @@ SOURCES =  \
 	Hyena.Query/IntegerQueryValue.cs \
 	Hyena.Query/QueryField.cs \
 	Hyena.Query/QueryFieldSet.cs \
+	Hyena.Query/QueryLimit.cs \
 	Hyena.Query/QueryListNode.cs \
 	Hyena.Query/QueryNode.cs \
 	Hyena.Query/QueryOperator.cs \
+	Hyena.Query/QueryOrder.cs \
 	Hyena.Query/QueryParser.cs \
 	Hyena.Query/QueryTermNode.cs \
 	Hyena.Query/QueryToken.cs \

@@ -64,11 +64,10 @@ namespace Hyena.Query.Gui
             combo.AppendText (Catalog.GetString ("weeks"));
             combo.AppendText (Catalog.GetString ("months"));
             combo.AppendText (Catalog.GetString ("years"));
+            combo.Realized += delegate { combo.Active = 1; };
             Add (combo);
 
             Add (new Label ("ago"));
-
-            combo.Active = 1;
 
             spin_button.ValueChanged += HandleValueChanged;
             combo.Changed += HandleValueChanged;
@@ -80,7 +79,6 @@ namespace Hyena.Query.Gui
                 spin_button.ValueChanged -= HandleValueChanged;
                 combo.Changed -= HandleValueChanged;
                 query_value = value as DateQueryValue;
-                //spin_button.Value = (double) (query_value.IsEmpty ? query_value.DefaultValue : query_value.IntValue);
                 combo.Active = Array.IndexOf (factors, query_value.Factor);
                 spin_button.ValueChanged += HandleValueChanged;
                 combo.Changed += HandleValueChanged;
@@ -89,7 +87,7 @@ namespace Hyena.Query.Gui
 
         protected void HandleValueChanged (object o, EventArgs args)
         {
-            query_value.SetRelativeValue (spin_button.ValueAsInt, factors [combo.Active]);
+            query_value.SetRelativeValue (-spin_button.ValueAsInt, factors [combo.Active]);
         }
     }
 }

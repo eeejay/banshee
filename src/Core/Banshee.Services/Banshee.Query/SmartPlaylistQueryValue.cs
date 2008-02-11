@@ -31,7 +31,7 @@ using Hyena.Query;
 
 namespace Banshee.Query
 {
-    public class SmartPlaylistQueryValue : IntegerQueryValue
+    public class SmartPlaylistQueryValue : PlaylistQueryValue
     {
     }
 }

@@ -1,5 +1,5 @@
 //
-// RatingQueryValueEntry.cs
+// QueryLimit.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -27,43 +27,55 @@
 //
 
 using System;
-using Gtk;
+using System.Text;
+using System.Collections.Generic;
 
-using Hyena.Query;
-using Hyena.Query.Gui;
-
-using Banshee.Widgets;
-using Banshee.Query;
-
-namespace Banshee.Query.Gui
+namespace Hyena.Query
 {
-    public class RatingQueryValueEntry : QueryValueEntry
+    public class QueryLimit
     {
-        protected RatingEntry entry;
-        protected RatingQueryValue query_value;
-
-        public RatingQueryValueEntry () : base ()
-        {
-            entry = new RatingEntry ();
-            entry.Changed += HandleValueChanged;
-
-            Add (entry);
+        private string name;
+        public string Name {
+            get { return name; }
         }
 
-        public override QueryValue QueryValue {
-            get { return query_value; }
-            set { 
-                entry.Changed -= HandleValueChanged;
-                query_value = value as RatingQueryValue;
-                entry.Value = (int) (query_value.IsEmpty ? query_value.DefaultValue : query_value.IntValue);
-                query_value.SetValue (entry.Value);
-                entry.Changed += HandleValueChanged;
-            }
+        private string label;
+        public string Label {
+            get { return label; }
+            set { label = value; }
         }
 
-        protected void HandleValueChanged (object o, EventArgs args)
+        private bool row_based;
+        public bool RowBased {
+            get { return row_based; }
+        }
+
+        private int factor = 1;
+        public int Factor {
+            get { return factor; }
+        }
+
+        private string column;
+        public string Column {
+            get { return column; }
+        }
+
+        public QueryLimit (string name, string label, string column, int factor) : this (name, label, false)
         {
-            query_value.SetValue (entry.Value);
+            this.column = column;
+            this.factor = factor;
+        }
+
+        public QueryLimit (string name, string label, bool row_based)
+        {
+            this.name = name;
+            this.label = label;
+            this.row_based = row_based;
+        }
+
+        public string ToSql (IntegerQueryValue limit_value)
+        {
+            return RowBased ? String.Format ("LIMIT {0}", limit_value.ToSql ()) : null;
         }
     }
 }

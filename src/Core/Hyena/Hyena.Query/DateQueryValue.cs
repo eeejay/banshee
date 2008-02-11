@@ -62,7 +62,8 @@ namespace Hyena.Query
             get { return "date"; }
         }
 
-        protected static AliasedObjectSet<Operator> operators = new AliasedObjectSet<Operator> (Equal, NotEqual, LessThan, GreaterThan, LessThanEqual, GreaterThanEqual);
+        //protected static AliasedObjectSet<Operator> operators = new AliasedObjectSet<Operator> (Equal, NotEqual, LessThan, GreaterThan, LessThanEqual, GreaterThanEqual);
+        protected static AliasedObjectSet<Operator> operators = new AliasedObjectSet<Operator> (LessThanEqual, GreaterThanEqual);
         public override AliasedObjectSet<Operator> OperatorSet {
             get { return operators; }
         }

@@ -102,6 +102,11 @@ namespace Hyena.Query
             return Value.ToString ();
         }
 
+        public override string ToString ()
+        {
+            return Value.ToString ();
+        }
+
         public abstract string ToSql ();
     }
 }

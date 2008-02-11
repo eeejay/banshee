@@ -89,6 +89,13 @@ namespace Hyena.Query
             DetermineFactor ();
         }
 
+        public void SetValue (int value, FileSizeFactor factor)
+        {
+            this.value = (long) value * (long) factor;
+            this.factor = factor;
+            IsEmpty = false;
+        }
+
         protected void DetermineFactor ()
         {
             if (!IsEmpty && value != 0) {

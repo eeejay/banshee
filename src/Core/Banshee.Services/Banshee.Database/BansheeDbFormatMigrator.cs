@@ -337,9 +337,8 @@ namespace Banshee.Database
                     Name                TEXT NOT NULL,
                     Condition           TEXT,
                     OrderBy             TEXT,
-                    OrderDir            TEXT,
                     LimitNumber         TEXT,
-                    LimitCriterion      INTEGER
+                    LimitCriterion      TEXT
                 )
             ");
                 

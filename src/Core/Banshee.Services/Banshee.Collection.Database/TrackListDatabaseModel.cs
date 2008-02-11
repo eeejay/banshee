@@ -112,77 +112,11 @@ namespace Banshee.Collection.Database
             }
         }
 
-        private string AscDesc ()
-        {
-            return sort_column.SortType == SortType.Ascending ? " ASC" : " DESC";
-        }
-
         private void GenerateSortQueryPart()
         {
-            if(sort_column == null) {
-                sort_query = null;
-                return;
-            }
-            
-            sort_query = GetSort (sort_column.SortKey, AscDesc ());
-        }
-
-        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
-        public static string GetSort (string key, string ascDesc)
-        {
-            string sort_query = null;
-            switch(key) {
-                case "Track":
-                    sort_query = String.Format (@"
-                        lower(CoreArtists.Name) ASC, 
-                        lower(CoreAlbums.Title) ASC, 
-                        CoreTracks.TrackNumber {0}", ascDesc); 
-                    break;
-
-                case "Artist":
-                    sort_query = String.Format (@"
-                        lower(CoreArtists.Name) {0}, 
-                        lower(CoreAlbums.Title) ASC,
-                        CoreTracks.Disc ASC,
-                        CoreTracks.TrackNumber ASC,
-                        CoreTracks.Uri ASC", ascDesc); 
-                    break;
-
-                case "Album":
-                    sort_query = String.Format (@"
-                        lower(CoreAlbums.Title) {0},
-                        CoreTracks.Disc ASC,
-                        CoreTracks.TrackNumber ASC,
-                        CoreTracks.Uri ASC", ascDesc); 
-                    break;
-
-                case "Title":
-                    sort_query = String.Format (@"
-                        lower(CoreTracks.Title) {0},
-                        lower(CoreArtists.Name) ASC, 
-                        lower(CoreAlbums.Title) ASC", ascDesc); 
-                    break;
-
-                case "Random":
-                    sort_query = "RANDOM ()";
-                    break;
-
-                case "Year":
-                case "Disc":
-                case "Duration":
-                case "Rating":
-                case "PlayCount":
-                case "SkipCount":
-                case "LastPlayedStamp":
-                case "DateAddedStamp":
-                case "Uri":
-                    sort_query = String.Format (
-                        "CoreTracks.{0} {1}, {2}",
-                        key, ascDesc, default_sort
-                    );
-                    break;
-            }
-            return sort_query;
+            sort_query = (sort_column == null) ?
+                null :
+                BansheeQuery.GetSort (sort_column.SortKey, sort_column.SortType == SortType.Ascending);
         }
 
         public void Refilter()

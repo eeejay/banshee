@@ -28,7 +28,10 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Text;
+
+using Mono.Unix;
 
 using Gtk;
 using Hyena;
@@ -38,83 +41,107 @@ namespace Hyena.Query.Gui
 {
     public class QueryBox : VBox
     {
-        private QueryFieldSet field_set;
+        private QueryTermsBox terms_box;
 
-        private QueryTermBox first_row = null;
-        public QueryTermBox FirstRow {
-            get { return first_row; }
+        private QueryLimitBox limit_box;
+        public QueryLimitBox LimitBox {
+            get { return limit_box; }
         }
-        
-        public QueryBox (QueryFieldSet fieldSet) : base()
+
+        private ComboBox terms_logic_combo;
+        private CheckButton terms_enabled_checkbox;
+        private Label terms_label;
+
+        public QueryBox (QueryFieldSet fieldSet, QueryOrder [] orders, QueryLimit [] limits) : base ()
         {
-            this.field_set = fieldSet;
-            CreateRow (false);
+            //this.sorted_fields = fieldSet.Fields;
+            //this.field_set = fieldSet;
+            terms_box = new QueryTermsBox (fieldSet);
+            limit_box = new QueryLimitBox (orders, limits);
+
+            BuildInterface ();
+        }
+
+        private void BuildInterface ()
+        {
+            Alignment matchesAlignment = new Alignment (0.0f, 0.0f, 1.0f, 1.0f);
+            matchesAlignment.Show ();
+            matchesAlignment.SetPadding (5, 5, 5, 5);
+            matchesAlignment.Add (terms_box);
+        
+            Frame matchesFrame = new Frame (null);
+            matchesFrame.Show ();
+            matchesFrame.Add (matchesAlignment);
+            matchesFrame.LabelWidget = BuildMatchHeader ();
+
+            PackStart(matchesFrame, true, true, 0);
+            PackStart(limit_box, false, false, 0);
+
+            //ShowAll ();
+        }
+
+        private HBox BuildMatchHeader ()
+        {
+            HBox header = new HBox ();
+            header.Show ();
+            
+            terms_enabled_checkbox = new CheckButton (Catalog.GetString ("_Match"));
+            terms_enabled_checkbox.Show ();
+            terms_enabled_checkbox.Active = true;
+            terms_enabled_checkbox.Toggled += OnMatchCheckBoxToggled;
+            header.PackStart (terms_enabled_checkbox, false, false, 0);
+            
+            terms_logic_combo = ComboBox.NewText ();
+            terms_logic_combo.AppendText (Catalog.GetString ("all"));
+            terms_logic_combo.AppendText (Catalog.GetString ("any"));
+            terms_logic_combo.Show ();
+            terms_logic_combo.Active = 0;
+            header.PackStart (terms_logic_combo, false, false, 0);
+            
+            terms_label = new Label (Catalog.GetString ("of the following:"));
+            terms_label.Show ();
+            terms_label.Xalign = 0.0f;
+            header.PackStart (terms_label, true, true, 0);
+            
+            header.Spacing = 5;
+            
+            return header;
+        }
+
+        private void OnMatchCheckBoxToggled   (object o, EventArgs args)
+        {
+            terms_box.Sensitive = terms_enabled_checkbox.Active;
+            terms_logic_combo.Sensitive = terms_enabled_checkbox.Active;
+            terms_label.Sensitive = terms_enabled_checkbox.Active;
         }
 
         public QueryNode QueryNode {
             get {
-                QueryListNode and = new QueryListNode (Keyword.And);
-                for (int i = 0, n = Children.Length; i < n; i++) {
-                    QueryTermBox term_box = Children [i] as QueryTermBox;
-                    and.AddChild (term_box.QueryNode);
+                if (!terms_enabled_checkbox.Active) {
+                    return null;
                 }
-                return and.Trim ();
+
+                QueryListNode node = new QueryListNode (terms_logic_combo.Active == 0 ? Keyword.And : Keyword.Or);
+                foreach (QueryNode child in terms_box.QueryNodes) {
+                    node.AddChild (child);
+                }
+                return node.Trim ();
             }
             set {
-                if (value is QueryListNode) {
-                    // type = value.Keyword
-                    foreach (QueryNode child in (value as QueryListNode).Children) {
-                        AddNode (child);
+                if (value != null) {
+                    terms_enabled_checkbox.Active = true;
+                    if (value is QueryListNode) {
+                        terms_logic_combo.Active = ((value as QueryListNode).Keyword == Keyword.And) ? 0 : 1;
+                        terms_box.QueryNodes = (value as QueryListNode).Children;
+                    } else {
+                        List<QueryNode> nodes = new List<QueryNode> ();
+                        nodes.Add (value);
+                        terms_box.QueryNodes = nodes;
                     }
                 } else {
-                    // type = 'and'
-                    AddNode (value);
+                    terms_enabled_checkbox.Active = false;
                 }
             }
         }
-
-        private void AddNode (QueryNode node)
-        {
-            if (node is QueryTermNode) {
-                QueryTermBox box = CreateRow (false);
-                box.QueryNode = node as QueryTermNode;
-            } else {
-                Console.WriteLine ("Query Gui cannot handle child node: {0}", node.ToString ());
-            }
-        }
-
-        public QueryTermBox CreateRow (bool canDelete)
-        {
-            QueryTermBox row = new QueryTermBox (field_set);
-            row.Show();
-            PackStart (row, false, false, 0);
-            row.CanDelete = canDelete;
-            row.AddRequest += OnRowAddRequest;
-            row.RemoveRequest += OnRowRemoveRequest;
-
-            if (first_row == null) {
-                first_row = row;
-                //row.FieldBox.GrabFocus();
-            }
-            return row;
-        }
-        
-        public void OnRowAddRequest(object o, EventArgs args)
-        {
-            CreateRow (true);
-            UpdateCanDelete ();
-        }
-        
-        public void OnRowRemoveRequest(object o, EventArgs args)
-        {
-            Remove (o as Widget);
-            UpdateCanDelete ();
-        }
-        
-        public void UpdateCanDelete()
-        {
-            ((QueryTermBox) Children[0]).CanDelete = Children.Length > 1;
-        }
-        
     }
 }

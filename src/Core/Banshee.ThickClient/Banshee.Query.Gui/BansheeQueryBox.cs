@@ -27,6 +27,7 @@
 //
 
 using Mono.Unix;
+using Gtk;
 
 using Hyena.Query;
 using Hyena.Query.Gui;
@@ -37,7 +38,7 @@ namespace Banshee.Query.Gui
 {
     public class BansheeQueryBox : QueryBox
     {
-        public BansheeQueryBox () : base (BansheeQuery.FieldSet)
+        public BansheeQueryBox () : base (BansheeQuery.FieldSet, BansheeQuery.Orders, BansheeQuery.Limits)
         {
         }
 
@@ -45,28 +46,7 @@ namespace Banshee.Query.Gui
             // Register our custom query value entries
             QueryValueEntry.AddSubType (typeof(RatingQueryValueEntry), typeof(RatingQueryValue));
             QueryValueEntry.AddSubType (typeof(PlaylistQueryValueEntry), typeof(PlaylistQueryValue));
-
-            // Set translated names for operators
-            IntegerQueryValue.Equal.Label            = Catalog.GetString ("is");
-            IntegerQueryValue.NotEqual.Label         = Catalog.GetString ("is not");
-            IntegerQueryValue.LessThanEqual.Label    = Catalog.GetString ("less than");
-            IntegerQueryValue.GreaterThanEqual.Label = Catalog.GetString ("more than");
-            IntegerQueryValue.LessThan.Label         = Catalog.GetString ("at most");
-            IntegerQueryValue.GreaterThan.Label      = Catalog.GetString ("at least");
-
-            DateQueryValue.Equal.Label               = Catalog.GetString ("is");
-            DateQueryValue.NotEqual.Label            = Catalog.GetString ("is not");
-            DateQueryValue.LessThanEqual.Label       = Catalog.GetString ("less than");
-            DateQueryValue.GreaterThanEqual.Label    = Catalog.GetString ("more than");
-            DateQueryValue.LessThan.Label            = Catalog.GetString ("at most");
-            DateQueryValue.GreaterThan.Label         = Catalog.GetString ("at least");
-
-            StringQueryValue.Equal.Label             = Catalog.GetString ("is");
-            StringQueryValue.NotEqual.Label          = Catalog.GetString ("is not");
-            StringQueryValue.Contains.Label          = Catalog.GetString ("contains");
-            StringQueryValue.DoesNotContain.Label    = Catalog.GetString ("doesn't contain");
-            StringQueryValue.StartsWith.Label        = Catalog.GetString ("starts with");
-            StringQueryValue.EndsWith.Label          = Catalog.GetString ("ends with");
+            QueryValueEntry.AddSubType (typeof(SmartPlaylistQueryValueEntry), typeof(SmartPlaylistQueryValue));
         }
     }
 }

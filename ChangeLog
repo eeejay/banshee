@@ -1,3 +1,103 @@
+2008-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit greatly improves the smart playlist editor, both in terms of
+	coming up to par with what we have in stable, and in terms of doing that in
+	a clean way.  You'll need to blow away your current trunk db to have your
+	smart playlists remigrated.  Limits to smart playlists now are functional.
+	You can create and edit smart playlits.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Move GetSort method to BansheeQuery to provide consistent sorting for
+	smart playlists too.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Make LimitCriterion a TEXT field and get rid of OrderDir.  Database change,
+	no migration, so run src/nuke-core-tables.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Add public
+	static QueryOrder and QueryLimit arrays that define the types of sorting
+	and limiting smart playlists can handle.  Break QueryFields into separate
+	public static variables in addition to providing FieldSet.  Within static
+	constructor, translate Hyena query operators.
+
+	* src/Core/Banshee.Services/Banshee.Query/SmartPlaylistQueryValue.cs:
+	Inherit from PlaylistQueryValue.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs: Get rid of
+	OrderDir, migrate old smart playlists to use new QueryLimit/Order classes.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Add QueryOrder, Limit, and LimitValue properties that, if all set, define
+	how a smart playlist is limited.  Move list of Orders to BansheeQuery.
+
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/BansheeQueryBox.cs: Add
+	SmartPlaylistQueryValueEntry mapping, and instantiate base class
+	(QueryBox) with BansheeQuery's FieldSet, Orders, and Limits.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/StringQueryValueEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/PlaylistQueryValueEntry.cs:
+	Specify a fixed widths for value entries.
+
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs:
+	Exact same thing as PlaylistQueryValueEntry - should probably be merged or
+	factored out.
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs: Update
+	to work with QueryLimit/Order classes and save/restore the limit/order.
+	Update the predefined playlists, though I think they're still broken atm.
+
+	* src/Core/Banshee.ThickClient/Makefile.am: Add new class.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs: Make sure
+	query value and gui are in sync, and set a default combo box value.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs: Similar
+	to date value entry, provide a dropdown with MB, GB, etc.
+
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/RatingQueryValueEntry.cs:
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/IntegerQueryValueEntry.cs: Make sure
+	the query value is in sync with the gui.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs: Contains a QueryTermsBox
+	and a QueryLimitBox.  Provides the main GUI interface that the smart
+	playlist Editor deals with.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs: New class, a HBox
+	that contains widgetry to limit a smart playlist.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs: Instead of defining
+	this as a HBox with field, op, value across it, make QueryTermBox not
+	actually a widet, and put its components into their respective VBoxes so
+	that each column is always the same width.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryTermsBox.cs: New file, a HBox
+	containing VBoxes for field, op, value, and button columns filled by the
+	components of one or more QueryTermBoxes.
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryValueEntry.cs: Set spacing,
+	define default width for entries, and add FileSize entry mapping.
+
+	* src/Core/Hyena.Gui/Makefile.am: Add new classes.
+
+	* src/Core/Hyena/Hyena.Query/DateQueryValue.cs: Only offer GreaterThan and
+	LessThan operators, for now at least.
+
+	* src/Core/Hyena/Hyena.Query/FileSizeQueryValue.cs: Define SetValue
+	method.
+
+	* src/Core/Hyena/Hyena.Query/QueryLimit.cs: New class used to create
+	named, labelized limit criteria (row based and not).  Smart playlists use
+	this to LIMIT their membership if needed.  Current, non row-based Limits
+	aren't implemented.
+
+	* src/Core/Hyena/Hyena.Query/QueryOrder.cs: New class used to create a
+	list of named, labelized orderings.  Used in Banshee to give a list of
+	orderings ("selected by") when you limit a smart playlist.
+
+	* src/Core/Hyena/Hyena.Query/QueryValue.cs: Add ToString override.
+
+	* src/Core/Hyena/Makefile.am: New files.
+
 2008-02-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:

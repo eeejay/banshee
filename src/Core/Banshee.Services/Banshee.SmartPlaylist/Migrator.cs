@@ -45,8 +45,8 @@ namespace Banshee.SmartPlaylist
 {
     internal class Migrator
     {
-        private string [] criteria = new string [] { "tracks", "minutes", "hours", "MB" };
-        private Dictionary<string, Order> order_hash = new Dictionary<string, Order> ();
+        private string [] criteria = new string [] { "songs", "minutes", "hours", "MB" };
+        private Dictionary<string, QueryOrder> order_hash = new Dictionary<string, QueryOrder> ();
 
         public static void MigrateAll ()
         {
@@ -56,13 +56,12 @@ namespace Banshee.SmartPlaylist
 
             Migrator m = new Migrator ();
             using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
-                "SELECT SmartPlaylistID, Name, Condition, OrderBy, OrderDir, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
+                "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
                 while (reader.Read ()) {
                     m.Migrate (
                         Convert.ToInt32 (reader[0]), reader[1] as string,
                         reader[2] as string, reader[3] as string,
-                        reader[4] as string, reader[5] as string,
-                        reader[6] as string
+                        reader[4] as string, reader[5] as string
                     );
                 }
             }
@@ -72,27 +71,27 @@ namespace Banshee.SmartPlaylist
 
         public Migrator ()
         {
-            order_hash.Add ("RANDOM()", FindOrder ("Random"));
-            order_hash.Add ("AlbumTitle", FindOrder ("Album"));
-            order_hash.Add ("Artist", FindOrder ("Artist"));
-            order_hash.Add ("Genre", FindOrder ("Genre"));
-            order_hash.Add ("Title", FindOrder ("Title"));
-            order_hash.Add ("Rating DESC", FindOrder ("Rating", "DESC"));
-            order_hash.Add ("Rating ASC", FindOrder ("Rating", "ASC"));
-            order_hash.Add ("NumerOfPlays DESC", FindOrder ("PlayCount", "DESC"));
-            order_hash.Add ("NumerOfPlays ASC", FindOrder ("PlayCount", "ASC"));
-            order_hash.Add ("DateAddedStamp DESC", FindOrder ("DateAddedStamp", "DESC"));
-            order_hash.Add ("DateAddedStamp ASC", FindOrder ("DateAddedStamp", "ASC"));
-            order_hash.Add ("LastPlayedStamp DESC", FindOrder ("LastPlayedStamp", "DESC"));
-            order_hash.Add ("LastPlayedStamp ASC", FindOrder ("LastPlayedStamp", "ASC"));
+            order_hash.Add ("RANDOM()",             BansheeQuery.FindOrder ("Random", true));
+            order_hash.Add ("AlbumTitle",           BansheeQuery.FindOrder ("Album", true));
+            order_hash.Add ("Artist",               BansheeQuery.FindOrder ("Artist", true));
+            order_hash.Add ("Genre",                BansheeQuery.FindOrder ("Genre", true));
+            order_hash.Add ("Title",                BansheeQuery.FindOrder ("Title", true));
+            order_hash.Add ("Rating DESC",          BansheeQuery.FindOrder ("Rating", false));
+            order_hash.Add ("Rating ASC",           BansheeQuery.FindOrder ("Rating", true));
+            order_hash.Add ("NumberOfPlays DESC",   BansheeQuery.FindOrder ("PlayCount", false));
+            order_hash.Add ("NumberOfPlays ASC",    BansheeQuery.FindOrder ("PlayCount", true));
+            order_hash.Add ("DateAddedStamp DESC",  BansheeQuery.FindOrder ("DateAddedStamp", false));
+            order_hash.Add ("DateAddedStamp ASC",   BansheeQuery.FindOrder ("DateAddedStamp", true));
+            order_hash.Add ("LastPlayedStamp DESC", BansheeQuery.FindOrder ("LastPlayedStamp", false));
+            order_hash.Add ("LastPlayedStamp ASC",  BansheeQuery.FindOrder ("LastPlayedStamp", true));
         }
 
-        private void Migrate (int dbid, string Name, string Condition, string OrderBy, string OrderDir, string LimitNumber, string LimitCriterion)
+        private void Migrate (int dbid, string Name, string Condition, string OrderBy, string LimitNumber, string LimitCriterion)
         {
+            Console.WriteLine ("migrating {0}, cond = {1}, order = {2}", Name, Condition, OrderBy);
             if (OrderBy != null && OrderBy != String.Empty) {
-                Order order = order_hash [OrderBy];
-                OrderBy = order.Key;
-                OrderDir = order.Dir;
+                QueryOrder order = order_hash [OrderBy];
+                OrderBy = order.Name;
             }
 
             LimitCriterion = criteria [Convert.ToInt32 (LimitCriterion)];
@@ -103,12 +102,12 @@ namespace Banshee.SmartPlaylist
                     SET Name = ?,
                         Condition = ?,
                         OrderBy = ?,
-                        OrderDir = ?,
                         LimitNumber = ?,
                         LimitCriterion = ?
                     WHERE SmartPlaylistID = ?",
-                Name, ConditionXml, OrderBy, OrderDir, LimitNumber, LimitCriterion, dbid
+                Name, ConditionXml, OrderBy, LimitNumber, LimitCriterion, dbid
             ));
+            Console.WriteLine ("migrated {0}, cond = {1}, order = {2}", Name, ConditionXml, OrderBy);
         }
 
         private string ParseCondition (string value)
@@ -226,20 +225,6 @@ namespace Banshee.SmartPlaylist
             // Have to negate the value b/c of how we used to constuct the SQL query
             date_value.SetRelativeValue (-Convert.ToInt64 (val), RelativeDateFactor.Second);
             term.Value = date_value;
-        }
-
-        private Order FindOrder (string key)
-        {
-            return FindOrder (key, null);
-        }
-
-        private Order FindOrder (string key, string dir)
-        {
-            foreach (Order o in SmartPlaylistSource.Orders) {
-                if (o.Key == key && (dir == null || o.Dir == dir))
-                    return o;
-            }
-            return default(Order);
         }
 
         public sealed class QueryOperator

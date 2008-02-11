@@ -41,6 +41,7 @@ namespace Hyena.Query.Gui
         public StringQueryValueEntry () : base ()
         {
             entry = new Entry ();
+            entry.WidthRequest = DefaultWidth;
             entry.Changed += HandleChanged;
             Add (entry);
         }

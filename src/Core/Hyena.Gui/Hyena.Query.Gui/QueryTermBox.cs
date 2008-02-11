@@ -36,15 +36,11 @@ using Hyena.Query;
 
 namespace Hyena.Query.Gui
 {
-    public class QueryTermBox : HBox
+    public class QueryTermBox
     {
-        private ComboBox field_chooser;
-        private ComboBox op_chooser;
-        private HBox value_box;
-
         private Button add_button;
         private Button remove_button;
-        
+
         public event EventHandler AddRequest;
         public event EventHandler RemoveRequest;
 
@@ -55,55 +51,80 @@ namespace Hyena.Query.Gui
         private QueryField [] sorted_fields;
         //private Operator [] operators; FIXME: not used --Aaron
 
-        public QueryTermBox (QueryFieldSet fieldSet) : base ()
+        private ComboBox field_chooser;
+        public ComboBox FieldChooser {
+            get { return field_chooser; }
+        }
+
+        private ComboBox op_chooser;
+        public ComboBox OpChooser {
+            get { return op_chooser; }
+        }
+
+        private HBox value_box;
+        public HBox ValueEntry {
+            get { return value_box; }
+        }
+
+        private HBox button_box;
+        public HBox Buttons {
+            get { return button_box; }
+        }
+
+        public QueryTermBox (QueryField [] sorted_fields) : base ()
         {
-            this.sorted_fields = fieldSet.Fields;
-            //this.field_set = fieldSet;
+            this.sorted_fields = sorted_fields;
             BuildInterface ();
         }
 
         private void BuildInterface ()
         {
-            Spacing = 5;
-
             field_chooser = ComboBox.NewText ();
             field_chooser.Changed += HandleFieldChanged;
-            PackStart (field_chooser, false, false, 0);
             
             op_chooser = ComboBox.NewText ();
             op_chooser.Changed += HandleOperatorChanged;
-            PackStart (op_chooser, false, false, 0);
             
             value_box = new HBox ();
-            PackStart (value_box, false, false, 0);
 
             remove_button = new Button (new Image ("gtk-remove", IconSize.Button));
             remove_button.Relief = ReliefStyle.None;
             remove_button.Clicked += OnButtonRemoveClicked;
-            PackEnd (remove_button, false, false, 0);
             
             add_button = new Button (new Image ("gtk-add", IconSize.Button));
             add_button.Relief = ReliefStyle.None;
             add_button.Clicked += OnButtonAddClicked;
-            PackEnd (add_button, false, false, 0);
+
+            button_box = new HBox ();
+            button_box.PackStart (remove_button, false, false, 0);
+            button_box.PackStart (add_button, false, false, 0);
 
             foreach (QueryField field in sorted_fields) {
                 field_chooser.AppendText (field.Label);
             }
 
+            Show ();
             field_chooser.Active = 0;
+        }
 
-            ShowAll ();
+        public void Show ()
+        {
+            field_chooser.ShowAll ();
+            op_chooser.ShowAll ();
+            value_box.ShowAll ();
+            button_box.ShowAll ();
         }
         
         private bool first = true;
         private void HandleFieldChanged (object o, EventArgs args)
         {
             QueryField field = sorted_fields [field_chooser.Active];
-            Console.WriteLine ("Changing to field {0}", field.Name);
+
             // Leave everything as is unless the new field is a different type
-            if (this.field != null && (field == this.field || field.ValueType == this.field.ValueType))
+            if (this.field != null && (field == this.field || field.ValueType == this.field.ValueType)) {
+                this.field = field;
                 return;
+            }
 
             op_chooser.Changed -= HandleOperatorChanged;
 
@@ -116,11 +137,7 @@ namespace Hyena.Query.Gui
             }
 
             value_entry = QueryValueEntry.Create (this.field.CreateQueryValue ());
-
-            if (value_entry == null) {
-                Console.WriteLine ("Value entry is NULL!, field.ValueType == {0}", this.field.ValueType);
-            }
-            value_box.Add (value_entry);
+            value_box.PackStart (value_entry, false, true, 0);
             value_entry.ShowAll ();
 
             // Remove old type's operators
@@ -141,7 +158,6 @@ namespace Hyena.Query.Gui
         private void HandleOperatorChanged (object o, EventArgs args)
         {
             this.op = value_entry.QueryValue.OperatorSet.Objects [op_chooser.Active];
-            Console.WriteLine ("Operator {0} selected", op.Name);
 
             //value_entry = new QueryValueEntry <field.ValueType> ();
         }

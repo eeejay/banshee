@@ -38,8 +38,13 @@ namespace Hyena.Query.Gui
     {
         private static Dictionary<Type, Type> types = new Dictionary<Type, Type> ();
 
+        protected int DefaultWidth {
+            get { return 170; }
+        }
+
         public QueryValueEntry () : base ()
         {
+            Spacing = 5;
         }
 
         public abstract QueryValue QueryValue { get; set; }
@@ -84,6 +89,7 @@ namespace Hyena.Query.Gui
             AddSubType (typeof(StringQueryValueEntry), typeof(StringQueryValue));
             AddSubType (typeof(IntegerQueryValueEntry), typeof(IntegerQueryValue));
             AddSubType (typeof(DateQueryValueEntry), typeof(DateQueryValue));
+            AddSubType (typeof(FileSizeQueryValueEntry), typeof(FileSizeQueryValue));
         }
     }
 }

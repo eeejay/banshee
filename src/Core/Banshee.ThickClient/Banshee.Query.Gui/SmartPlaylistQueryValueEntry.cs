@@ -1,5 +1,5 @@
 //
-// PlaylistQueryValueEntry.cs
+// SmartPlaylistQueryValueEntry.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -36,27 +36,28 @@ using Hyena.Query.Gui;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Playlist;
+using Banshee.SmartPlaylist;
 using Banshee.Widgets;
 using Banshee.Query;
 
 namespace Banshee.Query.Gui
 {
-    public class PlaylistQueryValueEntry : QueryValueEntry
+    public class SmartPlaylistQueryValueEntry : QueryValueEntry
     {
         protected ComboBox combo;
-        protected PlaylistQueryValue query_value;
+        protected SmartPlaylistQueryValue query_value;
         protected Dictionary<int, int> playlist_id_combo_map = new Dictionary<int, int> ();
         protected Dictionary<int, int> combo_playlist_id_map = new Dictionary<int, int> ();
 
-        public PlaylistQueryValueEntry () : base ()
+        public SmartPlaylistQueryValueEntry () : base ()
         {
             combo = ComboBox.NewText();
             combo.WidthRequest = DefaultWidth;
 
             int count = 0;
-            PlaylistSource playlist;
+            SmartPlaylistSource playlist;
             foreach (Source child in ServiceManager.SourceManager.DefaultSource.Children) {
-                playlist = child as PlaylistSource;
+                playlist = child as SmartPlaylistSource;
                 if (playlist != null && playlist.DbId != null) {
                     combo.AppendText (playlist.Name);
                     playlist_id_combo_map [(int)playlist.DbId] = count;
@@ -74,7 +75,7 @@ namespace Banshee.Query.Gui
             get { return query_value; }
             set { 
                 combo.Changed -= HandleValueChanged;
-                query_value = value as PlaylistQueryValue;
+                query_value = value as SmartPlaylistQueryValue;
                 if (!query_value.IsEmpty) {
                     try {
                         combo.Active = playlist_id_combo_map [(int)query_value.IntValue];

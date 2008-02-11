@@ -40,113 +40,273 @@ namespace Banshee.Query
 {
     public static class BansheeQuery
     {
-        public static QueryFieldSet FieldSet {
-            get { return field_set; }
-        }
-        
-        public static QueryField ArtistField {
-            get { return field_set["artist"]; }
-        }
+        private static bool asc = true;
+        private static bool desc = false;
+        public static QueryOrder [] Orders = new QueryOrder [] {
+            CreateQueryOrder ("Random",     asc,  Catalog.GetString ("Random")),
+            CreateQueryOrder ("Album",      asc,  Catalog.GetString ("Album")),
+            CreateQueryOrder ("Artist",     asc,  Catalog.GetString ("Artist")),
+            CreateQueryOrder ("Title",      asc,  Catalog.GetString ("Title")),
+            null,
+            CreateQueryOrder ("Rating",     desc, Catalog.GetString ("Highest Rating")),
+            CreateQueryOrder ("Rating",     asc,  Catalog.GetString ("Lowest Rating")),
+            null,
+            CreateQueryOrder ("PlayCount",  desc, Catalog.GetString ("Most Often Played")),
+            CreateQueryOrder ("PlayCount",  asc,  Catalog.GetString ("Least Often Played")),
+            null,
+            CreateQueryOrder ("LastPlayed", desc, Catalog.GetString ("Most Recently Played")),
+            CreateQueryOrder ("LastPlayed", asc,  Catalog.GetString ("Least Recently Played")),
+            null,
+            CreateQueryOrder ("DateAdded",  desc, Catalog.GetString ("Most Recently Added")),
+            CreateQueryOrder ("DateAdded",  asc,  Catalog.GetString ("Least Recently Added"))
+        };
 
-        public static QueryField AlbumField {
-            get { return field_set["album"]; }
-        }
+        public static QueryLimit [] Limits = new QueryLimit [] {
+            new QueryLimit ("songs",   Catalog.GetString("songs"), true),
+            new QueryLimit ("minutes", Catalog.GetString("minutes"), "CoreTracks.Duration", (int) RelativeDateFactor.Minute),
+            new QueryLimit ("hours",   Catalog.GetString("hours"), "CoreTracks.Duration", (int) RelativeDateFactor.Hour),
+            new QueryLimit ("MB",      Catalog.GetString("MB"), "CoreTracks.FileSize", (int) FileSizeFactor.MB),
+            new QueryLimit ("GB",      Catalog.GetString("GB"), "CoreTracks.FileSize", (int) FileSizeFactor.GB)
+        };
 
-        private static QueryFieldSet field_set = new QueryFieldSet (
-            new QueryField (
-                "artist", Catalog.GetString ("Artist"), "CoreArtists.Name", true,
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("artist"), Catalog.GetString ("by"), Catalog.GetString ("artists"),
-                "by", "artist", "artists"
-            ),
-            new QueryField (
-                "album", Catalog.GetString ("Album"), "CoreAlbums.Title", true,
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("album"), Catalog.GetString ("on"), Catalog.GetString ("from"),
-                "on", "album", "from", "albumtitle"
-            ),
-            new QueryField (
-                "disc", Catalog.GetString ("Disc"), "CoreTracks.Disc", typeof(NaturalIntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("disc"), Catalog.GetString ("cd"), Catalog.GetString ("discnum"),
-                "disc", "cd", "discnum"
-            ),
-            new QueryField (
-                "title", Catalog.GetString ("Track Title"), "CoreTracks.Title", true,
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("title"), Catalog.GetString ("titled"), Catalog.GetString ("name"), Catalog.GetString ("named"),
-                "title", "titled", "name", "named"
-            ),
-            new QueryField (
-                "year", Catalog.GetString ("Year"), "CoreTracks.Year", typeof(YearQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("year"), Catalog.GetString ("released"), Catalog.GetString ("yr"),
-                "year", "released", "yr"
-            ),
-            new QueryField (
-                "rating", Catalog.GetString ("Rating"), "CoreTracks.Rating", typeof(RatingQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("rating"), Catalog.GetString ("stars"),
-                "rating", "stars"
-            ),
-            new QueryField (
-                "playcount", Catalog.GetString ("Play Count"), "CoreTracks.PlayCount", typeof(NaturalIntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("plays"), Catalog.GetString ("playcount"), Catalog.GetString ("listens"),
-                "plays", "playcount", "numberofplays", "listens"
-            ),
-            new QueryField (
-                "skipcount", Catalog.GetString ("Skip Count"), "CoreTracks.SkipCount", typeof(NaturalIntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("skips"), Catalog.GetString ("skipcount"),
-                "skips", "skipcount"
-            ),
-            new QueryField (
-                "filesize", Catalog.GetString ("File Size"), "CoreTracks.FileSize", typeof(FileSizeQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("size"), Catalog.GetString ("filesize"),
-                "size", "filesize"
-            ),
-            new QueryField (
-                "uri", Catalog.GetString ("File Location"), "CoreTracks.Uri",
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("uri"), Catalog.GetString ("path"), Catalog.GetString ("file"), Catalog.GetString ("location"),
-                "uri", "path", "file", "location"
-            ),
-            new QueryField (
-                "duration", Catalog.GetString ("Duration"), "CoreTracks.Duration", typeof(IntegerQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("duration"), Catalog.GetString ("length"), Catalog.GetString ("time"),
-                "duration", "length", "time"
-            ),
-            new QueryField (
-                "mimetype", Catalog.GetString ("Mime Type"), "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}",
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("type"), Catalog.GetString ("mimetype"), Catalog.GetString ("format"), Catalog.GetString ("ext"),
-                "type", "mimetype", "format", "ext", "mime"
-            ),
-            new QueryField (
-                "lastplayed", Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", typeof(DateQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("lastplayed"), Catalog.GetString ("played"), Catalog.GetString ("playedon"),
-                "lastplayed", "played", "playedon"
-            ),
-            new QueryField (
-                "added", Catalog.GetString ("Imported Date"), "CoreTracks.DateAddedStamp", typeof(DateQueryValue),
-                // Translators: These are unique search fields.  Please, no spaces. Blank ok.
-                Catalog.GetString ("added"), Catalog.GetString ("imported"), Catalog.GetString ("addedon"), Catalog.GetString ("dateadded"), Catalog.GetString ("importedon"),
-                "added", "imported", "addedon", "dateadded", "importedon"
-            ),
-            new QueryField (
-                "playlistid", Catalog.GetString ("Playlist"),
-                "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CorePlaylistEntries WHERE PlaylistID = {1})", typeof(PlaylistQueryValue),
-                "playlistid", "playlist"
-            ),
-            new QueryField (
-                "smartplaylistid", Catalog.GetString ("Smart Playlist"),
-                "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {1})", typeof(SmartPlaylistQueryValue),
-                "smartplaylistid", "smartplaylist"
-            )
+        public static QueryField ArtistField = new QueryField (
+            "artist", Catalog.GetString ("Artist"), "CoreArtists.Name", true,
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("artist"), Catalog.GetString ("by"), Catalog.GetString ("artists"),
+            "by", "artist", "artists"
         );
+
+        public static QueryField AlbumField = new QueryField (
+            "album", Catalog.GetString ("Album"), "CoreAlbums.Title", true,
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("album"), Catalog.GetString ("on"), Catalog.GetString ("from"),
+            "on", "album", "from", "albumtitle"
+        );
+
+        public static QueryField DiscField = new QueryField (
+            "disc", Catalog.GetString ("Disc"), "CoreTracks.Disc", typeof(NaturalIntegerQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("disc"), Catalog.GetString ("cd"), Catalog.GetString ("discnum"),
+            "disc", "cd", "discnum"
+        );
+
+        public static QueryField TitleField = new QueryField (
+            "title", Catalog.GetString ("Track Title"), "CoreTracks.Title", true,
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("title"), Catalog.GetString ("titled"), Catalog.GetString ("name"), Catalog.GetString ("named"),
+            "title", "titled", "name", "named"
+        );
+
+        public static QueryField YearField = new QueryField (
+            "year", Catalog.GetString ("Year"), "CoreTracks.Year", typeof(YearQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("year"), Catalog.GetString ("released"), Catalog.GetString ("yr"),
+            "year", "released", "yr"
+        );
+
+        public static QueryField RatingField = new QueryField (
+            "rating", Catalog.GetString ("Rating"), "CoreTracks.Rating", typeof(RatingQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("rating"), Catalog.GetString ("stars"),
+            "rating", "stars"
+        );
+
+        public static QueryField PlayCountField = new QueryField (
+            "playcount", Catalog.GetString ("Play Count"), "CoreTracks.PlayCount", typeof(NaturalIntegerQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("plays"), Catalog.GetString ("playcount"), Catalog.GetString ("listens"),
+            "plays", "playcount", "numberofplays", "listens"
+        );
+
+        public static QueryField SkipCountField = new QueryField (
+            "skipcount", Catalog.GetString ("Skip Count"), "CoreTracks.SkipCount", typeof(NaturalIntegerQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("skips"), Catalog.GetString ("skipcount"),
+            "skips", "skipcount"
+        );
+
+        public static QueryField FileSizeField = new QueryField (
+            "filesize", Catalog.GetString ("File Size"), "CoreTracks.FileSize", typeof(FileSizeQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("size"), Catalog.GetString ("filesize"),
+            "size", "filesize"
+        );
+
+        public static QueryField UriField = new QueryField (
+            "uri", Catalog.GetString ("File Location"), "CoreTracks.Uri",
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("uri"), Catalog.GetString ("path"), Catalog.GetString ("file"), Catalog.GetString ("location"),
+            "uri", "path", "file", "location"
+        );
+
+        public static QueryField DurationField = new QueryField (
+            "duration", Catalog.GetString ("Duration"), "CoreTracks.Duration", typeof(IntegerQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("duration"), Catalog.GetString ("length"), Catalog.GetString ("time"),
+            "duration", "length", "time"
+        );
+
+        public static QueryField MimeTypeField = new QueryField (
+            "mimetype", Catalog.GetString ("Mime Type"), "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}",
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("type"), Catalog.GetString ("mimetype"), Catalog.GetString ("format"), Catalog.GetString ("ext"),
+            "type", "mimetype", "format", "ext", "mime"
+        );
+
+        public static QueryField LastPlayedField = new QueryField (
+            "lastplayed", Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", typeof(DateQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("lastplayed"), Catalog.GetString ("played"), Catalog.GetString ("playedon"),
+            "lastplayed", "played", "playedon"
+        );
+
+        public static QueryField DateAddedField = new QueryField (
+            "added", Catalog.GetString ("Imported Date"), "CoreTracks.DateAddedStamp", typeof(DateQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("added"), Catalog.GetString ("imported"), Catalog.GetString ("addedon"), Catalog.GetString ("dateadded"), Catalog.GetString ("importedon"),
+            "added", "imported", "addedon", "dateadded", "importedon"
+        );
+
+        public static QueryField PlaylistField = new QueryField (
+            "playlistid", Catalog.GetString ("Playlist"),
+            "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CorePlaylistEntries WHERE PlaylistID = {1})", typeof(PlaylistQueryValue),
+            "playlistid", "playlist"
+        );
+
+        public static QueryField SmartPlaylistField = new QueryField (
+            "smartplaylistid", Catalog.GetString ("Smart Playlist"),
+            "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {1})", typeof(SmartPlaylistQueryValue),
+            "smartplaylistid", "smartplaylist"
+        );
+
+        public static QueryFieldSet FieldSet = new QueryFieldSet (
+            ArtistField, AlbumField, DiscField, TitleField, YearField, RatingField, PlayCountField,
+            SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField,
+            DateAddedField, PlaylistField, SmartPlaylistField
+        );
+
+        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
+
+        public static string GetSort (string key)
+        {
+            return GetSort (key, false);
+        }
+
+        public static string GetSort (string key, bool asc)
+        {
+            string ascDesc = asc ? "ASC" : "DESC";
+            string sort_query = null;
+            switch(key) {
+                case "Track":
+                    sort_query = String.Format (@"
+                        lower(CoreArtists.Name) ASC, 
+                        lower(CoreAlbums.Title) ASC, 
+                        CoreTracks.TrackNumber {0}", ascDesc); 
+                    break;
+
+                case "Artist":
+                    sort_query = String.Format (@"
+                        lower(CoreArtists.Name) {0}, 
+                        lower(CoreAlbums.Title) ASC,
+                        CoreTracks.Disc ASC,
+                        CoreTracks.TrackNumber ASC,
+                        CoreTracks.Uri ASC", ascDesc); 
+                    break;
+
+                case "Album":
+                    sort_query = String.Format (@"
+                        lower(CoreAlbums.Title) {0},
+                        CoreTracks.Disc ASC,
+                        CoreTracks.TrackNumber ASC,
+                        CoreTracks.Uri ASC", ascDesc); 
+                    break;
+
+                case "Title":
+                    sort_query = String.Format (@"
+                        lower(CoreTracks.Title) {0},
+                        lower(CoreArtists.Name) ASC, 
+                        lower(CoreAlbums.Title) ASC", ascDesc); 
+                    break;
+
+                case "Random":
+                    sort_query = "RANDOM ()";
+                    break;
+
+                case "Year":
+                case "Disc":
+                case "Duration":
+                case "Rating":
+                case "PlayCount":
+                case "SkipCount":
+                case "LastPlayedStamp":
+                case "DateAddedStamp":
+                case "Uri":
+                    sort_query = String.Format (
+                        "CoreTracks.{0} {1}, {2}",
+                        key, ascDesc, default_sort
+                    );
+                    break;
+            }
+            return sort_query;
+        }
+
+        private static QueryOrder CreateQueryOrder (string name, bool asc, string label)
+        {
+            return new QueryOrder (CreateOrderName (name, asc), label, GetSort (name, asc));
+        }
+
+        public static QueryLimit FindLimit (string name)
+        {
+            foreach (QueryLimit limit in Limits) {
+                if (limit.Name == name)
+                    return limit;
+            }
+            return null;
+        }
+
+        public static QueryOrder FindOrder (string name, bool asc)
+        {
+            return FindOrder (CreateOrderName (name, asc));
+        }
+
+        public static QueryOrder FindOrder (string name)
+        {
+            Console.WriteLine ("# ordres = {0}", Orders.Length);
+            foreach (QueryOrder order in Orders) {
+                if (order != null && order.Name == name) {
+                    return order;
+                }
+            }
+            return null;
+        }
+
+        private static string CreateOrderName (string name, bool asc)
+        {
+            return String.Format ("{0}-{1}", name, asc ? "ASC" : "DESC");
+        }
+
+        static BansheeQuery () {
+            // Set translated names for operators
+            IntegerQueryValue.Equal.Label            = Catalog.GetString ("is");
+            IntegerQueryValue.NotEqual.Label         = Catalog.GetString ("is not");
+            IntegerQueryValue.LessThanEqual.Label    = Catalog.GetString ("at most");
+            IntegerQueryValue.GreaterThanEqual.Label = Catalog.GetString ("at least");
+            IntegerQueryValue.LessThan.Label         = Catalog.GetString ("less than");
+            IntegerQueryValue.GreaterThan.Label      = Catalog.GetString ("more than");
+
+            DateQueryValue.Equal.Label               = Catalog.GetString ("is");
+            DateQueryValue.NotEqual.Label            = Catalog.GetString ("is not");
+            DateQueryValue.LessThanEqual.Label       = Catalog.GetString ("at most");
+            DateQueryValue.GreaterThanEqual.Label    = Catalog.GetString ("at least");
+            DateQueryValue.LessThan.Label            = Catalog.GetString ("less than");
+            DateQueryValue.GreaterThan.Label         = Catalog.GetString ("more than");
+
+            StringQueryValue.Equal.Label             = Catalog.GetString ("is");
+            StringQueryValue.NotEqual.Label          = Catalog.GetString ("is not");
+            StringQueryValue.Contains.Label          = Catalog.GetString ("contains");
+            StringQueryValue.DoesNotContain.Label    = Catalog.GetString ("doesn't contain");
+            StringQueryValue.StartsWith.Label        = Catalog.GetString ("starts with");
+            StringQueryValue.EndsWith.Label          = Catalog.GetString ("ends with");
+        }
     }
 }
