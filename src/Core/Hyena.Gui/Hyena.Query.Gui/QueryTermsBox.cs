@@ -39,7 +39,6 @@ namespace Hyena.Query.Gui
 {
     public class QueryTermsBox : HBox
     {
-        private QueryFieldSet field_set;
         private QueryField [] sorted_fields;
         private List<QueryTermBox> terms = new List<QueryTermBox> ();
         private VBox field_box, op_box, entry_box, button_box;
@@ -50,8 +49,6 @@ namespace Hyena.Query.Gui
         
         public QueryTermsBox (QueryFieldSet fieldSet) : base ()
         {
-            this.field_set = fieldSet;
-
             // Sort the fields alphabetically by their label
             sorted_fields = new QueryField [fieldSet.Fields.Length];
             Array.Copy (fieldSet.Fields, sorted_fields, sorted_fields.Length);

@@ -1,3 +1,7 @@
+2008-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Hyena.Gui/Hyena.Query.Gui/QueryTermsBox.cs: Fix warning.
+
 2008-02-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs:
