@@ -1,3 +1,7 @@
+2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.LastFM/*: Copy from stable.
+
 2008-02-11  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Nereid/Nereid/Client.cs: Load custom gtkrc files from either
