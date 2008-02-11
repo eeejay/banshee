@@ -1,5 +1,5 @@
 /***************************************************************************
- *  Editor.cs
+ *  StationEditor.cs
  *
  *  Copyright (C) 2007-2008 Novell, Inc.
  *  Written by Gabriel Burt <gabriel.burt@gmail.com>
@@ -30,16 +30,18 @@ using System;
 using System.Collections;
 using Gtk;
 using Glade;
-using Mono.Gettext;
+using Mono.Unix;
 
 using Banshee.Base;
-using Banshee.Widgets;
 using Banshee.Sources;
 using Banshee.Database;
 
-namespace Banshee.Plugins.LastFM
+using Banshee.Widgets;
+using Banshee.Gui.Dialogs;
+
+namespace Banshee.LastFM
 {
-    public class Editor : Banshee.Gui.GladeDialog
+    public class StationEditor : GladeDialog
     {
         const string dialog_name = "StationSourceEditorDialog";
         const string dialog_resource = "lastfm.glade";
@@ -52,7 +54,7 @@ namespace Banshee.Plugins.LastFM
         [Widget] private Gtk.Label arg_label;
         [Widget] private Gtk.Button ok_button;
 
-        public Editor (StationSource source) : base (dialog_name, new Glade.XML (
+        public StationEditor (StationSource source) : base (dialog_name, new Glade.XML (
             System.Reflection.Assembly.GetExecutingAssembly (), dialog_resource, dialog_name, "banshee"))
         {
             this.source = source;
@@ -62,7 +64,7 @@ namespace Banshee.Plugins.LastFM
             Dialog.Title = Catalog.GetString ("Edit Station");
         }
     
-        public Editor () : base (dialog_name, new Glade.XML (
+        public StationEditor () : base (dialog_name, new Glade.XML (
             System.Reflection.Assembly.GetExecutingAssembly (), dialog_resource, dialog_name, "banshee"))
         {
             Initialize ();

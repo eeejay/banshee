@@ -31,7 +31,7 @@ using System.IO;
 using System.Data;
 using System.Collections.Generic;
 using System.Threading;
-using Mono.Gettext;
+using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
@@ -42,9 +42,9 @@ using Banshee.Metadata;
 using Banshee.MediaEngine;
 using Banshee.Playlists.Formats.Xspf;
  
-namespace Banshee.Plugins.LastFM
+namespace Banshee.LastFM
 {
-    public class StationSource : ChildSource
+    public class StationSource : Source
     {
         private static readonly Gdk.Pixbuf refresh_pixbuf = IconThemeUtils.LoadIcon (22, Stock.Refresh);
         private static readonly Gdk.Pixbuf error_pixbuf = IconThemeUtils.LoadIcon (22, Stock.DialogError);

@@ -36,13 +36,13 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Web;
 
-using Mono.Gettext;
+using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.Playlists.Formats.Xspf;
 using Last.FM;
 
-namespace Banshee.Plugins.LastFM
+namespace Banshee.LastFM
 {
     public class ConnectionStateChangedArgs : EventArgs
     {

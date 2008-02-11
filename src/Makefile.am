@@ -1,4 +1,5 @@
 SUBDIRS = \
+	Libraries \
 	Core \
 	Dap \
 	Backends \

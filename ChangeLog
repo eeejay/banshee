@@ -1,5 +1,19 @@
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Makefile.am:
+	* src/Libraries/Makefile.am: New directory for what was Extras in stable.
+
+	* build/build.environment.mk:
+	* configure.ac: 
+	* src/Libraries/Lastfm/*:
+	* src/Libraries/Lastfm.Gui/*: Bring Last.FM library over from stable, and
+	rip out the Gnome.Keyring dependency.
+
+	* src/Extensions/Banshee.LastFM/*: Bring Last.FM plugin over from stable.
+	Not part of the default build yet; lots of porting still to do.
+
+2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.LastFM/*: Copy from stable.
 
 2008-02-11  Aaron Bockover  <abock@gnome.org>

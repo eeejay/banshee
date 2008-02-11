@@ -31,7 +31,7 @@ using System.Data;
 using System.Collections.Generic;
 using Gtk;
 
-using Mono.Gettext;
+using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.Sources;
@@ -50,7 +50,7 @@ public static class PluginModuleEntry
     }
 }
 
-namespace Banshee.Plugins.LastFM
+namespace Banshee.LastFM
 {
     public class LastFMPlugin : Banshee.Plugins.Plugin
     {
@@ -212,7 +212,7 @@ namespace Banshee.Plugins.LastFM
 
         private void OnAddStation (object sender, EventArgs args)
         {
-            Editor ed = new Editor ();
+            StationEditor ed = new StationEditor ();
             ed.Window.ShowAll ();
             ed.RunDialog ();
         }

@@ -34,9 +34,10 @@ using System.Web;
 using Gdk;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Playlists.Formats.Xspf;
 
-namespace Banshee.Plugins.LastFM
+namespace Banshee.LastFM
 {
     public class LastFMTrackInfo : TrackInfo
     {

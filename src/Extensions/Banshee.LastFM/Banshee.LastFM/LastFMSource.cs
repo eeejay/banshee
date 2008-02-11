@@ -30,17 +30,19 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using Mono.Gettext;
+using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Configuration;
 using Banshee.Widgets;
 using Banshee.Sources;
 using Banshee.MediaEngine;
+
 using Last.FM.Gui;
  
-namespace Banshee.Plugins.LastFM
+namespace Banshee.LastFM
 {   
     public class LastFMSource : Source
     {

@@ -139,8 +139,13 @@ src/Backends/Banshee.Gnome/Makefile
 src/Backends/Banshee.GStreamer/Makefile
 src/Backends/Banshee.Unix/Makefile
 
+src/Libraries/Makefile
+src/Libraries/Lastfm/Makefile
+src/Libraries/Lastfm.Gui/Makefile
+
 src/Extensions/Makefile
 src/Extensions/Banshee.Audioscrobbler/Makefile
+src/Extensions/Banshee.LastFM/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
 src/Extensions/Banshee.PlayQueue/Makefile
