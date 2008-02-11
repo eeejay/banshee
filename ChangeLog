@@ -1,5 +1,13 @@
 2008-02-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Nereid/Nereid/Client.cs: Load custom gtkrc files from either
+	the user config (~/.config/banshee/gtkrc) or any custom gtkrc shipped
+	with the application
+
+	* src/Core/Nereid/Nereid/PlayerInterface.cs: Get rid of some whitespace
+
+2008-02-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
 	Draw a bottom border on the dragging column
 

@@ -126,7 +126,6 @@ namespace Nereid
             BuildViews ();
             BuildFooter ();
 
-            
             primary_vbox.Show ();
             Add (primary_vbox);
         }

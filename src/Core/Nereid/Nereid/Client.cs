@@ -26,19 +26,31 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System.IO;
+
 namespace Nereid
 {
     public class Client : Banshee.Gui.GtkBaseClient
     {
-        // Command line options:
-        //  --db=PATH   Use the database file at PATH.
         public static void Main ()
         {
+            // This could go into GtkBaseClient, but it's probably something we
+            // should really only support at each client level
+            string user_gtkrc = Path.Combine (Banshee.Base.Paths.ApplicationData, "gtkrc"); 
+            
+            if (File.Exists (user_gtkrc)) {
+                Gtk.Rc.AddDefaultFile (user_gtkrc);
+            } else if (File.Exists ("gtkrc")) {
+                Gtk.Rc.AddDefaultFile ("gtkrc");
+            }
+            
+            // Boot the client
             Banshee.Gui.GtkBaseClient.Entry<Client> ();
         }
         
         protected override void OnRegisterServices ()
         {
+            // Register the main interface
             Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
         }
     }
