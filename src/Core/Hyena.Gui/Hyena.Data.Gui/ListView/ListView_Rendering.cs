@@ -147,16 +147,13 @@ namespace Hyena.Data.Gui
                     
                 Cairo.Color stroke_color = CairoExtensions.ColorShade (graphics.GetWidgetColor (
                     GtkColorClass.Base, StateType.Normal), 0.0);
-                stroke_color.A = 0.5;
+                stroke_color.A = 0.3;
                 
                 header_cr.Color = stroke_color;
-                
-                header_cr.MoveTo (area.X - 1, area.Y + 1);
-                header_cr.LineTo (area.X - 1, area.Y + area.Height - 1);
-                header_cr.Stroke ();
-                
-                header_cr.MoveTo (area.X + area.Width, area.Y + 1);
-                header_cr.LineTo (area.X + area.Width, area.Y + area.Height - 1);
+                header_cr.MoveTo (area.X - 1.0, area.Y + 1.0);
+                header_cr.LineTo (area.X - 1.0, area.Y + area.Height);
+                header_cr.MoveTo (area.X + area.Width, area.Y + 1.0);
+                header_cr.LineTo (area.X + area.Width, area.Y + area.Height);
                 header_cr.Stroke ();
             }
             
@@ -331,20 +328,20 @@ namespace Hyena.Data.Gui
             int x = pressed_column_x_drag;
             
             Cairo.Color fill_color = graphics.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
-            fill_color.A = 0.6;
+            fill_color.A = 0.45;
             
             Cairo.Color stroke_color = CairoExtensions.ColorShade (graphics.GetWidgetColor (
                 GtkColorClass.Base, StateType.Normal), 0.0);
-            stroke_color.A = 0.4;
+            stroke_color.A = 0.3;
             
             list_cr.Rectangle (x, list_alloc.Y, column.Width, list_alloc.Height);
             list_cr.Color = fill_color;
             list_cr.Fill ();
             
             list_cr.MoveTo (x, list_alloc.Y);
-            list_cr.LineTo (x, list_alloc.Y + list_alloc.Height);
-            list_cr.MoveTo (x + column.Width, list_alloc.Y);
-            list_cr.LineTo (x + column.Width, list_alloc.Y + list_alloc.Height);
+            list_cr.LineTo (x, list_alloc.Y + list_alloc.Height - 1.0);
+            list_cr.LineTo (x + column.Width, list_alloc.Y + list_alloc.Height - 1.0);
+            list_cr.LineTo (x + column.Width, list_alloc.Y);
             
             list_cr.Color = stroke_color;
             list_cr.Antialias = Cairo.Antialias.None;

@@ -1,5 +1,10 @@
 2008-02-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Draw a bottom border on the dragging column
+
+2008-02-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
 	Major fix that reparents the artist/album/track views when switching
 	browser positions instead of destroying them and rebuilding; fixes a
