@@ -61,6 +61,7 @@ namespace Banshee.Collection.Gui
         private ScrolledWindow artist_scrolled_window;
         private ScrolledWindow album_scrolled_window;
         private ScrolledWindow track_scrolled_window;
+        private bool view_is_built = false;
         
         private Paned container;
         private Widget browser_container;
@@ -93,7 +94,7 @@ namespace Banshee.Collection.Gui
             }
             
             if (ServiceManager.Contains ("InterfaceActionService")) {
-                action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
+                action_service = ServiceManager.Get<InterfaceActionService> ();
                 
                 browser_view_actions = new ActionGroup ("BrowserView");
                 
@@ -128,25 +129,29 @@ namespace Banshee.Collection.Gui
         
         private void BuildCommon ()
         {
-            artist_view = new ArtistListView();
-            album_view = new AlbumListView();
-            track_view = new TrackListView();
+            if (view_is_built) {
+                return;
+            }
+            
+            artist_view = new ArtistListView ();
+            album_view = new AlbumListView ();
+            track_view = new TrackListView ();
         
             artist_view.HeaderVisible = false;
             album_view.HeaderVisible = false;
             
-            artist_scrolled_window = new ScrolledWindow();
-            artist_scrolled_window.Add(artist_view);
+            artist_scrolled_window = new ScrolledWindow ();
+            artist_scrolled_window.Add (artist_view);
             artist_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
             artist_scrolled_window.VscrollbarPolicy = PolicyType.Automatic;
             
-            album_scrolled_window = new ScrolledWindow();
-            album_scrolled_window.Add(album_view);
+            album_scrolled_window = new ScrolledWindow ();
+            album_scrolled_window.Add (album_view);
             album_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
             album_scrolled_window.VscrollbarPolicy = PolicyType.Automatic;
             
-            track_scrolled_window = new ScrolledWindow();
-            track_scrolled_window.Add(track_view);
+            track_scrolled_window = new ScrolledWindow ();
+            track_scrolled_window.Add (track_view);
             track_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
             track_scrolled_window.VscrollbarPolicy = PolicyType.Automatic;
             
@@ -156,23 +161,29 @@ namespace Banshee.Collection.Gui
 
             artist_view.SelectionProxy.Changed += OnBrowserViewSelectionChanged;
             album_view.SelectionProxy.Changed += OnBrowserViewSelectionChanged;
+            
+            view_is_built = true;
         }
         
-        private void Clean ()
+        private void Reset ()
         {
-            if (artist_view != null) {
-                artist_view.Destroy ();
+            // Unparent the views' scrolled window parents so they can be re-packed in 
+            // a new layout. The main container gets destroyed since it will be recreated.
+            
+            if (artist_scrolled_window != null) {
+                Container artist_album_container = artist_scrolled_window.Parent as Container;
+                if (artist_album_container != null) {
+                    artist_album_container.Remove (artist_scrolled_window);
+                    artist_album_container.Remove (album_scrolled_window);
+                }
             }
             
-            if (album_view != null) {
-                album_view.Destroy ();
-            }
-            
-            if (track_view != null) {
-                track_view.Destroy ();
+            if (track_scrolled_window != null) {
+                container.Remove (track_scrolled_window);
             }
             
             if (container != null) {
+                Remove (container);
                 container.Destroy ();
             }
             
@@ -181,7 +192,7 @@ namespace Banshee.Collection.Gui
 
         private void LayoutLeft ()
         {
-            Clean ();
+            Reset ();
             
             container = new HPaned ();
             VPaned artist_album_box = new VPaned ();
@@ -202,7 +213,7 @@ namespace Banshee.Collection.Gui
         
         private void LayoutTop ()
         {
-            Clean ();
+            Reset ();
             
             container = new VPaned ();
             HBox artist_album_box = new HBox ();
@@ -248,27 +259,27 @@ namespace Banshee.Collection.Gui
             BrowserVisible.Set (action.Active);
         }
         
-        protected virtual void OnBrowserViewSelectionChanged(object o, EventArgs args)
+        protected virtual void OnBrowserViewSelectionChanged (object o, EventArgs args)
         {
             Hyena.Collections.Selection selection = (Hyena.Collections.Selection)o;
             TrackListModel model = track_view.Model as TrackListModel;
             
-            if(selection.Count == 1 && selection.Contains(0) || selection.AllSelected) {
-                if(model != null && o == artist_view.Selection ) {
+            if (selection.Count == 1 && selection.Contains(0) || selection.AllSelected) {
+                if (model != null && o == artist_view.Selection ) {
                     model.ArtistInfoFilter = null;
                     album_model.ArtistInfoFilter = null;
-                } else if(model != null && o == album_view.Selection) {
+                } else if (model != null && o == album_view.Selection) {
                     model.AlbumInfoFilter = null;
                 }
                 return;
-            } else if(selection.Count == 0) {
+            } else if (selection.Count == 0) {
                 selection.Select(0);
                 return;
-            } else if(selection.Count > 0 && !selection.AllSelected) {
+            } else if (selection.Count > 0 && !selection.AllSelected) {
                 selection.QuietUnselect(0);
             }
             
-            if(o == artist_view.Selection) {
+            if (o == artist_view.Selection) {
                 ArtistInfo [] artists = new ArtistInfo[selection.Count];
                 int i = 0;
             
@@ -278,15 +289,61 @@ namespace Banshee.Collection.Gui
             
                 model.ArtistInfoFilter = artists;
                 album_model.ArtistInfoFilter = artists;
-            } else if(o == album_view.Selection) {
+            } else if (o == album_view.Selection) {
                 AlbumInfo [] albums = new AlbumInfo[selection.Count];
                 int i = 0;
             
-                foreach(int row_index in album_view.Selection) {
+                foreach (int row_index in album_view.Selection) {
                     albums[i++] = album_view.Model[row_index];
                 }
             
                 model.AlbumInfoFilter = albums;
+            }
+        }
+        
+        public void SetModels (TrackListModel track, ArtistListModel artist, AlbumListModel album)
+        {
+            // Save the old vertical positions
+            if (track_model != null) {
+                model_positions[track_model] = track_view.Vadjustment.Value;
+            }
+            
+            if (artist_model != null) {
+                model_positions[artist_model] = artist_view.Vadjustment.Value;
+            }
+            
+            if (album_model != null) {
+                model_positions[album_model] = album_view.Vadjustment.Value;
+            }
+            
+            // Set the new models and restore positions
+            track_model = track;
+            artist_model = artist;
+            album_model = album;
+
+            // Initialize the new positions if needed
+            if (track_model != null) {
+                if (!model_positions.ContainsKey (track_model)) {
+                    model_positions[track_model] = 0.0;
+                }
+                
+                track_view.SetModel (track_model, model_positions[track_model]);
+            }
+
+            if (artist_model != null) {
+                if (!model_positions.ContainsKey (artist_model)) {
+                    model_positions[artist_model] = 0.0;
+                }
+                
+                artist_view.SetModel (artist_model, model_positions[artist_model]);
+            }
+
+            if (album_model != null) {
+                if (!model_positions.ContainsKey (album_model)) {
+                    model_positions[album_model] = 0.0;
+                }
+                
+                album_view.SetModel (album_model, model_positions[album_model]);
             }
         }
         
@@ -321,44 +378,6 @@ namespace Banshee.Collection.Gui
                 }
                 
                 return ((ITrackModelSource)ServiceManager.SourceManager.ActiveSource).ShowBrowser;
-            }
-        }
-
-        public void SetModels (TrackListModel track, ArtistListModel artist, AlbumListModel album)
-        {
-            // Save the old vertical positions
-            if (track_model != null)
-                model_positions[track_model] = track_view.Vadjustment.Value;
-            if (artist_model != null)
-                model_positions[artist_model] = artist_view.Vadjustment.Value;
-            if (album_model != null)
-                model_positions[album_model] = album_view.Vadjustment.Value;
-
-            // Set the new models and restore positions
-            track_model = track;
-            artist_model = artist;
-            album_model = album;
-
-            // Initialize the new positions if needed
-            if (track_model != null) {
-                if (!model_positions.ContainsKey (track_model))
-                    model_positions[track_model] = 0.0;
-
-                track_view.SetModel(track_model, model_positions[track_model]);
-            }
-
-            if (artist_model != null) {
-                if (!model_positions.ContainsKey (artist_model))
-                    model_positions[artist_model] = 0.0;
-
-                artist_view.SetModel(artist_model, model_positions[artist_model]);
-            }
-
-            if (album_model != null) {
-                if (!model_positions.ContainsKey (album_model))
-                    model_positions[album_model] = 0.0;
-
-                album_view.SetModel(album_model, model_positions[album_model]);
             }
         }
         
