@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public interface IHeaderCell" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.2222</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <Interfaces />
   <Docs>

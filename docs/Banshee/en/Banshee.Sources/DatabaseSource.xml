@@ -1,13 +1,19 @@
 <Type Name="DatabaseSource" FullName="Banshee.Sources.DatabaseSource">
-  <TypeSignature Language="C#" Value="public abstract class DatabaseSource : Banshee.Sources.Source, Banshee.Sources.ITrackModelSource" />
+  <TypeSignature Language="C#" Value="public abstract class DatabaseSource : Banshee.Sources.Source, Banshee.Sources.IDurationAggregator, Banshee.Sources.IFileSizeAggregator, Banshee.Sources.ITrackModelSource" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Sources.Source</BaseTypeName>
   </Base>
   <Interfaces>
+    <Interface>
+      <InterfaceName>Banshee.Sources.IDurationAggregator</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>Banshee.Sources.IFileSizeAggregator</InterfaceName>
+    </Interface>
     <Interface>
       <InterfaceName>Banshee.Sources.ITrackModelSource</InterfaceName>
     </Interface>
@@ -77,7 +83,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DeleteSelectedTracks">
+    </Member><Member MemberName="ConfirmRemoveTracks"><MemberSignature Language="C#" Value="public virtual bool ConfirmRemoveTracks { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="DeleteSelectedTracks">
       <MemberSignature Language="C#" Value="public virtual void DeleteSelectedTracks ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
@@ -95,7 +101,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="model" Type="Banshee.Collection.Database.TrackListDatabaseModel" /><Parameter Name="range" Type="Hyena.Collections.RangeCollection+Range" /></Parameters>
       <Docs><param name="model">To be added.</param><param name="range">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="RateLimitedReload">
+    </Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FileSize"><MemberSignature Language="C#" Value="public long FileSize { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FilteredDuration"><MemberSignature Language="C#" Value="public TimeSpan FilteredDuration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FilteredFileSize"><MemberSignature Language="C#" Value="public long FilteredFileSize { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="RateLimitedReload">
       <MemberSignature Language="C#" Value="protected virtual void RateLimitedReload ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
@@ -124,13 +130,13 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="model" Type="Banshee.Collection.Database.TrackListDatabaseModel" /></Parameters>
       <Docs><param name="model">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="RemoveTrackRange">
+    </Member><Member MemberName="RemoveTrack"><MemberSignature Language="C#" Value="public virtual void RemoveTrack (Banshee.Collection.Database.LibraryTrackInfo track);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="track" Type="Banshee.Collection.Database.LibraryTrackInfo" /></Parameters><Docs><param name="track">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="RemoveTrack"><MemberSignature Language="C#" Value="public virtual void RemoveTrack (int index);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="index" Type="System.Int32" /></Parameters><Docs><param name="index">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="RemoveTrackRange">
       <MemberSignature Language="C#" Value="protected virtual void RemoveTrackRange (Banshee.Collection.Database.TrackListDatabaseModel model, Hyena.Collections.RangeCollection.Range range);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="model" Type="Banshee.Collection.Database.TrackListDatabaseModel" /><Parameter Name="range" Type="Hyena.Collections.RangeCollection+Range" /></Parameters>
       <Docs><param name="model">To be added.</param><param name="range">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="track_model">
+    </Member><Member MemberName="ShowBrowser"><MemberSignature Language="C#" Value="public virtual bool ShowBrowser { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="track_model">
       <MemberSignature Language="C#" Value="protected Banshee.Collection.Database.TrackListDatabaseModel track_model;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Collection.Database.TrackListDatabaseModel</ReturnType></ReturnValue>

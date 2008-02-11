@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class HyenaSqliteCommand" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -21,20 +21,20 @@
     
     
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public HyenaSqliteCommand (string command);" />
+      <MemberSignature Language="C#" Value="public HyenaSqliteCommand (string command_str);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="command" Type="System.String" /></Parameters>
-      <Docs><param name="command">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters><Parameter Name="command_str" Type="System.String" /></Parameters>
+      <Docs><param name="command_str">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public HyenaSqliteCommand (string command, int num_params);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="command" Type="System.String" /><Parameter Name="num_params" Type="System.Int32" /></Parameters>
       <Docs><param name="command">To be added.</param><param name="num_params">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public HyenaSqliteCommand (string command, object[] param_values);" />
+      <MemberSignature Language="C#" Value="public HyenaSqliteCommand (string command_str, object[] param_values);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="command" Type="System.String" /><Parameter Name="param_values" Type="System.Object[]"><Attributes><Attribute><AttributeName>System.ParamArray</AttributeName></Attribute></Attributes></Parameter></Parameters>
-      <Docs><param name="command">To be added.</param><param name="param_values">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters><Parameter Name="command_str" Type="System.String" /><Parameter Name="param_values" Type="System.Object[]"><Attributes><Attribute><AttributeName>System.ParamArray</AttributeName></Attribute></Attributes></Parameter></Parameters>
+      <Docs><param name="command_str">To be added.</param><param name="param_values">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="AddNamedParameter">
       <MemberSignature Language="C#" Value="public void AddNamedParameter (string name, object value);" />
       <MemberType>Method</MemberType>
@@ -57,7 +57,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Parameters">
+    </Member><Member MemberName="CreateParameters"><MemberSignature Language="C#" Value="protected void CreateParameters (int num_params);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="num_params" Type="System.Int32" /></Parameters><Docs><param name="num_params">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Parameters">
       <MemberSignature Language="C#" Value="public Mono.Data.Sqlite.SqliteParameterCollection Parameters { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Mono.Data.Sqlite.SqliteParameterCollection</ReturnType></ReturnValue>

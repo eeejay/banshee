@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public interface IConfigurationClient" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <Interfaces />
   <Docs>
@@ -35,11 +35,11 @@
       <Parameters><Parameter Name="key" Type="System.String" /><Parameter Name="fallback" Type="T" /></Parameters>
       <Docs><typeparam name="T">To be added.</typeparam><param name="key">To be added.</param><param name="fallback">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Get&lt;T&gt;">
-      <MemberSignature Language="C#" Value="public T Get&lt;T&gt; (string namespce, string key, T fallback);" />
+      <MemberSignature Language="C#" Value="public T Get&lt;T&gt; (string namespace, string key, T fallback);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>T</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="namespce" Type="System.String" /><Parameter Name="key" Type="System.String" /><Parameter Name="fallback" Type="T" /></Parameters>
-      <Docs><typeparam name="T">To be added.</typeparam><param name="namespce">To be added.</param><param name="key">To be added.</param><param name="fallback">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <Parameters><Parameter Name="namespace" Type="System.String" /><Parameter Name="key" Type="System.String" /><Parameter Name="fallback" Type="T" /></Parameters>
+      <Docs><typeparam name="T">To be added.</typeparam><param name="namespace">To be added.</param><param name="key">To be added.</param><param name="fallback">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Set&lt;T&gt;">
       <MemberSignature Language="C#" Value="public void Set&lt;T&gt; (Banshee.Configuration.SchemaEntry&lt;T&gt; entry, T value);" />
       <MemberType>Method</MemberType>
@@ -53,11 +53,11 @@
       <Parameters><Parameter Name="key" Type="System.String" /><Parameter Name="value" Type="T" /></Parameters>
       <Docs><typeparam name="T">To be added.</typeparam><param name="key">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Set&lt;T&gt;">
-      <MemberSignature Language="C#" Value="public void Set&lt;T&gt; (string namespce, string key, T value);" />
+      <MemberSignature Language="C#" Value="public void Set&lt;T&gt; (string namespace, string key, T value);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="namespce" Type="System.String" /><Parameter Name="key" Type="System.String" /><Parameter Name="value" Type="T" /></Parameters>
-      <Docs><typeparam name="T">To be added.</typeparam><param name="namespce">To be added.</param><param name="key">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters><Parameter Name="namespace" Type="System.String" /><Parameter Name="key" Type="System.String" /><Parameter Name="value" Type="T" /></Parameters>
+      <Docs><typeparam name="T">To be added.</typeparam><param name="namespace">To be added.</param><param name="key">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

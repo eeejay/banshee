@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class SortableColumn : Hyena.Data.Gui.Column, Hyena.Data.ISortableColumn" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.2222</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.Data.Gui.Column</BaseTypeName>

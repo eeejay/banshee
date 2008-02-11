@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ColumnCellPlaybackIndicator : Hyena.Data.Gui.ColumnCell" />
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
-    <AssemblyVersion>0.90.1.2321</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41384</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.Data.Gui.ColumnCell</BaseTypeName>
@@ -13,7 +13,7 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName=".ctor">
+    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public ColumnCellPlaybackIndicator (string property);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="property" Type="System.String" /></Parameters><Docs><param name="property">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ColumnCellPlaybackIndicator (string property, bool isHeader);" />
       <MemberType>Constructor</MemberType>
       <Parameters>

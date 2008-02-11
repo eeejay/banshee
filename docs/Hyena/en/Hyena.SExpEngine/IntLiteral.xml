@@ -2,14 +2,12 @@
   <TypeSignature Language="C#" Value="public class IntLiteral : Hyena.SExpEngine.LiteralNode&lt;int&gt;" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.SExpEngine.LiteralNode&lt;System.Int32&gt;</BaseTypeName>
-    <BaseTypeArguments>
-      <BaseTypeArgument TypeParamName="T">System.Int32</BaseTypeArgument>
-    </BaseTypeArguments>
-  </Base>
+    
+  <BaseTypeArguments><BaseTypeArgument TypeParamName="T">System.Int32</BaseTypeArgument></BaseTypeArguments></Base>
   <Interfaces />
   <Docs>
     <summary>To be added.</summary>
@@ -19,14 +17,8 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public IntLiteral (int value);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="value" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="value" Type="System.Int32" /></Parameters>
+      <Docs><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class Source : Banshee.Sources.ISource" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -52,12 +52,13 @@
     
     
     
-    <Member MemberName=".ctor">
+    
+  <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected Source (string generic_name, string name, int order);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="generic_name" Type="System.String" /><Parameter Name="name" Type="System.String" /><Parameter Name="order" Type="System.Int32" /></Parameters>
       <Docs><param name="generic_name">To be added.</param><param name="name">To be added.</param><param name="order">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Activate">
+    </Member><Member MemberName="AcceptsInputFromSource"><MemberSignature Language="C#" Value="public virtual bool AcceptsInputFromSource (Banshee.Sources.Source source);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Parameters><Parameter Name="source" Type="Banshee.Sources.Source" /></Parameters><Docs><param name="source">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Activate">
       <MemberSignature Language="C#" Value="public virtual void Activate ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
@@ -75,17 +76,17 @@
       <ReturnValue><ReturnType>System.Nullable&lt;System.Boolean&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Banshee.ServiceStack.IDBusExportable.Parent">
-      <MemberSignature Language="C#" Value="Banshee.ServiceStack.IDBusExportable IDBusExportable.Parent { get; };" />
+      <MemberSignature Language="C#" Value="Banshee.ServiceStack.IDBusExportable Banshee.ServiceStack.IDBusExportable.Parent { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.ServiceStack.IDBusExportable</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Banshee.ServiceStack.IService.ServiceName">
-      <MemberSignature Language="C#" Value="string IService.ServiceName { get; };" />
+      <MemberSignature Language="C#" Value="string Banshee.ServiceStack.IService.ServiceName { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Banshee.Sources.ISource.Children">
-      <MemberSignature Language="C#" Value="string[] ISource.Children { get; };" />
+      <MemberSignature Language="C#" Value="string[] Banshee.Sources.ISource.Children { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
@@ -126,7 +127,7 @@
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Count">
-      <MemberSignature Language="C#" Value="public virtual int Count { get; };" />
+      <MemberSignature Language="C#" Value="public abstract int Count { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
@@ -141,7 +142,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="FilterQuery">
+    </Member><Member MemberName="FilteredCount"><MemberSignature Language="C#" Value="public virtual int FilteredCount { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FilterQuery">
       <MemberSignature Language="C#" Value="public virtual string FilterQuery { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
@@ -156,7 +157,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="HasProperties">
+    </Member><Member MemberName="GetStatusText"><MemberSignature Language="C#" Value="public virtual string GetStatusText ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="HasProperties">
       <MemberSignature Language="C#" Value="public virtual bool HasProperties { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
@@ -166,7 +167,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Name">
+    </Member><Member MemberName="MergeSourceInput"><MemberSignature Language="C#" Value="public virtual void MergeSourceInput (Banshee.Sources.Source source, Banshee.Sources.SourceMergeType mergeType);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="source" Type="Banshee.Sources.Source" /><Parameter Name="mergeType" Type="Banshee.Sources.SourceMergeType" /></Parameters><Docs><param name="source">To be added.</param><param name="mergeType">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Name">
       <MemberSignature Language="C#" Value="public string Name { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
@@ -195,7 +196,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Order">
+    </Member><Member MemberName="OnUserNotifyUpdated"><MemberSignature Language="C#" Value="protected virtual void OnUserNotifyUpdated ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Order">
       <MemberSignature Language="C#" Value="public int Order { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
@@ -234,7 +235,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="parent" Type="Banshee.Sources.Source" /></Parameters>
       <Docs><param name="parent">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TrackModelPath">
+    </Member><Member MemberName="SortChildSources"><MemberSignature Language="C#" Value="public virtual void SortChildSources (System.Collections.Generic.IComparer&lt;Banshee.Sources.Source&gt; comparer, bool asc);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="comparer" Type="System.Collections.Generic.IComparer&lt;Banshee.Sources.Source&gt;" /><Parameter Name="asc" Type="System.Boolean" /></Parameters><Docs><param name="comparer">To be added.</param><param name="asc">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="SupportedMergeTypes"><MemberSignature Language="C#" Value="public virtual Banshee.Sources.SourceMergeType SupportedMergeTypes { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>Banshee.Sources.SourceMergeType</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="TrackModelPath">
       <MemberSignature Language="C#" Value="public virtual string TrackModelPath { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
@@ -244,6 +245,5 @@
       <MemberType>Event</MemberType>
       <ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
-  </Members>
+    </Member><Member MemberName="UserNotifyUpdated"><MemberSignature Language="C#" Value="public event EventHandler UserNotifyUpdated;" /><MemberType>Event</MemberType><ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class TrackInfoDisplay : Gtk.Bin" />
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
-    <AssemblyVersion>0.90.1.2321</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41384</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.Bin</BaseTypeName>
@@ -13,26 +13,18 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public TrackInfoDisplay ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="QueueDraw">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="QueueDraw">
       <MemberSignature Language="C#" Value="public void QueueDraw ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

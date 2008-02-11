@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Hyena" Version="0.90.1.2221">
+    <Assembly Name="Hyena" Version="0.90.1.41380">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -19,7 +19,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Hyena.Gui" Version="0.90.1.2222">
+    <Assembly Name="Hyena.Gui" Version="0.90.1.41381">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -45,6 +45,7 @@
     <Namespace Name="Hyena">
       <Type Name="DateTimeUtil" />
       <Type Name="IUndoAction" />
+      <Type Name="StringUtil" />
       <Type Name="Timer" />
       <Type Name="UndoManager" />
     </Namespace>
@@ -63,7 +64,9 @@
       <Type Name="LayoutOption" />
     </Namespace>
     <Namespace Name="Hyena.Data">
+      <Type Name="ArrayModelCache`1" DisplayName="ArrayModelCache&lt;T&gt;" />
       <Type Name="ColumnDescription" />
+      <Type Name="DictionaryModelCache`1" DisplayName="DictionaryModelCache&lt;T&gt;" />
       <Type Name="ICacheableModel" />
       <Type Name="ICareAboutView" />
       <Type Name="IFilterable" />
@@ -99,7 +102,6 @@
       <Type Name="SortableColumn" />
     </Namespace>
     <Namespace Name="Hyena.Data.Query">
-      <Type Name="DateQueryValue" />
       <Type Name="FileSizeFactor" />
       <Type Name="FileSizeQueryValue" />
       <Type Name="IntegerQueryValue" />
@@ -127,6 +129,7 @@
       <Type Name="HyenaSqliteConnection" />
       <Type Name="ICacheableDatabaseModel" />
       <Type Name="SqliteModelCache`1" DisplayName="SqliteModelCache&lt;T&gt;" />
+      <Type Name="SqliteModelCache`1+AggregatesUpdatedEventHandler" DisplayName="SqliteModelCache&lt;T&gt;+AggregatesUpdatedEventHandler" />
       <Type Name="SqliteModelProvider`1" DisplayName="SqliteModelProvider&lt;T&gt;" />
       <Type Name="VirtualDatabaseColumnAttribute" />
     </Namespace>
@@ -141,6 +144,48 @@
     <Namespace Name="Hyena.Gui.Dialogs">
       <Type Name="ExceptionDialog" />
       <Type Name="VersionInformationDialog" />
+    </Namespace>
+    <Namespace Name="Hyena.Gui.Theatrics">
+      <Type Name="Actor`1" DisplayName="Actor&lt;T&gt;" />
+      <Type Name="SingleActorStage" />
+      <Type Name="Stage`1" DisplayName="Stage&lt;T&gt;" />
+      <Type Name="Stage`1+ActorStepHandler" DisplayName="Stage&lt;T&gt;+ActorStepHandler" />
+    </Namespace>
+    <Namespace Name="Hyena.Query">
+      <Type Name="AliasedObjectSet`1" DisplayName="AliasedObjectSet&lt;T&gt;" />
+      <Type Name="DateQueryValue" />
+      <Type Name="FileSizeFactor" />
+      <Type Name="FileSizeQueryValue" />
+      <Type Name="IAliasedObject" />
+      <Type Name="IntegerQueryValue" />
+      <Type Name="Keyword" />
+      <Type Name="Operator" />
+      <Type Name="QueryField" />
+      <Type Name="QueryFieldSet" />
+      <Type Name="QueryLimit" />
+      <Type Name="QueryListNode" />
+      <Type Name="QueryNode" />
+      <Type Name="QueryOrder" />
+      <Type Name="QueryParser" />
+      <Type Name="QueryTermNode" />
+      <Type Name="QueryToken" />
+      <Type Name="QueryValue" />
+      <Type Name="RelativeDateFactor" />
+      <Type Name="StringQueryValue" />
+      <Type Name="TokenID" />
+      <Type Name="UserQueryParser" />
+      <Type Name="XmlQueryParser" />
+    </Namespace>
+    <Namespace Name="Hyena.Query.Gui">
+      <Type Name="DateQueryValueEntry" />
+      <Type Name="FileSizeQueryValueEntry" />
+      <Type Name="IntegerQueryValueEntry" />
+      <Type Name="QueryBox" />
+      <Type Name="QueryLimitBox" />
+      <Type Name="QueryTermBox" />
+      <Type Name="QueryTermsBox" />
+      <Type Name="QueryValueEntry" />
+      <Type Name="StringQueryValueEntry" />
     </Namespace>
     <Namespace Name="Hyena.SExpEngine">
       <Type Name="ArithmeticFunctionSet" />
@@ -173,6 +218,10 @@
       <Type Name="UnknownVariableException" />
       <Type Name="UtilityFunctionSet" />
       <Type Name="VoidLiteral" />
+    </Namespace>
+    <Namespace Name="Hyena.Widgets">
+      <Type Name="RoundedFrame" />
+      <Type Name="ScrolledWindow" />
     </Namespace>
   </Types>
   <Title>Untitled</Title>

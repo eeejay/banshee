@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ShadowContainer : Gtk.Alignment" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Widgets</AssemblyName>
-    <AssemblyVersion>0.90.1.2320</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41383</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.Alignment</BaseTypeName>
@@ -17,10 +17,7 @@
       <MemberSignature Language="C#" Value="public ShadowContainer ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

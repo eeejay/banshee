@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct SchemaEntry&lt;T&gt;" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -27,10 +27,10 @@
     
     
     <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public SchemaEntry (string namespce, string key, T defaultValue, string shortDescription, string longDescription);" />
+      <MemberSignature Language="C#" Value="public SchemaEntry (string namespace, string key, T defaultValue, string shortDescription, string longDescription);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="namespce" Type="System.String" /><Parameter Name="key" Type="System.String" /><Parameter Name="defaultValue" Type="T" /><Parameter Name="shortDescription" Type="System.String" /><Parameter Name="longDescription" Type="System.String" /></Parameters>
-      <Docs><param name="namespce">To be added.</param><param name="key">To be added.</param><param name="defaultValue">To be added.</param><param name="shortDescription">To be added.</param><param name="longDescription">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters><Parameter Name="namespace" Type="System.String" /><Parameter Name="key" Type="System.String" /><Parameter Name="defaultValue" Type="T" /><Parameter Name="shortDescription" Type="System.String" /><Parameter Name="longDescription" Type="System.String" /></Parameters>
+      <Docs><param name="namespace">To be added.</param><param name="key">To be added.</param><param name="defaultValue">To be added.</param><param name="shortDescription">To be added.</param><param name="longDescription">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="DefaultValue">
       <MemberSignature Language="C#" Value="public readonly T DefaultValue;" />
       <MemberType>Field</MemberType>

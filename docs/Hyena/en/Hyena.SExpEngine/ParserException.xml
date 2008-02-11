@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ParserException : ApplicationException" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ApplicationException</BaseTypeName>
@@ -16,20 +16,8 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ParserException (string token, int line, int col, Exception inner);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="token" Type="System.String" />
-        <Parameter Name="line" Type="System.Int32" />
-        <Parameter Name="col" Type="System.Int32" />
-        <Parameter Name="inner" Type="System.Exception" />
-      </Parameters>
-      <Docs>
-        <param name="token">To be added.</param>
-        <param name="line">To be added.</param>
-        <param name="col">To be added.</param>
-        <param name="inner">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="token" Type="System.String" /><Parameter Name="line" Type="System.Int32" /><Parameter Name="col" Type="System.Int32" /><Parameter Name="inner" Type="System.Exception" /></Parameters>
+      <Docs><param name="token">To be added.</param><param name="line">To be added.</param><param name="col">To be added.</param><param name="inner">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Banshee.Core" Version="0.90.1.2319">
+    <Assembly Name="Banshee.Core" Version="0.90.1.41381">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -19,7 +19,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Banshee.Services" Version="0.90.1.2319">
+    <Assembly Name="Banshee.Services" Version="0.90.1.41382">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -38,7 +38,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Banshee.Widgets" Version="0.90.1.2320">
+    <Assembly Name="Banshee.Widgets" Version="0.90.1.41383">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -57,7 +57,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Banshee.ThickClient" Version="0.90.1.2321">
+    <Assembly Name="Banshee.ThickClient" Version="0.90.1.41384">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -85,7 +85,6 @@
       <Type Name="VolumeButton+VolumeChangedHandler" />
     </Namespace>
     <Namespace Name="Banshee.AudioProfiles">
-      <Type Name="GConfProfileConfiguration" />
       <Type Name="Pipeline" />
       <Type Name="Pipeline+Process" />
       <Type Name="PipelineVariable" />
@@ -120,7 +119,6 @@
       <Type Name="NamingUtil" />
       <Type Name="NamingUtil+PostfixDuplicateIncrementHandler" />
       <Type Name="Paths" />
-      <Type Name="PathUtil" />
       <Type Name="PlatformHacks" />
       <Type Name="ProductAuthor" />
       <Type Name="ProductInformation" />
@@ -178,12 +176,14 @@
       <Type Name="ColumnCellDateTime" />
       <Type Name="ColumnCellDuration" />
       <Type Name="ColumnCellPlaybackIndicator" />
+      <Type Name="ColumnCellTrackNumber" />
       <Type Name="CompositeTrackListView" />
+      <Type Name="PersistentColumnController" />
       <Type Name="TrackListView" />
     </Namespace>
     <Namespace Name="Banshee.Configuration">
       <Type Name="ConfigurationClient" />
-      <Type Name="GConfConfigurationClient" />
+      <Type Name="DatabaseConfigurationClient" />
       <Type Name="IConfigurationClient" />
       <Type Name="SchemaEntry`1" DisplayName="SchemaEntry&lt;T&gt;" />
       <Type Name="XmlConfigurationClient" />
@@ -193,7 +193,6 @@
       <Type Name="LibrarySchema" />
     </Namespace>
     <Namespace Name="Banshee.Database">
-      <Type Name="BansheeDbCommand" />
       <Type Name="BansheeDbConnection" />
       <Type Name="BansheeDbFormatMigrator" />
       <Type Name="BansheeDbFormatMigrator+SlowStartedHandler" />
@@ -241,6 +240,7 @@
       <Type Name="GladeWindow" />
       <Type Name="ImageFileChooserDialog" />
       <Type Name="OpenLocationDialog" />
+      <Type Name="PreferencesDialog" />
       <Type Name="SeekDialog" />
       <Type Name="TrackEditor" />
     </Namespace>
@@ -254,20 +254,28 @@
       <Type Name="ArtworkPopup" />
       <Type Name="ConnectedSeekSlider" />
       <Type Name="ConnectedVolumeButton" />
+      <Type Name="PlaylistMenuItem" />
       <Type Name="TrackInfoDisplay" />
       <Type Name="UserJobTile" />
       <Type Name="UserJobTileHost" />
     </Namespace>
+    <Namespace Name="Banshee.I18n">
+      <Type Name="AssemblyCatalogAttribute" />
+      <Type Name="Catalog" />
+    </Namespace>
     <Namespace Name="Banshee.IO">
+      <Type Name="DemuxVfs" />
+      <Type Name="Directory" />
+      <Type Name="File" />
       <Type Name="IDemuxVfs" />
       <Type Name="IDirectory" />
       <Type Name="IFile" />
-      <Type Name="IIOConfig" />
       <Type Name="IOProxy" />
+      <Type Name="IProvider" />
+      <Type Name="StreamAssist" />
       <Type Name="Utilities" />
     </Namespace>
     <Namespace Name="Banshee.IO.GnomeVfs">
-      <Type Name="DemuxVfs" />
       <Type Name="Directory" />
       <Type Name="File" />
       <Type Name="IOConfig" />
@@ -276,10 +284,9 @@
       <Type Name="DemuxVfs" />
       <Type Name="Directory" />
       <Type Name="File" />
-      <Type Name="IOConfig" />
+      <Type Name="Provider" />
     </Namespace>
     <Namespace Name="Banshee.IO.Unix">
-      <Type Name="DemuxVfs" />
       <Type Name="Directory" />
       <Type Name="File" />
       <Type Name="IOConfig" />
@@ -308,7 +315,6 @@
       <Type Name="DBusPlayerEngineEventHandler" />
       <Type Name="DBusPlayerEngineStateHandler" />
       <Type Name="IEqualizer" />
-      <Type Name="IPlaybackController" />
       <Type Name="IPlayerEngineService" />
       <Type Name="PlaybackControllerService" />
       <Type Name="PlaybackControllerStoppedHandler" />
@@ -355,6 +361,16 @@
       <Type Name="State" />
       <Type Name="StateChangeHandler" />
     </Namespace>
+    <Namespace Name="Banshee.PlaybackController">
+      <Type Name="IBasicPlaybackController" />
+      <Type Name="ICanonicalPlaybackController" />
+      <Type Name="IPlaybackController" />
+      <Type Name="IPlaybackControllerExportable" />
+      <Type Name="PlaybackControllerService" />
+      <Type Name="PlaybackControllerStoppedHandler" />
+      <Type Name="PlaybackRepeatMode" />
+      <Type Name="PlaybackShuffleMode" />
+    </Namespace>
     <Namespace Name="Banshee.Playlist">
       <Type Name="AbstractPlaylistSource" />
       <Type Name="ImportPlaylistWorker" />
@@ -381,6 +397,20 @@
       <Type Name="W3CDateTime" />
       <Type Name="XspfBaseObject" />
     </Namespace>
+    <Namespace Name="Banshee.Query">
+      <Type Name="BansheeQuery" />
+      <Type Name="NaturalIntegerQueryValue" />
+      <Type Name="PlaylistQueryValue" />
+      <Type Name="RatingQueryValue" />
+      <Type Name="SmartPlaylistQueryValue" />
+      <Type Name="YearQueryValue" />
+    </Namespace>
+    <Namespace Name="Banshee.Query.Gui">
+      <Type Name="BansheeQueryBox" />
+      <Type Name="PlaylistQueryValueEntry" />
+      <Type Name="RatingQueryValueEntry" />
+      <Type Name="SmartPlaylistQueryValueEntry" />
+    </Namespace>
     <Namespace Name="Banshee.ServiceStack">
       <Type Name="Application" />
       <Type Name="DBusServiceManager" />
@@ -389,6 +419,7 @@
       <Type Name="IdleImplementationHandler" />
       <Type Name="IdleTimeoutRemoveHandler" />
       <Type Name="IdleTimeoutRemoveImplementationHandler" />
+      <Type Name="IExtensionService" />
       <Type Name="InvokeHandler" />
       <Type Name="IService" />
       <Type Name="IUserJob" />
@@ -406,7 +437,7 @@
     </Namespace>
     <Namespace Name="Banshee.SmartPlaylist">
       <Type Name="DependencyComparer" />
-      <Type Name="Order" />
+      <Type Name="Editor" />
       <Type Name="SmartPlaylistCore" />
       <Type Name="SmartPlaylistSource" />
       <Type Name="Timer" />
@@ -415,6 +446,8 @@
       <Type Name="DatabaseSource" />
       <Type Name="ErrorSource" />
       <Type Name="ErrorSource+Message" />
+      <Type Name="IDurationAggregator" />
+      <Type Name="IFileSizeAggregator" />
       <Type Name="IImportable" />
       <Type Name="ISource" />
       <Type Name="ISourceManager" />
@@ -428,6 +461,7 @@
       <Type Name="SourceEventArgs" />
       <Type Name="SourceEventHandler" />
       <Type Name="SourceManager" />
+      <Type Name="SourceMergeType" />
     </Namespace>
     <Namespace Name="Banshee.Sources.Gui">
       <Type Name="SourceView" />

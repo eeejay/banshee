@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class EqualizerLevelsBox : Gtk.VBox" />
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
-    <AssemblyVersion>0.90.1.2321</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41384</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.VBox</BaseTypeName>
@@ -16,20 +16,8 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public EqualizerLevelsBox (string[] levels);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="levels" Type="System.String[]">
-          <Attributes>
-            <Attribute>
-              <AttributeName>System.ParamArray</AttributeName>
-            </Attribute>
-          </Attributes>
-        </Parameter>
-      </Parameters>
-      <Docs>
-        <param name="levels">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="levels" Type="System.String[]"><Attributes><Attribute><AttributeName>System.ParamArray</AttributeName></Attribute></Attributes></Parameter></Parameters>
+      <Docs><param name="levels">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public static class Application" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -52,7 +52,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="handler" Type="Banshee.ServiceStack.InvokeHandler" /></Parameters>
       <Docs><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Run">
+    </Member><Member MemberName="Invoke"><MemberSignature Language="C#" Value="public static void Invoke (EventHandler handler);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="handler" Type="System.EventHandler" /></Parameters><Docs><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Run">
       <MemberSignature Language="C#" Value="public static void Run ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ColumnController : System.Collections.Generic.IEnumerable&lt;Hyena.Data.Gui.Column&gt;" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.2222</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -57,12 +57,12 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Count">
+    </Member><Member MemberName="Columns"><MemberSignature Language="C#" Value="protected System.Collections.Generic.List&lt;Hyena.Data.Gui.Column&gt; Columns { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Collections.Generic.List&lt;Hyena.Data.Gui.Column&gt;</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Count">
       <MemberSignature Language="C#" Value="public int Count { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Insert">
+    </Member><Member MemberName="EnableColumnMenu"><MemberSignature Language="C#" Value="public virtual bool EnableColumnMenu { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IndexOf"><MemberSignature Language="C#" Value="public int IndexOf (Hyena.Data.Gui.Column column);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Parameters><Parameter Name="column" Type="Hyena.Data.Gui.Column" /></Parameters><Docs><param name="column">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Insert">
       <MemberSignature Language="C#" Value="public void Insert (Hyena.Data.Gui.Column column, int index);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
@@ -92,7 +92,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="index" Type="System.Int32" /></Parameters>
       <Docs><param name="index">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="System.Collections.Generic.IEnumerable&lt;Hyena.Data.Gui.Column&gt;.GetEnumerator">
+    </Member><Member MemberName="Reorder"><MemberSignature Language="C#" Value="public void Reorder (int index, int newIndex);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="index" Type="System.Int32" /><Parameter Name="newIndex" Type="System.Int32" /></Parameters><Docs><param name="index">To be added.</param><param name="newIndex">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="System.Collections.Generic.IEnumerable&lt;Hyena.Data.Gui.Column&gt;.GetEnumerator">
       <MemberSignature Language="C#" Value="System.Collections.Generic.IEnumerator&lt;Hyena.Data.Gui.Column&gt; IEnumerable&lt;Column&gt;.GetEnumerator ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Collections.Generic.IEnumerator&lt;Hyena.Data.Gui.Column&gt;</ReturnType></ReturnValue>
@@ -104,7 +104,7 @@
       <ReturnValue><ReturnType>System.Collections.IEnumerator</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Updated">
+    </Member><Member MemberName="ToArray"><MemberSignature Language="C#" Value="public Hyena.Data.Gui.Column[] ToArray ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>Hyena.Data.Gui.Column[]</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Updated">
       <MemberSignature Language="C#" Value="public event EventHandler Updated;" />
       <MemberType>Event</MemberType>
       <ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue>

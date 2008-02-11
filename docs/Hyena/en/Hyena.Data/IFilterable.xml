@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public interface IFilterable" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
   </AssemblyInfo>
   <Interfaces />
   <Docs>

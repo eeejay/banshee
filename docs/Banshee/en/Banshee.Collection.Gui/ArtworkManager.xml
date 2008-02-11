@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ArtworkManager : Banshee.ServiceStack.IService" />
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
-    <AssemblyVersion>0.90.1.2321</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41384</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -17,78 +17,38 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
+    
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ArtworkManager ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Banshee.ServiceStack.IService.ServiceName">
-      <MemberSignature Language="C#" Value="string IService.ServiceName { get; };" />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Banshee.ServiceStack.IService.ServiceName">
+      <MemberSignature Language="C#" Value="string Banshee.ServiceStack.IService.ServiceName { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Lookup">
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Lookup">
       <MemberSignature Language="C#" Value="public Gdk.Pixbuf Lookup (string id);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>Gdk.Pixbuf</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="id" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="id">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Lookup">
+      <ReturnValue><ReturnType>Gdk.Pixbuf</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="System.String" /></Parameters>
+      <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Lookup">
       <MemberSignature Language="C#" Value="public Gdk.Pixbuf Lookup (string artist, string album);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>Gdk.Pixbuf</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="artist" Type="System.String" />
-        <Parameter Name="album" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="artist">To be added.</param>
-        <param name="album">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="LookupScale">
+      <ReturnValue><ReturnType>Gdk.Pixbuf</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="artist" Type="System.String" /><Parameter Name="album" Type="System.String" /></Parameters>
+      <Docs><param name="artist">To be added.</param><param name="album">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="LookupScale">
       <MemberSignature Language="C#" Value="public Gdk.Pixbuf LookupScale (string id, int size);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>Gdk.Pixbuf</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="id" Type="System.String" />
-        <Parameter Name="size" Type="System.Int32" />
-      </Parameters>
-      <Docs>
-        <param name="id">To be added.</param>
-        <param name="size">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>Gdk.Pixbuf</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="id" Type="System.String" /><Parameter Name="size" Type="System.Int32" /></Parameters>
+      <Docs><param name="id">To be added.</param><param name="size">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

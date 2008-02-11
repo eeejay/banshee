@@ -1,0 +1,50 @@
+<Type Name="Editor" FullName="Banshee.SmartPlaylist.Editor">
+  <TypeSignature Language="C#" Value="public class Editor : Banshee.Gui.Dialogs.GladeDialog" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+    <AssemblyVersion>0.90.1.41384</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Banshee.Gui.Dialogs.GladeDialog</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Editor ();" />
+      <MemberType>Constructor</MemberType>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Editor (Banshee.SmartPlaylist.SmartPlaylistSource playlist);" />
+      <MemberType>Constructor</MemberType>
+      <Parameters>
+        <Parameter Name="playlist" Type="Banshee.SmartPlaylist.SmartPlaylistSource" />
+      </Parameters>
+      <Docs>
+        <param name="playlist">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RunDialog">
+      <MemberSignature Language="C#" Value="public void RunDialog ();" />
+      <MemberType>Method</MemberType>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

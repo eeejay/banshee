@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class TrackInfo : Banshee.Collection.ITrackInfo" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -94,7 +94,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DiscNumber">
+    </Member><Member MemberName="Disc"><MemberSignature Language="C#" Value="public virtual int Disc { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="DiscNumber">
       <MemberSignature Language="C#" Value="public virtual int DiscNumber { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>

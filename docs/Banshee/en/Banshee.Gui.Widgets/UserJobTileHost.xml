@@ -1,11 +1,11 @@
 <Type Name="UserJobTileHost" FullName="Banshee.Gui.Widgets.UserJobTileHost">
-  <TypeSignature Language="C#" Value="public class UserJobTileHost : Gtk.VBox" />
+  <TypeSignature Language="C#" Value="public class UserJobTileHost : Gtk.Alignment" />
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
-    <AssemblyVersion>0.90.1.2321</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41384</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>Gtk.VBox</BaseTypeName>
+    <BaseTypeName>Gtk.Alignment</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>
@@ -17,10 +17,7 @@
       <MemberSignature Language="C#" Value="public UserJobTileHost ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

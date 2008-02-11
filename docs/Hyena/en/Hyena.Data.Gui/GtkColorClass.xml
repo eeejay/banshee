@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public enum GtkColorClass" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.2222</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>

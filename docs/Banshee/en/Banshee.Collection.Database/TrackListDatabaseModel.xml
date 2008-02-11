@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class TrackListDatabaseModel : Banshee.Collection.TrackListModel, Banshee.Collection.IExportableModel, Hyena.Data.ICareAboutView, Hyena.Data.IFilterable, Hyena.Data.ISortable, Hyena.Data.Sqlite.ICacheableDatabaseModel" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Collection.TrackListModel</BaseTypeName>
@@ -83,7 +83,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="FetchCount">
+    </Member><Member MemberName="Duration"><MemberSignature Language="C#" Value="public TimeSpan Duration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FetchCount">
       <MemberSignature Language="C#" Value="public int FetchCount { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
@@ -98,12 +98,12 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Hyena.Data.Query.QueryFieldSet</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Filter">
+    </Member><Member MemberName="FileSize"><MemberSignature Language="C#" Value="public long FileSize { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Filter">
       <MemberSignature Language="C#" Value="public string Filter { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetSort">
+    </Member><Member MemberName="FilteredDuration"><MemberSignature Language="C#" Value="public TimeSpan FilteredDuration { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.TimeSpan</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="FilteredFileSize"><MemberSignature Language="C#" Value="public long FilteredFileSize { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ForcedSortQuery"><MemberSignature Language="C#" Value="public string ForcedSortQuery { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetSort">
       <MemberSignature Language="C#" Value="public static string GetSort (string key, string ascDesc);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
@@ -130,7 +130,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Sort">
+    </Member><Member MemberName="SelectAggregates"><MemberSignature Language="C#" Value="public string SelectAggregates { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Sort">
       <MemberSignature Language="C#" Value="public void Sort (Hyena.Data.ISortableColumn column);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>

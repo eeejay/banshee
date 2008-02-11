@@ -1,8 +1,8 @@
 <Type Name="RateLimiter" FullName="Banshee.Base.RateLimiter">
   <TypeSignature Language="C#" Value="public class RateLimiter" />
   <AssemblyInfo>
-    <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>

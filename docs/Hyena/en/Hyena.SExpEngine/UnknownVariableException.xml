@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class UnknownVariableException : ApplicationException" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ApplicationException</BaseTypeName>
@@ -16,14 +16,8 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UnknownVariableException (string var);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="var" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="var">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="var" Type="System.String" /></Parameters>
+      <Docs><param name="var">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public sealed class CommonTags" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -130,7 +130,7 @@
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Duration">
+    </Member><Member MemberName="Disc"><MemberSignature Language="C#" Value="public const string Disc;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Duration">
       <MemberSignature Language="C#" Value="public const string Duration;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>

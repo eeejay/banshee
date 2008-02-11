@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class RadioTrackInfo : Banshee.Collection.TrackInfo" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Collection.TrackInfo</BaseTypeName>

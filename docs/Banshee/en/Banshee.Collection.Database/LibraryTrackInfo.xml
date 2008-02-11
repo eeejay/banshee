@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class LibraryTrackInfo : Banshee.Collection.TrackInfo" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Collection.TrackInfo</BaseTypeName>
@@ -18,7 +18,8 @@
     
     
     
-    <Member MemberName=".ctor">
+    
+  <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public LibraryTrackInfo ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
@@ -39,16 +40,15 @@
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Parameters><Parameter Name="uri" Type="Banshee.Base.SafeUri" /></Parameters>
       <Docs><param name="uri">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DbId">
+    </Member><Member MemberName="CopyToLibrary"><MemberSignature Language="C#" Value="public Banshee.Base.SafeUri CopyToLibrary ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>Banshee.Base.SafeUri</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="DbId">
       <MemberSignature Language="C#" Value="public int DbId { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Provider">
+    </Member><Member MemberName="MusicBrainzID"><MemberSignature Language="C#" Value="public string MusicBrainzID { set; get; };" /><MemberType>Property</MemberType><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Provider">
       <MemberSignature Language="C#" Value="public static Banshee.Database.BansheeModelProvider&lt;Banshee.Collection.Database.LibraryTrackInfo&gt; Provider { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Database.BansheeModelProvider&lt;Banshee.Collection.Database.LibraryTrackInfo&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
-  </Members>
+    </Member><Member MemberName="TagSetID"><MemberSignature Language="C#" Value="public int TagSetID { set; get; };" /><MemberType>Property</MemberType><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

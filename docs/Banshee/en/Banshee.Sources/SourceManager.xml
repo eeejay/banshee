@@ -1,8 +1,8 @@
 <Type Name="SourceManager" FullName="Banshee.Sources.SourceManager">
-  <TypeSignature Language="C#" Value="public class SourceManager : Banshee.Sources.ISourceManager" />
+  <TypeSignature Language="C#" Value="public class SourceManager : Banshee.Sources.ISourceManager, IDisposable" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -10,6 +10,9 @@
   <Interfaces>
     <Interface>
       <InterfaceName>Banshee.Sources.ISourceManager</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>System.IDisposable</InterfaceName>
     </Interface>
   </Interfaces>
   <Docs>
@@ -65,27 +68,27 @@
       <Parameters><Parameter Name="source" Type="Banshee.Sources.Source" /><Parameter Name="isDefault" Type="System.Boolean" /></Parameters>
       <Docs><param name="source">To be added.</param><param name="isDefault">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Banshee.ServiceStack.IDBusExportable.Parent">
-      <MemberSignature Language="C#" Value="Banshee.ServiceStack.IDBusExportable IDBusExportable.Parent { get; };" />
+      <MemberSignature Language="C#" Value="Banshee.ServiceStack.IDBusExportable Banshee.ServiceStack.IDBusExportable.Parent { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.ServiceStack.IDBusExportable</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Banshee.ServiceStack.IService.ServiceName">
-      <MemberSignature Language="C#" Value="string IService.ServiceName { get; };" />
+      <MemberSignature Language="C#" Value="string Banshee.ServiceStack.IService.ServiceName { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Banshee.Sources.ISourceManager.ActiveSource">
-      <MemberSignature Language="C#" Value="Banshee.Sources.ISource ISourceManager.ActiveSource { set; get; };" />
+      <MemberSignature Language="C#" Value="Banshee.Sources.ISource Banshee.Sources.ISourceManager.ActiveSource { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Sources.ISource</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Banshee.Sources.ISourceManager.DefaultSource">
-      <MemberSignature Language="C#" Value="Banshee.Sources.ISource ISourceManager.DefaultSource { get; };" />
+      <MemberSignature Language="C#" Value="Banshee.Sources.ISource Banshee.Sources.ISourceManager.DefaultSource { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Sources.ISource</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Banshee.Sources.ISourceManager.Sources">
-      <MemberSignature Language="C#" Value="string[] ISourceManager.Sources { get; };" />
+      <MemberSignature Language="C#" Value="string[] Banshee.Sources.ISourceManager.Sources { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
@@ -100,7 +103,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Sources.Source</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="RemoveSource">
+    </Member><Member MemberName="Dispose"><MemberSignature Language="C#" Value="public void Dispose ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="RemoveSource">
       <MemberSignature Language="C#" Value="public void RemoveSource (Banshee.Sources.Source source);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>

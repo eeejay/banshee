@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public interface IDirectory" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <Interfaces />
   <Docs>
@@ -40,13 +40,13 @@
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Parameters><Parameter Name="directory" Type="System.String" /></Parameters>
       <Docs><param name="directory">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetDirectories">
+    </Member><Member MemberName="GetDirectories"><MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;string&gt; GetDirectories (string directory);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;System.String&gt;</ReturnType></ReturnValue><Parameters><Parameter Name="directory" Type="System.String" /></Parameters><Docs><param name="directory">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetDirectories">
       <MemberSignature Language="C#" Value="public System.Collections.IEnumerable GetDirectories (string directory);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Collections.IEnumerable</ReturnType></ReturnValue>
       <Parameters><Parameter Name="directory" Type="System.String" /></Parameters>
       <Docs><param name="directory">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetFiles">
+    </Member><Member MemberName="GetFiles"><MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;string&gt; GetFiles (string directory);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;System.String&gt;</ReturnType></ReturnValue><Parameters><Parameter Name="directory" Type="System.String" /></Parameters><Docs><param name="directory">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetFiles">
       <MemberSignature Language="C#" Value="public System.Collections.IEnumerable GetFiles (string directory);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Collections.IEnumerable</ReturnType></ReturnValue>

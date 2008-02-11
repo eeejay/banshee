@@ -1,13 +1,17 @@
 <Type Name="PlaylistSource" FullName="Banshee.Playlist.PlaylistSource">
-  <TypeSignature Language="C#" Value="public class PlaylistSource : Banshee.Playlist.AbstractPlaylistSource" />
+  <TypeSignature Language="C#" Value="public class PlaylistSource : Banshee.Playlist.AbstractPlaylistSource, Banshee.Sources.IUnmapableSource" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Playlist.AbstractPlaylistSource</BaseTypeName>
   </Base>
-  <Interfaces />
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Banshee.Sources.IUnmapableSource</InterfaceName>
+    </Interface>
+  </Interfaces>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>
@@ -53,27 +57,27 @@
       <Parameters><Parameter Name="from" Type="Banshee.Collection.Database.TrackListDatabaseModel" /><Parameter Name="range" Type="Hyena.Collections.RangeCollection+Range" /></Parameters>
       <Docs><param name="from">To be added.</param><param name="range">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="CanUnmap">
-      <MemberSignature Language="C#" Value="public bool CanUnmap { get; };" />
+      <MemberSignature Language="C#" Value="public virtual bool CanUnmap { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="ConfirmBeforeUnmap">
-      <MemberSignature Language="C#" Value="public bool ConfirmBeforeUnmap { get; };" />
+      <MemberSignature Language="C#" Value="public virtual bool ConfirmBeforeUnmap { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="IconName">
+    </Member><Member MemberName="CreateUniqueName"><MemberSignature Language="C#" Value="public static string CreateUniqueName ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="CreateUniqueName"><MemberSignature Language="C#" Value="public static string CreateUniqueName (System.Collections.IEnumerable tracks);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters><Parameter Name="tracks" Type="System.Collections.IEnumerable" /></Parameters><Docs><param name="tracks">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetPlaylistId"><MemberSignature Language="C#" Value="public static int GetPlaylistId (string name);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Parameters><Parameter Name="name" Type="System.String" /></Parameters><Docs><param name="name">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="IconName">
       <MemberSignature Language="C#" Value="protected override string IconName { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="LoadAll">
+    </Member><Member MemberName="LoadAll"><MemberSignature Language="C#" Value="public static System.Collections.Generic.IEnumerable&lt;Banshee.Playlist.PlaylistSource&gt; LoadAll ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;Banshee.Playlist.PlaylistSource&gt;</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="LoadAll">
       <MemberSignature Language="C#" Value="public static System.Collections.Generic.List&lt;Banshee.Playlist.PlaylistSource&gt; LoadAll ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Collections.Generic.List&lt;Banshee.Playlist.PlaylistSource&gt;</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SourcePrimaryKey">
+    </Member><Member MemberName="PlaylistExists"><MemberSignature Language="C#" Value="public static bool PlaylistExists (string name);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Parameters><Parameter Name="name" Type="System.String" /></Parameters><Docs><param name="name">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="SourcePrimaryKey">
       <MemberSignature Language="C#" Value="protected override string SourcePrimaryKey { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
@@ -89,7 +93,7 @@
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Unmap">
-      <MemberSignature Language="C#" Value="public bool Unmap ();" />
+      <MemberSignature Language="C#" Value="public virtual bool Unmap ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Parameters />

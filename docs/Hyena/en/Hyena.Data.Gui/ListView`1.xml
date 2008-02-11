@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ListView&lt;T&gt; : Gtk.Container" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.2222</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -81,7 +81,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="OnModelCleared">
+    </Member><Member MemberName="OnColumnRightClicked"><MemberSignature Language="C#" Value="protected virtual void OnColumnRightClicked (Hyena.Data.Gui.Column clickedColumn, int x, int y);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="clickedColumn" Type="Hyena.Data.Gui.Column" /><Parameter Name="x" Type="System.Int32" /><Parameter Name="y" Type="System.Int32" /></Parameters><Docs><param name="clickedColumn">To be added.</param><param name="x">To be added.</param><param name="y">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="OnDragSourceSet"><MemberSignature Language="C#" Value="protected virtual void OnDragSourceSet ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="OnModelCleared">
       <MemberSignature Language="C#" Value="protected virtual void OnModelCleared ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
@@ -93,7 +93,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="QueueDraw">
+    </Member><Member MemberName="OnRowActivated"><MemberSignature Language="C#" Value="protected virtual void OnRowActivated ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="QueueDraw">
       <MemberSignature Language="C#" Value="public void QueueDraw ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>

@@ -1,8 +1,8 @@
 <Type Name="ProfileConfiguration" FullName="Banshee.AudioProfiles.ProfileConfiguration">
-  <TypeSignature Language="C#" Value="public abstract class ProfileConfiguration : System.Collections.Generic.IEnumerable&lt;System.Collections.Generic.KeyValuePair&lt;string,string&gt;&gt;" />
+  <TypeSignature Language="C#" Value="public class ProfileConfiguration : System.Collections.Generic.IEnumerable&lt;System.Collections.Generic.KeyValuePair&lt;string,string&gt;&gt;" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -44,7 +44,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="variable" Type="System.String" /><Parameter Name="value" Type="System.String" /></Parameters>
       <Docs><param name="variable">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetEnumerator">
+    </Member><Member MemberName="ConfNamespace"><MemberSignature Language="C#" Value="protected string ConfNamespace { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Count"><MemberSignature Language="C#" Value="public int Count { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetEnumerator">
       <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerator&lt;System.Collections.Generic.KeyValuePair&lt;string,string&gt;&gt; GetEnumerator ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Collections.Generic.IEnumerator&lt;System.Collections.Generic.KeyValuePair&lt;System.String,System.String&gt;&gt;</ReturnType></ReturnValue>
@@ -62,7 +62,7 @@
       <Parameters><Parameter Name="variable" Type="System.String" /></Parameters>
       <Docs><param name="variable">To be added.</param><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Load">
-      <MemberSignature Language="C#" Value="protected abstract void Load ();" />
+      <MemberSignature Language="C#" Value="protected virtual void Load ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
@@ -79,14 +79,14 @@
       <ReturnValue><ReturnType>Banshee.AudioProfiles.Profile</ReturnType></ReturnValue>
       <Parameters><Parameter Name="manager" Type="Banshee.AudioProfiles.ProfileManager" /><Parameter Name="id" Type="System.String" /></Parameters>
       <Docs><param name="manager">To be added.</param><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Remove">
+    </Member><Member MemberName="MakeConfNamespace"><MemberSignature Language="C#" Value="protected static string MakeConfNamespace (string id);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters><Parameter Name="id" Type="System.String" /></Parameters><Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Profile"><MemberSignature Language="C#" Value="public Banshee.AudioProfiles.Profile Profile { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>Banshee.AudioProfiles.Profile</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Remove">
       <MemberSignature Language="C#" Value="public void Remove (string variable);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="variable" Type="System.String" /></Parameters>
       <Docs><param name="variable">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Save">
-      <MemberSignature Language="C#" Value="public abstract void Save ();" />
+      <MemberSignature Language="C#" Value="public virtual void Save ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />

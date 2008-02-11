@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class PlaylistFormatBase : Banshee.Playlists.Formats.IPlaylistFormat" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>

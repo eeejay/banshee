@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ConfirmShutdownDialog : Banshee.Gui.Dialogs.ErrorListDialog" />
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
-    <AssemblyVersion>0.90.1.2321</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41384</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Gui.Dialogs.ErrorListDialog</BaseTypeName>
@@ -13,29 +13,18 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ConfirmShutdownDialog ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddString">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddString">
       <MemberSignature Language="C#" Value="public void AddString (string message);" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="message" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="message">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="message" Type="System.String" /></Parameters>
+      <Docs><param name="message">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

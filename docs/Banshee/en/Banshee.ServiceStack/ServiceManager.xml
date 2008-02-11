@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public static class ServiceManager" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -54,7 +54,7 @@
       <ReturnValue><ReturnType>Banshee.ServiceStack.IService</ReturnType></ReturnValue>
       <Parameters><Parameter Name="serviceName" Type="System.String" /></Parameters>
       <Docs><param name="serviceName">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Get&lt;T&gt;">
+    </Member><Member MemberName="Get&lt;T&gt;"><MemberSignature Language="C#" Value="public static T Get&lt;T&gt; ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>T</ReturnType></ReturnValue><Parameters /><Docs><typeparam name="T">To be added.</typeparam><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Get&lt;T&gt;">
       <MemberSignature Language="C#" Value="public static T Get&lt;T&gt; (string serviceName);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>T</ReturnType></ReturnValue>
@@ -66,9 +66,9 @@
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="PlaybackController">
-      <MemberSignature Language="C#" Value="public static Banshee.MediaEngine.PlaybackControllerService PlaybackController { get; };" />
+      <MemberSignature Language="C#" Value="public static Banshee.PlaybackController.PlaybackControllerService PlaybackController { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlaybackControllerService</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>Banshee.PlaybackController.PlaybackControllerService</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="PlayerEngine">
       <MemberSignature Language="C#" Value="public static Banshee.MediaEngine.PlayerEngineService PlayerEngine { get; };" />

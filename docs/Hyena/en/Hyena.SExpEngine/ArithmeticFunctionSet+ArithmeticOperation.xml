@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public enum ArithmeticFunctionSet.ArithmeticOperation" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
@@ -12,55 +12,35 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
+    
+    
     <Member MemberName="Add">
       <MemberSignature Language="C#" Value="Add" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="Divide">
+      <ReturnValue><ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="Divide">
       <MemberSignature Language="C#" Value="Divide" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="Modulo">
+      <ReturnValue><ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="Modulo">
       <MemberSignature Language="C#" Value="Modulo" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="Multiply">
+      <ReturnValue><ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="Multiply">
       <MemberSignature Language="C#" Value="Multiply" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="Subtract">
+      <ReturnValue><ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="Subtract">
       <MemberSignature Language="C#" Value="Subtract" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>Hyena.SExpEngine.ArithmeticFunctionSet+ArithmeticOperation</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
   </Members>
 </Type>

@@ -1,14 +1,14 @@
 <Type Name="SqliteModelCache&lt;T&gt;" FullName="Hyena.Data.Sqlite.SqliteModelCache&lt;T&gt;">
-  <TypeSignature Language="C#" Value="public class SqliteModelCache&lt;T&gt; : Hyena.Data.ModelCache&lt;T&gt;" />
+  <TypeSignature Language="C#" Value="public class SqliteModelCache&lt;T&gt; : Hyena.Data.DictionaryModelCache&lt;T&gt;" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.2221</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
   </TypeParameters>
   <Base>
-    <BaseTypeName>Hyena.Data.ModelCache&lt;T&gt;</BaseTypeName>
+    <BaseTypeName>Hyena.Data.DictionaryModelCache&lt;T&gt;</BaseTypeName>
     
   <BaseTypeArguments><BaseTypeArgument TypeParamName="T">T</BaseTypeArgument></BaseTypeArguments></Base>
   <Interfaces />
@@ -30,7 +30,7 @@
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="connection" Type="Hyena.Data.Sqlite.HyenaSqliteConnection" /><Parameter Name="uuid" Type="System.String" /><Parameter Name="model" Type="Hyena.Data.Sqlite.ICacheableDatabaseModel" /><Parameter Name="provider" Type="Hyena.Data.Sqlite.SqliteModelProvider&lt;T&gt;" /></Parameters>
       <Docs><param name="connection">To be added.</param><param name="uuid">To be added.</param><param name="model">To be added.</param><param name="provider">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="CacheId">
+    </Member><Member MemberName="AggregatesUpdated"><MemberSignature Language="C#" Value="public event Hyena.Data.Sqlite.SqliteModelCache&lt;T&gt;.AggregatesUpdatedEventHandler AggregatesUpdated;" /><MemberType>Event</MemberType><ReturnValue><ReturnType>Hyena.Data.Sqlite.SqliteModelCache&lt;T&gt;+AggregatesUpdatedEventHandler</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="CacheId">
       <MemberSignature Language="C#" Value="public int CacheId { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
@@ -56,7 +56,7 @@
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Parameters><Parameter Name="item_id" Type="System.Int32" /></Parameters>
       <Docs><param name="item_id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="UpdateCount">
+    </Member><Member MemberName="UpdateAggregates"><MemberSignature Language="C#" Value="protected void UpdateAggregates ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="UpdateCount">
       <MemberSignature Language="C#" Value="protected void UpdateCount ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public enum DragDropTargetType" />
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
-    <AssemblyVersion>0.90.1.2321</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41384</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
@@ -12,7 +12,10 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName="PlaylistRows">
+    
+    
+    
+    <Member MemberName="ModelSelection"><MemberSignature Language="C#" Value="ModelSelection" /><MemberType>Field</MemberType><ReturnValue><ReturnType>Banshee.Gui.DragDrop.DragDropTargetType</ReturnType></ReturnValue><Docs><summary>To be added.</summary></Docs></Member><Member MemberName="PlaylistRows">
       <MemberSignature Language="C#" Value="PlaylistRows" />
       <MemberType>Field</MemberType>
       <ReturnValue>
@@ -21,18 +24,12 @@
       <Docs>
         <summary>To be added.</summary>
       </Docs>
-    </Member>
-    <Member MemberName="Source">
+    </Member><Member MemberName="Source">
       <MemberSignature Language="C#" Value="Source" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Gui.DragDrop.DragDropTargetType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="TrackInfoObjects">
+      <ReturnValue><ReturnType>Banshee.Gui.DragDrop.DragDropTargetType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="TrackInfoObjects">
       <MemberSignature Language="C#" Value="TrackInfoObjects" />
       <MemberType>Field</MemberType>
       <ReturnValue>
@@ -41,16 +38,11 @@
       <Docs>
         <summary>To be added.</summary>
       </Docs>
-    </Member>
-    <Member MemberName="UriList">
+    </Member><Member MemberName="UriList">
       <MemberSignature Language="C#" Value="UriList" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Gui.DragDrop.DragDropTargetType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>Banshee.Gui.DragDrop.DragDropTargetType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
   </Members>
 </Type>

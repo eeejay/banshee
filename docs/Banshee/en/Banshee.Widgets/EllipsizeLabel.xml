@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class EllipsizeLabel : Gtk.Label" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Widgets</AssemblyName>
-    <AssemblyVersion>0.90.1.2320</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41383</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.Label</BaseTypeName>
@@ -13,26 +13,17 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public EllipsizeLabel ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public EllipsizeLabel (string label);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="label" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="label">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="label" Type="System.String" /></Parameters>
+      <Docs><param name="label">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

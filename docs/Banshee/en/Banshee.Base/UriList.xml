@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class UriList : System.Collections.Generic.List&lt;Banshee.Base.SafeUri&gt;" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.2319</AssemblyVersion>
+    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Collections.Generic.List&lt;Banshee.Base.SafeUri&gt;</BaseTypeName>
