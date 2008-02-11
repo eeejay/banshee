@@ -1,5 +1,9 @@
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/*: Update svn:ignore
+
+2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Makefile.am:
 	* src/Libraries/Makefile.am: New directory for what was Extras in stable.
 
