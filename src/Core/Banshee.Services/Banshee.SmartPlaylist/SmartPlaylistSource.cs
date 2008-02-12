@@ -180,8 +180,6 @@ namespace Banshee.SmartPlaylist
             LimitValue = new IntegerQueryValue ();
             LimitValue.ParseUserQuery (limit_number);
 
-            Console.WriteLine ("limit = {0}, order = {1}, val = {2}, valisempty? {3}", Limit, QueryOrder, LimitValue, LimitValue.IsEmpty);
-
             DbId = dbid;
 
             InstallProperties ();
@@ -262,17 +260,6 @@ namespace Banshee.SmartPlaylist
                 "DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {0}", DbId
             ));
 
-            Console.WriteLine ("limited? {0}", IsLimited);
-
-            Console.WriteLine (String.Format (
-                @"INSERT INTO CoreSmartPlaylistEntries 
-                    SELECT {0} as SmartPlaylistID, TrackId
-                        FROM CoreTracks, CoreArtists, CoreAlbums
-                        WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID
-                        {1} {2}",
-                DbId, PrependCondition("AND"), OrderAndLimit
-            ));
-
             // Repopulate it 
             ServiceManager.DbConnection.Execute (String.Format (
                 @"INSERT INTO CoreSmartPlaylistEntries 
@@ -312,6 +299,10 @@ namespace Banshee.SmartPlaylist
 
         public bool ConfirmBeforeUnmap {
             get { return true; }
+        }
+
+        public bool CanRefresh {
+            get { return QueryOrder == BansheeQuery.RandomOrder; }
         }
 
 #endregion

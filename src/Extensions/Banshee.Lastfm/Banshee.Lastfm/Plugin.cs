@@ -40,16 +40,6 @@ using Banshee.MediaEngine;
 using Banshee.Database;
 using Banshee.Configuration;
 
-public static class PluginModuleEntry
-{
-    public static Type [] GetTypes ()
-    {
-        return new Type [] {
-            typeof (Banshee.Plugins.LastFM.LastFMPlugin)
-        };
-    }
-}
-
 namespace Banshee.Lastfm
 {
     public class LastFMPlugin : Banshee.Plugins.Plugin
@@ -65,7 +55,12 @@ namespace Banshee.Lastfm
 
         private static LastFMPlugin instance = null;
         public static LastFMPlugin Instance {
-            get { return instance; }
+            get {
+                if (instance == null) {
+                    instance = new LastfmPlugin ();
+                }
+                return instance;
+            }
         }
 
         protected override string ConfigurationName { 
@@ -86,8 +81,6 @@ namespace Banshee.Lastfm
  
         protected override void PluginInitialize ()
         {
-            instance = this;
-
             // We don't automatically connect to Last.fm, but load the last Last.fm
             // username we used so we can load the user's stations.
             string last_user = LastUserSchema.Get ();

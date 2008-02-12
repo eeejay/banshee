@@ -1,5 +1,22 @@
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Remove
+	debugging WriteLines.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Add CanRefresh property that is true if ordered by random.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	RefreshSmartPlaylist action to the source toolbar and context menu.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Fix
+	whitespace, add and handle RefreshSmartPlaylist action.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/Plugin.cs: Get rid of old
+	PluginModuleEntry.
+
+2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Lastfm.Gui/Makefile.am: Forgot to commit this.
 
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>

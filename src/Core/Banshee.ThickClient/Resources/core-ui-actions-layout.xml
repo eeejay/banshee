@@ -5,7 +5,9 @@
     <toolitem action="NextAction"/>
     <placeholder name="SeekSlider"/>
     <placeholder name="TrackInfoDisplay"/>
-    <placeholder name="SourceActions"/>
+    <placeholder name="SourceActions">
+        <toolitem name="RefreshSmartPlaylist" action="RefreshSmartPlaylistAction"/>
+    </placeholder>
     <placeholder name="VolumeButton"/>
   </toolbar>
 
@@ -104,6 +106,7 @@
     <menuitem name="ImportSource" action="ImportSourceAction"/>
     <separator/>
     <menuitem name="RenameSource" action="RenameSourceAction"/>
+    <menuitem name="RefreshSmartPlaylist" action="RefreshSmartPlaylistAction"/>
     <menuitem name="UnmapSource" action="UnmapSourceAction"/>
     <!--<menuitem name="ExportPlaylist" action="ExportPlaylistAction"/>-->
     <!--<menuitem name="SyncDap" action="SyncDapAction"/>-->

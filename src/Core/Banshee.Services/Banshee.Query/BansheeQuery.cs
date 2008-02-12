@@ -42,8 +42,11 @@ namespace Banshee.Query
     {
         private static bool asc = true;
         private static bool desc = false;
+
+        public static QueryOrder RandomOrder = CreateQueryOrder ("Random",     asc,  Catalog.GetString ("Random"));
+
         public static QueryOrder [] Orders = new QueryOrder [] {
-            CreateQueryOrder ("Random",     asc,  Catalog.GetString ("Random")),
+            RandomOrder,
             CreateQueryOrder ("Album",      asc,  Catalog.GetString ("Album")),
             CreateQueryOrder ("Artist",     asc,  Catalog.GetString ("Artist")),
             CreateQueryOrder ("Title",      asc,  Catalog.GetString ("Title")),
@@ -271,7 +274,6 @@ namespace Banshee.Query
 
         public static QueryOrder FindOrder (string name)
         {
-            Console.WriteLine ("# ordres = {0}", Orders.Length);
             foreach (QueryOrder order in Orders) {
                 if (order != null && order.Name == name) {
                     return order;

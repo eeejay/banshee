@@ -60,9 +60,9 @@ namespace Banshee.Gui
             action_service = actionService;
 
             Add (new ActionEntry [] {
-                new ActionEntry("NewPlaylistAction", Stock.New,
-                    Catalog.GetString("_New Playlist"), "<control>N",
-                    Catalog.GetString("Create a new empty playlist"), OnNewPlaylist),
+                new ActionEntry ("NewPlaylistAction", Stock.New,
+                    Catalog.GetString ("_New Playlist"), "<control>N",
+                    Catalog.GetString ("Create a new empty playlist"), OnNewPlaylist),
 
                 new ActionEntry ("NewSmartPlaylistAction", null,
                     Catalog.GetString ("New _Smart Playlist"), null,
@@ -72,22 +72,29 @@ namespace Banshee.Gui
                     Catalog.GetString ("New _Smart Playlist _From Search"), null,
                     Catalog.GetString ("Create a new smart playlist from the current search"), OnNewSmartPlaylistFromSearch),
 
-                new ActionEntry("SourceContextMenuAction", null, 
+                new ActionEntry ("SourceContextMenuAction", null, 
                     String.Empty, null, null, OnSourceContextMenu),
 
-                new ActionEntry("ImportSourceAction", null,
-                    Catalog.GetString("Import Source"), null,
-                    Catalog.GetString("Import source to library"), OnImportSource),
+                new ActionEntry ("ImportSourceAction", null,
+                    Catalog.GetString ("Import Source"), null,
+                    Catalog.GetString ("Import source to library"), OnImportSource),
 
-                new ActionEntry("RenameSourceAction", "gtk-edit", 
+                new ActionEntry ("RenameSourceAction", "gtk-edit", 
                     "Rename", "F2", "Rename", OnRenameSource),
 
-                new ActionEntry("UnmapSourceAction", Stock.Delete,
+
+                new ActionEntry ("UnmapSourceAction", Stock.Delete,
                     "Unmap", "<shift>Delete", null, OnUnmapSource),
                     
-                new ActionEntry("SourcePropertiesAction", Stock.Properties,
+                new ActionEntry ("SourcePropertiesAction", Stock.Properties,
                     "Source Properties", null, null, OnSourceProperties),
             });
+
+            AddImportant (
+                new ActionEntry ("RefreshSmartPlaylistAction", Stock.Refresh,
+                    Catalog.GetString ("Refresh"), null,
+                    Catalog.GetString ("Refresh this randomly sorted smart playlist"), OnRefreshSmartPlaylist)
+            );
             
             Add (new Gtk.ActionEntry [] {
                 new Gtk.ActionEntry ("SortChildrenAction", null, 
@@ -140,34 +147,20 @@ namespace Banshee.Gui
             playlist.Save ();
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
             playlist.NotifyUpdated ();
-
-            // TODO should begin editing the name after making it, but this changed
-            // the ActiveSource to the new playlist and we don't want that.
-            //SourceView.BeginRenameSource (playlist);
         }
 
         private void OnNewSmartPlaylist (object o, EventArgs args)
         {
             Editor ed = new Editor ();
             ed.RunDialog ();
-
-            /*Editor ed = new Editor ();
-            ed.SetQueryFromSearch ();
-            ed.RunDialog ();*/
-
-            // TODO should begin editing the name after making it, but this changed
-            // the ActiveSource to the new playlist and we don't want that.
-            //SourceView.BeginRenameSource (playlist);
+            //playlist.NotifyUpdated ();
         }
 
         private void OnNewSmartPlaylistFromSearch (object o, EventArgs args)
         {
-            //Editor ed = new Editor ();
-            //ed.RunDialog ();
-
-            /*Editor ed = new Editor ();
-            ed.SetQueryFromSearch ();
-            ed.RunDialog ();*/
+            // TODO create playlist and save it
+            
+            //playlist.NotifyUpdated ();
 
             // TODO should begin editing the name after making it, but this changed
             // the ActiveSource to the new playlist and we don't want that.
@@ -208,6 +201,15 @@ namespace Banshee.Gui
                 source.Unmap ();
         }
 
+        private void OnRefreshSmartPlaylist (object o, EventArgs args)
+        {
+            SmartPlaylistSource playlist = ActionSource as SmartPlaylistSource;
+
+            if (playlist != null && playlist.CanRefresh) {
+                playlist.Reload ();
+            }
+        }
+
         private void OnSourceProperties (object o, EventArgs args)
         {
             Source source = ActionSource;
@@ -228,10 +230,12 @@ namespace Banshee.Gui
 
             if (source != last_source && source != null) {
                 IUnmapableSource unmapable = source as IUnmapableSource;
+                SmartPlaylistSource smart_playlist = source as SmartPlaylistSource;
                 UpdateAction ("UnmapSourceAction", unmapable != null, unmapable != null && unmapable.CanUnmap, source);
                 UpdateAction ("RenameSourceAction", source.CanRename, true, null);
                 UpdateAction ("ImportSourceAction", source is IImportable, true, source);
                 UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
+                UpdateAction ("RefreshSmartPlaylistAction", smart_playlist != null && smart_playlist.CanRefresh, true, source);
                 last_source = source;
             }
             
@@ -240,46 +244,46 @@ namespace Banshee.Gui
             }
         }
 
-        private static bool ConfirmUnmap(IUnmapableSource source)
+        private static bool ConfirmUnmap (IUnmapableSource source)
         {
-            string key = "no_confirm_unmap_" + source.GetType().Name.ToLower();
-            bool do_not_ask = ConfigurationClient.Get<bool>("sources", key, false);
+            string key = "no_confirm_unmap_" + source.GetType ().Name.ToLower ();
+            bool do_not_ask = ConfigurationClient.Get<bool> ("sources", key, false);
             
-            if(do_not_ask) {
+            if (do_not_ask) {
                 return true;
             }
         
-            Banshee.Widgets.HigMessageDialog dialog = new Banshee.Widgets.HigMessageDialog(
+            Banshee.Widgets.HigMessageDialog dialog = new Banshee.Widgets.HigMessageDialog (
                 ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow,
                 Gtk.DialogFlags.Modal,
                 Gtk.MessageType.Question,
                 Gtk.ButtonsType.Cancel,
-                String.Format(Catalog.GetString("Are you sure you want to delete this {0}?"),
-                    source.GenericName.ToLower()),
+                String.Format (Catalog.GetString ("Are you sure you want to delete this {0}?"),
+                    source.GenericName.ToLower ()),
                 source.Name);
             
-            dialog.AddButton(Gtk.Stock.Delete, Gtk.ResponseType.Ok, false);
+            dialog.AddButton (Gtk.Stock.Delete, Gtk.ResponseType.Ok, false);
             
-            Gtk.Alignment alignment = new Gtk.Alignment(0.0f, 0.0f, 0.0f, 0.0f);
+            Gtk.Alignment alignment = new Gtk.Alignment (0.0f, 0.0f, 0.0f, 0.0f);
             alignment.TopPadding = 10;
-            Gtk.CheckButton confirm_button = new Gtk.CheckButton(String.Format(Catalog.GetString(
-                "Do not ask me this again"), source.GenericName.ToLower()));
+            Gtk.CheckButton confirm_button = new Gtk.CheckButton (String.Format (Catalog.GetString (
+                "Do not ask me this again"), source.GenericName.ToLower ()));
             confirm_button.Toggled += delegate {
                 do_not_ask = confirm_button.Active;
             };
-            alignment.Add(confirm_button);
-            alignment.ShowAll();
-            dialog.LabelVBox.PackStart(alignment, false, false, 0);
+            alignment.Add (confirm_button);
+            alignment.ShowAll ();
+            dialog.LabelVBox.PackStart (alignment, false, false, 0);
             
             try {
-                if(dialog.Run() == (int)Gtk.ResponseType.Ok) {
-                    ConfigurationClient.Set<bool>("sources", key, do_not_ask);
+                if (dialog.Run () == (int)Gtk.ResponseType.Ok) {
+                    ConfigurationClient.Set<bool> ("sources", key, do_not_ask);
                     return true;
                 }
                 
                 return false;
             } finally {
-                dialog.Destroy();
+                dialog.Destroy ();
             }
         }
 
