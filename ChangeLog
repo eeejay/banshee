@@ -1,5 +1,9 @@
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Lastfm.Gui/Makefile.am: Forgot to commit this.
+
+2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* build/build.environment.mk: Add System.Web to Lastfm deps.
 
 	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs: Fix
