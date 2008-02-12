@@ -36,6 +36,8 @@ namespace Lastfm
 {
     public abstract class Account
     {
+        public event EventHandler Updated;
+
         private string username;
         public string Username {
             get { return username; }
@@ -48,7 +50,7 @@ namespace Lastfm
             set { password = value; }
         }
 
-        public string Md5Password {
+        public string CryptedPassword {
             get { return password == null ? null : Md5Encode (password); }
             set { password = value; }
         }
@@ -81,10 +83,22 @@ namespace Lastfm
                 shash.Append (hash[i].ToString ("x2"));
             }
 
+
             return shash.ToString ();
         }
 
-        public abstract void Save ();
+        public virtual void Save ()
+        {
+            OnUpdated ();
+        }
+
+        protected void OnUpdated ()
+        {
+            EventHandler handler = Updated;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
     }
 }
 

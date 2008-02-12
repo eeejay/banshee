@@ -1,5 +1,30 @@
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* build/build.environment.mk: Add System.Web to Lastfm deps.
+
+	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs: Fix
+	broken build; Xspf is now in Mono.Media.
+
+	* src/Libraries/Lastfm/Last.FM.mdp: Rename.
+
+	* src/Libraries/Lastfm/Lastfm/Account.cs: Add Updated event.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/Connection.cs:
+	* src/Libraries/Lastfm/Makefile.am:
+	* src/Libraries/Lastfm/Lastfm/Connection.cs: Move Connection class out of
+	extension, pull out Banshee dependencies.
+
+	* src/Libraries/Mono.Media/Playlists.Xspf/LinkEntry.cs:
+	* src/Libraries/Mono.Media/Playlists.Xspf/MetaEntry.cs:
+	* src/Libraries/Mono.Media/Playlists.Xspf/Playlist.cs:
+	* src/Libraries/Mono.Media/Playlists.Xspf/Track.cs:
+	* src/Libraries/Mono.Media/Playlists.Xspf/W3CDateTime.cs:
+	* src/Libraries/Mono.Media/Playlists.Xspf/XmlUtil.cs:
+	* src/Libraries/Mono.Media/Playlists.Xspf/XspfBaseObject.cs: Fix headers
+	and namespaces.
+
+2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* build/build.environment.mk:
 	* configure.ac:
 	* src/Libraries/Makefile.am:

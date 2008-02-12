@@ -1,30 +1,30 @@
-/***************************************************************************
- *  Connection.cs
- *
- *  Copyright (C) 2007 Novell, Inc.
- *  Written by Gabriel Burt <gabriel.burt@gmail.com>
- ****************************************************************************/
-
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// Connection.cs
+//
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
+//
+// Copyright (C) 2007-2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
 using System.Collections;
@@ -38,11 +38,9 @@ using System.Web;
 
 using Mono.Unix;
 
-using Banshee.Base;
-using Banshee.Playlists.Formats.Xspf;
-using Last.FM;
+using Playlists.Xspf;
 
-namespace Banshee.Lastfm
+namespace Lastfm
 {
     public class ConnectionStateChangedArgs : EventArgs
     {
@@ -83,28 +81,25 @@ namespace Banshee.Lastfm
 		public event StateChangedHandler StateChanged;
 
 		private ConnectionState state;
+        private string user_agent;
 		private string session;
-        private string username;
-        private string md5_password;
 		private string base_url;
 		private string base_path;
-		private string station;
 		private string info_message;
-		private bool subscriber;
         private bool connect_requested = false;
+        private bool network_connected = false;
 
-        private static Connection instance;
         private static Regex station_error_regex = new Regex ("error=(\\d+)", RegexOptions.Compiled);
 
-        // Properties
+        private Account account;
+        public Account Account {
+            get { return account; }
+        }
 
+		private bool subscriber;
 		public bool Subscriber {
 			get { return subscriber; }
 		}
-
-        public string Username {
-            get { return username; }
-        }
 
 		public ConnectionState State {
 			get { return state; }
@@ -114,7 +109,7 @@ namespace Banshee.Lastfm
                     return;
 
                 state = value;
-                LogCore.Instance.PushDebug (String.Format ("Last.fm State Changed to {0}", state), null, false);
+                //LogCore.Instance.PushDebug (String.Format ("Last.fm State Changed to {0}", state), null, false);
                 StateChangedHandler handler = StateChanged;
                 if (handler != null) {
                     handler (this, new ConnectionStateChangedArgs (state));
@@ -126,37 +121,25 @@ namespace Banshee.Lastfm
             get { return state == ConnectionState.Connected; }
         }
 
+		private string station;
 		public string Station {
 			get { return station; }
 		}
 
-        public static Connection Instance {
-            get {
-                if (instance == null)
-                    instance = new Connection ();
-                return instance;
-            }
-        }
-
-        // Public Methods
-
-		private Connection () 
+		public Connection (Account account, string user_agent)
 		{
+            this.account = account;
+            this.user_agent = user_agent;
+
             Initialize ();
-            username = Last.FM.Account.Username;
-            md5_password = Last.FM.Account.Md5Password;
             State = ConnectionState.Disconnected;
-            Banshee.Base.NetworkDetect.Instance.StateChanged += HandleNetworkStateChanged;
-            Last.FM.Account.LoginRequestFinished += HandleKeyringEvent;
-            Last.FM.Account.LoginCommitFinished += HandleKeyringEvent;
+
+            account.Updated += HandleAccountUpdated;
         }
 
         public void Dispose ()
         {
-            Banshee.Base.NetworkDetect.Instance.StateChanged -= HandleNetworkStateChanged;
-            Last.FM.Account.LoginRequestFinished -= HandleKeyringEvent;
-            Last.FM.Account.LoginCommitFinished -= HandleKeyringEvent;
-            instance = null;
+            account.Updated -= HandleAccountUpdated;
         }
 
         public void Connect ()
@@ -165,13 +148,12 @@ namespace Banshee.Lastfm
             if (State == ConnectionState.Connecting || State == ConnectionState.Connected)
                 return;
 
-            if (username == null || md5_password == null) {
+            if (account.Username == null || account.CryptedPassword == null) {
                 State = ConnectionState.NoAccount;
-                Last.FM.Account.RequestLogin ();
                 return;
             }
 
-            if (!Globals.Network.Connected) {
+            if (!network_connected) {
                 State = ConnectionState.NoNetwork;
                 return;
             }
@@ -181,14 +163,14 @@ namespace Banshee.Lastfm
             Handshake ();
 		}
 
-        public bool Love    (TrackInfo track) { return PostTrackRequest ("loveTrack", track); }
-        public bool UnLove  (TrackInfo track) { return PostTrackRequest ("unLoveTrack", track); }
-        public bool Ban     (TrackInfo track) { return PostTrackRequest ("banTrack", track); }
-        public bool UnBan   (TrackInfo track) { return PostTrackRequest ("unBanTrack", track); }
+        public bool Love    (string artist, string title) { return PostTrackRequest ("loveTrack", artist, title); }
+        public bool UnLove  (string artist, string title) { return PostTrackRequest ("unLoveTrack", artist, title); }
+        public bool Ban     (string artist, string title) { return PostTrackRequest ("banTrack", artist, title); }
+        public bool UnBan   (string artist, string title) { return PostTrackRequest ("unBanTrack", artist, title); }
 
         public StationError ChangeStationTo (string station)
         {
-            lock (instance) {
+            lock (this) {
                 if (Station == station)
                     return StationError.None;
 
@@ -218,7 +200,7 @@ namespace Banshee.Lastfm
 
 		public Playlist LoadPlaylistFor (string station) 
 		{
-            lock (instance) {
+            lock (this) {
                 if (station != Station)
                     return null;
 
@@ -227,11 +209,11 @@ namespace Banshee.Lastfm
                 Stream stream = null;
                 Console.WriteLine ("StationSource Loading: {0}", url);
                 try {
-                    stream = Connection.Instance.GetXspfStream (new SafeUri (url));
+                    stream = GetXspfStream (url);
                     pl.Load (stream);
-                    LogCore.Instance.PushDebug (String.Format ("Adding {0} Tracks to Last.fm Station {1}", pl.TrackCount, station), null);
+                    //LogCore.Instance.PushDebug (String.Format ("Adding {0} Tracks to Last.fm Station {1}", pl.TrackCount, station), null);
                 } catch (System.Net.WebException e) {
-                    LogCore.Instance.PushWarning ("Error Loading Last.fm Station", e.Message, false);
+                    //LogCore.Instance.PushWarning ("Error Loading Last.fm Station", e.Message, false);
                     return null;
                 } catch (Exception e) {
                     string body = "Unable to get body";
@@ -240,10 +222,10 @@ namespace Banshee.Lastfm
                             body = strm.ReadToEnd ();
                         }
                     } catch {}
-                    LogCore.Instance.PushWarning (
+                    /*LogCore.Instance.PushWarning (
                         "Error loading station",
                         String.Format ("Exception:\n{0}\n\nResponse Body:\n{1}", e.ToString (), body), false
-                    );
+                    );*/
                     return null;
                 }
 
@@ -259,24 +241,16 @@ namespace Banshee.Lastfm
             base_url = base_path = session = station = info_message = null;
         }
 
-        private void HandleKeyringEvent (AccountEventArgs args)
+        private void HandleAccountUpdated (object o, EventArgs args)
         {
-            if (args.Success) {
-                if (Account.Username != username || Account.Md5Password != md5_password) {
-                    username = Last.FM.Account.Username;
-                    md5_password = Last.FM.Account.Md5Password;
-
-                    State = ConnectionState.Disconnected;
-                    Connect ();
-                }
-            } else {
-                LogCore.Instance.PushWarning ("Failed to Get Last.fm Account From Keyring", "", false);
-            }
+            State = ConnectionState.Disconnected;
+            Connect ();
         }
 
-        private void HandleNetworkStateChanged (object sender, NetworkStateChangedArgs args)
+        public void UpdateNetworkState (bool connected)
         {
-            if (args.Connected) {
+            network_connected = connected;
+            if (connected) {
                 if (State == ConnectionState.NoNetwork) {
                     Connect ();
                 }
@@ -290,36 +264,36 @@ namespace Banshee.Lastfm
 
         private void Handshake ()
         {
-            ThreadAssist.Spawn (delegate {
+            //ThreadAssist.Spawn (delegate {
                 try {
                     Stream stream = Get (String.Format (
                         "http://ws.audioscrobbler.com/radio/handshake.php?version={0}&platform={1}&username={2}&passwordmd5={3}&language={4}&session=324234",
                         "1.1.1",
                         "linux", // FIXME
-                        username, md5_password,
+                        account.Username, account.CryptedPassword,
                         "en" // FIXME
                     ));
 
                     // Set us as connecting, assuming the connection attempt wasn't changed out from under us
                     if (ParseHandshake (new StreamReader (stream).ReadToEnd ()) && session != null) {
                         State = ConnectionState.Connected;
-                        LogCore.Instance.PushDebug (String.Format ("Logged into Last.fm as {0}", Username), null, false);
+                        //LogCore.Instance.PushDebug (String.Format ("Logged into Last.fm as {0}", Username), null, false);
                         return;
                     }
                 } catch (Exception e) {
-                    LogCore.Instance.PushDebug ("Error in Last.fm Handshake", e.ToString (), false);
+                    //LogCore.Instance.PushDebug ("Error in Last.fm Handshake", e.ToString (), false);
                 }
                 
                 // Must not have parsed correctly
                 Initialize ();
                 if (State == ConnectionState.Connecting)
                     State = ConnectionState.Disconnected;
-            });
+            //});
         }
 
 		private bool ParseHandshake (string content) 
 		{
-            LogCore.Instance.PushDebug ("Got Last.fm Handshake Response", content, false);
+            //LogCore.Instance.PushDebug ("Got Last.fm Handshake Response", content, false);
 			string [] lines = content.Split (new Char[] {'\n'});
 			foreach (string line in lines) {
 				string [] opts = line.Split (new Char[] {'='});
@@ -329,11 +303,11 @@ namespace Banshee.Lastfm
 					if (opts[1].ToLower () == "failed") {
 						session = null;
 						State = ConnectionState.InvalidAccount;
-                        LogCore.Instance.PushWarning (
+                        /*LogCore.Instance.PushWarning (
                             Catalog.GetString ("Failed to Login to Last.fm"),
                             Catalog.GetString ("Either your username or password is invalid."),
                             false
-                        );
+                        );*/
 						return false;
 					}
 
@@ -372,12 +346,13 @@ namespace Banshee.Lastfm
 
         private HttpStatusCode Post (string uri, string body)
         {
-            if (!Globals.Network.Connected) {
-                throw new NetworkUnavailableException ();
+            if (!network_connected) {
+                //throw new NetworkUnavailableException ();
+                return HttpStatusCode.RequestTimeout;
             }
         
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create (uri);
-            request.UserAgent = Banshee.Web.Browser.UserAgent;
+            request.UserAgent = user_agent; //Banshee.Web.Browser.UserAgent;
             request.Timeout = 10000;
             request.Method = "POST";
             request.KeepAlive = false;
@@ -396,27 +371,28 @@ namespace Banshee.Lastfm
             return response.StatusCode;
         }
 
-        private Stream GetXspfStream (SafeUri uri)
+        private Stream GetXspfStream (string uri)
         {
             return Get (uri, "application/xspf+xml");
         }
 
         private Stream Get (string uri)
         {
-            return Get (new SafeUri (uri), null);
+            return Get (uri, null);
         }
 
-        private Stream Get (SafeUri uri, string accept)
+        private Stream Get (string uri, string accept)
         {
-            if (!Globals.Network.Connected) {
-                throw new NetworkUnavailableException ();
+            if (!network_connected) {
+                //throw new NetworkUnavailableException ();
+                return null;
             }
         
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create (uri.AbsoluteUri);
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create (uri);
             if (accept != null) {
                 request.Accept = accept;
             }
-            request.UserAgent = Banshee.Web.Browser.UserAgent;
+            request.UserAgent = user_agent; //Banshee.Web.Browser.UserAgent;
             request.Timeout = 10000;
             request.KeepAlive = false;
             request.AllowAutoRedirect = true;
@@ -481,9 +457,9 @@ namespace Banshee.Lastfm
 
         // XML-RPC foo
 
-        private bool PostTrackRequest (string method, TrackInfo track)
+        private bool PostTrackRequest (string method, string artist, string title)
         {
-            return PostXmlRpc (LastFMXmlRpcRequest (method).AddStringParams (track.Artist, track.Title));
+            return PostXmlRpc (LastFMXmlRpcRequest (method).AddStringParams (artist, title));
         }
 
         private bool PostXmlRpc (LameXmlRpcRequest request)
@@ -502,8 +478,8 @@ namespace Banshee.Lastfm
         private LameXmlRpcRequest LastFMXmlRpcRequest (string method)
         {
             string time = UnixTime ();
-            string auth_hash = Last.FM.Account.Md5Encode (md5_password + time);
-            return new LameXmlRpcRequest (method).AddStringParams (username, time, auth_hash);
+            string auth_hash = Account.Md5Encode (account.CryptedPassword + time);
+            return new LameXmlRpcRequest (method).AddStringParams (account.Username, time, auth_hash);
         }
 
         protected class LameXmlRpcRequest

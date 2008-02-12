@@ -30,11 +30,12 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 
+using Playlists.Xspf;
+
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.ServiceStack;
 using Banshee.Playlists.Formats;
-using Banshee.Playlists.Formats.Xspf;
  
 namespace Banshee.Streaming
 {   
