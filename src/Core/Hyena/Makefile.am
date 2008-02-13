@@ -18,6 +18,7 @@ SOURCES =  \
 	Hyena.Data.Sqlite/ICacheableDatabaseModel.cs \
 	Hyena.Data.Sqlite/SqliteModelCache.cs \
 	Hyena.Data.Sqlite/SqliteModelProvider.cs \
+	Hyena.Data.Sqlite/SqliteUtils.cs \
 	Hyena.Data/ArrayModelCache.cs \
 	Hyena.Data/ColumnDescription.cs \
 	Hyena.Data/DictionaryModelCache.cs \

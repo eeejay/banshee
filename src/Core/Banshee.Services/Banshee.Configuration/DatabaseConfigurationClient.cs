@@ -111,7 +111,7 @@ namespace Banshee.Configuration
 
         public void Set <T> (string namespce, string key, T value)
         {
-            if (connection.QueryInt32 (select_id_command.ApplyValues (MakeKey (namespce, key))) > 0) {
+            if (connection.Query<int> (select_id_command.ApplyValues (MakeKey (namespce, key))) > 0) {
                 connection.Execute (
                     update_command.ApplyValues (value.ToString (), MakeKey (namespce, key))
                 );

@@ -209,10 +209,10 @@ namespace Banshee.Collection.Database
             set { base.Disc = value; }
         }
         
-        [DatabaseColumn ("Duration")]
-        private long duration {
-            get { return (long)Duration.TotalMilliseconds; }
-            set { Duration = new TimeSpan (value * TimeSpan.TicksPerMillisecond); }
+        [DatabaseColumn]
+        public override TimeSpan Duration {
+            get { return base.Duration; }
+            set { base.Duration = value; }
         }
         
         [DatabaseColumn]
@@ -239,16 +239,16 @@ namespace Banshee.Collection.Database
             set { base.SkipCount = value; }
         }
         
-        [DatabaseColumn]
-        private long LastPlayedStamp {
-            get { return DateTimeUtil.FromDateTime(LastPlayed); }
-            set { LastPlayed = DateTimeUtil.ToDateTime(value); }
+        [DatabaseColumn ("LastPlayedStamp")]
+        public override DateTime LastPlayed {
+            get { return base.LastPlayed; }
+            set { base.LastPlayed = value; }
         }
         
-        [DatabaseColumn]
-        private long DateAddedStamp {
-            get { return DateTimeUtil.FromDateTime(DateAdded); }
-            set { DateAdded = DateTimeUtil.ToDateTime(value); }
+        [DatabaseColumn ("DateAddedStamp")]
+        public override DateTime DateAdded {
+            get { return base.DateAdded; }
+            set { base.DateAdded = value; }
         }
 
         private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (

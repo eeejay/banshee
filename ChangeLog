@@ -1,3 +1,36 @@
+2008-02-13  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Made to use new
+	  generic Query method and added GetProperty, SetProperty and
+	  ClearProperty. These methods allow you to store/retrieve properties from
+	  the database that are not defined in the type T. Suppose you write an
+	  extension that needs to keep persistant data on a per-track basis for
+	  every track in the library. Rather than define it's own table and join
+	  it with CoreTracks, the extension could call
+	  LibraryTrackInfo.Provider.GetProperty and SetProperty. This will be used
+	  by the iTunes importer at least.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Added DbColumn class
+	  for lightweight column descrption, made to use new SqliteUtils class for
+	  simple operations, and protected some constructors.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: Common sqlite-related
+	  functions.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Replaced
+	  QueryInt32 and QueryString with a new generic Query<T> method. Added
+	  ColumnExists(string table_name, string column_name) method. Also
+	  reworked the way GetSchema works.
+
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs,
+	* src/Core/Banshee.Services/Banshee.Configuration/DatabaseConfigurationClient.cs,
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs: Made to use
+	  new generic Query method.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	  Took advantage of the fact that DbColumn-bound members can now be
+	  DateTime or TimeSpan.
+
 2008-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Remove

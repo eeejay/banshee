@@ -50,7 +50,7 @@ namespace Banshee.SmartPlaylist
 
         public static void MigrateAll ()
         {
-            int version = ServiceManager.DbConnection.QueryInt32 ("SELECT Value FROM CoreConfiguration WHERE Key = 'SmartPlaylistVersion'");
+            int version = ServiceManager.DbConnection.Query<int> ("SELECT Value FROM CoreConfiguration WHERE Key = 'SmartPlaylistVersion'");
             if (version == 1)
                 return;
 
