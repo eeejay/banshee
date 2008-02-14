@@ -1,5 +1,5 @@
 //
-// ISortable.cs
+// IFilterable.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -28,9 +28,10 @@
 
 namespace Hyena.Data
 {
-    public interface ISortable
+    public interface IFilterable
     {
-        void Sort(ISortableColumn column);
-        ISortableColumn SortColumn { get; }
+        void Refilter ();
+        string Filter { get; set; }
+        int UnfilteredCount { get; }
     }
 }

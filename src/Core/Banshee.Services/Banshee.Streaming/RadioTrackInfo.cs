@@ -30,7 +30,8 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 
-using Playlists.Xspf;
+using Hyena;
+using Media.Playlists.Xspf;
 
 using Banshee.Base;
 using Banshee.Collection;
@@ -52,7 +53,7 @@ namespace Banshee.Streaming
         
         protected RadioTrackInfo()
         {
-            Attributes |= TrackAttributes.IsLive | TrackAttributes.CanPlay;
+            IsLive = true;
         }
         
         public RadioTrackInfo(Track track) : this()

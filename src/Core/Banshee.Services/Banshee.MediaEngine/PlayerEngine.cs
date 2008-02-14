@@ -178,7 +178,7 @@ namespace Banshee.MediaEngine
         protected void OnTagFound (StreamTag tag)
         {
             if (tag.Equals (StreamTag.Zero) || current_track == null || 
-                current_track.Attributes & TrackAttributes.IsLive == 0) {
+                !current_track.IsLive) {
                     return;
             }
                         

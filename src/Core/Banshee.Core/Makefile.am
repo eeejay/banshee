@@ -6,7 +6,6 @@ SOURCES =  \
 	Banshee.Base/CoverArtSpec.cs \
 	Banshee.Base/FileNamePattern.cs \
 	Banshee.Base/Localization.cs \
-	Banshee.Base/Log.cs \
 	Banshee.Base/NamingUtil.cs \
 	Banshee.Base/Paths.cs \
 	Banshee.Base/PlatformHacks.cs \

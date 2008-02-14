@@ -1,3 +1,141 @@
+2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	The Last.fm extension can actually play music now.  Still need to port the
+	status bar.  Also, moved Hyena and Hyena.Gui out of Core and into Libraries.
+
+	* build/build.environment.mk: Libraries/Lastfm depends on Libraries/Hyena
+	for logging.
+
+	* configure.ac:
+	* src/Banshee.mds:
+	* src/Core/Banshee.Core/Makefile.am:
+	* src/Core/Core.mds: Reflect new organization.
+
+	* src/Libraries/Hyena/Makefile.am:
+	* src/Libraries/Hyena/Hyena.mdp:
+	* src/Core/Banshee.Core/Banshee.Core.mdp:
+	* src/Core/Banshee.Core/Banshee.Base/Log.cs:
+	* src/Libraries/Hyena/Hyena/Log.cs: Move Log to Hyena, replace
+	ApplicationContext dep with Debugging property.
+
+	* src/Core/Banshee.Core/Banshee.Collection/UnknownTrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/SampleTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Add/use properties
+	for all attributes - the flags are way to painful an API.
+
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Fix whitespace.  If
+	the defining assembly for a source is not Banshee.Services, record it for
+	use when retrieving resources.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs:
+	* src/Extensions/Banshee.MultimediaKeys/Banshee.MultimediaKeys/MultimediaKeysService.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	* src/Backends/Banshee.Unix/Banshee.IO.Unix/Directory.cs:
+	* src/Core/Banshee.Core/Banshee.Configuration/ConfigurationClient.cs:
+	* src/Core/Banshee.Core/Banshee.IO/Provider.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:
+	* src/Core/Banshee.Services/Banshee.Networking/NetworkDetect.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Web/Browser.cs: Add using Hyena.
+
+	* src/Core/Banshee.Core/Banshee.Base/ApplicationContext.cs: Add static
+	ctor that sets Hyena.Log.Debugging.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/GladeDialog.cs: Add
+	ctor from stable.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/IconThemeUtils.cs: Support
+	loading resources from arbitrary assemblies (eg from extensions).
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Specify the Source's defining assembly as the assembly to load the icon
+	resource from.
+
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml:
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	RefreshSmartPlaylist action to the Edit menu, and add a BelowAddToPlaylist
+	placeholder in the track context menu.
+
+	* src/Core/Makefile.am:
+	* src/Core/Hyena.Gui/*:
+	* src/Core/Hyena/*: Move Hyena* to src/Libraries
+
+	* src/Libraries/Makefile.am:
+	* src/Libraries/Libraries.mds: Add Hyena and Hyena.Gui.
+
+	* src/Extensions/Extensions.mds: Add Banshee.Lastfm.
+	* src/Extensions/Makefile.am: Add Banshee.Lastfm to the build.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.mdp: Reflect new/removed
+	files.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastFMSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastFMTrackInfo.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmTrackInfo.cs:
+	* src/Extensions/Banshee.Lastfm/Resources/Banshee.LastFM.addin.xml:
+	* src/Extensions/Banshee.Lastfm/Resources/Banshee.Lastfm.addin.xml:
+	Lower case fm.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmActions.cs:
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmTrackListModel.cs:
+	New List<TrackInfo> based model.
+
+	* src/Extensions/Banshee.Lastfm/Resources/Actions.xml:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/Plugin.cs: Removed.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/StationEditor.cs: 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/StationSource.cs: Update
+	headers, fix creation/saving, use new model.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/StationType.cs: Update
+	header.
+
+	* src/Extensions/Banshee.Lastfm/Makefile.am:
+	* src/Extensions/Banshee.Lastfm/Resources/ActiveSourceUI.xml:
+	* src/Extensions/Banshee.Lastfm/Resources/GlobalUI.xml: New action
+	resources.
+
+	* src/Libraries/Hyena/Hyena.Data/IFilterable.cs:
+	* src/Libraries/Hyena/Hyena.Data/ISortable.cs: Whitespace.
+
+	* src/Libraries/Hyena/Hyena.Data/PropertyStore.cs: Whitespace, reorder
+	some logic.
+
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui.mdp:
+	* src/Libraries/Lastfm/Lastfm.mdp:
+	* src/Libraries/Mono.Media/Mono.Media.mdp: New mdp files.
+
+	* src/Libraries/Lastfm/Lastfm/Account.cs: Remove abstract class modifier.
+
+	* src/Libraries/Lastfm/Lastfm/Connection.cs: Use Hyena.Log for logging msgs.
+
+	* src/Libraries/Mono.Media/Makefile.am:
+	* src/Libraries/Mono.Media/Playlists.Xspf/*:
+	* src/Libraries/Mono.Media/Media.Playlists.Xspf/*: Change namespace to
+	Media.Playlists.Xspf.  Merge fix for not-quite-compliant Last.fm Playlist
+	files from stable.
+
 2008-02-13  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Made to use new

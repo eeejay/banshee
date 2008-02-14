@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
 
+using Hyena;
 using Banshee.Base;
 
 namespace Banshee.Gui.Dialogs

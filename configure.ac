@@ -121,8 +121,6 @@ src/Makefile
 src/AssemblyInfo.cs
 
 src/Core/Makefile
-src/Core/Hyena/Makefile
-src/Core/Hyena.Gui/Makefile
 src/Core/Banshee.Core/Makefile
 src/Core/Banshee.Services/Makefile
 src/Core/Banshee.ThickClient/Makefile
@@ -140,9 +138,11 @@ src/Backends/Banshee.GStreamer/Makefile
 src/Backends/Banshee.Unix/Makefile
 
 src/Libraries/Makefile
-src/Libraries/Mono.Media/Makefile
+src/Libraries/Hyena/Makefile
+src/Libraries/Hyena.Gui/Makefile
 src/Libraries/Lastfm/Makefile
 src/Libraries/Lastfm.Gui/Makefile
+src/Libraries/Mono.Media/Makefile
 
 src/Extensions/Makefile
 src/Extensions/Banshee.Audioscrobbler/Makefile

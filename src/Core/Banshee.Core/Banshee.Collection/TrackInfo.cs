@@ -63,12 +63,15 @@ namespace Banshee.Collection
         private int skip_count;
         private DateTime last_played;
         
-        private TrackAttributes attributes;
-        
         private StreamPlaybackError playback_error = StreamPlaybackError.None;
 
         public TrackInfo ()
         {
+        }
+
+        public virtual void IncrementPlayCount ()
+        {
+            PlayCount++;
         }
 
         public override string ToString ()
@@ -220,22 +223,27 @@ namespace Banshee.Collection
             set { last_played = value; }
         }
         
-        public virtual TrackAttributes Attributes {
-            get { return attributes; }
-            protected set { attributes = value; }
-        }
-
         public virtual StreamPlaybackError PlaybackError {
             get { return playback_error; }
             set { playback_error = value; }
         }
+
+        private bool can_save_to_database = true;
+        public bool CanSaveToDatabase {
+            get { return can_save_to_database; }
+            set { can_save_to_database = value; }
+        }
         
+        private bool is_live = false;
         public bool IsLive {
-            get { return (Attributes & TrackAttributes.IsLive) == TrackAttributes.IsLive; }
+            get { return is_live; }
+            set { is_live = value; }
         }
 
+        private bool can_play = true;
         public bool CanPlay {
-            get { return (Attributes & TrackAttributes.CanPlay) == TrackAttributes.CanPlay; }
+            get { return can_play; }
+            set { can_play = value; }
         }
         
         // Generates a{sv} of self according to http://wiki.xmms2.xmms.se/index.php/Media_Player_Interfaces#.22Metadata.22

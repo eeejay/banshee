@@ -42,7 +42,8 @@ namespace Banshee.Collection
             Duration = TimeSpan.FromSeconds (182);
             Year = 1965;
             
-            Attributes |= TrackAttributes.CanPlay | TrackAttributes.CanSaveToDatabase;
+            CanPlay = true;
+            CanSaveToDatabase = true;
         }
     }
 }

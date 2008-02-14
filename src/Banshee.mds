@@ -10,10 +10,12 @@
     <Execute type="None" entry="Core" />
     <Execute type="None" entry="Engines" />
     <Execute type="None" entry="Extensions" />
+    <Execute type="None" entry="Libraries" />
   </StartMode>
   <Entries>
     <Entry filename="Core/Core.mds" />
     <Entry filename="Backends/Backends.mds" />
     <Entry filename="Extensions/Extensions.mds" />
+    <Entry filename="Libraries/Libraries.mds" />
   </Entries>
 </Combine>

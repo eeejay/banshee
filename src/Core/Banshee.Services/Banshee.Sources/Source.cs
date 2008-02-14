@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Reflection;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,36 +45,43 @@ namespace Banshee.Sources
     public abstract class Source : ISource
     {
         private Source parent;        
-        private PropertyStore properties = new PropertyStore();
-        private List<Source> child_sources = new List<Source>();
+        private PropertyStore properties = new PropertyStore ();
+        private List<Source> child_sources = new List<Source> ();
 
         public event EventHandler Updated;
         public event EventHandler UserNotifyUpdated;
         public event SourceEventHandler ChildSourceAdded;
         public event SourceEventHandler ChildSourceRemoved;
         
-        protected Source(string generic_name, string name, int order)
+        protected Source (string generic_name, string name, int order)
         {
             GenericName = generic_name;
             Name = name;
             Order = order;
-            
+
+            // If this source is not defined in Banshee.Services, set its
+            // ResourceAssembly to the assembly where it is defined.
+            Assembly asm = Assembly.GetAssembly (this.GetType ());//Assembly.GetCallingAssembly ();
+            if (asm != Assembly.GetExecutingAssembly ()) {
+                Properties.Set<Assembly> ("ResourceAssembly", asm);
+            }
+
             properties.PropertyChanged += OnPropertyChanged;
         }
         
-        protected void OnSetupComplete()
+        protected void OnSetupComplete ()
         {
-            if(this is ITrackModelSource) {
+            if (this is ITrackModelSource) {
                 ITrackModelSource tm_source = (ITrackModelSource)this;
                 
                 tm_source.TrackModel.Parent = this;
-                ServiceManager.DBusServiceManager.RegisterObject(tm_source.TrackModel);
+                ServiceManager.DBusServiceManager.RegisterObject (tm_source.TrackModel);
                 
                 tm_source.ArtistModel.Parent = this;
-                ServiceManager.DBusServiceManager.RegisterObject(tm_source.ArtistModel);
+                ServiceManager.DBusServiceManager.RegisterObject (tm_source.ArtistModel);
                 
                 tm_source.AlbumModel.Parent = this;
-                ServiceManager.DBusServiceManager.RegisterObject(tm_source.AlbumModel);
+                ServiceManager.DBusServiceManager.RegisterObject (tm_source.AlbumModel);
             }
         }
 
@@ -90,17 +98,17 @@ namespace Banshee.Sources
 
 #region Public Methods
         
-        public virtual void Activate()
+        public virtual void Activate ()
         {
         }
 
-        public virtual void Deactivate()
+        public virtual void Deactivate ()
         {
         }
 
-        public virtual void Rename(string newName)
+        public virtual void Rename (string newName)
         {
-            properties.SetString("Name", newName);
+            properties.SetString ("Name", newName);
         }
         
         public virtual bool AcceptsInputFromSource (Source source)
@@ -122,9 +130,9 @@ namespace Banshee.Sources
             this.parent = parent;
         }
         
-        public virtual void AddChildSource(Source child)
+        public virtual void AddChildSource (Source child)
         {
-            lock(Children) {
+            lock (Children) {
                 child.SetParentSource (this);
                 child_sources.Add (child);
                 OnChildSourceAdded (child);
@@ -141,7 +149,7 @@ namespace Banshee.Sources
                 child_sources.Remove (child);
                 
                 if (ServiceManager.SourceManager.ActiveSource == child) {
-                    ServiceManager.SourceManager.SetActiveSource(ServiceManager.SourceManager.DefaultSource);
+                    ServiceManager.SourceManager.SetActiveSource (ServiceManager.SourceManager.DefaultSource);
                 }
                 
                 OnChildSourceRemoved (child);
@@ -150,8 +158,8 @@ namespace Banshee.Sources
         
         public virtual void ClearChildSources ()
         {
-            lock(Children) {
-                while(child_sources.Count > 0) {
+            lock (Children) {
+                while (child_sources.Count > 0) {
                     RemoveChildSource (child_sources[child_sources.Count - 1]);
                 }
             }
@@ -192,39 +200,39 @@ namespace Banshee.Sources
         
 #region Protected Methods
     
-        protected virtual void OnChildSourceAdded(Source source)
+        protected virtual void OnChildSourceAdded (Source source)
         {
             SourceEventHandler handler = ChildSourceAdded;
-            if(handler != null) {
-                SourceEventArgs args = new SourceEventArgs();
+            if (handler != null) {
+                SourceEventArgs args = new SourceEventArgs ();
                 args.Source = source;
-                handler(args);
+                handler (args);
             }
         }
         
-        protected virtual void OnChildSourceRemoved(Source source)
+        protected virtual void OnChildSourceRemoved (Source source)
         {
             SourceEventHandler handler = ChildSourceRemoved;
-            if(handler != null) {
-                SourceEventArgs args = new SourceEventArgs();
+            if (handler != null) {
+                SourceEventArgs args = new SourceEventArgs ();
                 args.Source = source;
-                handler(args);
+                handler (args);
             }
         }
         
-        protected virtual void OnUpdated()
+        protected virtual void OnUpdated ()
         {
             EventHandler handler = Updated;
-            if(handler != null) {
-                handler(this, EventArgs.Empty);
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
             }
         }
         
-        protected virtual void OnUserNotifyUpdated()
+        protected virtual void OnUserNotifyUpdated ()
         {
             EventHandler handler = UserNotifyUpdated;
-            if(handler != null) {
-                handler(this, EventArgs.Empty);
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
             }
         }
         
@@ -232,9 +240,9 @@ namespace Banshee.Sources
         
 #region Private Methods
         
-        private void OnPropertyChanged(object o, PropertyChangeEventArgs args)
+        private void OnPropertyChanged (object o, PropertyChangeEventArgs args)
         {
-            OnUpdated();
+            OnUpdated ();
         }
         
 #endregion
@@ -264,18 +272,18 @@ namespace Banshee.Sources
         }
 
         public string Name {
-            get { return properties.GetString("Name"); }
-            set { properties.SetString("Name", value); }
+            get { return properties.GetString ("Name"); }
+            set { properties.SetString ("Name", value); }
         }
 
         public string GenericName {
-            get { return properties.GetString("GenericName"); }
-            set { properties.SetString("GenericName", value); }
+            get { return properties.GetString ("GenericName"); }
+            set { properties.SetString ("GenericName", value); }
         }
         
         public int Order {
-            get { return properties.GetInteger("Order"); }
-            set { properties.SetInteger("Order", value); }
+            get { return properties.GetInteger ("Order"); }
+            set { properties.SetInteger ("Order", value); }
         }
 
         public virtual bool ImplementsCustomSearch {
@@ -287,18 +295,18 @@ namespace Banshee.Sources
         }
                 
         public virtual string FilterQuery {
-            get { return properties.GetString("FilterQuery"); }
-            set { properties.SetString("FilterQuery", value); }
+            get { return properties.GetString ("FilterQuery"); }
+            set { properties.SetString ("FilterQuery", value); }
         }
         
         public TrackFilterType FilterType {
-            get { return (TrackFilterType)properties.GetInteger("FilterType"); }
-            set { properties.SetInteger("FilterType", (int)value); }
+            get { return (TrackFilterType)properties.GetInteger ("FilterType"); }
+            set { properties.SetInteger ("FilterType", (int)value); }
         }
         
         public virtual bool Expanded {
-            get { return properties.GetBoolean("Expanded"); }
-            set { properties.SetBoolean("Expanded", value); }
+            get { return properties.GetBoolean ("Expanded"); }
+            set { properties.SetBoolean ("Expanded", value); }
         }
         
         public virtual bool? AutoExpand {
@@ -359,7 +367,7 @@ namespace Banshee.Sources
         }
         
         string IService.ServiceName {
-            get { return DBusServiceManager.MakeDBusSafeString(Name) + "Source"; }
+            get { return DBusServiceManager.MakeDBusSafeString (Name) + "Source"; }
         }
         
         IDBusExportable IDBusExportable.Parent {

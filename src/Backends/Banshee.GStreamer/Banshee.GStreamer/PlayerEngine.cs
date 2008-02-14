@@ -30,6 +30,7 @@ using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 using Mono.Unix;
+using Hyena;
 using Hyena.Data;
 
 using Banshee.Base;

@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Mono.Unix;
 
+using Hyena;
 using Banshee.IO;
 using Banshee.Base;
 using Banshee.ServiceStack;

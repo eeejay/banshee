@@ -34,6 +34,7 @@ using System.Reflection;
 using Mono.Unix;
 using Mono.Addins;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.Streaming;
 using Banshee.ServiceStack;

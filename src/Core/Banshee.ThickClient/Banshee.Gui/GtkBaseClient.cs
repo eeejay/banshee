@@ -28,6 +28,7 @@
 
 using System;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Gui.Dialogs;

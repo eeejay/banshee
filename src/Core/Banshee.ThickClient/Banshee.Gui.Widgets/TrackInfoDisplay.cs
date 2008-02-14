@@ -34,6 +34,7 @@ using Mono.Unix;
 using Gtk;
 using Cairo;
 
+using Hyena;
 using Hyena.Gui;
 using Hyena.Gui.Theatrics;
 

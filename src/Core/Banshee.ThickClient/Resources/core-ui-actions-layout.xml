@@ -36,6 +36,7 @@
       <menuitem name="DeleteTracksFromDrive" action="DeleteTracksFromDriveAction"/>
       <separator/>
       <menuitem name="RenameSource" action="RenameSourceAction"/>
+      <menuitem name="RefreshSmartPlaylist" action="RefreshSmartPlaylistAction"/>
       <!--<menuitem name="ExportPlaylist" action="ExportPlaylistAction"/>-->
       <menuitem name="SourceProperties" action="SourcePropertiesAction"/>
       <menuitem name="UnmapSource" action="UnmapSourceAction"/>
@@ -117,6 +118,7 @@
   <popup name="TrackContextMenu" action="TrackContextMenuAction">
     <placeholder name="AboveAddToPlaylist"/>
     <menu name="AddToPlaylist" action="AddToPlaylistAction"></menu>
+    <placeholder name="BelowAddToPlaylist"/>
     <separator/>
     <menuitem name="RemoveTracks" action="RemoveTracksAction"/>
     <menuitem name="RemoveTracksFromLibrary" action="RemoveTracksFromLibraryAction"/>

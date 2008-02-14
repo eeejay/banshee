@@ -32,6 +32,7 @@ using System.Collections.Generic;
 
 using Mono.Addins;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.AudioProfiles;
 using Banshee.Sources;

@@ -31,6 +31,7 @@ using System.IO;
 using System.Collections.Generic;
 using Mono.Unix;
 
+using Hyena;
 using Banshee.Base;
 
 namespace Banshee.IO.Unix

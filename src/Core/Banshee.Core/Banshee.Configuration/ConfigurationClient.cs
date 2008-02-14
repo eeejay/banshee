@@ -29,6 +29,7 @@
 using System;
 using Mono.Addins;
 
+using Hyena;
 using Banshee.Base;
 
 namespace Banshee.Configuration

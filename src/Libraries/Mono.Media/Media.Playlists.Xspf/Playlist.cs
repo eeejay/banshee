@@ -32,7 +32,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Playlists.Xspf
+namespace Media.Playlists.Xspf
 {
     public class Playlist : XspfBaseObject
     {
@@ -57,14 +57,20 @@ namespace Playlists.Xspf
         }
         
         private void Load(XmlDocument doc)
-        {   
+        {
             XmlNamespaceManager xmlns = new XmlNamespaceManager(doc.NameTable);
             xmlns.AddNamespace("xspf", XspfNamespace);
             
             XmlNode playlist_node = doc.SelectSingleNode("/xspf:playlist", xmlns);
-            
+
             if(playlist_node == null) {
-                throw new ApplicationException("Not a valid XSPF playlist");
+                // Hack to work with files that don't have a namespace on the <playlist> node, like Last.fm
+                xmlns.AddNamespace("xspf", String.Empty);
+                playlist_node = doc.SelectSingleNode("/xspf:playlist", xmlns);
+
+                if(playlist_node == null) {
+                    throw new ApplicationException("Not a valid XSPF playlist");
+                }
             }
 
             XmlAttribute version_attr = playlist_node.Attributes["version"];

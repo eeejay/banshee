@@ -31,6 +31,7 @@ using System.IO;
 
 using Mono.Unix;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.Sources;
 using Banshee.ServiceStack;

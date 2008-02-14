@@ -33,6 +33,7 @@ using System.Xml;
 using System.Text;
 using System.Collections.Generic;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.Metadata;
 using Banshee.Kernel;

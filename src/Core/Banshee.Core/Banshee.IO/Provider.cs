@@ -30,6 +30,7 @@ using System;
 using System.Reflection;
 using Mono.Addins;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.Configuration;
 

@@ -112,7 +112,7 @@ namespace Hyena.Data
                 if(object_store == null) {
                     object_store = new Dictionary<string, object>();
                 }
-                
+
                 if(object_store.ContainsKey(name)) {
                     old_value = (T)object_store[name];
                     if (value.Equals (old_value))
@@ -188,7 +188,7 @@ namespace Hyena.Data
         public Type GetType(string name)
         {
             lock(this) {
-                return !Contains(name) ? null : object_store[name].GetType();
+                return Contains(name) ? object_store[name].GetType() : null;
             }
         }
     }

@@ -61,13 +61,6 @@
     <File name="Banshee.Playlists.Formats/PlaylistFormatDescription.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Playlists.Formats/PlaylistParser.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Playlists.Formats/PlsPlaylistFormat.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Playlists.Formats.Xspf/LinkEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Playlists.Formats.Xspf/MetaEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Playlists.Formats.Xspf/Playlist.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Playlists.Formats.Xspf/Track.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Playlists.Formats.Xspf/W3CDateTime.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Playlists.Formats.Xspf/XmlUtil.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Web/Browser.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Streaming/RadioTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Equalizer/EqualizerSetting.cs" subtype="Code" buildaction="Compile" />

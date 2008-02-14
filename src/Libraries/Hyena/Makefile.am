@@ -18,7 +18,6 @@ SOURCES =  \
 	Hyena.Data.Sqlite/ICacheableDatabaseModel.cs \
 	Hyena.Data.Sqlite/SqliteModelCache.cs \
 	Hyena.Data.Sqlite/SqliteModelProvider.cs \
-	Hyena.Data.Sqlite/SqliteUtils.cs \
 	Hyena.Data/ArrayModelCache.cs \
 	Hyena.Data/ColumnDescription.cs \
 	Hyena.Data/DictionaryModelCache.cs \
@@ -68,6 +67,7 @@ SOURCES =  \
 	Hyena.SExpEngine/TreeNode.cs \
 	Hyena.SExpEngine/UtilityFunctionSet.cs \
 	Hyena/IUndoAction.cs \
+	Hyena/Log.cs \
 	Hyena/StringUtil.cs \
 	Hyena/Timer.cs \
 	Hyena/UndoManager.cs \

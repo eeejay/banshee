@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Reflection;
 using Gtk;
 using Gdk;
 using Pango;
@@ -183,27 +184,26 @@ namespace Banshee.Sources.Gui
         
         private Gdk.Pixbuf ResolveSourceIcon (Source source)
         {
-            Hyena.Data.PropertyStore properties = source.Properties;
             Gdk.Pixbuf icon = source.Properties.Get<Gdk.Pixbuf> ("IconPixbuf");
             
             if (icon != null) {
                 return icon;
             }
             
-            Type icon_type = properties.GetType ("IconName");
-                
+            Type icon_type = source.Properties.GetType ("IconName");
+            Assembly asm = source.Properties.Get<Assembly> ("ResourceAssembly");
             if(icon_type == typeof (string)) {
-                icon = Banshee.Gui.IconThemeUtils.LoadIcon (22, properties.GetString ("IconName"));
+                icon = Banshee.Gui.IconThemeUtils.LoadIcon (asm, 22, source.Properties.GetString ("IconName"));
             } else if (icon_type == typeof (string [])) {
-                icon = Banshee.Gui.IconThemeUtils.LoadIcon (22, properties.GetStringList ("IconName"));
+                icon = Banshee.Gui.IconThemeUtils.LoadIcon (asm, 22, source.Properties.GetStringList ("IconName"));
             }
-                
+
             if (icon == null) {
                 icon = Banshee.Gui.IconThemeUtils.LoadIcon (22, "image-missing");
             }
                 
             if (icon != null) {
-                properties.Set<Gdk.Pixbuf> ("IconPixbuf", icon);
+                source.Properties.Set<Gdk.Pixbuf> ("IconPixbuf", icon);
             }
             
             return icon;

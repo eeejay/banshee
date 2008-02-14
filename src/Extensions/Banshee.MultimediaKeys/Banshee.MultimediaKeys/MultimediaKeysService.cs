@@ -33,6 +33,7 @@ using Mono.Unix;
 
 using NDesk.DBus;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.ServiceStack;
 

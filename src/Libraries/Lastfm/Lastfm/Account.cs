@@ -34,7 +34,7 @@ using System.Security.Cryptography;
 
 namespace Lastfm
 {
-    public abstract class Account
+    public class Account
     {
         public event EventHandler Updated;
 

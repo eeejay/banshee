@@ -27,6 +27,8 @@
 //
 
 using System;
+
+using Hyena;
 using Hyena.CommandLine;
 
 namespace Banshee.Base
@@ -65,6 +67,10 @@ namespace Banshee.Base
         private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo ("en-US");
         public static System.Globalization.CultureInfo InternalCultureInfo {
             get { return culture_info; }
+        }
+
+        static ApplicationContext () {
+            Log.Debugging = Debugging;
         }
     }
 }

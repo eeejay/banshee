@@ -28,6 +28,7 @@
 
 using System;
 
+using Hyena;
 using Hyena.Collections;
 
 using Banshee.Base;

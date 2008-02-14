@@ -66,7 +66,6 @@ namespace Banshee.Collection.Database
         
         public LibraryTrackInfo () : base ()
         {
-            Attributes |= TrackAttributes.CanPlay;
         }
 
         public override void Save ()

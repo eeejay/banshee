@@ -8,5 +8,15 @@
     <ImportSource class="Banshee.Library.Gui.FolderImportSource"/>
     <ImportSource class="Banshee.Library.Gui.FileImportSource"/>
   </Extension>
+
+  <ExtensionPoint path="/Banshee/ThickClient/ActionGroup">
+    <Description>Defines a new action group, possibly in conjunction with a Source extension.</Description>
+    <ExtensionNode name="ActionGroup"/>
+  </ExtensionPoint>
+
+  <ExtensionPoint path="/Banshee/ThickClient/SourceView">
+    <Description>Defines a new action group, possibly in conjunction with a Source extension.</Description>
+    <ExtensionNode name="ActionGroup"/>
+  </ExtensionPoint>
   
 </Addin>

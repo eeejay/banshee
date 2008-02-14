@@ -4,6 +4,7 @@
       <Entry build="True" name="Banshee.NotificationArea" configuration="Debug" />
       <Entry build="True" name="Banshee.MultimediaKeys" configuration="Debug" />
       <Entry build="True" name="Banshee.PlayQueue" configuration="Debug" />
+      <Entry build="False" name="Banshee.Lastfm" configuration="Debug" />
       <Entry build="True" name="Banshee.DapCore" configuration="Debug" />
       <Entry build="True" name="Banshee.Dap.MassStorage" configuration="Debug" />
     </Configuration>
@@ -18,6 +19,7 @@
     <Entry filename="Banshee.NotificationArea/Banshee.NotificationArea.mdp" />
     <Entry filename="Banshee.MultimediaKeys/Banshee.MultimediaKeys.mdp" />
     <Entry filename="Banshee.PlayQueue/Banshee.PlayQueue.mdp" />
+    <Entry filename="Banshee.Lastfm/Banshee.Lastfm.mdp" />
     <Entry filename="../Dap/Banshee.DapCore/Banshee.DapCore.mdp" />
     <Entry filename="../Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.mdp" />
   </Entries>

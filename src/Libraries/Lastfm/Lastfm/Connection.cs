@@ -36,9 +36,10 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Web;
 
+using Hyena;
 using Mono.Unix;
 
-using Playlists.Xspf;
+using Media.Playlists.Xspf;
 
 namespace Lastfm
 {
@@ -109,7 +110,7 @@ namespace Lastfm
                     return;
 
                 state = value;
-                //LogCore.Instance.PushDebug (String.Format ("Last.fm State Changed to {0}", state), null, false);
+                Log.Debug (String.Format ("Last.fm State Changed to {0}", state), null);
                 StateChangedHandler handler = StateChanged;
                 if (handler != null) {
                     handler (this, new ConnectionStateChangedArgs (state));
@@ -211,9 +212,9 @@ namespace Lastfm
                 try {
                     stream = GetXspfStream (url);
                     pl.Load (stream);
-                    //LogCore.Instance.PushDebug (String.Format ("Adding {0} Tracks to Last.fm Station {1}", pl.TrackCount, station), null);
+                    Log.Debug (String.Format ("Adding {0} Tracks to Last.fm Station {1}", pl.TrackCount, station), null);
                 } catch (System.Net.WebException e) {
-                    //LogCore.Instance.PushWarning ("Error Loading Last.fm Station", e.Message, false);
+                    Log.Warning ("Error Loading Last.fm Station", e.Message, false);
                     return null;
                 } catch (Exception e) {
                     string body = "Unable to get body";
@@ -222,10 +223,10 @@ namespace Lastfm
                             body = strm.ReadToEnd ();
                         }
                     } catch {}
-                    /*LogCore.Instance.PushWarning (
+                    Log.Warning (
                         "Error loading station",
                         String.Format ("Exception:\n{0}\n\nResponse Body:\n{1}", e.ToString (), body), false
-                    );*/
+                    );
                     return null;
                 }
 
@@ -277,11 +278,11 @@ namespace Lastfm
                     // Set us as connecting, assuming the connection attempt wasn't changed out from under us
                     if (ParseHandshake (new StreamReader (stream).ReadToEnd ()) && session != null) {
                         State = ConnectionState.Connected;
-                        //LogCore.Instance.PushDebug (String.Format ("Logged into Last.fm as {0}", Username), null, false);
+                        Log.Debug (String.Format ("Logged into Last.fm as {0}", account.Username), null);
                         return;
                     }
                 } catch (Exception e) {
-                    //LogCore.Instance.PushDebug ("Error in Last.fm Handshake", e.ToString (), false);
+                    Log.Debug ("Error in Last.fm Handshake", e.ToString ());
                 }
                 
                 // Must not have parsed correctly
@@ -293,7 +294,7 @@ namespace Lastfm
 
 		private bool ParseHandshake (string content) 
 		{
-            //LogCore.Instance.PushDebug ("Got Last.fm Handshake Response", content, false);
+            Log.Debug ("Got Last.fm Handshake Response", content);
 			string [] lines = content.Split (new Char[] {'\n'});
 			foreach (string line in lines) {
 				string [] opts = line.Split (new Char[] {'='});
@@ -303,11 +304,11 @@ namespace Lastfm
 					if (opts[1].ToLower () == "failed") {
 						session = null;
 						State = ConnectionState.InvalidAccount;
-                        /*LogCore.Instance.PushWarning (
+                        Log.Warning (
                             Catalog.GetString ("Failed to Login to Last.fm"),
                             Catalog.GetString ("Either your username or password is invalid."),
                             false
-                        );*/
+                        );
 						return false;
 					}
 

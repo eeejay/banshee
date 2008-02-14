@@ -29,7 +29,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace Playlists.Xspf
+namespace Media.Playlists.Xspf
 {
     public struct W3CDateTime: IComparable
     {

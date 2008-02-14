@@ -29,6 +29,8 @@
 using System;
 using System.Collections;
 using Mono.Unix;
+
+using Hyena;
 using Banshee.Base;
 
 namespace Banshee.Networking

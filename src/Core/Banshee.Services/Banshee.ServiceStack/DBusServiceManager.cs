@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using NDesk.DBus;
 using org.freedesktop.DBus;
 
+using Hyena;
 using Banshee.Base;
 
 namespace Banshee.ServiceStack

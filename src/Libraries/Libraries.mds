@@ -1,0 +1,25 @@
+<Combine name="Core" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="Hyena" configuration="Debug" />
+      <Entry build="True" name="Hyena.Gui" configuration="Debug" />
+      <Entry build="True" name="Lastfm" configuration="Debug" />
+      <Entry build="True" name="Lastfm.Gui" configuration="Debug" />
+      <Entry build="True" name="Mono.Media" configuration="Debug" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="Nereid" single="True">
+    <Execute type="None" entry="Hyena" />
+    <Execute type="None" entry="Hyena.Gui" />
+    <Execute type="None" entry="Lastfm" />
+    <Execute type="None" entry="Lastfm.Gui" />
+    <Execute type="None" entry="Mono.Media" />
+  </StartMode>
+  <Entries>
+    <Entry filename="Hyena/Hyena.mdp" />
+    <Entry filename="Hyena.Gui/Hyena.Gui.mdp" />
+    <Entry filename="Lastfm/Lastfm.mdp" />
+    <Entry filename="Lastfm.Gui/Lastfm.Gui.mdp" />
+    <Entry filename="Mono.Media/Mono.Media.mdp" />
+  </Entries>
+</Combine>

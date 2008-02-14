@@ -35,6 +35,7 @@ using Mono.Unix;
 
 using Gdk;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.ServiceStack;
 

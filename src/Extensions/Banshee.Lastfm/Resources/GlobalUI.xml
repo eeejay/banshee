@@ -1,0 +1,27 @@
+<ui>
+    <popup name="LastfmSourcePopup" action="LastfmSourcePopupAction">
+        <menuitem name="LastfmAdd" action="LastfmAddAction" />
+        <menu name='SortPlaylist' action='LastfmSortAction'>
+            <menuitem name='SortStationByName' action='LastfmSortStationsByNameAction' />
+            <menuitem name='SortStationByPlayCount' action='LastfmSortStationsByPlayCountAction' />
+            <menuitem name='SortStationByType' action='LastfmSortStationsByTypeAction' />
+        </menu>
+        <menuitem name="Connect" action="LastfmConnectAction" />
+        <separator />
+        <menuitem name="SourceProperties" action="SourcePropertiesAction" />
+    </popup>
+
+    <popup name="LastfmStationSourcePopup" action="LastfmStationSourcePopupAction">
+        <menuitem name="RenameSource" action="RenameSourceAction" />
+        <menuitem name="UnmapSource" action="UnmapSourceAction" />
+        <separator />
+        <menuitem name="SourceProperties" action="SourcePropertiesAction" />
+    </popup>
+
+    <popup name="TrackContextMenu" action="TrackContextMenuAction">
+        <placeholder name="BelowAddToPlaylist">
+            <menuitem name="LastfmLove" action="LastfmLoveAction"></menuitem>
+            <menuitem name="LastfmHate" action="LastfmHateAction"></menuitem>
+        </placeholder>
+    </popup>
+</ui>

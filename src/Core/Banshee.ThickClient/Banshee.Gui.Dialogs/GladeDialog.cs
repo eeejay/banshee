@@ -36,6 +36,10 @@ namespace Banshee.Gui.Dialogs
         public GladeDialog(string name) : base(name)
         {
         }
+
+        public GladeDialog(string name, Glade.XML resource) : base(name, resource)
+        {
+        }
     
         public virtual ResponseType Run()
         {

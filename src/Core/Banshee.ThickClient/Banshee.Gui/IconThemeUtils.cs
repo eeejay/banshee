@@ -34,8 +34,7 @@ namespace Banshee.Gui
 {
     public static class IconThemeUtils
     {
-        private static Assembly assembly = Assembly.GetExecutingAssembly ();
-        private static string [] resource_names;
+        private static Assembly executing_assembly = Assembly.GetExecutingAssembly ();
     
         public static bool HasIcon (string name)
         {
@@ -44,8 +43,13 @@ namespace Banshee.Gui
 
         public static Gdk.Pixbuf LoadIcon (int size, params string [] names)
         {
+            return LoadIcon (executing_assembly, size, names);
+        }
+
+        public static Gdk.Pixbuf LoadIcon (Assembly assembly, int size, params string [] names)
+        {
             for (int i = 0; i < names.Length; i++) {
-                Gdk.Pixbuf pixbuf = LoadIcon (names[i], size, i == names.Length - 1);
+                Gdk.Pixbuf pixbuf = LoadIcon (assembly, names[i], size, i == names.Length - 1);
                 if (pixbuf != null) {
                     return pixbuf;
                 }
@@ -56,13 +60,19 @@ namespace Banshee.Gui
 
         public static Gdk.Pixbuf LoadIcon (string name, int size)
         {
-            return LoadIcon (name, size, true);
+            return LoadIcon (executing_assembly, name, size, true);
         }
 
         public static Gdk.Pixbuf LoadIcon (string name, int size, bool fallBackOnResource)
         {
+            return LoadIcon (executing_assembly, name, size, fallBackOnResource);
+        }
+
+        public static Gdk.Pixbuf LoadIcon (Assembly assembly, string name, int size, bool fallBackOnResource)
+        {
+            Gdk.Pixbuf pixbuf = null;
             try {
-                Gdk.Pixbuf pixbuf = IconTheme.Default.LoadIcon (name, size, (IconLookupFlags)0);
+                pixbuf = IconTheme.Default.LoadIcon (name, size, (IconLookupFlags)0);
                 if (pixbuf != null) {
                     return pixbuf;
                 }
@@ -72,27 +82,23 @@ namespace Banshee.Gui
             if (!fallBackOnResource) {
                 return null;
             }
-            
+
+            assembly = assembly ?? executing_assembly;
+
+            string desired_resource_name = String.Format ("{0}.png", name);
+            string desired_resource_name_with_size = String.Format ("{0}-{1}.png", name, size);
+
             try {
-                if (resource_names == null) {
-                    resource_names = assembly.GetManifestResourceNames ();
-                }
-                
-                string desired_resource_name = name + ".png";
-                string desired_resource_name_with_size = String.Format ("{0}-{1}.png", name, size);
-                
-                foreach (string resource_name in resource_names) {
-                    if (resource_name == desired_resource_name) {
-                        return new Gdk.Pixbuf (assembly, desired_resource_name);
-                    } else if (resource_name == desired_resource_name_with_size) {
-                        return new Gdk.Pixbuf (assembly, desired_resource_name_with_size);
-                    }
-                }
-                
-                return null;
-            } catch {
-                return null;
-            }
+                if (assembly.GetManifestResourceInfo (desired_resource_name) != null)
+                    return new Gdk.Pixbuf (assembly, desired_resource_name);
+            } catch {}
+
+            try {
+                if (assembly.GetManifestResourceInfo (desired_resource_name_with_size) != null)
+                    return new Gdk.Pixbuf (assembly, desired_resource_name_with_size);
+            } catch {}
+
+            return null;
         }
     }
 }

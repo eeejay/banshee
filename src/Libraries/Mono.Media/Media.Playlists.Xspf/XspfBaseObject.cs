@@ -31,7 +31,7 @@ using System.Xml;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Playlists.Xspf
+namespace Media.Playlists.Xspf
 {
     public abstract class XspfBaseObject
     {

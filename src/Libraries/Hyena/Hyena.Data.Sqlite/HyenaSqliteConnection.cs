@@ -107,7 +107,7 @@ namespace Hyena.Data.Sqlite
         private bool Exists (string type, string name)
         {
             return
-                Query<int> (
+                QueryInt32 (
                     String.Format (@"
                         SELECT COUNT(*)
                             FROM sqlite_master
@@ -116,43 +116,22 @@ namespace Hyena.Data.Sqlite
                 ) > 0;
         }
         
-        private delegate void SchemaHandler (string column);
-        
-        private void SchemaClosure (string table_name, SchemaHandler code)
+        private static readonly char [] ws_chars = new char [] { ' ', '\t', '\n', '\r' };
+        public Dictionary<string, string> GetSchema (string name)
         {
-            string sql = Query<string> (String.Format (
-                "SELECT sql FROM sqlite_master WHERE Name='{0}'", table_name));
+            string sql = QueryString (String.Format (
+                "SELECT sql FROM sqlite_master WHERE Name='{0}'", name));
             if (String.IsNullOrEmpty (sql)) {
                 throw new Exception (String.Format (
-                    "Cannot get schema for {0} because it does not exist", table_name));
+                    "Cannot get schema for {0} because it does not exist", name));
             }
+            Dictionary<string, string> schema = new Dictionary<string, string> ();
             sql = sql.Substring (sql.IndexOf ('(') + 1);
             foreach (string column_def in sql.Split (',')) {
                 string column_def_t = column_def.Trim ();
                 int ws_index = column_def_t.IndexOfAny (ws_chars);
-                code (column_def_t.Substring (0, ws_index));
+                schema.Add (column_def_t.Substring (0, ws_index), null);
             }
-        }
-        
-        public bool ColumnExists (string tableName, string columnName)
-        {
-            bool value = false;
-            SchemaClosure (tableName, delegate (string column) {
-                if (column == columnName) {
-                    value = true;
-                    return;
-                }
-            });
-            return value;
-        }
-        
-        private static readonly char [] ws_chars = new char [] { ' ', '\t', '\n', '\r' };
-        public Dictionary<string, string> GetSchema (string table_name)
-        {
-            Dictionary<string, string> schema = new Dictionary<string,string> ();
-            SchemaClosure (table_name, delegate (string column) {
-                schema.Add (column, null);
-            });
             return schema;
         }
 
@@ -210,20 +189,34 @@ namespace Hyena.Data.Sqlite
             return ExecuteScalar (new SqliteCommand (command.ToString ()));
         }
         
-        public T Query<T> (SqliteCommand command)
+        public Int32 QueryInt32 (SqliteCommand command)
         {
-            return (T) SqliteUtils.FromDbFormat (typeof (T),
-                Convert.ChangeType (ExecuteScalar (command), typeof (T)));
+            return Convert.ToInt32 (ExecuteScalar (command));
         }
         
-        public T Query<T> (HyenaSqliteCommand command)
+        public Int32 QueryInt32 (HyenaSqliteCommand command)
         {
-            return Query<T> (command.Command);
+            return QueryInt32 (command.Command);
         }
 
-        public T Query<T> (object command)
+        public Int32 QueryInt32 (object command)
         {
-            return Query<T> (new SqliteCommand (command.ToString ()));
+            return QueryInt32 (new SqliteCommand (command.ToString ()));
+        }
+        
+        public string QueryString (SqliteCommand command)
+        {
+            return Convert.ToString (ExecuteScalar (command));
+        }
+        
+        public string QueryString (HyenaSqliteCommand command)
+        {
+            return QueryString (command.Command);
+        }
+        
+        public string QueryString (object command)
+        {
+            return QueryString (new SqliteCommand (command.ToString ()));
         }
 
         public int Execute (SqliteCommand command)

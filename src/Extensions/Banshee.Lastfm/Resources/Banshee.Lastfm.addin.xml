@@ -1,4 +1,4 @@
-<Addin id="Banshee.LastFM">
+<Addin id="Banshee.Lastfm">
 
   <Dependencies>
     <Addin id="Banshee.Services" version="1.0"/>
@@ -6,7 +6,7 @@
   </Dependencies>
 
   <Extension path="/Banshee/SourceManager/Source">
-    <Source class="Banshee.LastFM.LastFMSource"/>
+    <Source class="Banshee.Lastfm.LastfmSource"/>
   </Extension>
   
 </Addin>

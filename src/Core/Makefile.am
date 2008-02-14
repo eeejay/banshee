@@ -1,6 +1,4 @@
 SUBDIRS = \
-	Hyena \
-	Hyena.Gui \
 	Banshee.Core \
 	Banshee.Services \
 	Banshee.Widgets \

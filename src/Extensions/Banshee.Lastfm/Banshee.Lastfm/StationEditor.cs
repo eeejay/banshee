@@ -1,30 +1,30 @@
-/***************************************************************************
- *  StationEditor.cs
- *
- *  Copyright (C) 2007-2008 Novell, Inc.
- *  Written by Gabriel Burt <gabriel.burt@gmail.com>
- ****************************************************************************/
-
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// StationEditor.cs
+//
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
+//
+// Copyright (C) 2007-2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
 using System.Collections;
@@ -46,6 +46,7 @@ namespace Banshee.Lastfm
         const string dialog_name = "StationSourceEditorDialog";
         const string dialog_resource = "lastfm.glade";
 
+        private LastfmSource lastfm;
         private StationSource source;
 
         [Widget] private Gtk.Entry name_entry;
@@ -54,9 +55,10 @@ namespace Banshee.Lastfm
         [Widget] private Gtk.Label arg_label;
         [Widget] private Gtk.Button ok_button;
 
-        public StationEditor (StationSource source) : base (dialog_name, new Glade.XML (
+        public StationEditor (LastfmSource lastfm, StationSource source) : base (dialog_name, new Glade.XML (
             System.Reflection.Assembly.GetExecutingAssembly (), dialog_resource, dialog_name, "banshee"))
         {
+            this.lastfm = lastfm;
             this.source = source;
             SourceName = source.Name;
             Arg = source.Arg;
@@ -64,9 +66,10 @@ namespace Banshee.Lastfm
             Dialog.Title = Catalog.GetString ("Edit Station");
         }
     
-        public StationEditor () : base (dialog_name, new Glade.XML (
+        public StationEditor (LastfmSource lastfm) : base (dialog_name, new Glade.XML (
             System.Reflection.Assembly.GetExecutingAssembly (), dialog_resource, dialog_name, "banshee"))
         {
+            this.lastfm = lastfm;
             Initialize ();
             Dialog.Title = Catalog.GetString ("New Station");
         }
@@ -88,7 +91,7 @@ namespace Banshee.Lastfm
             int active_type = 0;
             int i = 0;
             foreach (StationType type in StationType.Types) {
-                if (!type.SubscribersOnly || Connection.Instance.Subscriber) {
+                if (!type.SubscribersOnly || lastfm.Connection.Subscriber) {
                     type_combo.AppendText (type.Label);
                     if (source != null && type == source.Type) {
                         active_type = i;
@@ -123,14 +126,15 @@ namespace Banshee.Lastfm
 
                 ThreadAssist.Spawn (delegate {
                     if (source == null) {
-                        source = new StationSource (name, type.Name, arg);
-                        LastFMPlugin.Instance.Source.AddChildSource (source);
-                        SourceManager.AddSource (source);
+                        source = new StationSource (lastfm, name, type.Name, arg);
+                        lastfm.AddChildSource (source);
+                        //LastFMPlugin.Instance.Source.AddChildSource (source);
+                        //ServiceManager.SourceManager.AddSource (source);
                     } else {
                         source.Rename (name);
                         source.Type = type;
                         source.Arg = arg;
-                        source.Commit ();
+                        source.Save ();
                         //source.Refresh ();
                     }
                 });

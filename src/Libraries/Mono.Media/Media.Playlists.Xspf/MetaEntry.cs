@@ -28,7 +28,7 @@
 
 using System;
 
-namespace Playlists.Xspf
+namespace Media.Playlists.Xspf
 {
     public struct MetaEntry
     {

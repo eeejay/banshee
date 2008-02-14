@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Banshee.Base
+namespace Hyena
 {
     public delegate void LogNotifyHandler (LogNotifyArgs args);
 
@@ -93,10 +93,16 @@ namespace Banshee.Base
         
         private static Dictionary<uint, DateTime> timers = new Dictionary<uint, DateTime> ();
         private static uint next_timer_id = 1;
+
+        private static bool debugging = false;
+        public static bool Debugging {
+            get { return debugging; }
+            set { debugging = value; }
+        }
         
         private static void Commit (LogEntryType type, string message, string details, bool showUser)
         {
-            if (type == LogEntryType.Debug && !ApplicationContext.Debugging) {
+            if (type == LogEntryType.Debug && !Debugging) {
                 return;
             }
         
@@ -137,28 +143,28 @@ namespace Banshee.Base
                                     
         public static void Debug (string message, string details)
         {
-            if (ApplicationContext.Debugging) {
+            if (Debugging) {
                 Commit (LogEntryType.Debug, message, details, false);
             }
         }
         
         public static void Debug (string message)
         {
-            if (ApplicationContext.Debugging) {
+            if (Debugging) {
                 Debug (message, null);
             }
         }
         
         public static void DebugFormat (string format, params object [] args)
         {
-            if (ApplicationContext.Debugging) {
+            if (Debugging) {
                 Debug (String.Format (format, args));
             }
         }
         
         public static uint DebugTimerStart (string message)
         {
-            if (!ApplicationContext.Debugging) {
+            if (!Debugging) {
                 return 0;
             }
             
@@ -168,7 +174,7 @@ namespace Banshee.Base
         
         public static uint DebugTimerStart ()
         {
-            if (!ApplicationContext.Debugging) {
+            if (!Debugging) {
                 return 0;
             }
             
@@ -179,7 +185,7 @@ namespace Banshee.Base
         
         public static void DebugTimerPrint (uint id)
         {
-            if (!ApplicationContext.Debugging) {
+            if (!Debugging) {
                 return;
             }
             
@@ -188,7 +194,7 @@ namespace Banshee.Base
         
         public static void DebugTimerPrint (uint id, string message)
         {
-            if (!ApplicationContext.Debugging) {
+            if (!Debugging) {
                 return;
             }
             
