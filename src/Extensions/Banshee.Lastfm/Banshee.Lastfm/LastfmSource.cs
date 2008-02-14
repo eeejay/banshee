@@ -69,7 +69,6 @@ namespace Banshee.Lastfm
             // We don't automatically connect to Last.fm, but load the last Last.fm
             // username we used so we can load the user's stations.
             account.Username = LastUserSchema.Get ();
-            account.Password = "nicoleh";
 
             connection = new Connection (account, Banshee.Web.Browser.UserAgent);
             connection.UpdateNetworkState (NetworkDetect.Instance.Connected);
