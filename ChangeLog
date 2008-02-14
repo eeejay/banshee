@@ -1,5 +1,9 @@
 2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: Forgot to svn add.
+
+2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/StationSource.cs:
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs:
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs:
