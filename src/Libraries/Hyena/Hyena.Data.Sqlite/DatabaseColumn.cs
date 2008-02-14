@@ -41,13 +41,13 @@ namespace Hyena.Data.Sqlite
         private readonly string column_type;
         private readonly string name;
         
-        public AbstractDatabaseColumn (FieldInfo field_info, AbstractDatabaseColumnAttribute attribute)
+        protected AbstractDatabaseColumn (FieldInfo field_info, AbstractDatabaseColumnAttribute attribute)
             : this (attribute, field_info, field_info.FieldType)
         {
             this.field_info = field_info;
         }
         
-        public AbstractDatabaseColumn (PropertyInfo property_info, AbstractDatabaseColumnAttribute attribute) :
+        protected AbstractDatabaseColumn (PropertyInfo property_info, AbstractDatabaseColumnAttribute attribute) :
             this (attribute, property_info, property_info.PropertyType)
         {
             if (!property_info.CanRead || !property_info.CanWrite) {
@@ -63,17 +63,11 @@ namespace Hyena.Data.Sqlite
         
         private AbstractDatabaseColumn (AbstractDatabaseColumnAttribute attribute, MemberInfo member_info, Type type)
         {
-            if (type == typeof (string)) {
-                column_type = "TEXT";
-            } else if (type == typeof (int) || type == typeof (long)) {
-                column_type = "INTEGER";
-            } else {
-                throw new Exception (String.Format (
-                    "{0}.{1}: The type {2} cannot be bound to a database column.",
-                    member_info.DeclaringType,
-                    member_info.Name,
-                    type.Name)
-                );
+            try {
+                column_type = SqliteUtils.GetType (type);
+            } catch (Exception e) {
+                throw new Exception(string.Format(
+                    "{0}.{1}: {3}", member_info.DeclaringType, member_info.Name, e.Message));
             }
             this.name = attribute.ColumnName ?? member_info.Name;
             this.type = type;
@@ -81,9 +75,10 @@ namespace Hyena.Data.Sqlite
         
         public object GetValue (object target)
         {
-            return field_info != null
+            object result = field_info != null
                 ? field_info.GetValue (target)
                 : property_info.GetValue (target, null);
+            return SqliteUtils.ToDbFormat (type, result);
         }
         
         public void SetValue (object target, IDataReader reader, int column)
@@ -103,7 +98,7 @@ namespace Hyena.Data.Sqlite
                     ? reader.GetInt64 (column)
                     : 0;
             }
-
+            result = SqliteUtils.FromDbFormat (type, result);
             SetValue (target, result);
         }
         
@@ -155,24 +150,7 @@ namespace Hyena.Data.Sqlite
         
         public string Schema {
             get {
-                StringBuilder builder = new StringBuilder ();
-                builder.Append (Name);
-                builder.Append (' ');
-                builder.Append (Type);
-                if ((attribute.Constraints & DatabaseColumnConstraints.NotNull) > 0) {
-                    builder.Append (" NOT NULL");
-                }
-                if ((attribute.Constraints & DatabaseColumnConstraints.Unique) > 0) {
-                    builder.Append (" UNIQUE");
-                }
-                if ((attribute.Constraints & DatabaseColumnConstraints.PrimaryKey) > 0) {
-                    builder.Append (" PRIMARY KEY");
-                }
-                if (attribute.DefaultValue != null) {
-                    builder.Append (" DEFAULT ");
-                    builder.Append (attribute.DefaultValue);
-                }
-                return builder.ToString ();
+                return SqliteUtils.BuildColumnSchema (Type, Name, attribute.DefaultValue, attribute.Constraints);
             }
         }
         
@@ -214,6 +192,20 @@ namespace Hyena.Data.Sqlite
         
         public string ForeignKey {
             get { return attribute.ForeignKey; }
+        }
+    }
+    
+    public struct DbColumn
+    {
+        public readonly string Name;
+        public readonly DatabaseColumnConstraints Constraints;
+        public readonly string DefaultValue;
+        
+        public DbColumn(string name, DatabaseColumnConstraints constraints, string default_value)
+        {
+            Name = name;
+            Constraints = constraints;
+            DefaultValue = default_value;
         }
     }
 }

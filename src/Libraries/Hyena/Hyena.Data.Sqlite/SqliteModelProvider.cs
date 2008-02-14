@@ -113,7 +113,7 @@ namespace Hyena.Data.Sqlite
                         InsertVersion (TableName, ModelVersion);
                     }
                 }
-                int db_version = connection.QueryInt32 (SelectVersionSql (HYENA_DATABASE_NAME));
+                int db_version = connection.Query<int> (SelectVersionSql (HYENA_DATABASE_NAME));
                 if (db_version < DatabaseVersion) {
                     MigrateDatabase (db_version);
                     UpdateVersion (HYENA_DATABASE_NAME, DatabaseVersion);
@@ -161,10 +161,7 @@ namespace Hyena.Data.Sqlite
             if (schema.Count > 0) {
                 foreach (DatabaseColumn column in columns) {
                     if (!schema.ContainsKey (column.Name)) {
-                        connection.Execute (String.Format (
-                            "ALTER TABLE {0} ADD {1}",
-                            TableName, column.Schema)
-                        );
+                        AddColumnToTable (column.Schema);
                     }
                     if (column.Index != null && !connection.IndexExists (column.Index)) {
                         connection.Execute (String.Format (
@@ -563,6 +560,56 @@ namespace Hyena.Data.Sqlite
             select = select_builder.ToString ();
             from = from_builder.ToString ();
             where = where_builder.ToString ();
+        }
+        
+        public U GetProperty <U> (T item, DbColumn column)
+        {
+            CheckProperty (typeof (U), column);
+            
+            return connection.Query<U> (String.Format (
+                "SELECT {0} FROM {1} WHERE {2}={3}",
+                column.Name, TableName, key.Name, key.GetValue (item)));
+        }
+        
+        public void SetProperty <U> (T item, U value, DbColumn column)
+        {
+            CheckProperty (typeof (U), column);
+            
+            connection.Execute (String.Format (
+                "UPDATE {0} SET {1}='{2}' WHERE {3}={4}",
+                TableName, column.Name,
+                SqliteUtils.ToDbFormat (typeof (U), value),
+                key.Name, key.GetValue (item)));
+        }
+        
+        public void ClearProperty <U> (DbColumn column)
+        {
+            if (!connection.ColumnExists (TableName, column.Name)) {
+                AddColumnToTable (SqliteUtils.BuildColumnSchema (
+                    SqliteUtils.GetType (typeof (U)),
+                    column.Name, column.DefaultValue, column.Constraints));
+            } else {
+                connection.Execute (string.Format (
+                    "UPDATE {0} SET {1}='{2}'",
+                    TableName, column.Name, column.DefaultValue));
+            }
+        }
+        
+        private void CheckProperty (Type type, DbColumn column)
+        {
+            if (!connection.ColumnExists (TableName, column.Name)) {
+                AddColumnToTable (SqliteUtils.BuildColumnSchema (
+                    SqliteUtils.GetType (type),
+                    column.Name, column.DefaultValue, column.Constraints));
+            }
+        }
+                                              
+        private void AddColumnToTable (string column_schema)
+        {
+            connection.Execute (String.Format (
+                "ALTER TABLE {0} ADD {1}",
+                TableName, column_schema)
+            );
         }
 	}
 }

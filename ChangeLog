@@ -1,5 +1,16 @@
 2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/StationSource.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	* src/Libraries/Hyena/Hyena.mdp:
+	* src/Libraries/Hyena/Makefile.am: The last commit reverted some of
+	scottp's changes due to svn mv'ing files that weren't up to date.
+
+2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	The Last.fm extension can actually play music now.  Still need to port the
 	status bar.  Also, moved Hyena and Hyena.Gui out of Core and into Libraries.
 

@@ -144,12 +144,12 @@ namespace Hyena.Data.Sqlite
                 return -1;
             }
             select_single_command.ApplyValues (item_id);
-            int target_id = connection.QueryInt32 (select_single_command);
+            int target_id = connection.Query<int> (select_single_command);
             if (target_id == 0) {
                 return -1;
             }
             if (first_order_id == -1) {
-                first_order_id = connection.QueryInt32 (select_first_command);
+                first_order_id = connection.Query<int> (select_first_command);
             }
             return target_id - first_order_id;
         }
@@ -194,7 +194,7 @@ namespace Hyena.Data.Sqlite
         
         private void FindOrCreateCacheModelId (string id)
         {
-            uid = connection.QueryInt32 (String.Format (
+            uid = connection.Query<int> (String.Format (
                 "SELECT CacheID FROM {0} WHERE ModelID = '{1}'",
                 CacheModelsTableName, id
             ));

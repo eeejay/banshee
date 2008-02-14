@@ -547,7 +547,7 @@ namespace Banshee.Lastfm
                 ");
             } else {
                 try {
-                    ServiceManager.DbConnection.QueryInt32 ("SELECT PlayCount FROM LastfmStations LIMIT 1");
+                    ServiceManager.DbConnection.Query<int> ("SELECT PlayCount FROM LastfmStations LIMIT 1");
                 } catch {
                     Log.Debug ("Adding new database column", "Table: LastfmStations, Column: PlayCount INTEGER");
                     ServiceManager.DbConnection.Execute ("ALTER TABLE LastfmStations ADD PlayCount INTEGER");
