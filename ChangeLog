@@ -1,5 +1,14 @@
 2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmActions.cs:
+	Handle SourcePropertiesAction for LastfmSource and StationSources.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/StationSource.cs: Set
+	HasProperties = true so Edit Properties action shows up.
+
+2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: Forgot to svn add.
 
 2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>

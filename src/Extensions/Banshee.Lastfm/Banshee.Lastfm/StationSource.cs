@@ -495,6 +495,10 @@ namespace Banshee.Lastfm
         public override int Count {
             get { return 0; }
         }
+
+        public override bool HasProperties {
+            get { return true; }
+        }
         
         public static List<StationSource> LoadAll (LastfmSource lastfm, string creator)
         {

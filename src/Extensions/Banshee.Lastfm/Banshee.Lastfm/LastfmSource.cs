@@ -240,6 +240,10 @@ namespace Banshee.Lastfm
             get { return false; }
         }
 
+        public override bool HasProperties {
+            get { return true; }
+        }
+
         private void HandleConnectionStateChanged (object sender, ConnectionStateChangedArgs args)
         {
             UpdateUI ();

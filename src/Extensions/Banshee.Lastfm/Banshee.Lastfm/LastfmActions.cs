@@ -49,7 +49,7 @@ namespace Banshee.Lastfm
 {
     public class LastfmActions : BansheeActionGroup
     {
-        private LastfmSource source;
+        private LastfmSource lastfm;
 
         private ActionButton love_button;
         private ActionButton hate_button;
@@ -59,10 +59,10 @@ namespace Banshee.Lastfm
         private uint actions_id;
         private ActionGroup actions;
 
-        public LastfmActions (LastfmSource source) : base ("Lastfm")
+        public LastfmActions (LastfmSource lastfm) : base ("Lastfm")
         {
             action_service = ServiceManager.Get<InterfaceActionService> ();
-            this.source = source;
+            this.lastfm = lastfm;
 
             AddImportant (
                 new ActionEntry (
@@ -113,16 +113,16 @@ namespace Banshee.Lastfm
                          null, "", 2
                     )
                 },
-                Array.IndexOf (LastfmSource.ChildComparers, source.ChildComparer),
+                Array.IndexOf (LastfmSource.ChildComparers, lastfm.ChildComparer),
                 delegate (object sender, ChangedArgs args) {
-                    source.ChildComparer = LastfmSource.ChildComparers[args.Current.Value];
-                    source.SortChildSources ();
+                    lastfm.ChildComparer = LastfmSource.ChildComparers[args.Current.Value];
+                    lastfm.SortChildSources ();
                 }
             );
 
             actions_id = action_service.UIManager.AddUiFromResource ("GlobalUI.xml");
 
-            source.Connection.StateChanged += HandleConnectionStateChanged;
+            lastfm.Connection.StateChanged += HandleConnectionStateChanged;
 
             /*Globals.ActionManager["LastfmLoveAction"].IsImportant = true;
             Globals.ActionManager["LastfmHateAction"].IsImportant = true;
@@ -157,6 +157,8 @@ namespace Banshee.Lastfm
 
             UpdateActions ();
 
+            action_service.SourceActions ["SourcePropertiesAction"].Activated += OnSourceProperties;
+
             action_service.AddActionGroup (this);
         }
 
@@ -176,14 +178,25 @@ namespace Banshee.Lastfm
 
         private void OnAddStation (object sender, EventArgs args)
         {
-            StationEditor ed = new StationEditor (source);
+            StationEditor ed = new StationEditor (lastfm);
             ed.Window.ShowAll ();
             ed.RunDialog ();
         }
 
         private void OnConnect (object sender, EventArgs args)
         {
-            source.Connection.Connect ();
+            lastfm.Connection.Connect ();
+        }
+
+        private void OnSourceProperties (object o, EventArgs args)
+        {
+            Source source = action_service.SourceActions.ActionSource;
+            if (source is LastfmSource) {
+                ShowLoginDialog ();
+            } else if (source is StationSource) {
+                StationEditor editor = new StationEditor (lastfm, source as StationSource);
+                editor.RunDialog ();
+            }
         }
 
         private void OnChangeStation (object sender, EventArgs args)
@@ -217,9 +230,9 @@ namespace Banshee.Lastfm
 
         public void ShowLoginDialog ()
         {
-            AccountLoginDialog dialog = new AccountLoginDialog (source.Account, true);
+            AccountLoginDialog dialog = new AccountLoginDialog (lastfm.Account, true);
             dialog.SaveOnEdit = true;
-            if (source.Account.Username == null) {
+            if (lastfm.Account.Username == null) {
                 dialog.AddSignUpButton ();
             }
             dialog.Run ();
@@ -242,10 +255,10 @@ namespace Banshee.Lastfm
                 updating = true;
             }
 
-            bool have_user = (source.Account.Username != null);
+            bool have_user = (lastfm.Account.Username != null);
             this["LastfmAddAction"].Sensitive = have_user;
             this["LastfmSortAction"].Sensitive = have_user;
-            this["LastfmConnectAction"].Visible = source.Connection.State == ConnectionState.Disconnected;
+            this["LastfmConnectAction"].Visible = lastfm.Connection.State == ConnectionState.Disconnected;
 
             updating = false;
         }
