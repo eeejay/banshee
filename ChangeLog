@@ -1,3 +1,9 @@
+2008-02-15  Aaron Bockover  <aaron@abock.org>
+
+	* build/build.environment.mk: Link against ICSharpCode.SharpZipLib
+
+	* configure.ac: Check for Mono.Data.Sqlite instead of Mono.Data.SqliteClient
+
 2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Lastfm/Lastfm.Data/UserTopArtists.cs:

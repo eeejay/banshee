@@ -45,7 +45,7 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 	System.Web
 	System.Web.Services
 	Mono.Cairo
-	Mono.Data.SqliteClient
+	Mono.Data.Sqlite
 	Mono.Posix
 	ICSharpCode.SharpZipLib
 ])
