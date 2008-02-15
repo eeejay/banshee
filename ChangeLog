@@ -1,5 +1,23 @@
 2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Lastfm/Lastfm/Connection.cs: Fix warnings.
+
+	* src/Libraries/Lastfm/Makefile.am:
+	* src/Libraries/Lastfm/Lastfm.Data: Add new namespace.
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopArtists.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopData.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmDataCollection.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmData.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/Profile.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopAlbums.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserData.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopTracks.cs: New files that expose
+	Last.fm metadata.
+
+2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmActions.cs:
 	Handle SourcePropertiesAction for LastfmSource and StationSources.
 

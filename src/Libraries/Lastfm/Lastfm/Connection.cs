@@ -87,7 +87,6 @@ namespace Lastfm
 		private string base_url;
 		private string base_path;
 		private string info_message;
-        private bool connect_requested = false;
         private bool network_connected = false;
 
         private static Regex station_error_regex = new Regex ("error=(\\d+)", RegexOptions.Compiled);
@@ -101,6 +100,10 @@ namespace Lastfm
 		public bool Subscriber {
 			get { return subscriber; }
 		}
+
+        public string InfoMessage {
+            get { return info_message; }
+        }
 
 		public ConnectionState State {
 			get { return state; }
@@ -145,7 +148,6 @@ namespace Lastfm
 
         public void Connect ()
         {
-            connect_requested = true;
             if (State == ConnectionState.Connecting || State == ConnectionState.Connected)
                 return;
 
@@ -353,7 +355,7 @@ namespace Lastfm
             }
         
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create (uri);
-            request.UserAgent = user_agent; //Banshee.Web.Browser.UserAgent;
+            request.UserAgent = user_agent;
             request.Timeout = 10000;
             request.Method = "POST";
             request.KeepAlive = false;
@@ -393,7 +395,7 @@ namespace Lastfm
             if (accept != null) {
                 request.Accept = accept;
             }
-            request.UserAgent = user_agent; //Banshee.Web.Browser.UserAgent;
+            request.UserAgent = user_agent;
             request.Timeout = 10000;
             request.KeepAlive = false;
             request.AllowAutoRedirect = true;
