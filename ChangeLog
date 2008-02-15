@@ -1,5 +1,15 @@
 2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopArtists.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopData.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/Profile.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopAlbums.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserData.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopTracks.cs: Remove unnecessary
+	usings.
+
+2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Lastfm/Lastfm/Connection.cs: Fix warnings.
 
 	* src/Libraries/Lastfm/Makefile.am:

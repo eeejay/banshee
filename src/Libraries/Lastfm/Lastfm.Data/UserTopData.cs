@@ -27,9 +27,6 @@
 //
 
 using System;
-using System.Collections;
-using System.Text;
-using System.Security.Cryptography;
 
 namespace Lastfm.Data
 {

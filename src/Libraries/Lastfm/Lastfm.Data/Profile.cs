@@ -27,9 +27,6 @@
 //
 
 using System;
-using System.Collections;
-using System.Xml;
-using System.Security.Cryptography;
 
 namespace Lastfm.Data
 {
@@ -56,7 +53,6 @@ namespace Lastfm.Data
         {
             this.username = username;
             profile = new DataEntry (doc["profile"]);
-            Console.WriteLine ("in profile have:\n{0}", doc.FirstChild.InnerXml);
         }
 
         public string Username          { get { return username; } }
