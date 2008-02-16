@@ -212,8 +212,10 @@ namespace Hyena.Data.Sqlite
         
         public T Query<T> (SqliteCommand command)
         {
-            return (T) SqliteUtils.FromDbFormat (typeof (T),
-                Convert.ChangeType (ExecuteScalar (command), typeof (T)));
+            object result = ExecuteScalar (command);
+            return result == null 
+                ? default (T)
+                : (T)SqliteUtils.FromDbFormat (typeof (T), Convert.ChangeType (result, typeof (T)));
         }
         
         public T Query<T> (HyenaSqliteCommand command)
