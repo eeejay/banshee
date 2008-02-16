@@ -1,17 +1,17 @@
 <Project name="Lastfm.Gui" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./" assembly="Lastfm" />
+      <Output directory="." assembly="Lastfm" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./Lastfm.Gui/AccountLoginDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Lastfm.Gui/AccountLoginForm.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Lastfm.Gui/Badge.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Lastfm.Gui/LinkButton.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Gui/AccountLoginDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Gui/AccountLoginForm.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Gui/Badge.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Gui/LinkButton.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

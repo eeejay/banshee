@@ -45,6 +45,9 @@
     <File name="Hyena.Data.Gui/ListView/ListView_Model.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ListView/ListView_Interaction.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/RowActivatedHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/FileSizeQueryValueEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/QueryLimitBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/QueryTermsBox.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

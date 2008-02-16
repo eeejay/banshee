@@ -1,16 +1,16 @@
 <Project name="Mono.Media" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./" assembly="Mono.Media" />
+      <Output directory="." assembly="Mono.Media" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./Lastfm/Account.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Lastfm/Browser.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Lastfm/Connection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm/Account.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm/Browser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm/Connection.cs" subtype="Code" buildaction="Compile" />
     <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/LinkEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/MetaEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/Playlist.cs" subtype="Code" buildaction="Compile" />
