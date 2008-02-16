@@ -2,8 +2,7 @@ SUBDIRS = \
 	Banshee.Core \
 	Banshee.Services \
 	Banshee.Widgets \
-	Banshee.ThickClient \
-	Nereid
+	Banshee.ThickClient
 
 run:
 	@pushd $(top_builddir); \

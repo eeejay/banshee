@@ -1,3 +1,7 @@
+2008-02-16  Aaron Bockover  <abock@gnome.org>
+
+	Moved Nereid from Core/ to Clients/; fixed up a lot of MonoDevelop stuff
+
 2008-02-15  Aaron Bockover  <aaron@abock.org>
 
 	* build/build.environment.mk: Link against ICSharpCode.SharpZipLib

@@ -120,13 +120,15 @@ libbanshee/Makefile
 src/Makefile
 src/AssemblyInfo.cs
 
+src/Clients/Makefile
+src/Clients/Nereid/Makefile
+src/Clients/Nereid/banshee2
+
 src/Core/Makefile
 src/Core/Banshee.Core/Makefile
 src/Core/Banshee.Services/Makefile
 src/Core/Banshee.ThickClient/Makefile
 src/Core/Banshee.Widgets/Makefile
-src/Core/Nereid/Makefile
-src/Core/Nereid/banshee2
 
 src/Dap/Makefile
 src/Dap/Banshee.DapCore/Makefile
