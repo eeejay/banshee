@@ -4,7 +4,7 @@
       <Entry build="True" name="Clients" configuration="Debug" />
       <Entry build="True" name="Core" configuration="Debug" />
       <Entry build="True" name="Backends" configuration="Debug" />
-	  <Entry build="True" name="Dap" configuration="Debug" />
+      <Entry build="True" name="Dap" configuration="Debug" />
       <Entry build="True" name="Extensions" configuration="Debug" />
       <Entry build="True" name="Libraries" configuration="Debug" />
     </Configuration>
@@ -13,7 +13,7 @@
     <Execute type="None" entry="Clients" />
     <Execute type="None" entry="Core" />
     <Execute type="None" entry="Backends" />
-	<Execute type="None" entry="Dap" />
+    <Execute type="None" entry="Dap" />
     <Execute type="None" entry="Extensions" />
     <Execute type="None" entry="Libraries" />
   </StartMode>
@@ -21,7 +21,7 @@
     <Entry filename="Clients/Clients.mds" />
     <Entry filename="Core/Core.mds" />
     <Entry filename="Backends/Backends.mds" />
-	<Entry filename="Dap/Dap.mds" />
+    <Entry filename="Dap/Dap.mds" />
     <Entry filename="Extensions/Extensions.mds" />
     <Entry filename="Libraries/Libraries.mds" />
   </Entries>
