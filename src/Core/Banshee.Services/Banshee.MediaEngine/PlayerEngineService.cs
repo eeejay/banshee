@@ -82,18 +82,21 @@ namespace Banshee.MediaEngine
                 LoadEngine (node);
             }
             
-            if (default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
-                Log.Warning (Catalog.GetString (
-                    "No player engines were found. Please ensure Banshee has been cleanly installed."),
-                    "Using the featureless NullPlayerEngine.");
-                LoadEngine (new NullPlayerEngine ());
-            }
-            
             if (default_engine != null) {
                 active_engine = default_engine;
                 Log.Debug (Catalog.GetString ("Default player engine"), active_engine.Name);
             } else {
                 default_engine = active_engine;
+            }
+            
+            if (default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
+                Log.Warning (Catalog.GetString (
+                    "No player engines were found. Please ensure Banshee has been cleanly installed."),
+                    "Using the featureless NullPlayerEngine.");
+                PlayerEngine null_engine = new NullPlayerEngine ();
+                LoadEngine (null_engine);
+                active_engine = null_engine;
+                default_engine = null_engine;
             }
             
             MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;

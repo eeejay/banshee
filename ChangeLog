@@ -1,5 +1,10 @@
 2008-02-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Fixed bug with the new NullPlayerEngine fallback loading
+
+2008-02-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Core/Banshee.Base/PlatformHacks.cs: Only run these
 	hacks if we are on Unix, and don't crash even if we are and they fail
 	
