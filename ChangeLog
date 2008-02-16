@@ -1,5 +1,23 @@
 2008-02-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Core/Banshee.Base/PlatformHacks.cs: Only run these
+	hacks if we are on Unix, and don't crash even if we are and they fail
+	
+	* src/Core/Banshee.Services/Banshee.MediaEngine/NullPlayerEngine.cs:
+	A fake engine that does nothing, used to allow Banshee to at least
+	start up on Windows without libbanshee
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Load the NullPlayerEngine if no real engines could be loaded
+	
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Disable DBus support if BusG.Init fails
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/CairoHelper.cs: Do not P/Invoke
+	to get the cairo context, instead use Gdk.CairoHelper
+
+2008-02-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Added
 	a necessary null check and return default (T) for the generic Query 
 	method that Scott introduced - fixes the bug everyone has been complaining

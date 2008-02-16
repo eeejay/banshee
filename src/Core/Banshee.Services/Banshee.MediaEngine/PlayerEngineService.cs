@@ -82,6 +82,13 @@ namespace Banshee.MediaEngine
                 LoadEngine (node);
             }
             
+            if (default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
+                Log.Warning (Catalog.GetString (
+                    "No player engines were found. Please ensure Banshee has been cleanly installed."),
+                    "Using the featureless NullPlayerEngine.");
+                LoadEngine (new NullPlayerEngine ());
+            }
+            
             if (default_engine != null) {
                 active_engine = default_engine;
                 Log.Debug (Catalog.GetString ("Default player engine"), active_engine.Name);
@@ -89,18 +96,16 @@ namespace Banshee.MediaEngine
                 default_engine = active_engine;
             }
             
-            if (default_engine == null || active_engine == null || engines == null || engines.Count == 0) {
-                throw new ApplicationException(Catalog.GetString(
-                    "No player engines were found. Please ensure Banshee has been cleanly installed."));
-            }
-            
             MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;
         }
         
         private void LoadEngine (TypeExtensionNode node)
         {
-            PlayerEngine engine = (PlayerEngine) node.CreateInstance (typeof (PlayerEngine));
-            
+            LoadEngine ((PlayerEngine) node.CreateInstance (typeof (PlayerEngine)));
+        }
+        
+        private void LoadEngine (PlayerEngine engine)
+        {
             engine.StateChanged += OnEngineStateChanged;
             engine.EventChanged += OnEngineEventChanged;
 

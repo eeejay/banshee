@@ -52,7 +52,13 @@ namespace Banshee.ServiceStack
                 return;
             }
             
-            BusG.Init();
+            try {
+                BusG.Init();
+            } catch {
+                Log.Warning ("DBus support could not be started. Disabling for this session.");
+                dbus_enabled = false;
+                return;
+            }
             
             try {
                 RequestNameReply name_reply = Bus.Session.RequestName(BusName);

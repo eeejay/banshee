@@ -8,6 +8,21 @@ SUBDIRS = \
 	extras \
 	po
 
+WINDOWS_ASSEMBLIES = \
+	Hyena.dll \
+	Hyena.Gui.dll \
+	Banshee.Core.dll \
+	Banshee.Services.dll \
+	Banshee.ThickClient.dll \
+	Banshee.Widgets.dll \
+	Banshee.GStreamer.dll \
+	Banshee.PlayQueue.dll \
+	Banshee.Lastfm.dll \
+	Lastfm.Gui.dll \
+	Lastfm.dll \
+	Mono.Media.dll \
+	Nereid.exe
+
 EXTRA_DIST = \
 	intltool-extract.in \
 	intltool-merge.in \
@@ -60,7 +75,10 @@ uninstall-hook:
 dist-windows: all
 	rm -rf banshee-windows; \
 	mkdir banshee-windows; \
-	cp -rf bin/*.{dll,exe} banshee-windows; \
+	cp -rf win-deps/* banshee-windows; \
+	for asm in $(WINDOWS_ASSEMBLIES); do \
+		cp -rf bin/$$asm banshee-windows; \
+	done; \
 	zip banshee-windows.zip -r banshee-windows; \
 	rm -rf banshee-windows
 

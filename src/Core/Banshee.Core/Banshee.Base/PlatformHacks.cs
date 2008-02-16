@@ -42,24 +42,35 @@ namespace Banshee.Base
         
         public static void TrapMonoJitSegv ()
         {
+            if (Environment.OSVersion.Platform != PlatformID.Unix) {
+                return;
+            }
+        
             // We must get a reference to the JIT's SEGV handler because 
             // GStreamer will set its own and not restore the previous, which
             // will cause what should be NullReferenceExceptions to be unhandled
             // segfaults for the duration of the instance, as the JIT is powerless!
             // FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=391777
-            mono_jit_segv_handler = Marshal.AllocHGlobal (512);
-            sigaction (Mono.Unix.Native.Signum.SIGSEGV, IntPtr.Zero, mono_jit_segv_handler);
+            
+            try {
+                mono_jit_segv_handler = Marshal.AllocHGlobal (512);
+                sigaction (Mono.Unix.Native.Signum.SIGSEGV, IntPtr.Zero, mono_jit_segv_handler);
+            } catch {
+            }
         }
         
         public static void RestoreMonoJitSegv ()
         {
-            if (mono_jit_segv_handler.Equals (IntPtr.Zero)) {
+            if (Environment.OSVersion.Platform != PlatformID.Unix || mono_jit_segv_handler.Equals (IntPtr.Zero)) {
                 return;
             }
             
             // Reset the SEGV handle to that of the JIT again (SIGH!)
-            sigaction (Mono.Unix.Native.Signum.SIGSEGV, mono_jit_segv_handler, IntPtr.Zero);
-            Marshal.FreeHGlobal (mono_jit_segv_handler);
+            try {
+                sigaction (Mono.Unix.Native.Signum.SIGSEGV, mono_jit_segv_handler, IntPtr.Zero);
+                Marshal.FreeHGlobal (mono_jit_segv_handler);
+            } catch {
+            }
         }
                 
         [DllImport ("libgtk-win32-2.0-0.dll")]
@@ -84,6 +95,10 @@ namespace Banshee.Base
 
         public static void SetProcessName (string name)
         {
+            if (Environment.OSVersion.Platform != PlatformID.Unix) {
+                return;
+            }
+        
             try {
                 if (prctl (15 /* PR_SET_NAME */, Encoding.ASCII.GetBytes (name + "\0"), 
                     IntPtr.Zero, IntPtr.Zero, IntPtr.Zero) != 0) {

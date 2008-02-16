@@ -34,21 +34,23 @@ namespace Hyena.Data.Gui
 {
     public static class CairoHelper
     {
-        [System.Runtime.InteropServices.DllImport("libgdk-x11-2.0.so")]
-        private static extern IntPtr gdk_cairo_create(IntPtr raw);
+        [System.Runtime.InteropServices.DllImport ("libgdk-x11-2.0.so")]
+        private static extern IntPtr gdk_cairo_create (IntPtr raw);
 
-        public static Cairo.Context CreateCairoDrawable(Gdk.Drawable drawable)
+        public static Cairo.Context CreateCairoDrawable (Gdk.Drawable drawable)
         {
-            if(drawable == null) {
+            if (drawable == null) {
                 return null;
             }
             
-            Cairo.Context context = new Cairo.Context(gdk_cairo_create(drawable.Handle));
+            return Gdk.CairoHelper.Create (drawable);
+            
+            /*Cairo.Context context = new Cairo.Context(gdk_cairo_create(drawable.Handle));
             if(context == null) {
                 throw new ApplicationException("Could not create Cairo.Context");
             }
 
-            return context;
+            return context;*/
         }
     }
 }
