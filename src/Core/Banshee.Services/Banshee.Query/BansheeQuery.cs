@@ -50,6 +50,7 @@ namespace Banshee.Query
             CreateQueryOrder ("Album",      asc,  Catalog.GetString ("Album")),
             CreateQueryOrder ("Artist",     asc,  Catalog.GetString ("Artist")),
             CreateQueryOrder ("Title",      asc,  Catalog.GetString ("Title")),
+            CreateQueryOrder ("Genre",      asc,  Catalog.GetString ("Genre")),
             null,
             CreateQueryOrder ("Rating",     desc, Catalog.GetString ("Highest Rating")),
             CreateQueryOrder ("Rating",     asc,  Catalog.GetString ("Lowest Rating")),
@@ -105,6 +106,12 @@ namespace Banshee.Query
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("year"), Catalog.GetString ("released"), Catalog.GetString ("yr"),
             "year", "released", "yr"
+        );
+
+        public static QueryField GenreField = new QueryField (
+            "genre", Catalog.GetString ("Genre"), "CoreTracks.Genre", false,
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("genre"), "genre"
         );
 
         public static QueryField RatingField = new QueryField (
@@ -164,7 +171,7 @@ namespace Banshee.Query
         );
 
         public static QueryField DateAddedField = new QueryField (
-            "added", Catalog.GetString ("Imported Date"), "CoreTracks.DateAddedStamp", typeof(DateQueryValue),
+            "added", Catalog.GetString ("Date Added"), "CoreTracks.DateAddedStamp", typeof(DateQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("added"), Catalog.GetString ("imported"), Catalog.GetString ("addedon"), Catalog.GetString ("dateadded"), Catalog.GetString ("importedon"),
             "added", "imported", "addedon", "dateadded", "importedon"
@@ -183,7 +190,7 @@ namespace Banshee.Query
         );
 
         public static QueryFieldSet FieldSet = new QueryFieldSet (
-            ArtistField, AlbumField, DiscField, TitleField, YearField, RatingField, PlayCountField,
+            ArtistField, AlbumField, DiscField, TitleField, YearField, GenreField, RatingField, PlayCountField,
             SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField,
             DateAddedField, PlaylistField, SmartPlaylistField
         );
@@ -236,6 +243,7 @@ namespace Banshee.Query
                     break;
 
                 case "Year":
+                case "Genre":
                 case "Disc":
                 case "Duration":
                 case "Rating":

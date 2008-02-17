@@ -219,6 +219,12 @@ namespace Banshee.Collection.Database
             get { return base.Year; }
             set { base.Year = value; }
         }
+
+        [DatabaseColumn]
+        public override string Genre {
+            get { return base.Genre; }
+            set { base.Genre = value; }
+        }
         
         [DatabaseColumn]
         public override int Rating {

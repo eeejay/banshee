@@ -267,6 +267,7 @@ namespace Banshee.Database
                     DiscNumber          INTEGER,
                     Duration            INTEGER,
                     Year                INTEGER,
+                    Genre               TEXT,
 
                     Rating              INTEGER,
                     PlayCount           INTEGER,
@@ -413,6 +414,7 @@ namespace Banshee.Database
                         0,
                         Duration * 1000,
                         Year,
+                        Genre,
                         Rating,
                         NumberOfPlays,
                         0,
