@@ -1,5 +1,10 @@
 2008-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Lastfm/Test.cs:
+	* src/Libraries/Lastfm.Gui/Test.cs: Add tests.
+
+2008-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Lastfm/Lastfm/Connection.cs:
 	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Rename to
 	RadioConnection.cs
