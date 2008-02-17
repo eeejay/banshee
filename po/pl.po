@@ -683,7 +683,7 @@ msgstr "Zakończ Banshee"
 # ten string używany jest 2 razy i zawsze coś będzie nie tak, ale imho lepiej miec menu Edycja :)
 #: ../src/Core/Banshee.Base/ActionManager.cs:108
 msgid "_Edit"
-msgstr "_Modyfikacja"
+msgstr "_Edycja"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:119
 msgid "Select _All"
@@ -2927,7 +2927,7 @@ msgstr "Odtwarza/zatrzymuje bieżący utwór"
 #: ../src/Core/Banshee/PlayerInterface.cs:484
 #: ../src/Plugins/Banshee.Plugins.MiniMode/MiniModeWindow.cs:153
 msgid "Play next song"
-msgstr "Odtwarza następny utwór"
+msgstr "Następny utwór"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:485
 msgid "Device disk usage"
