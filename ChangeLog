@@ -1,5 +1,19 @@
 2008-02-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Set RowSensitivePropertyName to 'CanPlay'
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Added a RowSensitivePropertyName property, defaulting to 'Sensitive'; 
+	objects in the model will be queried for this property to indicate whether
+	the object is sensitive (enabled) or not; render the row's sensitivity
+
+	* src/Libraries/Lastfm/Lastfm/Connection.cs: Clear the password if invalid
+
+2008-02-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Lastfm/Lastfm/Account.cs: Renamed Username to UserName
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmActions.cs:

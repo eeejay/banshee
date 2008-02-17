@@ -27,6 +27,8 @@
 //
 
 using System;
+using System.Reflection;
+
 using Gtk;
 
 namespace Hyena.Data.Gui
@@ -107,6 +109,48 @@ namespace Hyena.Data.Gui
         private IListModel<T> model;
         public virtual IListModel<T> Model {
             get { return model; }
+        }
+        
+        private string row_sensitive_property_name = "Sensitive";
+        private PropertyInfo row_sensitive_property_info;
+        bool row_sensitive_property_invalid = false;
+        
+        public string RowSensitivePropertyName {
+            get { return row_sensitive_property_name; }
+            set { 
+                if (value == row_sensitive_property_name) {
+                    return;
+                }
+                
+                row_sensitive_property_name = value;
+                row_sensitive_property_info = null;
+                row_sensitive_property_invalid = false;
+                
+                InvalidateListWindow ();
+            }
+        }
+        
+        private bool IsRowSensitive (object item)
+        {
+            if (item == null || row_sensitive_property_invalid) {
+                return true;
+            }
+         
+            if (row_sensitive_property_info == null || row_sensitive_property_info.ReflectedType != item.GetType ()) {
+                row_sensitive_property_info = item.GetType ().GetProperty (row_sensitive_property_name);
+                if (row_sensitive_property_info == null || row_sensitive_property_info.PropertyType != typeof (bool)) {
+                    row_sensitive_property_info = null;
+                    row_sensitive_property_invalid = true;
+                    return true;
+                }
+            }
+            
+            return (bool)row_sensitive_property_info.GetValue (item, null);
+        }
+        
+        private bool IsRowSensitive (int index)
+        {
+            return IsRowSensitive (model[index]);
         }
     }
 }

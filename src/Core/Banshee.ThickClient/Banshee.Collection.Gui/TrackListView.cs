@@ -69,6 +69,7 @@ namespace Banshee.Collection.Gui
             
             ColumnController = DefaultColumnController;
             RulesHint = true;
+            RowSensitivePropertyName = "CanPlay";
             
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
             

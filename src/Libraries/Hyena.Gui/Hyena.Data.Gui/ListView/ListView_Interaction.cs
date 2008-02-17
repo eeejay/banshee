@@ -84,16 +84,16 @@ namespace Hyena.Data.Gui
                 // is not selected, select it and don't move the focus or vadjustment.
                 // Otherwise, select the new row and scroll etc as necessary.
                 if ((relative_row * relative_row != 1)) {
-                    Selection.SelectFromFirst(row_index, true);
+                    Selection.SelectFromFirst (row_index, true);
                 } else if (Selection.Contains (focused_row_index)) {
-                    Selection.SelectFromFirst(row_index, true);
+                    Selection.SelectFromFirst (row_index, true);
                 } else {
-                    Selection.Select(focused_row_index);
+                    Selection.Select (focused_row_index);
                     return true;
                 }
             } else {
-                Selection.Clear(false);
-                Selection.Select(row_index);
+                Selection.Clear (false);
+                Selection.Select (row_index);
             }
 
             // Scroll if needed

@@ -311,6 +311,7 @@ namespace Lastfm
                             Catalog.GetString ("Either your username or password is invalid."),
                             false
                         );
+                        account.CryptedPassword = null;
 						return false;
 					}
 

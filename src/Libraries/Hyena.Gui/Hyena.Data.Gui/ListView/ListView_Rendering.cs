@@ -274,6 +274,7 @@ namespace Hyena.Data.Gui
             }
             
             object item = model[row_index];
+            bool sensitive = IsRowSensitive (item);
             
             Gdk.Rectangle cell_area = new Gdk.Rectangle ();
             cell_area.Height = RowHeight;
@@ -286,7 +287,7 @@ namespace Hyena.Data.Gui
                 
                 cell_area.Width = column_cache[ci].Width;
                 cell_area.X = column_cache[ci].X1;
-                PaintCell (item, ci, row_index, cell_area, cell_area, state, false);
+                PaintCell (item, ci, row_index, cell_area, cell_area, sensitive ? state : StateType.Insensitive, false);
             }
             
             if (pressed_column_is_dragging && pressed_column_index >= 0) {   
