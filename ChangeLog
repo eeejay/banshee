@@ -1,5 +1,22 @@
 2008-02-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Lastfm/Lastfm/Account.cs: Renamed Username to UserName
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmActions.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/LastfmSource.cs:
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:
+	* src/Libraries/Lastfm/Lastfm/Connection.cs: Use the UserName property
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm/StationSource.cs: Store
+	the MD5 hashed last.fm password
+
+	* src/Libraries/Hyena/Hyena/CryptoUtil.cs: Moved some MD5 methods from
+	Last.fm to here
+
+	* tests/Hyena/CryptoUtilTests.cs: Tests for CryptoUtil
+
+2008-02-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
 	Fixed bug with the new NullPlayerEngine fallback loading
 

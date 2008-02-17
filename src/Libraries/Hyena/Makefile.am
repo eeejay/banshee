@@ -67,12 +67,13 @@ SOURCES =  \
 	Hyena.SExpEngine/StringFunctionSet.cs \
 	Hyena.SExpEngine/TreeNode.cs \
 	Hyena.SExpEngine/UtilityFunctionSet.cs \
+	Hyena/CryptoUtil.cs \
+	Hyena/DateTimeUtil.cs \
 	Hyena/IUndoAction.cs \
 	Hyena/Log.cs \
 	Hyena/StringUtil.cs \
 	Hyena/Timer.cs \
-	Hyena/UndoManager.cs \
-	Hyena/Utilities.cs
+	Hyena/UndoManager.cs
 
 include $(top_srcdir)/build/build.mk
 

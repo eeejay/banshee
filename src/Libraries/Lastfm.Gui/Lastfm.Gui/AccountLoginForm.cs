@@ -79,7 +79,7 @@ namespace Lastfm.Gui
             Attach (password_entry, 1, 2, 1, 2, AttachOptions.Fill | AttachOptions.Expand, 
                 AttachOptions.Shrink, 0, 0);
                 
-            username_entry.Text = account.Username;
+            username_entry.Text = account.UserName;
             password_entry.Text = account.Password;
 
             username_entry.Changed += OnEntryChanged;
@@ -126,7 +126,7 @@ namespace Lastfm.Gui
 
         private void UpdateLogin ()
         {
-            account.Username = username_entry.Text.Trim ();
+            account.UserName = username_entry.Text.Trim ();
             account.Password = password_entry.Text.Trim ();
             account.Save ();
         }

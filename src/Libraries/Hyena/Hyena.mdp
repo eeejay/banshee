@@ -54,7 +54,7 @@
     <File name="Hyena.Query/QueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Query/StringQueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena/Timer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena/Utilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena/DateTimeUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.SExpEngine/ArithmeticFunctionSet.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.SExpEngine/CastFunctionSet.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.SExpEngine/CompareFunctionSet.cs" subtype="Code" buildaction="Compile" />
@@ -79,6 +79,7 @@
     <File name="Hyena.Query/QueryOrder.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Sqlite/SqliteUtils.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena/Log.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena/CryptoUtil.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

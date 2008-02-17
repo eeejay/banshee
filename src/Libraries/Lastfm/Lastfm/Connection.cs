@@ -151,7 +151,7 @@ namespace Lastfm
             if (State == ConnectionState.Connecting || State == ConnectionState.Connected)
                 return;
 
-            if (account.Username == null || account.CryptedPassword == null) {
+            if (account.UserName == null || account.CryptedPassword == null) {
                 State = ConnectionState.NoAccount;
                 return;
             }
@@ -273,14 +273,14 @@ namespace Lastfm
                         "http://ws.audioscrobbler.com/radio/handshake.php?version={0}&platform={1}&username={2}&passwordmd5={3}&language={4}&session=324234",
                         "1.1.1",
                         "linux", // FIXME
-                        account.Username, account.CryptedPassword,
+                        account.UserName, account.CryptedPassword,
                         "en" // FIXME
                     ));
 
                     // Set us as connecting, assuming the connection attempt wasn't changed out from under us
                     if (ParseHandshake (new StreamReader (stream).ReadToEnd ()) && session != null) {
                         State = ConnectionState.Connected;
-                        Log.Debug (String.Format ("Logged into Last.fm as {0}", account.Username), null);
+                        Log.Debug (String.Format ("Logged into Last.fm as {0}", account.UserName), null);
                         return;
                     }
                 } catch (Exception e) {
@@ -481,8 +481,8 @@ namespace Lastfm
         private LameXmlRpcRequest LastFMXmlRpcRequest (string method)
         {
             string time = UnixTime ();
-            string auth_hash = Account.Md5Encode (account.CryptedPassword + time);
-            return new LameXmlRpcRequest (method).AddStringParams (account.Username, time, auth_hash);
+            string auth_hash = Hyena.CryptoUtil.Md5Encode (account.CryptedPassword + time);
+            return new LameXmlRpcRequest (method).AddStringParams (account.UserName, time, auth_hash);
         }
 
         protected class LameXmlRpcRequest

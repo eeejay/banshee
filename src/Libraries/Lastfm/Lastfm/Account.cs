@@ -30,7 +30,6 @@
 using System;
 using System.Collections;
 using System.Text;
-using System.Security.Cryptography;
 
 namespace Lastfm
 {
@@ -39,7 +38,7 @@ namespace Lastfm
         public event EventHandler Updated;
 
         private string username;
-        public string Username {
+        public string UserName {
             get { return username; }
             set { username = value; }
         }
@@ -51,8 +50,20 @@ namespace Lastfm
         }
 
         public string CryptedPassword {
-            get { return password == null ? null : Md5Encode (password); }
-            set { password = value; }
+            get {
+                // Okay, so this will explode if someone has a raw text password 
+                // that matches ^[a-f0-9]{32}$ ... likely? I hope not.
+            
+                if (password == null) {
+                    return null;
+                } else if (Hyena.CryptoUtil.IsMd5Encoded (password)) {
+                    return password;
+                }
+                
+                password = Hyena.CryptoUtil.Md5Encode (password);
+                return password;
+            }
+            set { password = String.IsNullOrEmpty (value) ? null : value; }
         }
 
         public void SignUp ()
@@ -70,23 +81,6 @@ namespace Lastfm
             //Browser.Open ("http://last.fm/");
         }
         
-        public static string Md5Encode (string text)
-        {
-            if (text == null || text == String.Empty)
-                return String.Empty;
-                
-            MD5 md5 = MD5.Create ();
-            byte[] hash = md5.ComputeHash (Encoding.ASCII.GetBytes (text));
-
-            StringBuilder shash = new StringBuilder ();
-            for (int i = 0; i < hash.Length; ++i) {
-                shash.Append (hash[i].ToString ("x2"));
-            }
-
-
-            return shash.ToString ();
-        }
-
         public virtual void Save ()
         {
             OnUpdated ();

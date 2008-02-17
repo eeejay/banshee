@@ -10,9 +10,10 @@ ASSEMBLY_CSFILES =  \
 	Banshee.Core/KernelTests.cs \
 	Banshee.Services/PlaylistFormatTests.cs \
 	Banshee.Services/Xspf/Xspf.cs \
-	Hyena/RangeCollectionTests.cs
+	Hyena/RangeCollectionTests.cs \
+	Hyena/CryptoUtilTests.cs
 
-CFS=Hyena/RangeCollectionTests.cs
+CFS=Hyena/RangeCollectionTests.cs Hyena/CryptoUtilTests.cs
 
 NUNIT_TESTER_NAME = ConsoleUi
 NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe
@@ -30,7 +31,7 @@ if ENABLE_TESTS
 all: $(ASSEMBLY)
 
 run-test: $(NUNIT_TESTER) $(ASSEMBLY)
-	MONO_PATH="$(RUN_PATH)" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
+	MONO_PATH="$(top_builddir)/bin" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
 endif
 
 CLEANFILES = $(ASSEMBLY) $(NUNIT_TESTER) TestResult.xml

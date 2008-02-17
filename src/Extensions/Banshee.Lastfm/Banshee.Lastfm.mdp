@@ -29,8 +29,9 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Project" localcopy="False" refto="Banshee.Base" />
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Widgets" />
+    <ProjectReference type="Project" localcopy="True" refto="Lastfm" />
+    <ProjectReference type="Project" localcopy="True" refto="Lastfm.Gui" />
   </References>
   <DeploymentInformation strategy="File">
     <excludeFiles />
