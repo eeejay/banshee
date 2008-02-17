@@ -1,3 +1,37 @@
+2008-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit adds support for most of the user-particular data feeds
+	Audioscrobbler offers into Lastfm.dll, our Banshee-independent Lastfm
+	library.
+
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmDataCollection.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopTracks.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopArtists.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopData.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/Profile.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/UserTopAlbums.cs: Removed files.
+
+	* src/Libraries/Lastfm/Test.cs:
+	* src/Libraries/Lastfm.Gui/Test.cs: Moved test to Lastfm.Gui.
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataCore.cs: New static class for doing
+	initialization and settings.
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntryCollection.cs: New class that
+	wraps a XmlNodeList.
+
+	* src/Libraries/Lastfm/Makefile.am: Updates, add make test rule.
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs: Move all DataEntry
+	subclasses here.  There are too many to have in separate classes (and the
+	header/code ratio is really high).
+
+	* src/Libraries/Lastfm/Lastfm.Data/UserData.cs: Wrap almost all of the
+	Last.fm data feeds that pertain to a particular user.
+
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmData.cs: Update for DataCore
+	changes, and instantiate and wrap a DataEntryCollection.
+
 2008-02-16  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
@@ -69,7 +103,7 @@
 
 	* configure.ac: Check for Mono.Data.Sqlite instead of Mono.Data.SqliteClient
 
-2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
+2008-02-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Lastfm/Lastfm.Data/UserTopArtists.cs:
 	* src/Libraries/Lastfm/Lastfm.Data/UserTopData.cs:
@@ -79,7 +113,7 @@
 	* src/Libraries/Lastfm/Lastfm.Data/UserTopTracks.cs: Remove unnecessary
 	usings.
 
-2008-02-14  Gabriel Burt  <gabriel.burt@gmail.com>
+2008-02-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Lastfm/Lastfm/Connection.cs: Fix warnings.
 

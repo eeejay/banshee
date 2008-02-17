@@ -1,5 +1,5 @@
 //
-// LastfmDataCollection.cs
+// DataEntryCollection.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -33,30 +33,23 @@ using System.Collections.Generic;
 
 namespace Lastfm.Data
 {
-    public class LastfmDataCollection<T> : LastfmData, IEnumerable<T> where T : DataEntry
+    public class DataEntryCollection<T> : IEnumerable<T> where T : DataEntry
     {
-        private XmlNode root;
+        private XmlNodeList nodes;
         private Dictionary<int, T> collection = new Dictionary<int, T> ();
         private int count;
 
-        public LastfmDataCollection (string dataUrlFragment) : base (dataUrlFragment)
+        public DataEntryCollection (XmlDocument doc)
         {
-            Initialize ();
+            XmlNode node = doc.ChildNodes [doc.ChildNodes.Count - 1];
+            nodes = (node.Name == "rss") ? node.SelectNodes ("channel/items") : node.ChildNodes;
+            count = nodes.Count;
         }
 
-        public LastfmDataCollection (string dataUrlFragment, CacheDuration cacheDuration) : base (dataUrlFragment, cacheDuration)
+        public DataEntryCollection (XmlNodeList nodes)
         {
-            Initialize ();
-        }
-
-        private void Initialize ()
-        {
-            if (doc.ChildNodes.Count == 2)
-                root = doc.ChildNodes [1];
-            else
-                root = doc.FirstChild;
-
-            count = root.ChildNodes.Count;
+            this.nodes = nodes;
+            count = nodes.Count;
         }
 
         public int Count {
@@ -67,7 +60,7 @@ namespace Lastfm.Data
             get {
                 if (!collection.ContainsKey (i)) {
                     T t = (T) Activator.CreateInstance (typeof(T));
-                    t.Root = root.ChildNodes.Item (i);
+                    t.Root = nodes.Item (i);
                     collection[i] = t;
                 }
                 return collection[i];

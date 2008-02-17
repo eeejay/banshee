@@ -31,6 +31,8 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Xml;
+using System.Collections;
+using System.Collections.Generic;
 using ICSharpCode.SharpZipLib.GZip;
 
 using Hyena;
@@ -44,42 +46,29 @@ namespace Lastfm.Data
         Infinite
     }
 
-    public enum TopType {
-        Overall,
-        ThreeMonth,
-        SixMonth,
-        TwelveMonth,
-    }
-
-    public abstract class LastfmData
+    public abstract class LastfmData<T> : IEnumerable<T> where T : DataEntry
     {
-        private const int CACHE_VERSION = 2;
-        private static bool first_instance = true;
-
-        public static string UserAgent = null; //Banshee.Web.Browser.UserAgent;
-        public static string CachePath = null; //Path.Combine (Banshee.Base.Paths.UserPluginDirectory, "recommendation");
-        public static TimeSpan NormalCacheTime = TimeSpan.FromHours (2);
-
+        protected DataEntryCollection<T> collection;
         protected XmlDocument doc;
         protected string data_url;
         protected string cache_file;
         protected CacheDuration cache_duration;
 
-        public LastfmData (string dataUrlFragment) : this (dataUrlFragment, CacheDuration.Normal)
+        public LastfmData (string dataUrlFragment) : this (dataUrlFragment, CacheDuration.Normal, null)
         {
         }
 
-        public LastfmData (string dataUrlFragment, CacheDuration cacheDuration)
+        public LastfmData (string dataUrlFragment, string xpath) : this (dataUrlFragment, CacheDuration.Normal, xpath)
         {
-            if (CachePath == null || UserAgent == null) {
-                throw new NotSupportedException ("LastfmData.CachePath and/or LastfmData.Useragent are null.  Applications must set this value.");
-            }
+        }
 
-            if (first_instance) {
-                first_instance = false;
-                CheckForCacheWipe();
-                SetupCache();
-            }
+        public LastfmData (string dataUrlFragment, CacheDuration cacheDuration) : this (dataUrlFragment, cacheDuration, null)
+        {
+        }
+
+        public LastfmData (string dataUrlFragment, CacheDuration cacheDuration, string xpath)
+        {
+            DataCore.Initialize ();
 
             this.data_url = HostInjectionHack (String.Format ("http://ws.audioscrobbler.com/1.0/{0}", dataUrlFragment));
             this.cache_file = GetCachedPathFromUrl (data_url);
@@ -93,22 +82,39 @@ namespace Lastfm.Data
             using (StreamReader reader = new StreamReader (cache_file)) {
                 doc.Load (reader);
             }
+
+            if (xpath == null) {
+                collection = new DataEntryCollection<T> (doc);
+            } else {
+                collection = new DataEntryCollection<T> (doc.SelectNodes (xpath));
+            }
         }
 
         public string DataUrl {
             get { return data_url; }
         }
 
-        protected static string TopTypeToParam (TopType type)
-        {
-            switch (type) {
-                case TopType.Overall:       return "overall";
-                case TopType.ThreeMonth:    return "3month";
-                case TopType.SixMonth:      return "6month";
-                case TopType.TwelveMonth:   return "12month";
-            }
-            return null;
+#region DataEntryCollection wrapper
+
+        public int Count {
+            get { return collection.Count; }
         }
+
+        public T this[int i] {
+            get { return collection [i]; }
+        }
+
+        public IEnumerator<T> GetEnumerator ()
+        {
+            return collection.GetEnumerator ();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator ()
+        {
+            return collection.GetEnumerator ();
+        }
+
+#endregion
 
 #region Private methods
 
@@ -118,14 +124,14 @@ namespace Lastfm.Data
             if (cache_duration != CacheDuration.None) {
                 if (File.Exists (cache_file)) {
                     DateTime last_updated_time = File.GetLastWriteTime (cache_file);
-                    if (cache_duration == CacheDuration.Infinite || DateTime.Now - last_updated_time < NormalCacheTime) {
+                    if (cache_duration == CacheDuration.Infinite || DateTime.Now - last_updated_time < DataCore.NormalCacheTime) {
                         return;
                     }
                 }
             }
             
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create (data_url);
-            request.UserAgent = UserAgent;
+            request.UserAgent = DataCore.UserAgent;
             request.KeepAlive = false;
             
             using (HttpWebResponse response = (HttpWebResponse) request.GetResponse ()) {
@@ -160,7 +166,7 @@ namespace Lastfm.Data
         private static string GetCachedPathFromUrl (string url)
         {
             string hash = url.GetHashCode ().ToString ("X").ToLower ();
-            return Path.Combine (Path.Combine (CachePath, hash.Substring (0, 2)), hash);
+            return Path.Combine (Path.Combine (DataCore.CachePath, hash.Substring (0, 2)), hash);
         }
 
         // FIXME: This is to (try to) work around a bug in last.fm's XML
@@ -177,50 +183,6 @@ namespace Lastfm.Data
             }
 
             return url;
-        }
-
-        private void SetupCache()
-        {
-            bool clean = false;
-            
-            if(!Directory.Exists(CachePath)) {
-                clean = true;
-                Directory.CreateDirectory(CachePath);
-            }
-            
-            // Create our cache subdirectories.
-            for(int i = 0; i < 256; ++i) {
-                string subdir = i.ToString("x");
-                if(i < 16) {
-                    subdir = "0" + subdir;
-                }
-                
-                subdir = System.IO.Path.Combine(CachePath, subdir);
-                
-                if(!Directory.Exists(subdir)) {
-                    Directory.CreateDirectory(subdir);
-                }
-            }
-            
-            //RecommendationPlugin.CacheVersion.Set (CACHE_VERSION);
-            
-            if(clean) {
-                Log.Debug("Recommendation Plugin", "Created a new cache layout");
-            }
-        }
-
-        private void CheckForCacheWipe()
-        {
-            //bool wipe = false;
-            
-            if(!Directory.Exists(CachePath)) {
-                return;
-            }
-            
-            /*if (RecommendationPlugin.CacheVersion.Get() < CACHE_VERSION) {
-                Directory.Delete(CachePath, true);
-                Log.Debug("Recommendation Plugin", "Destroyed outdated cache");
-            }*/
         }
 
 #endregion
