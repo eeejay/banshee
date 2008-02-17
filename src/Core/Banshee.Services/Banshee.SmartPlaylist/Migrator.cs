@@ -32,7 +32,9 @@ using System.Data;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
+using Mono.Unix;
 
+using Hyena;
 using Hyena.Data;
 using Hyena.Query;
 using Hyena.Data.Sqlite;
@@ -48,25 +50,37 @@ namespace Banshee.SmartPlaylist
         private string [] criteria = new string [] { "songs", "minutes", "hours", "MB" };
         private Dictionary<string, QueryOrder> order_hash = new Dictionary<string, QueryOrder> ();
 
-        public static void MigrateAll ()
+        public static bool MigrateAll ()
         {
             int version = ServiceManager.DbConnection.Query<int> ("SELECT Value FROM CoreConfiguration WHERE Key = 'SmartPlaylistVersion'");
             if (version == 1)
-                return;
+                return true;
 
-            Migrator m = new Migrator ();
-            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
-                "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
-                while (reader.Read ()) {
-                    m.Migrate (
-                        Convert.ToInt32 (reader[0]), reader[1] as string,
-                        reader[2] as string, reader[3] as string,
-                        reader[4] as string, reader[5] as string
-                    );
+            try {
+                ServiceManager.DbConnection.Execute ("BEGIN");
+                Migrator m = new Migrator ();
+                using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
+                    "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
+                    while (reader.Read ()) {
+                        m.Migrate (
+                            Convert.ToInt32 (reader[0]), reader[1] as string,
+                            reader[2] as string, reader[3] as string,
+                            reader[4] as string, reader[5] as string
+                        );
+                    }
                 }
-            }
 
-            ServiceManager.DbConnection.Execute ("INSERT INTO CoreConfiguration (Key, Value) Values ('SmartPlaylistVersion', 1)");
+                ServiceManager.DbConnection.Execute ("INSERT INTO CoreConfiguration (Key, Value) Values ('SmartPlaylistVersion', 1)");
+                ServiceManager.DbConnection.Execute ("COMMIT");
+                return true;
+            } catch (Exception e) {
+                ServiceManager.DbConnection.Execute ("ROLLBACK");
+                Log.Error (
+                    Catalog.GetString ("Unable to Migrate Smart Playlists"),
+                    String.Format (Catalog.GetString ("Please file a bug with this error: {0}"), e.ToString ())
+                );
+                return false;
+            }
         }
 
         public Migrator ()
@@ -88,7 +102,6 @@ namespace Banshee.SmartPlaylist
 
         private void Migrate (int dbid, string Name, string Condition, string OrderBy, string LimitNumber, string LimitCriterion)
         {
-            Console.WriteLine ("migrating {0}, cond = {1}, order = {2}", Name, Condition, OrderBy);
             if (OrderBy != null && OrderBy != String.Empty) {
                 QueryOrder order = order_hash [OrderBy];
                 OrderBy = order.Name;
@@ -107,11 +120,15 @@ namespace Banshee.SmartPlaylist
                     WHERE SmartPlaylistID = ?",
                 Name, ConditionXml, OrderBy, LimitNumber, LimitCriterion, dbid
             ));
-            Console.WriteLine ("migrated {0}, cond = {1}, order = {2}", Name, ConditionXml, OrderBy);
+
+            Log.Debug (String.Format ("Migrated Smart Playlist {0}", Name));
         }
 
         private string ParseCondition (string value)
         {
+            if (String.IsNullOrEmpty (value))
+                return null;
+
             // Check for ANDs or ORs and split into conditions as needed
             string [] conditions;
             bool ands = true;

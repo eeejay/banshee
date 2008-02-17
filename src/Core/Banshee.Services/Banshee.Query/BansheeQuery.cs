@@ -57,11 +57,11 @@ namespace Banshee.Query
             CreateQueryOrder ("PlayCount",  desc, Catalog.GetString ("Most Often Played")),
             CreateQueryOrder ("PlayCount",  asc,  Catalog.GetString ("Least Often Played")),
             null,
-            CreateQueryOrder ("LastPlayed", desc, Catalog.GetString ("Most Recently Played")),
-            CreateQueryOrder ("LastPlayed", asc,  Catalog.GetString ("Least Recently Played")),
+            CreateQueryOrder ("LastPlayedStamp", desc, Catalog.GetString ("Most Recently Played")),
+            CreateQueryOrder ("LastPlayedStamp", asc,  Catalog.GetString ("Least Recently Played")),
             null,
-            CreateQueryOrder ("DateAdded",  desc, Catalog.GetString ("Most Recently Added")),
-            CreateQueryOrder ("DateAdded",  asc,  Catalog.GetString ("Least Recently Added"))
+            CreateQueryOrder ("DateAddedStamp",  desc, Catalog.GetString ("Most Recently Added")),
+            CreateQueryOrder ("DateAddedStamp",  asc,  Catalog.GetString ("Least Recently Added"))
         };
 
         public static QueryLimit [] Limits = new QueryLimit [] {

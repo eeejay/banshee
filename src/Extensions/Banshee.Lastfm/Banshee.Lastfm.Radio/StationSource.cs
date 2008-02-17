@@ -370,7 +370,7 @@ namespace Banshee.Lastfm.Radio
                 CurrentTrack = ServiceManager.PlayerEngine.CurrentTrack;
 
                 lock (track_model) {
-                    // Remove up to the 5 most-recent tracks
+                    // Remove all but 5 played or skipped tracks
                     if (current_track > 5) {
                         for (int i = 0; i < (current_track - 5); i++) {
                             track_model.Remove (track_model[0]);

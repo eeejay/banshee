@@ -1,3 +1,21 @@
+2008-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Change
+	LastPlayed and DateAdded order names.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs: Wrap the
+	migration in a transaction, print error message if it fails.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	Only initialize if the migration was successful.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs: BansheeQuery's
+	Orders array has nulls in it to indicate where separators would be nice -
+	actually implement those in the ComboBox.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	Improve comment.
+
 2008-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:

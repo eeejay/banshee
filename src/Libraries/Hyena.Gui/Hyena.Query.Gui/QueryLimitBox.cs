@@ -67,8 +67,11 @@ namespace Hyena.Query.Gui
             }
                 
             order_combo = ComboBox.NewText ();
+            order_combo.RowSeparatorFunc = IsRowSeparator;
             foreach (QueryOrder order in orders) {
-                if (order != null) {
+                if (order == null) {
+                    order_combo.AppendText (String.Empty);
+                } else {
                     order_combo.AppendText (order.Label);
                 }
             }
@@ -86,6 +89,11 @@ namespace Hyena.Query.Gui
             OnEnabledToggled (null, null);
 
             ShowAll ();
+        }
+
+        private bool IsRowSeparator (TreeModel model, TreeIter iter)
+        {
+            return model.GetValue (iter, 0) == String.Empty;
         }
 
         public QueryLimit Limit {
@@ -115,8 +123,9 @@ namespace Hyena.Query.Gui
         public QueryOrder Order {
             get { return Enabled ? orders [order_combo.Active] : null; }
             set {
-                if (value != null)
+                if (value != null) {
                     order_combo.Active = Array.IndexOf (orders, value);
+                }
             }
         }
 

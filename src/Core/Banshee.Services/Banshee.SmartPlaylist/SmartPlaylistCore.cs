@@ -47,16 +47,15 @@ namespace Banshee.SmartPlaylist
 
         public SmartPlaylistCore()
         {
-            Migrator.MigrateAll ();
+            if (Migrator.MigrateAll ()) {
+                // Listen for added/removed sources and added/changed songs
+                ServiceManager.SourceManager.SourceAdded += HandleSourceAdded;
+                ServiceManager.SourceManager.SourceRemoved += HandleSourceRemoved;
 
-            // Listen for added/removed sources and added/changed songs
-            ServiceManager.SourceManager.SourceAdded += HandleSourceAdded;
-            ServiceManager.SourceManager.SourceRemoved += HandleSourceRemoved;
-
-            //ServiceManager.SourceManager.DefaultSource.Reloaded += HandleLibraryReloaded;
-            //Globals.Library.TrackAdded += HandleTrackAdded;
-            //Globals.Library.TrackRemoved += HandleTrackRemoved;
-
+                //ServiceManager.SourceManager.DefaultSource.Reloaded += HandleLibraryReloaded;
+                //Globals.Library.TrackAdded += HandleTrackAdded;
+                //Globals.Library.TrackRemoved += HandleTrackRemoved;
+            }
         }
 
         private void HandleLibraryReloaded (object sender, EventArgs args)
