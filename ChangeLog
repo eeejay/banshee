@@ -1,5 +1,14 @@
 2008-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Lastfm/Lastfm/Connection.cs:
+	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Rename to
+	RadioConnection.cs
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs: Use
+	RadioConnection.
+
+2008-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/*: Grr, overwrote Aaron's last fixes with
 	my svn mv, since I'd initiated it locally before svn up'ing his changes.
 

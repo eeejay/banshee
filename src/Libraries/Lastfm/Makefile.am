@@ -5,7 +5,7 @@ LINK = $(REF_LASTFM)
 SOURCES = \
 	Lastfm/Account.cs \
 	Lastfm/Browser.cs \
-	Lastfm/Connection.cs \
+	Lastfm/RadioConnection.cs \
 	Lastfm.Data/DataCore.cs \
 	Lastfm.Data/DataEntry.cs \
 	Lastfm.Data/DataEntryCollection.cs \

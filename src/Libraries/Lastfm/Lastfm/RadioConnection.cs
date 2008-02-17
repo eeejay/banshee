@@ -1,5 +1,5 @@
 //
-// Connection.cs
+// RadioConnection.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -76,9 +76,9 @@ namespace Lastfm
         Unknown // not an official code, just the fall back
     }
 
-	public class Connection 
+	public class RadioConnection 
 	{
-		public delegate void StateChangedHandler (Connection connection, ConnectionStateChangedArgs args);
+		public delegate void StateChangedHandler (RadioConnection connection, ConnectionStateChangedArgs args);
 		public event StateChangedHandler StateChanged;
 
 		private ConnectionState state;
@@ -130,7 +130,7 @@ namespace Lastfm
 			get { return station; }
 		}
 
-		public Connection (Account account, string user_agent)
+		public RadioConnection (Account account, string user_agent)
 		{
             this.account = account;
             this.user_agent = user_agent;

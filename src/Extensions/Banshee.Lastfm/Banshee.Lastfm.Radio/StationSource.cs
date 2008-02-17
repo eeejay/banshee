@@ -243,10 +243,10 @@ namespace Banshee.Lastfm.Radio
                 Log.Debug (String.Format ("Successfully tuned Last.fm to {0}", station), null);
                 return true;
             } else {
-                Log.Debug (String.Format ("Failed to tune Last.fm to {0}", Name), Connection.ErrorMessageFor (error));
+                Log.Debug (String.Format ("Failed to tune Last.fm to {0}", Name), RadioConnection.ErrorMessageFor (error));
                 SetStatus (String.Format (
-                    // Translators: {0} is an error message sentence from Connection.cs.
-                    Catalog.GetString ("Failed to tune in station. {0}"), Connection.ErrorMessageFor (error)), true
+                    // Translators: {0} is an error message sentence from RadioConnection.cs.
+                    Catalog.GetString ("Failed to tune in station. {0}"), RadioConnection.ErrorMessageFor (error)), true
                 );
                 return false;
             }
@@ -400,7 +400,7 @@ namespace Banshee.Lastfm.Radio
                 }
             } else {
                 track_model.Clear ();
-                SetStatus (Connection.MessageFor (state), state != ConnectionState.Connecting);
+                SetStatus (RadioConnection.MessageFor (state), state != ConnectionState.Connecting);
                 OnUpdated ();
             }
         }
