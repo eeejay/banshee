@@ -232,7 +232,7 @@ namespace Banshee.Lastfm.Radio
         {
             AccountLoginDialog dialog = new AccountLoginDialog (lastfm.Account, true);
             dialog.SaveOnEdit = true;
-            if (lastfm.Account.Username == null) {
+            if (lastfm.Account.UserName == null) {
                 dialog.AddSignUpButton ();
             }
             dialog.Run ();
@@ -255,7 +255,7 @@ namespace Banshee.Lastfm.Radio
                 updating = true;
             }
 
-            bool have_user = (lastfm.Account.Username != null);
+            bool have_user = (lastfm.Account.UserName != null);
             this["LastfmAddAction"].Sensitive = have_user;
             this["LastfmSortAction"].Sensitive = have_user;
             this["LastfmConnectAction"].Visible = lastfm.Connection.State == ConnectionState.Disconnected;

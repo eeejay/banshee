@@ -1,5 +1,10 @@
 2008-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/*: Grr, overwrote Aaron's last fixes with
+	my svn mv, since I'd initiated it locally before svn up'ing his changes.
+
+2008-02-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm: Move Banshee.Lastfm to
 	Banshee.Lastfm.Radio in preparation for merging the Audioscrobbler and
 	Recommendations plugins.

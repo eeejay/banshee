@@ -163,7 +163,7 @@ namespace Banshee.Lastfm.Radio
             HyenaSqliteCommand command = new HyenaSqliteCommand (
                 @"INSERT INTO LastfmStations (Creator, Name, Type, Arg, PlayCount)
                     VALUES (?, ?, ?, ?, ?)",
-                lastfm.Account.Username, Name, 
+                lastfm.Account.UserName, Name, 
                 Type.ToString (), Arg, PlayCount
             );
 

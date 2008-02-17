@@ -50,8 +50,8 @@ namespace Banshee.Lastfm.Radio
     {
         private const string lastfm = "Last.fm";
 
-        private Connection connection;
-        public Connection Connection {
+        private RadioConnection connection;
+        public RadioConnection Connection {
             get { return connection; }
         }
 
@@ -68,9 +68,10 @@ namespace Banshee.Lastfm.Radio
 
             // We don't automatically connect to Last.fm, but load the last Last.fm
             // username we used so we can load the user's stations.
-            account.Username = LastUserSchema.Get ();
+            account.UserName = LastUserSchema.Get ();
+            account.CryptedPassword = LastPassSchema.Get ();
 
-            connection = new Connection (account, Banshee.Web.Browser.UserAgent);
+            connection = new RadioConnection (account, Banshee.Web.Browser.UserAgent);
             connection.UpdateNetworkState (NetworkDetect.Instance.Connected);
             NetworkDetect.Instance.StateChanged += delegate (object o, NetworkStateChangedArgs args) {
                 connection.UpdateNetworkState (args.Connected);
@@ -91,6 +92,11 @@ namespace Banshee.Lastfm.Radio
         public void Initialize ()
         {
             Connection.StateChanged += HandleConnectionStateChanged;
+            
+            if (Account.UserName != null && Account.CryptedPassword != null) {
+                Connection.Connect ();
+            }
+            
             UpdateUI ();
         }
 
@@ -196,14 +202,14 @@ namespace Banshee.Lastfm.Radio
         }
 
         private string last_username;
-        public void SetUsername (string username)
+        public void SetUserName (string username)
         {
             if (username != last_username) {
                 last_username = username;
                 LastfmSource.LastUserSchema.Set (last_username);
                 ClearChildSources ();
                 sorting = true;
-                foreach (StationSource child in StationSource.LoadAll (this, Account.Username)) {
+                foreach (StationSource child in StationSource.LoadAll (this, Account.UserName)) {
                     if (!child.Type.SubscribersOnly || Connection.Subscriber) {
                         AddChildSource (child);
                         //SourceManager.AddSource (child);
@@ -256,10 +262,15 @@ namespace Banshee.Lastfm.Radio
 
         private void UpdateUI ()
         {
-            bool have_user = (Account.Username != null);
-
+            bool have_user = Account.UserName != null;
+            bool have_pass = Account.CryptedPassword != null;
+            
+            if (have_pass) {
+                LastPassSchema.Set (Account.CryptedPassword);
+            }
+            
             if (have_user) {
-                SetUsername (Account.Username);
+                SetUserName (Account.UserName);
             } else {
                 ClearChildSources ();
             }
@@ -278,6 +289,10 @@ namespace Banshee.Lastfm.Radio
 
         public static readonly SchemaEntry<string> LastUserSchema = new SchemaEntry<string> (
             "plugins.lastfm", "username", "", "Last.fm user", "Last.fm username"
+        );
+
+        public static readonly SchemaEntry<string> LastPassSchema = new SchemaEntry<string> (
+            "plugins.lastfm", "password_hash", "", "Last.fm password", "Last.fm password (hashed)"
         );
 
         public static readonly SchemaEntry<bool> ExpandedSchema = new SchemaEntry<bool> (
