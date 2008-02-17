@@ -6,7 +6,7 @@
   </Dependencies>
 
   <Extension path="/Banshee/SourceManager/Source">
-    <Source class="Banshee.Lastfm.LastfmSource"/>
+    <Source class="Banshee.Lastfm.Radio.LastfmSource"/>
   </Extension>
   
 </Addin>

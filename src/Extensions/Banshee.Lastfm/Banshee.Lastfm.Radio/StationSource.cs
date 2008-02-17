@@ -48,7 +48,7 @@ using Banshee.MediaEngine;
 using Banshee.Collection;
 using Banshee.ServiceStack;
  
-namespace Banshee.Lastfm
+namespace Banshee.Lastfm.Radio
 {
     public class StationSource : Source, ITrackModelSource, IUnmapableSource, IDisposable
     {
@@ -163,7 +163,7 @@ namespace Banshee.Lastfm
             HyenaSqliteCommand command = new HyenaSqliteCommand (
                 @"INSERT INTO LastfmStations (Creator, Name, Type, Arg, PlayCount)
                     VALUES (?, ?, ?, ?, ?)",
-                lastfm.Account.UserName, Name, 
+                lastfm.Account.Username, Name, 
                 Type.ToString (), Arg, PlayCount
             );
 

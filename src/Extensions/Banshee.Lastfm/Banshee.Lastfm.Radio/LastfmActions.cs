@@ -45,7 +45,7 @@ using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Gui;
 
-namespace Banshee.Lastfm
+namespace Banshee.Lastfm.Radio
 {
     public class LastfmActions : BansheeActionGroup
     {
@@ -232,7 +232,7 @@ namespace Banshee.Lastfm
         {
             AccountLoginDialog dialog = new AccountLoginDialog (lastfm.Account, true);
             dialog.SaveOnEdit = true;
-            if (lastfm.Account.UserName == null) {
+            if (lastfm.Account.Username == null) {
                 dialog.AddSignUpButton ();
             }
             dialog.Run ();
@@ -255,7 +255,7 @@ namespace Banshee.Lastfm
                 updating = true;
             }
 
-            bool have_user = (lastfm.Account.UserName != null);
+            bool have_user = (lastfm.Account.Username != null);
             this["LastfmAddAction"].Sensitive = have_user;
             this["LastfmSortAction"].Sensitive = have_user;
             this["LastfmConnectAction"].Visible = lastfm.Connection.State == ConnectionState.Disconnected;

@@ -3,14 +3,14 @@ TARGET = library
 LINK = $(REF_EXTENSION_LASTFM)
 
 SOURCES = \
-	Banshee.Lastfm/Connection.cs \
-	Banshee.Lastfm/LastfmActions.cs \
-	Banshee.Lastfm/LastfmSource.cs \
-	Banshee.Lastfm/LastfmTrackInfo.cs \
-	Banshee.Lastfm/LastfmTrackListModel.cs \
-	Banshee.Lastfm/StationEditor.cs \
-	Banshee.Lastfm/StationSource.cs \
-	Banshee.Lastfm/StationType.cs
+	Banshee.Lastfm.Radio/Connection.cs \
+	Banshee.Lastfm.Radio/LastfmActions.cs \
+	Banshee.Lastfm.Radio/LastfmSource.cs \
+	Banshee.Lastfm.Radio/LastfmTrackInfo.cs \
+	Banshee.Lastfm.Radio/LastfmTrackListModel.cs \
+	Banshee.Lastfm.Radio/StationEditor.cs \
+	Banshee.Lastfm.Radio/StationSource.cs \
+	Banshee.Lastfm.Radio/StationType.cs
 
 RESOURCES =  \
 	Resources/Banshee.Lastfm.addin.xml \

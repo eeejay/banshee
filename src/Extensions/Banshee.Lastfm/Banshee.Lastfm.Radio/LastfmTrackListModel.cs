@@ -32,7 +32,7 @@ using System.Collections.Generic;
 
 using Banshee.Collection;
  
-namespace Banshee.Lastfm
+namespace Banshee.Lastfm.Radio
 {
     public class LastfmTrackListModel : TrackListModel, IEnumerable<TrackInfo>
     {

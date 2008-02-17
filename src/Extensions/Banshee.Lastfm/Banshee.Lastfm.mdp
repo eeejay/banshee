@@ -8,12 +8,12 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="Banshee.Lastfm/LastfmActions.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Lastfm/LastfmSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Lastfm/LastfmTrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Lastfm/StationEditor.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Lastfm/StationSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Lastfm/StationType.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Lastfm.Radio/LastfmActions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Lastfm.Radio/LastfmSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Lastfm.Radio/LastfmTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Lastfm.Radio/StationEditor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Lastfm.Radio/StationSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Lastfm.Radio/StationType.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/Actions.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/lastfm.glade" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/audioscrobbler.png" subtype="Code" buildaction="EmbedAsResource" />
