@@ -233,12 +233,16 @@ namespace Hyena.Data.Gui
             GrabFocus ();
             
             int row_index = GetRowAtY ((int)press.Y);
+
+            if (row_index >= Model.Count) {
+                return true;
+            }
             
             if (press.Button == 1 && press.Type != Gdk.EventType.TwoButtonPress && 
                 (press.State & Gdk.ModifierType.ControlMask) == 0 && Selection.Contains (row_index)) {
                 return true;
             }
-            
+
             object item = model[row_index];
             if (item == null) {
                 return true;
@@ -320,6 +324,11 @@ namespace Hyena.Data.Gui
                 GrabFocus ();
                 
                 int row_index = GetRowAtY ((int)evnt.Y);
+
+                if (row_index >= Model.Count) {
+                    return true;
+                }
+
                 object item = model[row_index];
                 if (item == null) {
                     return true;
@@ -412,7 +421,7 @@ namespace Hyena.Data.Gui
             }
         }
         
-        private int GetRowAtY (int y)
+        protected int GetRowAtY (int y)
         {
             int page_offset = (int)vadjustment.Value % RowHeight;
             int first_row = (int)vadjustment.Value / RowHeight;
@@ -421,7 +430,7 @@ namespace Hyena.Data.Gui
             return first_row + row_offset;
         }
 
-        private double GetYAtRow (int row)
+        protected double GetYAtRow (int row)
         {
             double y = (double) RowHeight * row;
             return y;

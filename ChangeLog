@@ -1,5 +1,10 @@
 2008-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Avoid hitting the model/database when clicking where there is no row.
+
+2008-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
 	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
