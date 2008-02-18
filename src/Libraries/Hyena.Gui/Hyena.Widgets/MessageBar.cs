@@ -29,6 +29,9 @@
 using System;
 using Gtk;
 
+using Hyena.Gui;
+using Hyena.Data.Gui;
+
 namespace Hyena.Widgets
 {
     public class MessageBar : Alignment
@@ -38,6 +41,8 @@ namespace Hyena.Widgets
         private Label label;
         private Button button;
         private Button close_button;
+        
+        private ListViewGraphics graphics;
         
         public event EventHandler ButtonClicked {
             add { button.Clicked += value; }
@@ -87,20 +92,36 @@ namespace Hyena.Widgets
             Add (shell_box);
             
             EnsureStyle ();
+            
+            BorderWidth = 3;
         }
-
+        
+        protected override void OnRealized ()
+        {
+            base.OnRealized ();
+            
+            graphics = new ListViewGraphics (this);
+            graphics.RefreshColors ();
+        }
+        
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
-            GdkWindow.DrawRectangle (Style.BackgroundGC (StateType.Normal), true, Allocation);
+            if (!IsDrawable) {
+                return false;
+            }
+ 
+            Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
                 
-            Gtk.Style.PaintFlatBox (Style, GdkWindow, StateType.Normal, ShadowType.Out,
-                Gdk.Rectangle.Zero, this, "tooltip", Allocation.X, Allocation.Y, 
-                Allocation.Width, Allocation.Height);
-            
-            base.OnExposeEvent (evnt);
-            return true;
+            try {
+                Gdk.Color color = Style.Background (StateType.Normal);
+                graphics.DrawFrame (cr, Allocation, CairoExtensions.GdkColorToCairoColor (color));
+                return base.OnExposeEvent(evnt);
+            } finally {
+                ((IDisposable)cr.Target).Dispose ();
+                ((IDisposable)cr).Dispose ();
+            }
         }
-      
+        
         private bool changing_style = false;
         protected override void OnStyleSet (Gtk.Style previousStyle)
         {

@@ -205,11 +205,16 @@ namespace Hyena.Data.Gui
         
         public void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
         {
+            DrawFrame (cr, alloc,  baseColor 
+                ? GetWidgetColor (GtkColorClass.Base, StateType.Normal)
+                : GetWidgetColor (GtkColorClass.Background, StateType.Normal));
+        }
+        
+        public void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
+        {
             CairoCorners corners = CairoCorners.All;
         
-            cr.Color = baseColor 
-                ? GetWidgetColor (GtkColorClass.Base, StateType.Normal)
-                : GetWidgetColor (GtkColorClass.Background, StateType.Normal);
+            cr.Color = color;
             CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, BorderRadius, corners);
             cr.Fill ();
             

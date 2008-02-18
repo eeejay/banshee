@@ -48,6 +48,8 @@ namespace Banshee.Gui.Widgets
             CloseClicked += OnCloseClicked;
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             ConnectSource (ServiceManager.SourceManager.ActiveSource);
+            
+            LeftPadding = 15;
         }
         
         private void ConnectSource (Source source)

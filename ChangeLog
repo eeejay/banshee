@@ -1,5 +1,16 @@
 2008-02-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:
+	Set some default spacing
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Add a version
+	of DrawFrame that takes a color
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MessageBar.cs: Draw our nice 
+	rounded frame and set a good default padding
+
+2008-02-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Nereid/Nereid/ViewContainer.cs: Pack a ConnectedMessageBar
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
