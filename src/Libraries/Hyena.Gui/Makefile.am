@@ -40,6 +40,8 @@ SOURCES =  \
 	Hyena.Query.Gui/QueryTermsBox.cs \
 	Hyena.Query.Gui/QueryValueEntry.cs \
 	Hyena.Query.Gui/StringQueryValueEntry.cs \
+	Hyena.Widgets/AnimatedImage.cs \
+	Hyena.Widgets/MessageBar.cs \
 	Hyena.Widgets/RoundedFrame.cs \
 	Hyena.Widgets/ScrolledWindow.cs
 

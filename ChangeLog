@@ -1,3 +1,41 @@
+2008-02-18  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Pack a ConnectedMessageBar
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceIconResolver.cs:
+	Pulled the icon resolver out of SourceRowRenderer since sources may have
+	multiple icons and it's useful outside of the renderer
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:
+	Works against a number of standardized Message.* properties that can be
+	set on a source's PropertyStore; this allows sources to communicate status
+	messages easily to the user
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	Use the new Message.* properties to communicate status messages to the user
+
+	* src/Libraries/Hyena/Hyena.Data/PropertyStore.cs: Added RemoveStartingWith
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Actor.cs: Added a CanExpire
+	property; reset the percentage to 0 when it reaches 1 and the actor is
+	not allowed to expire
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedImage.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MessageBar.cs: Ported/moved from
+	Banshee.Widgets; AnimatedImage works better and uses Hyena.Gui.Theatrics
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Send the
+	expose events to children
+	
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Updated to reflect the property name change from IconName to Icon.Name
+
 2008-02-18  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:

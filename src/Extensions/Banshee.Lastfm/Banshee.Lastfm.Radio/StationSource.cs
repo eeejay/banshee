@@ -52,15 +52,10 @@ namespace Banshee.Lastfm.Radio
 {
     public class StationSource : Source, ITrackModelSource, IUnmapableSource, IDisposable
     {
-        //private static readonly Gdk.Pixbuf refresh_pixbuf = IconThemeUtils.LoadIcon (22, Stock.Refresh);
-        //private static readonly Gdk.Pixbuf error_pixbuf = IconThemeUtils.LoadIcon (22, Stock.DialogError);
-
         private static string generic_name = Catalog.GetString ("Last.fm Station");
         
         private LastfmTrackListModel track_model;
         
-        //private HighlightMessageArea status_bar;
-
         private LastfmSource lastfm;
         public LastfmSource LastfmSource {
             get { return lastfm; }
@@ -79,7 +74,7 @@ namespace Banshee.Lastfm.Radio
                 type = value;
 
                 if (type.IconName != null)
-                    Properties.SetString ("IconName", type.IconName);
+                    Properties.SetString ("Icon.Name", type.IconName);
             }
         }
 
@@ -134,11 +129,6 @@ namespace Banshee.Lastfm.Radio
             Properties.SetString ("SourcePropertiesActionLabel", Catalog.GetString ("Edit Last.fm Station"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Last.fm Station"));
 
-            //box = new VBox ();
-            //status_bar = new HighlightMessageArea ();
-            //status_bar.BorderWidth = 5;
-            //status_bar.LeftPadding = 15;
-            //status_bar.Hide ();
             UpdateUI (lastfm.Connection.State);
         }
 
@@ -191,14 +181,8 @@ namespace Banshee.Lastfm.Radio
             //shuffle = (action_service.GlobalActions ["ShuffleAction"] as ToggleAction).Active;
             //(action_service.GlobalActions ["ShuffleAction"] as ToggleAction).Active = false;
             //Globals.ActionManager["ShuffleAction"].Sensitive = false;
- 
-            /*if (show_status)
-                status_bar.Show ();
-            else
-                status_bar.Hide ();*/
 
             //action_service.GlobalActions ["PreviousAction"].Sensitive = false;
-            //InterfaceElements.MainContainer.PackEnd (status_bar, false, false, 0);
 
             // We lazy load the Last.fm connection, so if we're not already connected, do it
             if (lastfm.Connection.State == ConnectionState.Connected)
@@ -226,7 +210,6 @@ namespace Banshee.Lastfm.Radio
             //Globals.ActionManager["ShuffleAction"].Sensitive = true;
 
             //Globals.ActionManager["PreviousAction"].Sensitive = true;
-            //InterfaceElements.MainContainer.Remove (status_bar);
         }
 
         // Last.fm requires you to 'tune' to a station before requesting a track list/playing it
@@ -252,25 +235,30 @@ namespace Banshee.Lastfm.Radio
             }
         }
 
-        bool show_status = false;
         private void SetStatus (string message, bool error)
         {
-            /*ThreadAssist.ProxyToMain (delegate {
-                show_status = true;
+            ThreadAssist.ProxyToMain (delegate {
                 string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
-                status_bar.Message = String.Format ("<big>{0}</big>", String.Format (GLib.Markup.EscapeText (message), status_name));
-                status_bar.Pixbuf = error ? error_pixbuf : refresh_pixbuf;
-                status_bar.ShowCloseButton = true;
-                status_bar.Show ();
-            });*/
+                Properties.SetString ("Message.Text", String.Format ("{0}", 
+                    String.Format (GLib.Markup.EscapeText (message), status_name)));
+                
+                if (error) {
+                    Properties.SetString ("Message.Icon.Name", "dialog-error");
+                    Properties.SetBoolean ("Message.IsSpinning", false);
+                } else {
+                    Properties.RemoveStartingWith ("Message.Icon.");
+                    Properties.SetBoolean ("Message.IsSpinning", true);
+                }
+                
+                Properties.SetBoolean ("Message.CanClose", true);
+            });
         }
 
         private void HideStatus ()
         {
-            /*ThreadAssist.ProxyToMain (delegate {
-                show_status = false;
-                status_bar.Hide ();
-            });*/
+            ThreadAssist.ProxyToMain (delegate {
+                Properties.RemoveStartingWith ("Message.");
+            });
         }
 
         /*public override void ShowPropertiesDialog ()

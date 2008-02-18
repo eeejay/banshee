@@ -105,7 +105,7 @@ namespace Banshee.Playlist
         public PlaylistSource (string name, int? dbid, int sortColumn, int sortType) 
             : base (generic_name, name, dbid, sortColumn, sortType)
         {
-            Properties.SetString ("IconName", "source-playlist");
+            Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
             DbId = dbid;

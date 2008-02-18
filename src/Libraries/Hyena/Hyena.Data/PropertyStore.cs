@@ -103,6 +103,27 @@ namespace Hyena.Data
             }
         }
         
+        public void RemoveStartingWith (string prefix)
+        {
+            lock(this) {
+                Queue<string> to_remove = null;
+                
+                foreach (KeyValuePair<string, object> item in object_store) {
+                    if (item.Key.StartsWith (prefix)) {
+                        if (to_remove == null) {
+                            to_remove = new Queue<string> ();
+                        }
+                        
+                        to_remove.Enqueue (item.Key);
+                    }
+                }
+                
+                while (to_remove != null && to_remove.Count > 0) {
+                    Remove (to_remove.Dequeue ());
+                }
+            }
+        }
+        
         public void Set<T>(string name, T value)
         {
             lock(this) {

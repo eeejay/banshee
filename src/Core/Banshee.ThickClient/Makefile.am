@@ -41,6 +41,7 @@ SOURCES =  \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
 	Banshee.Gui.Widgets/ArtworkPopup.cs \
+	Banshee.Gui.Widgets/ConnectedMessageBar.cs \
 	Banshee.Gui.Widgets/ConnectedSeekSlider.cs \
 	Banshee.Gui.Widgets/ConnectedVolumeButton.cs \
 	Banshee.Gui.Widgets/PlaylistMenuItem.cs \
@@ -69,6 +70,7 @@ SOURCES =  \
 	Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs \
 	Banshee.SmartPlaylist.Gui/Editor.cs \
 	Banshee.Sources.Gui/CellEditEntry.cs \
+	Banshee.Sources.Gui/SourceIconResolver.cs \
 	Banshee.Sources.Gui/SourceRowRenderer.cs \
 	Banshee.Sources.Gui/SourceView.cs \
 	Banshee.Sources.Gui/SourceView_DragAndDrop.cs

@@ -46,7 +46,7 @@ namespace Banshee.Sources
 
         public ErrorSource (string name) : base (name, name, 0)
         {
-            Properties.SetStringList ("IconName", "dialog-error", "gtk-dialog-error");
+            Properties.SetStringList ("Icon.Name", "dialog-error", "gtk-dialog-error");
         }
         
         private void OnReloaded ()

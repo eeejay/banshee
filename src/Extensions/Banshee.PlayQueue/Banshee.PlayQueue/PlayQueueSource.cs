@@ -60,7 +60,7 @@ namespace Banshee.PlayQueue
             BindToDatabase ();
             
             Order = 0;
-            Properties.SetString ("IconName", "audio-x-generic");
+            Properties.SetString ("Icon.Name", "audio-x-generic");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
             
             ((TrackListDatabaseModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID ASC";

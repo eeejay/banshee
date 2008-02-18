@@ -88,6 +88,8 @@
     <File name="Banshee.Collection.Gui/PersistentColumnController.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/PlaylistMenuItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Widgets/ConnectedMessageBar.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/SourceIconResolver.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

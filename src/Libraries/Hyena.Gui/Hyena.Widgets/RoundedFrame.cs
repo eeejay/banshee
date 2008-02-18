@@ -43,7 +43,6 @@ namespace Hyena.Widgets
         private Widget child;
         private Gdk.Rectangle child_allocation;
         
-    
         public RoundedFrame ()
         {
         }
@@ -115,6 +114,9 @@ namespace Hyena.Widgets
                 
             try {
                 DrawFrame (cr, evnt.Area);
+                if (child != null) {
+                    PropagateExpose (child, evnt);
+                }
                 return false;
             } finally {
                 ((IDisposable)cr.Target).Dispose ();

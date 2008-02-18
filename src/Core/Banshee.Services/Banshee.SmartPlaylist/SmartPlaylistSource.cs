@@ -197,7 +197,7 @@ namespace Banshee.SmartPlaylist
 
         protected void InstallProperties ()
         {
-            Properties.SetString ("IconName", "source-smart-playlist");
+            Properties.SetString ("Icon.Name", "source-smart-playlist");
             Properties.SetString ("SourcePropertiesActionLabel", properties_label);
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Smart Playlist"));
         }

@@ -38,6 +38,7 @@ namespace Hyena.Gui.Theatrics
         private uint duration;
         private double frames;
         private double percent;
+        private bool can_expire = true;
     
         public Actor (T target, uint duration)
         {
@@ -55,12 +56,21 @@ namespace Hyena.Gui.Theatrics
         
         public virtual void Step ()
         {
+            if (!CanExpire && percent >= 1.0) {
+                Reset ();
+            }
+            
             percent = (DateTime.Now - start_time).TotalMilliseconds / duration;
             frames++;
         }
 
         public bool Expired {
-            get { return percent >= 1.0; }
+            get { return CanExpire && percent >= 1.0; }
+        }
+        
+        public bool CanExpire {
+            get { return can_expire; }
+            set { can_expire = value; }
         }
         
         public T Target {

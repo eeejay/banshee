@@ -31,6 +31,7 @@ using Gtk;
 using Mono.Unix;
 
 using Banshee.Widgets;
+using Banshee.Gui.Widgets;
 using Banshee.Collection;
 
 namespace Nereid
@@ -73,6 +74,7 @@ namespace Nereid
             search_entry.Show ();
             
             PackStart (header, false, false, 0);
+            PackEnd (new ConnectedMessageBar (), false, true, 0);
         }
         
         private void BuildSearchEntry ()

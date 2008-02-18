@@ -27,7 +27,7 @@
 //
 
 using System;
-using System.Reflection;
+
 using Gtk;
 using Gdk;
 using Pango;
@@ -113,7 +113,7 @@ namespace Banshee.Sources.Gui
             
             bool hide_counts = source.Count <= 0;
             
-            Pixbuf icon = ResolveSourceIcon (source);
+            Pixbuf icon = SourceIconResolver.ResolveIcon (source);
             
             FontDescription fd = widget.PangoContext.FontDescription.Copy ();
             fd.Weight = (ISource)ServiceManager.PlaybackController.Source == (ISource)source 
@@ -180,33 +180,6 @@ namespace Banshee.Sources.Gui
         private int Middle (Gdk.Rectangle area, int height)
         {
             return area.Y + (int)Math.Round ((double)(area.Height - height) / 2.0) + 1;
-        }
-        
-        private Gdk.Pixbuf ResolveSourceIcon (Source source)
-        {
-            Gdk.Pixbuf icon = source.Properties.Get<Gdk.Pixbuf> ("IconPixbuf");
-            
-            if (icon != null) {
-                return icon;
-            }
-            
-            Type icon_type = source.Properties.GetType ("IconName");
-            Assembly asm = source.Properties.Get<Assembly> ("ResourceAssembly");
-            if(icon_type == typeof (string)) {
-                icon = Banshee.Gui.IconThemeUtils.LoadIcon (asm, 22, source.Properties.GetString ("IconName"));
-            } else if (icon_type == typeof (string [])) {
-                icon = Banshee.Gui.IconThemeUtils.LoadIcon (asm, 22, source.Properties.GetStringList ("IconName"));
-            }
-
-            if (icon == null) {
-                icon = Banshee.Gui.IconThemeUtils.LoadIcon (22, "image-missing");
-            }
-                
-            if (icon != null) {
-                source.Properties.Set<Gdk.Pixbuf> ("IconPixbuf", icon);
-            }
-            
-            return icon;
         }
         
         public override CellEditable StartEditing (Gdk.Event evnt , Widget widget, string path, 
