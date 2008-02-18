@@ -10,8 +10,8 @@ ASSEMBLY_CSFILES =  \
 	Banshee.Core/KernelTests.cs \
 	Banshee.Services/PlaylistFormatTests.cs \
 	Banshee.Services/Xspf/Xspf.cs \
-	Hyena/RangeCollectionTests.cs \
-	Hyena/CryptoUtilTests.cs
+	Hyena/CryptoUtilTests.cs \
+	Hyena/RangeCollectionTests.cs
 
 CFS=Hyena/RangeCollectionTests.cs Hyena/CryptoUtilTests.cs
 

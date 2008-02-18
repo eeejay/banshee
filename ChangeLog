@@ -1,3 +1,9 @@
+2008-02-18  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	  Changed LoadAll method to return IEnumerable rather than List. Since the
+	  method is only ever iterated over, we can do away with the List object.
+
 2008-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:

@@ -313,27 +313,27 @@ namespace Banshee.SmartPlaylist
             return String.IsNullOrEmpty (ConditionSql) ? " " : String.Format ("{0} ({1})", with, ConditionSql);
         }
 
-        public static List<SmartPlaylistSource> LoadAll ()
+        public static IEnumerable<SmartPlaylistSource> LoadAll ()
         {
-            List<SmartPlaylistSource> sources = new List<SmartPlaylistSource> ();
-
             using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
                 "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
                 while (reader.Read ()) {
+                    SmartPlaylistSource playlist = null;
                     try {
-                        SmartPlaylistSource playlist = new SmartPlaylistSource (
+                        playlist = new SmartPlaylistSource (
                             Convert.ToInt32 (reader[0]), reader[1] as string,
                             reader[2] as string, reader[3] as string,
                             reader[4] as string, reader[5] as string
                         );
-                        sources.Add (playlist);
                     } catch (Exception e) {
                         Log.Warning ("Ignoring Smart Playlist", String.Format ("Caught error: {0}", e), false);
                     }
+                    
+                    if (playlist != null) {
+                        yield return playlist;
+                    }
                 }
             }
-            
-            return sources;
         }
     }
 }
