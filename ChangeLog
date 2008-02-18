@@ -1,5 +1,10 @@
 2008-02-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Make the network
+	connection handshake run in a thread again
+
+2008-02-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:
 	Set some default spacing
 

@@ -35,6 +35,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Web;
+using System.Threading;
 
 using Hyena;
 using Mono.Unix;
@@ -267,7 +268,7 @@ namespace Lastfm
 
         private void Handshake ()
         {
-            //ThreadAssist.Spawn (delegate {
+            ThreadPool.QueueUserWorkItem (delegate {
                 try {
                     Stream stream = Get (String.Format (
                         "http://ws.audioscrobbler.com/radio/handshake.php?version={0}&platform={1}&username={2}&passwordmd5={3}&language={4}&session=324234",
@@ -291,7 +292,7 @@ namespace Lastfm
                 Initialize ();
                 if (State == ConnectionState.Connecting)
                     State = ConnectionState.Disconnected;
-            //});
+            });
         }
 
 		private bool ParseHandshake (string content) 
