@@ -30,12 +30,16 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Hyena;
+
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Playlist;
+using Banshee.Playlist.Gui;
+using Banshee.Playlists.Formats;
 using Banshee.SmartPlaylist;
 using Banshee.Gui.Dialogs;
 
@@ -82,6 +86,9 @@ namespace Banshee.Gui
                 new ActionEntry ("RenameSourceAction", "gtk-edit", 
                     "Rename", "F2", "Rename", OnRenameSource),
 
+                new ActionEntry ("ExportPlaylistAction", null,
+                    Catalog.GetString ("Export Playlist..."), null,
+                    Catalog.GetString ("Export a playlist"), OnExportPlaylist),
 
                 new ActionEntry ("UnmapSourceAction", Stock.Delete,
                     "Unmap", "<shift>Delete", null, OnUnmapSource),
@@ -194,6 +201,44 @@ namespace Banshee.Gui
             SourceView.BeginRenameSource (ActionSource);
         }
 
+        private void OnExportPlaylist (object o, EventArgs args)
+        {
+            AbstractPlaylistSource source = ActionSource as AbstractPlaylistSource;
+            if (source == null) {
+                return;
+            }
+
+            PlaylistExportDialog chooser = new PlaylistExportDialog (source.Name, PrimaryWindow);
+
+            string uri = null;
+            PlaylistFormatDescription format = null;
+            int response = chooser.Run ();            
+            if (response == (int) ResponseType.Ok) {                    
+                uri = chooser.Uri;
+                // Get the format that the user selected.
+                format = chooser.GetExportFormat ();
+            }             
+            chooser.Destroy (); 
+
+            if (uri == null) {
+                // User cancelled export.
+                return;
+            }
+            
+            try {
+                IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance (format.Type);
+                SafeUri suri = new SafeUri (uri);
+                if (suri.IsLocalPath) {
+                    playlist.BaseUri = new Uri (System.IO.Path.GetDirectoryName (suri.LocalPath));
+                    Console.WriteLine (playlist.BaseUri.LocalPath);
+                }
+                playlist.Save (Banshee.IO.File.OpenWrite (new SafeUri (uri), true), source);
+            } catch (Exception e) {
+                Console.WriteLine (e);
+                Log.Error (Catalog.GetString ("Could not export playlist"), e.Message);
+            }
+        }
+
         private void OnUnmapSource (object o, EventArgs args)
         {
             IUnmapableSource source = ActionSource as IUnmapableSource;
@@ -234,6 +279,7 @@ namespace Banshee.Gui
                 UpdateAction ("UnmapSourceAction", unmapable != null, unmapable != null && unmapable.CanUnmap, source);
                 UpdateAction ("RenameSourceAction", source.CanRename, true, null);
                 UpdateAction ("ImportSourceAction", source is IImportable, true, source);
+                UpdateAction ("ExportPlaylistAction", source is AbstractPlaylistSource, true, source);
                 UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
                 UpdateAction ("RefreshSmartPlaylistAction", smart_playlist != null && smart_playlist.CanRefresh, true, source);
                 last_source = source;

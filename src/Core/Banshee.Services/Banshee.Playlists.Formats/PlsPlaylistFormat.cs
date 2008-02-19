@@ -128,12 +128,14 @@ namespace Banshee.Playlists.Formats
         
         public override void Save(Stream stream, ITrackModelSource source)
         {
-            /*using(StreamWriter writer = new StreamWriter(stream)) {
+            using(StreamWriter writer = new StreamWriter(stream)) {
                 int count = 0;
                 
                 writer.WriteLine("[playlist]");
                 
-                foreach(TrackInfo track in source.Tracks) {
+                TrackInfo track;
+                for (int i = 0; i < source.TrackModel.Count; i++) {
+                    track = source.TrackModel[i];
                     count++;
                     
                     writer.WriteLine("File{0}={1}", count, ExportUri(track.Uri));
@@ -143,9 +145,7 @@ namespace Banshee.Playlists.Formats
                                 
                 writer.WriteLine("NumberOfEntries={0}", count);
                 writer.WriteLine("Version=2");
-            }*/
-            
-            throw new NotImplementedException ();
+            }
         }
     }
 }

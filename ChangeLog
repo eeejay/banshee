@@ -1,5 +1,24 @@
 2008-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlsPlaylistFormat.cs:
+	Uncomment out Save methods, and modify to work with TrackListModel.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Work on
+	ImportPlaylistAction - still not enabled/working.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Add
+	ExportPlaylistAction handler.
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:
+	Ported from stable.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	Export playlist action to source context menu and edit menu.
+
+2008-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Fix bug in getting
 	sources' custom views.
 
