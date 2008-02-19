@@ -2,7 +2,7 @@ ASSEMBLY = Banshee.Lastfm
 TARGET = library
 LINK = $(REF_EXTENSION_LASTFM)
 
-SOURCES = \
+SOURCES =  \
 	Banshee.Lastfm.Radio/Connection.cs \
 	Banshee.Lastfm.Radio/LastfmActions.cs \
 	Banshee.Lastfm.Radio/LastfmSource.cs \
@@ -13,11 +13,11 @@ SOURCES = \
 	Banshee.Lastfm.Radio/StationType.cs
 
 RESOURCES =  \
-	Resources/Banshee.Lastfm.addin.xml \
-	Resources/lastfm.glade \
 	Resources/ActiveSourceUI.xml \
-	Resources/GlobalUI.xml \
 	Resources/audioscrobbler.png \
+	Resources/Banshee.Lastfm.addin.xml \
+	Resources/GlobalUI.xml \
+	Resources/lastfm.glade \
 	Resources/recommended.png
 
 include $(top_srcdir)/build/build.mk

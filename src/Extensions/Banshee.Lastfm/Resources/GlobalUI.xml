@@ -20,8 +20,15 @@
 
     <popup name="TrackContextMenu" action="TrackContextMenuAction">
         <placeholder name="BelowAddToPlaylist">
-            <menuitem name="LastfmLove" action="LastfmLoveAction"></menuitem>
-            <menuitem name="LastfmHate" action="LastfmHateAction"></menuitem>
+            <menuitem name="LastfmLove" action="LastfmLoveAction"/>
+            <menuitem name="LastfmHate" action="LastfmHateAction"/>
         </placeholder>
     </popup>
+    
+    <toolbar name="HeaderToolbar">
+        <placeholder name="SourceActions">
+            <toolitem name="LastfmLove" action="LastfmLoveAction"/>
+            <toolitem name="LastfmHate" action="LastfmHateAction"/>
+        </placeholder>
+    </toolbar>
 </ui>

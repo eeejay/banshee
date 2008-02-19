@@ -56,6 +56,10 @@ namespace Banshee.Gui
             /* Other */
             "cd-action-burn",
             "cd-action-rip",
+            
+            /* Emotes */
+            "face-smile",
+            "face-sad"
         };    
 
         public BansheeIconFactory ()
@@ -77,6 +81,19 @@ namespace Banshee.Gui
             source.Pixbuf = new Pixbuf (asm, resource_name);
             source.Size = iconSize;
             iconSet.AddSource (source);
+        }
+        
+        public void AddThemeIcon (string iconName)
+        {
+            StockItem item = new StockItem (iconName, null, 0, Gdk.ModifierType.ShiftMask, null);
+            IconSet icon_set = new IconSet ();
+            
+            AddThemeIconToIconSet (iconName, IconSize.Menu, icon_set);
+            AddThemeIconToIconSet (iconName, IconSize.SmallToolbar, icon_set);
+            AddThemeIconToIconSet (iconName, IconSize.Dialog, icon_set);
+            
+            Add (iconName, icon_set);
+            StockManager.Add (item);
         }
         
         private void AddThemeIconToIconSet (string stockId, IconSize iconSize, IconSet iconSet)

@@ -1,5 +1,16 @@
 2008-02-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Implement love/hate actions
+
+	* src/Extensions/Banshee.Lastfm/Resources/GlobalUI.xml: Add love/hate
+	buttons to the header
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeIconFactory.cs: Allow
+	new theme icons to be mapped into stock publicly
+
+2008-02-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Make the network
 	connection handshake run in a thread again
 

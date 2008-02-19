@@ -44,6 +44,8 @@ using Banshee.Database;
 using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Gui;
+using Banshee.MediaEngine;
+using Banshee.Collection;
 
 namespace Banshee.Lastfm.Radio
 {
@@ -63,6 +65,8 @@ namespace Banshee.Lastfm.Radio
         {
             action_service = ServiceManager.Get<InterfaceActionService> ();
             this.lastfm = lastfm;
+            
+            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
 
             AddImportant (
                 new ActionEntry (
@@ -123,37 +127,11 @@ namespace Banshee.Lastfm.Radio
             actions_id = action_service.UIManager.AddUiFromResource ("GlobalUI.xml");
 
             lastfm.Connection.StateChanged += HandleConnectionStateChanged;
-
-            /*Globals.ActionManager["LastfmLoveAction"].IsImportant = true;
-            Globals.ActionManager["LastfmHateAction"].IsImportant = true;
-            Globals.ActionManager["LastfmLoveAction"].Visible = false;
-            Globals.ActionManager["LastfmHateAction"].Visible = false;
-            ActionButton love_button = new ActionButton (actions.GetAction ("LastfmLoveAction"));
-            love_button.Pixbuf = IconThemeUtils.LoadIcon ("face-smile", 22);
-            love_button.Padding = 1;
-            ActionButton hate_button = new ActionButton (actions.GetAction ("LastfmHateAction"));
-            hate_button.Pixbuf = IconThemeUtils.LoadIcon ("face-sad", 22);
-            hate_button.Padding = 1;
-            InterfaceElements.ActionButtonBox.PackStart (love_button, false, false, 0);
-            InterfaceElements.ActionButtonBox.PackStart (hate_button, false, false, 0);*/
-
-            /*PlayerEngineCore.EventChanged += delegate (object o, PlayerEngineEventArgs args) {
-                if (args.Event == PlayerEngineEvent.TrackInfoUpdated) {
-                    if (PlayerEngineCore.CurrentTrack is LastfmTrackInfo) {
-                        if (!last_track_was_lastfm) {
-                            this["LastfmLoveAction"].Visible = true;
-                            this["LastfmHateAction"].Visible = true;
-                            last_track_was_lastfm = true;
-                        }
-                    } else {
-                        if (last_track_was_lastfm) {
-                            this["LastfmLoveAction"].Visible = false;
-                            this["LastfmHateAction"].Visible = false;
-                            last_track_was_lastfm = false;
-                        }
-                    }
-                }
-            };*/
+            
+            this["LastfmLoveAction"].Visible = false;
+            this["LastfmHateAction"].Visible = false;
+            this["LastfmLoveAction"].IsImportant = true;
+            this["LastfmHateAction"].IsImportant = true;
 
             UpdateActions ();
 
@@ -164,13 +142,7 @@ namespace Banshee.Lastfm.Radio
 
         public override void Dispose ()
         {
-            //InterfaceElements.ActionButtonBox.Remove (love_button);
-            //InterfaceElements.ActionButtonBox.Remove (hate_button);
-
-            //Globals.ActionManager.UI.RemoveUi (actions_id);
-            //Globals.ActionManager.UI.RemoveActionGroup (actions);
             actions = null;
-
             base.Dispose ();
         }
 
@@ -211,8 +183,8 @@ namespace Banshee.Lastfm.Radio
 
         private void OnLoved (object sender, EventArgs args)
         {
-            LastfmTrackInfo track = null;//PlayerEngineCore.CurrentTrack as LastfmTrackInfo;
-            if (track == null)
+            LastfmTrackInfo track = ServiceManager.PlayerEngine.CurrentTrack as LastfmTrackInfo;
+            if (track == null) 
                 return;
 
             track.Love ();
@@ -220,12 +192,12 @@ namespace Banshee.Lastfm.Radio
 
         private void OnHated (object sender, EventArgs args)
         {
-            LastfmTrackInfo track = null; //PlayerEngineCore.CurrentTrack as LastfmTrackInfo;
+            LastfmTrackInfo track = ServiceManager.PlayerEngine.CurrentTrack as LastfmTrackInfo;
             if (track == null)
                 return;
 
             track.Ban ();
-            action_service.GlobalActions ["NextAction"].Activate ();
+            ServiceManager.PlaybackController.Next ();
         }
 
         public void ShowLoginDialog ()
@@ -240,6 +212,16 @@ namespace Banshee.Lastfm.Radio
         }
 
 #endregion
+
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        { 
+            if (args.Event == PlayerEngineEvent.EndOfStream || args.Event == PlayerEngineEvent.StartOfStream) {
+                TrackInfo current_track = ServiceManager.PlayerEngine.CurrentTrack;
+                this["LastfmLoveAction"].Visible = current_track is LastfmTrackInfo;
+                this["LastfmHateAction"].Visible = current_track is LastfmTrackInfo;
+                this["LastfmAddAction"].IsImportant = !(current_track is LastfmTrackInfo);
+            }
+        }
 
         private void HandleConnectionStateChanged (object sender, ConnectionStateChangedArgs args)
         {
