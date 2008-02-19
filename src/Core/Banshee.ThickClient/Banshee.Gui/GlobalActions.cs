@@ -104,6 +104,8 @@ namespace Banshee.Gui
                     
                 new ActionEntry("AboutAction", "gtk-about", OnAbout)
             });
+            
+            this["ExtensionsAction"].Visible = false;
         }
             
 #region Music Menu Actions

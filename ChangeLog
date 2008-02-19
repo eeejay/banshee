@@ -1,5 +1,10 @@
 2008-02-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Disable the
+	extension manager UI for now
+
+2008-02-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.Lastfm/Resources/GlobalUI.xml: Hide the love/ban
 	from the menu since it doesn't make sense yet
 
