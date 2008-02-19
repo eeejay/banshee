@@ -282,7 +282,7 @@ namespace Nereid
 
             // Connect the source models to the views if possible
             if (source.Properties.Contains ("NereidSourceContents")) {
-                view_container.Content = source.Properties.Get<ISourceContents> ("NereidView");
+                view_container.Content = source.Properties.Get<ISourceContents> ("NereidSourceContents");
                 view_container.Content.SetSource (source);
             } else if (source is ITrackModelSource) {
                 if (composite_view.TrackModel != null) {

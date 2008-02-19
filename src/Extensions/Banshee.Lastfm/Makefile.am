@@ -6,6 +6,7 @@ SOURCES =  \
 	Banshee.Lastfm.Radio/Connection.cs \
 	Banshee.Lastfm.Radio/LastfmActions.cs \
 	Banshee.Lastfm.Radio/LastfmSource.cs \
+	Banshee.Lastfm.Radio/LastfmSourceContents.cs \
 	Banshee.Lastfm.Radio/LastfmTrackInfo.cs \
 	Banshee.Lastfm.Radio/LastfmTrackListModel.cs \
 	Banshee.Lastfm.Radio/StationEditor.cs \

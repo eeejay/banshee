@@ -44,6 +44,8 @@ using Banshee.MediaEngine;
 using Banshee.ServiceStack;
 using Banshee.Networking;
 
+using Banshee.Sources.Gui;
+
 namespace Banshee.Lastfm.Radio
 {   
     public class LastfmSource : Source, IDisposable
@@ -86,6 +88,9 @@ namespace Banshee.Lastfm.Radio
             Properties.SetString ("GtkActionPath", "/LastfmSourcePopup");
             Properties.SetString ("Icon.Name", "audioscrobbler");
             Properties.SetString ("SourcePropertiesActionLabel", Catalog.GetString ("Edit Last.fm Settings"));
+
+            // FIXME this is temporary until we split the GUI part from the non-GUI part
+            Properties.Set<ISourceContents> ("NereidSourceContents", new LastfmSourceContents ());
 
             actions = new LastfmActions (this);
 
@@ -246,7 +251,7 @@ namespace Banshee.Lastfm.Radio
         }
 
         public override bool CanActivate {
-            get { return false; }
+            get { return true; }
         }
 
         public override bool HasProperties {

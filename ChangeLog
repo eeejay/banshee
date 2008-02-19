@@ -1,5 +1,18 @@
 2008-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Fix bug in getting
+	sources' custom views.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.mdp:
+	* src/Extensions/Banshee.Lastfm/Makefile.am:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	New class, shows how sources can set custom views.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Set
+	the custom view, allow activating.
+
+2008-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Resources/Banshee.Lastfm.addin.xml:
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.mdp:
 	* src/Extensions/Banshee.Lastfm/Makefile.am: Move the addin.xml file up
