@@ -18,12 +18,12 @@
         <menuitem name="SourceProperties" action="SourcePropertiesAction" />
     </popup>
 
-    <popup name="TrackContextMenu" action="TrackContextMenuAction">
+    <!--<popup name="TrackContextMenu" action="TrackContextMenuAction">
         <placeholder name="BelowAddToPlaylist">
             <menuitem name="LastfmLove" action="LastfmLoveAction"/>
             <menuitem name="LastfmHate" action="LastfmHateAction"/>
         </placeholder>
-    </popup>
+    </popup>-->
     
     <toolbar name="HeaderToolbar">
         <placeholder name="SourceActions">

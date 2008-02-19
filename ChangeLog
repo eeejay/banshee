@@ -1,5 +1,14 @@
 2008-02-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.Lastfm/Resources/GlobalUI.xml: Hide the love/ban
+	from the menu since it doesn't make sense yet
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Hide menu items that don't apply when the source is not library-based
+
+2008-02-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
 	Implement love/hate actions
 

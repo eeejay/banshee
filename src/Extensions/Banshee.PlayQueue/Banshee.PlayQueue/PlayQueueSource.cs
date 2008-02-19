@@ -36,13 +36,14 @@ using Hyena.Data.Sqlite;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Playlist;
+using Banshee.Library;
 using Banshee.Database;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.PlaybackController;
 using Banshee.MediaEngine;
 using Banshee.Configuration;
-
+using Banshee.Library;
 using Banshee.Gui;
 
 namespace Banshee.PlayQueue
@@ -180,9 +181,11 @@ namespace Banshee.PlayQueue
                 return;
             }
             
+            Source source = ServiceManager.SourceManager.ActiveSource;
+            bool in_library = (source != null && source.Parent is LibrarySource) || source is LibrarySource;
+            
             uia_service.GlobalActions.UpdateAction ("ClearPlayQueueAction", true, Count > 0);
-            uia_service.TrackActions.UpdateAction ("AddToPlayQueueAction", 
-                ServiceManager.SourceManager.ActiveSource != this, true);
+            uia_service.TrackActions.UpdateAction ("AddToPlayQueueAction", in_library, true);
         }
         
         void IBasicPlaybackController.First ()
