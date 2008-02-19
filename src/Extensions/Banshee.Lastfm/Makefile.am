@@ -13,9 +13,9 @@ SOURCES =  \
 	Banshee.Lastfm.Radio/StationType.cs
 
 RESOURCES =  \
+	Banshee.Lastfm.addin.xml \
 	Resources/ActiveSourceUI.xml \
 	Resources/audioscrobbler.png \
-	Resources/Banshee.Lastfm.addin.xml \
 	Resources/GlobalUI.xml \
 	Resources/lastfm.glade \
 	Resources/recommended.png

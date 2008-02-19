@@ -1,5 +1,12 @@
 2008-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Resources/Banshee.Lastfm.addin.xml:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.mdp:
+	* src/Extensions/Banshee.Lastfm/Makefile.am: Move the addin.xml file up
+	from Resources.
+
+2008-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ISourceContents.cs: New
 	interface.
 
