@@ -61,6 +61,9 @@ namespace Banshee.Lastfm.Radio
         }
 
         private LastfmActions actions;
+        public LastfmActions Actions {
+            get { return actions; }
+          }
 
         public LastfmSource () : base (lastfm, lastfm, 150)
         {

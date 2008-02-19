@@ -1,5 +1,21 @@
 2008-02-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Removed duplicate using declaration
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	Added a property to get the LastfmActions
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	When the lastfm error is account related, add a message action to allow
+	the user to enter their account details
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MessageBar.cs: Fix a few bugs
+
+	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Lots of tabs->spaces
+
+2008-02-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Disable the
 	extension manager UI for now
 

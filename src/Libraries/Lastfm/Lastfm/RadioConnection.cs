@@ -77,17 +77,17 @@ namespace Lastfm
         Unknown // not an official code, just the fall back
     }
 
-	public class RadioConnection 
-	{
-		public delegate void StateChangedHandler (RadioConnection connection, ConnectionStateChangedArgs args);
-		public event StateChangedHandler StateChanged;
+    public class RadioConnection 
+    {
+        public delegate void StateChangedHandler (RadioConnection connection, ConnectionStateChangedArgs args);
+        public event StateChangedHandler StateChanged;
 
-		private ConnectionState state;
+        private ConnectionState state;
         private string user_agent;
-		private string session;
-		private string base_url;
-		private string base_path;
-		private string info_message;
+        private string session;
+        private string base_url;
+        private string base_path;
+        private string info_message;
         private bool network_connected = false;
 
         private static Regex station_error_regex = new Regex ("error=(\\d+)", RegexOptions.Compiled);
@@ -97,17 +97,17 @@ namespace Lastfm
             get { return account; }
         }
 
-		private bool subscriber;
-		public bool Subscriber {
-			get { return subscriber; }
-		}
+        private bool subscriber;
+        public bool Subscriber {
+            get { return subscriber; }
+        }
 
         public string InfoMessage {
             get { return info_message; }
         }
 
-		public ConnectionState State {
-			get { return state; }
+        public ConnectionState State {
+            get { return state; }
 
             private set {
                 if (value == state)
@@ -120,19 +120,19 @@ namespace Lastfm
                     handler (this, new ConnectionStateChangedArgs (state));
                 }
             }
-		}
+        }
 
         public bool Connected {
             get { return state == ConnectionState.Connected; }
         }
 
-		private string station;
-		public string Station {
-			get { return station; }
-		}
+        private string station;
+        public string Station {
+            get { return station; }
+        }
 
-		public RadioConnection (Account account, string user_agent)
-		{
+        public RadioConnection (Account account, string user_agent)
+        {
             this.account = account;
             this.user_agent = user_agent;
 
@@ -165,7 +165,7 @@ namespace Lastfm
             // Otherwise, we're good to try to connect
             State = ConnectionState.Connecting;
             Handshake ();
-		}
+        }
 
         public bool Love    (string artist, string title) { return PostTrackRequest ("loveTrack", artist, title); }
         public bool UnLove  (string artist, string title) { return PostTrackRequest ("unLoveTrack", artist, title); }
@@ -202,8 +202,8 @@ namespace Lastfm
             }
         }
 
-		public Playlist LoadPlaylistFor (string station) 
-		{
+        public Playlist LoadPlaylistFor (string station) 
+        {
             lock (this) {
                 if (station != Station)
                     return null;
@@ -235,7 +235,7 @@ namespace Lastfm
 
                 return pl;
             }
-		}
+        }
 
         // Private methods
 
@@ -295,57 +295,57 @@ namespace Lastfm
             });
         }
 
-		private bool ParseHandshake (string content) 
-		{
+        private bool ParseHandshake (string content) 
+        {
             Log.Debug ("Got Last.fm Handshake Response", content);
-			string [] lines = content.Split (new Char[] {'\n'});
-			foreach (string line in lines) {
-				string [] opts = line.Split (new Char[] {'='});
+            string [] lines = content.Split (new Char[] {'\n'});
+            foreach (string line in lines) {
+                string [] opts = line.Split (new Char[] {'='});
 
-				switch (opts[0].Trim ().ToLower ()) {
-				case "session":
-					if (opts[1].ToLower () == "failed") {
-						session = null;
-						State = ConnectionState.InvalidAccount;
+                switch (opts[0].Trim ().ToLower ()) {
+                case "session":
+                    if (opts[1].ToLower () == "failed") {
+                        session = null;
+                        State = ConnectionState.InvalidAccount;
                         Log.Warning (
                             Catalog.GetString ("Failed to Login to Last.fm"),
                             Catalog.GetString ("Either your username or password is invalid."),
                             false
                         );
                         account.CryptedPassword = null;
-						return false;
-					}
+                        return false;
+                    }
 
-					session = opts[1];
-					break;
+                    session = opts[1];
+                    break;
 
-				case "stream_url":
-					//stream_url = opts[1];
-					break;
+                case "stream_url":
+                    //stream_url = opts[1];
+                    break;
 
-				case "subscriber":
-					subscriber = (opts[1] != "0");
-					break;
+                case "subscriber":
+                    subscriber = (opts[1] != "0");
+                    break;
 
-				case "base_url":
-					base_url = opts[1];
-					break;
+                case "base_url":
+                    base_url = opts[1];
+                    break;
 
-				case "base_path":
-					base_path = opts[1];
-					break;
-					
-				case "info_message":
-					info_message = opts[1];
-					break;
+                case "base_path":
+                    base_path = opts[1];
+                    break;
+                    
+                case "info_message":
+                    info_message = opts[1];
+                    break;
 
-				default:
-					break;
-				}
-			}
+                default:
+                    break;
+                }
+            }
 
-			return true;
-		}
+            return true;
+        }
 
         // Basic HTTP helpers
 
@@ -413,13 +413,13 @@ namespace Lastfm
             get { return String.Format ("http://{0}/1.0/rw/xmlrpc.php", base_url); }
         }
 
-		private string StationUrlFor (string station) 
-		{
+        private string StationUrlFor (string station) 
+        {
             return String.Format (
                 "http://{0}{1}/adjust.php?session={2}&url={3}&lang=en",
                 base_url, base_path, session, HttpUtility.UrlEncode (station)
             );
-		}
+        }
 
         private string StationRefreshUrl {
             get {
@@ -451,7 +451,7 @@ namespace Lastfm
         {
             switch (state) {
             case ConnectionState.Disconnected:      return Catalog.GetString ("Not connected to Last.fm.");
-            case ConnectionState.NoAccount:         return Catalog.GetString ("Need account details before can connect to Last.fm");
+            case ConnectionState.NoAccount:         return Catalog.GetString ("Account details are needed before you can connect to Last.fm");
             case ConnectionState.NoNetwork:         return Catalog.GetString ("No network connection detected.");
             case ConnectionState.InvalidAccount:    return Catalog.GetString ("Last.fm username or password is invalid.");
             case ConnectionState.Connecting:        return Catalog.GetString ("Connecting to Last.fm.");
@@ -532,11 +532,11 @@ namespace Lastfm
         }
     }
 
-	public sealed class StringUtils {
-		public static string StringToUTF8 (string s)
-		{
-			byte [] ba = (new UnicodeEncoding ()).GetBytes (s);
-			return System.Text.Encoding.UTF8.GetString (ba);
-		}
+    public sealed class StringUtils {
+        public static string StringToUTF8 (string s)
+        {
+            byte [] ba = (new UnicodeEncoding ()).GetBytes (s);
+            return System.Text.Encoding.UTF8.GetString (ba);
+        }
     }
 }

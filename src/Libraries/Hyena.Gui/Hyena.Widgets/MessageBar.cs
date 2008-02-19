@@ -68,6 +68,7 @@ namespace Hyena.Widgets
             image.FrameWidth = 22;
             Spinning = false;
             image.Load ();
+            image.Show ();
             
             label = new Label ();
             label.Xalign = 0.0f;
@@ -139,22 +140,25 @@ namespace Hyena.Widgets
         
         public string ButtonLabel {
             set {
-                bool should_remove = false;
+                bool button_is_child = false;
                 foreach (Widget child in box.Children) {
                     if (child == button) {
-                        should_remove = true;
+                        button_is_child = true;
                         break;
                     }
                 }
                 
-                if (should_remove && value == null) {
+                if (button_is_child && value == null) {
                     box.Remove (button);
                 }
                 
                 if (value != null) {
                     button.Label = value;
                     button.Show ();
-                    box.PackStart (button, false, false, 0);
+                    
+                    if (!button_is_child) {
+                        box.PackStart (button, false, false, 0);
+                    }
                 }
                 
                 QueueDraw ();
@@ -185,7 +189,6 @@ namespace Hyena.Widgets
         public Gdk.Pixbuf Pixbuf {
             set {
                 image.InactivePixbuf = value;
-                image.Visible = value != null || Spinning;
                 QueueDraw ();
             }
         }

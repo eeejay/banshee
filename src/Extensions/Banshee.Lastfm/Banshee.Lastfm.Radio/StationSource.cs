@@ -237,6 +237,11 @@ namespace Banshee.Lastfm.Radio
 
         private void SetStatus (string message, bool error)
         {
+            SetStatus (message, error, ConnectionState.Connected);
+        }
+
+        private void SetStatus (string message, bool error, ConnectionState state)
+        {
             ThreadAssist.ProxyToMain (delegate {
                 string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
                 Properties.SetString ("Message.Text", String.Format ("{0}", 
@@ -245,9 +250,19 @@ namespace Banshee.Lastfm.Radio
                 if (error) {
                     Properties.SetString ("Message.Icon.Name", "dialog-error");
                     Properties.SetBoolean ("Message.IsSpinning", false);
+                    
+                    if (state == ConnectionState.NoAccount || state == ConnectionState.InvalidAccount) {
+                        Properties.SetString ("Message.Action.Label", Catalog.GetString ("Account Settings"));
+                        Properties.Set<EventHandler> ("Message.Action.NotifyHandler", delegate {
+                             lastfm.Actions.ShowLoginDialog ();
+                           });
+                    } else {
+                        Properties.RemoveStartingWith ("Message.Action.");
+                      }
                 } else {
                     Properties.RemoveStartingWith ("Message.Icon.");
                     Properties.SetBoolean ("Message.IsSpinning", true);
+                    Properties.RemoveStartingWith ("Message.Action.");
                 }
                 
                 Properties.SetBoolean ("Message.CanClose", true);
@@ -397,7 +412,7 @@ namespace Banshee.Lastfm.Radio
                 }
             } else {
                 track_model.Clear ();
-                SetStatus (RadioConnection.MessageFor (state), state != ConnectionState.Connecting);
+                SetStatus (RadioConnection.MessageFor (state), state != ConnectionState.Connecting, state);
                 OnUpdated ();
             }
         }

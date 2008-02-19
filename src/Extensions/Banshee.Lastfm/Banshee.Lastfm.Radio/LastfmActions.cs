@@ -44,7 +44,6 @@ using Banshee.Database;
 using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Gui;
-using Banshee.MediaEngine;
 using Banshee.Collection;
 
 namespace Banshee.Lastfm.Radio
