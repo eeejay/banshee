@@ -39,10 +39,13 @@ namespace Banshee.Gui
 {
     public class GtkElementsService : IService, IPropertyStoreExpose
     {
+        public delegate bool PrimaryWindowCloseHandler ();
+        
         private PropertyStore property_store = new PropertyStore ();
         private BansheeIconFactory icon_factory = new BansheeIconFactory ();
         
-        private Window primary_window;
+        private BaseClientWindow primary_window;
+        private PrimaryWindowCloseHandler primary_window_close_handler;
         
         public event EventHandler ThemeChanged;
         
@@ -81,7 +84,7 @@ namespace Banshee.Gui
             }
         }
         
-        public Window PrimaryWindow {
+        public BaseClientWindow PrimaryWindow {
             get { return primary_window; }
             set {
                 if (primary_window != null) {
@@ -92,7 +95,7 @@ namespace Banshee.Gui
                 primary_window = value;
                 
                 if (primary_window != null) {
-                    property_store.Set<Window> ("PrimaryWindow", primary_window);
+                    property_store.Set<BaseClientWindow> ("PrimaryWindow", primary_window);
                     
                     primary_window.StyleSet += OnStyleSet;
                     primary_window.Realized += OnPrimaryWindowRealized;
@@ -101,6 +104,11 @@ namespace Banshee.Gui
                     property_store.Remove ("PrimaryWindow.RawHandle");
                 }
             }
+        }
+        
+        public PrimaryWindowCloseHandler PrimaryWindowClose {
+            get { return primary_window_close_handler; }
+            set { primary_window_close_handler = value; }
         }
         
         public BansheeIconFactory IconFactory {

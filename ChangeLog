@@ -1,3 +1,41 @@
+2008-02-19  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds most of the functionality of the notification area
+	back, and adds a new layer of cross platform support, so it should work
+	on Windows with limited functionality since Windows doesn't support 
+	what the raw X11 version can
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Clients/Nereid/Nereid/PlayerWindowSchema.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Moved
+	some windowing/state functionality into BaseClientWindow; includes stuff
+	like ToggleVisibility
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkElementsService.cs: Expose
+	PrimaryWindow as BaseClientWindow and added the PrimaryCloseHandler
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Major refactor of the notification area; get most of the basic interaction
+	functionality working again (clicking the icon, toggling window visibility,
+	popup menu; push the actual notification area down a level into the new
+	INotificationAreaBox abstraction, implementing common events in the 
+	service layer
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/INotificationAreaBox.cs:
+	An interface to expose common functionality of the area boxes so that
+	the service can implement common functionality once
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	An advanced INotificationAreaBox implementation that supports more events
+	on the notification area; this is functionally on par with Banshee stable
+	but will only work on X11; when it fails, GtkNotificationAreaBox will work
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/GtkNotificationAreaBox.cs:
+	An INotificationAreaBox implementation that wraps GtkStatusIcon; this is
+	a very basic one since the GtkStatusApi is extremely limited due to 
+	cross platform support; only the context menu and left click are supported,
+	but it will work on Windows
+
 2008-02-18  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:

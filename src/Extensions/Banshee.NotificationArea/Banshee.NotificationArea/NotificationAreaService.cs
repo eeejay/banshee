@@ -34,18 +34,25 @@ using Mono.Unix;
 
 //using Notifications;
 
-using Banshee.Gui;
 using Banshee.ServiceStack;
 using Banshee.Configuration;
-
-using NotificationAreaIcon = NotificationArea;
+using Banshee.Gui;
+using Banshee.MediaEngine;
 
 namespace Banshee.NotificationArea 
 {
-    public class NotificationAreaService : IExtensionService
+    public class NotificationAreaService : IExtensionService, IDisposable
     {
-        private NotificationAreaIcon notif_area;
-        private EventBox event_box;
+        private INotificationAreaBox notif_area;
+        private GtkElementsService elements_service;
+        private InterfaceActionService interface_action_service;
+    
+        private Menu menu;
+		//private RatingMenuItem rating_menu_item;
+        private BansheeActionGroup actions;
+        private uint ui_manager_id;
+        
+        private bool show_notifications = true;
     
         public NotificationAreaService ()
         {
@@ -53,193 +60,150 @@ namespace Banshee.NotificationArea
         
         void IExtensionService.Initialize ()
         {
-            // TODO: Add something like ServiceManager.NotifyStartup ("InterfaceActionService", Initialize);
-            
-            if (ServiceManager.Contains ("InterfaceActionService")) {
-                BuildNotificationArea ();
-            } else {
-                ServiceManager.ServiceStarted += delegate (ServiceStartedArgs args) {
-                   if (args.Service is Banshee.Gui.InterfaceActionService) {
-                       BuildNotificationArea ();
-                   }
-                };
+            elements_service = ServiceManager.Get<GtkElementsService> ();
+            interface_action_service = ServiceManager.Get<InterfaceActionService> ();
+        
+            if (!ServiceStartup ()) {
+                ServiceManager.ServiceStarted += OnServiceStarted;
             }
+        }
+        
+        private void OnServiceStarted (ServiceStartedArgs args) 
+        {
+            if (args.Service is Banshee.Gui.InterfaceActionService) {
+                interface_action_service = (InterfaceActionService)args.Service;
+            } else if (args.Service is GtkElementsService) {
+                elements_service = (GtkElementsService)args.Service;
+            }
+                    
+            ServiceStartup ();
+        }
+        
+        private bool ServiceStartup ()
+        {
+            if (elements_service == null || interface_action_service == null) {
+                return false;
+            }
+            
+            Initialize ();
+            
+            ServiceManager.ServiceStarted -= OnServiceStarted;
+            BuildNotificationArea ();
+            
+            return true;
+        }
+        
+        private void Initialize ()
+        {
+            interface_action_service.GlobalActions.Add (new ActionEntry [] {
+                new ActionEntry ("CloseAction", Stock.Close,
+                    Catalog.GetString ("_Close"), "<Control>W",
+                    Catalog.GetString ("Close"), CloseWindow)
+            });
+            
+            actions = new BansheeActionGroup ("NotificationArea");
+            actions.Add (new ToggleActionEntry [] {
+                new ToggleActionEntry ("ToggleNotificationsAction", null,
+                    Catalog.GetString ("_Show Notifications"), null,
+                    Catalog.GetString ("Show notifications when song changes"), ToggleNotifications, ShowNotifications)
+            });
+            
+            interface_action_service.AddActionGroup (actions);
+            
+            ui_manager_id = interface_action_service.UIManager.AddUiFromResource ("NotificationAreaMenu.xml");      
+            menu = (Menu)interface_action_service.UIManager.GetWidget("/NotificationAreaIconMenu");
+            menu.Show ();
+            
+            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+        }
+        
+        public void Dispose ()
+        {
+            if (notif_area != null) {
+                notif_area.Dispose ();
+                notif_area = null;
+            }
+            
+            ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
+            
+            elements_service.PrimaryWindowClose = null;
+            
+            interface_action_service.UIManager.RemoveUi (ui_manager_id);
+            interface_action_service.UIManager.RemoveActionGroup (actions);
+            
+            elements_service = null;
+            interface_action_service = null;
         }
         
         private void BuildNotificationArea () 
         {
-            notif_area = new NotificationAreaIcon (Catalog.GetString ("Banshee"));
-            notif_area.DestroyEvent += OnNotificationAreaDestroyEvent;
-
-            event_box = new EventBox ();
-            //event_box.ButtonPressEvent += OnNotificationAreaIconClick;
-            //event_box.EnterNotifyEvent += OnEnterNotifyEvent;
-            //event_box.LeaveNotifyEvent += OnLeaveNotifyEvent;
-            //event_box.ScrollEvent += OnMouseScroll;
+            if (Environment.OSVersion.Platform == PlatformID.Unix) {
+                try {
+                    notif_area = new X11NotificationAreaBox ();
+                } catch {
+                }
+            }
             
-            event_box.Add (new Gtk.Image (IconThemeUtils.LoadIcon (22, "music-player-banshee")));
-
-            notif_area.Add (event_box);
-            notif_area.ShowAll ();
+            if (notif_area == null) {
+                notif_area = new GtkNotificationAreaBox ();
+            }
             
-            //if(!QuitOnCloseSchema.Get()) {
-            //    RegisterCloseHandler();
-            //}
+            notif_area.Disconnected += OnNotificationAreaDisconnected;
+            notif_area.Activated += OnNotificationAreaActivated;
+            notif_area.PopupMenuEvent += OnNotificationAreaPopupMenuEvent;
+            
+            if (!QuitOnCloseSchema.Get ()) {
+                RegisterCloseHandler ();
+            }
         }
         
-        private void OnNotificationAreaDestroyEvent (object o, EventArgs args)
+        private void RegisterCloseHandler ()
+        {
+            if (elements_service.PrimaryWindowClose == null) {
+                elements_service.PrimaryWindowClose = OnPrimaryWindowClose;
+            }
+        }
+        
+        private void UnregisterCloseHandler ()
+        {
+            if (elements_service.PrimaryWindowClose != null) {
+                elements_service.PrimaryWindowClose = null;
+            }
+        }
+        
+        private bool OnPrimaryWindowClose ()
+        {
+            CloseWindow (null, null);
+            return true;
+        }
+        
+        private void OnNotificationAreaDisconnected (object o, EventArgs args)
         {
             // Ensure we don't keep the destroyed reference around
             if (notif_area != null) {
-                notif_area.DestroyEvent -= OnNotificationAreaDestroyEvent;
+                notif_area.Disconnected -= OnNotificationAreaDisconnected;
+                notif_area.Activated -= OnNotificationAreaActivated;
+                notif_area.PopupMenuEvent -= OnNotificationAreaPopupMenuEvent;
             }
             
             BuildNotificationArea ();
         }
-    
-        string IService.ServiceName {
-            get { return "NotificationAreaService"; }
-        }
-    
-        /*protected override string ConfigurationName { get { return "notification_area"; } }
-        public override string DisplayName { get { return Catalog.GetString("Notification Area Icon"); } }
-
-        public override string Description {
-            get { return Catalog.GetString("Shows the Notification Area Icon"); }
-        }
-
-        public override string[] Authors {
-            get {
-                return new string[] {
-                    "Sebastian Dr\u00f6ge",
-                    "Aaron Bockover",
-                    "Ruben Vermeersch",
-                    "Gabriel Burt"
-                };
-            }
-        }
-
-        private Menu menu;
-        private bool menu_is_reversed = false;
-		private RatingMenuItem rating_menu_item;
-        private ActionGroup actions;
-        private uint ui_manager_id;
-
-        private TrackInfoPopup popup;
-        private bool can_show_popup = false;
-        private bool cursor_over_trayicon = false;
-        private bool show_notifications = false;
-        private TrackInfo current_track = null;
-        private string notify_last_title = null;
-        private string notify_last_artist = null;
-
-        private static readonly uint SkipDelta = 10;
-        private static readonly int VolumeDelta = 10;
         
-        protected override void PluginInitialize()
+        private void OnNotificationAreaActivated (object o, EventArgs args)
         {
+            elements_service.PrimaryWindow.ToggleVisibility ();
         }
         
-        protected override void InterfaceInitialize() 
+        private void OnNotificationAreaPopupMenuEvent (object o, PopupMenuArgs args)
         {
-            Init();
-
-            actions = new ActionGroup("NotificationArea");
-
-            actions.Add(new ActionEntry [] {
-                new ActionEntry("CloseAction", Stock.Close,
-                    Catalog.GetString("_Close"), "<Control>W",
-                    Catalog.GetString("Close"), CloseWindow)
-            });
-
-            actions.Add(new ToggleActionEntry [] {
-                new ToggleActionEntry("ToggleNotificationsAction", null,
-                    Catalog.GetString("_Show Notifications"), null,
-                    Catalog.GetString("Show notifications when song changes"), ToggleNotifications, ShowNotifications)
-            });
-
-            Globals.ActionManager.UI.InsertActionGroup(actions, 0);
-            ui_manager_id = Globals.ActionManager.UI.AddUiFromResource("NotificationAreaIconMenu.xml");      
-            menu = (Menu) Globals.ActionManager.UI.GetWidget("/NotificationAreaIconMenu");
-
-            for(int i = 0; i < menu.Children.Length; i++) {
-                if(menu.Children[i].Name == "Next") {
-                    rating_menu_item = new RatingMenuItem();
-                    rating_menu_item.Activated += OnItemRatingActivated;
-                    ToggleRatingMenuSensitive();
-                    menu.Insert(rating_menu_item, i + 2);
-                    break;
-                }
-            }
-
-            menu.Show();
-            
-            popup = new TrackInfoPopup();
-            PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
-
-            // When we're already playing fill the TrackInfoPopup with the current track
-            if (PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
-                FillPopup();
-            }
-
-            // Forcefully load this value
-            show_notifications = ShowNotifications;
-            InterfaceElements.MainWindow.KeyPressEvent += OnKeyPressEvent;
-        }
-
-        protected override void PluginDispose() 
-        {
-            if (notif_area != null) {
-                notif_area.Destroy();
-                event_box = null;
-                notif_area = null;
-            }
-            
-            InterfaceElements.PrimaryWindowClose = null;
-            
-            PlayerEngineCore.EventChanged -= OnPlayerEngineEventChanged;
-            
-            Globals.ActionManager.UI.RemoveUi(ui_manager_id);
-            Globals.ActionManager.UI.RemoveActionGroup(actions);
-        }
-
-        public override Gtk.Widget GetConfigurationWidget()
-        {            
-            return new NotificationAreaIconConfigPage(this);
+            menu.Popup (null, null, notif_area.PositionMenu, 3, Gtk.Global.CurrentEventTime);
         }
         
-
-        
-        private void RegisterCloseHandler()
-        {
-            if(InterfaceElements.PrimaryWindowClose == null) {
-                InterfaceElements.PrimaryWindowClose = OnPrimaryWindowClose;
-            }
-        }
-        
-        private void UnregisterCloseHandler()
-        {
-            if(InterfaceElements.PrimaryWindowClose != null) {
-                InterfaceElements.PrimaryWindowClose = null;
-            }
-        }
-        
-        private bool OnPrimaryWindowClose()
-        {
-            CloseWindow(null, null);
-            return true;
-        }
-
-        private void OnDestroyEvent(object o, DestroyEventArgs args) 
-        {
-            Init();
-        }
-
-        private void CloseWindow(object o, EventArgs args)
+        private void CloseWindow (object o, EventArgs args)
         {
             try {
-                if(NotifyOnCloseSchema.Get()) {
-                    Gdk.Pixbuf image = Branding.ApplicationLogo.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
+                if (NotifyOnCloseSchema.Get ()) {
+                    /*Gdk.Pixbuf image = Branding.ApplicationLogo.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
                     Notification nf = new Notification(
                         Catalog.GetString("Still Running"), 
                         Catalog.GetString("Banshee was closed to the notification area. " + 
@@ -247,249 +211,24 @@ namespace Banshee.NotificationArea
                         image, event_box);
                     nf.Urgency = Urgency.Low;
                     nf.Timeout = 4500;
-                    nf.Show();
+                    nf.Show();*/
                     
-                    NotifyOnCloseSchema.Set(false);
+                    NotifyOnCloseSchema.Set (false);
                 }
             } catch {
             }
 
-            ShowHideMainWindow();
+            elements_service.PrimaryWindow.ToggleVisibility ();
         }
 
-        private void ToggleNotifications(object o, EventArgs args)
+        private void ToggleNotifications (object o, EventArgs args)
         {
-            ShowNotifications = (actions["ToggleNotificationsAction"] as ToggleAction).Active;
-        }
-
-        private void ShowHideMainWindow()
-        {
-            if (InterfaceElements.MainWindow.IsActive) {
-                SaveWindowSizePosition();
-                InterfaceElements.MainWindow.Visible = false;
-            } else {
-                RestoreWindowSizePosition();
-                InterfaceElements.MainWindow.Present();
-            }
-        }
-
-        private void ShowNotification()
-        {
-            // This has to happen before the next if, otherwise the last_* members aren't set correctly.
-            if(current_track == null || (notify_last_title == current_track.DisplayTrackTitle 
-                && notify_last_artist == current_track.DisplayArtistName)) {
-                return;
-            }
-            
-            notify_last_title = current_track.DisplayTrackTitle;
-            notify_last_artist = current_track.DisplayArtistName;
-
-            if(cursor_over_trayicon || !show_notifications || InterfaceElements.MainWindow.HasToplevelFocus) {
-                return;
-            }
-            
-            string message = String.Format("{0}\n<i>{1}</i>", 
-                GLib.Markup.EscapeText(current_track.DisplayTrackTitle),
-                GLib.Markup.EscapeText(current_track.DisplayArtistName));
-            
-            Gdk.Pixbuf image = null;
-            
-            try {
-                if(current_track.CoverArtFileName != null) {
-                    image = new Gdk.Pixbuf(current_track.CoverArtFileName);
-                } 
-            } catch {
-            }
-            
-            if(image == null) {
-                image = Branding.DefaultCoverArt;
-            }
-            
-            image = image.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
-            
-            try {
-                Notification nf = new Notification(Catalog.GetString("Now Playing"), message, image, event_box);
-                nf.Urgency = Urgency.Low;
-                nf.Timeout = 4500;
-                nf.Show();
-            } catch(Exception e) {
-                LogCore.Instance.PushError(Catalog.GetString("Cannot show notification"), e.Message, false);
-            }
-        }
-
-        [GLib.ConnectBefore]
-        private void OnKeyPressEvent(object o, KeyPressEventArgs args)
-        {
-            bool handled = false;
-            
-            if (args.Event.Key == Gdk.Key.w && (args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                handled = true;
-                ShowHideMainWindow();
-            }
-            
-            args.RetVal = handled;
-        }
-
-        private void OnNotificationAreaIconClick(object o, ButtonPressEventArgs args) 
-        {
-            if(args.Event.Type != Gdk.EventType.ButtonPress) {
-                return;
-            }
-        
-            switch(args.Event.Button) {
-                case 1:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        Globals.ActionManager["PreviousAction"].Activate();
-                    } else {
-                        ShowHideMainWindow();
-                    }
-                    break;
-                case 2:
-                    Globals.ActionManager["PlayPauseAction"].Activate();
-                    break;
-                case 3:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        Globals.ActionManager["NextAction"].Activate();
-                    } else {
-                        menu.Popup(null, null, new MenuPositionFunc(PositionMenu), 
-                            args.Event.Button, args.Event.Time);
-                    }
-                    break;
-            }
-        }
-
-        private void OnItemRatingActivated(object o, EventArgs args)
-        {
-            if(PlayerEngineCore.CurrentTrack != null) {
-                PlayerEngineCore.CurrentTrack.Rating = (uint)rating_menu_item.Value;
-                PlayerEngineCore.TrackInfoUpdated();
-            }
+            ShowNotifications = ((ToggleAction)actions["ToggleNotificationsAction"]).Active;
         }
         
-        private void ToggleRatingMenuSensitive() 
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args) 
         {
-            if(PlayerEngineCore.CurrentTrack != null && (SourceManager.ActiveSource is LibrarySource || 
-                SourceManager.ActiveSource is PlaylistSource ||
-                SourceManager.ActiveSource is SmartPlaylistSource)) {
-                rating_menu_item.Reset((int)PlayerEngineCore.CurrentTrack.Rating);
-                rating_menu_item.Show();
-            } else {
-                rating_menu_item.Hide();
-            }
-        }
-
-        private void PositionMenu(Menu menu, out int x, out int y, out bool push_in) 
-        {
-            bool on_bottom = PositionWidget(menu, out x, out y, 0);
-            push_in = true;
-            
-            if((on_bottom && !menu_is_reversed) || (!on_bottom && menu_is_reversed)) {
-                menu_is_reversed = !menu_is_reversed;
-                Widget [] frozen_children = new Widget[menu.Children.Length - 1];
-                Array.Copy(menu.Children, 1, frozen_children, 0, frozen_children.Length);
-                for(int i = 0; i < frozen_children.Length; i++) {
-                    menu.ReorderChild(frozen_children[i], 0);
-                }
-            }
-        }
-
-        private bool PositionWidget(Widget widget, out int x, out int y, int yPadding) 
-        {
-            int button_y, panel_width, panel_height;
-            Gtk.Requisition requisition = widget.SizeRequest();
-            
-            event_box.GdkWindow.GetOrigin(out x, out button_y);
-            (event_box.Toplevel as Gtk.Window).GetSize(out panel_width, out panel_height);
-            
-            bool on_bottom = button_y + panel_height + requisition.Height >= event_box.Screen.Height;
-
-            y = on_bottom
-                ? button_y - requisition.Height - yPadding
-                : button_y + panel_height + yPadding;
-                
-            return on_bottom;
-        }
-
-        private void OnMouseScroll(object o, ScrollEventArgs args) 
-        {
-            switch(args.Event.Direction) {
-                case Gdk.ScrollDirection.Up:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        PlayerEngineCore.Volume += (ushort)VolumeDelta;
-                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.Position += SkipDelta;
-                    } else {
-                        Globals.ActionManager["NextAction"].Activate();
-                    }
-                    break;
-                case Gdk.ScrollDirection.Down:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        if (PlayerEngineCore.Volume < (ushort)VolumeDelta)
-                            PlayerEngineCore.Volume = 0;
-                        else
-                            PlayerEngineCore.Volume -= (ushort)VolumeDelta;
-                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.Position -= SkipDelta;
-                    } else {
-                        Globals.ActionManager["PreviousAction"].Activate();
-                    }
-                    break;
-            }
-        }
-
-        private void HidePopup() 
-        {
-            popup.Hide();
-        }
-        
-        private void ShowPopup() 
-        {
-            PositionPopup();
-            popup.Show();
-        }
-        
-        private void PositionPopup() 
-        {
-            int x, y;
-            Gtk.Requisition event_box_req = event_box.SizeRequest();
-            Gtk.Requisition popup_req = popup.SizeRequest();
-            
-            PositionWidget(popup, out x, out y, 5);
-            
-            x = x - (popup_req.Width / 2) + (event_box_req.Width / 2);     
-            if(x + popup_req.Width >= event_box.Screen.Width) { 
-                x = event_box.Screen.Width - popup_req.Width - 5;
-            } else if(x < 5) {
-                x = 5;
-            }
-            
-            popup.Move(x, y);
-        }
-        
-        private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args) 
-        {
-            cursor_over_trayicon = true;
-            if(can_show_popup) {
-                // only show the popup when the cursor is still over the
-                // tray icon after 500ms
-                GLib.Timeout.Add(500, delegate {
-                    if ((cursor_over_trayicon) && (can_show_popup)) {
-                        ShowPopup();
-                    }
-                    return false;
-                });
-            }
-        }
-        
-        private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args) 
-        {
-            cursor_over_trayicon = false;
-            HidePopup();
-        }
-
-        private void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args) 
-        {
-            switch (args.Event) {
+            /*switch (args.Event) {
                 case PlayerEngineEvent.Iterate:
                     if(PlayerEngineCore.CurrentTrack != null) {
                         popup.Duration = (uint)PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
@@ -523,72 +262,39 @@ namespace Banshee.NotificationArea
                          return false;
                     });
                     break;
-            }
+            }*/
         }
-
-        private void FillPopup() 
-        {
-            can_show_popup = true;
-            popup.Artist = PlayerEngineCore.CurrentTrack.DisplayArtistName;
-            popup.Album = PlayerEngineCore.CurrentTrack.AlbumTitle;
-            popup.TrackTitle = PlayerEngineCore.CurrentTrack.DisplayTrackTitle;
-            try {
-                popup.CoverArtFileName = PlayerEngineCore.CurrentTrack.CoverArtFileName;
-            } catch {
-            }
-            popup.QueueDraw();
-            if (!popup.Visible) {
-                PositionPopup();
-            }
-        }
-
-        private int x, y, w, h;
-        private bool maximized;
-        private void SaveWindowSizePosition()
-        {
-            maximized = ((InterfaceElements.MainWindow.GdkWindow.State & Gdk.WindowState.Maximized) > 0);
-
-            if (!maximized) {
-                InterfaceElements.MainWindow.GetPosition(out x, out y);
-                InterfaceElements.MainWindow.GetSize(out w, out h);
-            }
-        }
-
-        private void RestoreWindowSizePosition() 
-        {
-            if (maximized) {
-                InterfaceElements.MainWindow.Maximize();
-            } else {
-                InterfaceElements.MainWindow.Resize(w, h);
-                InterfaceElements.MainWindow.Move(x, y);
-            }
-        }
-
+        
         public bool ShowNotifications {
             get { 
-                show_notifications = ShowNotificationsSchema.Get(); 
+                show_notifications = ShowNotificationsSchema.Get (); 
                 return show_notifications;
             }
+            
             set { 
-                ShowNotificationsSchema.Set(value);
+                ShowNotificationsSchema.Set (value);
                 show_notifications = value;
             }
         }
         
         public bool QuitOnClose {
             get {
-                return QuitOnCloseSchema.Get();
+                return QuitOnCloseSchema.Get ();
             }
             
             set {
-                QuitOnCloseSchema.Set(value);
-                if(value) {
-                    UnregisterCloseHandler();
+                QuitOnCloseSchema.Set (value);
+                if (value) {
+                    UnregisterCloseHandler ();
                 } else {
-                    RegisterCloseHandler();
+                    RegisterCloseHandler ();
                 }
             }
-        }*/
+        }
+    
+        string IService.ServiceName {
+            get { return "NotificationAreaService"; }
+        }
         
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
             "plugins.notification_area", "enabled",

@@ -8,10 +8,13 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="Banshee.NotificationArea/NotificationArea.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.NotificationArea/X11NotificationArea.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.NotificationArea/NotificationAreaService.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/NotificationAreaMenu.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/Banshee.NotificationArea.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.NotificationArea/X11NotificationAreaBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.NotificationArea/INotificationAreaBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.NotificationArea/GtkNotificationAreaBox.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />

@@ -51,7 +51,7 @@ using Banshee.Sources.Gui;
 
 namespace Nereid
 {
-    public class PlayerInterface : Window, IService, IDisposable, IHasTrackSelection, IHasSourceView
+    public class PlayerInterface : BaseClientWindow, IService, IDisposable, IHasTrackSelection, IHasSourceView
     {
         // Major Layout Components
         private VBox primary_vbox;
@@ -67,27 +67,18 @@ namespace Nereid
         private ObjectListView object_view;
         private Label status_label;
         
-        // Cached service references
-        private GtkElementsService elements_service;
-        private InterfaceActionService action_service;
-        
         public PlayerInterface () : base ("Banshee Music Player")
         {
-            elements_service = ServiceManager.Get<GtkElementsService> ("GtkElementsService");
-            action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
-            
-            ConfigureWindow ();
+        }
+        
+        protected override void Initialize ()
+        {
             BuildPrimaryLayout ();
             ConnectEvents ();
             LoadSettings ();
-            ResizeMoveWindow ();
             
-            elements_service.PrimaryWindow = this;
-
-            action_service.TrackActions.TrackSelector = this;
-            action_service.SourceActions.SourceView = this;
-            
-            AddAccelGroup (action_service.UIManager.AccelGroup);
+            ActionService.TrackActions.TrackSelector = this;
+            ActionService.SourceActions.SourceView = this;
             
             composite_view.TrackView.HasFocus = true;
             
@@ -109,16 +100,11 @@ namespace Nereid
 
 #region Interface Construction
         
-        private void ConfigureWindow ()
-        {
-            WindowPosition = WindowPosition.Center;
-        }
-        
         private void BuildPrimaryLayout ()
         {
             primary_vbox = new VBox ();
             
-            Widget menu = action_service.UIManager.GetWidget ("/MainMenu");
+            Widget menu = ActionService.UIManager.GetWidget ("/MainMenu");
             menu.Show ();
             primary_vbox.PackStart (menu, false, false, 0);
            
@@ -136,7 +122,7 @@ namespace Nereid
             toolbar_alignment.TopPadding = 3;
             toolbar_alignment.BottomPadding = 3;
             
-            header_toolbar = (Toolbar)action_service.UIManager.GetWidget ("/HeaderToolbar");
+            header_toolbar = (Toolbar)ActionService.UIManager.GetWidget ("/HeaderToolbar");
             header_toolbar.ShowArrow = false;
             header_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
             
@@ -147,15 +133,15 @@ namespace Nereid
             
             ConnectedSeekSlider seek_slider = new ConnectedSeekSlider ();
             seek_slider.Show ();
-            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/SeekSlider", seek_slider);
+            ActionService.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/SeekSlider", seek_slider);
             
             TrackInfoDisplay track_info_display = new TrackInfoDisplay ();
             track_info_display.Show ();
-            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/TrackInfoDisplay", track_info_display, true);
+            ActionService.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/TrackInfoDisplay", track_info_display, true);
             
             ConnectedVolumeButton volume_button = new ConnectedVolumeButton ();
             volume_button.Show ();
-            action_service.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/VolumeButton", volume_button);
+            ActionService.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/VolumeButton", volume_button);
         }
 
         private void BuildViews ()
@@ -201,7 +187,7 @@ namespace Nereid
                 status_label.Style.Foreground (StateType.Normal), status_label.Style.Background (StateType.Normal)));
             
             ActionButton song_properties_button = new ActionButton
-                (action_service.TrackActions["TrackPropertiesAction"]);
+                (ActionService.TrackActions["TrackPropertiesAction"]);
             song_properties_button.IconSize = IconSize.Menu;
             song_properties_button.Padding = 0;
             song_properties_button.LabelVisible = false;
@@ -222,31 +208,7 @@ namespace Nereid
 
 #endregion
 
-#region Configuration Loading/Saving        
-        
-        private void ResizeMoveWindow ()
-        {
-            int x = PlayerWindowSchema.XPos.Get ();
-            int y = PlayerWindowSchema.YPos.Get (); 
-            int width = PlayerWindowSchema.Width.Get ();
-            int height = PlayerWindowSchema.Height.Get ();
-           
-            if(width != 0 && height != 0) {
-                Resize (width, height);
-            }
-
-            if (x == 0 && y == 0) {
-                SetPosition (WindowPosition.Center);
-            } else {
-                Move (x, y);
-            }
-            
-            if (PlayerWindowSchema.Maximized.Get ()) {
-                Maximize ();
-            } else {
-                Unmaximize ();
-            }
-        }
+#region Configuration Loading/Saving
         
         private void LoadSettings ()
         {
@@ -262,8 +224,8 @@ namespace Nereid
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
 
-            action_service.TrackActions ["SearchForSameArtistAction"].Activated += OnProgrammaticSearch;
-            action_service.TrackActions ["SearchForSameAlbumAction"].Activated += OnProgrammaticSearch;
+            ActionService.TrackActions ["SearchForSameArtistAction"].Activated += OnProgrammaticSearch;
+            ActionService.TrackActions ["SearchForSameAlbumAction"].Activated += OnProgrammaticSearch;
 
             // UI events
             view_container.SearchEntry.Changed += OnSearchEntryChanged;
@@ -415,41 +377,7 @@ namespace Nereid
 #endregion
         
 #region Gtk.Window Overrides
-        
-        protected override bool OnConfigureEvent (Gdk.EventConfigure evnt)
-        {
-            int x, y, width, height;
 
-            if((GdkWindow.State & Gdk.WindowState.Maximized) != 0) {
-                return base.OnConfigureEvent (evnt);
-            }
-            
-            GetPosition (out x, out y);
-            GetSize (out width, out height);
-           
-            PlayerWindowSchema.XPos.Set (x);
-            PlayerWindowSchema.YPos.Set (y);
-            PlayerWindowSchema.Width.Set (width);
-            PlayerWindowSchema.Height.Set (height);
-            
-            return base.OnConfigureEvent (evnt);
-        }
-        
-        protected override bool OnWindowStateEvent (Gdk.EventWindowState evnt)
-        {
-            if ((evnt.NewWindowState & Gdk.WindowState.Withdrawn) == 0) {
-                PlayerWindowSchema.Maximized.Set ((evnt.NewWindowState & Gdk.WindowState.Maximized) != 0);
-            }
-            
-            return base.OnWindowStateEvent (evnt);
-        }
-
-        protected override bool OnDeleteEvent (Gdk.Event evnt)
-        {
-            Banshee.ServiceStack.Application.Shutdown ();
-            return true;
-        }
-        
         private bool accel_group_active = true;
         
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
@@ -459,12 +387,12 @@ namespace Nereid
             if (Focus is Entry && (GtkUtilities.NoImportantModifiersAreSet () && 
                 evnt.Key != Gdk.Key.Control_L && evnt.Key != Gdk.Key.Control_R)) {
                 if (accel_group_active) {
-                    RemoveAccelGroup (action_service.UIManager.AccelGroup);
+                    RemoveAccelGroup (ActionService.UIManager.AccelGroup);
                     accel_group_active = false;
                  }
             } else {
                 if (!accel_group_active) {
-                    AddAccelGroup (action_service.UIManager.AccelGroup);
+                    AddAccelGroup (ActionService.UIManager.AccelGroup);
                     accel_group_active = true;
                 }
             }

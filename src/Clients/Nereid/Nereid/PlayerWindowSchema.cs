@@ -33,41 +33,6 @@ namespace Nereid
 {
     public static class PlayerWindowSchema
     {
-        public static readonly SchemaEntry<int> Width = new SchemaEntry<int>(
-            "player_window", "width",
-            1024,
-            "Window Width",
-            "Width of the main interface window."
-        );
-
-        public static readonly SchemaEntry<int> Height = new SchemaEntry<int>(
-            "player_window", "height",
-            700,
-            "Window Height",
-            "Height of the main interface window."
-        );
-
-        public static readonly SchemaEntry<int> XPos = new SchemaEntry<int>(
-            "player_window", "x_pos",
-            0,
-            "Window Position X",
-            "Pixel position of Main Player Window on the X Axis"
-        );
-
-        public static readonly SchemaEntry<int> YPos = new SchemaEntry<int>(
-            "player_window", "y_pos",
-            0,
-            "Window Position Y",
-            "Pixel position of Main Player Window on the Y Axis"
-        );
-
-        public static readonly SchemaEntry<bool> Maximized = new SchemaEntry<bool>(
-            "player_window", "maximized",
-            false,
-            "Window Maximized",
-            "True if main window is to be maximized, false if it is not."
-        );
-
         public static readonly SchemaEntry<int> SourceViewWidth = new SchemaEntry<int>(
             "player_window", "source_view_width",
             175,
