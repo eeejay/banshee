@@ -32,10 +32,12 @@ using Mono.Unix;
 
 using Banshee.Widgets;
 using Banshee.Gui.Widgets;
+using Banshee.Sources.Gui;
 using Banshee.Collection;
 
 namespace Nereid
 {
+
     public class ViewContainer : VBox
     {
         private SearchEntry search_entry;
@@ -43,7 +45,7 @@ namespace Nereid
         private Label title_label;
         private Label search_label;
         
-        private Widget content;
+        private ISourceContents content;
         
         public ViewContainer ()
         {
@@ -110,22 +112,22 @@ namespace Nereid
             get { return search_entry; }
         }
         
-        public Widget Content {
+        public ISourceContents Content {
             get { return content; }
             set {
                 if (content == value)
                     return;
 
                 if (content != null) {
-                    content.Hide ();
-                    Remove (content);
+                    content.Widget.Hide ();
+                    Remove (content.Widget);
                 }
                 
                 content = value;
                 
                 if (content != null) {
-                    PackStart (content, true, true, 0);
-                    content.Show ();
+                    PackStart (content.Widget, true, true, 0);
+                    content.Widget.Show ();
                 }
             }
         }

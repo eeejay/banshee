@@ -1,5 +1,5 @@
 //
-// CompositeTrackListView.cs
+// CompositeTrackSourceContents.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -38,15 +38,15 @@ using Hyena.Data;
 using Hyena.Data.Gui;
 
 using Banshee.Sources;
-
-using Banshee.Gui;
 using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Configuration;
+using Banshee.Gui;
+using Banshee.Collection.Gui;
 
-namespace Banshee.Collection.Gui
+namespace Banshee.Sources.Gui
 {
-    public class CompositeTrackListView : VBox
+    public class CompositeTrackSourceContents : VBox, ISourceContents
     {
         private ArtistListView artist_view;
         private AlbumListView album_view;
@@ -84,7 +84,7 @@ namespace Banshee.Collection.Gui
             </ui>
         ";
         
-        public CompositeTrackListView ()
+        public CompositeTrackSourceContents ()
         {
             string position = BrowserPosition.Get ();
             if (position == "top") {
@@ -380,6 +380,40 @@ namespace Banshee.Collection.Gui
                 return ((ITrackModelSource)ServiceManager.SourceManager.ActiveSource).ShowBrowser;
             }
         }
+
+#region Implement ISourceContents
+
+        private Source source;
+
+        public bool SetSource (Source source)
+        {
+            ITrackModelSource track_source = source as ITrackModelSource;
+            if (track_source == null) {
+                return false;
+            }
+
+            this.source = source;
+            SetModels (track_source.TrackModel, track_source.ArtistModel, track_source.AlbumModel);
+            TrackView.HeaderVisible = true;
+            return true;
+        }
+
+        public void ResetSource ()
+        {
+            source = null;
+            SetModels (null, null, null);
+            TrackView.HeaderVisible = false;
+        }
+
+        public Source Source {
+            get { return source; }
+        }
+
+        public Widget Widget {
+            get { return this; }
+        }
+
+#endregion
         
         public static readonly SchemaEntry<bool> BrowserVisible = new SchemaEntry<bool> (
             "browser", "visible",

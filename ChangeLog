@@ -1,3 +1,27 @@
+2008-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ISourceContents.cs: New
+	interface.
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: When the ActiveSource is
+	changed, call ISourceContents.ResetSource on the current SourceContents.
+	Check the new source for a NereidSourceContents property and use it if it
+	exists (allowing Sources to define custom views).  And finally call
+	ISourceContents.SetSource on the new SourceContents.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Move to Banshee.Sources.Gui and implement ISourceContents.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ObjectListSourceContents.cs:
+	New class that wraps a ObjectListView in a ScrolledWindow and implements
+	ISourceContents.
+
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Defined Contents as a
+	ISourceContents not a Widget.
+
+	* src/Core/Banshee.ThickClient/Makefile.am: Updated.
+
 2008-02-19  Aaron Bockover  <abock@gnome.org>
 
 	This commit adds most of the functionality of the notification area

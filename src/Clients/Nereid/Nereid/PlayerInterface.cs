@@ -62,9 +62,8 @@ namespace Nereid
         
         // Major Interaction Components
         private SourceView source_view;
-        private CompositeTrackListView composite_view;
-        private ScrolledWindow object_view_scroll;
-        private ObjectListView object_view;
+        private CompositeTrackSourceContents composite_view;
+        private ObjectListSourceContents object_view;
         private Label status_label;
         
         public PlayerInterface () : base ("Banshee Music Player")
@@ -152,7 +151,7 @@ namespace Nereid
             view_container = new ViewContainer ();
             
             source_view = new SourceView ();
-            composite_view = new CompositeTrackListView ();
+            composite_view = new CompositeTrackSourceContents ();
             
             Hyena.Widgets.ScrolledWindow source_scroll = new Hyena.Widgets.ScrolledWindow ();
             source_scroll.AddWithFrame (source_view);       
@@ -269,7 +268,6 @@ namespace Nereid
             }
             
             view_container.Title = source.Name;
-            
             view_container.SearchEntry.Ready = false;
             view_container.SearchEntry.CancelSearch ();
 
@@ -278,36 +276,28 @@ namespace Nereid
                 view_container.SearchEntry.ActivateFilter ((int)source.FilterType);
             }
 
-            // Clear any models previously connected to the views
-            if (!(source is ITrackModelSource)) {
-                composite_view.SetModels (null, null, null);
-                composite_view.TrackView.HeaderVisible = false;
-            } else if (!(source is Hyena.Data.IObjectListModel)) {
-                if (object_view != null) {
-                    object_view.SetModel(null);
-                }
+            if (view_container.Content != null) {
+                view_container.Content.ResetSource ();
             }
-            
+
             // Connect the source models to the views if possible
-            if (source is ITrackModelSource) {
+            if (source.Properties.Contains ("NereidSourceContents")) {
+                view_container.Content = source.Properties.Get<ISourceContents> ("NereidView");
+                view_container.Content.SetSource (source);
+            } else if (source is ITrackModelSource) {
                 if (composite_view.TrackModel != null) {
                     composite_view.TrackModel.Reloaded -= HandleTrackModelReloaded;
                 }
-                ITrackModelSource track_source = (ITrackModelSource)source;
-                composite_view.SetModels (track_source.TrackModel, track_source.ArtistModel, track_source.AlbumModel);
+                composite_view.SetSource (source);
                 composite_view.TrackModel.Reloaded += HandleTrackModelReloaded;
-                composite_view.TrackView.HeaderVisible = true;
                 view_container.Content = composite_view;
             } else if (source is Hyena.Data.IObjectListModel) {
                 if (object_view == null) {
-                    object_view_scroll = new ScrolledWindow ();
-                    object_view = new Hyena.Data.Gui.ObjectListView ();
-                    object_view_scroll.Add (object_view);
-                    object_view.Show ();
+                    object_view = new ObjectListSourceContents ();
                 }
                 
-                object_view.SetModel((Hyena.Data.IObjectListModel)source);
-                view_container.Content = object_view_scroll;
+                view_container.Content = object_view;
+                view_container.Content.SetSource (source);
             }
             
             UpdateStatusBar ();
