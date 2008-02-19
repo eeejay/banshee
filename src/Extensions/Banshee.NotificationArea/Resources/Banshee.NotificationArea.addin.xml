@@ -7,7 +7,7 @@
     name="Notification Area Icon"
     category="User Interface"
     description="Displays an icon in the notification area and allows Banshee to be controlled through it."
-    author="Aaron Bockover, Sebastian Dröge, Gabriel Burt, Ruben Vermeersch"
+    author="Aaron Bockover, Sebastian Dröge, Alexander Hixon, Gabriel Burt, Ruben Vermeersch"
     url="http://banshee-project.org/"
     defaultEnabled="true">
 

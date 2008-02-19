@@ -7,7 +7,9 @@ SOURCES =  \
 	Banshee.NotificationArea/INotificationAreaBox.cs \
 	Banshee.NotificationArea/NotificationAreaService.cs \
 	Banshee.NotificationArea/X11NotificationArea.cs \
-	Banshee.NotificationArea/X11NotificationAreaBox.cs 
+	Banshee.NotificationArea/X11NotificationAreaBox.cs \
+	Notifications/Notification.cs \
+	Notifications/Notifications.cs 
 
 RESOURCES =  \
 	Resources/Banshee.NotificationArea.addin.xml \

@@ -38,6 +38,9 @@ namespace Banshee.MediaEngine
 {
     public abstract class PlayerEngine
     {
+        public const int VolumeDelta = 10;
+        public const int SkipDelta = 10;
+    
         public event PlayerEngineStateHandler StateChanged;
         public event PlayerEngineEventHandler EventChanged;
         

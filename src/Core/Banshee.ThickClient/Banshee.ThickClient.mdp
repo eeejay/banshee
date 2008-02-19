@@ -10,7 +10,6 @@
   <Contents>
     <File name="Resources/browser-album-cover.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Collection.Gui/TrackListView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Gui/CompositeTrackListView.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/ColumnCellAlbum.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/ArtworkManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/ArtistListView.cs" subtype="Code" buildaction="Compile" />
@@ -91,6 +90,9 @@
     <File name="Banshee.Gui.Widgets/ConnectedMessageBar.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources.Gui/SourceIconResolver.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/BaseClientWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/CompositeTrackSourceContents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/ISourceContents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/ObjectListSourceContents.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

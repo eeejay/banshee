@@ -50,7 +50,7 @@ namespace Banshee.Collection.Gui
 
         public ColumnCellAlbum () : base (null, true)
         {
-            artwork_manager = ServiceManager.Get<ArtworkManager> ("ArtworkManager");
+            artwork_manager = ServiceManager.Get<ArtworkManager> ();
         }
     
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)

@@ -1,3 +1,22 @@
+2008-02-19  Aaron Bockover  <abock@gnome.org>
+	
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Ported notification bubbles. Hawt. 4 u snorp lol.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	Added constant VolumeDelta and SkipDelta public fields
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	Don't use the redundant string parameter version of ServiceManager.Get
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/GtkNotificationAreaBox.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/INotificationAreaBox.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Added a Widget property for the notifications to use
+	
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationArea.cs:
+	Ignore some other crappy warnings
+
 2008-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:

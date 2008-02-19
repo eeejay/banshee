@@ -48,6 +48,10 @@ namespace Banshee.NotificationArea
             remove { base.PopupMenu -= value; }
         }
         
+        public Widget Widget {
+            get { return null; }
+        }
+        
         public GtkNotificationAreaBox ()
         {
             IconName = "music-player-banshee";

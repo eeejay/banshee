@@ -3,8 +3,10 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Sebastian Dröge <slomo@circular-chaos.org>
+//   Alexander Hixon <hixon.alexander@mediati.org>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -30,6 +32,7 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Banshee.MediaEngine;
 using Banshee.ServiceStack;
 using Banshee.Gui;
 
@@ -44,6 +47,10 @@ namespace Banshee.NotificationArea
         public event EventHandler Activated;
         public event PopupMenuHandler PopupMenuEvent;
         
+        public Widget Widget {
+            get { return event_box; }
+        }
+        
         public X11NotificationAreaBox () : base (Catalog.GetString ("Banshee"))
         {
             event_box = new EventBox ();
@@ -53,9 +60,9 @@ namespace Banshee.NotificationArea
             Add (event_box);
             
             event_box.ButtonPressEvent += OnButtonPressEvent;
-            //event_box.EnterNotifyEvent += OnEnterNotifyEvent;
-            //event_box.LeaveNotifyEvent += OnLeaveNotifyEvent;
-            //event_box.ScrollEvent += OnMouseScroll;
+            event_box.EnterNotifyEvent += OnEnterNotifyEvent;
+            event_box.LeaveNotifyEvent += OnLeaveNotifyEvent;
+            event_box.ScrollEvent += OnMouseScroll;
             
             ShowAll ();
         }
@@ -110,6 +117,95 @@ namespace Banshee.NotificationArea
             }
         }
         
+        private void OnMouseScroll (object o, ScrollEventArgs args)
+        {
+            switch (args.Event.Direction) {
+                case Gdk.ScrollDirection.Up:
+                    if ((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
+                        ServiceManager.PlayerEngine.Volume += (ushort)PlayerEngine.VolumeDelta;
+                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
+                        ServiceManager.PlayerEngine.Position += PlayerEngine.SkipDelta;
+                    } else {
+                        ServiceManager.PlaybackController.Next ();
+                    }
+                    break;
+                    
+                case Gdk.ScrollDirection.Down:
+                    if ((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
+                        if (ServiceManager.PlayerEngine.Volume < (ushort)PlayerEngine.VolumeDelta) {
+                            ServiceManager.PlayerEngine.Volume = 0;
+                        } else {
+                            ServiceManager.PlayerEngine.Volume -= (ushort)PlayerEngine.VolumeDelta;
+                        }
+                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
+                        ServiceManager.PlayerEngine.Position -= PlayerEngine.SkipDelta;
+                    } else {
+                        ServiceManager.PlaybackController.Previous ();
+                    }
+                    break;
+            }
+        }
+        
+        private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args) 
+        {
+            /*cursor_over_trayicon = true;
+            if(can_show_popup) {
+                // only show the popup when the cursor is still over the
+                // tray icon after 500ms
+                GLib.Timeout.Add(500, delegate {
+                    if ((cursor_over_trayicon) && (can_show_popup)) {
+                        ShowPopup();
+                    }
+                    return false;
+                });
+            }*/
+        }
+        
+        private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args) 
+        {
+            // cursor_over_trayicon = false;
+            // HidePopup();
+        }
+        
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args) 
+        {
+            /*switch (args.Event) {
+                case PlayerEngineEvent.Iterate:
+                    if(PlayerEngineCore.CurrentTrack != null) {
+                        popup.Duration = (uint)PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
+                        popup.Position = PlayerEngineCore.Position;
+
+                        if (current_track != PlayerEngineCore.CurrentTrack) {
+                            current_track = PlayerEngineCore.CurrentTrack;
+                            ShowNotification();
+                        }
+                    } else {
+                        popup.Duration = 0;
+                        popup.Position = 0;
+                    }
+                    break;
+                case PlayerEngineEvent.StartOfStream:
+                case PlayerEngineEvent.TrackInfoUpdated:
+                    ToggleRatingMenuSensitive();
+                    FillPopup();
+                    ShowNotification();
+                    break;
+                case PlayerEngineEvent.EndOfStream:
+                    // only hide the popup when we don't play again after 250ms
+                    GLib.Timeout.Add(250, delegate {
+                        if (PlayerEngineCore.CurrentState != PlayerEngineState.Playing) {
+                            ToggleRatingMenuSensitive();
+                            popup.Duration = 0;
+                            popup.Position = 0;
+                            can_show_popup = false;
+                            popup.Hide();
+                         }
+                         return false;
+                    });
+                    break;
+            }*/
+        }
+        
         protected virtual void OnActivated ()
         {
             EventHandler handler = Activated;
@@ -142,150 +238,7 @@ namespace Banshee.NotificationArea
         private TrackInfoPopup popup;
         private bool can_show_popup = false;
         private bool cursor_over_trayicon = false;
-        private bool show_notifications = false;
-        private TrackInfo current_track = null;
-        private string notify_last_title = null;
-        private string notify_last_artist = null;
 
-        private static readonly uint SkipDelta = 10;
-        private static readonly int VolumeDelta = 10;
-        
-        protected override void PluginInitialize()
-        {
-        }
-        
-        protected override void InterfaceInitialize() 
-        {
-
-            
-            popup = new TrackInfoPopup();
-            PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
-
-            // When we're already playing fill the TrackInfoPopup with the current track
-            if (PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
-                FillPopup();
-            }
-
-            // Forcefully load this value
-            show_notifications = ShowNotifications;
-            elements_service.MainWindow.KeyPressEvent += OnKeyPressEvent;
-        }
-
-        protected override void PluginDispose() 
-        {
-
-        }
-
-        public override Gtk.Widget GetConfigurationWidget()
-        {            
-            return new NotificationAreaIconConfigPage(this);
-        }
-
-        private void ShowNotification()
-        {
-            // This has to happen before the next if, otherwise the last_* members aren't set correctly.
-            if(current_track == null || (notify_last_title == current_track.DisplayTrackTitle 
-                && notify_last_artist == current_track.DisplayArtistName)) {
-                return;
-            }
-            
-            notify_last_title = current_track.DisplayTrackTitle;
-            notify_last_artist = current_track.DisplayArtistName;
-
-            if(cursor_over_trayicon || !show_notifications || elements_service.MainWindow.HasToplevelFocus) {
-                return;
-            }
-            
-            string message = String.Format("{0}\n<i>{1}</i>", 
-                GLib.Markup.EscapeText(current_track.DisplayTrackTitle),
-                GLib.Markup.EscapeText(current_track.DisplayArtistName));
-            
-            Gdk.Pixbuf image = null;
-            
-            try {
-                if(current_track.CoverArtFileName != null) {
-                    image = new Gdk.Pixbuf(current_track.CoverArtFileName);
-                } 
-            } catch {
-            }
-            
-            if(image == null) {
-                image = Branding.DefaultCoverArt;
-            }
-            
-            image = image.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
-            
-            try {
-                Notification nf = new Notification(Catalog.GetString("Now Playing"), message, image, event_box);
-                nf.Urgency = Urgency.Low;
-                nf.Timeout = 4500;
-                nf.Show();
-            } catch(Exception e) {
-                LogCore.Instance.PushError(Catalog.GetString("Cannot show notification"), e.Message, false);
-            }
-        }
-
-        [GLib.ConnectBefore]
-        private void OnKeyPressEvent(object o, KeyPressEventArgs args)
-        {
-            bool handled = false;
-            
-            if (args.Event.Key == Gdk.Key.w && (args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                handled = true;
-                ShowHideMainWindow();
-            }
-            
-            args.RetVal = handled;
-        }
-
-        
-
-        private void OnItemRatingActivated(object o, EventArgs args)
-        {
-            if(PlayerEngineCore.CurrentTrack != null) {
-                PlayerEngineCore.CurrentTrack.Rating = (uint)rating_menu_item.Value;
-                PlayerEngineCore.TrackInfoUpdated();
-            }
-        }
-        
-        private void ToggleRatingMenuSensitive() 
-        {
-            if(PlayerEngineCore.CurrentTrack != null && (SourceManager.ActiveSource is LibrarySource || 
-                SourceManager.ActiveSource is PlaylistSource ||
-                SourceManager.ActiveSource is SmartPlaylistSource)) {
-                rating_menu_item.Reset((int)PlayerEngineCore.CurrentTrack.Rating);
-                rating_menu_item.Show();
-            } else {
-                rating_menu_item.Hide();
-            }
-        }
-
-        private void OnMouseScroll(object o, ScrollEventArgs args) 
-        {
-            switch(args.Event.Direction) {
-                case Gdk.ScrollDirection.Up:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        PlayerEngineCore.Volume += (ushort)VolumeDelta;
-                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.Position += SkipDelta;
-                    } else {
-                        Globals.ActionManager["NextAction"].Activate();
-                    }
-                    break;
-                case Gdk.ScrollDirection.Down:
-                    if((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
-                        if (PlayerEngineCore.Volume < (ushort)VolumeDelta)
-                            PlayerEngineCore.Volume = 0;
-                        else
-                            PlayerEngineCore.Volume -= (ushort)VolumeDelta;
-                    } else if((args.Event.State & Gdk.ModifierType.ShiftMask) != 0) {
-                        PlayerEngineCore.Position -= SkipDelta;
-                    } else {
-                        Globals.ActionManager["PreviousAction"].Activate();
-                    }
-                    break;
-            }
-        }
 
         private void HidePopup() 
         {
@@ -315,29 +268,6 @@ namespace Banshee.NotificationArea
             
             popup.Move(x, y);
         }
-        
-        private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args) 
-        {
-            cursor_over_trayicon = true;
-            if(can_show_popup) {
-                // only show the popup when the cursor is still over the
-                // tray icon after 500ms
-                GLib.Timeout.Add(500, delegate {
-                    if ((cursor_over_trayicon) && (can_show_popup)) {
-                        ShowPopup();
-                    }
-                    return false;
-                });
-            }
-        }
-        
-        private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args) 
-        {
-            cursor_over_trayicon = false;
-            HidePopup();
-        }
-
-
 
         private void FillPopup() 
         {
@@ -354,7 +284,25 @@ namespace Banshee.NotificationArea
                 PositionPopup();
             }
         }
+        
+        /*
+                protected override void InterfaceInitialize() 
+        {
 
+            
+            popup = new TrackInfoPopup();
+            PlayerEngineCore.EventChanged += OnPlayerEngineEventChanged;
+
+            // When we're already playing fill the TrackInfoPopup with the current track
+            if (PlayerEngineCore.CurrentState == PlayerEngineState.Playing) {
+                FillPopup();
+            }
+
+            // Forcefully load this value
+            show_notifications = ShowNotifications;
+            elements_service.MainWindow.KeyPressEvent += OnKeyPressEvent;
+        }
+        
         */
     }
 }

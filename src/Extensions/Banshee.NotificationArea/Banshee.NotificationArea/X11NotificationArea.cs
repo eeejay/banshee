@@ -40,7 +40,7 @@ using System.Runtime.InteropServices;
 using Gtk;
 using Gdk;
 
-#pragma warning disable 0169
+#pragma warning disable 0169, 0414
 
 public class X11NotificationArea : Plug
 {
@@ -513,5 +513,5 @@ public class X11NotificationArea : Plug
 	}
 }
 
-#pragma warning restore 0169
+#pragma warning restore 0169, 0414
 

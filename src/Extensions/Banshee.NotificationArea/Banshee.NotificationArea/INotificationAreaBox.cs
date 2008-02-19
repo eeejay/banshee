@@ -38,5 +38,7 @@ namespace Banshee.NotificationArea
         event PopupMenuHandler PopupMenuEvent;
         
         void PositionMenu (Menu menu, out int x, out int y, out bool push_in);
+        
+        Widget Widget { get; }
     }
 }

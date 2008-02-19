@@ -2,10 +2,11 @@
 // NotificationAreaService.cs
 //
 // Authors:
-//   Sebastian Dröge <slomo@circular-chaos.org>
 //   Aaron Bockover <abockover@novell.com>
+//   Sebastian Dröge <slomo@circular-chaos.org>
+//   Alexander Hixon <hixon.alexander@mediati.org>
 //
-// Copyright (C) 2005-2007 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 // Copyright (C) 2006-2007 Sebastian Dröge
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -32,12 +33,16 @@ using System;
 using Gtk;
 using Mono.Unix;
 
-//using Notifications;
+using Notifications;
 
+using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.ServiceStack;
 using Banshee.Configuration;
 using Banshee.Gui;
+using Banshee.Collection.Gui;
 using Banshee.MediaEngine;
+using Banshee.Widgets;
 
 namespace Banshee.NotificationArea 
 {
@@ -46,13 +51,18 @@ namespace Banshee.NotificationArea
         private INotificationAreaBox notif_area;
         private GtkElementsService elements_service;
         private InterfaceActionService interface_action_service;
+        private ArtworkManager artwork_manager_service;
     
         private Menu menu;
-		//private RatingMenuItem rating_menu_item;
+		private RatingMenuItem rating_menu_item;
         private BansheeActionGroup actions;
         private uint ui_manager_id;
         
-        private bool show_notifications = true;
+        private bool show_notifications;
+        private string notify_last_title;
+        private string notify_last_artist;
+        private TrackInfo current_track;
+        private Notification current_nf;
     
         public NotificationAreaService ()
         {
@@ -114,7 +124,20 @@ namespace Banshee.NotificationArea
             menu = (Menu)interface_action_service.UIManager.GetWidget("/NotificationAreaIconMenu");
             menu.Show ();
             
+            for (int i = 0; i < menu.Children.Length; i++) {
+                if (menu.Children[i].Name == "Next") {
+                    rating_menu_item = new RatingMenuItem ();
+                    rating_menu_item.Activated += OnItemRatingActivated;
+                    ToggleRatingMenuSensitive ();
+                    menu.Insert (rating_menu_item, i + 2);
+                    break;
+                }
+            }
+
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            
+            // Forcefully load this
+            show_notifications = ShowNotifications;
         }
         
         public void Dispose ()
@@ -203,15 +226,19 @@ namespace Banshee.NotificationArea
         {
             try {
                 if (NotifyOnCloseSchema.Get ()) {
-                    /*Gdk.Pixbuf image = Branding.ApplicationLogo.ScaleSimple(42, 42, Gdk.InterpType.Bilinear);
-                    Notification nf = new Notification(
-                        Catalog.GetString("Still Running"), 
-                        Catalog.GetString("Banshee was closed to the notification area. " + 
+                    Gdk.Pixbuf image = IconThemeUtils.LoadIcon (48, "music-player-banshee");
+                    if (image != null) {
+                        image = image.ScaleSimple (42, 42, Gdk.InterpType.Bilinear);
+                    }
+                    
+                    Notification nf = new Notification (
+                        Catalog.GetString ("Still Running"), 
+                        Catalog.GetString ("Banshee was closed to the notification area. " + 
                             "Use the <i>Quit</i> option to end your session."),
-                        image, event_box);
+                        image, notif_area.Widget);
                     nf.Urgency = Urgency.Low;
                     nf.Timeout = 4500;
-                    nf.Show();*/
+                    nf.Show ();
                     
                     NotifyOnCloseSchema.Set (false);
                 }
@@ -228,41 +255,95 @@ namespace Banshee.NotificationArea
         
         private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args) 
         {
-            /*switch (args.Event) {
+            switch (args.Event) {
                 case PlayerEngineEvent.Iterate:
-                    if(PlayerEngineCore.CurrentTrack != null) {
-                        popup.Duration = (uint)PlayerEngineCore.CurrentTrack.Duration.TotalSeconds;
-                        popup.Position = PlayerEngineCore.Position;
-
-                        if (current_track != PlayerEngineCore.CurrentTrack) {
-                            current_track = PlayerEngineCore.CurrentTrack;
-                            ShowNotification();
-                        }
-                    } else {
-                        popup.Duration = 0;
-                        popup.Position = 0;
+                    if (current_track != ServiceManager.PlayerEngine.CurrentTrack) {
+                        current_track = ServiceManager.PlayerEngine.CurrentTrack;
+                        ShowTrackNotification ();
                     }
                     break;
                 case PlayerEngineEvent.StartOfStream:
                 case PlayerEngineEvent.TrackInfoUpdated:
-                    ToggleRatingMenuSensitive();
-                    FillPopup();
-                    ShowNotification();
+                    ToggleRatingMenuSensitive ();
+                    ShowTrackNotification ();
                     break;
                 case PlayerEngineEvent.EndOfStream:
-                    // only hide the popup when we don't play again after 250ms
-                    GLib.Timeout.Add(250, delegate {
-                        if (PlayerEngineCore.CurrentState != PlayerEngineState.Playing) {
-                            ToggleRatingMenuSensitive();
-                            popup.Duration = 0;
-                            popup.Position = 0;
-                            can_show_popup = false;
-                            popup.Hide();
-                         }
-                         return false;
-                    });
+                    current_track = null;
+                    ToggleRatingMenuSensitive ();
                     break;
-            }*/
+            }
+        }
+        
+        private void OnItemRatingActivated (object o, EventArgs args)
+        {
+            if (ServiceManager.PlayerEngine.CurrentTrack != null) {
+                ServiceManager.PlayerEngine.CurrentTrack.Rating = rating_menu_item.Value;
+                ServiceManager.PlayerEngine.CurrentTrack.Save ();
+                ServiceManager.PlayerEngine.TrackInfoUpdated ();
+            }
+        }
+        
+        private void ToggleRatingMenuSensitive () 
+        {
+            if (ServiceManager.PlayerEngine.CurrentTrack is LibraryTrackInfo) {
+                rating_menu_item.Reset ((int)ServiceManager.PlayerEngine.CurrentTrack.Rating);
+                rating_menu_item.Show ();
+            } else {
+                rating_menu_item.Hide ();
+            }
+        }
+        
+        private void ShowTrackNotification ()
+        {
+            // This has to happen before the next if, otherwise the last_* members aren't set correctly.
+            if (current_track == null || (notify_last_title == current_track.DisplayTrackTitle 
+                && notify_last_artist == current_track.DisplayArtistName)) {
+                return;
+            }
+            
+            notify_last_title = current_track.DisplayTrackTitle;
+            notify_last_artist = current_track.DisplayArtistName;
+
+            if (!show_notifications || elements_service.PrimaryWindow.HasToplevelFocus) {
+                return;
+            }
+            
+            string message = String.Format ("{0}\n<i>{1}</i>", 
+                GLib.Markup.EscapeText (current_track.DisplayTrackTitle),
+                GLib.Markup.EscapeText (current_track.DisplayArtistName));
+            
+            if (artwork_manager_service == null) {
+                artwork_manager_service = ServiceManager.Get<ArtworkManager> ();
+            }
+            
+            Gdk.Pixbuf image = null;
+            
+            if (artwork_manager_service != null) {
+                image = artwork_manager_service.LookupScale (current_track.ArtistAlbumId, 42);
+            }
+            
+            if (image == null) {
+                image = IconThemeUtils.LoadIcon (48, "audio-x-generic");
+                if (image != null) {
+                    image.ScaleSimple (42, 42, Gdk.InterpType.Bilinear);
+                }
+            }
+            
+            try {
+                if (current_nf != null) {
+                    current_nf.Close ();
+                }
+                
+                Notification nf = new Notification (Catalog.GetString ("Now Playing"), 
+                    message, image, notif_area.Widget);
+                nf.Urgency = Urgency.Low;
+                nf.Timeout = 4500;
+                nf.Show ();
+                
+                current_nf = nf;
+            } catch (Exception e) {
+                Hyena.Log.Warning (Catalog.GetString ("Cannot show notification"), e.Message);
+            }
         }
         
         public bool ShowNotifications {
@@ -296,28 +377,28 @@ namespace Banshee.NotificationArea
             get { return "NotificationAreaService"; }
         }
         
-        public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool> (
             "plugins.notification_area", "enabled",
             true,
             "Plugin enabled",
             "Notification area plugin enabled"
         );
                 
-        public static readonly SchemaEntry<bool> ShowNotificationsSchema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> ShowNotificationsSchema = new SchemaEntry<bool> (
             "plugins.notification_area", "show_notifications",
             true,
             "Show notifications",
             "Show track information notifications when track starts playing"
         );
                 
-        public static readonly SchemaEntry<bool> NotifyOnCloseSchema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> NotifyOnCloseSchema = new SchemaEntry<bool> (
             "plugins.notification_area", "notify_on_close",
             true,
             "Show a notification when closing main window",
             "When the main window is closed, show a notification stating this has happened."
         );
                 
-        public static readonly SchemaEntry<bool> QuitOnCloseSchema = new SchemaEntry<bool>(
+        public static readonly SchemaEntry<bool> QuitOnCloseSchema = new SchemaEntry<bool> (
             "plugins.notification_area", "quit_on_close",
             false,
             "Quit on close",
