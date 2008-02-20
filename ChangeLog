@@ -1,3 +1,20 @@
+2008-02-20  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs:
+	Fixed loading after Scott's commit, defer the loading of these import
+	objects until they are actually needed to improve theoretical startup speed
+
+	* src/Core/Banshee.Services/Banshee.Library/IImportSource.cs: Added the
+	CanImport member that Scott used in IExtensionImportSource
+	
+	* src/Core/Banshee.Services/Banshee.Library/IExtensionImportSource.cs:
+	Removed, no sense in having this interface
+
+	* src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:
+	Implement CanImport
+
 2008-02-19  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Library/IExtensionImportSource.cs: Added

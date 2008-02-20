@@ -66,5 +66,9 @@ namespace Banshee.Library.Gui
         public string [] IconNames {
             get { return new string [] { "gtk-open" }; }
         }
+        
+        public bool CanImport {
+            get { return true; }
+        }
     }
 }

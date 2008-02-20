@@ -37,21 +37,25 @@ namespace Banshee.Library
 {
     public class ImportSourceManager : IService, IEnumerable<IImportSource>
     {
-        private List<IImportSource> import_sources = new List<IImportSource> ();
+        private List<IImportSource> import_sources;
         
         public ImportSourceManager ()
         {
-            import_sources.Add (new HomeDirectoryImportSource ());
-            
-            foreach (IExtensionImportSource source in AddinManager.GetExtensionObjects ("/Banshee/Library/ImportSource")) {
-                if (source.CanImport) {
-                    import_sources.Add (source);
-                }
-            }
         }
         
         public IEnumerator<IImportSource> GetEnumerator ()
         {
+            if (import_sources == null) {
+                import_sources = new List<IImportSource> ();
+                import_sources.Add (new HomeDirectoryImportSource ());
+            
+                foreach (IImportSource source in AddinManager.GetExtensionObjects ("/Banshee/Library/ImportSource")) {
+                    if (source.CanImport) {
+                        import_sources.Add (source);
+                    }
+                }
+            }
+            
             return import_sources.GetEnumerator ();
         }
         

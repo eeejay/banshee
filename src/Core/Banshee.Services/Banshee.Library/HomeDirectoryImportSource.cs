@@ -50,5 +50,9 @@ namespace Banshee.Library
         public string [] IconNames {
             get { return new string [] { "user-home", "gtk-home" }; }
         }
+        
+        public bool CanImport {
+            get { return true; }
+        }
     }
 }

@@ -35,5 +35,6 @@ namespace Banshee.Library
         void Import ();
         string Name { get; }
         string [] IconNames { get; }
+        bool CanImport { get; }
     }
 }
