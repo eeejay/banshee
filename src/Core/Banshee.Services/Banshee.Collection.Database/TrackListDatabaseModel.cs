@@ -48,8 +48,8 @@ namespace Banshee.Collection.Database
         ICacheableDatabaseModel, IFilterable, ISortable, ICareAboutView
     {
         private readonly BansheeDbConnection connection;
-        private readonly BansheeModelProvider<LibraryTrackInfo> provider;
-        private readonly BansheeModelCache<LibraryTrackInfo> cache;
+        private readonly BansheeModelProvider<DatabaseTrackInfo> provider;
+        private readonly BansheeModelCache<DatabaseTrackInfo> cache;
         private int count;
         private TimeSpan duration;
         private long filesize;
@@ -75,8 +75,8 @@ namespace Banshee.Collection.Database
         public TrackListDatabaseModel (BansheeDbConnection connection, string uuid)
         {
             this.connection = connection;
-            provider = LibraryTrackInfo.Provider;
-            cache = new BansheeModelCache <LibraryTrackInfo> (connection, uuid, this, provider);
+            provider = DatabaseTrackInfo.Provider;
+            cache = new BansheeModelCache <DatabaseTrackInfo> (connection, uuid, this, provider);
             cache.AggregatesUpdated += HandleCacheAggregatesUpdated;
             Refilter ();
         }
@@ -215,7 +215,7 @@ namespace Banshee.Collection.Database
 
         public override int IndexOf (TrackInfo track)
         {
-            LibraryTrackInfo library_track = track as LibraryTrackInfo;
+            DatabaseTrackInfo library_track = track as DatabaseTrackInfo;
             return library_track == null ? -1 : cache.IndexOf ((int)library_track.DbId);
         }
 

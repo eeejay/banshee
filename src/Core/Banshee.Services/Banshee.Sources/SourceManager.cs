@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using Mono.Addins;
 
 using Banshee.ServiceStack;
+using Banshee.Library;
 
 namespace Banshee.Sources
 {
@@ -53,6 +54,7 @@ namespace Banshee.Sources
         private List<Source> sources = new List<Source>();
         private Source active_source;
         private Source default_source;
+        private LibrarySource library_source;
         
         public event SourceEventHandler SourceUpdated;
         public event SourceAddedHandler SourceAdded;
@@ -73,6 +75,11 @@ namespace Banshee.Sources
                     ((IDisposable)source).Dispose ();
                 }
             }
+        }
+
+        public void AddSource(Source source)
+        {
+            AddSource(source, false);
         }
         
         public void AddSource(Source source, bool isDefault)
@@ -99,6 +106,10 @@ namespace Banshee.Sources
                 args.Source = source;
                 handler(args);
             }
+
+            if (source is LibrarySource) {
+                library_source = source as LibrarySource;
+            }
             
             ServiceManager.DBusServiceManager.RegisterObject(source);
             
@@ -109,11 +120,6 @@ namespace Banshee.Sources
             if(isDefault && ActiveSource == null) {
                 SetActiveSource(source);
             }
-        }
-        
-        public void AddSource(Source source)
-        {
-            AddSource(source, false);
         }
         
         public void RemoveSource(Source source)
@@ -209,7 +215,11 @@ namespace Banshee.Sources
             get { return default_source; }
             set { default_source = value; }
         }
-        
+
+        public LibrarySource Library {
+            get { return library_source; }
+        }
+
         public Source ActiveSource {
             get { return active_source; }
         }

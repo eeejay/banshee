@@ -52,7 +52,7 @@ namespace Banshee.PlayQueue
     {
         private static string special_playlist_name = typeof (PlayQueueSource).ToString ();
 
-        private LibraryTrackInfo playing_track;
+        private DatabaseTrackInfo playing_track;
         private BansheeActionGroup actions;
         private bool actions_loaded = false;
         
@@ -204,7 +204,7 @@ namespace Banshee.PlayQueue
                 return;
             }
             
-            playing_track = (LibraryTrackInfo)TrackModel[0];
+            playing_track = (DatabaseTrackInfo)TrackModel[0];
             ServiceManager.PlayerEngine.OpenPlay (playing_track);
         }
         

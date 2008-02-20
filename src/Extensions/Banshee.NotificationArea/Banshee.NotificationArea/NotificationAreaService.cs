@@ -291,7 +291,7 @@ namespace Banshee.NotificationArea
         
         private void ToggleRatingMenuSensitive () 
         {
-            if (ServiceManager.PlayerEngine.CurrentTrack is LibraryTrackInfo) {
+            if (ServiceManager.PlayerEngine.CurrentTrack is DatabaseTrackInfo) {
                 rating_menu_item.Reset ((int)ServiceManager.PlayerEngine.CurrentTrack.Rating);
                 rating_menu_item.Show ();
             } else {

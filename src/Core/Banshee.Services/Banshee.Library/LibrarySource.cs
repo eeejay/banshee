@@ -42,29 +42,8 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Library
 {
-    public class LibrarySource : DatabaseSource
+    public class LibrarySource : PrimarySource
     {
-        private ErrorSource error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
-        private bool error_source_visible = false;
-
-        private HyenaSqliteCommand remove_range_command = new HyenaSqliteCommand (@"
-            DELETE FROM CoreTracks WHERE TrackID IN
-                (SELECT ItemID FROM CoreCache
-                    WHERE ModelID = ? LIMIT ?, ?);
-            DELETE FROM CorePlaylistEntries WHERE TrackID IN
-                (SELECT ItemID FROM CoreCache
-                    WHERE ModelID = ? LIMIT ?, ?);
-            DELETE FROM CoreSmartPlaylistEntries WHERE TrackID IN
-                (SELECT ItemID FROM CoreCache
-                    WHERE ModelID = ? LIMIT ?, ?)"
-        );
-
-        private HyenaSqliteCommand remove_track_command = new HyenaSqliteCommand (@"
-            DELETE FROM CoreTracks WHERE TrackID = ?;
-            DELETE FROM CorePlaylistEntries WHERE TrackID = ?;
-            DELETE FROM CoreSmartPlaylistEntries WHERE TrackID = ?"
-        );
-    
         public LibrarySource () : base (Catalog.GetString ("Library"), Catalog.GetString ("Library"), "Library", 1)
         {
             Properties.SetStringList ("Icon.Name", "go-home", "user-home", "source-library");
@@ -72,83 +51,12 @@ namespace Banshee.Library
             AfterInitialized ();
 
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Library"));
-            
-            error_source.Updated += OnErrorSourceUpdated;
-            OnErrorSourceUpdated (null, null);
         }
         
-        private void OnErrorSourceUpdated (object o, EventArgs args)
-        {
-            if (error_source.Count > 0 && !error_source_visible) {
-                AddChildSource (error_source);
-                error_source_visible = true;
-            } else if (error_source.Count <= 0 && error_source_visible) {
-                RemoveChildSource (error_source);
-                error_source_visible = false;
-            }
-        }
-
-        public override void RemoveTrack (LibraryTrackInfo track)
-        {
-            remove_track_command.ApplyValues (track.DbId);
-            ServiceManager.DbConnection.Execute (remove_track_command);
-            Reload ();
-            ReloadChildren ();
-        }
-
-        /*public override void RemoveTracks (IEnumerable<TrackInfo> tracks)
-        {
-
-            // BEGIN transaction
-
-            int i = 0;
-            LibraryTrackInfo ltrack;
-            foreach (TrackInfo track in tracks) {
-                ltrack = track as LibraryTrackInfo;
-                if (ltrack == null)
-                    continue;
-
-                command.ApplyValues (ltrack.DbId, ltrack.DbId, ltrack.DbId);
-                ServiceManager.DbConnection.Execute (command);
-
-                if (++i % 100 == 0) {
-                    // COMMIT and BEGIN new transaction
-                }
-            }
-
-            // COMMIT transaction
-
-            // Reload the library, all playlists, etc
-            Reload ();
-            ReloadChildren ();
-        }*/
-
-        public override void RemoveSelectedTracks (TrackListDatabaseModel model)
-        {
-            base.RemoveSelectedTracks (model);
-            ReloadChildren ();
-        }
-
-        protected override void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
-        {
-            remove_range_command.ApplyValues (
-                    model.CacheId, range.Start, range.End - range.Start + 1,
-                    model.CacheId, range.Start, range.End - range.Start + 1,
-                    model.CacheId, range.Start, range.End - range.Start + 1
-            );
-            ServiceManager.DbConnection.Execute (remove_range_command);
-        }
-
-        public override void DeleteSelectedTracks (TrackListDatabaseModel model)
-        {
-            base.DeleteSelectedTracks (model);
-            ReloadChildren ();
-        }
-
         protected override void DeleteTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
         {
             for (int i = range.Start; i <= range.End; i++) {
-                LibraryTrackInfo track = model [i] as LibraryTrackInfo;
+                DatabaseTrackInfo track = model [i] as DatabaseTrackInfo;
                 if (track == null)
                     continue;
 
@@ -169,15 +77,6 @@ namespace Banshee.Library
             }
         }
 
-        private void ReloadChildren ()
-        {
-            foreach (Source child in Children) {
-                if (child is ITrackModelSource) {
-                    (child as ITrackModelSource).Reload ();
-                }
-            }
-        }
-        
         public override bool AcceptsInputFromSource (Source source)
         {
             return source is IImportSource;
@@ -192,10 +91,6 @@ namespace Banshee.Library
             ((IImportSource)source).Import ();
         }
         
-        public ErrorSource ErrorSource {
-            get { return error_source; }
-        }
-
         public override bool CanRename {
             get { return false; }
         }

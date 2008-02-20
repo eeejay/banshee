@@ -220,7 +220,7 @@ namespace Banshee.Playlist
 
 #endregion
 
-        /*public override void AddTrack (LibraryTrackInfo track)
+        /*public override void AddTrack (DatabaseTrackInfo track)
         {
             add_track_command.ApplyValues (DbId, track.DbId);
             ServiceManager.DbConnection.Execute (add_track_command);
@@ -242,7 +242,7 @@ namespace Banshee.Playlist
             ServiceManager.DbConnection.Execute (add_track_range_command);
         }
 
-        public override void RemoveTrack (LibraryTrackInfo track)
+        public override void RemoveTrack (DatabaseTrackInfo track)
         {
             remove_track_command.ApplyValues (DbId, track.DbId);
             ServiceManager.DbConnection.Execute (remove_track_command);

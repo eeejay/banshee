@@ -231,11 +231,20 @@ namespace Banshee.Database
                 )
             ");
             
-            Execute(String.Format(@"
-                INSERT INTO CoreConfiguration 
-                    VALUES (null, 'DatabaseVersion', '{0}')
-            ", CURRENT_VERSION));
+            Execute (String.Format (
+                "INSERT INTO CoreConfiguration VALUES (null, 'DatabaseVersion', '{0}')",
+                CURRENT_VERSION
+            ));
             
+            
+            Execute(@"
+                CREATE TABLE CorePrimarySources (
+                    SourceID            INTEGER PRIMARY KEY,
+                    StringID            TEXT UNIQUE
+                )
+            ");
+            Execute ("INSERT INTO CorePrimarySources (StringID) VALUES ('Library')");
+
             // TODO add these:
             // Comment
             // Composer
@@ -246,9 +255,9 @@ namespace Banshee.Database
             // AlbumArtist (TPE2) (in CoreAlbums?)
             // Conductor (TPE3)
             // Remixer (TPE4)
-            
             Execute(@"
                 CREATE TABLE CoreTracks (
+                    SourceID            INTEGER NOT NULL,
                     TrackID             INTEGER PRIMARY KEY,
                     ArtistID            INTEGER,
                     AlbumID             INTEGER,
@@ -274,8 +283,10 @@ namespace Banshee.Database
                     SkipCount           INTEGER,
                     LastPlayedStamp     INTEGER,
                     DateAddedStamp      INTEGER
+                    DateUpdatedStamp    INTEGER
                 )
             ");
+            Execute("CREATE INDEX CoreTracksSourceIndex ON CoreTracks(SourceID)");
             Execute("CREATE INDEX CoreTracksArtistIndex ON CoreTracks(ArtistID)");
             Execute("CREATE INDEX CoreTracksAlbumIndex  ON CoreTracks(AlbumID)");
             Execute("CREATE INDEX CoreTracksRatingIndex ON CoreTracks(Rating)");
@@ -327,8 +338,7 @@ namespace Banshee.Database
                     EntryID             INTEGER PRIMARY KEY,
                     PlaylistID          INTEGER NOT NULL,
                     TrackID             INTEGER NOT NULL ON CONFLICT IGNORE,
-                    ViewOrder           INTEGER NOT NULL DEFAULT 0,
-                    UNIQUE (PlaylistID, TrackID) ON CONFLICT IGNORE
+                    ViewOrder           INTEGER NOT NULL DEFAULT 0
                 )
             ");
             
@@ -393,6 +403,7 @@ namespace Banshee.Database
             Execute(@"
                 INSERT INTO CoreTracks
                     SELECT 
+                        1,
                         TrackID, 
                         (SELECT ArtistID 
                             FROM CoreArtists 

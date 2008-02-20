@@ -14,7 +14,7 @@ SOURCES =  \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
 	Banshee.Collection.Database/LibraryAlbumInfo.cs \
 	Banshee.Collection.Database/LibraryArtistInfo.cs \
-	Banshee.Collection.Database/LibraryTrackInfo.cs \
+	Banshee.Collection.Database/DatabaseTrackInfo.cs \
 	Banshee.Collection.Database/TrackListDatabaseModel.cs \
 	Banshee.Collection/AlbumListModel.cs \
 	Banshee.Collection/ArtistListModel.cs \
@@ -109,6 +109,7 @@ SOURCES =  \
 	Banshee.Sources/ISourceManager.cs \
 	Banshee.Sources/ITrackModelSource.cs \
 	Banshee.Sources/IUnmapableSource.cs \
+	Banshee.Sources/PrimarySource.cs \
 	Banshee.Sources/Source.cs \
 	Banshee.Sources/SourceManager.cs \
 	Banshee.Sources/SourceMergeType.cs \

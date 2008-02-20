@@ -132,9 +132,14 @@ namespace Banshee.Sources
 
 #region Public Methods
 
+        public void Reload (double min_interval_ms)
+        {
+            reload_limiter.Execute (min_interval_ms);
+        }
+
         public void Reload ()
         {
-            reload_limiter.Execute ();
+            reload_limiter.Execute (50.0);
         }
 
         protected virtual void RateLimitedReload ()
@@ -147,10 +152,10 @@ namespace Banshee.Sources
 
         public virtual void RemoveTrack (int index)
         {
-            RemoveTrack (track_model [index] as LibraryTrackInfo);
+            RemoveTrack (track_model [index] as DatabaseTrackInfo);
         }
 
-        public virtual void RemoveTrack (LibraryTrackInfo track)
+        public virtual void RemoveTrack (DatabaseTrackInfo track)
         {
             throw new NotImplementedException(); 
         }

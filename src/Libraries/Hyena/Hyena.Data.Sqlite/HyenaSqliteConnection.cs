@@ -178,6 +178,11 @@ namespace Hyena.Data.Sqlite
             return ExecuteReader (command.Command);
         }
 
+        public IDataReader ExecuteReader (string command_str, params object [] param_values)
+        {
+            return ExecuteReader (new HyenaSqliteCommand (command_str, param_values));
+        }
+
         public IDataReader ExecuteReader (object command)
         {
             return ExecuteReader (new SqliteCommand (command.ToString ()));
@@ -205,6 +210,11 @@ namespace Hyena.Data.Sqlite
             return ExecuteScalar (command.Command);
         }
 
+        public object ExecuteScalar (string command_str, params object [] param_values)
+        {
+            return ExecuteScalar (new HyenaSqliteCommand (command_str, param_values));
+        }
+
         public object ExecuteScalar (object command)
         {
             return ExecuteScalar (new SqliteCommand (command.ToString ()));
@@ -221,6 +231,11 @@ namespace Hyena.Data.Sqlite
         public T Query<T> (HyenaSqliteCommand command)
         {
             return Query<T> (command.Command);
+        }
+
+        public T Query<T> (string command_str, params object [] param_values)
+        {
+            return Query<T> (new HyenaSqliteCommand (command_str, param_values));
         }
 
         public T Query<T> (object command)
@@ -249,6 +264,11 @@ namespace Hyena.Data.Sqlite
         public int Execute (HyenaSqliteCommand command)
         {
             return Execute (command.Command);
+        }
+
+        public int Execute (string command_str, params object [] param_values)
+        {
+            return Execute (new HyenaSqliteCommand (command_str, param_values));
         }
 
         public int Execute (object command)

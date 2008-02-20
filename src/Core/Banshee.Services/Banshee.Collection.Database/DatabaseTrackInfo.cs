@@ -1,5 +1,5 @@
 //
-// LibraryTrackInfo.cs
+// DatabaseTrackInfo.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -48,13 +48,13 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
-    public class LibraryTrackInfo : TrackInfo
+    public class DatabaseTrackInfo : TrackInfo
     {
-        private static BansheeModelProvider<LibraryTrackInfo> provider = new BansheeModelProvider<LibraryTrackInfo> (
+        private static BansheeModelProvider<DatabaseTrackInfo> provider = new BansheeModelProvider<DatabaseTrackInfo> (
             ServiceManager.DbConnection, "CoreTracks"
         );
 
-        public static BansheeModelProvider<LibraryTrackInfo> Provider {
+        public static BansheeModelProvider<DatabaseTrackInfo> Provider {
             get { return provider; }
         }
 
@@ -64,7 +64,7 @@ namespace Banshee.Collection.Database
             AbsoluteUri
         }
         
-        public LibraryTrackInfo () : base ()
+        public DatabaseTrackInfo () : base ()
         {
         }
 
@@ -77,6 +77,13 @@ namespace Banshee.Collection.Database
         private int dbid;
         public int DbId {
             get { return dbid; }
+        }
+
+        [DatabaseColumn ("SourceID", Index = "CoreTracksSourceIndex")]
+        private int source_id;
+        public int SourceId {
+            get { return source_id; }
+            set { source_id = value; }
         }
 
         [DatabaseColumn ("ArtistID", Index = "CoreTracksArtistIndex")]

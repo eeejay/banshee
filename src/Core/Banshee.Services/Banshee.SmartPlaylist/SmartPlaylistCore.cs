@@ -127,7 +127,7 @@ namespace Banshee.SmartPlaylist
 
         private void HandleTrackChanged (object sender, EventArgs args)
         {
-            //LibraryTrackInfo track = sender as LibraryTrackInfo;
+            //DatabaseTrackInfo track = sender as DatabaseTrackInfo;
 
             //if (track != null)
                 //CheckTrack (track);
@@ -259,7 +259,7 @@ namespace Banshee.SmartPlaylist
             return true;
         }
 
-        private void CheckTrack (LibraryTrackInfo track)
+        private void CheckTrack (DatabaseTrackInfo track)
         {
             if (RateLimit())
                 return;

@@ -48,6 +48,11 @@ namespace Banshee.Base
 
         public void Execute ()
         {
+            Execute (min_interval_ms);
+        }
+
+        public void Execute (double min_interval_ms)
+        {
             if (timeout_id != 0)
                 return;
 
@@ -57,7 +62,7 @@ namespace Banshee.Base
                 last_executed = DateTime.Now;
             } else {
                 //Console.WriteLine ("Method rate limited, setting timeout");
-                timeout_id = GLib.Timeout.Add((uint)min_interval_ms, OnRateLimitTimer);
+                timeout_id = GLib.Timeout.Add ((uint) min_interval_ms, OnRateLimitTimer);
             }
         }
 

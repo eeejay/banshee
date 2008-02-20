@@ -159,11 +159,11 @@ namespace Banshee.Playlist
         public void Import ()
         {    
             try {
-                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ("LibraryImportManager").ImportFinished += delegate {
+                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().ImportFinished += delegate {
                     CreatePlaylist ();
                 };
 
-                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ("LibraryImportManager").QueueSource (uris);
+                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().QueueSource (uris);
             } catch (PlaylistImportCanceledException) {
                 // Do nothing, user canceled import.
             }

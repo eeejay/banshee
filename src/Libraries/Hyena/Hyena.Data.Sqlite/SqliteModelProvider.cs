@@ -284,12 +284,22 @@ namespace Hyena.Data.Sqlite
         {
             int i = 0;
             
-            foreach (DatabaseColumn column in columns) {
-                column.SetValue (target, reader, i++);
-            }
-            
-            foreach (VirtualDatabaseColumn column in virtual_columns) {
-                column.SetValue (target, reader, i++);
+            AbstractDatabaseColumn bad_column = null;
+            try {
+                foreach (DatabaseColumn column in columns) {
+                    bad_column = column;
+                    column.SetValue (target, reader, i++);
+                }
+                
+                foreach (VirtualDatabaseColumn column in virtual_columns) {
+                    bad_column = column;
+                    column.SetValue (target, reader, i++);
+                }
+            } catch (Exception e) {
+                Log.Debug (
+                    String.Format ("Caught exception trying to load database column {0}", bad_column == null ? "[unknown]" : bad_column.Name),
+                    e.ToString ()
+                );
             }
         }
         

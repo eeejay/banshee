@@ -82,12 +82,18 @@ namespace Banshee.Library
                 path.Substring (index + 1).ToLower ()) >= 0;
         }
     
+        private int library_source_id;
+
         public LibraryImportManager ()
         {
         }
         
         protected override void OnImportRequested (string path)
         {
+            if (library_source_id == 0) {
+                library_source_id = ServiceManager.SourceManager.Library.SourceId;
+            }
+
             if (!IsWhiteListedFile (path)) {
                 IncrementProcessedCount (null);
                 return;
@@ -96,15 +102,15 @@ namespace Banshee.Library
             try {            
                 SafeUri uri = new SafeUri (path);
 
-                LibraryTrackInfo track = null;
+                DatabaseTrackInfo track = null;
                 
-                /*if (LibraryTrackInfo.ContainsUri (uri)) {
+                /*if (DatabaseTrackInfo.ContainsUri (uri)) {
                     IncrementProcessedCount (null);
                     return;
                 }*/
 
                 TagLib.File file = StreamTagger.ProcessUri (uri);
-                track = new LibraryTrackInfo ();
+                track = new DatabaseTrackInfo ();
                 StreamTagger.TrackInfoMerge (track, file);
                 
                 SafeUri newpath = track.CopyToLibrary ();
@@ -120,8 +126,9 @@ namespace Banshee.Library
 
                     artist.Save ();
 
+                    track.SourceId = library_source_id;
                     track.Save ();
-                    (ServiceManager.SourceManager.DefaultSource as LibrarySource).Reload ();
+                    ServiceManager.SourceManager.Library.Reload (200);
                 });
                 
                 if (track != null && track.DbId > 0) {
@@ -140,7 +147,7 @@ namespace Banshee.Library
 
         private void LogError (string path, string msg)
         {
-            ErrorSource error_source = ((LibrarySource)ServiceManager.SourceManager.DefaultSource).ErrorSource;
+            ErrorSource error_source = ServiceManager.SourceManager.Library.ErrorSource;
             error_source.AddMessage (Path.GetFileName (path), msg);
             
             Log.Error (path, msg, false);

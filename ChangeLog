@@ -1,3 +1,62 @@
+2008-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit adds a CorePrimarySources table and a SourceID column to the
+	CoreTracks table, allowing non-Library tracks to be stored there (and
+	therefore benefit from our searching, playlist, smart playlist, and view
+	code).
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Base/RateLimiter.cs: Allow specifying
+	a min_interval on each rate-limited execute.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Rename to DatabaseTrackInfo, add SourceId property.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add new CorePrimarySources table, add SourceID to CoreTracks, remove
+	unique constraint on CorePlaylistEntries.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: When
+	importing set the SourceId on the new DatabaseTrackInfos.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Refactor
+	a lot of logic into PrimarySource, and inherit from it.
+
+	* src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs: Use
+	shorter way of getting a specific service from the ServiceManager.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: New class
+	to be subclassed by LibrarySource, DaapSource, DapSource, etc - a way of
+	reusing CoreTracks and all associated goodness for non-Library tracks.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Add Library
+	convenience property.
+
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Makefile.am: Updated
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Use DatabaseTrackInfo.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Avoid problem
+	in Mono.Data.Sqlite in getting Int64 value.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add
+	convience methods for Query, Execute, ExecuteReader that accept the same
+	parameters as the HyenaSqliteCommand ctor does, allowing
+	Query<int>("select x from y where ?", z) instead of Query<int>(new
+	HyenaSqliteCommand ("select x from y where ?", z)).
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Add
+	try/catch around Load method to avoid crashing and provide debugging if
+	there are issues loading a row into an object.
+
 2008-02-20  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.MediaEngine/NullPlayerEngine.cs:
