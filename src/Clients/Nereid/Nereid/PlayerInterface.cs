@@ -126,6 +126,8 @@ namespace Nereid
             BuildHeader ();
             BuildViews ();
             BuildFooter ();
+            
+            this.Colormap = Gdk.Screen.Default.RgbaColormap;
 
             primary_vbox.Show ();
             Add (primary_vbox);
@@ -348,11 +350,12 @@ namespace Nereid
         
         private void OnHeaderToolbarExposeEvent (object o, ExposeEventArgs args)
         {
-            // This forces the toolbar to look like it's just a regular plain container
-            // since the stock toolbar look makes Banshee look ugly.
-            header_toolbar.GdkWindow.DrawRectangle (Style.BackgroundGC (header_toolbar.State), 
-                true, header_toolbar.Allocation);
-            
+            // This forces the toolbar to look like it's just a regular part
+            // of the window since the stock toolbar look makes Banshee look ugly.
+            Style.ApplyDefaultBackground (header_toolbar.GdkWindow, true, State, 
+                args.Event.Area, header_toolbar.Allocation.X, header_toolbar.Allocation.Y, 
+                header_toolbar.Allocation.Width, header_toolbar.Allocation.Height);
+
             // Manually expose all the toolbar's children
             foreach (Widget child in header_toolbar.Children) {
                 header_toolbar.PropagateExpose (child, args.Event);

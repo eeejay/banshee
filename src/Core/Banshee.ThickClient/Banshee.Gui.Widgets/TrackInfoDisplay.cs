@@ -106,13 +106,10 @@ namespace Banshee.Gui.Widgets
             attributes.Visual = Visual;
             attributes.Wclass = Gdk.WindowClass.InputOutput;
             attributes.Colormap = Colormap;
-            attributes.EventMask = (int)(Gdk.EventMask.VisibilityNotifyMask |
+            attributes.EventMask = (int)(
+                Gdk.EventMask.VisibilityNotifyMask |
                 Gdk.EventMask.ExposureMask |
                 Gdk.EventMask.PointerMotionMask |
-                Gdk.EventMask.EnterNotifyMask |
-                Gdk.EventMask.LeaveNotifyMask |
-                Gdk.EventMask.ButtonPressMask |
-                Gdk.EventMask.ButtonReleaseMask |
                 Events);
             
             Gdk.WindowAttributesType attributes_mask = 
@@ -129,9 +126,24 @@ namespace Banshee.Gui.Widgets
             Style = Style.Attach (GdkWindow);
         }
         
+        protected override void OnUnrealized ()
+        {
+            WidgetFlags ^= WidgetFlags.Realized;
+            GdkWindow.UserData = IntPtr.Zero;
+            GdkWindow.Destroy ();
+            GdkWindow = null;
+        }
+
         protected override void OnMapped ()
         {
+            WidgetFlags |= WidgetFlags.Mapped;
             GdkWindow.Show ();
+        }
+        
+        protected override void OnUnmapped ()
+        {
+            WidgetFlags ^= WidgetFlags.Mapped;
+            GdkWindow.Hide ();
         }
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
@@ -233,9 +245,12 @@ namespace Banshee.Gui.Widgets
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
-            if (!Visible) {
+            if (!Visible || !IsMapped) {
                 return true;
             }
+        
+            Style.ApplyDefaultBackground (GdkWindow, true, StateType.Normal, evnt.Area, 
+                0, 0, Allocation.Width, Allocation.Height);
         
             Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
         

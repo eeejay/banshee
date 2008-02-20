@@ -1,5 +1,17 @@
 2008-02-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Apply the window default
+	background to override the toolbar background instead of just a flat
+	colored rectangle; should play nicer with some themes
+	
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Apply a default background and override OnUnrealized and OnUnmapped
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Remove WidgetFlags.Realized in OnUnrealized
+
+2008-02-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
 	Added the skip song feature back
 

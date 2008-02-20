@@ -164,6 +164,8 @@ namespace Hyena.Data.Gui
         
         protected override void OnUnrealized ()
         {
+            WidgetFlags ^= WidgetFlags.Realized;
+            
             left_border_window.UserData = IntPtr.Zero;
             left_border_window.Destroy ();
             left_border_window = null;
