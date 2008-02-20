@@ -1,5 +1,10 @@
 2008-02-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Added the skip song feature back
+
+2008-02-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
 	Ported the show/hide TrackInfoPopup/tooltip when the mouse cursor is over
 	the notification area icon

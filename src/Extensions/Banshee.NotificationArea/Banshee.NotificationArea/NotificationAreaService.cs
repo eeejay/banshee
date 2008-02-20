@@ -344,11 +344,21 @@ namespace Banshee.NotificationArea
                     message, image, notif_area.Widget);
                 nf.Urgency = Urgency.Low;
                 nf.Timeout = 4500;
+                if (interface_action_service.PlaybackActions["NextAction"].Sensitive) {
+                    nf.AddAction ("skip-song", Catalog.GetString("Play next song"), OnSongSkipped);
+                }
                 nf.Show ();
                 
                 current_nf = nf;
             } catch (Exception e) {
-                Hyena.Log.Warning (Catalog.GetString ("Cannot show notification"), e.Message);
+                Hyena.Log.Warning (Catalog.GetString ("Cannot show notification"), e.Message, false);
+            }
+        }
+        
+        private void OnSongSkipped (object o, ActionArgs args)
+        {
+            if (args.Action == "skip-song") {
+                ServiceManager.PlaybackController.Next ();
             }
         }
         
