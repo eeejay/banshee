@@ -1,10 +1,10 @@
-// 
-// ImportSourceManager.cs
+//
+// IExtensionImportSource.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Scott Peterson <lunchtimemama@gmail.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,41 +27,11 @@
 //
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Mono.Addins;
-
-using Banshee.ServiceStack;
 
 namespace Banshee.Library
 {
-    public class ImportSourceManager : IService, IEnumerable<IImportSource>
+    public interface IExtensionImportSource : IImportSource
     {
-        private List<IImportSource> import_sources = new List<IImportSource> ();
-        
-        public ImportSourceManager ()
-        {
-            import_sources.Add (new HomeDirectoryImportSource ());
-            
-            foreach (IExtensionImportSource source in AddinManager.GetExtensionObjects ("/Banshee/Library/ImportSource")) {
-                if (source.CanImport) {
-                    import_sources.Add (source);
-                }
-            }
-        }
-        
-        public IEnumerator<IImportSource> GetEnumerator ()
-        {
-            return import_sources.GetEnumerator ();
-        }
-        
-        IEnumerator IEnumerable.GetEnumerator ()
-        {
-            return GetEnumerator ();
-        }
-        
-        string IService.ServiceName {
-            get { return "ImportSourceManager"; }
-        }
+        bool CanImport { get; }
     }
 }

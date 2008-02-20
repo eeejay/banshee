@@ -1,3 +1,17 @@
+2008-02-19  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.Services/Banshee.Library/IExtensionImportSource.cs: Added
+	  the IExtensionImportSource interface which extends the IImportSource
+	  interface to include bool CanImport { get; }. This means that an
+	  extension-provided import source will only be added to the list if the
+	  import source can be imported. Such a check might entail determining
+	  whether Beagle is installed, or a particular file (other music player's
+	  db) is present, &c..
+
+	* src/Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs: Made to
+	  use the new IExtensionImportSource when adding extension sources to the
+	  list of availible import sources.
+
 2008-02-19  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Apply the window default

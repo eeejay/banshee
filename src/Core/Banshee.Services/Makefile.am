@@ -35,6 +35,7 @@ SOURCES =  \
 	Banshee.Equalizer/EqualizerSetting.cs \
 	Banshee.Equalizer/EqualizerSettingEvent.cs \
 	Banshee.Library/HomeDirectoryImportSource.cs \
+	Banshee.Library/IExtensionImportSource.cs \
 	Banshee.Library/IImportSource.cs \
 	Banshee.Library/ImportSourceManager.cs \
 	Banshee.Library/LibraryImportManager.cs \
