@@ -67,6 +67,10 @@ namespace Banshee.Gui.Widgets
         private bool in_popup;
         private bool in_thumbnail_region;
         
+        protected TrackInfoDisplay (IntPtr native) : base (native)
+        {
+        }
+        
         public TrackInfoDisplay ()
         {
             stage.Iteration += OnStageIteration;
@@ -76,6 +80,15 @@ namespace Banshee.Gui.Widgets
             }
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+        }
+        
+        public override void Dispose ()
+        {
+            ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
+            stage.Iteration -= OnStageIteration;
+            HidePopup ();
+            
+            base.Dispose ();
         }
 
 #region Widget Window Management
@@ -127,6 +140,10 @@ namespace Banshee.Gui.Widgets
             
             if (IsRealized) {
                 GdkWindow.MoveResize (allocation);
+            }
+            
+            if (current_track == null) {
+                LoadCurrentTrack ();
             }
             
             QueueDraw ();
@@ -216,6 +233,10 @@ namespace Banshee.Gui.Widgets
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
+            if (!Visible) {
+                return true;
+            }
+        
             Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
         
             foreach (Gdk.Rectangle rect in evnt.Region.GetRectangles ()) {
@@ -364,31 +385,37 @@ namespace Banshee.Gui.Widgets
         private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
         {
             if (args.Event == PlayerEngineEvent.StartOfStream || args.Event == PlayerEngineEvent.TrackInfoUpdated) {
-                TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
-                
-                if (track == current_track) {
-                    return;
-                } else if (track == null) {
-                    incoming_track = null;
-                    incoming_pixbuf = null;
-                    return;
+                LoadCurrentTrack ();
+            }
+        }
+        
+        private void LoadCurrentTrack ()
+        {
+            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
+
+            if (track == current_track) {
+                return;
+            } else if (track == null) {
+                incoming_track = null;
+                incoming_pixbuf = null;
+                return;
+            }
+
+            incoming_track = track;
+
+            Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtistAlbumId, Allocation.Height);
+            
+            if (pixbuf == null) {
+                if (missing_pixbuf == null) {
+                    missing_pixbuf = IconThemeUtils.LoadIcon (32, "audio-x-generic");
                 }
-                
-                incoming_track = track;
-                
-                Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtistAlbumId, Allocation.Height);
-                if (pixbuf == null) {
-                    if (missing_pixbuf == null) {
-                        missing_pixbuf = IconThemeUtils.LoadIcon (32, "audio-x-generic");
-                    }
-                    incoming_pixbuf = missing_pixbuf;
-                } else {
-                    incoming_pixbuf = pixbuf;
-                }
-                
-                if (stage.Actor == null) {
-                    stage.Reset ();
-                }
+                incoming_pixbuf = missing_pixbuf;
+            } else {
+                incoming_pixbuf = pixbuf;
+            }
+            
+            if (stage.Actor == null) {
+                stage.Reset ();
             }
         }
         

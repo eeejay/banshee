@@ -213,6 +213,10 @@ namespace Notifications {
 
 		public void AttachToWidget (Gtk.Widget widget) {
 			int x, y;
+			
+			if (widget == null) {
+			    return;
+			}
 
 			widget.GdkWindow.GetOrigin (out x, out y);
 

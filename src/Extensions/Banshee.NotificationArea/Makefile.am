@@ -6,6 +6,7 @@ SOURCES =  \
 	Banshee.NotificationArea/GtkNotificationAreaBox.cs \
 	Banshee.NotificationArea/INotificationAreaBox.cs \
 	Banshee.NotificationArea/NotificationAreaService.cs \
+	Banshee.NotificationArea/TrackInfoPopup.cs \
 	Banshee.NotificationArea/X11NotificationArea.cs \
 	Banshee.NotificationArea/X11NotificationAreaBox.cs \
 	Notifications/Notification.cs \

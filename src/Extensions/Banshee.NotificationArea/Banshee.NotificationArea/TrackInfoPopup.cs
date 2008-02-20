@@ -1,10 +1,10 @@
 //
-// GtkNotificationAreaBox.cs
+// TrackInfoPopup.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -25,50 +25,51 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
 using System;
-using Mono.Unix;
 using Gtk;
 
-using Banshee.Gui;
+using Banshee.Base;
+using Banshee.Gui.Widgets;
+using Banshee.Widgets;
 using Banshee.ServiceStack;
-using Banshee.MediaEngine;
+using Banshee.Gui;
+using Hyena;
 
 namespace Banshee.NotificationArea
 {
-    public class GtkNotificationAreaBox : StatusIcon, INotificationAreaBox
+    public class TrackInfoPopup : Gtk.Window
     {
-        public event EventHandler Disconnected;
-        
-        public event EventHandler Activated {
-            add { base.Activate += value; }
-            remove { base.Activate -= value; }
-        }
-        
-        public event PopupMenuHandler PopupMenuEvent {
-            add { base.PopupMenu += value; }
-            remove { base.PopupMenu -= value; }
-        }
-        
-        public Widget Widget {
-            get { return null; }
-        }
-        
-        public GtkNotificationAreaBox (BaseClientWindow window)
+        private uint position;
+        private uint duration;
+        private TrackInfoDisplay header;
+        private HBox header_box = new HBox ();
+    
+        public TrackInfoPopup () : base (Gtk.WindowType.Popup)
         {
-            IconName = "music-player-banshee";
+            BorderWidth = 4;
+            AppPaintable = true;
+            Resizable = false;
             
-            Tooltip = window.Title;
-            window.TitleChanged += delegate { Tooltip = window.Title; };
+            header = new TrackInfoDisplay ();
+            header.SetSizeRequest (300, 46);
+            header_box.PackStart (header, true, true, 0);
+            header.Show ();
+            
+            Add (header_box);
+            header_box.Show ();
         }
         
-        public void PositionMenu (Menu menu, out int x, out int y, out bool push_in)
+        public override void Dispose ()
         {
-            StatusIcon.PositionMenu (menu, out x, out y, out push_in, Handle);
+            header.Dispose ();
+            base.Dispose ();
         }
         
-        public void PlayerEngineEventChanged (PlayerEngineEventArgs args)
+        protected override bool OnExposeEvent(Gdk.EventExpose evnt)
         {
+            Gtk.Style.PaintFlatBox (Style, GdkWindow, StateType.Normal, ShadowType.Out, evnt.Area, this, "tooltip", 
+                0, 0, Allocation.Width, Allocation.Height);
+            return base.OnExposeEvent (evnt);
         }
     }
 }

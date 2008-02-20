@@ -1,4 +1,33 @@
 2008-02-19  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Ported the show/hide TrackInfoPopup/tooltip when the mouse cursor is over
+	the notification area icon
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+	Ported the TrackInfoPopup/tooltip to use the new TrackInfoDisplay
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Implemented proper managed resource disposing and set the current track
+	on size allocation
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Set the title of the window
+	to the track information
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Added
+	a TitleChanged event and an UpdateTitle abstract method
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/GtkNotificationAreaBox.cs:
+	Set the tooltip to the primary window's title, track it when it changes
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/INotificationAreaBox.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Added a proxy method for player engine events
+
+	* src/Extensions/Banshee.NotificationArea/Notifications/Notification.cs:
+	Do not crash when Widget is null
+
+2008-02-19  Aaron Bockover  <abock@gnome.org>
 	
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
 	Ported notification bubbles. Hawt. 4 u snorp lol.

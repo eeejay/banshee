@@ -29,6 +29,7 @@
 
 using System;
 using System.Collections.Generic;
+using Mono.Unix;
 using Gtk;
 
 using Hyena.Gui;
@@ -66,7 +67,7 @@ namespace Nereid
         private ObjectListSourceContents object_view;
         private Label status_label;
         
-        public PlayerInterface () : base ("Banshee Music Player")
+        public PlayerInterface () : base (Catalog.GetString ("Banshee Media Player"))
         {
         }
         
@@ -82,6 +83,21 @@ namespace Nereid
             composite_view.TrackView.HasFocus = true;
             
             Show ();
+        }
+        
+        protected override void UpdateTitle ()
+        {
+            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
+            if (track != null) {
+                // Translators: this is the window title when a track is playing
+                //              {0} is the track title, {1} is the artist name
+                Title = String.Format (Catalog.GetString ("{0} ({1})"), 
+                    track.DisplayTrackTitle, track.DisplayArtistName);
+            } else {
+                Title = Catalog.GetString ("Banshee Media Player");
+            }
+            
+            OnTitleChanged ();
         }
         
 #region System Overrides 
@@ -222,7 +238,8 @@ namespace Nereid
         {
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
-
+            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            
             ActionService.TrackActions ["SearchForSameArtistAction"].Activated += OnProgrammaticSearch;
             ActionService.TrackActions ["SearchForSameAlbumAction"].Activated += OnProgrammaticSearch;
 
@@ -302,6 +319,17 @@ namespace Nereid
             
             UpdateStatusBar ();
             view_container.SearchEntry.Ready = true;
+        }
+        
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args) 
+        {
+            switch (args.Event) {
+                case PlayerEngineEvent.StartOfStream:
+                case PlayerEngineEvent.TrackInfoUpdated:
+                case PlayerEngineEvent.EndOfStream:
+                    UpdateTitle ();
+                    break;
+            }
         }
         
 #endregion

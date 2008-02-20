@@ -45,6 +45,8 @@ namespace Banshee.Gui
         protected InterfaceActionService ActionService {
             get { return action_service; }
         }
+        
+        public event EventHandler TitleChanged;
     
         public BaseClientWindow (string title) : base (title)
         {
@@ -165,6 +167,16 @@ namespace Banshee.Gui
             
             return base.OnWindowStateEvent (evnt);
         }
+        
+        protected virtual void OnTitleChanged ()
+        {
+            EventHandler handler = TitleChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+        
+        protected abstract void UpdateTitle ();
         
         public static readonly SchemaEntry<int> WidthSchema = new SchemaEntry<int>(
             "player_window", "width",

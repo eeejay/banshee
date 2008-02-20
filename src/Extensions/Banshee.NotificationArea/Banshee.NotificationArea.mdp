@@ -17,6 +17,7 @@
     <File name="Banshee.NotificationArea/GtkNotificationAreaBox.cs" subtype="Code" buildaction="Compile" />
     <File name="Notifications/Notification.cs" subtype="Code" buildaction="Compile" />
     <File name="Notifications/Notifications.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.NotificationArea/TrackInfoPopup.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />

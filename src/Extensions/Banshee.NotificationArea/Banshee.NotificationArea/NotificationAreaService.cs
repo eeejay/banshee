@@ -142,6 +142,10 @@ namespace Banshee.NotificationArea
         
         public void Dispose ()
         {
+            if (current_nf != null) {
+                current_nf.Close ();
+            }
+                
             if (notif_area != null) {
                 notif_area.Dispose ();
                 notif_area = null;
@@ -168,7 +172,7 @@ namespace Banshee.NotificationArea
             }
             
             if (notif_area == null) {
-                notif_area = new GtkNotificationAreaBox ();
+                notif_area = new GtkNotificationAreaBox (elements_service.PrimaryWindow);
             }
             
             notif_area.Disconnected += OnNotificationAreaDisconnected;
@@ -272,6 +276,8 @@ namespace Banshee.NotificationArea
                     ToggleRatingMenuSensitive ();
                     break;
             }
+            
+            notif_area.PlayerEngineEventChanged (args);
         }
         
         private void OnItemRatingActivated (object o, EventArgs args)
