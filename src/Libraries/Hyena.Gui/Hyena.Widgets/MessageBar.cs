@@ -63,12 +63,15 @@ namespace Hyena.Widgets
             box.Spacing = 10;
             
             image = new AnimatedImage ();
-            image.Pixbuf = Gtk.IconTheme.Default.LoadIcon ("process-working", 22, IconLookupFlags.NoSvg);
-            image.FrameHeight = 22;
-            image.FrameWidth = 22;
-            Spinning = false;
-            image.Load ();
-            image.Show ();
+            try {
+                image.Pixbuf = Gtk.IconTheme.Default.LoadIcon ("process-working", 22, IconLookupFlags.NoSvg);
+                image.FrameHeight = 22;
+                image.FrameWidth = 22;
+                Spinning = false;
+                image.Load ();
+                image.Show ();
+            } catch {
+            }
             
             label = new Label ();
             label.Xalign = 0.0f;

@@ -15,9 +15,9 @@ WINDOWS_ASSEMBLIES = \
 	Banshee.Services.dll \
 	Banshee.ThickClient.dll \
 	Banshee.Widgets.dll \
-	Banshee.GStreamer.dll \
 	Banshee.PlayQueue.dll \
 	Banshee.Lastfm.dll \
+	Banshee.NotificationArea.dll \
 	Lastfm.Gui.dll \
 	Lastfm.dll \
 	Mono.Media.dll \
@@ -75,6 +75,7 @@ uninstall-hook:
 dist-windows: all
 	rm -rf banshee-windows; \
 	mkdir banshee-windows; \
+	mkdir banshee-windows/icons; \
 	cp -rf win-deps/* banshee-windows; \
 	for asm in $(WINDOWS_ASSEMBLIES); do \
 		cp -rf bin/$$asm banshee-windows; \

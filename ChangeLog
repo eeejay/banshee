@@ -1,5 +1,13 @@
 2008-02-20  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/NullPlayerEngine.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MessageBar.cs: Minor fixes for
+	Windows
+
+	* win-deps/Mono.Addins.dll.config: Added the .config for Mono.Addins
+
+2008-02-20  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: If control is being held
 	down when the source view activates a row, set the source to be the
 	playback source, but do not play the first song in that source - this means

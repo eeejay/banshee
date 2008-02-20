@@ -68,7 +68,7 @@ namespace Banshee.MediaEngine
         }
         
         public override IEnumerable ExplicitDecoderCapabilities {
-            get { return null; }
+            get { return new string[0]; }
         }
         
         public override string Id {
