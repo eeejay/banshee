@@ -61,8 +61,6 @@ namespace Banshee.Sources.Gui
         private int current_timeout = -1;
         private bool editing_row = false;
 
-        public event EventHandler SourceDoubleClicked;
-    
         public SourceView ()
         {
             BuildColumns ();
@@ -149,7 +147,7 @@ namespace Banshee.Sources.Gui
         protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
         {
             TreePath path;
-            
+                       
             if (evnt.Button == 1) {
                 ResetHighlight ();
             }
@@ -173,17 +171,20 @@ namespace Banshee.Sources.Gui
                 if (ServiceManager.SourceManager.ActiveSource != source) {
                     ServiceManager.SourceManager.SetActiveSource (source);
                 }
-                
-                if (evnt.Type == Gdk.EventType.TwoButtonPress) {
-                    OnSourceDoubleClicked ();
-                }
             } else if (evnt.Button == 3) {
                 HighlightPath (path);
                 OnPopupMenu ();
                 return true;
             }
             
-            return base.OnButtonPressEvent(evnt);
+            if ((evnt.State & Gdk.ModifierType.ControlMask) != 0) {
+                if (evnt.Type == Gdk.EventType.TwoButtonPress && evnt.Button == 1) {
+                    ActivateRow (path, null);
+                }
+                return true;
+            }
+            
+            return base.OnButtonPressEvent (evnt);
         }
 
         protected override bool OnPopupMenu ()
@@ -485,18 +486,6 @@ namespace Banshee.Sources.Gui
             QueueDraw ();
         }
         
-#endregion
-
-#region Virtual Methods
-        
-        protected virtual void OnSourceDoubleClicked ()
-        {
-            EventHandler handler = SourceDoubleClicked;
-            if (handler != null) {
-                handler (this, EventArgs.Empty);
-            }
-        }
-
 #endregion
 
 #region Public Properties

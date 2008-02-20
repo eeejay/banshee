@@ -43,13 +43,17 @@ namespace Hyena.Gui
             return NoImportantModifiersAreSet (important_modifiers);
         }
             
-        public static bool NoImportantModifiersAreSet (Gdk.ModifierType [] modifiers)
+        public static bool NoImportantModifiersAreSet (params Gdk.ModifierType [] modifiers)
         {
-            if (!(Global.CurrentEvent is Gdk.EventKey)) {
+            Gdk.ModifierType state;
+            
+            if (Global.CurrentEvent is Gdk.EventKey) {
+                state = ((Gdk.EventKey)Global.CurrentEvent).State;
+            } else if (Global.CurrentEvent is Gdk.EventButton) {
+                state = ((Gdk.EventButton)Global.CurrentEvent).State;
+            } else {
                 return false;
             }
-            
-            Gdk.ModifierType state = ((Gdk.EventKey)Global.CurrentEvent).State;
             
             foreach (Gdk.ModifierType modifier in modifiers) {
                 if ((state & modifier) == modifier) {

@@ -258,7 +258,9 @@ namespace Nereid
 
             source_view.RowActivated += delegate {
                 SetPlaybackControllerSource (ServiceManager.SourceManager.ActiveSource);
-                ServiceManager.PlaybackController.First ();
+                if (GtkUtilities.NoImportantModifiersAreSet (Gdk.ModifierType.ControlMask)) {
+                    ServiceManager.PlaybackController.First ();
+                }
             };
             
             header_toolbar.ExposeEvent += OnHeaderToolbarExposeEvent;

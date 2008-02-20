@@ -199,7 +199,7 @@ namespace Banshee.Gui
         {
             Hyena.Collections.Selection selection = TrackSelector.TrackSelectionProxy.Selection;
             Source source = ServiceManager.SourceManager.ActiveSource;
-            bool in_library = (source != null && source.Parent is LibrarySource) || source is LibrarySource;
+            bool in_database = source is DatabaseSource;
 
             if (selection != null) {
                 bool has_selection = selection.Count > 0;
@@ -228,9 +228,9 @@ namespace Banshee.Gui
 
                     UpdateAction ("RemoveTracksFromLibraryAction", source.Parent is LibrarySource, has_selection, null);
                     
-                    UpdateAction ("TrackPropertiesAction", in_library, has_selection, null);
-                    UpdateAction ("RateTracksAction", in_library, has_selection, null);
-                    UpdateAction ("AddToPlaylistAction", in_library, has_selection, null);
+                    UpdateAction ("TrackPropertiesAction", in_database, has_selection, null);
+                    UpdateAction ("RateTracksAction", in_database, has_selection, null);
+                    UpdateAction ("AddToPlaylistAction", in_database, has_selection, null);
                 }
             }
         }

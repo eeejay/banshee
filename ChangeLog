@@ -1,5 +1,22 @@
 2008-02-20  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: If control is being held
+	down when the source view activates a row, set the source to be the
+	playback source, but do not play the first song in that source - this means
+	that ctrl+double-clicking a source will 'queue' that source to play next
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Make sure the
+	editor button works on all database sources
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Because
+	the ctrl+click behavior is strange on this use of the tree view, override
+	it and emulate the row activation
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkUtilities.cs: Support reading 
+	modifier states from Gdk.EventButton as well; make the array params
+
+2008-02-20  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs:
 	Fixed loading after Scott's commit, defer the loading of these import
 	objects until they are actually needed to improve theoretical startup speed
