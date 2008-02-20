@@ -1,6 +1,11 @@
 2008-02-19  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Library/IExtensionImportSource.cs: Added
+	  copyright name.
+
+2008-02-19  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.Services/Banshee.Library/IExtensionImportSource.cs: Added
 	  the IExtensionImportSource interface which extends the IImportSource
 	  interface to include bool CanImport { get; }. This means that an
 	  extension-provided import source will only be added to the list if the
