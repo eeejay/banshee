@@ -8,13 +8,14 @@ using Gtk;
 using Banshee.Widgets;
 using Banshee.Sources;
 using Banshee.ServiceStack;
+using Banshee.Collection;
+using Banshee.Collection.Gui;
 using Banshee.Gui;
 using Banshee.Sources.Gui;
 using Banshee.Web;
 
 using Lastfm;
 using Lastfm.Data;
-//using ConnectionState = Lastfm.ConnectionState;
 
 namespace Banshee.Lastfm.Radio
 {
@@ -140,6 +141,8 @@ namespace Banshee.Lastfm.Radio
 
         protected class NumberedList : TitledList
         {
+            protected ArtworkManager artwork_manager = ServiceManager.Get<ArtworkManager> ();
+
             protected LastfmSource lastfm;
             protected NumberedTileView tile_view;
             protected Dictionary<object, RecentTrack> widget_track_map = new Dictionary<object, RecentTrack> ();
@@ -162,6 +165,18 @@ namespace Banshee.Lastfm.Radio
                     tile.PrimaryText = track.Name;
                     tile.SecondaryText = track.Artist;
                     tile.ButtonPressEvent += OnTileActivated;
+
+                    // Unfortunately the recently loved list doesn't include what album the song is on
+                    if (!String.IsNullOrEmpty (track.Album)) {
+                        AlbumInfo album = new AlbumInfo (track.Album);
+                        album.ArtistName = track.Artist;
+
+                        Gdk.Pixbuf pb = artwork_manager == null ? null : artwork_manager.LookupScale (album.ArtworkId, 40);
+                        if (pb != null) {
+                            tile.Pixbuf = pb;
+                        }
+                    }
+
                     tile_view.AddNumberedWidget (tile);
                     tile.Show ();
                 }

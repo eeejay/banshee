@@ -184,4 +184,26 @@ namespace Lastfm.Data
             }
         }
     }
+
+    // Artist entries
+    public class SimilarArtist : NamedEntry
+    {
+        public double Match             { get { return Get<double>   ("match"); } }
+        public int MatchAsInt           { get { return (int) Math.Round (Match); } }
+    }
+
+    public class ArtistFan : Friend
+    {
+        public int Weight               { get { return Get<int>      ("weight"); } }
+    }
+
+    public class ArtistTopTrack : NamedEntry
+    {
+        public int Reach                { get { return Get<int>      ("reach"); } }
+    }
+
+    public class ArtistTopAlbum : NamedEntry
+    {
+        public int Reach                { get { return Get<int>      ("reach"); } }
+    }
 }

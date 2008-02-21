@@ -1,6 +1,20 @@
 2008-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	If possible, set album art on the lists of tracks.  Unfortunately the
+	Last.fm feed for recently loved songs doesn't include the album name, so
+	no cover art there.
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs: Add new Entry types for
+	Artist data.
+
+	* src/Libraries/Lastfm/Makefile.am:
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmArtistData.cs: Expose
+	artist-related data.
+
+2008-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
 	Fix numbering.
 
 2008-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
