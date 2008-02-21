@@ -88,7 +88,7 @@ namespace Hyena.Query
             get { return offset; }
         }
 
-        private Regex number_regex = new Regex ("\\d+", RegexOptions.Compiled);
+        private static Regex number_regex = new Regex ("\\d+", RegexOptions.Compiled);
         public override void ParseUserQuery (string input)
         {
             try {

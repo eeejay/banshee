@@ -35,8 +35,8 @@ namespace Lastfm.Data
 {
     public class DataEntry
     {
-        private XmlNode root;
-        public XmlNode Root {
+        private XmlElement root;
+        public XmlElement Root {
             get { return root; }
             set { root = value; }
         }
@@ -45,7 +45,7 @@ namespace Lastfm.Data
         {
         }
 
-        public DataEntry (XmlNode root)
+        public DataEntry (XmlElement root)
         {
             this.root = root;
         }
@@ -53,11 +53,14 @@ namespace Lastfm.Data
         public T Get<T> (string name)
         {
             try {
-                XmlNode node = root[name];
-                return (T) Convert.ChangeType (node.InnerText, typeof(T));
-            } catch (Exception) {
-                return default(T);
-            }
+                XmlElement node = root[name];
+                if (node != null) {
+                    return (T) Convert.ChangeType (node.InnerText, typeof(T));
+                } else if (root.HasAttribute (name)) {
+                    return (T) Convert.ChangeType (root.GetAttribute (name), typeof(T));
+                }
+            } catch (Exception) {}
+            return default(T);
         }
     }
 

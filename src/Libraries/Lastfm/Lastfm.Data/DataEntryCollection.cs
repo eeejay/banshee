@@ -60,7 +60,7 @@ namespace Lastfm.Data
             get {
                 if (!collection.ContainsKey (i)) {
                     T t = (T) Activator.CreateInstance (typeof(T));
-                    t.Root = nodes.Item (i);
+                    t.Root = nodes.Item (i) as XmlElement;
                     collection[i] = t;
                 }
                 return collection[i];

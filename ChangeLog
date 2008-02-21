@@ -1,5 +1,15 @@
 2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs: Make the regex
+	static.
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntryCollection.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs: Enforce the Root as being
+	a XmlElement, and if it doesn't have a child element of the requied name,
+	see if it has an attribute.
+
+2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs: Cleanup.
 
 2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
