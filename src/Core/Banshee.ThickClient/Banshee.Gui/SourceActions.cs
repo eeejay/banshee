@@ -286,7 +286,7 @@ namespace Banshee.Gui
             }
             
             if (source != null) {
-                UpdateAction ("SortChildrenAction", source.Children.Count > 0, true, null);
+                UpdateAction ("SortChildrenAction", source.Children.Count > 1, true, null);
             }
         }
 

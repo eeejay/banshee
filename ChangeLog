@@ -1,3 +1,9 @@
+2008-02-21  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Changed it so
+	  that the "Sort Children" option appears only if there are two or more
+	  children of a source: a list of one is always sorted :)
+
 2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
