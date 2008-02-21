@@ -78,7 +78,6 @@ namespace Hyena.Query
 
         public bool Relative {
             get { return relative; }
-            //set { relative = value; }
         }
 
         public RelativeDateFactor Factor {
@@ -87,13 +86,11 @@ namespace Hyena.Query
 
         public long RelativeOffset {
             get { return offset; }
-            //set { offset = value; IsEmpty = false; }
         }
 
-        private Regex number_regex = new Regex ("\\d+");//, RegexOptions.Compiled);
+        private Regex number_regex = new Regex ("\\d+", RegexOptions.Compiled);
         public override void ParseUserQuery (string input)
         {
-            // TODO: Add support for relative strings like "yesterday", "3 weeks ago", "5 days ago"
             try {
                 value = DateTime.Parse (input);
                 IsEmpty = false;

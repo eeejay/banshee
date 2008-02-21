@@ -1,5 +1,9 @@
 2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs: Cleanup.
+
+2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* build/build.environment.mk: Add Mono.Unix dep to Hyena so strings can be
 	translated, like they already could be in Hyena.Gui.
 
