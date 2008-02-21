@@ -12,9 +12,9 @@ SOURCES =  \
 	Banshee.Base/ThreadAssist.cs \
 	Banshee.Collection.Database/AlbumListDatabaseModel.cs \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
+	Banshee.Collection.Database/DatabaseTrackInfo.cs \
 	Banshee.Collection.Database/LibraryAlbumInfo.cs \
 	Banshee.Collection.Database/LibraryArtistInfo.cs \
-	Banshee.Collection.Database/DatabaseTrackInfo.cs \
 	Banshee.Collection.Database/TrackListDatabaseModel.cs \
 	Banshee.Collection/AlbumListModel.cs \
 	Banshee.Collection/ArtistListModel.cs \
@@ -39,6 +39,7 @@ SOURCES =  \
 	Banshee.Library/ImportSourceManager.cs \
 	Banshee.Library/LibraryImportManager.cs \
 	Banshee.Library/LibrarySource.cs \
+	Banshee.Library/ThreadPoolImportSource.cs \
 	Banshee.MediaEngine/IEqualizer.cs \
 	Banshee.MediaEngine/IPlayerEngineService.cs \
 	Banshee.MediaEngine/NullPlayerEngine.cs \
@@ -68,6 +69,7 @@ SOURCES =  \
 	Banshee.PlaybackController/PlaybackControllerService.cs \
 	Banshee.PlaybackController/PlaybackRepeatMode.cs \
 	Banshee.PlaybackController/PlaybackShuffleMode.cs \
+	Banshee.PlayerMigration/AmarokPlayerImportSource.cs \
 	Banshee.Playlist/AbstractPlaylistSource.cs \
 	Banshee.Playlist/PlaylistFileUtil.cs \
 	Banshee.Playlist/PlaylistSource.cs \

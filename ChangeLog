@@ -1,3 +1,29 @@
+2008-02-21  Scott Peterson <lunchtimemama@gmail.com> 
+
+	This commit begins to port the player migration namespace from stable into trunk.
+	I've only done the Amarok importer as a proof-of-concept and I haven't tested it.
+	This commit is more about laying out the namespace/object design for the player
+	migration stuff for critique. What is presented here in this patch is subject to
+	change if anyone wants to massage it a little more. Otherwise I'll go ahead with
+	porting/testing the other player migrators. So please provide feedback!
+
+	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs: Added
+	a base class for IImportSources which will perform a single-method
+	import operation in a ThreadPool thread.
+
+	* src/Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs: Added
+	Amarok importer to import sources.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Created
+	a new public method AddTrackToLibrary, which contains the logic for
+	adding a track to the library and hooking up the related Artist and
+	Album infos.
+
+	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
+	Ported the Amarok importer from stable. NOTE: I don't have Amarok - and
+	it's 3am - so I haven't tested this. It needs testing! SOMEONE TEST
+	THIS!!!
+
 2008-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:

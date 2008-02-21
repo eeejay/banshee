@@ -100,36 +100,7 @@ namespace Banshee.Library
             }
             
             try {            
-                SafeUri uri = new SafeUri (path);
-
-                DatabaseTrackInfo track = null;
-                
-                /*if (DatabaseTrackInfo.ContainsUri (uri)) {
-                    IncrementProcessedCount (null);
-                    return;
-                }*/
-
-                TagLib.File file = StreamTagger.ProcessUri (uri);
-                track = new DatabaseTrackInfo ();
-                StreamTagger.TrackInfoMerge (track, file);
-                
-                SafeUri newpath = track.CopyToLibrary ();
-                if (newpath != null) {
-                    track.Uri = newpath;
-                }
-
-                ThreadAssist.ProxyToMain (delegate {
-                    track.DateAdded = DateTime.Now;
-                    LibraryArtistInfo artist = new LibraryArtistInfo (track.ArtistName);
-                    track.ArtistId = artist.DbId;
-                    track.AlbumId = new LibraryAlbumInfo (artist, track.AlbumTitle).DbId;
-
-                    artist.Save ();
-
-                    track.SourceId = library_source_id;
-                    track.Save ();
-                    ServiceManager.SourceManager.Library.Reload (200);
-                });
+                DatabaseTrackInfo track = AddTrackToLibrary (path);
                 
                 if (track != null && track.DbId > 0) {
                     IncrementProcessedCount (String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle));
@@ -138,6 +109,45 @@ namespace Banshee.Library
                 LogError (path, e);
                 IncrementProcessedCount (null);
             }
+        }
+        
+        public DatabaseTrackInfo AddTrackToLibrary (string path)
+        {
+            return AddTrackToLibrary (new SafeUri (path));
+        }
+        
+        public DatabaseTrackInfo AddTrackToLibrary (SafeUri uri)
+        {
+            DatabaseTrackInfo track = null;
+            
+            /*if (DatabaseTrackInfo.ContainsUri (uri)) {
+                IncrementProcessedCount (null);
+                return;
+            }*/
+
+            TagLib.File file = StreamTagger.ProcessUri (uri);
+            track = new DatabaseTrackInfo ();
+            StreamTagger.TrackInfoMerge (track, file);
+            
+            SafeUri newpath = track.CopyToLibrary ();
+            if (newpath != null) {
+                track.Uri = newpath;
+            }
+
+            ThreadAssist.ProxyToMain (delegate {
+                track.DateAdded = DateTime.Now;
+                LibraryArtistInfo artist = new LibraryArtistInfo (track.ArtistName);
+                track.ArtistId = artist.DbId;
+                track.AlbumId = new LibraryAlbumInfo (artist, track.AlbumTitle).DbId;
+
+                artist.Save ();
+
+                track.SourceId = library_source_id;
+                track.Save ();
+                ServiceManager.SourceManager.Library.Reload (200);
+            });
+            
+            return track;
         }
 
         private void LogError (string path, Exception e)

@@ -93,6 +93,7 @@
     <File name="Banshee.Sources.Gui/CompositeTrackSourceContents.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources.Gui/ISourceContents.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources.Gui/ObjectListSourceContents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Playlist.Gui/PlaylistExportDialog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

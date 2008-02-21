@@ -31,6 +31,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Mono.Addins;
 
+using Banshee.PlayerMigration;
 using Banshee.ServiceStack;
 
 namespace Banshee.Library
@@ -48,6 +49,10 @@ namespace Banshee.Library
             if (import_sources == null) {
                 import_sources = new List<IImportSource> ();
                 import_sources.Add (new HomeDirectoryImportSource ());
+                
+                if (AmarokPlayerImportSource.StaticCanImport) {
+                    import_sources.Add (new AmarokPlayerImportSource ());
+                }
             
                 foreach (IImportSource source in AddinManager.GetExtensionObjects ("/Banshee/Library/ImportSource")) {
                     if (source.CanImport) {
