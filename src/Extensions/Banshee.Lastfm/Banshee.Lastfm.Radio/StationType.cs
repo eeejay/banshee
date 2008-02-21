@@ -78,79 +78,80 @@ namespace Banshee.Lastfm.Radio
             return null;
         }
 
-        public static List<StationType> Types = new List<StationType> ();
-        static StationType () {
-            Types.Add (new StationType (
-                "Recommended",
-                Catalog.GetString ("Recommended"),
-                Catalog.GetString ("For User:"),
-                "user/{0}/recommended/100",
-                "recommended",
-                false
-            ));
+        public static StationType Recommended = new StationType (
+            "Recommended",
+            Catalog.GetString ("Recommended"),
+            Catalog.GetString ("For User:"),
+            "user/{0}/recommended/100",
+            "recommended",
+            false
+        );
 
-            Types.Add (new StationType (
-                "Personal",
-                Catalog.GetString ("Personal"),
-                Catalog.GetString ("For User:"),
-                "user/{0}/personal",
-                "system-users",
-                true
-            ));
+        public static StationType Personal = new StationType (
+            "Personal",
+            Catalog.GetString ("Personal"),
+            Catalog.GetString ("For User:"),
+            "user/{0}/personal",
+            "system-users",
+            true
+        );
 
-            Types.Add (new StationType (
-                "Loved",
-                Catalog.GetString ("Loved"),
-                Catalog.GetString ("By User:"),
-                "user/{0}/loved",
-                "emblem-favorite",
-                true
-            ));
+        public static StationType Loved = new StationType (
+            "Loved",
+            Catalog.GetString ("Loved"),
+            Catalog.GetString ("By User:"),
+            "user/{0}/loved",
+            "emblem-favorite",
+            true
+        );
 
-            Types.Add (new StationType (
-                "Neighbor",
-                Catalog.GetString ("Neighbors"),
-                Catalog.GetString ("Of User:"),
-                "user/{0}/neighbours",
-                "system-users",
-                false
-            ));
+        public static StationType Neighbor = new StationType (
+            "Neighbor",
+            Catalog.GetString ("Neighbors"),
+            Catalog.GetString ("Of User:"),
+            "user/{0}/neighbours",
+            "system-users",
+            false
+        );
 
-            Types.Add (new StationType (
-                "Group",
-                Catalog.GetString ("Group"),
-                Catalog.GetString ("Group Name:"),
-                "group/{0}",
-                "stock_people",
-                false
-            ));
+        public static StationType Group = new StationType (
+            "Group",
+            Catalog.GetString ("Group"),
+            Catalog.GetString ("Group Name:"),
+            "group/{0}",
+            "stock_people",
+            false
+        );
 
-            Types.Add (new StationType (
-                "Tag",
-                Catalog.GetString ("Tag"),
-                Catalog.GetString ("Tag Name:"),
-                "globaltags/{0}",
-                null,
-                false
-            ));
+        public static StationType Tag = new StationType (
+            "Tag",
+            Catalog.GetString ("Tag"),
+            Catalog.GetString ("Tag Name:"),
+            "globaltags/{0}",
+            null,
+            false
+        );
 
-            Types.Add (new StationType (
-                "Fan",
-                Catalog.GetString ("Fan"),
-                Catalog.GetString ("Fans of:"),
-                "artist/{0}/fans",
-                "stock_people",
-                false
-            ));
+        public static StationType Fan = new StationType (
+            "Fan",
+            Catalog.GetString ("Fan"),
+            Catalog.GetString ("Fans of:"),
+            "artist/{0}/fans",
+            "stock_people",
+            false
+        );
 
-            Types.Add (new StationType (
-                "Similar",
-                Catalog.GetString ("Similar"),
-                Catalog.GetString ("Similar to:"),
-                "artist/{0}/similarartists",
-                null,
-                false
-            ));
-        }
+        public static StationType Similar = new StationType (
+            "Similar",
+            Catalog.GetString ("Similar"),
+            Catalog.GetString ("Similar to:"),
+            "artist/{0}/similarartists",
+            null,
+            false
+        );
+
+        public static StationType [] Types = new StationType [] {
+            Recommended, Personal, Loved, Neighbor, Group, Tag, Fan, Similar
+        };
     }
 }

@@ -31,4 +31,32 @@
             <toolitem name="LastfmHate" action="LastfmHateAction"/>
         </placeholder>
     </toolbar>
+
+    <popup name="LastfmArtistPopup" action="LastfmArtistPopup">
+        <menuitem name="LastfmArtistVisitLastfm" action="LastfmArtistVisitLastfmAction" />
+        <menuitem name="LastfmArtistVisitWikipedia" action="LastfmArtistVisitWikipediaAction" />
+        <!--<menuitem name="LastfmArtistVisitAmazon" action="LastfmArtistVisitAmazonAction" />-->
+        <menuitem name="LastfmArtistPlayFanRadio" action="LastfmArtistPlayFanRadioAction" />
+        <menuitem name="LastfmArtistPlaySimilarRadio" action="LastfmArtistPlaySimilarRadioAction" />
+        <menuitem name="LastfmArtistRecommend" action="LastfmArtistRecommendAction" />
+    </popup>
+
+    <popup name="LastfmAlbumPopup" action="LastfmAlbumPopup">
+        <menuitem name="LastfmAlbumVisitLastfm" action="LastfmAlbumVisitLastfmAction" />
+        <menuitem name="LastfmArtistVisitWikipedia" action="LastfmArtistVisitWikipediaAction" />
+        <!--<menuitem name="LastfmAlbumVisitAmazon" action="LastfmAlbumVisitAmazonAction" />-->
+        <menuitem name="LastfmArtistPlayFanRadio" action="LastfmArtistPlayFanRadioAction" />
+        <menuitem name="LastfmArtistPlaySimilarRadio" action="LastfmArtistPlaySimilarRadioAction" />
+        <menuitem name="LastfmAlbumRecommend" action="LastfmAlbumRecommendAction" />
+    </popup>
+
+    <popup name="LastfmTrackPopup" action="LastfmTrackPopup">
+        <menuitem name="LastfmTrackVisitLastfm" action="LastfmTrackVisitLastfmAction" />
+        <menuitem name="LastfmArtistViewVideos" action="LastfmArtistViewVideosAction" />
+        <menuitem name="LastfmArtistVisitWikipedia" action="LastfmArtistVisitWikipediaAction" />
+        <!--<menuitem name="LastfmAlbumVisitAmazon" action="LastfmAlbumVisitAmazonAction" />-->
+        <menuitem name="LastfmArtistPlayFanRadio" action="LastfmArtistPlayFanRadioAction" />
+        <menuitem name="LastfmArtistPlaySimilarRadio" action="LastfmArtistPlaySimilarRadioAction" />
+        <!--<menuitem name="LastfmTrackRecommend" action="LastfmTrackRecommendAction" />-->
+    </popup>
 </ui>

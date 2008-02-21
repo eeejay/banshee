@@ -1,5 +1,42 @@
 2008-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Web/Browser.cs: Add implementation,
+	gleaned from MonoDevelop.
+
+	* src/Core/Banshee.Widgets/Makefile.am:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/MenuTile.cs: Subclass of Tile
+	that overrides the OnButtonPress so it can be used to pop up a menu.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Add actions and handlers for artists, albums, and tracks that go to
+	various websites (Last.fm, Wikipedia) and other fun things.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	Add two lists: 10 most recently played songs, and 10 most recently loved.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs: Break
+	types out into public static variables.
+
+	* src/Extensions/Banshee.Lastfm/Resources/GlobalUI.xml: Add Popups for
+	artists, albums, and tracks.  Currently only tracks is actually used.
+
+	* src/Libraries/Lastfm/Makefile.am:
+	* src/Libraries/Lastfm/Lastfm.Data/UserData.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmUserData.cs: Move to
+	LastfmUserData, and change API - expose as properites data that doesn't
+	take any arguments.  Cache results in a local dictionary to avoid hitting
+	the network every time property is accessed.
+
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmData.cs: Add Refresh method that
+	will ignore the cache.
+
+	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Add comment with
+	unimplemented xmlrpc methods.
+
+	* src/Libraries/Lastfm/Test.cs: Update to new API.
+
+2008-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This commit adds a CorePrimarySources table and a SourceID column to the
 	CoreTracks table, allowing non-Library tracks to be stored there (and
 	therefore benefit from our searching, playlist, smart playlist, and view

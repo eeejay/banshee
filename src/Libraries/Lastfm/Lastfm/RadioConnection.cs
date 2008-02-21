@@ -406,6 +406,18 @@ namespace Lastfm
             return response.GetResponseStream ();
         }
 
+        /* ArtistMetaDataRequest.cpp:    rpc.setMethod( "artistMetadata" );
+         * DeleteFriendRequest.cpp:    xmlrpc.setMethod( "removeFriend" );
+         * RecommendRequest.cpp:    xml_rpc.setMethod( "recommendItem" );
+         * SetTagRequest.cpp:            xml_rpc.setMethod( "tagArtist" );
+         * SetTagRequest.cpp:            xml_rpc.setMethod( "tagAlbum" );
+         * SetTagRequest.cpp:            xml_rpc.setMethod( "tagTrack" );
+         * SimilarTagsRequest.cpp:    xmlrpc.setMethod( "getSimilarTags" );
+         * TrackMetaDataRequest.cpp:    xmlrpc.setMethod( "trackMetadata" );
+         * TrackToIdRequest.cpp:    xmlrpc.setMethod( "trackToId" );
+         * UserPicturesRequest.cpp:    xmlrpc.setMethod( "getAvatarUrls" );
+         */
+
 
         // URL generators for internal use
  

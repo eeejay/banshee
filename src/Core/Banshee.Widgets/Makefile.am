@@ -19,6 +19,7 @@ SOURCES =  \
 	Banshee.Widgets/HoverImageButton.cs \
 	Banshee.Widgets/LinearProgress.cs \
 	Banshee.Widgets/LinkLabel.cs \
+	Banshee.Widgets/MenuTile.cs \
 	Banshee.Widgets/MessagePane.cs \
 	Banshee.Widgets/MultiStateToggleButton.cs \
 	Banshee.Widgets/PropertyTable.cs \

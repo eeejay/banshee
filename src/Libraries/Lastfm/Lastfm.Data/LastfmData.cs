@@ -46,12 +46,13 @@ namespace Lastfm.Data
         Infinite
     }
 
-    public abstract class LastfmData<T> : IEnumerable<T> where T : DataEntry
+    public class LastfmData<T> : IEnumerable<T> where T : DataEntry
     {
         protected DataEntryCollection<T> collection;
         protected XmlDocument doc;
         protected string data_url;
         protected string cache_file;
+        protected string xpath;
         protected CacheDuration cache_duration;
 
         public LastfmData (string dataUrlFragment) : this (dataUrlFragment, CacheDuration.Normal, null)
@@ -73,7 +74,21 @@ namespace Lastfm.Data
             this.data_url = HostInjectionHack (String.Format ("http://ws.audioscrobbler.com/1.0/{0}", dataUrlFragment));
             this.cache_file = GetCachedPathFromUrl (data_url);
             this.cache_duration = cacheDuration;
+            this.xpath = xpath;
 
+            GetData ();
+        }
+
+        public void Refresh ()
+        {
+            CacheDuration old_duration = cache_duration;
+            cache_duration = CacheDuration.None;
+            GetData ();
+            cache_duration = old_duration;
+        }
+
+        private void GetData ()
+        {
             // Download the content if necessary
             DownloadContent ();
 
@@ -129,7 +144,7 @@ namespace Lastfm.Data
                     }
                 }
             }
-            
+
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create (data_url);
             request.UserAgent = DataCore.UserAgent;
             request.KeepAlive = false;

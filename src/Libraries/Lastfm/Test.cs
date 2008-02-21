@@ -39,21 +39,30 @@ public class LastfmTest
 
         string username = "RJ";
 
-        ProfileEntry prof = UserData.GetProfile (username);
+        LastfmUserData user = new LastfmUserData (username);
+
+        ProfileEntry prof = user.Profile;
         //Console.WriteLine ("data url: {0}", prof.DataUrl);
-        Console.WriteLine ("profile url: {0}", prof.Url);
-        Console.WriteLine ("real name: {0}", prof.RealName);
+        Console.WriteLine ("profile url: {0}", user.Profile.Url);
+        Console.WriteLine ("real name: {0}", user.Profile.RealName);
         Console.WriteLine ("play count: {0}", prof.PlayCount);
         Console.WriteLine ("gender: {0}", prof.Gender);
         Console.WriteLine ("age: {0}", prof.Age);
         Console.WriteLine ("country: {0}", prof.Country);
         Console.WriteLine ("registered: {0}", prof.Registered);
 
-        UserData<UserTopArtist> top_artists = UserData.GetTopArtists ("RJ", TopType.Overall);
+        Console.WriteLine ("profile url: {0}", user.Profile.Url);
+
+        LastfmData<UserTopArtist> top_artists = user.GetTopArtists (TopType.Overall);
         Console.WriteLine ("\nTop Artists ({0})", top_artists.Count);
         foreach (UserTopArtist artist in top_artists) {
             Console.WriteLine ("Artist: {0}\nPlays: {1}", artist.Name, artist.PlayCount);
         }
+
+        foreach (TopTag tag in user.TopTags) {
+            Console.WriteLine ("top tag: {0}", tag.Name);
+        }
+        user.TopTags.Refresh ();
 
         System.IO.Directory.Delete ("test_lastfm_cache", true);
     }

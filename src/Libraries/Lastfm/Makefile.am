@@ -10,7 +10,7 @@ SOURCES = \
 	Lastfm.Data/DataEntry.cs \
 	Lastfm.Data/DataEntryCollection.cs \
 	Lastfm.Data/LastfmData.cs \
-	Lastfm.Data/UserData.cs 
+	Lastfm.Data/LastfmUserData.cs 
 
 include $(top_srcdir)/build/build.mk
 

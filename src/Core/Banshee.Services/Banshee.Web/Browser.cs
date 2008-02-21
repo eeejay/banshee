@@ -3,8 +3,9 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2006-2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -37,15 +38,16 @@ namespace Banshee.Web
 {
     public class Browser
     {
-        public static bool Open (string uri)
+        public static bool Open (string url)
         {
             try {
-                //return Gnome.Url.Show(uri);
-                throw new ApplicationException ();
+                System.Diagnostics.Process.Start (
+                    System.Uri.EscapeUriString (url)
+                );
             } catch(Exception e) {
                 Log.Warning (Catalog.GetString ("Could not launch URL"),
                     String.Format (Catalog.GetString ("{0} could not be opened: {1}\n\n " + 
-                        "Check your 'Preferred Applications' settings."), uri, e.Message), true);
+                        "Check your 'Preferred Applications' settings."), url, e.Message), true);
             }
             
             return false;
