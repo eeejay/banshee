@@ -1,5 +1,10 @@
 2008-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	Fix numbering.
+
+2008-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Web/Browser.cs: Add implementation,
 	gleaned from MonoDevelop.
 

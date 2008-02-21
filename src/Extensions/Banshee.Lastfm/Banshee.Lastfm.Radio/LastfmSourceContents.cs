@@ -130,9 +130,10 @@ namespace Banshee.Lastfm.Radio
             {
             }
 
+            private int i = 1;
             public void AddNumberedWidget (Tile tile)
             {
-                tile.PrimaryText = String.Format ("{0}. {1}", Children.Length + 1, tile.PrimaryText);
+                tile.PrimaryText = String.Format ("{0}. {1}", i++, tile.PrimaryText);
                 AddWidget (tile);
             }
         }
