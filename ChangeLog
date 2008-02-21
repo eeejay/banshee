@@ -1,3 +1,49 @@
+2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* build/build.environment.mk: Add Mono.Unix dep to Hyena so strings can be
+	translated, like they already could be in Hyena.Gui.
+
+	* src/Core/Banshee.Services/Banshee.Base/RateLimiter.cs: Add option to not
+	run wrapped method immediately, but to have a delay first.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Implement DependsOn using depth-first scan of the ConditionTree.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Set a 10ms
+	delay before responding to OnTrackUpdated.
+
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs:
+	Check if Editor.CurrentlyEditing is set, and if so, do not put the current
+	playlist or ones that depend on it in the dropdown.
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs: Expose
+	through a public static property what Smart Playlist is currently being
+	edited.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs: Add and use a
+	Gtk.Entry if the query is more complicated than our GUI can handle.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs: Clean.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryTermsBox.cs: Make methods
+	protected instead of public, throw exception if unable to handle the
+	QueryNode given.
+
+	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs: Support parsing and
+	generating relative-date user queries.
+
+	* src/Libraries/Hyena/Hyena.Query/FileSizeQueryValue.cs: Put a space
+	between the file size and its unit.
+
+	* src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs: Change the default
+	alias for the Equal operator to "=" instead of "==".
+
+	* src/Libraries/Hyena/Hyena.Query/QueryListNode.cs: Use ' or ' instead of
+	', ' to separate OR'd nodes in generated user queries.
+
+	* src/Libraries/Hyena/Hyena.Query/UserQueryParser.cs: Add a static Parse
+	method for convenience.
+
 2008-02-21  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Changed it so

@@ -59,9 +59,11 @@ namespace Banshee.Query.Gui
             foreach (Source child in ServiceManager.SourceManager.DefaultSource.Children) {
                 playlist = child as SmartPlaylistSource;
                 if (playlist != null && playlist.DbId != null) {
-                    combo.AppendText (playlist.Name);
-                    playlist_id_combo_map [(int)playlist.DbId] = count;
-                    combo_playlist_id_map [count++] = (int) playlist.DbId;
+                    if (Editor.CurrentlyEditing == null || (Editor.CurrentlyEditing != playlist && !playlist.DependsOn (Editor.CurrentlyEditing))) {
+                        combo.AppendText (playlist.Name);
+                        playlist_id_combo_map [(int)playlist.DbId] = count;
+                        combo_playlist_id_map [count++] = (int) playlist.DbId;
+                    }
                 }
             }
 

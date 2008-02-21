@@ -49,7 +49,6 @@ namespace Hyena.Query.Gui
         private Operator op;
 
         private QueryField [] sorted_fields;
-        //private Operator [] operators; FIXME: not used --Aaron
 
         private ComboBox field_chooser;
         public ComboBox FieldChooser {

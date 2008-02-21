@@ -36,7 +36,7 @@ namespace Hyena.Query
 {
     public class IntegerQueryValue : QueryValue
     {
-        public static readonly Operator Equal              = new Operator ("equals", "= {0}", "==", "=", ":");
+        public static readonly Operator Equal              = new Operator ("equals", "= {0}", "=", "==", ":");
         public static readonly Operator NotEqual           = new Operator ("notEqual", "!= {0}", true, "!=", "!:");
         public static readonly Operator LessThanEqual      = new Operator ("lessThanEquals", "<= {0}", "<=");
         public static readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", ">= {0}", ">=");

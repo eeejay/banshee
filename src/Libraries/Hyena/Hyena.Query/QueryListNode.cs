@@ -182,10 +182,12 @@ namespace Hyena.Query
                 bool first = true;
                 foreach (QueryNode child in Children) {
                     if (!first) {
-                        if (Keyword == Keyword.Or)
-                            sb.Append (", ");
-                        else
+                        if (Keyword == Keyword.Or) {
+                            // FIXME translate
+                            sb.Append (" or ");
+                        } else {
                             sb.Append (" ");
+                        }
                     } else {
                         first = false;
                     }

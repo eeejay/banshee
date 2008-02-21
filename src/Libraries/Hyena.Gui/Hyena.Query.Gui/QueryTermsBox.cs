@@ -90,18 +90,18 @@ namespace Hyena.Query.Gui
         }
 
         private bool first_add_node = true;
-        private void AddNode (QueryNode node)
+        protected void AddNode (QueryNode node)
         {
             if (node is QueryTermNode) {
                 QueryTermBox box = first_add_node ? FirstRow : CreateRow (false);
                 box.QueryNode = node as QueryTermNode;
                 first_add_node = false;
             } else {
-                Console.WriteLine ("Query Gui cannot handle child node: {0}", node.ToString ());
+                throw new ArgumentException ("Query is too complex for GUI query editor", "node");
             }
         }
 
-        public QueryTermBox CreateRow (bool canDelete)
+        protected QueryTermBox CreateRow (bool canDelete)
         {
             QueryTermBox row = new QueryTermBox (sorted_fields);
 
@@ -128,13 +128,13 @@ namespace Hyena.Query.Gui
             return row;
         }
         
-        public void OnRowAddRequest (object o, EventArgs args)
+        protected void OnRowAddRequest (object o, EventArgs args)
         {
             CreateRow (true);
             UpdateCanDelete ();
         }
         
-        public void OnRowRemoveRequest (object o, EventArgs args)
+        protected void OnRowRemoveRequest (object o, EventArgs args)
         {
             QueryTermBox row = o as QueryTermBox;
 
@@ -147,7 +147,7 @@ namespace Hyena.Query.Gui
             UpdateCanDelete ();
         }
         
-        public void UpdateCanDelete ()
+        protected void UpdateCanDelete ()
         {
             FirstRow.CanDelete = terms.Count > 1;
         }

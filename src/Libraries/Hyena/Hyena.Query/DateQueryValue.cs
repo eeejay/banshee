@@ -27,8 +27,12 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.Text;
+using System.Text.RegularExpressions;
+
+using Mono.Unix;
 
 using Hyena;
 
@@ -86,6 +90,7 @@ namespace Hyena.Query
             //set { offset = value; IsEmpty = false; }
         }
 
+        private Regex number_regex = new Regex ("\\d+");//, RegexOptions.Compiled);
         public override void ParseUserQuery (string input)
         {
             // TODO: Add support for relative strings like "yesterday", "3 weeks ago", "5 days ago"
@@ -93,16 +98,30 @@ namespace Hyena.Query
                 value = DateTime.Parse (input);
                 IsEmpty = false;
             } catch {
+                Match match = number_regex.Match (input);
+                if (match != Match.Empty && match.Groups.Count > 0) {
+                    int val = Convert.ToInt32 (match.Groups[0].Captures[0].Value);
+                    foreach (RelativeDateFactor factor in Enum.GetValues (typeof(RelativeDateFactor))) {
+                        if (input == FactorString (factor, val)) {
+                            SetRelativeValue ((long) -val, factor);
+                            return;
+                        }
+                    }
+                }
                 IsEmpty = true;
             }
         }
 
         public override string ToUserQuery ()
         {
-            if (value.Hour == 0 && value.Minute == 0 && value.Second == 0) {
-                return value.ToString ("yyyy-MM-dd");
+            if (relative) {
+                return FactorString (factor, (int) (RelativeOffset == 0 ? 0 : (-RelativeOffset / (long) factor)));
             } else {
-                return value.ToString ();
+                if (value.Hour == 0 && value.Minute == 0 && value.Second == 0) {
+                    return value.ToString ("yyyy-MM-dd");
+                } else {
+                    return value.ToString ();
+                }
             }
         }
 
@@ -126,11 +145,24 @@ namespace Hyena.Query
             try {
                 if (isRelative) {
                     SetRelativeValue (Convert.ToInt64 (val), RelativeDateFactor.Second);
+                    DetermineFactor ();
                 } else {
                     SetValue (DateTime.Parse (val));
                 }
             } catch {
                 IsEmpty = true;
+            }
+        }
+
+        protected void DetermineFactor ()
+        {
+            if (relative) {
+                long val = Math.Abs (offset);
+                foreach (RelativeDateFactor factor in Enum.GetValues (typeof(RelativeDateFactor))) {
+                    if (val >= (long) factor) {
+                        this.factor = factor;
+                    }
+                }
             }
         }
 
@@ -162,6 +194,26 @@ namespace Hyena.Query
 
         public DateTime DateTime {
             get { return value; }
+        }
+
+        protected static string FactorString (RelativeDateFactor factor, int count)
+        {
+            string translated = null;
+            switch (factor) {
+                case RelativeDateFactor.Second: translated = Catalog.GetPluralString ("{0} second", "{0} seconds", count); break;
+                case RelativeDateFactor.Minute: translated = Catalog.GetPluralString ("{0} minute", "{0} minutes", count); break;
+                case RelativeDateFactor.Hour:   translated = Catalog.GetPluralString ("{0} hour",   "{0} hours", count); break;
+                case RelativeDateFactor.Day:    translated = Catalog.GetPluralString ("{0} day",    "{0} days", count); break;
+                case RelativeDateFactor.Week:   translated = Catalog.GetPluralString ("{0} week",   "{0} weeks", count); break;
+                case RelativeDateFactor.Month:  translated = Catalog.GetPluralString ("{0} month",  "{0} months", count); break;
+                case RelativeDateFactor.Year:   translated = Catalog.GetPluralString ("{0} year",   "{0} years", count); break;
+                default: return null;
+            }
+
+            return String.Format (
+                Catalog.GetString ("{0} ago"),
+                String.Format (translated, count)
+            );
         }
     }
 }

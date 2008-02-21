@@ -110,7 +110,7 @@ namespace Hyena.Query
         public override string ToUserQuery ()
         {
             if (factor != FileSizeFactor.None) {
-                return String.Format ("{0}{1}",
+                return String.Format ("{0} {1}",
                     IntValue == 0 ? 0 : (IntValue / (long) factor),
                     factor.ToString ()
                 );

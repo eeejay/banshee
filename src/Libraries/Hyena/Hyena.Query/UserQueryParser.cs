@@ -47,6 +47,11 @@ namespace Hyena.Query
         private QueryListNode root;
         private QueryFieldSet field_set;
 
+        public static QueryNode Parse (string input, QueryFieldSet fieldSet)
+        {
+            return new UserQueryParser (input).BuildTree (fieldSet);
+        }
+
         public UserQueryParser () : base () {}
         public UserQueryParser (string inputQuery) : base (inputQuery) {}
         public UserQueryParser (Stream stream) : base (stream) {}

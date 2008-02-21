@@ -22,8 +22,12 @@ namespace Banshee.SmartPlaylist
     public class Editor : GladeDialog
     {
         private BansheeQueryBox builder;
-
         private SmartPlaylistSource playlist = null;
+
+        private static SmartPlaylistSource currently_editing;
+        public static SmartPlaylistSource CurrentlyEditing {
+            get { return currently_editing; }
+        }
 
         [Widget] private Gtk.Entry name_entry;
         [Widget] private Gtk.VBox builder_box;
@@ -34,9 +38,10 @@ namespace Banshee.SmartPlaylist
 
         public Editor (SmartPlaylistSource playlist) : base ("SmartPlaylistEditorDialog")
         {
+            currently_editing = playlist;
             this.playlist = playlist;
-            Console.WriteLine ("Loading smart playlist into editor: {0}",
-                playlist.ConditionTree == null ? "" : playlist.ConditionTree.ToXml (BansheeQuery.FieldSet, true));
+            /*Console.WriteLine ("Loading smart playlist into editor: {0}",
+                playlist.ConditionTree == null ? "" : playlist.ConditionTree.ToXml (BansheeQuery.FieldSet, true));*/
 
             Initialize ();
 
@@ -205,9 +210,9 @@ namespace Banshee.SmartPlaylist
 
             QueryNode node = builder.QueryNode;
             if (node == null) {
-                Console.WriteLine ("Editor query is null");
+                //Console.WriteLine ("Editor query is null");
             } else {
-                Console.WriteLine ("Editor query is: {0}", node.ToXml (BansheeQuery.FieldSet, true));
+                //Console.WriteLine ("Editor query is: {0}", node.ToXml (BansheeQuery.FieldSet, true));
             }
 
             if (response == ResponseType.Ok) {
@@ -255,6 +260,7 @@ namespace Banshee.SmartPlaylist
                 });
             }
 
+            currently_editing = null;
             return response;
         }
 
@@ -293,6 +299,7 @@ namespace Banshee.SmartPlaylist
                 }
             }
 
+            currently_editing = null;
             Dialog.Destroy ();
         }
 

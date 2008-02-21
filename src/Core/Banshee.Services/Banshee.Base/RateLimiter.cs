@@ -36,12 +36,18 @@ namespace Banshee.Base
         public delegate void RateLimitedMethod ();
 
         private RateLimitedMethod method;
+        private double initial_delay_ms;
         private double min_interval_ms;
         private DateTime last_executed = DateTime.MinValue;
         private uint timeout_id = 0;
 
-        public RateLimiter (double min_interval_ms, RateLimitedMethod method)
+        public RateLimiter (double min_interval_ms, RateLimitedMethod method) : this (0.0, min_interval_ms, method)
         {
+        }
+
+        public RateLimiter (double initial_delay_ms, double min_interval_ms, RateLimitedMethod method)
+        {
+            this.initial_delay_ms = initial_delay_ms;
             this.min_interval_ms = min_interval_ms;
             this.method = method;
         }
@@ -58,8 +64,12 @@ namespace Banshee.Base
 
             double delta = (DateTime.Now - last_executed).TotalMilliseconds;
             if (delta >= min_interval_ms) {
-                method ();
-                last_executed = DateTime.Now;
+                if (initial_delay_ms == 0.0) {
+                    method ();
+                    last_executed = DateTime.Now;
+                } else {
+                    timeout_id = GLib.Timeout.Add ((uint) initial_delay_ms, OnRateLimitTimer);
+                }
             } else {
                 //Console.WriteLine ("Method rate limited, setting timeout");
                 timeout_id = GLib.Timeout.Add ((uint) min_interval_ms, OnRateLimitTimer);

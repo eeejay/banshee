@@ -94,7 +94,7 @@ namespace Banshee.Sources
             error_source.Updated += OnErrorSourceUpdated;
             OnErrorSourceUpdated (null, null);
 
-            tracks_updated_limiter = new RateLimiter (50.0, RateLimitedOnTracksUpdated);
+            tracks_updated_limiter = new RateLimiter (10.0, 50.0, RateLimitedOnTracksUpdated);
 
             primary_sources[source_id] = this;
         }

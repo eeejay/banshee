@@ -212,6 +212,29 @@ namespace Banshee.SmartPlaylist
 
         public bool DependsOn (SmartPlaylistSource source)
         {
+            return DependsOn (source, ConditionTree);
+        }
+
+        private bool DependsOn (SmartPlaylistSource source, QueryNode node)
+        {
+            if (node == null) {
+                return false;
+            }
+
+            if (node is QueryListNode) {
+                foreach (QueryNode child in (node as QueryListNode).Children) {
+                    if (DependsOn (source, child)) {
+                        return true;
+                    }
+                }
+            } else {
+                QueryTermNode term = node as QueryTermNode;
+                if (term.Field == BansheeQuery.SmartPlaylistField) {
+                    if ((term.Value as IntegerQueryValue).IntValue == source.DbId)
+                        return true;
+                }
+            }
+
             return false;
         }
 

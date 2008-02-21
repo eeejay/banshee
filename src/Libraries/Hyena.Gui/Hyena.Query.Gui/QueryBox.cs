@@ -42,6 +42,10 @@ namespace Hyena.Query.Gui
     public class QueryBox : VBox
     {
         private QueryTermsBox terms_box;
+        private bool complex_query = false;
+
+        private HBox terms_entry_box;
+        private Entry terms_entry;
 
         private QueryLimitBox limit_box;
         public QueryLimitBox LimitBox {
@@ -51,12 +55,14 @@ namespace Hyena.Query.Gui
         private ComboBox terms_logic_combo;
         private CheckButton terms_enabled_checkbox;
         private Label terms_label;
+        private QueryFieldSet field_set;
+        private Frame matchesFrame;
 
         public QueryBox (QueryFieldSet fieldSet, QueryOrder [] orders, QueryLimit [] limits) : base ()
         {
             //this.sorted_fields = fieldSet.Fields;
-            //this.field_set = fieldSet;
-            terms_box = new QueryTermsBox (fieldSet);
+            this.field_set = fieldSet;
+            terms_box = new QueryTermsBox (field_set);
             limit_box = new QueryLimitBox (orders, limits);
 
             BuildInterface ();
@@ -64,17 +70,27 @@ namespace Hyena.Query.Gui
 
         private void BuildInterface ()
         {
+            NoShowAll = true;
+
             Alignment matchesAlignment = new Alignment (0.0f, 0.0f, 1.0f, 1.0f);
-            matchesAlignment.Show ();
             matchesAlignment.SetPadding (5, 5, 5, 5);
             matchesAlignment.Add (terms_box);
         
-            Frame matchesFrame = new Frame (null);
-            matchesFrame.Show ();
+            matchesFrame = new Frame (null);
             matchesFrame.Add (matchesAlignment);
             matchesFrame.LabelWidget = BuildMatchHeader ();
+            matchesFrame.ShowAll ();
+
+            terms_entry_box = new HBox ();
+            terms_entry_box.Spacing = 8;
+            terms_entry_box.PackStart (new Label (Catalog.GetString ("Condition:")), false, false, 0);
+            terms_entry = new Entry ();
+            terms_entry_box.PackStart (terms_entry, true, true, 0);
+
+            limit_box.ShowAll ();
 
             PackStart(matchesFrame, true, true, 0);
+            PackStart(terms_entry_box, false, false, 0);
             PackStart(limit_box, false, false, 0);
 
             //ShowAll ();
@@ -117,8 +133,12 @@ namespace Hyena.Query.Gui
 
         public QueryNode QueryNode {
             get {
-                if (!terms_enabled_checkbox.Active) {
+                if (!complex_query && !terms_enabled_checkbox.Active) {
                     return null;
+                }
+
+                if (complex_query) {
+                    return UserQueryParser.Parse (terms_entry.Text, field_set);
                 }
 
                 QueryListNode node = new QueryListNode (terms_logic_combo.Active == 0 ? Keyword.And : Keyword.Or);
@@ -127,16 +147,25 @@ namespace Hyena.Query.Gui
                 }
                 return node.Trim ();
             }
+
             set {
                 if (value != null) {
                     terms_enabled_checkbox.Active = true;
-                    if (value is QueryListNode) {
-                        terms_logic_combo.Active = ((value as QueryListNode).Keyword == Keyword.And) ? 0 : 1;
-                        terms_box.QueryNodes = (value as QueryListNode).Children;
-                    } else {
-                        List<QueryNode> nodes = new List<QueryNode> ();
-                        nodes.Add (value);
-                        terms_box.QueryNodes = nodes;
+
+                    try {
+                        if (value is QueryListNode) {
+                            terms_logic_combo.Active = ((value as QueryListNode).Keyword == Keyword.And) ? 0 : 1;
+                            terms_box.QueryNodes = (value as QueryListNode).Children;
+                        } else {
+                            List<QueryNode> nodes = new List<QueryNode> ();
+                            nodes.Add (value);
+                            terms_box.QueryNodes = nodes;
+                        }
+                    } catch (ArgumentException e) {
+                        complex_query = true;
+                        matchesFrame.HideAll ();
+                        terms_entry.Text = value.ToUserQuery ();
+                        terms_entry_box.ShowAll ();
                     }
                 } else {
                     terms_enabled_checkbox.Active = false;
