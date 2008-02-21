@@ -46,6 +46,7 @@ namespace Banshee.Sources
     {
         protected ErrorSource error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
         protected bool error_source_visible = false;
+        protected RateLimiter tracks_updated_limiter;
 
         protected HyenaSqliteCommand remove_range_command = new HyenaSqliteCommand (@"
             DELETE FROM CoreTracks WHERE TrackID IN
@@ -70,6 +71,18 @@ namespace Banshee.Sources
             get { return source_id; }
         }
 
+        public ErrorSource ErrorSource {
+            get { return error_source; }
+        }
+
+        public event EventHandler TracksUpdated;
+
+        private static Dictionary<int, PrimarySource> primary_sources = new Dictionary<int, PrimarySource> ();
+        public static PrimarySource GetById (int id)
+        {
+            return (primary_sources.ContainsKey (id)) ? primary_sources[id] : null;
+        }
+
         protected PrimarySource (string generic_name, string name, string id, int order) : base (generic_name, name, id, order)
         {
             source_id = ServiceManager.DbConnection.Query<int> ("SELECT SourceID FROM CorePrimarySources WHERE StringID = ?", id);
@@ -80,10 +93,35 @@ namespace Banshee.Sources
             track_model.Condition = String.Format ("CoreTracks.SourceID = {0}", source_id);;
             error_source.Updated += OnErrorSourceUpdated;
             OnErrorSourceUpdated (null, null);
+
+            tracks_updated_limiter = new RateLimiter (50.0, RateLimitedOnTracksUpdated);
+
+            primary_sources[source_id] = this;
         }
 
-        public ErrorSource ErrorSource {
-            get { return error_source; }
+        public void OnTracksUpdated ()
+        {
+            tracks_updated_limiter.Execute ();
+        }
+
+        protected virtual void RateLimitedOnTracksUpdated ()
+        {
+            Reload ();
+
+            EventHandler handler = TracksUpdated;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+
+        protected override void RateLimitedReload ()
+        {
+            base.RateLimitedReload ();
+            foreach (Source child in Children) {
+                if (child is ITrackModelSource) {
+                    (child as ITrackModelSource).Reload ();
+                }
+            }
         }
 
         protected void OnErrorSourceUpdated (object o, EventArgs args)
@@ -102,7 +140,6 @@ namespace Banshee.Sources
             remove_track_command.ApplyValues (track.DbId);
             ServiceManager.DbConnection.Execute (remove_track_command);
             Reload ();
-            ReloadChildren ();
         }
 
         /*public override void RemoveTracks (IEnumerable<TrackInfo> tracks)
@@ -129,14 +166,7 @@ namespace Banshee.Sources
 
             // Reload the library, all playlists, etc
             Reload ();
-            ReloadChildren ();
         }*/
-
-        public override void RemoveSelectedTracks (TrackListDatabaseModel model)
-        {
-            base.RemoveSelectedTracks (model);
-            ReloadChildren ();
-        }
 
         protected override void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
         {
@@ -146,21 +176,6 @@ namespace Banshee.Sources
                     model.CacheId, range.Start, range.End - range.Start + 1
             );
             ServiceManager.DbConnection.Execute (remove_range_command);
-        }
-
-        public override void DeleteSelectedTracks (TrackListDatabaseModel model)
-        {
-            base.DeleteSelectedTracks (model);
-            ReloadChildren ();
-        }
-
-        private void ReloadChildren ()
-        {
-            foreach (Source child in Children) {
-                if (child is ITrackModelSource) {
-                    (child as ITrackModelSource).Reload ();
-                }
-            }
         }
     }
 }

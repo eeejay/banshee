@@ -372,10 +372,20 @@ namespace Banshee.Gui
 
         private void OnRateTracks (object o, EventArgs args)
         {
+            foreach (Widget proxy in (o as Gtk.Action).Proxies) {
+                Menu menu = proxy.Parent as Menu;
+                if (menu != null && menu.Visible) {
+                    menu.Popdown ();
+                    menu.Hide ();
+                }
+            }
+
             int rating = rating_proxy.LastRating;
             foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
-                track.Rating = rating;
-                track.Save ();
+                if (track != null) {
+                    track.Rating = rating;
+                    track.Save ();
+                }
             }
         }
 

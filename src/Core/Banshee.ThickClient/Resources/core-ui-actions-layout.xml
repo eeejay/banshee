@@ -104,6 +104,10 @@
     </menu>
   </popup>
 
+  <popup name="ErrorSourceContextMenu" action="ErrorSourceContextMenuAction">
+    <menuitem name="UnmapSource" action="UnmapSourceAction"/>
+  </popup>
+
   <popup name="SourceContextMenu" action="SourceContextMenuAction">
     <menuitem name="ImportSource" action="ImportSourceAction"/>
     <separator/>

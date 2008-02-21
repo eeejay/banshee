@@ -114,7 +114,7 @@ namespace Hyena
                     case LogEntryType.Debug: Console.ForegroundColor = ConsoleColor.Blue; break;
                 }
                 
-                Console.Write ("[{0} {1:00}:{2:00}:{3:00}.{4:000}]", type, DateTime.Now.Hour,
+                Console.Write ("[{0} {1:00}:{2:00}:{3:00}.{4:000}]", TypeString (type), DateTime.Now.Hour,
                     DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
                 
                 Console.ResetColor ();
@@ -129,6 +129,17 @@ namespace Hyena
             if (showUser) {
                 OnNotify (new LogEntry (type, message, details));
             }
+        }
+
+        private static string TypeString (LogEntryType type)
+        {
+            switch (type) {
+                case LogEntryType.Debug:         return "Debug";
+                case LogEntryType.Warning:       return "Warn ";
+                case LogEntryType.Error:         return "Error";
+                case LogEntryType.Information:   return "Info ";
+            }
+            return null;
         }
         
         private static void OnNotify (LogEntry entry)

@@ -82,18 +82,12 @@ namespace Banshee.Library
                 path.Substring (index + 1).ToLower ()) >= 0;
         }
     
-        private int library_source_id;
-
         public LibraryImportManager ()
         {
         }
         
         protected override void OnImportRequested (string path)
         {
-            if (library_source_id == 0) {
-                library_source_id = ServiceManager.SourceManager.Library.SourceId;
-            }
-
             if (!IsWhiteListedFile (path)) {
                 IncrementProcessedCount (null);
                 return;
@@ -142,9 +136,8 @@ namespace Banshee.Library
 
                 artist.Save ();
 
-                track.SourceId = library_source_id;
+                track.Source = ServiceManager.SourceManager.Library;
                 track.Save ();
-                ServiceManager.SourceManager.Library.Reload (200);
             });
             
             return track;

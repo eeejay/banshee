@@ -36,6 +36,7 @@ using Hyena.Data.Sqlite;
 using Banshee.Base;
 using Banshee.Configuration.Schema;
 using Banshee.Database;
+using Banshee.Sources;
 using Banshee.IO;
 using Banshee.ServiceStack;
 
@@ -70,7 +71,9 @@ namespace Banshee.Collection.Database
 
         public override void Save ()
         {
+            DateUpdated = DateTime.Now;
             Provider.Save (this);
+            Source.OnTracksUpdated ();
         }
         
         [DatabaseColumn ("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
@@ -83,7 +86,11 @@ namespace Banshee.Collection.Database
         private int source_id;
         public int SourceId {
             get { return source_id; }
-            set { source_id = value; }
+        }
+
+        public PrimarySource Source {
+            get { return PrimarySource.GetById (source_id); }
+            set { source_id = value.SourceId; }
         }
 
         [DatabaseColumn ("ArtistID", Index = "CoreTracksArtistIndex")]
@@ -261,6 +268,13 @@ namespace Banshee.Collection.Database
         public override DateTime DateAdded {
             get { return base.DateAdded; }
             set { base.DateAdded = value; }
+        }
+
+        private DateTime date_updated;
+        [DatabaseColumn ("DateUpdatedStamp")]
+        public DateTime DateUpdated {
+            get { return date_updated; }
+            set { date_updated = value; }
         }
 
         private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (

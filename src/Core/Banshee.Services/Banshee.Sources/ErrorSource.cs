@@ -36,7 +36,7 @@ using Hyena.Collections;
 
 namespace Banshee.Sources
 {
-    public class ErrorSource : Source, IObjectListModel
+    public class ErrorSource : Source, IObjectListModel, IUnmapableSource
     {
         private List<Message> messages = new List<Message> ();
         private Selection selection = new Selection ();
@@ -47,6 +47,15 @@ namespace Banshee.Sources
         public ErrorSource (string name) : base (name, name, 0)
         {
             Properties.SetStringList ("Icon.Name", "dialog-error", "gtk-dialog-error");
+            Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Close Error Report"));
+            Properties.SetString ("GtkActionPath", "/ErrorSourceContextMenu");
+        }
+
+        public bool Unmap ()
+        {
+            Clear ();
+            Parent.RemoveChildSource (this);
+            return true;
         }
         
         private void OnReloaded ()
@@ -114,6 +123,18 @@ namespace Banshee.Sources
         }
         
         public override bool CanSearch {
+            get { return false; }
+        }
+
+        public override bool CanRename {
+            get { return false; }
+        }
+
+        public virtual bool CanUnmap {
+            get { return true; }
+        }
+
+        public bool ConfirmBeforeUnmap {
             get { return false; }
         }
         

@@ -139,7 +139,7 @@ namespace Banshee.Sources
 
         public void Reload ()
         {
-            reload_limiter.Execute (50.0);
+            reload_limiter.Execute (100.0);
         }
 
         protected virtual void RateLimitedReload ()

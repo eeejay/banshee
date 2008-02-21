@@ -273,7 +273,7 @@ namespace Banshee.Database
                     Title               TEXT,
                     TrackNumber         INTEGER,
                     TrackCount          INTEGER,
-                    DiscNumber          INTEGER,
+                    Disc                INTEGER,
                     Duration            INTEGER,
                     Year                INTEGER,
                     Genre               TEXT,
@@ -282,7 +282,7 @@ namespace Banshee.Database
                     PlayCount           INTEGER,
                     SkipCount           INTEGER,
                     LastPlayedStamp     INTEGER,
-                    DateAddedStamp      INTEGER
+                    DateAddedStamp      INTEGER,
                     DateUpdatedStamp    INTEGER
                 )
             ");
@@ -430,6 +430,7 @@ namespace Banshee.Database
                         NumberOfPlays,
                         0,
                         LastPlayedStamp,
+                        DateAddedStamp,
                         DateAddedStamp
                         FROM Tracks
             ");

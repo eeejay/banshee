@@ -1,3 +1,36 @@
+2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Add DateUpdated property and update it in Save method.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Rename DiscNumber to Disc to avoid automatic column creation.  Fix issue
+	with DateUpdatedStamp not being created, and use DateAdded as its default
+	value for migrated tracks.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Use
+	the Source property on DatabaseTrackInfo instead of SourceId.  Remove
+	reload call to Library since it saving the tracks automatically triggers
+	it now.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Increase
+	minimum time between reloads.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs: Implement
+	IUnmapableSource.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add
+	TracksUpdated event.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Try to popdown
+	the menu before rating.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	custom context menu for ErrorSource.
+
+	* src/Libraries/Hyena/Hyena/Log.cs: Make log type string all the same
+	length so they line up better.
+
 2008-02-21  Scott Peterson <lunchtimemama@gmail.com> 
 
 	This commit begins to port the player migration namespace from stable into trunk.
