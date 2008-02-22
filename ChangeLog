@@ -1,5 +1,18 @@
 2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* build/build.environment.mk:
+	* configure.ac:
+	* src/Clients/Nereid/Nereid/Client.cs:
+	* src/Extensions/Banshee.Skins/Banshee.Skins.addin.xml:
+	* src/Extensions/Banshee.Skins/Banshee.Skins.mdp:
+	* src/Extensions/Banshee.Skins/Banshee.Skins/SkinManager.cs:
+	* src/Extensions/Banshee.Skins/Makefile.am:
+	* src/Extensions/Banshee.Skins/Resources/GlobalUI.xml:
+	* src/Extensions/Makefile.am: New extension for switching skins (*.gtkrc
+	files under ~/.config/plugins/skins/).
+
+2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs: Make the regex
 	static.
 

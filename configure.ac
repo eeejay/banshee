@@ -152,6 +152,7 @@ src/Extensions/Banshee.Lastfm/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
 src/Extensions/Banshee.PlayQueue/Makefile
+src/Extensions/Banshee.Skins/Makefile
 ])
 
 if test "x${enable_daap}" = "xyes"; then
