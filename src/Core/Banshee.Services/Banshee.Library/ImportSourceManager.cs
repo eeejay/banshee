@@ -50,7 +50,7 @@ namespace Banshee.Library
                 import_sources = new List<IImportSource> ();
                 import_sources.Add (new HomeDirectoryImportSource ());
                 
-                if (AmarokPlayerImportSource.StaticCanImport) {
+                if (AmarokPlayerImportSource.CanImport) {
                     import_sources.Add (new AmarokPlayerImportSource ());
                 }
             

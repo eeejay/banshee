@@ -208,7 +208,7 @@ namespace Banshee.PlayerMigration
             }
         }
         
-        public static bool StaticCanImport
+        public static bool CanImport
         {
             get { return File.Exists (library_path); }
         }
@@ -220,10 +220,6 @@ namespace Banshee.PlayerMigration
 
         public override string [] IconNames {
             get { return new string [] { "system-search" }; }
-        }
-        
-        public override bool CanImport {
-            get { return StaticCanImport; }
         }
     }
 }
