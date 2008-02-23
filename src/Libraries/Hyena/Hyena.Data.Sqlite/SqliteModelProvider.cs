@@ -157,7 +157,7 @@ namespace Hyena.Data.Sqlite
         private void CheckTable ()
         {
             //Console.WriteLine ("In {0} checking for table {1}", this, TableName);
-            Dictionary<string, string> schema = connection.GetSchema (TableName);
+            IDictionary<string, string> schema = connection.GetSchema (TableName);
             if (schema.Count > 0) {
                 foreach (DatabaseColumn column in columns) {
                     if (!schema.ContainsKey (column.Name)) {

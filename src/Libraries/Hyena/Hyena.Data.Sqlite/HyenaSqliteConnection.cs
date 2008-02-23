@@ -147,7 +147,7 @@ namespace Hyena.Data.Sqlite
         }
         
         private static readonly char [] ws_chars = new char [] { ' ', '\t', '\n', '\r' };
-        public Dictionary<string, string> GetSchema (string table_name)
+        public IDictionary<string, string> GetSchema (string table_name)
         {
             Dictionary<string, string> schema = new Dictionary<string,string> ();
             SchemaClosure (table_name, delegate (string column) {

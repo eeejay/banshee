@@ -1,5 +1,12 @@
 2008-02-22  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs,
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs:
+	  HyenaSqliteConnection.GetSchema now returns an IDictionary<string,
+	  string> rather than a Dictionary<string, string>.
+
+2008-02-22  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs,
 	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
 	  Minor change to Amarok's CanImport property name.
