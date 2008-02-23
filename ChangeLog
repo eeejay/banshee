@@ -1,4 +1,18 @@
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
+    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+      Remove a few bits of commented code. Added Stock.Properties icon for the Configure
+      menu item.
+    
+    * src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: Added Ctrl+E keyboard
+      shortcut for equalizer window.
+    
+    * src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Added Stock.Preferences
+      icon for Preferences menu item.
+    
+    * src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Added E keyboard shortcut
+      for track editor dialog.
+
+2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
     * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Use the static
       instance of Account shared by others, rather than creating a seperate instance.
     

@@ -48,7 +48,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("_View"), null, null, null),
                     
                 new ActionEntry ("ShowEqualizerAction", null,
-                   Catalog.GetString ("_Equalizer"), null,
+                   Catalog.GetString ("_Equalizer"), "<control>E",
                    Catalog.GetString ("View the graphical equalizer"), OnShowEqualizer)
             });
             

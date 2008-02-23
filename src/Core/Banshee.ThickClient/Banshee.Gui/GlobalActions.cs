@@ -69,7 +69,7 @@ namespace Banshee.Gui
                 new ActionEntry ("EditMenuAction", null, 
                     Catalog.GetString("_Edit"), null, null, null),
 
-                new ActionEntry ("PreferencesAction", null,
+                new ActionEntry ("PreferencesAction", Stock.Preferences,
                     Catalog.GetString ("_Preferences"), null,
                     Catalog.GetString ("Modify your personal preferences"), OnPreferences),
 

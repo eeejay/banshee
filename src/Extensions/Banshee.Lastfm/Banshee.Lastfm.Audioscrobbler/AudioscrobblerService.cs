@@ -95,10 +95,6 @@ namespace Banshee.Lastfm.Audioscrobbler
             
             action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
             InterfaceInitialize ();
-        
-            /*if (!connection.Started && account.UserName != null && account.CryptedPassword != null) {
-                connection.Connect ();
-            }*/
         }
         
         public void InterfaceInitialize ()
@@ -114,7 +110,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                     Catalog.GetString ("Visit _user profile page"), null,
                     Catalog.GetString ("Visit your Audioscrobbler profile page"), OnVisitOwnProfile),
                 
-                new ActionEntry ("AudioscrobblerConfigureAction", null,
+                new ActionEntry ("AudioscrobblerConfigureAction", Stock.Properties,
                     Catalog.GetString ("_Configure..."), null,
                     Catalog.GetString ("Configure the Audioscrobbler plugin"), OnConfigurePlugin)
             });
@@ -190,7 +186,6 @@ namespace Banshee.Lastfm.Audioscrobbler
                 case PlayerEngineEvent.StartOfStream:
                     // Queue the previous track in case of a skip
                     st.Stop ();
-                    //Log.DebugFormat ("Attempting to queue track (from start-o-stream): {0}", last_track);
                     Queue (last_track);
                 
                     st.Reset (); st.Start ();
@@ -210,7 +205,6 @@ namespace Banshee.Lastfm.Audioscrobbler
                 case PlayerEngineEvent.EndOfStream:
                     st.Stop ();
                     Queue (ServiceManager.PlayerEngine.CurrentTrack);
-                    //Log.DebugFormat ("Attempting to queue track (from end-o-stream): {0}", ServiceManager.PlayerEngine.CurrentTrack);
                     //queued = true;
                     break;
             }
