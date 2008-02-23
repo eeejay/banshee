@@ -100,12 +100,19 @@ namespace Banshee.Library
             }
         }
         
+        private string user_job_title;
         protected virtual string UserJobTitle {
-            get { return String.Format (Catalog.GetString ("Importing Songs from {0}"), Name); }
+            get {
+                if (user_job_title == null) {
+                    user_job_title = String.Format (Catalog.GetString ("Importing Songs from {0}"), Name);
+                }
+                return user_job_title;
+            }
         }
         
+        private string cancel_message = Catalog.GetString ("The import process is currently running. Would you like to stop it?");
         protected virtual string CancelMessage {
-            get { return Catalog.GetString ("The import process is currently running. Would you like to stop it?"); }
+            get { return cancel_message; }
         }
     
         protected virtual bool CanCancel {
