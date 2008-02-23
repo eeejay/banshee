@@ -47,6 +47,7 @@ using Banshee.Base;
 using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Gui;
+using Banshee.Networking;
 
 using Banshee.Collection;
 
@@ -73,12 +74,21 @@ namespace Banshee.Lastfm.Audioscrobbler
         
         void IExtensionService.Initialize ()
         {
-            account = new Account ();
-            account.UserName = LastUserSchema.Get ();
-            account.CryptedPassword = LastPassSchema.Get ();
+            account = Account.Instance;
+            
+            if (account.UserName == null) {
+                account.UserName = LastUserSchema.Get ();
+                account.CryptedPassword = LastPassSchema.Get ();
+            }
             
             queue = new Queue ();
             connection = new AudioscrobblerConnection (account, queue);
+            
+            // This auto-connects for us if we start off connected to the network.
+            connection.UpdateNetworkState (NetworkDetect.Instance.Connected);
+            NetworkDetect.Instance.StateChanged += delegate (object o, NetworkStateChangedArgs args) {
+                connection.UpdateNetworkState (args.Connected);
+            };
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
@@ -86,9 +96,9 @@ namespace Banshee.Lastfm.Audioscrobbler
             action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
             InterfaceInitialize ();
         
-            if (!connection.Started) {
+            /*if (!connection.Started && account.UserName != null && account.CryptedPassword != null) {
                 connection.Connect ();
-            }
+            }*/
         }
         
         public void InterfaceInitialize ()
@@ -159,9 +169,16 @@ namespace Banshee.Lastfm.Audioscrobbler
         SongTimer st = new SongTimer ();
         
         private void Queue (TrackInfo track) {
+            if (track == null || st.PlayTime == 0) {
+                return;
+            }
+            
+            Log.DebugFormat ("Track {4} had playtime of {0} sec, duration {1} sec, started: {2}, queued: {3}",
+                st.PlayTime, track.Duration.TotalSeconds, song_started, queued, track);
+            
             if (song_started && !queued && track.Duration.TotalSeconds > 30 && 
                 track.ArtistName != "" && track.TrackTitle != "" &&
-               (st.PlayTime >  track.Duration.TotalSeconds / 2 || st.PlayTime > 240)) {
+                (st.PlayTime >  track.Duration.TotalSeconds / 2 || st.PlayTime > 240)) {
                   queue.Add (track, song_start_time);
                   queued = true;
             }
@@ -173,6 +190,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                 case PlayerEngineEvent.StartOfStream:
                     // Queue the previous track in case of a skip
                     st.Stop ();
+                    //Log.DebugFormat ("Attempting to queue track (from start-o-stream): {0}", last_track);
                     Queue (last_track);
                 
                     st.Reset (); st.Start ();
@@ -182,14 +200,18 @@ namespace Banshee.Lastfm.Audioscrobbler
                     song_started = true;
 
                     // Queue as now playing
-                    connection.NowPlaying (last_track.ArtistName, last_track.TrackTitle,
-                        last_track.AlbumTitle, last_track.Duration.TotalSeconds, last_track.TrackNumber);
+                    if (last_track != null) {
+                        connection.NowPlaying (last_track.ArtistName, last_track.TrackTitle,
+                            last_track.AlbumTitle, last_track.Duration.TotalSeconds, last_track.TrackNumber);
+                    }
+                    
                     break;
                 
                 case PlayerEngineEvent.EndOfStream:
                     st.Stop ();
                     Queue (ServiceManager.PlayerEngine.CurrentTrack);
-                    queued = true;
+                    //Log.DebugFormat ("Attempting to queue track (from end-o-stream): {0}", ServiceManager.PlayerEngine.CurrentTrack);
+                    //queued = true;
                     break;
             }
         }

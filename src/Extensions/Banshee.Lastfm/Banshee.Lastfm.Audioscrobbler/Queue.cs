@@ -56,7 +56,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                 this.title = track.TrackTitle;
                 this.track_number = (int) track.TrackNumber;
                 this.duration = (int) track.Duration.TotalSeconds;
-                this.start_time = DateTimeUtil.ToTimeT(start_time.ToUniversalTime ());
+                this.start_time = DateTimeUtil.ToTimeT(start_time.ToLocalTime ());
             }
 
             public QueuedTrack (string artist, string album,

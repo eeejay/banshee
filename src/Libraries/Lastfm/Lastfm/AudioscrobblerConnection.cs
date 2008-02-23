@@ -66,6 +66,10 @@ namespace Lastfm
         string session_id = null;
         string now_playing_url;
         bool now_playing_submitted = false;
+        bool connected = false;
+        public bool Connected {
+            get { return connected; }
+        }
         
         bool started = false;
         public bool Started {
@@ -98,23 +102,38 @@ namespace Lastfm
         
         private void AccountUpdated (object o, EventArgs args)
         {
+            Stop ();
+            session_id = null;
             Connect ();
         }
         
         public void Connect ()
         {
-            if (session_id == null) {
-                if (!started) {
-                    Start ();
+            if (!started) {
+                Start ();
+            }
+        
+            if (session_id == null && started) {
+                if (connected) {
+                    state = State.NEED_HANDSHAKE;
+                    Handshake ();
+                } else {
+                    Hyena.Log.Debug ("Not connecting to Audioscrobbler", "Not connected to network.");
                 }
-                
-                Handshake ();
+            }
+        }
+        
+        public void UpdateNetworkState (bool connected)
+        {
+            Log.DebugFormat ("Changing Audioscrobbler connected state: {0}", connected ? "connected" : "disconnected");
+            this.connected = connected;
+            if (connected) {
+                Connect ();
             }
         }
 
         private void Start ()
         {
-            state = State.NEED_HANDSHAKE;
             started = true;
             queue.TrackAdded += delegate(object o, EventArgs args) {
                 StartTransitionHandler ();
@@ -125,6 +144,11 @@ namespace Lastfm
 
         private void StartTransitionHandler ()
         {
+            if (!started) {
+                // Don't run if we're not actually connected.
+                return;
+            }
+            
             if (timer == null) {
                 timer = new System.Timers.Timer ();
                 timer.Interval = TICK_INTERVAL;
@@ -132,10 +156,10 @@ namespace Lastfm
                 timer.Elapsed += new ElapsedEventHandler (StateTransitionHandler);
                 
                 timer.Start ();
-                Console.WriteLine ("Timer started.");
+                //Console.WriteLine ("Timer started.");
             } else if (!timer.Enabled) {
                 timer.Start ();
-                Console.WriteLine ("Restarting timer from stopped state.");
+                //Console.WriteLine ("Restarting timer from stopped state.");
             }
         }
 
@@ -161,13 +185,13 @@ namespace Lastfm
 
         private void StateTransitionHandler (object o, ElapsedEventArgs e)
         {
-            Console.WriteLine ("State transition handler running.");
+            Hyena.Log.DebugFormat ("State transition handler running; state: {0}", state);
+            
             /* if we're not connected, don't bother doing anything
              * involving the network. */
-             // TODO!
-            /*if (!NetworkDetect.Instance.Connected) {
-                return true;
-            }*/
+            if (!connected) {
+                return;
+            }
                         
             if ((state == State.IDLE || state == State.NEED_TRANSMIT) && hard_failures > 2) {
                 state = State.NEED_HANDSHAKE;
@@ -233,7 +257,7 @@ namespace Lastfm
 
             next_interval = DateTime.MinValue;
 
-            if (post_url == null) {
+            if (post_url == null || !connected) {
                 return;
             }
 
@@ -528,6 +552,7 @@ namespace Lastfm
                 }
                 else if (line.StartsWith ("OK")) {
                     // NowPlaying submitted  
+                    Hyena.Log.DebugFormat ("Submitted NowPlaying track to Audioscrobbler");
                 }
                 else {
                     Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "Unexpected or no response", false);       
@@ -535,7 +560,7 @@ namespace Lastfm
             }
             catch (Exception e) {
                 Hyena.Log.Error ("Audioscrobbler NowPlaying failed", 
-                              String.Format("Failed to post NowPlaying: {0}", e));
+                              String.Format("Failed to post NowPlaying: {0}", e), false);
             }
         }
     }
