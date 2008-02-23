@@ -1,3 +1,23 @@
+2008-02-22  Alexander Hixon <hixon.alexander@mediati.org>
+    * src/Extensions/Makefile.am:
+    * src/Extensions/Banshee.Audioscrobbler:
+    * build/build.environment.mk:
+    * configure.ac: Remove reference to the old extension name and paths.
+    
+    * src/Extensions/Banshee.Lastfm/Makefile.am:
+    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs:
+    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.addin.xml: Cleaned version of the
+      Audioscrobbler plugin from stable. Glue to hook up player engine and
+      AudioscrobblerConnection logic lives here.
+    
+    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:
+    * src/Libraries/Lastfm/Lastfm/IQueue.cs: Seperate out web bits and queue interface
+      into our Last.fm library. Uses version 1.2 of the Last.fm protocol.
+    
+    * src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+    * src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Added 'Tools' menu.
+
 2008-02-22  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs: Minor

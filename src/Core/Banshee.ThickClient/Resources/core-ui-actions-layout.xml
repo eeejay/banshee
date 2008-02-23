@@ -76,6 +76,9 @@
       <separator/>
       <menuitem name="Shuffle" action="ShuffleAction"/>
     </menu>
+    
+    <menu name="ToolsMenu" action="ToolsMenuAction">
+    </menu>
 
     <menu name="HelpMenu" action="HelpMenuAction">
       <menu name="WebMenu" action="WebMenuAction">

@@ -77,6 +77,10 @@ namespace Banshee.Gui
                     Catalog.GetString ("Manage _Extensions"), null,
                     Catalog.GetString ("Manage extensions to add new features to Banshee"), OnExtensions),
                 
+                // Tools menu
+                new ActionEntry ("ToolsMenuAction", null,
+                    Catalog.GetString ("_Tools"), null, null, null),
+                
                 // Help Menu
                 new ActionEntry ("HelpMenuAction", null, 
                     Catalog.GetString ("_Help"), null, null, null),

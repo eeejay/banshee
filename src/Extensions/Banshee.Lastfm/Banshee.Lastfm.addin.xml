@@ -9,4 +9,8 @@
     <Source class="Banshee.Lastfm.Radio.LastfmSource"/>
   </Extension>
   
+  <Extension path="/Banshee/ServiceManager/Service">
+    <Service class="Banshee.Lastfm.Audioscrobbler.AudioscrobblerService"/>
+  </Extension>
+  
 </Addin>
