@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: oc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-27 13:30+0100\n"
-"PO-Revision-Date: 2007-12-28 10:28+0100\n"
+"PO-Revision-Date: 2008-02-20 00:10+0100\n"
 "Last-Translator: Yannig Marchegay (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -181,7 +181,7 @@ msgstr "Legidor de musica Banshee"
 
 #: ../data/banshee.desktop.in.in.h:2
 msgid "Music Player"
-msgstr ""
+msgstr "Legidor de musica"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileComboBox.cs:84
 msgid "No available profiles"
@@ -290,7 +290,7 @@ msgstr "<b>_Artista :</b>"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:25
 msgid "<b>_Genre:</b>"
-msgstr ""
+msgstr "<b>_Mena :</b>"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:26
 msgid "<b>_Rating:</b>"
@@ -302,7 +302,7 @@ msgstr "<b>_Títol :</b>"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:28
 msgid "<b>_Year:</b>"
-msgstr ""
+msgstr "<b>_An :</b>"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:29
 msgid "<big><b>Import Music to Library</b></big>"
@@ -751,7 +751,7 @@ msgstr ""
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:780
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:92
 msgid "Album"
-msgstr "Albom"
+msgstr "Album"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/ArtistColumn.cs:42
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:47
@@ -814,7 +814,7 @@ msgstr ""
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackNumberColumn.cs:42
 msgid "Track"
-msgstr ""
+msgstr "Pista"
 
 #: ../src/Core/Banshee/Banshee.TrackView.Columns/TrackViewColumn.cs:141
 msgid "Columns..."
@@ -840,12 +840,12 @@ msgstr "Annada"
 #: ../src/Core/Banshee.Base/ActionManager.cs:65
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:47
 msgid "_Music"
-msgstr ""
+msgstr "_Musica"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:68
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:59
 msgid "_New Playlist"
-msgstr ""
+msgstr "Tièra de lectura _novèla"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:69
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:60
@@ -1206,17 +1206,17 @@ msgstr "_Seguent"
 #: ../src/Core/Banshee.Base/ActionManager.cs:287
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:55
 msgid "Play the next song"
-msgstr ""
+msgstr "Legir la cançon seguenta"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:290
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:58
 msgid "Pre_vious"
-msgstr ""
+msgstr "_Precedent"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:291
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:59
 msgid "Play the previous song"
-msgstr ""
+msgstr "Legir la cançon precedenta"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:296
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:84
@@ -1307,7 +1307,7 @@ msgstr ""
 #: ../src/Core/Banshee.Base/ActionManager.cs:346
 #: ../src/Core/Banshee.Base/SourceManager.cs:280
 msgid "Synchronize"
-msgstr "Sincronisar"
+msgstr "Sincronizar"
 
 #: ../src/Core/Banshee.Base/ActionManager.cs:347
 msgid "Save changes to device or synchronize music library"
@@ -1336,7 +1336,7 @@ msgstr "Artista desconegut"
 #: ../src/Core/Banshee.Base/TrackInfo.cs:299
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:140
 msgid "Unknown Album"
-msgstr "Albom desconegut"
+msgstr "Album desconegut"
 
 #: ../src/Core/Banshee.Base/AudioCd/AudioCdDisk.cs:90
 #, csharp-format
@@ -1934,7 +1934,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:62
 msgid "songs"
-msgstr ""
+msgstr "cançons"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:63
 msgid "minutes"
@@ -1993,7 +1993,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:786
 msgid "Track Number"
-msgstr ""
+msgstr "Numerò de pista"
 
 #: ../src/Core/Banshee.Base/Banshee.SmartPlaylist/QueryBuilderModel.cs:789
 #: ../src/Core/Banshee.Base/Sources/AbstractPlaylistSource.cs:59
@@ -2446,7 +2446,7 @@ msgstr ""
 #: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:56
 #: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:46
 msgid "Import Errors"
-msgstr ""
+msgstr "Errors d'importacion"
 
 #: ../src/Core/Banshee.Base/Sources/ImportErrorsSource.cs:72
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/ErrorsSource.cs:64
@@ -2511,7 +2511,7 @@ msgstr ""
 #: ../src/Core/Banshee.Base/TrackInfo.cs:307
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:148
 msgid "Unknown Title"
-msgstr ""
+msgstr "Títol desconegut"
 
 #: ../src/Core/Banshee.Base/TrackInfoHeader.cs:106
 #: ../src/Core/Banshee.Base/TrackInfoHeader.cs:112
@@ -2561,7 +2561,7 @@ msgstr "Nom d'artista"
 #: ../src/Core/Banshee/PlayerInterface.cs:458
 #: ../src/Core/Nereid/Nereid/ViewContainer.cs:87
 msgid "Album Title"
-msgstr "Títol de l'albom"
+msgstr "Títol de l'album"
 
 #: ../src/Core/Banshee/PlayerInterface.cs:481
 msgid "Write selection to CD"
@@ -4028,7 +4028,7 @@ msgstr ""
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:113
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastPlaylistView.cs:101
 msgid "Podcast"
-msgstr ""
+msgstr "Podcast"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/PodcastPlugin.cs:114
 msgid "Manage the Podcast plugin"
@@ -4092,7 +4092,7 @@ msgstr "Pas cap de descripcion es disponibla"
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:78
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastSource.cs:106
 msgid "Podcasts"
-msgstr ""
+msgstr "Podcasts"
 
 #: ../src/Plugins/Banshee.Plugins.Podcast/UI/PodcastFeedView.cs:144
 msgid "All"
