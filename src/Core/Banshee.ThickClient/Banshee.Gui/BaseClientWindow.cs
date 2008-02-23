@@ -65,7 +65,7 @@ namespace Banshee.Gui
         
         public void ToggleVisibility ()
         {
-            if (IsActive) {
+            if (Visible) {
                 SaveWindowSizePosition ();
                 Visible = false;
             } else {
