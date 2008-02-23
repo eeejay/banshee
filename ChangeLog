@@ -1,4 +1,25 @@
-2008-02-22  Alexander Hixon <hixon.alexander@mediati.org>
+2008-02-22  Alexander Hixon  <hixon.alexander@mediati.org>
+    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+      Use a slightly less brain-dead method of checking the total length of the track
+      played. Skipping through a track but playing the correct length for inclusion on
+      a Last.fm profile now works correctly.
+      
+      Also added support for sending NowPlaying information.
+    
+    * src/Libraries/Lastfm/Lastfm/Account.cs: Create an 'Instance' property for use via
+      multiple modules.
+    
+    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Uncommented and exposed
+      NowPlaying method, so that Last.fm lists the current track as playing.
+
+2008-02-22  Alexander Hixon  <hixon.alexander@mediati.org>
+    * src/Extensions/Banshee.Audioscrobbler: Mark this as removed in SVN. Accidentally
+      missed in previous revision.
+    
+    * src/Extensions/Banshee.Lastfm/Resources/AudioscrobblerMenu.xml: Added missing file,
+      enables Audioscrobbler extension service to load without error.
+
+2008-02-22  Alexander Hixon  <hixon.alexander@mediati.org>
     * src/Extensions/Makefile.am:
     * src/Extensions/Banshee.Audioscrobbler:
     * build/build.environment.mk:

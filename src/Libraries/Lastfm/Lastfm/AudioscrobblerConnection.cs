@@ -65,6 +65,7 @@ namespace Lastfm
         string post_url;
         string session_id = null;
         string now_playing_url;
+        bool now_playing_submitted = false;
         
         bool started = false;
         public bool Started {
@@ -79,11 +80,6 @@ namespace Lastfm
         
         int hard_failures = 0;
         int hard_failure_retry_sec = 60;
- 
-        bool now_playing_submitted;
-        
-        DateTime song_start_time;
-        //TrackInfo last_track;
         
         WebRequest now_playing_post;
         WebRequest current_web_req;
@@ -484,24 +480,24 @@ namespace Lastfm
         //
         // Async code for now playing
         
-        /*void NowPlaying (TrackInfo track)
+        public void NowPlaying (string artist, string title, string album, double duration, int tracknum)
 
         {
-            if (session_id != null && track.Artist != "" && track.Title != "") {
+            if (session_id != null && artist != "" && title != "") {
                 
                 string str_track_number = "";
-                if (track.TrackNumber != 0)
-                    str_track_number = track.TrackNumber.ToString();
+                if (tracknum != 0)
+                    str_track_number = tracknum.ToString();
                 
                 string uri = String.Format ("{0}?s={1}&a={2}&t={3}&b={4}&l={5}&n={6}&m={7}",
                                             now_playing_url,
                                             session_id,
-                                            HttpUtility.UrlEncode(track.Artist),
-                                            HttpUtility.UrlEncode(track.Title),
-    			                            HttpUtility.UrlEncode(track.Album),
-                                            track.Duration.TotalSeconds.ToString(),
+                                            HttpUtility.UrlEncode(artist),
+                                            HttpUtility.UrlEncode(title),
+    			                            HttpUtility.UrlEncode(album),
+                                            duration.ToString(),
                                             str_track_number,
-    			                            "" *//* musicbrainz id *//*);
+    			                            "" /* musicbrainz id */);
 
                 now_playing_post = WebRequest.Create (uri);
                 now_playing_post.Method = "POST";
@@ -523,9 +519,9 @@ namespace Lastfm
 
                 string line = sr.ReadLine ();
                 if (line.StartsWith ("BADSESSION")) {
-                    Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "Session ID sent was invalid", false);*/
+                    Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "Session ID sent was invalid", false);
                     /* attempt to re-handshake on the next interval */
-                    /*session_id = null;
+                    session_id = null;
                     next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
                     state = State.NEED_HANDSHAKE;
                     return;
@@ -541,6 +537,6 @@ namespace Lastfm
                 Hyena.Log.Error ("Audioscrobbler NowPlaying failed", 
                               String.Format("Failed to post NowPlaying: {0}", e));
             }
-        }*/
+        }
     }
 }
