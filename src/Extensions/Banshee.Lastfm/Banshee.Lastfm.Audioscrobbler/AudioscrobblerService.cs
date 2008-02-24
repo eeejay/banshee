@@ -91,7 +91,6 @@ namespace Banshee.Lastfm.Audioscrobbler
             };
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
             
             action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
             InterfaceInitialize ();
@@ -131,7 +130,6 @@ namespace Banshee.Lastfm.Audioscrobbler
         public void Dispose ()
         {
             ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
-            ServiceManager.PlayerEngine.StateChanged -= OnPlayerEngineStateChanged;
             
             connection.Stop ();
         
@@ -140,26 +138,48 @@ namespace Banshee.Lastfm.Audioscrobbler
             actions = null;
         }
         
-        void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
-        {
-            if (ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Paused && 
-                    ServiceManager.PlayerEngine.LastState == PlayerEngineState.Playing) {
-                st.Stop ();
-            } 
-            else if (ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Playing &&
-                ServiceManager.PlayerEngine.LastState == PlayerEngineState.Paused) {
-                st.Start ();
-            }
-        }
-        
         // We need to time how long the song has played
         internal class SongTimer
         {
-            private DateTime start_time;
-            public int PlayTime = 0;
-            public void Start() { start_time = DateTime.Now; }
-            public void Stop() { PlayTime += (int) (DateTime.Now - start_time).TotalSeconds;}
-            public void Reset() { PlayTime = 0; }
+            private long playtime = 0;  // number of msecs played
+            public long PlayTime {
+                get { return playtime; }
+            }
+            
+            private long previouspos = 0;
+            
+            // number of events to ignore to get sync (since events may be fired in wrong order)
+            private int ignorenext = 0;
+                        
+            public void IncreasePosition ()
+            {
+                long increase = 0;
+                
+                if (ignorenext == 0) {
+                    increase = (ServiceManager.PlayerEngine.Position - previouspos);
+                    playtime += increase;
+                } else {
+                    ignorenext--;
+                }
+                
+                previouspos = ServiceManager.PlayerEngine.Position;
+                
+                //Console.WriteLine ("Position now {0} (increased by {1} msec) : {2}", playtime, increase, ignorenext);
+            }
+            
+            public void SkipPosition ()
+            {                
+                // Set newly seeked position
+                previouspos = ServiceManager.PlayerEngine.Position;
+                ignorenext = 2; // allow 2 iterates to sync
+            }
+            
+            public void Reset ()
+            {
+                playtime = 0;
+                previouspos = 0;
+                ignorenext = 0;
+            }
         }
         
         SongTimer st = new SongTimer ();
@@ -169,12 +189,12 @@ namespace Banshee.Lastfm.Audioscrobbler
                 return;
             }
             
-            Log.DebugFormat ("Track {4} had playtime of {0} sec, duration {1} sec, started: {2}, queued: {3}",
-                st.PlayTime, track.Duration.TotalSeconds, song_started, queued, track);
+            Log.DebugFormat ("Track {4} had playtime of {0} msec ({5}sec), duration {1} msec, started: {2}, queued: {3}",
+                st.PlayTime, track.Duration.TotalMilliseconds, song_started, queued, track, st.PlayTime / 1000);
             
             if (song_started && !queued && track.Duration.TotalSeconds > 30 && 
                 track.ArtistName != "" && track.TrackTitle != "" &&
-                (st.PlayTime >  track.Duration.TotalSeconds / 2 || st.PlayTime > 240)) {
+                (st.PlayTime >  track.Duration.TotalMilliseconds / 2 || st.PlayTime > 240 * 1000)) {
                   queue.Add (track, song_start_time);
                   queued = true;
             }
@@ -185,10 +205,9 @@ namespace Banshee.Lastfm.Audioscrobbler
             switch (args.Event) {
                 case PlayerEngineEvent.StartOfStream:
                     // Queue the previous track in case of a skip
-                    st.Stop ();
                     Queue (last_track);
                 
-                    st.Reset (); st.Start ();
+                    st.Reset ();
                     song_start_time = DateTime.Now;
                     last_track = ServiceManager.PlayerEngine.CurrentTrack;
                     queued = false;
@@ -202,8 +221,15 @@ namespace Banshee.Lastfm.Audioscrobbler
                     
                     break;
                 
+                case PlayerEngineEvent.Seek:
+                    st.SkipPosition ();
+                    break;
+                
+                case PlayerEngineEvent.Iterate:
+                    st.IncreasePosition ();
+                    break;
+                
                 case PlayerEngineEvent.EndOfStream:
-                    st.Stop ();
                     Queue (ServiceManager.PlayerEngine.CurrentTrack);
                     //queued = true;
                     break;

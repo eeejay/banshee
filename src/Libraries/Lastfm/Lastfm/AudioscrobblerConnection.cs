@@ -504,7 +504,14 @@ namespace Lastfm
         //
         // Async code for now playing
         
-        public void NowPlaying (string artist, string title, string album, double duration, int tracknum)
+        public void NowPlaying (string artist, string title, string album, double duration,
+            int tracknum)
+        {
+            NowPlaying (artist, title, album, duration, tracknum, "");
+        }
+        
+        public void NowPlaying (string artist, string title, string album, double duration,
+            int tracknum, string mbrainzid)
 
         {
             if (session_id != null && artist != "" && title != "") {
@@ -521,7 +528,7 @@ namespace Lastfm
     			                            HttpUtility.UrlEncode(album),
                                             duration.ToString(),
                                             str_track_number,
-    			                            "" /* musicbrainz id */);
+    			                            mbrainzid);
 
                 now_playing_post = WebRequest.Create (uri);
                 now_playing_post.Method = "POST";

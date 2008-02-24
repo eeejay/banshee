@@ -40,6 +40,8 @@ using Hyena;
 
 using Banshee.Base;
 using Banshee.Collection;
+using Banshee.ServiceStack;
+using Banshee.Sources;
 
 using Lastfm;
 
@@ -57,10 +59,15 @@ namespace Banshee.Lastfm.Audioscrobbler
                 this.track_number = (int) track.TrackNumber;
                 this.duration = (int) track.Duration.TotalSeconds;
                 this.start_time = DateTimeUtil.ToTimeT(start_time.ToLocalTime ());
+                // TODO
+                //this.musicbrainzid = track.MusicBrainzId;
+                
+                this.musicbrainzid = "";
             }
 
             public QueuedTrack (string artist, string album,
-                                string title, int track_number, int duration, long start_time)
+                                string title, int track_number, int duration, long start_time,
+                                string musicbrainzid)
             {
                 this.artist = artist;
                 this.album = album;
@@ -68,6 +75,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                 this.track_number = track_number;
                 this.duration = duration;
                 this.start_time = start_time;
+                this.musicbrainzid = musicbrainzid;
             }
 
             public long StartTime {
@@ -93,18 +101,24 @@ namespace Banshee.Lastfm.Audioscrobbler
             public int Duration {
                 get { return duration; }
             }
+            
+            public string MusicBrainzId {
+                get { return musicbrainzid; }
+            }
 
             string artist;
             string album;
             string title;
             int track_number;
             int duration;
+            string musicbrainzid;
             long start_time;
         }
 
         List<QueuedTrack> queue;
         string xml_path;
         bool dirty;
+        SourceManager sourcemanager;
 
         public event EventHandler TrackAdded;
 
@@ -118,6 +132,8 @@ namespace Banshee.Lastfm.Audioscrobbler
             if (!Directory.Exists(xmlfilepath)) {
                 Directory.CreateDirectory (xmlfilepath);
             }
+            
+            sourcemanager = ServiceManager.Get<SourceManager> ("SourceManager");
 
             Load ();
         }
@@ -144,6 +160,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                 writer.WriteElementString ("TrackNumber", track.TrackNumber.ToString());
                 writer.WriteElementString ("Duration", track.Duration.ToString());
                 writer.WriteElementString ("StartTime", track.StartTime.ToString());
+                writer.WriteElementString ("MusicBrainzId", track.MusicBrainzId);
                 writer.WriteEndElement (); // Track
             }
             writer.WriteEndElement (); // AudioscrobblerQueue
@@ -154,7 +171,6 @@ namespace Banshee.Lastfm.Audioscrobbler
         public void Load ()
         {
             queue.Clear ();
-
             try {
                 string query = "//AudioscrobblerQueue/QueuedTrack";
                 XmlDocument doc = new XmlDocument ();
@@ -169,6 +185,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                     int track_number = 0;
                     int duration = 0;
                     long start_time = 0;
+                    string musicbrainzid = "";
 
                     foreach (XmlNode child in node.ChildNodes) {
                         if (child.Name == "Artist" && child.ChildNodes.Count != 0) {
@@ -183,10 +200,13 @@ namespace Banshee.Lastfm.Audioscrobbler
                             duration = Convert.ToInt32 (child.ChildNodes [0].Value);
                         } else if (child.Name == "StartTime" && child.ChildNodes.Count != 0) {
                             start_time = Convert.ToInt64 (child.ChildNodes [0].Value);
+                        } else if (child.Name == "MusicBrainzId" && child.ChildNodes.Count != 0) {
+                            musicbrainzid = child.ChildNodes [0].Value;
                         }
                     }
 
-                    queue.Add (new QueuedTrack (artist, album, title, track_number, duration, start_time));
+                    queue.Add (new QueuedTrack (artist, album, title, track_number, duration,
+                        start_time, musicbrainzid));
                 }
             } catch { 
             }
@@ -199,11 +219,11 @@ namespace Banshee.Lastfm.Audioscrobbler
 
             int i;
             for (i = 0; i < queue.Count; i ++) {
-                /* Last.FM 1.2 can handle up to 50 songs in one request */
+                /* Last.fm 1.2 can handle up to 50 songs in one request */
                 if (i == 49) break;
 
                 QueuedTrack track = (QueuedTrack) queue[i];
-
+                
                 if (track.TrackNumber != 0)
                     str_track_number = track.TrackNumber.ToString();
 
@@ -217,8 +237,9 @@ namespace Banshee.Lastfm.Audioscrobbler
                     track.Duration.ToString (),
                     HttpUtility.UrlEncode (track.Album),
                     str_track_number,
-                    "" /* musicbrainz id */,
-                     i);
+                    track.MusicBrainzId,
+                    
+                    i);
             }
 
             numtracks = i;
