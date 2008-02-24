@@ -137,19 +137,19 @@ namespace Banshee.Library
             
             importing = true;
             CreateUserJob ();
-            ThreadPool.QueueUserWorkItem (DoImport);
+            ThreadPool.QueueUserWorkItem (ImportCore);
             DestroyUserJob ();
             importing = false;
         }
         
 #endregion
         
-        private void DoImport (object o)
+        private void ImportCore (object o)
         {
-            DoImport ();
+            ImportCore ();
         }
         
-        protected abstract void DoImport ();
+        protected abstract void ImportCore ();
         
     }
 }

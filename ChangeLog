@@ -1,3 +1,12 @@
+2008-02-23  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs,
+	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
+	  Renamed DoImport to ImportCore as per Framework Design Guidelines, also
+	  slapped the new keyword onto the static
+	  AmarokPlayerImportSource.CanImport property to get rid of the warning
+	  about it hiding a base member of the same name (which it should).
+
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
     * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
       Get track duration and progress information before showing the popup 

@@ -51,7 +51,7 @@ namespace Banshee.PlayerMigration
                                                  "amarok"),
                                                  "collection.db");
 
-        protected override void DoImport ()
+        protected override void ImportCore ()
         {
             LibraryImportManager import_manager = ServiceManager.Get<LibraryImportManager> ("LibraryImportManager");
             IDbConnection conn;
@@ -208,7 +208,7 @@ namespace Banshee.PlayerMigration
             }
         }
         
-        public static bool CanImport
+        public static new bool CanImport
         {
             get { return File.Exists (library_path); }
         }
