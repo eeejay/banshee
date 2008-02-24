@@ -62,6 +62,7 @@ namespace Lastfm
         const string SCROBBLER_VERSION = "1.2";
 
         Account account;
+        string user_agent;
         string post_url;
         string session_id = null;
         string now_playing_url;
@@ -75,6 +76,11 @@ namespace Lastfm
         public bool Started {
             get { return started; }
         }
+        
+        public string UserAgent {
+            get { return user_agent; }
+            set { user_agent = value; }
+        }
 
         System.Timers.Timer timer;
         DateTime next_interval;
@@ -85,12 +91,16 @@ namespace Lastfm
         int hard_failures = 0;
         int hard_failure_retry_sec = 60;
         
-        WebRequest now_playing_post;
-        WebRequest current_web_req;
+        HttpWebRequest now_playing_post;
+        HttpWebRequest current_web_req;
         IAsyncResult current_async_result;
         State state;
         
-        public AudioscrobblerConnection (Account account, IQueue queue)
+        internal AudioscrobblerConnection (Account account, IQueue queue) : this (account, queue, "")
+        {
+        }
+        
+        internal AudioscrobblerConnection (Account account, IQueue queue, string user_agent)
         {
             this.account = account;
             
@@ -98,6 +108,8 @@ namespace Lastfm
             
             state = State.IDLE;
             this.queue = queue;
+            
+            this.user_agent = user_agent;
         }
         
         private void AccountUpdated (object o, EventArgs args)
@@ -228,13 +240,6 @@ namespace Lastfm
                 /* nothing here */
                 break;
             }
-            
-            // Only submit if queue is empty, otherwise the submission
-            // gets overruled by the queue submission by Last.fm
-            /*if (queue.Count == 0 && !now_playing_submitted && state == State.IDLE && is_playing) {
-                NowPlaying (PlayerEngineCore.CurrentTrack);
-            }*/
-            // TODO
         }
 
         //
@@ -267,7 +272,8 @@ namespace Lastfm
 
             sb.Append (queue.GetTransmitInfo (out num_tracks_transmitted));
 
-            current_web_req = WebRequest.Create (post_url);
+            current_web_req = (HttpWebRequest) WebRequest.Create (post_url);
+            current_web_req.UserAgent = user_agent;
             current_web_req.Method = "POST";
             current_web_req.ContentType = "application/x-www-form-urlencoded";
             current_web_req.ContentLength = sb.Length;
@@ -414,7 +420,7 @@ namespace Lastfm
                                         timestamp,
                                         security_token);
 
-            current_web_req = WebRequest.Create (uri);
+            current_web_req = (HttpWebRequest) WebRequest.Create (uri);
 
             state = State.WAITING_FOR_HANDSHAKE_RESP;
             current_async_result = current_web_req.BeginGetResponse (HandshakeGetResponse, null);
@@ -530,7 +536,8 @@ namespace Lastfm
                                             str_track_number,
     			                            mbrainzid);
 
-                now_playing_post = WebRequest.Create (uri);
+                now_playing_post = (HttpWebRequest) WebRequest.Create (uri);
+                now_playing_post.UserAgent = user_agent;
                 now_playing_post.Method = "POST";
                 now_playing_post.ContentType = "application/x-www-form-urlencoded";
                 now_playing_post.ContentLength = uri.Length;
@@ -549,6 +556,10 @@ namespace Lastfm
                 StreamReader sr = new StreamReader (s, Encoding.UTF8);
 
                 string line = sr.ReadLine ();
+                if (line == null) {
+                    Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "No response", false);
+                }
+                
                 if (line.StartsWith ("BADSESSION")) {
                     Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "Session ID sent was invalid", false);
                     /* attempt to re-handshake on the next interval */

@@ -7,6 +7,7 @@ SOURCES = \
 	Lastfm/AudioscrobblerConnection.cs \
 	Lastfm/Browser.cs \
 	Lastfm/IQueue.cs \
+	Lastfm/LastfmCore.cs \
 	Lastfm/RadioConnection.cs \
 	Lastfm.Data/DataCore.cs \
 	Lastfm.Data/DataEntry.cs \

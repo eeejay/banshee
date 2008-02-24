@@ -34,18 +34,7 @@ using System.Text;
 namespace Lastfm
 {
     public class Account
-    {
-        private static Account instance;
-        public static Account Instance {
-            get {
-                if (instance == null) {
-                    instance = new Account ();
-                }
-                
-                return instance;
-            }
-        }
-    
+    {    
         public event EventHandler Updated;
 
         private string username;

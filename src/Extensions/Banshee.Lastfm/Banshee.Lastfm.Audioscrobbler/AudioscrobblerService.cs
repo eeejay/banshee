@@ -74,15 +74,20 @@ namespace Banshee.Lastfm.Audioscrobbler
         
         void IExtensionService.Initialize ()
         {
-            account = Account.Instance;
+            account = LastfmCore.Account;
             
             if (account.UserName == null) {
                 account.UserName = LastUserSchema.Get ();
                 account.CryptedPassword = LastPassSchema.Get ();
             }
             
+            if (LastfmCore.UserAgent == null) {
+                LastfmCore.UserAgent = Banshee.Web.Browser.UserAgent;
+            }
+            
             queue = new Queue ();
-            connection = new AudioscrobblerConnection (account, queue);
+            LastfmCore.AudioscrobblerQueue = queue;
+            connection = LastfmCore.Audioscrobbler;
             
             // This auto-connects for us if we start off connected to the network.
             connection.UpdateNetworkState (NetworkDetect.Instance.Connected);

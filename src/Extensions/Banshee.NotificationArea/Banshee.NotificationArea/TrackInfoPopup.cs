@@ -55,7 +55,7 @@ namespace Banshee.NotificationArea
             
             // Position label and linear progress bar
             HBox position_box = new HBox ();
-            position_box.Spacing = 10;
+            //position_box.Spacing = 10;
             
             position_label = new Label ();
             position_label.Xalign = 0.0f;

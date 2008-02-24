@@ -96,7 +96,12 @@ namespace Lastfm
         public Account Account {
             get { return account; }
         }
-
+        
+        public string UserAgent {
+            get { return user_agent; }
+            set { user_agent = value; }
+        }
+        
         private bool subscriber;
         public bool Subscriber {
             get { return subscriber; }
@@ -131,7 +136,7 @@ namespace Lastfm
             get { return station; }
         }
 
-        public RadioConnection (Account account, string user_agent)
+        internal RadioConnection (Account account, string user_agent)
         {
             this.account = account;
             this.user_agent = user_agent;

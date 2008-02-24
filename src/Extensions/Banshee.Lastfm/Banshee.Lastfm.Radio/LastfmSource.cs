@@ -69,7 +69,7 @@ namespace Banshee.Lastfm.Radio
 
         public LastfmSource () : base (lastfm, lastfm, 150)
         {
-            account = Account.Instance;
+            account = LastfmCore.Account;
 
             // We don't automatically connect to Last.fm, but load the last Last.fm
             // username we used so we can load the user's stations.
@@ -78,7 +78,11 @@ namespace Banshee.Lastfm.Radio
                 account.CryptedPassword = LastPassSchema.Get ();
             }
 
-            connection = new RadioConnection (account, Banshee.Web.Browser.UserAgent);
+            if (LastfmCore.UserAgent == null) {
+                LastfmCore.UserAgent = Banshee.Web.Browser.UserAgent;
+            }
+            
+            connection = LastfmCore.Radio;
             connection.UpdateNetworkState (NetworkDetect.Instance.Connected);
             NetworkDetect.Instance.StateChanged += delegate (object o, NetworkStateChangedArgs args) {
                 connection.UpdateNetworkState (args.Connected);
