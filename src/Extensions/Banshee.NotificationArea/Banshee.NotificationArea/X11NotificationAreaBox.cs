@@ -113,6 +113,7 @@ namespace Banshee.NotificationArea
             
             popup = new TrackInfoPopup ();
             PositionPopup ();
+            
             popup.Show ();
         }
         
@@ -214,6 +215,18 @@ namespace Banshee.NotificationArea
         public void PlayerEngineEventChanged (PlayerEngineEventArgs args) 
         {
             switch (args.Event) {
+                case PlayerEngineEvent.Iterate:
+                    if (popup != null) {
+                        if (ServiceManager.PlayerEngine.CurrentTrack != null) {
+                            popup.Duration = (uint)ServiceManager.PlayerEngine.CurrentTrack.Duration.TotalSeconds;
+                            popup.Position = ServiceManager.PlayerEngine.Position / 1000;
+                        } else {
+                            popup.Duration = 0;
+                            popup.Position = 0;
+                        }
+                    }
+                    
+                    break;
                 case PlayerEngineEvent.StartOfStream:
                     can_show_popup = true;
                     break;

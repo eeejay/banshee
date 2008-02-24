@@ -1,4 +1,14 @@
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
+    * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+    * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+      Added LinearProgress hotness.
+    
+    * src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs: Fixed a bug
+      where the user would change tracks while a track was mid-way through being buffered,
+      and the first track's buffering result would cover up the song duration/progress
+      information.
+
+2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
     * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
       Rewrote the SongTimer class to use PlayerEngine.Position. Doesn't rely on
       PlayerEngineState events anymore. This also means that SongTimer works well while

@@ -96,6 +96,7 @@ namespace Banshee.Gui.Widgets
                     OnPlayerEngineTick ();
                     break;
                 case PlayerEngineEvent.StartOfStream:
+                    stream_position_label.IsBuffering = false;
                     seek_slider.CanSeek = true;
                     break;
                 case PlayerEngineEvent.Buffering:

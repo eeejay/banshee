@@ -42,7 +42,10 @@ namespace Banshee.NotificationArea
         private uint position;
         private uint duration;
         private TrackInfoDisplay header;
-        private HBox header_box = new HBox ();
+        private VBox header_box = new VBox ();
+        
+        private Label position_label;
+        private LinearProgress linear_progress;
     
         public TrackInfoPopup () : base (Gtk.WindowType.Popup)
         {
@@ -50,10 +53,34 @@ namespace Banshee.NotificationArea
             AppPaintable = true;
             Resizable = false;
             
+            // Position label and linear progress bar
+            HBox position_box = new HBox ();
+            position_box.Spacing = 10;
+            
+            position_label = new Label ();
+            position_label.Xalign = 0.0f;
+            position_label.Ypad = 5;
+            position_label.Yalign = 1.0f;
+            position_label.ModifyFg (StateType.Normal, this.Style.Base(StateType.Active));
+            
+            VBox progress_box = new VBox ();
+            linear_progress = new LinearProgress ();
+            progress_box.PackStart (linear_progress, true, true, 6);
+            
+            position_box.PackStart (position_label, false, false, 6);
+            position_box.PackStart (progress_box, true, true, 6);
+            
             header = new TrackInfoDisplay ();
-            header.SetSizeRequest (300, 46);
-            header_box.PackStart (header, true, true, 0);
+            header.SetSizeRequest (320, 64);
+            
+            Alignment alignment = new Alignment (1.0f, 0.5f, 0.0f, 0.0f);
+            alignment.Add (header);
+            alignment.Show ();
+            
+            header_box.PackStart (alignment, true, true, 0);
+            header_box.PackStart (position_box, false, false, 0);
             header.Show ();
+            position_box.ShowAll ();
             
             Add (header_box);
             header_box.Show ();
@@ -70,6 +97,27 @@ namespace Banshee.NotificationArea
             Gtk.Style.PaintFlatBox (Style, GdkWindow, StateType.Normal, ShadowType.Out, evnt.Area, this, "tooltip", 
                 0, 0, Allocation.Width, Allocation.Height);
             return base.OnExposeEvent (evnt);
+        }
+        
+        private void UpdatePosition()
+        {
+            linear_progress.Fraction = (double)position / (double)duration;
+            position_label.Markup = String.Format("<small>{0} of {1}</small>",
+                    DateTimeUtil.FormatDuration(position), DateTimeUtil.FormatDuration(duration)); 
+        }
+        
+        public uint Duration {
+            set {
+                duration = value;
+                UpdatePosition();
+            }
+        }
+        
+        public uint Position {
+            set {
+                position = value;
+                UpdatePosition();
+            }
         }
     }
 }
