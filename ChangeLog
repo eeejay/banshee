@@ -1,5 +1,21 @@
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
     * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+      Get track duration and progress information before showing the popup 
+      and relying on the fact that we're playing to determine the progress
+      label text. Showing the popup during a paused song now works.
+    
+    * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+      Add some padding around the TrackInfoDisplay to pretty things up
+      slightly and line up the cover art.
+    
+    * src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs: Don't try
+      to run Account.Save if the username or password haven't changed
+      since the time the dialog was opened till the time it closed.
+      Prevents reconnecting if you simply open the dialog and close it
+      again.
+
+2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
+    * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
     * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
       Added LinearProgress hotness.
     

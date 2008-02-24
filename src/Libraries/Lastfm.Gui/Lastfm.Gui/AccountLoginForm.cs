@@ -104,7 +104,7 @@ namespace Lastfm.Gui
             
             Resize (3, 2);
             signup_button = new LinkButton ("Sign Up for Last.fm");
-            //signup_button.Clicked += delegate { Account.SignUp (); };
+            signup_button.Clicked += delegate { account.SignUp (); };
             signup_button.Show ();
             Attach (signup_button, 1, 2, 2, 3, AttachOptions.Shrink, AttachOptions.Shrink, 0, 0);
         }
@@ -126,9 +126,13 @@ namespace Lastfm.Gui
 
         private void UpdateLogin ()
         {
-            account.UserName = username_entry.Text.Trim ();
-            account.Password = password_entry.Text.Trim ();
-            account.Save ();
+            if (account.UserName != username_entry.Text.Trim () ||
+                account.Password != password_entry.Text.Trim ()) {
+                
+                account.UserName = username_entry.Text.Trim ();
+                account.Password = password_entry.Text.Trim ();
+                account.Save ();
+            }
         }
 
         public bool SaveOnEdit {

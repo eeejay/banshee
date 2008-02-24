@@ -73,7 +73,8 @@ namespace Banshee.NotificationArea
             header = new TrackInfoDisplay ();
             header.SetSizeRequest (320, 64);
             
-            Alignment alignment = new Alignment (1.0f, 0.5f, 0.0f, 0.0f);
+            Alignment alignment = new Alignment (1.0f, 1.0f, 0.0f, 0.0f);
+            alignment.SetPadding (6, 3, 6, 3);
             alignment.Add (header);
             alignment.Show ();
             
