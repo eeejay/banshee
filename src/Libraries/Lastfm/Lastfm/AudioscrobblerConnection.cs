@@ -61,7 +61,6 @@ namespace Lastfm
         const string SCROBBLER_URL = "http://post.audioscrobbler.com/";
         const string SCROBBLER_VERSION = "1.2";
 
-        Account account;
         string post_url;
         string session_id = null;
         string now_playing_url;
@@ -90,11 +89,9 @@ namespace Lastfm
         IAsyncResult current_async_result;
         State state;
         
-        internal AudioscrobblerConnection (Account account, IQueue queue)
+        internal AudioscrobblerConnection (IQueue queue)
         {
-            this.account = account;
-            
-            account.Updated += AccountUpdated;
+            LastfmCore.Account.Updated += AccountUpdated;
             
             state = State.IDLE;
             this.queue = queue;
@@ -201,7 +198,9 @@ namespace Lastfm
             /* and address changes in our engine state */
             switch (state) {
             case State.IDLE:
-                if (account.UserName != null && account.CryptedPassword != null && session_id == null) {
+                if (LastfmCore.Account.UserName != null &&
+                    LastfmCore.Account.CryptedPassword != null && session_id == null) {
+                    
                     state = State.NEED_HANDSHAKE;
                 } else {
                     if (queue.Count > 0)
@@ -398,13 +397,14 @@ namespace Lastfm
         void Handshake ()
         {
             string timestamp = UnixTime();
-            string security_token = Hyena.CryptoUtil.Md5Encode (account.CryptedPassword + timestamp);
+            string security_token = Hyena.CryptoUtil.Md5Encode
+                (LastfmCore.Account.CryptedPassword + timestamp);
 
             string uri = String.Format ("{0}?hs=true&p={1}&c={2}&v={3}&u={4}&t={5}&a={6}",
                                         SCROBBLER_URL,
                                         SCROBBLER_VERSION,
                                         CLIENT_ID, CLIENT_VERSION,
-                                        HttpUtility.UrlEncode (account.UserName),
+                                        HttpUtility.UrlEncode (LastfmCore.Account.UserName),
                                         timestamp,
                                         security_token);
 

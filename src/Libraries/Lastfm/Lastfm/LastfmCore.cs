@@ -53,7 +53,7 @@ namespace Lastfm
         public static RadioConnection Radio {
             get {
                 if (radio == null) {
-                    radio = new RadioConnection (LastfmCore.Account);
+                    radio = new RadioConnection ();
                 }
                 
                 return radio;
@@ -75,7 +75,7 @@ namespace Lastfm
                             ("Queue instance must be defined before referencing Audioscrobbler.");
                     }
                     
-                    audioscrobbler = new AudioscrobblerConnection (LastfmCore.Account,queue);
+                    audioscrobbler = new AudioscrobblerConnection (queue);
                 }
                 
                 return audioscrobbler;

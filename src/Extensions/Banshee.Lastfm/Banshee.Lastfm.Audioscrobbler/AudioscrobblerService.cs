@@ -134,8 +134,16 @@ namespace Banshee.Lastfm.Audioscrobbler
   
         public void Dispose ()
         {
+            // Try and queue the currently playing track just in case it's queueable
+            // but the user hasn't hit next yet and quit/disposed the service.
+            if (ServiceManager.PlayerEngine.CurrentTrack != null) {
+                Queue (ServiceManager.PlayerEngine.CurrentTrack);
+            }
+            
             ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
             
+            // When we stop the connection, queue ends up getting saved too, so the
+            // track we queued earlier should stay until next session.
             connection.Stop ();
         
             action_service.UIManager.RemoveUi (ui_manager_id);

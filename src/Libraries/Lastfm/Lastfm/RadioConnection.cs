@@ -90,11 +90,6 @@ namespace Lastfm
         private bool network_connected = false;
 
         private static Regex station_error_regex = new Regex ("error=(\\d+)", RegexOptions.Compiled);
-
-        private Account account;
-        public Account Account {
-            get { return account; }
-        }
         
         private bool subscriber;
         public bool Subscriber {
@@ -130,19 +125,17 @@ namespace Lastfm
             get { return station; }
         }
 
-        internal RadioConnection (Account account)
+        internal RadioConnection ()
         {
-            this.account = account;
-
             Initialize ();
             State = ConnectionState.Disconnected;
 
-            account.Updated += HandleAccountUpdated;
+            LastfmCore.Account.Updated += HandleAccountUpdated;
         }
 
         public void Dispose ()
         {
-            account.Updated -= HandleAccountUpdated;
+            LastfmCore.Account.Updated -= HandleAccountUpdated;
         }
 
         public void Connect ()
@@ -150,7 +143,7 @@ namespace Lastfm
             if (State == ConnectionState.Connecting || State == ConnectionState.Connected)
                 return;
 
-            if (account.UserName == null || account.CryptedPassword == null) {
+            if (LastfmCore.Account.UserName == null || LastfmCore.Account.CryptedPassword == null) {
                 State = ConnectionState.NoAccount;
                 return;
             }
@@ -272,14 +265,14 @@ namespace Lastfm
                         "http://ws.audioscrobbler.com/radio/handshake.php?version={0}&platform={1}&username={2}&passwordmd5={3}&language={4}&session=324234",
                         "1.1.1",
                         "linux", // FIXME
-                        account.UserName, account.CryptedPassword,
+                        LastfmCore.Account.UserName, LastfmCore.Account.CryptedPassword,
                         "en" // FIXME
                     ));
 
                     // Set us as connecting, assuming the connection attempt wasn't changed out from under us
                     if (ParseHandshake (new StreamReader (stream).ReadToEnd ()) && session != null) {
                         State = ConnectionState.Connected;
-                        Log.Debug (String.Format ("Logged into Last.fm as {0}", account.UserName), null);
+                        Log.Debug (String.Format ("Logged into Last.fm as {0}", LastfmCore.Account.UserName), null);
                         return;
                     }
                 } catch (Exception e) {
@@ -310,7 +303,7 @@ namespace Lastfm
                             Catalog.GetString ("Either your username or password is invalid."),
                             false
                         );
-                        account.CryptedPassword = null;
+                        LastfmCore.Account.CryptedPassword = null;
                         return false;
                     }
 
@@ -493,8 +486,8 @@ namespace Lastfm
         private LameXmlRpcRequest LastFMXmlRpcRequest (string method)
         {
             string time = UnixTime ();
-            string auth_hash = Hyena.CryptoUtil.Md5Encode (account.CryptedPassword + time);
-            return new LameXmlRpcRequest (method).AddStringParams (account.UserName, time, auth_hash);
+            string auth_hash = Hyena.CryptoUtil.Md5Encode (LastfmCore.Account.CryptedPassword + time);
+            return new LameXmlRpcRequest (method).AddStringParams (LastfmCore.Account.UserName, time, auth_hash);
         }
 
         protected class LameXmlRpcRequest

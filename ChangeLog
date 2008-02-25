@@ -1,3 +1,23 @@
+2008-02-25  Alexander Hixon  <hixon.alexander@mediati.org>
+    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+      Attempt to queue the currently playing track when we dispose the 
+      service, in case it's scrobbable, but the user quit before hitting
+      the next button to send it off to the server. It gets queued until
+      next start.
+    
+    * src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+      Fix TrackInfoDisplay by making sure we pass the correct EventMasks so
+      that we don't bombard the user with cover art on track change, if the
+      user had shown the cover art popup previously in the session. Also 
+      fixes hiding the cover art popup after the correct amount of time. 
+    
+    * src/Libraries/Lastfm/Lastfm/RadioConnection.cs:
+    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:
+    * src/Libraries/Lastfm/Lastfm/LastfmCore.cs: Remove Account from 
+      constructors for RadioConnection and AudioscrobblerConnection.
+      Also get the Connections to reference LastfmCore.Account rather
+      than keeping track of their own copy.
+
 2008-02-24  Alexander Hixon  <hixon.alexander@mediati.org>
     * src/Libraries/Lastfm/Lastfm/RadioConnection.cs:
     * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Remove class-

@@ -110,6 +110,8 @@ namespace Banshee.Gui.Widgets
                 Gdk.EventMask.VisibilityNotifyMask |
                 Gdk.EventMask.ExposureMask |
                 Gdk.EventMask.PointerMotionMask |
+                Gdk.EventMask.EnterNotifyMask |
+                Gdk.EventMask.LeaveNotifyMask |
                 Events);
             
             Gdk.WindowAttributesType attributes_mask = 
