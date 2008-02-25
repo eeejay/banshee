@@ -83,7 +83,6 @@ namespace Lastfm
         public event StateChangedHandler StateChanged;
 
         private ConnectionState state;
-        private string user_agent;
         private string session;
         private string base_url;
         private string base_path;
@@ -95,11 +94,6 @@ namespace Lastfm
         private Account account;
         public Account Account {
             get { return account; }
-        }
-        
-        public string UserAgent {
-            get { return user_agent; }
-            set { user_agent = value; }
         }
         
         private bool subscriber;
@@ -136,10 +130,9 @@ namespace Lastfm
             get { return station; }
         }
 
-        internal RadioConnection (Account account, string user_agent)
+        internal RadioConnection (Account account)
         {
             this.account = account;
-            this.user_agent = user_agent;
 
             Initialize ();
             State = ConnectionState.Disconnected;
@@ -362,7 +355,7 @@ namespace Lastfm
             }
         
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create (uri);
-            request.UserAgent = user_agent;
+            request.UserAgent = LastfmCore.UserAgent;
             request.Timeout = 10000;
             request.Method = "POST";
             request.KeepAlive = false;
@@ -402,7 +395,7 @@ namespace Lastfm
             if (accept != null) {
                 request.Accept = accept;
             }
-            request.UserAgent = user_agent;
+            request.UserAgent = LastfmCore.UserAgent;
             request.Timeout = 10000;
             request.KeepAlive = false;
             request.AllowAutoRedirect = true;

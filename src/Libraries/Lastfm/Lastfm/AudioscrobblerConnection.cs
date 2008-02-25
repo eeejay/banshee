@@ -62,7 +62,6 @@ namespace Lastfm
         const string SCROBBLER_VERSION = "1.2";
 
         Account account;
-        string user_agent;
         string post_url;
         string session_id = null;
         string now_playing_url;
@@ -75,11 +74,6 @@ namespace Lastfm
         bool started = false;
         public bool Started {
             get { return started; }
-        }
-        
-        public string UserAgent {
-            get { return user_agent; }
-            set { user_agent = value; }
         }
 
         System.Timers.Timer timer;
@@ -96,11 +90,7 @@ namespace Lastfm
         IAsyncResult current_async_result;
         State state;
         
-        internal AudioscrobblerConnection (Account account, IQueue queue) : this (account, queue, "")
-        {
-        }
-        
-        internal AudioscrobblerConnection (Account account, IQueue queue, string user_agent)
+        internal AudioscrobblerConnection (Account account, IQueue queue)
         {
             this.account = account;
             
@@ -108,8 +98,6 @@ namespace Lastfm
             
             state = State.IDLE;
             this.queue = queue;
-            
-            this.user_agent = user_agent;
         }
         
         private void AccountUpdated (object o, EventArgs args)
@@ -273,7 +261,7 @@ namespace Lastfm
             sb.Append (queue.GetTransmitInfo (out num_tracks_transmitted));
 
             current_web_req = (HttpWebRequest) WebRequest.Create (post_url);
-            current_web_req.UserAgent = user_agent;
+            current_web_req.UserAgent = LastfmCore.UserAgent;
             current_web_req.Method = "POST";
             current_web_req.ContentType = "application/x-www-form-urlencoded";
             current_web_req.ContentLength = sb.Length;
@@ -537,7 +525,7 @@ namespace Lastfm
     			                            mbrainzid);
 
                 now_playing_post = (HttpWebRequest) WebRequest.Create (uri);
-                now_playing_post.UserAgent = user_agent;
+                now_playing_post.UserAgent = LastfmCore.UserAgent;
                 now_playing_post.Method = "POST";
                 now_playing_post.ContentType = "application/x-www-form-urlencoded";
                 now_playing_post.ContentLength = uri.Length;

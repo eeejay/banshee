@@ -46,23 +46,14 @@ namespace Lastfm
         private static string user_agent;
         public static string UserAgent {
             get { return user_agent; }
-            set {
-                user_agent = value;
-                if (radio != null) {
-                    radio.UserAgent = value;
-                }
-                
-                if (audioscrobbler != null) {
-                    audioscrobbler.UserAgent = value;
-                }
-            }
+            set { user_agent = value; }
         }
         
         private static RadioConnection radio;
         public static RadioConnection Radio {
             get {
                 if (radio == null) {
-                    radio = new RadioConnection (LastfmCore.Account, user_agent);
+                    radio = new RadioConnection (LastfmCore.Account);
                 }
                 
                 return radio;
@@ -84,8 +75,7 @@ namespace Lastfm
                             ("Queue instance must be defined before referencing Audioscrobbler.");
                     }
                     
-                    audioscrobbler = new AudioscrobblerConnection (LastfmCore.Account,queue,
-                        user_agent);
+                    audioscrobbler = new AudioscrobblerConnection (LastfmCore.Account,queue);
                 }
                 
                 return audioscrobbler;
