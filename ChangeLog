@@ -1,52 +1,64 @@
+2008-02-26  Aaron Bockover  <abock@gnome.org>
+
+	* ChangeLog: Fixed all the improper formatting that has been committed
+	to this file lately. Wrote a guide that describes the proper formatting
+	procedure for this file
+
+	http://banshee-project.org/ChangeLogForDevelopers
+
+	* HACKING: Updated with above link
+
 2008-02-25  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
-      Attempt to queue the currently playing track when we dispose the 
-      service, in case it's scrobbable, but the user quit before hitting
-      the next button to send it off to the server. It gets queued until
-      next start.
-    
-    * src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
-      Fix TrackInfoDisplay by making sure we pass the correct EventMasks so
-      that we don't bombard the user with cover art on track change, if the
-      user had shown the cover art popup previously in the session. Also 
-      fixes hiding the cover art popup after the correct amount of time. 
-    
-    * src/Libraries/Lastfm/Lastfm/RadioConnection.cs:
-    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:
-    * src/Libraries/Lastfm/Lastfm/LastfmCore.cs: Remove Account from 
-      constructors for RadioConnection and AudioscrobblerConnection.
-      Also get the Connections to reference LastfmCore.Account rather
-      than keeping track of their own copy.
+	
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Attempt to queue the currently playing track when we dispose the 
+	service, in case it's scrobbable, but the user quit before hitting
+	the next button to send it off to the server. It gets queued until
+	next start.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Fix TrackInfoDisplay by making sure we pass the correct EventMasks so
+	that we don't bombard the user with cover art on track change, if the
+	user had shown the cover art popup previously in the session. Also 
+	fixes hiding the cover art popup after the correct amount of time. 
+
+	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs:
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:
+	* src/Libraries/Lastfm/Lastfm/LastfmCore.cs: Remove Account from 
+	constructors for RadioConnection and AudioscrobblerConnection.
+	Also get the Connections to reference LastfmCore.Account rather
+	than keeping track of their own copy.
 
 2008-02-24  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Libraries/Lastfm/Lastfm/RadioConnection.cs:
-    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Remove class-
-      based UserAgent properties, values and constructor arguments. Use
-      LastfmCore.UserAgent instead.
-    
-    * src/Libraries/Lastfm/Lastfm/LastfmCore.cs: Simplify UserAgent's setter,
-      and update instance creation to reflect changes in ctor definitions.
+	
+	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs:
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Remove class-
+	based UserAgent properties, values and constructor arguments. Use
+	LastfmCore.UserAgent instead.
+
+	* src/Libraries/Lastfm/Lastfm/LastfmCore.cs: Simplify UserAgent's setter,
+	and update instance creation to reflect changes in ctor definitions.
 
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
-      Decrease spacing between time and progress bar.
-    
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
-    * src/Libraries/Lastfm/Makefile.am:
-    * src/Libraries/Lastfm/Lastfm/LastfmCore.cs: Use LastfmCore as a singleton
-      to access Last.fm classes.
-    
-    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Provide support
-      for user agent when sending requests to Audioscrobbler servers. Can be
-      passed via ctor or by setting the UserAgent property. Also marked ctor
-      as internal.
-    
-    * src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Added UserAgent property.
-      Marked ctor as internal.
-    
-    * src/Libraries/Lastfm/Lastfm/Account.cs: Remove the static Account instance,
-      since it's now provided by LastfmCore as a singleton.
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+	Decrease spacing between time and progress bar.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	* src/Libraries/Lastfm/Lastfm/LastfmCore.cs: Use LastfmCore as a singleton 
+	to access Last.fm classes.
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Provide support
+	for user agent when sending requests to Audioscrobbler servers. Can be
+	passed via ctor or by setting the UserAgent property. Also marked ctor
+	as internal.
+
+	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Added UserAgent property.
+	Marked ctor as internal.
+
+	* src/Libraries/Lastfm/Lastfm/Account.cs: Remove the static Account 
+	instance, since it's now provided by LastfmCore as a singleton.
 
 2008-02-23  Scott Peterson <lunchtimemama@gmail.com> 
 
@@ -58,121 +70,130 @@
 	  about it hiding a base member of the same name (which it should).
 
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
-      Get track duration and progress information before showing the popup 
-      and relying on the fact that we're playing to determine the progress
-      label text. Showing the popup during a paused song now works.
-    
-    * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
-      Add some padding around the TrackInfoDisplay to pretty things up
-      slightly and line up the cover art.
-    
-    * src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs: Don't try
-      to run Account.Save if the username or password haven't changed
-      since the time the dialog was opened till the time it closed.
-      Prevents reconnecting if you simply open the dialog and close it
-      again.
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Get track duration and progress information before showing the popup 
+	and relying on the fact that we're playing to determine the progress
+	label text. Showing the popup during a paused song now works.
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+	Add some padding around the TrackInfoDisplay to pretty things up
+	slightly and line up the cover art.
+
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs: Don't try
+	to run Account.Save if the username or password haven't changed
+	since the time the dialog was opened till the time it closed.
+	Prevents reconnecting if you simply open the dialog and close it again.
 
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
-    * src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
-      Added LinearProgress hotness.
-    
-    * src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs: Fixed a bug
-      where the user would change tracks while a track was mid-way through being buffered,
-      and the first track's buffering result would cover up the song duration/progress
-      information.
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+	Added LinearProgress hotness.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs: 
+	Fixed a bug where the user would change tracks while a track was mid-way 
+	through being buffered, and the first track's buffering result would 
+	cover up the song duration/progress information.
 
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
-      Rewrote the SongTimer class to use PlayerEngine.Position. Doesn't rely on
-      PlayerEngineState events anymore. This also means that SongTimer works well while
-      listening to songs on Last.fm.
-    
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs:
-    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Implement MusicBrainzId
-      property and using that data to generate requests to Last.fm. Currently isn't
-      attached to any real data source, so the ID is always empty.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Rewrote the SongTimer class to use PlayerEngine.Position. Doesn't rely on
+	PlayerEngineState events anymore. This also means that SongTimer works 
+	well while listening to songs on Last.fm.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs:
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: 
+	Implement MusicBrainzId property and using that data to generate requests 
+	to Last.fm. Currently isn't attached to any real data source, so the ID 
+	is always empty.
 
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Port fix across from
-      stable so that using Alt+F4 to close the main window works again.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Port fix 
+	across from stable so that using Alt+F4 to close the main window 
+	works again.
 
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
-      Remove a few bits of commented code. Added Stock.Properties icon for the Configure
-      menu item.
-    
-    * src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: Added Ctrl+E keyboard
-      shortcut for equalizer window.
-    
-    * src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Added Stock.Preferences
-      icon for Preferences menu item.
-    
-    * src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Added E keyboard shortcut
-      for track editor dialog.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Remove a few bits of commented code. Added Stock.Properties icon for 
+	the Configure menu item.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: Added Ctrl+E 
+	keyboard shortcut for equalizer window.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Added 
+	Stock.Preferences icon for Preferences menu item.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Added E 
+	keyboard shortcut for track editor dialog.
 
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Use the static
-      instance of Account shared by others, rather than creating a seperate instance.
-    
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
-    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Added support for keeping
-      track of network connection state and automatically connecting. Also included better
-      debugging messages.
-    
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
-      Fix queuing tracks that have actually been played long enough but were not submitted.
-      Also added a few simple checks to see if the current track attempting to be queued
-      is null or has been listened to for less than one second.
-    
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs: Send tracks
-      with the correct original play-start time (instead of double-universal time).
-    
-    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Make sure that errors when
-      POSTing the current track being listened to aren't displayed to the user via the HIG
-      message dialog - log them silently to console instead.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Use 
+	the static instance of Account shared by others, rather than creating 
+	a seperate instance.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Added support 
+	for keeping track of network connection state and automatically connecting. 	Also included better debugging messages.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Fix queuing tracks that have actually been played long enough but were 
+	not submitted. Also added a few simple checks to see if the current track 
+	attempting to be queued is null or has been listened to for less than 
+	one second.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs: 
+	Send tracks with the correct original play-start time (instead of 
+	double-universal time).
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Make sure that 
+	errors when POSTing the current track being listened to aren't displayed 
+	to the user via the HIG message dialog - log them silently to console 
+	instead.
 
 2008-02-22  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
-      Use a slightly less brain-dead method of checking the total length of the track
-      played. Skipping through a track but playing the correct length for inclusion on
-      a Last.fm profile now works correctly.
-      
-      Also added support for sending NowPlaying information.
-    
-    * src/Libraries/Lastfm/Lastfm/Account.cs: Create an 'Instance' property for use via
-      multiple modules.
-    
-    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Uncommented and exposed
-      NowPlaying method, so that Last.fm lists the current track as playing.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Use a slightly less brain-dead method of checking the total length of 
+	the track played. Skipping through a track but playing the correct 
+	length for inclusion on a Last.fm profile now works correctly. Also added 
+	support for sending NowPlaying information.
+
+	* src/Libraries/Lastfm/Lastfm/Account.cs: Create an 'Instance' property 
+	for use via multiple modules.
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Uncommented 
+	and exposed NowPlaying method, so that Last.fm lists the current track 
+	as playing.
 
 2008-02-22  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Banshee.Audioscrobbler: Mark this as removed in SVN. Accidentally
-      missed in previous revision.
-    
-    * src/Extensions/Banshee.Lastfm/Resources/AudioscrobblerMenu.xml: Added missing file,
-      enables Audioscrobbler extension service to load without error.
+
+	* src/Extensions/Banshee.Audioscrobbler: Mark this as removed in SVN. 
+	Accidentally missed in previous revision.
+
+	* src/Extensions/Banshee.Lastfm/Resources/AudioscrobblerMenu.xml: Added 
+	missing file, enables Audioscrobbler extension service to load 
+	without error.
 
 2008-02-22  Alexander Hixon  <hixon.alexander@mediati.org>
-    * src/Extensions/Makefile.am:
-    * src/Extensions/Banshee.Audioscrobbler:
-    * build/build.environment.mk:
-    * configure.ac: Remove reference to the old extension name and paths.
-    
-    * src/Extensions/Banshee.Lastfm/Makefile.am:
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs:
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
-    * src/Extensions/Banshee.Lastfm/Banshee.Lastfm.addin.xml: Cleaned version of the
-      Audioscrobbler plugin from stable. Glue to hook up player engine and
-      AudioscrobblerConnection logic lives here.
-    
-    * src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:
-    * src/Libraries/Lastfm/Lastfm/IQueue.cs: Seperate out web bits and queue interface
-      into our Last.fm library. Uses version 1.2 of the Last.fm protocol.
-    
-    * src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
-    * src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Added 'Tools' menu.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.addin.xml: Cleaned 
+	version of the Audioscrobbler plugin from stable. Glue to hook up 
+	player engine and AudioscrobblerConnection logic lives here.
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:
+	* src/Libraries/Lastfm/Lastfm/IQueue.cs: Seperate out web bits and 
+	queue interface into our Last.fm library. Uses version 1.2 of the 
+	Last.fm protocol.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Added 'Tools' menu.
 
 2008-02-22  Scott Peterson <lunchtimemama@gmail.com> 
 
@@ -268,8 +289,8 @@
 2008-02-21  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Changed it so
-	  that the "Sort Children" option appears only if there are two or more
-	  children of a source: a list of one is always sorted :)
+	that the "Sort Children" option appears only if there are two or more
+	children of a source: a list of one is always sorted :)
 
 2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
@@ -306,23 +327,24 @@
 
 2008-02-21  Scott Peterson <lunchtimemama@gmail.com> 
 
-	This commit begins to port the player migration namespace from stable into trunk.
-	I've only done the Amarok importer as a proof-of-concept and I haven't tested it.
-	This commit is more about laying out the namespace/object design for the player
-	migration stuff for critique. What is presented here in this patch is subject to
-	change if anyone wants to massage it a little more. Otherwise I'll go ahead with
+	This commit begins to port the player migration namespace from stable into 
+	trunk. I've only done the Amarok importer as a proof-of-concept and I 
+	haven't tested it. This commit is more about laying out the 
+	namespace/object design for the player migration stuff for critique. 
+	What is presented here in this patch is subject to change if anyone 
+	wants to massage it a little more. Otherwise I'll go ahead with
 	porting/testing the other player migrators. So please provide feedback!
 
-	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs: Added
-	a base class for IImportSources which will perform a single-method
+	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs: 
+	Added a base class for IImportSources which will perform a single-method
 	import operation in a ThreadPool thread.
 
 	* src/Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs: Added
 	Amarok importer to import sources.
 
-	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Created
-	a new public method AddTrackToLibrary, which contains the logic for
-	adding a track to the library and hooking up the related Artist and
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: 
+	Created a new public method AddTrackToLibrary, which contains the logic 
+	for adding a track to the library and hooking up the related Artist and
 	Album infos.
 
 	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:

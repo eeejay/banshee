@@ -43,3 +43,4 @@ namespace Banshee.IO
         System.IO.Stream OpenWrite (SafeUri uri, bool overwrite);
     }
 }
+blah

@@ -2,6 +2,16 @@ This document defines many guidelines that should be adhered to when developing
 against Banshee. These guidelines will make the codebase more readable,
 extensible, and portable.
 
+ChangeLog Formatting Guidelines
+===============================
+
+Every change to source code must have an entry in the ChangeLog file. The
+formatting details of this file are described here:
+
+  http://banshee-project.org/ChangeLogForDevelopers
+
+Please review these guidelines separate to this document.
+
 
 C# Coding Style Guidelines
 ==========================
