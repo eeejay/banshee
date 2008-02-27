@@ -4,7 +4,6 @@ LINK = $(REF_NEREID)
 SOURCES =  \
 	Nereid/Client.cs \
 	Nereid/PlayerInterface.cs \
-	Nereid/PlayerWindowSchema.cs \
 	Nereid/ViewContainer.cs
 
 bin_SCRIPTS = banshee2

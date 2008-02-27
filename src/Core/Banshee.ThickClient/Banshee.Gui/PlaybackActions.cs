@@ -43,9 +43,16 @@ namespace Banshee.Gui
     {
         private InterfaceActionService action_service;
         private Gtk.Action play_pause_action;
+        private PlaybackRepeatActions repeat_actions;
+
+        public PlaybackRepeatActions RepeatActions {
+            get { return repeat_actions; }
+        }
         
         public PlaybackActions (InterfaceActionService actionService) : base ("Playback")
         {
+            repeat_actions = new PlaybackRepeatActions (actionService);
+
             Add (new ActionEntry [] {
                 new ActionEntry ("PlayPauseAction", "media-playback-start",
                     Catalog.GetString ("_Play"), "space",
@@ -79,20 +86,6 @@ namespace Banshee.Gui
                     Catalog.GetString ("Stop playback after the current song finishes playing"), 
                     OnStopWhenFinishedAction, false)
             });
-            
-            Add (new RadioActionEntry [] {
-                new RadioActionEntry ("RepeatNoneAction", null, 
-                    Catalog.GetString ("Repeat N_one"), null,
-                    Catalog.GetString ("Do not repeat playlist"), 0),
-                    
-                new RadioActionEntry ("RepeatAllAction", null,
-                    Catalog.GetString ("Repeat _All"), null,
-                    Catalog.GetString ("Play all songs before repeating playlist"), 1),
-                    
-                new RadioActionEntry ("RepeatSingleAction", null,
-                    Catalog.GetString ("Repeat Si_ngle"), null,
-                    Catalog.GetString ("Repeat the current playing song"), 2)
-            }, 0, null);
 
             actionService.GlobalActions.Add (new ActionEntry [] {
                 new ActionEntry ("PlaybackMenuAction", null,

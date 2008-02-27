@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -66,7 +67,7 @@ namespace Hyena
                 return null;
             }
         
-            string undercase = String.Empty;
+            StringBuilder undercase = new StringBuilder ();
             string [] tokens = Regex.Split (s, "([A-Z]{1}[a-z]+)");
             
             for (int i = 0; i < tokens.Length; i++) {
@@ -74,13 +75,42 @@ namespace Hyena
                     continue;
                 }
 
-                undercase += tokens[i].ToLower ();
+                undercase.Append (tokens[i].ToLower ());
                 if (i < tokens.Length - 2) {
-                    undercase += "_";
+                    undercase.Append ('_');
                 }
             }
             
-            return undercase;
+            return undercase.ToString ();
+        }
+
+        public static string UnderCaseToCamelCase (string s)
+        {
+            if (String.IsNullOrEmpty (s)) {
+                return null;
+            }
+
+            StringBuilder builder = new StringBuilder ();
+
+            for (int i = 0, n = s.Length, b = -1; i < n; i++) {
+                if (b < 0 && s[i] != '_') {
+                    builder.Append (Char.ToUpper (s[i]));
+                    b = i;
+                } else if (s[i] == '_' && i + 1 < n && s[i + 1] != '_') {
+                    if (builder.Length > 0 && Char.IsUpper (builder[builder.Length - 1])) {
+                        builder.Append (Char.ToLower (s[i + 1]));
+                    } else {
+                        builder.Append (Char.ToUpper (s[i + 1]));
+                    }
+                    i++;
+                    b = i;
+                } else if (s[i] != '_') {
+                    builder.Append (Char.ToLower (s[i]));
+                    b = i;
+                }
+            }
+
+            return builder.ToString ();
         }
     }
 }

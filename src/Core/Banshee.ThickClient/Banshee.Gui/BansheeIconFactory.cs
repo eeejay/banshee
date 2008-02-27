@@ -44,6 +44,9 @@ namespace Banshee.Gui
             "media-playback-pause",
             "media-playback-stop",
             "media-eject",
+            "media-repeat-all",
+            "media-repeat-none",
+            "media-repeat-single",
             
             /* Volume Button Icons */
             "audio-volume-high", 

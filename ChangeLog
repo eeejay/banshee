@@ -1,3 +1,36 @@
+2008-02-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:
+	Created UI actions for repeat mode functionality; this is where the 
+	repeat mode can be accessed and is stored/loaded from configuration; 
+	the UI actions are set up here
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/RepeatActionButton.cs:
+	A special button that syncs its state with the PlaybackRepeatActions and
+	presents the actions as a popup menu
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Make the footer actually
+	a Gtk.Toolbar, pack the new RepeatActionButton, and do some allocation
+	magic to ensure the status bar is always centered on the toolbar; moved
+	the only two schema items that are still at the client level into here
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeIconFactory.cs: Added
+	the media-repeat icons into the stock
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Load the
+	PlaybackRepeatActions as a child set of actions
+	
+	* src/Clients/Nereid/Nereid/PlayerWindowSchema.cs: Removed
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Added a ToolbarFooter object
+
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: Added UnderCaseToCamelCase
+	method that does the opposite of what CamelCaseToUnderCaseDoes; use
+	a StringBuilder for the latter
+
+	* tests/Hyena/StringUtilTests.cs: Added some tests for the above two methods
+
 2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Remove unnecessary Show.

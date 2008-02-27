@@ -44,6 +44,7 @@ SOURCES =  \
 	Banshee.Gui.Widgets/ConnectedSeekSlider.cs \
 	Banshee.Gui.Widgets/ConnectedVolumeButton.cs \
 	Banshee.Gui.Widgets/PlaylistMenuItem.cs \
+	Banshee.Gui.Widgets/RepeatActionButton.cs \
 	Banshee.Gui.Widgets/TrackInfoDisplay.cs \
 	Banshee.Gui.Widgets/UserJobTile.cs \
 	Banshee.Gui.Widgets/UserJobTileHost.cs \
@@ -58,6 +59,7 @@ SOURCES =  \
 	Banshee.Gui/IHasSourceView.cs \
 	Banshee.Gui/InterfaceActionService.cs \
 	Banshee.Gui/PlaybackActions.cs \
+	Banshee.Gui/PlaybackRepeatActions.cs \
 	Banshee.Gui/SourceActions.cs \
 	Banshee.Gui/TrackActions.cs \
 	Banshee.Gui/ViewActions.cs \
@@ -85,6 +87,9 @@ RESOURCES =  \
 	Resources/banshee-logo.png \
 	Resources/browser-album-cover.png \
 	Resources/core-ui-actions-layout.xml \
+	Resources/media-repeat-all.png \
+	Resources/media-repeat-none.png \
+	Resources/media-repeat-single.png \
 	Resources/source-cd-audio.png \
 	Resources/source-library.png \
 	Resources/source-localqueue.png \

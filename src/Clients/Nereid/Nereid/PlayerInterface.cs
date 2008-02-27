@@ -42,6 +42,7 @@ using Banshee.Database;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.MediaEngine;
+using Banshee.Configuration;
 
 using Banshee.Gui;
 using Banshee.Gui.Widgets;
@@ -57,8 +58,8 @@ namespace Nereid
         // Major Layout Components
         private VBox primary_vbox;
         private Toolbar header_toolbar;
+        private Toolbar footer_toolbar;
         private HPaned views_pane;
-        private HBox footer_box;
         private ViewContainer view_container;
         
         // Major Interaction Components
@@ -195,31 +196,28 @@ namespace Nereid
 
         private void BuildFooter ()
         {
-            footer_box = new HBox ();
-            footer_box.Spacing = 2;
+            footer_toolbar = (Toolbar)ActionService.UIManager.GetWidget ("/FooterToolbar");
+            footer_toolbar.ShowArrow = false;
+            footer_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
+            footer_toolbar.IconSize = IconSize.Menu;
 
             status_label = new Label ();
             status_label.ModifyFg (StateType.Normal, Hyena.Gui.GtkUtilities.ColorBlend (
                 status_label.Style.Foreground (StateType.Normal), status_label.Style.Background (StateType.Normal)));
-            
-            ActionButton song_properties_button = new ActionButton
-                (ActionService.TrackActions["TrackPropertiesAction"]);
-            song_properties_button.IconSize = IconSize.Menu;
-            song_properties_button.Padding = 0;
-            song_properties_button.LabelVisible = false;
-            
-            //footer_box.PackStart (shuffle_toggle_button, false, false, 0);
-            //footer_box.PackStart (repeat_toggle_button, false, false, 0);
-            footer_box.PackStart (status_label, true, true, 0);
-            footer_box.PackStart (song_properties_button, false, false, 0);
 
-            Alignment align = new Alignment (0.5f, 0.5f, 1.0f, 1.0f);
-            align.TopPadding = 2;
-            align.BottomPadding = 0;
-            align.Add (footer_box);
-            align.ShowAll ();
+            Alignment status_align = new Alignment (0.5f, 0.5f, 1.0f, 1.0f);
+            status_align.Add (status_label);
 
-            primary_vbox.PackStart (align, false, true, 0);
+            RepeatActionButton repeat_button = new RepeatActionButton ();
+            repeat_button.SizeAllocated += delegate (object o, Gtk.SizeAllocatedArgs args) {
+                status_align.LeftPadding = (uint)args.Allocation.Width;
+            };
+
+            ActionService.PopulateToolbarPlaceholder (footer_toolbar, "/FooterToolbar/StatusBar", status_align, true);
+            ActionService.PopulateToolbarPlaceholder (footer_toolbar, "/FooterToolbar/RepeatButton", repeat_button);
+
+            footer_toolbar.ShowAll ();
+            primary_vbox.PackStart (footer_toolbar, false, true, 0);
         }
 
 #endregion
@@ -228,7 +226,7 @@ namespace Nereid
         
         private void LoadSettings ()
         {
-            views_pane.Position = PlayerWindowSchema.SourceViewWidth.Get ();
+            views_pane.Position = SourceViewWidth.Get ();
         }
         
 #endregion
@@ -247,7 +245,7 @@ namespace Nereid
             // UI events
             view_container.SearchEntry.Changed += OnSearchEntryChanged;
             views_pane.SizeRequested += delegate {
-                PlayerWindowSchema.SourceViewWidth.Set (views_pane.Position);
+                SourceViewWidth.Set (views_pane.Position);
             };
             
             composite_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
@@ -262,7 +260,8 @@ namespace Nereid
                 }
             };
             
-            header_toolbar.ExposeEvent += OnHeaderToolbarExposeEvent;
+            header_toolbar.ExposeEvent += OnToolbarExposeEvent;
+            footer_toolbar.ExposeEvent += OnToolbarExposeEvent;
         }
         
 #endregion
@@ -349,17 +348,19 @@ namespace Nereid
             source.FilterQuery = view_container.SearchEntry.Query;
         }
         
-        private void OnHeaderToolbarExposeEvent (object o, ExposeEventArgs args)
+        private void OnToolbarExposeEvent (object o, ExposeEventArgs args)
         {
+            Toolbar toolbar = (Toolbar)o;
+
             // This forces the toolbar to look like it's just a regular part
             // of the window since the stock toolbar look makes Banshee look ugly.
-            Style.ApplyDefaultBackground (header_toolbar.GdkWindow, true, State, 
-                args.Event.Area, header_toolbar.Allocation.X, header_toolbar.Allocation.Y, 
-                header_toolbar.Allocation.Width, header_toolbar.Allocation.Height);
+            Style.ApplyDefaultBackground (toolbar.GdkWindow, true, State, 
+                args.Event.Area, toolbar.Allocation.X, toolbar.Allocation.Y, 
+                toolbar.Allocation.Width, toolbar.Allocation.Height);
 
             // Manually expose all the toolbar's children
-            foreach (Widget child in header_toolbar.Children) {
-                header_toolbar.PropagateExpose (child, args.Event);
+            foreach (Widget child in toolbar.Children) {
+                toolbar.PropagateExpose (child, args.Event);
             }
         }
         
@@ -472,9 +473,26 @@ namespace Nereid
 
 #endregion
 
+#region Configuration Schemas
+
+        public static readonly SchemaEntry<int> SourceViewWidth = new SchemaEntry<int> (
+            "player_window", "source_view_width",
+            175,
+            "Source View Width",
+            "Width of Source View Column."
+        );
+
+        public static readonly SchemaEntry<bool> ShowCoverArt = new SchemaEntry<bool> (
+            "player_window", "show_cover_art",
+            true,
+            "Show cover art",
+            "Show cover art below source view if available"
+        );
+
+#endregion
+
         string IService.ServiceName {
             get { return "NereidPlayerInterface"; }
         }
     }
 }
-

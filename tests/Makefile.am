@@ -13,7 +13,7 @@ ASSEMBLY_CSFILES =  \
 	Hyena/CryptoUtilTests.cs \
 	Hyena/RangeCollectionTests.cs
 
-CFS=Hyena/RangeCollectionTests.cs Hyena/CryptoUtilTests.cs
+CFS=Hyena/RangeCollectionTests.cs Hyena/CryptoUtilTests.cs Hyena/StringUtilTests.cs
 
 NUNIT_TESTER_NAME = ConsoleUi
 NUNIT_TESTER = $(NUNIT_TESTER_NAME).exe

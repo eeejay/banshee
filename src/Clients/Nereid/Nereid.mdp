@@ -10,7 +10,6 @@
   <Contents>
     <File name="Nereid/PlayerInterface.cs" subtype="Code" buildaction="Compile" />
     <File name="Nereid/ViewContainer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Nereid/PlayerWindowSchema.cs" subtype="Code" buildaction="Compile" />
     <File name="Nereid/Client.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>

@@ -10,6 +10,10 @@
     </placeholder>
     <placeholder name="VolumeButton"/>
   </toolbar>
+  <toolbar name="FooterToolbar">
+    <placeholder name="StatusBar"/>
+    <placeholder name="RepeatButton"/>
+  </toolbar>
 
   <menubar name="MainMenu">
     <menu name="MusicMenu" action="MusicMenuAction">
@@ -70,9 +74,9 @@
       <menuitem name="RestartSong" action="RestartSongAction"/>
       <separator/>
       <placeholder name="PlaybackMenuAdditions"/>
-      <!--<menuitem name="RepeatNone" action="RepeatNoneAction"/>
+      <menuitem name="RepeatNone" action="RepeatNoneAction"/>
       <menuitem name="RepeatAll" action="RepeatAllAction"/>
-      <menuitem name="RepeatSingle" action="RepeatSingleAction"/>-->
+      <menuitem name="RepeatSingle" action="RepeatSingleAction"/>
       <separator/>
       <menuitem name="Shuffle" action="ShuffleAction"/>
     </menu>
