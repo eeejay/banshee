@@ -3,7 +3,6 @@ SUBDIRS = \
 	Core \
 	Clients \
 	Backends \
-	Dap \
 	Extensions
 
 EXTRA_DIST = AssemblyInfo.cs.in
