@@ -190,10 +190,10 @@
 
 	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs,
 	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
-	  Renamed DoImport to ImportCore as per Framework Design Guidelines, also
-	  slapped the new keyword onto the static
-	  AmarokPlayerImportSource.CanImport property to get rid of the warning
-	  about it hiding a base member of the same name (which it should).
+	Renamed DoImport to ImportCore as per Framework Design Guidelines, also
+	slapped the new keyword onto the static
+	AmarokPlayerImportSource.CanImport property to get rid of the warning
+	about it hiding a base member of the same name (which it should).
 
 2008-02-23  Alexander Hixon  <hixon.alexander@mediati.org>
 
@@ -325,20 +325,20 @@
 2008-02-22  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs: Minor
-	  fix for fetching the UserJob's Title.
+	fix for fetching the UserJob's Title.
 
 2008-02-22  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs,
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs:
-	  HyenaSqliteConnection.GetSchema now returns an IDictionary<string,
-	  string> rather than a Dictionary<string, string>.
+	HyenaSqliteConnection.GetSchema now returns an IDictionary<string,
+	string> rather than a Dictionary<string, string>.
 
 2008-02-22  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs,
 	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
-	  Minor change to Amarok's CanImport property name.
+	Minor change to Amarok's CanImport property name.
 
 2008-02-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
@@ -644,16 +644,16 @@
 2008-02-19  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Library/IExtensionImportSource.cs: Added
-	  the IExtensionImportSource interface which extends the IImportSource
-	  interface to include bool CanImport { get; }. This means that an
-	  extension-provided import source will only be added to the list if the
-	  import source can be imported. Such a check might entail determining
-	  whether Beagle is installed, or a particular file (other music player's
-	  db) is present, &c..
+	the IExtensionImportSource interface which extends the IImportSource
+	interface to include bool CanImport { get; }. This means that an
+	extension-provided import source will only be added to the list if the
+	import source can be imported. Such a check might entail determining
+	whether Beagle is installed, or a particular file (other music player's
+	db) is present, &c..
 
 	* src/Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs: Made to
-	  use the new IExtensionImportSource when adding extension sources to the
-	  list of availible import sources.
+	use the new IExtensionImportSource when adding extension sources to the
+	list of availible import sources.
 
 2008-02-19  Aaron Bockover  <abock@gnome.org>
 
@@ -919,8 +919,8 @@
 2008-02-18  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
-	  Changed LoadAll method to return IEnumerable rather than List. Since the
-	  method is only ever iterated over, we can do away with the List object.
+	Changed LoadAll method to return IEnumerable rather than List. Since the
+	method is only ever iterated over, we can do away with the List object.
 
 2008-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
@@ -1282,31 +1282,31 @@
 2008-02-13  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Made to use new
-	  generic Query method and added GetProperty, SetProperty and
-	  ClearProperty. These methods allow you to store/retrieve properties from
-	  the database that are not defined in the type T. Suppose you write an
-	  extension that needs to keep persistant data on a per-track basis for
-	  every track in the library. Rather than define it's own table and join
-	  it with CoreTracks, the extension could call
-	  LibraryTrackInfo.Provider.GetProperty and SetProperty. This will be used
-	  by the iTunes importer at least.
+	generic Query method and added GetProperty, SetProperty and
+	ClearProperty. These methods allow you to store/retrieve properties from
+	the database that are not defined in the type T. Suppose you write an
+	extension that needs to keep persistant data on a per-track basis for
+	every track in the library. Rather than define it's own table and join
+	it with CoreTracks, the extension could call
+	LibraryTrackInfo.Provider.GetProperty and SetProperty. This will be used
+	by the iTunes importer at least.
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Added DbColumn class
-	  for lightweight column descrption, made to use new SqliteUtils class for
-	  simple operations, and protected some constructors.
+	for lightweight column descrption, made to use new SqliteUtils class for
+	simple operations, and protected some constructors.
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: Common sqlite-related
-	  functions.
+	functions.
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Replaced
-	  QueryInt32 and QueryString with a new generic Query<T> method. Added
-	  ColumnExists(string table_name, string column_name) method. Also
-	  reworked the way GetSchema works.
+	QueryInt32 and QueryString with a new generic Query<T> method. Added
+	ColumnExists(string table_name, string column_name) method. Also
+	reworked the way GetSchema works.
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs,
 	* src/Core/Banshee.Services/Banshee.Configuration/DatabaseConfigurationClient.cs,
 	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs: Made to use
-	  new generic Query method.
+	new generic Query method.
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
 	  Took advantage of the fact that DbColumn-bound members can now be
@@ -1619,20 +1619,20 @@
 2008-02-10  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/Device.cs:
-	  Commented out my changes because i can't make em compile ;)
+	Commented out my changes because i can't make em compile ;)
 	 
 2008-02-10  Alan McGovern <alan.mcgovern@gmail.com> 
 
 	* src/Dap/Banshee.DapCore/Banshee.DapCore/IDevice.cs
 	* src/Dap/Banshee.DapCore/Banshee.DapCore/AbstractDevice.cs
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/Device.cs:
-	  Updated the interface, implemented the abstract class and made
-	  MassStorage inherit from AbstractDevice.
+	Updated the interface, implemented the abstract class and made
+	MassStorage inherit from AbstractDevice.
 	  
 2008-02-10  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs: Assures
-	  that all rows in view are rendered.
+	that all rows in view are rendered.
 
 2008-02-09  Aaron Bockover  <abock@gnome.org>
 
@@ -1865,7 +1865,7 @@
 2008-02-08  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs: Got rid
-	  of extra semicolon;
+	of extra semicolon;
 
 2008-02-07  Aaron Bockover  <abock@gnome.org>
 
@@ -2228,51 +2228,51 @@
 2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Got rid of obsolete type.
-	  Last commit, I swear.
+	Last commit, I swear.
 
 2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Merged PaintRows into
-	  PaintList since PaintList had become a withered shell of its former
-	  self, not worth the method call.
+	PaintList since PaintList had become a withered shell of its former
+	self, not worth the method call.
 
 2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: Very minor change - removed
-	  unnessisary assignment.
+	unnessisary assignment.
 
 2008-02-05  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena.Gui/Hyena.Data.Gui/ListView.cs: A rework of PaintList and
-	  PaintRows. Previously, all rows needed to be iterated over three times:
-	  once to calculate the selection blocks, once to draw the rule, and once
-	  to draw the content. Now it is only iterated over once - rules, content
-	  for unselected rows, and selection blocks are drawn during iteration
-	  while selected rows are put into a list and their content is drawn at
-	  the end. This exploits the fact that the most common numbers of visible
-	  selected rows are 0 and 1. The actual performance gains for this patch
-	  are rather modest, but tangeble (a millisecond or two for the execution
-	  time of PaintList acording to the profiler).
+	PaintRows. Previously, all rows needed to be iterated over three times:
+	once to calculate the selection blocks, once to draw the rule, and once
+	to draw the content. Now it is only iterated over once - rules, content
+	for unselected rows, and selection blocks are drawn during iteration
+	while selected rows are put into a list and their content is drawn at
+	the end. This exploits the fact that the most common numbers of visible
+	selected rows are 0 and 1. The actual performance gains for this patch
+	are rather modest, but tangeble (a millisecond or two for the execution
+	time of PaintList acording to the profiler).
 
 2008-02-04  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
-	  Made some private fields readonly.
+	Made some private fields readonly.
 
 2008-02-04  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	* src/Core/Banshee.Core/Banshee.Configuration.Schema/LibrarySchema.cs:
 	* src/Core/Banshee.Core/Banshee.Base/SafeUri.cs: Standardized venacular
-	  around "Location" rather than "Path" when refering to the file URI in
-	  user-facing strings (BGO 436453)
+	around "Location" rather than "Path" when refering to the file URI in
+	user-facing strings (BGO 436453)
 
 2008-02-04  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data/DictionaryModelCache.cs: Initialize the cache
-	  dictionary to the proper capacity (since we know it).
+	dictionary to the proper capacity (since we know it).
 
 2008-02-04  Aaron Bockover  <abock@gnome.org>
 
@@ -2398,12 +2398,12 @@
 2008-02-01  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs: Made
-	  to use DatabaseConfigurationClient when checking for version.
+	to use DatabaseConfigurationClient when checking for version.
 
 	* src/Core/Banshee.Services/Banshee.Configuration:
 	* src/Core/Banshee.Services/Banshee.Configuration/DatabaseConfigurationClient.cs:
-	  Added DatabaseConfigurationClient, an IConfigurationClient wrapper for
-	  the CoreConfiguration table.
+	Added DatabaseConfigurationClient, an IConfigurationClient wrapper for
+	the CoreConfiguration table.
 
 2008-01-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
@@ -3413,45 +3413,45 @@
 
 2008-01-20  Scott Peterson <lunchtimemama@gmail.com> 
 
-	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
-	  Got rid of DbId setter (not used).
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	Got rid of DbId setter (not used).
 
 2008-01-20  Scott Peterson <lunchtimemama@gmail.com> 
 
-	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs,
-	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
-	  Consolidated save logic.
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	Consolidated save logic.
 
 2008-01-20  Scott Peterson <lunchtimemama@gmail.com> 
 
-	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs,
-	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs: Got rid of
-	  unnecessary private variables.
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs: Got rid of
+	unnecessary private variables.
 
 2008-01-19  Scott Peterson  <lunchtimemama@gmail.com>
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Cleaned up
-	  CheckVersion and CheckTable, beautified
+	CheckVersion and CheckTable, beautified
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Dealt with new
-	  type names and cleaned up.
+	type names and cleaned up.
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Reworked
-	  TableExitst and added new convenience methods IndexExitsts,
-	  GetSchema, and QueryString. Also added more overloads to QueryInt32
+	TableExitst and added new convenience methods IndexExitsts,
+	GetSchema, and QueryString. Also added more overloads to QueryInt32
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Made IndexOf to
-	  use QueryInt32.
+	use QueryInt32.
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs: Renamed
-	  DatabaseColumnBaseAttribute to AbstractDatabaseColumnAttribute and
-	  renamed DatabaseVirtualColumnAttribute to
-	  VirtualDatabaseColumnAttribute.
+	DatabaseColumnBaseAttribute to AbstractDatabaseColumnAttribute and
+	renamed DatabaseVirtualColumnAttribute to
+	VirtualDatabaseColumnAttribute.
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
@@ -3470,52 +3470,52 @@
 2008-01-19  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Now with even more
-	  awesome!
+	awesome!
 
 2008-01-19  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Improved IndexOf
-	  with first_order_id caching.
+	with first_order_id caching.
 
 2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Minor fix for last
-	  commit.
+	commit.
 
 2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Implimented
-	  IndexOf() using SQL MAGIC!
+	IndexOf() using SQL MAGIC!
 
-	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
-	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
-	  Removed now superfluous DbIndex
+	Removed now superfluous DbIndex
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
-	  Rejiggered IndexOf
+	Rejiggered IndexOf
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs: Got
-	  rid of now superfluous IDatabaseItem type
+	rid of now superfluous IDatabaseItem type
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelCache.cs:
-	  Rejiggered generic constraints
+	Rejiggered generic constraints
 
 2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlaybackControllerService.cs:
-	  Makes sure playback doesn't barf when there is no next track to play.
+	Makes sure playback doesn't barf when there is no next track to play.
 
 2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
 
-	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseAttributes.cs,
-	  src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs,
-	  src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
-	  src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs,
-	  src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs: Got
-	  rid of DatabaseTableAttribute
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseAttributes.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs: Got
+	rid of DatabaseTableAttribute
 
 2008-01-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
@@ -3525,15 +3525,15 @@
 
 2008-01-18  Scott Peterson <lunchtimemama@gmail.com> 
 
-	* src/Core/Hyena/Hyena.Data.Sqlite/ModelProvider.cs,
-	  src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs,
-	  src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
-	  Renamed ModelProvider to SqliteModelProvider
+	* src/Core/Hyena/Hyena.Data.Sqlite/ModelProvider.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
+	Renamed ModelProvider to SqliteModelProvider
 
-	* src/Core/Hyena/Hyena.Data.Sqlite/ModelCache.cs,
-	  src/Core/Hyena/Hyena.Data.Sqlite/SqilteModelCache.cs,
-	  src/Core/Banshee.Services/Banshee.Database/BansheeModelCache.cs: Renamed
-	  ModelCache to SqliteModelCache
+	* src/Core/Hyena/Hyena.Data.Sqlite/ModelCache.cs:
+	* src/Core/Hyena/Hyena.Data.Sqlite/SqilteModelCache.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelCache.cs: Renamed
+	ModelCache to SqliteModelCache
 
 2008-01-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
@@ -3542,47 +3542,47 @@
 2008-01-17  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/ModelProvider.cs: Renamed from
-	  DatabaseModel for consistancy and rejiggered
+	DatabaseModel for consistancy and rejiggered
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseAttributes.cs: Added
-	  DatabaseTableAttribute
+	DatabaseTableAttribute
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/ModelCache.cs: Renamed from
-	  DatabaseModelCache for consistancy and rijiggered
+	DatabaseModelCache for consistancy and rijiggered
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModel.cs: Renamed
-	  ModelProvider.cs
+	ModelProvider.cs
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs: Renamed to
-	  DatabaseAttributes.cs
+	DatabaseAttributes.cs
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/ICacheableDatabaseModel.cs: Removed
-	  subsumed and obsolete members
+	subsumed and obsolete members
 
 	* src/Core/Hyena/Hyena.Data.Sqlite/DatabaseModelCache.cs: Renamed
-	  ModelCache.cs
+	ModelCache.cs
 
-	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs,
-	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs,
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryTrackInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
-	  Made to use new DatabaseTable attribute
+	Made to use new DatabaseTable attribute
 
-	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs,
-	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs,
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
-	  Removal of subsumed and obsolete members
+	Removal of subsumed and obsolete members
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModel.cs:
-	  Renamed to BansheeModelProvider.cs
+	Renamed to BansheeModelProvider.cs
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDatabaseModelCache.cs:
-	  Renamed to BansheeModelCache.cs
+	Renamed to BansheeModelCache.cs
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
-	  Whitespace fixes and TableName/ModelVersion removal
+	Whitespace fixes and TableName/ModelVersion removal
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelCache.cs: Generics
-	  changes
+	changes
 
 2008-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
