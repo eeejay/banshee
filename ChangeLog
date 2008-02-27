@@ -1,3 +1,8 @@
+2008-02-27  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Only scrobble tracks if the 'Enable song reporting' checkbox is active.
+
 2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
@@ -216,7 +221,8 @@
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
 	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Added support 
-	for keeping track of network connection state and automatically connecting. 	Also included better debugging messages.
+	for keeping track of network connection state and automatically connecting.
+	Also included better debugging messages.
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
 	Fix queuing tracks that have actually been played long enough but were 

@@ -198,7 +198,9 @@ namespace Banshee.Lastfm.Audioscrobbler
         SongTimer st = new SongTimer ();
         
         private void Queue (TrackInfo track) {
-            if (track == null || st.PlayTime == 0) {
+            if (track == null || st.PlayTime == 0 ||
+                !(actions["AudioscrobblerEnableAction"] as ToggleAction).Active) {
+                
                 return;
             }
             
