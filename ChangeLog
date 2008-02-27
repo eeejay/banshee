@@ -1,3 +1,13 @@
+2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.mdp:
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui.mdp:
+	* src/Libraries/Lastfm/Lastfm.mdp:
+	* src/Libraries/Mono.Media/Mono.Media.mdp: Fix MD build.
+
+	* src/Extensions/Banshee.Lastfm/Makefile.am: Remove non-existant file.
+
 2008-02-27  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Support lazy

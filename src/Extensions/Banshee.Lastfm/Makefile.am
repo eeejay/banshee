@@ -3,9 +3,8 @@ TARGET = library
 LINK = $(REF_EXTENSION_LASTFM) -r:System.Web -r:Mono.Security
 
 SOURCES =  \
-    Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs \
-    Banshee.Lastfm.Audioscrobbler/Queue.cs \
-	Banshee.Lastfm.Radio/Connection.cs \
+	Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs \
+	Banshee.Lastfm.Audioscrobbler/Queue.cs \
 	Banshee.Lastfm.Radio/LastfmActions.cs \
 	Banshee.Lastfm.Radio/LastfmSource.cs \
 	Banshee.Lastfm.Radio/LastfmSourceContents.cs \
@@ -18,8 +17,8 @@ SOURCES =  \
 RESOURCES =  \
 	Banshee.Lastfm.addin.xml \
 	Resources/ActiveSourceUI.xml \
-	Resources/AudioscrobblerMenu.xml \
 	Resources/audioscrobbler.png \
+	Resources/AudioscrobblerMenu.xml \
 	Resources/GlobalUI.xml \
 	Resources/lastfm.glade \
 	Resources/recommended.png

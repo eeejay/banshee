@@ -8,20 +8,17 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="Lastfm/Account.cs" subtype="Code" buildaction="Compile" />
-    <File name="Lastfm/Browser.cs" subtype="Code" buildaction="Compile" />
-    <File name="Lastfm/Connection.cs" subtype="Code" buildaction="Compile" />
-    <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/LinkEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/MetaEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/Playlist.cs" subtype="Code" buildaction="Compile" />
-    <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/Track.cs" subtype="Code" buildaction="Compile" />
-    <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/W3CDateTime.cs" subtype="Code" buildaction="Compile" />
-    <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/XmlUtil.cs" subtype="Code" buildaction="Compile" />
-    <File name="Mono.Media/Banshee.Playlists.Formats.Xspf/XspfBaseObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="Media.Playlists.Xspf/LinkEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Media.Playlists.Xspf/MetaEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Media.Playlists.Xspf/Playlist.cs" subtype="Code" buildaction="Compile" />
+    <File name="Media.Playlists.Xspf/Track.cs" subtype="Code" buildaction="Compile" />
+    <File name="Media.Playlists.Xspf/W3CDateTime.cs" subtype="Code" buildaction="Compile" />
+    <File name="Media.Playlists.Xspf/XmlUtil.cs" subtype="Code" buildaction="Compile" />
+    <File name="Media.Playlists.Xspf/XspfBaseObject.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Gac" localcopy="True" refto="gnome-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
 </Project>

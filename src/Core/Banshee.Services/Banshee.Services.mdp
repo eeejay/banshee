@@ -122,7 +122,6 @@
     <File name="Banshee.Query/SmartPlaylistQueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Query/YearQueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MediaEngine/NullPlayerEngine.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.PlayerMigration" subtype="Directory" buildaction="Compile" />
     <File name="Banshee.PlayerMigration/AmarokPlayerImportSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Library/ThreadPoolImportSource.cs" subtype="Code" buildaction="Compile" />
   </Contents>

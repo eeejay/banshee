@@ -11,11 +11,23 @@
     <File name="Lastfm/Account.cs" subtype="Code" buildaction="Compile" />
     <File name="Lastfm/Browser.cs" subtype="Code" buildaction="Compile" />
     <File name="Lastfm/RadioConnection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm/AudioscrobblerConnection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm/IQueue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm/LastfmCore.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Data/DataCore.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Data/DataEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Data/DataEntryCollection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Data/LastfmArtistData.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Data/LastfmData.cs" subtype="Code" buildaction="Compile" />
+    <File name="Lastfm.Data/LastfmUserData.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Gac" localcopy="True" refto="gnome-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Project" localcopy="True" refto="Hyena" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="Mono.Media" />
+    <ProjectReference type="Gac" localcopy="True" refto="ICSharpCode.SharpZipLib, Version=2.84.0.0, Culture=neutral, PublicKeyToken=1b03e6acf1164f73" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </References>
 </Project>
