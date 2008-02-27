@@ -1,5 +1,15 @@
 2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Add and
+	comment out an implementation for 'New Smart Playlist From Search'.  It
+	works, but the smart playlist Editor needs to be changed to accept
+	conditions with no field (eg implying search-all-default-fields).
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Comment out 'New Smart Playlist From Search' item.
+
+2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Services.mdp:
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.mdp:
 	* src/Libraries/Lastfm.Gui/Lastfm.Gui.mdp:

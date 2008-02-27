@@ -15,7 +15,7 @@
     <menu name="MusicMenu" action="MusicMenuAction">
       <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
       <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
-      <menuitem name="NewSmartPlaylistFromSearch" action="NewSmartPlaylistFromSearchAction"/>
+      <!--<menuitem name="NewSmartPlaylistFromSearch" action="NewSmartPlaylistFromSearchAction"/>-->
       <separator/>
       <menuitem name="ImportMusic" action="ImportMusicAction"/>
       <!--<menuitem name="ImportPlaylist" action="ImportPlaylistAction"/>-->

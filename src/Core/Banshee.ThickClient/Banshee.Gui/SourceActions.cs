@@ -31,16 +31,19 @@ using Mono.Unix;
 using Gtk;
 
 using Hyena;
+using Hyena.Query;
 
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Sources;
+using Banshee.Library;
 using Banshee.Playlist;
 using Banshee.Playlist.Gui;
 using Banshee.Playlists.Formats;
 using Banshee.SmartPlaylist;
+using Banshee.Query;
 using Banshee.Gui.Dialogs;
 
 namespace Banshee.Gui
@@ -72,9 +75,9 @@ namespace Banshee.Gui
                     Catalog.GetString ("New _Smart Playlist"), null,
                     Catalog.GetString ("Create a new smart playlist"), OnNewSmartPlaylist),
 
-                new ActionEntry ("NewSmartPlaylistFromSearchAction", null,
+                /*new ActionEntry ("NewSmartPlaylistFromSearchAction", null,
                     Catalog.GetString ("New _Smart Playlist _From Search"), null,
-                    Catalog.GetString ("Create a new smart playlist from the current search"), OnNewSmartPlaylistFromSearch),
+                    Catalog.GetString ("Create a new smart playlist from the current search"), OnNewSmartPlaylistFromSearch),*/
 
                 new ActionEntry ("SourceContextMenuAction", null, 
                     String.Empty, null, null, OnSourceContextMenu),
@@ -154,25 +157,46 @@ namespace Banshee.Gui
             playlist.Save ();
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
             playlist.NotifyUpdated ();
+            //SourceView.BeginRenameSource (playlist);
         }
 
         private void OnNewSmartPlaylist (object o, EventArgs args)
         {
             Editor ed = new Editor ();
             ed.RunDialog ();
-            //playlist.NotifyUpdated ();
         }
 
-        private void OnNewSmartPlaylistFromSearch (object o, EventArgs args)
+        /*private void OnNewSmartPlaylistFromSearch (object o, EventArgs args)
         {
-            // TODO create playlist and save it
-            
-            //playlist.NotifyUpdated ();
+            Source active_source = ServiceManager.SourceManager.ActiveSource;
+            QueryNode node = UserQueryParser.Parse (active_source.FilterQuery, BansheeQuery.FieldSet);
+
+            if (node == null) {
+                return;
+            }
+
+            // If the active source is a playlist or smart playlist, add that as a condition to the query
+            QueryListNode list_node = null;
+            if (active_source is PlaylistSource) {
+                list_node = new QueryListNode (Keyword.And);
+                list_node.AddChild (QueryTermNode.ParseUserQuery (BansheeQuery.FieldSet, String.Format ("playlistid:{0}", (active_source as PlaylistSource).DbId)));
+                list_node.AddChild (node);
+            } else if (active_source is SmartPlaylistSource) {
+                list_node = new QueryListNode (Keyword.And);
+                list_node.AddChild (QueryTermNode.ParseUserQuery (BansheeQuery.FieldSet, String.Format ("smartplaylistid:{0}", (active_source as SmartPlaylistSource).DbId)));
+                list_node.AddChild (node);
+            }
+
+            SmartPlaylistSource playlist = new SmartPlaylistSource (active_source.FilterQuery);
+            playlist.ConditionTree = list_node ?? node;
+            playlist.Save ();
+            ServiceManager.SourceManager.Library.AddChildSource (playlist);
+            playlist.NotifyUpdated ();
 
             // TODO should begin editing the name after making it, but this changed
             // the ActiveSource to the new playlist and we don't want that.
             //SourceView.BeginRenameSource (playlist);
-        }
+        }*/
 
         private void OnSourceContextMenu (object o, EventArgs args)
         {
@@ -282,6 +306,8 @@ namespace Banshee.Gui
                 UpdateAction ("ExportPlaylistAction", source is AbstractPlaylistSource, true, source);
                 UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
                 UpdateAction ("RefreshSmartPlaylistAction", smart_playlist != null && smart_playlist.CanRefresh, true, source);
+                /*UpdateAction ("NewSmartPlaylistFromSearchAction", (source is LibrarySource || source.Parent is LibrarySource),
+                        !String.IsNullOrEmpty (source.FilterQuery), source);*/
                 last_source = source;
             }
             
