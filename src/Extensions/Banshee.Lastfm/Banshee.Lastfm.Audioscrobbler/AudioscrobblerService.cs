@@ -62,7 +62,6 @@ namespace Banshee.Lastfm.Audioscrobbler
         private Queue queue;        
         private Account account;
         
-        private bool song_started = false; /* if we were watching the current song from the beginning */
         private bool queued; /* if current_track has been queued */
         
         private DateTime song_start_time;
@@ -89,7 +88,6 @@ namespace Banshee.Lastfm.Audioscrobbler
             LastfmCore.AudioscrobblerQueue = queue;
             connection = LastfmCore.Audioscrobbler;
             
-            // This auto-connects for us if we start off connected to the network.
             connection.UpdateNetworkState (NetworkDetect.Instance.Connected);
             NetworkDetect.Instance.StateChanged += delegate (object o, NetworkStateChangedArgs args) {
                 connection.UpdateNetworkState (args.Connected);
@@ -204,14 +202,19 @@ namespace Banshee.Lastfm.Audioscrobbler
                 return;
             }
             
-            Log.DebugFormat ("Track {4} had playtime of {0} msec ({5}sec), duration {1} msec, started: {2}, queued: {3}",
-                st.PlayTime, track.Duration.TotalMilliseconds, song_started, queued, track, st.PlayTime / 1000);
+            Log.DebugFormat ("Track {3} had playtime of {0} msec ({4}sec), duration {1} msec, queued: {2}",
+                st.PlayTime, track.Duration.TotalMilliseconds, queued, track, st.PlayTime / 1000);
             
-            if (song_started && !queued && track.Duration.TotalSeconds > 30 && 
+            if (!queued && track.Duration.TotalSeconds > 30 && 
                 track.ArtistName != "" && track.TrackTitle != "" &&
                 (st.PlayTime >  track.Duration.TotalMilliseconds / 2 || st.PlayTime > 240 * 1000)) {
-                  queue.Add (track, song_start_time);
-                  queued = true;
+                    if (!connection.Started) {
+                        // Lazy-connect.
+                        connection.Connect ();
+                    }
+                    
+                    queue.Add (track, song_start_time);
+                    queued = true;
             }
         }
         
@@ -226,7 +229,6 @@ namespace Banshee.Lastfm.Audioscrobbler
                     song_start_time = DateTime.Now;
                     last_track = ServiceManager.PlayerEngine.CurrentTrack;
                     queued = false;
-                    song_started = true;
 
                     // Queue as now playing
                     if (last_track != null) {
@@ -246,7 +248,6 @@ namespace Banshee.Lastfm.Audioscrobbler
                 
                 case PlayerEngineEvent.EndOfStream:
                     Queue (ServiceManager.PlayerEngine.CurrentTrack);
-                    //queued = true;
                     break;
             }
         }
@@ -276,10 +277,6 @@ namespace Banshee.Lastfm.Audioscrobbler
             get { return EngineEnabledSchema.Get (); }
             set { 
                 EngineEnabledSchema.Set (value);
-                if (!connection.Started) {
-                    connection.Connect ();
-                }
-                
                 (actions["AudioscrobblerEnableAction"] as ToggleAction).Active = value;
             }
         }

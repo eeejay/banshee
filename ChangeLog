@@ -1,5 +1,15 @@
 2008-02-27  Alexander Hixon  <hixon.alexander@mediati.org>
 
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Support lazy
+	authentication. Also implement retrying if sending a 'Now Playing' track
+	failed. Slightly more detailed logging is also added.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Removed a useless boolean value. Also implemented lazy connecting before
+	queuing tracks.
+
+2008-02-27  Alexander Hixon  <hixon.alexander@mediati.org>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
 	Only scrobble tracks if the 'Enable song reporting' checkbox is active.
 

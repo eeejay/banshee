@@ -63,8 +63,7 @@ namespace Lastfm
 
         string post_url;
         string session_id = null;
-        string now_playing_url;
-        bool now_playing_submitted = false;
+        string now_playing_url = "%now_playing_uri%"; /* default placeholder url */
         bool connected = false;
         public bool Connected {
             get { return connected; }
@@ -85,6 +84,7 @@ namespace Lastfm
         int hard_failure_retry_sec = 60;
         
         HttpWebRequest now_playing_post;
+        string now_playing_uri;
         HttpWebRequest current_web_req;
         IAsyncResult current_async_result;
         State state;
@@ -109,34 +109,24 @@ namespace Lastfm
             if (!started) {
                 Start ();
             }
-        
-            if (session_id == null && started) {
-                if (connected) {
-                    state = State.NEED_HANDSHAKE;
-                    Handshake ();
-                } else {
-                    Hyena.Log.Debug ("Not connecting to Audioscrobbler", "Not connected to network.");
-                }
-            }
         }
         
         public void UpdateNetworkState (bool connected)
         {
             Log.DebugFormat ("Changing Audioscrobbler connected state: {0}", connected ? "connected" : "disconnected");
             this.connected = connected;
-            if (connected) {
-                Connect ();
-            }
         }
 
         private void Start ()
-        {
+        {            
             started = true;
             queue.TrackAdded += delegate(object o, EventArgs args) {
                 StartTransitionHandler ();
             };
             
             queue.Load ();
+            
+            StartTransitionHandler ();
         }
 
         private void StartTransitionHandler ()
@@ -182,7 +172,7 @@ namespace Lastfm
 
         private void StateTransitionHandler (object o, ElapsedEventArgs e)
         {
-            Hyena.Log.DebugFormat ("State transition handler running; state: {0}", state);
+            Hyena.Log.DebugFormat ("State transition handler running; state: {0}, connected {1}", state, connected);
             
             /* if we're not connected, don't bother doing anything
              * involving the network. */
@@ -203,10 +193,15 @@ namespace Lastfm
                     
                     state = State.NEED_HANDSHAKE;
                 } else {
-                    if (queue.Count > 0)
+                    if (queue.Count > 0) {
                         state = State.NEED_TRANSMIT;
-                    else if (now_playing_submitted)
+                    } else if (now_playing_uri != null) {
+                        // Now playing info needs to be sent
+                        NowPlaying (now_playing_uri);
+                    } else {
+                        Hyena.Log.DebugFormat ("State transition handler going to sleep.");
                         StopTransitionHandler ();
+                    }
                 }
                 
                 break;
@@ -369,10 +364,6 @@ namespace Lastfm
                 /* we succeeded, pop the elements off our queue */
                 queue.RemoveRange (0, ts.Count);
                 queue.Save ();
-                if (queue.Count == 0) {
-                    // Don't wake up all the time - sleep for a while.
-                    StopTransitionHandler ();
-                }
                 
                 state = State.IDLE;
             }
@@ -499,45 +490,86 @@ namespace Lastfm
         // Async code for now playing
         
         public void NowPlaying (string artist, string title, string album, double duration,
-            int tracknum)
+                                int tracknum)
         {
             NowPlaying (artist, title, album, duration, tracknum, "");
         }
         
         public void NowPlaying (string artist, string title, string album, double duration,
-            int tracknum, string mbrainzid)
-
+                                int tracknum, string mbrainzid)
         {
-            if (session_id != null && artist != "" && title != "") {
-                
-                string str_track_number = "";
-                if (tracknum != 0)
-                    str_track_number = tracknum.ToString();
-                
-                string uri = String.Format ("{0}?s={1}&a={2}&t={3}&b={4}&l={5}&n={6}&m={7}",
-                                            now_playing_url,
-                                            session_id,
-                                            HttpUtility.UrlEncode(artist),
-                                            HttpUtility.UrlEncode(title),
-    			                            HttpUtility.UrlEncode(album),
-                                            duration.ToString(),
-                                            str_track_number,
-    			                            mbrainzid);
+            if (artist == "" || title == "") {
+                return;
+            }
+        
+            string str_track_number = "";
+            if (tracknum != 0) {
+                str_track_number = tracknum.ToString();
+            }
+            
+            string session_string = String.IsNullOrEmpty(session_id) ? "%session_id%" : session_id;
+            Console.WriteLine ("Session string: {0}", session_string);
+            
+            string uri = String.Format ("{0}?s={1}&a={2}&t={3}&b={4}&l={5}&n={6}&m={7}",
+                                        now_playing_url,
+                                        session_string,
+                                        HttpUtility.UrlEncode(artist),
+                                        HttpUtility.UrlEncode(title),
+			                            HttpUtility.UrlEncode(album),
+                                        duration.ToString(),
+                                        str_track_number,
+			                            mbrainzid);
 
+            NowPlaying (uri);
+        }
+        
+        public void NowPlaying (string uri)
+        {            
+            if (now_playing_post != null) {
+                Hyena.Log.DebugFormat ("Now-playing submission already started - aborting.");
+                now_playing_post.Abort ();
+            }
+            
+            // Fill in placeholder text if NowPlaying was called when
+            // we weren't authenticated.
+            string fillin = "%now_playing_uri%?s=%session_id%";
+            
+            // We prefer not to use replace with placeholders due to security
+            // risks - so we substring to a predetermined length.
+            if (uri.StartsWith (fillin) && session_id != null) {
+                uri = String.Format ("{0}?s={1}&{2}", now_playing_url,
+                                    session_id,
+                                    uri.Substring (fillin.Length + 1));
+            }
+            
+            now_playing_uri = uri;
+            
+            if (session_id == null) {
+                // Go connect - we'll come back later in main timer loop.
+                Connect ();
+                return;
+            }
+
+            try {
                 now_playing_post = (HttpWebRequest) WebRequest.Create (uri);
                 now_playing_post.UserAgent = LastfmCore.UserAgent;
                 now_playing_post.Method = "POST";
                 now_playing_post.ContentType = "application/x-www-form-urlencoded";
                 now_playing_post.ContentLength = uri.Length;
                 now_playing_post.BeginGetResponse (NowPlayingGetResponse, null);
-                now_playing_submitted = true;
+                state = State.WAITING_FOR_RESP;
+            } catch (Exception ex) {
+                Hyena.Log.Warning ("Audioscrobbler NowPlaying failed",
+                                  String.Format ("Exception while creating request: {0}", ex), false);
+                
+                // Reset now_playing_uri if it was the problem.
+                now_playing_uri = null;
             }
         }
 
         void NowPlayingGetResponse (IAsyncResult ar)
         {
             try {
-
                 WebResponse my_resp = now_playing_post.EndGetResponse (ar);
 
                 Stream s = my_resp.GetResponseStream ();
@@ -559,6 +591,10 @@ namespace Lastfm
                 else if (line.StartsWith ("OK")) {
                     // NowPlaying submitted  
                     Hyena.Log.DebugFormat ("Submitted NowPlaying track to Audioscrobbler");
+                    now_playing_post = null;
+                    now_playing_uri = null;
+                    state = State.IDLE;
+                    return;
                 }
                 else {
                     Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "Unexpected or no response", false);       
@@ -567,6 +603,17 @@ namespace Lastfm
             catch (Exception e) {
                 Hyena.Log.Error ("Audioscrobbler NowPlaying failed", 
                               String.Format("Failed to post NowPlaying: {0}", e), false);
+            }
+            
+            // NowPlaying error/success is non-crutial.
+            hard_failures++;
+            if (hard_failures < 3) {
+                NowPlaying (now_playing_uri);
+            } else {
+                // Give up - NowPlaying status information is non-critical.
+                now_playing_uri = null;
+                now_playing_post = null;
+                state = State.IDLE;
             }
         }
     }
