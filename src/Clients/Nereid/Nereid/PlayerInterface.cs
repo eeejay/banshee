@@ -179,7 +179,6 @@ namespace Nereid
             
             source_box.PackStart (source_scroll, true, true, 0);
             source_box.PackStart (new UserJobTileHost (), false, false, 0);
-            source_box.Show ();
             
             source_view.SetSizeRequest (125, -1);
             view_container.SetSizeRequest (425, -1);

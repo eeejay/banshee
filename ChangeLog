@@ -1,5 +1,12 @@
 2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Remove unnecessary Show.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs: Add
+	the inner VBox to the Alignment...hard for it to show otherwise.
+
+2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
 	Improve the metadata refresh process - use the existing OnSlow* calls in
 	the migrator, don't die if a track can't be refreshed, etc.

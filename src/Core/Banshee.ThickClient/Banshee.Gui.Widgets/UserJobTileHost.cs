@@ -48,6 +48,8 @@ namespace Banshee.Gui.Widgets
             box.Spacing = 8;
             box.Show ();
 
+            Add (box);
+
             if (ServiceManager.Contains ("UserJobManager")) {
                 UserJobManager job_manager = ServiceManager.Get<UserJobManager> ("UserJobManager");
                 job_manager.JobAdded += OnJobAdded;
