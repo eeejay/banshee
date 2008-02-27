@@ -1,5 +1,11 @@
 2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Improve the metadata refresh process - use the existing OnSlow* calls in
+	the migrator, don't die if a track can't be refreshed, etc.
+
+2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Add and
 	comment out an implementation for 'New Smart Playlist From Search'.  It
 	works, but the smart playlist Editor needs to be changed to accept

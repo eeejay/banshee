@@ -452,7 +452,7 @@ namespace Banshee.Database
             if (args.Service is UserJobManager) {
                 ServiceManager.ServiceStarted -= OnServiceStarted;
                 if (ServiceManager.SourceManager.Library != null) {
-                    new RefreshMetadataJob ();
+                    RefreshMetadata ();
                 } else {
                     ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
                 }
@@ -463,39 +463,52 @@ namespace Banshee.Database
         {
             if (args.Source is Banshee.Library.LibrarySource) {
                 ServiceManager.SourceManager.SourceAdded -= OnSourceAdded;
-                new RefreshMetadataJob ();
+                RefreshMetadata ();
             }
         }
 
-        private class RefreshMetadataJob : UserJob
+        private void RefreshMetadata ()
         {
-            public RefreshMetadataJob () : base ("Refreshing Metadata", "Refreshing Metadata", "Preparing...")
-            {
-                Register ();
-                CanCancel = false;
+            OnSlowStarted("Getting new metadata for existing tracks", 
+                "This operation may take a few minutes, but the wait will be well worth it!");
+        
+            Thread thread = new Thread (RefreshMetadataJob);
+            thread.Start();
+        
+            while (thread.IsAlive) {
+                OnSlowPulse ();
+                Thread.Sleep (100);
+            }
+        
+            OnSlowFinished();
+        }
 
-                Banshee.Library.LibrarySource library = ServiceManager.SourceManager.Library;
-                int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks WHERE SourceID = 1");
-                long now = DateTimeUtil.FromDateTime (DateTime.Now);
+        private void RefreshMetadataJob ()
+        {
+            Banshee.Library.LibrarySource library = ServiceManager.SourceManager.Library;
+            int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks WHERE SourceID = 1");
+            long now = DateTimeUtil.FromDateTime (DateTime.Now);
 
-                HyenaSqliteCommand select_command = new HyenaSqliteCommand (
-                    String.Format (
-                        "SELECT {0} FROM {1} WHERE {2} AND CoreTracks.SourceID = 1",
-                        DatabaseTrackInfo.Provider.Select,
-                        DatabaseTrackInfo.Provider.From,
-                        DatabaseTrackInfo.Provider.Where
-                    )
-                );
+            HyenaSqliteCommand select_command = new HyenaSqliteCommand (
+                String.Format (
+                    "SELECT {0} FROM {1} WHERE {2} AND CoreTracks.SourceID = 1",
+                    DatabaseTrackInfo.Provider.Select,
+                    DatabaseTrackInfo.Provider.From,
+                    DatabaseTrackInfo.Provider.Where
+                )
+            );
 
-                int count = 0;
-                using (System.Data.IDataReader reader = ServiceManager.DbConnection.Query (select_command)) {
-                    while (reader.Read ()) {
-                        Progress = ++count / total;
-                        DatabaseTrackInfo track = DatabaseTrackInfo.Provider.Load (reader, 0);
-                        Status = String.Format ("Updating {0} - {1}", track.ArtistName, track.TrackTitle);
+            int count = 0;
+            using (System.Data.IDataReader reader = ServiceManager.DbConnection.Query (select_command)) {
+                while (reader.Read ()) {
+                    DatabaseTrackInfo track = null;
+                    try {
+                        track = DatabaseTrackInfo.Provider.Load (reader, 0);
                         TagLib.File file = StreamTagger.ProcessUri (track.Uri);
                         StreamTagger.TrackInfoMerge (track, file);
                         track.Save ();
+                    } catch (Exception e) {
+                        Log.Warning (String.Format ("Failed to update metadata for {0}", track.Uri), e.GetType ().ToString ());
                     }
                 }
             }
