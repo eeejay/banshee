@@ -105,7 +105,9 @@ namespace Banshee.Lastfm.Radio
         private void HandleConnectionStateChanged (object sender, ConnectionStateChangedArgs args)
         {
             if (args.State == ConnectionState.Connected) {
-                UpdateForUser (lastfm.Account.UserName);
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    UpdateForUser (lastfm.Account.UserName);
+                });
             }
         }
 

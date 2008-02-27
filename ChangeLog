@@ -1,3 +1,8 @@
+2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	Fix crasher - don't update GTK outside the main thread.
+
 2008-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit brings back a thread-safe database layer.  Unfortunately, that
