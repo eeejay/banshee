@@ -9,7 +9,7 @@ ADDINS_INSTALL_DIR = $(DEFAULT_INSTALL_DIR)/addins
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
 LINK_SYSTEM_WEB = -r:System.Web
-LINK_SQLITE = -r:System.Data -r:Mono.Data.Sqlite
+LINK_SQLITE = -r:System.Data -r:Mono.Data.SqliteClient
 LINK_CAIRO = -r:Mono.Cairo
 LINK_MONO_POSIX = -r:Mono.Posix
 LINK_ICSHARP_ZIP_LIB = -r:ICSharpCode.SharpZipLib

@@ -32,6 +32,8 @@ using System.IO;
 using Mono.Unix;
 
 using Hyena;
+using Hyena.Data.Sqlite;
+
 using Banshee.Base;
 using Banshee.Sources;
 using Banshee.ServiceStack;
@@ -116,19 +118,20 @@ namespace Banshee.Library
             
             /*if (DatabaseTrackInfo.ContainsUri (uri)) {
                 IncrementProcessedCount (null);
-                return;
+                return null;
             }*/
 
-            TagLib.File file = StreamTagger.ProcessUri (uri);
-            track = new DatabaseTrackInfo ();
-            StreamTagger.TrackInfoMerge (track, file);
-            
-            SafeUri newpath = track.CopyToLibrary ();
-            if (newpath != null) {
-                track.Uri = newpath;
-            }
+            //ServiceManager.DbConnection.BeginTransaction ();
+            //try {
+                TagLib.File file = StreamTagger.ProcessUri (uri);
+                track = new DatabaseTrackInfo ();
+                StreamTagger.TrackInfoMerge (track, file);
+                
+                SafeUri newpath = track.CopyToLibrary ();
+                if (newpath != null) {
+                    track.Uri = newpath;
+                }
 
-            ThreadAssist.ProxyToMain (delegate {
                 track.DateAdded = DateTime.Now;
                 LibraryArtistInfo artist = new LibraryArtistInfo (track.ArtistName);
                 track.ArtistId = artist.DbId;
@@ -137,8 +140,13 @@ namespace Banshee.Library
                 artist.Save ();
 
                 track.Source = ServiceManager.SourceManager.Library;
+
                 track.Save ();
-            });
+                //ServiceManager.DbConnection.CommitTransaction ();
+            /*} catch (Exception) {
+                ServiceManager.DbConnection.RollbackTransaction ();
+                throw;
+            }*/
             
             return track;
         }
@@ -146,6 +154,10 @@ namespace Banshee.Library
         private void LogError (string path, Exception e)
         {
             LogError (path, e.Message);
+
+            if (!(e is TagLib.CorruptFileException) && !(e is TagLib.UnsupportedFormatException)) {
+                Log.DebugFormat ("Full import exception: {0}", e.ToString ());
+            }
         }
 
         private void LogError (string path, string msg)

@@ -95,7 +95,7 @@ namespace Hyena.Data.Sqlite
                     : 0;
             } else {
                 result = !reader.IsDBNull (column)
-                    ? (long) reader.GetValue (column)
+                    ? Convert.ToInt64 (reader.GetValue (column))
                     : 0;
             }
             result = SqliteUtils.FromDbFormat (type, result);

@@ -521,7 +521,7 @@ namespace Banshee.Lastfm.Radio
                 creator
             );
 
-            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (command)) {
+            using (IDataReader reader = ServiceManager.DbConnection.Query (command)) {
                 while (reader.Read ()) {
                     try {
                         stations.Add (new StationSource (lastfm,

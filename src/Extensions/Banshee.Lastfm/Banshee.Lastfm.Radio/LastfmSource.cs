@@ -107,9 +107,9 @@ namespace Banshee.Lastfm.Radio
         {
             Connection.StateChanged += HandleConnectionStateChanged;
             
-            if (Account.UserName != null && Account.CryptedPassword != null) {
+            /*if (Account.UserName != null && Account.CryptedPassword != null) {
                 Connection.Connect ();
-            }
+            }*/
             
             UpdateUI ();
         }
@@ -234,10 +234,13 @@ namespace Banshee.Lastfm.Radio
             }
         }
 
-        /*public override void Activate ()
+        public override void Activate ()
         {
-            InterfaceElements.ActionButtonBox.PackStart (add_button, false, false, 0);
-        }*/
+            //InterfaceElements.ActionButtonBox.PackStart (add_button, false, false, 0);
+            if (Connection.State == ConnectionState.Disconnected) {
+                Connection.Connect ();
+            }
+        }
 
         public override bool CanSearch {
             get { return false; }

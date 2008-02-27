@@ -1,10 +1,11 @@
 //
 // HyenaSqliteConnection.cs
 //
-// Author:
+// Authors:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -25,74 +26,170 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
+ 
 using System;
-using System.IO;
-using System.Collections.Generic;
 using System.Data;
 using System.Threading;
-using Mono.Data.Sqlite;
+using System.Collections.Generic;
+
+// NOTE: Mono.Data.Sqlite has serious threading issues.  You cannot access
+//       its results from any thread but the one the SqliteConnection belongs to.
+//       That is why we still use Mono.Data.SqliteClient.
+using Mono.Data.SqliteClient;
 
 namespace Hyena.Data.Sqlite
 {
-    public abstract class HyenaSqliteConnection : IDisposable
+    public enum HyenaCommandType {
+        Reader,
+        Scalar,
+        Execute,
+    }
+
+    public class HyenaSqliteConnection : IDisposable
     {
         private SqliteConnection connection;
+        private string dbpath;
 
-        private static Thread main_thread;
-        static HyenaSqliteConnection () {
-            main_thread = Thread.CurrentThread;
+        private Queue<HyenaSqliteCommand> command_queue = new Queue<HyenaSqliteCommand>();
+        private Thread queue_thread;
+        private bool processing_queue = false;
+        private volatile bool dispose_requested = false;
+        private volatile int results_ready = 0;
+        private AutoResetEvent queue_signal = new AutoResetEvent (false);
+        private ManualResetEvent result_ready_signal = new ManualResetEvent (false);
+
+        private volatile Thread transaction_thread = null;
+        private ManualResetEvent transaction_signal = new ManualResetEvent (true);
+
+        internal ManualResetEvent ResultReadySignal {
+            get { return result_ready_signal; }
         }
-
-        private static bool InMainThread {
-            get { return main_thread.Equals (Thread.CurrentThread); }
-        }
-
-        public HyenaSqliteConnection () : this (true)
+        
+        public HyenaSqliteConnection(string dbpath)
         {
+            this.dbpath = dbpath;
+            queue_thread = new Thread(ProcessQueue);
+            queue_thread.IsBackground = true;
+            queue_thread.Start();
         }
 
-        public HyenaSqliteConnection (bool connect)
+#region Public Query Methods
+        
+        // SELECT multiple column queries
+        public IDataReader Query (HyenaSqliteCommand command)
         {
-            if (connect) {
-                Open ();
+            command.CommandType = HyenaCommandType.Reader;
+            QueueCommand(command);
+            return command.WaitForResult (this) as SqliteDataReader;
+        }
+
+        public IDataReader Query (string command_str, params object [] param_values)
+        {
+            return Query (new HyenaSqliteCommand (command_str, param_values));
+        }
+        
+        public IDataReader Query (object command)
+        {
+            return Query (new HyenaSqliteCommand (command.ToString ()));
+        }
+        
+        // SELECT single column queries
+        public T Query<T> (HyenaSqliteCommand command)
+        {
+            command.CommandType = HyenaCommandType.Scalar;
+            QueueCommand(command);
+            object result = command.WaitForResult (this);
+
+            return result == null 
+                ? default (T)
+                : (T) SqliteUtils.FromDbFormat (typeof (T), Convert.ChangeType (result, typeof (T)));
+        }
+
+        public T Query<T> (string command_str, params object [] param_values)
+        {
+            return Query<T> (new HyenaSqliteCommand (command_str, param_values));
+        }
+
+        public T Query<T> (object command)
+        {
+            return Query<T> (new HyenaSqliteCommand (command.ToString ()));
+        }
+
+        // INSERT, UPDATE, DELETE queries
+        public int Execute (HyenaSqliteCommand command)
+        {
+            command.CommandType = HyenaCommandType.Execute;;
+            QueueCommand(command);
+            return (int) command.WaitForResult (this);
+        }
+
+        public int Execute (string command_str, params object [] param_values)
+        {
+            return Execute (new HyenaSqliteCommand (command_str, param_values));
+        }
+
+        public int Execute (object command)
+        {
+            return Execute (new HyenaSqliteCommand (command.ToString ()));
+        }
+
+#endregion
+
+#region Public Utility Methods
+        
+        public void BeginTransaction ()
+        {
+            if (transaction_thread == Thread.CurrentThread) {
+                throw new Exception ("Can't start a recursive transaction");
             }
-        }
 
-        public void Dispose ()
-        {
-            Close ();
-        }
-
-        public void Open ()
-        {
-            lock (this) {
-                if (connection != null) {
-                    return;
+            while (transaction_thread != Thread.CurrentThread) {
+                if (transaction_thread != null) {
+                    // Wait for the existing transaction to finish before this thread proceeds
+                    transaction_signal.WaitOne ();
                 }
 
-                string dbfile = DatabaseFile;
-                connection = new SqliteConnection (String.Format ("Version=3,URI=file:{0}", dbfile));
-                connection.Open ();
-
-                Execute (@"
-                    PRAGMA synchronous = OFF;
-                    PRAGMA cache_size = 32768;
-                ");
-            }
-        }
-
-        public void Close ()
-        {
-            lock (this) {
-                if (connection != null) {
-                    connection.Close ();
-                    connection = null;
+                lock (command_queue) {
+                    if (transaction_thread == null) {
+                        transaction_thread = Thread.CurrentThread;
+                        transaction_signal.Reset ();
+                    }
                 }
             }
+
+            Execute ("BEGIN TRANSACTION");
         }
 
-#region Convenience methods 
+        public void CommitTransaction ()
+        {
+            if (transaction_thread != Thread.CurrentThread) {
+                throw new Exception ("Can't commit from outside a transaction");
+            }
+
+            Execute ("COMMIT TRANSACTION");
+
+            lock (command_queue) {
+                transaction_thread = null;
+                // Let any other threads continue
+                transaction_signal.Set (); 
+            }
+        }
+
+        public void RollbackTransaction ()
+        {
+            if (transaction_thread != Thread.CurrentThread) {
+                throw new Exception ("Can't rollback from outside a transaction");
+            }
+
+            Execute ("ROLLBACK");
+
+            lock (command_queue) {
+                transaction_thread = null;
+            
+                // Let any other threads continue
+                transaction_signal.Set (); 
+            }
+        }
 
         public bool TableExists (string tableName)
         {
@@ -115,7 +212,7 @@ namespace Hyena.Data.Sqlite
                         type, name)
                 ) > 0;
         }
-        
+
         private delegate void SchemaHandler (string column);
         
         private void SchemaClosure (string table_name, SchemaHandler code)
@@ -156,136 +253,73 @@ namespace Hyena.Data.Sqlite
             return schema;
         }
 
-        public IDataReader ExecuteReader (SqliteCommand command)
-        {
-            if (command.Connection == null)
-                command.Connection = connection;
+#endregion
 
-            if (!InMainThread) {
-                Console.WriteLine ("About to execute command not in main thread: {0}", command.CommandText);
+#region Private Queue Methods
+
+        private void QueueCommand(HyenaSqliteCommand command)
+        {
+            bool queued = false;
+            while (true) {
+                lock (command_queue) {
+                    if (transaction_thread == null || Thread.CurrentThread == transaction_thread) {
+                        command_queue.Enqueue (command);
+                        break;
+                    }
+                }
+
+                transaction_signal.WaitOne ();
             }
-
-            try {
-                return command.ExecuteReader ();
-            } catch (Exception e) {
-                Console.WriteLine ("Caught exception trying to execute {0}", command.CommandText);
-                throw e;
-            }
+            queue_signal.Set ();
         }
 
-        public IDataReader ExecuteReader (HyenaSqliteCommand command)
+        internal void ClaimResult ()
         {
-            return ExecuteReader (command.Command);
-        }
-
-        public IDataReader ExecuteReader (string command_str, params object [] param_values)
-        {
-            return ExecuteReader (new HyenaSqliteCommand (command_str, param_values));
-        }
-
-        public IDataReader ExecuteReader (object command)
-        {
-            return ExecuteReader (new SqliteCommand (command.ToString ()));
-        }
-
-        public object ExecuteScalar (SqliteCommand command)
-        {
-            if (command.Connection == null)
-                command.Connection = connection;
-
-            if (!InMainThread) {
-                Console.WriteLine ("About to execute command not in main thread: {0}", command.CommandText);
-            }
-
-            try {
-                return command.ExecuteScalar ();
-            } catch (Exception e) {
-                Console.WriteLine ("Caught exception trying to execute {0}", command.CommandText);
-                throw e;
+            lock (command_queue) {
+                results_ready++;
+                if (results_ready == 0) {
+                    result_ready_signal.Reset ();
+                }
             }
         }
 
-        public object ExecuteScalar (HyenaSqliteCommand command)
-        {
-            return ExecuteScalar (command.Command);
-        }
+        private void ProcessQueue()
+        {         
+            if (connection == null) {
+                connection = new SqliteConnection (String.Format ("Version=3,URI=file:{0}", dbpath));
+                connection.Open ();
+            }
+            
+            // Keep handling queries
+            while (!dispose_requested) {
+                while (command_queue.Count > 0) {
+                    HyenaSqliteCommand command;
+                    lock (command_queue) {
+                        command = command_queue.Dequeue ();
+                    }
 
-        public object ExecuteScalar (string command_str, params object [] param_values)
-        {
-            return ExecuteScalar (new HyenaSqliteCommand (command_str, param_values));
-        }
+                    command.Execute (connection);
 
-        public object ExecuteScalar (object command)
-        {
-            return ExecuteScalar (new SqliteCommand (command.ToString ()));
-        }
-        
-        public T Query<T> (SqliteCommand command)
-        {
-            object result = ExecuteScalar (command);
-            return result == null 
-                ? default (T)
-                : (T)SqliteUtils.FromDbFormat (typeof (T), Convert.ChangeType (result, typeof (T)));
-        }
-        
-        public T Query<T> (HyenaSqliteCommand command)
-        {
-            return Query<T> (command.Command);
-        }
+                    lock (command_queue) {
+                        results_ready++;
+                        result_ready_signal.Set ();
+                    }
+                }
 
-        public T Query<T> (string command_str, params object [] param_values)
-        {
-            return Query<T> (new HyenaSqliteCommand (command_str, param_values));
-        }
-
-        public T Query<T> (object command)
-        {
-            return Query<T> (new SqliteCommand (command.ToString ()));
-        }
-
-        public int Execute (SqliteCommand command)
-        {
-            if (command.Connection == null)
-                command.Connection = connection;
-
-            if (!InMainThread) {
-                Console.WriteLine ("About to execute command not in main thread: {0}", command.CommandText);
+                queue_signal.WaitOne ();
             }
 
-            try {
-                command.ExecuteNonQuery ();
-            } catch (Exception e) {
-                Console.WriteLine ("Caught exception trying to execute {0}", command.CommandText);
-                throw e;
-            }
-            return command.LastInsertRowID ();
-        }
-
-        public int Execute (HyenaSqliteCommand command)
-        {
-            return Execute (command.Command);
-        }
-
-        public int Execute (string command_str, params object [] param_values)
-        {
-            return Execute (new HyenaSqliteCommand (command_str, param_values));
-        }
-
-        public int Execute (object command)
-        {
-            return Execute (new SqliteCommand (command.ToString ()));
-        }
-        
-        public int LastInsertRowId {
-            get { return connection.LastInsertRowId; }
+            // Finish
+            connection.Close ();
         }
 
 #endregion
 
-        public abstract string DatabaseFile { get; }
-
-        public IDbConnection Connection {
-            get { return connection; }
+        public void Dispose()
+        {
+            dispose_requested = true;
+            queue_signal.Set ();
+            queue_thread.Join ();
         }
     }
 }

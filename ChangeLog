@@ -1,3 +1,76 @@
+2008-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit brings back a thread-safe database layer.  Unfortunately, that
+	currently means switching back to the deprecated Mono.Data.SqliteClient
+	library.  Mono.Data.Sqlite does not allow executing a command in one
+	thread and reading it in another, where M.D.SqliteClient does.
+
+	* Makefile.am: Add BANSHEE_DEV_MONO_OPTIONS env var to enable setting
+	--profile=default:stat for example to run with make run.
+
+	* build/build.environment.mk: Depend on Mono.Data.SqliteClient again.
+	Mono.Data.Sqlite requires that even reading the results of a query must be
+	done in the same thread that ran the query/owns the connection.
+
+	* src/Core/Banshee.Core/Banshee.IO/Provider.cs: Clean up.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:
+	* src/Core/Banshee.Services/Banshee.Configuration/DatabaseConfigurationClient.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	New HyenaSqliteConnection API.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Get rid of unused ctor and execute useful performance-related PRAGMAs.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Use HyenaSqliteConnection's utility methods, new API.  Add UserJob to
+	rescan a user's songs when migrating over in order to get fields we now
+	store in the database - like Disc, etc.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Get
+	rid of ProxyToMain call.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Add null check.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Reorder
+	loading of Library, Library playlists.
+
+	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
+	Use Mono.Data.SqliteClient.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJob.cs: Avoid
+	duplication in ctors.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Increase the
+	delay betwen refreshes.
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs: Get
+	rid of ProxyToMain calls.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs: Do
+	not login to Last.fm radio until a source is activated.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Convert longs
+	in a different way that M.D.SqliteClient likes.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Combined
+	with QueuedSqliteCommand code, meant to be called by threaded/queued
+	HyenaSqliteConnection.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Combined
+	with QueuedSqliteDatabase code (from F-Spot's copy).  Supports blocking
+	other threads during transactions and has no busy-waits.
+
 2008-02-26  Aaron Bockover  <abock@gnome.org>
 
 	* ChangeLog: Fixed all the improper formatting that has been committed

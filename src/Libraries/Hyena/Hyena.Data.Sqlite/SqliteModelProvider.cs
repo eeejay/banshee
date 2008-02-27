@@ -48,7 +48,6 @@ namespace Hyena.Data.Sqlite
         private HyenaSqliteCommand select_command;
         private HyenaSqliteCommand select_range_command;
         private HyenaSqliteCommand select_single_command;
-
         
         private string primary_key;
         private string select;
@@ -102,7 +101,7 @@ namespace Hyena.Data.Sqlite
         protected virtual void CheckVersion ()
         {
             if (connection.TableExists (HyenaTableName)) {
-                using (IDataReader reader = connection.ExecuteReader (SelectVersionSql (TableName))) {
+                using (IDataReader reader = connection.Query (SelectVersionSql (TableName))) {
                     if (reader.Read ()) {
                         int table_version = reader.GetInt32 (0);
                         if (table_version < ModelVersion) {
@@ -243,14 +242,16 @@ namespace Hyena.Data.Sqlite
         
         protected virtual void PrepareInsertCommand (T target)
         {
+            object [] values = new object [columns.Count];
             for (int i = 0; i < columns.Count; i++) {
                 if (columns[i] != key) {
-                    InsertCommand.Parameters[i].Value = columns[i].GetValue (target);
+                    values[i] = columns[i].GetValue (target);
                 } else {
                     // On insert, the key needs to be NULL to be automatically set by Sqlite
-                    InsertCommand.Parameters[i].Value = null;
+                    values[i] = null;
                 }
             }
+            InsertCommand.ApplyValues (values);
         }
         
         protected int Insert (T target)
@@ -261,10 +262,12 @@ namespace Hyena.Data.Sqlite
 
         protected virtual void PrepareUpdateCommand (T target)
         {
+            object [] values = new object [columns.Count + 1];
             for (int i = 0; i < columns.Count; i++) {
-                UpdateCommand.Parameters[i].Value = columns[i].GetValue (target);
+                values [i] = columns[i].GetValue (target);
             }
-            UpdateCommand.Parameters[columns.Count].Value = key.GetValue (target);
+            values[columns.Count] = key.GetValue (target);
+            UpdateCommand.ApplyValues (values);
         }
         
         protected void Update (T target)
@@ -311,7 +314,7 @@ namespace Hyena.Data.Sqlite
         {
             PrepareSelectCommand ();
             int i = 1;
-            using (IDataReader reader = connection.ExecuteReader (SelectCommand)) {
+            using (IDataReader reader = connection.Query (SelectCommand)) {
                 while (reader.Read ()) {
                     yield return Load (reader, i++);
                 }
@@ -326,7 +329,7 @@ namespace Hyena.Data.Sqlite
         public IEnumerable<T> FetchRange (int offset, int limit)
         {
             PrepareSelectRangeCommand (offset, limit);
-            using (IDataReader reader = connection.ExecuteReader (SelectRangeCommand)) {
+            using (IDataReader reader = connection.Query (SelectRangeCommand)) {
                 while (reader.Read ()) {
                     yield return Load (reader, offset++);
                 }
@@ -341,7 +344,7 @@ namespace Hyena.Data.Sqlite
         public T FetchSingle (int id)
         {
             PrepareSelectSingleCommand (id);
-            using (IDataReader reader = connection.ExecuteReader (SelectSingleCommand)) {
+            using (IDataReader reader = connection.Query (SelectSingleCommand)) {
                 if (reader.Read ()) {
                     return Load (reader, id);
                 }

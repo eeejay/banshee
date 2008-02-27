@@ -257,7 +257,7 @@ namespace Banshee.Playlist
 
         public static IEnumerable<PlaylistSource> LoadAll ()
         {
-            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
+            using (IDataReader reader = ServiceManager.DbConnection.Query (
                 "SELECT PlaylistID, Name, SortColumn, SortType FROM CorePlaylists WHERE Special = 0")) {
                 while (reader.Read ()) {
                     yield return new PlaylistSource (
@@ -270,14 +270,9 @@ namespace Banshee.Playlist
         
         public static int GetPlaylistId (string name)
         {
-            object result = ServiceManager.DbConnection.ExecuteScalar (new HyenaSqliteCommand (
-                "SELECT PlaylistID FROM Playlists WHERE Name = ? LIMIT 1", name));
-            
-            if (result != null) {
-                return Convert.ToInt32 (result);
-            }
-            
-            return 0;
+            return ServiceManager.DbConnection.Query<int> (
+                "SELECT PlaylistID FROM Playlists WHERE Name = ? LIMIT 1", name
+            );
         }
         
         public static bool PlaylistExists (string name)

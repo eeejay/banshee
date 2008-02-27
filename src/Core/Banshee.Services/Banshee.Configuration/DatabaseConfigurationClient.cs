@@ -95,7 +95,7 @@ namespace Banshee.Configuration
         
         private IDataReader Get (string namespce, string key)
         {
-            return connection.ExecuteReader (
+            return connection.Query (
                 select_value_command.ApplyValues (MakeKey (namespce, key)));
         }
 

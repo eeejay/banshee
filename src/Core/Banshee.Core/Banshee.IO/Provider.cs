@@ -42,8 +42,7 @@ namespace Banshee.IO
         private static IDirectory directory;
         private static IFile file;
         
-        private static void LoadProvider ()
-        {
+        static Provider () {
             lock (typeof (Provider)) {
                 if (provider != null) {
                     return;
@@ -71,11 +70,11 @@ namespace Banshee.IO
         }
         
         public static IDirectory Directory {
-            get { LoadProvider (); return directory; }
+            get { return directory; }
         }
         
         public static IFile File {
-            get { LoadProvider (); return file; }
+            get { return file; }
         }
         
         public static IDemuxVfs CreateDemuxVfs (string file)

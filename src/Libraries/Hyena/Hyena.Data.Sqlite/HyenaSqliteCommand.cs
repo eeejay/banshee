@@ -1,11 +1,11 @@
 //
 // HyenaSqliteCommand.cs
 //
-// Author:
+// Authors:
 //   Aaron Bockover <abockover@novell.com>
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -30,120 +30,154 @@
 using System;
 using System.IO;
 using System.Data;
-using Mono.Data.Sqlite;
+using System.Text;
+using System.Threading;
+
+// NOTE: Mono.Data.Sqlite has serious threading issues.  You cannot access
+//       its results from any thread but the one the SqliteConnection belongs to.
+//       That is why we still use Mono.Data.SqliteClient.
+using Mono.Data.SqliteClient;
 
 namespace Hyena.Data.Sqlite
 {
     public class HyenaSqliteCommand
     {
-        private SqliteCommand command;
+        protected object result = null;
+        private Exception execution_exception = null;
+        private bool finished = false;
+
+        private string command;
+        private string command_format = null;
+        private string command_formatted = null;
+        private int parameter_count = 0;
+        private object [] current_values;
 
 #region Properties
 
-        public SqliteCommand Command {
+        public string Text {
             get { return command; }
         }
 
-        public SqliteParameterCollection Parameters {
-            get { return command.Parameters; }
-        }
-
-        public string CommandText {
-            get { return command.CommandText; }
+        private HyenaCommandType command_type;
+        public HyenaCommandType CommandType {
+            get { return command_type; }
+            set { command_type = value; }
         }
 
 #endregion
 
-        public HyenaSqliteCommand (string command_str)
+        public HyenaSqliteCommand (string command)
         {
-            this.command = new SqliteCommand (command_str);
-
-            int num_params = 0;
-            for (int i = 0; i < command_str.Length; i++) {
-                if (command_str [i] == '?') {
-                    num_params++;
-                }
-            }
-
-            CreateParameters (num_params);
+            this.command = command;
         }
 
-        public HyenaSqliteCommand (string command_str, params object [] param_values)
+        public HyenaSqliteCommand (string command, params object [] param_values)
         {
-            this.command = new SqliteCommand (command_str);
-            CreateParameters (param_values.Length);
+            this.command = command;
             ApplyValues (param_values);
         }
 
-        protected void CreateParameters (int num_params)
+        public void Execute (SqliteConnection connection)
         {
-            for (int i = 0; i < num_params; i++) {
-                Parameters.Add (new SqliteParameter ());
+            finished = false;
+            execution_exception = null;
+            result = null;
+
+            SqliteCommand sql_command = new SqliteCommand (CurrentSqlText ());
+            sql_command.Connection = connection;
+            //Log.Debug ("Executing {0}", sql_command.CommandText);
+
+            try {
+                switch (command_type) {
+                    case HyenaCommandType.Reader:
+                        result = sql_command.ExecuteReader ();
+                        break;
+
+                    case HyenaCommandType.Scalar:
+                        result = sql_command.ExecuteScalar ();
+                        break;
+
+                    case HyenaCommandType.Execute:
+                    default:
+                        sql_command.ExecuteNonQuery ();
+                        result = sql_command.LastInsertRowID ();
+                        break;
+                }
+            } catch (Exception e) {
+                Log.DebugFormat (String.Format ("Exception executing command: {0}", Text), e.ToString ()); 
+                execution_exception = e;
             }
+
+            finished = true;
+        }
+
+        internal object WaitForResult (HyenaSqliteConnection conn)
+        {
+            while (!finished) {
+                conn.ResultReadySignal.WaitOne ();
+            }
+
+            conn.ClaimResult ();
+
+            if (execution_exception != null) {
+                throw execution_exception;
+            }
+            
+            return result;
         }
 
         public HyenaSqliteCommand ApplyValues (params object [] param_values)
         {
-            if (param_values.Length != Parameters.Count) {
+            finished = false;
+            if (command_format == null) {
+                CreateParameters ();
+            }
+
+            if (param_values.Length != parameter_count) {
                 throw new ArgumentException (String.Format (
-                    "Command has {0} parameters, but {1} values given.", Parameters.Count, param_values.Length
+                    "Command has {0} parameters, but {1} values given.", parameter_count, param_values.Length
                 ));
             }
 
-            for (int i = 0; i < param_values.Length; i++) {
-                Parameters[i].Value = param_values[i];
+            for (int i = 0; i < parameter_count; i++) {
+                if (param_values[i] is string) {
+                    param_values[i] = String.Format ("'{0}'", (param_values[i] as string).Replace ("'", "''"));
+                } else if (param_values[i] == null) {
+                    param_values[i] = "NULL";
+                }
             }
 
+            current_values = param_values;
+            command_formatted = null;
             return this;
         }
-        
-        public void AddNamedParameter (string name, object value)
+
+        private string CurrentSqlText ()
         {
-            SqliteParameter param = new SqliteParameter (name, DbType.String);
-            param.Value = value;
-            Parameters.Add (param);
-        }
-                
-        /*public DbCommand(string command, params object [] parameters) : this(command)
-        {
-            for(int i = 0; i < parameters.Length;) {
-                SqliteParameter param;
-                
-                if(parameters[i] is SqliteParameter) {
-                    param = (SqliteParameter)parameters[i];
-                    if(i < parameters.Length - 1 && !(parameters[i + 1] is SqliteParameter)) {
-                        param.Value = parameters[i + 1];
-                        i += 2;
-                    } else {
-                        i++;
-                    }
-                } else {
-                    param = new SqliteParameter();
-                    param.ParameterName = (string)parameters[i];
-                    param.Value = parameters[i + 1];
-                    i += 2;
-                }
-                
-                Parameters.Add(param);
+            if (command_format == null) {
+                return command;
             }
+
+            if (command_formatted == null) {
+                command_formatted = String.Format (command_format, current_values);
+            }
+
+            return command_formatted;
         }
-        
-        public void AddParameter (object value)
+
+        private void CreateParameters ()
         {
-            SqliteParameter param = new SqliteParameter ();
-            param.Value = value;
-            Parameters.Add (param);
+            StringBuilder sb = new StringBuilder ();
+            foreach (char c in command) {
+                if (c == '?') {
+                    sb.Append ('{');
+                    sb.Append (parameter_count++);
+                    sb.Append ('}');
+                } else {
+                    sb.Append (c);
+                }
+            }
+            command_format = sb.ToString ();
         }
-        
-        public void AddParameter<T>(string name, T value)
-        {
-            AddParameter<T>(new DbParameter<T>(name), value);
-        }
-        
-        public void AddParameter<T>(DbParameter<T> param, T value)
-        {
-            param.Value = value;
-            Parameters.Add(param);
-        }*/
     }
 }

@@ -114,18 +114,17 @@ namespace Banshee.PlayQueue
         
         private void BindToDatabase ()
         {
-            object result = ServiceManager.DbConnection.ExecuteScalar (new HyenaSqliteCommand (@"
-                SELECT PlaylistID FROM CorePlaylists 
-                    WHERE Special = 1 AND Name = ?
-                    LIMIT 1", special_playlist_name));
+            int result = ServiceManager.DbConnection.Query<int> (
+                "SELECT PlaylistID FROM CorePlaylists WHERE Special = 1 AND Name = ? LIMIT 1",
+                special_playlist_name
+            );
             
-            if (result != null) {
-                DbId = Convert.ToInt32 (result);
+            if (result != 0) {
+                DbId = result;
             } else {
-                ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
-                    INSERT INTO CorePlaylists VALUES (0, ?, -1, 0, 1)
+                DbId = ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
+                    INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType, Special) VALUES (NULL, ?, -1, 0, 1)
                 ", special_playlist_name));
-                DbId = ServiceManager.DbConnection.LastInsertRowId;
             }
         }
         

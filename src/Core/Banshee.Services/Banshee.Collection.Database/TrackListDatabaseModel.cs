@@ -169,12 +169,14 @@ namespace Banshee.Collection.Database
                 provider.From, JoinFragment, provider.Where, ConditionFragment
             );
 
-            using (IDataReader reader = connection.ExecuteReader (String.Format (
+            using (IDataReader reader = connection.Query (String.Format (
                 "SELECT COUNT(*), {0} {1}", SelectAggregates, unfiltered_query)))
             {
-                count = Convert.ToInt32 (reader[0]);
-                duration = TimeSpan.FromMilliseconds (reader.IsDBNull (1) ? 0 : Convert.ToInt64 (reader[1]));
-                filesize = reader.IsDBNull (2) ? 0 : Convert.ToInt64 (reader[2]);
+                if (reader.Read ()) {
+                    count = Convert.ToInt32 (reader[0]);
+                    duration = TimeSpan.FromMilliseconds (reader.IsDBNull (1) ? 0 : Convert.ToInt64 (reader[1]));
+                    filesize = reader.IsDBNull (2) ? 0 : Convert.ToInt64 (reader[2]);
+                }
             }
 
             StringBuilder qb = new StringBuilder ();

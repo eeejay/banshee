@@ -61,7 +61,7 @@ MAINTAINERCLEANFILES = \
 
 run:
 	@pushd bin; \
-	$(MONO) --debug Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
+	$(MONO) --debug $(BANSHEE_DEV_MONO_OPTIONS) Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
 	popd;
 
 clean-local:

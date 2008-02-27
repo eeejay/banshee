@@ -66,7 +66,7 @@ namespace Banshee.Collection.Database
             if (artistName == null || artistName.Trim () == String.Empty)
                 artistName = Catalog.GetString ("Unknown Artist");
 
-            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (select_command.ApplyValues (artistName))) {
+            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command.ApplyValues (artistName))) {
                 if (reader.Read ()) {
                     LoadFromReader (reader);
                 } else {

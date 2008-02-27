@@ -29,8 +29,9 @@
 using System;
 using System.IO;
 using System.Data;
-using Mono.Data.Sqlite;
+using System.Threading;
 
+using Hyena;
 using Hyena.Data;
 using Hyena.Data.Sqlite;
 
@@ -41,22 +42,18 @@ namespace Banshee.Database
 {
     public sealed class BansheeDbConnection : HyenaSqliteConnection, IService
     {
-        public BansheeDbConnection () : this (true)
+        public BansheeDbConnection () : base (DatabaseFile)
         {
+            Execute ("PRAGMA synchronous = OFF;");
+            Execute ("PRAGMA cache_size = 32768;");
+
+            BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (this);
+            migrator.SlowStarted += OnMigrationSlowStarted;
+            migrator.SlowPulse += OnMigrationSlowPulse;
+            migrator.SlowFinished += OnMigrationSlowFinished;
+            migrator.Migrate ();
         }
 
-        public BansheeDbConnection (bool connect)
-            : base(connect)
-        {
-            if (connect) {
-                BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (Connection);
-                migrator.SlowStarted += OnMigrationSlowStarted;
-                migrator.SlowPulse += OnMigrationSlowPulse;
-                migrator.SlowFinished += OnMigrationSlowFinished;
-                migrator.Migrate ();
-            }
-        }
-        
         //private Gtk.Window slow_window;
         //private Gtk.ProgressBar slow_progress;
         
@@ -125,7 +122,7 @@ namespace Banshee.Database
             }*/
         }
 
-        public override string DatabaseFile {
+        public static string DatabaseFile {
             get {
                 if (ApplicationContext.CommandLine.Contains ("db"))
                     return ApplicationContext.CommandLine["db"];
@@ -150,7 +147,7 @@ namespace Banshee.Database
                 return dbfile;
             }
         }
-        
+
         string IService.ServiceName {
             get { return "DbConnection"; }
         }

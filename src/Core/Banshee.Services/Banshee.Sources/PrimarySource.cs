@@ -90,11 +90,11 @@ namespace Banshee.Sources
                 source_id = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", id);
             }
 
-            track_model.Condition = String.Format ("CoreTracks.SourceID = {0}", source_id);;
+            track_model.Condition = String.Format ("CoreTracks.SourceID = {0}", source_id);
             error_source.Updated += OnErrorSourceUpdated;
             OnErrorSourceUpdated (null, null);
 
-            tracks_updated_limiter = new RateLimiter (10.0, 50.0, RateLimitedOnTracksUpdated);
+            tracks_updated_limiter = new RateLimiter (50.0, 500.0, RateLimitedOnTracksUpdated);
 
             primary_sources[source_id] = this;
         }

@@ -31,7 +31,14 @@ using System.Data;
 using System.Reflection;
 using System.Threading;
 
+using Hyena;
+using Hyena.Data.Sqlite;
 using Timer=Hyena.Timer;
+
+using Banshee.ServiceStack;
+using Banshee.Sources;
+using Banshee.Collection.Database;
+using Banshee.Streaming;
 
 namespace Banshee.Database
 {
@@ -65,9 +72,9 @@ namespace Banshee.Database
             }
         }
         
-        private IDbConnection connection;
+        private HyenaSqliteConnection connection;
         
-        public BansheeDbFormatMigrator(IDbConnection connection)
+        public BansheeDbFormatMigrator (HyenaSqliteConnection connection)
         {
             this.connection = connection;
         }
@@ -134,26 +141,12 @@ namespace Banshee.Database
         
         protected bool TableExists(string tableName)
         {
-            IDbCommand command = connection.CreateCommand();
-            command.CommandText = @"
-                SELECT COUNT(*)
-                    FROM sqlite_master
-                    WHERE Type='table' AND Name=:table_name";
-            
-            IDbDataParameter table_param = command.CreateParameter();
-            table_param.ParameterName = "table_name";
-            table_param.Value = tableName;
-            
-            command.Parameters.Add(table_param);
-            
-            return Convert.ToInt32(command.ExecuteScalar()) > 0;
+            return connection.TableExists (tableName);
         }
         
         protected void Execute(string query)
         {
-            IDbCommand command = connection.CreateCommand();
-            command.CommandText = query;
-            command.ExecuteNonQuery();
+            connection.Execute (query);
         }
             
         protected int DatabaseVersion {
@@ -162,14 +155,13 @@ namespace Banshee.Database
                     return 0;
                 }
                 
-                IDbCommand command = connection.CreateCommand();
-                command.CommandText = @"
+                string select_query = @"
                     SELECT Value 
                         FROM CoreConfiguration
                         WHERE Key = 'DatabaseVersion'
                 ";
                 
-                return Convert.ToInt32(command.ExecuteScalar());
+                return Convert.ToInt32 (connection.Query<int> (select_query));
             }
         }
         
@@ -449,9 +441,64 @@ namespace Banshee.Database
                 INSERT INTO CoreSmartPlaylists (SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion)
                     SELECT * FROM SmartPlaylists
             ");
-            
+
             // TODO: Kick off some kind of scanner to find the file size of all the files
             //       since that information was never in the old Banshee
+            ServiceManager.ServiceStarted += OnServiceStarted;
+        }
+
+        private void OnServiceStarted (ServiceStartedArgs args)
+        {
+            if (args.Service is UserJobManager) {
+                ServiceManager.ServiceStarted -= OnServiceStarted;
+                if (ServiceManager.SourceManager.Library != null) {
+                    new RefreshMetadataJob ();
+                } else {
+                    ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
+                }
+            }
+        }
+
+        private void OnSourceAdded (SourceAddedArgs args)
+        {
+            if (args.Source is Banshee.Library.LibrarySource) {
+                ServiceManager.SourceManager.SourceAdded -= OnSourceAdded;
+                new RefreshMetadataJob ();
+            }
+        }
+
+        private class RefreshMetadataJob : UserJob
+        {
+            public RefreshMetadataJob () : base ("Refreshing Metadata", "Refreshing Metadata", "Preparing...")
+            {
+                Register ();
+                CanCancel = false;
+
+                Banshee.Library.LibrarySource library = ServiceManager.SourceManager.Library;
+                int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks WHERE SourceID = 1");
+                long now = DateTimeUtil.FromDateTime (DateTime.Now);
+
+                HyenaSqliteCommand select_command = new HyenaSqliteCommand (
+                    String.Format (
+                        "SELECT {0} FROM {1} WHERE {2} AND CoreTracks.SourceID = 1",
+                        DatabaseTrackInfo.Provider.Select,
+                        DatabaseTrackInfo.Provider.From,
+                        DatabaseTrackInfo.Provider.Where
+                    )
+                );
+
+                int count = 0;
+                using (System.Data.IDataReader reader = ServiceManager.DbConnection.Query (select_command)) {
+                    while (reader.Read ()) {
+                        Progress = ++count / total;
+                        DatabaseTrackInfo track = DatabaseTrackInfo.Provider.Load (reader, 0);
+                        Status = String.Format ("Updating {0} - {1}", track.ArtistName, track.TrackTitle);
+                        TagLib.File file = StreamTagger.ProcessUri (track.Uri);
+                        StreamTagger.TrackInfoMerge (track, file);
+                        track.Save ();
+                    }
+                }
+            }
         }
         
 #endregion

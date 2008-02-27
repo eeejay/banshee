@@ -169,7 +169,7 @@ namespace Hyena.Data.Sqlite
         {
             //using (new Timer (String.Format ("Fetching set for {0}", model))) {
                 select_range_command.ApplyValues (offset, limit);
-                using (IDataReader reader = connection.ExecuteReader (select_range_command)) {
+                using (IDataReader reader = connection.Query (select_range_command)) {
                     while (reader.Read ()) {
                         if (!ContainsKey (offset)) {
                             Add (offset, provider.Load (reader, offset));
@@ -182,12 +182,14 @@ namespace Hyena.Data.Sqlite
         
         protected void UpdateAggregates ()
         {
-            using (IDataReader reader = connection.ExecuteReader (count_command.ApplyValues (uid))) {
-                rows = Convert.ToInt32 (reader[0]);
+            using (IDataReader reader = connection.Query (count_command.ApplyValues (uid))) {
+                if (reader.Read ()) {
+                    rows = Convert.ToInt32 (reader[0]);
 
-                AggregatesUpdatedEventHandler handler = AggregatesUpdated;
-                if (handler != null) {
-                    handler (reader);
+                    AggregatesUpdatedEventHandler handler = AggregatesUpdated;
+                    if (handler != null) {
+                        handler (reader);
+                    }
                 }
             }
         }

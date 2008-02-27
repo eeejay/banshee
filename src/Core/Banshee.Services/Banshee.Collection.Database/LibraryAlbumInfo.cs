@@ -67,7 +67,7 @@ namespace Banshee.Collection.Database
             if (title == null || title.Trim () == String.Empty)
                 title = Catalog.GetString ("Unknown Album");
 
-            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (select_command.ApplyValues (artist.DbId, title))) {
+            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command.ApplyValues (artist.DbId, title))) {
                 if (reader.Read ()) {
                     dbid = Convert.ToInt32 (reader[(int) Column.AlbumID]);
                     Title = reader[(int) Column.Title] as string;

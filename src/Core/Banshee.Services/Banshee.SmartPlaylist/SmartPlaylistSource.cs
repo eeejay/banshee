@@ -338,7 +338,7 @@ namespace Banshee.SmartPlaylist
 
         public static IEnumerable<SmartPlaylistSource> LoadAll ()
         {
-            using (IDataReader reader = ServiceManager.DbConnection.ExecuteReader (
+            using (IDataReader reader = ServiceManager.DbConnection.Query (
                 "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
                 while (reader.Read ()) {
                     SmartPlaylistSource playlist = null;

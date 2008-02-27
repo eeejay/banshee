@@ -284,8 +284,8 @@ namespace Banshee.Collection.Database
         public static bool ContainsUri (SafeUri uri)
         {
             string relative_path = Paths.MakePathRelativeToLibrary (uri.AbsolutePath) ?? uri.AbsoluteUri;
-            return Convert.ToInt32 (ServiceManager.DbConnection.ExecuteScalar (
-                check_command.ApplyValues (relative_path, uri.AbsoluteUri))) > 0;
+            return ServiceManager.DbConnection.Query<int> (
+                check_command.ApplyValues (relative_path, uri.AbsoluteUri)) > 0;
         }
         
         public SafeUri CopyToLibrary ()
