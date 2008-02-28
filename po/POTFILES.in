@@ -15,7 +15,6 @@ libbanshee/gst-cd-rip-0.10.c
 libbanshee/gst-transcode-0.10.c
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs
 src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs
-src/Core/Banshee.Core/Banshee.Base/Utilities.cs
 src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs
 src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs
 src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs
@@ -42,7 +41,6 @@ src/Core/Banshee.Services/Banshee.Sources/Source.cs
 src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileComboBox.cs
 src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs
 src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade
-src/Core/Banshee.ThickClient/Banshee.Collection.Gui/CompositeTrackListView.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs
@@ -97,5 +95,3 @@ src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs
 src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs
-src/Libraries/Lastfm/Lastfm/RadioConnection.cs 
-
