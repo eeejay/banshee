@@ -178,6 +178,11 @@ namespace Banshee.ServiceStack
                 return services.ContainsKey (serviceName);
             }
         }
+
+        public static bool Contains<T> () where T : class, IService
+        {
+            return Contains (typeof (T).Name);
+        }
         
         public static IService Get (string serviceName)
         {

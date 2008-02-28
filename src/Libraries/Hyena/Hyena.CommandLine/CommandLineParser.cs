@@ -94,7 +94,7 @@ namespace Hyena.CommandLine
         
         private bool IsOption (string argument)
         {
-            return argument.Substring (0, 2) == "--";
+            return argument.Length > 2 && argument.Substring (0, 2) == "--";
         }
         
         private string OptionName (string argument)

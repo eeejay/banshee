@@ -220,7 +220,7 @@ namespace Hyena.Data.Gui
                             single_list_alloc.Width, single_list_alloc.Height);
                     }
                     
-                    if (focused_row_index == ri && !Selection.Contains (ri)) {
+                    if (focused_row_index == ri && !Selection.Contains (ri) && HasFocus) {
                         CairoCorners corners = CairoCorners.All;
                         
                         if (Selection.Contains (ri - 1)) {
@@ -253,7 +253,7 @@ namespace Hyena.Data.Gui
                     list_alloc.Width, selection_height);
             }
             
-            if (Selection.Count > 1 && !selected_focus_alloc.Equals (Gdk.Rectangle.Zero)) {
+            if (Selection.Count > 1 && !selected_focus_alloc.Equals (Gdk.Rectangle.Zero) && HasFocus) {
                 graphics.DrawRowSelection (list_cr, selected_focus_alloc.X, selected_focus_alloc.Y, 
                     selected_focus_alloc.Width, selected_focus_alloc.Height, false, true, 
                     graphics.GetWidgetColor (GtkColorClass.Dark, StateType.Selected));

@@ -140,5 +140,14 @@ namespace Banshee.ServiceStack
             
             OnFinished ();
         }
+
+        public static void SpawnLikeFish (int count)
+        {
+            int i = 0;
+            Application.RunTimeout (2000, delegate { 
+                new TestUserJob (); 
+                return ++i < count;
+            });
+        }
     }
 }

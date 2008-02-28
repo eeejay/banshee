@@ -1,3 +1,22 @@
+2008-02-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Added
+	a generic Contains method so Contains checks can be type safe just like
+	the generic Get service calls
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/TestUserJob.cs:
+	Added a method to spawn a few test user jobs which is useful for 
+	debugging the user job API and host tile display
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	When the magic command line argument is passed, spawn the test jobs
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Only render the focus row if the view actually has focus
+
+	* src/Libraries/Hyena/Hyena.CommandLine/CommandLineParser.cs: Fix a 
+	minor crasher bug
+
 2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Do not

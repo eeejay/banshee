@@ -31,6 +31,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
+using Banshee.Base;
 using Banshee.ServiceStack;
 
 namespace Banshee.Gui.Widgets
@@ -42,21 +43,39 @@ namespace Banshee.Gui.Widgets
         
         public UserJobTileHost () : base (0.0f, 0.0f, 1.0f, 1.0f)
         {
-            TopPadding = 5;
-
             box = new VBox ();
             box.Spacing = 8;
             box.Show ();
 
             Add (box);
 
-            if (ServiceManager.Contains ("UserJobManager")) {
-                UserJobManager job_manager = ServiceManager.Get<UserJobManager> ("UserJobManager");
+            if (ServiceManager.Contains<UserJobManager> ()) {
+                UserJobManager job_manager = ServiceManager.Get<UserJobManager> ();
                 job_manager.JobAdded += OnJobAdded;
                 job_manager.JobRemoved += OnJobRemoved;
             }
+
+            if (ApplicationContext.CommandLine.Contains ("test-user-job")) {
+                int fish;
+                if (!Int32.TryParse (ApplicationContext.CommandLine["test-user-job"], out fish)) {
+                    fish = 5;
+                }
+                TestUserJob.SpawnLikeFish (fish);
+            }
         }
-        
+
+        public new void Show ()
+        {
+            TopPadding = 8;
+            base.Show ();
+        }
+
+        public new void Hide ()
+        {
+            TopPadding = 0;
+            base.Hide ();
+        }
+
         private void AddJob (IUserJob job)
         {                    
             if (job == null || job.IsFinished) {
@@ -93,10 +112,11 @@ namespace Banshee.Gui.Widgets
                 if (job_tiles.ContainsKey (args.Job)) {
                     UserJobTile tile = job_tiles[args.Job];
                     box.Remove (tile);
-                    
-                    if (job_tiles.Count <= 0) {
-                        Hide ();
-                    }
+                    job_tiles.Remove (args.Job);
+                }
+
+                if (job_tiles.Count <= 0) {
+                    Hide ();
                 }
             }
         }
