@@ -1,3 +1,8 @@
+2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Fix up
+	last SourceView commit.
+
 2008-02-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Added

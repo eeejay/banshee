@@ -144,50 +144,67 @@ namespace Banshee.Sources.Gui
             graphics.RefreshColors ();
         }
 
-        protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
+        protected override bool OnButtonPressEvent (Gdk.EventButton press)
         {
             TreePath path;
             TreeViewColumn column;
                        
-            if (evnt.Button == 1) {
+            if (press.Button == 1) {
                 ResetHighlight ();
             }
             
-            // If there is row at the click position, or if the column clicked on was the expander column,
-            // let the base handler take care of it.
-            if (!GetPathAtPos ((int)evnt.X, (int)evnt.Y, out path, out column) || column == ExpanderColumn) {
-                return base.OnButtonPressEvent (evnt);
+            // If there is not a row at the click position let the base handler take care of the press
+            if (!GetPathAtPos ((int)press.X, (int)press.Y, out path, out column)) {
+                return base.OnButtonPressEvent (press);
             }
 
             Source source = GetSource (path);
-            
-            if (evnt.Button == 1) {
-                if (!source.CanActivate) {
-                    if (!source.Expanded) {
-                        ExpandRow (path, false);
-                    } else {
-                        CollapseRow (path);
-                    }
-                    return false;
-                }
-                
-                if (ServiceManager.SourceManager.ActiveSource != source) {
+
+            // From F-Spot's SaneTreeView class
+            int expander_size = (int) StyleGetProperty ("expander-size");
+            int horizontal_separator = (int) StyleGetProperty ("horizontal-separator");
+            bool on_expander = (press.X <= (horizontal_separator / 2 + path.Depth * expander_size));
+            if (on_expander) {
+                bool ret = base.OnButtonPressEvent (press);
+                // If the active source is a child of this source, and we are about to collapse it, switch
+                // the active source to the parent.
+                if (source == ServiceManager.SourceManager.ActiveSource.Parent && GetRowExpanded (path)) {
                     ServiceManager.SourceManager.SetActiveSource (source);
                 }
-            } else if (evnt.Button == 3) {
+                return ret;
+            }
+
+            // For Sources that can't be activated, when they're clicked just 
+            // expand or collapse them and return.
+            if (press.Button == 1 && !source.CanActivate) {
+                if (!source.Expanded) {
+                    ExpandRow (path, false);
+                } else {
+                    CollapseRow (path);
+                }
+                return false;
+            }
+
+            if (press.Button == 3) {
                 HighlightPath (path);
                 OnPopupMenu ();
                 return true;
             }
+
+            if (press.Button == 1) {
+                if (ServiceManager.SourceManager.ActiveSource != source) {
+                    ServiceManager.SourceManager.SetActiveSource (source);
+                }
+            }
             
-            if ((evnt.State & Gdk.ModifierType.ControlMask) != 0) {
-                if (evnt.Type == Gdk.EventType.TwoButtonPress && evnt.Button == 1) {
+            if ((press.State & Gdk.ModifierType.ControlMask) != 0) {
+                if (press.Type == Gdk.EventType.TwoButtonPress && press.Button == 1) {
                     ActivateRow (path, null);
                 }
                 return true;
             }
             
-            return base.OnButtonPressEvent (evnt);
+            return base.OnButtonPressEvent (press);
         }
 
         protected override bool OnPopupMenu ()
