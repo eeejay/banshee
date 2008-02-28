@@ -28,8 +28,10 @@
 
 using System;
 using Mono.Unix;
+using Cairo;
 using Gtk;
 
+using Hyena.Gui;
 using Hyena.Data.Gui;
 
 using Banshee.Gui;
@@ -100,6 +102,23 @@ namespace Banshee.Collection.Gui
         private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
         {
             QueueDraw ();
+        }
+
+        protected override void ChildClassPostRender (Gdk.EventExpose evnt, Cairo.Context cr, Gdk.Rectangle clip)
+        {
+            Gdk.Rectangle rect = new Gdk.Rectangle ();
+            rect.Width = (int)Math.Round (Allocation.Width * 0.65);
+            rect.Height = (int)Math.Round (Allocation.Height * 0.50);
+            rect.X = (Allocation.Width - rect.Width) / 2;
+            rect.Y = ((Allocation.Height - rect.Height) / 2) - (int)(rect.Height * .15);
+
+            CairoExtensions.PushGroup (cr);
+            Theme.PushContext ();
+            Theme.Context.Radius = 12;
+            Theme.DrawFrame (cr, rect, true);
+            Theme.PopContext ();
+            CairoExtensions.PopGroupToSource (cr);
+            cr.PaintWithAlpha (0.8);
         }
         
 #region Drag and Drop

@@ -31,13 +31,13 @@ using Gtk;
 using Cairo;
 
 using Hyena.Gui;
-using Hyena.Data.Gui;
+using Hyena.Gui.Theming;
 
 namespace Hyena.Widgets
 {
     public class RoundedFrame : Bin
     {
-        private ListViewGraphics graphics;
+        private Theme theme;
         private int frame_width = 3;
         
         private Widget child;
@@ -53,8 +53,8 @@ namespace Hyena.Widgets
         {
             base.OnRealized ();
             
-            graphics = new ListViewGraphics (this);
-            graphics.RefreshColors ();
+            theme = new GtkTheme (this);
+            //theme.RefreshColors ();
         }
 
         protected override void OnSizeRequested (ref Requisition requisition)
@@ -131,7 +131,7 @@ namespace Hyena.Widgets
             int width = child_allocation.Width + 2 * frame_width;
             int height = child_allocation.Height + 2 * frame_width;
             
-            graphics.DrawFrame (cr, new Gdk.Rectangle (x, y, width, height), true);
+            theme.DrawFrame (cr, new Gdk.Rectangle (x, y, width, height), true);
         }
 
 #endregion

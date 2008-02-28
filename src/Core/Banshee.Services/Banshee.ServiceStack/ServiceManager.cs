@@ -103,6 +103,10 @@ namespace Banshee.ServiceStack
                     if (service is IDisposable) {
                         dispose_services.Push (service);
                     }
+
+                    if (service is IInitializeService) {
+                        ((IInitializeService)service).Initialize ();
+                    }
                 }
                 
                 foreach (TypeExtensionNode node in extension_nodes) {

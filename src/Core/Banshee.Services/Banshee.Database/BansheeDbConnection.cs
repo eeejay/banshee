@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -40,92 +40,35 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Database
 {
-    public sealed class BansheeDbConnection : HyenaSqliteConnection, IService
+    public sealed class BansheeDbConnection : HyenaSqliteConnection, IInitializeService
     {
+        private BansheeDbFormatMigrator migrator;
+
         public BansheeDbConnection () : base (DatabaseFile)
         {
             Execute ("PRAGMA synchronous = OFF;");
             Execute ("PRAGMA cache_size = 32768;");
 
-            BansheeDbFormatMigrator migrator = new BansheeDbFormatMigrator (this);
-            migrator.SlowStarted += OnMigrationSlowStarted;
-            migrator.SlowPulse += OnMigrationSlowPulse;
-            migrator.SlowFinished += OnMigrationSlowFinished;
-            migrator.Migrate ();
+            migrator = new BansheeDbFormatMigrator (this);
         }
 
-        //private Gtk.Window slow_window;
-        //private Gtk.ProgressBar slow_progress;
-        
-        /*private void IterateSlow ()
+        void IInitializeService.Initialize ()
         {
-            while (Gtk.Application.EventsPending ()) {
-                Gtk.Application.RunIteration ();
+            lock (this) {
+                migrator.Migrate ();
+                migrator = null;
             }
-        }*/
-        
-        private void OnMigrationSlowStarted (string title, string message)
-        {
-           /* lock (this) {
-                if (slow_window != null) {
-                    slow_window.Destroy ();
-                }
-                
-                Gtk.Application.Init ();
-                
-                slow_window = new Gtk.Window (String.Empty);
-                slow_window.BorderWidth = 10;
-                slow_window.WindowPosition = Gtk.WindowPosition.Center;
-                slow_window.DeleteEvent += delegate (object o, Gtk.DeleteEventArgs args) {
-                    args.RetVal = true;
-                };
-                
-                Gtk.VBox box = new Gtk.VBox ();
-                box.Spacing = 5;
-                
-                Gtk.Label title_label = new Gtk.Label ();
-                title_label.Xalign = 0.0f;
-                title_label.Markup = String.Format ("<b><big>{0}</big></b>",
-                    GLib.Markup.EscapeText (title));
-                
-                Gtk.Label message_label = new Gtk.Label ();
-                message_label.Xalign = 0.0f;
-                message_label.Text = message;
-                message_label.Wrap = true;
-                
-                slow_progress = new Gtk.ProgressBar ();
-                
-                box.PackStart (title_label, false, false, 0);
-                box.PackStart (message_label, false, false, 0);
-                box.PackStart (slow_progress, false, false, 0);
-                
-                slow_window.Add (box);
-                slow_window.ShowAll ();
-                
-                IterateSlow ();
-            }*/
         }
-        
-        private void OnMigrationSlowPulse (object o, EventArgs args)
-        {
-            /*lock (this) {
-                slow_progress.Pulse ();
-                IterateSlow ();
-            }*/
-        }
-        
-        private void OnMigrationSlowFinished (object o, EventArgs args)
-        {
-            /*lock (this) {
-                slow_window.Destroy ();
-                IterateSlow ();
-            }*/
+
+        public BansheeDbFormatMigrator Migrator {
+            get { lock (this) { return migrator; } }
         }
 
         public static string DatabaseFile {
             get {
-                if (ApplicationContext.CommandLine.Contains ("db"))
+                if (ApplicationContext.CommandLine.Contains ("db")) {
                     return ApplicationContext.CommandLine["db"];
+                }
 
                 string dbfile = Path.Combine (Path.Combine (Environment.GetFolderPath (
                     Environment.SpecialFolder.ApplicationData), 

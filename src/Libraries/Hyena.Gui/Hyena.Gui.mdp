@@ -13,7 +13,6 @@
     <File name="Hyena.Data.Gui/ColumnCellText.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ColumnController.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ColumnHeaderCellText.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/ListViewGraphics.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/SortableColumn.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui/CleanRoomStartup.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui.Dialogs/ExceptionDialog.cs" subtype="Code" buildaction="Compile" />
@@ -50,6 +49,11 @@
     <File name="Hyena.Query.Gui/QueryTermsBox.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Widgets/MessageBar.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Widgets/AnimatedImage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui.Theming" subtype="Directory" buildaction="Compile" />
+    <File name="Hyena.Gui.Theming/Theme.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui.Theming/GtkColors.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui.Theming/ThemeContext.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui.Theming/GtkTheme.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -59,7 +63,6 @@
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
-  <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />
@@ -69,4 +72,5 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
+  <Deployment.LinuxDeployData generateScript="False" />
 </Project>

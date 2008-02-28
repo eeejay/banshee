@@ -30,7 +30,7 @@ using System;
 using Gtk;
 
 using Hyena.Gui;
-using Hyena.Data.Gui;
+using Hyena.Gui.Theming;
 
 namespace Hyena.Widgets
 {
@@ -42,7 +42,7 @@ namespace Hyena.Widgets
         private Button button;
         private Button close_button;
         
-        private ListViewGraphics graphics;
+        private Theme theme;
         
         public event EventHandler ButtonClicked {
             add { button.Clicked += value; }
@@ -104,8 +104,8 @@ namespace Hyena.Widgets
         {
             base.OnRealized ();
             
-            graphics = new ListViewGraphics (this);
-            graphics.RefreshColors ();
+            theme = new GtkTheme (this);
+            // theme.RefreshColors ();
         }
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
@@ -118,7 +118,7 @@ namespace Hyena.Widgets
                 
             try {
                 Gdk.Color color = Style.Background (StateType.Normal);
-                graphics.DrawFrame (cr, Allocation, CairoExtensions.GdkColorToCairoColor (color));
+                theme.DrawFrame (cr, Allocation, CairoExtensions.GdkColorToCairoColor (color));
                 return base.OnExposeEvent(evnt);
             } finally {
                 ((IDisposable)cr.Target).Dispose ();

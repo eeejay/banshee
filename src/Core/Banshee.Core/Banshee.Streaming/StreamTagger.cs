@@ -40,53 +40,80 @@ namespace Banshee.Streaming
             TagLib.File file = Banshee.IO.DemuxVfs.OpenFile (uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
                 null, TagLib.ReadStyle.Average);
 
-            if (file.Properties.MediaTypes != TagLib.MediaTypes.Audio) {
+            if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) != 0 && 
+                file.Properties.MediaTypes != TagLib.MediaTypes.Audio) {
                 throw new TagLib.UnsupportedFormatException ("File contains more than just audio");
             }
             
             return file;
         }
-    
-        private static string Choose(string priority, string fallback)
+
+        private static string Choose (string priority, string fallback)
         {
-            return priority == null || priority.Length == 0 ? fallback : priority;
+            return Choose (priority, fallback, false);
+        }
+    
+        private static string Choose (string priority, string fallback, bool flip)
+        {
+            return flip 
+                ? String.IsNullOrEmpty (fallback) ? priority : fallback
+                : String.IsNullOrEmpty (priority) ? fallback : priority;
+        }
+
+        private static int Choose (int priority, int fallback)
+        {
+            return Choose (priority, fallback, false);
+        }
+
+        private static int Choose (int priority, int fallback, bool flip)
+        {
+            return flip 
+                ? (fallback <= 0 ? priority : fallback)
+                : (priority <= 0 ? fallback : priority);
         }
         
-        public static void TrackInfoMerge(TrackInfo track, TagLib.File file)
+        public static void TrackInfoMerge (TrackInfo track, TagLib.File file)
+        {
+            TrackInfoMerge (track, file, false);
+        }
+
+        public static void TrackInfoMerge (TrackInfo track, TagLib.File file, bool preferTrackInfo)
         {
             track.Uri = new SafeUri (file.Name);
             track.MimeType = file.MimeType;
-            track.ArtistName = Choose(file.Tag.JoinedPerformers, track.ArtistName);
-            track.AlbumTitle = Choose(file.Tag.Album, track.AlbumTitle);
-            track.Disc = file.Tag.Disc == 0 ? track.Disc : (int)file.Tag.Disc;
-            track.TrackTitle = Choose(file.Tag.Title, track.TrackTitle);
-            track.Genre = Choose(file.Tag.FirstGenre, track.Genre);
-            track.TrackNumber = file.Tag.Track == 0 ? track.TrackNumber : (int)file.Tag.Track;
-            track.TrackCount = file.Tag.TrackCount == 0 ? track.TrackCount : (int)file.Tag.TrackCount;
-            track.Year = (int)file.Tag.Year;
-            track.Duration = file.Properties.Duration;
             track.FileSize = Banshee.IO.File.GetSize (track.Uri);
+            track.Duration = file.Properties.Duration;
+
+            track.ArtistName = Choose (file.Tag.JoinedPerformers, track.ArtistName, preferTrackInfo);
+            track.AlbumTitle = Choose (file.Tag.Album, track.AlbumTitle, preferTrackInfo);
+            track.TrackTitle = Choose (file.Tag.Title, track.TrackTitle, preferTrackInfo);
+            track.Genre = Choose (file.Tag.FirstGenre, track.Genre, preferTrackInfo);
+
+            track.TrackNumber = Choose ((int)file.Tag.Track, track.TrackNumber, preferTrackInfo);
+            track.TrackCount = Choose ((int)file.Tag.TrackCount, track.TrackCount, preferTrackInfo);
+            track.Disc = Choose ((int)file.Tag.Disc, track.Disc, preferTrackInfo);
+            track.Year = Choose ((int)file.Tag.Year, track.Year, preferTrackInfo);
         }
     
-        public static void TrackInfoMerge(TrackInfo track, StreamTag tag)
+        public static void TrackInfoMerge (TrackInfo track, StreamTag tag)
         {
             try {
-                switch(tag.Name) {
+                switch (tag.Name) {
                     case CommonTags.Artist:
-                        track.ArtistName = Choose((string)tag.Value, track.ArtistName);
+                        track.ArtistName = Choose ((string)tag.Value, track.ArtistName);
                         break;
                     case CommonTags.Title:
-                        track.TrackTitle = Choose((string)tag.Value, track.TrackTitle);
+                        track.TrackTitle = Choose ((string)tag.Value, track.TrackTitle);
                         break;
                     case CommonTags.Album:
-                        track.AlbumTitle = Choose((string)tag.Value, track.AlbumTitle);
+                        track.AlbumTitle = Choose ((string)tag.Value, track.AlbumTitle);
                         break;
                     case CommonTags.Disc:
                         int disc = (int)tag.Value;
                         track.Disc = disc == 0 ? track.Disc : disc;
                         break;
                     case CommonTags.Genre:
-                        track.Genre = Choose((string)tag.Value, track.Genre);
+                        track.Genre = Choose ((string)tag.Value, track.Genre);
                         break;
                     case CommonTags.TrackNumber:
                         int track_number = (int)tag.Value;
@@ -96,10 +123,10 @@ namespace Banshee.Streaming
                         track.TrackCount = (int)tag.Value;
                         break;
                     case CommonTags.Duration:
-                        if(tag.Value is TimeSpan) {
+                        if (tag.Value is TimeSpan) {
                             track.Duration = (TimeSpan)tag.Value;
                         } else {
-                            track.Duration = new TimeSpan((uint)tag.Value * TimeSpan.TicksPerMillisecond);
+                            track.Duration = new TimeSpan ((uint)tag.Value * TimeSpan.TicksPerMillisecond);
                         }
                         break;
                     case CommonTags.MoreInfoUri:

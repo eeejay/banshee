@@ -55,12 +55,11 @@ namespace Banshee.ServiceStack
         public UserJob (string name, string title, string status) : this (name, title, status, null)
         {
         }
-        
-        /*public UserJob (string name, string title, string status, string iconName)
-            : this (name, title, status, new string [] { iconName })
+
+        public UserJob (string name) : this (name, name, null, null)
         {
-        }*/
-        
+        }
+
         public UserJob (string name, string title, string status, params string [] iconNames)
         {
             FreezeUpdate ();

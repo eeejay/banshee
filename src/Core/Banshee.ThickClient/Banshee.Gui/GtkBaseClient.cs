@@ -30,6 +30,7 @@ using System;
 
 using Hyena;
 using Banshee.Base;
+using Banshee.Database;
 using Banshee.ServiceStack;
 using Banshee.Gui.Dialogs;
 
@@ -80,6 +81,8 @@ namespace Banshee.Gui
             ThreadAssist.InitializeMainThread ();
             
             PlatformHacks.GdkSetProgramClass (Application.InternalName);
+
+            ServiceManager.ServiceStarted += OnServiceStarted;
             
             // Register specific services this client will care about
             if (registerCommonServices) {
@@ -107,7 +110,32 @@ namespace Banshee.Gui
         protected virtual void OnRegisterServices ()
         {
         }
+
+        private void OnServiceStarted (ServiceStartedArgs args)
+        {
+            if (args.Service is BansheeDbConnection) {
+                ServiceManager.ServiceStarted -= OnServiceStarted;
+                BansheeDbFormatMigrator migrator = ((BansheeDbConnection)args.Service).Migrator;
+                if (migrator != null) {
+                    migrator.Started += OnMigratorStarted;
+                    migrator.Finished += OnMigratorFinished;
+                }
+            }
+        }
         
+        private void OnMigratorStarted (object o, EventArgs args)
+        {
+            BansheeDbFormatMigrator migrator = (BansheeDbFormatMigrator)o;
+            new BansheeDbFormatMigratorMonitor (migrator);
+        }
+
+        private void OnMigratorFinished (object o, EventArgs args)
+        {
+            BansheeDbFormatMigrator migrator = (BansheeDbFormatMigrator)o;
+            migrator.Started -= OnMigratorStarted;
+            migrator.Finished -= OnMigratorFinished;
+        }
+
         private void OnLogNotify (LogNotifyArgs args)
         {
             RunIdle (delegate {
@@ -121,8 +149,8 @@ namespace Banshee.Gui
             Gtk.Window window = null;
             Gtk.MessageType mtype;
             
-            if (ServiceManager.Contains ("GtkElementsService")) {
-                window = ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow;
+            if (ServiceManager.Contains<GtkElementsService> ()) {
+                window = ServiceManager.Get<GtkElementsService> ().PrimaryWindow;
             }
             
             switch (entry.Type) {

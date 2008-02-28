@@ -1,3 +1,53 @@
+2008-02-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Added a new
+	base version of TrackInfoMerge that allows you to switch priority/fallback
+	values to prefer either the database track or the taglib file data
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Move
+	the migration consumer stuff out, make the migrator accessible to others
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Use a UserJob to report the migration track scanning progress
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IInitializeService.cs:
+	A simple interface that will tell the service manager to call initialize
+	on it after registering; this allows other objects to listen for the
+	service before the service actually does anything
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Support IInitializeService.Initialize
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJob.cs: Added some
+	more ctor overrides to make it easier to use
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeDbFormatMigratorMonitor.cs:
+	A UI for reporting the migration progress in the database layer
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Connect
+	to the database migration layer and use the new UI to report progress
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Draw a bubble, shouldn't commit this, in a hurry
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/CellContext.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Fixed up
+	to use the new Hyena.Gui.Theming API
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListViewGraphics.cs: Nuked 
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkColors.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/Theme.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/ThemeContext.cs: New simple
+	theme API that will make doing the custom drawing easier than the crappy
+	ListViewGraphics bloated/hard to use API
+
 2008-02-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Base/ThreadAssist.cs: Do not set the

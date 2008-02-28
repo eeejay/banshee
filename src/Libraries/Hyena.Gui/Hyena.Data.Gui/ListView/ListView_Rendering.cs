@@ -33,6 +33,8 @@ using Gtk;
 using Cairo;
 
 using Hyena.Gui;
+using Hyena.Gui.Theming;
+using GtkColorClass=Hyena.Gui.Theming.GtkColorClass;
 
 namespace Hyena.Data.Gui
 {
@@ -41,8 +43,11 @@ namespace Hyena.Data.Gui
         private const int InnerBorderWidth = 4;
         private const int FooterHeight = InnerBorderWidth;
         
-        private ListViewGraphics graphics;
-        
+        private Theme theme;
+        protected Theme Theme {
+            get { return theme; }
+        }
+
         private Cairo.Context list_cr;
         private Cairo.Context header_cr;
         private Cairo.Context footer_cr;
@@ -51,7 +56,7 @@ namespace Hyena.Data.Gui
         
         private Pango.Layout header_pango_layout;
         private Pango.Layout list_pango_layout;
-        
+
         public new void QueueDraw ()
         {
             base.QueueDraw ();
@@ -59,6 +64,10 @@ namespace Hyena.Data.Gui
             InvalidateHeaderWindow ();
             InvalidateListWindow ();
             InvalidateFooterWindow ();
+        }
+
+        protected virtual void ChildClassPostRender (Gdk.EventExpose evnt, Cairo.Context cr, Gdk.Rectangle clip)
+        {
         }
          
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
@@ -75,7 +84,7 @@ namespace Hyena.Data.Gui
             Cairo.Context cr = CairoHelper.CreateCairoDrawable (evnt.Window);
             cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cr.Clip ();
-            
+
             if (evnt.Window == header_window) {
                 header_cr = cr;
                 if (header_pango_layout == null) {
@@ -98,6 +107,8 @@ namespace Hyena.Data.Gui
                 }
                 PaintList (evnt, clip);
             }
+
+            ChildClassPostRender (evnt, cr, clip);
             
             ((IDisposable)cr.Target).Dispose ();
             ((IDisposable)cr).Dispose ();
@@ -105,7 +116,7 @@ namespace Hyena.Data.Gui
         
         private void PaintHeader (Gdk.Rectangle clip)
         {
-            graphics.DrawHeaderBackground (header_cr, header_alloc, 2, header_visible);
+            Theme.DrawHeaderBackground (header_cr, header_alloc, 2, header_visible);
             
             if (column_controller == null || !header_visible) {
                 return;
@@ -138,14 +149,14 @@ namespace Hyena.Data.Gui
             
             if (dragging) {
                 if (ci < column_cache.Length - 1) {
-                    graphics.DrawHeaderSeparator (header_cr, header_alloc, 
+                    Theme.DrawHeaderSeparator (header_cr, header_alloc, 
                         column_cache[ci].ResizeX1 - 1 + left_border_alloc.Width, 2);
                 }
             
-                graphics.DrawColumnHighlight (header_cr, area, 3, 
-                    CairoExtensions.ColorShade (graphics.GetWidgetColor (GtkColorClass.Dark, StateType.Normal), 0.9));
+                Theme.DrawColumnHighlight (header_cr, area, 3, 
+                    CairoExtensions.ColorShade (Theme.Colors.GetWidgetColor (GtkColorClass.Dark, StateType.Normal), 0.9));
                     
-                Cairo.Color stroke_color = CairoExtensions.ColorShade (graphics.GetWidgetColor (
+                Cairo.Color stroke_color = CairoExtensions.ColorShade (Theme.Colors.GetWidgetColor (
                     GtkColorClass.Base, StateType.Normal), 0.0);
                 stroke_color.A = 0.3;
                 
@@ -162,7 +173,7 @@ namespace Hyena.Data.Gui
                     && column_cache[ci].Column is ISortableColumn;
                 ((ColumnHeaderCellText)cell).HasSort = has_sort;
                 if (has_sort) {
-                    graphics.DrawColumnHighlight (header_cr, area, 3);
+                    Theme.DrawColumnHighlight (header_cr, area, 3);
                 }
             }
             
@@ -170,12 +181,12 @@ namespace Hyena.Data.Gui
                 header_cr.Save ();
                 header_cr.Translate (area.X, area.Y);
                 cell.Render (new CellContext (header_cr, header_pango_layout, this, header_window, 
-                    graphics, area), StateType.Normal, area.Width, area.Height);
+                    theme, area), StateType.Normal, area.Width, area.Height);
                 header_cr.Restore ();
             }
             
             if (!dragging && ci < column_cache.Length - 1) {
-                graphics.DrawHeaderSeparator (header_cr, header_alloc, 
+                Theme.DrawHeaderSeparator (header_cr, header_alloc, 
                     column_cache[ci].ResizeX1 - 1 + left_border_alloc.Width, 2);
             }
         }
@@ -216,7 +227,7 @@ namespace Hyena.Data.Gui
                     }
                 } else {
                     if (rules_hint && ri % 2 != 0) {
-                        graphics.DrawRowRule (list_cr, single_list_alloc.X, single_list_alloc.Y, 
+                        Theme.DrawRowRule (list_cr, single_list_alloc.X, single_list_alloc.Y, 
                             single_list_alloc.Width, single_list_alloc.Height);
                     }
                     
@@ -231,13 +242,13 @@ namespace Hyena.Data.Gui
                             corners ^= CairoCorners.BottomLeft | CairoCorners.BottomRight;
                         }
                         
-                        graphics.DrawRowSelection (list_cr, single_list_alloc.X, single_list_alloc.Y, 
+                        Theme.DrawRowSelection (list_cr, single_list_alloc.X, single_list_alloc.Y, 
                             single_list_alloc.Width, single_list_alloc.Height, false, true, 
-                            graphics.GetWidgetColor (GtkColorClass.Background, StateType.Selected), corners);
+                            Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected), corners);
                     }
                     
                     if (selection_height > 0) {
-                        graphics.DrawRowSelection (
+                        Theme.DrawRowSelection (
                             list_cr, list_alloc.X, list_alloc.Y + selection_y, list_alloc.Width, selection_height);
                         selection_height = 0;
                     }
@@ -249,14 +260,14 @@ namespace Hyena.Data.Gui
             }
             
             if (selection_height > 0) {
-                graphics.DrawRowSelection (list_cr, list_alloc.X, list_alloc.Y + selection_y, 
+                Theme.DrawRowSelection (list_cr, list_alloc.X, list_alloc.Y + selection_y, 
                     list_alloc.Width, selection_height);
             }
             
             if (Selection.Count > 1 && !selected_focus_alloc.Equals (Gdk.Rectangle.Zero) && HasFocus) {
-                graphics.DrawRowSelection (list_cr, selected_focus_alloc.X, selected_focus_alloc.Y, 
+                Theme.DrawRowSelection (list_cr, selected_focus_alloc.X, selected_focus_alloc.Y, 
                     selected_focus_alloc.Width, selected_focus_alloc.Height, false, true, 
-                    graphics.GetWidgetColor (GtkColorClass.Dark, StateType.Selected));
+                    Theme.Colors.GetWidgetColor (GtkColorClass.Dark, StateType.Selected));
             }
             
             foreach (int ri in selected_rows) {
@@ -304,7 +315,7 @@ namespace Hyena.Data.Gui
             cell.BindListItem (item);
             
             if (dragging) {
-                Cairo.Color fill_color = graphics.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
+                Cairo.Color fill_color = Theme.Colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
                 fill_color.A = 0.5;
                 list_cr.Color = fill_color;
                 list_cr.Rectangle (area.X, area.Y, area.Width, area.Height);
@@ -313,7 +324,7 @@ namespace Hyena.Data.Gui
             
             list_cr.Save ();
             list_cr.Translate (clip.X, clip.Y);
-            cell.Render (new CellContext (list_cr, list_pango_layout, this, list_window, graphics, area), 
+            cell.Render (new CellContext (list_cr, list_pango_layout, this, list_window, theme, area), 
                 dragging? StateType.Normal : state, area.Width, area.Height);
             list_cr.Restore ();
         }
@@ -328,10 +339,10 @@ namespace Hyena.Data.Gui
             
             int x = pressed_column_x_drag;
             
-            Cairo.Color fill_color = graphics.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
+            Cairo.Color fill_color = Theme.Colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
             fill_color.A = 0.45;
             
-            Cairo.Color stroke_color = CairoExtensions.ColorShade (graphics.GetWidgetColor (
+            Cairo.Color stroke_color = CairoExtensions.ColorShade (Theme.Colors.GetWidgetColor (
                 GtkColorClass.Base, StateType.Normal), 0.0);
             stroke_color.A = 0.3;
             
@@ -352,17 +363,17 @@ namespace Hyena.Data.Gui
         
         private void PaintLeftBorder (Gdk.EventExpose evnt, Gdk.Rectangle clip)
         {
-            graphics.DrawLeftBorder (left_border_cr, left_border_alloc);
+            Theme.DrawLeftBorder (left_border_cr, left_border_alloc);
         }
         
         private void PaintRightBorder (Gdk.EventExpose evnt, Gdk.Rectangle clip)
         {
-            graphics.DrawRightBorder (right_border_cr, right_border_alloc);
+            Theme.DrawRightBorder (right_border_cr, right_border_alloc);
         }
         
         private void PaintFooter (Gdk.EventExpose evnt, Gdk.Rectangle clip)
         {
-            graphics.DrawFooter (footer_cr, footer_alloc);
+            Theme.DrawFooter (footer_cr, footer_alloc);
         }
         
         protected void InvalidateListWindow ()

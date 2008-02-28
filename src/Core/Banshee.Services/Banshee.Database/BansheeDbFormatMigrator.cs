@@ -30,6 +30,7 @@ using System;
 using System.Data;
 using System.Reflection;
 using System.Threading;
+using Mono.Unix;
 
 using Hyena;
 using Hyena.Data.Sqlite;
@@ -52,6 +53,9 @@ namespace Banshee.Database
         public event SlowStartedHandler SlowStarted;
         public event EventHandler SlowPulse;
         public event EventHandler SlowFinished;
+
+        public event EventHandler Started;
+        public event EventHandler Finished;
         
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
@@ -102,6 +106,22 @@ namespace Banshee.Database
                 handler(this, EventArgs.Empty);
             }
         }
+
+        protected virtual void OnStarted ()
+        {
+            EventHandler handler = Started;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+
+        protected virtual void OnFinished ()
+        {
+            EventHandler handler = Finished;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
         
         public void Migrate()
         {
@@ -114,17 +134,25 @@ namespace Banshee.Database
                 Console.WriteLine(e);
                 Execute("ROLLBACK");
             }
+
+            OnFinished ();
         }
         
         private void InnerMigrate()
         {   
             MethodInfo [] methods = GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
             bool terminate = false;
+            bool ran_migration_step = false;
             
             for(int i = DatabaseVersion + 1; i <= CURRENT_VERSION; i++) {
                 foreach(MethodInfo method in methods) {
                     foreach(Attribute attr in method.GetCustomAttributes(false)) {
                         if(attr is DatabaseVersionAttribute && ((DatabaseVersionAttribute)attr).Version == i) {
+                            if (!ran_migration_step) {
+                                ran_migration_step = true;
+                                OnStarted ();
+                            }
+
                             if(!(bool)method.Invoke(this, null)) {
                                 terminate = true;
                             }
@@ -172,30 +200,32 @@ namespace Banshee.Database
         // NOTE: Return true if the step should allow the driver to continue
         //       Return false if the step should terminate driver
         
-        [DatabaseVersion(1)]
-        private bool Migrate_1()
+        [DatabaseVersion (1)]
+        private bool Migrate_1 ()
         {   
-            if(TableExists("Tracks")) {
-                InitializeFreshDatabase();
+            if (TableExists("Tracks")) {
+                InitializeFreshDatabase ();
                 
-                using(new Timer("Database Migration")) {
-                    OnSlowStarted("Upgrading your Banshee Database", 
-                        "This operation may take a few minutes, but the wait will be well worth it!");
-                
-                    Thread thread = new Thread(MigrateFromLegacyBanshee);
-                    thread.Start();
-                
-                    while(thread.IsAlive) {
-                        OnSlowPulse();
-                        Thread.Sleep(100);
-                    }
-                
-                    OnSlowFinished();
+                uint timer_id = Log.DebugTimerStart ("Database Schema Migration");
+
+                OnSlowStarted (Catalog.GetString ("Upgrading your Banshee Database"), 
+                    Catalog.GetString ("Please wait while your old Banshee database is migrated to the new format."));
+            
+                Thread thread = new Thread (MigrateFromLegacyBanshee);
+                thread.Start ();
+            
+                while (thread.IsAlive) {
+                    OnSlowPulse ();
+                    Thread.Sleep (100);
                 }
+
+                Log.DebugTimerPrint (timer_id);
+            
+                OnSlowFinished ();
                 
                 return false;
             } else {
-                InitializeFreshDatabase();
+                InitializeFreshDatabase ();
                 return false;
             }
         }   
@@ -373,6 +403,7 @@ namespace Banshee.Database
         
         private void MigrateFromLegacyBanshee()
         {
+            Thread.Sleep (3000);
             Execute(@"
                 INSERT INTO CoreArtists 
                     SELECT DISTINCT null, 0, null, Artist, 0 
@@ -452,7 +483,7 @@ namespace Banshee.Database
             if (args.Service is UserJobManager) {
                 ServiceManager.ServiceStarted -= OnServiceStarted;
                 if (ServiceManager.SourceManager.Library != null) {
-                    RefreshMetadata ();
+                    Application.RunTimeout (3000, RefreshMetadata);
                 } else {
                     ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
                 }
@@ -463,31 +494,35 @@ namespace Banshee.Database
         {
             if (args.Source is Banshee.Library.LibrarySource) {
                 ServiceManager.SourceManager.SourceAdded -= OnSourceAdded;
-                RefreshMetadata ();
+                RefreshMetadataDelayed ();
             }
         }
 
-        private void RefreshMetadata ()
+        private void RefreshMetadataDelayed ()
         {
-            OnSlowStarted("Getting new metadata for existing tracks", 
-                "This operation may take a few minutes, but the wait will be well worth it!");
-        
-            Thread thread = new Thread (RefreshMetadataJob);
-            thread.Start();
-        
-            while (thread.IsAlive) {
-                OnSlowPulse ();
-                Thread.Sleep (100);
-            }
-        
-            OnSlowFinished();
+            Application.RunTimeout (3000, RefreshMetadata);
         }
 
-        private void RefreshMetadataJob ()
+        private bool RefreshMetadata ()
+        {
+            ThreadPool.QueueUserWorkItem (RefreshMetadataThread);
+            return false;
+        }
+
+        private void RefreshMetadataThread (object state)
         {
             Banshee.Library.LibrarySource library = ServiceManager.SourceManager.Library;
             int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks WHERE SourceID = 1");
             long now = DateTimeUtil.FromDateTime (DateTime.Now);
+
+            if (total <= 0) {
+                return;
+            }
+
+            UserJob job = new UserJob (Catalog.GetString ("Refreshing Metadata"));
+            job.Status = Catalog.GetString ("Scanning...");
+            job.IconNames = new string [] { "system-search", "gtk-find" };
+            job.Register ();
 
             HyenaSqliteCommand select_command = new HyenaSqliteCommand (
                 String.Format (
@@ -505,15 +540,23 @@ namespace Banshee.Database
                     try {
                         track = DatabaseTrackInfo.Provider.Load (reader, 0);
                         TagLib.File file = StreamTagger.ProcessUri (track.Uri);
-                        StreamTagger.TrackInfoMerge (track, file);
+                        StreamTagger.TrackInfoMerge (track, file, true);
                         track.Save ();
+
+                        job.Status = String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle);
                     } catch (Exception e) {
-                        Log.Warning (String.Format ("Failed to update metadata for {0}", track.Uri), e.GetType ().ToString ());
+                        Log.Warning (String.Format ("Failed to update metadata for {0}", track),
+                            e.GetType ().ToString (), false);
                     }
+
+                    job.Progress = (double)++count / (double)total;
                 }
             }
+
+            job.Finish ();
         }
         
 #endregion
+
     }
 }

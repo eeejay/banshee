@@ -32,7 +32,7 @@ using Gtk;
 using Gdk;
 using Pango;
 
-using Hyena.Data.Gui;
+using Hyena.Gui.Theming;
 using Hyena.Gui.Theatrics;
 
 using Banshee.ServiceStack;
@@ -89,20 +89,20 @@ namespace Banshee.Sources.Gui
                 
                 // draw the hot cairo selection
                 if (!view.EditingRow) { 
-                    view.Graphics.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
+                    view.Theme.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
                         background_area.Width - 2, background_area.Height - 2);
                 }
             } else if (path != null && path.Equals (view.HighlightedPath) && view.Cr != null) {
-                view.Graphics.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
+                view.Theme.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
                     background_area.Width - 2, background_area.Height - 2, false);
             } else if (view.NotifyStage.ActorCount > 0 && view.Cr != null) {
                 TreeIter iter;
                 if (view.Model.GetIter (out iter, path) && view.NotifyStage.Contains (iter)) {
                     Actor<TreeIter> actor = view.NotifyStage[iter];
-                    Cairo.Color color = view.Graphics.GetWidgetColor (GtkColorClass.Background, StateType.Active);
+                    Cairo.Color color = view.Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Active);
                     color.A = Math.Sin (actor.Percent * Math.PI);
                         
-                    view.Graphics.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
+                    view.Theme.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
                         background_area.Width - 2, background_area.Height - 2, true, true, color);
                 }
             }

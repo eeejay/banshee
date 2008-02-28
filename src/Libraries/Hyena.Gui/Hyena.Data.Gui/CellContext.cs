@@ -28,6 +28,8 @@
 
 using System;
 
+using Hyena.Gui.Theming;
+
 namespace Hyena.Data.Gui
 {
     public class CellContext
@@ -36,17 +38,17 @@ namespace Hyena.Data.Gui
         private Pango.Layout layout;
         private Gtk.Widget widget;
         private Gdk.Drawable drawable;
-        private ListViewGraphics graphics;
+        private Theme theme;
         private Gdk.Rectangle area;
         
         public CellContext (Cairo.Context context, Pango.Layout layout, Gtk.Widget widget,
-            Gdk.Drawable drawable, ListViewGraphics graphics, Gdk.Rectangle area)
+            Gdk.Drawable drawable, Theme theme, Gdk.Rectangle area)
         {
             this.context = context;
             this.layout = layout;
             this.widget = widget;
             this.drawable = drawable;
-            this.graphics = graphics;
+            this.theme = theme;
             this.area = area;
         }
         
@@ -66,8 +68,8 @@ namespace Hyena.Data.Gui
             get { return drawable; }
         }
 
-        public ListViewGraphics Graphics {
-            get { return graphics; }
+        public Theme Theme {
+            get { return theme; }
         }
 
         public Gdk.Rectangle Area {

@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using Gtk;
 using Cairo;
 
-using Hyena.Data.Gui;
+using Hyena.Gui.Theming;
 using Hyena.Gui.Theatrics;
 
 using Banshee.ServiceStack;
@@ -50,7 +50,7 @@ namespace Banshee.Sources.Gui
     public partial class SourceView : TreeView
     {
         private SourceRowRenderer renderer;
-        private ListViewGraphics graphics;
+        private Theme theme;
         private Cairo.Context cr;
         
         private Stage<TreeIter> notify_stage = new Stage<TreeIter> (2000);
@@ -140,8 +140,8 @@ namespace Banshee.Sources.Gui
         {
             base.OnRealized ();
             
-            graphics = new ListViewGraphics (this);
-            graphics.RefreshColors ();
+            theme = new GtkTheme (this);
+            // theme.RefreshColors ();
         }
 
         protected override bool OnButtonPressEvent (Gdk.EventButton press)
@@ -542,8 +542,8 @@ namespace Banshee.Sources.Gui
             get { return cr; }
         }
         
-        internal ListViewGraphics Graphics {
-            get { return graphics; }
+        internal Theme Theme {
+            get { return theme; }
         }
         
         internal Stage<TreeIter> NotifyStage {

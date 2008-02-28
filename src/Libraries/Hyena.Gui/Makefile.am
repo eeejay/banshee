@@ -16,7 +16,6 @@ SOURCES =  \
 	Hyena.Data.Gui/ListView/ListView_Model.cs \
 	Hyena.Data.Gui/ListView/ListView_Rendering.cs \
 	Hyena.Data.Gui/ListView/ListView_Windowing.cs \
-	Hyena.Data.Gui/ListViewGraphics.cs \
 	Hyena.Data.Gui/ObjectListView.cs \
 	Hyena.Data.Gui/RowActivatedHandler.cs \
 	Hyena.Data.Gui/SortableColumn.cs \
@@ -25,6 +24,10 @@ SOURCES =  \
 	Hyena.Gui.Theatrics/Actor.cs \
 	Hyena.Gui.Theatrics/SingleActorStage.cs \
 	Hyena.Gui.Theatrics/Stage.cs \
+	Hyena.Gui.Theming/GtkColors.cs \
+	Hyena.Gui.Theming/GtkTheme.cs \
+	Hyena.Gui.Theming/Theme.cs \
+	Hyena.Gui.Theming/ThemeContext.cs \
 	Hyena.Gui/CairoExtensions.cs \
 	Hyena.Gui/CleanRoomStartup.cs \
 	Hyena.Gui/EntryEraseAction.cs \

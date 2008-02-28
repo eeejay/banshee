@@ -78,7 +78,7 @@ namespace Banshee.Collection.Gui
             }
             
             ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, true, x, y, pixbuf_size, pixbuf_size, 
-                !is_default, ListViewGraphics.BorderRadius);
+                !is_default, context.Theme.Context.Radius);
                 
             int fl_width = 0, fl_height = 0, sl_width = 0, sl_height = 0;
             

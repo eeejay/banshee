@@ -30,6 +30,8 @@ using System;
 using Gtk;
 using Cairo;
 
+using Hyena.Gui.Theming;
+
 namespace Hyena.Data.Gui
 {
     public class ColumnCellText : ColumnCell
@@ -59,7 +61,7 @@ namespace Hyena.Data.Gui
             if (use_cairo_pango) {
                 context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
                 Pango.CairoHelper.LayoutPath (context.Context, context.Layout);
-                context.Context.Color = context.Graphics.GetWidgetColor (GtkColorClass.Text, state);
+                context.Context.Color = context.Theme.Colors.GetWidgetColor (GtkColorClass.Text, state);
                 context.Context.Fill ();
             } else {
                 Style.PaintLayout(context.Widget.Style, context.Drawable, state, true, context.Area,

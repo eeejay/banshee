@@ -49,6 +49,7 @@ SOURCES =  \
 	Banshee.Gui.Widgets/UserJobTile.cs \
 	Banshee.Gui.Widgets/UserJobTileHost.cs \
 	Banshee.Gui/BansheeActionGroup.cs \
+	Banshee.Gui/BansheeDbFormatMigratorMonitor.cs \
 	Banshee.Gui/BansheeIconFactory.cs \
 	Banshee.Gui/BaseClientWindow.cs \
 	Banshee.Gui/CommonServices.cs \

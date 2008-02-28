@@ -99,6 +99,7 @@
     <File name="Resources/media-repeat-single.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Gui.Widgets/RepeatActionButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/PlaybackRepeatActions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/BansheeDbFormatMigratorMonitor.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />
@@ -114,7 +115,6 @@
     <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
-  <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />
@@ -124,4 +124,5 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
+  <Deployment.LinuxDeployData generateScript="False" />
 </Project>

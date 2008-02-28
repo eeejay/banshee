@@ -29,6 +29,8 @@
 using System;
 using Gtk;
 
+using Hyena.Gui.Theming;
+
 namespace Hyena.Data.Gui
 {
     public partial class ListView<T> : Container
@@ -155,9 +157,9 @@ namespace Hyena.Data.Gui
             
             MoveResizeWindows (Allocation);
             
-            // graphics context for drawing theme parts
-            graphics = new ListViewGraphics (this);
-            graphics.RefreshColors ();
+            // context for drawing theme parts
+            theme = new GtkTheme (this);
+            //graphics.RefreshColors ();
             
             OnDragSourceSet ();
         }
