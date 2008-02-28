@@ -121,4 +121,3 @@ old-code/Plugins/Banshee.Plugins.Radio/banshee-plugin-radio.schemas.in
 old-code/Plugins/Banshee.Plugins.Recommendation/RecommendationPane.cs
 old-code/Plugins/Banshee.Plugins.Recommendation/RecommendationPlugin.cs
 old-code/Plugins/Banshee.Plugins.Recommendation/banshee-plugin-recommendation.schemas.in
-src/Libraries/Lastfm/Lastfm/RadioConnection.cs

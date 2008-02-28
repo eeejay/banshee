@@ -95,3 +95,4 @@ src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs
 src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs
+src/Libraries/Lastfm/Lastfm/RadioConnection.cs

@@ -1,3 +1,8 @@
+2008-02-28  Gabriel Burt  <gabriel.burt@gmail.com>
+	
+	* POTFILES.skip:
+	* POTFILES.in: Move RadioConnection to POTFILES.in
+
 2008-02-28  Jonh Wendell  <jwendell@gnome.org>
 	
 	* POTFILES.in: Updated
