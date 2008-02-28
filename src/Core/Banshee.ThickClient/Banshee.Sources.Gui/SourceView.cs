@@ -147,13 +147,16 @@ namespace Banshee.Sources.Gui
         protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
         {
             TreePath path;
+            TreeViewColumn column;
                        
             if (evnt.Button == 1) {
                 ResetHighlight ();
             }
             
-            if (!GetPathAtPos ((int)evnt.X, (int)evnt.Y, out path)) {
-                return true;
+            // If there is row at the click position, or if the column clicked on was the expander column,
+            // let the base handler take care of it.
+            if (!GetPathAtPos ((int)evnt.X, (int)evnt.Y, out path, out column) || column == ExpanderColumn) {
+                return base.OnButtonPressEvent (evnt);
             }
 
             Source source = GetSource (path);
