@@ -1,3 +1,28 @@
+2008-02-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Base/ThreadAssist.cs: Do not set the
+	main thread automatically and instead require an explicit call to a new
+	InitializeMainThread method just for sanity to avoid possible race 
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Call
+	ThreadAssist.InitializeMainThread
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	Enable the database URI pre-check when importing, minor clean up, 
+	wrap the commits in database transactions, and do an explicit save
+	on the LibraryAlbumInfo (not sure if this is correct)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	Fixed a big threading bug - the actual user job/manager API is designed
+	to be consumed from many threads, and the UI host for the jobs has to
+	manage threading; this fixes some odd UI behavior after library imports
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs: Use
+	generic/type-safe service manager methods
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Some 
+	clean up, remove an anonymous method to make more readable
+
 2008-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Fix up

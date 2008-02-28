@@ -76,6 +76,8 @@ namespace Banshee.Gui
             // Initialize GTK
             Gtk.Application.Init ();
             Gtk.Window.DefaultIconName = default_icon_name;
+
+            ThreadAssist.InitializeMainThread ();
             
             PlatformHacks.GdkSetProgramClass (Application.InternalName);
             

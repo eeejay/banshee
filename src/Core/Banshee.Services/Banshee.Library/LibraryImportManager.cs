@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -97,9 +97,9 @@ namespace Banshee.Library
             
             try {            
                 DatabaseTrackInfo track = AddTrackToLibrary (path);
-                
                 if (track != null && track.DbId > 0) {
-                    IncrementProcessedCount (String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle));
+                    IncrementProcessedCount (String.Format ("{0} - {1}", 
+                        track.DisplayArtistName, track.DisplayTrackTitle));
                 }
             } catch (Exception e) {
                 LogError (path, e);
@@ -116,13 +116,13 @@ namespace Banshee.Library
         {
             DatabaseTrackInfo track = null;
             
-            /*if (DatabaseTrackInfo.ContainsUri (uri)) {
+            if (DatabaseTrackInfo.ContainsUri (uri)) {
                 IncrementProcessedCount (null);
                 return null;
-            }*/
+            }
 
-            //ServiceManager.DbConnection.BeginTransaction ();
-            //try {
+            ServiceManager.DbConnection.BeginTransaction ();
+            try {
                 TagLib.File file = StreamTagger.ProcessUri (uri);
                 track = new DatabaseTrackInfo ();
                 StreamTagger.TrackInfoMerge (track, file);
@@ -132,21 +132,24 @@ namespace Banshee.Library
                     track.Uri = newpath;
                 }
 
-                track.DateAdded = DateTime.Now;
                 LibraryArtistInfo artist = new LibraryArtistInfo (track.ArtistName);
+                LibraryAlbumInfo album = new LibraryAlbumInfo (artist, track.AlbumTitle);
+
                 track.ArtistId = artist.DbId;
-                track.AlbumId = new LibraryAlbumInfo (artist, track.AlbumTitle).DbId;
+                track.AlbumId = album.DbId;
 
-                artist.Save ();
-
+                track.DateAdded = DateTime.Now;
                 track.Source = ServiceManager.SourceManager.Library;
 
+                album.Save ();
+                artist.Save ();
                 track.Save ();
-                //ServiceManager.DbConnection.CommitTransaction ();
-            /*} catch (Exception) {
+
+                ServiceManager.DbConnection.CommitTransaction ();
+            } catch (Exception) {
                 ServiceManager.DbConnection.RollbackTransaction ();
                 throw;
-            }*/
+            }
             
             return track;
         }

@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2006-2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -69,7 +69,7 @@ namespace Banshee.Collection
         private void CreateUserJob ()
         {
             lock (user_job_mutex) {
-                if(user_job != null) {
+                if (user_job != null) {
                     return;
                 }
                 
@@ -86,8 +86,8 @@ namespace Banshee.Collection
         
         private void DestroyUserJob ()
         {
-            lock(user_job_mutex) {
-                if(user_job == null) {
+            lock (user_job_mutex) {
+                if (user_job == null) {
                     return;
                 }
                 
@@ -108,7 +108,7 @@ namespace Banshee.Collection
             double new_progress = (double)processed_count / (double)total_count;
             double old_progress = user_job.Progress;
             
-            if(new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs (new_progress - old_progress) > 0.001) {
+            if (new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs (new_progress - old_progress) > 0.001) {
                 string disp_progress = String.Format (ProgressMessage, processed_count, total_count);
                 
                 user_job.Title = disp_progress;
@@ -119,8 +119,8 @@ namespace Banshee.Collection
         
         private void CheckForCanceled ()
         {
-            lock(user_job_mutex) {
-                if(user_job != null && user_job.IsCancelRequested) {
+            lock (user_job_mutex) {
+                if (user_job != null && user_job.IsCancelRequested) {
                     throw new ImportCanceledException ();  
                 }
             }
@@ -135,7 +135,7 @@ namespace Banshee.Collection
         
         private void Enqueue (string path)
         {
-            if(path_queue.Contains (path)) {
+            if (path_queue.Contains (path)) {
                 return;
             }
             
@@ -148,28 +148,8 @@ namespace Banshee.Collection
         public void QueueSource (UriList uris)
         {
             CreateUserJob ();
-
-            ThreadPool.QueueUserWorkItem (delegate {
-                try {
-                    foreach (string path in uris.LocalPaths) {
-                        Interlocked.Increment (ref scan_ref_count);
-                        ScanForFiles (path);
-                        Interlocked.Decrement (ref scan_ref_count);
-                    }
-                    
-                    if(scan_ref_count == 0) {
-                        ProcessQueue ();
-                    }
-                } catch (ImportCanceledException) {
-                    FinalizeImport ();
-                }
-            });
+            ThreadPool.QueueUserWorkItem (ThreadedQueueSource, uris);
         }
-        
-        // public void QueueSource (Gtk.SelectionData selection)
-        // {
-        //     QueueSource (new UriList (System.Text.Encoding.UTF8.GetString (selection.Data)));
-        // }
         
         public void QueueSource (string source)
         {
@@ -179,6 +159,25 @@ namespace Banshee.Collection
         public void QueueSource (string [] paths)
         {
             QueueSource (new UriList (paths));
+        }
+
+        private void ThreadedQueueSource (object o)
+        {
+            UriList uris = (UriList)o;
+
+            try {
+                foreach (string path in uris.LocalPaths) {
+                    Interlocked.Increment (ref scan_ref_count);
+                    ScanForFiles (path);
+                    Interlocked.Decrement (ref scan_ref_count);
+                }
+                
+                if(scan_ref_count == 0) {
+                    ProcessQueue ();
+                }
+            } catch (ImportCanceledException) {
+                FinalizeImport ();
+            }
         }
         
         private void ScanForFiles (string source)
@@ -201,7 +200,7 @@ namespace Banshee.Collection
             
             if (is_regular_file) {
                 try {
-                    if (!Path.GetFileName (source).StartsWith(".")) {
+                    if (!Path.GetFileName (source).StartsWith (".")) {
                         Enqueue (source);
                     }
                 } catch (System.ArgumentException) {
@@ -248,7 +247,7 @@ namespace Banshee.Collection
             path_queue.Clear ();
             processing_queue = false;
             
-            if(scan_ref_count == 0) {
+            if (scan_ref_count == 0) {
                 DestroyUserJob ();
                 OnImportFinished ();
             }

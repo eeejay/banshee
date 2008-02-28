@@ -35,13 +35,19 @@ namespace Banshee.Base
     {
         private static Thread main_thread;
         
-        static ThreadAssist ()
+        public static void InitializeMainThread ()
         {
             main_thread = Thread.CurrentThread;
         }
         
         public static bool InMainThread {
-            get { return main_thread.Equals (Thread.CurrentThread); }
+            get {
+                if (main_thread == null) {
+                    throw new ApplicationException ("ThreadAssist.InitializeMainThread must be called first");
+                }
+ 
+                return main_thread.Equals (Thread.CurrentThread); 
+            }
         }
         
         public static void ProxyToMain (EventHandler handler)
@@ -49,7 +55,7 @@ namespace Banshee.Base
             if (!InMainThread) {
                 Banshee.ServiceStack.Application.Invoke (handler);
             } else {
-                handler (null, new EventArgs ());
+                handler (null, EventArgs.Empty);
             }
         }
         

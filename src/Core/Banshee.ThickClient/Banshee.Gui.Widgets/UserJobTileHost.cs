@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -93,32 +93,36 @@ namespace Banshee.Gui.Widgets
         
         private void OnJobAdded (object o, UserJobEventArgs args)
         {
-            lock (this) {
-                if (args.Job.DelayShow) {
-                    // Give the Job 1 second to become more than 33% complete
-                    Banshee.ServiceStack.Application.RunTimeout (1000, delegate {
+            ThreadAssist.ProxyToMain (delegate {
+                lock (this) {
+                    if (args.Job.DelayShow) {
+                        // Give the Job 1 second to become more than 33% complete
+                        Banshee.ServiceStack.Application.RunTimeout (1000, delegate {
+                            AddJob (args.Job);
+                            return false;
+                        });
+                    } else {
                         AddJob (args.Job);
-                        return false;
-                    });
-                } else {
-                    AddJob (args.Job);
+                    }
                 }
-            }
+            });
         }
         
         private void OnJobRemoved (object o, UserJobEventArgs args)
         {
-            lock (this) {
-                if (job_tiles.ContainsKey (args.Job)) {
-                    UserJobTile tile = job_tiles[args.Job];
-                    box.Remove (tile);
-                    job_tiles.Remove (args.Job);
+            ThreadAssist.ProxyToMain (delegate {
+                lock (this) {
+                    if (job_tiles.ContainsKey (args.Job)) {
+                        UserJobTile tile = job_tiles[args.Job];
+                        box.Remove (tile);
+                        job_tiles.Remove (args.Job);
+                    }
+    
+                    if (job_tiles.Count <= 0) {
+                        Hide ();
+                    }
                 }
-
-                if (job_tiles.Count <= 0) {
-                    Hide ();
-                }
-            }
+            });
         }
     }
 }
