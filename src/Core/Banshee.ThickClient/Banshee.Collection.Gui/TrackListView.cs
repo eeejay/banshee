@@ -106,7 +106,7 @@ namespace Banshee.Collection.Gui
 
         protected override void ChildClassPostRender (Gdk.EventExpose evnt, Cairo.Context cr, Gdk.Rectangle clip)
         {
-            Gdk.Rectangle rect = new Gdk.Rectangle ();
+            /*Gdk.Rectangle rect = new Gdk.Rectangle ();
             rect.Width = (int)Math.Round (Allocation.Width * 0.65);
             rect.Height = (int)Math.Round (Allocation.Height * 0.50);
             rect.X = (Allocation.Width - rect.Width) / 2;
@@ -118,7 +118,7 @@ namespace Banshee.Collection.Gui
             Theme.DrawFrame (cr, rect, true);
             Theme.PopContext ();
             CairoExtensions.PopGroupToSource (cr);
-            cr.PaintWithAlpha (0.8);
+            cr.PaintWithAlpha (0.8);*/
         }
         
 #region Drag and Drop
