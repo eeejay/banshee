@@ -1,5 +1,10 @@
 2008-02-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Fix
+	calculation figuring out whether or not the click is on the expander.
+
+2008-02-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Base/RateLimiter.cs:
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:

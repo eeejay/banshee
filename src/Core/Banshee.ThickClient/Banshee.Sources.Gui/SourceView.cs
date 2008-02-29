@@ -163,7 +163,8 @@ namespace Banshee.Sources.Gui
             // From F-Spot's SaneTreeView class
             int expander_size = (int) StyleGetProperty ("expander-size");
             int horizontal_separator = (int) StyleGetProperty ("horizontal-separator");
-            bool on_expander = (press.X <= (horizontal_separator / 2 + path.Depth * expander_size));
+            bool on_expander = (press.X <= (horizontal_separator * 2 + path.Depth * expander_size));
+
             if (on_expander) {
                 bool ret = base.OnButtonPressEvent (press);
                 // If the active source is a child of this source, and we are about to collapse it, switch
