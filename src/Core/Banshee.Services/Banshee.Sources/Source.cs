@@ -356,7 +356,7 @@ namespace Banshee.Sources
             }
 
             if (this is IFileSizeAggregator) {
-                long bytes = (this as IFileSizeAggregator).FileSize;
+                long bytes = (this as IFileSizeAggregator).FilteredFileSize;
                 if (bytes > 0) {
                     builder.Append (", ");
                     builder.AppendFormat (new FileSizeQueryValue (bytes).ToUserQuery ());
