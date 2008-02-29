@@ -43,7 +43,6 @@ using Banshee.Collection.Database;
 using Banshee.PlaybackController;
 using Banshee.MediaEngine;
 using Banshee.Configuration;
-using Banshee.Library;
 using Banshee.Gui;
 
 namespace Banshee.PlayQueue

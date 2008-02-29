@@ -93,7 +93,7 @@ namespace Hyena.Query.Gui
 
         private bool IsRowSeparator (TreeModel model, TreeIter iter)
         {
-            return model.GetValue (iter, 0) == String.Empty;
+            return String.IsNullOrEmpty (model.GetValue (iter, 0) as string);
         }
 
         public QueryLimit Limit {

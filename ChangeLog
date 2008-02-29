@@ -1,5 +1,16 @@
 2008-02-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Base/RateLimiter.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs:
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs: Fix warnings.
+
+2008-02-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	Add a Save (bool notify) method so processes that are triggering lots of
 	Save's can avoid notifying the track's PrimarySource until they choose to

@@ -52,7 +52,6 @@ namespace Hyena.Data.Sqlite
 
         private Queue<HyenaSqliteCommand> command_queue = new Queue<HyenaSqliteCommand>();
         private Thread queue_thread;
-        private bool processing_queue = false;
         private volatile bool dispose_requested = false;
         private volatile int results_ready = 0;
         private AutoResetEvent queue_signal = new AutoResetEvent (false);
@@ -266,7 +265,6 @@ namespace Hyena.Data.Sqlite
 
         private void QueueCommand(HyenaSqliteCommand command)
         {
-            bool queued = false;
             while (true) {
                 lock (command_queue) {
                     if (transaction_thread == null || Thread.CurrentThread == transaction_thread) {

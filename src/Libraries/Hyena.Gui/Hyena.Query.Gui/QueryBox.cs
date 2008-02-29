@@ -161,7 +161,7 @@ namespace Hyena.Query.Gui
                             nodes.Add (value);
                             terms_box.QueryNodes = nodes;
                         }
-                    } catch (ArgumentException e) {
+                    } catch (ArgumentException) {
                         complex_query = true;
                         matchesFrame.HideAll ();
                         terms_entry.Text = value.ToUserQuery ();

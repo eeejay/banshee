@@ -39,7 +39,6 @@ namespace Lastfm.Gui
         private AccelGroup accel_group;
         private AccountLoginForm login_form;
         private Label message;
-        private Account account;
     
         public AccountLoginDialog (Account account) : this (account, false)
         {
@@ -47,8 +46,6 @@ namespace Lastfm.Gui
     
         public AccountLoginDialog (Account account, bool addCloseButton) : base ()
         {
-            this.account = account;
-
             Title = Catalog.GetString ("Last.fm Account Login");
             HasSeparator = false;
             BorderWidth = 5;

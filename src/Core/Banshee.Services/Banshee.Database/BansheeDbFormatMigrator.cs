@@ -513,9 +513,7 @@ namespace Banshee.Database
 
         private void RefreshMetadataThread (object state)
         {
-            Banshee.Library.LibrarySource library = ServiceManager.SourceManager.Library;
             int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks WHERE SourceID = 1");
-            long now = DateTimeUtil.FromDateTime (DateTime.Now);
 
             if (total <= 0) {
                 return;

@@ -41,7 +41,6 @@ namespace Lastfm.Gui
         private Entry password_entry;
         private LinkButton signup_button;
         
-        private bool is_destroyed = false;
         private bool save_on_edit = false;
 
         public AccountLoginForm (Account account) : base (2, 2, false)
@@ -93,7 +92,6 @@ namespace Lastfm.Gui
             }
             
             base.OnDestroyed ();
-            is_destroyed = true;
         }
         
         public void AddSignUpButton ()

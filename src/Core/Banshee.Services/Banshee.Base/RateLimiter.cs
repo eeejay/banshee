@@ -45,8 +45,6 @@ namespace Banshee.Base
         private double requested_interval;
         private bool executing = false;
 
-        private string name;
-
         public RateLimiter (double min_interval_ms, RateLimitedMethod method) : this (0.0, min_interval_ms, method)
         {
         }
