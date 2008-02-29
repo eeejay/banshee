@@ -94,6 +94,8 @@ namespace Banshee.Library
                 IncrementProcessedCount (null);
                 return;
             }
+
+            ServiceManager.SourceManager.Library.Importing = true;
             
             try {            
                 DatabaseTrackInfo track = AddTrackToLibrary (path);
@@ -173,6 +175,7 @@ namespace Banshee.Library
 
         protected override void OnImportFinished ()
         {
+            ServiceManager.SourceManager.Library.Importing = false;
             base.OnImportFinished ();
         }
         

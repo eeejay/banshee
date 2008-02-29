@@ -277,7 +277,7 @@ namespace Banshee.SmartPlaylist
 
 #region DatabaseSource overrides
 
-        protected override void RateLimitedReload ()
+        public override void RateLimitedReload ()
         {
             // Wipe the member list clean
             ServiceManager.DbConnection.Execute (String.Format (

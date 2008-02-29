@@ -321,10 +321,7 @@ namespace Banshee.Gui
             PlaylistSource playlist = new PlaylistSource ("New Playlist");
             playlist.Save ();
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
-
-            ThreadAssist.Spawn (delegate {
-                playlist.AddSelectedTracks (TrackSelector.TrackModel);
-            });
+            playlist.AddSelectedTracks (TrackSelector.TrackModel);
         }
 
         private void OnAddToExistingPlaylist (object o, EventArgs args)
@@ -334,7 +331,7 @@ namespace Banshee.Gui
 
         private void OnRemoveTracks (object o, EventArgs args)
         {
-            ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
+            ITrackModelSource source = ActiveSource as ITrackModelSource;
 
             if (!ConfirmRemove (source, false, source.TrackModel.Selection.Count))
                 return;
@@ -346,7 +343,7 @@ namespace Banshee.Gui
 
         private void OnRemoveTracksFromLibrary (object o, EventArgs args)
         {
-            ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
+            ITrackModelSource source = ActiveSource as ITrackModelSource;
 
             if (source != null) {
                 LibrarySource library = source.Parent as LibrarySource;
@@ -360,7 +357,7 @@ namespace Banshee.Gui
 
         private void OnDeleteTracksFromDrive (object o, EventArgs args)
         {
-            ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
+            ITrackModelSource source = ActiveSource as ITrackModelSource;
 
             if (!ConfirmRemove (source, true, source.TrackModel.Selection.Count))
                 return;
@@ -380,19 +377,12 @@ namespace Banshee.Gui
                 }
             }
 
-            int rating = rating_proxy.LastRating;
-            foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
-                if (track != null) {
-                    track.Rating = rating;
-                    track.Save ();
-                }
-            }
+            (ActiveSource as DatabaseSource).RateSelectedTracks (rating_proxy.LastRating);
         }
 
         private void OnSearchForSameArtist (object o, EventArgs args)
         {
-            Source source = ServiceManager.SourceManager.ActiveSource;
-            // ITrackModelSource track_source = source as ITrackModelSource; FIXME: What? --Aaron
+            Source source = ActiveSource;
             foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
                 source.FilterQuery = BansheeQuery.ArtistField.ToTermString (":", track.ArtistName);
                 break;
@@ -401,8 +391,7 @@ namespace Banshee.Gui
 
         private void OnSearchForSameAlbum (object o, EventArgs args)
         {
-            Source source = ServiceManager.SourceManager.ActiveSource;
-            // ITrackModelSource track_source = source as ITrackModelSource; FIXME: What? --Aaron
+            Source source = ActiveSource;
             foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
                 source.FilterQuery = BansheeQuery.AlbumField.ToTermString (":", track.AlbumTitle);
                 break;

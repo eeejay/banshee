@@ -1,3 +1,53 @@
+2008-02-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Add a Save (bool notify) method so processes that are triggering lots of
+	Save's can avoid notifying the track's PrimarySource until they choose to
+	- eg in the metadata refresh process.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Add comment to PRAGMA cache_size call.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add indices to Core[Smart]PlaylistEntries, and use track.Save (false) when
+	updating the metadata.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Set
+	Library.Importing = true/false around the import process.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add
+	ReloadChildren method.  Add RateSelectedTracks method.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add
+	Importing property that when set true increases the period between
+	TrackUpdated calls to 5 s (from the normal 0.25 s).  Fix bug where Reload
+	always reloaded all children - not something we want to do when the user
+	is searching, say.  Explicitly call ReloadChildren where needed.
+
+	* src/Core/Banshee.Services/Banshee.Base/RateLimiter.cs: Make more thread
+	safe.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Add an
+	ActiveSource convenience property.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Use
+	ActiveSource property.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Use new
+	ActiveSource property, and call RateSelectedTracks to rate entire
+	selection Ranges at a time - much much faster.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Make
+	Execute and WaitForResult internal methods.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Put
+	locks on the current command around Query/Execute calls to prevent a
+	thread from calling the same command before an earlier thread gets its
+	result.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Avoid
+	checking the cache table more times than necessary.
+
 2008-02-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Added a new

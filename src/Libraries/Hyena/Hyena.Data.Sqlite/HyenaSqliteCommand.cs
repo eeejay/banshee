@@ -59,7 +59,7 @@ namespace Hyena.Data.Sqlite
         }
 
         private HyenaCommandType command_type;
-        public HyenaCommandType CommandType {
+        internal HyenaCommandType CommandType {
             get { return command_type; }
             set { command_type = value; }
         }
@@ -77,15 +77,18 @@ namespace Hyena.Data.Sqlite
             ApplyValues (param_values);
         }
 
-        public void Execute (SqliteConnection connection)
+        internal void Execute (SqliteConnection connection)
         {
-            finished = false;
+            if (finished) {
+                throw new Exception ("Command is already set to finished; result needs to be claimed before command can be rerun");
+            }
+
             execution_exception = null;
             result = null;
 
             SqliteCommand sql_command = new SqliteCommand (CurrentSqlText ());
             sql_command.Connection = connection;
-            //Log.Debug ("Executing {0}", sql_command.CommandText);
+            //Log.DebugFormat ("Executing {0}", sql_command.CommandText);
 
             try {
                 switch (command_type) {
@@ -117,18 +120,22 @@ namespace Hyena.Data.Sqlite
                 conn.ResultReadySignal.WaitOne ();
             }
 
+            object ret = result;
+            
+            // Reset to false in case run again
+            finished = false;
+
             conn.ClaimResult ();
 
             if (execution_exception != null) {
                 throw execution_exception;
             }
             
-            return result;
+            return ret;
         }
 
         public HyenaSqliteCommand ApplyValues (params object [] param_values)
         {
-            finished = false;
             if (command_format == null) {
                 CreateParameters ();
             }

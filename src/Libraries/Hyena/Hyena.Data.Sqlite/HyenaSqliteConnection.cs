@@ -78,9 +78,11 @@ namespace Hyena.Data.Sqlite
         // SELECT multiple column queries
         public IDataReader Query (HyenaSqliteCommand command)
         {
-            command.CommandType = HyenaCommandType.Reader;
-            QueueCommand(command);
-            return command.WaitForResult (this) as SqliteDataReader;
+            lock (command) {
+                command.CommandType = HyenaCommandType.Reader;
+                QueueCommand(command);
+                return command.WaitForResult (this) as SqliteDataReader;
+            }
         }
 
         public IDataReader Query (string command_str, params object [] param_values)
@@ -96,9 +98,12 @@ namespace Hyena.Data.Sqlite
         // SELECT single column queries
         public T Query<T> (HyenaSqliteCommand command)
         {
-            command.CommandType = HyenaCommandType.Scalar;
-            QueueCommand(command);
-            object result = command.WaitForResult (this);
+            object result = null;
+            lock (command) {
+                command.CommandType = HyenaCommandType.Scalar;
+                QueueCommand(command);
+                result = command.WaitForResult (this);
+            }
 
             return result == null 
                 ? default (T)
@@ -118,9 +123,11 @@ namespace Hyena.Data.Sqlite
         // INSERT, UPDATE, DELETE queries
         public int Execute (HyenaSqliteCommand command)
         {
-            command.CommandType = HyenaCommandType.Execute;;
-            QueueCommand(command);
-            return (int) command.WaitForResult (this);
+            lock (command) {
+                command.CommandType = HyenaCommandType.Execute;;
+                QueueCommand(command);
+                return (int) command.WaitForResult (this);
+            }
         }
 
         public int Execute (string command_str, params object [] param_values)

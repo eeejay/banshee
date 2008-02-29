@@ -359,10 +359,11 @@ namespace Banshee.Database
                 CREATE TABLE CorePlaylistEntries (
                     EntryID             INTEGER PRIMARY KEY,
                     PlaylistID          INTEGER NOT NULL,
-                    TrackID             INTEGER NOT NULL ON CONFLICT IGNORE,
+                    TrackID             INTEGER NOT NULL,
                     ViewOrder           INTEGER NOT NULL DEFAULT 0
                 )
             ");
+            Execute("CREATE INDEX CorePlaylistEntriesIndex ON CorePlaylistEntries(PlaylistID, EntryID)");
             
             Execute(@"
                 CREATE TABLE CoreSmartPlaylists (
@@ -381,6 +382,7 @@ namespace Banshee.Database
                     TrackID             INTEGER NOT NULL
                 )
             ");
+            Execute("CREATE INDEX CoreSmartPlaylistEntriesIndex ON CoreSmartPlaylistEntries(SmartPlaylistID, TrackID)");
 
             Execute(@"
                 CREATE TABLE CoreCacheModels (
@@ -483,7 +485,7 @@ namespace Banshee.Database
             if (args.Service is UserJobManager) {
                 ServiceManager.ServiceStarted -= OnServiceStarted;
                 if (ServiceManager.SourceManager.Library != null) {
-                    Application.RunTimeout (3000, RefreshMetadata);
+                    RefreshMetadataDelayed ();
                 } else {
                     ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
                 }
@@ -541,7 +543,7 @@ namespace Banshee.Database
                         track = DatabaseTrackInfo.Provider.Load (reader, 0);
                         TagLib.File file = StreamTagger.ProcessUri (track.Uri);
                         StreamTagger.TrackInfoMerge (track, file, true);
-                        track.Save ();
+                        track.Save (false);
 
                         job.Status = String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle);
                     } catch (Exception e) {
@@ -552,6 +554,7 @@ namespace Banshee.Database
                     job.Progress = (double)++count / (double)total;
                 }
             }
+            ServiceManager.SourceManager.Library.OnTracksUpdated ();
 
             job.Finish ();
         }

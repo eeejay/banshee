@@ -88,6 +88,10 @@ namespace Banshee.Gui
             }
         }
 
+        public Source ActiveSource {
+            get { return ServiceManager.SourceManager.ActiveSource; }
+        }
+
         public Gtk.Window PrimaryWindow {
             get { return ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow; }
         }

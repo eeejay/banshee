@@ -32,6 +32,7 @@ using System.Collections.Generic;
 
 using Mono.Unix;
 using Hyena.Data;
+using Hyena.Data.Sqlite;
 using Hyena.Collections;
 
 using Banshee.Base;
@@ -50,6 +51,8 @@ namespace Banshee.Sources
         protected AlbumListDatabaseModel album_model;
         protected ArtistListDatabaseModel artist_model;
 
+        protected HyenaSqliteCommand rate_track_range_command;
+
         protected RateLimiter reload_limiter;
         
         public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order)
@@ -58,6 +61,11 @@ namespace Banshee.Sources
             track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, uuid);
             album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
             artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
+            rate_track_range_command= new HyenaSqliteCommand (String.Format (@"
+                UPDATE CoreTracks SET Rating = ? WHERE TrackID IN (
+                    SELECT ItemID FROM CoreCache WHERE ModelID = {0} LIMIT ?, ?)",
+                track_model.CacheId
+            ));
             reload_limiter = new RateLimiter (50.0, RateLimitedReload);
         }
 
@@ -92,7 +100,7 @@ namespace Banshee.Sources
                 base.FilterQuery = value;
                 track_model.Filter = value;
                 track_model.Refilter ();
-                RateLimitedReload ();
+                Reload ();
             }
         }
 
@@ -134,20 +142,33 @@ namespace Banshee.Sources
 
         public void Reload (double min_interval_ms)
         {
-            reload_limiter.Execute (min_interval_ms);
+            ThreadAssist.SpawnFromMain (delegate {
+                reload_limiter.Execute (min_interval_ms);
+            });
         }
 
         public void Reload ()
         {
-            reload_limiter.Execute (100.0);
+            ThreadAssist.SpawnFromMain (delegate {
+                reload_limiter.Execute (100.0);
+            });
         }
 
-        protected virtual void RateLimitedReload ()
+        public virtual void RateLimitedReload ()
         {
             track_model.Reload ();
             artist_model.Reload ();
             album_model.Reload ();
             OnUpdated ();
+        }
+
+        protected virtual void ReloadChildren ()
+        {
+            foreach (Source child in Children) {
+                if (child is ITrackModelSource) {
+                    (child as ITrackModelSource).Reload ();
+                }
+            }
         }
 
         public virtual void RemoveTrack (int index)
@@ -192,6 +213,26 @@ namespace Banshee.Sources
             WithTrackSelection (model, DeleteTrackRange);
         }
 
+        public virtual void RateSelectedTracks (int rating)
+        {
+            RateSelectedTracks (track_model, rating);
+        }
+
+        public virtual void RateSelectedTracks (TrackListDatabaseModel model, int rating)
+        {
+            Selection selection = model.Selection;
+            if (selection.Count == 0)
+                return;
+
+            lock (model) {
+                foreach (RangeCollection.Range range in selection.Ranges) {
+                    RateTrackRange (model, range, rating);
+                }
+                Reload ();
+                ReloadChildren ();
+            }
+        }
+
 #endregion
         
 #region Protected Methods
@@ -213,17 +254,24 @@ namespace Banshee.Sources
             throw new NotImplementedException(); 
         }
 
+        protected virtual void RateTrackRange (TrackListDatabaseModel model, RangeCollection.Range range, int rating)
+        {
+            rate_track_range_command.ApplyValues (rating, range.Start, range.End - range.Start + 1);
+            ServiceManager.DbConnection.Execute (rate_track_range_command);
+        }
+
         protected void WithTrackSelection (TrackListDatabaseModel model, TrackRangeHandler handler)
         {
             Selection selection = model.Selection;
             if (selection.Count == 0)
                 return;
 
-            lock (track_model) {
+            lock (model) {
                 foreach (RangeCollection.Range range in selection.Ranges) {
                     handler (model, range);
                 }
                 Reload ();
+                ReloadChildren ();
             }
         }
 

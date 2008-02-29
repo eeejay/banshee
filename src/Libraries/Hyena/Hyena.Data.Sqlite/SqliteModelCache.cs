@@ -215,8 +215,13 @@ namespace Hyena.Data.Sqlite
             }
         }
 
+        private static string checked_cache_table;
         private void CheckCacheTable ()
         {
+            if (CacheTableName == checked_cache_table) {
+                return;
+            }
+
             if (!connection.TableExists (CacheTableName)) {
                 connection.Execute (String.Format (@"
                     CREATE TABLE {0} (
@@ -232,6 +237,8 @@ namespace Hyena.Data.Sqlite
                     CacheModelsTableName
                 ));
             }
+
+            checked_cache_table = CacheTableName;
         }
     }
 }

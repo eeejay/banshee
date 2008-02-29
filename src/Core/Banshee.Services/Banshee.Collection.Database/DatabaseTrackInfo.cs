@@ -71,9 +71,16 @@ namespace Banshee.Collection.Database
 
         public override void Save ()
         {
+            Save (true);
+        }
+
+        public void Save (bool notify)
+        {
             DateUpdated = DateTime.Now;
             Provider.Save (this);
-            Source.OnTracksUpdated ();
+            if (notify) {
+                Source.OnTracksUpdated ();
+            }
         }
         
         [DatabaseColumn ("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]

@@ -58,6 +58,15 @@ namespace Banshee.Base
                 handler (null, EventArgs.Empty);
             }
         }
+
+        public static void SpawnFromMain (ThreadStart threadedMethod)
+        {
+            if (InMainThread) {
+                Spawn (threadedMethod, true);
+            } else {
+                threadedMethod ();
+            }
+        }
         
         public static Thread Spawn (ThreadStart threadedMethod, bool autoStart)
         {

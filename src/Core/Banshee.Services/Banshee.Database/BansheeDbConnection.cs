@@ -46,8 +46,9 @@ namespace Banshee.Database
 
         public BansheeDbConnection () : base (DatabaseFile)
         {
-            Execute ("PRAGMA synchronous = OFF;");
+            // Each cache page is about 1.5K, so 32768 pages = 49152K = 48M
             Execute ("PRAGMA cache_size = 32768;");
+            Execute ("PRAGMA synchronous = OFF;");
 
             migrator = new BansheeDbFormatMigrator (this);
         }

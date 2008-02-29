@@ -59,7 +59,7 @@ namespace Banshee.Gui
         }
 
         public Source ActionSource {
-            get { return SourceView.HighlightedSource ?? ServiceManager.SourceManager.ActiveSource; }
+            get { return SourceView.HighlightedSource ?? ActiveSource; }
         }
         
         public SourceActions (InterfaceActionService actionService) : base ("Source")

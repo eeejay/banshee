@@ -47,6 +47,7 @@ namespace Banshee.Sources
         protected ErrorSource error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
         protected bool error_source_visible = false;
         protected RateLimiter tracks_updated_limiter;
+        private double tracks_updated_ms = 250.0;
 
         protected HyenaSqliteCommand remove_range_command = new HyenaSqliteCommand (@"
             DELETE FROM CoreTracks WHERE TrackID IN
@@ -94,33 +95,34 @@ namespace Banshee.Sources
             error_source.Updated += OnErrorSourceUpdated;
             OnErrorSourceUpdated (null, null);
 
-            tracks_updated_limiter = new RateLimiter (50.0, 500.0, RateLimitedOnTracksUpdated);
+            tracks_updated_limiter = new RateLimiter (20.0, tracks_updated_ms, RateLimitedOnTracksUpdated);
 
             primary_sources[source_id] = this;
         }
 
+        public bool Importing {
+            set { tracks_updated_ms = value ? 5000.0 : 250.0; }
+        }
+
         public void OnTracksUpdated ()
         {
-            tracks_updated_limiter.Execute ();
+            ThreadAssist.Spawn (delegate {
+                tracks_updated_limiter.Execute (tracks_updated_ms);
+            });
         }
 
         protected virtual void RateLimitedOnTracksUpdated ()
         {
-            Reload ();
+            RateLimitedReload ();
+            foreach (Source child in Children) {
+                if (child is DatabaseSource) {
+                    (child as DatabaseSource).RateLimitedReload ();
+                }
+            }
 
             EventHandler handler = TracksUpdated;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
-            }
-        }
-
-        protected override void RateLimitedReload ()
-        {
-            base.RateLimitedReload ();
-            foreach (Source child in Children) {
-                if (child is ITrackModelSource) {
-                    (child as ITrackModelSource).Reload ();
-                }
             }
         }
 
@@ -140,6 +142,7 @@ namespace Banshee.Sources
             remove_track_command.ApplyValues (track.DbId);
             ServiceManager.DbConnection.Execute (remove_track_command);
             Reload ();
+            ReloadChildren ();
         }
 
         /*public override void RemoveTracks (IEnumerable<TrackInfo> tracks)
