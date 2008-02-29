@@ -44,6 +44,7 @@ namespace Banshee.Lastfm.Radio
         private StationSource station;
         private Track track;
         private bool loved, hated;
+        private string trackauth;
 
         public LastfmTrackInfo ()
         {
@@ -62,10 +63,15 @@ namespace Banshee.Lastfm.Radio
         public bool Hated {
             get { return hated; }
         }
+        
+        public string TrackAuth {
+            get { return trackauth; }
+        }
 
-        public LastfmTrackInfo (Track track, StationSource station)
+        public LastfmTrackInfo (Track track, StationSource station, string trackauth)
         {
             this.station = station;
+            this.trackauth = trackauth;
             Uri = new SafeUri (track.Locations[0]);
             ArtistName = track.Creator;
             TrackTitle = track.Title;

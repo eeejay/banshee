@@ -49,6 +49,8 @@ namespace Media.Playlists.Xspf
         
         private Playlist parent;
         
+        private XmlNode ctor_node;
+        
         public Track()
         {
         }
@@ -67,6 +69,8 @@ namespace Media.Playlists.Xspf
             }
             
             LoadBase(node, xmlns);
+            
+            ctor_node = node;
             
             album = XmlUtil.ReadString(node, xmlns, "xspf:album");
 
@@ -88,6 +92,18 @@ namespace Media.Playlists.Xspf
             foreach(Uri uri in locations) {
                 writer.WriteElementString("location", uri.AbsoluteUri);
             }
+        }
+        
+        // XXX: Better solution could probably be achieved?
+        public string GetExtendedValue (string key)
+        {
+            foreach (XmlNode n in ctor_node) {
+                if (n.LocalName == key) {                    
+                    return n.InnerText;
+                }
+            }
+            
+            return null;
         }
         
         public Uri GetLocationAt(int position)

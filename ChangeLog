@@ -1,3 +1,27 @@
+2008-02-29  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmTrackInfo.cs:
+	Modify the LastfmTrackInfo object, and add in the new trackauth variable
+	in the constructor and associated property. We get the trackauth value
+	from the track returned from Last.fm (lastfm:trackauth).
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Only submit NowPlaying tracks if the track is more than 30 seconds in length
+	and the user has enabled scrobbling of tracks.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs:
+	Support the new TrackAuth property in LastfmTrackInfo, submit that and the
+	correct source code if the track was from radio, otherwise say it was from
+	the library.
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Lots of cleanups
+	to do with HACKING guidelines, trying to send stuff when we're not allowed
+	to (ie not connected), and *heaps* of logic/name cleanups. 
+
+	* src/Libraries/Mono.Media/Media.Playlists.Xspf/Track.cs: Expose some lame
+	kind of method to get extra key values.
+
 2008-02-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Fix

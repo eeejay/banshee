@@ -340,7 +340,7 @@ namespace Banshee.Lastfm.Radio
                     } else {
                         List<TrackInfo> new_tracks = new List<TrackInfo> ();
                         foreach (Media.Playlists.Xspf.Track track in playlist.Tracks) {
-                            TrackInfo ti = new LastfmTrackInfo (track, this);
+                            TrackInfo ti = new LastfmTrackInfo (track, this, track.GetExtendedValue ("trackauth"));
                             new_tracks.Add (ti);
                             lock (track_model) {
                                 track_model.Add (ti);

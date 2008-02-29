@@ -209,8 +209,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                 track.ArtistName != "" && track.TrackTitle != "" &&
                 (st.PlayTime >  track.Duration.TotalMilliseconds / 2 || st.PlayTime > 240 * 1000)) {
                     if (!connection.Started) {
-                        // Lazy-connect.
-                        connection.Connect ();
+                        connection.Start ();
                     }
                     
                     queue.Add (track, song_start_time);
@@ -231,7 +230,9 @@ namespace Banshee.Lastfm.Audioscrobbler
                     queued = false;
 
                     // Queue as now playing
-                    if (last_track != null) {
+                    if (last_track != null && last_track.Duration.TotalSeconds > 30 &&
+                        (actions["AudioscrobblerEnableAction"] as ToggleAction).Active) {
+                        
                         connection.NowPlaying (last_track.ArtistName, last_track.TrackTitle,
                             last_track.AlbumTitle, last_track.Duration.TotalSeconds, last_track.TrackNumber);
                     }
