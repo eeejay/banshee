@@ -137,23 +137,7 @@ namespace Banshee.PlayerMigration
                          string artist = (string) reader[3];
                          
                          // the following fields are not critical and can be skipped if something goes wrong
-                         string genre = reader[4] as string;
-                         string album = reader[5] as string;
-                         int year = 0, rating = 0, playcount = 0;
-                         uint track_number = 0;
-                         TimeSpan duration = TimeSpan.Zero;
-
-                         try {
-                             year = Int32.Parse ((string) reader[6]);
-                         } catch (Exception) {}
-
-                         try {
-                             track_number = Convert.ToUInt32 ((long) reader[7]);
-                         } catch (Exception) {}
-
-                         try {
-                             duration = TimeSpan.FromSeconds ((int) reader[8]);
-                         } catch (Exception) {}
+                         int rating = 0, playcount = 0;
 
                          // Try to read stats
                          try {
@@ -203,7 +187,7 @@ namespace Banshee.PlayerMigration
                      reader.Close ();
                      conn.Close ();
                  } catch (Exception) {}
-            } catch (Exception e) {
+            } catch (Exception) {
                 LogError (library_path, "Importing from Amarok database failed");
             }
         }
