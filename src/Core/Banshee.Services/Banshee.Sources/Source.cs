@@ -31,6 +31,7 @@ using System.Reflection;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 using Mono.Unix;
 
@@ -44,9 +45,10 @@ namespace Banshee.Sources
 {
     public abstract class Source : ISource
     {
-        private Source parent;        
+        private Source parent;
         private PropertyStore properties = new PropertyStore ();
         private List<Source> child_sources = new List<Source> ();
+        private ReadOnlyCollection<Source> read_only_children;
 
         public event EventHandler Updated;
         public event EventHandler UserNotifyUpdated;
@@ -67,6 +69,7 @@ namespace Banshee.Sources
             }
 
             properties.PropertyChanged += OnPropertyChanged;
+            read_only_children = new ReadOnlyCollection<Source> (child_sources);
         }
         
         protected void OnSetupComplete ()
@@ -249,8 +252,8 @@ namespace Banshee.Sources
         
 #region Public Properties
         
-        public ICollection<Source> Children {
-            get { return child_sources; }
+        public ReadOnlyCollection<Source> Children {
+            get { return read_only_children; }
         }
         
         string [] ISource.Children {

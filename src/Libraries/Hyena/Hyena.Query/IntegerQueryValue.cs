@@ -64,7 +64,7 @@ namespace Hyena.Query
             SetValue ((long) value);
         }
 
-        public void SetValue (long value)
+        public virtual void SetValue (long value)
         {
             this.value = value;
             IsEmpty = false;

@@ -111,5 +111,17 @@ namespace Banshee.Playlist
 
         protected abstract void Create ();
         protected abstract void Update ();
+        
+        public override bool Equals (object o)
+        {
+            AbstractPlaylistSource source = o as AbstractPlaylistSource;
+            return source != null && source.DbId == DbId;
+        }
+
+        public override int GetHashCode ()
+        {
+            return DbId.GetHashCode ();
+        }
+
     }
 }

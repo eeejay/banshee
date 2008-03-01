@@ -117,7 +117,7 @@
     <File name="Banshee.Base/ThreadAssist.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Query/BansheeQuery.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Query/NaturalIntegerQueryValue.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Query/PlaylistQueryValue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Query/AbstractPlaylistQueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Query/RatingQueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Query/SmartPlaylistQueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Query/YearQueryValue.cs" subtype="Code" buildaction="Compile" />
@@ -125,6 +125,7 @@
     <File name="Banshee.PlayerMigration/AmarokPlayerImportSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Library/ThreadPoolImportSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/IInitializeService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Query/PlaylistQueryValue.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -139,6 +140,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="TagLib, Version=0.0.0.0, Culture=neutral" />
   </References>
+  <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />
@@ -148,5 +150,4 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
-  <Deployment.LinuxDeployData generateScript="False" />
 </Project>

@@ -36,6 +36,7 @@ SOURCES =  \
 	Hyena.Query/AliasedObjectSet.cs \
 	Hyena.Query/DateQueryValue.cs \
 	Hyena.Query/FileSizeQueryValue.cs \
+	Hyena.Query/IntegerKeyedObjectQueryValue.cs \
 	Hyena.Query/IntegerQueryValue.cs \
 	Hyena.Query/QueryField.cs \
 	Hyena.Query/QueryFieldSet.cs \

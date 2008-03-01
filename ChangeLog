@@ -1,3 +1,48 @@
+2008-03-01  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	  Implements new HasDepenencies property.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ITrackModelSource.cs: Added
+	  HasDependencies property.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: The public Children
+	  property is now a ReadOnlyCollection<Source> since other code has no
+	  business modifying the collection directly.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: No longer
+	  reload a child source if it has dependencies (the dependencies will
+	  trigger a reload of the source which depends on them).
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	  Overrided Equals and GetHashCode to compare DbId.
+
+	* src/Core/Banshee.Services/Banshee.Query/SmartPlaylistQueryValue.cs:
+	  Implements new abstract member Resolve(). Used to turn a DbId into a
+	  SmartPlaylistSource.
+
+	* src/Core/Banshee.Services/Banshee.Query/PlaylistQueryValue.cs: Implements
+	  new abstract memeber Resolve () (right now it just returns null b/c we
+	  don't use the ObjectValue of a PlaylistQueryValue. In the future, this
+	  may change).
+
+	* src/Core/Banshee.Services/Banshee.Query/AbstractPlaylistQueryValue.cs:
+	  Added abstract query value to handle the OperatorSet overload used by
+	  both SmartPlaylistQueryValue and PlaylistQueryValue.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs: Made
+	  to use generics and addded GetSmartPlaylistFromDbId () method.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	  Now keeps track of SmartPlaylistSources on which it depends. Used for
+	  listening to dependencies' Update events.
+
+	* src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs: SetValue made
+	  virtual.
+
+	* src/Libraries/Hyena/Hyena.Query/IntegerKeyedObjectQueryValue.cs: New
+	  abstract class which allows an IntegerObjectValue to map to an object.
+
 2008-02-29  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:

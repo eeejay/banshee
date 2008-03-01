@@ -57,6 +57,9 @@ namespace Banshee.SmartPlaylist
         private QueryOrder query_order;
         private QueryLimit limit;
         private IntegerQueryValue limit_value;
+        
+        private List<SmartPlaylistSource> dependencies = new List<SmartPlaylistSource>();
+        
 
 #region Properties
 
@@ -139,10 +142,9 @@ namespace Banshee.SmartPlaylist
                 return (Limit != null && LimitValue != null && !LimitValue.IsEmpty && QueryOrder != null);
             }
         }
-
-        // FIXME scan ConditionTree for playlist fields
-        public bool PlaylistDependent {
-            get { return false; }
+        
+        public override bool HasDependencies {
+            get { return dependencies.Count > 0; }
         }
 
         // FIXME scan ConditionTree for date fields
@@ -167,6 +169,7 @@ namespace Banshee.SmartPlaylist
             LimitValue = limit_value;
 
             InstallProperties ();
+            UpdateDependencies ();
         }
 
         // For existing smart playlists that we're loading from the database
@@ -184,6 +187,7 @@ namespace Banshee.SmartPlaylist
             DbId = dbid;
 
             InstallProperties ();
+            UpdateDependencies ();
 
             //Globals.Library.TrackRemoved += OnLibraryTrackRemoved;
 
@@ -212,32 +216,46 @@ namespace Banshee.SmartPlaylist
 
         public bool DependsOn (SmartPlaylistSource source)
         {
-            return DependsOn (source, ConditionTree);
-        }
-
-        private bool DependsOn (SmartPlaylistSource source, QueryNode node)
-        {
-            if (node == null) {
-                return false;
-            }
-
-            if (node is QueryListNode) {
-                foreach (QueryNode child in (node as QueryListNode).Children) {
-                    if (DependsOn (source, child)) {
-                        return true;
-                    }
-                }
-            } else {
-                QueryTermNode term = node as QueryTermNode;
-                if (term.Field == BansheeQuery.SmartPlaylistField) {
-                    if ((term.Value as IntegerQueryValue).IntValue == source.DbId)
-                        return true;
-                }
-            }
-
+            dependencies.Contains (source);
             return false;
         }
 
+#endregion
+        
+#region Private Methods
+        
+        private void UpdateDependencies (QueryNode node)
+        {
+            if (node is QueryListNode) {
+                foreach (QueryNode child in (node as QueryListNode).Children) {
+                    UpdateDependencies (child);
+                }
+            } else {
+                QueryTermNode term = node as QueryTermNode;
+                if (term != null && term.Field == BansheeQuery.SmartPlaylistField) {
+                    SmartPlaylistSource s = (term.Value as SmartPlaylistQueryValue).ObjectValue;
+                    s.Updated += OnDependencyUpdated;
+                    dependencies.Add (s);
+                }
+            }
+        }
+        
+        private void UpdateDependencies ()
+        {
+            foreach (SmartPlaylistSource s in dependencies) {
+                s.Updated -= OnDependencyUpdated;
+            }
+            
+            dependencies.Clear ();
+            
+            UpdateDependencies (ConditionTree);
+        }
+        
+        private void OnDependencyUpdated (object sender, EventArgs args)
+        {
+            RateLimitedReload ();
+        }
+        
 #endregion
 
 #region AbstractPlaylist overrides
@@ -253,6 +271,7 @@ namespace Banshee.SmartPlaylist
                 IsLimited ? LimitValue.ToSql () : null,
                 IsLimited ? Limit.Name : null
             ));
+            UpdateDependencies ();
         }
 
         protected override void Update ()
@@ -271,6 +290,7 @@ namespace Banshee.SmartPlaylist
                 IsLimited ? Limit.Name : null,
                 DbId
             ));
+            UpdateDependencies ();
         }
 
 #endregion

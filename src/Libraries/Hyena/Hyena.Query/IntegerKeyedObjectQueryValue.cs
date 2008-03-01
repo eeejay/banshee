@@ -1,5 +1,5 @@
 //
-// PlaylistQueryValue.cs
+// IntegerKeyedObjectQueryValue.cs
 //
 // Authors:
 //   Scott Peterson <lunchtimemama@gmail.com>
@@ -27,17 +27,28 @@
 //
 
 using System;
-using Hyena.Query;
 
-using Banshee.Playlist;
-
-namespace Banshee.Query
+namespace Hyena.Query
 {
-    public class PlaylistQueryValue : AbstractPlaylistQueryValue<PlaylistSource>
+    public abstract class IntegerKeyedObjectQueryValue<T> : IntegerQueryValue where T : class
     {
-        protected sealed override PlaylistSource Resolve ()
+        private T object_value;
+        
+        public override void SetValue (long value)
         {
-            return null;
+            object_value = null;
+            base.SetValue (value);
         }
+
+        public T ObjectValue {
+            get {
+                if (object_value == null) {
+                    object_value = Resolve ();
+                }
+                return object_value;
+            }
+        }
+        
+        protected abstract T Resolve ();
     }
 }

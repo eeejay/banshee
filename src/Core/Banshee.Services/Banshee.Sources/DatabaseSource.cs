@@ -165,10 +165,15 @@ namespace Banshee.Sources
         protected virtual void ReloadChildren ()
         {
             foreach (Source child in Children) {
-                if (child is ITrackModelSource) {
-                    (child as ITrackModelSource).Reload ();
+                ITrackModelSource c = child as ITrackModelSource;
+                if (c != null && !c.HasDependencies) {
+                    c.Reload ();
                 }
             }
+        }
+        
+        public virtual bool HasDependancies {
+            get { return false; }
         }
 
         public virtual void RemoveTrack (int index)

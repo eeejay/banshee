@@ -29,9 +29,16 @@
 using System;
 using Hyena.Query;
 
+using Banshee.ServiceStack;
+using Banshee.SmartPlaylist;
+
 namespace Banshee.Query
 {
-    public class SmartPlaylistQueryValue : PlaylistQueryValue
+    public class SmartPlaylistQueryValue : AbstractPlaylistQueryValue<SmartPlaylistSource>
     {
+        protected sealed override SmartPlaylistSource Resolve ()
+        {
+            return ServiceManager.Get<SmartPlaylistCore>().GetSmartPlaylistFromDbId ((int)IntValue);
+        }
     }
 }

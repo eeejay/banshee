@@ -81,6 +81,7 @@ SOURCES =  \
 	Banshee.Playlists.Formats/PlaylistFormatDescription.cs \
 	Banshee.Playlists.Formats/PlaylistParser.cs \
 	Banshee.Playlists.Formats/PlsPlaylistFormat.cs \
+	Banshee.Query/AbstractPlaylistQueryValue.cs \
 	Banshee.Query/BansheeQuery.cs \
 	Banshee.Query/NaturalIntegerQueryValue.cs \
 	Banshee.Query/PlaylistQueryValue.cs \

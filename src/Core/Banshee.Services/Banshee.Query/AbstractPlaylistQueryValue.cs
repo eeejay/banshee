@@ -2,9 +2,9 @@
 // PlaylistQueryValue.cs
 //
 // Authors:
-//   Scott Peterson <lunchtimemama@gmail.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2008 Scott Peterson
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -33,11 +33,11 @@ using Banshee.Playlist;
 
 namespace Banshee.Query
 {
-    public class PlaylistQueryValue : AbstractPlaylistQueryValue<PlaylistSource>
+    public abstract class AbstractPlaylistQueryValue<T> : IntegerKeyedObjectQueryValue<T> where T : AbstractPlaylistSource
     {
-        protected sealed override PlaylistSource Resolve ()
-        {
-            return null;
+        private static AliasedObjectSet<Operator> playlist_ops = new AliasedObjectSet<Operator> (Equal, NotEqual);
+        public override AliasedObjectSet<Operator> OperatorSet {
+            get { return playlist_ops; }
         }
     }
 }

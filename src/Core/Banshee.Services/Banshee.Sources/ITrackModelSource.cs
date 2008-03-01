@@ -42,6 +42,7 @@ namespace Banshee.Sources
         ArtistListModel ArtistModel { get; }
 
         void Reload ();
+        bool HasDependencies { get; }
 
         void RemoveSelectedTracks ();
         void DeleteSelectedTracks ();

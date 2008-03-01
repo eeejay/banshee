@@ -317,6 +317,10 @@ namespace Banshee.Lastfm.Radio
                 return (left < 0) ? 0 : left;
             }
         }
+        
+        public bool HasDependencies {
+            get { return false; }
+        }
 
         private bool refreshing = false;
         public void Refresh ()

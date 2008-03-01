@@ -1,6 +1,5 @@
 using System;
 using System.Data;
-using System.Collections;
 using System.Collections.Generic;
 
 using Mono.Unix;
@@ -29,7 +28,7 @@ namespace Banshee.SmartPlaylist
         private readonly double RATE_LIMIT_CPU_MAX = 0.10;
         private static int RATE_LIMIT_REFRESH = 5;
 
-        private ArrayList playlists = new ArrayList();
+        private List<SmartPlaylistSource> playlists = new List<SmartPlaylistSource> ();
 
         private DateTime last_check = DateTime.MinValue;
         private uint event_counter = 0;
@@ -76,12 +75,6 @@ namespace Banshee.SmartPlaylist
 
             //Console.WriteLine ("source added: {0}", args.Source.Name);
             if (args.Source is PlaylistSource || args.Source is SmartPlaylistSource) {
-                foreach (SmartPlaylistSource pl in playlists) {
-                    if (pl.PlaylistDependent) {
-                        pl.ListenToPlaylists();
-                    }
-                }
-                
                 if (args.Source is PlaylistSource)
                     return;
             }
@@ -278,6 +271,17 @@ namespace Banshee.SmartPlaylist
         public void SortPlaylists () {
             playlists.Sort(new DependencyComparer());
         }
+        
+        public SmartPlaylistSource GetSmartPlaylistFromDbId (int dbId)
+        {
+            // TODO use a dictionary
+            foreach (SmartPlaylistSource sp in playlists) {
+                if (sp.DbId == dbId) {
+                    return sp;
+                }
+            }
+            return null;
+        }
     }
 
     // Class used for timing different operations.  Commented out for normal operation.
@@ -330,15 +334,12 @@ namespace Banshee.SmartPlaylist
         }
     }
 
-    public class DependencyComparer : IComparer {
-        public int Compare(object ao, object bo)
+    public class DependencyComparer : IComparer<SmartPlaylistSource> {
+        public int Compare(SmartPlaylistSource a, SmartPlaylistSource b)
         {
-            SmartPlaylistSource a = ao as SmartPlaylistSource;
-            SmartPlaylistSource b = bo as SmartPlaylistSource;
-
-            if (b.DependsOn(a)) {
+            if (b.DependsOn (a)) {
                 return -1;
-            } else if (a.DependsOn(b)) {
+            } else if (a.DependsOn (b)) {
                 return 1;
             } else {
                 return 0;
