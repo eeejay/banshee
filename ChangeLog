@@ -1,5 +1,9 @@
 2008-03-01  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fixed typo.
+
+2008-03-01  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
 	  Implements new HasDepenencies property.
 

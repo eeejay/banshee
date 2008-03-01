@@ -172,7 +172,7 @@ namespace Banshee.Sources
             }
         }
         
-        public virtual bool HasDependancies {
+        public virtual bool HasDependencies {
             get { return false; }
         }
 
