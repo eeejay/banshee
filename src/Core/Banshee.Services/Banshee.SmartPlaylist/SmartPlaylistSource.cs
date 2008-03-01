@@ -224,22 +224,6 @@ namespace Banshee.SmartPlaylist
         
 #region Private Methods
         
-        private void UpdateDependencies (QueryNode node)
-        {
-            if (node is QueryListNode) {
-                foreach (QueryNode child in (node as QueryListNode).Children) {
-                    UpdateDependencies (child);
-                }
-            } else {
-                QueryTermNode term = node as QueryTermNode;
-                if (term != null && term.Field == BansheeQuery.SmartPlaylistField) {
-                    SmartPlaylistSource s = (term.Value as SmartPlaylistQueryValue).ObjectValue;
-                    s.Updated += OnDependencyUpdated;
-                    dependencies.Add (s);
-                }
-            }
-        }
-        
         private void UpdateDependencies ()
         {
             foreach (SmartPlaylistSource s in dependencies) {
@@ -248,7 +232,11 @@ namespace Banshee.SmartPlaylist
             
             dependencies.Clear ();
             
-            UpdateDependencies (ConditionTree);
+            foreach (SmartPlaylistQueryValue value in ConditionTree.SearchForValues<SmartPlaylistQueryValue> ()) {
+                SmartPlaylistSource playlist = value.ObjectValue;
+                playlist.Updated += OnDependencyUpdated;
+                dependencies.Add (playlist);
+            }
         }
         
         private void OnDependencyUpdated (object sender, EventArgs args)

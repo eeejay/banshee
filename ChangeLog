@@ -1,5 +1,13 @@
 2008-03-01  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena/Hyena.Query/QueryNode.cs: Added methods to search a
+	  QueryNode tree for values of a given type either by depth or breadth.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	  Consume the new QueryNode.SearchForValues method.
+
+2008-03-01  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fixed typo.
 
 2008-03-01  Scott Peterson <lunchtimemama@gmail.com> 

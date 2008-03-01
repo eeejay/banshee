@@ -28,12 +28,19 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.IO;
 using System.Text;
 
 namespace Hyena.Query
 {
+    public enum QueryNodeSearchMethod
+    {
+        DepthFirst,
+        BreadthFirst
+    }
+    
     public abstract class QueryNode
     {
         private QueryListNode parent;
@@ -107,6 +114,63 @@ namespace Hyena.Query
                     return sw.ToString ();
                 }
             }
+        }
+        
+        public IEnumerable<T> SearchForValues<T> () where T : QueryValue
+        {
+            return SearchForValues<T> (QueryNodeSearchMethod.DepthFirst);
+        }
+        
+        public IEnumerable<T> SearchForValues<T> (QueryNodeSearchMethod method) where T : QueryValue
+        {
+            if (method == QueryNodeSearchMethod.DepthFirst) {
+                return SearchForValuesByDepth<T> (this);
+            } else {
+                return SearchForValuesByBreadth<T> ();
+            }
+        }
+        
+        private static IEnumerable<T> SearchForValuesByDepth<T> (QueryNode node) where T : QueryValue
+        {
+            QueryListNode list = node as QueryListNode;
+            if (list != null) {
+                foreach (QueryNode child in list.Children) {
+                    foreach (T item in SearchForValuesByDepth<T> (child)) {
+                        yield return item;
+                    }
+                }
+            } else {
+                QueryTermNode term = node as QueryTermNode;
+                if (term != null) {
+                    T value = term.Value as T;
+                    if (value != null) {
+                        yield return value;
+                    }
+                }
+            }
+        }
+        
+        private IEnumerable<T> SearchForValuesByBreadth<T> () where T : QueryValue
+        {
+            Queue<QueryNode> queue = new Queue<QueryNode> ();
+            queue.Enqueue (this);
+            do {
+                QueryNode node = queue.Dequeue ();
+                QueryListNode list = node as QueryListNode;
+                if (list != null) {
+                    foreach (QueryNode child in list.Children) {
+                        queue.Enqueue (child);
+                    }
+                } else {
+                    QueryTermNode term = node as QueryTermNode;
+                    if (term != null && term.Value is T) {
+                        T value = term.Value as T;
+                        if (value != null) {
+                            yield return value;
+                        }
+                    }
+                }
+            } while (queue.Count > 0);
         }
 
         public override string ToString ()
