@@ -163,7 +163,7 @@ namespace Hyena.Query
                     }
                 } else {
                     QueryTermNode term = node as QueryTermNode;
-                    if (term != null && term.Value is T) {
+                    if (term != null) {
                         T value = term.Value as T;
                         if (value != null) {
                             yield return value;

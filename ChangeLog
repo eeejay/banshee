@@ -1,5 +1,10 @@
 2008-03-01  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena/Hyena.Query/QueryNode.cs: Got rid of unnecessary
+	  condition.
+
+2008-03-01  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena/Hyena.Query/QueryNode.cs: Added methods to search a
 	  QueryNode tree for values of a given type either by depth or breadth.
 
