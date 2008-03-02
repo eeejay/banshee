@@ -95,8 +95,10 @@ namespace Banshee.Collection.Gui
                 };
             }
 
-            overlay = new BetaReleaseViewOverlay (this);
-            overlay.Finished += OnOverlayFinished;
+            if (!Banshee.Base.ApplicationContext.Debugging) {
+                overlay = new BetaReleaseViewOverlay (this);
+                overlay.Finished += OnOverlayFinished;
+            }
         }
         
         private void OnOverlayFinished (object o, EventArgs args)

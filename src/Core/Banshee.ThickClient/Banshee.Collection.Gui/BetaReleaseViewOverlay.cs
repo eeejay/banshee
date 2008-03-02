@@ -100,10 +100,19 @@ namespace Banshee.Collection.Gui
                 ));
                 source.Properties.SetString ("Message.Icon.Name", Stock.Info);
                 source.Properties.SetBoolean ("Message.CanClose", false);
-                source.Properties.SetString ("Message.Action.Label", Catalog.GetString ("I understand this is a preview release"));
+                source.Properties.SetString ("Message.Action.Label", 
+                    Catalog.GetString ("I understand this is a preview release"));
                 source.Properties.Set<EventHandler> ("Message.Action.NotifyHandler", delegate { 
                     stage.Iteration += OnStageIteration;
                     stage.Reset ();
+
+                    ServiceManager.SourceManager.ActiveSourceChanged -= OnActiveSourceChanged;
+
+                    if (source != null) {
+                        source.Properties.RemoveStartingWith ("Message.");
+                        source = null;
+                    }
+                    
                     dismissed = true;
                 });
             }
@@ -128,13 +137,6 @@ namespace Banshee.Collection.Gui
                     logo_scale = null;
                 }
 
-                ServiceManager.SourceManager.ActiveSourceChanged -= OnActiveSourceChanged;
-
-                if (source != null) {
-                    source.Properties.RemoveStartingWith ("Message.");
-                    source = null;
-                }
-
                 OnFinished ();
             }
 
@@ -157,7 +159,7 @@ namespace Banshee.Collection.Gui
             theme.Context.Radius = 12;
 
             Gdk.Rectangle rect = new Gdk.Rectangle ();
-            rect.Width = (int)Math.Round (widget.Allocation.Width * 0.65);
+            rect.Width = (int)Math.Round (widget.Allocation.Width * 0.75);
 
             int padding = (int)theme.Context.Radius * 2;
             int spacing = padding / 2;
