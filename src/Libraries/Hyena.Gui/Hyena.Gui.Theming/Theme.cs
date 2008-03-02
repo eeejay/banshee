@@ -75,7 +75,9 @@ namespace Hyena.Gui.Theming
         }
 
 #region Drawing
-     
+
+        public abstract void DrawPie (double fraction);
+
         public abstract void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x, int bottom_offset);
         
         public abstract void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset, bool fill);
@@ -173,6 +175,15 @@ namespace Hyena.Gui.Theming
 
         public ThemeContext Context {
             get { lock (this) { return contexts.Peek (); } }
+        }
+
+#endregion
+
+#region Static Utilities
+
+        public static double Clamp (double min, double max, double value)
+        {
+             return Math.Max (min, Math.Min (max, value)); 
         }
 
 #endregion

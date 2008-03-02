@@ -1,3 +1,25 @@
+2008-03-01  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:
+	A sweet overlay thingy that draws some big warning/welcome for users
+	about the state of trunk/preview release
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Render the hot overlay
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Expose some properties as protected
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Stage.cs:
+	Fix a bug when iterating actors in the stage by creating a copy to
+	iterate; this allows actor step handlers to modify the stage actors
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/Theme.cs: Added DrawPie
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/ThemeContext.cs: Add some
+	more state properties
+
 2008-03-01  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena/Hyena.Query/QueryNode.cs: Got rid of unnecessary

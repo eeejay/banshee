@@ -40,6 +40,14 @@ namespace Hyena.Data.Gui
         private Gdk.Window footer_window;
         private Gdk.Window left_border_window;
         private Gdk.Window right_border_window;
+
+        protected Gdk.Window ListWindow {
+            get { return list_window; }
+        }
+
+        protected Gdk.Window HeaderWindow {
+            get { return header_window; }
+        }
         
         private Gdk.Rectangle list_alloc;
         private Gdk.Rectangle header_alloc;

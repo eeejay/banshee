@@ -49,6 +49,39 @@ namespace Hyena.Gui.Theming
             border_color = Colors.GetWidgetColor (GtkColorClass.Dark, StateType.Active);
         }
 
+        public override void DrawPie (double fraction)
+        {
+            // Calculate the pie path
+            fraction = Theme.Clamp (0.0, 1.0, fraction);
+            double a1 = 3.0 * Math.PI / 2.0;
+            double a2 = a1 + 2.0 * Math.PI * fraction;
+
+            if (fraction == 0.0) {
+                return;
+            }
+
+            Context.Cairo.MoveTo (Context.X, Context.Y);
+            Context.Cairo.Arc (Context.X, Context.Y, Context.Radius, a1, a2);
+            Context.Cairo.LineTo (Context.X, Context.Y);
+
+            // Fill the pie
+            Color color_a = Colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected);
+            Color color_b = CairoExtensions.ColorShade (color_a, 1.4);
+
+            RadialGradient fill = new RadialGradient (Context.X, Context.Y, 0, 
+                Context.X, Context.Y, 2.0 * Context.Radius);
+            fill.AddColorStop (0, color_a);
+            fill.AddColorStop (1, color_b);
+            Context.Cairo.Pattern = fill;
+
+            Context.Cairo.FillPreserve ();
+
+            // Stroke the pie
+            Context.Cairo.Color = CairoExtensions.ColorShade (color_a, 0.8);
+            Context.Cairo.LineWidth = Context.LineWidth;
+            Context.Cairo.Stroke ();
+        }
+
         public override void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x, int bottom_offset)
         {
             Cairo.Color gtk_background_color = Colors.GetWidgetColor(GtkColorClass.Background, StateType.Normal);
@@ -124,6 +157,7 @@ namespace Hyena.Gui.Theming
         {
             CairoCorners corners = CairoCorners.All;
         
+            color.A = Context.FillAlpha;
             cr.Color = color;
             CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, corners);
             cr.Fill ();

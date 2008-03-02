@@ -145,8 +145,9 @@ namespace Hyena.Gui.Theatrics
             }
             
             Queue<Actor<T>> expired_actors = new Queue<Actor<T>> ();
+            Dictionary<T, Actor<T>> actors_copy = new Dictionary<T, Actor<T>> (actors);
             
-            foreach (KeyValuePair<T, Actor<T>> entry in actors) {
+            foreach (KeyValuePair<T, Actor<T>> entry in actors_copy) {
                 entry.Value.Step ();
                 
                 if (!OnActorStep (entry.Value) || entry.Value.Expired) {

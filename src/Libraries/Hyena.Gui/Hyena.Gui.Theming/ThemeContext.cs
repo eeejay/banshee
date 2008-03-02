@@ -27,15 +27,46 @@
 //
 
 using System;
+using Cairo;
 
 namespace Hyena.Gui.Theming
 {
     public class ThemeContext
     {
-        private int radius = 3;
-        public int Radius {
+        private double radius = 3.0;
+        public double Radius {
             get { return radius; }
             set { radius = value; }
+        }
+
+        private double fill_alpha = 1.0;
+        public double FillAlpha {
+            get { return fill_alpha; }
+            set { fill_alpha = Theme.Clamp (0.0, 1.0, value); }
+        }
+
+        private double line_width = 1.0;
+        public double LineWidth {
+            get { return line_width; }
+            set { line_width = value; }
+        }
+
+        private double x;
+        public double X {
+            get { return x; }
+            set { x = value; }
+        }
+
+        private double y;
+        public double Y {
+            get { return y; }
+            set { y = value; }
+        }
+
+        private Cairo.Context cairo;
+        public Cairo.Context Cairo {
+            get { return cairo; }
+            set { cairo = value; }
         }
     }
 }

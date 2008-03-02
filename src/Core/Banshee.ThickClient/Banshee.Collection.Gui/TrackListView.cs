@@ -32,6 +32,8 @@ using Cairo;
 using Gtk;
 
 using Hyena.Gui;
+using Hyena.Gui.Theming;
+using Hyena.Gui.Theatrics;
 using Hyena.Data.Gui;
 
 using Banshee.Gui;
@@ -45,7 +47,8 @@ namespace Banshee.Collection.Gui
     public class TrackListView : ListView<TrackInfo>
     {
         private PersistentColumnController column_controller;
-        
+        private BetaReleaseViewOverlay overlay;
+
         public TrackListView () : base ()
         {
             column_controller = new PersistentColumnController ("track_view_columns");
@@ -76,8 +79,8 @@ namespace Banshee.Collection.Gui
             
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
             
-            if (ServiceManager.Contains ("GtkElementsService")) {
-                ServiceManager.Get<Banshee.Gui.GtkElementsService> ().ThemeChanged += delegate {
+            if (ServiceManager.Contains<GtkElementsService> ()) {
+                ServiceManager.Get<GtkElementsService> ().ThemeChanged += delegate {
                     foreach (Column column in column_controller) {
                         if (column.HeaderCell != null) {
                             column.HeaderCell.NotifyThemeChange ();
@@ -91,6 +94,16 @@ namespace Banshee.Collection.Gui
                     QueueDraw ();
                 };
             }
+
+            overlay = new BetaReleaseViewOverlay (this);
+            overlay.Finished += OnOverlayFinished;
+        }
+        
+        private void OnOverlayFinished (object o, EventArgs args)
+        {
+            overlay.Finished -= OnOverlayFinished;
+            overlay = null;
+            QueueDraw ();
         }
 
         protected override bool OnPopupMenu ()
@@ -106,19 +119,9 @@ namespace Banshee.Collection.Gui
 
         protected override void ChildClassPostRender (Gdk.EventExpose evnt, Cairo.Context cr, Gdk.Rectangle clip)
         {
-            /*Gdk.Rectangle rect = new Gdk.Rectangle ();
-            rect.Width = (int)Math.Round (Allocation.Width * 0.65);
-            rect.Height = (int)Math.Round (Allocation.Height * 0.50);
-            rect.X = (Allocation.Width - rect.Width) / 2;
-            rect.Y = ((Allocation.Height - rect.Height) / 2) - (int)(rect.Height * .15);
-
-            CairoExtensions.PushGroup (cr);
-            Theme.PushContext ();
-            Theme.Context.Radius = 12;
-            Theme.DrawFrame (cr, rect, true);
-            Theme.PopContext ();
-            CairoExtensions.PopGroupToSource (cr);
-            cr.PaintWithAlpha (0.8);*/
+            if (evnt.Window == ListWindow && overlay != null) {
+                overlay.Render (Theme, cr, clip);
+            }
         }
         
 #region Drag and Drop
