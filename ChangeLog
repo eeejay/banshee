@@ -1,5 +1,10 @@
 2008-03-02  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:
+	Activate the repeat action when it's loaded from configuration
+
+2008-03-02  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:
 	Fix some small bugs; do not show with --debug passed
 
