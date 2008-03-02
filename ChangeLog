@@ -1,3 +1,9 @@
+2008-03-02  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Add a null check before sorting out dependencies, so we don't bomb out on
+	creating a new simple Smart Playlist.
+
 2008-03-01  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:
