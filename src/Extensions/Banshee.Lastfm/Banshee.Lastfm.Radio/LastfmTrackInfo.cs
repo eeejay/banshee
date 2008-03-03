@@ -93,7 +93,11 @@ namespace Banshee.Lastfm.Radio
 		{
             loved = true; hated = false;
             ThreadAssist.Spawn (delegate {
-                station.LastfmSource.Connection.Love (ArtistName, TrackTitle);
+                try {
+                    station.LastfmSource.Connection.Love (ArtistName, TrackTitle);
+                } catch (System.Net.WebException e) {
+                    Hyena.Log.Warning ("Got Exception Trying to Love Song", e.ToString (), false);
+                }
             });
 		}
 
@@ -101,7 +105,11 @@ namespace Banshee.Lastfm.Radio
 		{
             loved = false; hated = true;
             ThreadAssist.Spawn (delegate {
-                station.LastfmSource.Connection.Ban (ArtistName, TrackTitle);
+                try {
+                    station.LastfmSource.Connection.Ban (ArtistName, TrackTitle);
+                } catch (System.Net.WebException e) {
+                    Hyena.Log.Warning ("Got Exception Trying to Ban Song", e.ToString (), false);
+                }
             });
 		}
     }

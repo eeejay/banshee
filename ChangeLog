@@ -1,5 +1,10 @@
 2008-03-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmTrackInfo.cs:
+	Catch Web exceptions in Love and Ban methods, avoiding crashing.
+
+2008-03-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This patch fixes a poor assumption made quite a while ago that for
 	playlists put the TrackID into the CoreCache table, which if you had a
 	song in a playlist twice would make it impossible to remove one and not
