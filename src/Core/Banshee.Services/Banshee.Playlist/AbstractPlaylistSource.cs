@@ -54,10 +54,6 @@ namespace Banshee.Playlist
         protected abstract string SourcePrimaryKey { get; }
         protected abstract string TrackJoinTable { get; }
 
-        protected virtual string TrackJoin {
-            get { return String.Format (", {0}", TrackJoinTable); }
-        }
-
         protected virtual string TrackCondition {
             get {
                 return String.Format (
@@ -67,6 +63,10 @@ namespace Banshee.Playlist
             }
         }
 
+        protected virtual string JoinPrimaryKey {
+            get { return "EntryID"; }
+        }
+
         public int? DbId {
             get { return dbid; }
             protected set {
@@ -74,7 +74,9 @@ namespace Banshee.Playlist
                     return;
                 }
                 dbid = value;
-                track_model.JoinFragment = TrackJoin;
+                track_model.JoinTable = TrackJoinTable;
+                track_model.JoinPrimaryKey = JoinPrimaryKey;
+                track_model.JoinColumn = "TrackID";
                 track_model.Condition = String.Format (TrackCondition, dbid);
                 AfterInitialized ();
             }

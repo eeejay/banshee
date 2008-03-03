@@ -378,11 +378,13 @@ namespace Banshee.Database
                 
             Execute(@"
                 CREATE TABLE CoreSmartPlaylistEntries (
+                    EntryID             INTEGER PRIMARY KEY,
                     SmartPlaylistID     INTEGER NOT NULL,
                     TrackID             INTEGER NOT NULL
                 )
             ");
-            Execute("CREATE INDEX CoreSmartPlaylistEntriesIndex ON CoreSmartPlaylistEntries(SmartPlaylistID, TrackID)");
+            Execute("CREATE INDEX CoreSmartPlaylistEntriesPlaylistIndex ON CoreSmartPlaylistEntries(EntryID, SmartPlaylistID)");
+            Execute("CREATE INDEX CoreSmartPlaylistEntriesTrackIndex ON CoreSmartPlaylistEntries(SmartPlaylistID, TrackID)");
 
             Execute(@"
                 CREATE TABLE CoreCacheModels (

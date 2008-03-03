@@ -51,8 +51,6 @@ namespace Banshee.Sources
         protected AlbumListDatabaseModel album_model;
         protected ArtistListDatabaseModel artist_model;
 
-        protected HyenaSqliteCommand rate_track_range_command;
-
         protected RateLimiter reload_limiter;
         
         public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order)
@@ -61,11 +59,6 @@ namespace Banshee.Sources
             track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, uuid);
             album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
             artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
-            rate_track_range_command= new HyenaSqliteCommand (String.Format (@"
-                UPDATE CoreTracks SET Rating = ? WHERE TrackID IN (
-                    SELECT ItemID FROM CoreCache WHERE ModelID = {0} LIMIT ?, ?)",
-                track_model.CacheId
-            ));
             reload_limiter = new RateLimiter (50.0, RateLimitedReload);
         }
 
@@ -178,12 +171,16 @@ namespace Banshee.Sources
 
         public virtual void RemoveTrack (int index)
         {
-            RemoveTrack (track_model [index] as DatabaseTrackInfo);
+            if (index != -1) {
+                RemoveTrackRange (track_model, new RangeCollection.Range (index, index));
+                Reload ();
+                ReloadChildren ();
+            }
         }
 
         public virtual void RemoveTrack (DatabaseTrackInfo track)
         {
-            throw new NotImplementedException(); 
+            RemoveTrack (track_model.IndexOf (track));
         }
 
         // Methods for removing tracks from this source
@@ -233,8 +230,8 @@ namespace Banshee.Sources
                 foreach (RangeCollection.Range range in selection.Ranges) {
                     RateTrackRange (model, range, rating);
                 }
-                Reload ();
-                ReloadChildren ();
+
+                ReloadPrimarySource ();
             }
         }
 
@@ -242,8 +239,55 @@ namespace Banshee.Sources
         
 #region Protected Methods
 
+        // If we are a PrimarySource, reload ourself and our children, otherwise if our Parent
+        // is one, do so for it, otherwise do so for all PrimarySources.
+        protected void ReloadPrimarySource ()
+        {
+            PrimarySource psource;
+            if ((psource = this as PrimarySource) != null) {
+                Reload ();
+                ReloadChildren ();
+            } else {
+                if ((psource = Parent as PrimarySource) != null) {
+                    psource.Reload ();
+                    psource.ReloadChildren ();
+                } else {
+                    foreach (Source source in ServiceManager.SourceManager.Sources) {
+                        if ((psource = source as PrimarySource) != null) {
+                            psource.Reload ();
+                            psource.ReloadChildren ();
+                        }
+                    }
+                }
+            }
+        }
+
+        protected HyenaSqliteCommand rate_track_range_command;
+        protected HyenaSqliteCommand RateTrackRangeCommand {
+            get {
+                if (rate_track_range_command == null) {
+                    if (track_model.JoinTable != null) {
+                        rate_track_range_command = new HyenaSqliteCommand (String.Format (@"
+                            UPDATE CoreTracks SET Rating = ? WHERE
+                                TrackID IN (SELECT TrackID FROM {0} WHERE 
+                                    {1} IN (SELECT ItemID FROM CoreCache WHERE ModelID = {2} LIMIT ?, ?))",
+                            track_model.JoinTable, track_model.JoinPrimaryKey, track_model.CacheId
+                        ));
+                    } else {
+                        rate_track_range_command = new HyenaSqliteCommand (String.Format (@"
+                            UPDATE CoreTracks SET Rating = ? WHERE TrackID IN (
+                                SELECT ItemID FROM CoreCache WHERE ModelID = {0} LIMIT ?, ?)",
+                            track_model.CacheId
+                        ));
+                    }
+                }
+                return rate_track_range_command;
+            }
+        }
+
         protected void AfterInitialized ()
         {
+            track_model.Initialize ();
             Reload ();
             OnSetupComplete ();
         }
@@ -261,8 +305,8 @@ namespace Banshee.Sources
 
         protected virtual void RateTrackRange (TrackListDatabaseModel model, RangeCollection.Range range, int rating)
         {
-            rate_track_range_command.ApplyValues (rating, range.Start, range.End - range.Start + 1);
-            ServiceManager.DbConnection.Execute (rate_track_range_command);
+            RateTrackRangeCommand.ApplyValues (rating, range.Start, range.End - range.Start + 1);
+            ServiceManager.DbConnection.Execute (RateTrackRangeCommand);
         }
 
         protected void WithTrackSelection (TrackListDatabaseModel model, TrackRangeHandler handler)

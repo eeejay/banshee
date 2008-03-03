@@ -36,5 +36,9 @@ namespace Hyena.Data.Sqlite
     {
         string ReloadFragment { get; }
         string SelectAggregates { get; }
+        string JoinTable { get; }
+        string JoinFragment { get; }
+        string JoinPrimaryKey { get; }
+        string JoinColumn { get; }
     }
 }

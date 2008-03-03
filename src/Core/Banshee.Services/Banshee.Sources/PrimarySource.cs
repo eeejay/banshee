@@ -137,14 +137,6 @@ namespace Banshee.Sources
             }
         }
 
-        public override void RemoveTrack (DatabaseTrackInfo track)
-        {
-            remove_track_command.ApplyValues (track.DbId);
-            ServiceManager.DbConnection.Execute (remove_track_command);
-            Reload ();
-            ReloadChildren ();
-        }
-
         /*public override void RemoveTracks (IEnumerable<TrackInfo> tracks)
         {
 

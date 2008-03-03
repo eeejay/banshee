@@ -1,3 +1,46 @@
+2008-03-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This patch fixes a poor assumption made quite a while ago that for
+	playlists put the TrackID into the CoreCache table, which if you had a
+	song in a playlist twice would make it impossible to remove one and not
+	the other.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Fix reload fragments to use the track_model's JoinTable etc when needed.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Add JoinTable, JoinPrimaryKey, and JoinColumn properties that allow the
+	model to specify that it joins, for example, the CoreTracks table with the
+	CoreCache table via the CorePlaylistEntries table.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add a EntryID primary key to CoreSmartPlaylistEntries, and create an index
+	for it.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Add JoinPrimaryKey virtual property, and set the Join* properties.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Fix
+	AddTrackRange method to work with track model's that have a join table.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Change INSERT to add NULL so primary key automatically set.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Implement
+	RemoveTrack by calling RemoveTrackRange with an appropriate Range.  Add
+	ReloadPrimarySource method that reloads the current source's "nearest"
+	PrimarySource - either itself, its parent, or all PrimarySources.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Remove
+	RemoveTrack method - fully implemented in DatabaseSource.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/ICacheableDatabaseModel.cs: Add
+	Join properties.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Handle models
+	that specify a JoinTable.
+
 2008-03-02  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:

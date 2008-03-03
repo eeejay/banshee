@@ -54,6 +54,8 @@ namespace Banshee.Playlist
         private static HyenaSqliteCommand add_track_range_command;
         private static HyenaSqliteCommand remove_track_range_command;
 
+        private static string add_track_range_from_joined_model_sql;
+
         private static string generic_name = Catalog.GetString ("Playlist");
 
         protected override string SourceTable {
@@ -76,6 +78,7 @@ namespace Banshee.Playlist
 
             remove_track_command = new HyenaSqliteCommand (
                 "DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND TrackID = ?"
+                //"DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND EntryID = ?"
             );
 
             add_track_range_command = new HyenaSqliteCommand (@"
@@ -85,9 +88,16 @@ namespace Banshee.Playlist
                         LIMIT ?, ?"
             );
 
+            add_track_range_from_joined_model_sql = @"
+                INSERT INTO CorePlaylistEntries
+                    SELECT null, ?, TrackID, 0
+                        FROM CoreCache c INNER JOIN {0} e ON c.ItemID = e.{1}
+                        WHERE ModelID = ?
+                        LIMIT ?, ?";
+
             remove_track_range_command = new HyenaSqliteCommand (@"
                 DELETE FROM CorePlaylistEntries WHERE PlaylistID = ? AND
-                    TrackID IN (SELECT ItemID FROM CoreCache
+                    EntryID IN (SELECT ItemID FROM CoreCache
                         WHERE ModelID = ? LIMIT ?, ?)"
             );
         }
@@ -236,17 +246,20 @@ namespace Banshee.Playlist
             OnUserNotifyUpdated ();
         }
 
+        TrackListDatabaseModel last_add_range_from_model;
+        HyenaSqliteCommand last_add_range_command = null;
         protected virtual void AddTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
         {
-            add_track_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
-            ServiceManager.DbConnection.Execute (add_track_range_command);
-        }
+            last_add_range_command = (from.JoinTable == null)
+                ? add_track_range_command
+                : from == last_add_range_from_model
+                    ? last_add_range_command
+                    : new HyenaSqliteCommand (String.Format (add_track_range_from_joined_model_sql, from.JoinTable, from.JoinPrimaryKey));
 
-        public override void RemoveTrack (DatabaseTrackInfo track)
-        {
-            remove_track_command.ApplyValues (DbId, track.DbId);
-            ServiceManager.DbConnection.Execute (remove_track_command);
-            Reload ();
+            last_add_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
+            ServiceManager.DbConnection.Execute (last_add_range_command);
+
+            last_add_range_from_model = from;
         }
 
         protected override void RemoveTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)

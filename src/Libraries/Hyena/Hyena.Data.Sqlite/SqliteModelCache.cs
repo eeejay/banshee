@@ -64,11 +64,25 @@ namespace Hyena.Data.Sqlite
             CheckCacheTable ();
 
             if (model.SelectAggregates != null) {
-                count_command = new HyenaSqliteCommand (String.Format (@"
-                    SELECT COUNT(*), {0} FROM {1} WHERE {2}
-                        IN (SELECT ItemID FROM {3} WHERE ModelID = ?)",
-                    model.SelectAggregates, provider.TableName, provider.PrimaryKey, CacheTableName
-                ));
+                if (model.JoinFragment != null) {
+                    count_command = new HyenaSqliteCommand (String.Format (@"
+                        SELECT count(*), {0} FROM {1}{2} j
+                        WHERE j.{4} IN (SELECT ItemID FROM {3} WHERE ModelID = ?)
+                        AND {5} = j.{6}",
+                        model.SelectAggregates, // eg sum(FileSize), sum(Duration)
+                        provider.TableName,     // eg CoreTracks
+                        model.JoinFragment,     // eg , CorePlaylistEntries
+                        CacheTableName,         // eg CoreCache
+                        model.JoinPrimaryKey,   // eg EntryID
+                        provider.PrimaryKey,    // eg CoreTracks.TrackID
+                        model.JoinColumn        // eg TrackID
+                    ));
+                } else {
+                    count_command = new HyenaSqliteCommand (String.Format (
+                        "SELECT count(*), {0} FROM {1} WHERE {2} IN (SELECT ItemID FROM {3} WHERE ModelID = ?)",
+                        model.SelectAggregates, provider.TableName, provider.PrimaryKey, CacheTableName
+                    ));
+                }
             } else {
                 count_command = new HyenaSqliteCommand (String.Format (
                     "SELECT COUNT(*) FROM {0} WHERE ModelID = ?", CacheTableName
@@ -77,31 +91,74 @@ namespace Hyena.Data.Sqlite
 
             FindOrCreateCacheModelId (String.Format ("{0}-{1}", uuid, typeof(T).Name));
 
-            select_range_command = new HyenaSqliteCommand (
-                String.Format (@"
-                    SELECT {0} FROM {1}
-                        INNER JOIN {2}
-                            ON {3} = {2}.ItemID
-                        WHERE
-                            {2}.ModelID = {4} {5}
-                            {6}
-                        LIMIT ?, ?",
-                    provider.Select, provider.From, CacheTableName,
-                    provider.PrimaryKey, uid,
-                    String.IsNullOrEmpty (provider.Where) ? String.Empty : "AND",
-                    provider.Where
-                )
-            );
+            if (model.JoinFragment != null) {
+                select_range_command = new HyenaSqliteCommand (
+                    String.Format (@"
+                        SELECT {0} FROM {1}
+                            INNER JOIN {2}
+                                ON {3} = {2}.{4}
+                            INNER JOIN {5}
+                                ON {2}.{6} = {5}.ItemID
+                            WHERE
+                                {5}.ModelID = {7} {8}
+                                {9}
+                            LIMIT ?, ?",
+                        provider.Select, provider.From,
+                        model.JoinTable, provider.PrimaryKey, model.JoinColumn,
+                        CacheTableName, model.JoinPrimaryKey, uid,
+                        String.IsNullOrEmpty (provider.Where) ? null : "AND",
+                        provider.Where
+                    )
+                );
+
+                select_single_command = new HyenaSqliteCommand (
+                    String.Format (@"
+                        SELECT OrderID FROM {0}
+                            WHERE
+                                ModelID = {1} AND
+                                ItemID = (SELECT {2} FROM {3} WHERE {4} = ?)",
+                        CacheTableName, uid, model.JoinPrimaryKey, model.JoinTable, model.JoinColumn
+                    )
+                );
+
+                reload_sql = String.Format (@"
+                    DELETE FROM {0} WHERE ModelID = {1};
+                        INSERT INTO {0} SELECT null, {1}, {2} ",
+                    CacheTableName, uid, model.JoinPrimaryKey
+                );
+            } else {
+                select_range_command = new HyenaSqliteCommand (
+                    String.Format (@"
+                        SELECT {0} FROM {1}
+                            INNER JOIN {2}
+                                ON {3} = {2}.ItemID
+                            WHERE
+                                {2}.ModelID = {4} {5}
+                                {6}
+                            LIMIT ?, ?",
+                        provider.Select, provider.From, CacheTableName,
+                        provider.PrimaryKey, uid,
+                        String.IsNullOrEmpty (provider.Where) ? String.Empty : "AND",
+                        provider.Where
+                    )
+                );
             
-            select_single_command = new HyenaSqliteCommand (
-                String.Format (@"
-                    SELECT OrderID FROM {0}
-                        WHERE
-                            ModelID = {1} AND
-                            ItemID = ?",
-                    CacheTableName, uid
-                )
-            );
+                select_single_command = new HyenaSqliteCommand (
+                    String.Format (@"
+                        SELECT OrderID FROM {0}
+                            WHERE
+                                ModelID = {1} AND
+                                ItemID = ?",
+                        CacheTableName, uid
+                    )
+                );
+
+                reload_sql = String.Format (@"
+                    DELETE FROM {0} WHERE ModelID = {1};
+                        INSERT INTO {0} SELECT null, {1}, {2} ",
+                    CacheTableName, uid, provider.PrimaryKey
+                );
+            }
             
             select_first_command = new HyenaSqliteCommand (
                 String.Format (
@@ -110,11 +167,6 @@ namespace Hyena.Data.Sqlite
                 )
             );
 
-            reload_sql = String.Format (@"
-                DELETE FROM {0} WHERE ModelID = {1};
-                    INSERT INTO {0} SELECT null, {1}, {2} ",
-                CacheTableName, uid, provider.PrimaryKey
-            );
         }
 
         public bool Warm {

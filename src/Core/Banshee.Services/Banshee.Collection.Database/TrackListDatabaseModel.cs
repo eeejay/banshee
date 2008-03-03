@@ -49,7 +49,7 @@ namespace Banshee.Collection.Database
     {
         private readonly BansheeDbConnection connection;
         private readonly BansheeModelProvider<DatabaseTrackInfo> provider;
-        private readonly BansheeModelCache<DatabaseTrackInfo> cache;
+        private BansheeModelCache<DatabaseTrackInfo> cache;
         private int count;
         private TimeSpan duration;
         private long filesize;
@@ -63,19 +63,31 @@ namespace Banshee.Collection.Database
         private bool forced_sort_query;
         
         private string reload_fragment;
-        private string join_fragment, condition;
+        private string join_table, join_fragment, join_primary_key, join_column, condition;
 
         private string filter_query;
         private string filter;
         private string artist_id_filter_query;
         private string album_id_filter_query;
+
+        private string uuid;
         
         private int rows_in_view;
         
         public TrackListDatabaseModel (BansheeDbConnection connection, string uuid)
         {
             this.connection = connection;
+            this.uuid = uuid;
             provider = DatabaseTrackInfo.Provider;
+        }
+
+        private bool initialized = false;
+        public void Initialize ()
+        {
+            if (initialized)
+                return;
+
+            initialized = true;
             cache = new BansheeModelCache <DatabaseTrackInfo> (connection, uuid, this, provider);
             cache.AggregatesUpdated += HandleCacheAggregatesUpdated;
             Refilter ();
@@ -267,19 +279,32 @@ namespace Banshee.Collection.Database
             }
         }
 
+        public string JoinTable {
+            get { return join_table; }
+            set {
+                join_table = value;
+                join_fragment = String.Format (", {0}", join_table);
+            }
+        }
+
         public string JoinFragment {
             get { return join_fragment; }
-            set {
-                join_fragment = value;
-                Refilter();
-            }
+        }
+
+        public string JoinPrimaryKey {
+            get { return join_primary_key; }
+            set { join_primary_key = value; }
+        }
+
+        public string JoinColumn {
+            get { return join_column; }
+            set { join_column = value; }
         }
 
         public string Condition {
             get { return condition; }
             set {
                 condition = value;
-                Refilter();
             }
         }
 

@@ -66,11 +66,19 @@ namespace Banshee.Collection.Database
                     @"FROM CoreArtists {0} ORDER BY Name",
                     track_model != null ? String.Format(@"
                         WHERE CoreArtists.ArtistID IN
+                            (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreCache{1}
+                                WHERE CoreCache.ModelID = {0} AND
+                                      CoreCache.ItemID = {2})",
+                        /*WHERE CoreArtists.ArtistID IN
                             (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreArtists, CoreCache
                                 WHERE CoreCache.ModelID = {0} AND
-                                      CoreCache.ItemId = CoreTracks.TrackID AND
-                                      CoreArtists.ArtistId = CoreTracks.ArtistID)",
-                        track_model.CacheId
+                                      CoreCache.ItemID = CoreTracks.TrackID AND
+                                      CoreArtists.ArtistID = CoreTracks.ArtistID)",*/
+                        track_model.CacheId,
+                        track_model.JoinFragment,
+                        track_model.JoinTable == null
+                            ? "CoreTracks.TrackID"
+                            : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
                     ) : null
                 );
 
@@ -108,5 +116,10 @@ namespace Banshee.Collection.Database
         public string ReloadFragment {
             get { return reload_fragment; }
         }
+
+        public string JoinTable { get { return null; } }
+        public string JoinFragment { get { return null; } }
+        public string JoinPrimaryKey { get { return null; } }
+        public string JoinColumn { get { return null; } }
     }
 }

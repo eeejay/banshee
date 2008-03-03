@@ -75,12 +75,15 @@ namespace Banshee.Collection.Database
                     track_model == null ? null :
                         String.Format (@"
                             CoreAlbums.AlbumID IN
-                                (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreAlbums, CoreCache
+                                (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreCache{1}
                                     WHERE CoreCache.ModelID = {0} AND
-                                          CoreCache.ItemId = CoreTracks.TrackID AND
-                                          CoreAlbums.AlbumID = CoreTracks.AlbumID)",
-                            track_model.CacheId
-                        ),
+                                          CoreCache.ItemId = {2})",
+                            track_model.CacheId,
+                            track_model.JoinFragment,
+                            track_model.JoinTable == null
+                                ? "CoreTracks.TrackID"
+                                : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
+                            ),
                     both ? "AND" : null,
                     artist_id_filter_query
                 );
@@ -139,5 +142,10 @@ namespace Banshee.Collection.Database
         public string ReloadFragment {
             get { return reload_fragment; }
         }
+
+        public string JoinTable { get { return null; } }
+        public string JoinFragment { get { return null; } }
+        public string JoinPrimaryKey { get { return null; } }
+        public string JoinColumn { get { return null; } }
     }
 }

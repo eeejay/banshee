@@ -297,7 +297,7 @@ namespace Banshee.SmartPlaylist
             // Repopulate it 
             ServiceManager.DbConnection.Execute (String.Format (
                 @"INSERT INTO CoreSmartPlaylistEntries 
-                    SELECT {0} as SmartPlaylistID, TrackId
+                    SELECT NULL, {0} as SmartPlaylistID, TrackId
                         FROM CoreTracks, CoreArtists, CoreAlbums
                         WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID
                         {1} {2}",
