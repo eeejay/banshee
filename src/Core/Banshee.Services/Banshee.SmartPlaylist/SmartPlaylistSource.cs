@@ -339,6 +339,51 @@ namespace Banshee.SmartPlaylist
             get { return QueryOrder == BansheeQuery.RandomOrder; }
         }
 
+        protected override void HandleTracksAdded (Source sender, TrackEventArgs args)
+        {
+            if (args.When > last_added) {
+                last_added = args.When;
+                Reload ();
+            }
+        }
+
+        protected override void HandleTracksChanged (Source sender, TrackEventArgs args)
+        {
+            if (args.When > last_updated) {
+                last_updated = args.When;
+                Reload ();
+            }
+        }
+
+        protected override void HandleTracksRemoved (Source sender, TrackEventArgs args)
+        {
+            if (args.When > last_removed) {
+                last_removed = args.When;
+                Reload ();
+                /*if (ServiceManager.DbConnection.Query<int> (count_removed_command, last_removed) > 0) {
+                    if (Limit == null) {
+                        //track_model.UpdateAggregates ();
+                        //OnUpdated ();
+                        Reload ();
+                    } else {
+                        Reload ();
+                    }
+                }*/
+            }
+        }
+
+        public override void SetParentSource (Source parent)
+        {
+            base.SetParentSource (parent);
+
+            PrimarySource primary = parent as PrimarySource;
+            if (primary != null) {
+                primary.TracksAdded += HandleTracksAdded;
+                primary.TracksChanged += HandleTracksChanged;
+                primary.TracksRemoved += HandleTracksRemoved;
+            }
+        }
+
 #endregion
 
         private string PrependCondition (string with)

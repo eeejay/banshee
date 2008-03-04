@@ -112,9 +112,11 @@ namespace Banshee.Sources.Gui
             };
             
             ServiceManager.SourceManager.SourceUpdated += delegate (SourceEventArgs args) {
-                TreeIter iter = FindSource (args.Source);
-                store.SetValue (iter, 1, args.Source.Order);
-                QueueDraw ();
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    TreeIter iter = FindSource (args.Source);
+                    store.SetValue (iter, 1, args.Source.Order);
+                    QueueDraw ();
+                });
             };
             
             ServiceManager.PlaybackController.SourceChanged += delegate {
@@ -417,12 +419,14 @@ namespace Banshee.Sources.Gui
 
         private void OnSourceUserNotifyUpdated (object o, EventArgs args)
         {
-            TreeIter iter = FindSource ((Source)o);
-            if (iter.Equals (TreeIter.Zero)) {
-                return;
-            }
-            
-            notify_stage.AddOrReset (iter);
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                TreeIter iter = FindSource ((Source)o);
+                if (iter.Equals (TreeIter.Zero)) {
+                    return;
+                }
+                
+                notify_stage.AddOrReset (iter);
+            });
         }
         
 #endregion

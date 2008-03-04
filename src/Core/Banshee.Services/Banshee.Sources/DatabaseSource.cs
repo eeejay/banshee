@@ -32,6 +32,7 @@ using System.Collections.Generic;
 
 using Mono.Unix;
 using Hyena.Data;
+using Hyena.Query;
 using Hyena.Data.Sqlite;
 using Hyena.Collections;
 
@@ -40,6 +41,7 @@ using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
 using Banshee.Collection.Database;
+using Banshee.Query;
 
 namespace Banshee.Sources
 {
@@ -136,26 +138,30 @@ namespace Banshee.Sources
         public void Reload (double min_interval_ms)
         {
             ThreadAssist.SpawnFromMain (delegate {
-                reload_limiter.Execute (min_interval_ms);
+                //reload_limiter.Execute (min_interval_ms);
+                RateLimitedReload ();
             });
         }
 
         public void Reload ()
         {
             ThreadAssist.SpawnFromMain (delegate {
-                reload_limiter.Execute (100.0);
+                //reload_limiter.Execute (100.0);
+                RateLimitedReload ();
             });
         }
 
         public virtual void RateLimitedReload ()
         {
-            track_model.Reload ();
-            artist_model.Reload ();
-            album_model.Reload ();
-            OnUpdated ();
+            lock (track_model) {
+                track_model.Reload ();
+                artist_model.Reload ();
+                album_model.Reload ();
+                OnUpdated ();
+            }
         }
 
-        protected virtual void ReloadChildren ()
+        /*protected virtual void ReloadChildren ()
         {
             foreach (Source child in Children) {
                 ITrackModelSource c = child as ITrackModelSource;
@@ -163,7 +169,7 @@ namespace Banshee.Sources
                     c.Reload ();
                 }
             }
-        }
+        }*/
         
         public virtual bool HasDependencies {
             get { return false; }
@@ -173,8 +179,7 @@ namespace Banshee.Sources
         {
             if (index != -1) {
                 RemoveTrackRange (track_model, new RangeCollection.Range (index, index));
-                Reload ();
-                ReloadChildren ();
+                OnTracksRemoved ();
             }
         }
 
@@ -197,6 +202,7 @@ namespace Banshee.Sources
         public virtual void RemoveSelectedTracks (TrackListDatabaseModel model)
         {
             WithTrackSelection (model, RemoveTrackRange);
+            OnTracksRemoved ();
         }
 
         // Methods for deleting tracks from this source
@@ -213,6 +219,7 @@ namespace Banshee.Sources
         public virtual void DeleteSelectedTracks (TrackListDatabaseModel model)
         {
             WithTrackSelection (model, DeleteTrackRange);
+            OnTracksRemoved ();
         }
 
         public virtual void RateSelectedTracks (int rating)
@@ -230,32 +237,64 @@ namespace Banshee.Sources
                 foreach (RangeCollection.Range range in selection.Ranges) {
                     RateTrackRange (model, range, rating);
                 }
-
-                ReloadPrimarySource ();
             }
+            OnTracksChanged (BansheeQuery.RatingField);
         }
 
 #endregion
         
 #region Protected Methods
 
+        protected virtual void OnTracksAdded ()
+        {
+            ThreadAssist.SpawnFromMain (delegate {
+                HandleTracksAdded (this, new TrackEventArgs ());
+                foreach (PrimarySource psource in PrimarySources) {
+                    psource.NotifyTracksAdded ();
+                }
+            });
+        }
+
+        protected void OnTracksChanged ()
+        {
+            OnTracksChanged (null);
+        }
+
+        protected virtual void OnTracksChanged (QueryField field)
+        {
+            ThreadAssist.SpawnFromMain (delegate {
+                HandleTracksChanged (this, new TrackEventArgs (field));
+                foreach (PrimarySource psource in PrimarySources) {
+                    psource.NotifyTracksChanged (field);
+                }
+            });
+        }
+
+        protected virtual void OnTracksRemoved ()
+        {
+            ThreadAssist.SpawnFromMain (delegate {
+                HandleTracksRemoved (this, new TrackEventArgs ());
+                foreach (PrimarySource psource in PrimarySources) {
+                    psource.NotifyTracksRemoved ();
+                }
+            });
+        }
+
         // If we are a PrimarySource, reload ourself and our children, otherwise if our Parent
         // is one, do so for it, otherwise do so for all PrimarySources.
-        protected void ReloadPrimarySource ()
-        {
-            PrimarySource psource;
-            if ((psource = this as PrimarySource) != null) {
-                Reload ();
-                ReloadChildren ();
-            } else {
-                if ((psource = Parent as PrimarySource) != null) {
-                    psource.Reload ();
-                    psource.ReloadChildren ();
+        private IEnumerable<PrimarySource> PrimarySources {
+            get {
+                PrimarySource psource;
+                if ((psource = this as PrimarySource) != null) {
+                    yield return psource;
                 } else {
-                    foreach (Source source in ServiceManager.SourceManager.Sources) {
-                        if ((psource = source as PrimarySource) != null) {
-                            psource.Reload ();
-                            psource.ReloadChildren ();
+                    if ((psource = Parent as PrimarySource) != null) {
+                        yield return psource;
+                    } else {
+                        foreach (Source source in ServiceManager.SourceManager.Sources) {
+                            if ((psource = source as PrimarySource) != null) {
+                                yield return psource;
+                            }
                         }
                     }
                 }
@@ -268,14 +307,14 @@ namespace Banshee.Sources
                 if (rate_track_range_command == null) {
                     if (track_model.JoinTable != null) {
                         rate_track_range_command = new HyenaSqliteCommand (String.Format (@"
-                            UPDATE CoreTracks SET Rating = ? WHERE
+                            UPDATE CoreTracks SET Rating = ?, DateUpdatedStamp = ? WHERE
                                 TrackID IN (SELECT TrackID FROM {0} WHERE 
                                     {1} IN (SELECT ItemID FROM CoreCache WHERE ModelID = {2} LIMIT ?, ?))",
                             track_model.JoinTable, track_model.JoinPrimaryKey, track_model.CacheId
                         ));
                     } else {
                         rate_track_range_command = new HyenaSqliteCommand (String.Format (@"
-                            UPDATE CoreTracks SET Rating = ? WHERE TrackID IN (
+                            UPDATE CoreTracks SET Rating = ?, DateUpdatedStamp = ? WHERE TrackID IN (
                                 SELECT ItemID FROM CoreCache WHERE ModelID = {0} LIMIT ?, ?)",
                             track_model.CacheId
                         ));
@@ -305,7 +344,7 @@ namespace Banshee.Sources
 
         protected virtual void RateTrackRange (TrackListDatabaseModel model, RangeCollection.Range range, int rating)
         {
-            RateTrackRangeCommand.ApplyValues (rating, range.Start, range.End - range.Start + 1);
+            RateTrackRangeCommand.ApplyValues (rating, DateTime.Now, range.Start, range.End - range.Start + 1);
             ServiceManager.DbConnection.Execute (RateTrackRangeCommand);
         }
 
@@ -319,9 +358,19 @@ namespace Banshee.Sources
                 foreach (RangeCollection.Range range in selection.Ranges) {
                     handler (model, range);
                 }
-                Reload ();
-                ReloadChildren ();
             }
+        }
+
+        protected virtual void HandleTracksAdded (Source sender, TrackEventArgs args)
+        {
+        }
+
+        protected virtual void HandleTracksChanged (Source sender, TrackEventArgs args)
+        {
+        }
+
+        protected virtual void HandleTracksRemoved (Source sender, TrackEventArgs args)
+        {
         }
 
 #endregion

@@ -52,20 +52,24 @@ namespace Banshee.Collection
         
         protected virtual void OnCleared ()
         {
-            EventHandler handler = Cleared;
-            if(handler != null) {
-                handler(this, EventArgs.Empty);
-            }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                EventHandler handler = Cleared;
+                if(handler != null) {
+                    handler(this, EventArgs.Empty);
+                }
+            });
         }
         
         protected virtual void OnReloaded ()
         {
             selection.Clear ();
 
-            EventHandler handler = Reloaded;
-            if(handler != null) {
-                handler(this, EventArgs.Empty);
-            }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                EventHandler handler = Reloaded;
+                if(handler != null) {
+                    handler(this, EventArgs.Empty);
+                }
+            });
         }
         
         public virtual void Clear()

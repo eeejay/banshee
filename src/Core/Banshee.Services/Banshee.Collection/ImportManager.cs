@@ -131,6 +131,7 @@ namespace Banshee.Collection
             path_queue.Clear ();
             processing_queue = false;
             DestroyUserJob ();
+            OnImportFinished ();
         }
         
         private void Enqueue (string path)

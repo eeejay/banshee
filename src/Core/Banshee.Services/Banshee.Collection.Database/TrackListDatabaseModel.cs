@@ -50,11 +50,11 @@ namespace Banshee.Collection.Database
         private readonly BansheeDbConnection connection;
         private readonly BansheeModelProvider<DatabaseTrackInfo> provider;
         private BansheeModelCache<DatabaseTrackInfo> cache;
-        private int count;
+        private long count;
         private TimeSpan duration;
         private long filesize;
 
-        private int filtered_count;
+        private long filtered_count;
         private TimeSpan filtered_duration;
         private long filtered_filesize;
         
@@ -172,17 +172,27 @@ namespace Banshee.Collection.Database
             filtered_count = 0;
             OnCleared();
         }
-        
-        private bool first_reload = true;
-        public override void Reload()
-        {
-            string unfiltered_query = String.Format (
-                "FROM {0}{1} WHERE {2} {3}",
-                provider.From, JoinFragment, provider.Where, ConditionFragment
-            );
 
+        private string unfiltered_query;
+        protected string UnfilteredQuery {
+            get {
+                return unfiltered_query ?? unfiltered_query = String.Format (
+                    "FROM {0}{1} WHERE {2} {3}",
+                    provider.From, JoinFragment, provider.Where, ConditionFragment
+                );
+            }
+        }
+
+        /*public void UpdateAggregates ()
+        {
+            UpdateUnfilteredAggregates ();
+            UpdateFilteredAggregates ();
+        }*/
+
+        private void UpdateUnfilteredAggregates ()
+        {
             using (IDataReader reader = connection.Query (String.Format (
-                "SELECT COUNT(*), {0} {1}", SelectAggregates, unfiltered_query)))
+                "SELECT COUNT(*), {0} {1}", SelectAggregates, UnfilteredQuery)))
             {
                 if (reader.Read ()) {
                     count = Convert.ToInt32 (reader[0]);
@@ -190,10 +200,21 @@ namespace Banshee.Collection.Database
                     filesize = reader.IsDBNull (2) ? 0 : Convert.ToInt64 (reader[2]);
                 }
             }
+        }
+
+        /*private void UpdateFilteredAggregates ()
+        {
+            cache.UpdateAggregates ();
+            filtered_count = cache.Count;
+        }*/
+        
+        private bool first_reload = true;
+        public override void Reload()
+        {
+            UpdateUnfilteredAggregates ();
 
             StringBuilder qb = new StringBuilder ();
-                
-            qb.Append (unfiltered_query);
+            qb.Append (UnfilteredQuery);
             
             if (artist_id_filter_query != null) {
                 qb.Append ("AND ");
@@ -230,7 +251,7 @@ namespace Banshee.Collection.Database
         public override int IndexOf (TrackInfo track)
         {
             DatabaseTrackInfo library_track = track as DatabaseTrackInfo;
-            return library_track == null ? -1 : cache.IndexOf ((int)library_track.DbId);
+            return (int) (library_track == null ? -1 : cache.IndexOf ((int)library_track.DbId));
         }
 
         public override TrackInfo this[int index] {
@@ -238,7 +259,7 @@ namespace Banshee.Collection.Database
         }
 
         public override int Count {
-            get { return filtered_count; }
+            get { return (int) filtered_count; }
         }
 
         public TimeSpan Duration {
@@ -250,7 +271,7 @@ namespace Banshee.Collection.Database
         }
         
         public int UnfilteredCount {
-            get { return count; }
+            get { return (int) count; }
         }
 
         public TimeSpan FilteredDuration {
@@ -362,7 +383,7 @@ namespace Banshee.Collection.Database
         }
 
         public int CacheId {
-            get { return cache.CacheId; }
+            get { return (int) cache.CacheId; }
         }
 
         public ISortableColumn SortColumn { 
@@ -383,6 +404,25 @@ namespace Banshee.Collection.Database
         {
             return this[index].GenerateExportable();
         }
+
+        private string track_ids_sql;
+        public string TrackIdsSql {
+            get {
+                if (track_ids_sql == null) {
+                    if (JoinTable == null) {
+                        track_ids_sql = "SELECT ItemID FROM CoreCache WHERE ModelID = ? LIMIT ?, ?";
+                    } else {
+                        track_ids_sql = String.Format (
+                            "SELECT {0} FROM {1} WHERE {2} IN (SELECT ItemID FROM CoreCache WHERE ModelID = ? LIMIT ?, ?)",
+                            JoinColumn, JoinTable, JoinPrimaryKey
+                        );
+                    }
+                }
+                return track_ids_sql;
+            }
+        }
+
+
 
         // Implement ICacheableModel
         public int FetchCount {

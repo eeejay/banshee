@@ -206,11 +206,22 @@ namespace Hyena.Data.Sqlite
             return target_id - first_order_id;
         }
 
+        private HyenaSqliteCommand last_reload_command;
+        private string last_reload_fragment;
+
         public override int Reload ()
         {
+            if (last_reload_fragment == model.ReloadFragment) {
+                last_reload_command = last_reload_command;
+            } else {
+                last_reload_fragment = model.ReloadFragment;
+                last_reload_command = new HyenaSqliteCommand (reload_sql + last_reload_fragment);
+            }
+
             Clear ();
+
             //using (new Timer (String.Format ("Generating cache table for {0}", model))) {
-                connection.Execute (reload_sql + model.ReloadFragment);
+                connection.Execute (last_reload_command);
             //}
             first_order_id = -1;
             UpdateAggregates ();

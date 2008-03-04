@@ -128,7 +128,7 @@ namespace Banshee.Sources
             get { return SourceMergeType.None; }
         }
         
-        public void SetParentSource (Source parent)
+        public virtual void SetParentSource (Source parent)
         {
             this.parent = parent;
         }

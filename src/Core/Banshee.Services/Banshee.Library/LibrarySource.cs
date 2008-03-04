@@ -30,6 +30,8 @@ using System;
 using System.Collections.Generic;
 
 using Mono.Unix;
+
+using Hyena;
 using Hyena.Collections;
 using Hyena.Data.Sqlite;
 
@@ -67,13 +69,12 @@ namespace Banshee.Library
                     } catch (System.IO.FileNotFoundException) {
                     } catch (System.IO.DirectoryNotFoundException) {
                     }
-
-                    // Remove from database
-                    remove_track_command.ApplyValues (track.DbId, track.DbId, track.DbId);
-                    ServiceManager.DbConnection.Execute (remove_track_command);
                 } catch (Exception e) {
                     ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
                 }
+
+                // Remove from database
+                RemoveTrackRange (model, range);
             }
         }
 

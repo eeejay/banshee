@@ -84,6 +84,11 @@ namespace Hyena.Data.Sqlite
             }
         }
 
+        public IDataReader Query (HyenaSqliteCommand command, params object [] param_values)
+        {
+            return Query (command.ApplyValues (param_values));
+        }
+
         public IDataReader Query (string command_str, params object [] param_values)
         {
             return Query (new HyenaSqliteCommand (command_str, param_values));
@@ -109,6 +114,11 @@ namespace Hyena.Data.Sqlite
                 : (T) SqliteUtils.FromDbFormat (typeof (T), Convert.ChangeType (result, typeof (T)));
         }
 
+        public T Query<T> (HyenaSqliteCommand command, params object [] param_values)
+        {
+            return Query<T> (command.ApplyValues (param_values));
+        }
+
         public T Query<T> (string command_str, params object [] param_values)
         {
             return Query<T> (new HyenaSqliteCommand (command_str, param_values));
@@ -127,6 +137,11 @@ namespace Hyena.Data.Sqlite
                 QueueCommand(command);
                 return (int) command.WaitForResult (this);
             }
+        }
+
+        public int Execute (HyenaSqliteCommand command, params object [] param_values)
+        {
+            return Execute (command.ApplyValues (param_values));
         }
 
         public int Execute (string command_str, params object [] param_values)

@@ -35,6 +35,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Hyena.Data;
+using Hyena.Data.Sqlite;
 using Hyena.Collections;
 
 using Banshee.Base;
@@ -53,6 +54,10 @@ namespace Banshee.Playlist
         protected abstract string SourceTable { get; }
         protected abstract string SourcePrimaryKey { get; }
         protected abstract string TrackJoinTable { get; }
+
+        protected DateTime last_added = DateTime.MinValue;
+        protected DateTime last_updated = DateTime.MinValue;
+        protected DateTime last_removed = DateTime.MinValue;
 
         protected virtual string TrackCondition {
             get {
@@ -79,8 +84,23 @@ namespace Banshee.Playlist
                 track_model.JoinColumn = "TrackID";
                 track_model.Condition = String.Format (TrackCondition, dbid);
                 AfterInitialized ();
+
+                count_updated_command = new HyenaSqliteCommand (String.Format (
+                    @"SELECT COUNT(*) FROM {0} WHERE {1} = {2} AND TrackID IN (
+                        SELECT TrackID FROM CoreTracks WHERE DateUpdatedStamp > ?)",
+                    TrackJoinTable, SourcePrimaryKey, dbid
+                ));
+
+                count_removed_command = new HyenaSqliteCommand (String.Format (
+                    @"SELECT COUNT(*) FROM {0} WHERE {1} = {2} AND TrackID IN (
+                        SELECT TrackID FROM CoreRemovedTracks WHERE DateRemovedStamp > ?)",
+                    TrackJoinTable, SourcePrimaryKey, dbid
+                ));
             }
         }
+
+        protected HyenaSqliteCommand count_updated_command;
+        protected HyenaSqliteCommand count_removed_command;
 
         public AbstractPlaylistSource (string generic_name, string name) 
             : this (generic_name, name, null, -1, 0)

@@ -243,6 +243,7 @@ namespace Banshee.Playlist
                 return;
 
             WithTrackSelection (from, AddTrackRange);
+            Reload ();
             OnUserNotifyUpdated ();
         }
 
@@ -268,6 +269,33 @@ namespace Banshee.Playlist
             ServiceManager.DbConnection.Execute (remove_track_range_command);
         }
 
+        protected override void HandleTracksChanged (Source sender, TrackEventArgs args)
+        {
+            if (args.When > last_updated) {
+                last_updated = args.When;
+                // Optimization: playlists only need to reload for updates if they are sorted by the column updated
+                //if (args.ChangedField == null || args.ChangedChanged == [current sort field]) {
+                    //if (ServiceManager.DbConnection.Query<int> (count_updated_command, last_updated) > 0) {
+                        Reload ();
+                    //}
+                //}
+            }
+        }
+
+        protected override void HandleTracksRemoved (Source sender, TrackEventArgs args)
+        {
+            if (args.When > last_removed) {
+                last_removed = args.When;
+                Reload ();
+                /*if (ServiceManager.DbConnection.Query<int> (count_removed_command, last_removed) > 0) {
+                    //ServiceManager.DbConnection.Execute ("DELETE FROM CoreCache WHERE ModelID = ? AND ItemID IN (SELECT EntryID FROM CorePlaylistEntries WHERE PlaylistID = ? AND TrackID IN (TrackID FROM CoreRemovedTracks))");
+                    ServiceManager.DbConnection.Execute ("DELETE FROM CorePlaylistEntries WHERE TrackID IN (SELECT TrackID FROM CoreRemovedTracks)");
+                    //track_model.UpdateAggregates ();
+                    //OnUpdated ();
+                }*/
+            }
+        }
+
         public static IEnumerable<PlaylistSource> LoadAll ()
         {
             using (IDataReader reader = ServiceManager.DbConnection.Query (
@@ -278,6 +306,17 @@ namespace Banshee.Playlist
                         Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3])
                     );
                 }
+            }
+        }
+
+        public override void SetParentSource (Source parent)
+        {
+            base.SetParentSource (parent);
+
+            PrimarySource primary = parent as PrimarySource;
+            if (primary != null) {
+                primary.TracksChanged += HandleTracksChanged;
+                primary.TracksRemoved += HandleTracksRemoved;
             }
         }
         

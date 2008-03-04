@@ -242,6 +242,7 @@ namespace Banshee.Database
             Execute("DROP TABLE IF EXISTS CorePlaylistEntries");
             Execute("DROP TABLE IF EXISTS CoreSmartPlaylists");
             Execute("DROP TABLE IF EXISTS CoreSmartPlaylistEntries");
+            Execute("DROP TABLE IF EXISTS CoreRemovedTracks");
             Execute("DROP TABLE IF EXISTS CoreTracksCache");
             Execute("DROP TABLE IF EXISTS CoreCache");
             
@@ -385,6 +386,14 @@ namespace Banshee.Database
             ");
             Execute("CREATE INDEX CoreSmartPlaylistEntriesPlaylistIndex ON CoreSmartPlaylistEntries(EntryID, SmartPlaylistID)");
             Execute("CREATE INDEX CoreSmartPlaylistEntriesTrackIndex ON CoreSmartPlaylistEntries(SmartPlaylistID, TrackID)");
+
+            Execute(@"
+                CREATE TABLE CoreRemovedTracks (
+                    TrackID             INTEGER NOT NULL,
+                    Uri                 TEXT,
+                    DateRemovedStamp    INTEGER
+                )
+            ");
 
             Execute(@"
                 CREATE TABLE CoreCacheModels (
@@ -554,7 +563,7 @@ namespace Banshee.Database
                     job.Progress = (double)++count / (double)total;
                 }
             }
-            ServiceManager.SourceManager.Library.OnTracksUpdated ();
+            ServiceManager.SourceManager.Library.NotifyTracksChanged ();
 
             job.Finish ();
         }

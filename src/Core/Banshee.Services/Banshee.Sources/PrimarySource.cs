@@ -31,6 +31,7 @@ using System.Collections.Generic;
 
 using Mono.Unix;
 using Hyena.Data;
+using Hyena.Query;
 using Hyena.Data.Sqlite;
 using Hyena.Collections;
 
@@ -39,33 +40,43 @@ using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
 using Banshee.Collection.Database;
+using Banshee.Query;
 
 namespace Banshee.Sources
 {
+    public class TrackEventArgs : EventArgs
+    {
+        private DateTime when;
+        public DateTime When {
+            get { return when; }
+        }
+
+        private QueryField changed_field;
+        public QueryField ChangedField {
+            get { return changed_field; }
+        }
+
+        public TrackEventArgs ()
+        {
+            when = DateTime.Now;
+        }
+
+        public TrackEventArgs (QueryField field) : this ()
+        {
+            this.changed_field = field;
+        }
+    }
+
     public abstract class PrimarySource : DatabaseSource
     {
         protected ErrorSource error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
         protected bool error_source_visible = false;
-        protected RateLimiter tracks_updated_limiter;
+        //protected RateLimiter tracks_updated_limiter;
         private double tracks_updated_ms = 250.0;
 
-        protected HyenaSqliteCommand remove_range_command = new HyenaSqliteCommand (@"
-            DELETE FROM CoreTracks WHERE TrackID IN
-                (SELECT ItemID FROM CoreCache
-                    WHERE ModelID = ? LIMIT ?, ?);
-            DELETE FROM CorePlaylistEntries WHERE TrackID IN
-                (SELECT ItemID FROM CoreCache
-                    WHERE ModelID = ? LIMIT ?, ?);
-            DELETE FROM CoreSmartPlaylistEntries WHERE TrackID IN
-                (SELECT ItemID FROM CoreCache
-                    WHERE ModelID = ? LIMIT ?, ?)"
-        );
-
-        protected HyenaSqliteCommand remove_track_command = new HyenaSqliteCommand (@"
-            DELETE FROM CoreTracks WHERE TrackID = ?;
-            DELETE FROM CorePlaylistEntries WHERE TrackID = ?;
-            DELETE FROM CoreSmartPlaylistEntries WHERE TrackID = ?"
-        );
+        protected string remove_range_sql = @"
+            INSERT INTO CoreRemovedTracks SELECT ?, TrackID, Uri FROM CoreTracks WHERE TrackID IN ({0});
+            DELETE FROM CoreTracks WHERE TrackID IN ({0})";
 
         protected int source_id;
         public int SourceId {
@@ -76,7 +87,11 @@ namespace Banshee.Sources
             get { return error_source; }
         }
 
-        public event EventHandler TracksUpdated;
+        public delegate void TrackEventHandler (Source sender, TrackEventArgs args);
+
+        public event TrackEventHandler TracksAdded;
+        public event TrackEventHandler TracksChanged;
+        public event TrackEventHandler TracksRemoved;
 
         private static Dictionary<int, PrimarySource> primary_sources = new Dictionary<int, PrimarySource> ();
         public static PrimarySource GetById (int id)
@@ -95,7 +110,7 @@ namespace Banshee.Sources
             error_source.Updated += OnErrorSourceUpdated;
             OnErrorSourceUpdated (null, null);
 
-            tracks_updated_limiter = new RateLimiter (20.0, tracks_updated_ms, RateLimitedOnTracksUpdated);
+            //tracks_updated_limiter = new RateLimiter (20.0, tracks_updated_ms, RateLimitedOnTracksUpdated);
 
             primary_sources[source_id] = this;
         }
@@ -104,26 +119,24 @@ namespace Banshee.Sources
             set { tracks_updated_ms = value ? 5000.0 : 250.0; }
         }
 
-        public void OnTracksUpdated ()
+        internal void NotifyTracksAdded ()
         {
-            ThreadAssist.Spawn (delegate {
-                tracks_updated_limiter.Execute (tracks_updated_ms);
-            });
+            OnTracksAdded ();
         }
 
-        protected virtual void RateLimitedOnTracksUpdated ()
+        internal void NotifyTracksChanged (QueryField field)
         {
-            RateLimitedReload ();
-            foreach (Source child in Children) {
-                if (child is DatabaseSource) {
-                    (child as DatabaseSource).RateLimitedReload ();
-                }
-            }
+            OnTracksChanged (field);
+        }
 
-            EventHandler handler = TracksUpdated;
-            if (handler != null) {
-                handler (this, EventArgs.Empty);
-            }
+        internal void NotifyTracksChanged ()
+        {
+            OnTracksChanged ();
+        }
+
+        internal void NotifyTracksRemoved ()
+        {
+            OnTracksRemoved ();
         }
 
         protected void OnErrorSourceUpdated (object o, EventArgs args)
@@ -163,14 +176,59 @@ namespace Banshee.Sources
             Reload ();
         }*/
 
+        public override void SetParentSource (Source source)
+        {
+            if (source is PrimarySource) {
+                throw new ArgumentException ("PrimarySource cannot have another PrimarySource as its parent");
+            }
+
+            base.SetParentSource (source);
+        }
+
+        protected override void OnTracksAdded ()
+        {
+            ThreadAssist.SpawnFromMain (delegate {
+                Reload ();
+
+                TrackEventHandler handler = TracksAdded;
+                if (handler != null) {
+                    handler (this, new TrackEventArgs ());
+                }
+            });
+        }
+
+        protected override void OnTracksChanged (QueryField field)
+        {
+            ThreadAssist.SpawnFromMain (delegate {
+                Reload ();
+
+                TrackEventHandler handler = TracksChanged;
+                if (handler != null) {
+                    handler (this, new TrackEventArgs (field));
+                }
+            });
+        }
+
+        protected override void OnTracksRemoved ()
+        {
+            ThreadAssist.SpawnFromMain (delegate {
+                Reload ();
+
+                TrackEventHandler handler = TracksRemoved;
+                if (handler != null) {
+                    handler (this, new TrackEventArgs ());
+                }
+            });
+        }
+
         protected override void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
         {
-            remove_range_command.ApplyValues (
-                    model.CacheId, range.Start, range.End - range.Start + 1,
-                    model.CacheId, range.Start, range.End - range.Start + 1,
-                    model.CacheId, range.Start, range.End - range.Start + 1
+            ServiceManager.DbConnection.Execute (
+                String.Format (remove_range_sql, model.TrackIdsSql),
+                DateTime.Now,
+                model.CacheId, range.Start, range.End - range.Start + 1,
+                model.CacheId, range.Start, range.End - range.Start + 1
             );
-            ServiceManager.DbConnection.Execute (remove_range_command);
         }
     }
 }

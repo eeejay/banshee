@@ -95,8 +95,6 @@ namespace Banshee.Library
                 return;
             }
 
-            ServiceManager.SourceManager.Library.Importing = true;
-            
             try {            
                 DatabaseTrackInfo track = AddTrackToLibrary (path);
                 if (track != null && track.DbId > 0) {
@@ -114,6 +112,7 @@ namespace Banshee.Library
             return AddTrackToLibrary (new SafeUri (path));
         }
         
+        private int count = 0;
         public DatabaseTrackInfo AddTrackToLibrary (SafeUri uri)
         {
             DatabaseTrackInfo track = null;
@@ -145,12 +144,16 @@ namespace Banshee.Library
 
                 album.Save ();
                 artist.Save ();
-                track.Save ();
+                track.Save (false);
 
                 ServiceManager.DbConnection.CommitTransaction ();
             } catch (Exception) {
                 ServiceManager.DbConnection.RollbackTransaction ();
                 throw;
+            }
+
+            if (count++ % 500 == 0) {
+                ServiceManager.SourceManager.Library.NotifyTracksAdded ();
             }
             
             return track;
@@ -175,7 +178,7 @@ namespace Banshee.Library
 
         protected override void OnImportFinished ()
         {
-            ServiceManager.SourceManager.Library.Importing = false;
+            ServiceManager.SourceManager.Library.NotifyTracksAdded ();
             base.OnImportFinished ();
         }
         

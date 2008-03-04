@@ -77,9 +77,14 @@ namespace Banshee.Collection.Database
         public void Save (bool notify)
         {
             DateUpdated = DateTime.Now;
+            bool is_new = dbid == 0;
             Provider.Save (this);
             if (notify) {
-                Source.OnTracksUpdated ();
+                if (is_new) {
+                    Source.NotifyTracksAdded ();
+                } else {
+                    Source.NotifyTracksChanged ();
+                }
             }
         }
         

@@ -149,6 +149,8 @@ namespace Hyena.Data.Sqlite
             for (int i = 0; i < parameter_count; i++) {
                 if (param_values[i] is string) {
                     param_values[i] = String.Format ("'{0}'", (param_values[i] as string).Replace ("'", "''"));
+                } else if (param_values[i] is DateTime) {
+                    param_values[i] = DateTimeUtil.FromDateTime ((DateTime) param_values[i]);
                 } else if (param_values[i] == null) {
                     param_values[i] = "NULL";
                 }

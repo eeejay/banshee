@@ -1,3 +1,67 @@
+2008-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit adds more granular events for when tracks are added, changed,
+	and removed to each track's PrimarySource.  Playlists etc can listen for
+	these events, and only reload when necessary (still work to do on this
+	front).  Reloads happen not in the main thread, so actions (like rating
+	4800 songs at once) return quickly, but other sources may take a second or
+	few to be updated.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	In Save method, trigger PrimarySource's TrackAdded or Changed method as
+	appropriate.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Cache the unfiltered query string.
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Call
+	OnImportFinished even if cancelled.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add CoreRemovedTracks table.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Pass
+	false to DatabaseTrackInfo.Save method, and manually trigger TracksAdded
+	event every 500 songs or when finished/cancelled.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Use
+	RemoveTrackRange instead of remove_track_command.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Add stamps for tracking when last handled Tracks* events, add count
+	commands for use in determining if an event affects this source.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Handle
+	TracksChanged and TracksRemoved events from our PrimarySource parent.
+	Right now we just always trigger a Reload, but these handlers are ripe for
+	optimizations that will avoid Reloads unless absolutely necessary.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Trigger the
+	Track* events on the primary source when adding/changing/removing tracks.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add
+	TracksAdded, TracksChanged, and TracksRemoved methods.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Make
+	SetParentSource a virtual method.
+
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Make
+	sure GUI-related events are handled in the main loop.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Turn
+	DateTime values into integers.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add
+	another override for Query/Query<T>/Execute (HyenaSqliteCommand, params).
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Cache the
+	reload command.
+
 2008-03-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena/Hyena/Log.cs: Added InformationTimer methods

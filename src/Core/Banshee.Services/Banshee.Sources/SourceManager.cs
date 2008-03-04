@@ -176,12 +176,14 @@ namespace Banshee.Sources
         
         private void OnSourceUpdated(object o, EventArgs args)
         {
-            SourceEventHandler handler = SourceUpdated;
-            if(handler != null) {
-                SourceEventArgs evargs = new SourceEventArgs();
-                evargs.Source = o as Source;
-                handler(evargs);
-            }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                SourceEventHandler handler = SourceUpdated;
+                if(handler != null) {
+                    SourceEventArgs evargs = new SourceEventArgs();
+                    evargs.Source = o as Source;
+                    handler(evargs);
+                }
+            });
         }
 
         private void OnChildSourceAdded(SourceEventArgs args)
