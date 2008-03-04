@@ -26,3 +26,4 @@ DISTCLEANFILES =	\
 MAINTAINERCLEANFILES = \
 	Makefile.in
 
+CLEANFILES = translators.xml

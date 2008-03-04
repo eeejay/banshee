@@ -1,6 +1,6 @@
 dnl Automake setup
 
-AC_INIT([banshee-preview], [0.90.1])
+AC_INIT([banshee-preview], [0.99.1]) # 1.0 Alpha 1
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
@@ -45,7 +45,7 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 	System.Web
 	System.Web.Services
 	Mono.Cairo
-	Mono.Data.Sqlite
+	Mono.Data.SqliteClient
 	Mono.Posix
 	ICSharpCode.SharpZipLib
 ])
@@ -63,7 +63,7 @@ dnl NUnit (optional)
 SHAMROCK_CHECK_MONO_NUNIT
 
 dnl Boo libraries and compiler (optional)
-BANSHEE_CHECK_BOO
+#BANSHEE_CHECK_BOO
 
 dnl External TagLib# libraries (optional)
 BANSHEE_CHECK_TAGLIB_SHARP
@@ -79,16 +79,16 @@ AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
 AM_GCONF_SOURCE_2
 
 dnl DAP support (each module is optional)
-BANSHEE_CHECK_DAP_IPOD
-BANSHEE_CHECK_DAP_NJB
-BANSHEE_CHECK_DAP_MTP
-BANSHEE_CHECK_DAP_KARMA
+#BANSHEE_CHECK_DAP_IPOD
+#BANSHEE_CHECK_DAP_NJB
+#BANSHEE_CHECK_DAP_MTP
+#BANSHEE_CHECK_DAP_KARMA
 
 dnl DAAP support (optional)
-BANSHEE_CHECK_DAAP
+#BANSHEE_CHECK_DAAP
 
 dnl i18n
-SHAMROCK_CONFIGURE_I18N(banshee2)
+SHAMROCK_CONFIGURE_I18N(banshee-preview)
 
 dnl generated files
 AC_OUTPUT([
@@ -112,8 +112,6 @@ po/Makefile.in
 tests/Makefile
 
 extras/Makefile
-extras/tools/Makefile
-extras/tools/banshee-import
 
 libbanshee/Makefile
 
@@ -129,10 +127,6 @@ src/Core/Banshee.Core/Makefile
 src/Core/Banshee.Services/Makefile
 src/Core/Banshee.ThickClient/Makefile
 src/Core/Banshee.Widgets/Makefile
-
-src/Dap/Makefile
-src/Dap/Banshee.DapCore/Makefile
-src/Dap/Banshee.Dap.MassStorage/Makefile
 
 src/Backends/Makefile
 src/Backends/Banshee.Gnome/Makefile
@@ -171,21 +165,20 @@ banshee-$VERSION
     C Compiler:        ${CC}
     Mono C# Compiler:  ${MCS}
     Mono Runtime:      ${MONO}
- 
-    Digital Audio Players (DAP):
-      iPod:            ${enable_ipodsharp}
-      NJB:             ${enable_njbsharp}
-      MTP:             ${enable_mtp_dap}
-      Karma:           ${enable_karmasharp}
-
-    DAAP Support:      ${enable_daap}${zeroconf_lib}
 "
-if test -d ${expanded_libdir}/banshee; then
+#    Digital Audio Players (DAP):
+#      iPod:            ${enable_ipodsharp}
+#      NJB:             ${enable_njbsharp}
+#      MTP:             ${enable_mtp_dap}
+#      Karma:           ${enable_karmasharp}
+#
+#    DAAP Support:      ${enable_daap}${zeroconf_lib}
+#"
+
+if test -d ${expanded_libdir}/${PACKAGE}; then
 	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/banshee"
 	echo "         Remove the existing install before installing this build."
 	echo "         Installing over an existing install will cause conflicts!"
 	echo 
 fi
-
-grep -v "Pass " README.trunk
 

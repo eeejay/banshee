@@ -1,3 +1,4 @@
+data/audio-profiles/aac.xml.in
 old-code/Core/Banshee.Base/ActionManager.cs
 old-code/Core/Banshee.Base/AudioCd/AudioCdCore.cs
 old-code/Core/Banshee.Base/AudioCd/AudioCdDisk.cs
