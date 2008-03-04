@@ -108,16 +108,16 @@ namespace Hyena
         
             if (type != LogEntryType.Information || (type == LogEntryType.Information && !showUser)) {
                 switch (type) {
-                    case LogEntryType.Error: Console.ForegroundColor = ConsoleColor.Red; break;
-                    case LogEntryType.Warning: Console.ForegroundColor = ConsoleColor.DarkYellow; break;
-                    case LogEntryType.Information: Console.ForegroundColor = ConsoleColor.Green; break;
-                    case LogEntryType.Debug: Console.ForegroundColor = ConsoleColor.Blue; break;
+                    case LogEntryType.Error: ConsoleCrayon.ForegroundColor = ConsoleColor.Red; break;
+                    case LogEntryType.Warning: ConsoleCrayon.ForegroundColor = ConsoleColor.Yellow; break;
+                    case LogEntryType.Information: ConsoleCrayon.ForegroundColor = ConsoleColor.Green; break;
+                    case LogEntryType.Debug: ConsoleCrayon.ForegroundColor = ConsoleColor.Blue; break;
                 }
                 
                 Console.Write ("[{0} {1:00}:{2:00}:{3:00}.{4:000}]", TypeString (type), DateTime.Now.Hour,
                     DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
                 
-                Console.ResetColor ();
+                ConsoleCrayon.ResetColor ();
                                
                 if (details != null) {
                     Console.WriteLine (" {0} - {1}", message, details);

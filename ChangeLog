@@ -1,3 +1,14 @@
+2008-03-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena/Hyena/ConsoleCrayon.cs: A workaround for the somewhat
+	broken terminfo driver for setting console colors in System.Console on
+	Mono. If xterm and tty is detected, ANSI control codes will be used to
+	color the console, otherwise if the runtime is not mono and the OS is
+	not unix, the regular System.Console API will be used
+
+	* src/Libraries/Hyena/Hyena/Log.cs: Use Hyena.ConsoleCrayon instead of
+	System.Console to set/reset the terminal colors
+
 2008-03-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmTrackInfo.cs:

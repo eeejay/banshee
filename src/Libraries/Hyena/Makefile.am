@@ -68,6 +68,7 @@ SOURCES =  \
 	Hyena.SExpEngine/StringFunctionSet.cs \
 	Hyena.SExpEngine/TreeNode.cs \
 	Hyena.SExpEngine/UtilityFunctionSet.cs \
+	Hyena/ConsoleCrayon.cs \
 	Hyena/CryptoUtil.cs \
 	Hyena/DateTimeUtil.cs \
 	Hyena/IUndoAction.cs \
