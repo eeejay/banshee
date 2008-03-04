@@ -150,6 +150,111 @@ namespace Hyena
             }
         }
         
+        #region Timer Methods
+        
+        public static uint DebugTimerStart (string message)
+        {
+            return TimerStart (message, false);
+        }
+        
+        public static uint InformationTimerStart (string message)
+        {
+            return TimerStart (message, true);
+        }
+        
+        private static uint TimerStart (string message, bool isInfo)
+        {
+            if (!Debugging && !isInfo) {
+                return 0;
+            }
+            
+            if (isInfo) {
+                Information (message);
+            } else {
+                Debug (message);
+            }
+            
+            return TimerStart (isInfo);
+        }
+        
+        public static uint DebugTimerStart ()
+        {
+            return TimerStart (false);
+        }
+        
+        public static uint InformationTimerStart ()
+        {
+            return TimerStart (true);
+        }
+            
+        private static uint TimerStart (bool isInfo)
+        {
+            if (!Debugging && !isInfo) {
+                return 0;
+            }
+            
+            uint timer_id = next_timer_id++;
+            timers.Add (timer_id, DateTime.Now);
+            return timer_id;
+        }
+        
+        public static void DebugTimerPrint (uint id)
+        {
+            if (!Debugging) {
+                return;
+            }
+            
+            TimerPrint (id, "Operation duration: {0}", false);
+        }
+        
+        public static void DebugTimerPrint (uint id, string message)
+        {
+            if (!Debugging) {
+                return;
+            }
+            
+            TimerPrint (id, message, false);
+        }
+        
+        public static void InformationTimerPrint (uint id)
+        {
+            TimerPrint (id, "Operation duration: {0}", true);
+        }
+        
+        public static void InformationTimerPrint (uint id, string message)
+        {
+            TimerPrint (id, message, true);
+        }
+        
+        private static void TimerPrint (uint id, string message, bool isInfo)
+        {
+            if (!Debugging && !isInfo) {
+                return;
+            }
+            
+            DateTime finish = DateTime.Now;
+            
+            if (!timers.ContainsKey (id)) {
+                return;
+            }
+            
+            TimeSpan duration = finish - timers[id];
+            string d_message;
+            if (duration.TotalSeconds < 60) {
+                d_message = String.Format ("{0}s", duration.TotalSeconds);
+            } else {
+                d_message = duration.ToString ();
+            }
+            
+            if (isInfo) {
+                InformationFormat (message, d_message);
+            } else {
+                DebugFormat (message, d_message);
+            }
+        }
+        
+        #endregion
+        
         #region Public Debug Methods
                                     
         public static void Debug (string message, string details)
@@ -172,60 +277,7 @@ namespace Hyena
                 Debug (String.Format (format, args));
             }
         }
-        
-        public static uint DebugTimerStart (string message)
-        {
-            if (!Debugging) {
-                return 0;
-            }
-            
-            Debug (message);
-            return DebugTimerStart ();
-        }
-        
-        public static uint DebugTimerStart ()
-        {
-            if (!Debugging) {
-                return 0;
-            }
-            
-            uint timer_id = next_timer_id++;
-            timers.Add (timer_id, DateTime.Now);
-            return timer_id;
-        }
-        
-        public static void DebugTimerPrint (uint id)
-        {
-            if (!Debugging) {
-                return;
-            }
-            
-            DebugTimerPrint (id, "Operation duration: {0}");
-        }
-        
-        public static void DebugTimerPrint (uint id, string message)
-        {
-            if (!Debugging) {
-                return;
-            }
-            
-            DateTime finish = DateTime.Now;
-            
-            if (!timers.ContainsKey (id)) {
-                return;
-            }
-            
-            TimeSpan duration = finish - timers[id];
-            string d_message;
-            if (duration.TotalSeconds < 60) {
-                d_message = String.Format ("{0}s", duration.TotalSeconds);
-            } else {
-                d_message = duration.ToString ();
-            }
-            
-            DebugFormat (message, d_message);
-        }
-        
+                
         #endregion
         
         #region Public Information Methods
@@ -248,6 +300,11 @@ namespace Hyena
         public static void Information (string message, bool showUser)
         {
             Information (message, null, showUser);
+        }
+        
+        public static void InformationFormat (string format, params object [] args)
+        {
+            Information (String.Format (format, args));
         }
         
         #endregion

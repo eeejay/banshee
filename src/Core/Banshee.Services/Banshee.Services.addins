@@ -1,4 +1,5 @@
 <Addins>
-  <Directory include-subdirs="true">./addins</Directory>
+  <Directory include-subdirs="true">./Backends</Directory>
+  <Directory include-subdirs="true">./Extensions</Directory>
 </Addins>
 

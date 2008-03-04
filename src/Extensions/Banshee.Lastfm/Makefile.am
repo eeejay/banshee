@@ -1,6 +1,7 @@
 ASSEMBLY = Banshee.Lastfm
 TARGET = library
 LINK = $(REF_EXTENSION_LASTFM) -r:System.Web -r:Mono.Security
+INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs \

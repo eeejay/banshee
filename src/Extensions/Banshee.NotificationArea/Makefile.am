@@ -1,6 +1,7 @@
 ASSEMBLY = Banshee.NotificationArea
 TARGET = library
 LINK = $(REF_EXTENSION_NOTIFICATIONAREA)
+INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.NotificationArea/GtkNotificationAreaBox.cs \

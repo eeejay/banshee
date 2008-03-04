@@ -4,7 +4,8 @@ MONO_ADDINS_PATH =
 
 # Install Paths
 DEFAULT_INSTALL_DIR = $(pkglibdir)
-ADDINS_INSTALL_DIR = $(DEFAULT_INSTALL_DIR)/addins
+BACKENDS_INSTALL_DIR = $(DEFAULT_INSTALL_DIR)/Backends
+EXTENSIONS_INSTALL_DIR = $(DEFAULT_INSTALL_DIR)/Extensions
 
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System

@@ -6,7 +6,7 @@ SOURCES =  \
 	Banshee.GStreamer/PlayerEngine.cs \
 	Banshee.GStreamer/Service.cs
 RESOURCES = Banshee.GStreamer.addin.xml
-INSTALL_DIR = $(ADDINS_INSTALL_DIR)
+INSTALL_DIR = $(BACKENDS_INSTALL_DIR)
 
 include $(top_srcdir)/build/build.mk
 

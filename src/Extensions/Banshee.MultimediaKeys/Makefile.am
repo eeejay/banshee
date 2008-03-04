@@ -1,6 +1,7 @@
 ASSEMBLY = Banshee.MultimediaKeys
 TARGET = library
 LINK = $(REF_EXTENSION_MULTIMEDIAKEYS)
+INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES = Banshee.MultimediaKeys/MultimediaKeysService.cs 
 

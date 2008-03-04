@@ -1,5 +1,34 @@
 2008-03-04  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena/Hyena/Log.cs: Added InformationTimer methods
+	akin to DebugTimer methods that will work without --debug mode
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Use InformationTimer instead of DebugTimer to show the overall startup
+	time; set the addin cache path to just be the application data path,
+	since Mono.Addins creates its own subdirectory underneath
+
+	* src/Core/Banshee.Services/Banshee.Services.addins: Scan Extensions
+	and Backends directories for addins
+
+	* build/build.environment.mk: Define EXTENSIONS_INSTALL_DIR, 
+	BACKENDS_INSTALL_DIR
+
+	* src/Backends/Banshee.GStreamer/Makefile.am:
+	* src/Backends/Banshee.Gnome/Makefile.am:
+	* src/Backends/Banshee.Unix/Makefile.am:
+	* src/Extensions/Banshee.Lastfm/Makefile.am:
+	* src/Extensions/Banshee.MultimediaKeys/Makefile.am:
+	* src/Extensions/Banshee.NotificationArea/Makefile.am:
+	* src/Extensions/Banshee.PlayQueue/Makefile.am:
+	* src/Extensions/Banshee.Skins/Makefile.am: Set the INSTALL_DIR to 
+	either EXTENSIONS_INSTALL_DIR or BACKENDS_INSTALL_DIR so addins are
+	a bit more organized in the install/packages
+
+	* src/Extensions/Makefile.am: Disable the skins extension
+
+2008-03-04  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena/Hyena/ConsoleCrayon.cs: A workaround for the somewhat
 	broken terminfo driver for setting console colors in System.Console on
 	Mono. If xterm and tty is detected, ANSI control codes will be used to

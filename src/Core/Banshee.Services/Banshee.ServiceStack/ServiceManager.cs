@@ -88,7 +88,7 @@ namespace Banshee.ServiceStack
             lock (self_mutex) {          
                 OnStartupBegin ();
                 
-                uint cumulative_timer_id = Log.DebugTimerStart ();
+                uint cumulative_timer_id = Log.InformationTimerStart ();
                 
                 foreach (Type type in service_types) {
                     uint timer_id = Log.DebugTimerStart (); 
@@ -135,7 +135,7 @@ namespace Banshee.ServiceStack
                 
                 is_initialized = true;
                 
-                Log.DebugTimerPrint (cumulative_timer_id, "All services are started {0}");
+                Log.InformationTimerPrint (cumulative_timer_id, "All services are started {0}");
                 
                 OnStartupFinished ();
             }
@@ -244,7 +244,7 @@ namespace Banshee.ServiceStack
         }
         
         public static string UserAddinCachePath {
-            get { return Path.Combine (Paths.ApplicationData, "addins"); }
+            get { return Paths.ApplicationData; }
         }
         
         public static DBusServiceManager DBusServiceManager {

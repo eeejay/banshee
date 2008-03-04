@@ -1,6 +1,7 @@
 ASSEMBLY = Banshee.Skins
 TARGET = library
 LINK = $(REF_EXTENSION_SKINS)
+INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES = Banshee.Skins/SkinManager.cs 
 

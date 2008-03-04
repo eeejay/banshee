@@ -1,6 +1,7 @@
 ASSEMBLY = Banshee.PlayQueue
 TARGET = library
 LINK = $(REF_EXTENSION_PLAYQUEUE)
+INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES = Banshee.PlayQueue/PlayQueueSource.cs 
 

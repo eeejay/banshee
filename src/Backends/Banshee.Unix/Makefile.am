@@ -1,6 +1,7 @@
 ASSEMBLY = Banshee.Unix
 TARGET = library
 LINK = $(REF_BACKEND_UNIX)
+INSTALL_DIR = $(BACKENDS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.IO.Unix/DemuxVfs.cs \

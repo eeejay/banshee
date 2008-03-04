@@ -2,7 +2,6 @@ SUBDIRS = \
 	Banshee.Lastfm \
 	Banshee.MultimediaKeys \
 	Banshee.NotificationArea \
-	Banshee.PlayQueue \
-	Banshee.Skins
+	Banshee.PlayQueue
 
 MAINTAINERCLEANFILES = Makefile.in
