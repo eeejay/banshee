@@ -171,8 +171,6 @@ namespace Hyena
                     break;
             }
 
-            Console.WriteLine (_xterm_colors);
-            
             xterm_colors = _xterm_colors && isatty (1) && isatty (2);
         }
 
