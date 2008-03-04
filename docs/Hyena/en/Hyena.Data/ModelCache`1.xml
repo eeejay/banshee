@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class ModelCache&lt;T&gt;" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -34,7 +34,7 @@
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="i" Type="System.Int32" /><Parameter Name="item" Type="T" /></Parameters>
-      <Docs><param name="i">To be added.</param><param name="item">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Docs><param name="i">To be added.</param><param name="item">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Clear">
       <MemberSignature Language="C#" Value="public abstract void Clear ();" />
       <MemberType>Method</MemberType>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class RoundedFrame : Gtk.Bin" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.Bin</BaseTypeName>
@@ -17,10 +17,7 @@
       <MemberSignature Language="C#" Value="public RoundedFrame ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

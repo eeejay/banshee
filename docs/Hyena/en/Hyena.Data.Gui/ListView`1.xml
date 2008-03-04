@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ListView&lt;T&gt; : Gtk.Container" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -42,17 +42,17 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ColumnController">
+    </Member><Member MemberName="ChildClassPostRender"><MemberSignature Language="C#" Value="protected virtual void ChildClassPostRender (Gdk.EventExpose evnt, Cairo.Context cr, Gdk.Rectangle clip);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="evnt" Type="Gdk.EventExpose" /><Parameter Name="cr" Type="Cairo.Context" /><Parameter Name="clip" Type="Gdk.Rectangle" /></Parameters><Docs><param name="evnt">To be added.</param><param name="cr">To be added.</param><param name="clip">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ColumnController">
       <MemberSignature Language="C#" Value="public Hyena.Data.Gui.ColumnController ColumnController { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Hyena.Data.Gui.ColumnController</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="HeaderVisible">
+    </Member><Member MemberName="GetRowAtY"><MemberSignature Language="C#" Value="protected int GetRowAtY (int y);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Parameters><Parameter Name="y" Type="System.Int32" /></Parameters><Docs><param name="y">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetYAtRow"><MemberSignature Language="C#" Value="protected double GetYAtRow (int row);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Double</ReturnType></ReturnValue><Parameters><Parameter Name="row" Type="System.Int32" /></Parameters><Docs><param name="row">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="HeaderVisible">
       <MemberSignature Language="C#" Value="public bool HeaderVisible { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="InvalidateFooterWindow">
+    </Member><Member MemberName="HeaderWindow"><MemberSignature Language="C#" Value="protected Gdk.Window HeaderWindow { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>Gdk.Window</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="InvalidateFooterWindow">
       <MemberSignature Language="C#" Value="protected void InvalidateFooterWindow ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
@@ -70,7 +70,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Model">
+    </Member><Member MemberName="ListWindow"><MemberSignature Language="C#" Value="protected Gdk.Window ListWindow { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>Gdk.Window</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Model">
       <MemberSignature Language="C#" Value="public virtual Hyena.Data.IListModel&lt;T&gt; Model { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Hyena.Data.IListModel&lt;T&gt;</ReturnType></ReturnValue>
@@ -109,7 +109,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="RulesHint">
+    </Member><Member MemberName="RowSensitivePropertyName"><MemberSignature Language="C#" Value="public string RowSensitivePropertyName { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="RulesHint">
       <MemberSignature Language="C#" Value="public bool RulesHint { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
@@ -148,7 +148,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="value" Type="Hyena.Data.IListModel&lt;T&gt;" /><Parameter Name="vpos" Type="System.Double" /></Parameters>
       <Docs><param name="value">To be added.</param><param name="vpos">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Vadjustment">
+    </Member><Member MemberName="Theme"><MemberSignature Language="C#" Value="protected Hyena.Gui.Theming.Theme Theme { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>Hyena.Gui.Theming.Theme</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Vadjustment">
       <MemberSignature Language="C#" Value="public Gtk.Adjustment Vadjustment { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Gtk.Adjustment</ReturnType></ReturnValue>

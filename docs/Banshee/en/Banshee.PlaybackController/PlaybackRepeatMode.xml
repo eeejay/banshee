@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public enum PlaybackRepeatMode" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
@@ -12,35 +12,23 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
     <Member MemberName="None">
       <MemberSignature Language="C#" Value="None" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.PlaybackController.PlaybackRepeatMode</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="RepeatAll">
+      <ReturnValue><ReturnType>Banshee.PlaybackController.PlaybackRepeatMode</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="RepeatAll">
       <MemberSignature Language="C#" Value="RepeatAll" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.PlaybackController.PlaybackRepeatMode</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="RepeatSingle">
+      <ReturnValue><ReturnType>Banshee.PlaybackController.PlaybackRepeatMode</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="RepeatSingle">
       <MemberSignature Language="C#" Value="RepeatSingle" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.PlaybackController.PlaybackRepeatMode</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>Banshee.PlaybackController.PlaybackRepeatMode</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
   </Members>
 </Type>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class DictionaryComboBox&lt;T&gt; : Gtk.ComboBox" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Widgets</AssemblyName>
-    <AssemblyVersion>0.90.1.41383</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25405</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>

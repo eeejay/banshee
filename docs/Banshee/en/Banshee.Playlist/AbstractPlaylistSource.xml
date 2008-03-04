@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class AbstractPlaylistSource : Banshee.Sources.DatabaseSource" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Sources.DatabaseSource</BaseTypeName>
@@ -56,7 +56,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="NotifyUpdated"><MemberSignature Language="C#" Value="public void NotifyUpdated ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Save">
+    </Member><Member MemberName="JoinPrimaryKey"><MemberSignature Language="C#" Value="protected virtual string JoinPrimaryKey { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="NotifyUpdated"><MemberSignature Language="C#" Value="public void NotifyUpdated ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Save">
       <MemberSignature Language="C#" Value="public virtual void Save ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public static class GtkUtilities" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -31,7 +31,7 @@
       <MemberSignature Language="C#" Value="public static bool NoImportantModifiersAreSet (Gdk.ModifierType[] modifiers);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="modifiers" Type="Gdk.ModifierType[]" /></Parameters>
+      <Parameters><Parameter Name="modifiers" Type="Gdk.ModifierType[]"><Attributes><Attribute><AttributeName>System.ParamArray</AttributeName></Attribute></Attributes></Parameter></Parameters>
       <Docs><param name="modifiers">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>

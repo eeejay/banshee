@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class RadioTrackInfo : Banshee.Collection.TrackInfo" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Collection.TrackInfo</BaseTypeName>
@@ -35,7 +35,7 @@
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="track" Type="Banshee.Playlists.Formats.Xspf.Track" /></Parameters>
       <Docs><param name="track">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ParsingPlaylist">
+    </Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public RadioTrackInfo (Media.Playlists.Xspf.Track track);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="track" Type="Media.Playlists.Xspf.Track" /></Parameters><Docs><param name="track">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ParsingPlaylist">
       <MemberSignature Language="C#" Value="public bool ParsingPlaylist { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
@@ -58,9 +58,9 @@
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="XspfTrack">
-      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.Xspf.Track XspfTrack { get; };" />
+      <MemberSignature Language="C#" Value="public Media.Playlists.Xspf.Track XspfTrack { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>Banshee.Playlists.Formats.Xspf.Track</ReturnType></ReturnValue>
+      <ReturnValue><ReturnType>Media.Playlists.Xspf.Track</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>

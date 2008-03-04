@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct PipelineVariable.PossibleValue" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>

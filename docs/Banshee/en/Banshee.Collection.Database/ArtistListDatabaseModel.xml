@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ArtistListDatabaseModel : Banshee.Collection.ArtistListModel, Hyena.Data.Sqlite.ICacheableDatabaseModel" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Collection.ArtistListModel</BaseTypeName>
@@ -41,7 +41,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ReloadFragment">
+    </Member><Member MemberName="JoinColumn"><MemberSignature Language="C#" Value="public string JoinColumn { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="JoinFragment"><MemberSignature Language="C#" Value="public string JoinFragment { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="JoinPrimaryKey"><MemberSignature Language="C#" Value="public string JoinPrimaryKey { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="JoinTable"><MemberSignature Language="C#" Value="public string JoinTable { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ReloadFragment">
       <MemberSignature Language="C#" Value="public string ReloadFragment { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>

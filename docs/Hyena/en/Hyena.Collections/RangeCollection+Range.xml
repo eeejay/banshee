@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public struct RangeCollection.Range : IComparable" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>

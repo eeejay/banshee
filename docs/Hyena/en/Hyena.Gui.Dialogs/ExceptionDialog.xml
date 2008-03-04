@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ExceptionDialog : Gtk.Dialog" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.Dialog</BaseTypeName>

@@ -12,10 +12,10 @@ banshee_SCRIPTS = $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY)
 all: $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY) $(TRANSLATOR_EXTRACTOR_ASSEMBLY)
 
 $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY): GConfSchemaExtractor.cs
-	$(BUILD) -out:$@ $<
+	$(MCS) -out:$@ $<
 
-$(TRANSLATOR_EXTRACTOR_ASSEMBLY): TranslatorExtract.cs
-	$(BUILD) -out:$@ $< && $(MONO) $@ $(top_builddir)/po > \
+$(TRANSLATOR_EXTRACTOR_ASSEMBLY): TranslatorExtractor.cs
+	$(MCS) -out:$@ $< && $(MONO) $@ $(top_builddir)/po > \
 		$(top_srcdir)/src/Core/Banshee.Core/Resources/translators.xml
 
 EXTRA_DIST = \

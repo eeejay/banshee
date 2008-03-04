@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ActionToggleButton : Gtk.ToggleButton" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Widgets</AssemblyName>
-    <AssemblyVersion>0.90.1.41383</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25405</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.ToggleButton</BaseTypeName>

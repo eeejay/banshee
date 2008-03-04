@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class PropertyStore" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -92,7 +92,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="name" Type="System.String" /></Parameters>
       <Docs><param name="name">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Set&lt;T&gt;">
+    </Member><Member MemberName="RemoveStartingWith"><MemberSignature Language="C#" Value="public void RemoveStartingWith (string prefix);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="prefix" Type="System.String" /></Parameters><Docs><param name="prefix">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Set&lt;T&gt;">
       <MemberSignature Language="C#" Value="public void Set&lt;T&gt; (string name, T value);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>

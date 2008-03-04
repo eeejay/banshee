@@ -158,7 +158,7 @@ namespace Hyena
         {
             bool _xterm_colors = false;
                 
-            switch (Environment.GetEnvironmentVariable ("TERM")){
+            switch (Environment.GetEnvironmentVariable ("TERM")) {
                 case "xterm":
                 case "rxvt":
                 case "rxvt-unicode": 

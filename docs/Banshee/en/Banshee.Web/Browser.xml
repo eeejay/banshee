@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class Browser" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -21,11 +21,11 @@
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="Open">
-      <MemberSignature Language="C#" Value="public static bool Open (string uri);" />
+      <MemberSignature Language="C#" Value="public static bool Open (string url);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="uri" Type="System.String" /></Parameters>
-      <Docs><param name="uri">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <Parameters><Parameter Name="url" Type="System.String" /></Parameters>
+      <Docs><param name="url">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="UserAgent">
       <MemberSignature Language="C#" Value="public static readonly string UserAgent;" />
       <MemberType>Field</MemberType>

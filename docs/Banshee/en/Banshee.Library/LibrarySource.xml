@@ -1,11 +1,11 @@
 <Type Name="LibrarySource" FullName="Banshee.Library.LibrarySource">
-  <TypeSignature Language="C#" Value="public class LibrarySource : Banshee.Sources.DatabaseSource" />
+  <TypeSignature Language="C#" Value="public class LibrarySource : Banshee.Sources.PrimarySource" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>Banshee.Sources.DatabaseSource</BaseTypeName>
+    <BaseTypeName>Banshee.Sources.PrimarySource</BaseTypeName>
   </Base>
   <Interfaces />
   <Docs>

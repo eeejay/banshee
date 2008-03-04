@@ -1,12 +1,12 @@
 <Type Name="SmartPlaylistQueryValue" FullName="Banshee.Query.SmartPlaylistQueryValue">
-  <TypeSignature Language="C#" Value="public class SmartPlaylistQueryValue : Banshee.Query.PlaylistQueryValue" />
+  <TypeSignature Language="C#" Value="public class SmartPlaylistQueryValue : Banshee.Query.AbstractPlaylistQueryValue&lt;Banshee.SmartPlaylist.SmartPlaylistSource&gt;" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>Banshee.Query.PlaylistQueryValue</BaseTypeName>
-  </Base>
+    <BaseTypeName>Banshee.Query.AbstractPlaylistQueryValue&lt;Banshee.SmartPlaylist.SmartPlaylistSource&gt;</BaseTypeName>
+  <BaseTypeArguments><BaseTypeArgument TypeParamName="T">Banshee.SmartPlaylist.SmartPlaylistSource</BaseTypeArgument></BaseTypeArguments></Base>
   <Interfaces />
   <Docs>
     <summary>To be added.</summary>
@@ -17,10 +17,7 @@
       <MemberSignature Language="C#" Value="public SmartPlaylistQueryValue ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

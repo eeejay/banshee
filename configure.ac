@@ -1,6 +1,6 @@
 dnl Automake setup
 
-AC_INIT([banshee2], [0.90.1])
+AC_INIT([banshee-preview], [0.90.1])
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
@@ -122,7 +122,7 @@ src/AssemblyInfo.cs
 
 src/Clients/Makefile
 src/Clients/Nereid/Makefile
-src/Clients/Nereid/banshee2
+src/Clients/Nereid/banshee-preview
 
 src/Core/Makefile
 src/Core/Banshee.Core/Makefile

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class HoverImageButton : Gtk.EventBox" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Widgets</AssemblyName>
-    <AssemblyVersion>0.90.1.41383</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25405</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.EventBox</BaseTypeName>

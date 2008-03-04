@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class LayoutGroup : System.Collections.Generic.IEnumerable&lt;Hyena.CommandLine.LayoutOption&gt;" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public static class ServiceManager" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -38,7 +38,7 @@
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Parameters><Parameter Name="serviceName" Type="System.String" /></Parameters>
       <Docs><param name="serviceName">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DbConnection">
+    </Member><Member MemberName="Contains&lt;T&gt;"><MemberSignature Language="C#" Value="public static bool Contains&lt;T&gt; ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Parameters /><Docs><typeparam name="T">To be added.</typeparam><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="DbConnection">
       <MemberSignature Language="C#" Value="public static Banshee.Database.BansheeDbConnection DbConnection { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Database.BansheeDbConnection</ReturnType></ReturnValue>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class PreferencesDialog : Banshee.Gui.Dialogs.GladeDialog" />
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
-    <AssemblyVersion>0.90.1.41384</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25406</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Gui.Dialogs.GladeDialog</BaseTypeName>
@@ -17,10 +17,7 @@
       <MemberSignature Language="C#" Value="public PreferencesDialog ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

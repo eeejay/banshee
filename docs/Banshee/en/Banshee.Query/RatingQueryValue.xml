@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class RatingQueryValue : Hyena.Query.IntegerQueryValue" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.Query.IntegerQueryValue</BaseTypeName>
@@ -17,10 +17,7 @@
       <MemberSignature Language="C#" Value="public RatingQueryValue ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

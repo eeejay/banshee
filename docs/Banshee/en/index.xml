@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Banshee.Core" Version="0.90.1.41381">
+    <Assembly Name="Banshee.Core" Version="0.90.1.25775">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -19,7 +19,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Banshee.Services" Version="0.90.1.41382">
+    <Assembly Name="Banshee.Services" Version="0.90.1.25404">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -38,7 +38,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Banshee.Widgets" Version="0.90.1.41383">
+    <Assembly Name="Banshee.Widgets" Version="0.90.1.25405">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -57,7 +57,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Banshee.ThickClient" Version="0.90.1.41384">
+    <Assembly Name="Banshee.ThickClient" Version="0.90.1.25406">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -111,7 +111,6 @@
       <Type Name="FileNamePattern+ExpandTokenHandler" />
       <Type Name="FileNamePattern+FilterHandler" />
       <Type Name="Localization" />
-      <Type Name="Log" />
       <Type Name="LogEntry" />
       <Type Name="LogEntryType" />
       <Type Name="LogNotifyArgs" />
@@ -162,9 +161,9 @@
     <Namespace Name="Banshee.Collection.Database">
       <Type Name="AlbumListDatabaseModel" />
       <Type Name="ArtistListDatabaseModel" />
+      <Type Name="DatabaseTrackInfo" />
       <Type Name="LibraryAlbumInfo" />
       <Type Name="LibraryArtistInfo" />
-      <Type Name="LibraryTrackInfo" />
       <Type Name="TrackListDatabaseModel" />
     </Namespace>
     <Namespace Name="Banshee.Collection.Gui">
@@ -172,12 +171,12 @@
       <Type Name="ArtistListView" />
       <Type Name="ArtworkManager" />
       <Type Name="ArtworkRenderer" />
+      <Type Name="BetaReleaseViewOverlay" />
       <Type Name="ColumnCellAlbum" />
       <Type Name="ColumnCellDateTime" />
       <Type Name="ColumnCellDuration" />
       <Type Name="ColumnCellPlaybackIndicator" />
       <Type Name="ColumnCellTrackNumber" />
-      <Type Name="CompositeTrackListView" />
       <Type Name="PersistentColumnController" />
       <Type Name="TrackListView" />
     </Namespace>
@@ -218,15 +217,19 @@
     </Namespace>
     <Namespace Name="Banshee.Gui">
       <Type Name="BansheeActionGroup" />
+      <Type Name="BansheeDbFormatMigratorMonitor" />
       <Type Name="BansheeIconFactory" />
+      <Type Name="BaseClientWindow" />
       <Type Name="CommonServices" />
       <Type Name="GlobalActions" />
       <Type Name="GtkBaseClient" />
       <Type Name="GtkElementsService" />
+      <Type Name="GtkElementsService+PrimaryWindowCloseHandler" />
       <Type Name="IconThemeUtils" />
       <Type Name="IHasSourceView" />
       <Type Name="InterfaceActionService" />
       <Type Name="PlaybackActions" />
+      <Type Name="PlaybackRepeatActions" />
       <Type Name="SourceActions" />
       <Type Name="TrackActions" />
       <Type Name="ViewActions" />
@@ -252,9 +255,11 @@
     </Namespace>
     <Namespace Name="Banshee.Gui.Widgets">
       <Type Name="ArtworkPopup" />
+      <Type Name="ConnectedMessageBar" />
       <Type Name="ConnectedSeekSlider" />
       <Type Name="ConnectedVolumeButton" />
       <Type Name="PlaylistMenuItem" />
+      <Type Name="RepeatActionButton" />
       <Type Name="TrackInfoDisplay" />
       <Type Name="UserJobTile" />
       <Type Name="UserJobTileHost" />
@@ -270,13 +275,11 @@
       <Type Name="IDemuxVfs" />
       <Type Name="IDirectory" />
       <Type Name="IFile" />
-      <Type Name="IOProxy" />
       <Type Name="IProvider" />
       <Type Name="StreamAssist" />
       <Type Name="Utilities" />
     </Namespace>
     <Namespace Name="Banshee.IO.GnomeVfs">
-      <Type Name="Directory" />
       <Type Name="File" />
       <Type Name="IOConfig" />
     </Namespace>
@@ -287,7 +290,6 @@
       <Type Name="Provider" />
     </Namespace>
     <Namespace Name="Banshee.IO.Unix">
-      <Type Name="Directory" />
       <Type Name="File" />
       <Type Name="IOConfig" />
     </Namespace>
@@ -305,6 +307,7 @@
       <Type Name="ImportSourceManager" />
       <Type Name="LibraryImportManager" />
       <Type Name="LibrarySource" />
+      <Type Name="ThreadPoolImportSource" />
     </Namespace>
     <Namespace Name="Banshee.Library.Gui">
       <Type Name="FileImportSource" />
@@ -316,7 +319,7 @@
       <Type Name="DBusPlayerEngineStateHandler" />
       <Type Name="IEqualizer" />
       <Type Name="IPlayerEngineService" />
-      <Type Name="PlaybackControllerService" />
+      <Type Name="NullPlayerEngine" />
       <Type Name="PlaybackControllerStoppedHandler" />
       <Type Name="PlaybackRepeatMode" />
       <Type Name="PlaybackShuffleMode" />
@@ -371,12 +374,18 @@
       <Type Name="PlaybackRepeatMode" />
       <Type Name="PlaybackShuffleMode" />
     </Namespace>
+    <Namespace Name="Banshee.PlayerMigration">
+      <Type Name="AmarokPlayerImportSource" />
+    </Namespace>
     <Namespace Name="Banshee.Playlist">
       <Type Name="AbstractPlaylistSource" />
       <Type Name="ImportPlaylistWorker" />
       <Type Name="PlaylistFileUtil" />
       <Type Name="PlaylistImportCanceledException" />
       <Type Name="PlaylistSource" />
+    </Namespace>
+    <Namespace Name="Banshee.Playlist.Gui">
+      <Type Name="PlaylistExportDialog" />
     </Namespace>
     <Namespace Name="Banshee.Playlists.Formats">
       <Type Name="AsxPlaylistFormat" />
@@ -390,7 +399,6 @@
       <Type Name="PlsPlaylistFormat" />
     </Namespace>
     <Namespace Name="Banshee.Playlists.Formats.Xspf">
-      <Type Name="LinkEntry" />
       <Type Name="MetaEntry" />
       <Type Name="Playlist" />
       <Type Name="Track" />
@@ -398,6 +406,7 @@
       <Type Name="XspfBaseObject" />
     </Namespace>
     <Namespace Name="Banshee.Query">
+      <Type Name="AbstractPlaylistQueryValue`1" DisplayName="AbstractPlaylistQueryValue&lt;T&gt;" />
       <Type Name="BansheeQuery" />
       <Type Name="NaturalIntegerQueryValue" />
       <Type Name="PlaylistQueryValue" />
@@ -420,6 +429,7 @@
       <Type Name="IdleTimeoutRemoveHandler" />
       <Type Name="IdleTimeoutRemoveImplementationHandler" />
       <Type Name="IExtensionService" />
+      <Type Name="IInitializeService" />
       <Type Name="InvokeHandler" />
       <Type Name="IService" />
       <Type Name="IUserJob" />
@@ -453,6 +463,7 @@
       <Type Name="ISourceManager" />
       <Type Name="ITrackModelSource" />
       <Type Name="IUnmapableSource" />
+      <Type Name="PrimarySource" />
       <Type Name="Source" />
       <Type Name="Source+NameComparer" />
       <Type Name="Source+SizeComparer" />
@@ -464,6 +475,10 @@
       <Type Name="SourceMergeType" />
     </Namespace>
     <Namespace Name="Banshee.Sources.Gui">
+      <Type Name="CompositeTrackSourceContents" />
+      <Type Name="ISourceContents" />
+      <Type Name="ObjectListSourceContents" />
+      <Type Name="SourceIconResolver" />
       <Type Name="SourceView" />
     </Namespace>
     <Namespace Name="Banshee.Streaming">
@@ -491,13 +506,13 @@
       <Type Name="EllipsizeLabel" />
       <Type Name="FadingAlignment" />
       <Type Name="GenericToolItem`1" DisplayName="GenericToolItem&lt;T&gt;" />
-      <Type Name="HighlightMessageArea" />
       <Type Name="HigMessageDialog" />
       <Type Name="HoverImageButton" />
       <Type Name="ImageAnimation" />
       <Type Name="LinearProgress" />
       <Type Name="LinkLabel" />
       <Type Name="LinkLabel+UriOpenHandler" />
+      <Type Name="MenuTile" />
       <Type Name="MessagePane" />
       <Type Name="MultiStateToggleButton" />
       <Type Name="PropertyTable" />

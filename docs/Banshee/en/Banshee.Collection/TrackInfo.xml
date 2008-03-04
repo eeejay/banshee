@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class TrackInfo : Banshee.Collection.ITrackInfo" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25775</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -85,11 +85,11 @@
       <Parameters><Parameter Name="track" Type="Banshee.Collection.TrackInfo" /></Parameters>
       <Docs><param name="track">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="CanPlay">
-      <MemberSignature Language="C#" Value="public bool CanPlay { get; };" />
+      <MemberSignature Language="C#" Value="public bool CanPlay { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DateAdded">
+    </Member><Member MemberName="CanSaveToDatabase"><MemberSignature Language="C#" Value="public bool CanSaveToDatabase { set; get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="DateAdded">
       <MemberSignature Language="C#" Value="public virtual DateTime DateAdded { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
@@ -135,8 +135,8 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="IsLive">
-      <MemberSignature Language="C#" Value="public bool IsLive { get; };" />
+    </Member><Member MemberName="IncrementPlayCount"><MemberSignature Language="C#" Value="public virtual void IncrementPlayCount ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsLive">
+      <MemberSignature Language="C#" Value="public bool IsLive { set; get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>

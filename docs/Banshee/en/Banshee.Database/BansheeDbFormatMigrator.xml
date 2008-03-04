@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class BansheeDbFormatMigrator" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -24,7 +24,7 @@
     
     
     
-    <Member MemberName=".ctor">
+    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public BansheeDbFormatMigrator (Hyena.Data.Sqlite.HyenaSqliteConnection connection);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="connection" Type="Hyena.Data.Sqlite.HyenaSqliteConnection" /></Parameters><Docs><param name="connection">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public BansheeDbFormatMigrator (System.Data.IDbConnection connection);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="connection" Type="System.Data.IDbConnection" /></Parameters>
@@ -46,13 +46,13 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="query" Type="System.String" /></Parameters>
       <Docs><param name="query">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Migrate">
+    </Member><Member MemberName="Finished"><MemberSignature Language="C#" Value="public event EventHandler Finished;" /><MemberType>Event</MemberType><ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Migrate">
       <MemberSignature Language="C#" Value="public void Migrate ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="OnSlowFinished">
+    </Member><Member MemberName="OnFinished"><MemberSignature Language="C#" Value="protected virtual void OnFinished ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="OnSlowFinished">
       <MemberSignature Language="C#" Value="protected virtual void OnSlowFinished ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
@@ -70,7 +70,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="title" Type="System.String" /><Parameter Name="message" Type="System.String" /></Parameters>
       <Docs><param name="title">To be added.</param><param name="message">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SlowFinished">
+    </Member><Member MemberName="OnStarted"><MemberSignature Language="C#" Value="protected virtual void OnStarted ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="SlowFinished">
       <MemberSignature Language="C#" Value="public event EventHandler SlowFinished;" />
       <MemberType>Event</MemberType>
       <ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue>
@@ -85,7 +85,7 @@
       <MemberType>Event</MemberType>
       <ReturnValue><ReturnType>Banshee.Database.BansheeDbFormatMigrator+SlowStartedHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TableExists">
+    </Member><Member MemberName="Started"><MemberSignature Language="C#" Value="public event EventHandler Started;" /><MemberType>Event</MemberType><ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="TableExists">
       <MemberSignature Language="C#" Value="protected bool TableExists (string tableName);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>

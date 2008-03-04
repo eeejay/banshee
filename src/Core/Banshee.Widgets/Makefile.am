@@ -43,5 +43,5 @@ RESOURCES =  \
 
 include $(top_srcdir)/build/build.mk
 
-EXTRA_DIST += $(ASSEMBLY_FILE).config.in
+EXTRA_DIST += $(ASSEMBLY_FILE).config
 

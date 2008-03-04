@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class SqliteModelProvider&lt;T&gt;" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -61,7 +61,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="CreateCommand">
+    </Member><Member MemberName="ClearProperty&lt;U&gt;"><MemberSignature Language="C#" Value="public void ClearProperty&lt;U&gt; (Hyena.Data.Sqlite.DbColumn column);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="column" Type="Hyena.Data.Sqlite.DbColumn" /></Parameters><Docs><typeparam name="U">To be added.</typeparam><param name="column">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="CreateCommand">
       <MemberSignature Language="C#" Value="protected virtual Hyena.Data.Sqlite.HyenaSqliteCommand CreateCommand { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Hyena.Data.Sqlite.HyenaSqliteCommand</ReturnType></ReturnValue>
@@ -100,7 +100,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="HyenaTableName">
+    </Member><Member MemberName="GetProperty&lt;U&gt;"><MemberSignature Language="C#" Value="public U GetProperty&lt;U&gt; (T item, Hyena.Data.Sqlite.DbColumn column);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>U</ReturnType></ReturnValue><Parameters><Parameter Name="item" Type="T" /><Parameter Name="column" Type="Hyena.Data.Sqlite.DbColumn" /></Parameters><Docs><typeparam name="U">To be added.</typeparam><param name="item">To be added.</param><param name="column">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="HyenaTableName">
       <MemberSignature Language="C#" Value="protected virtual string HyenaTableName { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
@@ -218,7 +218,7 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Hyena.Data.Sqlite.HyenaSqliteCommand</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TableName">
+    </Member><Member MemberName="SetProperty&lt;U&gt;"><MemberSignature Language="C#" Value="public void SetProperty&lt;U&gt; (T item, U value, Hyena.Data.Sqlite.DbColumn column);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="item" Type="T" /><Parameter Name="value" Type="U" /><Parameter Name="column" Type="Hyena.Data.Sqlite.DbColumn" /></Parameters><Docs><typeparam name="U">To be added.</typeparam><param name="item">To be added.</param><param name="value">To be added.</param><param name="column">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="TableName">
       <MemberSignature Language="C#" Value="public abstract string TableName { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>

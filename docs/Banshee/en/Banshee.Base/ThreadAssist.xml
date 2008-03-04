@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public static class ThreadAssist" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -16,7 +16,8 @@
     
     
     
-    <Member MemberName="InMainThread">
+    
+  <Member MemberName="InitializeMainThread"><MemberSignature Language="C#" Value="public static void InitializeMainThread ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="InMainThread">
       <MemberSignature Language="C#" Value="public static bool InMainThread { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
@@ -39,6 +40,5 @@
       <ReturnValue><ReturnType>System.Threading.Thread</ReturnType></ReturnValue>
       <Parameters><Parameter Name="threadedMethod" Type="System.Threading.ThreadStart" /><Parameter Name="autoStart" Type="System.Boolean" /></Parameters>
       <Docs><param name="threadedMethod">To be added.</param><param name="autoStart">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
-  </Members>
+    </Member><Member MemberName="SpawnFromMain"><MemberSignature Language="C#" Value="public static void SpawnFromMain (System.Threading.ThreadStart threadedMethod);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="threadedMethod" Type="System.Threading.ThreadStart" /></Parameters><Docs><param name="threadedMethod">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

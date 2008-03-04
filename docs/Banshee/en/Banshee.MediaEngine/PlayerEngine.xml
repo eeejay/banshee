@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public abstract class PlayerEngine" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -43,7 +43,8 @@
     
     
     
-    <Member MemberName=".ctor">
+    
+  <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="protected PlayerEngine ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
@@ -187,7 +188,7 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SourceCapabilities">
+    </Member><Member MemberName="SkipDelta"><MemberSignature Language="C#" Value="public const int SkipDelta = 10;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><MemberValue>10</MemberValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="SourceCapabilities">
       <MemberSignature Language="C#" Value="public abstract System.Collections.IEnumerable SourceCapabilities { get; };" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Collections.IEnumerable</ReturnType></ReturnValue>
@@ -213,6 +214,5 @@
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.UInt16</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
-  </Members>
+    </Member><Member MemberName="VolumeDelta"><MemberSignature Language="C#" Value="public const int VolumeDelta = 10;" /><MemberType>Field</MemberType><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><MemberValue>10</MemberValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

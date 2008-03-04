@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class ColumnHeaderCellText : Hyena.Data.Gui.ColumnCellText, Hyena.Data.Gui.IHeaderCell" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
-    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.Data.Gui.ColumnCellText</BaseTypeName>

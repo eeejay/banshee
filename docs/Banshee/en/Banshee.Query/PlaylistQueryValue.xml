@@ -1,12 +1,12 @@
 <Type Name="PlaylistQueryValue" FullName="Banshee.Query.PlaylistQueryValue">
-  <TypeSignature Language="C#" Value="public class PlaylistQueryValue : Hyena.Query.IntegerQueryValue" />
+  <TypeSignature Language="C#" Value="public class PlaylistQueryValue : Banshee.Query.AbstractPlaylistQueryValue&lt;Banshee.Playlist.PlaylistSource&gt;" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>Hyena.Query.IntegerQueryValue</BaseTypeName>
-  </Base>
+    <BaseTypeName>Banshee.Query.AbstractPlaylistQueryValue&lt;Banshee.Playlist.PlaylistSource&gt;</BaseTypeName>
+  <BaseTypeArguments><BaseTypeArgument TypeParamName="T">Banshee.Playlist.PlaylistSource</BaseTypeArgument></BaseTypeArguments></Base>
   <Interfaces />
   <Docs>
     <summary>To be added.</summary>
@@ -17,10 +17,7 @@
       <MemberSignature Language="C#" Value="public PlaylistQueryValue ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class UserJobManager : Banshee.ServiceStack.IService, System.Collections.Generic.IEnumerable&lt;Banshee.ServiceStack.IUserJob&gt;" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>

@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class UserJob : Banshee.ServiceStack.IUserJob" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
-    <AssemblyVersion>0.90.1.41382</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25404</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -40,7 +40,7 @@
     
     
     
-    <Member MemberName=".ctor">
+    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public UserJob (string name);" /><MemberType>Constructor</MemberType><Parameters><Parameter Name="name" Type="System.String" /></Parameters><Docs><param name="name">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UserJob (string name, string title, string status);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="title" Type="System.String" /><Parameter Name="status" Type="System.String" /></Parameters>
@@ -53,7 +53,7 @@
     </Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UserJob (string name, string title, string status, string[] iconNames);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="title" Type="System.String" /><Parameter Name="status" Type="System.String" /><Parameter Name="iconNames" Type="System.String[]" /></Parameters>
+      <Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="title" Type="System.String" /><Parameter Name="status" Type="System.String" /><Parameter Name="iconNames" Type="System.String[]"><Attributes><Attribute><AttributeName>System.ParamArray</AttributeName></Attribute></Attributes></Parameter></Parameters>
       <Docs><param name="name">To be added.</param><param name="title">To be added.</param><param name="status">To be added.</param><param name="iconNames">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member><Member MemberName="CanCancel">
       <MemberSignature Language="C#" Value="public virtual bool CanCancel { set; get; };" />

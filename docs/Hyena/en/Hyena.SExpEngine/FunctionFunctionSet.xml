@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public class FunctionFunctionSet : Hyena.SExpEngine.FunctionSet" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.SExpEngine.FunctionSet</BaseTypeName>

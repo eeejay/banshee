@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public static class StreamTagger" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25775</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -15,7 +15,8 @@
   <Members>
     
     
-    <Member MemberName="ProcessUri">
+    
+  <Member MemberName="ProcessUri">
       <MemberSignature Language="C#" Value="public static TagLib.File ProcessUri (Banshee.Base.SafeUri uri);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>TagLib.File</ReturnType></ReturnValue>
@@ -33,6 +34,5 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="track" Type="Banshee.Collection.TrackInfo" /><Parameter Name="file" Type="TagLib.File" /></Parameters>
       <Docs><param name="track">To be added.</param><param name="file">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
-  </Members>
+    </Member><Member MemberName="TrackInfoMerge"><MemberSignature Language="C#" Value="public static void TrackInfoMerge (Banshee.Collection.TrackInfo track, TagLib.File file, bool preferTrackInfo);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="track" Type="Banshee.Collection.TrackInfo" /><Parameter Name="file" Type="TagLib.File" /><Parameter Name="preferTrackInfo" Type="System.Boolean" /></Parameters><Docs><param name="track">To be added.</param><param name="file">To be added.</param><param name="preferTrackInfo">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

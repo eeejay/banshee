@@ -2,7 +2,7 @@
   <TypeSignature Language="C#" Value="public enum Keyword" />
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
-    <AssemblyVersion>0.90.1.41380</AssemblyVersion>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
@@ -12,35 +12,23 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
     <Member MemberName="And">
       <MemberSignature Language="C#" Value="And" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.Query.Keyword</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="Not">
+      <ReturnValue><ReturnType>Hyena.Query.Keyword</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="Not">
       <MemberSignature Language="C#" Value="Not" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.Query.Keyword</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="Or">
+      <ReturnValue><ReturnType>Hyena.Query.Keyword</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    </Member><Member MemberName="Or">
       <MemberSignature Language="C#" Value="Or" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.Query.Keyword</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
+      <ReturnValue><ReturnType>Hyena.Query.Keyword</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
     </Member>
   </Members>
 </Type>
