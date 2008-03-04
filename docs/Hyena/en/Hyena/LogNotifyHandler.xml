@@ -1,14 +1,14 @@
-<Type Name="LogNotifyHandler" FullName="Banshee.Base.LogNotifyHandler">
+<Type Name="LogNotifyHandler" FullName="Hyena.LogNotifyHandler">
   <TypeSignature Language="C#" Value="public delegate void LogNotifyHandler(LogNotifyArgs args);" />
   <AssemblyInfo>
-    <AssemblyName>Banshee.Core</AssemblyName>
-    <AssemblyVersion>0.90.1.41381</AssemblyVersion>
+    <AssemblyName>Hyena</AssemblyName>
+    <AssemblyVersion>0.90.1.25402</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Delegate</BaseTypeName>
   </Base>
   <Parameters>
-    <Parameter Name="args" Type="Banshee.Base.LogNotifyArgs" />
+    <Parameter Name="args" Type="Hyena.LogNotifyArgs" />
   </Parameters>
   <ReturnValue>
     <ReturnType>System.Void</ReturnType>
