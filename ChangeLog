@@ -1,3 +1,8 @@
+2008-03-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Ignore deprecation warning.
+
 2008-03-05  Aaron Bockover  <abock@gnome.org>
 
 	* build/build.rules.mk: Turned on -warnaserror and only show the bold

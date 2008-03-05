@@ -119,7 +119,9 @@ namespace Banshee.ServiceStack
         public void RegisterObject(object o, string objectName)
         {
             if(dbus_enabled && Bus.Session != null) {
+#pragma warning disable 0618
                 Bus.Session.Register(BusName, new ObjectPath(objectName), o);
+#pragma warning restore 0618
                 /*if (Banshee.Base.ApplicationContext.Debugging) {
                     Banshee.Base.Log.DebugFormat ("Registered {0} on {1}", objectName, BusName);
                 }*/
