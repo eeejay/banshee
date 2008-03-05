@@ -174,7 +174,7 @@ namespace Banshee.Lastfm.Radio
             OnUpdated ();
         }
         
-        private bool shuffle;
+        //private bool shuffle;
         public override void Activate ()
         {
             base.Activate ();

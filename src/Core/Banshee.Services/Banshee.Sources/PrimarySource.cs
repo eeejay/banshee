@@ -71,8 +71,6 @@ namespace Banshee.Sources
     {
         protected ErrorSource error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
         protected bool error_source_visible = false;
-        //protected RateLimiter tracks_updated_limiter;
-        private double tracks_updated_ms = 250.0;
 
         protected string remove_range_sql = @"
             INSERT INTO CoreRemovedTracks SELECT ?, TrackID, Uri FROM CoreTracks WHERE TrackID IN ({0});
@@ -110,13 +108,7 @@ namespace Banshee.Sources
             error_source.Updated += OnErrorSourceUpdated;
             OnErrorSourceUpdated (null, null);
 
-            //tracks_updated_limiter = new RateLimiter (20.0, tracks_updated_ms, RateLimitedOnTracksUpdated);
-
             primary_sources[source_id] = this;
-        }
-
-        public bool Importing {
-            set { tracks_updated_ms = value ? 5000.0 : 250.0; }
         }
 
         internal void NotifyTracksAdded ()

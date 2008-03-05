@@ -236,9 +236,7 @@ namespace Hyena.Data.Sqlite
 
         public override long Reload ()
         {
-            if (last_reload_fragment == model.ReloadFragment) {
-                last_reload_command = last_reload_command;
-            } else {
+            if (last_reload_fragment != model.ReloadFragment) {
                 last_reload_fragment = model.ReloadFragment;
                 last_reload_command = new HyenaSqliteCommand (reload_sql + last_reload_fragment);
             }

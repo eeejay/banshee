@@ -199,7 +199,6 @@ namespace Nereid
             footer_toolbar = (Toolbar)ActionService.UIManager.GetWidget ("/FooterToolbar");
             footer_toolbar.ShowArrow = false;
             footer_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
-            footer_toolbar.IconSize = IconSize.Menu;
 
             status_label = new Label ();
             status_label.ModifyFg (StateType.Normal, Hyena.Gui.GtkUtilities.ColorBlend (

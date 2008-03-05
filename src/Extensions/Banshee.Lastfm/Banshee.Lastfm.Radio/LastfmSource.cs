@@ -272,10 +272,10 @@ namespace Banshee.Lastfm.Radio
             UpdateUI ();
         }
 
-        private void HandleChildUpdated (object sender, EventArgs args)
+        /*private void HandleChildUpdated (object sender, EventArgs args)
         {
             SortChildSources ();
-        }
+        }*/
 
         private void UpdateUI ()
         {

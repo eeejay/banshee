@@ -53,10 +53,6 @@ namespace Banshee.Lastfm.Radio
     {
         private LastfmSource lastfm;
 
-        private ActionButton love_button;
-        private ActionButton hate_button;
-        private bool last_track_was_lastfm = false;
-
         private InterfaceActionService action_service;
         private uint actions_id;
         private ActionGroup actions;
@@ -200,7 +196,10 @@ namespace Banshee.Lastfm.Radio
 
         public override void Dispose ()
         {
-            actions = null;
+            if (actions != null) {
+                action_service.UIManager.RemoveUi (actions_id);
+                actions = null;
+            }
             base.Dispose ();
         }
 
@@ -227,16 +226,6 @@ namespace Banshee.Lastfm.Radio
                 StationEditor editor = new StationEditor (lastfm, source as StationSource);
                 editor.RunDialog ();
             }
-        }
-
-        private void OnChangeStation (object sender, EventArgs args)
-        {
-            (ServiceManager.SourceManager.ActiveSource as StationSource).ChangeToThisStation ();
-        }
-
-        private void OnRefreshStation (object sender, EventArgs args)
-        {
-            (ServiceManager.SourceManager.ActiveSource as StationSource).Refresh ();
         }
 
         private void OnLoved (object sender, EventArgs args)
