@@ -1,5 +1,9 @@
 2008-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Data/ISelectable.cs: Forgot to commit new file.
+
+2008-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This commit fixes a long standing bug in trunk - selections now persist
 	across source reloads (assuming the tracks are still in the source/not
 	filtered).
