@@ -21,8 +21,19 @@ all: $(ASSEMBLY_FILE)
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED)
 	@mkdir -p $(top_builddir)/bin
-	@echo -e "\033[1mCompiling $(notdir $@)...\033[0m"
-	@$(BUILD) -target:$(TARGET) -out:$@ $(LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
+	@colors=no; \
+	case $$TERM in \
+		"xterm" | "rxvt" | "rxvt-unicode") \
+			test "x$$COLORTERM" != "x" && colors=yes ;; \
+		"xterm-color") colors=yes ;; \
+	esac; \
+	if [ "x$$colors" = "xyes" ]; then \
+		tty -s && true || { colors=no; true; } \
+	fi; \
+	test "x$$colors" = "xyes" && \
+		echo -e "\033[1mCompiling $(notdir $@)...\033[0m" || \
+		echo "Compiling $(notdir $@)...";
+	@$(BUILD) -target:$(TARGET) -out:$@ -warnaserror $(LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
 	@if [ -e $(notdir $@.config) ]; then \
 		cp $(notdir $@.config) $(top_builddir)/bin; \
 	fi;

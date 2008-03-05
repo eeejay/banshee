@@ -52,7 +52,6 @@ namespace Banshee.PlayQueue
         private static string special_playlist_name = typeof (PlayQueueSource).ToString ();
 
         private DatabaseTrackInfo playing_track;
-        private BansheeActionGroup actions;
         private bool actions_loaded = false;
         
         public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null)
@@ -78,7 +77,6 @@ namespace Banshee.PlayQueue
                     OnAddToPlayQueue)
             });
             
-            actions = new BansheeActionGroup ("PlayQueueSource");
             uia_service.GlobalActions.AddImportant (
                 new ActionEntry ("ClearPlayQueueAction", Stock.Clear,
                     Catalog.GetString ("Clear"), null,

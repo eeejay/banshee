@@ -148,9 +148,13 @@ namespace Hyena.Data.Gui
             return (bool)row_sensitive_property_info.GetValue (item, null);
         }
         
+        #pragma warning disable 0169
+        
         private bool IsRowSensitive (int index)
         {
             return IsRowSensitive (model[index]);
         }
+        
+        #pragma warning restore 0169
     }
 }

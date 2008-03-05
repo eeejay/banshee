@@ -1,3 +1,15 @@
+2008-03-05  Aaron Bockover  <abock@gnome.org>
+
+	* build/build.rules.mk: Turned on -warnaserror and only show the bold
+	compiling message if the terminal supports colors and is a tty
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/CairoHelper.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	Fixed warnings
+
 2008-03-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Resources/COPYING: Update to 2008.

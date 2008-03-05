@@ -60,11 +60,15 @@ namespace Banshee.Streaming
                 : String.IsNullOrEmpty (priority) ? fallback : priority;
         }
 
+        #pragma warning disable 0169
+        
         private static int Choose (int priority, int fallback)
         {
             return Choose (priority, fallback, false);
         }
-
+        
+        #pragma warning restore 0169
+        
         private static int Choose (int priority, int fallback, bool flip)
         {
             return flip 

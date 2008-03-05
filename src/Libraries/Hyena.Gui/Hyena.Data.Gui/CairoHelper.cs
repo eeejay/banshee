@@ -34,8 +34,8 @@ namespace Hyena.Data.Gui
 {
     public static class CairoHelper
     {
-        [System.Runtime.InteropServices.DllImport ("libgdk-x11-2.0.so")]
-        private static extern IntPtr gdk_cairo_create (IntPtr raw);
+        // [System.Runtime.InteropServices.DllImport ("libgdk-x11-2.0.so")]
+        // private static extern IntPtr gdk_cairo_create (IntPtr raw);
 
         public static Cairo.Context CreateCairoDrawable (Gdk.Drawable drawable)
         {

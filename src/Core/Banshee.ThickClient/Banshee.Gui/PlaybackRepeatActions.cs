@@ -39,7 +39,6 @@ namespace Banshee.Gui
 {
     public class PlaybackRepeatActions : BansheeActionGroup, IEnumerable<RadioAction>
     {
-        private InterfaceActionService action_service;
         private RadioAction active_action;
 
         public RadioAction Active {
@@ -69,8 +68,6 @@ namespace Banshee.Gui
                     Catalog.GetString ("Repeat Si_ngle"), null,
                     Catalog.GetString ("Repeat the current playing song"), 2)
             }, 0, OnChanged);
-
-            action_service = actionService;
 
             Gtk.Action action = this[ConfigIdToActionName (RepeatMode.Get ())];
             if (action is RadioAction) {
