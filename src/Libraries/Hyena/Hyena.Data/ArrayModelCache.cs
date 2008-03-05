@@ -33,21 +33,21 @@ namespace Hyena.Data
     public abstract class ArrayModelCache<T> : ModelCache<T>
     {
         protected T [] cache;
-        protected int offset = -1;
-        protected int limit = 0;
+        protected long offset = -1;
+        protected long limit = 0;
 
         public ArrayModelCache (ICacheableModel model) : base (model)
         {
             cache = new T [model.FetchCount];
         }
 
-        public override bool ContainsKey (int i)
+        public override bool ContainsKey (long i)
         {
             return (i >= offset &&
                     i <= (offset + limit));
         }
 
-        public override void Add (int i, T item)
+        public override void Add (long i, T item)
         {
             if (cache.Length != model.FetchCount) {
                 cache = new T [model.FetchCount];
@@ -63,7 +63,7 @@ namespace Hyena.Data
             limit++;
         }
 
-        public override T this [int i] {
+        public override T this [long i] {
             get { return cache [i - offset]; }
         }
 

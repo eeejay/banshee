@@ -40,7 +40,7 @@ namespace Hyena.Data
             this.model = model;
         }
 
-        public virtual T GetValue (int index)
+        public virtual T GetValue (long index)
         {
             if (ContainsKey (index))
                 return this[index];
@@ -54,14 +54,14 @@ namespace Hyena.Data
         }
         
         // Responsible for fetching a set of items and placing them in the cache
-        protected abstract void FetchSet (int offset, int limit);
+        protected abstract void FetchSet (long offset, long limit);
 
         // Reset the cache and return the total # of items in the model
-        public abstract int Reload ();
+        public abstract long Reload ();
 
-        public abstract bool ContainsKey (int i);
-        public abstract void Add (int i, T item);
-        public abstract T this[int i] { get; }
+        public abstract bool ContainsKey (long i);
+        public abstract void Add (long i, T item);
+        public abstract T this[long i] { get; }
         public abstract void Clear ();
     }
 }

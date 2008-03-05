@@ -85,6 +85,10 @@ namespace Banshee.SmartPlaylist
             get { return "CoreSmartPlaylistEntries"; }
         }
 
+        protected override bool CachesJoinTableEntries {
+            get { return false; }
+        }
+
         // Custom properties
         private QueryNode condition;
         public QueryNode ConditionTree {

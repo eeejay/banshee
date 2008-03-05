@@ -262,7 +262,6 @@ namespace Banshee.Gui
             TrackSelector.TrackSelectionProxy.Selection.Clear ();
         }
 
-
         private void OnTrackContextMenu (object o, EventArgs args)
         {
             ResetRating ();

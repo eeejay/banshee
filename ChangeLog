@@ -1,5 +1,50 @@
 2008-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	This commit fixes a long standing bug in trunk - selections now persist
+	across source reloads (assuming the tracks are still in the source/not
+	filtered).
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Add a bool CachesJoinTableEntries property so Smart Playlists can use the
+	join table but fill the CoreCache with TrackIDS not EntryIDS - needed,
+	since their EntryIDs don't last long b/c they are wiped/created anew every
+	time its Reloaded.
+
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs: Don't
+	clear the selection on reload.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Override CachesJoinTableEntries to false.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Check
+	model.CachesJoinTableEntries instead of JoinTable != null.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Whitespace.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/ICacheableDatabaseModel.cs:
+	Inherit from ISelectable and add CachesJoinTableEntries property. 
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: SaveSelection
+	before a Reload and RestoreSelection afterward.
+
+	* src/Libraries/Hyena/Hyena.Data/ModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data/ArrayModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data/DictionaryModelCache.cs: Update to use
+	Int64s where appropriate.
+
+	* src/Libraries/Hyena/Hyena.Data/IListModel.cs: Inherit from ISelectable.
+
+	* src/Libraries/Hyena/Hyena.Data/ModelSelection.cs: Comment out
+	unimplemented IndexOf method.
+
+	* src/Libraries/Hyena/Makefile.am: New ISelectable interface.
+
+2008-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This commit adds more granular events for when tracks are added, changed,
 	and removed to each track's PrimarySource.  Playlists etc can listen for
 	these events, and only reload when necessary (still work to do on this

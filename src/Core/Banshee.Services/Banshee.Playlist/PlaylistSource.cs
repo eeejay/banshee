@@ -251,7 +251,7 @@ namespace Banshee.Playlist
         HyenaSqliteCommand last_add_range_command = null;
         protected virtual void AddTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
         {
-            last_add_range_command = (from.JoinTable == null)
+            last_add_range_command = (!from.CachesJoinTableEntries)
                 ? add_track_range_command
                 : from == last_add_range_from_model
                     ? last_add_range_command

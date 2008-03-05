@@ -409,7 +409,7 @@ namespace Banshee.Collection.Database
         public string TrackIdsSql {
             get {
                 if (track_ids_sql == null) {
-                    if (JoinTable == null) {
+                    if (!CachesJoinTableEntries) {
                         track_ids_sql = "SELECT ItemID FROM CoreCache WHERE ModelID = ? LIMIT ?, ?";
                     } else {
                         track_ids_sql = String.Format (
@@ -422,7 +422,11 @@ namespace Banshee.Collection.Database
             }
         }
 
-
+        private bool caches_join_table_entries = false;
+        public bool CachesJoinTableEntries {
+            get { return caches_join_table_entries; }
+            set { caches_join_table_entries = value; }
+        }
 
         // Implement ICacheableModel
         public int FetchCount {

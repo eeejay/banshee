@@ -72,6 +72,10 @@ namespace Banshee.Playlist
             get { return "EntryID"; }
         }
 
+        protected virtual bool CachesJoinTableEntries {
+            get { return true; }
+        }
+
         public int? DbId {
             get { return dbid; }
             protected set {
@@ -82,6 +86,7 @@ namespace Banshee.Playlist
                 track_model.JoinTable = TrackJoinTable;
                 track_model.JoinPrimaryKey = JoinPrimaryKey;
                 track_model.JoinColumn = "TrackID";
+                track_model.CachesJoinTableEntries = CachesJoinTableEntries;
                 track_model.Condition = String.Format (TrackCondition, dbid);
                 AfterInitialized ();
 

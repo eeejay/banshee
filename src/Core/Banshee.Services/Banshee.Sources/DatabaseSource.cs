@@ -305,7 +305,7 @@ namespace Banshee.Sources
         protected HyenaSqliteCommand RateTrackRangeCommand {
             get {
                 if (rate_track_range_command == null) {
-                    if (track_model.JoinTable != null) {
+                    if (track_model.CachesJoinTableEntries) {
                         rate_track_range_command = new HyenaSqliteCommand (String.Format (@"
                             UPDATE CoreTracks SET Rating = ?, DateUpdatedStamp = ? WHERE
                                 TrackID IN (SELECT TrackID FROM {0} WHERE 

@@ -33,24 +33,24 @@ namespace Hyena.Data
 {
     public abstract class DictionaryModelCache<T> : ModelCache<T>
     {
-        protected Dictionary<int, T> cache;
+        protected Dictionary<long, T> cache;
 
         public DictionaryModelCache (ICacheableModel model) : base (model)
         {
-            cache = new Dictionary<int, T> (model.FetchCount);
+            cache = new Dictionary<long, T> (model.FetchCount);
         }
 
-        public override bool ContainsKey (int i)
+        public override bool ContainsKey (long i)
         {
             return cache.ContainsKey (i);
         }
 
-        public override void Add (int i, T item)
+        public override void Add (long i, T item)
         {
             cache.Add (i, item);
         }
 
-        public override T this [int i] {
+        public override T this [long i] {
             get { return cache [i]; }
         }
 

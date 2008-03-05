@@ -65,11 +65,11 @@ namespace Hyena.Data
 
 #region Methods
 
-        public int IndexOf (T value)
+        /*public int IndexOf (T value)
         {
             //selection.IndexOf (model.IndexOf (value));
             return -1;
-        }
+        }*/
 
         public IEnumerator<T> GetEnumerator ()
         {

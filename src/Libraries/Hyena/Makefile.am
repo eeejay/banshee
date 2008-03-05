@@ -27,6 +27,7 @@ SOURCES =  \
 	Hyena.Data/IFilterable.cs \
 	Hyena.Data/IListModel.cs \
 	Hyena.Data/IPropertyStoreExpose.cs \
+	Hyena.Data/ISelectable.cs \
 	Hyena.Data/ISortable.cs \
 	Hyena.Data/ISortableColumn.cs \
 	Hyena.Data/ModelCache.cs \

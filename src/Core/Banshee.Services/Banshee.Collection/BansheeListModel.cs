@@ -62,8 +62,6 @@ namespace Banshee.Collection
         
         protected virtual void OnReloaded ()
         {
-            selection.Clear ();
-
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 EventHandler handler = Reloaded;
                 if(handler != null) {

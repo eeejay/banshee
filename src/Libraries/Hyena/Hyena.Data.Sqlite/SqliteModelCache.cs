@@ -41,12 +41,17 @@ namespace Hyena.Data.Sqlite
         private HyenaSqliteCommand select_single_command;
         private HyenaSqliteCommand select_first_command;
         private HyenaSqliteCommand count_command;
+        private HyenaSqliteCommand delete_selection_command;
+        private HyenaSqliteCommand save_selection_command;
+        private HyenaSqliteCommand get_selection_command;
 
         private string reload_sql;
-        private int uid;
-        private int rows;
+        private long uid;
+        private long selection_uid;
+        private long rows;
         // private bool warm;
-        private int first_order_id;
+        private bool first_reload = true;
+        private long first_order_id;
 
         public delegate void AggregatesUpdatedEventHandler (IDataReader reader);
         public event AggregatesUpdatedEventHandler AggregatesUpdated;
@@ -64,7 +69,7 @@ namespace Hyena.Data.Sqlite
             CheckCacheTable ();
 
             if (model.SelectAggregates != null) {
-                if (model.JoinFragment != null) {
+                if (model.CachesJoinTableEntries) {
                     count_command = new HyenaSqliteCommand (String.Format (@"
                         SELECT count(*), {0} FROM {1}{2} j
                         WHERE j.{4} IN (SELECT ItemID FROM {3} WHERE ModelID = ?)
@@ -89,9 +94,10 @@ namespace Hyena.Data.Sqlite
                 ));
             }
 
-            FindOrCreateCacheModelId (String.Format ("{0}-{1}", uuid, typeof(T).Name));
+            uid = FindOrCreateCacheModelId (String.Format ("{0}-{1}", uuid, typeof(T).Name));
+            selection_uid = FindOrCreateCacheModelId (String.Format ("{0}-{1}-Selection", uuid, typeof(T).Name));
 
-            if (model.JoinFragment != null) {
+            if (model.CachesJoinTableEntries) {
                 select_range_command = new HyenaSqliteCommand (
                     String.Format (@"
                         SELECT {0} FROM {1}
@@ -167,6 +173,19 @@ namespace Hyena.Data.Sqlite
                 )
             );
 
+            delete_selection_command = new HyenaSqliteCommand (String.Format (
+                "DELETE FROM {0} WHERE ModelID = {1}", CacheTableName, selection_uid
+            ));
+            
+            save_selection_command = new HyenaSqliteCommand (String.Format (
+                "INSERT INTO {0} SELECT null, {1}, ItemID FROM {0} WHERE ModelID = {2} LIMIT ?, ?",
+                CacheTableName, selection_uid, uid
+            ));
+
+            get_selection_command = new HyenaSqliteCommand (String.Format (
+                "SELECT OrderID FROM {0} WHERE ModelID = {1} AND ItemID IN (SELECT ItemID FROM {0} WHERE ModelID = {2})",
+                CacheTableName, uid, selection_uid
+            ));
         }
 
         public bool Warm {
@@ -174,11 +193,11 @@ namespace Hyena.Data.Sqlite
             get { return false; }
         }
 
-        public int Count {
+        public long Count {
             get { return rows; }
         }
 
-        public int CacheId {
+        public long CacheId {
             get { return uid; }
         }
 
@@ -189,33 +208,43 @@ namespace Hyena.Data.Sqlite
         protected virtual string CacheTableName {
             get { return "HyenaCache"; }
         }
+
+        private long FirstOrderId {
+            get {
+                if (first_order_id == -1) {
+                    first_order_id = connection.Query<long> (select_first_command);
+                }
+                return first_order_id;
+             }
+        }
         
-        public int IndexOf (int item_id)
+        public long IndexOf (long item_id)
         {
             if (rows == 0) {
                 return -1;
             }
             select_single_command.ApplyValues (item_id);
-            int target_id = connection.Query<int> (select_single_command);
+            long target_id = connection.Query<long> (select_single_command);
             if (target_id == 0) {
                 return -1;
             }
-            if (first_order_id == -1) {
-                first_order_id = connection.Query<int> (select_first_command);
-            }
-            return target_id - first_order_id;
+            return target_id - FirstOrderId;
         }
 
         private HyenaSqliteCommand last_reload_command;
         private string last_reload_fragment;
 
-        public override int Reload ()
+        public override long Reload ()
         {
             if (last_reload_fragment == model.ReloadFragment) {
                 last_reload_command = last_reload_command;
             } else {
                 last_reload_fragment = model.ReloadFragment;
                 last_reload_command = new HyenaSqliteCommand (reload_sql + last_reload_fragment);
+            }
+
+            if (!first_reload) {
+                SaveSelection ();
             }
 
             Clear ();
@@ -225,17 +254,56 @@ namespace Hyena.Data.Sqlite
             //}
             first_order_id = -1;
             UpdateAggregates ();
+
+            if (!first_reload) {
+                RestoreSelection ();
+            } else {
+                first_reload = false;
+            }
+
             return rows;
         }
 
-        protected override void FetchSet (int offset, int limit)
+        private void SaveSelection ()
+        {
+            connection.Execute (delete_selection_command);
+
+            if (model.Selection.Count > 0) {
+                foreach (Hyena.Collections.RangeCollection.Range range in model.Selection.Ranges) {
+                    connection.Execute (save_selection_command.ApplyValues (range.Start, range.End - range.Start + 1));
+                }
+            }
+        }
+
+        private void RestoreSelection ()
+        {
+            model.Selection.Clear (false);
+            long selected_id = -1;
+            long first_id = FirstOrderId;
+            using (IDataReader reader = connection.Query (get_selection_command)) {
+                while (reader.Read ()) {
+                    selected_id = Convert.ToInt64 (reader[0]);
+                    selected_id -= first_id;
+                    model.Selection.QuietSelect ((int)selected_id);
+                }
+            }
+
+            // Trigger a model Changed event
+            if (selected_id == -1) {
+                model.Selection.Clear ();
+            } else {
+                model.Selection.Select ((int)selected_id);
+            }
+        }
+
+        protected override void FetchSet (long offset, long limit)
         {
             //using (new Timer (String.Format ("Fetching set for {0}", model))) {
                 select_range_command.ApplyValues (offset, limit);
                 using (IDataReader reader = connection.Query (select_range_command)) {
                     while (reader.Read ()) {
                         if (!ContainsKey (offset)) {
-                            Add (offset, provider.Load (reader, offset));
+                            Add (offset, provider.Load (reader, (int)offset));
                         }
                         offset++;
                      }
@@ -247,7 +315,7 @@ namespace Hyena.Data.Sqlite
         {
             using (IDataReader reader = connection.Query (count_command.ApplyValues (uid))) {
                 if (reader.Read ()) {
-                    rows = Convert.ToInt32 (reader[0]);
+                    rows = Convert.ToInt64 (reader[0]);
 
                     AggregatesUpdatedEventHandler handler = AggregatesUpdated;
                     if (handler != null) {
@@ -257,25 +325,27 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        private void FindOrCreateCacheModelId (string id)
+        private long FindOrCreateCacheModelId (string id)
         {
-            uid = connection.Query<int> (String.Format (
+            long model_id = connection.Query<long> (String.Format (
                 "SELECT CacheID FROM {0} WHERE ModelID = '{1}'",
                 CacheModelsTableName, id
             ));
 
-            if (uid == 0) {
+            if (model_id == 0) {
                 //Console.WriteLine ("Didn't find existing cache for {0}, creating", id);
-                uid = connection.Execute (new HyenaSqliteCommand (String.Format (
+                model_id = connection.Execute (new HyenaSqliteCommand (String.Format (
                     "INSERT INTO {0} (ModelID) VALUES (?)", CacheModelsTableName
                     ), id
                 ));
             } else {
                 //Console.WriteLine ("Found existing cache for {0}: {1}", id, uid);
                 //warm = true;
-                Clear ();
-                UpdateAggregates ();
+                //Clear ();
+                //UpdateAggregates ();
             }
+
+            return model_id;
         }
 
         private static string checked_cache_table;

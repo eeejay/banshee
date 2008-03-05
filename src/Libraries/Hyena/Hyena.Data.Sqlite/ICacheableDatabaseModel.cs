@@ -32,7 +32,7 @@ using Hyena.Data;
 
 namespace Hyena.Data.Sqlite
 {
-    public interface ICacheableDatabaseModel : ICacheableModel
+    public interface ICacheableDatabaseModel : ICacheableModel, ISelectable
     {
         string ReloadFragment { get; }
         string SelectAggregates { get; }
@@ -40,5 +40,6 @@ namespace Hyena.Data.Sqlite
         string JoinFragment { get; }
         string JoinPrimaryKey { get; }
         string JoinColumn { get; }
+        bool CachesJoinTableEntries { get; }
     }
 }

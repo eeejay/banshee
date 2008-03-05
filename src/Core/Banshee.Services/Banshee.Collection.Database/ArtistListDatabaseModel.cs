@@ -43,7 +43,7 @@ namespace Banshee.Collection.Database
         private readonly BansheeModelCache<LibraryArtistInfo> cache;
         private readonly TrackListDatabaseModel track_model;
         private string reload_fragment;
-        private int count;
+        private long count;
         
         private readonly ArtistInfo select_all_artist = new ArtistInfo(null);
         
@@ -75,8 +75,8 @@ namespace Banshee.Collection.Database
                                       CoreCache.ItemID = CoreTracks.TrackID AND
                                       CoreArtists.ArtistID = CoreTracks.ArtistID)",*/
                         track_model.CacheId,
-                        track_model.JoinFragment,
-                        track_model.JoinTable == null
+                        track_model.CachesJoinTableEntries ? track_model.JoinFragment : null,
+                        (!track_model.CachesJoinTableEntries)
                             ? "CoreTracks.TrackID"
                             : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
                     ) : null
@@ -103,7 +103,7 @@ namespace Banshee.Collection.Database
         }
 
         public override int Count { 
-            get { return count; }
+            get { return (int) count; }
         }
 
         // Implement ICacheableModel
@@ -121,5 +121,6 @@ namespace Banshee.Collection.Database
         public string JoinFragment { get { return null; } }
         public string JoinPrimaryKey { get { return null; } }
         public string JoinColumn { get { return null; } }
+        public bool CachesJoinTableEntries { get { return false; } }
     }
 }
