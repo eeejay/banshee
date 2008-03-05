@@ -1,5 +1,10 @@
 2008-03-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Small but
+	powerful fix - was not clearing the selection between reloads at all.
+
+2008-03-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Base/RateLimiter.cs: Change to prevent
 	the method from being called while it is still running, queueing another
 	run to happen when the current one finishes, instead of specifying a

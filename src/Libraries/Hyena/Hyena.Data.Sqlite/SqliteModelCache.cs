@@ -290,7 +290,6 @@ namespace Hyena.Data.Sqlite
 
         private void RestoreSelection ()
         {
-            bool cleared = false;
             long selected_id = -1;
             long first_id = FirstOrderId;
 
@@ -299,15 +298,17 @@ namespace Hyena.Data.Sqlite
                 first_id -= 1;
             }
 
+            model.Selection.Clear (false);
+
             using (IDataReader reader = connection.Query (get_selection_command)) {
                 while (reader.Read ()) {
-                    if (!cleared) {
-                        model.Selection.Clear (false);
-                        cleared = true;
-                    }
                     selected_id = Convert.ToInt64 (reader[0]) - first_id;
                     model.Selection.QuietSelect ((int)selected_id);
                 }
+            }
+
+            if (has_select_all_item && model.Selection.Count == 0) {
+                model.Selection.QuietSelect (0);
             }
         }
 
