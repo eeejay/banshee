@@ -143,7 +143,7 @@ namespace Banshee.Collection.Gui
             widget.QueueDraw ();
         }
 
-        public void Render (Theme theme, Cairo.Context cr, Gdk.Rectangle clip)
+        public void Render (Theme theme, Gdk.Rectangle allocation, Cairo.Context cr, Gdk.Rectangle clip)
         {
             if (widget == null) {
                 return;
@@ -159,7 +159,7 @@ namespace Banshee.Collection.Gui
             theme.Context.Radius = 12;
 
             Gdk.Rectangle rect = new Gdk.Rectangle ();
-            rect.Width = (int)Math.Round (widget.Allocation.Width * 0.75);
+            rect.Width = (int)Math.Round (allocation.Width * 0.75);
 
             int padding = (int)theme.Context.Radius * 2;
             int spacing = padding / 2;
@@ -175,8 +175,8 @@ namespace Banshee.Collection.Gui
             layout.GetPixelSize (out layout_width, out layout_height);
 
             rect.Height = layout_height + 2 * padding;
-            rect.X = (widget.Allocation.Width - rect.Width) / 2;
-            rect.Y = (widget.Allocation.Height - rect.Height) / 2;
+            rect.X = (allocation.Width - rect.Width) / 2;
+            rect.Y = (allocation.Height - rect.Height) / 2;
             int layout_x = rect.X + padding + spacing + logo_scale.Width;
             int layout_y = rect.Y + padding;
             double alpha = stage.ActorCount > 0 ? 1.0 - stage.Actor.Percent : 1.0;
@@ -184,7 +184,7 @@ namespace Banshee.Collection.Gui
             Cairo.Color color = theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal);
             color.A = Theme.Clamp (0.0, 0.85, alpha);
             cr.Color = color;
-            cr.Rectangle (0, 0, widget.Allocation.Width, widget.Allocation.Height);
+            cr.Rectangle (0, 0, allocation.Width, allocation.Height);
             cr.Fill ();
 
             if (stage.Playing && alpha < 1.0) {

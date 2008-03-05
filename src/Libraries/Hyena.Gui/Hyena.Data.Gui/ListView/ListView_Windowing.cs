@@ -54,6 +54,10 @@ namespace Hyena.Data.Gui
         private Gdk.Rectangle footer_alloc;
         private Gdk.Rectangle left_border_alloc;
         private Gdk.Rectangle right_border_alloc;
+        
+        protected Gdk.Rectangle ListAllocation {
+            get { return list_alloc; }
+        }
        
         protected override void OnRealized ()
         {

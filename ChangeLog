@@ -1,5 +1,14 @@
 2008-03-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Use the allocation passed to Render to do the maths
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Expose ListAllocation as a protected property
+
+2008-03-05  Aaron Bockover  <abock@gnome.org>
+
 	Lots of build fixes, preparing for the release
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
