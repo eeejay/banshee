@@ -1,5 +1,15 @@
 2008-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	Replace confusing constructors with static FindOrCreate methods.  Should
+	fix an issue with finding/creating/associating new albums too.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Use
+	new FindOrCreate methods.
+
+2008-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data/ISelectable.cs: Forgot to commit new file.
 
 2008-03-04  Gabriel Burt  <gabriel.burt@gmail.com>

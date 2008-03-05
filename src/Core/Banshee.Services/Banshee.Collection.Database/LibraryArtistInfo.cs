@@ -56,29 +56,33 @@ namespace Banshee.Collection.Database
             ArtistID,
             Name
         }
+
+        public static LibraryArtistInfo FindOrCreate (string artistName)
+        {
+            LibraryArtistInfo artist;
+
+            if (artistName == null || artistName.Trim () == String.Empty)
+                artistName = Catalog.GetString ("Unknown Artist");
+
+            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artistName)) {
+                if (reader.Read ()) {
+                    artist = new LibraryArtistInfo (reader);
+                } else {
+                    artist = new LibraryArtistInfo ();
+                    artist.Name = artistName;
+                    artist.Save ();
+                }
+            }
+            return artist;
+        }
         
         public LibraryArtistInfo () : base (null)
         {
         }
 
-        public LibraryArtistInfo (string artistName) : base (null)
+        protected LibraryArtistInfo (IDataReader reader) : base (null)
         {
-            if (artistName == null || artistName.Trim () == String.Empty)
-                artistName = Catalog.GetString ("Unknown Artist");
-
-            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command.ApplyValues (artistName))) {
-                if (reader.Read ()) {
-                    LoadFromReader (reader);
-                } else {
-                    Name = artistName;
-                    Save ();
-                }
-            }
-        }
-
-        public LibraryArtistInfo(IDataReader reader) : base(null)
-        {
-            LoadFromReader(reader);
+            LoadFromReader (reader);
         }
 
         public void Save ()
@@ -86,9 +90,9 @@ namespace Banshee.Collection.Database
             Provider.Save (this);
         }
 
-        private void LoadFromReader(IDataReader reader)
+        private void LoadFromReader (IDataReader reader)
         {
-            dbid = Convert.ToInt32(reader[(int)Column.ArtistID]);
+            dbid = Convert.ToInt32 (reader[(int)Column.ArtistID]);
             Name = reader[(int)Column.Name] as string;
         }
 

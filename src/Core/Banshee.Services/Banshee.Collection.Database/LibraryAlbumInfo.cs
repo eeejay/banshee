@@ -58,26 +58,41 @@ namespace Banshee.Collection.Database
             ArtistName
         }
 
+        public static LibraryAlbumInfo FindOrCreate (LibraryArtistInfo artist, string title)
+        {
+            LibraryAlbumInfo album;
+
+            if (title == null || title.Trim () == String.Empty)
+                title = Catalog.GetString ("Unknown Album");
+
+            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, title)) {
+                if (reader.Read ()) {
+                    album = new LibraryAlbumInfo (reader);
+                    album.ArtistName = artist.Name;
+                } else {
+                    album = new LibraryAlbumInfo ();
+                    album.Title = title;
+                    album.ArtistId = artist.DbId;
+                    album.ArtistName = artist.Name;
+                    album.Save ();
+                }
+            }
+            return album;
+        }
+
         public LibraryAlbumInfo () : base (null)
         {
         }
 
-        public LibraryAlbumInfo (LibraryArtistInfo artist, string title) : base (null)
+        protected LibraryAlbumInfo (IDataReader reader) : base (null)
         {
-            if (title == null || title.Trim () == String.Empty)
-                title = Catalog.GetString ("Unknown Album");
+            LoadFromReader (reader);
+        }
 
-            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command.ApplyValues (artist.DbId, title))) {
-                if (reader.Read ()) {
-                    dbid = Convert.ToInt32 (reader[(int) Column.AlbumID]);
-                    Title = reader[(int) Column.Title] as string;
-                    ArtistName = artist.Name;
-                } else {
-                    artist_id = artist.DbId;
-                    Title = title;
-                    Save ();
-                }
-            }
+        private void LoadFromReader (IDataReader reader)
+        {
+            dbid = Convert.ToInt32 (reader[(int) Column.AlbumID]);
+            Title = reader[(int) Column.Title] as string;
         }
 
         public void Save ()

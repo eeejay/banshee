@@ -133,17 +133,13 @@ namespace Banshee.Library
                     track.Uri = newpath;
                 }
 
-                LibraryArtistInfo artist = new LibraryArtistInfo (track.ArtistName);
-                LibraryAlbumInfo album = new LibraryAlbumInfo (artist, track.AlbumTitle);
-
-                track.ArtistId = artist.DbId;
-                track.AlbumId = album.DbId;
+                LibraryArtistInfo artist = LibraryArtistInfo.FindOrCreate (track.ArtistName);
+                LibraryAlbumInfo album = LibraryAlbumInfo.FindOrCreate (artist, track.AlbumTitle);
 
                 track.DateAdded = DateTime.Now;
                 track.Source = ServiceManager.SourceManager.Library;
-
-                album.Save ();
-                artist.Save ();
+                track.ArtistId = artist.DbId;
+                track.AlbumId = album.DbId;
                 track.Save (false);
 
                 ServiceManager.DbConnection.CommitTransaction ();
