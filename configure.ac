@@ -25,7 +25,7 @@ SHAMROCK_EXPAND_DATADIR
 
 dnl libbanshee/native dependencies (required)
 BANSHEE_CHECK_LIBBANSHEE
-BANSHEE_CHECK_NAUTILUS_BURN
+#BANSHEE_CHECK_NAUTILUS_BURN
 BANSHEE_CHECK_GSTREAMER
 SHAMROCK_CHECK_GSTREAMER_0_10_PLUGINS([
 	decodebin
@@ -96,10 +96,10 @@ Makefile
 
 build/Makefile
 build/m4/Makefile
-build/banshee.pc
+build/banshee-preview.pc
 
 data/Makefile
-data/org.gnome.Banshee.service
+data/org.bansheeproject.Banshee.service
 data/audio-profiles/Makefile
 data/icon-theme-hicolor/Makefile
 

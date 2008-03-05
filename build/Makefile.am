@@ -4,7 +4,7 @@ GCONF_SCHEMA_EXTRACTOR_ASSEMBLY = gconf-schema-extractor.exe
 TRANSLATOR_EXTRACTOR_ASSEMBLY = translator-extractor.exe
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = banshee.pc
+pkgconfig_DATA = banshee-preview.pc
 
 bansheedir = $(pkglibdir)
 banshee_SCRIPTS = $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY)
@@ -25,9 +25,9 @@ EXTRA_DIST = \
 	GConfSchemaExtractor.cs \
 	TranslatorExtractor.cs \
 	gconf-schema-rules \
-	banshee.pc.in
+	banshee-preview.pc.in
 
 CLEANFILES = *.exe *.mdb
-DISTCLEANFILES = banshee.pc
+DISTCLEANFILES = banshee-preview.pc
 MAINTAINERCLEANFILES = Makefile.in
 

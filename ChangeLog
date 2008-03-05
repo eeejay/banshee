@@ -1,3 +1,13 @@
+2008-03-05  Aaron Bockover  <abock@gnome.org>
+
+	Lots of build fixes, preparing for the release
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Always update the addin registry so new/changed addins are rescanned
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Workaround for a mono 1.2.4 bug
+
 2008-03-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Small but

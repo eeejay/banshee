@@ -72,14 +72,19 @@ namespace Banshee.ServiceStack
             RegisterService<UserJobManager> ();
             
             AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
-                ? "." : UserAddinCachePath);
+                ? "." : Paths.ApplicationData);
             
-            Banshee.Configuration.ConfigurationClient.Initialize ();
+            IProgressStatus monitor = ApplicationContext.CommandLine.Contains ("mono-addins-progress")
+                ? new ConsoleProgressStatus (true)
+                : null;
         
             if (ApplicationContext.Debugging) {
-                AddinManager.Registry.Rebuild (null /*new ConsoleProgressStatus (true)*/);
+                AddinManager.Registry.Rebuild (monitor);
+            } else {
+                AddinManager.Registry.Update (monitor);
             }
             
+            Banshee.Configuration.ConfigurationClient.Initialize ();
             extension_nodes = AddinManager.GetExtensionNodes ("/Banshee/ServiceManager/Service");
         }
         
@@ -241,10 +246,6 @@ namespace Banshee.ServiceStack
         
         public static bool IsInitialized {
             get { return is_initialized; }
-        }
-        
-        public static string UserAddinCachePath {
-            get { return Paths.ApplicationData; }
         }
         
         public static DBusServiceManager DBusServiceManager {

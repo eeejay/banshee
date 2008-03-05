@@ -128,7 +128,8 @@ namespace Hyena.Data.Gui
             
             Column [] columns = ColumnController.ToArray ();
             Array.Sort (columns, delegate (Column a, Column b) {
-                return String.Compare (a.Title, b.Title);
+                // Fully qualified type name to avoid Mono 1.2.4 bug
+                return System.String.Compare (a.Title, b.Title);
             });
             
             foreach (Column column in columns) {

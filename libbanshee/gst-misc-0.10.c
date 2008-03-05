@@ -42,30 +42,7 @@
 #  include <gst/pbutils/pbutils.h>
 #endif
 
-#include "gst-mbtrm.h"
-
 static gboolean gstreamer_initialized = FALSE;
-
-static gboolean
-gst_mbtrm_register_elements(GstPlugin *plugin)
-{
-    return gst_element_register(plugin, "mbtrm",
-        GST_RANK_NONE, GST_TYPE_MBTRM);
-}
-
-static GstPluginDesc gst_mbtrm_plugin_desc = {
-    GST_VERSION_MAJOR,
-    GST_VERSION_MINOR,
-    "mbtrm",
-    "Private MusicBrainz TRM element",
-    gst_mbtrm_register_elements,
-    "0.10.10",
-    "LGPL",
-    "libbanshee",
-    "Banshee",
-    "http://banshee-project.org/",
-    GST_PADDING_INIT
-};
 
 void gstreamer_initialize()
 {
@@ -79,8 +56,6 @@ void gstreamer_initialize()
     gst_pb_utils_init();
     #endif
     
-    _gst_plugin_register_static(&gst_mbtrm_plugin_desc);
-
     gstreamer_initialized = TRUE;
 }
 

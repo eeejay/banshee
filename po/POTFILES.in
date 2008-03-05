@@ -9,7 +9,7 @@ data/audio-profiles/vorbis.xml.in
 data/audio-profiles/wavpack.xml.in
 data/audio-profiles/wav.xml.in
 data/audio-profiles/wma.xml.in
-data/banshee.desktop.in.in
+data/banshee-preview.desktop.in.in
 libbanshee/gst-cd-rip-0.10.c
 libbanshee/gst-transcode-0.10.c
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs

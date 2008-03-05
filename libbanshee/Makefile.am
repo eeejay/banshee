@@ -18,14 +18,16 @@ libbanshee_la_SOURCES = \
 	gst-cd-rip.h \
 	gst-tagger.c \
 	gst-tagger.h \
-	gst-mbtrm.h \
-	misc-glue.c \
-	nautilus-burn.c \
 	gst-playback-0.10.c \
 	gst-misc-0.10.c \
 	gst-transcode-0.10.c \
-	gst-cd-rip-0.10.c \
-	gst-mbtrm.c
+	gst-cd-rip-0.10.c
+
+OLD_CODE = \
+	gst-mbtrm.h \
+	gst-mbtrm.c \
+	nautilus-burn.c \
+	misc-glue.c
 
 libbanshee_la_LIBADD = \
 	$(LIBBANSHEE_LIBS) \
