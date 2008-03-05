@@ -82,7 +82,6 @@ src/Extensions/Banshee.Lastfm/Resources/lastfm.glade
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs
-src/Extensions/Banshee.Skins/Banshee.Skins/SkinManager.cs
 src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs

@@ -145,7 +145,6 @@ src/Extensions/Banshee.Lastfm/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
 src/Extensions/Banshee.PlayQueue/Makefile
-src/Extensions/Banshee.Skins/Makefile
 ])
 
 if test "x${enable_daap}" = "xyes"; then
@@ -156,7 +155,7 @@ if test "x${enable_daap}" = "xyes"; then
 fi
 
 echo "
-banshee-$VERSION
+${PACKAGE}-${VERSION}
 
     Install Prefix:    ${prefix}
     Datadir:           ${expanded_datadir}
@@ -176,7 +175,7 @@ banshee-$VERSION
 #"
 
 if test -d ${expanded_libdir}/${PACKAGE}; then
-	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/banshee"
+	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/${PACKAGE}"
 	echo "         Remove the existing install before installing this build."
 	echo "         Installing over an existing install will cause conflicts!"
 	echo 

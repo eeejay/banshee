@@ -15,8 +15,10 @@ $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY): GConfSchemaExtractor.cs
 	$(MCS) -out:$@ $<
 
 $(TRANSLATOR_EXTRACTOR_ASSEMBLY): TranslatorExtractor.cs
-	$(MCS) -out:$@ $< && $(MONO) $@ $(top_builddir)/po > \
-		$(top_builddir)/data/translators.xml
+	if [ "x$(top_srcdir)" = "x$(top_builddir)" ]; then \
+		$(MCS) -out:$@ $< && $(MONO) $@ $(top_builddir)/po > \
+			$(top_srcdir)/src/Core/Banshee.Core/Resources/translators.xml; \
+	fi;
 
 EXTRA_DIST = \
 	icon-theme-installer \
