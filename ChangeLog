@@ -1,5 +1,54 @@
 2008-03-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Base/RateLimiter.cs: Change to prevent
+	the method from being called while it is still running, queueing another
+	run to happen when the current one finishes, instead of specifying a
+	specific rate limit.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Set HasSelectAllItem on cache to true.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Avoid parsing the user query if it hasn't changed since we last parsed it.
+	Add SuppressReloads method so we can update both the album and artist
+	filter before doing a Reload, and add a ClearArtistAlbumFilters method
+	that directly, quickly does that.
+
+	* src/Core/Banshee.Services/Banshee.Collection/AlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/ArtistListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs: Create
+	the selection object within each subclass so that Album and Artist models
+	can create a SelectAllSelection.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Collection/SelectAllSelection.cs: New
+	class that makes sure the first item is selected as the AllSelected = true
+	state.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Override new ReloadTrackModel method which is called by DatabaseSource's
+	RateLimitedReload and RateLimitedFilter methods.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add
+	RateLimitedFilter method for spawning off the filter handler.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Updated to work with SelectAllSelection and to trigger two track model
+	updates when the artist model changes - one that is not filtered by any
+	artists or albums, and one that is filtered by the artist/album selection,
+	if any.
+
+	* src/Libraries/Hyena/Hyena.Collections/Selection.cs: Change AllSelected
+	and SelectAll to be virtual, add a MaxIndex getter.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Update the
+	SaveSelection and RestoreSelection code to work with artist/album
+	selections that have a first (fake) item "All *".
+
+2008-03-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
 	Ignore deprecation warning.
 

@@ -27,7 +27,6 @@
 //
 
 using System;
-using GLib;
 
 namespace Banshee.Base
 {
@@ -36,72 +35,41 @@ namespace Banshee.Base
         public delegate void RateLimitedMethod ();
 
         private RateLimitedMethod method;
-        private double initial_delay_ms;
-        private double min_interval_ms;
-        private DateTime last_executed = DateTime.MinValue;
-        private uint timeout_id = 0;
-
         private bool requested = false;
-        private double requested_interval;
         private bool executing = false;
 
-        public RateLimiter (double min_interval_ms, RateLimitedMethod method) : this (0.0, min_interval_ms, method)
+        public RateLimiter (RateLimitedMethod method)
         {
-        }
-
-        public RateLimiter (double initial_delay_ms, double min_interval_ms, RateLimitedMethod method)
-        {
-            this.initial_delay_ms = initial_delay_ms;
-            this.min_interval_ms = min_interval_ms;
             this.method = method;
         }
 
         public void Execute ()
         {
-            Execute (min_interval_ms);
-        }
-
-        public void Execute (double min_interval_ms)
-        {
             lock (this) {
-                if (requested || timeout_id != 0) {
-                    return;
-                }
-
-                if (executing) {
+                if (requested || executing) {
                     requested = true;
-                    requested_interval = min_interval_ms;
                     return;
-                }
-
-                double delta = (DateTime.Now - last_executed).TotalMilliseconds;
-                if (delta >= min_interval_ms) {
-                    timeout_id = GLib.Timeout.Add ((uint) initial_delay_ms, OnRateLimitTimer);
-                } else {
-                    timeout_id = GLib.Timeout.Add ((uint) (min_interval_ms - delta), OnRateLimitTimer);
                 }
             }
+
+            InnerExecute ();
         }
 
-        private bool OnRateLimitTimer ()
+        private bool InnerExecute ()
         {
             lock (this) {
-                timeout_id = 0;
                 executing = true;
             }
 
-            //Hyena.Log.DebugFormat ("Executing method {0} from {1} in {2}", method.Method.Name, method.Method.DeclaringType, System.Threading.Thread.CurrentThread.ManagedThreadId);
             method ();
 
             lock (this) {
-                last_executed = DateTime.Now;
-                //Hyena.Log.DebugFormat ("Done executing method {0} from {1} at {2}", method.Method.Name, method.Method.DeclaringType, last_executed);
                 executing = false;
             }
 
             if (requested) {
                 requested = false;
-                Execute (requested_interval);
+                Execute ();
             }
 
             return false;

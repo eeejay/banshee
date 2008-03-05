@@ -188,6 +188,12 @@ namespace Hyena.Data.Sqlite
             ));
         }
 
+        private bool has_select_all_item = false;
+        public bool HasSelectAllItem {
+            get { return has_select_all_item; }
+            set { has_select_all_item = value; }
+        }
+
         public bool Warm {
             //get { return warm; }
             get { return false; }
@@ -223,8 +229,7 @@ namespace Hyena.Data.Sqlite
             if (rows == 0) {
                 return -1;
             }
-            select_single_command.ApplyValues (item_id);
-            long target_id = connection.Query<long> (select_single_command);
+            long target_id = connection.Query<long> (select_single_command, item_id);
             if (target_id == 0) {
                 return -1;
             }
@@ -266,39 +271,50 @@ namespace Hyena.Data.Sqlite
         {
             connection.Execute (delete_selection_command);
 
-            if (model.Selection.Count > 0) {
+            if (model.Selection.Count > 0 && !(has_select_all_item && model.Selection.AllSelected)) {
+                long start, end;
                 foreach (Hyena.Collections.RangeCollection.Range range in model.Selection.Ranges) {
-                    connection.Execute (save_selection_command.ApplyValues (range.Start, range.End - range.Start + 1));
+                    start = range.Start;
+                    end = range.End;
+
+                    // Compensate for the first, fake 'All *' item
+                    if (has_select_all_item) {
+                        start -= 1;
+                        end -= 1;
+                    }
+
+                    connection.Execute (save_selection_command, start, end - start + 1);
                 }
             }
         }
 
         private void RestoreSelection ()
         {
-            model.Selection.Clear (false);
+            bool cleared = false;
             long selected_id = -1;
             long first_id = FirstOrderId;
-            using (IDataReader reader = connection.Query (get_selection_command)) {
-                while (reader.Read ()) {
-                    selected_id = Convert.ToInt64 (reader[0]);
-                    selected_id -= first_id;
-                    model.Selection.QuietSelect ((int)selected_id);
-                }
+
+            // Compensate for the first, fake 'All *' item
+            if (has_select_all_item) {
+                first_id -= 1;
             }
 
-            // Trigger a model Changed event
-            if (selected_id == -1) {
-                model.Selection.Clear ();
-            } else {
-                model.Selection.Select ((int)selected_id);
+            using (IDataReader reader = connection.Query (get_selection_command)) {
+                while (reader.Read ()) {
+                    if (!cleared) {
+                        model.Selection.Clear (false);
+                        cleared = true;
+                    }
+                    selected_id = Convert.ToInt64 (reader[0]) - first_id;
+                    model.Selection.QuietSelect ((int)selected_id);
+                }
             }
         }
 
         protected override void FetchSet (long offset, long limit)
         {
             //using (new Timer (String.Format ("Fetching set for {0}", model))) {
-                select_range_command.ApplyValues (offset, limit);
-                using (IDataReader reader = connection.Query (select_range_command)) {
+                using (IDataReader reader = connection.Query (select_range_command, offset, limit)) {
                     while (reader.Read ()) {
                         if (!ContainsKey (offset)) {
                             Add (offset, provider.Load (reader, (int)offset));
@@ -311,7 +327,7 @@ namespace Hyena.Data.Sqlite
         
         protected void UpdateAggregates ()
         {
-            using (IDataReader reader = connection.Query (count_command.ApplyValues (uid))) {
+            using (IDataReader reader = connection.Query (count_command, uid)) {
                 if (reader.Read ()) {
                     rows = Convert.ToInt64 (reader[0]);
 

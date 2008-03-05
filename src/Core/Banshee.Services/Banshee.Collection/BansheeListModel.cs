@@ -37,7 +37,7 @@ namespace Banshee.Collection
 {
     public abstract class BansheeListModel<T> : ExportableModel, IListModel<T>
     {
-        protected Selection selection = new Selection ();
+        protected Selection selection;
 
         public event EventHandler Cleared;
         public event EventHandler Reloaded;
@@ -90,6 +90,13 @@ namespace Banshee.Collection
 
         public virtual Selection Selection {
             get { return selection; }
+        }
+
+        protected ModelSelection<T> model_selection;
+        public virtual ModelSelection<T> SelectedItems {
+            get {
+                return model_selection ?? model_selection = new ModelSelection<T> (this, Selection);
+            }
         }
     }
 }

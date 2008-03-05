@@ -58,7 +58,7 @@ namespace Hyena.Collections
         public Selection ()
         {
         }
-        
+
         protected virtual void OnChanged ()
         {
             EventHandler handler = Changed;
@@ -73,7 +73,7 @@ namespace Hyena.Collections
                 ranges.Add (index);
             }
             
-            OnChanged();
+            OnChanged ();
         }
         
         public void Select (int index)
@@ -136,7 +136,7 @@ namespace Hyena.Collections
             OnChanged ();
         }
 
-        public void SelectAll ()
+        public virtual void SelectAll ()
         {
             SelectRange (0, max_index);
         }
@@ -153,9 +153,8 @@ namespace Hyena.Collections
             }
             
             ranges.Clear ();
-            if (raise) {
+            if (raise)
                 OnChanged ();
-            }
         }
         
         public int Count {
@@ -164,9 +163,10 @@ namespace Hyena.Collections
         
         public int MaxIndex {
             set { max_index = value; }
+            get { return max_index; }
         }
         
-        public bool AllSelected {
+        public virtual bool AllSelected {
             get { 
                 if (ranges.RangeCount == 1) {
                     RangeCollection.Range range = ranges.Ranges[0];

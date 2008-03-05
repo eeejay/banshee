@@ -54,6 +54,7 @@ namespace Banshee.Sources
         protected ArtistListDatabaseModel artist_model;
 
         protected RateLimiter reload_limiter;
+        protected RateLimiter filter_limiter;
         
         public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order)
         {
@@ -61,7 +62,8 @@ namespace Banshee.Sources
             track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, uuid);
             album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
             artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
-            reload_limiter = new RateLimiter (50.0, RateLimitedReload);
+            reload_limiter = new RateLimiter (RateLimitedReload);
+            filter_limiter = new RateLimiter (RateLimitedFilter);
         }
 
 #region Public Properties
@@ -93,9 +95,7 @@ namespace Banshee.Sources
         public override string FilterQuery {
             set {
                 base.FilterQuery = value;
-                track_model.Filter = value;
-                track_model.Refilter ();
-                Reload ();
+                filter_limiter.Execute ();
             }
         }
 
@@ -135,30 +135,53 @@ namespace Banshee.Sources
 
 #region Public Methods
 
-        public void Reload (double min_interval_ms)
-        {
-            ThreadAssist.SpawnFromMain (delegate {
-                //reload_limiter.Execute (min_interval_ms);
-                RateLimitedReload ();
-            });
-        }
-
         public void Reload ()
         {
+            reload_limiter.Execute ();
+        }
+
+        protected virtual void RateLimitedReload ()
+        {
             ThreadAssist.SpawnFromMain (delegate {
-                //reload_limiter.Execute (100.0);
-                RateLimitedReload ();
+                lock (track_model) {
+                    ReloadTrackModel ();
+                    artist_model.Reload ();
+                    album_model.Reload ();
+                    OnUpdated ();
+                }
             });
         }
 
-        public virtual void RateLimitedReload ()
+        protected virtual void ReloadTrackModel ()
         {
-            lock (track_model) {
-                track_model.Reload ();
-                artist_model.Reload ();
-                album_model.Reload ();
-                OnUpdated ();
-            }
+            track_model.Reload ();
+        }
+
+        protected virtual void RateLimitedFilter ()
+        {
+            ThreadAssist.SpawnFromMain (delegate {
+                lock (this) {
+                    // First, reload the track model w/o the artist/album filter
+                    track_model.SuppressReloads = true;
+                    track_model.Filter = FilterQuery;
+                    track_model.ClearArtistAlbumFilters ();
+                    track_model.SuppressReloads = false;
+                    ReloadTrackModel ();
+
+                    // Then, reload the artist/album models
+                    artist_model.Reload ();
+                    album_model.Reload ();
+
+                    // Then, reload the track model with the artist/album filters
+                    track_model.SuppressReloads = true;
+                    track_model.ArtistInfoFilter = artist_model.SelectedItems;
+                    track_model.AlbumInfoFilter = album_model.SelectedItems;
+                    track_model.SuppressReloads = false;
+                    ReloadTrackModel ();
+
+                    OnUpdated ();
+                }
+            });
         }
 
         /*protected virtual void ReloadChildren ()

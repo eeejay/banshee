@@ -25,6 +25,7 @@ SOURCES =  \
 	Banshee.Collection/ImportEventHandler.cs \
 	Banshee.Collection/ImportManager.cs \
 	Banshee.Collection/ModelHelper.cs \
+	Banshee.Collection/SelectAllSelection.cs \
 	Banshee.Collection/TrackListModel.cs \
 	Banshee.Configuration/DatabaseConfigurationClient.cs \
 	Banshee.Database/BansheeDbConnection.cs \

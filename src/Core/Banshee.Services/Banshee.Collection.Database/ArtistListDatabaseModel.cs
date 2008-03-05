@@ -51,6 +51,7 @@ namespace Banshee.Collection.Database
         {
             provider = LibraryArtistInfo.Provider;
             cache = new BansheeModelCache <LibraryArtistInfo> (connection, uuid, this, provider);
+            cache.HasSelectAllItem = true;
         }
 
         public ArtistListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection, string uuid) : this (connection, uuid)
@@ -59,7 +60,7 @@ namespace Banshee.Collection.Database
         }
     
         private bool first_reload = true;
-        public override void Reload()
+        public override void Reload ()
         {
             if (!first_reload || !cache.Warm) {
                 reload_fragment = String.Format (

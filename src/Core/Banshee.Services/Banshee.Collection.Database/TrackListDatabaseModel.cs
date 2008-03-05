@@ -93,35 +93,24 @@ namespace Banshee.Collection.Database
             Refilter ();
         }
         
+        private bool have_new_filter = true;
         private void GenerateFilterQueryPart()
         {
+            if (!have_new_filter)
+                return;
+
             if (String.IsNullOrEmpty(Filter)) {
                 filter_query = null;
             } else {
-                Hyena.Query.UserQueryParser qp = new UserQueryParser (Filter);
-                QueryNode n = qp.BuildTree (BansheeQuery.FieldSet);
+                QueryNode query_tree = UserQueryParser.Parse (Filter, BansheeQuery.FieldSet);
+                filter_query = (query_tree == null) ? null : query_tree.ToSql (BansheeQuery.FieldSet);
 
-                filter_query = n.ToSql (BansheeQuery.FieldSet);
-
-                /*
-                Console.WriteLine ("query: {0}", Filter);
-                Console.WriteLine ("Xml for Query: {0}", n.ToXml (BansheeQuery.FieldSet, true));
-                Console.WriteLine ("Sql for Query: {0}", filter_query);
-                Hyena.Query.QueryParser qp2 = new XmlQueryParser (n.ToXml (BansheeQuery.FieldSet));
-                QueryNode n2 = qp2.BuildTree (BansheeQuery.FieldSet);
-                if (n2 != null) {
-                    Console.WriteLine ("User query for Xml: {0}", n2.ToUserQuery ());
-                } else
-                    Console.WriteLine ("n2 is null");
-                    */
-
-                if (filter_query.Length == 0)
+                if (filter_query != null && filter_query.Length == 0) {
                     filter_query = null;
-                //else {
-                    //artist_id_filter_query = null;
-                    //album_id_filter_query = null;
-                //}
+                }
             }
+
+            have_new_filter = false;
         }
 
         private void GenerateSortQueryPart()
@@ -211,6 +200,9 @@ namespace Banshee.Collection.Database
         private bool first_reload = true;
         public override void Reload()
         {
+            if (suppress_reload)
+                return;
+
             UpdateUnfilteredAggregates ();
 
             StringBuilder qb = new StringBuilder ();
@@ -287,6 +279,7 @@ namespace Banshee.Collection.Database
             set { 
                 lock(this) {
                     filter = value; 
+                    have_new_filter = true;
                 }
             }
         }
@@ -382,6 +375,14 @@ namespace Banshee.Collection.Database
             }
         }
 
+        public override void ClearArtistAlbumFilters ()
+        {
+            artist_id_filter_query = null;
+            album_id_filter_query = null;
+            Refilter();
+            Reload();
+        }
+
         public int CacheId {
             get { return (int) cache.CacheId; }
         }
@@ -426,6 +427,12 @@ namespace Banshee.Collection.Database
         public bool CachesJoinTableEntries {
             get { return caches_join_table_entries; }
             set { caches_join_table_entries = value; }
+        }
+
+        private bool suppress_reload = false;
+        public bool SuppressReloads {
+            get { return suppress_reload; }
+            set { suppress_reload = value; }
         }
 
         // Implement ICacheableModel

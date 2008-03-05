@@ -53,6 +53,7 @@ namespace Banshee.Collection.Database
         {
             provider = LibraryAlbumInfo.Provider;
             cache = new BansheeModelCache <LibraryAlbumInfo> (connection, uuid, this, provider);
+            cache.HasSelectAllItem = true;
         }
 
         public AlbumListDatabaseModel(TrackListDatabaseModel trackModel, 
@@ -62,7 +63,7 @@ namespace Banshee.Collection.Database
         }
 
         private bool first_reload = true;
-        public override void Reload()
+        public override void Reload ()
         {
             if (!first_reload || !cache.Warm) {
                 bool either = (artist_id_filter_query != null) || (track_model != null);

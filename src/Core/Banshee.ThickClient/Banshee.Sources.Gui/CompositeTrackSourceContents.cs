@@ -255,6 +255,7 @@ namespace Banshee.Sources.Gui
         {
             ToggleAction action = (ToggleAction)o;
             artist_view.Selection.Clear ();
+            album_view.Selection.Clear ();
             browser_container.Visible = action.Active && ActiveSourceCanHasBrowser;
             BrowserVisible.Set (action.Active);
         }
@@ -263,20 +264,18 @@ namespace Banshee.Sources.Gui
         {
             Hyena.Collections.Selection selection = (Hyena.Collections.Selection)o;
             TrackListModel model = track_view.Model as TrackListModel;
-            
-            if (selection.Count == 1 && selection.Contains(0) || selection.AllSelected) {
+
+            if (selection.AllSelected) {
                 if (model != null && o == artist_view.Selection ) {
-                    model.ArtistInfoFilter = null;
+                    model.ClearArtistAlbumFilters ();
                     album_model.ArtistInfoFilter = null;
+                    if (!album_model.Selection.AllSelected) {
+                        UpdateAlbumSelectionFilters ();
+                    }
                 } else if (model != null && o == album_view.Selection) {
                     model.AlbumInfoFilter = null;
                 }
                 return;
-            } else if (selection.Count == 0) {
-                selection.Select(0);
-                return;
-            } else if (selection.Count > 0 && !selection.AllSelected) {
-                selection.QuietUnselect(0);
             }
             
             if (o == artist_view.Selection) {
@@ -287,18 +286,17 @@ namespace Banshee.Sources.Gui
                     artists[i++] = artist_view.Model[row_index];
                 }
             
+                model.AlbumInfoFilter = null;
                 model.ArtistInfoFilter = artists;
                 album_model.ArtistInfoFilter = artists;
             } else if (o == album_view.Selection) {
-                AlbumInfo [] albums = new AlbumInfo[selection.Count];
-                int i = 0;
-            
-                foreach (int row_index in album_view.Selection) {
-                    albums[i++] = album_view.Model[row_index];
-                }
-            
-                model.AlbumInfoFilter = albums;
+                UpdateAlbumSelectionFilters ();
             }
+        }
+
+        private void UpdateAlbumSelectionFilters ()
+        {
+            (track_view.Model as TrackListModel).AlbumInfoFilter = (album_view.Model as AlbumListModel).SelectedItems;
         }
         
         public void SetModels (TrackListModel track, ArtistListModel artist, AlbumListModel album)

@@ -1,10 +1,10 @@
 //
-// TrackListModel.cs
+// SelectAllSelection.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,43 +27,35 @@
 //
 
 using System;
-using System.Collections.Generic;
 
-using Hyena.Data;
 using Hyena.Collections;
-using Hyena.Query;
-
-using Banshee.ServiceStack;
 
 namespace Banshee.Collection
 {
-    public abstract class TrackListModel : BansheeListModel<TrackInfo>
+    public class SelectAllSelection : Selection
     {
-        public TrackListModel() : base ()
+        public SelectAllSelection () : base ()
         {
-            selection = new Selection ();
-        }
-        
-        public TrackListModel(IDBusExportable parent) : base(parent)
-        {
-            selection = new Selection ();
-        }
-        
-        public virtual int IndexOf(TrackInfo track)
-        {
-            throw new NotImplementedException();
-        }
-        
-        public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
-            set { throw new NotImplementedException(); }
-        }
-        
-        public virtual IEnumerable<AlbumInfo> AlbumInfoFilter {
-            set { throw new NotImplementedException(); }
         }
 
-        public virtual void ClearArtistAlbumFilters ()
+        protected override void OnChanged ()
         {
+            if (Count == 0 || base.AllSelected) {
+                Clear (false);
+                QuietSelect (0);
+            }
+
+            base.OnChanged ();
+        }
+
+        public override void SelectAll ()
+        {
+            Clear (false);
+            Select (0);
+        }
+
+        public override bool AllSelected {
+            get { return Contains (0); }
         }
     }
 }

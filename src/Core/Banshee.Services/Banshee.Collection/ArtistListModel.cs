@@ -37,12 +37,14 @@ namespace Banshee.Collection
     {
         public ArtistListModel() : base ()
         {
-            selection.Select (0);
+            selection = new SelectAllSelection ();
+            selection.SelectAll ();
         }
         
         public ArtistListModel(IDBusExportable parent) : base(parent)
         {
-            selection.Select (0);
+            selection = new SelectAllSelection ();
+            selection.SelectAll ();
         }
     }
 }

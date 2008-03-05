@@ -291,7 +291,7 @@ namespace Banshee.SmartPlaylist
 
 #region DatabaseSource overrides
 
-        public override void RateLimitedReload ()
+        protected override void ReloadTrackModel ()
         {
             // Wipe the member list clean
             ServiceManager.DbConnection.Execute (String.Format (
@@ -308,7 +308,7 @@ namespace Banshee.SmartPlaylist
                 DbId, PrependCondition("AND"), OrderAndLimit
             ));
 
-            base.RateLimitedReload ();
+            base.ReloadTrackModel ();
         }
 
 #endregion

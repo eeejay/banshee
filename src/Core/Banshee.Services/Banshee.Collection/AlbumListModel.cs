@@ -38,12 +38,14 @@ namespace Banshee.Collection
     {
         public AlbumListModel() : base ()
         {
-            selection.Select (0);
+            selection = new SelectAllSelection ();
+            selection.SelectAll ();
         }
         
         public AlbumListModel(IDBusExportable parent) : base(parent)
         {
-            selection.Select (0);
+            selection = new SelectAllSelection ();
+            selection.SelectAll ();
         }
 
         public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
