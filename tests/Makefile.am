@@ -5,7 +5,7 @@ NUNIT_FLAGS = @MONO_NUNIT_LIBS@
 
 ASSEMBLY_NAME = banshee-tests
 ASSEMBLY = $(ASSEMBLY_NAME).dll
-ASSEMBLY_CSFILES = \
+ASSEMBLY_CSFILES =  \
 	$(srcdir)/Hyena/CryptoUtilTests.cs \
 	$(srcdir)/Hyena/RangeCollectionTests.cs \
 	$(srcdir)/Hyena/StringUtilTests.cs

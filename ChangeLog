@@ -1,3 +1,19 @@
+2008-03-06  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs: 
+	Render the buffering progress bar using the GTK styles, take care of
+	the pango layout manually instead of using a GtkLabel to be able
+	to render the text in two colors, depending on the progress bar
+
+	* build/build.rules.mk: Do not pass -warnaserror if mono is older than
+	1.2.4 since there appear to be some fake warnings raised with the older
+	gmcs compiler
+
+	* build/m4/shamrock/mono.m4: Added a method to detect the mono version but
+	not bail if it wasn't met, and set a result
+
+	* configure.ac: Check for at least mono 1.2.4 and export the result
+
 2008-03-05  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:

@@ -37,6 +37,7 @@ SHAMROCK_CHECK_GSTREAMER_0_10_PLUGINS([
 ])
 
 dnl Mono and gmcs
+SHAMROCK_CHECK_MONO_MODULE_NOBAIL(1.2.4)
 SHAMROCK_CHECK_MONO_MODULE(1.1.10)
 SHAMROCK_FIND_MONO_2_0_COMPILER
 SHAMROCK_FIND_MONO_RUNTIME
@@ -49,6 +50,9 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 	Mono.Posix
 	ICSharpCode.SharpZipLib
 ])
+
+HAVE_MONO_1_2_6=$HAVE_MONO_MODULE
+AC_SUBST(HAVE_MONO_1_2_6)
 
 dnl NDesk DBus libraries
 BANSHEE_CHECK_NDESK_DBUS
@@ -164,6 +168,7 @@ ${PACKAGE}-${VERSION}
     C Compiler:        ${CC}
     Mono C# Compiler:  ${MCS}
     Mono Runtime:      ${MONO}
+    Mono >= 1.2.6:     ${HAVE_MONO_1_2_6}
 "
 #    Digital Audio Players (DAP):
 #      iPod:            ${enable_ipodsharp}
