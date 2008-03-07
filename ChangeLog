@@ -1,5 +1,17 @@
 2008-03-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/CommonTags.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add Composer, Copyright, LicenseUri, and Comment columns to CoreTracks.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Add Composer
+	field.
+
+2008-03-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
 	Add ToString override for debugging purposes.
 

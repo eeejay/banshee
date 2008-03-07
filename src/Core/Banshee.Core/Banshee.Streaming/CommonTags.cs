@@ -39,6 +39,7 @@ namespace Banshee.Streaming
         public const string Genre             = "genre";
         public const string Disc              = "disc";
         public const string Comment           = "comment";
+        public const string Composer          = "composer";
         public const string TrackNumber       = "track-number";
         public const string TrackCount        = "track-count";
         public const string AlbumVolumeNumber = "album-disc-number";
@@ -51,6 +52,7 @@ namespace Banshee.Streaming
         public const string Copyright         = "copyright";
         public const string Contact           = "contact";
         public const string License           = "license";
+        public const string LicenseUri        = "license-uri";
         public const string Performer         = "performer";
         public const string Duration          = "duration";
         public const string Codec             = "codec";
@@ -60,6 +62,7 @@ namespace Banshee.Streaming
         public const string NominalBitrate    = "nominal-bitrate";
         public const string MinimumBitrate    = "minimum-bitrate";
         public const string MaximumBitrate    = "maximum-bitrate";
+        public const string BeatsPerMinute    = "beats-per-minute";
         public const string Serial            = "serial";
         public const string Encoder           = "encoder";
         public const string EncoderVersion    = "encoder-version";

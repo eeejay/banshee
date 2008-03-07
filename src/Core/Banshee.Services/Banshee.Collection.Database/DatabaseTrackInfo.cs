@@ -251,6 +251,30 @@ namespace Banshee.Collection.Database
             get { return base.Genre; }
             set { base.Genre = value; }
         }
+
+        [DatabaseColumn]
+        public override string Composer {
+            get { return base.Composer; }
+            set { base.Composer = value; }
+        }
+
+        [DatabaseColumn]
+        public override string Copyright {
+            get { return base.Copyright; }
+            set { base.Copyright = value; }
+        }
+
+        [DatabaseColumn]
+        public override string LicenseUri {
+            get { return base.LicenseUri; }
+            set { base.LicenseUri = value; }
+        }
+
+        [DatabaseColumn]
+        public override string Comment {
+            get { return base.Comment; }
+            set { base.Comment = value; }
+        }
         
         [DatabaseColumn]
         public override int Rating {

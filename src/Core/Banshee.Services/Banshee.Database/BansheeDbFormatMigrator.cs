@@ -269,15 +269,8 @@ namespace Banshee.Database
             Execute ("INSERT INTO CorePrimarySources (StringID) VALUES ('Library')");
 
             // TODO add these:
-            // Comment
-            // Composer
-            // Copyright
-            // LicenseUri
-            //
             // Others to consider:
             // AlbumArtist (TPE2) (in CoreAlbums?)
-            // Conductor (TPE3)
-            // Remixer (TPE4)
             Execute(@"
                 CREATE TABLE CoreTracks (
                     SourceID            INTEGER NOT NULL,
@@ -300,7 +293,11 @@ namespace Banshee.Database
                     Duration            INTEGER,
                     Year                INTEGER,
                     Genre               TEXT,
+                    Composer            TEXT,
+                    Copyright           TEXT,
+                    LicenseUri          TEXT,
 
+                    Comment             TEXT,
                     Rating              INTEGER,
                     PlayCount           INTEGER,
                     SkipCount           INTEGER,
@@ -462,6 +459,7 @@ namespace Banshee.Database
                         Duration * 1000,
                         Year,
                         Genre,
+                        NULL, NULL, NULL, NULL,
                         Rating,
                         NumberOfPlays,
                         0,
@@ -486,8 +484,6 @@ namespace Banshee.Database
                     SELECT * FROM SmartPlaylists
             ");
 
-            // TODO: Kick off some kind of scanner to find the file size of all the files
-            //       since that information was never in the old Banshee
             ServiceManager.ServiceStarted += OnServiceStarted;
         }
 

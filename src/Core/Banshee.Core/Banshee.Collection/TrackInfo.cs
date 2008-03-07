@@ -49,7 +49,11 @@ namespace Banshee.Collection
         private string album_title;
         private string track_title;
         private string genre;
+        private string composer;
+        private string copyright;
+        private string license_uri;
 
+        private string comment;
         private int track_number;
         private int track_count;
         private int disc;
@@ -191,6 +195,26 @@ namespace Banshee.Collection
         public virtual int Year {
             get { return year; }
             set { year = value; }
+        }
+
+        public virtual string Composer {
+            get { return composer; }
+            set { composer = value; }
+        }
+
+        public virtual string Copyright {
+            get { return copyright; }
+            set { copyright = value; }
+        }
+
+        public virtual string LicenseUri {
+            get { return license_uri; }
+            set { license_uri = value; }
+        }
+
+        public virtual string Comment {
+            get { return comment; }
+            set { comment = value; }
         }
 
         public virtual int Rating {

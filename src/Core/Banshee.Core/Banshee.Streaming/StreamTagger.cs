@@ -92,6 +92,9 @@ namespace Banshee.Streaming
             track.AlbumTitle = Choose (file.Tag.Album, track.AlbumTitle, preferTrackInfo);
             track.TrackTitle = Choose (file.Tag.Title, track.TrackTitle, preferTrackInfo);
             track.Genre = Choose (file.Tag.FirstGenre, track.Genre, preferTrackInfo);
+            track.Composer = Choose (file.Tag.FirstComposer, track.Composer, preferTrackInfo);
+            track.Copyright = Choose (file.Tag.Copyright, track.Copyright, preferTrackInfo);
+            track.Comment = Choose (file.Tag.Comment, track.Comment, preferTrackInfo);
 
             track.TrackNumber = Choose ((int)file.Tag.Track, track.TrackNumber, preferTrackInfo);
             track.TrackCount = Choose ((int)file.Tag.TrackCount, track.TrackCount, preferTrackInfo);
@@ -118,6 +121,18 @@ namespace Banshee.Streaming
                         break;
                     case CommonTags.Genre:
                         track.Genre = Choose ((string)tag.Value, track.Genre);
+                        break;
+                    case CommonTags.Composer:
+                        track.Composer = Choose ((string)tag.Value, track.Composer);
+                        break;
+                    case CommonTags.Copyright:
+                        track.Copyright = Choose ((string)tag.Value, track.Copyright);
+                        break;
+                    case CommonTags.LicenseUri:
+                        track.LicenseUri = Choose ((string)tag.Value, track.LicenseUri);
+                        break;
+                    case CommonTags.Comment:
+                        track.Comment = Choose ((string)tag.Value, track.Comment);
                         break;
                     case CommonTags.TrackNumber:
                         int track_number = (int)tag.Value;

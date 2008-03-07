@@ -114,6 +114,12 @@ namespace Banshee.Query
             Catalog.GetString ("genre"), "genre"
         );
 
+        public static QueryField ComposerField = new QueryField (
+            "composer", Catalog.GetString ("Composer"), "CoreTracks.Composer", false,
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("composer"), "composer"
+        );
+
         public static QueryField RatingField = new QueryField (
             "rating", Catalog.GetString ("Rating"), "CoreTracks.Rating", typeof(RatingQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
@@ -190,7 +196,7 @@ namespace Banshee.Query
         );
 
         public static QueryFieldSet FieldSet = new QueryFieldSet (
-            ArtistField, AlbumField, DiscField, TitleField, YearField, GenreField, RatingField, PlayCountField,
+            ArtistField, AlbumField, DiscField, TitleField, YearField, GenreField, ComposerField, RatingField, PlayCountField,
             SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField,
             DateAddedField, PlaylistField, SmartPlaylistField
         );
