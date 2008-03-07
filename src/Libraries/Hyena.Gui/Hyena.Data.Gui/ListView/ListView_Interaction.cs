@@ -443,14 +443,6 @@ namespace Hyena.Data.Gui
 
 #endregion
 
-#region Drag and Drop
-
-        protected virtual void OnDragSourceSet ()
-        {
-        }
-        
-#endregion
-
 #region Adjustments & Scrolling
 
         private void UpdateAdjustments (Adjustment hadj, Adjustment vadj)

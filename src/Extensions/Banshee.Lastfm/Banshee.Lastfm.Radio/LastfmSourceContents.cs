@@ -106,7 +106,9 @@ namespace Banshee.Lastfm.Radio
         {
             if (args.State == ConnectionState.Connected) {
                 Banshee.Base.ThreadAssist.ProxyToMain (delegate {
-                    UpdateForUser (lastfm.Account.UserName);
+                    if (lastfm != null && lastfm.Account != null) {
+                        UpdateForUser (lastfm.Account.UserName);
+                    }
                 });
             }
         }

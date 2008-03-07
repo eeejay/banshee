@@ -51,7 +51,7 @@ namespace Banshee.Sources.Gui
             
         private static TargetEntry [] dnd_dest_entries = new TargetEntry [] {
             Banshee.Gui.DragDrop.DragDropTarget.Source,
-            Banshee.Gui.DragDrop.DragDropTarget.ModelSelection
+            Hyena.Data.Gui.ListViewDragDropTarget.ModelSelection
         };
         
         private Source new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"));

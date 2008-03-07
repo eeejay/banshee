@@ -1,5 +1,28 @@
 2008-03-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	Added another partial class for drag and drop specific stuff for the
+	view; implement variable velocity scrolling when dragging rows in the
+	view; it's awesome; added a Reorderable property, but it does not do
+	anything yet (other than the awesome scrolling)
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Moved some DnD code into the new partial class
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Set Reorderable and ForceDragSourceSet properties
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.DragDrop/DragDropTarget.cs:
+	Removed the model selection target
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Use the model selection target from hyena
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	Fixed a crasher/NRE
+
+2008-03-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena/Hyena/ConsoleCrayon.cs: Added Hutch's terminfo
 	changes to do all the coloring properly
 

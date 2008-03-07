@@ -33,7 +33,6 @@ namespace Banshee.Gui.DragDrop
 {
     public enum DragDropTargetType {
         Source,
-        ModelSelection,
         UriList
     };
         
@@ -42,10 +41,6 @@ namespace Banshee.Gui.DragDrop
         public static readonly TargetEntry Source = 
             new TargetEntry ("application/x-banshee-source", TargetFlags.App, 
                 (uint)DragDropTargetType.Source);
-
-        public static readonly TargetEntry ModelSelection =
-            new TargetEntry ("application/x-banshee-model-selection", TargetFlags.App,
-                (uint)DragDropTargetType.ModelSelection);
 
         public static readonly TargetEntry UriList = 
             new TargetEntry ("text/uri-list", 0, (uint)DragDropTargetType.UriList);
