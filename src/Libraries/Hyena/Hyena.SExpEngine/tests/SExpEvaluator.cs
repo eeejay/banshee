@@ -1,12 +1,12 @@
 using System;
 using System.IO;
-using SExpEngine;
+using Hyena.SExpEngine;
 
 public class SExpEvaluator
 {
-    public static void Main()
+    public static void Main(string [] args)
     {
-        using(FileStream stream = new FileStream("tests/list.sxp", FileMode.Open)) {
+        using(FileStream stream = new FileStream(args[0], FileMode.Open)) {
             using(StreamReader reader = new StreamReader(stream)) {
                 Evaluator evaluator = new Evaluator();
                 TreeNode result = evaluator.EvaluateString(reader.ReadToEnd()).Flatten();
