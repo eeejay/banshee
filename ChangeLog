@@ -1,6 +1,11 @@
 2008-03-07  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	Some minor fixes and cleanups
+
+2008-03-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
 	Added another partial class for drag and drop specific stuff for the
 	view; implement variable velocity scrolling when dragging rows in the
 	view; it's awesome; added a Reorderable property, but it does not do

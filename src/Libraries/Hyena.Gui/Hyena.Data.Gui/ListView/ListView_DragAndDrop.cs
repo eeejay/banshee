@@ -101,6 +101,7 @@ namespace Hyena.Data.Gui
         }
         
         private uint drag_scroll_timeout_id;
+        private uint drag_scroll_timeout_duration = 50;
         private double drag_scroll_velocity;
         private double drag_scroll_velocity_max = 100.0;
         
@@ -117,6 +118,7 @@ namespace Hyena.Data.Gui
         protected override bool OnDragMotion (Gdk.DragContext context, int x, int y, uint time)
         {
             if (!Reorderable) {
+                StopDragScroll ();
                 return false;
             }
             
@@ -132,7 +134,7 @@ namespace Hyena.Data.Gui
             }
             
             if (drag_scroll_timeout_id == 0) {
-                drag_scroll_timeout_id = GLib.Timeout.Add (50, OnDragScrollTimeout);
+                drag_scroll_timeout_id = GLib.Timeout.Add (drag_scroll_timeout_duration, OnDragScrollTimeout);
             }
             
             return true;
@@ -150,16 +152,7 @@ namespace Hyena.Data.Gui
         
         private bool OnDragScrollTimeout ()
         {
-            double actual_velocity = drag_scroll_velocity * drag_scroll_velocity_max;
-            
-            if (vadjustment.Value + actual_velocity < vadjustment.Lower) {
-                vadjustment.Value = vadjustment.Lower;
-            } else if (vadjustment.Value + actual_velocity > vadjustment.Upper - vadjustment.PageSize) {
-                vadjustment.Value = vadjustment.Upper - vadjustment.PageSize;
-            } else {
-                vadjustment.Value += actual_velocity;
-            }
-            
+            ScrollTo (vadjustment.Value + (drag_scroll_velocity * drag_scroll_velocity_max));
             return true;
         }
     }

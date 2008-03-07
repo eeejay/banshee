@@ -444,7 +444,7 @@ namespace Hyena.Data.Gui
 #endregion
 
 #region Adjustments & Scrolling
-
+        
         private void UpdateAdjustments (Adjustment hadj, Adjustment vadj)
         {
             if (vadj != null) {
