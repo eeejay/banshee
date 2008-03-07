@@ -83,18 +83,16 @@ namespace Hyena
 
 #region Ansi/VT Code Calculation
 
-        // FIXME: These may not be the best mappings.
-        //        << 8 indicates the color as a high code
-        //        which will make it bold (1;)
-        private static int ConsoleColorToAnsiIndex (ConsoleColor color)
+        // Modified from Mono's System.TermInfoDriver
+        // License: MIT/X11
+        // Authors: Gonzalo Paniagua Javier <gonzalo@ximian.com>
+        // (C) 2005-2006 Novell, Inc <http://www.novell.com>
+        
+        private static int TranslateColor (ConsoleColor desired, out bool light)
         {
-            switch (color) {
-                case ConsoleColor.Red: return 1 << 8;
-                case ConsoleColor.Green: return 2 << 8;
-                case ConsoleColor.Yellow: return 3 << 8;
-                case ConsoleColor.Blue: return 4 << 8;
-                case ConsoleColor.Magenta: return 5 << 8;
-                case ConsoleColor.Cyan: return 6 << 8;
+            light = false;
+            switch (desired) {
+                // Dark colors
                 case ConsoleColor.Black: return 0;
                 case ConsoleColor.DarkRed: return 1;
                 case ConsoleColor.DarkGreen: return 2;
@@ -102,24 +100,27 @@ namespace Hyena
                 case ConsoleColor.DarkBlue: return 4;
                 case ConsoleColor.DarkMagenta: return 5;
                 case ConsoleColor.DarkCyan: return 6;
-                case ConsoleColor.DarkGray:
-                case ConsoleColor.Gray:
-                case ConsoleColor.White:
-                default: return 7;
+                case ConsoleColor.Gray: return 7;
+
+                // Light colors
+                case ConsoleColor.DarkGray: light = true; return 0;
+                case ConsoleColor.Red: light = true; return 1;
+                case ConsoleColor.Green: light = true; return 2;
+                case ConsoleColor.Yellow: light = true; return 3;
+                case ConsoleColor.Blue: light = true; return 4;
+                case ConsoleColor.Magenta: light = true; return 5;
+                case ConsoleColor.Cyan: light = true; return 6;
+                case ConsoleColor.White: default: light = true; return 7;
             }
         }
-
+        
         private static string GetAnsiColorControlCode (ConsoleColor color, bool isForeground)
         {
-            int index = ConsoleColorToAnsiIndex (color);
-            string highcode = String.Empty;
-
-            if ((index >> 8) > 0) {
-                highcode = "1;";
-                index >>= 8;
-            }
-
-            return String.Format ("\x001b[{0}{1}m", highcode, (isForeground ? 30 : 40) + index);
+            // lighter fg colours are 90 -> 97 rather than 30 -> 37
+            // lighter bg colours are 100 -> 107 rather than 40 -> 47
+            bool light;
+            int code = TranslateColor (color, out light) + (isForeground ? 30 : 40) + (light ? 60 : 0);
+            return String.Format ("\x001b[{0}m", code);
         }
 
         private static string GetAnsiResetControlCode ()

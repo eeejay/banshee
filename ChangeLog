@@ -1,3 +1,8 @@
+2008-03-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena/Hyena/ConsoleCrayon.cs: Added Hutch's terminfo
+	changes to do all the coloring properly
+
 2008-03-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
