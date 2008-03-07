@@ -272,8 +272,10 @@ namespace Banshee.Sources.Gui
                     if (!album_model.Selection.AllSelected) {
                         UpdateAlbumSelectionFilters ();
                     }
+                    artist_view.ScrollTo (0);
                 } else if (model != null && o == album_view.Selection) {
                     model.AlbumInfoFilter = null;
+                    album_view.ScrollTo (0);
                 }
                 return;
             }

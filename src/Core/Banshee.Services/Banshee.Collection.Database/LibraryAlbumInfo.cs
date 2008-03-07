@@ -124,5 +124,10 @@ namespace Banshee.Collection.Database
             get { return base.ArtistName; }
             set { base.ArtistName = value; }
         }
+
+        public override string ToString ()
+        {
+            return String.Format ("<LibraryAlbumInfo Title={0} DbId={1}>", Title, DbId);
+        }
     }
 }

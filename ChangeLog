@@ -1,3 +1,20 @@
+2008-03-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	Add ToString override for debugging purposes.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Scroll to the top if artist or album selection changes to all selected.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs: When
+	refreshing the view for the model, scroll to the first selected item if
+	possible.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data/ModelCache.cs: Add locks to make
+	thread-safe, solves (at least some) spurious browser issues people have
+	been seeing.
+
 2008-03-06  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs: 

@@ -217,23 +217,30 @@ namespace Hyena.Data.Sqlite
 
         private long FirstOrderId {
             get {
-                if (first_order_id == -1) {
-                    first_order_id = connection.Query<long> (select_first_command);
+                lock (this) {
+                    if (first_order_id == -1) {
+                        first_order_id = connection.Query<long> (select_first_command);
+                    }
+                    return first_order_id;
                 }
-                return first_order_id;
              }
         }
         
         public long IndexOf (long item_id)
         {
-            if (rows == 0) {
-                return -1;
+            lock (this) {
+                if (rows == 0)
+                    return -1;
+
+                if (item_id == FirstOrderId)
+                    return 0;
+
+                long target_id = connection.Query<long> (select_single_command, item_id);
+                if (target_id == 0) {
+                    return -1;
+                }
+                return target_id - FirstOrderId;
             }
-            long target_id = connection.Query<long> (select_single_command, item_id);
-            if (target_id == 0) {
-                return -1;
-            }
-            return target_id - FirstOrderId;
         }
 
         private HyenaSqliteCommand last_reload_command;
@@ -241,30 +248,32 @@ namespace Hyena.Data.Sqlite
 
         public override long Reload ()
         {
-            if (last_reload_fragment != model.ReloadFragment) {
-                last_reload_fragment = model.ReloadFragment;
-                last_reload_command = new HyenaSqliteCommand (reload_sql + last_reload_fragment);
+            lock (this) {
+                if (last_reload_fragment != model.ReloadFragment) {
+                    last_reload_fragment = model.ReloadFragment;
+                    last_reload_command = new HyenaSqliteCommand (reload_sql + last_reload_fragment);
+                }
+
+                if (!first_reload) {
+                    SaveSelection ();
+                }
+
+                Clear ();
+
+                //using (new Timer (String.Format ("Generating cache table for {0}", model))) {
+                    connection.Execute (last_reload_command);
+                //}
+                first_order_id = -1;
+                UpdateAggregates ();
+
+                if (!first_reload) {
+                    RestoreSelection ();
+                } else {
+                    first_reload = false;
+                }
+
+                return rows;
             }
-
-            if (!first_reload) {
-                SaveSelection ();
-            }
-
-            Clear ();
-
-            //using (new Timer (String.Format ("Generating cache table for {0}", model))) {
-                connection.Execute (last_reload_command);
-            //}
-            first_order_id = -1;
-            UpdateAggregates ();
-
-            if (!first_reload) {
-                RestoreSelection ();
-            } else {
-                first_reload = false;
-            }
-
-            return rows;
         }
 
         private void SaveSelection ()
@@ -314,6 +323,7 @@ namespace Hyena.Data.Sqlite
 
         protected override void FetchSet (long offset, long limit)
         {
+            lock (this) {
             //using (new Timer (String.Format ("Fetching set for {0}", model))) {
                 using (IDataReader reader = connection.Query (select_range_command, offset, limit)) {
                     while (reader.Read ()) {
@@ -324,6 +334,7 @@ namespace Hyena.Data.Sqlite
                      }
                  }
             //}
+            }
         }
         
         protected void UpdateAggregates ()
