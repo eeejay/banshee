@@ -231,6 +231,17 @@ namespace Hyena.Data.Gui
                             single_list_alloc.Width, single_list_alloc.Height);
                     }
                     
+                    if (ri == drag_reorder_row_index && Reorderable) {
+                        list_cr.Save ();
+                        list_cr.LineWidth = 1.0;
+                        list_cr.Antialias = Antialias.None;
+                        list_cr.MoveTo (single_list_alloc.Left, single_list_alloc.Top);
+                        list_cr.LineTo (single_list_alloc.Right, single_list_alloc.Top);
+                        list_cr.Color = Theme.Colors.GetWidgetColor (GtkColorClass.Text, StateType.Normal);
+                        list_cr.Stroke ();
+                        list_cr.Restore ();
+                    }
+                    
                     if (focused_row_index == ri && !Selection.Contains (ri) && HasFocus) {
                         CairoCorners corners = CairoCorners.All;
                         
@@ -325,7 +336,7 @@ namespace Hyena.Data.Gui
             list_cr.Save ();
             list_cr.Translate (clip.X, clip.Y);
             cell.Render (new CellContext (list_cr, list_pango_layout, this, list_window, theme, area), 
-                dragging? StateType.Normal : state, area.Width, area.Height);
+                dragging ? StateType.Normal : state, area.Width, area.Height);
             list_cr.Restore ();
         }
         

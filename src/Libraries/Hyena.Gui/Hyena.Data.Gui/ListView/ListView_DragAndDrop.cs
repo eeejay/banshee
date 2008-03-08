@@ -104,6 +104,8 @@ namespace Hyena.Data.Gui
         private uint drag_scroll_timeout_duration = 50;
         private double drag_scroll_velocity;
         private double drag_scroll_velocity_max = 100.0;
+        private int drag_reorder_row_index = -1;
+        private int drag_reorder_motion_y = -1;
         
         private void StopDragScroll ()
         {
@@ -119,10 +121,16 @@ namespace Hyena.Data.Gui
         {
             if (!Reorderable) {
                 StopDragScroll ();
+                drag_reorder_row_index = -1;
+                drag_reorder_motion_y = -1;
+                InvalidateListWindow ();
                 return false;
             }
             
-            double scroll_threshold = Allocation.Height * 0.2;
+            drag_reorder_motion_y = y;
+            DragReorderUpdateRow ();
+            
+            double scroll_threshold = Allocation.Height * 0.3;
             
             if (y < scroll_threshold) {
                 drag_scroll_velocity = -1.0 + (y / scroll_threshold);
@@ -148,12 +156,24 @@ namespace Hyena.Data.Gui
         protected override void OnDragEnd (Gdk.DragContext context)
         {
             StopDragScroll ();
+            drag_reorder_row_index = -1;
+            drag_reorder_motion_y = -1;
         }
         
         private bool OnDragScrollTimeout ()
         {
             ScrollTo (vadjustment.Value + (drag_scroll_velocity * drag_scroll_velocity_max));
+            DragReorderUpdateRow ();
             return true;
+        }
+        
+        private void DragReorderUpdateRow ()
+        {
+            int row = GetRowAtY (drag_reorder_motion_y + list_alloc.Y) - 1;
+            if (row != drag_reorder_row_index) {
+                drag_reorder_row_index = row;
+                InvalidateListWindow ();
+            }   
         }
     }
 }

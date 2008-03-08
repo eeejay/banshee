@@ -1,6 +1,14 @@
 2008-03-07  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	Calculate the row index for reordering
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Render a line to indicate the row reordering index
+
+2008-03-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
 	Some minor fixes and cleanups
 
 2008-03-07  Aaron Bockover  <abock@gnome.org>
