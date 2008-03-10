@@ -43,29 +43,35 @@ namespace Banshee.Collection.Database
         private readonly BansheeModelProvider<LibraryAlbumInfo> provider;
         private readonly BansheeModelCache<LibraryAlbumInfo> cache;
         private readonly TrackListDatabaseModel track_model;
+        private readonly ArtistListDatabaseModel artist_model;
         private long count;
         private string artist_id_filter_query;
         private string reload_fragment;
         
-        private readonly AlbumInfo select_all_album = new AlbumInfo(null);
+        private readonly AlbumInfo select_all_album = new AlbumInfo (null);
         
-        public AlbumListDatabaseModel(BansheeDbConnection connection, string uuid)
+        public AlbumListDatabaseModel (BansheeDbConnection connection, string uuid)
         {
             provider = LibraryAlbumInfo.Provider;
             cache = new BansheeModelCache <LibraryAlbumInfo> (connection, uuid, this, provider);
             cache.HasSelectAllItem = true;
         }
 
-        public AlbumListDatabaseModel(TrackListDatabaseModel trackModel, 
+        public AlbumListDatabaseModel (TrackListDatabaseModel trackModel, ArtistListDatabaseModel artistModel,
                 BansheeDbConnection connection, string uuid) : this (connection, uuid)
         {
             this.track_model = trackModel;
+            this.artist_model = artistModel;
         }
 
         private bool first_reload = true;
         public override void Reload ()
         {
             if (!first_reload || !cache.Warm) {
+                if (artist_model != null) {
+                    ArtistInfoFilter = artist_model.SelectedItems;
+                }
+
                 bool either = (artist_id_filter_query != null) || (track_model != null);
                 bool both = (artist_id_filter_query != null) && (track_model != null);
 
@@ -95,8 +101,8 @@ namespace Banshee.Collection.Database
 
             first_reload = false;
             count = cache.Count + 1;
-            select_all_album.Title = String.Format("All Albums ({0})", count - 1);
-            OnReloaded();
+            select_all_album.Title = String.Format ("All Albums ({0})", count - 1);
+            OnReloaded ();
         }
         
         public override AlbumInfo this[int index] {
@@ -109,19 +115,18 @@ namespace Banshee.Collection.Database
         }
         
         public override IEnumerable<ArtistInfo> ArtistInfoFilter {
-            set { 
-                ModelHelper.BuildIdFilter<ArtistInfo>(value, "CoreAlbums.ArtistID", artist_id_filter_query,
-                    delegate(ArtistInfo artist) {
-                        if(!(artist is LibraryArtistInfo)) {
+            set {
+                ModelHelper.BuildIdFilter<ArtistInfo> (value, "CoreAlbums.ArtistID", artist_id_filter_query,
+                    delegate (ArtistInfo artist) {
+                        if (!(artist is LibraryArtistInfo)) {
                             return null;
                         }
                         
-                        return ((LibraryArtistInfo)artist).DbId.ToString();
+                        return ((LibraryArtistInfo)artist).DbId.ToString ();
                     },
                 
-                    delegate(string new_filter) {
+                    delegate (string new_filter) {
                         artist_id_filter_query = new_filter;
-                        Reload();
                     }
                 );
             }
@@ -142,6 +147,15 @@ namespace Banshee.Collection.Database
 
         public string ReloadFragment {
             get { return reload_fragment; }
+        }
+
+        public int CacheId {
+            get { return (int) cache.CacheId; }
+        }
+
+        public void ClearCache ()
+        {
+            cache.Clear ();
         }
 
         public string JoinTable { get { return null; } }

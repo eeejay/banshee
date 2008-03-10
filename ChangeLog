@@ -1,5 +1,42 @@
 2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	Now depends on the Artist model, resets the artist filter at each reload,
+	exposes CacheId and ClearCache.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Expose CacheId property and ClearCache method.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Keep references to the artist/album models and regenerate the artist/album
+	filter for each reload.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Reset
+	the count to 0 when finished importing.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Whitespace.
+	
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Avoid
+	triggering the Reloaded event when reloading it twice in a row - no
+	flicker.  OnTracksRemoved now reloads the current source, but not the
+	library etc.  New PruneArtistsAlbums method that deletes artists/albums
+	from the cache that have been removed from the library.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Rename
+	TracksRemoved event to TracksDeleted for clarity/parity with method names.
+	Override PruneArtistsAlbums method.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Fix reloading when selection changes.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	TracksRemoved event renamed to TracksDeleted for clarity.
+
+2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Avoid
 	unnecessary db queries in saving/restoring selection.  Fix bugs with
 	IndexOf method.

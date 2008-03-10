@@ -174,6 +174,7 @@ namespace Banshee.Library
 
         protected override void OnImportFinished ()
         {
+            count = 0;
             ServiceManager.SourceManager.Library.NotifyTracksAdded ();
             base.OnImportFinished ();
         }

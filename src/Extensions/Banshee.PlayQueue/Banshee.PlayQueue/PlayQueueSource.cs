@@ -102,7 +102,7 @@ namespace Banshee.PlayQueue
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
 
             ServiceManager.SourceManager.Library.TracksChanged += HandleTracksChanged;
-            ServiceManager.SourceManager.Library.TracksRemoved += HandleTracksRemoved;
+            ServiceManager.SourceManager.Library.TracksDeleted += HandleTracksDeleted;
         }
         
         public void Dispose ()

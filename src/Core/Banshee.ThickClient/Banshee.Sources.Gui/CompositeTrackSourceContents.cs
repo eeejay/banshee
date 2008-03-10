@@ -269,12 +269,14 @@ namespace Banshee.Sources.Gui
                 if (model != null && o == artist_view.Selection ) {
                     model.ClearArtistAlbumFilters ();
                     album_model.ArtistInfoFilter = null;
+                    album_model.Reload ();
                     if (!album_model.Selection.AllSelected) {
                         UpdateAlbumSelectionFilters ();
                     }
                     artist_view.ScrollTo (0);
                 } else if (model != null && o == album_view.Selection) {
                     model.AlbumInfoFilter = null;
+                    model.Reload ();
                     album_view.ScrollTo (0);
                 }
                 return;
@@ -290,7 +292,9 @@ namespace Banshee.Sources.Gui
             
                 model.AlbumInfoFilter = null;
                 model.ArtistInfoFilter = artists;
+                model.Reload ();
                 album_model.ArtistInfoFilter = artists;
+                album_model.Reload ();
             } else if (o == album_view.Selection) {
                 UpdateAlbumSelectionFilters ();
             }
@@ -299,6 +303,7 @@ namespace Banshee.Sources.Gui
         private void UpdateAlbumSelectionFilters ()
         {
             (track_view.Model as TrackListModel).AlbumInfoFilter = (album_view.Model as AlbumListModel).SelectedItems;
+            track_view.Model.Reload ();
         }
         
         public void SetModels (TrackListModel track, ArtistListModel artist, AlbumListModel album)

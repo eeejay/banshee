@@ -76,6 +76,11 @@ namespace Banshee.Sources
             INSERT INTO CoreRemovedTracks SELECT ?, TrackID, Uri FROM CoreTracks WHERE TrackID IN ({0});
             DELETE FROM CoreTracks WHERE TrackID IN ({0})";
 
+        protected HyenaSqliteCommand prune_artists_albums_command = new HyenaSqliteCommand (@"
+            DELETE FROM CoreArtists WHERE ArtistID NOT IN (SELECT ArtistID FROM CoreTracks);
+            DELETE FROM CoreAlbums WHERE AlbumID NOT IN (SELECT AlbumID FROM CoreTracks)
+        ");
+
         protected int source_id;
         public int SourceId {
             get { return source_id; }
@@ -89,7 +94,7 @@ namespace Banshee.Sources
 
         public event TrackEventHandler TracksAdded;
         public event TrackEventHandler TracksChanged;
-        public event TrackEventHandler TracksRemoved;
+        public event TrackEventHandler TracksDeleted;
 
         private static Dictionary<int, PrimarySource> primary_sources = new Dictionary<int, PrimarySource> ();
         public static PrimarySource GetById (int id)
@@ -126,9 +131,9 @@ namespace Banshee.Sources
             OnTracksChanged ();
         }
 
-        internal void NotifyTracksRemoved ()
+        internal void NotifyTracksDeleted ()
         {
-            OnTracksRemoved ();
+            OnTracksDeleted ();
         }
 
         protected void OnErrorSourceUpdated (object o, EventArgs args)
@@ -201,16 +206,29 @@ namespace Banshee.Sources
             });
         }
 
-        protected override void OnTracksRemoved ()
+        protected override void OnTracksDeleted ()
         {
             ThreadAssist.SpawnFromMain (delegate {
                 Reload ();
 
-                TrackEventHandler handler = TracksRemoved;
+                TrackEventHandler handler = TracksDeleted;
                 if (handler != null) {
                     handler (this, new TrackEventArgs ());
                 }
             });
+        }
+
+        protected override void OnTracksRemoved ()
+        {
+            PruneArtistsAlbums ();
+            OnTracksDeleted ();
+        }
+
+        public override void RemoveSelectedTracks (TrackListDatabaseModel model)
+        {
+            base.RemoveSelectedTracks (model);
+            PruneArtistsAlbums ();
+            OnTracksDeleted ();
         }
 
         protected override void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
@@ -221,6 +239,12 @@ namespace Banshee.Sources
                 model.CacheId, range.Start, range.End - range.Start + 1,
                 model.CacheId, range.Start, range.End - range.Start + 1
             );
+        }
+
+        protected override void PruneArtistsAlbums ()
+        {
+            ServiceManager.DbConnection.Execute (prune_artists_albums_command);
+            base.PruneArtistsAlbums ();
         }
     }
 }

@@ -107,6 +107,15 @@ namespace Banshee.Collection.Database
             get { return (int) count; }
         }
 
+        public int CacheId {
+            get { return (int) cache.CacheId; }
+        }
+
+        public void ClearCache ()
+        {
+            cache.Clear ();
+        }
+
         // Implement ICacheableModel
         public int FetchCount {
             get { return 20; }

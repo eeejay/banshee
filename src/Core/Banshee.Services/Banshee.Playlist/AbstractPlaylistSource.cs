@@ -149,6 +149,5 @@ namespace Banshee.Playlist
         {
             return DbId.GetHashCode ();
         }
-
     }
 }

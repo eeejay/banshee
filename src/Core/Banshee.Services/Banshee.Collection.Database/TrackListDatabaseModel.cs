@@ -70,6 +70,9 @@ namespace Banshee.Collection.Database
         private string artist_id_filter_query;
         private string album_id_filter_query;
 
+        private ArtistListDatabaseModel artist_model;
+        private AlbumListDatabaseModel album_model;
+
         private string uuid;
         
         private int rows_in_view;
@@ -82,24 +85,26 @@ namespace Banshee.Collection.Database
         }
 
         private bool initialized = false;
-        public void Initialize ()
+        public void Initialize (ArtistListDatabaseModel artist_model, AlbumListDatabaseModel album_model)
         {
             if (initialized)
                 return;
 
+            this.artist_model = artist_model;
+            this.album_model = album_model;
+
             initialized = true;
             cache = new BansheeModelCache <DatabaseTrackInfo> (connection, uuid, this, provider);
             cache.AggregatesUpdated += HandleCacheAggregatesUpdated;
-            Refilter ();
         }
         
         private bool have_new_filter = true;
-        private void GenerateFilterQueryPart()
+        private void GenerateFilterQueryPart ()
         {
             if (!have_new_filter)
                 return;
 
-            if (String.IsNullOrEmpty(Filter)) {
+            if (String.IsNullOrEmpty (Filter)) {
                 filter_query = null;
             } else {
                 QueryNode query_tree = UserQueryParser.Parse (Filter, BansheeQuery.FieldSet);
@@ -113,29 +118,29 @@ namespace Banshee.Collection.Database
             have_new_filter = false;
         }
 
-        private void GenerateSortQueryPart()
+        private void GenerateSortQueryPart ()
         {
             sort_query = (sort_column == null) ?
                 null :
                 BansheeQuery.GetSort (sort_column.SortKey, sort_column.SortType == SortType.Ascending);
         }
 
-        public void Refilter()
+        public void Refilter ()
         {
-            lock(this) {
-                GenerateFilterQueryPart();
+            lock (this) {
+                GenerateFilterQueryPart ();
                 cache.Clear ();
             }
         }
         
-        public void Sort(ISortableColumn column)
+        public void Sort (ISortableColumn column)
         {
-            lock(this) {
+            lock (this) {
                 if (forced_sort_query) {
                     return;
                 }
                 
-                if(sort_column == column && sort_column != null) {
+                if (sort_column == column && sort_column != null) {
                     sort_column.SortType = sort_column.SortType == SortType.Ascending 
                         ? SortType.Descending 
                         : SortType.Ascending;
@@ -143,7 +148,7 @@ namespace Banshee.Collection.Database
             
                 sort_column = column;
             
-                GenerateSortQueryPart();
+                GenerateSortQueryPart ();
                 cache.Clear ();
             }
         }
@@ -154,12 +159,12 @@ namespace Banshee.Collection.Database
             filtered_filesize = reader.IsDBNull (2) ? 0 : Convert.ToInt64 (reader[2]);
         }
         
-        public override void Clear()
+        public override void Clear ()
         {
             cache.Clear ();
             count = 0;
             filtered_count = 0;
-            OnCleared();
+            OnCleared ();
         }
 
         private string unfiltered_query;
@@ -198,15 +203,32 @@ namespace Banshee.Collection.Database
         }*/
         
         private bool first_reload = true;
-        public override void Reload()
+        public override void Reload ()
+        {
+            Reload (true);
+        }
+
+        public void Reload (bool notify)
         {
             if (suppress_reload)
                 return;
+
+            Refilter ();
 
             UpdateUnfilteredAggregates ();
 
             StringBuilder qb = new StringBuilder ();
             qb.Append (UnfilteredQuery);
+
+            if (artist_model != null) {
+                ArtistInfoFilter = artist_model.SelectedItems;
+            }
+
+            if (album_model != null) {
+                //Console.WriteLine ("album_id_filter_query was {0}, and selection count = {1}", album_id_filter_query, album_model.Selection.Count);
+                AlbumInfoFilter = album_model.SelectedItems;
+                //Console.WriteLine ("album_id_filter_query now is {0}", album_id_filter_query);
+            }
             
             if (artist_id_filter_query != null) {
                 qb.Append ("AND ");
@@ -237,13 +259,15 @@ namespace Banshee.Collection.Database
             filtered_count = cache.Count;
             first_reload = false;
 
-            OnReloaded ();
+            if (notify) {
+                OnReloaded ();
+            }
         }
 
         public override int IndexOf (TrackInfo track)
         {
-            DatabaseTrackInfo library_track = track as DatabaseTrackInfo;
-            return (int) (library_track == null ? -1 : cache.IndexOf ((int)library_track.DbId));
+            DatabaseTrackInfo db_track = track as DatabaseTrackInfo;
+            return (int) (db_track == null ? -1 : cache.IndexOf ((int)db_track.DbId));
         }
 
         public override TrackInfo this[int index] {
@@ -277,7 +301,7 @@ namespace Banshee.Collection.Database
         public string Filter {
             get { return filter; }
             set { 
-                lock(this) {
+                lock (this) {
                     filter = value; 
                     have_new_filter = true;
                 }
@@ -317,9 +341,7 @@ namespace Banshee.Collection.Database
 
         public string Condition {
             get { return condition; }
-            set {
-                condition = value;
-            }
+            set { condition = value; }
         }
 
         public string ConditionFragment {
@@ -334,22 +356,20 @@ namespace Banshee.Collection.Database
             else
                 return String.Format (" {0} {1} ", prefix, condition);
         }
-        
+
         public override IEnumerable<ArtistInfo> ArtistInfoFilter {
-            set { 
-                ModelHelper.BuildIdFilter<ArtistInfo>(value, "CoreTracks.ArtistID", artist_id_filter_query,
-                    delegate(ArtistInfo artist) {
-                        if(!(artist is LibraryArtistInfo)) {
+            set {
+                ModelHelper.BuildIdFilter<ArtistInfo> (value, "CoreTracks.ArtistID", artist_id_filter_query,
+                    delegate (ArtistInfo artist) {
+                        if (!(artist is LibraryArtistInfo)) {
                             return null;
                         }
                         
-                        return ((LibraryArtistInfo)artist).DbId.ToString();
+                        return ((LibraryArtistInfo)artist).DbId.ToString ();
                     },
                 
-                    delegate(string new_filter) {
+                    delegate (string new_filter) {
                         artist_id_filter_query = new_filter;
-                        Refilter();
-                        Reload();
                     }
                 );
             }
@@ -357,19 +377,17 @@ namespace Banshee.Collection.Database
         
         public override IEnumerable<AlbumInfo> AlbumInfoFilter {
             set { 
-                ModelHelper.BuildIdFilter<AlbumInfo>(value, "CoreTracks.AlbumID", album_id_filter_query,
-                    delegate(AlbumInfo album) {
-                        if(!(album is LibraryAlbumInfo)) {
+                ModelHelper.BuildIdFilter<AlbumInfo> (value, "CoreTracks.AlbumID", album_id_filter_query,
+                    delegate (AlbumInfo album) {
+                        if (!(album is LibraryAlbumInfo)) {
                             return null;
                         }
                         
-                        return ((LibraryAlbumInfo)album).DbId.ToString();
+                        return ((LibraryAlbumInfo)album).DbId.ToString ();
                     },
                 
-                    delegate(string new_filter) {
+                    delegate (string new_filter) {
                         album_id_filter_query = new_filter;
-                        Refilter();
-                        Reload();
                     }
                 );
             }
@@ -379,9 +397,22 @@ namespace Banshee.Collection.Database
         {
             artist_id_filter_query = null;
             album_id_filter_query = null;
-            Refilter();
-            Reload();
+            Reload ();
         }
+
+        /*private HyenaSqliteCommand check_artists_command = new HyenaSqliteCommand (
+            "SELECT ItemID FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT ArtistID FROM CoreArtists)"
+        );
+
+        private HyenaSqliteCommand check_albums_command = new HyenaSqliteCommand (
+            "SELECT ItemID FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT AlbumID FROM CoreAlbums)"
+        );*/
+
+        /*public void CheckFilters ()
+        {
+            if (track_model.Artist
+            if (ServiceManager.DbConnection.Query<int> (
+        }*/
 
         public int CacheId {
             get { return (int) cache.CacheId; }
@@ -396,14 +427,14 @@ namespace Banshee.Collection.Database
             set { rows_in_view = value; }
         }
 
-        int IExportableModel.GetLength() 
+        int IExportableModel.GetLength () 
         {
             return Count;
         }
         
-        IDictionary<string, object> IExportableModel.GetMetadata(int index)
+        IDictionary<string, object> IExportableModel.GetMetadata (int index)
         {
-            return this[index].GenerateExportable();
+            return this[index].GenerateExportable ();
         }
 
         private string track_ids_sql;

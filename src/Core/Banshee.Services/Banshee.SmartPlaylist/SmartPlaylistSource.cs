@@ -359,7 +359,7 @@ namespace Banshee.SmartPlaylist
             }
         }
 
-        protected override void HandleTracksRemoved (Source sender, TrackEventArgs args)
+        protected override void HandleTracksDeleted (Source sender, TrackEventArgs args)
         {
             if (args.When > last_removed) {
                 last_removed = args.When;
@@ -384,7 +384,7 @@ namespace Banshee.SmartPlaylist
             if (primary != null) {
                 primary.TracksAdded += HandleTracksAdded;
                 primary.TracksChanged += HandleTracksChanged;
-                primary.TracksRemoved += HandleTracksRemoved;
+                primary.TracksDeleted += HandleTracksDeleted;
             }
         }
 

@@ -60,8 +60,8 @@ namespace Banshee.Sources
         {
             string uuid = String.Format ("{0}-{1}", this.GetType().Name, id);
             track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, uuid);
-            album_model = new AlbumListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
             artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
+            album_model = new AlbumListDatabaseModel (track_model, artist_model, ServiceManager.DbConnection, uuid);
             reload_limiter = new RateLimiter (RateLimitedReload);
             filter_limiter = new RateLimiter (RateLimitedFilter);
         }
@@ -149,12 +149,17 @@ namespace Banshee.Sources
                     album_model.Reload ();
                     OnUpdated ();
                 }
-            });
+            }
         }
 
         protected virtual void ReloadTrackModel ()
         {
-            track_model.Reload ();
+            ReloadTrackModel (true);
+        }
+
+        protected void ReloadTrackModel (bool notify)
+        {
+            track_model.Reload (notify);
         }
 
         protected virtual void RateLimitedFilter ()
@@ -166,7 +171,7 @@ namespace Banshee.Sources
                     track_model.Filter = FilterQuery;
                     track_model.ClearArtistAlbumFilters ();
                     track_model.SuppressReloads = false;
-                    ReloadTrackModel ();
+                    ReloadTrackModel (false);
 
                     // Then, reload the artist/album models
                     artist_model.Reload ();
@@ -198,7 +203,7 @@ namespace Banshee.Sources
             get { return false; }
         }
 
-        public virtual void RemoveTrack (int index)
+        public void RemoveTrack (int index)
         {
             if (index != -1) {
                 RemoveTrackRange (track_model, new RangeCollection.Range (index, index));
@@ -206,16 +211,10 @@ namespace Banshee.Sources
             }
         }
 
-        public virtual void RemoveTrack (DatabaseTrackInfo track)
+        public void RemoveTrack (DatabaseTrackInfo track)
         {
             RemoveTrack (track_model.IndexOf (track));
         }
-
-        // Methods for removing tracks from this source
-        /*public virtual void RemoveTracks (IEnumerable<TrackInfo> tracks)
-        {
-            throw new NotImplementedException(); 
-        }*/
 
         public virtual void RemoveSelectedTracks ()
         {
@@ -228,12 +227,6 @@ namespace Banshee.Sources
             OnTracksRemoved ();
         }
 
-        // Methods for deleting tracks from this source
-        /*public virtual void DeleteTracks (IEnumerable<TrackInfo> tracks)
-        {
-            throw new NotImplementedException(); 
-        }*/
-
         public virtual void DeleteSelectedTracks ()
         {
             DeleteSelectedTracks (track_model);
@@ -242,7 +235,8 @@ namespace Banshee.Sources
         public virtual void DeleteSelectedTracks (TrackListDatabaseModel model)
         {
             WithTrackSelection (model, DeleteTrackRange);
-            OnTracksRemoved ();
+            PruneArtistsAlbums ();
+            OnTracksDeleted ();
         }
 
         public virtual void RateSelectedTracks (int rating)
@@ -293,17 +287,23 @@ namespace Banshee.Sources
             });
         }
 
-        protected virtual void OnTracksRemoved ()
+        protected virtual void OnTracksDeleted ()
         {
             ThreadAssist.SpawnFromMain (delegate {
-                HandleTracksRemoved (this, new TrackEventArgs ());
+                HandleTracksDeleted (this, new TrackEventArgs ());
                 foreach (PrimarySource psource in PrimarySources) {
-                    psource.NotifyTracksRemoved ();
+                    psource.NotifyTracksDeleted ();
                 }
             });
         }
 
-        // If we are a PrimarySource, reload ourself and our children, otherwise if our Parent
+        protected virtual void OnTracksRemoved ()
+        {
+            PruneArtistsAlbums ();
+            Reload ();
+        }
+
+        // If we are a PrimarySource, return ourself and our children, otherwise if our Parent
         // is one, do so for it, otherwise do so for all PrimarySources.
         private IEnumerable<PrimarySource> PrimarySources {
             get {
@@ -349,7 +349,7 @@ namespace Banshee.Sources
 
         protected void AfterInitialized ()
         {
-            track_model.Initialize ();
+            track_model.Initialize (artist_model, album_model);
             Reload ();
             OnSetupComplete ();
         }
@@ -384,6 +384,30 @@ namespace Banshee.Sources
             }
         }
 
+        protected HyenaSqliteCommand prune_command;
+        protected HyenaSqliteCommand PruneCommand {
+            get {
+                return prune_command ?? prune_command = new HyenaSqliteCommand (String.Format (
+                        @"DELETE FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT ArtistID FROM CoreTracks WHERE TrackID IN ({0}));
+                          DELETE FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT AlbumID FROM CoreTracks WHERE TrackID IN ({0}));",
+                        track_model.TrackIdsSql
+                    ),
+                    artist_model.CacheId, artist_model.CacheId, 0, artist_model.Count,
+                    album_model.CacheId, album_model.CacheId, 0, album_model.Count
+                );
+            }
+        }
+
+        protected virtual void PruneArtistsAlbums ()
+        {
+            //Hyena.Log.Information ("Pruning artists/albums");
+            ServiceManager.DbConnection.Execute (PruneCommand);
+            //Hyena.Log.Information ("Clearing artists/albums cache");
+            artist_model.Reload ();
+            album_model.Reload ();
+            //Hyena.Log.Information ("Done clearing artists/albums cache");
+        }
+
         protected virtual void HandleTracksAdded (Source sender, TrackEventArgs args)
         {
         }
@@ -392,7 +416,7 @@ namespace Banshee.Sources
         {
         }
 
-        protected virtual void HandleTracksRemoved (Source sender, TrackEventArgs args)
+        protected virtual void HandleTracksDeleted (Source sender, TrackEventArgs args)
         {
         }
 
