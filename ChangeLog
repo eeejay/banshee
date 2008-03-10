@@ -1,3 +1,11 @@
+2008-03-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Removed all
+	of the excessive [potential] thread spawning; it will be moved to where
+	it is actually necessary (it is not necessary in most cases, is overkill,
+	and can cause unexpected problems); this fixes the regression in the
+	Play Queue
+
 2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fix the

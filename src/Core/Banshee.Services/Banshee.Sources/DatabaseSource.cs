@@ -142,14 +142,12 @@ namespace Banshee.Sources
 
         protected virtual void RateLimitedReload ()
         {
-            ThreadAssist.SpawnFromMain (delegate {
-                lock (track_model) {
-                    ReloadTrackModel ();
-                    artist_model.Reload ();
-                    album_model.Reload ();
-                    OnUpdated ();
-                }
-            });
+            lock (track_model) {
+                ReloadTrackModel ();
+                artist_model.Reload ();
+                album_model.Reload ();
+                OnUpdated ();
+            }
         }
 
         protected virtual void ReloadTrackModel ()
@@ -160,33 +158,33 @@ namespace Banshee.Sources
         protected void ReloadTrackModel (bool notify)
         {
             track_model.Reload (notify);
+            Hyena.Log.DebugFormat ("Called {0}::ReloadTrackModel ({1}) [Count={2}]", GetType ().FullName, 
+                notify, track_model.Count);
         }
 
         protected virtual void RateLimitedFilter ()
         {
-            ThreadAssist.SpawnFromMain (delegate {
-                lock (this) {
-                    // First, reload the track model w/o the artist/album filter
-                    track_model.SuppressReloads = true;
-                    track_model.Filter = FilterQuery;
-                    track_model.ClearArtistAlbumFilters ();
-                    track_model.SuppressReloads = false;
-                    ReloadTrackModel (false);
+            lock (this) {
+                // First, reload the track model w/o the artist/album filter
+                track_model.SuppressReloads = true;
+                track_model.Filter = FilterQuery;
+                track_model.ClearArtistAlbumFilters ();
+                track_model.SuppressReloads = false;
+                ReloadTrackModel (false);
 
-                    // Then, reload the artist/album models
-                    artist_model.Reload ();
-                    album_model.Reload ();
+                // Then, reload the artist/album models
+                artist_model.Reload ();
+                album_model.Reload ();
 
-                    // Then, reload the track model with the artist/album filters
-                    track_model.SuppressReloads = true;
-                    track_model.ArtistInfoFilter = artist_model.SelectedItems;
-                    track_model.AlbumInfoFilter = album_model.SelectedItems;
-                    track_model.SuppressReloads = false;
-                    ReloadTrackModel ();
+                // Then, reload the track model with the artist/album filters
+                track_model.SuppressReloads = true;
+                track_model.ArtistInfoFilter = artist_model.SelectedItems;
+                track_model.AlbumInfoFilter = album_model.SelectedItems;
+                track_model.SuppressReloads = false;
+                ReloadTrackModel ();
 
-                    OnUpdated ();
-                }
-            });
+                OnUpdated ();
+            }
         }
 
         /*protected virtual void ReloadChildren ()
@@ -264,12 +262,10 @@ namespace Banshee.Sources
 
         protected virtual void OnTracksAdded ()
         {
-            ThreadAssist.SpawnFromMain (delegate {
-                HandleTracksAdded (this, new TrackEventArgs ());
-                foreach (PrimarySource psource in PrimarySources) {
-                    psource.NotifyTracksAdded ();
-                }
-            });
+            HandleTracksAdded (this, new TrackEventArgs ());
+            foreach (PrimarySource psource in PrimarySources) {
+                psource.NotifyTracksAdded ();
+            }
         }
 
         protected void OnTracksChanged ()
@@ -279,22 +275,18 @@ namespace Banshee.Sources
 
         protected virtual void OnTracksChanged (QueryField field)
         {
-            ThreadAssist.SpawnFromMain (delegate {
-                HandleTracksChanged (this, new TrackEventArgs (field));
-                foreach (PrimarySource psource in PrimarySources) {
-                    psource.NotifyTracksChanged (field);
-                }
-            });
+            HandleTracksChanged (this, new TrackEventArgs (field));
+            foreach (PrimarySource psource in PrimarySources) {
+                psource.NotifyTracksChanged (field);
+            }
         }
 
         protected virtual void OnTracksDeleted ()
         {
-            ThreadAssist.SpawnFromMain (delegate {
-                HandleTracksDeleted (this, new TrackEventArgs ());
-                foreach (PrimarySource psource in PrimarySources) {
-                    psource.NotifyTracksDeleted ();
-                }
-            });
+            HandleTracksDeleted (this, new TrackEventArgs ());
+            foreach (PrimarySource psource in PrimarySources) {
+                psource.NotifyTracksDeleted ();
+            }
         }
 
         protected virtual void OnTracksRemoved ()
