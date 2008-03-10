@@ -122,7 +122,7 @@ namespace Hyena.Data.Sqlite
                         SELECT OrderID FROM {0}
                             WHERE
                                 ModelID = {1} AND
-                                ItemID = (SELECT {2} FROM {3} WHERE {4} = ?)",
+                                ItemID IN (SELECT {2} FROM {3} WHERE {4} = ?) LIMIT 1",
                         CacheTableName, uid, model.JoinPrimaryKey, model.JoinTable, model.JoinColumn
                     )
                 );
@@ -232,9 +232,6 @@ namespace Hyena.Data.Sqlite
                 if (rows == 0)
                     return -1;
 
-                if (item_id == FirstOrderId)
-                    return 0;
-
                 long target_id = connection.Query<long> (select_single_command, item_id);
                 if (target_id == 0) {
                     return -1;
@@ -276,11 +273,13 @@ namespace Hyena.Data.Sqlite
             }
         }
 
+        private bool saved_selection = false;
         private void SaveSelection ()
         {
-            connection.Execute (delete_selection_command);
-
             if (model.Selection.Count > 0 && !(has_select_all_item && model.Selection.AllSelected)) {
+                connection.Execute (delete_selection_command);
+                saved_selection = true;
+
                 long start, end;
                 foreach (Hyena.Collections.RangeCollection.Range range in model.Selection.Ranges) {
                     start = range.Start;
@@ -294,6 +293,8 @@ namespace Hyena.Data.Sqlite
 
                     connection.Execute (save_selection_command, start, end - start + 1);
                 }
+            } else {
+                saved_selection = false;
             }
         }
 
@@ -309,10 +310,12 @@ namespace Hyena.Data.Sqlite
 
             model.Selection.Clear (false);
 
-            using (IDataReader reader = connection.Query (get_selection_command)) {
-                while (reader.Read ()) {
-                    selected_id = Convert.ToInt64 (reader[0]) - first_id;
-                    model.Selection.QuietSelect ((int)selected_id);
+            if (saved_selection) {
+                using (IDataReader reader = connection.Query (get_selection_command)) {
+                    while (reader.Read ()) {
+                        selected_id = Convert.ToInt64 (reader[0]) - first_id;
+                        model.Selection.QuietSelect ((int)selected_id);
+                    }
                 }
             }
 

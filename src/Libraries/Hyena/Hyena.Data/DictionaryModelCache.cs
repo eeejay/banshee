@@ -56,7 +56,9 @@ namespace Hyena.Data
 
         public override void Clear ()
         {
-            cache.Clear ();
+            lock (this) {
+                cache.Clear ();
+            }
         }
     }
 }
