@@ -149,7 +149,7 @@ namespace Banshee.Sources
                     album_model.Reload ();
                     OnUpdated ();
                 }
-            }
+            });
         }
 
         protected virtual void ReloadTrackModel ()

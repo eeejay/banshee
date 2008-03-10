@@ -1,5 +1,10 @@
 2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fix the
+	build.
+
+2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
 	Now depends on the Artist model, resets the artist filter at each reload,
 	exposes CacheId and ClearCache.
