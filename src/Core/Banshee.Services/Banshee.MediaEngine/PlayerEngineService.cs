@@ -148,12 +148,11 @@ namespace Banshee.MediaEngine
             if (args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
                 active_engine.Volume = (ushort) VolumeSchema.Get ();
                 MetadataService.Instance.Lookup (CurrentTrack);
-            } else if (args.State == PlayerEngineState.Initalized) {
+            } else if (args.State == PlayerEngineState.Ready) {
                 // Enable our preferred equalizer if it exists and was enabled last time.
-                if (this.SupportsEqualizer && EqualizerSetting.EnabledSchema.Get ()) {
+                if (SupportsEqualizer && EqualizerSetting.EnabledSchema.Get ()) {
                     string name = EqualizerSetting.PresetSchema.Get();
-                    
-                    if (name != "") {
+                    if (!String.IsNullOrEmpty (name)) {
                         // Don't use EqualizerManager.Instance - used by the eq dialog window.
                         EqualizerManager manager = new EqualizerManager (EqualizerManager.Instance.Path);
                         manager.Load ();
@@ -263,13 +262,18 @@ namespace Banshee.MediaEngine
         
         private void OpenCheck (object o)
         {
+            if (CurrentState == PlayerEngineState.NotReady) {
+                throw new InvalidOperationException (String.Format ("Player engine {0} is in the NotReady state", 
+                    active_engine.GetType ().FullName));
+            }
+        
             SafeUri uri = null;
             TrackInfo track = null;
         
             if (o is SafeUri) {
-                uri = o as SafeUri;
+                uri = (SafeUri)o;
             } else if (o is TrackInfo) {
-                track = o as TrackInfo;
+                track = (TrackInfo)o;
                 uri = track.Uri;
             } else {
                 return;
@@ -357,7 +361,8 @@ namespace Banshee.MediaEngine
         
         public bool IsPlaying (TrackInfo track)
         {
-            return CurrentState != PlayerEngineState.Idle && track != null && track.AudiblyEqual (CurrentTrack);
+            return CurrentState != PlayerEngineState.Idle && CurrentState != PlayerEngineState.NotReady && 
+                track != null && track.AudiblyEqual (CurrentTrack);
         }
 
         private void CheckPending ()

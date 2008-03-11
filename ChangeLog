@@ -1,3 +1,28 @@
+2008-03-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: 
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	Use the new Ready state instead of Initialized
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs: Do not
+	allow state transitions unless the engine is setting itself to the 
+	ready state; send the idle state automatically once the engine sends
+	the ready state; all engines must transition to ready before anything
+	else
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Handle the NotReady state in much the same way Idle is handled; some
+	generic code cleanup
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineState.cs:
+	Removed Initialized state in favor of Ready, added the NotReady state,
+	which is the default state for all engines; engines must manually
+	transition to the Ready state before any other state changes can occur
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Set the playing track when PlayerEngineEvent.StartOfStream is raised;
+	do not set the playing track manually when querying the model
+
 2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:

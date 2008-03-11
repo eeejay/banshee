@@ -68,7 +68,7 @@ namespace Banshee.Gui
         
         private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
         {            
-            if (args.State == PlayerEngineState.Initalized && !ServiceManager.PlayerEngine.SupportsEqualizer) {
+            if (args.State == PlayerEngineState.Ready && !ServiceManager.PlayerEngine.SupportsEqualizer) {
                 action_service["View.ShowEqualizerAction"].Sensitive = false;
             }
         }

@@ -46,8 +46,9 @@ namespace Banshee.MediaEngine
         
         private TrackInfo current_track;
         private SafeUri current_uri;
-        private PlayerEngineState current_state = PlayerEngineState.Idle;
-        private PlayerEngineState last_state = PlayerEngineState.Idle;
+        private PlayerEngineState current_state = PlayerEngineState.NotReady;
+        private PlayerEngineState last_state = PlayerEngineState.NotReady;
+        private PlayerEngineState idle_state = PlayerEngineState.NotReady;
         
         protected abstract void OpenUri (SafeUri uri);
         
@@ -55,12 +56,12 @@ namespace Banshee.MediaEngine
         {
             current_track = null;
             current_uri = null;
-            OnStateChanged (PlayerEngineState.Idle);
+            OnStateChanged (idle_state);
         }
         
         public virtual void Close ()
         {
-            OnStateChanged (PlayerEngineState.Idle);
+            OnStateChanged (idle_state);
         }
         
         public virtual void Dispose ()
@@ -86,7 +87,7 @@ namespace Banshee.MediaEngine
 
         private void HandleOpen (SafeUri uri)
         {
-            if (current_state != PlayerEngineState.Idle) {
+            if (current_state != PlayerEngineState.Idle && current_state != PlayerEngineState.NotReady) {
                 Close ();
             }
         
@@ -120,6 +121,13 @@ namespace Banshee.MediaEngine
             if (current_state == state) {
                 return;
             }
+            
+            if (idle_state == PlayerEngineState.NotReady && state != PlayerEngineState.Ready) {
+                Hyena.Log.Warning ("Engine must transition to the ready state before other states can be entered", false);
+                return;
+            } else if (idle_state == PlayerEngineState.NotReady && state == PlayerEngineState.Ready) {
+                idle_state = PlayerEngineState.Idle;
+            }
         
             if (ThreadAssist.InMainThread) {
                 RaiseStateChanged (state);
@@ -127,6 +135,14 @@ namespace Banshee.MediaEngine
                 ThreadAssist.ProxyToMain (delegate {
                     RaiseStateChanged (state);
                 });
+            }
+            
+            // Going to the Ready state automatically transitions to the Idle state
+            // The Ready state is advertised so one-time startup processes can easily
+            // happen outside of the engine itself
+            
+            if (state == PlayerEngineState.Ready) {
+                OnStateChanged (PlayerEngineState.Idle);
             }
         }
         

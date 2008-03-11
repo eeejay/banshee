@@ -110,7 +110,7 @@ namespace Banshee.GStreamer
             gst_playback_set_buffering_callback (handle, buffering_callback);
             gst_playback_set_tag_found_callback (handle, tag_found_callback);
             
-            OnStateChanged (PlayerEngineState.Initalized);
+            OnStateChanged (PlayerEngineState.Ready);
             
             if (pending_volume >= 0) {
                 Volume = (ushort)pending_volume;

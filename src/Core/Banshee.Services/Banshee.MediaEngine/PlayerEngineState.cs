@@ -40,11 +40,12 @@ namespace Banshee.MediaEngine
     
     public enum PlayerEngineState 
     {
+        NotReady,
+        Ready,
         Idle,
         Contacting,
         Loaded,
         Playing,
-        Paused,
-        Initalized
+        Paused
     }
 }

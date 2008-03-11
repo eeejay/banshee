@@ -147,7 +147,9 @@ namespace Banshee.PlayQueue
         private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
         { 
             if (args.Event == PlayerEngineEvent.EndOfStream) {
-                RemoveFirstTrack ();
+                RemovePlayingTrack ();
+            } else if (args.Event == PlayerEngineEvent.StartOfStream) {
+                playing_track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo; 
             }
         }
         
@@ -194,7 +196,7 @@ namespace Banshee.PlayQueue
         
         void IBasicPlaybackController.Next ()
         {
-            RemoveFirstTrack ();
+            RemovePlayingTrack ();
             
             if (Count <= 0) {
                 playing_track = null;
@@ -203,15 +205,14 @@ namespace Banshee.PlayQueue
                 return;
             }
             
-            playing_track = (DatabaseTrackInfo)TrackModel[0];
-            ServiceManager.PlayerEngine.OpenPlay (playing_track);
+            ServiceManager.PlayerEngine.OpenPlay ((DatabaseTrackInfo)TrackModel[0]);
         }
         
         void IBasicPlaybackController.Previous ()
         {
         }
         
-        private void RemoveFirstTrack ()
+        private void RemovePlayingTrack ()
         {
             if (playing_track != null) {
                 RemoveTrack (playing_track);
