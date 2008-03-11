@@ -1,5 +1,13 @@
 2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs: Fix
+	scrolling to jump to the first selected item only if a selected item is
+	not already in view.  If the model count < the visible rows, scroll to the
+	top.
+
+2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs:

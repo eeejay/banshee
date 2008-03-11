@@ -466,7 +466,7 @@ namespace Hyena.Data.Gui
         
         public void ScrollTo (double val)
         {
-            vadjustment.Value = Math.Min (val, vadjustment.Upper - vadjustment.PageSize);
+            vadjustment.Value = Math.Max (0.0, Math.Min (val, vadjustment.Upper - vadjustment.PageSize));
         }
 
         public void ScrollToRow (int row_index)

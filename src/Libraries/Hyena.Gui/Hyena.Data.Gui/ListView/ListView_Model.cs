@@ -74,8 +74,21 @@ namespace Hyena.Data.Gui
             if (vpos != null) {
                 ScrollTo ((double) vpos);
             } else {
-                if (Selection.Count > 0) {
-                    ScrollToRow (Selection.Ranges[0].Start + 1 - RowsInView/2);
+                if (Model.Count <= RowsInView) {
+                    ScrollTo (0.0);
+                } else if (Selection.Count > 0) {
+                    bool selection_in_view = false;
+                    int first_row = GetRowAtY (0);
+                    for (int i = 0; i < RowsInView; i++) {
+                        if (Selection.Contains (first_row + i)) {
+                            selection_in_view = true;
+                            break;
+                        }
+                    }
+
+                    if (!selection_in_view) {
+                        ScrollToRow (Selection.Ranges[0].Start + 1 - RowsInView/2);
+                    }
                 } else {
                     ScrollTo (vadjustment.Value);
                 }
