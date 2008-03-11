@@ -98,7 +98,7 @@ namespace Banshee.Gui
                 new ActionEntry ("AddToPlaylistAction", null,
                     Catalog.GetString ("Add _to Playlist"), null,
                     Catalog.GetString ("Append selected songs to playlist or create new playlist from selection"),
-                    OnAddToPlaylist),
+                    OnAddToPlaylistMenu),
 
                 new ActionEntry ("AddToNewPlaylistAction", Stock.New,
                     Catalog.GetString ("New Playlist"), null,
@@ -281,7 +281,7 @@ namespace Banshee.Gui
 
         // Called when the Add to Playlist action is highlighted.
         // Generates the menu of playlists to which you can add the selected tracks.
-        private void OnAddToPlaylist (object o, EventArgs args)
+        private void OnAddToPlaylistMenu (object o, EventArgs args)
         {
             Gdk.Pixbuf pl_pb = Gdk.Pixbuf.LoadFromResource ("source-playlist-16.png");
             Source active_source = ServiceManager.SourceManager.ActiveSource;
@@ -320,12 +320,16 @@ namespace Banshee.Gui
             PlaylistSource playlist = new PlaylistSource ("New Playlist");
             playlist.Save ();
             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
-            playlist.AddSelectedTracks (TrackSelector.TrackModel);
+            ThreadAssist.SpawnFromMain (delegate {
+                playlist.AddSelectedTracks (TrackSelector.TrackModel);
+            });
         }
 
         private void OnAddToExistingPlaylist (object o, EventArgs args)
         {
-            ((PlaylistMenuItem)o).Playlist.AddSelectedTracks (TrackSelector.TrackModel);
+            ThreadAssist.SpawnFromMain (delegate {
+                ((PlaylistMenuItem)o).Playlist.AddSelectedTracks (TrackSelector.TrackModel);
+            });
         }
 
         private void OnRemoveTracks (object o, EventArgs args)
@@ -336,7 +340,9 @@ namespace Banshee.Gui
                 return;
 
             if (source != null && source.CanRemoveTracks) {
-                source.RemoveSelectedTracks ();
+                ThreadAssist.SpawnFromMain (delegate {
+                    source.RemoveSelectedTracks ();
+                });
             }
         }
 
@@ -347,9 +353,13 @@ namespace Banshee.Gui
             if (source != null) {
                 LibrarySource library = source.Parent as LibrarySource;
                 if (library != null) {
-                    if (!ConfirmRemove (library, false, source.TrackModel.Selection.Count))
+                    if (!ConfirmRemove (library, false, source.TrackModel.Selection.Count)) {
                         return;
-                    library.RemoveSelectedTracks (source.TrackModel as TrackListDatabaseModel);
+                    }
+
+                    ThreadAssist.SpawnFromMain (delegate {
+                        library.RemoveSelectedTracks (source.TrackModel as TrackListDatabaseModel);
+                    });
                 }
             }
         }
@@ -376,7 +386,9 @@ namespace Banshee.Gui
                 }
             }
 
-            (ActiveSource as DatabaseSource).RateSelectedTracks (rating_proxy.LastRating);
+            ThreadAssist.SpawnFromMain (delegate {
+                (ActiveSource as DatabaseSource).RateSelectedTracks (rating_proxy.LastRating);
+            });
         }
 
         private void OnSearchForSameArtist (object o, EventArgs args)

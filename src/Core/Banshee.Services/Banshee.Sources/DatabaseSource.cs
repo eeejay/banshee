@@ -94,7 +94,9 @@ namespace Banshee.Sources
             set {
                 base.FilterQuery = value;
                 track_model.Filter = FilterQuery;
-                reload_limiter.Execute ();
+                ThreadAssist.SpawnFromMain (delegate {
+                    Reload ();
+                });
             }
         }
 
@@ -139,7 +141,7 @@ namespace Banshee.Sources
             reload_limiter.Execute ();
         }
 
-        protected virtual void RateLimitedReload ()
+        protected void RateLimitedReload ()
         {
             lock (track_model) {
                 // First, reload the track model w/o the artist/album filter
@@ -317,8 +319,11 @@ namespace Banshee.Sources
         protected void AfterInitialized ()
         {
             track_model.Initialize (artist_model, album_model);
-            Reload ();
-            OnSetupComplete ();
+
+            ThreadAssist.SpawnFromMain (delegate {
+                Reload ();
+                OnSetupComplete ();
+            });
         }
 
         protected virtual void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)

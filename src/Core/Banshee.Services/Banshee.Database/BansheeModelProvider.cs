@@ -36,7 +36,7 @@ using Banshee.Configuration;
 
 namespace Banshee.Database
 {
-    public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : new ()
+    public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : ICacheableItem, new ()
     {
         private string table_name;
 

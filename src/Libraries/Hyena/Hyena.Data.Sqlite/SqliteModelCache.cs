@@ -32,7 +32,7 @@ using System.Data;
 
 namespace Hyena.Data.Sqlite
 {
-    public class SqliteModelCache<T> : DictionaryModelCache<T>
+    public class SqliteModelCache<T> : DictionaryModelCache<T> where T : ICacheableItem
     {
         private HyenaSqliteConnection connection;
         private ICacheableDatabaseModel model;
@@ -100,10 +100,10 @@ namespace Hyena.Data.Sqlite
             if (model.CachesJoinTableEntries) {
                 select_range_command = new HyenaSqliteCommand (
                     String.Format (@"
-                        SELECT {0} FROM {1}
+                        SELECT {0}, cache.ItemID  FROM {1}
                             INNER JOIN {2}
                                 ON {3} = {2}.{4}
-                            INNER JOIN {5}
+                            INNER JOIN {5} cache
                                 ON {2}.{6} = {5}.ItemID
                             WHERE
                                 {5}.ModelID = {7} {8}
@@ -135,11 +135,11 @@ namespace Hyena.Data.Sqlite
             } else {
                 select_range_command = new HyenaSqliteCommand (
                     String.Format (@"
-                        SELECT {0} FROM {1}
-                            INNER JOIN {2}
-                                ON {3} = {2}.ItemID
+                        SELECT {0}, cache.ItemID FROM {1}
+                            INNER JOIN {2} cache
+                                ON {3} = cache.ItemID
                             WHERE
-                                {2}.ModelID = {4} {5}
+                                cache.ModelID = {4} {5}
                                 {6}
                             LIMIT ?, ?",
                         provider.Select, provider.From, CacheTableName,

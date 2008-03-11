@@ -34,7 +34,7 @@ using System.Text;
 
 namespace Hyena.Data.Sqlite
 {
-    public abstract class SqliteModelProvider<T>
+    public abstract class SqliteModelProvider<T> where T : ICacheableItem
     {
         private readonly List<DatabaseColumn> columns = new List<DatabaseColumn> ();
         private readonly List<VirtualDatabaseColumn> virtual_columns = new List<VirtualDatabaseColumn> ();
@@ -297,6 +297,10 @@ namespace Hyena.Data.Sqlite
                 foreach (VirtualDatabaseColumn column in virtual_columns) {
                     bad_column = column;
                     column.SetValue (target, reader, i++);
+                }
+
+                if (i < reader.FieldCount) {
+                    target.CacheId = Convert.ToInt64 (reader[i]);
                 }
             } catch (Exception e) {
                 Log.Debug (

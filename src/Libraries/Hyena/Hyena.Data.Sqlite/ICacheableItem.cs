@@ -1,11 +1,10 @@
-
 //
-// BansheeDatabaseModelCache.cs
+// ICacheableItem.cs
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,29 +26,12 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Data;
+using Hyena.Data;
 
-using Hyena.Data.Sqlite;
-
-namespace Banshee.Database
+namespace Hyena.Data.Sqlite
 {
-    public class BansheeModelCache <T> : SqliteModelCache <T> where T : ICacheableItem, new ()
+    public interface ICacheableItem
     {
-        public BansheeModelCache (HyenaSqliteConnection connection,
-                                  string uuid,
-                                  ICacheableDatabaseModel model,
-                                  BansheeModelProvider <T> provider)
-            : base (connection, uuid, model, provider)
-        {
-        }
-        
-        protected override string CacheModelsTableName {
-            get { return "CoreCacheModels"; }
-        }
-        
-        protected override string CacheTableName {
-            get { return "CoreCache"; }
-        }
+        long CacheId { get; set; }
     }
 }

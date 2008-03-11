@@ -49,7 +49,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
-    public class DatabaseTrackInfo : TrackInfo
+    public class DatabaseTrackInfo : TrackInfo, ICacheableItem
     {
         private static BansheeModelProvider<DatabaseTrackInfo> provider = new BansheeModelProvider<DatabaseTrackInfo> (
             ServiceManager.DbConnection, "CoreTracks"
@@ -112,6 +112,12 @@ namespace Banshee.Collection.Database
         private int track_id;
         public int TrackId {
             get { return track_id; }
+        }
+
+        private long cache_id;
+        public long CacheId {
+            get { return cache_id; }
+            set { cache_id = value; }
         }
 
         [DatabaseColumn ("SourceID", Index = "CoreTracksSourceIndex")]

@@ -38,7 +38,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
-    public class LibraryArtistInfo : ArtistInfo
+    public class LibraryArtistInfo : ArtistInfo, ICacheableItem
     {
         private static BansheeModelProvider<LibraryArtistInfo> provider = new BansheeModelProvider<LibraryArtistInfo> (
             ServiceManager.DbConnection, "CoreArtists"
@@ -100,6 +100,12 @@ namespace Banshee.Collection.Database
         private int dbid;
         public int DbId {
             get { return dbid; }
+        }
+
+        private long cache_id;
+        public long CacheId {
+            get { return cache_id; }
+            set { cache_id = value; }
         }
 
         [DatabaseColumn]

@@ -559,9 +559,9 @@ namespace Banshee.Database
                     job.Progress = (double)++count / (double)total;
                 }
             }
-            ServiceManager.SourceManager.Library.NotifyTracksChanged ();
 
             job.Finish ();
+            ServiceManager.SourceManager.Library.NotifyTracksChanged ();
         }
         
 #endregion

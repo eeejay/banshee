@@ -1,3 +1,27 @@
+2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	Add CacheId property that can be used to uniqued ID an item within a list.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Notify the Library about the metadata-refreshed tracks after closing the
+	user job so it doesn't look like it's hung.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: SpawnFromMain
+	a few methods.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelCache.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	* src/Libraries/Hyena/Makefile.am:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/ICacheableItem.cs: New interface
+	containing CacheId property that *ModelCache and *ModelProvider classes
+	require.
+
 2008-03-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Change 
