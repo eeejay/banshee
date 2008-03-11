@@ -53,6 +53,11 @@ namespace Hyena.Data.Gui
             
             model = value;
 
+            ISortable sortable = model as ISortable;
+            if (sortable != null && sortable.SortColumn == null && ColumnController.DefaultSortColumn != null) {
+                sortable.Sort (ColumnController.DefaultSortColumn);
+            }
+
             if (model != null) {
                 model.Cleared += OnModelClearedHandler;
                 model.Reloaded += OnModelReloadedHandler;

@@ -73,6 +73,8 @@ namespace Banshee.Collection.Gui
             column_controller.Load ();
             
             ColumnController = DefaultColumnController;
+            ColumnController.DefaultSortColumn = ColumnController[3] as SortableColumn;
+
             RulesHint = true;
             RowSensitivePropertyName = "CanPlay";
             

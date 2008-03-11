@@ -1,5 +1,13 @@
 2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	Default the sort of the TrackList to sort by Artist.
+
+2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:

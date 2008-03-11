@@ -96,6 +96,8 @@ namespace Banshee.Collection.Database
             initialized = true;
             cache = new BansheeModelCache <DatabaseTrackInfo> (connection, uuid, this, provider);
             cache.AggregatesUpdated += HandleCacheAggregatesUpdated;
+
+            GenerateSortQueryPart ();
         }
         
         private bool have_new_filter = true;
@@ -120,9 +122,9 @@ namespace Banshee.Collection.Database
 
         private void GenerateSortQueryPart ()
         {
-            sort_query = (sort_column == null) ?
-                null :
-                BansheeQuery.GetSort (sort_column.SortKey, sort_column.SortType == SortType.Ascending);
+            sort_query = (sort_column == null)
+                ? BansheeQuery.GetSort ("Artist", true)
+                : BansheeQuery.GetSort (sort_column.SortKey, sort_column.SortType == SortType.Ascending);
         }
 
         public void Refilter ()

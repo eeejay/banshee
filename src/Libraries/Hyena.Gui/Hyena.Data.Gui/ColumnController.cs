@@ -35,6 +35,7 @@ namespace Hyena.Data.Gui
     public class ColumnController : IEnumerable<Column>
     {
         private List<Column> columns = new List<Column> ();
+        private ISortableColumn default_sort_column;
         
         protected List<Column> Columns {
             get { return columns; }
@@ -155,6 +156,11 @@ namespace Hyena.Data.Gui
         
         public Column this[int index] {
             get { return columns[index]; }
+        }
+
+        public ISortableColumn DefaultSortColumn {
+            get { return default_sort_column; }
+            set { default_sort_column = value; }
         }
         
         public int Count {
