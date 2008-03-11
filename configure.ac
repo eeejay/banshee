@@ -51,8 +51,8 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 	ICSharpCode.SharpZipLib
 ])
 
-HAVE_MONO_1_2_6=$HAVE_MONO_MODULE
-AC_SUBST(HAVE_MONO_1_2_6)
+HAVE_MONO_1_2_4=$HAVE_MONO_MODULE
+AC_SUBST(HAVE_MONO_1_2_4)
 
 dnl NDesk DBus libraries
 BANSHEE_CHECK_NDESK_DBUS
@@ -168,7 +168,8 @@ ${PACKAGE}-${VERSION}
     C Compiler:        ${CC}
     Mono C# Compiler:  ${MCS}
     Mono Runtime:      ${MONO}
-    Mono >= 1.2.6:     ${HAVE_MONO_1_2_6}
+    Mono >= 1.2.4:     ${HAVE_MONO_1_2_4}
+    Gtk# >= 2.10:      ${HAVE_GTK_2_10}
 "
 #    Digital Audio Players (DAP):
 #      iPod:            ${enable_ipodsharp}

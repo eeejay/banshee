@@ -1,5 +1,24 @@
 2008-03-11  Aaron Bockover  <abock@gnome.org>
 
+	* build/build.rules.mk:
+	* build/m4/banshee/gtk-sharp.m4:
+	* configure.ac: Check for Gtk# 2.10 or better and define HAVE_GTK_2_10
+	on all the assemblies; this will allow the build to succeed on Gtk# 2.8
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/GtkNotificationAreaBox.cs:
+	Do not build if we don't HAVE_GTK_2_10, since GtkStatusIcon was introduced
+	in that version; we only use GtkStatusIcon as a fallback if we are not
+	running on X11/Unix anyway (i.e. it's mainly used for Windows)
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Do not try to instantiate GtkNotificationAreaBox if we don't HAVE_GTK_2_10;
+	and since now we are not guaranteed to have some sort of 
+	INotificationAreaBox, properly dispose the notification area service
+	if we never get a reference to one (i.e. running on not X11/Unix and
+	not Gtk# 2.10+)
+
+2008-03-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Remove a bad line where
 	I set the colormap of the window to be RGBA for no reason; I was playing
 	around one night and committed this awful thing; SORRY

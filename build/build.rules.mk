@@ -33,7 +33,7 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED)
 	test "x$$colors" = "xyes" && \
 		echo -e "\033[1mCompiling $(notdir $@)...\033[0m" || \
 		echo "Compiling $(notdir $@)...";
-	@test "x$(HAVE_MONO_1_2_6)" = "xyes" && warn="-warnaserror"; $(BUILD) -target:$(TARGET) -out:$@ $$warn $(LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
+	@test "x$(HAVE_MONO_1_2_4)" = "xyes" && warn="-warnaserror"; test "x$(HAVE_GTK_2_10)" = "xyes" && gtk_210="-define:HAVE_GTK_2_10"; $(BUILD) -target:$(TARGET) -out:$@ $$warn $$gtk_210 $(LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
 	@if [ -e $(notdir $@.config) ]; then \
 		cp $(notdir $@.config) $(top_builddir)/bin; \
 	fi;

@@ -52,9 +52,10 @@ namespace Banshee.NotificationArea
         private GtkElementsService elements_service;
         private InterfaceActionService interface_action_service;
         private ArtworkManager artwork_manager_service;
-    
+        private bool disposed;
+        
         private Menu menu;
-		private RatingMenuItem rating_menu_item;
+        private RatingMenuItem rating_menu_item;
         private BansheeActionGroup actions;
         private uint ui_manager_id;
         
@@ -98,7 +99,11 @@ namespace Banshee.NotificationArea
             Initialize ();
             
             ServiceManager.ServiceStarted -= OnServiceStarted;
-            BuildNotificationArea ();
+            if (!BuildNotificationArea ()) {
+                Hyena.Log.Warning ("No available notification area drivers could be found.", false);
+                Dispose ();
+                return false;
+            }
             
             return true;
         }
@@ -142,6 +147,10 @@ namespace Banshee.NotificationArea
         
         public void Dispose ()
         {
+            if (disposed) {
+                return;
+            }
+            
             if (current_nf != null) {
                 current_nf.Close ();
             }
@@ -160,9 +169,11 @@ namespace Banshee.NotificationArea
             
             elements_service = null;
             interface_action_service = null;
+            
+            disposed = true;
         }
         
-        private void BuildNotificationArea () 
+        private bool BuildNotificationArea () 
         {
             if (Environment.OSVersion.Platform == PlatformID.Unix) {
                 try {
@@ -172,7 +183,13 @@ namespace Banshee.NotificationArea
             }
             
             if (notif_area == null) {
+                #if HAVE_GTK_2_10
                 notif_area = new GtkNotificationAreaBox (elements_service.PrimaryWindow);
+                #endif
+            }
+            
+            if (notif_area == null) {
+                return false;
             }
             
             notif_area.Disconnected += OnNotificationAreaDisconnected;
@@ -182,6 +199,8 @@ namespace Banshee.NotificationArea
             if (!QuitOnCloseSchema.Get ()) {
                 RegisterCloseHandler ();
             }
+            
+            return true;
         }
         
         private void RegisterCloseHandler ()
