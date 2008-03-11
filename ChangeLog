@@ -1,5 +1,14 @@
 2008-03-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:
+	* src/Extensions/Banshee.Lastfm/Makefile.am: New tag, recommended,
+	neighbour, and personal icons.
+
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs: Do not update
+	the account information until the Close button is pressed.
+
+2008-03-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
 	Removed Equals and GetHashCode override that ignored type differences, and
 	caused the playqueue to disappear if you had a smartplaylist of the same

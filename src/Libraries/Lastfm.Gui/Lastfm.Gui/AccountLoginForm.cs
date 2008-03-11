@@ -80,9 +80,6 @@ namespace Lastfm.Gui
                 
             username_entry.Text = account.UserName;
             password_entry.Text = account.Password;
-
-            username_entry.Changed += OnEntryChanged;
-            password_entry.Changed += OnEntryChanged;
         }
         
         protected override void OnDestroyed ()
@@ -107,21 +104,6 @@ namespace Lastfm.Gui
             Attach (signup_button, 1, 2, 2, 3, AttachOptions.Shrink, AttachOptions.Shrink, 0, 0);
         }
         
-        private uint update_login_timeout = 0;
-        
-        private void OnEntryChanged (object o, EventArgs args)
-        {
-            if (!save_on_edit || update_login_timeout > 0) {
-                return;
-            }
-
-            update_login_timeout = GLib.Timeout.Add (1000, delegate {
-                UpdateLogin ();
-                update_login_timeout = 0;
-                return false;
-            });
-        }
-
         private void UpdateLogin ()
         {
             if (account.UserName != username_entry.Text.Trim () ||

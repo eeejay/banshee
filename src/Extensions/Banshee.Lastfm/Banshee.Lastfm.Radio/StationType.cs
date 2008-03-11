@@ -92,7 +92,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Personal"),
             Catalog.GetString ("For User:"),
             "user/{0}/personal",
-            "system-users",
+            "personal",
             true
         );
 
@@ -110,7 +110,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Neighbors"),
             Catalog.GetString ("Of User:"),
             "user/{0}/neighbours",
-            "system-users",
+            "neighbour",
             false
         );
 
@@ -128,7 +128,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Tag"),
             Catalog.GetString ("Tag Name:"),
             "globaltags/{0}",
-            null,
+            "tag",
             false
         );
 
