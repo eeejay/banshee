@@ -32,6 +32,6 @@ namespace Hyena.Data.Sqlite
 {
     public interface ICacheableItem
     {
-        long CacheId { get; set; }
+        long SourceEntryId { get; set; }
     }
 }

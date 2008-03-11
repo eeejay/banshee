@@ -329,9 +329,12 @@ namespace Hyena.Data.Sqlite
             lock (this) {
             //using (new Timer (String.Format ("Fetching set for {0}", model))) {
                 using (IDataReader reader = connection.Query (select_range_command, offset, limit)) {
+                    T item;
                     while (reader.Read ()) {
                         if (!ContainsKey (offset)) {
-                            Add (offset, provider.Load (reader, (int)offset));
+                            item = provider.Load (reader, (int) offset);
+                            item.SourceEntryId = Convert.ToInt64 (reader[reader.FieldCount - 1]);
+                            Add (offset, item);
                         }
                         offset++;
                      }

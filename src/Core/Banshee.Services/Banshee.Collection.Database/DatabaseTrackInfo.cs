@@ -114,10 +114,10 @@ namespace Banshee.Collection.Database
             get { return track_id; }
         }
 
-        private long cache_id;
-        public long CacheId {
-            get { return cache_id; }
-            set { cache_id = value; }
+        private long entry_id;
+        public long SourceEntryId {
+            get { return entry_id; }
+            set { entry_id = value; }
         }
 
         [DatabaseColumn ("SourceID", Index = "CoreTracksSourceIndex")]

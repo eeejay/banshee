@@ -210,9 +210,6 @@ namespace Banshee.Collection.Database
 
         public void Reload (bool unfiltered, bool notify)
         {
-            if (suppress_reload)
-                return;
-
             Refilter ();
 
             UpdateUnfilteredAggregates ();
@@ -464,12 +461,6 @@ namespace Banshee.Collection.Database
         public bool CachesJoinTableEntries {
             get { return caches_join_table_entries; }
             set { caches_join_table_entries = value; }
-        }
-
-        private bool suppress_reload = false;
-        public bool SuppressReloads {
-            get { return suppress_reload; }
-            set { suppress_reload = value; }
         }
 
         // Implement ICacheableModel

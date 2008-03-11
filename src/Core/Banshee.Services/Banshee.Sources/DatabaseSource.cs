@@ -170,8 +170,8 @@ namespace Banshee.Sources
         protected virtual void ReloadTrackModel (bool unfiltered, bool notify)
         {
             track_model.Reload (unfiltered, notify);
-            Hyena.Log.DebugFormat ("Called {0}::ReloadTrackModel ({1}) [Count={2}]", GetType ().FullName, 
-                notify, track_model.Count);
+            //Hyena.Log.DebugFormat ("Called {0}::ReloadTrackModel ({1}) [Count={2}]", GetType ().FullName, 
+            //    notify, track_model.Count);
         }
 
         public virtual bool HasDependencies {

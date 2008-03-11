@@ -1,5 +1,23 @@
 2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/ICacheableItem.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Rename
+	CacheId to SourceEntryId, only require T : ICacheableItem in *ModelCache
+	classes, and set the SourceEntryId in SqliteModelCache.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Remove cruft.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Comment out
+	logging.
+
+2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Fix bug with
 	inconsistent table name in SQL.
 
