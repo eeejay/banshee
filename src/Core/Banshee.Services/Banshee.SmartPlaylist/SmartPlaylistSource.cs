@@ -247,7 +247,7 @@ namespace Banshee.SmartPlaylist
         
         private void OnDependencyUpdated (object sender, EventArgs args)
         {
-            RateLimitedReload ();
+            Reload ();
         }
         
 #endregion
@@ -291,24 +291,24 @@ namespace Banshee.SmartPlaylist
 
 #region DatabaseSource overrides
 
-        protected override void ReloadTrackModel ()
+        protected override void ReloadTrackModel (bool unfiltered, bool notify)
         {
-            // Wipe the member list clean
-            ServiceManager.DbConnection.Execute (String.Format (
-                "DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {0}", DbId
-            ));
+            // The first time ReloadTrackModel is called, it is called with unfiltered = true,
+            // so only repopulate the smart playlist entries then.
+            if (unfiltered) {
+                // Wipe the member list clean and repopulate it 
+                ServiceManager.DbConnection.Execute (String.Format (
+                    @"DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {0};
+                      INSERT INTO CoreSmartPlaylistEntries 
+                        SELECT NULL, {0} as SmartPlaylistID, TrackId
+                            FROM CoreTracks, CoreArtists, CoreAlbums
+                            WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID
+                            {1} {2}",
+                    DbId, PrependCondition("AND"), OrderAndLimit
+                ));
+            }
 
-            // Repopulate it 
-            ServiceManager.DbConnection.Execute (String.Format (
-                @"INSERT INTO CoreSmartPlaylistEntries 
-                    SELECT NULL, {0} as SmartPlaylistID, TrackId
-                        FROM CoreTracks, CoreArtists, CoreAlbums
-                        WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID
-                        {1} {2}",
-                DbId, PrependCondition("AND"), OrderAndLimit
-            ));
-
-            base.ReloadTrackModel ();
+            base.ReloadTrackModel (unfiltered, notify);
         }
 
 #endregion

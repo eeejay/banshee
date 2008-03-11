@@ -160,12 +160,12 @@ namespace Banshee.Sources
             }
         }
 
-        protected virtual void ReloadTrackModel ()
+        protected void ReloadTrackModel ()
         {
             ReloadTrackModel (false, true);
         }
 
-        protected void ReloadTrackModel (bool unfiltered, bool notify)
+        protected virtual void ReloadTrackModel (bool unfiltered, bool notify)
         {
             track_model.Reload (unfiltered, notify);
             Hyena.Log.DebugFormat ("Called {0}::ReloadTrackModel ({1}) [Count={2}]", GetType ().FullName, 

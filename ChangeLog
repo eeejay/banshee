@@ -1,3 +1,9 @@
+2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: 
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Fix smart playlists to work with new ReloadTrack override.
+
 2008-03-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: 
@@ -22,6 +28,11 @@
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
 	Set the playing track when PlayerEngineEvent.StartOfStream is raised;
 	do not set the playing track manually when querying the model
+
+2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
 
 2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
