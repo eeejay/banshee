@@ -128,8 +128,6 @@ namespace Nereid
             BuildViews ();
             BuildFooter ();
             
-            this.Colormap = Gdk.Screen.Default.RgbaColormap;
-
             primary_vbox.Show ();
             Add (primary_vbox);
         }

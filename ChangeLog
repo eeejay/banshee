@@ -1,5 +1,11 @@
 2008-03-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Remove a bad line where
+	I set the colormap of the window to be RGBA for no reason; I was playing
+	around one night and committed this awful thing; SORRY
+
+2008-03-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena.Gui/Hyena.Gui/PangoCairoHelper.cs: Wrap the 
 	Pango Cairo calls we care about so we'll build and run on GTK 2.8 again,
 	which is quite important (yay SLED)
