@@ -1,3 +1,17 @@
+2008-03-11  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/PangoCairoHelper.cs: Wrap the 
+	Pango Cairo calls we care about so we'll build and run on GTK 2.8 again,
+	which is quite important (yay SLED)
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Use the new
+	Hyena.Gui.PangoCairoHelper API
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/CairoHelper.cs: Nuked
+
 2008-03-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:

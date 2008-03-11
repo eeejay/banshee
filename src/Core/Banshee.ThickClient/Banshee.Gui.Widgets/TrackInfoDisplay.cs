@@ -357,7 +357,7 @@ namespace Banshee.Gui.Widgets
             int fl_width, fl_height, sl_width, sl_height;
 
             // Set up the text layouts
-            Pango.Layout first_line_layout = Pango.CairoHelper.CreateLayout (cr);
+            Pango.Layout first_line_layout = PangoCairoHelper.CreateLayout (cr);
             first_line_layout.Width = (int)(width * Pango.Scale.PangoScale);
             first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
             first_line_layout.FontDescription = PangoContext.FontDescription.Copy ();
@@ -377,7 +377,7 @@ namespace Banshee.Gui.Widgets
             
             if (renderTrack) {
                 cr.MoveTo (x, y);
-                Pango.CairoHelper.LayoutPath (cr, first_line_layout);
+                PangoCairoHelper.LayoutPath (cr, first_line_layout);
                 cr.Color = text_color;
                 cr.Fill ();
             }
@@ -387,7 +387,7 @@ namespace Banshee.Gui.Widgets
             }
             
             cr.MoveTo (x, y + fl_height);
-            Pango.CairoHelper.ShowLayout (cr, second_line_layout);
+            PangoCairoHelper.ShowLayout (cr, second_line_layout);
         }
         
         public new void QueueDraw ()

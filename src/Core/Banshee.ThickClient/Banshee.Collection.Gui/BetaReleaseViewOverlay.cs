@@ -195,7 +195,7 @@ namespace Banshee.Collection.Gui
             theme.DrawFrame (cr, rect, true);
             cr.MoveTo (layout_x, layout_y);
             cr.Color = theme.Colors.GetWidgetColor (GtkColorClass.Text, StateType.Normal);
-            Pango.CairoHelper.ShowLayout (cr, layout);
+            PangoCairoHelper.ShowLayout (cr, layout);
 
             int x = rect.X + padding;
             int y = rect.Y + padding;

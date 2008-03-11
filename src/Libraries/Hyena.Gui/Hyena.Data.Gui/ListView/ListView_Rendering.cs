@@ -81,14 +81,14 @@ namespace Hyena.Data.Gui
                 
         private void PaintRegion (Gdk.EventExpose evnt, Gdk.Rectangle clip)
         {
-            Cairo.Context cr = CairoHelper.CreateCairoDrawable (evnt.Window);
+            Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
             cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cr.Clip ();
 
             if (evnt.Window == header_window) {
                 header_cr = cr;
                 if (header_pango_layout == null) {
-                    header_pango_layout = Pango.CairoHelper.CreateLayout (header_cr);
+                    header_pango_layout = PangoCairoHelper.CreateLayout (header_cr);
                 }
                 PaintHeader (evnt.Area);
             } else if (evnt.Window == footer_window) {
@@ -103,7 +103,7 @@ namespace Hyena.Data.Gui
             } else if (evnt.Window == list_window) {
                 list_cr = cr;
                 if (list_pango_layout == null) {
-                    list_pango_layout = Pango.CairoHelper.CreateLayout (list_cr);
+                    list_pango_layout = PangoCairoHelper.CreateLayout (list_cr);
                 }
                 PaintList (evnt, clip);
             }

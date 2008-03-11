@@ -17,7 +17,6 @@
     <File name="Hyena.Gui/CleanRoomStartup.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui.Dialogs/ExceptionDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui.Dialogs/VersionInformationDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena.Data.Gui/CairoHelper.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui/CairoExtensions.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ObjectListView.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui/EntryEraseAction.cs" subtype="Code" buildaction="Compile" />
@@ -54,6 +53,7 @@
     <File name="Hyena.Gui.Theming/ThemeContext.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui.Theming/GtkTheme.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui/PangoCairoHelper.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

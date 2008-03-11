@@ -27,30 +27,37 @@
 //
 
 using System;
-using Gdk;
-using Cairo;
+using System.Runtime.InteropServices;
 
-namespace Hyena.Data.Gui
+namespace Hyena.Gui
 {
-    public static class CairoHelper
+    public static class PangoCairoHelper
     {
-        // [System.Runtime.InteropServices.DllImport ("libgdk-x11-2.0.so")]
-        // private static extern IntPtr gdk_cairo_create (IntPtr raw);
-
-        public static Cairo.Context CreateCairoDrawable (Gdk.Drawable drawable)
+        [DllImport ("libpangocairo-1.0.so.0")]
+        private static extern void pango_cairo_show_layout (IntPtr cr, IntPtr layout);
+        
+        public static void ShowLayout (Cairo.Context cr, Pango.Layout layout)
         {
-            if (drawable == null) {
-                return null;
-            }
-            
-            return Gdk.CairoHelper.Create (drawable);
-            
-            /*Cairo.Context context = new Cairo.Context(gdk_cairo_create(drawable.Handle));
-            if(context == null) {
-                throw new ApplicationException("Could not create Cairo.Context");
-            }
+            pango_cairo_show_layout (cr == null ? IntPtr.Zero : cr.Handle, 
+                layout == null ? IntPtr.Zero : layout.Handle);
+        }
+        
+        [DllImport ("libpangocairo-1.0.so.0")]
+        private static extern IntPtr pango_cairo_create_layout (IntPtr cr);
 
-            return context;*/
+        public static Pango.Layout CreateLayout (Cairo.Context cr) 
+        {
+            IntPtr raw_ret = pango_cairo_create_layout (cr == null ? IntPtr.Zero : cr.Handle);
+            return GLib.Object.GetObject (raw_ret) as Pango.Layout;
+        }
+        
+        [DllImport ("libpangocairo-1.0.so.0")]
+        private static extern void pango_cairo_layout_path (IntPtr cr, IntPtr layout);
+
+        public static void LayoutPath (Cairo.Context cr, Pango.Layout layout) 
+        {
+            pango_cairo_layout_path (cr == null ? IntPtr.Zero : cr.Handle, 
+                layout == null ? IntPtr.Zero : layout.Handle);
         }
     }
 }

@@ -7,14 +7,6 @@
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
-  <Contents>
-    <File name="Banshee.Core/FileNamePatternTests.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Core/KernelTests.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Services/Xspf/Xspf.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Services/PlaylistFormatTests.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena/RangeCollectionTests.cs" subtype="Code" buildaction="Compile" />
-    <File name="Hyena/CryptoUtilTests.cs" subtype="Code" buildaction="Compile" />
-  </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Core" />
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Services" />

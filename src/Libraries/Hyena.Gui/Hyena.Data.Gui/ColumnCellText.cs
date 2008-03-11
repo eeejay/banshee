@@ -30,6 +30,7 @@ using System;
 using Gtk;
 using Cairo;
 
+using Hyena.Gui;
 using Hyena.Gui.Theming;
 
 namespace Hyena.Data.Gui
@@ -60,7 +61,7 @@ namespace Hyena.Data.Gui
             
             if (use_cairo_pango) {
                 context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
-                Pango.CairoHelper.LayoutPath (context.Context, context.Layout);
+                PangoCairoHelper.LayoutPath (context.Context, context.Layout);
                 context.Context.Color = context.Theme.Colors.GetWidgetColor (GtkColorClass.Text, state);
                 context.Context.Fill ();
             } else {

@@ -2,7 +2,6 @@ ASSEMBLY = Hyena.Gui
 TARGET = library
 LINK = $(REF_HYENA_GUI)
 SOURCES =  \
-	Hyena.Data.Gui/CairoHelper.cs \
 	Hyena.Data.Gui/CellContext.cs \
 	Hyena.Data.Gui/Column.cs \
 	Hyena.Data.Gui/ColumnCell.cs \
@@ -35,6 +34,7 @@ SOURCES =  \
 	Hyena.Gui/EntryInsertAction.cs \
 	Hyena.Gui/EntryUndoAdapter.cs \
 	Hyena.Gui/GtkUtilities.cs \
+	Hyena.Gui/PangoCairoHelper.cs \
 	Hyena.Query.Gui/DateQueryValueEntry.cs \
 	Hyena.Query.Gui/FileSizeQueryValueEntry.cs \
 	Hyena.Query.Gui/IntegerQueryValueEntry.cs \
