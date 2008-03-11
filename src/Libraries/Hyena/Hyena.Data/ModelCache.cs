@@ -58,8 +58,8 @@ namespace Hyena.Data
         // Responsible for fetching a set of items and placing them in the cache
         protected abstract void FetchSet (long offset, long limit);
 
-        // Reset the cache and return the total # of items in the model
-        public abstract long Reload ();
+        // Regenerate the cache
+        public abstract void Reload ();
 
         public abstract bool ContainsKey (long i);
         public abstract void Add (long i, T item);

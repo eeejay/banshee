@@ -30,7 +30,6 @@ namespace Hyena.Data
 {
     public interface IFilterable
     {
-        void Refilter ();
         string Filter { get; set; }
         int UnfilteredCount { get; }
     }

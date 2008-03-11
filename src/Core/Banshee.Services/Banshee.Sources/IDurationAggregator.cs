@@ -33,6 +33,5 @@ namespace Banshee.Sources
     public interface IDurationAggregator
     {
         TimeSpan Duration { get; }
-        TimeSpan FilteredDuration { get; }
     }
 }

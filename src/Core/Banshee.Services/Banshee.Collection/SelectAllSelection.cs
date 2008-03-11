@@ -55,7 +55,7 @@ namespace Banshee.Collection
         }
 
         public override bool AllSelected {
-            get { return Contains (0); }
+            get { return Contains (0) || (Count == 2 && Contains (1)); }
         }
     }
 }

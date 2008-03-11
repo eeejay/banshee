@@ -342,7 +342,7 @@ namespace Banshee.Sources
             if (this is IDurationAggregator) {
                 builder.Append (", ");
 
-                TimeSpan span = (this as IDurationAggregator).FilteredDuration; 
+                TimeSpan span = (this as IDurationAggregator).Duration; 
                 if (span.Days > 0) {
                     double days = span.Days + (span.Hours / 24.0);
                     builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0:0.0} days", 
@@ -359,7 +359,7 @@ namespace Banshee.Sources
             }
 
             if (this is IFileSizeAggregator) {
-                long bytes = (this as IFileSizeAggregator).FilteredFileSize;
+                long bytes = (this as IFileSizeAggregator).FileSize;
                 if (bytes > 0) {
                     builder.Append (", ");
                     builder.AppendFormat (new FileSizeQueryValue (bytes).ToUserQuery ());

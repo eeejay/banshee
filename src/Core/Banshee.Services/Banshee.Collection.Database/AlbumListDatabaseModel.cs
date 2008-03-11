@@ -32,6 +32,7 @@ using System.Data;
 using System.Text;
 using System.Collections.Generic;
 
+using Hyena;
 using Hyena.Data.Sqlite;
 
 using Banshee.Database;
@@ -55,6 +56,8 @@ namespace Banshee.Collection.Database
             provider = LibraryAlbumInfo.Provider;
             cache = new BansheeModelCache <LibraryAlbumInfo> (connection, uuid, this, provider);
             cache.HasSelectAllItem = true;
+
+            Selection.Changed += HandleSelectionChanged;
         }
 
         public AlbumListDatabaseModel (TrackListDatabaseModel trackModel, ArtistListDatabaseModel artistModel,
@@ -64,54 +67,48 @@ namespace Banshee.Collection.Database
             this.artist_model = artistModel;
         }
 
-        private bool first_reload = true;
-        public override void Reload ()
+        private void HandleSelectionChanged (object sender, EventArgs args)
         {
-            Reload (false, true);
+            track_model.Reload (ReloadTrigger.AlbumFilter);
         }
 
-        public void Reload (bool unfiltered, bool notify)
+        public override void Reload ()
         {
-            TrackListDatabaseModel track_model = unfiltered ? null : this.track_model;
-            ArtistListDatabaseModel artist_model = unfiltered ? null : this.artist_model;
+            ArtistInfoFilter = artist_model == null ? null : artist_model.SelectedItems;
 
-            if (!first_reload || !cache.Warm) {
-                ArtistInfoFilter = artist_model == null ? null : artist_model.SelectedItems;
+            bool either = (artist_id_filter_query != null) || (track_model != null);
+            bool both = (artist_id_filter_query != null) && (track_model != null);
 
-                bool either = (artist_id_filter_query != null) || (track_model != null);
-                bool both = (artist_id_filter_query != null) && (track_model != null);
+            reload_fragment = String.Format (@"
+                FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID
+                    {0} {1} {2} {3} ORDER BY CoreAlbums.Title, CoreArtists.Name",
+                either ? "WHERE" : null,
+                track_model == null ? null :
+                    String.Format (@"
+                        CoreAlbums.AlbumID IN
+                            (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreCache{1}
+                                WHERE CoreCache.ModelID = {0} AND
+                                      CoreCache.ItemId = {2})",
+                        track_model.CacheId,
+                        track_model.CachesJoinTableEntries ? track_model.JoinFragment : null,
+                        (!track_model.CachesJoinTableEntries)
+                            ? "CoreTracks.TrackID"
+                            : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
+                        ),
+                both ? "AND" : null,
+                artist_id_filter_query
+            );
+            //Console.WriteLine ("reload fragment for albums is {0}", reload_fragment);
 
-                reload_fragment = String.Format (@"
-                    FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID
-                        {0} {1} {2} {3} ORDER BY CoreAlbums.Title, CoreArtists.Name",
-                    either ? "WHERE" : null,
-                    track_model == null ? null :
-                        String.Format (@"
-                            CoreAlbums.AlbumID IN
-                                (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreCache{1}
-                                    WHERE CoreCache.ModelID = {0} AND
-                                          CoreCache.ItemId = {2})",
-                            track_model.CacheId,
-                            track_model.CachesJoinTableEntries ? track_model.JoinFragment : null,
-                            (!track_model.CachesJoinTableEntries)
-                                ? "CoreTracks.TrackID"
-                                : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
-                            ),
-                    both ? "AND" : null,
-                    artist_id_filter_query
-                );
-                //Console.WriteLine ("reload fragment for albums is {0}", reload_fragment);
+            cache.SaveSelection ();
+            cache.Reload ();
+            cache.UpdateAggregates ();
+            cache.RestoreSelection ();
 
-                cache.Reload ();
-            }
-
-            first_reload = false;
             count = cache.Count + 1;
             select_all_album.Title = String.Format ("All Albums ({0})", count - 1);
 
-            if (notify) {
-                OnReloaded ();
-            }
+            OnReloaded ();
         }
         
         public override AlbumInfo this[int index] {

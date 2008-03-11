@@ -50,7 +50,6 @@ namespace Hyena.Data.Sqlite
         private long selection_uid;
         private long rows;
         // private bool warm;
-        private bool first_reload = true;
         private long first_order_id;
 
         public delegate void AggregatesUpdatedEventHandler (IDataReader reader);
@@ -129,7 +128,7 @@ namespace Hyena.Data.Sqlite
 
                 reload_sql = String.Format (@"
                     DELETE FROM {0} WHERE ModelID = {1};
-                        INSERT INTO {0} SELECT null, {1}, {2} ",
+                        INSERT INTO {0} (ModelID, ItemID) SELECT {1}, {2} ",
                     CacheTableName, uid, model.JoinPrimaryKey
                 );
             } else {
@@ -161,7 +160,7 @@ namespace Hyena.Data.Sqlite
 
                 reload_sql = String.Format (@"
                     DELETE FROM {0} WHERE ModelID = {1};
-                        INSERT INTO {0} SELECT null, {1}, {2} ",
+                        INSERT INTO {0} (ModelID, ItemID) SELECT {1}, {2} ",
                     CacheTableName, uid, provider.PrimaryKey
                 );
             }
@@ -178,7 +177,7 @@ namespace Hyena.Data.Sqlite
             ));
             
             save_selection_command = new HyenaSqliteCommand (String.Format (
-                "INSERT INTO {0} SELECT null, {1}, ItemID FROM {0} WHERE ModelID = {2} LIMIT ?, ?",
+                "INSERT INTO {0} (ModelID, ItemID) SELECT {1}, ItemID FROM {0} WHERE ModelID = {2} LIMIT ?, ?",
                 CacheTableName, selection_uid, uid
             ));
 
@@ -243,7 +242,7 @@ namespace Hyena.Data.Sqlite
         private HyenaSqliteCommand last_reload_command;
         private string last_reload_fragment;
 
-        public override long Reload ()
+        public override void Reload ()
         {
             lock (this) {
                 if (last_reload_fragment != model.ReloadFragment) {
@@ -251,30 +250,15 @@ namespace Hyena.Data.Sqlite
                     last_reload_command = new HyenaSqliteCommand (reload_sql + last_reload_fragment);
                 }
 
-                if (!first_reload) {
-                    SaveSelection ();
-                }
-
                 Clear ();
-
-                //using (new Timer (String.Format ("Generating cache table for {0}", model))) {
-                    connection.Execute (last_reload_command);
-                //}
+                //Log.DebugFormat ("Reloading {0} with {1}", model, last_reload_command.Text);
+                connection.Execute (last_reload_command);
                 first_order_id = -1;
-                UpdateAggregates ();
-
-                if (!first_reload) {
-                    RestoreSelection ();
-                } else {
-                    first_reload = false;
-                }
-
-                return rows;
             }
         }
 
         private bool saved_selection = false;
-        private void SaveSelection ()
+        public void SaveSelection ()
         {
             if (model.Selection.Count > 0 && !(has_select_all_item && model.Selection.AllSelected)) {
                 connection.Execute (delete_selection_command);
@@ -298,7 +282,7 @@ namespace Hyena.Data.Sqlite
             }
         }
 
-        private void RestoreSelection ()
+        public void RestoreSelection ()
         {
             long selected_id = -1;
             long first_id = FirstOrderId;
@@ -322,12 +306,12 @@ namespace Hyena.Data.Sqlite
             if (has_select_all_item && model.Selection.Count == 0) {
                 model.Selection.QuietSelect (0);
             }
+            saved_selection = false;
         }
 
         protected override void FetchSet (long offset, long limit)
         {
             lock (this) {
-            //using (new Timer (String.Format ("Fetching set for {0}", model))) {
                 using (IDataReader reader = connection.Query (select_range_command, offset, limit)) {
                     T item;
                     while (reader.Read ()) {
@@ -337,13 +321,12 @@ namespace Hyena.Data.Sqlite
                             Add (offset, item);
                         }
                         offset++;
-                     }
-                 }
-            //}
+                    }
+                }
             }
         }
         
-        protected void UpdateAggregates ()
+        public void UpdateAggregates ()
         {
             using (IDataReader reader = connection.Query (count_command, uid)) {
                 if (reader.Read ()) {

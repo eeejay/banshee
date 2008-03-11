@@ -201,7 +201,7 @@ namespace Banshee.Query
             DateAddedField, PlaylistField, SmartPlaylistField
         );
 
-        private const string default_sort = "lower(CoreArtists.Name) ASC, lower(CoreAlbums.Title) ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
+        private const string default_sort = "CoreArtists.Name ASC, CoreAlbums.Title ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
 
         public static string GetSort (string key)
         {
@@ -215,15 +215,15 @@ namespace Banshee.Query
             switch(key) {
                 case "Track":
                     sort_query = String.Format (@"
-                        lower(CoreArtists.Name) ASC, 
-                        lower(CoreAlbums.Title) ASC, 
+                        CoreArtists.Name ASC, 
+                        CoreAlbums.Title ASC, 
                         CoreTracks.TrackNumber {0}", ascDesc); 
                     break;
 
                 case "Artist":
                     sort_query = String.Format (@"
-                        lower(CoreArtists.Name) {0}, 
-                        lower(CoreAlbums.Title) ASC,
+                        CoreArtists.Name {0}, 
+                        CoreAlbums.Title ASC,
                         CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber ASC,
                         CoreTracks.Uri ASC", ascDesc); 
@@ -231,7 +231,7 @@ namespace Banshee.Query
 
                 case "Album":
                     sort_query = String.Format (@"
-                        lower(CoreAlbums.Title) {0},
+                        CoreAlbums.Title {0},
                         CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber ASC,
                         CoreTracks.Uri ASC", ascDesc); 
@@ -239,9 +239,9 @@ namespace Banshee.Query
 
                 case "Title":
                     sort_query = String.Format (@"
-                        lower(CoreTracks.Title) {0},
-                        lower(CoreArtists.Name) ASC, 
-                        lower(CoreAlbums.Title) ASC", ascDesc); 
+                        CoreTracks.Title {0},
+                        CoreArtists.Name ASC, 
+                        CoreAlbums.Title ASC", ascDesc); 
                     break;
 
                 case "Random":

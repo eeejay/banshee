@@ -1,3 +1,63 @@
+2008-03-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit cleans up and speeds up reloading.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Listen for Selection.Changed event and reload the track model with the
+	appropriate ReloadTrigger argument.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Add a Reload method that takes a ReloadTrigger argument identifying what
+	caused the reload (user query, artist or album filter) so each can be
+	handled optimally.  Should fix performance regressions introduced in
+	yesterday's bug fixes.
+
+	* src/Core/Banshee.Services/Banshee.Collection/SelectAllSelection.cs: If
+	there is only one real item and it's selected, then AllSelected = true.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add a bunch more indexes to CoreTracks.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Do not call
+	lower() within ORDER BY fragments for track sorting.  This means it will
+	be case sensitive for now.  Sqlite's lower() method doesn't work with
+	non-LATIN characters, and it's slow.  We need to add columns where we
+	store the result of lowercasing Album, Artist, and Title in C#.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Add a new Refresh method that actually regenerates the smart playlist
+	entries, since this doesn't need to happen on every Reload.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Move the
+	complicated Reload logic into the *ListDatabaseModels.  Get rid of
+	FilteredDuration/FileSize properties.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/IFileSizeAggregator.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/IDurationAggregator.cs: Remove
+	Filtered* properties - we never display both, so might was well not require it
+	or bother to calculate the un-filtered version.
+
+	* src/Libraries/Hyena/Hyena.Data/IFilterable.cs:  Remove Refilter method.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Fix bug with default sort column where it was based on your column order.
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs: Call
+	new Refresh method on SmartPlaylistSources.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Remove selection-changed source reload code - that's handled internally by the
+	*ListDatabaseModels now.
+
+	* src/Libraries/Hyena/Hyena.Data/ModelCache.cs: Change Reload to return
+	void.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Use slightly
+	faster INSERT INTO pattern, and don't automatically Save/RestoreSelection
+	and UpdateAggregates within Reload.
+
 2008-03-11  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Do not crash

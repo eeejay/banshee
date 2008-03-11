@@ -233,6 +233,7 @@ namespace Banshee.SmartPlaylist
                         playlist.LimitValue = limit_value;
 
                         playlist.Save ();
+                        playlist.Refresh ();
                         ThreadAssist.ProxyToMain (delegate {
                             ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
                         });
@@ -245,7 +246,7 @@ namespace Banshee.SmartPlaylist
 
                         playlist.Rename (name);
                         playlist.Save ();
-                        playlist.Reload ();
+                        playlist.RefreshAndReload ();
 
                         /*if (playlist.TimeDependent)
                             SmartPlaylistCore.Instance.StartTimer (playlist);

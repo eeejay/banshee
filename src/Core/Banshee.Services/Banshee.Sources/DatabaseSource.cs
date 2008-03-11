@@ -31,6 +31,8 @@ using System;
 using System.Collections.Generic;
 
 using Mono.Unix;
+
+using Hyena;
 using Hyena.Data;
 using Hyena.Query;
 using Hyena.Data.Sqlite;
@@ -78,16 +80,8 @@ namespace Banshee.Sources
             get { return track_model.Duration; }
         }
 
-        public TimeSpan FilteredDuration {
-            get { return track_model.FilteredDuration; }
-        }
-
         public long FileSize {
             get { return track_model.FileSize; }
-        }
-
-        public long FilteredFileSize {
-            get { return track_model.FilteredFileSize; }
         }
 
         public override string FilterQuery {
@@ -144,34 +138,9 @@ namespace Banshee.Sources
         protected void RateLimitedReload ()
         {
             lock (track_model) {
-                // First, reload the track model w/o the artist/album filter
-                ReloadTrackModel (true, false);
-
-                // Then, reload the artist/album models
-                artist_model.Reload ();
-                album_model.Reload ();
-
-                // Then, reload the track model with the artist/album filters, if any
-                if (!artist_model.Selection.AllSelected || !album_model.Selection.AllSelected) {
-                    ReloadTrackModel ();
-                } else {
-                    track_model.NotifyReloaded ();
-                }
-
+                track_model.Reload ();
                 OnUpdated ();
             }
-        }
-
-        protected void ReloadTrackModel ()
-        {
-            ReloadTrackModel (false, true);
-        }
-
-        protected virtual void ReloadTrackModel (bool unfiltered, bool notify)
-        {
-            track_model.Reload (unfiltered, notify);
-            //Hyena.Log.DebugFormat ("Called {0}::ReloadTrackModel ({1}) [Count={2}]", GetType ().FullName, 
-            //    notify, track_model.Count);
         }
 
         public virtual bool HasDependencies {

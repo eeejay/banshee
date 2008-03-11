@@ -31,6 +31,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 
+using Hyena;
 using Hyena.Data.Sqlite;
 
 using Banshee.Database;
@@ -52,49 +53,46 @@ namespace Banshee.Collection.Database
             provider = LibraryArtistInfo.Provider;
             cache = new BansheeModelCache <LibraryArtistInfo> (connection, uuid, this, provider);
             cache.HasSelectAllItem = true;
+
+            Selection.Changed += HandleSelectionChanged;
         }
 
         public ArtistListDatabaseModel(TrackListDatabaseModel trackModel, BansheeDbConnection connection, string uuid) : this (connection, uuid)
         {
             this.track_model = trackModel;
         }
+
+        private void HandleSelectionChanged (object sender, EventArgs args)
+        {
+            track_model.Reload (ReloadTrigger.ArtistFilter);
+        }
     
-        private bool first_reload = true;
         public override void Reload ()
         {
-            Reload (false, true);
-        }
+            reload_fragment = String.Format (
+                "FROM CoreArtists {0} ORDER BY Name",
+                track_model == null ? null : String.Format (@"
+                    WHERE CoreArtists.ArtistID IN
+                        (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreCache{1}
+                            WHERE CoreCache.ModelID = {0} AND
+                                  CoreCache.ItemID = {2})",
+                    track_model.CacheId,
+                    track_model.CachesJoinTableEntries ? track_model.JoinFragment : null,
+                    (!track_model.CachesJoinTableEntries)
+                        ? "CoreTracks.TrackID"
+                        : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
+                )
+            );
 
-        public void Reload (bool unfiltered, bool notify)
-        {
-            TrackListDatabaseModel track_model = unfiltered ? null : this.track_model;
+            cache.SaveSelection ();
+            cache.Reload ();
+            cache.UpdateAggregates ();
+            cache.RestoreSelection ();
 
-            if (!first_reload || !cache.Warm) {
-                reload_fragment = String.Format (
-                    "FROM CoreArtists {0} ORDER BY Name",
-                    track_model == null ? null : String.Format (@"
-                        WHERE CoreArtists.ArtistID IN
-                            (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreCache{1}
-                                WHERE CoreCache.ModelID = {0} AND
-                                      CoreCache.ItemID = {2})",
-                        track_model.CacheId,
-                        track_model.CachesJoinTableEntries ? track_model.JoinFragment : null,
-                        (!track_model.CachesJoinTableEntries)
-                            ? "CoreTracks.TrackID"
-                            : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
-                    )
-                );
-
-                cache.Reload ();
-            }
-
-            first_reload = false;
             count = cache.Count + 1;
             select_all_artist.Name = String.Format("All Artists ({0})", count - 1);
 
-            if (notify) {
-                OnReloaded();
-            }
+            OnReloaded();
         }
         
         public override ArtistInfo this[int index] {

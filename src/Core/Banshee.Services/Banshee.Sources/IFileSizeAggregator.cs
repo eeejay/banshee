@@ -31,6 +31,5 @@ namespace Banshee.Sources
     public interface IFileSizeAggregator
     {
         long FileSize { get; }
-        long FilteredFileSize { get; }
     }
 }

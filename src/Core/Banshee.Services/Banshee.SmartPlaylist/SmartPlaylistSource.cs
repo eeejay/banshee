@@ -291,24 +291,24 @@ namespace Banshee.SmartPlaylist
 
 #region DatabaseSource overrides
 
-        protected override void ReloadTrackModel (bool unfiltered, bool notify)
+        public void RefreshAndReload ()
         {
-            // The first time ReloadTrackModel is called, it is called with unfiltered = true,
-            // so only repopulate the smart playlist entries then.
-            if (unfiltered) {
-                // Wipe the member list clean and repopulate it 
-                ServiceManager.DbConnection.Execute (String.Format (
-                    @"DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {0};
-                      INSERT INTO CoreSmartPlaylistEntries 
-                        SELECT NULL, {0} as SmartPlaylistID, TrackId
-                            FROM CoreTracks, CoreArtists, CoreAlbums
-                            WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID
-                            {1} {2}",
-                    DbId, PrependCondition("AND"), OrderAndLimit
-                ));
-            }
+            Refresh ();
+            Reload ();
+        }
 
-            base.ReloadTrackModel (unfiltered, notify);
+        public void Refresh ()
+        {
+            // Wipe the member list clean and repopulate it 
+            ServiceManager.DbConnection.Execute (String.Format (
+                @"DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {0};
+                  INSERT INTO CoreSmartPlaylistEntries 
+                    SELECT NULL, {0} as SmartPlaylistID, TrackId
+                        FROM CoreTracks, CoreArtists, CoreAlbums
+                        WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID
+                        {1} {2}",
+                DbId, PrependCondition("AND"), OrderAndLimit
+            ));
         }
 
 #endregion
@@ -347,7 +347,7 @@ namespace Banshee.SmartPlaylist
         {
             if (args.When > last_added) {
                 last_added = args.When;
-                Reload ();
+                RefreshAndReload ();
             }
         }
 
@@ -355,7 +355,7 @@ namespace Banshee.SmartPlaylist
         {
             if (args.When > last_updated) {
                 last_updated = args.When;
-                Reload ();
+                RefreshAndReload ();
             }
         }
 
@@ -363,6 +363,7 @@ namespace Banshee.SmartPlaylist
         {
             if (args.When > last_removed) {
                 last_removed = args.When;
+                RefreshAndReload ();
                 Reload ();
                 /*if (ServiceManager.DbConnection.Query<int> (count_removed_command, last_removed) > 0) {
                     if (Limit == null) {

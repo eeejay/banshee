@@ -307,10 +307,16 @@ namespace Banshee.Database
                 )
             ");
             Execute("CREATE INDEX CoreTracksSourceIndex ON CoreTracks(SourceID)");
+            Execute("CREATE INDEX CoreTracksAggregatesIndex ON CoreTracks(FileSize, Duration)");
             Execute("CREATE INDEX CoreTracksArtistIndex ON CoreTracks(ArtistID)");
             Execute("CREATE INDEX CoreTracksAlbumIndex  ON CoreTracks(AlbumID)");
             Execute("CREATE INDEX CoreTracksRatingIndex ON CoreTracks(Rating)");
-            Execute("CREATE INDEX CoreTracksTrackNumberIndex ON CoreTracks(AlbumID, TrackNumber)");
+            Execute("CREATE INDEX CoreTracksLastPlayedStampIndex ON CoreTracks(LastPlayedStamp)");
+            Execute("CREATE INDEX CoreTracksDateAddedStampIndex ON CoreTracks(DateAddedStamp)");
+            Execute("CREATE INDEX CoreTracksPlayCountIndex ON CoreTracks(PlayCount)");
+            Execute("CREATE INDEX CoreTracksDiscIndex ON CoreTracks(Disc)");
+            Execute("CREATE INDEX CoreTracksTrackNumberIndex ON CoreTracks(TrackNumber)");
+            Execute("CREATE INDEX CoreTracksTitleeIndex ON CoreTracks(Title)");
             
             Execute(@"
                 CREATE TABLE CoreAlbums (
@@ -361,7 +367,8 @@ namespace Banshee.Database
                     ViewOrder           INTEGER NOT NULL DEFAULT 0
                 )
             ");
-            Execute("CREATE INDEX CorePlaylistEntriesIndex ON CorePlaylistEntries(PlaylistID, EntryID)");
+            Execute("CREATE INDEX CorePlaylistEntriesIndex ON CorePlaylistEntries(PlaylistID)");
+            Execute("CREATE INDEX CorePlaylistTrackIDIndex ON CorePlaylistEntries(TrackID)");
             
             Execute(@"
                 CREATE TABLE CoreSmartPlaylists (
@@ -381,8 +388,8 @@ namespace Banshee.Database
                     TrackID             INTEGER NOT NULL
                 )
             ");
-            Execute("CREATE INDEX CoreSmartPlaylistEntriesPlaylistIndex ON CoreSmartPlaylistEntries(EntryID, SmartPlaylistID)");
-            Execute("CREATE INDEX CoreSmartPlaylistEntriesTrackIndex ON CoreSmartPlaylistEntries(SmartPlaylistID, TrackID)");
+            Execute("CREATE INDEX CoreSmartPlaylistEntriesPlaylistIndex ON CoreSmartPlaylistEntries(SmartPlaylistID)");
+            Execute("CREATE INDEX CoreSmartPlaylistEntriesTrackIndex ON CoreSmartPlaylistEntries(TrackID)");
 
             Execute(@"
                 CREATE TABLE CoreRemovedTracks (

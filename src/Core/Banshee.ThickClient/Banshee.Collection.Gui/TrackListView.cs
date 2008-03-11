@@ -52,11 +52,13 @@ namespace Banshee.Collection.Gui
         {
             column_controller = new PersistentColumnController ("track_view_columns");
 
+            SortableColumn artist_column = new SortableColumn (Catalog.GetString ("Artist"), new ColumnCellText ("ArtistName", true), 0.225, "Artist");
+
             column_controller.AddRange (
                 new Column (null, "indicator", new ColumnCellPlaybackIndicator (null), 0.05),
                 new SortableColumn (Catalog.GetString ("Track"), new ColumnCellTrackNumber ("TrackNumber", true), 0.10, "Track"),
                 new SortableColumn (Catalog.GetString ("Title"), new ColumnCellText ("TrackTitle", true), 0.25, "Title"),
-                new SortableColumn (Catalog.GetString ("Artist"), new ColumnCellText ("ArtistName", true), 0.225, "Artist"),
+                artist_column,
                 new SortableColumn (Catalog.GetString ("Album"), new ColumnCellText ("AlbumTitle", true), 0.225, "Album"),
                 new SortableColumn (Catalog.GetString ("Duration"), new ColumnCellDuration ("Duration", true), 0.15, "Duration"),
                 
@@ -73,7 +75,7 @@ namespace Banshee.Collection.Gui
             column_controller.Load ();
             
             ColumnController = DefaultColumnController;
-            ColumnController.DefaultSortColumn = ColumnController[3] as SortableColumn;
+            ColumnController.DefaultSortColumn = artist_column;
 
             RulesHint = true;
             RowSensitivePropertyName = "CanPlay";

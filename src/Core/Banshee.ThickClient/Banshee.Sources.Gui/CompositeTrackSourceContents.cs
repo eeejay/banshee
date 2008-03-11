@@ -267,19 +267,11 @@ namespace Banshee.Sources.Gui
 
             if (selection.AllSelected) {
                 if (model != null && o == artist_view.Selection ) {
-                    track_source.Reload ();
                     artist_view.ScrollTo (0);
                 } else if (model != null && o == album_view.Selection) {
-                    track_source.Reload ();
                     album_view.ScrollTo (0);
                 }
                 return;
-            }
-            
-            if (o == artist_view.Selection) {
-                track_source.Reload ();
-            } else if (o == album_view.Selection) {
-                track_source.Reload ();
             }
         }
 

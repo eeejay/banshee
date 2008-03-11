@@ -33,6 +33,7 @@ using System.Text;
 using System.Collections.Generic;
 
 using Mono.Unix;
+
 using Hyena;
 using Hyena.Data;
 using Hyena.Data.Sqlite;
@@ -44,6 +45,12 @@ using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
+    public enum ReloadTrigger {
+        Query,
+        ArtistFilter,
+        AlbumFilter
+    };
+        
     public class TrackListDatabaseModel : TrackListModel, IExportableModel, 
         ICacheableDatabaseModel, IFilterable, ISortable, ICareAboutView
     {
@@ -51,8 +58,6 @@ namespace Banshee.Collection.Database
         private readonly BansheeModelProvider<DatabaseTrackInfo> provider;
         private BansheeModelCache<DatabaseTrackInfo> cache;
         private long count;
-        private TimeSpan duration;
-        private long filesize;
 
         private long filtered_count;
         private TimeSpan filtered_duration;
@@ -65,7 +70,7 @@ namespace Banshee.Collection.Database
         private string reload_fragment;
         private string join_table, join_fragment, join_primary_key, join_column, condition;
 
-        private string filter_query;
+        private string query_fragment;
         private string filter;
         private string artist_id_filter_query;
         private string album_id_filter_query;
@@ -107,13 +112,13 @@ namespace Banshee.Collection.Database
                 return;
 
             if (String.IsNullOrEmpty (Filter)) {
-                filter_query = null;
+                query_fragment = null;
             } else {
                 QueryNode query_tree = UserQueryParser.Parse (Filter, BansheeQuery.FieldSet);
-                filter_query = (query_tree == null) ? null : query_tree.ToSql (BansheeQuery.FieldSet);
+                query_fragment = (query_tree == null) ? null : query_tree.ToSql (BansheeQuery.FieldSet);
 
-                if (filter_query != null && filter_query.Length == 0) {
-                    filter_query = null;
+                if (query_fragment != null && query_fragment.Length == 0) {
+                    query_fragment = null;
                 }
             }
 
@@ -127,14 +132,6 @@ namespace Banshee.Collection.Database
                 : BansheeQuery.GetSort (sort_column.SortKey, sort_column.SortType == SortType.Ascending);
         }
 
-        public void Refilter ()
-        {
-            lock (this) {
-                GenerateFilterQueryPart ();
-                cache.Clear ();
-            }
-        }
-        
         public void Sort (ISortableColumn column)
         {
             lock (this) {
@@ -187,15 +184,10 @@ namespace Banshee.Collection.Database
 
         private void UpdateUnfilteredAggregates ()
         {
-            using (IDataReader reader = connection.Query (String.Format (
-                "SELECT COUNT(*), {0} {1}", SelectAggregates, UnfilteredQuery)))
-            {
-                if (reader.Read ()) {
-                    count = Convert.ToInt32 (reader[0]);
-                    duration = TimeSpan.FromMilliseconds (reader.IsDBNull (1) ? 0 : Convert.ToInt64 (reader[1]));
-                    filesize = reader.IsDBNull (2) ? 0 : Convert.ToInt64 (reader[2]);
-                }
-            }
+            HyenaSqliteCommand count_command = new HyenaSqliteCommand (String.Format (
+                "SELECT COUNT(*) {0}", UnfilteredQuery
+            ));
+            count = connection.Query<long> (count_command);
         }
 
         /*private void UpdateFilteredAggregates ()
@@ -204,45 +196,52 @@ namespace Banshee.Collection.Database
             filtered_count = cache.Count;
         }*/
         
-        private bool first_reload = true;
         public override void Reload ()
         {
-            Reload (false, true);
+            Reload (ReloadTrigger.Query);
         }
 
-        public void Reload (bool unfiltered, bool notify)
+        public void Reload (ReloadTrigger trigger)
         {
-            Refilter ();
+            GenerateFilterQueryPart ();
 
             UpdateUnfilteredAggregates ();
+            cache.SaveSelection ();
 
+            if (trigger == ReloadTrigger.AlbumFilter) {
+                ReloadWithFilters ();
+            } else {
+                ReloadWithoutArtistAlbumFilters ();
+
+                if (trigger == ReloadTrigger.Query) {
+                    artist_model.Reload ();
+                }
+
+                album_model.Reload ();
+
+                // Unless both artist/album selections are "all" (eg unfiltered), reload
+                // the track model again with the artist/album filters now in place.
+                if (!artist_model.Selection.AllSelected || !album_model.Selection.AllSelected) {
+                    ReloadWithFilters ();
+                }
+            }
+
+            cache.UpdateAggregates ();
+            cache.RestoreSelection ();
+
+            filtered_count = cache.Count;
+
+            OnReloaded ();
+        }
+
+        private void ReloadWithoutArtistAlbumFilters ()
+        {
             StringBuilder qb = new StringBuilder ();
             qb.Append (UnfilteredQuery);
 
-            ArtistListDatabaseModel artist_model = unfiltered ? null : this.artist_model;
-            AlbumListDatabaseModel album_model = unfiltered ? null : this.album_model;
-
-            if (artist_model != null) {
-                ArtistInfoFilter = artist_model.SelectedItems;
-            }
-
-            if (album_model != null) {
-                AlbumInfoFilter = album_model.SelectedItems;
-            }
-            
-            if (!unfiltered && artist_id_filter_query != null) {
+            if (query_fragment != null) {
                 qb.Append ("AND ");
-                qb.Append (artist_id_filter_query);
-            }
-                    
-            if (!unfiltered && album_id_filter_query != null) {
-                qb.Append ("AND ");
-                qb.Append (album_id_filter_query);
-            }
-            
-            if (filter_query != null) {
-                qb.Append ("AND ");
-                qb.Append (filter_query);
+                qb.Append (query_fragment);
             }
             
             if (sort_query != null) {
@@ -252,21 +251,40 @@ namespace Banshee.Collection.Database
                 
             reload_fragment = qb.ToString ();
 
-            if (!first_reload || !cache.Warm) {
-                cache.Reload ();
-            }
-
-            filtered_count = cache.Count;
-            first_reload = false;
-
-            if (notify) {
-                OnReloaded ();
-            }
+            cache.Reload ();
         }
 
-        internal void NotifyReloaded ()
+        private void ReloadWithFilters ()
         {
-            OnReloaded ();
+            StringBuilder qb = new StringBuilder ();
+            qb.Append (UnfilteredQuery);
+
+            ArtistInfoFilter = artist_model.SelectedItems;
+            AlbumInfoFilter = album_model.SelectedItems;
+
+            if (artist_id_filter_query != null) {
+                qb.Append ("AND ");
+                qb.Append (artist_id_filter_query);
+            }
+                    
+            if (album_id_filter_query != null) {
+                qb.Append ("AND ");
+                qb.Append (album_id_filter_query);
+            }
+            
+            if (query_fragment != null) {
+                qb.Append ("AND ");
+                qb.Append (query_fragment);
+            }
+            
+            if (sort_query != null) {
+                qb.Append (" ORDER BY ");
+                qb.Append (sort_query);
+            }
+                
+            reload_fragment = qb.ToString ();
+
+            cache.Reload ();
         }
 
         public override int IndexOf (TrackInfo track)
@@ -284,25 +302,17 @@ namespace Banshee.Collection.Database
         }
 
         public TimeSpan Duration {
-            get { return duration; }
+            get { return filtered_duration; }
         }
 
         public long FileSize {
-            get { return filesize; }
+            get { return filtered_filesize; }
         }
         
         public int UnfilteredCount {
             get { return (int) count; }
         }
 
-        public TimeSpan FilteredDuration {
-            get { return filtered_duration; }
-        }
-
-        public long FilteredFileSize {
-            get { return filtered_filesize; }
-        }
-        
         public string Filter {
             get { return filter; }
             set { 
