@@ -62,28 +62,28 @@ namespace Banshee.Collection.Database
         private bool first_reload = true;
         public override void Reload ()
         {
+            Reload (false, true);
+        }
+
+        public void Reload (bool unfiltered, bool notify)
+        {
+            TrackListDatabaseModel track_model = unfiltered ? null : this.track_model;
+
             if (!first_reload || !cache.Warm) {
                 reload_fragment = String.Format (
-                    @"FROM CoreArtists {0} ORDER BY Name",
-                    track_model != null ? String.Format(@"
+                    "FROM CoreArtists {0} ORDER BY Name",
+                    track_model == null ? null : String.Format (@"
                         WHERE CoreArtists.ArtistID IN
                             (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreCache{1}
                                 WHERE CoreCache.ModelID = {0} AND
                                       CoreCache.ItemID = {2})",
-                        /*WHERE CoreArtists.ArtistID IN
-                            (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreArtists, CoreCache
-                                WHERE CoreCache.ModelID = {0} AND
-                                      CoreCache.ItemID = CoreTracks.TrackID AND
-                                      CoreArtists.ArtistID = CoreTracks.ArtistID)",*/
                         track_model.CacheId,
                         track_model.CachesJoinTableEntries ? track_model.JoinFragment : null,
                         (!track_model.CachesJoinTableEntries)
                             ? "CoreTracks.TrackID"
                             : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
-                    ) : null
+                    )
                 );
-
-                //Console.WriteLine ("reload fragment for artists is {0}", reload_fragment);
 
                 cache.Reload ();
             }
@@ -91,7 +91,10 @@ namespace Banshee.Collection.Database
             first_reload = false;
             count = cache.Count + 1;
             select_all_artist.Name = String.Format("All Artists ({0})", count - 1);
-            OnReloaded();
+
+            if (notify) {
+                OnReloaded();
+            }
         }
         
         public override ArtistInfo this[int index] {

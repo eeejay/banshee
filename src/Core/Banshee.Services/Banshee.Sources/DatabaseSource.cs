@@ -54,7 +54,6 @@ namespace Banshee.Sources
         protected ArtistListDatabaseModel artist_model;
 
         protected RateLimiter reload_limiter;
-        protected RateLimiter filter_limiter;
         
         public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order)
         {
@@ -63,7 +62,6 @@ namespace Banshee.Sources
             artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
             album_model = new AlbumListDatabaseModel (track_model, artist_model, ServiceManager.DbConnection, uuid);
             reload_limiter = new RateLimiter (RateLimitedReload);
-            filter_limiter = new RateLimiter (RateLimitedFilter);
         }
 
 #region Public Properties
@@ -95,7 +93,8 @@ namespace Banshee.Sources
         public override string FilterQuery {
             set {
                 base.FilterQuery = value;
-                filter_limiter.Execute ();
+                track_model.Filter = FilterQuery;
+                reload_limiter.Execute ();
             }
         }
 
@@ -143,60 +142,36 @@ namespace Banshee.Sources
         protected virtual void RateLimitedReload ()
         {
             lock (track_model) {
-                ReloadTrackModel ();
+                // First, reload the track model w/o the artist/album filter
+                ReloadTrackModel (true, false);
+
+                // Then, reload the artist/album models
                 artist_model.Reload ();
                 album_model.Reload ();
+
+                // Then, reload the track model with the artist/album filters, if any
+                if (!artist_model.Selection.AllSelected || !album_model.Selection.AllSelected) {
+                    ReloadTrackModel ();
+                } else {
+                    track_model.NotifyReloaded ();
+                }
+
                 OnUpdated ();
             }
         }
 
         protected virtual void ReloadTrackModel ()
         {
-            ReloadTrackModel (true);
+            ReloadTrackModel (false, true);
         }
 
-        protected void ReloadTrackModel (bool notify)
+        protected void ReloadTrackModel (bool unfiltered, bool notify)
         {
-            track_model.Reload (notify);
+            track_model.Reload (unfiltered, notify);
             Hyena.Log.DebugFormat ("Called {0}::ReloadTrackModel ({1}) [Count={2}]", GetType ().FullName, 
                 notify, track_model.Count);
         }
 
-        protected virtual void RateLimitedFilter ()
-        {
-            lock (this) {
-                // First, reload the track model w/o the artist/album filter
-                track_model.SuppressReloads = true;
-                track_model.Filter = FilterQuery;
-                track_model.ClearArtistAlbumFilters ();
-                track_model.SuppressReloads = false;
-                ReloadTrackModel (false);
-
-                // Then, reload the artist/album models
-                artist_model.Reload ();
-                album_model.Reload ();
-
-                // Then, reload the track model with the artist/album filters
-                track_model.SuppressReloads = true;
-                track_model.ArtistInfoFilter = artist_model.SelectedItems;
-                track_model.AlbumInfoFilter = album_model.SelectedItems;
-                track_model.SuppressReloads = false;
-                ReloadTrackModel ();
-
-                OnUpdated ();
-            }
-        }
-
-        /*protected virtual void ReloadChildren ()
-        {
-            foreach (Source child in Children) {
-                ITrackModelSource c = child as ITrackModelSource;
-                if (c != null && !c.HasDependencies) {
-                    c.Reload ();
-                }
-            }
-        }*/
-        
         public virtual bool HasDependencies {
             get { return false; }
         }
@@ -233,7 +208,6 @@ namespace Banshee.Sources
         public virtual void DeleteSelectedTracks (TrackListDatabaseModel model)
         {
             WithTrackSelection (model, DeleteTrackRange);
-            PruneArtistsAlbums ();
             OnTracksDeleted ();
         }
 
@@ -283,6 +257,7 @@ namespace Banshee.Sources
 
         protected virtual void OnTracksDeleted ()
         {
+            PruneArtistsAlbums ();
             HandleTracksDeleted (this, new TrackEventArgs ());
             foreach (PrimarySource psource in PrimarySources) {
                 psource.NotifyTracksDeleted ();
@@ -392,12 +367,8 @@ namespace Banshee.Sources
 
         protected virtual void PruneArtistsAlbums ()
         {
-            //Hyena.Log.Information ("Pruning artists/albums");
-            ServiceManager.DbConnection.Execute (PruneCommand);
-            //Hyena.Log.Information ("Clearing artists/albums cache");
-            artist_model.Reload ();
-            album_model.Reload ();
-            //Hyena.Log.Information ("Done clearing artists/albums cache");
+            //Console.WriteLine ("Pruning with {0}", PruneCommand.Text);
+            //ServiceManager.DbConnection.Execute (PruneCommand);
         }
 
         protected virtual void HandleTracksAdded (Source sender, TrackEventArgs args)

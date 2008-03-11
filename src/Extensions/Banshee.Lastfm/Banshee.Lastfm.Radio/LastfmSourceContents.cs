@@ -37,7 +37,7 @@ namespace Banshee.Lastfm.Radio
         {
         }
 
-        public bool SetSource (Source src)
+        public bool SetSource (ISource src)
         {
             lastfm = src as LastfmSource;
             if (lastfm == null) {
@@ -53,7 +53,7 @@ namespace Banshee.Lastfm.Radio
             return true;
         }
 
-        public Source Source {
+        public ISource Source {
             get { return lastfm; }
         }
 

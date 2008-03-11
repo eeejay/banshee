@@ -334,7 +334,7 @@ namespace Hyena.Data.Gui
                     return true;
                 }
                 
-                if (Selection.Contains (row_index)) {
+                if (Selection.Contains (row_index) && Selection.Count > 1) {
                     Selection.Clear (false);
                     Selection.Select (row_index);
                     FocusRow (row_index);

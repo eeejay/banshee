@@ -1,3 +1,36 @@
+2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Add override to Reload method with options for suppressing notification
+	and filtering.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Remove
+	RateLimitedFilter method, rework Reload to do suffice.  Remove cruft.
+	Call track model's Reload with arguments to suppress notification and
+	artist/album filtering.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Remove
+	cruft, call PruneArtistsAlbums from within OnTracksDeleted
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Simplify Selection changed handler to just call Reload on the source.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ISourceContents.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ObjectListSourceContents.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs: 
+	Change to use ISource instead of Source.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Prevent unnecessary Selection.Changed raising.
+
+	* src/Libraries/Hyena/Hyena.Collections/Selection.cs: Add ToString
+	override for debugging.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	Do ++count so Library gets refreshed on even 500s instead of N*500 + 1.
+
 2008-03-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Removed all

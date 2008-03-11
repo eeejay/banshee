@@ -147,32 +147,6 @@ namespace Banshee.Sources
             }
         }
 
-        /*public override void RemoveTracks (IEnumerable<TrackInfo> tracks)
-        {
-
-            // BEGIN transaction
-
-            int i = 0;
-            DatabaseTrackInfo ltrack;
-            foreach (TrackInfo track in tracks) {
-                ltrack = track as DatabaseTrackInfo;
-                if (ltrack == null)
-                    continue;
-
-                command.ApplyValues (ltrack.DbId, ltrack.DbId, ltrack.DbId);
-                ServiceManager.DbConnection.Execute (command);
-
-                if (++i % 100 == 0) {
-                    // COMMIT and BEGIN new transaction
-                }
-            }
-
-            // COMMIT transaction
-
-            // Reload the library, all playlists, etc
-            Reload ();
-        }*/
-
         public override void SetParentSource (Source source)
         {
             if (source is PrimarySource) {
@@ -209,6 +183,7 @@ namespace Banshee.Sources
         protected override void OnTracksDeleted ()
         {
             ThreadAssist.SpawnFromMain (delegate {
+                PruneArtistsAlbums ();
                 Reload ();
 
                 TrackEventHandler handler = TracksDeleted;
@@ -220,14 +195,6 @@ namespace Banshee.Sources
 
         protected override void OnTracksRemoved ()
         {
-            PruneArtistsAlbums ();
-            OnTracksDeleted ();
-        }
-
-        public override void RemoveSelectedTracks (TrackListDatabaseModel model)
-        {
-            base.RemoveSelectedTracks (model);
-            PruneArtistsAlbums ();
             OnTracksDeleted ();
         }
 

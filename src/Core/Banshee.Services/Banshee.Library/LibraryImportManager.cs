@@ -148,7 +148,7 @@ namespace Banshee.Library
                 throw;
             }
 
-            if (count++ % 500 == 0) {
+            if (++count % 500 == 0) {
                 ServiceManager.SourceManager.Library.NotifyTracksAdded ();
             }
             

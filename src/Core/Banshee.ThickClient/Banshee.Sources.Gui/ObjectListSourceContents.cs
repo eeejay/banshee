@@ -48,7 +48,7 @@ namespace Banshee.Sources.Gui
     public class ObjectListSourceContents : ScrolledWindow, ISourceContents
     {
         private ObjectListView object_view;
-        private Source source;
+        private ISource source;
 
         public ObjectListSourceContents () : base ()
         {
@@ -63,14 +63,14 @@ namespace Banshee.Sources.Gui
             object_view.SetModel (null);
         }
 
-        public bool SetSource (Source source)
+        public bool SetSource (ISource source)
         {
             object_view.SetModel((Hyena.Data.IObjectListModel)source);
             this.source = source;
             return true;
         }
 
-        public Source Source {
+        public ISource Source {
             get { return source; }
         }
 

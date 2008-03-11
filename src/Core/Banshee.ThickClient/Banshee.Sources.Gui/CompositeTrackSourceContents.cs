@@ -267,45 +267,22 @@ namespace Banshee.Sources.Gui
 
             if (selection.AllSelected) {
                 if (model != null && o == artist_view.Selection ) {
-                    model.ClearArtistAlbumFilters ();
-                    album_model.ArtistInfoFilter = null;
-                    album_model.Reload ();
-                    if (!album_model.Selection.AllSelected) {
-                        UpdateAlbumSelectionFilters ();
-                    }
+                    track_source.Reload ();
                     artist_view.ScrollTo (0);
                 } else if (model != null && o == album_view.Selection) {
-                    model.AlbumInfoFilter = null;
-                    model.Reload ();
+                    track_source.Reload ();
                     album_view.ScrollTo (0);
                 }
                 return;
             }
             
             if (o == artist_view.Selection) {
-                ArtistInfo [] artists = new ArtistInfo[selection.Count];
-                int i = 0;
-            
-                foreach(int row_index in artist_view.Selection) {
-                    artists[i++] = artist_view.Model[row_index];
-                }
-            
-                model.AlbumInfoFilter = null;
-                model.ArtistInfoFilter = artists;
-                model.Reload ();
-                album_model.ArtistInfoFilter = artists;
-                album_model.Reload ();
+                track_source.Reload ();
             } else if (o == album_view.Selection) {
-                UpdateAlbumSelectionFilters ();
+                track_source.Reload ();
             }
         }
 
-        private void UpdateAlbumSelectionFilters ()
-        {
-            (track_view.Model as TrackListModel).AlbumInfoFilter = (album_view.Model as AlbumListModel).SelectedItems;
-            track_view.Model.Reload ();
-        }
-        
         public void SetModels (TrackListModel track, ArtistListModel artist, AlbumListModel album)
         {
             // Save the old vertical positions
@@ -388,16 +365,15 @@ namespace Banshee.Sources.Gui
 
 #region Implement ISourceContents
 
-        private Source source;
+        private ITrackModelSource track_source;
 
-        public bool SetSource (Source source)
+        public bool SetSource (ISource source)
         {
-            ITrackModelSource track_source = source as ITrackModelSource;
+            track_source = source as ITrackModelSource;
             if (track_source == null) {
                 return false;
             }
 
-            this.source = source;
             SetModels (track_source.TrackModel, track_source.ArtistModel, track_source.AlbumModel);
             TrackView.HeaderVisible = true;
             return true;
@@ -405,13 +381,13 @@ namespace Banshee.Sources.Gui
 
         public void ResetSource ()
         {
-            source = null;
+            track_source = null;
             SetModels (null, null, null);
             TrackView.HeaderVisible = false;
         }
 
-        public Source Source {
-            get { return source; }
+        public ISource Source {
+            get { return track_source; }
         }
 
         public Widget Widget {

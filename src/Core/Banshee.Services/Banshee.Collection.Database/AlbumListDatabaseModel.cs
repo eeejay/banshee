@@ -67,10 +67,16 @@ namespace Banshee.Collection.Database
         private bool first_reload = true;
         public override void Reload ()
         {
+            Reload (false, true);
+        }
+
+        public void Reload (bool unfiltered, bool notify)
+        {
+            TrackListDatabaseModel track_model = unfiltered ? null : this.track_model;
+            ArtistListDatabaseModel artist_model = unfiltered ? null : this.artist_model;
+
             if (!first_reload || !cache.Warm) {
-                if (artist_model != null) {
-                    ArtistInfoFilter = artist_model.SelectedItems;
-                }
+                ArtistInfoFilter = artist_model == null ? null : artist_model.SelectedItems;
 
                 bool either = (artist_id_filter_query != null) || (track_model != null);
                 bool both = (artist_id_filter_query != null) && (track_model != null);
@@ -102,7 +108,10 @@ namespace Banshee.Collection.Database
             first_reload = false;
             count = cache.Count + 1;
             select_all_album.Title = String.Format ("All Albums ({0})", count - 1);
-            OnReloaded ();
+
+            if (notify) {
+                OnReloaded ();
+            }
         }
         
         public override AlbumInfo this[int index] {

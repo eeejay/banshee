@@ -36,9 +36,9 @@ namespace Banshee.Sources.Gui
 {
     public interface ISourceContents
     {
-        bool SetSource (Source source);
+        bool SetSource (ISource source);
         void ResetSource ();
-        Source Source { get; }
+        ISource Source { get; }
         Widget Widget { get; }
     }
 }

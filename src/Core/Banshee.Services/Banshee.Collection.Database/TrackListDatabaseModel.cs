@@ -205,10 +205,10 @@ namespace Banshee.Collection.Database
         private bool first_reload = true;
         public override void Reload ()
         {
-            Reload (true);
+            Reload (false, true);
         }
 
-        public void Reload (bool notify)
+        public void Reload (bool unfiltered, bool notify)
         {
             if (suppress_reload)
                 return;
@@ -220,22 +220,23 @@ namespace Banshee.Collection.Database
             StringBuilder qb = new StringBuilder ();
             qb.Append (UnfilteredQuery);
 
+            ArtistListDatabaseModel artist_model = unfiltered ? null : this.artist_model;
+            AlbumListDatabaseModel album_model = unfiltered ? null : this.album_model;
+
             if (artist_model != null) {
                 ArtistInfoFilter = artist_model.SelectedItems;
             }
 
             if (album_model != null) {
-                //Console.WriteLine ("album_id_filter_query was {0}, and selection count = {1}", album_id_filter_query, album_model.Selection.Count);
                 AlbumInfoFilter = album_model.SelectedItems;
-                //Console.WriteLine ("album_id_filter_query now is {0}", album_id_filter_query);
             }
             
-            if (artist_id_filter_query != null) {
+            if (!unfiltered && artist_id_filter_query != null) {
                 qb.Append ("AND ");
                 qb.Append (artist_id_filter_query);
             }
                     
-            if (album_id_filter_query != null) {
+            if (!unfiltered && album_id_filter_query != null) {
                 qb.Append ("AND ");
                 qb.Append (album_id_filter_query);
             }
@@ -262,6 +263,11 @@ namespace Banshee.Collection.Database
             if (notify) {
                 OnReloaded ();
             }
+        }
+
+        internal void NotifyReloaded ()
+        {
+            OnReloaded ();
         }
 
         public override int IndexOf (TrackInfo track)
