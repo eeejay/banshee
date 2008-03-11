@@ -100,10 +100,10 @@ namespace Hyena.Data.Sqlite
             if (model.CachesJoinTableEntries) {
                 select_range_command = new HyenaSqliteCommand (
                     String.Format (@"
-                        SELECT {0}, cache.ItemID  FROM {1}
+                        SELECT {0}, {5}.ItemID  FROM {1}
                             INNER JOIN {2}
                                 ON {3} = {2}.{4}
-                            INNER JOIN {5} cache
+                            INNER JOIN {5}
                                 ON {2}.{6} = {5}.ItemID
                             WHERE
                                 {5}.ModelID = {7} {8}
@@ -135,11 +135,11 @@ namespace Hyena.Data.Sqlite
             } else {
                 select_range_command = new HyenaSqliteCommand (
                     String.Format (@"
-                        SELECT {0}, cache.ItemID FROM {1}
-                            INNER JOIN {2} cache
-                                ON {3} = cache.ItemID
+                        SELECT {0}, {2}.ItemID FROM {1}
+                            INNER JOIN {2} 
+                                ON {3} = {2}.ItemID
                             WHERE
-                                cache.ModelID = {4} {5}
+                                {2}.ModelID = {4} {5}
                                 {6}
                             LIMIT ?, ?",
                         provider.Select, provider.From, CacheTableName,
