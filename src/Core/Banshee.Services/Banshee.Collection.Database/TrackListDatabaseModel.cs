@@ -273,7 +273,7 @@ namespace Banshee.Collection.Database
         public override int IndexOf (TrackInfo track)
         {
             DatabaseTrackInfo db_track = track as DatabaseTrackInfo;
-            return (int) (db_track == null ? -1 : cache.IndexOf ((int)db_track.DbId));
+            return (int) (db_track == null ? -1 : cache.IndexOf ((int)db_track.TrackId));
         }
 
         public override TrackInfo this[int index] {

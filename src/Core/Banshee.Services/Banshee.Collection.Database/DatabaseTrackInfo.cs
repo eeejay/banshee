@@ -69,6 +69,26 @@ namespace Banshee.Collection.Database
         {
         }
 
+        public override bool TrackEqual (TrackInfo track)
+        {
+            if (!(track is DatabaseTrackInfo)) {
+                return base.TrackEqual (track);
+            }
+            
+            DatabaseTrackInfo db_track = (DatabaseTrackInfo)track;
+            
+            if (db_track.TrackId == TrackId) {
+                /*if (db_track.Source == Source) {
+                    Console.WriteLine ("{0}, {1}", db_track.Source, Source);
+                    return this == db_track;
+                }
+                
+                */ return true;
+            }
+            
+            return false;
+        }
+        
         public override void Save ()
         {
             Save (true);
@@ -77,7 +97,7 @@ namespace Banshee.Collection.Database
         public void Save (bool notify)
         {
             DateUpdated = DateTime.Now;
-            bool is_new = dbid == 0;
+            bool is_new = TrackId == 0;
             Provider.Save (this);
             if (notify) {
                 if (is_new) {
@@ -89,9 +109,9 @@ namespace Banshee.Collection.Database
         }
         
         [DatabaseColumn ("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
-        private int dbid;
-        public int DbId {
-            get { return dbid; }
+        private int track_id;
+        public int TrackId {
+            get { return track_id; }
         }
 
         [DatabaseColumn ("SourceID", Index = "CoreTracksSourceIndex")]

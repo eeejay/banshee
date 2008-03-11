@@ -362,7 +362,7 @@ namespace Banshee.MediaEngine
         public bool IsPlaying (TrackInfo track)
         {
             return CurrentState != PlayerEngineState.Idle && CurrentState != PlayerEngineState.NotReady && 
-                track != null && track.AudiblyEqual (CurrentTrack);
+                track != null && track.TrackEqual (CurrentTrack);
         }
 
         private void CheckPending ()

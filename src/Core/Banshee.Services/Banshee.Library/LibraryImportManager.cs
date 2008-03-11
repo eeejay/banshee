@@ -97,7 +97,7 @@ namespace Banshee.Library
 
             try {            
                 DatabaseTrackInfo track = AddTrackToLibrary (path);
-                if (track != null && track.DbId > 0) {
+                if (track != null && track.TrackId > 0) {
                     IncrementProcessedCount (String.Format ("{0} - {1}", 
                         track.DisplayArtistName, track.DisplayTrackTitle));
                 }

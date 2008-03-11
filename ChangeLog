@@ -1,5 +1,20 @@
 2008-03-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Change 
+	AudiblyEqual to TrackEqual since it makes more sense; make the base 
+	comparison compare the track URIs
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Override TrackEqual and use database IDs for comparisons since that
+	is much more efficient; not complete however; renamed DbId to TrackId
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Changed to use TrackId instead of DbId
+
+2008-03-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:
 	Patch from Lukas Lipka to use the stop icon instead of close icon
 	in the UserJobTile widget (BGO #520342)

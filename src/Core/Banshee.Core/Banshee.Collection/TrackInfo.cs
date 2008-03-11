@@ -84,13 +84,13 @@ namespace Banshee.Collection
                 AlbumTitle, Duration, Uri == null ? "<unknown>" : Uri.AbsoluteUri);
         }
 
-        public virtual bool AudiblyEqual (TrackInfo track)
+        public virtual bool TrackEqual (TrackInfo track)
         {
             if (track == null) {
                 return false;
             }
             
-            return ArtistAlbumEqual (track) && StringUtil.RelaxedCompare (track.TrackTitle, TrackTitle) == 0;
+            return track.Uri.AbsoluteUri == Uri.AbsoluteUri;
         }
         
         public bool ArtistAlbumEqual (TrackInfo track)
