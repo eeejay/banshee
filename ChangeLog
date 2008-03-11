@@ -1,5 +1,10 @@
 2008-03-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Do not crash
+	if the native Cairo pop/push group functions do not exist
+
+2008-03-11  Aaron Bockover  <abock@gnome.org>
+
 	* build/build.rules.mk:
 	* build/m4/banshee/gtk-sharp.m4:
 	* configure.ac: Check for Gtk# 2.10 or better and define HAVE_GTK_2_10

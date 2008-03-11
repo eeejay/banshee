@@ -300,14 +300,24 @@ namespace Hyena.Gui
             return false;
         }
         
+        private static bool native_push_pop_exists = true;
+        
         [DllImport ("libcairo.so.2")]
         private static extern void cairo_push_group (IntPtr ptr);
         private static CairoInteropCall cairo_push_group_call = new CairoInteropCall ("PushGroup");
         
         public static void PushGroup (Cairo.Context cr)
         {
-            if (!CallCairoMethod (cr, ref cairo_push_group_call)) {
-                cairo_push_group (cr.Handle);
+            if (!native_push_pop_exists) {
+                return;
+            }
+            
+            try {
+                if (!CallCairoMethod (cr, ref cairo_push_group_call)) {
+                    cairo_push_group (cr.Handle);
+                }
+            } catch {
+                native_push_pop_exists = false;
             }
         }
         
@@ -317,8 +327,16 @@ namespace Hyena.Gui
         
         public static void PopGroupToSource (Cairo.Context cr)
         {
-            if (!CallCairoMethod (cr, ref cairo_pop_group_to_source_call)) {
-                cairo_pop_group_to_source (cr.Handle);
+            if (!native_push_pop_exists) {
+                return;
+            }
+            
+            try {
+                if (!CallCairoMethod (cr, ref cairo_pop_group_to_source_call)) {
+                    cairo_pop_group_to_source (cr.Handle);
+                }
+            } catch (EntryPointNotFoundException) {
+                native_push_pop_exists = false;
             }
         }
     }
