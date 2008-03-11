@@ -1,3 +1,9 @@
+2008-03-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:
+	Patch from Lukas Lipka to use the stop icon instead of close icon
+	in the UserJobTile widget (BGO #520342)
+
 2008-03-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: 

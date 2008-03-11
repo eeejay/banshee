@@ -83,7 +83,7 @@ namespace Banshee.Gui.Widgets
             progress_bar.Text = " ";
             progress_bar.Show ();
             
-            cancel_button = new Button (new Image (Stock.Close, IconSize.Menu));
+            cancel_button = new Button (new Image (Stock.Stop, IconSize.Menu));
             cancel_button.Relief = ReliefStyle.None;
             cancel_button.ShowAll ();
             cancel_button.Clicked += OnCancelClicked;
