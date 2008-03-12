@@ -317,7 +317,8 @@ namespace Hyena.Data.Sqlite
                     while (reader.Read ()) {
                         if (!ContainsKey (offset)) {
                             item = provider.Load (reader, (int) offset);
-                            item.SourceEntryId = Convert.ToInt64 (reader[reader.FieldCount - 1]);
+                            item.CacheEntryId = Convert.ToInt64 (reader[reader.FieldCount - 1]);
+                            item.CacheModelId = uid;
                             Add (offset, item);
                         }
                         offset++;

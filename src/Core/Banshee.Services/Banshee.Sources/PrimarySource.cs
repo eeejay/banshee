@@ -81,9 +81,9 @@ namespace Banshee.Sources
             DELETE FROM CoreAlbums WHERE AlbumID NOT IN (SELECT AlbumID FROM CoreTracks)
         ");
 
-        protected int source_id;
-        public int SourceId {
-            get { return source_id; }
+        protected int dbid;
+        public int DbId {
+            get { return dbid; }
         }
 
         public ErrorSource ErrorSource {
@@ -104,16 +104,16 @@ namespace Banshee.Sources
 
         protected PrimarySource (string generic_name, string name, string id, int order) : base (generic_name, name, id, order)
         {
-            source_id = ServiceManager.DbConnection.Query<int> ("SELECT SourceID FROM CorePrimarySources WHERE StringID = ?", id);
-            if (source_id == 0) {
-                source_id = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", id);
+            dbid = ServiceManager.DbConnection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = ?", id);
+            if (dbid == 0) {
+                dbid = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", id);
             }
 
-            track_model.Condition = String.Format ("CoreTracks.SourceID = {0}", source_id);
+            track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", dbid);
             error_source.Updated += OnErrorSourceUpdated;
             OnErrorSourceUpdated (null, null);
 
-            primary_sources[source_id] = this;
+            primary_sources[dbid] = this;
         }
 
         internal void NotifyTracksAdded ()

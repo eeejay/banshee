@@ -1,3 +1,16 @@
+2008-03-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/ICacheableItem.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Add a
+	CacheModelId property to Track/Artist/Album classes, and rename
+	SourceEntryId to CacheEntryId.
+
 2008-03-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit cleans up and speeds up reloading.

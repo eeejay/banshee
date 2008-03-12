@@ -137,7 +137,7 @@ namespace Banshee.Library
                 LibraryAlbumInfo album = LibraryAlbumInfo.FindOrCreate (artist, track.AlbumTitle);
 
                 track.DateAdded = DateTime.Now;
-                track.Source = ServiceManager.SourceManager.Library;
+                track.PrimarySource = ServiceManager.SourceManager.Library;
                 track.ArtistId = artist.DbId;
                 track.AlbumId = album.DbId;
                 track.Save (false);

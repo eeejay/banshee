@@ -262,7 +262,7 @@ namespace Banshee.Database
             
             Execute(@"
                 CREATE TABLE CorePrimarySources (
-                    SourceID            INTEGER PRIMARY KEY,
+                    PrimarySourceID     INTEGER PRIMARY KEY,
                     StringID            TEXT UNIQUE
                 )
             ");
@@ -273,7 +273,7 @@ namespace Banshee.Database
             // AlbumArtist (TPE2) (in CoreAlbums?)
             Execute(@"
                 CREATE TABLE CoreTracks (
-                    SourceID            INTEGER NOT NULL,
+                    PrimarySourceID     INTEGER NOT NULL,
                     TrackID             INTEGER PRIMARY KEY,
                     ArtistID            INTEGER,
                     AlbumID             INTEGER,
@@ -306,7 +306,7 @@ namespace Banshee.Database
                     DateUpdatedStamp    INTEGER
                 )
             ");
-            Execute("CREATE INDEX CoreTracksSourceIndex ON CoreTracks(SourceID)");
+            Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(PrimarySourceID)");
             Execute("CREATE INDEX CoreTracksAggregatesIndex ON CoreTracks(FileSize, Duration)");
             Execute("CREATE INDEX CoreTracksArtistIndex ON CoreTracks(ArtistID)");
             Execute("CREATE INDEX CoreTracksAlbumIndex  ON CoreTracks(AlbumID)");
@@ -527,7 +527,7 @@ namespace Banshee.Database
 
         private void RefreshMetadataThread (object state)
         {
-            int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks WHERE SourceID = 1");
+            int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks WHERE PrimarySourceID = 1");
 
             if (total <= 0) {
                 return;
@@ -540,7 +540,7 @@ namespace Banshee.Database
 
             HyenaSqliteCommand select_command = new HyenaSqliteCommand (
                 String.Format (
-                    "SELECT {0} FROM {1} WHERE {2} AND CoreTracks.SourceID = 1",
+                    "SELECT {0} FROM {1} WHERE {2} AND CoreTracks.PrimarySourceID = 1",
                     DatabaseTrackInfo.Provider.Select,
                     DatabaseTrackInfo.Provider.From,
                     DatabaseTrackInfo.Provider.Where

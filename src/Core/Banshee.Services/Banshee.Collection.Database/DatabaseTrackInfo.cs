@@ -101,9 +101,9 @@ namespace Banshee.Collection.Database
             Provider.Save (this);
             if (notify) {
                 if (is_new) {
-                    Source.NotifyTracksAdded ();
+                    PrimarySource.NotifyTracksAdded ();
                 } else {
-                    Source.NotifyTracksChanged ();
+                    PrimarySource.NotifyTracksChanged ();
                 }
             }
         }
@@ -114,21 +114,16 @@ namespace Banshee.Collection.Database
             get { return track_id; }
         }
 
-        private long entry_id;
-        public long SourceEntryId {
-            get { return entry_id; }
-            set { entry_id = value; }
+
+        [DatabaseColumn ("PrimarySourceID", Index = "CoreTracksSourceIndex")]
+        private int primary_source_id;
+        public int PrimarySourceId {
+            get { return primary_source_id; }
         }
 
-        [DatabaseColumn ("SourceID", Index = "CoreTracksSourceIndex")]
-        private int source_id;
-        public int SourceId {
-            get { return source_id; }
-        }
-
-        public PrimarySource Source {
-            get { return PrimarySource.GetById (source_id); }
-            set { source_id = value.SourceId; }
+        public PrimarySource PrimarySource {
+            get { return PrimarySource.GetById (primary_source_id); }
+            set { primary_source_id = value.DbId; }
         }
 
         [DatabaseColumn ("ArtistID", Index = "CoreTracksArtistIndex")]
@@ -338,6 +333,19 @@ namespace Banshee.Collection.Database
             get { return date_updated; }
             set { date_updated = value; }
         }
+
+        private long cache_entry_id;
+        public long CacheEntryId {
+            get { return cache_entry_id; }
+            set { cache_entry_id = value; }
+        }
+
+        private long cache_model_id;
+        public long CacheModelId {
+            get { return cache_model_id; }
+            set { cache_model_id = value; }
+        }
+
 
         private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (
             "SELECT COUNT(*) FROM CoreTracks WHERE Uri = ? OR Uri = ?"

@@ -106,10 +106,16 @@ namespace Banshee.Collection.Database
             get { return dbid; }
         }
 
-        private long entry_id;
-        public long SourceEntryId {
-            get { return entry_id; }
-            set { entry_id = value; }
+        private long cache_entry_id;
+        public long CacheEntryId {
+            get { return cache_entry_id; }
+            set { cache_entry_id = value; }
+        }
+
+        private long cache_model_id;
+        public long CacheModelId {
+            get { return cache_model_id; }
+            set { cache_model_id = value; }
         }
 
         [DatabaseColumn("ArtistID")]
