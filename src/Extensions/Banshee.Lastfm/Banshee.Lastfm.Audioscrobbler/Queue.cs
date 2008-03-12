@@ -135,8 +135,7 @@ namespace Banshee.Lastfm.Audioscrobbler
 
         public Queue ()
         {
-            string xmlfilepath = Path.Combine (Path.Combine (Banshee.Base.Paths.ApplicationData,
-                "plugins"), "last.fm");
+            string xmlfilepath = Path.Combine (Banshee.Base.Paths.ExtensionsData, "last.fm");
             xml_path = Path.Combine (xmlfilepath, "audioscrobbler-queue.xml");
             queue = new List<QueuedTrack> ();
             

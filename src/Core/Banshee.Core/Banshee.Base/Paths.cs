@@ -127,10 +127,20 @@ namespace Banshee.Base
         }
         
         private static string application_data = Path.Combine (Environment.GetFolderPath (
-            Environment.SpecialFolder.ApplicationData), "banshee");
+            Environment.SpecialFolder.ApplicationData), "banshee-1");
         
         public static string ApplicationData {
-            get { return application_data; }
+            get { 
+                if (!Directory.Exists (application_data)) {
+                    Directory.CreateDirectory (application_data);
+                }
+                
+                return application_data; 
+            }
+        }
+        
+        public static string ExtensionsData {
+            get { return Path.Combine (ApplicationData, "extensions"); }
         }
         
         public static string DefaultLibraryPath {

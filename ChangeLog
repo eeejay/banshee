@@ -1,5 +1,18 @@
 2008-03-12  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Change the application
+	data directory to banshee-1; create the directory if it doesn't exist;
+	added ExtensionsData to Paths
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Copy the old library to the new path if it exists - this will allow
+	both old and new Banshee series to fully coexist
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs:
+	Use the ExtensionsData path
+
+2008-03-12  Aaron Bockover  <abock@gnome.org>
+
 	Yes. I made all the build stuff refer to Banshee as banshee-1 instead
 	of banshee-preview. This includes all paths, launchers, and even
 	gconf keys.

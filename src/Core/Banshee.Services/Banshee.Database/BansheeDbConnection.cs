@@ -70,6 +70,11 @@ namespace Banshee.Database
                 if (ApplicationContext.CommandLine.Contains ("db")) {
                     return ApplicationContext.CommandLine["db"];
                 }
+                
+                string proper_dbfile = Path.Combine (Paths.ApplicationData, "banshee.db");
+                if (File.Exists (proper_dbfile)) {
+                    return proper_dbfile;
+                }
 
                 string dbfile = Path.Combine (Path.Combine (Environment.GetFolderPath (
                     Environment.SpecialFolder.ApplicationData), 
@@ -87,8 +92,11 @@ namespace Banshee.Database
                         dbfile = tdbfile;
                     }
                 }
-
-                return dbfile;
+                
+                Log.InformationFormat ("Copying your old Banshee Database to {0}", proper_dbfile);
+                File.Copy (dbfile, proper_dbfile);
+                
+                return proper_dbfile;
             }
         }
 
