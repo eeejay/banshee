@@ -1,6 +1,9 @@
 dnl Automake setup
 
-AC_INIT([banshee-preview], [0.99.1]) # 1.0 Alpha 1
+# 0.98.* = Alpha *
+# 0.99.* = Beta *
+AC_INIT([banshee-preview], [0.98.1]) 
+
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
