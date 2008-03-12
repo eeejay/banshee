@@ -76,17 +76,8 @@ namespace Banshee.Collection.Database
             }
             
             DatabaseTrackInfo db_track = (DatabaseTrackInfo)track;
-            
-            if (db_track.TrackId == TrackId) {
-                /*if (db_track.Source == Source) {
-                    Console.WriteLine ("{0}, {1}", db_track.Source, Source);
-                    return this == db_track;
-                }
-                
-                */ return true;
-            }
-            
-            return false;
+            return db_track.TrackId == TrackId && db_track.CacheModelId == CacheModelId && 
+                db_track.CacheEntryId == CacheEntryId;
         }
         
         public override void Save ()

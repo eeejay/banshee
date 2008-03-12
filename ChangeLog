@@ -1,3 +1,31 @@
+2008-03-12  Aaron Bockover  <abock@gnome.org>
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeService.cs:
+	Added an all-singing, all-dancing GNOME entry service; currently this 
+	just hooks up Gnome.Url.Show (gnome-open) to Banshee.Web.Browser; 
+	ideally Process.Start would work properly, but it's got some issues, 
+	even though it does use xdg-open (which gnome-open should use); 
+	gnome-open is also a bit more backwards compatible and may be necessary
+	on SLED, for instance; phew.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Fixed the playback indication for database tracks (BGO #520503)
+
+	* src/Core/Banshee.Services/Banshee.Web/Browser.cs: Implemented an
+	OpenHandler to allow extensions to override the default way of opening
+	a link in a browser
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GConfConfigurationClient.cs:
+	Renamed namespace from Banshee.Gnome to Banshee.GnomeBackend since there
+	is a possibility of conflicts with the standard Gnome namespace
+
+	* build/build.rules.mk: Add some rules to filter out duplicate references
+	that will be passed to the compiler due to the dependency chain in the
+	build environment; makes debugging easier even though the compiler would
+	filter this out by itself; also put hard target dependencies on assemblies
+	that are referenced in bin/; hopefully will help some occasional build
+	problems
+
 2008-03-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Call

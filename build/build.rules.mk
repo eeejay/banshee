@@ -10,6 +10,10 @@ ASSEMBLY_FILE = $(top_builddir)/bin/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
 
 INSTALL_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_INSTALL_DIR), $(INSTALL_DIR)))
 
+FILTER_LINK_PIPE = tr [:space:] \\n | sort | uniq
+FILTERED_LINK = $(shell echo "$(LINK)" | $(FILTER_LINK_PIPE))
+DEP_LINK = $(shell echo "$(LINK)" | $(FILTER_LINK_PIPE) | sed s,-r:,,g | grep '$(top_builddir)/bin/')
+
 OUTPUT_FILES = \
 	$(ASSEMBLY_FILE) \
 	$(ASSEMBLY_FILE).mdb
@@ -19,7 +23,10 @@ module_SCRIPTS = $(OUTPUT_FILES)
 
 all: $(ASSEMBLY_FILE)
 
-$(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED)
+build-debug:
+	@echo $(DEP_LINK)
+
+$(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	@mkdir -p $(top_builddir)/bin
 	@colors=no; \
 	case $$TERM in \
@@ -33,7 +40,7 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED)
 	test "x$$colors" = "xyes" && \
 		echo -e "\033[1mCompiling $(notdir $@)...\033[0m" || \
 		echo "Compiling $(notdir $@)...";
-	@test "x$(HAVE_MONO_1_2_4)" = "xyes" && warn="-warnaserror"; test "x$(HAVE_GTK_2_10)" = "xyes" && gtk_210="-define:HAVE_GTK_2_10"; $(BUILD) -target:$(TARGET) -out:$@ $$warn $$gtk_210 $(LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
+	@test "x$(HAVE_MONO_1_2_4)" = "xyes" && warn="-warnaserror"; test "x$(HAVE_GTK_2_10)" = "xyes" && gtk_210="-define:HAVE_GTK_2_10"; $(BUILD) -target:$(TARGET) -out:$@ $$warn $$gtk_210 $(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD) 
 	@if [ -e $(notdir $@.config) ]; then \
 		cp $(notdir $@.config) $(top_builddir)/bin; \
 	fi;

@@ -35,7 +35,7 @@ using Hyena;
 using Banshee.Base;
 using Banshee.Configuration;
 
-namespace Banshee.Gnome
+namespace Banshee.GnomeBackend
 {
     public class GConfConfigurationClient : IConfigurationClient
     {

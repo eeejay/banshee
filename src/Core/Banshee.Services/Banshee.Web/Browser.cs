@@ -28,6 +28,7 @@
 //
 
 using System;
+using System.Diagnostics;
 using Mono.Unix;
 
 using Hyena;
@@ -38,19 +39,30 @@ namespace Banshee.Web
 {
     public class Browser
     {
+        public delegate bool OpenUrlHandler (string uri);
+        
+        private static OpenUrlHandler open_handler = null;
+        public static OpenUrlHandler OpenHandler {
+            get { return open_handler; }
+            set { open_handler = value; }
+        }
+    
         public static bool Open (string url)
         {
             try {
-                System.Diagnostics.Process.Start (
-                    System.Uri.EscapeUriString (url)
-                );
+                url = Uri.EscapeUriString (url);
+                if (open_handler != null) {
+                    return open_handler (url);
+                } else {
+                    Process.Start (url);
+                    return true;
+                }
             } catch(Exception e) {
                 Log.Warning (Catalog.GetString ("Could not launch URL"),
                     String.Format (Catalog.GetString ("{0} could not be opened: {1}\n\n " + 
                         "Check your 'Preferred Applications' settings."), url, e.Message), true);
+                return false;
             }
-            
-            return false;
         }
 
         public static readonly string UserAgent = String.Format ("Banshee {0} (http://banshee-project.org/", 
