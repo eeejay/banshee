@@ -1,12 +1,12 @@
 theme = hicolor
 themedir = $(datadir)/icons/$(theme)
 theme_icons = \
-	apps,music-player-banshee-16.png \
-	apps,music-player-banshee-22.png \
-	apps,music-player-banshee-24.png \
-	apps,music-player-banshee-32.png \
-	apps,music-player-banshee-48.png \
-	apps,music-player-banshee-192.png
+	apps,media-player-banshee-16.png \
+	apps,media-player-banshee-22.png \
+	apps,media-player-banshee-24.png \
+	apps,media-player-banshee-32.png \
+	apps,media-player-banshee-48.png \
+	apps,media-player-banshee-192.png
 
 install_icon_exec = $(top_srcdir)/build/icon-theme-installer \
 	-t "$(theme)" \

@@ -10,5 +10,5 @@ export LD_LIBRARY_PATH=@expanded_libdir@:@expanded_libdir@/@PACKAGE@${LD_LIBRARY
 export GST_PLUGIN_PATH=@expanded_libdir@/@PACKAGE@/gstreamer-0.10${GST_PLUGIN_PATH+:$GST_PLUGIN_PATH}
 
 # Finally - environment is set up, time to run our beloved
-exec -a banshee-preview mono --debug $MONO_EXE "$@"
+exec -a banshee-1 mono --debug $MONO_EXE "$@"
 

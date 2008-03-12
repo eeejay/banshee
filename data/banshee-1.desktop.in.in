@@ -1,11 +1,11 @@
 [Desktop Entry]
 Version=1.0
 Encoding=UTF-8
-_Name=Banshee Music Player
-_GenericName=Music Player
-Comment=Play and organize your music
-Exec=banshee-preview --play-enqueued --enqueue %U
-Icon=music-player-banshee
+_Name=Banshee
+_GenericName=Media Player
+Comment=Play and organize your media collection
+Exec=banshee-1 --play-enqueued --enqueue %U
+Icon=media-player-banshee
 StartupNotify=true
 Terminal=false
 Type=Application

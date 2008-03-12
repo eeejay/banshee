@@ -39,7 +39,7 @@ namespace Banshee.GnomeBackend
 {
     public class GConfConfigurationClient : IConfigurationClient
     {
-        private static string base_key = "/apps/banshee/";
+        private static string base_key = "/apps/banshee-1/";
         
         private GConf.Client client;
         private Dictionary<string, string> key_table = new Dictionary<string, string> ();

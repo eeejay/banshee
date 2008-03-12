@@ -3,7 +3,7 @@ SUBDIRS = \
 	icon-theme-hicolor
 
 desktopdir = $(datadir)/applications
-desktop_in_files=banshee-preview.desktop.in.in
+desktop_in_files=banshee-1.desktop.in.in
 desktop_DATA=$(desktop_in_files:.desktop.in.in=.desktop)
 
 %.desktop.in: %.desktop.in.in

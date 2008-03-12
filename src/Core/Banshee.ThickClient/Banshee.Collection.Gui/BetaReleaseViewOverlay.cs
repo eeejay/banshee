@@ -43,6 +43,9 @@ namespace Banshee.Collection.Gui
 {
     public class BetaReleaseViewOverlay
     {
+        // Every time a release is made, increment this if we want to show it
+        private const int WARNING_VERSION = 1;
+    
         private string welcome_string;
         private SingleActorStage stage = new SingleActorStage ();
         private Gdk.Pixbuf logo_scale;
@@ -55,7 +58,7 @@ namespace Banshee.Collection.Gui
 
         public BetaReleaseViewOverlay (Widget widget)
         {
-            if (dismissed) {
+            if (dismissed || Configuration.ConfigurationClient.Get<int> ("core", "beta_release_note", 0) >= WARNING_VERSION) {
                 return;
             }
 
@@ -120,6 +123,8 @@ namespace Banshee.Collection.Gui
 
         protected virtual void OnFinished ()
         {
+            Configuration.ConfigurationClient.Set<int> ("core", "beta_release_note", WARNING_VERSION);
+        
             EventHandler handler = Finished;
             if (handler != null) {
                 handler (this, EventArgs.Empty);

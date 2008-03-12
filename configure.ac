@@ -2,7 +2,7 @@ dnl Automake setup
 
 # 0.98.* = Alpha *
 # 0.99.* = Beta *
-AC_INIT([banshee-preview], [0.98.1]) 
+AC_INIT([banshee-1], [0.98.1]) 
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
@@ -95,7 +95,7 @@ dnl DAAP support (optional)
 #BANSHEE_CHECK_DAAP
 
 dnl i18n
-SHAMROCK_CONFIGURE_I18N(banshee-preview)
+SHAMROCK_CONFIGURE_I18N($PACKAGE)
 
 dnl generated files
 AC_OUTPUT([
@@ -103,7 +103,7 @@ Makefile
 
 build/Makefile
 build/m4/Makefile
-build/banshee-preview.pc
+build/banshee-1.pc
 
 data/Makefile
 data/org.bansheeproject.Banshee.service
@@ -127,7 +127,7 @@ src/AssemblyInfo.cs
 
 src/Clients/Makefile
 src/Clients/Nereid/Makefile
-src/Clients/Nereid/banshee-preview
+src/Clients/Nereid/banshee-1
 
 src/Core/Makefile
 src/Core/Banshee.Core/Makefile

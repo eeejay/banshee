@@ -1,5 +1,11 @@
 2008-03-12  Aaron Bockover  <abock@gnome.org>
 
+	Yes. I made all the build stuff refer to Banshee as banshee-1 instead
+	of banshee-preview. This includes all paths, launchers, and even
+	gconf keys.
+
+2008-03-12  Aaron Bockover  <abock@gnome.org>
+
 	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeService.cs:
 	Fixed the null check, actually works now
 

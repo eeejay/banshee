@@ -6,7 +6,7 @@ SOURCES =  \
 	Nereid/PlayerInterface.cs \
 	Nereid/ViewContainer.cs
 
-bin_SCRIPTS = banshee-preview
+bin_SCRIPTS = banshee-1
 
 include $(top_srcdir)/build/build.mk
 
