@@ -51,6 +51,8 @@ using Banshee.Networking;
 
 using Banshee.Collection;
 
+using Browser = Lastfm.Browser;
+
 namespace Banshee.Lastfm.Audioscrobbler
 {
     public class AudioscrobblerService : IExtensionService, IDisposable
@@ -83,6 +85,8 @@ namespace Banshee.Lastfm.Audioscrobbler
             if (LastfmCore.UserAgent == null) {
                 LastfmCore.UserAgent = Banshee.Web.Browser.UserAgent;
             }
+            
+            Browser.Open = Banshee.Web.Browser.Open;
             
             queue = new Queue ();
             LastfmCore.AudioscrobblerQueue = queue;

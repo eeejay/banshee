@@ -87,6 +87,7 @@
     <menu name="HelpMenu" action="HelpMenuAction">
       <menu name="WebMenu" action="WebMenuAction">
         <menuitem name="WikiGuide" action="WikiGuideAction"/>
+        <menuitem name="WikiSearchHelp" action="WikiSearchHelpAction"/>
         <separator/>
         <menuitem name="Wiki" action="WikiAction"/>
         <menuitem name="WikiDeveloper" action="WikiDeveloperAction"/>

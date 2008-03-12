@@ -1,6 +1,32 @@
 2008-03-12  Aaron Bockover  <abock@gnome.org>
 
 	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeService.cs:
+	Fixed the null check, actually works now
+
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Add a 'Help' menu item 
+	to the bottom of the search entry filter menu
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Add a menu item that takes the user to the documentation on the Wiki
+	for query/search syntaxt and examples
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/SearchEntry.cs: Expose the Menu
+
+	* src/Libraries/Lastfm/Lastfm/Account.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Hook up the web browser stuff again so account links work
+
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs: Add the
+	account signup button back
+
+	* src/Libraries/Lastfm/Lastfm/Browser.cs: Fixed up to work again
+
+2008-03-12  Aaron Bockover  <abock@gnome.org>
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeService.cs:
 	Added an all-singing, all-dancing GNOME entry service; currently this 
 	just hooks up Gnome.Url.Show (gnome-open) to Banshee.Web.Browser; 
 	ideally Process.Start would work properly, but it's got some issues, 

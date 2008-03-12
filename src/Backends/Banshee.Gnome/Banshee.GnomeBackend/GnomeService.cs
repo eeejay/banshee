@@ -41,7 +41,7 @@ namespace Banshee.GnomeBackend
         
         public void Initialize ()
         {
-            if (Browser.OpenHandler != null) {
+            if (Browser.OpenHandler == null) {
                 Browser.OpenHandler = OpenUrl;
             }
         }
@@ -55,7 +55,8 @@ namespace Banshee.GnomeBackend
         
         private bool OpenUrl (string url)
         {
-            return Gnome.Url.Show (url);;
+            Hyena.Log.Debug ("Opening URL via gnome-open", url);
+            return Gnome.Url.Show (url);
         }
         
         string IService.ServiceName {

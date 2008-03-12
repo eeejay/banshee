@@ -94,6 +94,12 @@ namespace Banshee.Gui
                         Banshee.Web.Browser.Open ("http://banshee-project.org/Guide");
                     }),
                     
+                new ActionEntry ("WikiSearchHelpAction", null,
+                    Catalog.GetString ("Advanced Collection Searching"), null,
+                    Catalog.GetString ("Learn advanced ways to search your media collection"), delegate {
+                        Banshee.Web.Browser.Open ("http://banshee-project.org/OnePointEx/Search");
+                    }),
+                    
                 new ActionEntry ("WikiAction", null,
                     Catalog.GetString ("Banshee _Home Page"), null,
                     Catalog.GetString ("Visit the Banshee Home Page"), delegate {

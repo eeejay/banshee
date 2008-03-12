@@ -35,6 +35,9 @@ using Banshee.Gui.Widgets;
 using Banshee.Sources.Gui;
 using Banshee.Collection;
 
+using Banshee.Gui;
+using Banshee.ServiceStack;
+
 namespace Nereid
 {
 
@@ -71,6 +74,21 @@ namespace Nereid
             header.PackStart (title_label, true, true, 0);
             header.PackStart (search_label, false, false, 5);
             header.PackStart (search_entry, false, false, 0);
+            
+            InterfaceActionService uia = ServiceManager.Get<InterfaceActionService> ();
+            if (uia != null) {
+                Gtk.Action action = uia.GlobalActions["WikiSearchHelpAction"];
+                if (action != null) {
+                    MenuItem item = new SeparatorMenuItem ();
+                    item.Show ();
+                    search_entry.Menu.Append (item);
+                    
+                    item = new ImageMenuItem (Stock.Help, null);
+                    item.Activated += delegate { action.Activate (); };
+                    item.Show ();
+                    search_entry.Menu.Append (item);
+                }
+            }
             
             header.ShowAll ();
             search_entry.Show ();

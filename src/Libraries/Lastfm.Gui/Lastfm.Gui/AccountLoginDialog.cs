@@ -84,6 +84,7 @@ namespace Lastfm.Gui
             vbox.PackStart (message, false, false, 0);
         
             login_form = new AccountLoginForm (account);
+            login_form.AddSignUpButton ();
             login_form.Show ();
             
             vbox.PackStart (login_form, true, true, 0);

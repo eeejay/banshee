@@ -30,23 +30,19 @@ using System;
 
 namespace Lastfm
 {
-    /*public delegate bool UriOpenHandler (string uri);
-
     public static class Browser
     {
-        private static UriOpenHandler open_handler;
+        public delegate bool OpenHandler (string uri);
         
-        public static UriOpenHandler Open {
-            get {
-                if (open_handler == null) {
-                    open_handler = new UriOpenHandler (Gnome.Url.Show);
-                }
-                
-                return open_handler;
-            }
-            
+        private static OpenHandler open_handler = DefaultOpen;
+        public static OpenHandler Open {
+            get { return open_handler; }
             set { open_handler = value; }
-        }    
+        }
+        
+        private static bool DefaultOpen (string uri)
+        {
+            return false;
+        }
     }
-    */
 }

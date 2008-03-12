@@ -68,17 +68,17 @@ namespace Lastfm
 
         public void SignUp ()
         {
-            //Browser.Open ("http://www.last.fm/join");
+            Browser.Open ("http://www.last.fm/join");
         }
         
         public void VisitUserProfile (string username)
         {
-            //Browser.Open (String.Format ("http://last.fm/user/{0}", username));
+            Browser.Open (String.Format ("http://last.fm/user/{0}", username));
         }
         
         public void VisitHomePage ()
         {
-            //Browser.Open ("http://last.fm/");
+            Browser.Open ("http://last.fm/");
         }
         
         public virtual void Save ()

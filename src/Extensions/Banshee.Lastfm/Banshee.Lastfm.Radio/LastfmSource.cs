@@ -46,6 +46,8 @@ using Banshee.Networking;
 
 using Banshee.Sources.Gui;
 
+using Browser = Lastfm.Browser;
+
 namespace Banshee.Lastfm.Radio
 {   
     public class LastfmSource : Source, IDisposable
@@ -81,6 +83,8 @@ namespace Banshee.Lastfm.Radio
             if (LastfmCore.UserAgent == null) {
                 LastfmCore.UserAgent = Banshee.Web.Browser.UserAgent;
             }
+            
+            Browser.Open = Banshee.Web.Browser.Open;
             
             connection = LastfmCore.Radio;
             connection.UpdateNetworkState (NetworkDetect.Instance.Connected);

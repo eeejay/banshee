@@ -64,6 +64,10 @@ namespace Banshee.Widgets
             add { filter_changed += value; }
             remove { filter_changed -= value; }
         }
+        
+        public Menu Menu {
+            get { return menu; }
+        }
 
         public SearchEntry()
         {

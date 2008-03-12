@@ -45,7 +45,8 @@ using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Gui;
 using Banshee.Collection;
-using Banshee.Web;
+
+using Browser = Banshee.Web.Browser;
 
 namespace Banshee.Lastfm.Radio
 {
