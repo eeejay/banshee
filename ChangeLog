@@ -1,5 +1,14 @@
 2008-03-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Call
+	RefreshAndReload on smart playlist Refresh action.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	Call RefreshAndReload when loading the smart playlists if we just migrated
+	them.
+
+2008-03-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:

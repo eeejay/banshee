@@ -38,6 +38,8 @@ namespace Banshee.SmartPlaylist
         private DateTime start;
         private uint timeout_id = 0;
 
+        private bool migrated_this_run = false;
+
         private double cpu_ms_since_last_check = 0;
         public double CpuTime {
             get { return cpu_ms_since_last_check; }
@@ -47,6 +49,7 @@ namespace Banshee.SmartPlaylist
         public SmartPlaylistCore()
         {
             if (Migrator.MigrateAll ()) {
+                migrated_this_run = true;
                 // Listen for added/removed sources and added/changed songs
                 ServiceManager.SourceManager.SourceAdded += HandleSourceAdded;
                 ServiceManager.SourceManager.SourceRemoved += HandleSourceRemoved;
@@ -67,7 +70,9 @@ namespace Banshee.SmartPlaylist
             if (args.Source == ServiceManager.SourceManager.DefaultSource) {
                 foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll ()) {
                     playlists.Add (pl);
-                    //pl.Reload ();
+                    if (migrated_this_run) {
+                        pl.RefreshAndReload ();
+                    }
                     ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
                 }
                 return;

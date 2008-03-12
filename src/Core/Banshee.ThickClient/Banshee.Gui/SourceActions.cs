@@ -275,7 +275,7 @@ namespace Banshee.Gui
             SmartPlaylistSource playlist = ActionSource as SmartPlaylistSource;
 
             if (playlist != null && playlist.CanRefresh) {
-                playlist.Reload ();
+                playlist.RefreshAndReload ();
             }
         }
 
