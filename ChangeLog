@@ -1,3 +1,8 @@
+2008-03-13  James Willcox  <snorp@snorp.net>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Correctly update after cover art appears
+	
 2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Resources/audioscrobbler.png: Replace

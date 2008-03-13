@@ -293,7 +293,7 @@ namespace Banshee.Gui.Widgets
                 cr.PaintWithAlpha (stage.Actor.Percent);
                 return;
             }
-            
+
             // XFade only the cover art
             cr.Rectangle (0, 0, Allocation.Height, Allocation.Height);
             cr.Clip ();
@@ -305,29 +305,30 @@ namespace Banshee.Gui.Widgets
             CairoExtensions.PopGroupToSource (cr);
             
             cr.PaintWithAlpha (1.0 - stage.Actor.Percent);
-            
+
             // Fade in/out the text
             cr.ResetClip ();
             cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cr.Clip ();
-            
+
             bool same_artist_album = incoming_track != null ? incoming_track.ArtistAlbumEqual (current_track) : false;
+            bool same_track = incoming_track != null ? incoming_track.Equals (current_track) : false;
             
             if (same_artist_album) {
-                RenderTrackInfo (cr, incoming_track, false, true);
-            }
+                RenderTrackInfo (cr, incoming_track, same_track, true);
+            } 
                    
             if (stage.Actor.Percent <= 0.5) {
                 // Fade out old text
                 CairoExtensions.PushGroup (cr);
-                RenderTrackInfo (cr, current_track, true, !same_artist_album);
+                RenderTrackInfo (cr, current_track, !same_track, !same_artist_album);
                 CairoExtensions.PopGroupToSource (cr);
                
                 cr.PaintWithAlpha (1.0 - (stage.Actor.Percent * 2.0));
             } else {
                 // Fade in new text
                 CairoExtensions.PushGroup (cr);
-                RenderTrackInfo (cr, incoming_track, true, !same_artist_album);
+                RenderTrackInfo (cr, incoming_track, !same_track, !same_artist_album);
                 CairoExtensions.PopGroupToSource (cr);
                 
                 cr.PaintWithAlpha ((stage.Actor.Percent - 0.5) * 2.0);
@@ -410,7 +411,7 @@ namespace Banshee.Gui.Widgets
         {
             TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
 
-            if (track == current_track) {
+            if (track == current_track && current_pixbuf != missing_pixbuf) {
                 return;
             } else if (track == null) {
                 incoming_track = null;
