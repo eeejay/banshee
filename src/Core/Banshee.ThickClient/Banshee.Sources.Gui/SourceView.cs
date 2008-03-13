@@ -113,9 +113,13 @@ namespace Banshee.Sources.Gui
             
             ServiceManager.SourceManager.SourceUpdated += delegate (SourceEventArgs args) {
                 Banshee.Base.ThreadAssist.ProxyToMain (delegate {
-                    TreeIter iter = FindSource (args.Source);
-                    store.SetValue (iter, 1, args.Source.Order);
-                    QueueDraw ();
+                    lock (args.Source) {
+                        TreeIter iter = FindSource (args.Source);
+                        if (!TreeIter.Zero.Equals (iter)) {
+                            store.SetValue (iter, 1, args.Source.Order);
+                            QueueDraw ();
+                        }
+                    }
                 });
             };
             

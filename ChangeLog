@@ -1,5 +1,11 @@
 2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Avoid
+	GtkCritical warning by checking that the TreeIter is not Zero before
+	setting a value on it.  Fixes bug with closing the Error Source.
+
+2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs:
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs:
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs:
