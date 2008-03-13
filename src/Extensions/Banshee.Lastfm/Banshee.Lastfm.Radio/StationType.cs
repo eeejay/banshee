@@ -110,7 +110,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Neighbors"),
             Catalog.GetString ("Of User:"),
             "user/{0}/neighbours",
-            "neighbour",
+            "system-users",
             false
         );
 
@@ -119,7 +119,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Group"),
             Catalog.GetString ("Group Name:"),
             "group/{0}",
-            "stock_people",
+            "system-users",
             false
         );
 
@@ -137,7 +137,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Fan"),
             Catalog.GetString ("Fans of:"),
             "artist/{0}/fans",
-            "stock_people",
+            "system-users",
             false
         );
 
@@ -146,7 +146,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Similar"),
             Catalog.GetString ("Similar to:"),
             "artist/{0}/similarartists",
-            null,
+            "personal",
             false
         );
 

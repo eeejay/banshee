@@ -1,5 +1,13 @@
 2008-03-12  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Make
+	CanPlay false if there is a stream error on the track
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:
+	Change some of the icons for now
+
+2008-03-12  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Change the application
 	data directory to banshee-1; create the directory if it doesn't exist;
 	added ExtensionsData to Paths

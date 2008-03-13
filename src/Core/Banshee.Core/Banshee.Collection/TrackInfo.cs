@@ -249,7 +249,10 @@ namespace Banshee.Collection
         
         public virtual StreamPlaybackError PlaybackError {
             get { return playback_error; }
-            set { playback_error = value; }
+            set { 
+                playback_error = value;
+                CanPlay &= value == StreamPlaybackError.None;
+            }
         }
 
         private bool can_save_to_database = true;
