@@ -185,5 +185,25 @@ namespace Banshee.ServiceStack
                 return version;
             }
         }
+        
+        private static string display_version;
+        public static string DisplayVersion {
+            get { 
+                if (display_version != null) {
+                    return display_version;
+                }
+                
+                foreach (Attribute attribute in Assembly.GetEntryAssembly ().GetCustomAttributes (false)) {
+                    Type type = attribute.GetType ();
+                    PropertyInfo property = type.GetProperty ("Version");
+                    if (type.Name == "AssemblyDisplayVersionAttribute" && property != null && 
+                        property.PropertyType == typeof (string)) {
+                        display_version = (string)property.GetValue (attribute, null); 
+                    }
+                }
+                
+                return display_version;
+            }
+        }
     }
 }

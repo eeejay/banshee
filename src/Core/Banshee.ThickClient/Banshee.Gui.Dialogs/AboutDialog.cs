@@ -45,19 +45,21 @@ namespace Banshee.Gui.Dialogs
             // build authors page
             List<string> authors = new List<string> ();            
             authors.Add (Catalog.GetString ("Primary Development"));
+            authors.Add (String.Empty);
             
             foreach (ProductAuthor author in ProductInformation.Authors) {
                 authors.Add (String.Format("    {0} ({1})", author.Name, author.Role));
             }
             
-            authors.Add ("");
+            authors.Add (String.Empty);
             authors.Add (Catalog.GetString("Contributors"));
+            authors.Add (String.Empty);
             
             foreach (string author in ProductInformation.Contributors) {
                 authors.Add (String.Format("    {0}", author));
             }
             
-            authors.Add ("");
+            authors.Add (String.Empty);
             
             // build translators page
             StringBuilder translation_credits = new StringBuilder ();
@@ -70,14 +72,18 @@ namespace Banshee.Gui.Dialogs
                 translation_credits.Append ("\n");
             }
             
-            //Logo = Branding.AboutBoxLogo;
-            //Name = Branding.ApplicationName;
+            SetUrlHook (delegate (Gtk.AboutDialog dialog, string link) {
+                Banshee.Web.Browser.Open (link);
+            });
+            
             Name = "Banshee";
             Logo = Gdk.Pixbuf.LoadFromResource ("banshee-logo.png");
-            Version = Banshee.ServiceStack.Application.Version;
-            Comments = Catalog.GetString ("Music Management and Playback for GNOME.");
+            Version = String.Format ("{0} ({1})", 
+                Banshee.ServiceStack.Application.DisplayVersion, 
+                Banshee.ServiceStack.Application.Version);
+            Comments = Catalog.GetString ("Extraordinary Multimedia Management and Playback");
             Copyright = Catalog.GetString (
-                "Copyright \u00a9 2005-2007 Novell, Inc.\n" + 
+                "Copyright \u00a9 2005-2008 Novell, Inc.\n" + 
                 "Copyright \u00a9 2005 Aaron Bockover"
             );
             
@@ -90,10 +96,6 @@ namespace Banshee.Gui.Dialogs
             
             License = ProductInformation.License;
             WrapLicense = true;
-            
-            //SetUrlHook(delegate(Gtk.AboutDialog dialog, string link) {
-            //    Banshee.Web.Browser.Open(link);
-            //});
         }
     }
 }

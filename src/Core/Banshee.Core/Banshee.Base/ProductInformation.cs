@@ -42,11 +42,11 @@ namespace Banshee.Base
         
         static ProductInformation ()
         {
-            try {
+        //    try {
                 LoadContributors ();
                 LoadTranslators ();
-            } catch {
-            }
+       //     } catch {
+     //       }
         }
         
         private static void LoadContributors ()
@@ -58,7 +58,7 @@ namespace Banshee.Base
             doc.LoadXml (Resource.GetFileContents ("contributors.xml"));
         
             foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
-                if (node.FirstChild.Value == null) {
+                if (node.FirstChild == null || node.FirstChild.Value == null) {
                     continue;
                 }
 

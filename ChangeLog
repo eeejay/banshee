@@ -1,3 +1,17 @@
+2008-03-13  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac:
+	* src/AssemblyInfo.cs.in: 
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:
+	Expose a display version in assembly metadata and API
+
+	* src/Core/Banshee.Core/Banshee.Base/ProductInformation.cs: Fix small bug
+
+	* src/Core/Banshee.Core/Resources/contributors.xml: Updated
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs: 
+	Some minor fixes and cosmetic polish; the link works again
+
 2008-03-12  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Redefine 
