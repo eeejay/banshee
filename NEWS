@@ -1,172 +1,198 @@
 ===============================================================================
-WELCOME TO BANSHEE 0.13.1
+WELCOME TO BANSHEE 1.0 ALPHA 1! (0.98.1)
 ===============================================================================
 
- * Banshee is a music management and playback application for GNOME.
+  * Banshee is a multimedia management and playback application for GNOME.
 
-   "Import, organize, play, and share your music using Banshee's simple, 
-    powerful interface. Rip CDs, play and sync your iPod, create playlists, 
-    and burn audio CDs. Most portable music devices are supported. Banshee 
-    also has support for podcasting, smart playlists, music recommendations, 
-    and much more."
+    "Import, organize, and discover new music with Banshee through its simple
+    and powerful interface and wide array of innovative features. Create 
+    your own radio stations or listen to a friends' through Last.fm integration;
+    experience automatic cover art fetching as you listen; and easily browse,
+    search, and control your media collection."
 
- * Learn More: http://banshee-project.org/Discover
- * Release Overview Page: http://banshee-project.org/Releases/0.13.1
-
-
-===============================================================================
-TABLE OF CONTENTS
-===============================================================================
-
- * Welcome
- * Module Notes
- * Get The Goods
-   - Sources
-   - ChangeLogs
-   - Dependencies
- * New Stuff
-   - Features
-   - Localization
- * Bugzilla Overview
-   - Noteworthy bugs fixes/enhancements embraced in this release
-   - Show all bugs marked FIXED during this release cycle
-   - File Bugs... Be Proactive... Contribute to Open Source!
- * Miscellaneous
-   - Contributors for this release
-   - Contributors for past releases
-   - Thanks!
+  * Learn More: http://banshee-project.org/Releases/0.98.1
 
 
 ===============================================================================
-MODULE NOTES
+ALPHA RELEASE DISCLAIMER
 ===============================================================================
 
- * The location of the user configuration directory for Banshee changed from
-   ~/.gnome2/banshee to and XDG based directory, typically ~/.config/banshee
+    This is the first release in the Banshee 1.0 series. This Alpha 1 release 
+    does not have feature parity with previous Banshee releases (the last 
+    being Banshee 0.13.2). This means there are a number of features in this 
+    release that users may have come to know and love in Banshee that are 
+    missing for the time being. 
 
- * The banshee-official-plugins module has been merged with core, so 
-   banshee-official-plugins is now obsolete
- 
- * libipoddevice (0.5.3) and ipod-sharp (0.6.3) are required for iPod support
+    However, although this is an Alpha release, it is quite stable and has 
+    many great new features and performance improvements which will be detailed
+    later. It has also been designed to be both installed and run in parallel 
+    with previous Banshee releases, so you can test the release out without 
+    breaking your stable Banshee setup.
 
- * Helix support has been removed from core and is now available from
-   the Helix Banshee community project. More information regarding Helix
-   support can be found at: http://helix-banshee.helixcommunity.org
- 
+    Missing features include:
+
+      * No hardware support 
+        - Audio CDs, CD Burning
+        - iPod, MTP, Mass Storage and other Digital Audio Player support
+
+      * Some plugins have not yet been ported to the new 1.0 architecture:
+        - Podcasting, DAAP/iTunes Music Sharing, Internet Radio
+        - Recommendations, Mini Mode, Bookmarks, Batch Cover Art Fetching
+
+    Do not despair, these features will be added back before the final 1.0 
+    release. Many hardware related features are projected to land in the 
+    Alpha 2 and 3 releases of Banshee 1.0. We expect releases in quick 
+    succession leading up to the final 1.0 release. 
+
+    Please read the full release notes on the Banshee Wiki for more details:
+
+      * http://banshee-project.org/Releases/0.98.1
+
 
 ===============================================================================
-GET THE GOODS
+OTHER NOTES
+===============================================================================
+
+    These changes were made to ensure that you can run older Banshee releases
+    in parallel with new Banshee releases:
+
+    * The location of the user configuration directory for Banshee 1.x changed
+      from ~/.config/banshee to ~/.config/banshee-1 (where ~/.config is defined
+      by XDG policy)
+
+    * The base GConf path used for storing settings via the GNOME backend
+      changed from /apps/banshee to /apps/banshee-1; an XML configuration file
+      will be used if the GNOME backend extension is not installed
+
+
+===============================================================================
+SOURCES / PACKAGES
 ===============================================================================
 
 Sources
 -------
 
- * Banshee 0.13.1 Tarballs:
-   http://banshee-project.org/files/banshee/banshee-0.13.1.tar.bz2
-   http://banshee-project.org/files/banshee/banshee-0.13.1.tar.gz
- 
- * ipod-sharp 0.6.2 Tarball:
-   http://banshee-project.org/files/ipod-sharp/ipod-sharp-0.6.3.tar.gz
+    * Banshee 0.98.1 Tarballs:
+      http://banshee-project.org/files/banshee/banshee-1-0.98.1.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-0.98.1.tar.gz
 
- * libipoddevice 0.5.2 Tarball:
-   http://banshee-project.org/files/libipoddevice/libipoddevice-0.5.3.tar.gz
+Packages
+--------
 
- * njb-sharp 0.3.0 Tarball:
-   http://banshee-project.org/files/njb-sharp/njb-sharp-0.3.0.tar.gz
+    Packages are available from the openSUSE Build Service in the
+    Banshee:Preview project. Currently only packages for openSUSE 10.3
+    and openSUSE Factory are being built. We expect to target more
+    distributions and older openSUSE/SLED releases as we approach the
+    final 1.0 release:
+
+    * http://download.opensuse.org/repositories/Banshee:/Preview/
 
 ChangeLogs
 ----------
- 
- * http://banshee-project.org/files/banshee/banshee-0.13.1.changes
 
-Dependencies
-------------
-
- * Mono 1.2.x and full stack
- * gtk-sharp-2.0 2.8 or 2.10
- * GStreamer 0.10.3 or better (0.10.12+ Recommended)
- * sqlite3
- * libmusicbrainz 2.1.1 or better
- * libnautilus-burn 2.12 or better
- * GTK+ 2.8 or better
- * HAL 0.5.2 or better (0.5.6+ Recommended)
+    * http://banshee-project.org/files/banshee/banshee-1-0.98.1.changes
 
 
 ===============================================================================
-NEW STUFF
+DEPENDENCIES
 ===============================================================================
 
-Features
---------
+    * Mono 1.2.2 (.NET 2.0 Profile / gmcs)
+    * SQlite 3.4
+    * Gtk# 2.8
+    * GStreamer 0.10.3
 
- * Added Undo/Redo support to the track editor (BGO #465736)
+    * NDesk DBus (ndesk-dbus) 0.5
+    * NDesk DBus GLib (ndesk-dbus-glib) 0.3
+    * Mono.Addins (mono-addins) 0.3.1
+    * TagLib# (taglib-sharp) 2.0
 
- * Play Internet Radio playlists from the open location dialog
+    Please note that for openSUSE, all of the dependencies above can be 
+    found in the openSUSE Build Service, and are linked into the 
+    Banshee:Preview project. Even if you build from source, if you wish
+    to avoid building the entire dependency chain above, add the 
+    Banshee:Preview repository to your repository list.
 
-===============================================================================
-BUGZILLA OVERVIEW
-===============================================================================
-
-Noteworthy bugs fixes/enhancements embraced in this release
------------------------------------------------------------
-
- GNOME Bugzilla
-
- * 453420 - Fixed CD burning in GNOME 2.19.x+
- * 457711 - Added new managed playlist parsing that eliminates the need for
-            totem-plparser (Aaron Bockover)
- * 468216 - Support GZipped compressed HTTP streams from last.fm in the 
-            recommendation plugin (Christian Krause)
- * 451457 - Fixed parsing of similarity in recommendation plugin that would
-            allow it to surpass 100% in some locales (Aaron Bockover)
- * 461596 - Expand $HOME and ~ in XDG user-dirs.dirs
-
-Show all bugs marked FIXED during this release cycle
-----------------------------------------------------
-
- * http://banshee-project.org/files/closedbugs.php/2007-08-06,2007-08-20
-
-File Bugs... Be Proactive... Contribute to Open Source!
--------------------------------------------------------
-
- * Please do not hesitate to file bugs against Banshee in GNOME Bugzilla.
- * http://bugzilla.gnome.org, component: banshee
- * Banshee Community Forums: http://banshee-project.org/forums
- * Discuss Banshee on the mailing list or in #banshee on irc.gnome.org.
- * Lots of information on the Banshee Wiki: http://banshee-project.org
- * Need to debug Banshee? http://banshee-project.org/Debugging
+    Historically, Banshee has fostered development of a number of projects
+    and bundled their source code instead of depending on external builds.
+    Many of these dependencies have matured and grown into well maintained
+    projects on their own, and we are now depending on them externally. We
+    waited to remove the bundles long enough to allow for distributions to
+    ship packages to reduce the pain of building Banshee.
 
 
 ===============================================================================
-MISCELLANEOUS
+NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-Contributors for this release
+    Banshee 1.0 Alpha 1 represents the first release since we began rewriting
+    much of the core of Banshee. The primary reason for rewriting this core
+    was to deliver much needed performance improvements.
+
+    Banshee now uses much less memory and has greatly improved startup speed.
+    It can handle collections that are much larger in size without adversely
+    affecting application speed or memory usage.
+
+    These core architectural changes also allowed us to cleanly implement
+    many great new features and provides a framework for new features to
+    be easily developed in the future.
+
+    New features in this release include:
+
+    * Artist/Album Browser
+    * Powerful new query/search capabilities
+    * Playback from a dedicated source while interacting with other sources
+    * Play Queue taking control of playback over other sources when populated
+    * Tightly integrated Last.fm and Audioscrobbler support
+    * Create your own custom Last.fm radio stations to suit your tastes
+    * 10 band software equalizer (requires additional GStreamer dependencies)
+
+
+===============================================================================
+REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
+===============================================================================
+
+    While this is an Alpha Release, we have known it to be quite stable. There
+    are a number of missing features though that will be added back as we
+    progress towards the final 1.0 release of Banshee.
+
+    If you encounter any bad behavior with this release, please do not
+    hesitate to file bugs!
+
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.98.1
+
+
+===============================================================================
+VALUED BANSHEE CONTRIBUTORS
+===============================================================================
+
+Contributors For This Release
 -----------------------------
-   
-   Community makes Open Source work!
 
-   Aaron Bockover, Christian Krause
+    The following people directly contributed to the release of this version
+    of Banshee. Without their help, there would be no release!
+      
+      Aaron Bockover, Alan McGovern, Alexander Hixon, Gabriel Burt, 
+      James Willcox, Michael Monreal, Ruben Vermeersch, Scott Peterson, 
+      Sebastian Dröge, Will Farrington
 
-Contributors for past releases [1]
-----------------------------------
+    The release notes and screenshots for this release were crafted by:
 
-   Aaron Bockover, Alexandros Frantzis, Alp Toker, Bertrand Lorentz, Bill 
-   Dawson, Bob Copeland, Bojan Rajkovic, Brian Nickel, Chris Turchin, 
-   Christian Krause, Christopher James Halse Rogers, Dan Wilson, 
-   Daniel Munkton, Eric Butler, Gabriel Burt, Igor Guerrero Fonseca, 
-   Ilya Konstantinov, Jakub Steiner, James Willcox, Jan Arne Petersen, 
-   Jason Conti, Juri Pakaste, Lauri Kotilainen, Michael Monreal, Mike Urbanski, 
-   Nathan Palmer, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch, 
-   Sebastian Dröge, Scott Peterson, Tim Yamin, Trey Ethridge
+      Aaron Bockover, Gabriel Burt, Jorge Castro, Josiah Ritchie,
+      Scott Peterson
 
-   [1] This list is actually only accurate since 0.11.3. I need to grep the
-   ChangeLog to build a complete list. If your name is missing here, feel
-   free to let us know, or just wait for it to appear in a later release.
+Contributors In Past Releases
+-----------------------------
 
-Thanks!
--------
-
-   Enjoy the release! We appreciate your support and involvement!
-
+    Alan McGovern, Alexander Hixon, Alexandros Frantzis, Alp Toker,
+    Aydemir Ulaş Şahin, Ben Maurer, Bertrand Lorentz, Bill Dawson, 
+    Bob Copeland, Bojan Rajkovic, Brian Nickel, Chris Lahey, Chris Toshok,
+    Chris Turchin, Christian Krause, Christopher James Halse Rogers, 
+    Dan Wilson, Dan Winship, Daniel Munkton, Eric Butler, Fredrik Hedberg,
+    Hans Petter Jansson, Igor Guerrero Fonseca, Ilya Konstantinov,
+    Ivan N. Zlatev, James Willcox, Jan Arne Petersen, Jason Conti, Jeff Tickle,
+    Jorge Castro, Juri Pakaste, Ken Vandine, Larry Ewing, Lauri Kotilainen,
+    Michael Monreal, Miguel de Icaza, Mike Urbanski, Nathan Palmer, 
+    Oscar Forero, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch,
+    Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington
 
