@@ -76,6 +76,10 @@ namespace Banshee.Gui
                 Active = (RadioAction)this["RepeatNoneAction"];
             }
             Active.Activate ();
+
+            foreach (RadioAction iter_action in this) {
+                iter_action.Sensitive = false;
+            }
         }
 
         private void OnChanged (object o, ChangedArgs args)
