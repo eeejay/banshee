@@ -1,3 +1,8 @@
+2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs: Add
+	Banshee Group radio station as a default.
+
 2008-03-13  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Protect against

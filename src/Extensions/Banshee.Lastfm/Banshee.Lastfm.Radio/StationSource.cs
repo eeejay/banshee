@@ -546,6 +546,7 @@ namespace Banshee.Lastfm.Radio
                 stations.Add (new StationSource (lastfm, Catalog.GetString ("Recommended"), "Recommended", creator));
                 stations.Add (new StationSource (lastfm, Catalog.GetString ("Personal"), "Personal", creator));
                 stations.Add (new StationSource (lastfm, Catalog.GetString ("Loved"), "Loved", creator));
+                stations.Add (new StationSource (lastfm, Catalog.GetString ("Banshee Group"), "Group", "Banshee"));
                 stations.Add (new StationSource (lastfm, Catalog.GetString ("Neighbors"), "Neighbor", creator));
             }
 
