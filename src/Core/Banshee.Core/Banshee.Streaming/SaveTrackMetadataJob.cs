@@ -54,6 +54,7 @@ namespace Banshee.Streaming
                 return;
             }
         
+            // Note: this should be kept in sync with the metadata read in StreamTagger.cs
             TagLib.File file = StreamTagger.ProcessUri(track.Uri);
             file.Tag.AlbumArtists = new string [] { track.ArtistName };
             file.Tag.Album = track.AlbumTitle;
@@ -61,8 +62,12 @@ namespace Banshee.Streaming
             file.Tag.Title = track.TrackTitle;
             file.Tag.Track = (uint)track.TrackNumber;
             file.Tag.TrackCount = (uint)track.TrackCount;
+            file.Tag.Composers = new string [] { track.Composer };
+            file.Tag.Copyright = track.Copyright;
+            file.Tag.Comment = track.Comment;
+            file.Tag.Disc = (uint)track.Disc;
             file.Tag.Year = (uint)track.Year;
-            file.Save();
+            file.Save ();
         }
     }
 }

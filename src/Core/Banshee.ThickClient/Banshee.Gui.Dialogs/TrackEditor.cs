@@ -111,6 +111,8 @@ namespace Banshee.Gui.Dialogs
 
     public class TrackEditor : GladeWindow
     {
+        [Widget] private Notebook EditorNotebook;
+        [Widget] private VBox EditorVBox;
         [Widget] private Button CancelButton;
         [Widget] private Button SaveButton;
         [Widget] private Button Previous;
@@ -168,6 +170,13 @@ namespace Banshee.Gui.Dialogs
                     TrackSet.Add(new EditorTrack(track));
             }
             
+            Label notice = new Label ();
+            notice.Wrap = true;
+            notice.Markup = "<i>Note: The artist and album fields are not editable in this preview release.</i>";
+            notice.ShowAll ();
+            EditorVBox.PackStart (notice, false, true, 6);
+            EditorVBox.ReorderChild (notice, 0);
+            
             rating_entry.Show();
             (Glade["RatingLabel"] as Label).MnemonicWidget = rating_entry;
             RatingContainer.PackStart(rating_entry, false, false, 0);
@@ -190,6 +199,10 @@ namespace Banshee.Gui.Dialogs
             RatingSync.Clicked += OnRatingSyncClicked;
             EnterNextTitle.Clicked += OnEnterNextTitleClicked;
             CoverButton.Clicked += OnCoverButtonClicked;
+            
+            // FIXME artist/album editing disabled for now in trunk
+            Artist.Sensitive = false;
+            Album.Sensitive = false;
             
             Artist.Changed += OnValueEdited;
             Album.Changed += OnValueEdited;
@@ -223,7 +236,7 @@ namespace Banshee.Gui.Dialogs
             EnterNextTitle.Visible = TrackSet.Count > 1;
             Glade["SyncAllAlignment"].Visible = TrackSet.Count > 1;
             
-            (Glade["Notebook"] as Gtk.Notebook).RemovePage(1);
+            EditorNotebook.RemovePage(1);
 
             tips.SetTip(TrackNumberIterator, Catalog.GetString("Automatically set all track numbers in increasing order"), "track iterator");
             tips.SetTip(TrackCountSync, Catalog.GetString("Set all track counts to this value"), "track counts");

@@ -83,6 +83,7 @@ namespace Banshee.Streaming
 
         public static void TrackInfoMerge (TrackInfo track, TagLib.File file, bool preferTrackInfo)
         {
+            // Note: this should be kept in sync with the metadata written in SaveTrackMetadataJob.cs
             track.Uri = new SafeUri (file.Name);
             track.MimeType = file.MimeType;
             track.FileSize = Banshee.IO.File.GetSize (track.Uri);

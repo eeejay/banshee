@@ -10,11 +10,14 @@
         <property name="visible">True</property>
         <property name="spacing">10</property>
         <child>
-          <widget class="GtkNotebook" id="Notebook">
+          <widget class="GtkNotebook" id="EditorNotebook">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <child>
-              <widget class="GtkTable" id="table1">
+              <widget class="GtkVBox" id="EditorVBox">
+                <property name="visible">True</property>
+            <child>
+              <widget class="GtkTable" id="EditorTable">
                 <property name="visible">True</property>
                 <property name="border_width">10</property>
                 <property name="n_rows">10</property>
@@ -622,6 +625,8 @@
                     <property name="y_options"></property>
                   </packing>
                 </child>
+              </widget>
+            </child>
               </widget>
             </child>
             <child>
