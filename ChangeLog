@@ -1,3 +1,8 @@
+2008-03-12  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Don't
+	copy the old db file unless it exists.
+
 2008-03-12  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Make

@@ -88,13 +88,13 @@ namespace Banshee.Database
                         "banshee"),
                         "banshee.db");
 
-                    if (File.Exists (tdbfile)) {
-                        dbfile = tdbfile;
-                    }
+                    dbfile = tdbfile;
                 }
                 
-                Log.InformationFormat ("Copying your old Banshee Database to {0}", proper_dbfile);
-                File.Copy (dbfile, proper_dbfile);
+                if (File.Exists (dbfile)) {
+                    Log.InformationFormat ("Copying your old Banshee Database to {0}", proper_dbfile);
+                    File.Copy (dbfile, proper_dbfile);
+                }
                 
                 return proper_dbfile;
             }
