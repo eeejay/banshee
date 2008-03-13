@@ -109,9 +109,7 @@ namespace Hyena.Data.Sqlite
                 result = command.WaitForResult (this);
             }
 
-            return result == null 
-                ? default (T)
-                : (T) SqliteUtils.FromDbFormat (typeof (T), Convert.ChangeType (result, typeof (T)));
+            return (T)SqliteUtils.FromDbFormat (typeof (T), result);
         }
 
         public T Query<T> (HyenaSqliteCommand command, params object [] param_values)

@@ -84,26 +84,8 @@ namespace Hyena.Data.Sqlite
         public void SetValue (object target, IDataReader reader, int column)
         {
             // FIXME should we insist on nullable types?
-            object result;
-            if (type == typeof (string)) {
-                result = !reader.IsDBNull (column)
-                    ? String.Intern (reader.GetString (column))
-                    : null;
-            } else if (type == typeof (int)) {
-                result = !reader.IsDBNull (column)
-                    ? reader.GetInt32 (column)
-                    : 0;
-            } else if (type == typeof (int)) {
-                result = !reader.IsDBNull (column)
-                    ? Convert.ToInt64 (reader.GetValue (column))
-                    : Int64.MinValue;
-            } else {
-                result = !reader.IsDBNull (column)
-                    ? Convert.ToInt64 (reader.GetValue (column))
-                    : 0;
-            }
-            result = SqliteUtils.FromDbFormat (type, result);
-            SetValue (target, result);
+            object value = reader.IsDBNull (column) ? null : reader.GetValue (column);
+            SetValue (target, SqliteUtils.FromDbFormat(type, value));
         }
         
         public void SetValue (object target, object value)

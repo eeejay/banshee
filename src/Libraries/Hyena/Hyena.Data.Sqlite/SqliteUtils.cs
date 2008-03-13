@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Reflection;
 using System.Text;
 
 namespace Hyena.Data.Sqlite
@@ -49,13 +50,13 @@ namespace Hyena.Data.Sqlite
         public static object ToDbFormat (Type type, object value)
         {
             if (type == typeof (DateTime)) {
-                if (DateTime.MinValue.Equals (value)) {
-                    value = "NULL";
-                } else { 
-                    value = DateTimeUtil.FromDateTime ((DateTime)value);
-                }
+                return DateTime.MinValue.Equals ((DateTime)value)
+                    ? (object)null
+                    : DateTimeUtil.FromDateTime ((DateTime)value);
             } else if (type == typeof (TimeSpan)) {
-                value = ((TimeSpan)value).TotalMilliseconds;
+                return TimeSpan.MinValue.Equals ((TimeSpan)value)
+                    ? (object)null
+                    : ((TimeSpan)value).TotalMilliseconds;
             }
             return value;
         }
@@ -63,11 +64,22 @@ namespace Hyena.Data.Sqlite
         public static object FromDbFormat (Type type, object value)
         {
             if (type == typeof (DateTime)) {
-                value = Int64.MinValue.Equals (value) ? DateTime.MinValue : DateTimeUtil.ToDateTime ((long) value);
+                return value == null
+                    ? DateTime.MinValue
+                    : DateTimeUtil.ToDateTime (Convert.ToInt64 (value));
             } else if (type == typeof (TimeSpan)) {
-                value = TimeSpan.FromMilliseconds ((long)value);
+                return value == null
+                    ? TimeSpan.MinValue
+                    : TimeSpan.FromMilliseconds (Convert.ToInt64 (value));
+            } else if (value == null) {
+                if (type.IsValueType) {
+                    return Activator.CreateInstance (type);
+                } else {
+                    return null;
+                }
+            } else {
+                return Convert.ChangeType (value, type);
             }
-            return value;
         }
         
         public static string BuildColumnSchema (string type,

@@ -1,3 +1,11 @@
+2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: Patch from Scott
+	Peterson fixing up some DateTime/SQL related issues.
+
 2008-03-13  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac:
