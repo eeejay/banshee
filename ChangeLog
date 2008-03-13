@@ -1,5 +1,15 @@
 2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Patch from Alexander Hixon fixing the Audioscrobbler now-playing delay
+	issue, properly listens for the account being updated to update
+	links/actions.
+
+	* src/Core/Banshee.Core/Resources/contributors.xml: Add Michael Monreal to
+	Artists.
+
+2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Avoid
 	GtkCritical warning by checking that the TreeIter is not Zero before
 	setting a value on it.  Fixes bug with closing the Error Source.

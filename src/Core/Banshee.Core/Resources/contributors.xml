@@ -51,5 +51,6 @@
   <!-- Artists have their own markup because of the GtkAboutBox design -->
   <artist>Garrett LeSage</artist>
   <artist>Jakub Steiner</artist>
+  <artist>Michael Monreal</artist>
   <artist>Ryan Collier</artist>
 </people>

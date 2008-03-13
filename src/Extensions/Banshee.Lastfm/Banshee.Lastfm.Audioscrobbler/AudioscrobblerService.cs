@@ -65,6 +65,8 @@ namespace Banshee.Lastfm.Audioscrobbler
         private Account account;
         
         private bool queued; /* if current_track has been queued */
+        private bool now_playing_sent = false; /* self explanitory :) */
+        private int iterate_countdown = 4 * 4; /* number of times to wait for iterate event before sending now playing */
         
         private DateTime song_start_time;
         private TrackInfo last_track;
@@ -95,6 +97,11 @@ namespace Banshee.Lastfm.Audioscrobbler
             connection.UpdateNetworkState (NetworkDetect.Instance.Connected);
             NetworkDetect.Instance.StateChanged += delegate (object o, NetworkStateChangedArgs args) {
                 connection.UpdateNetworkState (args.Connected);
+            };
+            
+            // Update the Visit action menu item if we update our account info
+            LastfmCore.Account.Updated += delegate (object o, EventArgs args) {
+                actions["AudioscrobblerVisitAction"].Sensitive = LastfmCore.Account.UserName != null && LastfmCore.Account.CryptedPassword != null;
             };
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
@@ -232,14 +239,8 @@ namespace Banshee.Lastfm.Audioscrobbler
                     song_start_time = DateTime.Now;
                     last_track = ServiceManager.PlayerEngine.CurrentTrack;
                     queued = false;
-
-                    // Queue as now playing
-                    if (last_track != null && last_track.Duration.TotalSeconds > 30 &&
-                        (actions["AudioscrobblerEnableAction"] as ToggleAction).Active) {
-                        
-                        connection.NowPlaying (last_track.ArtistName, last_track.TrackTitle,
-                            last_track.AlbumTitle, last_track.Duration.TotalSeconds, last_track.TrackNumber);
-                    }
+                    now_playing_sent = false;
+                    iterate_countdown = 4 * 4;  /* we get roughly 4 events/sec */
                     
                     break;
                 
@@ -248,11 +249,26 @@ namespace Banshee.Lastfm.Audioscrobbler
                     break;
                 
                 case PlayerEngineEvent.Iterate:
+                    // Queue as now playing
+                    if (!now_playing_sent && iterate_countdown == 0) {
+                        if (last_track != null && last_track.Duration.TotalSeconds > 30 &&
+                            (actions["AudioscrobblerEnableAction"] as ToggleAction).Active) {
+                            
+                            connection.NowPlaying (last_track.ArtistName, last_track.TrackTitle,
+                                last_track.AlbumTitle, last_track.Duration.TotalSeconds, last_track.TrackNumber);
+                        }
+                        
+                        now_playing_sent = true;
+                    } else if (iterate_countdown > 0) {
+                        iterate_countdown --;
+                    }
+                    
                     st.IncreasePosition ();
                     break;
                 
                 case PlayerEngineEvent.EndOfStream:
                     Queue (ServiceManager.PlayerEngine.CurrentTrack);
+                    iterate_countdown = 4 * 4; 
                     break;
             }
         }
