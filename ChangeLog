@@ -1,3 +1,8 @@
+2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Resources/audioscrobbler.png: Replace
+	24x24 version with 22x22 version.
+
 2008-03-13  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:
