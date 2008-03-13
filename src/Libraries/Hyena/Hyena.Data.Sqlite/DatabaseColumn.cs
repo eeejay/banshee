@@ -93,6 +93,10 @@ namespace Hyena.Data.Sqlite
                 result = !reader.IsDBNull (column)
                     ? reader.GetInt32 (column)
                     : 0;
+            } else if (type == typeof (int)) {
+                result = !reader.IsDBNull (column)
+                    ? Convert.ToInt64 (reader.GetValue (column))
+                    : Int64.MinValue;
             } else {
                 result = !reader.IsDBNull (column)
                     ? Convert.ToInt64 (reader.GetValue (column))

@@ -49,7 +49,11 @@ namespace Hyena.Data.Sqlite
         public static object ToDbFormat (Type type, object value)
         {
             if (type == typeof (DateTime)) {
-                value = DateTimeUtil.FromDateTime ((DateTime)value);
+                if (DateTime.MinValue.Equals (value)) {
+                    value = "NULL";
+                } else { 
+                    value = DateTimeUtil.FromDateTime ((DateTime)value);
+                }
             } else if (type == typeof (TimeSpan)) {
                 value = ((TimeSpan)value).TotalMilliseconds;
             }
@@ -59,7 +63,7 @@ namespace Hyena.Data.Sqlite
         public static object FromDbFormat (Type type, object value)
         {
             if (type == typeof (DateTime)) {
-                value = DateTimeUtil.ToDateTime ((long)value);
+                value = Int64.MinValue.Equals (value) ? DateTime.MinValue : DateTimeUtil.ToDateTime ((long) value);
             } else if (type == typeof (TimeSpan)) {
                 value = TimeSpan.FromMilliseconds ((long)value);
             }

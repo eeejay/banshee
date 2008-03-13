@@ -150,7 +150,12 @@ namespace Hyena.Data.Sqlite
                 if (param_values[i] is string) {
                     param_values[i] = String.Format ("'{0}'", (param_values[i] as string).Replace ("'", "''"));
                 } else if (param_values[i] is DateTime) {
-                    param_values[i] = DateTimeUtil.FromDateTime ((DateTime) param_values[i]);
+                    DateTime dt = (DateTime) param_values[i];
+                    if (dt == DateTime.MinValue) {
+                        param_values[i] = "NULL";
+                    } else {
+                        DateTimeUtil.FromDateTime ((DateTime) param_values[i]);
+                    }
                 } else if (param_values[i] == null) {
                     param_values[i] = "NULL";
                 }

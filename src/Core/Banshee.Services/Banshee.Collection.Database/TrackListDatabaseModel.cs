@@ -394,11 +394,11 @@ namespace Banshee.Collection.Database
             set { 
                 ModelHelper.BuildIdFilter<AlbumInfo> (value, "CoreTracks.AlbumID", album_id_filter_query,
                     delegate (AlbumInfo album) {
-                        if (!(album is LibraryAlbumInfo)) {
+                        if (!(album is DatabaseAlbumInfo)) {
                             return null;
                         }
                         
-                        return ((LibraryAlbumInfo)album).DbId.ToString ();
+                        return ((DatabaseAlbumInfo)album).DbId.ToString ();
                     },
                 
                     delegate (string new_filter) {

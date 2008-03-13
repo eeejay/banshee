@@ -476,6 +476,8 @@ namespace Banshee.Database
                         FROM Tracks
             ");
 
+            Execute ("update coretracks set lastplayedstamp = NULL where lastplayedstamp = -62135575200");
+
             Execute(@"
                 INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType)
                     SELECT * FROM Playlists

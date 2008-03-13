@@ -1,5 +1,5 @@
 //
-// LibraryAlbumInfo.cs
+// DatabaseAlbumInfo.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -38,13 +38,13 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
-    public class LibraryAlbumInfo : AlbumInfo, ICacheableItem
+    public class DatabaseAlbumInfo : AlbumInfo, ICacheableItem
     {
-        private static BansheeModelProvider<LibraryAlbumInfo> provider = new BansheeModelProvider<LibraryAlbumInfo> (
+        private static BansheeModelProvider<DatabaseAlbumInfo> provider = new BansheeModelProvider<DatabaseAlbumInfo> (
             ServiceManager.DbConnection, "CoreAlbums"
         );
 
-        public static BansheeModelProvider<LibraryAlbumInfo> Provider {
+        public static BansheeModelProvider<DatabaseAlbumInfo> Provider {
             get { return provider; }
         }
 
@@ -58,19 +58,19 @@ namespace Banshee.Collection.Database
             ArtistName
         }
 
-        public static LibraryAlbumInfo FindOrCreate (LibraryArtistInfo artist, string title)
+        public static DatabaseAlbumInfo FindOrCreate (LibraryArtistInfo artist, string title)
         {
-            LibraryAlbumInfo album;
+            DatabaseAlbumInfo album;
 
             if (title == null || title.Trim () == String.Empty)
                 title = Catalog.GetString ("Unknown Album");
 
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, title)) {
                 if (reader.Read ()) {
-                    album = new LibraryAlbumInfo (reader);
+                    album = new DatabaseAlbumInfo (reader);
                     album.ArtistName = artist.Name;
                 } else {
-                    album = new LibraryAlbumInfo ();
+                    album = new DatabaseAlbumInfo ();
                     album.Title = title;
                     album.ArtistId = artist.DbId;
                     album.ArtistName = artist.Name;
@@ -80,11 +80,11 @@ namespace Banshee.Collection.Database
             return album;
         }
 
-        public LibraryAlbumInfo () : base (null)
+        public DatabaseAlbumInfo () : base (null)
         {
         }
 
-        protected LibraryAlbumInfo (IDataReader reader) : base (null)
+        protected DatabaseAlbumInfo (IDataReader reader) : base (null)
         {
             LoadFromReader (reader);
         }

@@ -22,9 +22,9 @@ RESOURCES =  \
 	Resources/AudioscrobblerMenu.xml \
 	Resources/GlobalUI.xml \
 	Resources/lastfm.glade \
-	Resources/recommended.png \
 	Resources/neighbour.png \
 	Resources/personal.png \
+	Resources/recommended.png \
 	Resources/tag.png
 
 include $(top_srcdir)/build/build.mk

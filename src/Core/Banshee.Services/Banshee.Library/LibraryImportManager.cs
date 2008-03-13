@@ -134,7 +134,7 @@ namespace Banshee.Library
                 }
 
                 LibraryArtistInfo artist = LibraryArtistInfo.FindOrCreate (track.ArtistName);
-                LibraryAlbumInfo album = LibraryAlbumInfo.FindOrCreate (artist, track.AlbumTitle);
+                DatabaseAlbumInfo album = DatabaseAlbumInfo.FindOrCreate (artist, track.AlbumTitle);
 
                 track.DateAdded = DateTime.Now;
                 track.PrimarySource = ServiceManager.SourceManager.Library;

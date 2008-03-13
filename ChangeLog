@@ -1,5 +1,26 @@
 2008-03-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	Rename LibraryAlbumInfo to DatabaseAlbumInfo.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Change all DateTime.MinValue stamps to NULL.
+
+	* src/Extensions/Banshee.Lastfm/Makefile.am: Alphabetize.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: Serialize and
+	unserialze DateTime.MinValue as NULL.
+
+	* src/nuke-core-tables: Update to new config subdir.
+
+2008-03-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs: Disable
 	artist/album editing and add note explaining they are disabled for the

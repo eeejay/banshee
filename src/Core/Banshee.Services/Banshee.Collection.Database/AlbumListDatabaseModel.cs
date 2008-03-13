@@ -41,8 +41,8 @@ namespace Banshee.Collection.Database
 {
     public class AlbumListDatabaseModel : AlbumListModel, ICacheableDatabaseModel
     {
-        private readonly BansheeModelProvider<LibraryAlbumInfo> provider;
-        private readonly BansheeModelCache<LibraryAlbumInfo> cache;
+        private readonly BansheeModelProvider<DatabaseAlbumInfo> provider;
+        private readonly BansheeModelCache<DatabaseAlbumInfo> cache;
         private readonly TrackListDatabaseModel track_model;
         private readonly ArtistListDatabaseModel artist_model;
         private long count;
@@ -53,8 +53,8 @@ namespace Banshee.Collection.Database
         
         public AlbumListDatabaseModel (BansheeDbConnection connection, string uuid)
         {
-            provider = LibraryAlbumInfo.Provider;
-            cache = new BansheeModelCache <LibraryAlbumInfo> (connection, uuid, this, provider);
+            provider = DatabaseAlbumInfo.Provider;
+            cache = new BansheeModelCache <DatabaseAlbumInfo> (connection, uuid, this, provider);
             cache.HasSelectAllItem = true;
 
             Selection.Changed += HandleSelectionChanged;
