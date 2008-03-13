@@ -77,10 +77,11 @@ namespace Banshee.SmartPlaylist
             // Model is Name, Condition, OrderBy, LimitNumber, LimitCriterion
             ListStore list_model = new ListStore (typeof(string), typeof(string), typeof(string), typeof(string), typeof(string));
 
-            list_model.AppendValues (
+            // FIXME this is broken
+            /*list_model.AppendValues (
                 Catalog.GetString ("Neglected Favorites"),
-                " (Rating > 3) AND ((strftime(\"%s\", current_timestamp) - LastPlayedStamp + 3600) > 2592000) ",
-                null, "0", null);
+                "Rating>3 played<=\"2 weeks ago\"",
+                null, "0", null);*/
 
             // TODO this one is broken, not supported by the condition GUI
             /*list_model.AppendValues (
@@ -233,10 +234,8 @@ namespace Banshee.SmartPlaylist
                         playlist.LimitValue = limit_value;
 
                         playlist.Save ();
-                        playlist.Refresh ();
-                        ThreadAssist.ProxyToMain (delegate {
-                            ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
-                        });
+                        ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
+                        playlist.RefreshAndReload ();
                         //SmartPlaylistCore.Instance.StartTimer (playlist);
                     } else {
                         playlist.ConditionTree = condition_tree;
@@ -294,6 +293,7 @@ namespace Banshee.SmartPlaylist
                     pl.Save ();
                     //Banshee.Sources.LibrarySource.Instance.AddChildSource (pl);
                     ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
+                    pl.RefreshAndReload ();
                     //SmartPlaylistCore.Instance.StartTimer (pl);
                 }
             }

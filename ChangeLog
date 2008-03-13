@@ -1,3 +1,9 @@
+2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:
+	Disable one broken pre-defined smart playlist, and ensure the others are
+	refreshed/reloaded when 'selected for use'.
+
 2008-03-13  Aaron Bockover  <abock@gnome.org>
 
 	* NEWS: Updated for 0.98.1
