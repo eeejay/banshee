@@ -1,5 +1,10 @@
 2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena/DateTimeUtil.cs: Super ugly hack to work
+	around ArguemtnOutOfRangeException thrown by DateTime parser.
+
+2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs: Add
 	Banshee Group radio station as a default.
 
