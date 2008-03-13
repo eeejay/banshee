@@ -114,16 +114,12 @@ namespace Banshee.Base
                 ? path.Substring (library_location.Length + 1)
                 : null;
         }
+        
+        private static string legacy_application_data = Path.Combine (Environment.GetFolderPath (
+            Environment.SpecialFolder.ApplicationData), "banshee");
     
         public static string LegacyApplicationData {
-            get {
-                return Environment.GetFolderPath (Environment.SpecialFolder.Personal)
-                    + Path.DirectorySeparatorChar
-                    + ".gnome2"
-                    + Path.DirectorySeparatorChar
-                    + "banshee"
-                    + Path.DirectorySeparatorChar;
-            }
+            get { return legacy_application_data; }
         }
         
         private static string application_data = Path.Combine (Environment.GetFolderPath (

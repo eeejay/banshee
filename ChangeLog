@@ -1,3 +1,14 @@
+2008-03-12  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Redefine 
+	LegacyApplicationData to mean the previous ApplicationData, not the
+	one from when we were using ~/.gnome2/banshee
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	Migrate cover art from the new LegacyApplicationData path
+
+	* src/Core/Banshee.Services/Makefile.am: Fixed build
+
 2008-03-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:

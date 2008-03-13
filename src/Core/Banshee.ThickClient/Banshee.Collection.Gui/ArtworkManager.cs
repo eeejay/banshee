@@ -60,7 +60,7 @@ namespace Banshee.Collection.Gui
             
             // FIXME: Replace with Directory.Move for release
             
-            string legacy_artwork_path = Path.Combine (Paths.ApplicationData, "covers");
+            string legacy_artwork_path = Path.Combine (Paths.LegacyApplicationData, "covers");
             int artwork_count = 0;
             
             if (Directory.Exists (legacy_artwork_path)) {
