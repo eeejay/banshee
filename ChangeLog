@@ -1,3 +1,8 @@
+2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fix mono
+	1.2.4 build issue.
+
 2008-03-14  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Mono.Media/Mono.Media.mdp: Removed unnessisary reference.
