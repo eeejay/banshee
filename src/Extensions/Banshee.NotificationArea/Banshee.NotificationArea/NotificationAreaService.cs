@@ -249,7 +249,7 @@ namespace Banshee.NotificationArea
         {
             try {
                 if (NotifyOnCloseSchema.Get ()) {
-                    Gdk.Pixbuf image = IconThemeUtils.LoadIcon (48, "music-player-banshee");
+                    Gdk.Pixbuf image = IconThemeUtils.LoadIcon (48, Banshee.ServiceStack.Application.IconName);
                     if (image != null) {
                         image = image.ScaleSimple (42, 42, Gdk.InterpType.Bilinear);
                     }

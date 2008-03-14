@@ -167,6 +167,10 @@ namespace Banshee.ServiceStack
             get { return "banshee"; }
         }
         
+        public static string IconName {
+            get { return "media-player-banshee"; }
+        }
+        
         private static string version;
         public static string Version {
             get { 

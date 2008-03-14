@@ -1,3 +1,17 @@
+2008-03-14  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Define
+	a property for the icon name that is expected to be in the GTK icon theme;
+	set this value to the new media-player-banshee icon name (used to be
+	music-player-banshee, changed to avoid conflicts)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/GtkNotificationAreaBox.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Remove all hardcoded references to music-player-banshee, the old icon
+	name, and replaced with the new Application property
+
 2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fix mono

@@ -58,7 +58,7 @@ namespace Banshee.NotificationArea
         
         public GtkNotificationAreaBox (BaseClientWindow window)
         {
-            IconName = "music-player-banshee";
+            IconName = Banshee.ServiceStack.Application.IconName;
             
             Tooltip = window.Title;
             window.TitleChanged += delegate { Tooltip = window.Title; };

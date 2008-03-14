@@ -59,7 +59,7 @@ namespace Banshee.NotificationArea
         {
             event_box = new EventBox ();
             image = new Image ();
-            image.IconName = "music-player-banshee";
+            image.IconName = Banshee.ServiceStack.Application.IconName;
             event_box.Add (image);
             Add (event_box);
             

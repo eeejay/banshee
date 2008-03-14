@@ -57,7 +57,7 @@ namespace Banshee.Gui
         
         private string default_icon_name;
         
-        protected GtkBaseClient () : this (true, "music-player-banshee")
+        protected GtkBaseClient () : this (true, Application.IconName)
         {
         }
         
