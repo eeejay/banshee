@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.fi-20060902\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-09 08:30+0300\n"
+"POT-Creation-Date: 2008-03-14 09:19+0300\n"
 "PO-Revision-Date: 2007-06-09 20:14+0300\n"
 "Last-Translator: Joonas Niilola <juippis@roskakori.org>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -184,13 +184,14 @@ msgstr "Käytä vaihtelevaa bittinopeutta"
 msgid "Windows Media Audio"
 msgstr "Windows Media Audio"
 
-#: ../data/banshee-preview.desktop.in.in.h:1
-msgid "Banshee Music Player"
-msgstr "Banshee-musiikkisoitin"
+#: ../data/banshee-1.desktop.in.in.h:1 ../libbanshee/gst-cd-rip-0.10.c:406
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:58
+msgid "Banshee"
+msgstr "Banshee"
 
-#: ../data/banshee-preview.desktop.in.in.h:2
-msgid "Music Player"
-msgstr "Musiikkisoitin"
+#: ../data/banshee-1.desktop.in.in.h:2
+msgid "Media Player"
+msgstr "Mediasoitin"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:222
 msgid "Could not create pipeline"
@@ -231,11 +232,6 @@ msgstr "Jonoa ei voitu liittää koodaajaan"
 #: ../libbanshee/gst-cd-rip-0.10.c:299
 msgid "Could not link encoder to gnomevfssink"
 msgstr "Koodaajaa ei voitu liittää kohteeseen gnomevfssink"
-
-#: ../libbanshee/gst-cd-rip-0.10.c:406
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:58
-msgid "Banshee"
-msgstr "Banshee"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:432
 msgid "Encoding element does not support tagging!"
@@ -306,40 +302,40 @@ msgstr "Banshee-musiikkisoitin"
 msgid "{0} ({1})"
 msgstr "{0} ({1})"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:68
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:71
 msgid "_Search:"
 msgstr "_Etsi:"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:87
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:105
 msgid "All Columns"
 msgstr "Kaikki sarakkeet"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:89
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:107
 msgid "Song Name"
 msgstr "Kappaleen nimi"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:90
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:108
 msgid "Artist Name"
 msgstr "Esittäjän nimi"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:91
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:109
 msgid "Album Title"
 msgstr "Levyn nimi"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:92
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:110
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:53
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:112
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:64
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:66
 msgid "Genre"
 msgstr "Tyyli"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:93
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:111
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:105
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:63
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:65
 msgid "Year"
 msgstr "Vuosi"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:103
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:121
 #, csharp-format
 msgid "Filter on {0}"
 msgstr "Suodata {0} mukaan"
@@ -347,20 +343,20 @@ msgstr "Suodata {0} mukaan"
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:87
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:51
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:77
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:59
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:55
 msgid "Artist"
 msgstr "Esittäjä"
 
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:92
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:50
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:84
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:60
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:62
 msgid "Album"
 msgstr "Levy"
 
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:97
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:52
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:58
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:60
 msgid "Title"
 msgstr "Kappale"
 
@@ -388,7 +384,7 @@ msgid "Unknown Artist"
 msgstr "Tuntematon esittäjä"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:157
-#: ../src/Core/Banshee.Services/Banshee.Collection.Database/LibraryAlbumInfo.cs:66
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:66
 msgid "Unknown Album"
 msgstr "Tuntematon levy"
 
@@ -406,7 +402,7 @@ msgid "Scanning for songs"
 msgstr "Etsitään kappaleita"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:115
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:530
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:539
 msgid "Scanning..."
 msgstr "Etsitään..."
 
@@ -433,10 +429,9 @@ msgstr "Päivitetään bansheen tietokantaa"
 #: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:212
 msgid ""
 "Please wait while your old Banshee database is migrated to the new format."
-msgstr ""
-"Odota, että vanha bansheen tietokanta muunnetaan uuteen muotoon."
+msgstr "Odota, että vanha bansheen tietokanta muunnetaan uuteen muotoon."
 
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:529
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:538
 msgid "Refreshing Metadata"
 msgstr "Päivitetään metatietoja"
 
@@ -468,7 +463,7 @@ msgid ""
 msgstr ""
 "Soittomoottoreita ei löytynyt. Tarkista, että banshee on asennettu oikein."
 
-#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:258
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:257
 msgid "Problem with Player Engine"
 msgstr "Ongelma soittomoottorin kanssa"
 
@@ -686,7 +681,7 @@ msgstr "tähteä"
 
 # Soittokerrat?
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:131
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:65
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:67
 msgid "Play Count"
 msgstr "Soittokerrat"
 
@@ -704,7 +699,7 @@ msgid "listens"
 msgstr "kuuntelukerrat"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:138
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:66
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:68
 msgid "Skip Count"
 msgstr "Ohitusten lukumäärä"
 
@@ -752,7 +747,7 @@ msgid "location"
 msgstr "sijainti"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:159
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:61
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:63
 msgid "Duration"
 msgstr "Kesto"
 
@@ -808,7 +803,7 @@ msgid "playedon"
 msgstr "soittopäivä"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:180
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:69
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:71
 msgid "Date Added"
 msgstr "Lisäyspäivä"
 
@@ -888,8 +883,8 @@ msgid "ends with"
 msgstr "päättyy"
 
 #: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:182
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:300
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:323
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:313
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:336
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:67
 msgid "Unknown"
 msgstr "Tuntematon"
@@ -974,11 +969,11 @@ msgid_plural "{0:0.0} minutes"
 msgstr[0] "{0} minuutti"
 msgstr[1] "{0:0.0} minuuttia"
 
-#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:48
+#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:61
 msgid "Could not launch URL"
 msgstr "URLia ei voi avata"
 
-#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:49
+#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:62
 #, csharp-format
 msgid ""
 "{0} could not be opened: {1}\n"
@@ -997,21 +992,21 @@ msgstr "Profiileja ei saatavilla"
 msgid "Advanced"
 msgstr "Lisäasetukset"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:66
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:69
 msgid "Welcome to the Banshee 1.0 Alpha 1 release!"
 msgstr "Tervetuloa käyttämään bansheen 1.0 alpha 1 -versiota!"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:68
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:71
 msgid ""
 "It is <i>very</i> important to note that this is a <i>preview release</i> "
 "and does <i>not yet</i> contain all of the features you may be used to in "
 "previous Banshee releases."
 msgstr ""
 "On hyvin tärkeää ymmärtää, että tämä on <i>ohjelman esiversio</i> eikä "
-"sisällä vielä kaikkia ominaisuuksia, joihin olet tottunut aiemmissa "
-"bansheen versioissa."
+"sisällä vielä kaikkia ominaisuuksia, joihin olet tottunut aiemmissa bansheen "
+"versioissa."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:72
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:75
 msgid ""
 "Most notably, hardware features are not yet available (Audio CDs, Digital "
 "Audio Players), and the Podcasting, Internet Radio, Recommendations, Mini "
@@ -1021,7 +1016,7 @@ msgstr ""
 "musiikkisoittimet) sekä liitännäiset Podcasteille, internetradiolle, "
 "suosituksille, minitilalle ja DAAP-jakojen (iTunes-jaot) käyttöön."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:77
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:80
 msgid ""
 "All of the features you have come to love in Banshee will be added back "
 "before the final 1.0 release."
@@ -1029,33 +1024,32 @@ msgstr ""
 "Kaikki ominaisuudet joihin olet aiemmin tottunut bansheessa tullaan "
 "lisäämään takaisin ennen lopullista 1.0-julkaisua."
 
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:79
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:82
 msgid "Enjoy the preview!"
 msgstr "Nauti kokemuksesta!"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:89
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:92
 msgid "Message.Id"
 msgstr "Viesti.tunniste"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:99
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:102
 msgid "Please confirm your understanding of the message above."
 msgstr "Ole hyvä ja vahvista että ymmärsit ylläolevan viestin."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:104
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:107
 msgid "I understand this is a preview release"
 msgstr "Ymmärrän että tämä on esiversio"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:57
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:59
 msgid "Track"
 msgstr "Nr."
 
 #. new SortableColumn ("Rating", new RatingColumnCell (null, true), 0.15, "Rating"),
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:68
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:70
 msgid "Last Played"
 msgstr "Viimeksi soitettu"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:70
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:72
 msgid "Location"
 msgstr "Sijainti"
 
@@ -1063,23 +1057,23 @@ msgstr "Sijainti"
 msgid "Primary Development"
 msgstr "Ensisijainen kehitys"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:54
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:55
 msgid "Contributors"
 msgstr "Avustajat"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:78
-msgid "Music Management and Playback for GNOME."
-msgstr "Musiikin hallinta- ja toisto-ohjelma Gnomelle."
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:84
+msgid "Extraordinary Multimedia Management and Playback"
+msgstr "Multimedian hallinta- ja toisto-ohjelma"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:80
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:86
 msgid ""
-"Copyright © 2005-2007 Novell, Inc.\n"
+"Copyright © 2005-2008 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
 msgstr ""
-"Copyright © 2005-2007 Novell, Inc.\n"
+"Copyright © 2005-2008 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:85
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:91
 msgid "Banshee Wiki"
 msgstr "Bansheen Wiki"
 
@@ -1148,35 +1142,35 @@ msgstr ""
 "Virheenkorjaus yrittää selvitä vaikeista tilanteista, kuten levyn "
 "pintanaarmuista, mutta hidastaa levyn tuomista melkoisesti."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:228
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:241
 msgid "Automatically set all track numbers in increasing order"
 msgstr "Aseta kaikki kappalenumerot automaattisesti kasvavaan järjestykseen"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:229
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:242
 msgid "Set all track counts to this value"
 msgstr "Aseta kaikki kappalelaskurit tähän arvoon"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:230
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:243
 msgid "Set all artists to this value"
 msgstr "Aseta kaikki esittäjät tähän arvoon"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:231
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:244
 msgid "Set all albums to this value"
 msgstr "Aseta kaikki levyn nimet tähän arvoon"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:232
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:245
 msgid "Set all disc numbers to this value"
 msgstr "Aseta kaikki levynumerot tähän arvoon"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:233
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:246
 msgid "Set all genres to this value"
 msgstr "Aseta kaikki tyylit tähän arvoon"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:234
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:247
 msgid "Set all years to this value"
 msgstr "Aseta kaikki vuodet tähän arvoon"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:235
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:248
 msgid ""
 "Apply the values of this track set for the Artist, Album Title, Genre, Track "
 "count, Year, and Rating fields to the rest of the selected tracks in this "
@@ -1186,20 +1180,20 @@ msgstr ""
 "kappalemäärä, vuosi ja arvostelu myös kaikissa muissa muokkaimessa "
 "valituissa kappaleissa."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:236
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:249
 msgid "Set all ratings to this value"
 msgstr "Aseta kaikki arvostelut tähän arvoon"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:298
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:311
 msgid "Never played"
 msgstr "Ei koskaan soitettu"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:312
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:325
 #, csharp-format
 msgid "Editing song {0} of {1}"
 msgstr "Muokataan kappaletta {0}/{1}"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:313
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:326
 #, csharp-format
 msgid "Editing {0}"
 msgstr "Muokataan {0}"
@@ -1281,56 +1275,64 @@ msgid "Learn about how to use Banshee"
 msgstr "Opi käyttämään Bansheeta"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:98
+msgid "Advanced Collection Searching"
+msgstr "Edistynyt haku kokoelmista"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:99
+msgid "Learn advanced ways to search your media collection"
+msgstr "Opi edistyneitä tapoja etsiä tietoja kokoelmastasi"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:104
 msgid "Banshee _Home Page"
 msgstr "Bansheen kotisivu"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:99
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:105
 msgid "Visit the Banshee Home Page"
 msgstr "Käy Bansheen kotisivulla"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:104
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:110
 msgid "_Get Involved"
 msgstr "_Osallistu kehitykseen"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:105
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:111
 msgid "Become a contributor to Banshee"
 msgstr "Osallistu Bansheen kehitykseen"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:110
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:116
 msgid "_Version Information..."
 msgstr "Versiotietoja..."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:111
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:117
 msgid "View detailed version and configuration information"
 msgstr "Näytä yksityiskohtaiset versio- ja asetustiedot"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:150
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:157
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:156
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:163
 msgid "Error opening stream"
 msgstr "Virhe avattaessa virtaa"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:151
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:157
 msgid "Could not open stream or playlist"
 msgstr "Virtaa tai soittolistaa ei voitu avata"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:158
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:164
 msgid "Problem parsing playlist"
 msgstr "Virhe tulkittaessa soittolistaa"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:166
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:172
 msgid "Import Playlist"
 msgstr "Tuo soittolista"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:175
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:181
 msgid "Import"
 msgstr "Tuo"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:198
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:215
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:204
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:221
 msgid "Unable to Import Playlist"
 msgstr "Soittolistaa ei voitu tuoda"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:216
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:222
 msgid ""
 "Banshee was unable to find any valid tracks to import.  Please check the "
 "playlist and try again."
@@ -1595,7 +1597,7 @@ msgstr "Samalta _esittäjältä"
 msgid "Search all songs of this artist"
 msgstr "Etsi kaikki tämän esittäjän kappaleet"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:420
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:432
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural ""
@@ -1603,16 +1605,16 @@ msgid_plural ""
 msgstr[0] "Haluatko varmasti poistaa tämän kappaleen pysyvästi?"
 msgstr[1] "Haluatko varmasti poistaa valitut {0} kappaletta pysyvästi?"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:424
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:436
 msgid "If you delete the selection, it will be permanently lost."
 msgstr "Jos poistat valitut kappaleet, ne hukataan pysyvästi."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:427
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:439
 #, csharp-format
 msgid "Remove selection from {0}?"
 msgstr "Poistetaanko valitut lähteestä {0}?"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:430
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:442
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your {1}?"
 msgid_plural ""
@@ -1718,23 +1720,19 @@ msgstr "Valitse muoto: "
 msgid "New Smart Playlist"
 msgstr "Uusi älysoittolista"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:81
-msgid "Neglected Favorites"
-msgstr "Laiminlyödyt suosikkikappaleet"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:92
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:93
 msgid "700 MB of Favorites"
 msgstr "700 Mt suosikkikappaleita"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:100
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:101
 msgid "80 Minutes of Favorites"
 msgstr "80 minuuttia suosikkikappaleita"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:108
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:109
 msgid "Unheard"
 msgstr "Kuuntelemattomat"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:116
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:117
 msgid "Unheard Podcasts"
 msgstr "Kuuntelemattomat podcastit"
 
@@ -2087,175 +2085,175 @@ msgstr "Vaimennettu"
 msgid "Full Volume"
 msgstr "Täysi voimakkuus"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:108
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:119
 msgid "_Audioscrobbler"
 msgstr "Audioscrobbler"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:109
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:117
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:120
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:128
 msgid "Configure the Audioscrobbler plugin"
 msgstr "Audioscrobbler-liitännäisen asetukset"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:112
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:123
 msgid "Visit _user profile page"
 msgstr "Käy käyttäjäprofiilin sivulla"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:113
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:124
 msgid "Visit your Audioscrobbler profile page"
 msgstr "Käy Audioscrobbler-profiilisi sivulla"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:116
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:127
 msgid "_Configure..."
 msgstr "Määritä..."
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:122
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:133
 msgid "_Enable song reporting"
 msgstr "Lähetä soivan kappaleen tiedot"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:123
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:134
 msgid "Enable song reporting"
 msgstr "Lähetä soivan kappaleen tiedot"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:70
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:71
 msgid "_Add Station"
 msgstr "_Lisää asema"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:71
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:72
 msgid "Add a new Last.fm radio station"
 msgstr "Lisää uusi last.fm-radioasema"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:78
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:79
 msgid "Connect"
 msgstr "Yhdistä"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:83
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:84
 msgid "Sort Stations by"
 msgstr "Järjestä asemat käyttäen"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:91
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:123
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:148
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:92
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:124
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:149
 msgid "View on Last.fm"
 msgstr "Näytä last.fm:ssä"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:92
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:93
 msgid "View this artist's Last.fm page"
 msgstr "Näytä esittäjän last.fm-sivu"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:95
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:96
 msgid "View Artist on Wikipedia"
 msgstr "Näytä esittäjä wikipediassa"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:96
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:97
 msgid "Find this artist on Wikipedia"
 msgstr "Etsi esittäjän sivua wikipediasta"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:103
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:104
 msgid "View Artist's Videos"
 msgstr "Näytä esittäjän videot"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:104
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:105
 msgid "Find videos by this artist"
 msgstr "Etsi tämän esittäjän videoita"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:107
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:108
 msgid "Listen to 'fans of' Station"
 msgstr "Kuuntele \"Esittäjän fanit\"-asemaa"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:108
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:109
 msgid "Listen to the Last.fm 'fans of' station for this artist"
 msgstr "Kuuntele tämän esittäjän \"Esittäjän fanit\"-asemaa"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:111
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:112
 msgid "Listen to 'similar to' Station"
 msgstr "Kuuntele \"Samankaltaista musiikkia\"-asemaa"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:112
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:113
 msgid "Listen to the Last.fm 'similar to' station for this artist"
 msgstr "Kuuntele tämän esittäjän \"Samankaltaista musiikkia\"-asemaa"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:115
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:131
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:152
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:116
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:132
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:153
 msgid "Recommend to"
 msgstr "Kenelle suositellaan"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:116
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:117
 msgid "Recommend this artist to someone"
 msgstr "Suosittele tätä esittäjää"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:124
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:125
 msgid "View this album's Last.fm page"
 msgstr "Näytä tämän levyn last.fm-sivu"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:132
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:133
 msgid "Recommend this album to someone"
 msgstr "Suosittele tätä levyä"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:139
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:140
 msgid "Love Track"
 msgstr "Rakastan kappaletta"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:140
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:141
 msgid "Mark current track as loved"
 msgstr "Merkitse tämänhetkinen kappale ihanaksi"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:144
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:145
 msgid "Ban Track"
 msgstr "Estä kappale"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:145
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:146
 msgid "Mark current track as banned"
 msgstr "Merkitse soiva kappale estetyksi"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:149
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:150
 msgid "View this track's Last.fm page"
 msgstr "Näytä kappaleen last.fm-sivu"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:153
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:154
 msgid "Recommend this track to someone"
 msgstr "Suosittele tätä kappaletta"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:160
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:161
 msgid "Station Name"
 msgstr "Aseman nimi"
 
 # Soittokerrat?
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:165
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:166
 msgid "Total Play Count"
 msgstr "Soittokerrat kaikkiaan"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:170
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:171
 msgid "Station Type"
 msgstr "Aseman tyyppi"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:253
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:254
 #, csharp-format
 msgid "http://last.fm/music/{0}"
 msgstr "http://last.fm/music/{0}"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:261
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:269
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:262
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:270
 #, csharp-format
 msgid "http://last.fm/music/{0}/{1}"
 msgstr "http://last.fm/music/{0}/{1}"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:277
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:278
 #, csharp-format
 msgid "http://www.last.fm/music/{0}/+videos"
 msgstr "http://www.last.fm/music/{0}/+videos"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:285
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:286
 #, csharp-format
 msgid "http://en.wikipedia.org/wiki/{0}"
 msgstr "http://en.wikipedia.org/wiki/{0}"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:314
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:315
 #, csharp-format
 msgid "Fans of {0}"
 msgstr "Esittäjän {0} fanit"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:335
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:336
 #, csharp-format
 msgid "Similar to {0}"
 msgstr "Samankaltainen kuin {0}"
@@ -2268,11 +2266,11 @@ msgstr "Äskettäin rakastetut kappaleet"
 msgid "Recently Played Tracks"
 msgstr "Äskettäin soitetut kappaleet"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:96
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:100
 msgid "Edit Last.fm Settings"
 msgstr "Muokkaa last.fm-asetuksia"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:295
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:299
 msgid "Last.fm (Disconnected)"
 msgstr "Last.fm (ei yhteyttä)"
 
@@ -2349,6 +2347,10 @@ msgid "Loved"
 msgstr "Rakastettu"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:549
+msgid "Banshee Group"
+msgstr "Banshee-ryhmä"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:550
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:110
 msgid "Neighbors"
 msgstr "Naapurit"
@@ -2406,27 +2408,27 @@ msgstr "Aseman_tyyppi:"
 msgid "_Name:"
 msgstr "_Nimi:"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:110
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:115
 msgid "_Close"
 msgstr "_Sulje"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:111
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:116
 msgid "Close"
 msgstr "Sulje"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:117
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:122
 msgid "_Show Notifications"
 msgstr "_Näytä huomautukset"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:118
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:123
 msgid "Show notifications when song changes"
 msgstr "Näytä huomautus vaihdettaessa kappaletta"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:239
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:258
 msgid "Still Running"
 msgstr "Yhä käynnissä"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:240
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:259
 msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
@@ -2434,15 +2436,15 @@ msgstr ""
 "Banshee suljettiin ilmoitusalueelle. Käytä <i>Sulje</i>-vaihtoehtoa "
 "lopettaaksesi istunnon."
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:343
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:362
 msgid "Now Playing"
 msgstr "Nyt soiva kappale"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:348
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:367
 msgid "Play next song"
 msgstr "Soita seuraava kappale"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:354
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:373
 msgid "Cannot show notification"
 msgstr "Huomautusta ei voi näyttää"
 
@@ -2680,6 +2682,12 @@ msgstr "Yhdistetään last.fm-palveluun."
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:461
 msgid "Connected to Last.fm."
 msgstr "Yhdistetty Last.fm-palveluun."
+
+#~ msgid "Banshee Music Player"
+#~ msgstr "Banshee-musiikkisoitin"
+
+#~ msgid "Neglected Favorites"
+#~ msgstr "Laiminlyödyt suosikkikappaleet"
 
 #~ msgid "Advanced Audio Coding (AAC)"
 #~ msgstr "Advanced Audio Coding (AAC)"
