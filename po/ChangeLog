@@ -97,9 +97,9 @@
 
 	* oc.po: Updated Occitan translation.
 
-2007-12-30  Jorge Gonzalez  <jorgegonz@svn.gnome.org>  
+2007-12-30  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-	* es.po: Updated Spanish translation 
+	* es.po: Updated Spanish translation
 
 2007-12-28  Daniel Nylander <po@danielnylander.se>
 
@@ -124,11 +124,11 @@
 
 2007-12-16  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation
+	* es.po: Updated Spanish translation
 
 2007-12-11  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2007-12-11  Daniel Nylander <po@danielnylander.se>
 
@@ -140,7 +140,7 @@
 
 2007-12-06  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2007-12-02  Jordi Mas <jmas@softcatala.org>
 
@@ -148,15 +148,15 @@
 
 2007-11-28  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation
+	* es.po: Updated Spanish translation
 
-2007-11-21  Yannig Marchegay <yannig@marchegay.org> 
+2007-11-21  Yannig Marchegay <yannig@marchegay.org>
 
 	* oc.po: Updated Occitan translation
 
-2007-11-14  Jorge Gonzalez  <jorgegonz@svn.gnome.org> 
+2007-11-14  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation
+	* es.po: Updated Spanish translation
 
 2007-11-12  Ihar Hrachyshka <ihar.hrachyshka@gmail.com>
 
@@ -173,13 +173,13 @@
 	* pt.po: Updated Portuguese translation by Filipe Gomes
 	<filipefgomes@gmail.com>.
 
-2007-11-03  Jorge Gonzalez <jorgegonz@svn.gnome.org>  
+2007-11-03  Jorge Gonzalez <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation
+	* es.po: Updated Spanish translation
 
 2007-11-02  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2007-11-01  Daniel Nylander <po@danielnylander.se>
 
@@ -198,7 +198,7 @@
 	* it.po: Updated Italian translation by
 	Gianvito Cavasoli <gianvito@nectarine.it>.
 
-2007-10-22  Djihed Afifi <djihed@gmail.com> 
+2007-10-22  Djihed Afifi <djihed@gmail.com>
 
 	* ar.po: Updated Arabic Translation by Ahmad Farghal.
 
@@ -212,7 +212,7 @@
 
 2007-10-07  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2007-10-07  Lasse Bang Mikkelsen  <lbm@lbm.dk>
 
@@ -224,11 +224,11 @@
 
 2007-09-29  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation
+	* es.po: Updated Spanish translation
 
 2007-09-26  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation
+	* es.po: Updated Spanish translation
 
 2007-09-23  Stéphane Raimbault  <stephane.raimbault@gmail.com>
 
@@ -237,7 +237,7 @@
 
 2007-09-20  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation
+	* es.po: Updated Spanish translation
 
 2007-09-16  Ilkka Tuohela  <hile@iki.fi>
 
@@ -353,7 +353,7 @@
 2007-06-26  Guilherme de S. Pastore  <gpastore@gnome.org>
 
 	* pt_BR.po: Updated Brazilian Portuguese translation provided
-	  by Daniel Abreu (bug #451439).
+	by Daniel Abreu (bug #451439).
 
 2007-06-18  Alexandre Prokoudine  <alexandre.prokoudine@gmail.com>
 
@@ -480,7 +480,7 @@
 	* fr.po: Updated French translation by Jonathan Ernst and
 	Robert-André Mauchin.
 
-2007-04-18  Djihed Afifi <djihed@gmail.com> 
+2007-04-18  Djihed Afifi <djihed@gmail.com>
 
 	* ar.po: Updated Arabic Translation by Ahmad Farghal.
 
@@ -492,7 +492,7 @@
 
 	* cs.po: Updated Czech translation.
 
-2007-04-14  Djihed Afifi <djihed@gmail.com> 
+2007-04-14  Djihed Afifi <djihed@gmail.com>
 
 	* ar.po: Updated Arabic Translation by Ahmad Farghal.
 
@@ -500,11 +500,11 @@
 
 	* sv.po: Updated Swedish translation.
 
-2007-04-11  Djihed Afifi <djihed@gmail.com> 
+2007-04-11  Djihed Afifi <djihed@gmail.com>
 
 	* ar.po: Updated Arabic Translation by Ahmad Farghal.
 
-2007-04-11  Djihed Afifi <djihed@gmail.com> 
+2007-04-11  Djihed Afifi <djihed@gmail.com>
 
 	* ar.po: Updated Arabic Translation by Ahmad Farghal.
 
@@ -628,7 +628,7 @@
 2007-02-05  Takeshi AIHANA <takeshi.aihana@gmail.com>
 
 	* ja.po: Updated Japanese translation by
-			 Koike Kazuhiko <kazhik@mozilla.gr.jp>.
+	Koike Kazuhiko <kazhik@mozilla.gr.jp>.
 
 2007-02-05  Ilkka Tuohela  <hile@iki.fi>
 
@@ -797,7 +797,7 @@
 
 	* sv.po: Updated Swedish translation.
 
-2006-11-18  Djihed Afifi <djihed@gmail.com> 
+2006-11-18  Djihed Afifi <djihed@gmail.com>
 
 	* ar.po: Added Arabic Translation.
 	* LINGUAS: Added ar.
@@ -921,7 +921,7 @@
 2006-10-07  Takeshi AIHANA <takeshi.aihana@gmail.com>
 
 	* ja.po: Updated Japanese translation by
-			 Koike Kazuhiko <kazhik_at_mozilla_dot_gr_dot_jp>
+	Koike Kazuhiko <kazhik_at_mozilla_dot_gr_dot_jp>
 
 2006-10-06  Lasse Bang Mikkelsen  <lbm@fatalerror.dk>
 
@@ -993,7 +993,7 @@
 
 2006-09-17  Aaron Bockover  <abock@gnome.org>
 
-	* POTFILES.in: Updated, moved src/SourceView.cs to 
+	* POTFILES.in: Updated, moved src/SourceView.cs to
 	src/Banshee.Base/Gui/SourceView.cs
 
 2006-09-17  Nickolay V. Shmyrev  <nshmyrev@yandex.ru>
@@ -1073,7 +1073,7 @@
 
 2006-08-31  Chao-Hsiung Liao  <j_h_liau@yahoo.com.tw>
 
-	* LINGUAS: add "zh_HK" "zh_TW" 
+	* LINGUAS: add "zh_HK" "zh_TW"
 	* zh_HK.po: Add Traditional Chinese translation(Hong Kong).
 	* zh_TW.po: Add Traditional Chinese translation(Taiwan).
 
@@ -1134,11 +1134,11 @@
 2006-08-06  Hendrik Richter  <hendrikr@gnome.org>
 
 	* de.po: Updated German translation, by
-	         Daniel Schindler <daniel@vcard24.de>
+	Daniel Schindler <daniel@vcard24.de>
 
 2006-08-05  Aaron Bockover  <abock@gnome.org>
 
-	* POTFILES.in: Updated 
+	* POTFILES.in: Updated
 
 2006-08-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
@@ -1159,7 +1159,7 @@
 2006-08-02  Øivind Hoel  <ohoel@cvs.gnome.org>
 
 	* nb.po: Updated Norwegian Bokmål translation.
-	* POTFILES.in: Removed src/AboutBox.cs and src/Dialogs.cs, 
+	* POTFILES.in: Removed src/AboutBox.cs and src/Dialogs.cs,
 	added src/Banshee.Base/Gui/AboutDialog.cs
 
 2006-07-31  Jakub Friedl  <jfriedl@suse.cz>
@@ -1188,7 +1188,7 @@
 
 2006-07-28  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-07-28  Jakub Friedl  <jfriedl@suse.cz>
 
@@ -1205,12 +1205,12 @@
 
 2006-07-24  Nickolay V. Shmyrev  <nshmyrev@yandex.ru>
 
-	* ru.po: Added Russian translation by 
+	* ru.po: Added Russian translation by
 	Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
 
 2006-07-21  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-07-17  Ilkka Tuohela  <hile@iki.fi>
 
@@ -1236,7 +1236,7 @@
 
 	* LINGUAS: Added ru
 
-	* ru.po: Added Russian translation by 
+	* ru.po: Added Russian translation by
 	Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
 
 2006-07-03  Ilkka Tuohela  <hile@iki.fi>
@@ -1360,7 +1360,7 @@
 2006-05-31  Takeshi AIHANA  <takeshi.aihana@gmail.com>
 
 	* ja.po: Updated Japanese translation by
-	         Koike Kazuhiko <kazhik@mozilla.gr.jp>.
+	Koike Kazuhiko <kazhik@mozilla.gr.jp>.
 
 2006-05-30  Lasse Bang Mikkelsen  <lbm@fatalerror.dk>
 
@@ -1393,7 +1393,7 @@
 
 2006-07-21  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-05-15  Vincent van Adrighem  <adrighem@gnome.org>
 
@@ -1441,11 +1441,11 @@
 2006-04-22  Hendrik Richter  <hendrikr@gnome.org>
 
 	* de.po: Updated German Translation by
-	         Daniel Schindler <daniel@logic-co.de>
+	Daniel Schindler <daniel@logic-co.de>
 
 2006-04-19  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-04-18  Žygimantas Beručka  <zygis@gnome.org>
 
@@ -1481,12 +1481,12 @@ nb
 
 2006-04-09  Sebastian Dröge  <slomo@ubuntu.com>
 
-	* LINGUAS: Use a LINGUAS file instead of putting all languages 
+	* LINGUAS: Use a LINGUAS file instead of putting all languages
 	into configure.ac.  http://live.gnome.org/GnomeGoals/PoLinguas
 
 2006-04-02  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-04-02  Alexander Shopov  <ash@contact.bg>
 
@@ -1496,7 +1496,7 @@ nb
 2006-03-30  Hendrik Richter  <hendrikr@gnome.org>
 
 	* de.po: Added German Translation by
-	         Daniel Schindler <daniel@vcard24.de>.
+	Daniel Schindler <daniel@vcard24.de>.
 
 2006-03-28  Vincent van Adrighem  <adrighem@gnome.org>
 
@@ -1516,7 +1516,7 @@ nb
 
 2006-03-13  Aaron Bockover  <aaron@abock.org>
 
-	* POTFILES.in: Updated 
+	* POTFILES.in: Updated
 
 2006-03-10  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
@@ -1524,7 +1524,7 @@ nb
 
 2006-03-09  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-03-05  Aaron Bockover  <aaron@abock.org>
 
@@ -1553,9 +1553,9 @@ nb
 
 2006-02-21  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 	* POTFILES.in: Changed GstFileEncoder to GstTranscoder
-	  to make intltool-update happy.
+	to make intltool-update happy.
 
 2006-02-20  Ilkka Tuohela  <hile@iki.fi>
 
@@ -1572,7 +1572,7 @@ nb
 
 2006-02-15  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-02-13  Aaron Bockover  <aaron@abock.org>
 
@@ -1581,7 +1581,7 @@ nb
 2006-02-12  Takeshi AIHANA <takeshi.aihana@gmail.com>
 
 	* ja.po: Updated Japanese translation.
-		  Thanks to Koike Kazuhiko <kazhik@gmail.com>.
+	Thanks to Koike Kazuhiko <kazhik@gmail.com>.
 
 2006-02-10  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
@@ -1589,7 +1589,7 @@ nb
 
 2006-02-07  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-02-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
@@ -1611,7 +1611,7 @@ nb
 
 2006-01-29  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-01-22  Alexander Shopov  <ash@contact.bg>
 
@@ -1628,7 +1628,7 @@ nb
 
 2006-01-17  Øivind Hoel  <ohoel@cvs.gnome.org>
 
-	* nb.po: Updated Norwegian Bokmål translation. 
+	* nb.po: Updated Norwegian Bokmål translation.
 
 2006-01-17  Lasse Bang Mikkelsen  <lbm@fatalerror.dk>
 
@@ -1636,7 +1636,7 @@ nb
 
 2006-01-16  Aaron Bockover  <aaron@aaronbock.net>
 
-	* fr.po: Updated French translation from 
+	* fr.po: Updated French translation from
 	Stephane Raimbault <stephane.raimbault@free.fr>
 
 2006-01-16  Stephane Raimbault  <stephane.raimbault@free.fr>
@@ -1739,7 +1739,7 @@ nb
 2005-12-17  Takeshi AIHANA <aihana@gnome.gr.jp>
 
 	* ja.po: Updated Japanese translation by
-                        Koike Kazuhiko <kazhik@gmail.com>.
+	Koike Kazuhiko <kazhik@gmail.com>.
 
 2005-12-16  Lasse Bang Mikkelsen  <lbm@fatalerror.dk>
 
@@ -1757,7 +1757,7 @@ nb
 2005-12-11  Aaron Bockover  <aaron@aaronbock.net>
 
 	* POTFILES.in: Added missing files
-	* nb.po: Updated Øivind Hoel's Norwegian Bokmål translation 
+	* nb.po: Updated Øivind Hoel's Norwegian Bokmål translation
 
 2005-12-10  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
@@ -1779,7 +1779,7 @@ nb
 2005-12-04  Aaron Bockover  <aaron@aaronbock.net>
 
 	* POTFILES.in: added src/Banshee.Base/ImportManager.cs
-	* fr.po: Added French translation by Stephane Raimbault 
+	* fr.po: Added French translation by Stephane Raimbault
 	<stephane.raimbault@free.fr>
 
 2005-12-03  Adam Weinberger  <adamw@gnome.org>
@@ -1842,7 +1842,7 @@ nb
 
 2005-11-17  Aaron Bockover  <aaron@aaronbock.net>
 
-	* POTFILES.in: moved src/SearchEntry.cs to 
+	* POTFILES.in: moved src/SearchEntry.cs to
 	src/Banshee.Widgets/SearchEntry.cs; added src/ToggleStates.cs
 
 2005-11-14  Aaron Bockover  <aaron@aaronbock.net>
@@ -1852,7 +1852,7 @@ nb
 2005-11-14  Guilherme de S. Pastore  <gpastore@gnome.org>
 
 	* pt_BR.po: updated Brazilian Portuguese translation provided
-	  by Marco Carvalho <marcocarvalho89@yahoo.com.br>
+	by Marco Carvalho <marcocarvalho89@yahoo.com.br>
 
 2005-11-13  Žygimantas Beručka  <zygis@gnome.org>
 
@@ -1877,7 +1877,7 @@ nb
 2005-11-09  Guilherme de S. Pastore  <gpastore@gnome.org>
 
 	* pt_BR.po: new Brazilian Portuguese translation provided
-	  by Marco Carvalho <marcocarvalho89@yahoo.com.br>
+	by Marco Carvalho <marcocarvalho89@yahoo.com.br>
 
 2005-11-09  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
@@ -1902,7 +1902,7 @@ nb
 
 2005-10-31  Aaron Bockover  <aaron@aaronbock.net>
 
-	* nb.po: Added Norwegian Bokmål translation by 
+	* nb.po: Added Norwegian Bokmål translation by
 	Øivind Hoel <oivind.hoel@gmail.com>
 
 2005-10-29  Funda Wang  <fundawang@linux.net.cn>
@@ -1979,6 +1979,6 @@ nb
 
 2005-09-17  Aaron Bockover  <aaron@aaronbock.net>
 
-	* POTFILES.in: added data/glade/newipod.glade, src/Dialogs.cs, 
+	* POTFILES.in: added data/glade/newipod.glade, src/Dialogs.cs,
 	src/IpodCore.cs, src/Utilities.cs
 	
