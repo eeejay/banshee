@@ -83,7 +83,7 @@ namespace Banshee.Gui.Dialogs
                 Banshee.ServiceStack.Application.Version);
             Comments = Catalog.GetString ("Extraordinary Multimedia Management and Playback");
             Copyright = Catalog.GetString (
-                "Copyright \u00a9 2005-2008 Novell, Inc.\n" + 
+                "Copyright \u00a9 2005\u20132008 Novell, Inc.\n" + 
                 "Copyright \u00a9 2005 Aaron Bockover"
             );
             

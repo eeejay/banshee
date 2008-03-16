@@ -1,3 +1,9 @@
+2008-03-16  Wouter Bolsterlee  <wbolster@svn.gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:
+	Use a real en dash for date ranges. This is 2008 and we
+	do speak Unicode nowadays! :)
+
 2008-03-14  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Define
