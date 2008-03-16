@@ -63,6 +63,8 @@ src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs
 src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs
+src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs
+src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs
@@ -78,6 +80,7 @@ src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs
+src/Extensions/Banshee.Lastfm/banshee-plugin-lastfm.schemas.in
 src/Extensions/Banshee.Lastfm/Resources/lastfm.glade
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs
