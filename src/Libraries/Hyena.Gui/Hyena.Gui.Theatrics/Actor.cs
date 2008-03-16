@@ -49,9 +49,15 @@ namespace Hyena.Gui.Theatrics
         
         public void Reset ()
         {
+            Reset (duration);
+        }
+        
+        public void Reset (uint duration)
+        {
             start_time = DateTime.Now;
             frames = 0.0;
             percent = 0.0;
+            this.duration = duration;
         }
         
         public virtual void Step ()

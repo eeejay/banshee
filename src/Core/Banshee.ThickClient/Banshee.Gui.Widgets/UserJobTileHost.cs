@@ -31,6 +31,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
+using Hyena.Gui;
 using Banshee.Base;
 using Banshee.ServiceStack;
 
@@ -38,12 +39,12 @@ namespace Banshee.Gui.Widgets
 {
     public class UserJobTileHost : Alignment
     {
-        private VBox box;
+        private AnimatedVBox box;
         private Dictionary<IUserJob, UserJobTile> job_tiles = new Dictionary<IUserJob, UserJobTile> ();
         
         public UserJobTileHost () : base (0.0f, 0.0f, 1.0f, 1.0f)
         {
-            box = new VBox ();
+            box = new AnimatedVBox ();
             box.Spacing = 8;
             box.Show ();
 
@@ -85,7 +86,7 @@ namespace Banshee.Gui.Widgets
             if ((job.DelayShow && job.Progress < 0.33) || !job.DelayShow) {
                 UserJobTile tile = new UserJobTile (job);
                 job_tiles.Add (job, tile);
-                box.PackStart (tile, false, false, 0);
+                box.PackEnd (tile, Easing.QuadraticOut);
                 tile.Show ();
                 Show ();
             }

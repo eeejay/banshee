@@ -1,3 +1,4 @@
+
 //
 // Application.cs
 //
@@ -87,8 +88,8 @@ namespace Banshee.ServiceStack
         {
             ShutdownRequestHandler handler = ShutdownRequested;
             if (handler != null) {
-                foreach (Delegate d in handler.GetInvocationList ()) {
-                    if(!(bool)d.DynamicInvoke (null)) {
+                foreach (ShutdownRequestHandler del in handler.GetInvocationList ()) {
+                    if(!del ()) {
                         return false;
                     }
                 }

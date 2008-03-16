@@ -54,6 +54,11 @@
     <File name="Hyena.Gui.Theming/GtkTheme.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui/PangoCairoHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Widgets/AnimatedBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Widgets/AnimatedHBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Widgets/AnimatedVBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Widgets/AnimatedWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui.Theatrics/AnimationHelper.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

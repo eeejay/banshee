@@ -22,6 +22,7 @@ SOURCES =  \
 	Hyena.Gui.Dialogs/ExceptionDialog.cs \
 	Hyena.Gui.Dialogs/VersionInformationDialog.cs \
 	Hyena.Gui.Theatrics/Actor.cs \
+	Hyena.Gui.Theatrics/Choreographer.cs \
 	Hyena.Gui.Theatrics/SingleActorStage.cs \
 	Hyena.Gui.Theatrics/Stage.cs \
 	Hyena.Gui.Theming/GtkColors.cs \
@@ -44,7 +45,11 @@ SOURCES =  \
 	Hyena.Query.Gui/QueryTermsBox.cs \
 	Hyena.Query.Gui/QueryValueEntry.cs \
 	Hyena.Query.Gui/StringQueryValueEntry.cs \
+	Hyena.Widgets/AnimatedBox.cs \
+	Hyena.Widgets/AnimatedHBox.cs \
 	Hyena.Widgets/AnimatedImage.cs \
+	Hyena.Widgets/AnimatedVBox.cs \
+	Hyena.Widgets/AnimatedWidget.cs \
 	Hyena.Widgets/MessageBar.cs \
 	Hyena.Widgets/RoundedFrame.cs \
 	Hyena.Widgets/ScrolledWindow.cs

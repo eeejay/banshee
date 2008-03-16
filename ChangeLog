@@ -1,3 +1,38 @@
+2008-03-16  Scott Peterson  <lunchtimemama@gmail.com>
+
+	Added animated layout widgets to Hyena.Gui
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:
+	Cast the shutdown handlers in the foreach statement.
+	
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.
+	cs: User jobs now use the fancy fancy AnimatedVBox.
+	
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Actor.cs:
+	Added an overload for Rest which takes a new duration.
+	
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Choreographer.cs:
+	A static class which provides math-o-magical easing equations.
+	
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Stage.cs:
+	Added an overload for Rest which takes a new duration and &= the
+	ActorStepHandlers together to fix a theoretical bug.
+	
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs:
+	A base class for doing animated packing.
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedHBox.cs:
+	A container for animatedly packing widgets into a horizontal box.
+	
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedVBox.cs:
+	A container for animatedly packing widgets into a vertical box.
+	
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedWidget.cs:
+	An internal class used by the AnimatedBox classes
+	
+	* src/Libraries/Hyena.Gui/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.mdp:
+
 2008-03-16  Wouter Bolsterlee  <wbolster@svn.gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:

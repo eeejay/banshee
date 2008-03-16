@@ -99,9 +99,28 @@ namespace Hyena.Gui.Theatrics
         public Actor<T> AddOrReset (T target)
         {
             lock (this) {
+                return AddOrResetCore (target, null);
+            }
+        }
+        
+        public Actor<T> AddOrReset (T target, uint duration)
+        {
+            lock (this) {
+                return AddOrResetCore (target, duration);
+            }
+        }
+        
+        private Actor<T> AddOrResetCore (T target, uint? duration)
+        {
+            lock (this) {
                 if (Contains (target)) {
                     Actor<T> actor = this[target];
-                    actor.Reset ();
+                    
+                    if (duration == null) {
+                        actor.Reset ();
+                    } else {
+                        actor.Reset (duration.Value);
+                    }
                     
                     CheckTimeout ();
                     
@@ -115,13 +134,31 @@ namespace Hyena.Gui.Theatrics
         public void Reset (T target)
         {
             lock (this) {
+                ResetCore (target, null);
+            }
+        }
+        
+        public void Reset (T target, uint duration)
+        {
+            lock (this) {
+                ResetCore (target, duration);
+            }
+        }
+        
+        private void ResetCore (T target, uint? duration)
+        {
+            lock (this) {
                 if (!Contains (target)) {
                     throw new InvalidOperationException ("Stage does not contain this actor");
                 }
                 
                 CheckTimeout ();
                 
-                this[target].Reset ();
+                if (duration == null) {
+                    this [target].Reset ();
+                } else {
+                    this [target].Reset (duration.Value);
+                }
             }
         }
         
@@ -139,24 +176,19 @@ namespace Hyena.Gui.Theatrics
         
         private bool OnTimeout ()
         {
-            if (!Playing || actors.Count == 0) {
+            if (!Playing || this.actors.Count == 0) {
                 timeout_id = 0;
                 return false;
             }
             
-            Queue<Actor<T>> expired_actors = new Queue<Actor<T>> ();
-            Dictionary<T, Actor<T>> actors_copy = new Dictionary<T, Actor<T>> (actors);
-            
-            foreach (KeyValuePair<T, Actor<T>> entry in actors_copy) {
-                entry.Value.Step ();
+            Queue<Actor<T>> actors = new Queue<Actor<T>> (this.actors.Values);
+            while (actors.Count > 0) {
+                Actor<T> actor = actors.Dequeue ();
+                actor.Step ();
                 
-                if (!OnActorStep (entry.Value) || entry.Value.Expired) {
-                    expired_actors.Enqueue (entry.Value);
+                if (!OnActorStep (actor) || actor.Expired) {
+                    this.actors.Remove (actor.Target);
                 }
-            }
-            
-            while (expired_actors.Count > 0) {
-                actors.Remove (expired_actors.Dequeue ().Target);
             }
             
             OnIteration ();
@@ -168,7 +200,11 @@ namespace Hyena.Gui.Theatrics
         {
             ActorStepHandler handler = ActorStep;
             if (handler != null) {
-                return handler (actor);
+                bool result = true;
+                foreach (ActorStepHandler del in handler.GetInvocationList ()) {
+                    result &= del (actor);
+                }
+                return result;
             }
             return false;
         }
