@@ -1,3 +1,25 @@
+2008-03-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Sources/MessageAction.cs: Non-GUI
+	action that can be attached to a SourceMessage
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Added SourceMessage
+	support to replace the Message.* properties; supports a stack of messages
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceMessage.cs: Message
+	class replacing all of the Message.* properties
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	Updated to use the new Source/SourceMessage changes
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedHBox.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedVBox.cs: Some code
+	clean ups and the ability to remove all widgets at once
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MessageBar.cs: Minor rendering fix
+
 2008-03-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingEntry.cs: Add ability

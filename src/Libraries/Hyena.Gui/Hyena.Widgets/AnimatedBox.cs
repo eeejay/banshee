@@ -36,16 +36,24 @@ using Hyena.Gui.Theatrics;
 
 namespace Hyena.Gui
 {
-    public abstract class AnimatedBox : Container, IEnumerable<Widget>
+    public abstract class AnimatedBox : Container
     {
         private readonly Stage<AnimatedWidget> stage = new Stage<AnimatedWidget> ();
         private readonly Queue<AnimatedWidget> expired = new Queue<AnimatedWidget> ();
         private readonly LinkedList<AnimatedWidget> children = new LinkedList<AnimatedWidget> ();
-        private readonly object childrenMutex = new object ();
+        private readonly object children_mutex = new object ();
         
-        protected int spacing;
-        protected int startSpacing;
-        protected int endSpacing;
+        private int spacing;
+        
+        private int start_spacing;
+        protected int StartSpacing {
+            get { return start_spacing; }
+        }
+        
+        private int end_spacing;
+        protected int EndSpacing {
+            get { return end_spacing; }
+        }
         
         private uint duration = 500;
         private Easing easing = Easing.Linear;
@@ -77,7 +85,7 @@ namespace Hyena.Gui
                     break;
                 case AnimationState.Going:
                     if (actor.Expired) {
-                        lock (childrenMutex) {
+                        lock (children_mutex) {
                             children.Remove (actor.Target.Node);
                         }
                         expired.Enqueue (actor.Target);
@@ -152,9 +160,9 @@ namespace Hyena.Gui
         
         public void PackStart (Widget widget, uint duration, Easing easing, Blocking blocking)
         {
-            AnimatedWidget animatedWidget = Pack (widget, duration, easing, blocking);
-            lock (childrenMutex) {
-                animatedWidget.Node = children.AddFirst (animatedWidget);
+            AnimatedWidget animated_widget = Pack (widget, duration, easing, blocking);
+            lock (children_mutex) {
+                animated_widget.Node = children.AddFirst (animated_widget);
             }
         }
         
@@ -195,9 +203,9 @@ namespace Hyena.Gui
         
         public void PackEnd (Widget widget, uint duration, Easing easing, Blocking blocking)
         {
-            AnimatedWidget animatedWidget = Pack (widget, duration, easing, blocking);
-            lock (childrenMutex) {
-                animatedWidget.Node = children.AddLast (animatedWidget);
+            AnimatedWidget animated_widget = Pack (widget, duration, easing, blocking);
+            lock (children_mutex) {
+                animated_widget.Node = children.AddLast (animated_widget);
             }
         }
         
@@ -207,11 +215,11 @@ namespace Hyena.Gui
                 throw new ArgumentNullException ("widget");
             }
             
-            AnimatedWidget animatedWidget = new AnimatedWidget (widget, duration, easing, blocking);
-            animatedWidget.Parent = this;
-            animatedWidget.WidgetDestroyed += OnWidgetDestroyed;
-            stage.Add (animatedWidget, duration);
-            return animatedWidget;
+            AnimatedWidget animated_widget = new AnimatedWidget (widget, duration, easing, blocking);
+            animated_widget.Parent = this;
+            animated_widget.WidgetDestroyed += OnWidgetDestroyed;
+            stage.Add (animated_widget, duration);
+            return animated_widget;
         }
         
 #endregion
@@ -264,17 +272,19 @@ namespace Hyena.Gui
                 throw new ArgumentNullException ("widget");
             }
             
-            AnimatedWidget animatedWidget = null;
-            foreach (AnimatedWidget child in this) {
+            AnimatedWidget animated_widget = null;
+            foreach (AnimatedWidget child in Widgets) {
                 if (child.Widget == widget) {
-                    animatedWidget = child;
+                    animated_widget = child;
                     break;
                 }
             }
-            if (animatedWidget == null) {
+            
+            if (animated_widget == null) {
                 throw new ArgumentException ("Cannot remove the specified widget because it has not been added to this container or it has already been removed.", "widget");
             }
-            RemoveCore (animatedWidget, duration, easing, blocking);
+            
+            RemoveCore (animated_widget, duration, easing, blocking);
         }
         
         private void RemoveCore (AnimatedWidget widget)
@@ -288,9 +298,11 @@ namespace Hyena.Gui
                 if (duration != null) {
                     widget.Duration = duration.Value;
                 }
+                
                 if (easing != null) {
                     widget.Easing = easing.Value;
                 }
+                
                 if (blocking != null) {
                     widget.Blocking = blocking.Value;
                 }
@@ -307,6 +319,7 @@ namespace Hyena.Gui
                     } else if (widget.Easing == Easing.ExponentialOut) {
                         widget.Easing = Easing.ExponentialIn;
                     }
+                    
                     widget.AnimationState = AnimationState.Going;
                     stage.Add (widget, widget.Duration);
                 }
@@ -317,28 +330,24 @@ namespace Hyena.Gui
         
 #region Other Public Methods
         
+        public void RemoveAll ()
+        {
+            foreach (AnimatedWidget child in Widgets) {
+                if (child.AnimationState != AnimationState.Going) {
+                    RemoveCore (child);
+                }
+            }
+        }
+        
         public bool Contains (Widget widget)
         {
-            foreach (AnimatedWidget child in this) {
+            foreach (AnimatedWidget child in Widgets) {
                 if (child.AnimationState != AnimationState.Going && child.Widget == widget) {
                     return true;
                 }
             }
+            
             return false;
-        }
-        
-        public new IEnumerator<Widget> GetEnumerator ()
-        {
-            lock (childrenMutex) {
-                foreach (AnimatedWidget child in children) {
-                    yield return child;
-                }
-            }
-        }
-        
-        IEnumerator System.Collections.IEnumerable.GetEnumerator ()
-        {
-            return GetEnumerator ();
         }
         
 #endregion
@@ -358,7 +367,7 @@ namespace Hyena.Gui
         
         protected override void ForAll (bool include_internals, Callback callback)
         {
-            foreach (AnimatedWidget child in this) {
+            foreach (AnimatedWidget child in Widgets) {
                 callback (child);
             }
         }
@@ -375,8 +384,8 @@ namespace Hyena.Gui
                 }
                 spacing = value;
                 double half = (double)spacing / 2.0;
-                startSpacing = (int)Math.Floor (half);
-                endSpacing = (int)Math.Ceiling (half);
+                start_spacing = (int)Math.Floor (half);
+                end_spacing = (int)Math.Ceiling (half);
             }
         }
         
@@ -393,6 +402,16 @@ namespace Hyena.Gui
         public Blocking Blocking {
             get { return blocking; }
             set { blocking = value; }
+        }
+        
+        internal IEnumerable<AnimatedWidget> Widgets {
+            get {
+                lock (children_mutex) {
+                    foreach (AnimatedWidget child in children) {
+                        yield return child;
+                    }
+                }
+            }
         }
         
 #endregion

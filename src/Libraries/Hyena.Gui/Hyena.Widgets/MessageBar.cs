@@ -37,17 +37,12 @@ namespace Hyena.Widgets
     public class MessageBar : Alignment
     {   
         private HBox box;
+        private HBox button_box;
         private AnimatedImage image;
         private Label label;
-        private Button button;
         private Button close_button;
         
         private Theme theme;
-        
-        public event EventHandler ButtonClicked {
-            add { button.Clicked += value; }
-            remove { button.Clicked -= value; }
-        }
         
         public event EventHandler CloseClicked {
             add { close_button.Clicked += value; }
@@ -77,11 +72,12 @@ namespace Hyena.Widgets
             label.Xalign = 0.0f;
             label.Show ();
             
-            button = new Button ();
-            
             box.PackStart (image, false, false, 0);
             box.PackStart (label, true, true, 0);
             box.Show ();
+            
+            button_box = new HBox ();
+            button_box.Spacing = 3;
             
             close_button = new Button (new Image (Stock.Close, IconSize.Menu));
             close_button.Relief = ReliefStyle.None;
@@ -90,6 +86,7 @@ namespace Hyena.Widgets
             close_button.Hide ();
             
             shell_box.PackStart (box, true, true, 0);
+            shell_box.PackStart (button_box, false, false, 0);
             shell_box.PackStart (close_button, false, false, 0);
             shell_box.Show ();
             
@@ -103,9 +100,13 @@ namespace Hyena.Widgets
         protected override void OnRealized ()
         {
             base.OnRealized ();
-            
             theme = new GtkTheme (this);
-            // theme.RefreshColors ();
+        }
+        
+        protected override void OnSizeAllocated (Gdk.Rectangle allocation)
+        {
+            base.OnSizeAllocated (allocation);
+            QueueDraw ();
         }
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
@@ -113,13 +114,13 @@ namespace Hyena.Widgets
             if (!IsDrawable) {
                 return false;
             }
- 
+            
             Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
                 
             try {
                 Gdk.Color color = Style.Background (StateType.Normal);
                 theme.DrawFrame (cr, Allocation, CairoExtensions.GdkColorToCairoColor (color));
-                return base.OnExposeEvent(evnt);
+                return base.OnExposeEvent (evnt);
             } finally {
                 ((IDisposable)cr.Target).Dispose ();
                 ((IDisposable)cr).Dispose ();
@@ -141,43 +142,28 @@ namespace Hyena.Widgets
             changing_style = false;
         }
         
-        public string ButtonLabel {
-            set {
-                bool button_is_child = false;
-                foreach (Widget child in box.Children) {
-                    if (child == button) {
-                        button_is_child = true;
-                        break;
-                    }
-                }
-                
-                if (button_is_child && value == null) {
-                    box.Remove (button);
-                }
-                
-                if (value != null) {
-                    button.Label = value;
-                    button.Show ();
-                    
-                    if (!button_is_child) {
-                        box.PackStart (button, false, false, 0);
-                    }
-                }
-                
-                QueueDraw ();
+        public void RemoveButton (Button button)
+        {
+            button_box.Remove (button);
+        }
+        
+        public void ClearButtons ()
+        {
+            foreach (Widget child in button_box.Children) {
+                button_box.Remove (child);
             }
+        }
+        
+        public void AddButton (Button button)
+        {
+            button_box.Show ();
+            button.Show ();
+            button_box.PackStart (button, false, false, 0);
         }
         
         public bool ShowCloseButton {
             set {
                 close_button.Visible = value;
-                QueueDraw ();
-            }
-        }
-        
-        public bool ButtonUseStock {
-            set {
-                button.UseStock = value;
                 QueueDraw ();
             }
         }

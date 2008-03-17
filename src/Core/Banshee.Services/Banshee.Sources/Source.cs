@@ -38,6 +38,7 @@ using Mono.Unix;
 using Hyena.Data;
 using Hyena.Query;
 
+using Banshee.Base;
 using Banshee.Collection;
 using Banshee.ServiceStack;
 
@@ -47,11 +48,13 @@ namespace Banshee.Sources
     {
         private Source parent;
         private PropertyStore properties = new PropertyStore ();
+        private List<SourceMessage> messages = new List<SourceMessage> ();
         private List<Source> child_sources = new List<Source> ();
         private ReadOnlyCollection<Source> read_only_children;
 
         public event EventHandler Updated;
         public event EventHandler UserNotifyUpdated;
+        public event EventHandler MessageNotify;
         public event SourceEventHandler ChildSourceAdded;
         public event SourceEventHandler ChildSourceRemoved;
         
@@ -70,6 +73,10 @@ namespace Banshee.Sources
 
             properties.PropertyChanged += OnPropertyChanged;
             read_only_children = new ReadOnlyCollection<Source> (child_sources);
+            
+            if (ApplicationContext.Debugging && ApplicationContext.CommandLine.Contains ("test-source-messages")) {
+                TestMessages ();
+            }
         }
         
         protected void OnSetupComplete ()
@@ -202,6 +209,87 @@ namespace Banshee.Sources
 #endregion
         
 #region Protected Methods
+
+        protected virtual void PushMessage (SourceMessage message)
+        {
+            lock (this) {
+                messages.Insert (0, message);
+            }
+            
+            OnMessageNotify ();
+        }
+        
+        protected virtual SourceMessage PopMessage ()
+        {
+            try {
+                lock (this) {
+                    if (messages.Count > 0) {
+                        SourceMessage message = messages[0];
+                        messages.RemoveAt (0);
+                        return message;
+                    }
+                    
+                    return null;
+                }
+            } finally {
+                OnMessageNotify ();
+            }
+        }
+        
+        private void TestMessages ()
+        {
+            int count = 0;
+            SourceMessage message_3 = null;
+            
+            Application.RunTimeout (5000, delegate {
+                if (count++ > 5) {
+                    if (count == 7) {
+                        RemoveMessage (message_3);
+                    }
+                    PopMessage ();
+                    return true;
+                } else if (count > 10) {
+                    return false;
+                }
+                
+                SourceMessage message = new SourceMessage (this);
+                message.FreezeNotify ();
+                message.Text = String.Format ("Testing message {0}", count);
+                message.IsSpinning = count % 2 == 0;
+                message.CanClose = count % 2 == 1;
+                if (count % 3 == 0) {
+                    for (int i = 2; i < count; i++) {
+                        message.AddAction (new MessageAction (String.Format ("Button {0}", i)));
+                    }
+                }
+                    
+                message.ThawNotify ();
+                PushMessage (message);
+                
+                if (count == 3) {
+                    message_3 = message;
+                }
+                
+                return true;
+            });
+        }
+        
+        protected virtual void RemoveMessage (SourceMessage message)
+        {
+            lock (this) {
+                if (messages.Remove (message)) {
+                    OnMessageNotify ();
+                }
+            }   
+        }
+        
+        protected virtual void OnMessageNotify ()
+        {
+            EventHandler handler = MessageNotify;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
     
         protected virtual void OnChildSourceAdded (Source source)
         {
@@ -257,9 +345,7 @@ namespace Banshee.Sources
         }
         
         string [] ISource.Children {
-            get {
-                return null;
-            }
+            get { return null; }
         }
 
         public Source Parent {
@@ -287,6 +373,10 @@ namespace Banshee.Sources
         public int Order {
             get { return properties.GetInteger ("Order"); }
             set { properties.SetInteger ("Order", value); }
+        }
+        
+        public SourceMessage CurrentMessage {
+            get { lock (this) { return messages.Count > 0 ? messages[0] : null; } }
         }
 
         public virtual bool ImplementsCustomSearch {

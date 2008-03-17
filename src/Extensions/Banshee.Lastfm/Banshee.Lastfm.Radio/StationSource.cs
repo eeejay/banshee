@@ -55,6 +55,7 @@ namespace Banshee.Lastfm.Radio
         private static string generic_name = Catalog.GetString ("Last.fm Station");
         
         private LastfmTrackListModel track_model;
+        private SourceMessage status_message;
         
         private LastfmSource lastfm;
         public LastfmSource LastfmSource {
@@ -242,38 +243,36 @@ namespace Banshee.Lastfm.Radio
 
         private void SetStatus (string message, bool error, ConnectionState state)
         {
-            ThreadAssist.ProxyToMain (delegate {
-                string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
-                Properties.SetString ("Message.Text", String.Format ("{0}", 
-                    String.Format (GLib.Markup.EscapeText (message), status_name)));
-                
-                if (error) {
-                    Properties.SetString ("Message.Icon.Name", "dialog-error");
-                    Properties.SetBoolean ("Message.IsSpinning", false);
-                    
-                    if (state == ConnectionState.NoAccount || state == ConnectionState.InvalidAccount) {
-                        Properties.SetString ("Message.Action.Label", Catalog.GetString ("Account Settings"));
-                        Properties.Set<EventHandler> ("Message.Action.NotifyHandler", delegate {
-                             lastfm.Actions.ShowLoginDialog ();
-                           });
-                    } else {
-                        Properties.RemoveStartingWith ("Message.Action.");
-                      }
-                } else {
-                    Properties.RemoveStartingWith ("Message.Icon.");
-                    Properties.SetBoolean ("Message.IsSpinning", true);
-                    Properties.RemoveStartingWith ("Message.Action.");
-                }
-                
-                Properties.SetBoolean ("Message.CanClose", true);
-            });
+            if (status_message == null) {
+                status_message = new SourceMessage (this);
+                PushMessage (status_message);
+            }
+            
+            string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
+            
+            status_message.FreezeNotify ();
+            status_message.Text = String.Format (GLib.Markup.EscapeText (message), status_name);
+            status_message.CanClose = !error;
+            status_message.IsSpinning = !error;
+            status_message.SetIconName (error ? "dialog-error" : null);
+            status_message.ClearActions ();
+            
+            if (error && (state == ConnectionState.NoAccount || state == ConnectionState.InvalidAccount)) {
+                status_message.AddAction (new MessageAction (Catalog.GetString ("Account Settings"),
+                    delegate { lastfm.Actions.ShowLoginDialog (); }));
+                status_message.AddAction (new MessageAction (Catalog.GetString ("Join Last.fm"),
+                    delegate { lastfm.Account.SignUp (); }));
+            }
+            
+            status_message.ThawNotify ();
         }
 
         private void HideStatus ()
         {
-            ThreadAssist.ProxyToMain (delegate {
-                Properties.RemoveStartingWith ("Message.");
-            });
+            if (status_message != null) {
+                RemoveMessage (status_message);
+                status_message = null;
+            }
         }
 
         /*public override void ShowPropertiesDialog ()

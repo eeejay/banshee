@@ -35,6 +35,7 @@ using Banshee.ServiceStack;
 
 using Hyena.Widgets;
 using Banshee.Sources.Gui;
+using Banshee.Base;
 
 namespace Banshee.Gui.Widgets
 {
@@ -42,9 +43,23 @@ namespace Banshee.Gui.Widgets
     {
         private Source source;
         
+        private class ActionButton : Button
+        {
+            private MessageAction action;
+            
+            public ActionButton (MessageAction action) : base (action.Label)
+            {
+                this.action = action;
+            }
+            
+            protected override void OnClicked ()
+            {
+                action.Activate ();
+            }
+        }
+        
         public ConnectedMessageBar ()
         {
-            ButtonClicked += OnActionClicked;
             CloseClicked += OnCloseClicked;
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             ConnectSource (ServiceManager.SourceManager.ActiveSource);
@@ -57,107 +72,61 @@ namespace Banshee.Gui.Widgets
             this.source = source;
             
             if (this.source != null) {
-                this.source.Properties.PropertyChanged += OnSourcePropertyChanged;
-                
-                UpdateText (this.source.Properties.GetString ("Message.Text"), false);
-                UpdateClose (this.source.Properties.GetBoolean ("Message.CanClose"), false);
-                UpdateAction (false);
-                UpdateIcon (false);
-                UpdateSpinner (this.source.Properties.GetBoolean ("Message.IsSpinning"), false);
+                this.source.MessageNotify += OnSourceMessageNotify;
+                Update ();
             }
         }
         
-        private void UpdateText (object value, bool removed)
+        private void Update ()
         {
-            string message = removed || value == null ? null : value.ToString ();
-            Message = message;
-            
-            if (message == null || removed || source.Properties.GetBoolean ("Message.IsHidden")) {
+            ThreadAssist.ProxyToMain (InnerUpdate);
+        }
+        
+        private void InnerUpdate (object o, EventArgs args)
+        {
+            if (source == null || source.CurrentMessage == null || source.CurrentMessage.IsHidden) {
                 Hide ();
-            } else {
-                Show ();
-            }
-        }
-        
-        private void UpdateIcon (bool removed)
-        {
-            if (removed) {
-                SourceIconResolver.InvalidatePixbufs (source, "Message");
-                Pixbuf = null;
                 return;
             }
             
-            Pixbuf = SourceIconResolver.ResolveIcon (source, "Message");
-        }
-        
-        private void UpdateClose (bool value, bool removed)
-        {
-            ShowCloseButton = value && !removed; 
-        }
-        
-        private void UpdateAction (bool removed)
-        {
-            if (removed) {
-                ButtonLabel = null; 
-                return;
+            Message = source.CurrentMessage.Text;
+            Pixbuf = null;
+            ShowCloseButton = source.CurrentMessage.CanClose;
+            Spinning = source.CurrentMessage.IsSpinning;
+            
+            Pixbuf = source.CurrentMessage.IconNames == null ? null :
+                IconThemeUtils.LoadIcon (22, source.CurrentMessage.IconNames);
+            
+            ClearButtons ();
+            
+            if (source.CurrentMessage.Actions != null) {
+                foreach (MessageAction action in source.CurrentMessage.Actions) {
+                    Button button = new ActionButton (action);
+                    button.UseStock = action.IsStock;
+                    AddButton (button);
+                }
             }
             
-            ButtonLabel = source.Properties.GetString ("Message.Action.Label");
-            ButtonUseStock = source.Properties.GetBoolean ("Message.Action.IsStock");
-        }
-        
-        private void UpdateSpinner (bool value, bool removed)
-        {
-            Spinning = value && !removed; 
-        }
-        
-        private void OnActionClicked (object o, EventArgs args)
-        {
-            EventHandler handler = source.Properties.Get<EventHandler> ("Message.Action.NotifyHandler");
-            if (handler != null) {
-                handler (o, args);
-            }
+            Show ();
         }
         
         private void OnCloseClicked (object o, EventArgs args)
         {
-            source.Properties.SetBoolean ("Message.IsHidden", true);
+            source.CurrentMessage.IsHidden = true;
         }
         
         private void OnActiveSourceChanged (SourceEventArgs args)
         {
             if (source != null && source != args.Source) {
-                source.Properties.PropertyChanged -= OnSourcePropertyChanged;
+                source.MessageNotify -= OnSourceMessageNotify;
             }
             
             ConnectSource (args.Source);
         }
         
-        private void OnSourcePropertyChanged (object o, PropertyChangeEventArgs args)
+        private void OnSourceMessageNotify (object o, EventArgs args)
         {
-            if (!args.PropertyName.StartsWith ("Message.")) {
-                return;
-            }
-            
-            if (args.PropertyName == "Message.Text") {
-                UpdateText (args.NewValue, args.Removed);
-            } else if (args.PropertyName == "Message.Icon.Name") {
-                SourceIconResolver.InvalidatePixbufs (source, "Message");
-                UpdateIcon (args.Removed);
-            } else if (args.PropertyName == "Message.CanClose") {
-                UpdateClose (args.NewValue == null ? false : (bool)args.NewValue, args.Removed);
-            } else if (args.PropertyName.StartsWith ("Message.Action.")) {
-                UpdateAction (args.Removed);
-            } else if (args.PropertyName == "Message.IsSpinning") {
-                UpdateSpinner (args.NewValue == null ? false : (bool)args.NewValue, args.Removed);
-            } else if (args.PropertyName == "Message.IsHidden") {
-                bool value = args.NewValue == null ? false : (bool)args.NewValue;
-                if (args.Removed || !value) {
-                    UpdateText (this.source.Properties.GetString ("Message.Text"), false);
-                } else if (value) {
-                    Hide ();
-                }
-            }
+            Update ();
         }
     }
 }

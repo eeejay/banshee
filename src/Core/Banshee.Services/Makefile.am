@@ -114,10 +114,12 @@ SOURCES =  \
 	Banshee.Sources/ISourceManager.cs \
 	Banshee.Sources/ITrackModelSource.cs \
 	Banshee.Sources/IUnmapableSource.cs \
+	Banshee.Sources/MessageAction.cs \
 	Banshee.Sources/PrimarySource.cs \
 	Banshee.Sources/Source.cs \
 	Banshee.Sources/SourceManager.cs \
 	Banshee.Sources/SourceMergeType.cs \
+	Banshee.Sources/SourceMessage.cs \
 	Banshee.Streaming/RadioTrackInfo.cs \
 	Banshee.Web/Browser.cs
 

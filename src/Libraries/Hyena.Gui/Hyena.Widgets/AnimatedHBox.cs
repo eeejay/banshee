@@ -38,14 +38,17 @@ namespace Hyena.Gui
         {
             int width = 0;
             int height = 0;
-            foreach (AnimatedWidget widget in this) {
+            
+            foreach (AnimatedWidget widget in Widgets) {
                 Requisition req = widget.SizeRequest ();
-                widget.Size = req.Width + spacing;
+                widget.Size = req.Width + Spacing;
                 width += widget.Value;
+                
                 if (req.Height > height) {
                     height = req.Height;
                 }
             }
+            
             requisition.Width = width;
             requisition.Height = height;
         }
@@ -53,12 +56,15 @@ namespace Hyena.Gui
         protected override void OnSizeAllocated (Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
-            foreach (AnimatedWidget widget in this) {
+            
+            foreach (AnimatedWidget widget in Widgets) {
                 allocation.Width = widget.Value;
-                widget.Alloc.X = startSpacing;
+                widget.Alloc.X = StartSpacing;
+                
                 if (widget.Blocking == Blocking.Downstage) {
                     widget.Alloc.X += widget.Value - widget.Size;
                 }
+                
                 widget.Alloc.Height = allocation.Height;
                 widget.SizeAllocate (allocation);
                 allocation.X += allocation.Width;

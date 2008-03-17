@@ -38,25 +38,28 @@ namespace Hyena.Gui
         {
             int width = 0;
             int height = 0;
-            int rolloverSpacing = 0;
-            foreach (AnimatedWidget widget in this) {
+            int rollover_Spacing = 0;
+            
+            foreach (AnimatedWidget widget in Widgets) {
                 Requisition req = widget.SizeRequest ();
-                widget.Size = req.Height + rolloverSpacing;
-                widget.Alloc.Y = rolloverSpacing;
+                widget.Size = req.Height + rollover_Spacing;
+                widget.Alloc.Y = rollover_Spacing;
+                
                 if (widget.IsFirst) {
                     if (widget.Next != null) {
                         if (widget.AnimationState != AnimationState.Idle) {
-                            widget.Size += spacing;
+                            widget.Size += Spacing;
                         } else {
-                            widget.Size += endSpacing;
-                            rolloverSpacing = startSpacing;
+                            widget.Size += EndSpacing;
+                            rollover_Spacing = StartSpacing;
                         }
                     }
-                } else if (widget.Next != null && widget.Next.IsLast && widget.Next.AnimationState != AnimationState.Idle) {
-                    rolloverSpacing = spacing;
+                } else if (widget.Next != null && widget.Next.IsLast && 
+                    widget.Next.AnimationState != AnimationState.Idle) {
+                    rollover_Spacing = Spacing;
                 } else if (!widget.IsLast) {
-                    widget.Size += endSpacing;
-                    rolloverSpacing = startSpacing;
+                    widget.Size += EndSpacing;
+                    rollover_Spacing = StartSpacing;
                 }
                 
                 height += widget.Value;
@@ -64,6 +67,7 @@ namespace Hyena.Gui
                     width = req.Width;
                 }
             }
+            
             requisition.Width = width;
             requisition.Height = height;
         }
@@ -71,7 +75,7 @@ namespace Hyena.Gui
         protected override void OnSizeAllocated (Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
-            foreach (AnimatedWidget widget in this) {
+            foreach (AnimatedWidget widget in Widgets) {
                 allocation.Height = widget.Value;
                 if (widget.Blocking == Blocking.Downstage) {
                     widget.Alloc.Y += widget.Value - widget.Size;
