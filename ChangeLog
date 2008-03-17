@@ -1,3 +1,31 @@
+2008-03-16  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackMediaAttributes.cs: 
+	Defined a starting set of general flags that can be used to describe
+	the track, including VideoStream, AudioStream, Podcast, AudioBook, etc.
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Added a 
+	MediaAttributes property
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Override MediaAttributes and bind it to the Attributes column
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Detect and merge
+	some MediaAttributes into the track (i.e. if taglib says the file
+	has audio and/or video streams, apply those as attributes)
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Added the first schema changes using the migrator now that we have actually
+	made a release, we don't want to break users' database; add a column called
+	Attributes to CoreTracks
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	NotifyTracksAdded a little more frequently than we do right now
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: Special case
+	Enum types so that we can convert integer values in the database to
+	the enum values they represent if a bound property's type is an enum
+
 2008-03-16  Scott Peterson  <lunchtimemama@gmail.com>
 
 	Added animated layout widgets to Hyena.Gui

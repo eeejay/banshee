@@ -40,9 +40,9 @@ namespace Banshee.Streaming
             TagLib.File file = Banshee.IO.DemuxVfs.OpenFile (uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
                 null, TagLib.ReadStyle.Average);
 
-            if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) != 0 && 
-                file.Properties.MediaTypes != TagLib.MediaTypes.Audio) {
-                throw new TagLib.UnsupportedFormatException ("File contains more than just audio");
+            if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) == 0 && 
+                (file.Properties.MediaTypes & TagLib.MediaTypes.Video) == 0) {
+                throw new TagLib.UnsupportedFormatException ("File does not contain video or audio");
             }
             
             return file;
@@ -76,6 +76,27 @@ namespace Banshee.Streaming
                 : (priority <= 0 ? fallback : priority);
         }
         
+        private static void FindTrackMediaAttributes (TrackInfo track, TagLib.File file)
+        {
+            track.MediaAttributes = TrackMediaAttributes.None;
+            
+            if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) != 0) {
+                track.MediaAttributes |= TrackMediaAttributes.AudioStream;
+            }
+            
+            if ((file.Properties.MediaTypes & TagLib.MediaTypes.Video) != 0) {
+                track.MediaAttributes |= TrackMediaAttributes.VideoStream;
+            }
+            
+            // TODO: Actually figure out, if possible at the tag/file level, if
+            // the file is actual music, podcast, audiobook, movie, tv show, etc.
+            // For now just assume that if it's only audio, it's music, since that's
+            // what we've just historically assumed on any media type
+            if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0) {
+                track.MediaAttributes |= TrackMediaAttributes.Music;
+            }
+        }
+        
         public static void TrackInfoMerge (TrackInfo track, TagLib.File file)
         {
             TrackInfoMerge (track, file, false);
@@ -88,6 +109,8 @@ namespace Banshee.Streaming
             track.MimeType = file.MimeType;
             track.FileSize = Banshee.IO.File.GetSize (track.Uri);
             track.Duration = file.Properties.Duration;
+            
+            FindTrackMediaAttributes (track, file);
 
             track.ArtistName = Choose (file.Tag.JoinedPerformers, track.ArtistName, preferTrackInfo);
             track.AlbumTitle = Choose (file.Tag.Album, track.AlbumTitle, preferTrackInfo);

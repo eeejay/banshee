@@ -222,6 +222,12 @@ namespace Banshee.Collection.Database
             set { base.FileSize = value; }
         }
         
+        [DatabaseColumn ("Attributes")]
+        public override TrackMediaAttributes MediaAttributes {
+            get { return base.MediaAttributes; }
+            set { base.MediaAttributes = value; }
+        }
+        
         [DatabaseColumn ("Title")]
         public override string TrackTitle {
             get { return base.TrackTitle; }

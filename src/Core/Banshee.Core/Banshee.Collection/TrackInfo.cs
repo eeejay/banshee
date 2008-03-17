@@ -273,6 +273,12 @@ namespace Banshee.Collection
             set { can_play = value; }
         }
         
+        private TrackMediaAttributes media_attributes;
+        public virtual TrackMediaAttributes MediaAttributes {
+            get { return media_attributes; }
+            set { media_attributes = value; }
+        }
+        
         // Generates a{sv} of self according to http://wiki.xmms2.xmms.se/index.php/Media_Player_Interfaces#.22Metadata.22
         public IDictionary<string, object> GenerateExportable ()
         {

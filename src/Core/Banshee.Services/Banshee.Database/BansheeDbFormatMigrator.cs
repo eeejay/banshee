@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -38,6 +38,7 @@ using Timer=Hyena.Timer;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
+using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Streaming;
 
@@ -60,7 +61,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 1;
+        protected const int CURRENT_VERSION = 2;
         
         protected class DatabaseVersionAttribute : Attribute 
         {
@@ -123,48 +124,55 @@ namespace Banshee.Database
             }
         }
         
-        public void Migrate()
+        public void Migrate ()
         {
             try {
-                Execute("BEGIN");
-                InnerMigrate();
-                Execute("COMMIT");
-            } catch(Exception e) {
-                Console.WriteLine("Rolling back transaction");
-                Console.WriteLine(e);
-                Execute("ROLLBACK");
+                Execute ("BEGIN");
+                InnerMigrate ();
+                Execute ("COMMIT");
+            } catch (Exception e) {
+                Console.WriteLine ("Rolling back transaction");
+                Console.WriteLine (e);
+                Execute ("ROLLBACK");
             }
 
             OnFinished ();
         }
         
-        private void InnerMigrate()
+        private void InnerMigrate ()
         {   
-            MethodInfo [] methods = GetType().GetMethods(BindingFlags.Instance | BindingFlags.NonPublic);
+            MethodInfo [] methods = GetType ().GetMethods (BindingFlags.Instance | BindingFlags.NonPublic);
             bool terminate = false;
             bool ran_migration_step = false;
             
-            for(int i = DatabaseVersion + 1; i <= CURRENT_VERSION; i++) {
-                foreach(MethodInfo method in methods) {
-                    foreach(Attribute attr in method.GetCustomAttributes(false)) {
-                        if(attr is DatabaseVersionAttribute && ((DatabaseVersionAttribute)attr).Version == i) {
-                            if (!ran_migration_step) {
-                                ran_migration_step = true;
-                                OnStarted ();
-                            }
-
-                            if(!(bool)method.Invoke(this, null)) {
-                                terminate = true;
-                            }
-                            break;
+            for (int i = DatabaseVersion + 1; i <= CURRENT_VERSION; i++) {
+                foreach (MethodInfo method in methods) {
+                    foreach (DatabaseVersionAttribute attr in method.GetCustomAttributes (
+                        typeof (DatabaseVersionAttribute), false)) {
+                        if (attr.Version != i) {
+                            continue;
                         }
+                        
+                        if (!ran_migration_step) {
+                            ran_migration_step = true;
+                            OnStarted ();
+                        }
+
+                        if (!(bool)method.Invoke (this, null)) {
+                            terminate = true;
+                        }
+                        
+                        break;
                     }
                 }
                 
-                if(terminate) {
+                if (terminate) {
                     break;
                 }
             }
+            
+            Execute (String.Format ("UPDATE CoreConfiguration SET Value = '{0}' WHERE Key = 'DatabaseVersion'",
+                CURRENT_VERSION));
         }
         
         protected bool TableExists(string tableName)
@@ -228,7 +236,15 @@ namespace Banshee.Database
                 InitializeFreshDatabase ();
                 return false;
             }
-        }   
+        }
+        
+        [DatabaseVersion (2)]
+        private bool Migrate_2 ()
+        {
+            Execute (String.Format ("ALTER TABLE CoreTracks ADD COLUMN Attributes INTEGER  DEFAULT {0}",
+                (int)TrackMediaAttributes.Default));
+            return true;
+        }
         
 #pragma warning restore 0169
         
@@ -271,7 +287,7 @@ namespace Banshee.Database
             // TODO add these:
             // Others to consider:
             // AlbumArtist (TPE2) (in CoreAlbums?)
-            Execute(@"
+            Execute(String.Format (@"
                 CREATE TABLE CoreTracks (
                     PrimarySourceID     INTEGER NOT NULL,
                     TrackID             INTEGER PRIMARY KEY,
@@ -285,6 +301,7 @@ namespace Banshee.Database
                     UriType             INTEGER,
                     MimeType            TEXT,
                     FileSize            INTEGER,
+                    Attributes          INTEGER DEFAULT {0},
                     
                     Title               TEXT,
                     TrackNumber         INTEGER,
@@ -305,7 +322,7 @@ namespace Banshee.Database
                     DateAddedStamp      INTEGER,
                     DateUpdatedStamp    INTEGER
                 )
-            ");
+            ", (int)TrackMediaAttributes.Default));
             Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(PrimarySourceID)");
             Execute("CREATE INDEX CoreTracksAggregatesIndex ON CoreTracks(FileSize, Duration)");
             Execute("CREATE INDEX CoreTracksArtistIndex ON CoreTracks(ArtistID)");
@@ -440,7 +457,7 @@ namespace Banshee.Database
                         ORDER BY AlbumTitle
             ");
             
-            Execute(@"
+            Execute (String.Format (@"
                 INSERT INTO CoreTracks
                     SELECT 
                         1,
@@ -454,11 +471,12 @@ namespace Banshee.Database
                                 AND a.ArtistID = b.ArtistID
                                 AND b.Name = Artist),
                         0,
-                        null,
+                        0,
                         Uri,
                         0,
                         MimeType,
                         0,
+                        {0},
                         Title,
                         TrackNumber,
                         TrackCount,
@@ -474,7 +492,7 @@ namespace Banshee.Database
                         DateAddedStamp,
                         DateAddedStamp
                         FROM Tracks
-            ");
+            ", (int)TrackMediaAttributes.Default));
 
             Execute ("update coretracks set lastplayedstamp = NULL where lastplayedstamp = -62135575200");
 

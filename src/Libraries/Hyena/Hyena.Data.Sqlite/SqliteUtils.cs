@@ -39,7 +39,7 @@ namespace Hyena.Data.Sqlite
             if (type == typeof (string)) {
                 return "TEXT";
             } else if (type == typeof (int) || type == typeof (long)
-                || type == typeof (DateTime) || type == typeof (TimeSpan)) {
+                || type == typeof (DateTime) || type == typeof (TimeSpan) || type.IsEnum) {
                 return "INTEGER";
             } else {
                 throw new Exception (String.Format (
@@ -57,7 +57,10 @@ namespace Hyena.Data.Sqlite
                 return TimeSpan.MinValue.Equals ((TimeSpan)value)
                     ? (object)null
                     : ((TimeSpan)value).TotalMilliseconds;
+            } else if (type.IsEnum) {
+                return Convert.ChangeType (value, Enum.GetUnderlyingType (type));
             }
+            
             return value;
         }
         
@@ -77,15 +80,15 @@ namespace Hyena.Data.Sqlite
                 } else {
                     return null;
                 }
+            } else if (type.IsEnum) {
+                return Enum.ToObject (type, value);
             } else {
                 return Convert.ChangeType (value, type);
             }
         }
         
-        public static string BuildColumnSchema (string type,
-                                                string name,
-                                                string default_value,
-                                                DatabaseColumnConstraints constraints)
+        public static string BuildColumnSchema (string type, string name, string default_value,
+            DatabaseColumnConstraints constraints)
         {
             StringBuilder builder = new StringBuilder ();
             builder.Append (name);
