@@ -22,7 +22,7 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// NONINFRINGEMENT. IN NO  SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 // LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -36,20 +36,26 @@ namespace Banshee.Widgets
 {
     public class RatingEntry : Gtk.EventBox
     {
-        private static int max_rating = 5;
-        private static int min_rating = 1;
-        private static Pixbuf icon_rated;
-        private static Pixbuf icon_blank;
+        private static Pixbuf default_icon_rated;
+        private static Pixbuf default_icon_not_rated;
+        
+        private int max_rating = 5;
+        private int min_rating = 1;
+        private Pixbuf icon_rated;
+        private Pixbuf icon_blank;
         
         public object RatedObject;
         
         private int rating;
         private bool embedded;
         private int y_offset = 4, x_offset = 4;
+        private bool preview_on_hover = false;
         private Gdk.Pixbuf display_pixbuf;
         
         public event EventHandler Changing;
         public event EventHandler Changed;
+        
+#region Constructors
         
         public RatingEntry () : this (1) 
         {
@@ -73,16 +79,21 @@ namespace Banshee.Widgets
                 x_offset = 0;
             }
             
+            //PreviewOnHover = true;
+            //Events |= Gdk.EventMask.PointerMotionMask | Gdk.EventMask.LeaveNotifyMask;
+            
             CanFocus = true;
             
             display_pixbuf = new Pixbuf (Gdk.Colorspace.Rgb, true, 8, Width, Height);
             display_pixbuf.Fill (0xffffff00);
-            DrawRating (DisplayPixbuf, Value);
+            DrawRating (Value);
             
             EnsureStyle ();
             ShowAll ();
         }
         
+#endregion
+
         ~RatingEntry ()
         {
             display_pixbuf.Dispose ();
@@ -91,38 +102,114 @@ namespace Banshee.Widgets
             icon_rated = null;
             icon_blank = null;
         }
+        
+#region Public API
+        
+        /*public Pixbuf DrawRating (int val)
+        {
+            Pixbuf buf = new Pixbuf (Gdk.Colorspace.Rgb, true, 8, Width, Height);
+            DrawRating (buf, val);
+            return buf;
+        }*/
+        
+        internal void SetValueFromPosition (int x)
+        {
+            Value = RatingFromPosition (x);
+        }
+        
+#endregion
 
+#region Public Properties
+
+        public int Value {
+            get { return rating; }
+            set {
+                if (rating != value && value >= min_rating - 1 && value <= max_rating) {
+                    rating = value;
+                    OnChanging ();
+                    OnChanged ();
+                }
+            }
+        }
+        
+        public int XOffset {
+            get { return x_offset; }
+        }
+        
+        public int YOffset {
+            get { return y_offset; }
+        }
+        
+        public Pixbuf DisplayPixbuf {
+            get { return display_pixbuf; }
+        }
+        
+        public int MaxRating {
+            get { return max_rating; }
+            set { max_rating = value; }
+        }
+        
+        public int MinRating {
+            get { return min_rating; }
+            set { min_rating = value; }
+        }
+        
+        public int NumLevels {
+            get { return max_rating - min_rating + 1; }
+        }
+        
+        public static Pixbuf DefaultIconRated {
+            get { return default_icon_rated ?? default_icon_rated = Gdk.Pixbuf.LoadFromResource ("rating-rated.png"); }
+            set { default_icon_rated = value; }
+        }
+        
+        public static Pixbuf DefaultIconNotRated {
+            get { return default_icon_not_rated ?? default_icon_not_rated = Gdk.Pixbuf.LoadFromResource ("rating-unrated.png"); }
+            set { default_icon_not_rated = value; }
+        }
+        
+        public Pixbuf IconRated {
+            get { return icon_rated ?? icon_rated = DefaultIconRated; }
+            set { icon_rated = value; }
+        }
+        
+        public Pixbuf IconNotRated {
+            get { return icon_blank ?? icon_blank = DefaultIconNotRated; }
+            set { icon_blank = value; }
+        }
+        
+        public bool PreviewOnHover {
+            get { return preview_on_hover; }
+            set {
+                if (preview_on_hover == value)
+                    return;
+                    
+                preview_on_hover = value;
+                
+                /*if (value)
+                    Events |= Gdk.EventMask.PointerMotionMask;
+                else
+                    Events = Events & ~Gdk.EventMask.PointerMotionMask;*/
+            }
+        }
+        
+        public int Width {
+            get { return IconRated.Width * NumLevels; }
+        }
+        
+        public int Height {
+            get { return IconRated.Height; }
+        }
+        
+#endregion
+
+#region Protected Gtk.Widget Overrides
+        
         protected override void OnSizeRequested (ref Gtk.Requisition requisition)
         {
             requisition.Width = Width + (2 * x_offset);
             requisition.Height = Height + (2 * y_offset);
             base.OnSizeRequested (ref requisition);
-        }
-        
-        public static Pixbuf DrawRating (int val)
-        {
-            Pixbuf buf = new Pixbuf (Gdk.Colorspace.Rgb, true, 8, Width, Height);
-            DrawRating (buf, val);
-            return buf;
-        }
-        
-        private static void DrawRating (Pixbuf pbuf, int val)
-        {
-            for (int i = 0; i < MaxRating; i++) {
-                if (i <= val - MinRating) {
-                    IconRated.CopyArea (0, 0, IconRated.Width, IconRated.Height, 
-                        pbuf, i * IconRated.Width, 0);
-                } else {
-                    IconNotRated.CopyArea (0, 0, IconRated.Width, IconRated.Height,
-                        pbuf, i * IconRated.Width, 0);
-                }
-            }
-        }
-        
-        private int RatingFromPosition (double x)
-        {
-            return x < x_offset + 1 ? 0 : (int) Math.Max ( 0, Math.Min (((x - x_offset) 
-                / (double)icon_rated.Width) + 1, MaxRating));
         }
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
@@ -153,12 +240,29 @@ namespace Banshee.Widgets
             
             HasFocus = true;
             Value = RatingFromPosition (evnt.X);
+            
             return true;
         }
         
-        public bool HandleKeyPress (Gdk.EventKey evnt)
+        protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing crossing)
         {
-            return this.OnKeyPressEvent (evnt);
+            DrawRating (Value);
+            QueueDraw ();
+            return true;
+        }
+        
+        protected override bool OnMotionNotifyEvent (Gdk.EventMotion motion)
+        {
+            if ((motion.State & Gdk.ModifierType.Button1Mask) != 0) {
+                Value = RatingFromPosition (motion.X);
+                return true;
+            } else if (preview_on_hover) {
+                DrawRating (RatingFromPosition (motion.X));
+                QueueDraw ();
+                return true;
+            }
+            
+            return false;
         }
         
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
@@ -191,7 +295,16 @@ namespace Banshee.Widgets
             return HandleScroll (args);
         }
 
-        public bool HandleScroll (EventScroll args)
+#endregion
+
+#region Internal API, primarily for RatingMenuItem
+        
+        internal bool HandleKeyPress (Gdk.EventKey evnt)
+        {
+            return this.OnKeyPressEvent (evnt);
+        }
+
+        internal bool HandleScroll (EventScroll args)
         {
             switch (args.Direction) {
                 case Gdk.ScrollDirection.Up:
@@ -208,16 +321,9 @@ namespace Banshee.Widgets
             return false;
         }
         
-        protected override bool OnMotionNotifyEvent (Gdk.EventMotion evnt)
-        {
-            // TODO draw highlights onmouseover a rating? (and clear on leaveNotify)
-            if ((evnt.State & Gdk.ModifierType.Button1Mask) == 0) {
-                return false;
-            }
-            
-            Value = RatingFromPosition (evnt.X);
-            return true;
-        }
+#endregion
+
+#region Protected methods
 
         protected virtual void OnChanging ()
         {
@@ -229,7 +335,7 @@ namespace Banshee.Widgets
 
         protected virtual void OnChanged ()
         {
-            DrawRating (DisplayPixbuf, Value);
+            DrawRating (Value);
             QueueDraw ();
 
             EventHandler handler = Changed;
@@ -237,79 +343,31 @@ namespace Banshee.Widgets
                 handler (this, new EventArgs ());
             }
         }
-        
-        public void SetValueFromPosition (int x)
+
+#endregion
+
+#region Private methods
+
+        private void DrawRating (int val)
         {
-            Value = RatingFromPosition (x);
+            for (int i = 0; i < MaxRating; i++) {
+                if (i <= val - MinRating) {
+                    IconRated.CopyArea (0, 0, IconRated.Width, IconRated.Height, 
+                        DisplayPixbuf, i * IconRated.Width, 0);
+                } else {
+                    IconNotRated.CopyArea (0, 0, IconRated.Width, IconRated.Height,
+                        DisplayPixbuf, i * IconRated.Width, 0);
+                }
+            }
+        }
+        
+        private int RatingFromPosition (double x)
+        {
+            return x < x_offset + 1 ? 0 : (int) Math.Max ( 0, Math.Min (((x - x_offset) 
+                / (double)icon_rated.Width) + 1, MaxRating));
         }
 
-        public int Value {
-            get { return rating; }
-            set {
-                if (rating != value && value >= min_rating - 1 && value <= max_rating) {
-                    rating = value;
-                    OnChanging ();
-                    OnChanged ();
-                }
-            }
-        }
-        
-        public int XOffset {
-            get { return x_offset; }
-        }
-        
-        public int YOffset {
-            get { return y_offset; }
-        }
-        
-        public Pixbuf DisplayPixbuf {
-            get { return display_pixbuf; }
-        }
-        
-        public static int MaxRating {
-            get { return max_rating; }
-            set { max_rating = value; }
-        }
-        
-        public static int MinRating {
-            get { return min_rating; }
-            set { min_rating = value; }
-        }
-        
-        public static int NumLevels {
-            get { return max_rating - min_rating + 1; }
-        }
-        
-        public static Pixbuf IconRated {
-            get {
-                if (icon_rated == null) {
-                    icon_rated = Gdk.Pixbuf.LoadFromResource ("rating-rated.png");
-                }
-                
-                return icon_rated;
-            }
-            
-            set { icon_rated = value; }
-        }
-        
-        public static Pixbuf IconNotRated {
-            get {
-                if (icon_blank == null) {
-                    icon_blank = Gdk.Pixbuf.LoadFromResource ("rating-unrated.png");
-                }
-                
-                return icon_blank;
-            }
-            
-            set { icon_blank = value; }
-        }
-        
-        public static int Width {
-            get { return IconRated.Width * NumLevels; }
-        }
-        
-        public static int Height {
-            get { return IconRated.Height; }
-        }
+#endregion
+
     }
 }

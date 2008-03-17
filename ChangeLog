@@ -1,3 +1,8 @@
+2008-03-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingEntry.cs: Add ability
+	preview-on-hover, but keep it disabled for now.
+
 2008-03-16  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Collection/TrackMediaAttributes.cs: 
