@@ -59,7 +59,7 @@ namespace Banshee.PlayQueue
             BindToDatabase ();
             
             Order = 0;
-            Properties.SetString ("Icon.Name", "audio-x-generic");
+            Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
             
             ((TrackListDatabaseModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID ASC";
@@ -101,8 +101,11 @@ namespace Banshee.PlayQueue
             UpdateActions ();
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
 
-            ServiceManager.SourceManager.Library.TracksChanged += HandleTracksChanged;
-            ServiceManager.SourceManager.Library.TracksDeleted += HandleTracksDeleted;
+            // TODO listen to all primary sources
+            ServiceManager.SourceManager.MusicLibrary.TracksChanged += HandleTracksChanged;
+            ServiceManager.SourceManager.MusicLibrary.TracksDeleted += HandleTracksDeleted;
+            ServiceManager.SourceManager.VideoLibrary.TracksChanged += HandleTracksChanged;
+            ServiceManager.SourceManager.VideoLibrary.TracksDeleted += HandleTracksDeleted;
         }
         
         public void Dispose ()

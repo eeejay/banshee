@@ -98,6 +98,18 @@ namespace Banshee.Gui
                     return new Gdk.Pixbuf (assembly, desired_resource_name_with_size);
             } catch {}
 
+            if (assembly != executing_assembly) {
+                try {
+                    if (executing_assembly.GetManifestResourceInfo (desired_resource_name) != null)
+                        return new Gdk.Pixbuf (executing_assembly, desired_resource_name);
+                } catch {}
+
+                try {
+                    if (executing_assembly.GetManifestResourceInfo (desired_resource_name_with_size) != null)
+                        return new Gdk.Pixbuf (executing_assembly, desired_resource_name_with_size);
+                } catch {}
+            }
+
             return null;
         }
     }

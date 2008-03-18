@@ -1,3 +1,39 @@
+2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: If a
+	file contains video, put it in the VideoLibrary instead of the
+	MusicLibrary.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs: New
+	files. VideoLibrarySource turns off the browser.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Changed to
+	not be music specific.  Subclassed by new Music/VideoLibrarySource classes.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:
+	Update SourceManager.Library references to SourceManager.MusicLibrary.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Create
+	VideoLibrarySource.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Rename
+	Library property to MusicLibrary, and add VideoLibrary property.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/IconThemeUtils.cs: Check the
+	executing assembly for the resource file if it's not found in the given
+	assembly.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Rename ImportMusicAction to ImportAction.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Change icon to normal playlist icon for now since the Music Library now
+	uses our old icon.  Listen for events on the VideoLibrary too.
+
 2008-03-18  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:

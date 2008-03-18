@@ -58,10 +58,13 @@ namespace Banshee.ServiceStack
             ServiceManager.Run ();
             
             if (ServiceManager.SourceManager != null) {
-                ServiceManager.SourceManager.AddSource (new LibrarySource (), true);
+                ServiceManager.SourceManager.AddSource (new MusicLibrarySource (), true);
+                ServiceManager.SourceManager.AddSource (new VideoLibrarySource (), false);
 
+                // FIXME add each playlist as a childsource of the PrimarySource it belongs to,
+                // not just to the MusicLibrary.
                 foreach (PlaylistSource pl in PlaylistSource.LoadAll ()) {
-                    ServiceManager.SourceManager.Library.AddChildSource (pl);
+                    ServiceManager.SourceManager.MusicLibrary.AddChildSource (pl);
                 }
 
                 ServiceManager.SourceManager.LoadExtensionSources ();

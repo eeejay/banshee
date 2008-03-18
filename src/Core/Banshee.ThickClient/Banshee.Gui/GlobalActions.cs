@@ -49,9 +49,9 @@ namespace Banshee.Gui
                 new ActionEntry ("MusicMenuAction", null, 
                     Catalog.GetString ("_Music"), null, null, null),
 
-                new ActionEntry ("ImportMusicAction", Stock.Open,
+                new ActionEntry ("ImportAction", Stock.Open,
                     Catalog.GetString ("Import _Music..."), "<control>I",
-                    Catalog.GetString ("Import music from a variety of sources"), OnImportMusic),
+                    Catalog.GetString ("Import music from a variety of sources"), OnImport),
 
                 new ActionEntry ("ImportPlaylistAction", null,
                     Catalog.GetString ("Import Playlist..."), null,
@@ -124,7 +124,7 @@ namespace Banshee.Gui
             
 #region Music Menu Actions
 
-        private void OnImportMusic (object o, EventArgs args)
+        private void OnImport (object o, EventArgs args)
         {
             Banshee.Library.Gui.ImportDialog dialog = new Banshee.Library.Gui.ImportDialog ();            
             try {

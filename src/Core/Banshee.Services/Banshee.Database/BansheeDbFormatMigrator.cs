@@ -518,7 +518,7 @@ namespace Banshee.Database
         {
             if (args.Service is UserJobManager) {
                 ServiceManager.ServiceStarted -= OnServiceStarted;
-                if (ServiceManager.SourceManager.Library != null) {
+                if (ServiceManager.SourceManager.MusicLibrary != null) {
                     RefreshMetadataDelayed ();
                 } else {
                     ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
@@ -528,7 +528,7 @@ namespace Banshee.Database
 
         private void OnSourceAdded (SourceAddedArgs args)
         {
-            if (args.Source is Banshee.Library.LibrarySource) {
+            if (args.Source is Banshee.Library.MusicLibrarySource) {
                 ServiceManager.SourceManager.SourceAdded -= OnSourceAdded;
                 RefreshMetadataDelayed ();
             }
@@ -588,7 +588,7 @@ namespace Banshee.Database
             }
 
             job.Finish ();
-            ServiceManager.SourceManager.Library.NotifyTracksChanged ();
+            ServiceManager.SourceManager.MusicLibrary.NotifyTracksChanged ();
         }
         
 #endregion

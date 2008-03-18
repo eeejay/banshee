@@ -112,7 +112,9 @@ namespace Banshee.Library
             return AddTrackToLibrary (new SafeUri (path));
         }
         
-        private int count = 0;
+        private int music_count = 0;
+        private int video_count = 0;
+
         public DatabaseTrackInfo AddTrackToLibrary (SafeUri uri)
         {
             DatabaseTrackInfo track = null;
@@ -137,7 +139,15 @@ namespace Banshee.Library
                 DatabaseAlbumInfo album = DatabaseAlbumInfo.FindOrCreate (artist, track.AlbumTitle);
 
                 track.DateAdded = DateTime.Now;
-                track.PrimarySource = ServiceManager.SourceManager.Library;
+
+                if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
+                    track.PrimarySource = ServiceManager.SourceManager.VideoLibrary;
+                    video_count++;
+                } else {
+                    track.PrimarySource = ServiceManager.SourceManager.MusicLibrary;
+                    music_count++;
+                }
+
                 track.ArtistId = artist.DbId;
                 track.AlbumId = album.DbId;
                 track.Save (false);
@@ -148,8 +158,12 @@ namespace Banshee.Library
                 throw;
             }
 
-            if (++count % 250 == 0) {
-                ServiceManager.SourceManager.Library.NotifyTracksAdded ();
+            if (music_count > 0 && music_count % 250 == 0) {
+                ServiceManager.SourceManager.MusicLibrary.NotifyTracksAdded ();
+            }
+
+            if (video_count > 0 && video_count % 250 == 0) {
+                ServiceManager.SourceManager.VideoLibrary.NotifyTracksAdded ();
             }
             
             return track;
@@ -166,7 +180,7 @@ namespace Banshee.Library
 
         private void LogError (string path, string msg)
         {
-            ErrorSource error_source = ServiceManager.SourceManager.Library.ErrorSource;
+            ErrorSource error_source = ServiceManager.SourceManager.MusicLibrary.ErrorSource;
             error_source.AddMessage (Path.GetFileName (path), msg);
             
             Log.Error (path, msg, false);
@@ -174,8 +188,16 @@ namespace Banshee.Library
 
         protected override void OnImportFinished ()
         {
-            count = 0;
-            ServiceManager.SourceManager.Library.NotifyTracksAdded ();
+            if (music_count > 0) {
+                ServiceManager.SourceManager.MusicLibrary.NotifyTracksAdded ();
+            }
+
+            if (video_count > 0) {
+                ServiceManager.SourceManager.VideoLibrary.NotifyTracksAdded ();
+            }
+
+            music_count = 0;
+            video_count = 0;
             base.OnImportFinished ();
         }
         

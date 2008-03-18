@@ -21,7 +21,7 @@
       <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
       <!--<menuitem name="NewSmartPlaylistFromSearch" action="NewSmartPlaylistFromSearchAction"/>-->
       <separator/>
-      <menuitem name="ImportMusic" action="ImportMusicAction"/>
+      <menuitem name="Import" action="ImportAction"/>
       <!--<menuitem name="ImportPlaylist" action="ImportPlaylistAction"/>-->
       <menuitem name="OpenLocation" action="OpenLocationAction"/>
       <separator/>
@@ -102,7 +102,7 @@
     <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
     <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
     <separator/>
-    <menuitem name="ImportMusic" action="ImportMusicAction"/>
+    <menuitem name="Import" action="ImportAction"/>
     <separator/>
     <menu name="SortChildren" action="SortChildrenAction">
       <menuitem name="SortChildrenNameAsc" action="SortChildrenNameAscAction"/>

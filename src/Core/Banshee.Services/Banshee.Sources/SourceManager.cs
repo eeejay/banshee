@@ -54,7 +54,8 @@ namespace Banshee.Sources
         private List<Source> sources = new List<Source>();
         private Source active_source;
         private Source default_source;
-        private LibrarySource library_source;
+        private MusicLibrarySource music_library;
+        private VideoLibrarySource video_library;
         
         public event SourceEventHandler SourceUpdated;
         public event SourceAddedHandler SourceAdded;
@@ -107,8 +108,10 @@ namespace Banshee.Sources
                 handler(args);
             }
 
-            if (source is LibrarySource) {
-                library_source = source as LibrarySource;
+            if (source is MusicLibrarySource) {
+                music_library = source as MusicLibrarySource;
+            } else if (source is VideoLibrarySource) {
+                video_library = source as VideoLibrarySource;
             }
             
             ServiceManager.DBusServiceManager.RegisterObject(source);
@@ -218,8 +221,12 @@ namespace Banshee.Sources
             set { default_source = value; }
         }
 
-        public LibrarySource Library {
-            get { return library_source; }
+        public MusicLibrarySource MusicLibrary {
+            get { return music_library; }
+        }
+
+        public VideoLibrarySource VideoLibrary {
+            get { return video_library; }
         }
 
         public Source ActiveSource {

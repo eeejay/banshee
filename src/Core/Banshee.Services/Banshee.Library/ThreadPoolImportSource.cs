@@ -87,7 +87,7 @@ namespace Banshee.Library
 
         protected void LogError (string path, string msg)
         {
-            ErrorSource error_source = ServiceManager.SourceManager.Library.ErrorSource;
+            ErrorSource error_source = ServiceManager.SourceManager.MusicLibrary.ErrorSource;
             error_source.AddMessage (Path.GetFileName (path), msg);
             
             Log.Error (path, msg, false);

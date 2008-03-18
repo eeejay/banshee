@@ -46,13 +46,11 @@ namespace Banshee.Library
 {
     public class LibrarySource : PrimarySource
     {
-        public LibrarySource () : base (Catalog.GetString ("Library"), Catalog.GetString ("Library"), "Library", 1)
+        public LibrarySource (string label, string name, int order) : base (label, label, name, order)
         {
-            Properties.SetStringList ("Icon.Name", "go-home", "user-home", "source-library");
             Properties.SetString ("GtkActionPath", "/LibraryContextMenu");
-            AfterInitialized ();
-
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Library"));
+            AfterInitialized ();
         }
         
         protected override void DeleteTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
