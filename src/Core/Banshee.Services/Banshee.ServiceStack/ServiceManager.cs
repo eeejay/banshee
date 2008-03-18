@@ -74,7 +74,7 @@ namespace Banshee.ServiceStack
             AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
                 ? "." : Paths.ApplicationData);
             
-            IProgressStatus monitor = ApplicationContext.CommandLine.Contains ("mono-addins-progress")
+            IProgressStatus monitor = ApplicationContext.CommandLine.Contains ("debug-addins")
                 ? new ConsoleProgressStatus (true)
                 : null;
         

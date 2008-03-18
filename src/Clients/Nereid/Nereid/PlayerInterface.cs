@@ -297,9 +297,10 @@ namespace Nereid
             }
 
             // Connect the source models to the views if possible
-            if (source.Properties.Contains ("NereidSourceContents")) {
-                view_container.Content = source.Properties.Get<ISourceContents> ("NereidSourceContents");
+            if (source.Properties.Contains ("Nereid.SourceContents")) {
+                view_container.Content = source.Properties.Get<ISourceContents> ("Nereid.SourceContents");
                 view_container.Content.SetSource (source);
+                view_container.Show ();
             } else if (source is ITrackModelSource) {
                 if (composite_view.TrackModel != null) {
                     composite_view.TrackModel.Reloaded -= HandleTrackModelReloaded;
@@ -307,6 +308,7 @@ namespace Nereid
                 composite_view.SetSource (source);
                 composite_view.TrackModel.Reloaded += HandleTrackModelReloaded;
                 view_container.Content = composite_view;
+                view_container.Show ();
             } else if (source is Hyena.Data.IObjectListModel) {
                 if (object_view == null) {
                     object_view = new ObjectListSourceContents ();
@@ -314,7 +316,13 @@ namespace Nereid
                 
                 view_container.Content = object_view;
                 view_container.Content.SetSource (source);
+                view_container.Show ();
+            } else {
+                view_container.Hide ();
             }
+            
+            view_container.Header.Visible = source.Properties.Contains ("Nereid.SourceContents.HeaderVisible") ?
+                source.Properties.Get<bool> ("Nereid.SourceContents.HeaderVisible") : true;
             
             UpdateStatusBar ();
             view_container.SearchEntry.Ready = true;

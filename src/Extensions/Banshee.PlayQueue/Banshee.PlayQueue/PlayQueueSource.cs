@@ -58,7 +58,7 @@ namespace Banshee.PlayQueue
         {
             BindToDatabase ();
             
-            Order = 0;
+            Order = 10;
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
             

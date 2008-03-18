@@ -1,3 +1,29 @@
+2008-03-18  Aaron Bockover  <abock@gnome.org>
+	
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Hide the view container
+	when the source doesn't support custom contents or has a track model
+
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Fix up the source ordering to allow for some play
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Changed the argument to have MA spew its guts to --debug-addins
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	Changed to reflect the Nereid source contents properties and hide the
+	source contents header since it's pointless for Last.fm
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	Stubbed out the basics for the new 'Now Playing' source that will be used
+	to display video, visualizations, and other data related to the currently
+	playing track
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	Basic placeholder GdkWindow to be used to render video
+
 2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:

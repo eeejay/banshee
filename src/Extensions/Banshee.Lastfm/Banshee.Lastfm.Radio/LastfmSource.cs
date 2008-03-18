@@ -100,7 +100,8 @@ namespace Banshee.Lastfm.Radio
             Properties.SetString ("SourcePropertiesActionLabel", Catalog.GetString ("Edit Last.fm Settings"));
 
             // FIXME this is temporary until we split the GUI part from the non-GUI part
-            Properties.Set<ISourceContents> ("NereidSourceContents", new LastfmSourceContents ());
+            Properties.Set<ISourceContents> ("Nereid.SourceContents", new LastfmSourceContents ());
+            Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
 
             actions = new LastfmActions (this);
 

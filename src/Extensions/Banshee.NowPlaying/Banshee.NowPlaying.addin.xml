@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Addin 
-    id="Banshee.PlayQueue"
+    id="Banshee.NowPlaying"
     version="1.0"
     compatVersion="1.0"
     copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
-    name="Play Queue"
+    name="Now Playing"
     category="Sources"
-    description="Adds a source that acts as a queue of playing tracks. When the queue is populated, all playback happens from the queue in a forced order."
+    description="Adds a source that displays video and visualizations, along with other aggregated data about the currently playing track."
     author="Aaron Bockover"
     url="http://banshee-project.org/"
     defaultEnabled="true">
@@ -17,7 +17,7 @@
   </Dependencies>
 
   <Extension path="/Banshee/SourceManager/Source">
-    <Source class="Banshee.PlayQueue.PlayQueueSource"/>
+    <Source class="Banshee.NowPlaying.NowPlayingSource"/>
   </Extension>
-  
+
 </Addin>

@@ -1,11 +1,10 @@
 //
-// VideoLibrarySource.cs
+// NowPlayingInterface.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
-//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2005-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,19 +27,51 @@
 //
 
 using System;
+
 using Mono.Unix;
+using Gtk;
 
-namespace Banshee.Library
+using Banshee.Sources;
+using Banshee.Gui;
+using Banshee.Sources.Gui;
+
+namespace Banshee.NowPlaying
 {
-    public class VideoLibrarySource : LibrarySource
-    {
-        public VideoLibrarySource () : base (Catalog.GetString ("Video Library"), "VideoLibrary", 30)
+    public class NowPlayingInterface : VBox, ISourceContents
+    {   
+        private NowPlayingSource source;
+        private VideoDisplay video_display;
+        
+        public NowPlayingInterface ()
         {
-            Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
+            video_display = new VideoDisplay ();
+            video_display.Show ();
+            
+            PackStart (video_display, true, true, 0);
+        }
+        
+#region ISourceContents
+        
+        public bool SetSource (ISource src)
+        {
+            this.source = source as NowPlayingSource;
+            return this.source != null;
         }
 
-        public override bool ShowBrowser {
-            get { return false; }
+        public ISource Source {
+            get { return source; }
         }
+
+        public void ResetSource ()
+        {
+            source = null;
+        }
+
+        public Widget Widget {
+            get { return this; }
+        }
+        
+#endregion
+
     }
 }

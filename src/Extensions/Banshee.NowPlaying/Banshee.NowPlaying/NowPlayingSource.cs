@@ -1,11 +1,10 @@
 //
-// VideoLibrarySource.cs
+// NowPlayingSource.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
-//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2005-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -29,18 +28,36 @@
 
 using System;
 using Mono.Unix;
+using Gtk;
 
-namespace Banshee.Library
+using Banshee.Sources;
+using Banshee.Sources.Gui;
+using Banshee.ServiceStack;
+
+namespace Banshee.NowPlaying
 {
-    public class VideoLibrarySource : LibrarySource
-    {
-        public VideoLibrarySource () : base (Catalog.GetString ("Video Library"), "VideoLibrary", 30)
+    public class NowPlayingSource : Source, IDisposable
+    {       
+        public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 0)
         {
-            Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
+            Properties.SetString ("Icon.Name", "media-playback-start");
+            Properties.Set<ISourceContents> ("Nereid.SourceContents", new NowPlayingInterface ());
+            Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
+            
+            ServiceManager.SourceManager.AddSource (this);
+        }
+        
+        public void Dispose ()
+        {
+        }
+        
+#region Source Overrides
+
+        public override int Count {
+            get { return 0; }
         }
 
-        public override bool ShowBrowser {
-            get { return false; }
-        }
+#endregion
+
     }
 }

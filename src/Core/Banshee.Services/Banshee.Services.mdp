@@ -129,6 +129,8 @@
     <File name="Banshee.Collection.Database/DatabaseAlbumInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/SourceMessage.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/MessageAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library/MusicLibrarySource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library/VideoLibrarySource.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
