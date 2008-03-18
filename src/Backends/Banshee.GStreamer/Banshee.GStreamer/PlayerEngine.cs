@@ -317,7 +317,11 @@ namespace Banshee.GStreamer
         }
     
         public double AmplifierLevel {
-            set { gst_equalizer_set_preamp_level (handle, value); }
+            set {
+                double db = Math.Pow (10.0, value/20.0);
+
+                gst_equalizer_set_preamp_level (handle, db);
+            }
         }
         
         public int [] BandRange {

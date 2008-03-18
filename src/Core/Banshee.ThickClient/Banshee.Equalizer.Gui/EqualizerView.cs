@@ -60,18 +60,17 @@ namespace Banshee.Equalizer.Gui
         {
             Spacing = 10;
         
-            // amplifier_scale's values must be divisible by 100 to get *real* val. eg 100 == 1, 40 == 0.4, 1 == 0.01
-            amplifier_scale = new EqualizerBandScale (0, 100, 5, 150, "Preamp");
-            amplifier_scale.ValueChanged += OnAmplifierValueChanged;
-            amplifier_scale.Show ();
-            PackStart (amplifier_scale, false, false, 0);
-            
             int[] br = ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).BandRange;
             int mid = (br[0] + br[1]) / 2;
             
             range[0] = br[0];
             range[1] = mid;
             range[2] = br[1];
+            
+            amplifier_scale = new EqualizerBandScale (0, range[1] * 10, range[0] * 10, range[2] * 10, "Preamp");
+            amplifier_scale.ValueChanged += OnAmplifierValueChanged;
+            amplifier_scale.Show ();
+            PackStart (amplifier_scale, false, false, 0);            
             
             EqualizerLevelsBox eq_levels = new EqualizerLevelsBox (
                 FormatDecibelString (range[2]),
@@ -146,7 +145,7 @@ namespace Banshee.Equalizer.Gui
         {
             EqualizerBandScale scale = o as EqualizerBandScale;
             if (active_eq != null) {
-                double val = (double) scale.Value / 100D;
+                double val = (double) scale.Value / 10D;
                 active_eq.AmplifierLevel = val;
             }
             
