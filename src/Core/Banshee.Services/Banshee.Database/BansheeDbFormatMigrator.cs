@@ -140,7 +140,7 @@ namespace Banshee.Database
         }
         
         private void InnerMigrate ()
-        {   
+        {
             MethodInfo [] methods = GetType ().GetMethods (BindingFlags.Instance | BindingFlags.NonPublic);
             bool terminate = false;
             bool ran_migration_step = false;
@@ -171,8 +171,7 @@ namespace Banshee.Database
                 }
             }
             
-            Execute (String.Format ("UPDATE CoreConfiguration SET Value = '{0}' WHERE Key = 'DatabaseVersion'",
-                CURRENT_VERSION));
+            Execute (String.Format ("UPDATE CoreConfiguration SET Value = {0} WHERE Key = 'DatabaseVersion'", CURRENT_VERSION));
         }
         
         protected bool TableExists(string tableName)
@@ -187,17 +186,11 @@ namespace Banshee.Database
             
         protected int DatabaseVersion {
             get {
-                if(!TableExists("CoreConfiguration")) {
+                if (!TableExists("CoreConfiguration")) {
                     return 0;
                 }
                 
-                string select_query = @"
-                    SELECT Value 
-                        FROM CoreConfiguration
-                        WHERE Key = 'DatabaseVersion'
-                ";
-                
-                return Convert.ToInt32 (connection.Query<int> (select_query));
+                return connection.Query<int> ("SELECT Value FROM CoreConfiguration WHERE Key = 'DatabaseVersion'");
             }
         }
         
@@ -210,7 +203,7 @@ namespace Banshee.Database
         
         [DatabaseVersion (1)]
         private bool Migrate_1 ()
-        {   
+        {
             if (TableExists("Tracks")) {
                 InitializeFreshDatabase ();
                 
@@ -280,12 +273,7 @@ namespace Banshee.Database
                     Value               TEXT
                 )
             ");
-            
-            Execute (String.Format (
-                "INSERT INTO CoreConfiguration VALUES (null, 'DatabaseVersion', '{0}')",
-                CURRENT_VERSION
-            ));
-            
+            Execute (String.Format ("INSERT INTO CoreConfiguration VALUES (null, 'DatabaseVersion', {0})", CURRENT_VERSION));
             
             Execute(@"
                 CREATE TABLE CorePrimarySources (
@@ -379,6 +367,7 @@ namespace Banshee.Database
             
             Execute(@"
                 CREATE TABLE CorePlaylists (
+                    PrimarySourceID     INTEGER,
                     PlaylistID          INTEGER PRIMARY KEY,
                     Name                TEXT,
                     SortColumn          INTEGER NOT NULL DEFAULT -1,
@@ -400,6 +389,7 @@ namespace Banshee.Database
             
             Execute(@"
                 CREATE TABLE CoreSmartPlaylists (
+                    PrimarySourceID     INTEGER,
                     SmartPlaylistID     INTEGER PRIMARY KEY,
                     Name                TEXT NOT NULL,
                     Condition           TEXT,
@@ -521,6 +511,9 @@ namespace Banshee.Database
                 INSERT INTO CoreSmartPlaylists (SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion)
                     SELECT * FROM SmartPlaylists
             ");
+
+            Execute ("UPDATE CoreSmartPlaylists SET PrimarySourceID = 1");
+            Execute ("UPDATE CorePlaylists SET PrimarySourceID = 1");
 
             ServiceManager.ServiceStarted += OnServiceStarted;
         }

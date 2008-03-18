@@ -1,3 +1,8 @@
+2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Forgot to make the db schema changes in the InitializeFreshDatabase method.
+
 2008-03-18  Aaron Bockover  <abock@gnome.org>
 	
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Hide the view container
