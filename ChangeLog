@@ -1,3 +1,9 @@
+2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Fix delete
+	from library code so that remove tracks from database is only called once
+	per Range.
+
 2008-03-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Sources/MessageAction.cs: Non-GUI

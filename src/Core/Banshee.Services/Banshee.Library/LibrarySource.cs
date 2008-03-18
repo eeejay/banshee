@@ -57,13 +57,13 @@ namespace Banshee.Library
         
         protected override void DeleteTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
         {
+            // Remove from file system
             for (int i = range.Start; i <= range.End; i++) {
                 DatabaseTrackInfo track = model [i] as DatabaseTrackInfo;
                 if (track == null)
                     continue;
 
                 try {
-                    // Remove from file system
                     try {
                         Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
                     } catch (System.IO.FileNotFoundException) {
@@ -72,10 +72,10 @@ namespace Banshee.Library
                 } catch (Exception e) {
                     ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
                 }
-
-                // Remove from database
-                RemoveTrackRange (model, range);
             }
+
+            // Remove from database
+            RemoveTrackRange (model, range);
         }
 
         public override bool AcceptsInputFromSource (Source source)
