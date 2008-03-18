@@ -142,6 +142,10 @@ namespace Banshee.Playlist
                 Update ();
         }
 
+        public override bool ShowBrowser {
+            get { return (Parent is DatabaseSource) ? (Parent as DatabaseSource).ShowBrowser : base.ShowBrowser; }
+        }
+
         public void NotifyUpdated ()
         {
             OnUserNotifyUpdated ();

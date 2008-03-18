@@ -1,5 +1,11 @@
 2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Set ShowBrowser to the same value as our Parent, by default.  So playlists
+	under VideoLibrary will not show the browser.
+
+2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This commit makes it easy/possible to create playlists and smart playlists
 	on any PrimarySource.
 
