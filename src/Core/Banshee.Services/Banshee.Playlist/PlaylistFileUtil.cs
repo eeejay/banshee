@@ -9,6 +9,7 @@ using Hyena.Data.Sqlite;
 
 using Banshee.Base;
 using Banshee.Configuration;
+using Banshee.ServiceStack;
 using Banshee.Database;
 using Banshee.Sources;
 using Banshee.Library;
@@ -171,7 +172,7 @@ namespace Banshee.Playlist
         
         private void CreatePlaylist ()
         {
-            PlaylistSource playlist = new PlaylistSource (name);
+            PlaylistSource playlist = new PlaylistSource (name, ServiceManager.SourceManager.MusicLibrary.DbId);
             playlist.Save ();
 
             HyenaSqliteCommand command = new HyenaSqliteCommand (

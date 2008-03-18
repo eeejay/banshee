@@ -54,7 +54,7 @@ namespace Banshee.Sources.Gui
             Hyena.Data.Gui.ListViewDragDropTarget.ModelSelection
         };
         
-        private Source new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"));
+        private Source new_playlist_source = null;
         private TreeIter new_playlist_iter = TreeIter.Zero;
         private bool new_playlist_visible = false;
         
@@ -90,7 +90,7 @@ namespace Banshee.Sources.Gui
             TreeIter library = FindSource (ServiceManager.SourceManager.DefaultSource);
             new_playlist_iter = store.AppendNode (library);
             
-            store.SetValue (new_playlist_iter, 0, new_playlist_source);
+            store.SetValue (new_playlist_iter, 0, NewPlaylistSource);
             store.SetValue (new_playlist_iter, 1, 999);
             new_playlist_visible = true;
 
@@ -107,7 +107,7 @@ namespace Banshee.Sources.Gui
             bool self_drag = Gtk.Drag.GetSourceWidget (context) == this;
             
             if (!new_playlist_visible && active_source != null && 
-                new_playlist_source.AcceptsInputFromSource (active_source) &&
+                NewPlaylistSource.AcceptsInputFromSource (active_source) &&
                 ((self_drag && active_source.SupportedMergeTypes != SourceMergeType.None) || !self_drag)) {
                 ShowNewPlaylistRow ();
             }
@@ -166,8 +166,8 @@ namespace Banshee.Sources.Gui
                 
                 Source drop_source = final_drag_source;    
                 
-                if (final_drag_source == new_playlist_source) {
-                    PlaylistSource playlist = new PlaylistSource ("New Playlist");
+                if (final_drag_source == NewPlaylistSource) {
+                    PlaylistSource playlist = new PlaylistSource ("New Playlist", ServiceManager.SourceManager.MusicLibrary.DbId);
                     playlist.Save ();
                     ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
                     drop_source = playlist;

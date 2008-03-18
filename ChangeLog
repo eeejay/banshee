@@ -1,5 +1,43 @@
 2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	This commit makes it easy/possible to create playlists and smart playlists
+	on any PrimarySource.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add PrimarySourceID column to Core[Smart]Playlists.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Load and save PrimarySourceID.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	Handle loading smart playlists from various primary sources.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:
+
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Change Music
+	to Media where appropriate.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: When creating
+	new playlists, create them with the correct primary source.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	This needs to be fixed up - the 'New Playlist' playlist that appears when
+	you drag tracks over the SourceView only displays for the Music Library
+	atm.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Update to new PlaylistSource ctor.
+
+2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: If a
 	file contains video, put it in the VideoLibrary instead of the
 	MusicLibrary.

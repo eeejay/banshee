@@ -93,16 +93,16 @@ namespace Banshee.Playlist
 
 #region Constructors
 
-        public PlaylistSource (string name) : this (name, null)
+        public PlaylistSource (string name, int primarySourceId) : this (name, null, primarySourceId)
         {
         }
 
-        public PlaylistSource (string name, int? dbid) : this (name, dbid, -1, 0)
+        public PlaylistSource (string name, int? dbid, int primarySourceId) : this (name, dbid, -1, 0, primarySourceId)
         {
         }
 
-        public PlaylistSource (string name, int? dbid, int sortColumn, int sortType) 
-            : base (generic_name, name, dbid, sortColumn, sortType)
+        public PlaylistSource (string name, int? dbid, int sortColumn, int sortType, int primarySourceId)
+            : base (generic_name, name, dbid, sortColumn, sortType, primarySourceId)
         {
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
@@ -165,9 +165,9 @@ namespace Banshee.Playlist
         protected override void Create ()
         {
             DbId = ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (
-                @"INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType)
-                    VALUES (NULL, ?, ?, ?)",
-                Name, -1, 1 //SortColumn, SortType
+                @"INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType, PrimarySourceID)
+                    VALUES (NULL, ?, ?, ?, ?)",
+                Name, -1, 1, PrimarySourceId //SortColumn, SortType
             ));
         }
 
@@ -288,11 +288,11 @@ namespace Banshee.Playlist
         public static IEnumerable<PlaylistSource> LoadAll ()
         {
             using (IDataReader reader = ServiceManager.DbConnection.Query (
-                "SELECT PlaylistID, Name, SortColumn, SortType FROM CorePlaylists WHERE Special = 0")) {
+                "SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID FROM CorePlaylists WHERE Special = 0")) {
                 while (reader.Read ()) {
                     yield return new PlaylistSource (
                         reader[1] as string, Convert.ToInt32 (reader[0]),
-                        Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3])
+                        Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3]), Convert.ToInt32 (reader[4])
                     );
                 }
             }
@@ -309,14 +309,14 @@ namespace Banshee.Playlist
             }
         }
         
-        public static int GetPlaylistId (string name)
+        private static int GetPlaylistId (string name)
         {
             return ServiceManager.DbConnection.Query<int> (
                 "SELECT PlaylistID FROM Playlists WHERE Name = ? LIMIT 1", name
             );
         }
         
-        public static bool PlaylistExists (string name)
+        private static bool PlaylistExists (string name)
         {
             return GetPlaylistId (name) > 0;
         }

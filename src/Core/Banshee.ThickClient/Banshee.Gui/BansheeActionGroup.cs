@@ -92,6 +92,10 @@ namespace Banshee.Gui
             get { return ServiceManager.SourceManager.ActiveSource; }
         }
 
+        public virtual PrimarySource ActivePrimarySource {
+            get { return (ActiveSource as PrimarySource) ?? (ActiveSource.Parent as PrimarySource) ?? ServiceManager.SourceManager.MusicLibrary; }
+        }
+
         public Gtk.Window PrimaryWindow {
             get { return ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow; }
         }

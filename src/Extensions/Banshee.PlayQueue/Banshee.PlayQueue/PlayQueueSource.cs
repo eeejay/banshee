@@ -54,7 +54,7 @@ namespace Banshee.PlayQueue
         private DatabaseTrackInfo playing_track;
         private bool actions_loaded = false;
         
-        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null)
+        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null, 0)
         {
             BindToDatabase ();
             

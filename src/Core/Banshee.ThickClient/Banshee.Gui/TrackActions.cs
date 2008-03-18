@@ -294,7 +294,7 @@ namespace Banshee.Gui
                 submenu.Append (this ["AddToNewPlaylistAction"].CreateMenuItem ());
                 bool separator_added = false;
                 
-                foreach (Source child in ServiceManager.SourceManager.DefaultSource.Children) {
+                foreach (Source child in ActivePrimarySource.Children) {
                     PlaylistSource playlist = child as PlaylistSource;
                     if (playlist != null) {
                         if (!separator_added) {
@@ -317,9 +317,9 @@ namespace Banshee.Gui
         private void OnAddToNewPlaylist (object o, EventArgs args)
         {
             // TODO generate name based on the track selection, or begin editing it
-            PlaylistSource playlist = new PlaylistSource ("New Playlist");
+            PlaylistSource playlist = new PlaylistSource ("New Playlist", ActivePrimarySource.DbId);
             playlist.Save ();
-            ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
+            playlist.PrimarySource.AddChildSource (playlist);
             ThreadAssist.SpawnFromMain (delegate {
                 playlist.AddSelectedTracks (TrackSelector.TrackModel);
             });

@@ -31,6 +31,7 @@ using System.Collections.Generic;
 
 using Gtk;
 using Cairo;
+using Mono.Unix;
 
 using Hyena.Gui.Theming;
 using Hyena.Gui.Theatrics;
@@ -560,7 +561,10 @@ namespace Banshee.Sources.Gui
         }
         
         internal Source NewPlaylistSource {
-            get { return new_playlist_source; }
+            get {
+                return new_playlist_source ??
+                    new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"), ServiceManager.SourceManager.MusicLibrary.DbId);
+            }
         }
 
 #endregion        

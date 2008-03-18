@@ -61,7 +61,11 @@ namespace Banshee.Gui
         public Source ActionSource {
             get { return SourceView.HighlightedSource ?? ActiveSource; }
         }
-        
+
+        public override PrimarySource ActivePrimarySource {
+            get { return (SourceView.HighlightedSource as PrimarySource) ?? base.ActivePrimarySource; }
+        }
+
         public SourceActions (InterfaceActionService actionService) : base ("Source")
         {
             action_service = actionService;
@@ -153,16 +157,17 @@ namespace Banshee.Gui
 
         private void OnNewPlaylist (object o, EventArgs args)
         {
-            PlaylistSource playlist = new PlaylistSource ("New Playlist");
+            PlaylistSource playlist = new PlaylistSource ("New Playlist", ActivePrimarySource.DbId);
             playlist.Save ();
-            ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
+            playlist.PrimarySource.AddChildSource (playlist);
             playlist.NotifyUpdated ();
             //SourceView.BeginRenameSource (playlist);
         }
 
+
         private void OnNewSmartPlaylist (object o, EventArgs args)
         {
-            Editor ed = new Editor ();
+            Editor ed = new Editor (ActivePrimarySource);
             ed.RunDialog ();
         }
 
@@ -281,9 +286,9 @@ namespace Banshee.Gui
 
         private void OnSourceProperties (object o, EventArgs args)
         {
-            Source source = ActionSource;
-            if (source is SmartPlaylistSource) {
-                Editor ed = new Editor (source as SmartPlaylistSource);
+            SmartPlaylistSource source = ActionSource as SmartPlaylistSource;
+            if (source != null) {
+                Editor ed = new Editor (source);
                 ed.RunDialog ();
             }
         }

@@ -160,12 +160,12 @@ namespace Banshee.SmartPlaylist
 
 #region Constructors
 
-        public SmartPlaylistSource (string name) : this (null, name, String.Empty, String.Empty, String.Empty, String.Empty)
+        public SmartPlaylistSource (string name, int primarySourceId) : this (null, name, String.Empty, String.Empty, String.Empty, String.Empty, primarySourceId)
         {
         }
 
-        public SmartPlaylistSource (string name, QueryNode condition, QueryOrder order, QueryLimit limit, IntegerQueryValue limit_value)
-            : base (generic_name, name, null, -1, 0)
+        public SmartPlaylistSource (string name, QueryNode condition, QueryOrder order, QueryLimit limit, IntegerQueryValue limit_value, int primarySourceId)
+            : base (generic_name, name, null, -1, 0, primarySourceId)
         {
             ConditionTree = condition;
             QueryOrder = order;
@@ -177,8 +177,8 @@ namespace Banshee.SmartPlaylist
         }
 
         // For existing smart playlists that we're loading from the database
-        public SmartPlaylistSource (int? dbid, string name, string condition_xml, string order_by, string limit_number, string limit_criterion) :
-            base (generic_name, name, dbid, -1, 0)
+        public SmartPlaylistSource (int? dbid, string name, string condition_xml, string order_by, string limit_number, string limit_criterion, int primarySourceId) :
+            base (generic_name, name, dbid, -1, 0, primarySourceId)
         {
             ConditionXml = condition_xml;
             QueryOrder = BansheeQuery.FindOrder (order_by);
@@ -258,12 +258,13 @@ namespace Banshee.SmartPlaylist
         {
             DbId = ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
                 INSERT INTO CoreSmartPlaylists
-                    (Name, Condition, OrderBy, LimitNumber, LimitCriterion)
-                    VALUES (?, ?, ?, ?, ?)",
+                    (Name, Condition, OrderBy, LimitNumber, LimitCriterion, PrimarySourceID)
+                    VALUES (?, ?, ?, ?, ?, ?)",
                 Name, ConditionXml,
                 IsLimited ? QueryOrder.Name : null,
                 IsLimited ? LimitValue.ToSql () : null,
-                IsLimited ? Limit.Name : null
+                IsLimited ? Limit.Name : null,
+                PrimarySourceId
             ));
             UpdateDependencies ();
         }
@@ -305,9 +306,9 @@ namespace Banshee.SmartPlaylist
                   INSERT INTO CoreSmartPlaylistEntries 
                     SELECT NULL, {0} as SmartPlaylistID, TrackId
                         FROM CoreTracks, CoreArtists, CoreAlbums
-                        WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID
+                        WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID AND CoreTracks.PrimarySourceID = {3}
                         {1} {2}",
-                DbId, PrependCondition("AND"), OrderAndLimit
+                DbId, PrependCondition("AND"), OrderAndLimit, PrimarySourceId
             ));
         }
 
@@ -399,14 +400,14 @@ namespace Banshee.SmartPlaylist
         public static IEnumerable<SmartPlaylistSource> LoadAll ()
         {
             using (IDataReader reader = ServiceManager.DbConnection.Query (
-                "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion FROM CoreSmartPlaylists")) {
+                "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion, PrimarySourceID FROM CoreSmartPlaylists")) {
                 while (reader.Read ()) {
                     SmartPlaylistSource playlist = null;
                     try {
                         playlist = new SmartPlaylistSource (
                             Convert.ToInt32 (reader[0]), reader[1] as string,
                             reader[2] as string, reader[3] as string,
-                            reader[4] as string, reader[5] as string
+                            reader[4] as string, reader[5] as string, Convert.ToInt32 (reader[6])
                         );
                     } catch (Exception e) {
                         Log.Warning ("Ignoring Smart Playlist", String.Format ("Caught error: {0}", e), false);

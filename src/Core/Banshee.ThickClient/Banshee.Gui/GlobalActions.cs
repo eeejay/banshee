@@ -50,8 +50,8 @@ namespace Banshee.Gui
                     Catalog.GetString ("_Music"), null, null, null),
 
                 new ActionEntry ("ImportAction", Stock.Open,
-                    Catalog.GetString ("Import _Music..."), "<control>I",
-                    Catalog.GetString ("Import music from a variety of sources"), OnImport),
+                    Catalog.GetString ("Import _Media..."), "<control>I",
+                    Catalog.GetString ("Import media from a variety of sources"), OnImport),
 
                 new ActionEntry ("ImportPlaylistAction", null,
                     Catalog.GetString ("Import Playlist..."), null,

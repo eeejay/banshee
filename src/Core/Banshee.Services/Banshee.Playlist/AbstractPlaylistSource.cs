@@ -104,17 +104,28 @@ namespace Banshee.Playlist
             }
         }
 
+        protected int primary_source_id;
+        public int PrimarySourceId {
+            get { return primary_source_id; }
+        }
+
+        public PrimarySource PrimarySource {
+            get { return PrimarySource.GetById (primary_source_id); }
+            set { primary_source_id = value.DbId; }
+        }
+
         protected HyenaSqliteCommand count_updated_command;
         protected HyenaSqliteCommand count_removed_command;
 
-        public AbstractPlaylistSource (string generic_name, string name) 
-            : this (generic_name, name, null, -1, 0)
+        public AbstractPlaylistSource (string generic_name, string name, int primarySourceId)
+            : this (generic_name, name, null, -1, 0, primarySourceId)
         {
         }
 
-        public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType) 
+        public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType, int primarySourceId)
             : base (generic_name, name, Convert.ToString (dbid), 500)
         {
+            this.primary_source_id = primarySourceId;
         }
 
         public override void Rename (string newName)

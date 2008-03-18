@@ -23,6 +23,7 @@ namespace Banshee.SmartPlaylist
     {
         private BansheeQueryBox builder;
         private SmartPlaylistSource playlist = null;
+        private PrimarySource primary_source;
 
         private static SmartPlaylistSource currently_editing;
         public static SmartPlaylistSource CurrentlyEditing {
@@ -40,6 +41,7 @@ namespace Banshee.SmartPlaylist
         {
             currently_editing = playlist;
             this.playlist = playlist;
+            this.primary_source = playlist.PrimarySource;
             /*Console.WriteLine ("Loading smart playlist into editor: {0}",
                 playlist.ConditionTree == null ? "" : playlist.ConditionTree.ToXml (BansheeQuery.FieldSet, true));*/
 
@@ -56,8 +58,9 @@ namespace Banshee.SmartPlaylist
             LimitEnabled = playlist.IsLimited;
         }
     
-        public Editor () : base ("SmartPlaylistEditorDialog")
+        public Editor (PrimarySource primary_source) : base ("SmartPlaylistEditorDialog")
         {
+            this.primary_source = primary_source;
             Initialize ();
         }
 
@@ -226,7 +229,7 @@ namespace Banshee.SmartPlaylist
                 ThreadAssist.Spawn (delegate {
                     //Console.WriteLine ("Name = {0}, Cond = {1}, OrderAndLimit = {2}", name, condition, order_by, limit_number);
                     if (playlist == null) {
-                        playlist = new SmartPlaylistSource (name);
+                        playlist = new SmartPlaylistSource (name, primary_source.DbId);
 
                         playlist.ConditionTree = condition_tree;
                         playlist.QueryOrder = order;
@@ -234,7 +237,7 @@ namespace Banshee.SmartPlaylist
                         playlist.LimitValue = limit_value;
 
                         playlist.Save ();
-                        ServiceManager.SourceManager.DefaultSource.AddChildSource (playlist);
+                        playlist.PrimarySource.AddChildSource (playlist);
                         playlist.RefreshAndReload ();
                         //SmartPlaylistCore.Instance.StartTimer (playlist);
                     } else {
@@ -289,10 +292,9 @@ namespace Banshee.SmartPlaylist
                     val.ParseUserQuery (adv_tree_view.Model.GetValue (iter, 3) as string);
                     QueryLimit limit       = BansheeQuery.FindLimit (adv_tree_view.Model.GetValue (iter, 4) as string);
 
-                    SmartPlaylistSource pl = new SmartPlaylistSource (name, condition, order, limit, val);
+                    SmartPlaylistSource pl = new SmartPlaylistSource (name, condition, order, limit, val, primary_source.DbId);
                     pl.Save ();
-                    //Banshee.Sources.LibrarySource.Instance.AddChildSource (pl);
-                    ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
+                    pl.PrimarySource.AddChildSource (pl);
                     pl.RefreshAndReload ();
                     //SmartPlaylistCore.Instance.StartTimer (pl);
                 }

@@ -1342,7 +1342,7 @@
   </widget>
   <widget class="GtkDialog" id="ImportDialog">
     <property name="border_width">12</property>
-    <property name="title" translatable="yes">Import Music to Library</property>
+    <property name="title" translatable="yes">Import Media to Library</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
@@ -1418,7 +1418,7 @@
               <widget class="GtkLabel" id="label64">
                 <property name="visible">True</property>
                 <property name="xalign">0</property>
-                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Import Music to Library&lt;/b&gt;&lt;/big&gt;</property>
+                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Import Media to Library&lt;/b&gt;&lt;/big&gt;</property>
                 <property name="use_markup">True</property>
               </widget>
               <packing>
@@ -1431,7 +1431,7 @@
               <widget class="GtkLabel" id="MessageLabel">
                 <property name="visible">True</property>
                 <property name="xalign">0</property>
-                <property name="label" translatable="yes">Your music library is empty. You may import new music into your library now, or choose to do so later.</property>
+                <property name="label" translatable="yes">Your media library is empty. You may import new music and videos into your library now, or choose to do so later.</property>
                 <property name="wrap">True</property>
               </widget>
               <packing>
@@ -1468,7 +1468,7 @@
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="has_default">True</property>
-                <property name="label" translatable="yes">Import Music Source</property>
+                <property name="label" translatable="yes">Import Media Source</property>
                 <property name="use_underline">True</property>
                 <property name="response_id">-5</property>
               </widget>

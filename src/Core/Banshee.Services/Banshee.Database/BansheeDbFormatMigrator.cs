@@ -61,7 +61,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 2;
+        protected const int CURRENT_VERSION = 3;
         
         protected class DatabaseVersionAttribute : Attribute 
         {
@@ -243,6 +243,17 @@ namespace Banshee.Database
         {
             Execute (String.Format ("ALTER TABLE CoreTracks ADD COLUMN Attributes INTEGER  DEFAULT {0}",
                 (int)TrackMediaAttributes.Default));
+            return true;
+        }
+
+        [DatabaseVersion (3)]
+        private bool Migrate_3 ()
+        {
+            Execute ("ALTER TABLE CorePlaylists ADD COLUMN PrimarySourceID INTEGER");
+            Execute ("UPDATE CorePlaylists SET PrimarySourceID = 1");
+
+            Execute ("ALTER TABLE CoreSmartPlaylists ADD COLUMN PrimarySourceID INTEGER");
+            Execute ("UPDATE CoreSmartPlaylists SET PrimarySourceID = 1");
             return true;
         }
         

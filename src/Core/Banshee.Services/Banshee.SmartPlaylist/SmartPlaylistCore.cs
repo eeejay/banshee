@@ -67,13 +67,17 @@ namespace Banshee.SmartPlaylist
 
         private void HandleSourceAdded (SourceEventArgs args)
         {
-            if (args.Source == ServiceManager.SourceManager.DefaultSource) {
+            PrimarySource primary = args.Source as PrimarySource;
+            if (primary != null) {
                 foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll ()) {
-                    playlists.Add (pl);
-                    if (migrated_this_run) {
-                        pl.RefreshAndReload ();
+                    if (pl.PrimarySourceId == primary.DbId) {
+                        playlists.Add (pl);
+
+                        if (migrated_this_run) {
+                            pl.RefreshAndReload ();
+                        }
+                        primary.AddChildSource (pl);
                     }
-                    ServiceManager.SourceManager.DefaultSource.AddChildSource (pl);
                 }
                 return;
             }
@@ -94,14 +98,9 @@ namespace Banshee.SmartPlaylist
                     false
             );*/
 
-            Timer t = new Timer ("HandleSourceAdded", playlist.Name);
-
             StartTimer (playlist);
-            
             playlists.Add(playlist);
             SortPlaylists();
-
-            t.Stop();
         }
 
         private void HandleSourceRemoved (SourceEventArgs args)
