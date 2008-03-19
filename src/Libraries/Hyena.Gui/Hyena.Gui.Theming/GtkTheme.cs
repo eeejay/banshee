@@ -162,6 +162,10 @@ namespace Hyena.Gui.Theming
             CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, corners);
             cr.Fill ();
             
+            if (!Context.ShowStroke) {
+                return;
+            }
+            
             cr.LineWidth = 1.0;
             cr.Translate (0.5, 0.5);
             cr.Color = border_color;

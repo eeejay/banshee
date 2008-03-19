@@ -66,7 +66,6 @@ namespace Banshee.NowPlaying
             video_window.UserData = Handle;
             
             video_window.SetBackPixmap (null, false);
-            Style = Style.Attach (video_window);
             
             ServiceManager.PlayerEngine.VideoWindow = video_window.Handle;
         }
@@ -91,6 +90,8 @@ namespace Banshee.NowPlaying
             GdkWindow.UserData = Handle;
             
             video_window.Reparent (Parent.GdkWindow, Allocation.X, Allocation.Y);
+            
+            Style = Style.Attach (GdkWindow);
         }
         
         protected override void OnUnrealized ()

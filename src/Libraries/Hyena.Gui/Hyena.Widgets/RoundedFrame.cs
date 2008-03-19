@@ -42,9 +42,30 @@ namespace Hyena.Widgets
         
         private Widget child;
         private Gdk.Rectangle child_allocation;
+        private bool fill_color_set;
+        private Cairo.Color fill_color;
+        private bool draw_border = true;
         
         public RoundedFrame ()
         {
+        }
+        
+        public void SetFillColor (Cairo.Color color)
+        {
+            fill_color = color;
+            fill_color_set = true;
+            QueueDraw ();
+        }
+        
+        public void UnsetFillColor ()
+        {
+            fill_color_set = false;
+            QueueDraw ();
+        }
+        
+        public bool DrawBorder {
+            get { return draw_border; }
+            set { draw_border = value; QueueDraw (); }
         }
         
 #region Gtk.Widget Overrides
@@ -52,9 +73,7 @@ namespace Hyena.Widgets
         protected override void OnRealized ()
         {
             base.OnRealized ();
-            
             theme = new GtkTheme (this);
-            //theme.RefreshColors ();
         }
 
         protected override void OnSizeRequested (ref Requisition requisition)
@@ -131,7 +150,15 @@ namespace Hyena.Widgets
             int width = child_allocation.Width + 2 * frame_width;
             int height = child_allocation.Height + 2 * frame_width;
             
-            theme.DrawFrame (cr, new Gdk.Rectangle (x, y, width, height), true);
+            Gdk.Rectangle rect = new Gdk.Rectangle (x, y, width, height);
+            
+            theme.Context.ShowStroke = draw_border;
+            
+            if (fill_color_set) {
+                theme.DrawFrame (cr, rect, fill_color);
+            } else {
+                theme.DrawFrame (cr, rect, true);
+            }
         }
 
 #endregion

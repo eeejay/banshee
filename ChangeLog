@@ -1,5 +1,23 @@
 2008-03-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Stubbed
+	some stuff out to allow showing separator rows; not complete
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	Pack the video widget into a rounded frame to look sexy
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Respect ShowStroke
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/ThemeContext.cs: Added 
+	ShowStroke property
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Allow setting
+	a custom fill color and the ability to hide the border/stroke
+
+2008-03-19  Aaron Bockover  <abock@gnome.org>
+
 	* build/m4/banshee/gstreamer.m4: Link gstinterfaces and gstvideo libraries
 
 	* libbanshee/gst-playback-0.10.c: First pass at hopefully properly 

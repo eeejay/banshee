@@ -69,6 +69,8 @@ namespace Banshee.Sources.Gui
             ConfigureDragAndDrop ();
             RefreshList ();
             ConnectEvents ();
+            
+            RowSeparatorFunc = RowSeparatorHandler;
         }
         
 #region Setup Methods        
@@ -92,7 +94,7 @@ namespace Banshee.Sources.Gui
         
         private void BuildModel ()
         {
-            store = new TreeStore (typeof (Source), typeof (int));
+            store = new TreeStore (typeof (Source), typeof (int), typeof (bool));
             store.SetSortColumnId (1, SortType.Ascending);
             store.ChangeSortColumn ();
             Model = store;
@@ -279,6 +281,11 @@ namespace Banshee.Sources.Gui
             return false;
         }
         
+        private bool RowSeparatorHandler (TreeModel model, TreeIter iter)
+        {
+            return (bool)store.GetValue (iter, 2);
+        }
+        
 #endregion
 
 #region Source <-> Iter Methods
@@ -301,36 +308,67 @@ namespace Banshee.Sources.Gui
 
         private TreeIter FindSource (Source source)
         {
-            TreeIter iter = TreeIter.Zero;
-            store.GetIterFirst (out iter);
-            return FindSource (source, iter);
+            foreach (TreeIter iter in FindInModel (0, source)) {
+                return iter;
+            }
+            
+            return TreeIter.Zero;
         }
         
-        private TreeIter FindSource (Source source, TreeIter iter)
+        private IEnumerable<TreeIter> FindInModel (int column, object match)
+        {
+            TreeIter iter = TreeIter.Zero;
+            store.GetIterFirst (out iter);
+            return FindInModel (column, match, iter);
+        }
+        
+        private IEnumerable<TreeIter> FindInModel (int column, object match, TreeIter iter)
         {
             if (!store.IterIsValid (iter)) {
-                return TreeIter.Zero;
+                yield break;
             }
             
             do {
-                if ((store.GetValue (iter, 0) as Source) == source) {
-                    return iter;
+                object result = store.GetValue (iter, column);
+                Type result_type = result != null ? result.GetType () : null;
+                if (result_type != null && ((result_type.IsValueType && result.Equals (match)) || result == match)) {
+                    yield return iter;
                 }
                 
                 if (store.IterHasChild (iter)) {
                     TreeIter citer = TreeIter.Zero;
                     store.IterChildren (out citer, iter);
-                    TreeIter result = FindSource (source, citer);
-                    
-                    if (!result.Equals (TreeIter.Zero)) {
-                        return result;
+                    foreach (TreeIter yiter in FindInModel (column, match, citer)) {
+                        if (!yiter.Equals (TreeIter.Zero)) {
+                            yield return yiter;
+                        }
                     }
                 }
             } while (store.IterNext (ref iter));
-            
-            return TreeIter.Zero;
         }
-
+        
+        /*private void AddRowSeparator (int order)
+        {
+            TreeIter iter = store.InsertNode (order);
+            
+            store.SetValue (iter, 0, null);
+            store.SetValue (iter, 1, order);
+            store.SetValue (iter, 2, true);
+        }
+        
+        private void ClearRowSeparators ()
+        {
+            Queue<TreeIter> to_remove = new Queue<TreeIter> ();
+            foreach (TreeIter iter in FindInModel (2, true)) {
+                to_remove.Enqueue (iter);
+            }
+            
+            while (to_remove.Count > 0) {
+                TreeIter iter = to_remove.Dequeue ();
+                store.Remove (ref iter);
+            }
+        }*/
+        
 #endregion
 
 #region Add/Remove Sources / SourceManager interaction
@@ -360,13 +398,14 @@ namespace Banshee.Sources.Gui
             
             store.SetValue (iter, 0, source);
             store.SetValue (iter, 1, source.Order);
+            store.SetValue (iter, 2, false);
 
             lock (source.Children) {
                 foreach (Source child in source.Children) {
                     AddSource (child, iter);
                 }
             }
-
+            
             source.ChildSourceAdded += OnSourceChildSourceAdded; 
             source.ChildSourceRemoved += OnSourceChildSourceRemoved;
             source.UserNotifyUpdated += OnSourceUserNotifyUpdated;

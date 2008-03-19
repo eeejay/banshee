@@ -51,6 +51,12 @@ namespace Hyena.Gui.Theming
             set { line_width = value; }
         }
 
+        private bool show_stroke = true;
+        public bool ShowStroke {
+            get { return show_stroke; }
+            set { show_stroke = value; }
+        }
+
         private double x;
         public double X {
             get { return x; }

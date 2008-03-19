@@ -41,13 +41,20 @@ namespace Banshee.NowPlaying
     {   
         private NowPlayingSource source;
         private VideoDisplay video_display;
+        private Hyena.Widgets.RoundedFrame frame;
         
         public NowPlayingInterface ()
         {
             video_display = new VideoDisplay ();
             video_display.Show ();
             
-            PackStart (video_display, true, true, 0);
+            frame = new Hyena.Widgets.RoundedFrame ();
+            frame.SetFillColor (new Cairo.Color (0, 0, 0));
+            frame.DrawBorder = false;
+            frame.Add (video_display);
+            frame.Show ();
+            
+            PackStart (frame, true, true, 0);
         }
         
 #region ISourceContents
