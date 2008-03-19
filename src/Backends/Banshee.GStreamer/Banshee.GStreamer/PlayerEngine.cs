@@ -137,7 +137,7 @@ namespace Banshee.GStreamer
 
             IPropertyStoreExpose service = ServiceManager.Get<IService> ("GtkElementsService") as IPropertyStoreExpose;
             if (service != null) {
-                gst_playback_set_gdk_window (handle, service.PropertyStore.Get<IntPtr> ("PrimaryWindow.RawHandle"));
+                gst_playback_set_application_gdk_window (handle, service.PropertyStore.Get<IntPtr> ("PrimaryWindow.RawHandle"));
             }
                 
             IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup (uri.AbsoluteUri);
@@ -155,6 +155,11 @@ namespace Banshee.GStreamer
         {
             gst_playback_pause (handle);
             OnStateChanged (PlayerEngineState.Paused);
+        }
+        
+        public override void VideoExpose (IntPtr window, bool direct)
+        {
+            gst_playback_expose_video_window (handle, window, direct);
         }
 
         public override IntPtr [] GetBaseElements ()
@@ -312,14 +317,35 @@ namespace Banshee.GStreamer
             get { return "GStreamer 0.10"; }
         }
         
+        private bool? supports_equalizer = null;
         public override bool SupportsEqualizer {
-            get { return gst_equalizer_is_supported (handle); }
+            get { 
+                if (supports_equalizer == null) {
+                    supports_equalizer = gst_equalizer_is_supported (handle); 
+                }
+                
+                return supports_equalizer.Value;
+            }
         }
-    
+        
+        private bool? supports_video = null;
+        public override bool SupportsVideo {
+            get { 
+                if (supports_video == null) {
+                    supports_video = gst_playback_video_is_supported (handle); 
+                }
+                
+                return supports_video.Value;
+            }
+        }
+        
+        public override IntPtr VideoWindow {
+            set { gst_playback_set_video_window (handle, value); }
+        }
+        
         public double AmplifierLevel {
             set {
-                double db = Math.Pow (10.0, value/20.0);
-
+                double db = Math.Pow (10.0, value / 20.0);
                 gst_equalizer_set_preamp_level (handle, db);
             }
         }
@@ -427,7 +453,16 @@ namespace Banshee.GStreamer
             out IntPtr audiobin, out IntPtr audiotee);
             
         [DllImport ("libbanshee")]
-        private static extern void gst_playback_set_gdk_window (HandleRef engine, IntPtr window);
+        private static extern void gst_playback_set_application_gdk_window (HandleRef engine, IntPtr window);
+        
+        [DllImport ("libbanshee")]
+        private static extern bool gst_playback_video_is_supported (HandleRef engine);
+        
+        [DllImport ("libbanshee")]
+        private static extern void gst_playback_set_video_window (HandleRef engine, IntPtr window);
+        
+        [DllImport ("libbanshee")]
+        private static extern void gst_playback_expose_video_window (HandleRef engine, IntPtr window, bool direct);
                                                                    
         [DllImport ("libbanshee")]
         private static extern void gst_playback_get_error_quarks (out uint core, out uint library, 

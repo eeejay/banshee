@@ -111,6 +111,11 @@ namespace Banshee.MediaEngine
             OnStateChanged (PlayerEngineState.Paused);
         }
         
+        public virtual void VideoExpose (IntPtr window, bool direct)
+        {
+            throw new NotImplementedException ("Engine must implement VideoExpose since this method only gets called when SupportsVideo is true");
+        }
+        
         public virtual IntPtr [] GetBaseElements ()
         {
             return null;
@@ -272,6 +277,14 @@ namespace Banshee.MediaEngine
         
         public abstract bool SupportsEqualizer {
             get;
+        }
+        
+        public abstract bool SupportsVideo {
+            get;
+        }
+        
+        public virtual IntPtr VideoWindow {
+            set { }
         }
     }
 }

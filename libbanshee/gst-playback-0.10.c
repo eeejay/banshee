@@ -46,6 +46,7 @@
 #include <gdk/gdk.h>
 #ifdef GDK_WINDOWING_X11
 #include <gdk/gdkx.h>
+#include <gst/interfaces/xoverlay.h>
 #endif
 
 #include "gst-tagger.h"
@@ -71,6 +72,13 @@ struct GstPlayback {
     GstElement *equalizer;
     GstElement *preamp;
     
+    GMutex *mutex;
+
+    #ifdef GDK_WINDOWING_X11
+    GstXOverlay *xoverlay;
+    GdkWindow *video_window;
+    #endif
+
     guint iterate_timeout_id;
     gchar *cdda_device;
     
@@ -92,6 +100,10 @@ struct GstPlayback {
     GstInstallPluginsContext *install_plugins_context;
     #endif
 };
+
+#ifdef GDK_WINDOWING_X11
+static gboolean gst_playback_find_xoverlay (GstPlayback *engine);
+#endif
 
 // private methods
 
@@ -384,10 +396,47 @@ gst_playback_cdda_source_set_track(GstElement *playbin, guint track)
     return FALSE;
 }
 
+static void
+gst_playback_video_sink_element_added (GstBin *videosink, GstElement *element, GstPlayback *engine)
+{
+    g_return_if_fail (IS_GST_PLAYBACK (engine));
+
+    #ifdef GDK_WINDOWING_X11
+    g_mutex_lock (engine->mutex);
+    gst_playback_find_xoverlay (engine);
+    g_mutex_unlock (engine->mutex);    
+    #endif
+}
+
+static void
+gst_playback_bus_element_sync_message (GstBus *bus, GstMessage *message, GstPlayback *engine)
+{
+    gboolean found_xoverlay;
+    
+    g_return_if_fail (IS_GST_PLAYBACK (engine));
+
+    #ifdef GDK_WINDOWING_X11
+
+    if (message->structure == NULL || !gst_structure_has_name (message->structure, "prepare-xwindow-id")) {
+        return;
+    }
+
+    g_mutex_lock (engine->mutex);
+    found_xoverlay = gst_playback_find_xoverlay (engine);
+    g_mutex_unlock (engine->mutex);
+
+    if (found_xoverlay) {
+        gst_x_overlay_set_xwindow_id (engine->xoverlay, GDK_WINDOW_XWINDOW (engine->video_window));
+    }
+
+    #endif
+}
+
 static gboolean 
 gst_playback_construct(GstPlayback *engine)
 {
-    GstElement *fakesink;
+    GstBus *bus;
+    GstElement *videosink;
     GstElement *audiosink;
     GstElement *audiosinkqueue;
     GstElement *audioconvert;
@@ -446,23 +495,42 @@ gst_playback_construct(GstPlayback *engine)
         gst_element_link(engine->preamp, engine->equalizer);
         gst_element_link(engine->equalizer, audioconvert);
         gst_element_link(audioconvert, audiosink);
-    }
-    else
-    {
+    } else {
         // link the queue with the real audio sink
         gst_element_link(audiosinkqueue, audiosink);
     }
     
-    g_object_set(G_OBJECT(engine->playbin), "audio-sink", engine->audiobin, NULL);
+    g_object_set (G_OBJECT (engine->playbin), "audio-sink", engine->audiobin, NULL);
     
-    fakesink = gst_element_factory_make("fakesink", "fakesink");
-    g_object_set(G_OBJECT(engine->playbin), "video-sink", fakesink, NULL);
+    videosink = gst_element_factory_make ("gconfvideosink", "videosink");
+    if (videosink == NULL) {
+        videosink = gst_element_factory_make ("ximagesink", "videosink");
+        if (videosink == NULL) {
+            videosink = gst_element_factory_make ("fakesink", "videosink");
+            if (videosink != NULL) {
+                g_object_set (G_OBJECT (videosink), "sync", TRUE, NULL);
+            }
+        }
+    }
+    
+    g_object_set (G_OBJECT (engine->playbin), "video-sink", videosink, NULL);
 
-    gst_bus_add_watch(gst_pipeline_get_bus(GST_PIPELINE(engine->playbin)), 
-        gst_playback_bus_callback, engine);
-        
-    g_signal_connect(engine->playbin, "notify::source", G_CALLBACK(gst_playback_on_notify_source_cb), engine);
-        
+    bus = gst_pipeline_get_bus (GST_PIPELINE (engine->playbin));
+    
+    gst_bus_add_watch (bus, gst_playback_bus_callback, engine);
+    gst_bus_set_sync_handler (bus, gst_bus_sync_signal_handler, engine);
+
+    g_signal_connect (bus, "sync-message::element", 
+        G_CALLBACK (gst_playback_bus_element_sync_message), engine);
+
+    g_signal_connect (engine->playbin, "notify::source", 
+        G_CALLBACK (gst_playback_on_notify_source_cb), engine);
+    
+    if (GST_IS_BIN (videosink)) {
+        g_signal_connect (videosink, "element-added",
+            G_CALLBACK (gst_playback_video_sink_element_added), engine);
+    }
+
     return TRUE;
 }
 
@@ -510,6 +578,9 @@ GstPlayback *
 gst_playback_new()
 {
     GstPlayback *engine = g_new0(GstPlayback, 1);
+    
+    engine->mutex = g_mutex_new ();
+    
     if(!gst_playback_construct(engine)) {
         g_free(engine);
         return NULL;
@@ -522,6 +593,8 @@ void
 gst_playback_free(GstPlayback *engine)
 {
     g_return_if_fail(IS_GST_PLAYBACK(engine));
+    
+    g_mutex_free (engine->mutex);
     
     if(GST_IS_OBJECT(engine->playbin)) {
         engine->target_state = GST_STATE_NULL;
@@ -770,7 +843,7 @@ gst_playback_get_pipeline_elements(GstPlayback *engine, GstElement **playbin, Gs
 }
 
 void
-gst_playback_set_gdk_window(GstPlayback *engine, GdkWindow *window)
+gst_playback_set_application_gdk_window(GstPlayback *engine, GdkWindow *window)
 {
     engine->window = window;
 }
@@ -784,10 +857,116 @@ gst_playback_get_error_quarks(GQuark *core, GQuark *library, GQuark *resource, G
     *stream = GST_STREAM_ERROR;
 }
 
+/* Region XOverlay */
+
+#ifdef GDK_WINDOWING_X11
+
+gboolean
+gst_playback_video_is_supported (GstPlayback *engine)
+{
+    return TRUE; // gst_playback_find_xoverlay (engine);
+}
+
+static gboolean
+gst_playback_find_xoverlay (GstPlayback *engine)
+{
+    GstElement *video_sink = NULL;
+    GstElement *xoverlay;
+    GstXOverlay *previous_xoverlay;
+
+    previous_xoverlay = engine->xoverlay;
+    
+    g_object_get (engine->playbin, "video-sink", &video_sink, NULL);
+    
+    if (video_sink == NULL) {
+        engine->xoverlay = NULL;
+        if (previous_xoverlay != NULL) {
+            gst_object_unref (previous_xoverlay);
+        }
+
+        return FALSE;
+    }
+    
+    xoverlay = GST_IS_BIN (video_sink)
+        ? gst_bin_get_by_interface (GST_BIN (video_sink), GST_TYPE_X_OVERLAY)
+        : video_sink;
+    
+    engine->xoverlay = GST_IS_X_OVERLAY (xoverlay) ? GST_X_OVERLAY (xoverlay) : NULL;
+    
+    if (previous_xoverlay != NULL) {
+        gst_object_unref (previous_xoverlay);
+    }
+        
+    if (engine->xoverlay != NULL && g_object_class_find_property (
+        G_OBJECT_GET_CLASS (engine->xoverlay), "force-aspect-ratio")) {
+        g_object_set (G_OBJECT (engine->xoverlay), "force-aspect-ratio", TRUE, NULL);
+    }
+
+    gst_object_unref (video_sink);
+
+    return engine->xoverlay != NULL;
+}
+
+void
+gst_playback_set_video_window (GstPlayback *engine, GdkWindow *window)
+{
+    engine->video_window = window;
+}
+
+void
+gst_playback_expose_video_window (GstPlayback *engine, GdkWindow *window, gboolean direct)
+{
+    XID window_id;
+    
+    if (direct && engine->xoverlay != NULL && GST_IS_X_OVERLAY (engine->xoverlay)) {
+        gst_x_overlay_expose (engine->xoverlay);
+        return;
+    }
+   
+    g_mutex_lock (engine->mutex);
+   
+    if (engine->xoverlay == NULL && !gst_playback_find_xoverlay (engine)) {
+        g_mutex_unlock (engine->mutex);
+        return;
+    }
+    
+    gst_object_ref (engine->xoverlay);
+    g_mutex_unlock (engine->mutex);
+
+    window_id = GDK_WINDOW_XWINDOW (window);
+
+    gst_x_overlay_set_xwindow_id (engine->xoverlay, window_id);
+    gst_x_overlay_expose (engine->xoverlay);
+
+    gst_object_unref (engine->xoverlay);
+}
+
+#else
+
+gboolean
+gst_playback_video_is_supported (GstPlayback *engine)
+{
+    return FALSE;
+}
+
+void
+gst_playback_set_video_window (GstPlayback *engine, GdkWindow *window)
+{
+}
+
+void
+gst_playback_expose_video_window (GstPlayback *engine, GdkWindow *window, gboolean direct)
+{
+}
+
+#endif
+
+/* Region Equalizer */
+
 gboolean
 gst_equalizer_is_supported(GstPlayback *engine)
 {
-    return (engine != NULL && engine->equalizer != NULL && engine->preamp != NULL);
+    return engine != NULL && engine->equalizer != NULL && engine->preamp != NULL;
 }
 
 void

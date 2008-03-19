@@ -9,7 +9,9 @@ AC_DEFUN([BANSHEE_CHECK_GSTREAMER],
 		gstreamer-plugins-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
 		gstreamer-controller-0.10 >= $GSTREAMER_REQUIRED_VERSION
 		gstreamer-dataprotocol-0.10 >= $GSTREAMER_REQUIRED_VERSION)
-	
+
+	GST_LIBS="$GST_LIBS -lgstvideo-0.10 -lgstinterfaces-0.10"
+
 	PKG_CHECK_MODULES(GST_PBUTILS, gstreamer-plugins-base-0.10 >= 0.10.12, 
 		gst_pbutils=yes, gst_pbutils=no)
 

@@ -354,6 +354,15 @@ namespace Banshee.MediaEngine
             }
         }
         
+        public void VideoExpose (IntPtr window, bool direct)
+        {
+            active_engine.VideoExpose (window, direct);
+        }
+        
+        public IntPtr VideoWindow {
+            set { active_engine.VideoWindow = value; }
+        }
+        
         public void TrackInfoUpdated ()
         {
             active_engine.TrackInfoUpdated ();
@@ -433,6 +442,10 @@ namespace Banshee.MediaEngine
         
         public bool SupportsEqualizer {
             get { return ((active_engine is IEqualizer) && active_engine.SupportsEqualizer); }
+        }
+        
+        public bool SupportsVideo {
+            get { return active_engine.SupportsVideo; }
         }
         
         public uint Length {

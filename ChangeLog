@@ -1,3 +1,25 @@
+2008-03-19  Aaron Bockover  <abock@gnome.org>
+
+	* build/m4/banshee/gstreamer.m4: Link gstinterfaces and gstvideo libraries
+
+	* libbanshee/gst-playback-0.10.c: First pass at hopefully properly 
+	implementing the GstXOverlay stuff; adds video rough video support
+	to the pipeline/player engine
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/NullPlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Implement a few video related features to allow setting/exposing to a
+	GdkWindow for video support
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	Send the GdkWindow/Video calls into the player engine - binds the 
+	pipeline XOverlay to a window in the UI
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	Managed GdkWindow and video slab display widget thingy that can be
+	drawn on by an engine
+
 2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
