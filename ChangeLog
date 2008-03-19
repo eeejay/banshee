@@ -1,3 +1,14 @@
+2008-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Take the title
+	from the filename if needed.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Display a video icon for missing video 'album art'.
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Change 'song' to 'item' in a few places.
+
 2008-03-19  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:

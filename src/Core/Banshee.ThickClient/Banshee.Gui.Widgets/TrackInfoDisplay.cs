@@ -51,7 +51,8 @@ namespace Banshee.Gui.Widgets
         private ArtworkManager artwork_manager;
         private Gdk.Pixbuf current_pixbuf;
         private Gdk.Pixbuf incoming_pixbuf;
-        private Gdk.Pixbuf missing_pixbuf;
+        private Gdk.Pixbuf missing_audio_pixbuf;
+        private Gdk.Pixbuf missing_video_pixbuf;
         
         private Cairo.Color background_color;
         private Cairo.Color text_color;
@@ -239,9 +240,14 @@ namespace Banshee.Gui.Widgets
             text_light_color = CairoExtensions.ColorAdjustBrightness (text_color, 0.5);
             background_color = CairoExtensions.GdkColorToCairoColor (Style.Background (StateType.Normal));
             
-            if (missing_pixbuf != null) {
-                missing_pixbuf.Dispose ();
-                missing_pixbuf = null;
+            if (missing_audio_pixbuf != null) {
+                missing_audio_pixbuf.Dispose ();
+                missing_audio_pixbuf = null;
+            }
+
+            if (missing_video_pixbuf != null) {
+                missing_video_pixbuf.Dispose ();
+                missing_video_pixbuf = null;
             }
         }
         
@@ -344,7 +350,12 @@ namespace Banshee.Gui.Widgets
         private void RenderCoverArt (Cairo.Context cr, Gdk.Pixbuf pixbuf)
         {
             ArtworkRenderer.RenderThumbnail (cr, pixbuf, false, 0, 0, Allocation.Height, Allocation.Height, 
-                pixbuf != missing_pixbuf, 0, pixbuf == missing_pixbuf, background_color);
+                IsMissingPixbuf (pixbuf), 0, IsMissingPixbuf (pixbuf), background_color);
+        }
+
+        private bool IsMissingPixbuf (Gdk.Pixbuf pb)
+        {
+            return (pb == missing_audio_pixbuf || pb == missing_video_pixbuf);
         }
         
         private void RenderTrackInfo (Cairo.Context cr, TrackInfo track, bool renderTrack, bool renderArtistAlbum)
@@ -411,7 +422,7 @@ namespace Banshee.Gui.Widgets
         {
             TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
 
-            if (track == current_track && current_pixbuf != missing_pixbuf) {
+            if (track == current_track && !IsMissingPixbuf (current_pixbuf)) {
                 return;
             } else if (track == null) {
                 incoming_track = null;
@@ -424,10 +435,17 @@ namespace Banshee.Gui.Widgets
             Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtistAlbumId, Allocation.Height);
             
             if (pixbuf == null) {
-                if (missing_pixbuf == null) {
-                    missing_pixbuf = IconThemeUtils.LoadIcon (32, "audio-x-generic");
+                if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
+                    if (missing_video_pixbuf == null) {
+                        missing_video_pixbuf = IconThemeUtils.LoadIcon (32, "video-x-generic");
+                    }
+                    incoming_pixbuf = missing_video_pixbuf;
+                } else {
+                    if (missing_audio_pixbuf == null) {
+                        missing_audio_pixbuf = IconThemeUtils.LoadIcon (32, "audio-x-generic");
+                    }
+                    incoming_pixbuf = missing_audio_pixbuf;
                 }
-                incoming_pixbuf = missing_pixbuf;
             } else {
                 incoming_pixbuf = pixbuf;
             }
@@ -452,7 +470,7 @@ namespace Banshee.Gui.Widgets
                 Log.DebugFormat ("TrackInfoDisplay RenderAnimation: {0:0.00} FPS", last_fps);
             }
             
-            if (current_pixbuf != incoming_pixbuf && current_pixbuf != missing_pixbuf) {
+            if (current_pixbuf != incoming_pixbuf && !IsMissingPixbuf (current_pixbuf)) {
                 ArtworkRenderer.DisposePixbuf (current_pixbuf);
             }
             

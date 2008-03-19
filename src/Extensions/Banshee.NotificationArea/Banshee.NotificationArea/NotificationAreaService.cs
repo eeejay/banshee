@@ -120,7 +120,7 @@ namespace Banshee.NotificationArea
             actions.Add (new ToggleActionEntry [] {
                 new ToggleActionEntry ("ToggleNotificationsAction", null,
                     Catalog.GetString ("_Show Notifications"), null,
-                    Catalog.GetString ("Show notifications when song changes"), ToggleNotifications, ShowNotifications)
+                    Catalog.GetString ("Show notifications when item changes"), ToggleNotifications, ShowNotifications)
             });
             
             interface_action_service.AddActionGroup (actions);
@@ -364,7 +364,7 @@ namespace Banshee.NotificationArea
                 nf.Urgency = Urgency.Low;
                 nf.Timeout = 4500;
                 if (interface_action_service.PlaybackActions["NextAction"].Sensitive) {
-                    nf.AddAction ("skip-song", Catalog.GetString("Play next song"), OnSongSkipped);
+                    nf.AddAction ("skip-song", Catalog.GetString("Play next item"), OnSongSkipped);
                 }
                 nf.Show ();
                 
@@ -423,7 +423,7 @@ namespace Banshee.NotificationArea
             "plugins.notification_area", "show_notifications",
             true,
             "Show notifications",
-            "Show track information notifications when track starts playing"
+            "Show information notifications when item starts playing"
         );
                 
         public static readonly SchemaEntry<bool> NotifyOnCloseSchema = new SchemaEntry<bool> (

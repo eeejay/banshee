@@ -124,6 +124,16 @@ namespace Banshee.Streaming
             track.TrackCount = Choose ((int)file.Tag.TrackCount, track.TrackCount, preferTrackInfo);
             track.Disc = Choose ((int)file.Tag.Disc, track.Disc, preferTrackInfo);
             track.Year = Choose ((int)file.Tag.Year, track.Year, preferTrackInfo);
+
+            if (String.IsNullOrEmpty (track.TrackTitle)) {
+                try {
+                    string filename = System.IO.Path.GetFileName (track.Uri.LocalPath);
+                    if (!String.IsNullOrEmpty (filename)) {
+                        filename = filename.Substring (0, filename.LastIndexOf ('.'));
+                        track.TrackTitle = filename;
+                    }
+                } catch {}
+            }
         }
     
         public static void TrackInfoMerge (TrackInfo track, StreamTag tag)
