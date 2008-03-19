@@ -1,5 +1,19 @@
 2008-03-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Added a TrackStarted event that will always be raised, even if the 
+	playback controller did not transition to the track, but most importantly
+	it will _always_ be raised after the Transition event; this allows
+	users to connect to both events to determine if the track that is 
+	playing was manually played or not
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Activate the now playing source if the user manually started playing a
+	track with a video stream; uses the nice transition/track start stuff
+	noted above
+
+2008-03-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Stubbed
 	some stuff out to allow showing separator rows; not complete
 

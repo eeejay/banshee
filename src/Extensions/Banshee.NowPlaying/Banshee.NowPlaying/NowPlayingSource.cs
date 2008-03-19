@@ -31,13 +31,18 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.Sources;
-using Banshee.Sources.Gui;
 using Banshee.ServiceStack;
+using Banshee.MediaEngine;
+using Banshee.Collection;
+
+using Banshee.Sources.Gui;
 
 namespace Banshee.NowPlaying
 {
     public class NowPlayingSource : Source, IDisposable
-    {       
+    {
+        private TrackInfo transitioned_track;
+        
         public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 0)
         {
             Properties.SetString ("Icon.Name", "media-playback-start");
@@ -45,6 +50,23 @@ namespace Banshee.NowPlaying
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
             
             ServiceManager.SourceManager.AddSource (this);
+            
+            ServiceManager.PlaybackController.Transition += OnPlaybackControllerTransition;
+            ServiceManager.PlaybackController.TrackStarted += OnPlaybackControllerTrackStarted;
+        }
+        
+        private void OnPlaybackControllerTransition (object o, EventArgs args)
+        {
+            transitioned_track = ServiceManager.PlaybackController.CurrentTrack;
+        }
+        
+        private void OnPlaybackControllerTrackStarted (object o, EventArgs args)
+        { 
+            TrackInfo current_track = ServiceManager.PlaybackController.CurrentTrack;
+            if (current_track != null && transitioned_track != current_track && 
+                (current_track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
+                ServiceManager.SourceManager.SetActiveSource (this);
+            }
         }
         
         public void Dispose ()

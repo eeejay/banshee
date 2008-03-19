@@ -52,6 +52,8 @@ namespace Banshee.PlaybackController
     
         private TrackInfo current_track;
         private TrackInfo changing_to_track;
+        private bool raise_started_after_transition = false;
+        private bool transition_track_started = false;
         
         private Random random = new Random ();
     
@@ -70,6 +72,7 @@ namespace Banshee.PlaybackController
         
         public event EventHandler Stopped;
         public event EventHandler SourceChanged;
+        public event EventHandler TrackStarted;
         public event EventHandler Transition;
         
         public PlaybackControllerService ()
@@ -111,41 +114,54 @@ namespace Banshee.PlaybackController
                     }
                     
                     changing_to_track = null;
+                    
+                    if (!raise_started_after_transition) {
+                        transition_track_started = false;
+                        OnTrackStarted ();
+                    } else {
+                        transition_track_started = true;
+                    }
                     break;
             }       
         }
         
         public void First ()
         {
-            OnTransition ();
+            raise_started_after_transition = true;
             
             if (Source is IBasicPlaybackController) {
                 ((IBasicPlaybackController)Source).First ();
             } else {
                 ((ICanonicalPlaybackController)this).First ();
             }
+            
+            OnTransition ();
         }
         
         public void Next ()
         {
-            OnTransition ();
+            raise_started_after_transition = true;
             
             if (Source is IBasicPlaybackController) {
                 ((IBasicPlaybackController)Source).Next ();
             } else {
                 ((ICanonicalPlaybackController)this).Next ();
             }
+            
+            OnTransition ();
         }
         
         public void Previous ()
         {
-            OnTransition ();
+            raise_started_after_transition = true;
             
             if (Source is IBasicPlaybackController) {
                 ((IBasicPlaybackController)Source).Previous ();
             } else {
                 ((ICanonicalPlaybackController)this).Previous ();
             }
+            
+            OnTransition ();
         }
         
         void ICanonicalPlaybackController.First ()
@@ -239,11 +255,26 @@ namespace Banshee.PlaybackController
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
+            
+            if (raise_started_after_transition && transition_track_started) {
+                OnTrackStarted ();
+            }
+            
+            raise_started_after_transition = false;
+            transition_track_started = false;
         }
         
         protected virtual void OnSourceChanged ()
         {
             EventHandler handler = SourceChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+        
+        protected virtual void OnTrackStarted ()
+        {
+            EventHandler handler = TrackStarted;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
