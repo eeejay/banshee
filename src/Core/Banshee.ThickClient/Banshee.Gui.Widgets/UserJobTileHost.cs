@@ -48,9 +48,9 @@ namespace Banshee.Gui.Widgets
             
             box = new AnimatedVBox ();
             box.Spacing = 8;
-            box.Show ();
 
             Add (box);
+            ShowAll ();
 
             if (ServiceManager.Contains<UserJobManager> ()) {
                 UserJobManager job_manager = ServiceManager.Get<UserJobManager> ();
@@ -67,18 +67,6 @@ namespace Banshee.Gui.Widgets
             }
         }
 
-        public new void Show ()
-        {
-            TopPadding = 8;
-            base.Show ();
-        }
-
-        public new void Hide ()
-        {
-            TopPadding = 0;
-            base.Hide ();
-        }
-
         private void AddJob (IUserJob job)
         {                    
             if (job == null || job.IsFinished) {
@@ -90,7 +78,6 @@ namespace Banshee.Gui.Widgets
                 job_tiles.Add (job, tile);
                 box.PackEnd (tile, Easing.QuadraticOut);
                 tile.Show ();
-                Show ();
             }
         }
         
@@ -119,15 +106,6 @@ namespace Banshee.Gui.Widgets
                         UserJobTile tile = job_tiles[args.Job];
                         box.Remove (tile);
                         job_tiles.Remove (args.Job);
-                    }
-    
-                    if (job_tiles.Count <= 0) {
-                        // Don't actually hide the widget, since that screws
-                        // with the last widget's ease-out animation.
-                        
-                        // All subwidgets end up hiding themselves anyway,
-                        // so all we need to do is make sure we have no padding.
-                        TopPadding = 0;
                     }
                 }
             });

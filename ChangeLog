@@ -1,5 +1,11 @@
 2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	Got rid of padding stuff. That will be taken care of in
+	AnimatedVBox.
+
+2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
+
 	This gets rid of the 5 (count 'em: five) GdkWindows we were using
 	to render the ListView. We now render everything to the GdkWindow
 	of the ListView's parent.
