@@ -97,7 +97,7 @@ namespace Banshee.Gui
 
                 new ActionEntry ("AddToPlaylistAction", null,
                     Catalog.GetString ("Add _to Playlist"), null,
-                    Catalog.GetString ("Append selected songs to playlist or create new playlist from selection"),
+                    Catalog.GetString ("Append selected items to playlist or create new playlist from selection"),
                     OnAddToPlaylistMenu),
 
                 new ActionEntry ("AddToNewPlaylistAction", Stock.New,
@@ -115,14 +115,14 @@ namespace Banshee.Gui
 
                 new ActionEntry ("DeleteTracksFromDriveAction", null,
                     Catalog.GetString ("_Delete From Drive"), null,
-                    Catalog.GetString ("Permanently delete selected song(s) from medium"), OnDeleteTracksFromDrive),
+                    Catalog.GetString ("Permanently delete selected item(s) from medium"), OnDeleteTracksFromDrive),
 
                 new ActionEntry ("RateTracksAction", null,
                     String.Empty, null, null, OnRateTracks),
 
                 new ActionEntry ("SearchMenuAction", Stock.Find,
-                    Catalog.GetString ("_Search for Songs"), null,
-                    Catalog.GetString ("Search for songs matching certain criteria"), null),
+                    Catalog.GetString ("_Search"), null,
+                    Catalog.GetString ("Search for items matching certain criteria"), null),
 
                 new ActionEntry ("SearchForSameAlbumAction", null,
                     Catalog.GetString ("By Matching _Album"), null,
@@ -429,8 +429,8 @@ namespace Banshee.Gui
             if (delete) {
                 header = String.Format (
                     Catalog.GetPluralString (
-                        "Are you sure you want to permanently delete this song?",
-                        "Are you sure you want to permanently delete the selected {0} songs?", selCount
+                        "Are you sure you want to permanently delete this item?",
+                        "Are you sure you want to permanently delete the selected {0} items?", selCount
                     ), selCount
                 );
                 message = Catalog.GetString ("If you delete the selection, it will be permanently lost.");
@@ -439,8 +439,8 @@ namespace Banshee.Gui
                 header = String.Format (Catalog.GetString ("Remove selection from {0}?"), source.Name);
                 message = String.Format (
                     Catalog.GetPluralString (
-                        "Are you sure you want to remove the selected song from your {1}?",
-                        "Are you sure you want to remove the selected {0} songs from your {1}?", selCount
+                        "Are you sure you want to remove the selected item from your {1}?",
+                        "Are you sure you want to remove the selected {0} items from your {1}?", selCount
                     ), selCount, source.GenericName
                 );
                 button_label = "gtk-remove";

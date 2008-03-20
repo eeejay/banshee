@@ -322,7 +322,7 @@ namespace Banshee.Gui.Dialogs
             }
             
             Window.Title = TrackSet.Count > 1 
-                ? String.Format(Catalog.GetString("Editing song {0} of {1}"), index + 1, TrackSet.Count)
+                ? String.Format(Catalog.GetString("Editing item {0} of {1}"), index + 1, TrackSet.Count)
                 : String.Format(Catalog.GetString("Editing {0}"), track.TrackTitle);
        
             if(track.Uri.IsLocalPath) {

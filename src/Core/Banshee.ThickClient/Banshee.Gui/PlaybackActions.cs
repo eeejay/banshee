@@ -56,23 +56,23 @@ namespace Banshee.Gui
             Add (new ActionEntry [] {
                 new ActionEntry ("PlayPauseAction", "media-playback-start",
                     Catalog.GetString ("_Play"), "space",
-                    Catalog.GetString ("Play or pause the current song"), OnPlayPauseAction),
+                    Catalog.GetString ("Play or pause the current item"), OnPlayPauseAction),
                     
                 new ActionEntry ("NextAction", "media-skip-forward",
                     Catalog.GetString ("_Next"), "N",
-                    Catalog.GetString ("Play the next song"), OnNextAction),
+                    Catalog.GetString ("Play the next item"), OnNextAction),
                     
                 new ActionEntry ("PreviousAction", "media-skip-backward",
                     Catalog.GetString ("Pre_vious"), "B",
-                    Catalog.GetString ("Play the previous song"), OnPreviousAction),
+                    Catalog.GetString ("Play the previous item"), OnPreviousAction),
 
                 new ActionEntry ("SeekToAction", null,
                     Catalog.GetString ("Seek _to..."), "T",
-                    Catalog.GetString ("Seek to a specific location in current song"), OnSeekToAction),
+                    Catalog.GetString ("Seek to a specific location in current item"), OnSeekToAction),
                 
                 new ActionEntry ("RestartSongAction", null,
                     Catalog.GetString ("_Restart Song"), "R",
-                    Catalog.GetString ("Restart the current song"), OnRestartSongAction)
+                    Catalog.GetString ("Restart the current item"), OnRestartSongAction)
             });
             
             Add (new ToggleActionEntry [] {
@@ -83,7 +83,7 @@ namespace Banshee.Gui
                     
                 new ToggleActionEntry ("StopWhenFinishedAction", null,
                     Catalog.GetString ("_Stop When Finished"), "<Shift>space",
-                    Catalog.GetString ("Stop playback after the current song finishes playing"), 
+                    Catalog.GetString ("Stop playback after the current item finishes playing"), 
                     OnStopWhenFinishedAction, false)
             });
 
@@ -125,6 +125,9 @@ namespace Banshee.Gui
                 case PlayerEngineEvent.StartOfStream:
                     TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack; 
                     action_service["Playback.RestartSongAction"].Sensitive = !track.IsLive;
+                    action_service["Playback.RestartSongAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
+                        ? Catalog.GetString ("_Restart Song")
+                        : Catalog.GetString ("_Restart Video");
                     break;
                 case PlayerEngineEvent.EndOfStream:
                     ToggleAction stop_action = (ToggleAction)action_service["Playback.StopWhenFinishedAction"];

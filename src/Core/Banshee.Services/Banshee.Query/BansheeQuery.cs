@@ -66,11 +66,11 @@ namespace Banshee.Query
         };
 
         public static QueryLimit [] Limits = new QueryLimit [] {
-            new QueryLimit ("songs",   Catalog.GetString("songs"), true),
-            new QueryLimit ("minutes", Catalog.GetString("minutes"), "CoreTracks.Duration", (int) RelativeDateFactor.Minute),
-            new QueryLimit ("hours",   Catalog.GetString("hours"), "CoreTracks.Duration", (int) RelativeDateFactor.Hour),
-            new QueryLimit ("MB",      Catalog.GetString("MB"), "CoreTracks.FileSize", (int) FileSizeFactor.MB),
-            new QueryLimit ("GB",      Catalog.GetString("GB"), "CoreTracks.FileSize", (int) FileSizeFactor.GB)
+            new QueryLimit ("songs",   Catalog.GetString ("items"), true),
+            new QueryLimit ("minutes", Catalog.GetString ("minutes"), "CoreTracks.Duration", (int) RelativeDateFactor.Minute),
+            new QueryLimit ("hours",   Catalog.GetString ("hours"), "CoreTracks.Duration", (int) RelativeDateFactor.Hour),
+            new QueryLimit ("MB",      Catalog.GetString ("MB"), "CoreTracks.FileSize", (int) FileSizeFactor.MB),
+            new QueryLimit ("GB",      Catalog.GetString ("GB"), "CoreTracks.FileSize", (int) FileSizeFactor.GB)
         };
 
         public static QueryField ArtistField = new QueryField (

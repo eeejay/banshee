@@ -427,7 +427,7 @@ namespace Banshee.Sources
                 return String.Empty;
             }
             
-            builder.AppendFormat (Catalog.GetPluralString ("{0} song", "{0} songs", count), count);
+            builder.AppendFormat (Catalog.GetPluralString ("{0} item", "{0} items", count), count);
             
             if (this is IDurationAggregator) {
                 builder.Append (", ");

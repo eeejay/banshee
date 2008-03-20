@@ -1,5 +1,14 @@
 2008-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Lots of 'song'
+	to 'item' changes.
+
+2008-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Take the title
 	from the filename if needed.
 
