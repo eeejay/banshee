@@ -34,7 +34,7 @@ namespace Hyena.Data.Gui
         {
             column_layout = new Pango.Layout (PangoContext);
             CanFocus = true;
-            selection_proxy.Changed += delegate { InvalidateListWindow (); };
+            selection_proxy.Changed += delegate { InvalidateList (); };
         }
     }
 }

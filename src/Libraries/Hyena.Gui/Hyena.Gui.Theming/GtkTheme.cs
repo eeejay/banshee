@@ -81,145 +81,116 @@ namespace Hyena.Gui.Theming
             Context.Cairo.LineWidth = Context.LineWidth;
             Context.Cairo.Stroke ();
         }
-
-        public override void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x, int bottom_offset)
+        
+        public override void DrawArrow (Context cr, Gdk.Rectangle alloc, Hyena.Data.SortType type)
         {
-            Cairo.Color gtk_background_color = Colors.GetWidgetColor(GtkColorClass.Background, StateType.Normal);
-            Cairo.Color dark_color = CairoExtensions.ColorShade(gtk_background_color, 0.80);
-            Cairo.Color light_color = CairoExtensions.ColorShade(gtk_background_color, 1.1);
+            cr.Translate (0.5, 0.5);
+            int x1 = alloc.X;
+            int x3 = alloc.X + alloc.Width / 2;
+            int x2 = x3 + (x3 - x1);
+            int y1 = alloc.Y;
+            int y2 = alloc.Bottom;
             
-            int y_1 = alloc.Y + 2;
-            int y_2 = alloc.Y + alloc.Height - 4 - bottom_offset;
+            if (type == Hyena.Data.SortType.Ascending) {
+                cr.MoveTo (x1, y1);
+                cr.LineTo (x2, y1);
+                cr.LineTo (x3, y2);
+                cr.LineTo (x1, y1);
+            } else {
+                cr.MoveTo (x3, y1);
+                cr.LineTo (x2, y2);
+                cr.LineTo (x1, y2);
+                cr.LineTo (x3, y1);
+            }
+            
+            cr.Color = new Color (1, 1, 1, 0.4);
+            cr.FillPreserve ();
+            cr.Color = new Color (0, 0, 0, 1);
+            cr.Stroke ();
+            cr.Translate (-0.5, -0.5);
+        }
+
+
+        public override void DrawHeaderSeparator (Cairo.Context cr, Gdk.Rectangle alloc, int x)
+        {
+            Cairo.Color gtk_background_color = Colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal);
+            Cairo.Color dark_color = CairoExtensions.ColorShade (gtk_background_color, 0.80);
+            Cairo.Color light_color = CairoExtensions.ColorShade (gtk_background_color, 1.1);
+            
+            int y_1 = alloc.Top + 4;
+            int y_2 = alloc.Bottom - 4;
             
             cr.LineWidth = 1;
             cr.Antialias = Cairo.Antialias.None;
             
             cr.Color = dark_color;
-            cr.MoveTo(x, y_1);
-            cr.LineTo(x, y_2);
-            cr.Stroke();
+            cr.MoveTo (x, y_1);
+            cr.LineTo (x, y_2);
+            cr.Stroke ();
             
             cr.Color = light_color;
-            cr.MoveTo(x + 1, y_1);
-            cr.LineTo(x + 1, y_2);
-            cr.Stroke();
+            cr.MoveTo (x + 1, y_1);
+            cr.LineTo (x + 1, y_2);
+            cr.Stroke ();
             
             cr.Antialias = Cairo.Antialias.Default;
         }
         
-        public override void DrawHeaderBackground(Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset, bool fill)
+        public override void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc)
         {
-            Cairo.Color gtk_background_color = Colors.GetWidgetColor(GtkColorClass.Background, StateType.Normal);
-            Cairo.Color gtk_base_color = Colors.GetWidgetColor(GtkColorClass.Base, StateType.Normal);
-            Cairo.Color light_color = CairoExtensions.ColorShade(gtk_background_color, 1.1);
-            Cairo.Color dark_color = CairoExtensions.ColorShade(gtk_background_color, 0.95);
+            Cairo.Color gtk_background_color = Colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal);
+            Cairo.Color light_color = CairoExtensions.ColorShade (gtk_background_color, 1.1);
+            Cairo.Color dark_color = CairoExtensions.ColorShade (gtk_background_color, 0.95);
             
             CairoCorners corners = CairoCorners.TopLeft | CairoCorners.TopRight;
-            
-            if(fill) {
-                LinearGradient grad = new LinearGradient(alloc.X, alloc.Y, alloc.X, alloc.Y + alloc.Height);
-                grad.AddColorStop(0, light_color);
-                grad.AddColorStop(0.75, dark_color);
-                grad.AddColorStop(0, light_color);
-            
-                cr.Pattern = grad;
-                CairoExtensions.RoundedRectangle(cr, alloc.X, alloc.Y, alloc.Width, 
-                alloc.Height - bottom_offset, Context.Radius, corners);
-                cr.Fill();
-            
-                cr.Color = gtk_base_color;
-                cr.Rectangle(alloc.X, alloc.Y + alloc.Height - bottom_offset, alloc.Width, bottom_offset);
-                cr.Fill();
-            } else {
-                cr.Color = gtk_base_color;
-                CairoExtensions.RoundedRectangle(cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, corners);
-                cr.Fill();
-            }
-            
-            cr.LineWidth = 1.0;
-            cr.Translate(alloc.X + 0.5, alloc.Y + 0.5);
-            cr.Color = border_color;
-            CairoExtensions.RoundedRectangle(cr, alloc.X, alloc.Y, alloc.Width - 1, 
-                alloc.Height + 4, Context.Radius, corners);
-            cr.Stroke();
-            
-            if(fill) {
-                cr.LineWidth = 1;
-                cr.Antialias = Cairo.Antialias.None;
-                cr.MoveTo(alloc.X + 1, alloc.Y + alloc.Height - 1 - bottom_offset);
-                cr.LineTo(alloc.X + alloc.Width - 1, alloc.Y + alloc.Height - 1 - bottom_offset);
-                cr.Stroke();
-                cr.Antialias = Cairo.Antialias.Default;
-            }
-        }
+
+            LinearGradient grad = new LinearGradient (alloc.X, alloc.Y, alloc.X, alloc.Bottom);
+            grad.AddColorStop (0, light_color);
+            grad.AddColorStop (0.75, dark_color);
+            grad.AddColorStop (0, light_color);
         
-        public override void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
-        {
-            CairoCorners corners = CairoCorners.All;
-        
-            color.A = Context.FillAlpha;
-            cr.Color = color;
+            cr.Pattern = grad;
             CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, corners);
             cr.Fill ();
             
-            if (!Context.ShowStroke) {
-                return;
-            }
-            
-            cr.LineWidth = 1.0;
-            cr.Translate (0.5, 0.5);
             cr.Color = border_color;
-            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width - 1, alloc.Height - 1, Context.Radius, corners);
+            cr.Rectangle (alloc.X, alloc.Bottom, alloc.Width, BorderWidth);
+            cr.Fill ();
+        }
+        
+        public override void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
+        {
+            color.A = Context.FillAlpha;
+            cr.Color = color;
+            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, CairoCorners.All);
+            cr.Fill ();
+        }
+        
+        public override void DrawFrameBorder (Cairo.Context cr, Gdk.Rectangle alloc)
+        {
+            cr.LineWidth = BorderWidth;
+            cr.Color = border_color;
+            double offset = (double)BorderWidth / 2.0;
+            CairoExtensions.RoundedRectangle (cr, alloc.X + offset, alloc.Y + offset,
+                alloc.Width - BorderWidth, alloc.Height - BorderWidth, Context.Radius, CairoCorners.All);
             cr.Stroke();
         }
 
-        public override void DrawColumnHighlight(Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset, Cairo.Color color)
+        public override void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
         {
-            Cairo.Color light_color = CairoExtensions.ColorShade(color, 1.6);
-            Cairo.Color dark_color = CairoExtensions.ColorShade(color, 1.3);
+            Cairo.Color light_color = CairoExtensions.ColorShade (color, 1.6);
+            Cairo.Color dark_color = CairoExtensions.ColorShade (color, 1.3);
             
-            LinearGradient grad = new LinearGradient(alloc.X, alloc.Y + 2, alloc.X, alloc.Y + alloc.Height - 3 - bottom_offset);
-            grad.AddColorStop(0, light_color);
-            grad.AddColorStop(1, dark_color);
+            LinearGradient grad = new LinearGradient (alloc.X, alloc.Y, alloc.X, alloc.Bottom - 1);
+            grad.AddColorStop (0, light_color);
+            grad.AddColorStop (1, dark_color);
             
             cr.Pattern = grad;
-            cr.Rectangle(alloc.X, alloc.Y + 2, alloc.Width - 1, alloc.Height - 3 - bottom_offset);
+            cr.Rectangle (alloc.X + 1.5, alloc.Y + 1.5, alloc.Width - 3, alloc.Height - 2);
             cr.Fill();
         }
         
-        public override void DrawFooter(Cairo.Context cr, Gdk.Rectangle alloc)
-        {
-            Cairo.Color gtk_base_color = Colors.GetWidgetColor(GtkColorClass.Base, StateType.Normal);
-            CairoCorners corners = CairoCorners.BottomLeft | CairoCorners.BottomRight;
-            
-            cr.Color = gtk_base_color;
-            CairoExtensions.RoundedRectangle(cr, alloc.X , alloc.Y, alloc.Width, 
-                alloc.Height, Context.Radius, corners);
-            cr.Fill();
-            
-            cr.LineWidth = 1.0;
-            cr.Translate(alloc.Y + 0.5, alloc.Y + 0.5);
-            
-            cr.Color = border_color;
-            CairoExtensions.RoundedRectangle(cr, alloc.X, alloc.Y - 4, alloc.Width - 1, 
-                alloc.Height + 3, Context.Radius, corners);
-            cr.Stroke();
-        }
-        
-        protected override void DrawLeftOrRightBorder(Cairo.Context cr, int x, Gdk.Rectangle alloc)
-        {
-            cr.LineWidth = 1.0;
-            cr.Antialias = Cairo.Antialias.None;
-            
-            cr.Color = border_color;
-            cr.MoveTo(x, alloc.Y);
-            cr.LineTo(x, alloc.Y + alloc.Height);
-            cr.Stroke();
-            
-            cr.Antialias = Cairo.Antialias.Default;
-        }
-        
-        public override void DrawRowSelection(Cairo.Context cr, int x, int y, int width, int height,
+        public override void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height,
             bool filled, bool stroked, Cairo.Color color, CairoCorners corners)
         {
             Cairo.Color selection_color = color;
@@ -227,19 +198,19 @@ namespace Hyena.Gui.Theming
             selection_stroke.A = color.A;
             
             if (filled) {
-                Cairo.Color selection_fill_light = CairoExtensions.ColorShade(selection_color, 1.1);
-                Cairo.Color selection_fill_dark = CairoExtensions.ColorShade(selection_color, 0.90);
+                Cairo.Color selection_fill_light = CairoExtensions.ColorShade (selection_color, 1.1);
+                Cairo.Color selection_fill_dark = CairoExtensions.ColorShade (selection_color, 0.90);
                 
                 selection_fill_light.A = color.A;
                 selection_fill_dark.A = color.A;
                 
-                LinearGradient grad = new LinearGradient(x, y, x, y + height);
-                grad.AddColorStop(0, selection_fill_light);
-                grad.AddColorStop(1, selection_fill_dark);
+                LinearGradient grad = new LinearGradient (x, y, x, y + height);
+                grad.AddColorStop (0, selection_fill_light);
+                grad.AddColorStop (1, selection_fill_dark);
                 
                 cr.Pattern = grad;
-                CairoExtensions.RoundedRectangle(cr, x, y, width, height, Context.Radius, corners, true);
-                cr.Fill();
+                CairoExtensions.RoundedRectangle (cr, x, y, width, height, Context.Radius, corners, true);
+                cr.Fill ();
             }
             
             if (stroked) {

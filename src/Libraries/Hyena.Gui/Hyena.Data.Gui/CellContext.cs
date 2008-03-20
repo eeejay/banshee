@@ -40,9 +40,10 @@ namespace Hyena.Data.Gui
         private Gdk.Drawable drawable;
         private Theme theme;
         private Gdk.Rectangle area;
+        private Gdk.Rectangle clip;
         
         public CellContext (Cairo.Context context, Pango.Layout layout, Gtk.Widget widget,
-            Gdk.Drawable drawable, Theme theme, Gdk.Rectangle area)
+            Gdk.Drawable drawable, Theme theme, Gdk.Rectangle area, Gdk.Rectangle clip)
         {
             this.context = context;
             this.layout = layout;
@@ -50,6 +51,7 @@ namespace Hyena.Data.Gui
             this.drawable = drawable;
             this.theme = theme;
             this.area = area;
+            this.clip = clip;
         }
         
         public Cairo.Context Context {
@@ -74,6 +76,10 @@ namespace Hyena.Data.Gui
 
         public Gdk.Rectangle Area {
             get { return area; }
+        }
+        
+        public Gdk.Rectangle Clip {
+            get { return clip; }
         }
     }
 }

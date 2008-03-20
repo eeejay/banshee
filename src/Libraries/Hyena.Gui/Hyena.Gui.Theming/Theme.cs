@@ -77,40 +77,50 @@ namespace Hyena.Gui.Theming
 #region Drawing
 
         public abstract void DrawPie (double fraction);
-
-        public abstract void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x, int bottom_offset);
         
-        public abstract void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset, bool fill);
+        public abstract void DrawArrow (Cairo.Context cr, Gdk.Rectangle alloc, Hyena.Data.SortType type);
+
+        public abstract void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x);
+        
+        public abstract void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc);
         
         public void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
         {
-            DrawFrame (cr, alloc,  baseColor 
+            DrawFrameBackground (cr, alloc, baseColor);
+            DrawFrameBorder (cr, alloc);
+        }
+        
+        public void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
+        {
+            DrawFrameBackground (cr, alloc, color);
+            DrawFrameBorder (cr, alloc);
+        }
+        
+        public void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
+        {
+            DrawFrameBackground (cr, alloc,  baseColor 
                 ? colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal)
                 : colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal));
         }
         
-        public abstract void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);
+        public abstract void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);
         
-        public void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset)
+        public abstract void DrawFrameBorder (Cairo.Context cr, Gdk.Rectangle alloc);
+        
+        public void DrawColumnHighlight (Cairo.Context cr, double cellWidth, double cellHeight)
         {
-            DrawColumnHighlight (cr, alloc, bottom_offset, colors.GetWidgetColor(GtkColorClass.Background, StateType.Selected));
+            Gdk.Rectangle alloc = new Gdk.Rectangle ();
+            alloc.Width = (int)cellWidth;
+            alloc.Height = (int)cellHeight;
+            DrawColumnHighlight (cr, alloc);
         }
         
-        public abstract void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, int bottom_offset, Cairo.Color color);
-        
-        public abstract void DrawFooter (Cairo.Context cr, Gdk.Rectangle alloc);
-        
-        public void DrawLeftBorder (Cairo.Context cr, Gdk.Rectangle alloc)
+        public void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc)
         {
-            DrawLeftOrRightBorder (cr, alloc.X + 1, alloc);
+            DrawColumnHighlight (cr, alloc, colors.GetWidgetColor(GtkColorClass.Background, StateType.Selected));
         }
         
-        public void DrawRightBorder (Cairo.Context cr, Gdk.Rectangle alloc)
-        {
-            DrawLeftOrRightBorder (cr, alloc.X + alloc.Width, alloc);   
-        }
-        
-        protected abstract void DrawLeftOrRightBorder (Cairo.Context cr, int x, Gdk.Rectangle alloc);
+        public abstract void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);
         
         public void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height)
         {
@@ -148,6 +158,18 @@ namespace Hyena.Gui.Theming
         
         public Cairo.Color SelectionStroke {
             get { return selection_stroke; }
+        }
+        
+        public virtual int BorderWidth {
+            get { return 1; }
+        }
+        
+        public virtual int InnerBorderWidth {
+            get { return 4; }
+        }
+        
+        public int TotalBorderWidth {
+            get { return BorderWidth + InnerBorderWidth; }
         }
 
 #endregion

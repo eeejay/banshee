@@ -50,41 +50,20 @@ namespace Hyena.Data.Gui
                 return;
             }
             
-            context.Context.Translate (0.5, 0.5);
-
             if (!has_sort) {
                 base.Render (context, state, cellWidth - 10, cellHeight);
                 return;
             }
             
-            int w = (int)(cellHeight / 3.5);
-            int h = (int)((double)w / 1.6);
-            int x1 = (int)cellWidth - w - 10;
-            int x2 = x1 + w;
-            int x3 = x1 + w / 2;
-            int y1 = ((int)cellHeight - h) / 2;
-            int y2 = y1 + h;
+            Gdk.Rectangle alloc = new Gdk.Rectangle ();
+            alloc.Width = (int)(cellHeight / 3.5);
+            alloc.Height = (int)((double)alloc.Width / 1.6);
+            alloc.X = (int)cellWidth - alloc.Width - 10;
+            alloc.Y = ((int)cellHeight - alloc.Height) / 2;
             
-            base.Render (context, state, cellWidth - 2 * w - 10, cellHeight);
-            
-            context.Context.Translate (-0.5, -0.5);
-            
-            if (((ISortableColumn)data_handler ()).SortType == SortType.Ascending) {
-                context.Context.MoveTo (x1, y1);
-                context.Context.LineTo (x2, y1);
-                context.Context.LineTo (x3, y2);
-                context.Context.LineTo (x1, y1);
-            } else {
-                context.Context.MoveTo (x3, y1);
-                context.Context.LineTo (x2, y2);
-                context.Context.LineTo (x1, y2);
-                context.Context.LineTo (x3, y1);
-            }
-                
-            context.Context.Color = new Color (1, 1, 1, 0.4);
-            context.Context.FillPreserve ();
-            context.Context.Color = new Color (0, 0, 0, 1);
-            context.Context.Stroke ();
+            context.Theme.DrawColumnHighlight (context.Context, cellWidth, cellHeight);
+            base.Render (context, state, cellWidth - 2 * alloc.Width - 10, cellHeight);
+            context.Theme.DrawArrow (context.Context, alloc, ((ISortableColumn)data_handler ()).SortType);
         }
         
         protected override string Text {

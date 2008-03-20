@@ -148,7 +148,7 @@ namespace Hyena.Data.Gui
                 row_sensitive_property_info = null;
                 row_sensitive_property_invalid = false;
                 
-                InvalidateListWindow ();
+                InvalidateList ();
             }
         }
         

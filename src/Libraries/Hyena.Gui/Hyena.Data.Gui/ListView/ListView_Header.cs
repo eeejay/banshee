@@ -47,12 +47,9 @@ namespace Hyena.Data.Gui
             public int Index;
         }
         
-        private const int COLUMN_PADDING = 1;
         private static Gdk.Cursor resize_x_cursor = new Gdk.Cursor (Gdk.CursorType.SbHDoubleArrow);
         private static Gdk.Cursor drag_cursor = new Gdk.Cursor (Gdk.CursorType.Fleur);
-        
-        private int column_text_y;
-        private int column_text_height;
+
         private int resizing_column_index = -1;
         private int pressed_column_index = -1;
         private int pressed_column_x_start = -1;
@@ -81,6 +78,10 @@ namespace Hyena.Data.Gui
         
         private void RegenerateColumnCache ()
         {
+            if (!IsRealized) {
+                return;
+            }
+            
             InvalidateColumnCache ();
             
             if (column_controller == null) {
@@ -98,10 +99,10 @@ namespace Hyena.Data.Gui
                 column_cache[i] = new CachedColumn ();
                 column_cache[i].Column = column;
                 
-                column_cache[i].Width = (int)Math.Round (((double)list_alloc.Width * column.Width));
+                column_cache[i].Width = (int)Math.Round (((double)header_interaction_alloc.Width * column.Width));
                 column_cache[i].X1 = i == 0 ? 0 : column_cache[i - 1].X2;
                 column_cache[i].X2 = column_cache[i].X1 + column_cache[i].Width;
-                column_cache[i].ResizeX1 = column_cache[i].X1 + column_cache[i].Width - COLUMN_PADDING;
+                column_cache[i].ResizeX1 = column_cache[i].X2;
                 column_cache[i].ResizeX2 = column_cache[i].ResizeX1 + 2;
                 column_cache[i].Index = i;
                 
@@ -143,7 +144,8 @@ namespace Hyena.Data.Gui
             menu.ShowAll ();
             menu.Popup (null, null, delegate (Menu popup, out int pos_x, out int pos_y, out bool push_in) {
                 int win_x, win_y;
-                header_window.GetOrigin (out win_x, out win_y);
+                GdkWindow.GetOrigin (out win_x, out win_y);
+                
                 pos_x = win_x + x;
                 pos_y = win_y + y;
                 push_in = true;
@@ -173,17 +175,17 @@ namespace Hyena.Data.Gui
 
             even_distribution /= subsequent_columns;
 
-            resizing_column.Column.Width = (resizing_column.Width + resize_delta) / (double)list_alloc.Width;
+            resizing_column.Column.Width = (resizing_column.Width + resize_delta) / (double)list_rendering_alloc.Width;
 
             for (int i = resizing_column_index + 1; i < column_cache.Length; i++) {
                 column_cache[i].Column.Width = (column_cache[i].Width - 
                     (column_cache[i].Column.Width * resize_delta) - 
-                    even_distribution) / (double)list_alloc.Width;
+                    even_distribution) / (double)list_rendering_alloc.Width;
             }
             
             RegenerateColumnCache ();
-            InvalidateHeaderWindow ();
-            InvalidateListWindow ();
+            InvalidateHeader ();
+            InvalidateList ();
         }
         
         private Column GetColumnForResizeHandle (int x)
@@ -193,8 +195,8 @@ namespace Hyena.Data.Gui
             }
             
             foreach (CachedColumn column in column_cache) {
-                if (x >= column.ResizeX1 - 2 + left_border_alloc.Width && 
-                    x <= column.ResizeX2 + 2 + left_border_alloc.Width ) {
+                if (x >= column.ResizeX1 - 2 && 
+                    x <= column.ResizeX2 + 2) {
                     return column.Column;
                 }
             }
@@ -209,11 +211,10 @@ namespace Hyena.Data.Gui
             }
             
             foreach (CachedColumn column in column_cache) {
-                if (x >= column.X1 + left_border_alloc.Width && x <= column.X2 + left_border_alloc.Width) {
+                if (x >= column.X1 && x <= column.X2) {
                     return column.Column;
                 }
             }
-            
             return null;
         }
         
@@ -250,35 +251,20 @@ namespace Hyena.Data.Gui
 #endregion
 
 #region Header
- 
-        private void ShowHideHeader ()
-        {
-            if (header_window == null) {
-                return;
-            }
-            
-            if (header_visible) {
-                header_window.Show ();
-            } else {
-                header_window.Hide ();
-            }
-            
-            MoveResizeWindows (Allocation);
-        }
 
         private int header_height = 0;
         private int HeaderHeight {
             get {
                 if (!header_visible) {
-                    return InnerBorderWidth;
+                    return 0;
                 }
                 
                 if (header_height == 0) {
-                    int w_width;
+                    int w;
+                    int h;
                     column_layout.SetText ("W");
-                    column_layout.GetPixelSize (out w_width, out column_text_height);
-                    header_height = COLUMN_PADDING * 2 + column_text_height;
-                    column_text_y = (header_height / 2) - (column_text_height / 2) - 2;
+                    column_layout.GetPixelSize (out w, out h);
+                    header_height = h;
                     header_height += 10;
                 }
                 
@@ -291,7 +277,7 @@ namespace Hyena.Data.Gui
             get { return header_visible; }
             set { 
                 header_visible = value; 
-                ShowHideHeader ();
+                MoveResize (Allocation);
             }
         }
         

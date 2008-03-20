@@ -65,7 +65,7 @@ namespace Hyena.Data.Gui
                 context.Context.Color = context.Theme.Colors.GetWidgetColor (GtkColorClass.Text, state);
                 context.Context.Fill ();
             } else {
-                Style.PaintLayout(context.Widget.Style, context.Drawable, state, true, context.Area,
+                Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, context.Clip,
                     context.Widget, "text", context.Area.X + 4, context.Area.Y + (((int)cellHeight - text_height) / 2),
                     context.Layout);
             }

@@ -106,7 +106,7 @@ namespace Banshee.Collection.Gui
             y = (int)((cellHeight - (fl_height + sl_height)) / 2);
             
             Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
-                context.Area, context.Widget, "text",
+                context.Clip, context.Widget, "text",
                 context.Area.X + x, context.Area.Y + y, first_line_layout);
             
             if (album.ArtistName == null) {
@@ -124,11 +124,11 @@ namespace Banshee.Collection.Gui
                 gc.RgbBgColor = fgcolor;
             }
             
-            context.Drawable.DrawLayout (gc, context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
+            // We need to clip
+            //context.Drawable.DrawLayout (gc, context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
             
-            // Style.PaintLayout (context.Widget.Style, context.Drawable, state, true,
-            //    context.Area, context.Widget, "text",
-            //    context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
+            Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, context.Clip, context.Widget, "text",
+               context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
         }
     }
 }

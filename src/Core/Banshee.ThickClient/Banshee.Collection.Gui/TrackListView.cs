@@ -127,7 +127,7 @@ namespace Banshee.Collection.Gui
 
         protected override void ChildClassPostRender (Gdk.EventExpose evnt, Cairo.Context cr, Gdk.Rectangle clip)
         {
-            if (evnt.Window == ListWindow && overlay != null) {
+            if (overlay != null) {
                 overlay.Render (Theme, ListAllocation, cr, clip);
             }
         }

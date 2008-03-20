@@ -1,3 +1,54 @@
+2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
+
+	This gets rid of the 5 (count 'em: five) GdkWindows we were using
+	to render the ListView. We now render everything to the GdkWindow
+	of the ListView's parent.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	ListWindow is no more.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	Use Style to paint the layout rather than the Drawable. This is not
+	ideal, but nessisary so we can clip.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs: Moved
+	triangle-drawing code into the Theme.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	InvalidateListWindow is now InvalidateList.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Replaced five input-output GdkWidows with one input-only GdkWindow.
+	Also improved RowsInView calculation.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Changed the math to account for just one GdkWindow, got rid of
+	unnessisary method ShowHideHeader().
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Rework of rendering. Everything draws to a single GdkWindow.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Changed the math to account for just one GdkWindow. Split the
+	OnButtonPressEvent and OnButtonReleaseEvent methods into methods
+	specific to the header and list.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Clip to the
+	clipping box.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/CellContext.cs: Add a clip
+	property for the clipping box.
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/Theme.cs: Added
+	DrawRectangle. Split DrawFrame into DrawFrameBackground and
+	DrawFrameBorder.
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Added
+	DrawRectangle. Split DrawFrame into DrawFrameBackground and
+	DrawFrameBorder. Misc rendering improvements.
+
 2008-03-20  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Revert change from

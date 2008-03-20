@@ -109,7 +109,7 @@ namespace Hyena.Data.Gui
             }
 
             focused_row_index = row_index;
-            InvalidateListWindow ();
+            InvalidateList ();
             return true;
         }
         
@@ -192,54 +192,82 @@ namespace Hyena.Data.Gui
             
             return base.OnKeyPressEvent (press);
         }
+        
+        private static bool IsEventInAlloc (Gdk.EventButton evnt, Gdk.Rectangle alloc)
+        {
+            if (evnt.X < alloc.Left) {
+                return false;
+            } else if (evnt.X > alloc.Right) {
+                return false;
+            } else if (evnt.Y < alloc.Top) {
+                return false;
+            } else if (evnt.Y > alloc.Bottom) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        
+#region OnButtonPress
 
-        protected override bool OnButtonPressEvent (Gdk.EventButton press)
+        protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
         {
             HasFocus = true;
+            if (IsEventInAlloc (evnt, header_interaction_alloc)) {
+                return OnHeaderButtonPressEvent (evnt);
+            } else if (IsEventInAlloc (evnt, list_interaction_alloc) && model != null) {
+                return OnListButtonPressEvent (evnt);
+            }
+            return true;
+        }
+        
+        private bool OnHeaderButtonPressEvent (Gdk.EventButton evnt)
+        {
+            int x = (int)evnt.X - header_interaction_alloc.X;
+            int y = (int)evnt.Y - header_interaction_alloc.Y;
             
-            if (press.Window == header_window) {
-                if (press.Button == 3 && ColumnController.EnableColumnMenu) {
-                    Column menu_column = GetColumnAt ((int)press.X);
-                    if (menu_column != null) {
-                        OnColumnRightClicked (menu_column, (int)press.X, (int)press.Y);
-                    }
-                    return true;
-                } else if (press.Button != 1) {
-                    return true;
+            if (evnt.Button == 3 && ColumnController.EnableColumnMenu) {
+                Column menu_column = GetColumnAt (x);
+                if (menu_column != null) {
+                    OnColumnRightClicked (menu_column, x + Allocation.X, y + Allocation.Y);
                 }
-                
-                Gtk.Drag.SourceUnset (this);
-                
-                Column column = GetColumnForResizeHandle ((int)press.X);
+                return true;
+            } else if (evnt.Button != 1) {
+                return true;
+            }
+            
+            Gtk.Drag.SourceUnset (this);
+            
+            Column column = GetColumnForResizeHandle (x);
+            if (column != null) {
+                resizing_column_index = GetCachedColumnForColumn (column).Index;
+            } else {
+                column = GetColumnAt (x);
                 if (column != null) {
-                    resizing_column_index = GetCachedColumnForColumn (column).Index;
-                } else {
-                    column = GetColumnAt ((int)press.X);
-                    if (column != null) {
-                        CachedColumn column_c = GetCachedColumnForColumn (column);
-                        pressed_column_index = column_c.Index;
-                        pressed_column_x_start = (int)press.X;
-                        pressed_column_x_offset = pressed_column_x_start - column_c.X1;
-                    }
+                    CachedColumn column_c = GetCachedColumnForColumn (column);
+                    pressed_column_index = column_c.Index;
+                    pressed_column_x_start = x;
+                    pressed_column_x_offset = pressed_column_x_start - column_c.X1;
                 }
-                
-                return true;
             }
             
-            if (press.Window != list_window || model == null) {
-                return true;
-            }
+            return true;
+        }
+        
+        private bool OnListButtonPressEvent (Gdk.EventButton evnt)
+        {
+            int y = (int)evnt.Y - list_interaction_alloc.Y;
             
             GrabFocus ();
             
-            int row_index = GetRowAtY ((int)press.Y);
+            int row_index = GetRowAtY (y);
 
             if (row_index >= Model.Count) {
                 return true;
             }
             
-            if (press.Button == 1 && press.Type != Gdk.EventType.TwoButtonPress && 
-                (press.State & Gdk.ModifierType.ControlMask) == 0 && Selection.Contains (row_index)) {
+            if (evnt.Button == 1 && evnt.Type != Gdk.EventType.TwoButtonPress && 
+                (evnt.State & Gdk.ModifierType.ControlMask) == 0 && Selection.Contains (row_index)) {
                 return true;
             }
 
@@ -248,23 +276,23 @@ namespace Hyena.Data.Gui
                 return true;
             }
 
-            if (press.Button == 1 && press.Type == Gdk.EventType.TwoButtonPress && 
+            if (evnt.Button == 1 && evnt.Type == Gdk.EventType.TwoButtonPress && 
                 row_index == last_click_row_index) {
                 OnRowActivated ();
                 last_click_row_index = -1;
             } else {
-                if ((press.State & Gdk.ModifierType.ControlMask) != 0) {
-                    if (press.Button == 3) {
+                if ((evnt.State & Gdk.ModifierType.ControlMask) != 0) {
+                    if (evnt.Button == 3) {
                         if (!Selection.Contains (row_index)) {
                             Selection.Select (row_index);
                         }
                     } else {
                         Selection.ToggleSelect (row_index);
                     }
-                } else if ((press.State & Gdk.ModifierType.ShiftMask) != 0) {
+                } else if ((evnt.State & Gdk.ModifierType.ShiftMask) != 0) {
                     Selection.SelectFromFirst (row_index, true);
                 } else {
-                    if (press.Button == 3) {
+                    if (evnt.Button == 3) {
                         if (!Selection.Contains (row_index)) {
                             Selection.Clear (false);
                             Selection.Select (row_index);
@@ -277,7 +305,7 @@ namespace Hyena.Data.Gui
 
                 FocusRow (row_index);
 
-                if (press.Button == 3) {
+                if (evnt.Button == 3) {
                     last_click_row_index = -1;
                     OnPopupMenu ();
                 } else {
@@ -285,121 +313,146 @@ namespace Hyena.Data.Gui
                 }
             }
             
-            InvalidateListWindow ();
-            
+            InvalidateList ();
             return true;
         }
+        
+#endregion
+
+#region OnButtonRelease
         
         protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
         {
-            if (evnt.Window == header_window) {
-                OnDragSourceSet ();
-                
-                if (resizing_column_index >= 0) {
-                    pressed_column_index = -1;
-                    resizing_column_index = -1;
-                    header_window.Cursor = null;
-                    return true;
-                }
-                
-                if (pressed_column_index >= 0 && pressed_column_is_dragging) {
-                    pressed_column_is_dragging = false;
-                    pressed_column_index = -1;
-                    header_window.Cursor = null;
-                    InvalidateHeaderWindow ();
-                    InvalidateListWindow ();
-                    return true;
-                }
+            OnDragSourceSet ();
             
-                Column column = column_cache[pressed_column_index].Column;
-                if (column != null && Model is ISortable && column is ISortableColumn) {
-                    ((ISortable)Model).Sort ((ISortableColumn)column);
-                    Model.Reload ();
-                    InvalidateHeaderWindow ();
-                }
-                
+            if (resizing_column_index >= 0) {
                 pressed_column_index = -1;
-            } else if (evnt.Window == list_window && model != null &&
+                resizing_column_index = -1;
+                GdkWindow.Cursor = null;
+                return true;
+            }
+            
+            if (pressed_column_index >= 0 && pressed_column_is_dragging) {
+                pressed_column_is_dragging = false;
+                pressed_column_index = -1;
+                GdkWindow.Cursor = null;
+                InvalidateHeader ();
+                InvalidateList ();
+                return true;
+            }
+            
+            if (IsEventInAlloc (evnt, header_interaction_alloc)) {
+                return OnHeaderButtonRelease (evnt);
+            } else if (IsEventInAlloc (evnt, list_interaction_alloc) && model != null &&
                 (evnt.State & (Gdk.ModifierType.ShiftMask | Gdk.ModifierType.ControlMask)) == 0) {
-                GrabFocus ();
-                
-                int row_index = GetRowAtY ((int)evnt.Y);
-
-                if (row_index >= Model.Count) {
-                    return true;
-                }
-
-                object item = model[row_index];
-                if (item == null) {
-                    return true;
-                }
-                
-                if (Selection.Contains (row_index) && Selection.Count > 1) {
-                    Selection.Clear (false);
-                    Selection.Select (row_index);
-                    FocusRow (row_index);
-                    return true;
-                }
+                return OnListButtonRelease (evnt);
             }
 
             return true;
         }
         
+        private bool OnHeaderButtonRelease (Gdk.EventButton evnt)
+        {
+            Column column = column_cache[pressed_column_index].Column;
+            if (column != null && Model is ISortable && column is ISortableColumn) {
+                ((ISortable)Model).Sort ((ISortableColumn)column);
+                Model.Reload ();
+                InvalidateHeader ();
+            }
+            
+            pressed_column_index = -1;
+            return true;
+        }
+        
+        private bool OnListButtonRelease (Gdk.EventButton evnt)
+        {
+            int y = (int)evnt.Y - list_interaction_alloc.Y;
+            
+            GrabFocus ();
+            
+            int row_index = GetRowAtY (y);
+
+            if (row_index >= Model.Count) {
+                return true;
+            }
+
+            object item = model[row_index];
+            if (item == null) {
+                return true;
+            }
+            
+            if (Selection.Contains (row_index) && Selection.Count > 1) {
+                Selection.Clear (false);
+                Selection.Select (row_index);
+                FocusRow (row_index);
+            }
+            return true;
+        }
+        
+#endregion
+        
         protected override bool OnMotionNotifyEvent (Gdk.EventMotion evnt)
         {
-            if (evnt.Window == header_window) {
-                if (pressed_column_index >= 0 && !pressed_column_is_dragging && 
-                    Gtk.Drag.CheckThreshold (this, pressed_column_x_start, 0, (int)evnt.X, 0)) {
-                    pressed_column_is_dragging = true;
-                    InvalidateHeaderWindow ();
-                    InvalidateListWindow ();
-                }
+            int x = (int)evnt.X - header_interaction_alloc.X;
+            
+            if (pressed_column_index >= 0 && !pressed_column_is_dragging && 
+                Gtk.Drag.CheckThreshold (this, pressed_column_x_start, 0, x, 0)) {
+                pressed_column_is_dragging = true;
+                InvalidateHeader ();
+                InvalidateList ();
+            }
+            
+            if (pressed_column_is_dragging) {
+                GdkWindow.Cursor = drag_cursor;
                 
-                if (pressed_column_is_dragging) {
-                    header_window.Cursor = drag_cursor;
+                Column swap_column = GetColumnAt (x);
+                
+                if (swap_column != null) {
+                    CachedColumn swap_column_c = GetCachedColumnForColumn (swap_column);
+                    bool reorder = false;
                     
-                    Column swap_column = GetColumnAt ((int)evnt.X);
-                    
-                    if (swap_column != null) {
-                        CachedColumn swap_column_c = GetCachedColumnForColumn (swap_column);
-                        bool reorder = false;
-                        
-                        if (swap_column_c.Index < pressed_column_index) {
-                            // Moving from right to left
-                            reorder = pressed_column_x_drag <= swap_column_c.X1 + swap_column_c.Width / 2;
-                        } else if (swap_column_c.Index > pressed_column_index) {
-                            // Moving from left to right
-                            reorder = pressed_column_x_drag + column_cache[pressed_column_index].Width >= 
-                                swap_column_c.X1 + swap_column_c.Width / 2;
-                        }
-                        
-                        if (reorder) {
-                            int actual_pressed_index = ColumnController.IndexOf (column_cache[pressed_column_index].Column);
-                            int actual_swap_index = ColumnController.IndexOf (swap_column_c.Column);
-                            ColumnController.Reorder (actual_pressed_index, actual_swap_index);
-                            pressed_column_index = swap_column_c.Index;
-                            RegenerateColumnCache ();
-                        }
+                    if (swap_column_c.Index < pressed_column_index) {
+                        // Moving from right to left
+                        reorder = pressed_column_x_drag <= swap_column_c.X1 + swap_column_c.Width / 2;
+                    } else if (swap_column_c.Index > pressed_column_index) {
+                        // Moving from left to right
+                        reorder = pressed_column_x_drag + column_cache[pressed_column_index].Width >= 
+                            swap_column_c.X1 + swap_column_c.Width / 2;
                     }
                     
-                    pressed_column_x_drag = (int)evnt.X - pressed_column_x_offset;
-                    
-                    InvalidateHeaderWindow ();
-                    InvalidateListWindow ();
-                    return true;
+                    if (reorder) {
+                        int actual_pressed_index = ColumnController.IndexOf (column_cache[pressed_column_index].Column);
+                        int actual_swap_index = ColumnController.IndexOf (swap_column_c.Column);
+                        ColumnController.Reorder (actual_pressed_index, actual_swap_index);
+                        pressed_column_index = swap_column_c.Index;
+                        RegenerateColumnCache ();
+                    }
                 }
-            
-                header_window.Cursor = resizing_column_index >= 0 || GetColumnForResizeHandle ((int)evnt.X) != null 
-                    ? resize_x_cursor 
-                    : null;
                 
-                if (resizing_column_index >= 0) {
-                    ResizeColumn (evnt.X);
-                }
+                pressed_column_x_drag = x - pressed_column_x_offset;
+                
+                InvalidateHeader ();
+                InvalidateList ();
+                return true;
+            }
+        
+            GdkWindow.Cursor = resizing_column_index >= 0 || GetColumnForResizeHandle (x) != null 
+                ? resize_x_cursor 
+                : null;
+            
+            if (resizing_column_index >= 0) {
+                ResizeColumn ((double)x);
             }
             
             return true;
         }
+        
+        protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
+        {
+            GdkWindow.Cursor = null;
+            return base.OnLeaveNotifyEvent (evnt);
+        }
+
         
         protected override bool OnFocusInEvent (Gdk.EventFocus evnt)
         {
@@ -461,7 +514,7 @@ namespace Hyena.Data.Gui
         
         private void OnAdjustmentChanged (object o, EventArgs args)
         {
-            InvalidateListWindow ();
+            InvalidateList ();
         }
         
         public void ScrollTo (double val)

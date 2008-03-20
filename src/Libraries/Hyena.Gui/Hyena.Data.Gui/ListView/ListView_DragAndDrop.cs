@@ -123,7 +123,7 @@ namespace Hyena.Data.Gui
                 StopDragScroll ();
                 drag_reorder_row_index = -1;
                 drag_reorder_motion_y = -1;
-                InvalidateListWindow ();
+                InvalidateList ();
                 return false;
             }
             
@@ -169,10 +169,10 @@ namespace Hyena.Data.Gui
         
         private void DragReorderUpdateRow ()
         {
-            int row = GetRowAtY (drag_reorder_motion_y + list_alloc.Y) - 1;
+            int row = GetRowAtY (drag_reorder_motion_y) - 1;
             if (row != drag_reorder_row_index) {
                 drag_reorder_row_index = row;
-                InvalidateListWindow ();
+                InvalidateList ();
             }   
         }
     }
