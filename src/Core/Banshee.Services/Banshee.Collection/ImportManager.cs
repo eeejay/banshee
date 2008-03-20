@@ -73,7 +73,7 @@ namespace Banshee.Collection
                     return;
                 }
                 
-                user_job = new UserJob (Title, Title, Catalog.GetString ("Scanning for songs"));
+                user_job = new UserJob (Title, Title, Catalog.GetString ("Scanning for media"));
                 user_job.IconNames = new string [] { "system-search", "gtk-find" };
                 user_job.CancelMessage = CancelMessage;
                 user_job.CanCancel = true;
@@ -274,7 +274,7 @@ namespace Banshee.Collection
             }
         }
         
-        private string title = Catalog.GetString ("Importing Songs");
+        private string title = Catalog.GetString ("Importing Media");
         public string Title {
             get { return title; }
             set { title = value; }

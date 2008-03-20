@@ -44,6 +44,8 @@ namespace Banshee.Gui.Widgets
         
         public UserJobTileHost () : base (0.0f, 0.0f, 1.0f, 1.0f)
         {
+            LeftPadding = 4;
+            
             box = new AnimatedVBox ();
             box.Spacing = 8;
             box.Show ();
@@ -114,7 +116,7 @@ namespace Banshee.Gui.Widgets
             ThreadAssist.ProxyToMain (delegate {
                 lock (this) {
                     if (job_tiles.ContainsKey (args.Job)) {
-                        UserJobTile tile = job_tiles[args.Job];                        
+                        UserJobTile tile = job_tiles[args.Job];
                         box.Remove (tile);
                         job_tiles.Remove (args.Job);
                     }
@@ -122,6 +124,9 @@ namespace Banshee.Gui.Widgets
                     if (job_tiles.Count <= 0) {
                         // Don't actually hide the widget, since that screws
                         // with the last widget's ease-out animation.
+                        
+                        // All subwidgets end up hiding themselves anyway,
+                        // so all we need to do is make sure we have no padding.
                         TopPadding = 0;
                     }
                 }

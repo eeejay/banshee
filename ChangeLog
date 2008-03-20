@@ -1,6 +1,22 @@
 2008-03-20  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	Added left padding, so it doesn't look so bad on fullscreen. Also made
+	addition to code comment from previous commit, and some evil whitespace.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Patch to fix small bug introduced in r3487 where the missing pixbuf icon
+	would be displayed as an album cover type when it shouldn't be (ie the
+	black box around the icon).
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Slightly more
+	awesome status bar text, shamelessly ported from stable.
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Removed
+	more mentions of 'songs' and replaced with 'media'.
+
+2008-03-20  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
 	Stop hiding the job tile host, so that any ease-out animations that occur
 	with only a single widget in the host display correctly, instead of being
 	completely hidden.

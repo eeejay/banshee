@@ -430,22 +430,28 @@ namespace Banshee.Sources
             builder.AppendFormat (Catalog.GetPluralString ("{0} item", "{0} items", count), count);
             
             if (this is IDurationAggregator) {
-                builder.Append (", ");
-
-                TimeSpan span = (this as IDurationAggregator).Duration; 
+                TimeSpan span = (this as IDurationAggregator).Duration;
+                
                 if (span.Days > 0) {
-                    double days = span.Days + (span.Hours / 24.0);
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0:0.0} days", 
-                        (int)Math.Ceiling (days)), days);
-                } else if (span.Hours > 0) {
-                    double hours = span.Hours + (span.Minutes / 60.0);
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0:0.0} hours", 
-                        (int)Math.Ceiling (hours)), hours);
-                } else {
-                    double minutes = span.Minutes + (span.Seconds / 60.0);
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0:0.0} minutes", 
-                        (int)Math.Ceiling (minutes)), minutes);
+                    builder.Append (", ");
+                    builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", 
+                        (int) span.Days), span.Days);
                 }
+                
+                if (span.Hours > 0) {
+                    builder.Append (", ");
+                    builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", 
+                        (int) span.Hours), span.Hours);
+                }
+                
+                builder.Append (", ");
+                
+                builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", 
+                    (int) span.Minutes), span.Minutes);
+                
+                builder.Append (", ");
+                builder.AppendFormat (Catalog.GetPluralString ("{0} second", "{0} seconds",
+                    (int) span.Seconds), span.Seconds);
             }
 
             if (this is IFileSizeAggregator) {

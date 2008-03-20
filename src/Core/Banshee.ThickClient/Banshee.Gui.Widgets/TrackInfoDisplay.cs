@@ -350,7 +350,7 @@ namespace Banshee.Gui.Widgets
         private void RenderCoverArt (Cairo.Context cr, Gdk.Pixbuf pixbuf)
         {
             ArtworkRenderer.RenderThumbnail (cr, pixbuf, false, 0, 0, Allocation.Height, Allocation.Height, 
-                IsMissingPixbuf (pixbuf), 0, IsMissingPixbuf (pixbuf), background_color);
+                !IsMissingPixbuf (pixbuf), 0, IsMissingPixbuf (pixbuf), background_color);
         }
 
         private bool IsMissingPixbuf (Gdk.Pixbuf pb)
