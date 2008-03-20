@@ -9,6 +9,7 @@ using Hyena.Data.Sqlite;
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Collection.Database;
+using Banshee.MediaEngine;
 using Banshee.Gui;
 using Banshee.ServiceStack;
 using Hyena;
@@ -254,18 +255,38 @@ namespace Banshee.Bookmarks
             DatabaseTrackInfo current_track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo;
             if (track != null) {
                 if (current_track == null || current_track.TrackId != track.TrackId) {
-                    ServiceManager.PlayerEngine.Open (track); 
-                }
-
-                if (ServiceManager.PlayerEngine.CanSeek) {
-                    ServiceManager.PlayerEngine.Position = position;
-                }
-                
-                if (ServiceManager.PlayerEngine.CurrentState != Banshee.MediaEngine.PlayerEngineState.Playing) {
-                    ServiceManager.PlayerEngine.Play ();
+                    ServiceManager.PlayerEngine.StateChanged += HandleStateChanged;
+                    ServiceManager.PlayerEngine.OpenPlay (track);
+                } else {
+                    if (ServiceManager.PlayerEngine.CanSeek) {
+                        ServiceManager.PlayerEngine.Position = position;
+                    } else {
+                        ServiceManager.PlayerEngine.StateChanged += HandleStateChanged;
+                        ServiceManager.PlayerEngine.Play ();
+                    }
                 }
             } else {
                 Remove();
+            }
+        }
+        
+        private void HandleStateChanged (object sender, PlayerEngineStateArgs args)
+        {
+            if (args.State == PlayerEngineState.Playing) {
+                ServiceManager.PlayerEngine.StateChanged -= HandleStateChanged;
+                
+                if (!ServiceManager.PlayerEngine.CurrentTrack.IsLive) {
+                    // Sleep in 5ms increments for at most 250ms waiting for CanSeek to be true
+                    int count = 0;
+                    while (count < 50 && !ServiceManager.PlayerEngine.CanSeek) {
+                        System.Threading.Thread.Sleep (5);
+                        count++;
+                    }
+                }
+                
+                if (ServiceManager.PlayerEngine.CanSeek) {
+                    ServiceManager.PlayerEngine.Position = position;
+                }
             }
         }
 

@@ -1,3 +1,9 @@
+2008-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:
+	Work around issue with CanSeek being equal to false for a bit after the
+	engine loads the song we want to jump within.
+
 2008-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Patch from Bertrand Lorentz porting the Bookmarks plugin.
