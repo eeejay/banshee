@@ -114,13 +114,15 @@ namespace Banshee.Gui.Widgets
             ThreadAssist.ProxyToMain (delegate {
                 lock (this) {
                     if (job_tiles.ContainsKey (args.Job)) {
-                        UserJobTile tile = job_tiles[args.Job];
+                        UserJobTile tile = job_tiles[args.Job];                        
                         box.Remove (tile);
                         job_tiles.Remove (args.Job);
                     }
     
                     if (job_tiles.Count <= 0) {
-                        Hide ();
+                        // Don't actually hide the widget, since that screws
+                        // with the last widget's ease-out animation.
+                        TopPadding = 0;
                     }
                 }
             });

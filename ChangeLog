@@ -1,3 +1,10 @@
+2008-03-20  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	Stop hiding the job tile host, so that any ease-out animations that occur
+	with only a single widget in the host display correctly, instead of being
+	completely hidden.
+
 2008-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:
