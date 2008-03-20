@@ -1,4 +1,5 @@
 SUBDIRS = \
+	Banshee.Bookmarks \
 	Banshee.Lastfm \
 	Banshee.MultimediaKeys \
 	Banshee.NotificationArea \

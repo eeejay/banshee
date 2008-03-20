@@ -1,5 +1,19 @@
 2008-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patch from Bertrand Lorentz porting the Bookmarks plugin.
+
+	* build/build.environment.mk:
+	* configure.ac:
+	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks.addin.xml:
+	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks.mdp:
+	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:
+	* src/Extensions/Banshee.Bookmarks/Makefile.am:
+	* src/Extensions/Banshee.Bookmarks/Resources/BookmarksMenu.xml:
+	* src/Extensions/Extensions.mds:
+	* src/Extensions/Makefile.am: Port the Bookmarks plugin to trunk.
+
+2008-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
