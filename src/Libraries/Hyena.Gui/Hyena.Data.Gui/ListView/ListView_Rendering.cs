@@ -330,7 +330,7 @@ namespace Hyena.Data.Gui
                 GtkColorClass.Base, StateType.Normal), 0.0);
             stroke_color.A = 0.3;
             
-            cairo_context.Rectangle (x, header_rendering_alloc.Bottom, column.Width,
+            cairo_context.Rectangle (x, header_rendering_alloc.Bottom, column.Width - 2,
                 list_rendering_alloc.Bottom - header_rendering_alloc.Bottom);
             cairo_context.Color = fill_color;
             cairo_context.Fill ();
