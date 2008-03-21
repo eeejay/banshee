@@ -106,7 +106,7 @@ namespace Hyena.Data.Gui
         
         private void MoveResize (Gdk.Rectangle allocation)
         {
-            if (!IsRealized) {
+            if (Theme == null) {
                 return;
             }
             

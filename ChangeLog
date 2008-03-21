@@ -1,3 +1,12 @@
+2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	This fixes the header disapearing if you switch to and from the Now
+	Playing source.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Whitespace.
+
 2008-03-20  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TerseTrackListView.cs:

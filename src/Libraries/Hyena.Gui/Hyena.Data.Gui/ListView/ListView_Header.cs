@@ -276,7 +276,7 @@ namespace Hyena.Data.Gui
         public bool HeaderVisible {
             get { return header_visible; }
             set { 
-                header_visible = value; 
+                header_visible = value;
                 MoveResize (Allocation);
             }
         }
