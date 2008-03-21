@@ -35,6 +35,8 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
+#pragma warning disable 0612
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -693,3 +695,5 @@ namespace Bacon
         }
     }
 }
+
+#pragma warning restore 0612
