@@ -26,6 +26,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#pragma warning disable 0612
+
 using System;
 using Gtk;
 using Glade;
@@ -634,3 +636,5 @@ namespace Banshee.Gui.Dialogs
         }
     }
 }
+
+#pragma warning restore 0612

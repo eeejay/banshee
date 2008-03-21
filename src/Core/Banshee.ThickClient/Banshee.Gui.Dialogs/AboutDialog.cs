@@ -25,6 +25,8 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
+
+#pragma warning disable 0618
  
 using System;
 using System.Text;
@@ -76,6 +78,9 @@ namespace Banshee.Gui.Dialogs
                 Banshee.Web.Browser.Open (link);
             });
             
+            // TODO: We should really use ProgramName in the future rather
+            // than plain Name, since it's been depreciated. We can't do that
+            // yet though since it breaks stuff for other people. 
             Name = "Banshee";
             Logo = Gdk.Pixbuf.LoadFromResource ("banshee-logo.png");
             Version = String.Format ("{0} ({1})", 
@@ -99,3 +104,5 @@ namespace Banshee.Gui.Dialogs
         }
     }
 }
+
+#pragma warning restore 0618

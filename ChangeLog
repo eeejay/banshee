@@ -1,3 +1,10 @@
+2008-03-21  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:
+	Unbreak builds for people using newer versions of Gtk#.
+
 2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
