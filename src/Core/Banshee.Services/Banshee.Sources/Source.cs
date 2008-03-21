@@ -81,9 +81,8 @@ namespace Banshee.Sources
         
         protected void OnSetupComplete ()
         {
-            if (this is ITrackModelSource) {
-                ITrackModelSource tm_source = (ITrackModelSource)this;
-                
+            ITrackModelSource tm_source = this as ITrackModelSource;
+            if (tm_source != null) {
                 tm_source.TrackModel.Parent = this;
                 ServiceManager.DBusServiceManager.RegisterObject (tm_source.TrackModel);
                 

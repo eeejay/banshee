@@ -1,5 +1,10 @@
 2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Better
+	polymorphism.
+
+2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
 	Minor rendering fix when reordering columns.
 
