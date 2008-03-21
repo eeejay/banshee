@@ -161,8 +161,9 @@ namespace Hyena.Data.Gui
             double even_distribution = 0.0;
             
             int min_width = 25;
-            if (resizing_column.Column.HeaderCell is IHeaderCell) {
-                min_width = ((IHeaderCell)resizing_column.Column.HeaderCell).MinWidth;
+            IHeaderCell header_cell = resizing_column.Column.HeaderCell as IHeaderCell;
+            if (header_cell != null) {
+                min_width = header_cell.MinWidth;
             }
             
             if (resizing_column.Width + resize_delta < min_width) {

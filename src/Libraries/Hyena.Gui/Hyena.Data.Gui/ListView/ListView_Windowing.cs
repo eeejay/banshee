@@ -43,7 +43,7 @@ namespace Hyena.Data.Gui
         
         private Gdk.Window event_window;
         
-        protected Gdk.Rectangle ListAllocation {
+        protected Rectangle ListAllocation {
             get { return list_rendering_alloc; }
         }
        
@@ -104,7 +104,7 @@ namespace Hyena.Data.Gui
             event_window.Hide ();
         }
         
-        private void MoveResize (Gdk.Rectangle allocation)
+        private void MoveResize (Rectangle allocation)
         {
             if (Theme == null) {
                 return;
@@ -115,9 +115,6 @@ namespace Hyena.Data.Gui
             
             list_rendering_alloc.X = header_rendering_alloc.X + Theme.TotalBorderWidth;
             list_rendering_alloc.Y = header_rendering_alloc.Bottom + Theme.TotalBorderWidth;
-            if (header_rendering_alloc.Height > 0) {
-                //list_rendering_alloc.Y++;
-            }
             list_rendering_alloc.Width = allocation.Width - Theme.TotalBorderWidth * 2;
             list_rendering_alloc.Height = allocation.Height - (list_rendering_alloc.Y - allocation.Y) -
                 Theme.TotalBorderWidth;
@@ -142,7 +139,7 @@ namespace Hyena.Data.Gui
             requisition.Height = HeaderHeight;
         }
         
-        protected override void OnSizeAllocated (Gdk.Rectangle allocation)
+        protected override void OnSizeAllocated (Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
             
@@ -160,8 +157,9 @@ namespace Hyena.Data.Gui
                 UpdateAdjustments (null, null);
             }
             
-            if (Model is ICareAboutView) {
-                ((ICareAboutView)Model).RowsInView = RowsInView;
+            ICareAboutView model = Model as ICareAboutView;
+            if (model != null) {
+                model.RowsInView = RowsInView;
             }
             
             RegenerateColumnCache ();

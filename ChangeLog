@@ -1,6 +1,14 @@
 2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Better polymorphism, removed unnessisary qualifications.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Better polymorphism.
+
+2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
 	This fixes the header disapearing if you switch to and from the Now
 	Playing source.
 
