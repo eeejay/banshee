@@ -13,13 +13,14 @@ SOURCES =  \
 	Banshee.Collection.Gui/ArtistListView.cs \
 	Banshee.Collection.Gui/ArtworkManager.cs \
 	Banshee.Collection.Gui/ArtworkRenderer.cs \
-	Banshee.Collection.Gui/BetaReleaseViewOverlay.cs \
 	Banshee.Collection.Gui/ColumnCellAlbum.cs \
 	Banshee.Collection.Gui/ColumnCellDateTime.cs \
 	Banshee.Collection.Gui/ColumnCellDuration.cs \
 	Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs \
+	Banshee.Collection.Gui/ColumnCellTrack.cs \
 	Banshee.Collection.Gui/ColumnCellTrackNumber.cs \
 	Banshee.Collection.Gui/PersistentColumnController.cs \
+	Banshee.Collection.Gui/TerseTrackListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \
 	Banshee.Equalizer.Gui/EqualizerBandScale.cs \
 	Banshee.Equalizer.Gui/EqualizerLevelsBox.cs \

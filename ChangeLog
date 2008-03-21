@@ -1,3 +1,16 @@
+2008-03-20  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TerseTrackListView.cs:
+	Started a new track view that can be very narrow and won't have columns;
+	think, 'is this what a detachable play queue looks like?'
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrack.cs:
+	Started a cell renderer for showing a track in a list with a single column
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Get rid of the preview release overlay thingy. It sucked.
+
 2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Better

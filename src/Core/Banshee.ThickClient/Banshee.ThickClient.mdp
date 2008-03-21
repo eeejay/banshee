@@ -100,7 +100,8 @@
     <File name="Banshee.Gui.Widgets/RepeatActionButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/PlaybackRepeatActions.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/BansheeDbFormatMigratorMonitor.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Gui/BetaReleaseViewOverlay.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/TerseTrackListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/ColumnCellTrack.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

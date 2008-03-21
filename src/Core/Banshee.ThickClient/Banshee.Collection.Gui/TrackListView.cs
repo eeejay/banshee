@@ -46,7 +46,6 @@ namespace Banshee.Collection.Gui
     public class TrackListView : ListView<TrackInfo>
     {
         private PersistentColumnController column_controller;
-        private BetaReleaseViewOverlay overlay;
 
         public TrackListView () : base ()
         {
@@ -98,21 +97,9 @@ namespace Banshee.Collection.Gui
                     QueueDraw ();
                 };
             }
-
-            if (!Banshee.Base.ApplicationContext.Debugging) {
-                overlay = new BetaReleaseViewOverlay (this);
-                overlay.Finished += OnOverlayFinished;
-            }
             
             ForceDragSourceSet = true;
             Reorderable = true;
-        }
-        
-        private void OnOverlayFinished (object o, EventArgs args)
-        {
-            overlay.Finished -= OnOverlayFinished;
-            overlay = null;
-            QueueDraw ();
         }
 
         protected override bool OnPopupMenu ()
@@ -124,13 +111,6 @@ namespace Banshee.Collection.Gui
         private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
         {
             QueueDraw ();
-        }
-
-        protected override void ChildClassPostRender (Gdk.EventExpose evnt, Cairo.Context cr, Gdk.Rectangle clip)
-        {
-            if (overlay != null) {
-                overlay.Render (Theme, ListAllocation, cr, clip);
-            }
         }
         
 #region Drag and Drop
