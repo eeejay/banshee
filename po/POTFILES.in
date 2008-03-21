@@ -63,8 +63,6 @@ src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs
 src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs
-src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs
-src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs

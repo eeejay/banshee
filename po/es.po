@@ -1832,10 +1832,6 @@ msgstr "_Limitar a"
 msgid "selected by"
 msgstr "seleccionado por"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:62
-msgid "songs"
-msgstr "canciones"
-
 #: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:317
 msgid "Seconds"
 msgstr "Segundos"
@@ -3368,9 +3364,6 @@ msgstr "Conectado a Last.fm"
 
 #~ msgid "Importing from Amarok database failed"
 #~ msgstr "Falló la importación de la base de datos de Amarok"
-
-#~ msgid "Scanning for songs"
-#~ msgstr "Buscando canciones"
 
 #~ msgid "Migrate From Other Media Players"
 #~ msgstr "Migrar desde otros reproductores"

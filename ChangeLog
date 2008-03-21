@@ -1,3 +1,9 @@
+2008-03-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:
+	Remove.
+
 2008-03-21  Alexander Hixon  <hixon.alexander@mediati.org>
 	* src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs: Patch missing
 	from previous revision.
