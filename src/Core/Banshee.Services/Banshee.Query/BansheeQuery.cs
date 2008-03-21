@@ -258,6 +258,7 @@ namespace Banshee.Query
                 case "LastPlayedStamp":
                 case "DateAddedStamp":
                 case "Uri":
+                case "Composer":
                     sort_query = String.Format (
                         "CoreTracks.{0} {1}, {2}",
                         key, ascDesc, default_sort

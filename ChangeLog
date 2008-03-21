@@ -1,3 +1,12 @@
+2008-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Patch from Michael Miceli adding a composer column to the TrackListView,
+	fixes BGO #523666.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Add a Composer
+	sort case.
+
 2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:

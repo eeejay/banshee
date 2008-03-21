@@ -69,7 +69,8 @@ namespace Banshee.Collection.Gui
                 //new SortableColumn ("Rating", new RatingColumnCell (null, true), 0.15, "Rating"),
                 new SortableColumn (Catalog.GetString ("Last Played"), new ColumnCellDateTime ("LastPlayed", true), 0.15, "LastPlayedStamp"),
                 new SortableColumn (Catalog.GetString ("Date Added"), new ColumnCellDateTime ("DateAdded", true), 0.15, "DateAddedStamp"),
-                new SortableColumn (Catalog.GetString ("Location"), new ColumnCellText ("Uri", true), 0.15, "Uri")
+                new SortableColumn (Catalog.GetString ("Location"), new ColumnCellText ("Uri", true), 0.15, "Uri"),
+                new SortableColumn (Catalog.GetString ("Composer"), new ColumnCellText ("Composer", true), 0.25, "Composer")
             );
             
             column_controller.Load ();
