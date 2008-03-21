@@ -429,6 +429,12 @@ namespace Hyena.Data.Gui
             cairo_context.Stroke ();
         }
         
+        public new void QueueDraw ()
+        {
+            InvalidateHeader ();
+            InvalidateList ();
+        }
+        
         private void InvalidateList ()
         {
             InvalidateList (true);
@@ -439,7 +445,7 @@ namespace Hyena.Data.Gui
             if (IsRealized) {
                 this.render_everything |= render_everything;
                 GdkWindow.InvalidateRect (list_rendering_alloc, true);
-                QueueDraw ();
+                base.QueueDraw ();
             }
         }
         
@@ -447,7 +453,7 @@ namespace Hyena.Data.Gui
         {
             if (IsRealized) {
                 GdkWindow.InvalidateRect (header_rendering_alloc, true);
-                QueueDraw ();
+                base.QueueDraw ();
             }
         }
         

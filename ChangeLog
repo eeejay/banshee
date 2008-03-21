@@ -1,5 +1,11 @@
 2008-03-21  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Override QueueDraw to use our own methods. (Fixes bug where
+	hiding/showing columns did not update list)
+
+2008-03-21  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
 	Added some rendering fixes, hook up the Pixmap canvases.
 
