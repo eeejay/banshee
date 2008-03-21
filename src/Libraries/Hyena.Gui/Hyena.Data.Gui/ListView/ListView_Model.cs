@@ -99,6 +99,7 @@ namespace Hyena.Data.Gui
             }
             
             if (Parent is ScrolledWindow) {
+                render_everything = true;
                 Parent.QueueDraw ();
             }
         }

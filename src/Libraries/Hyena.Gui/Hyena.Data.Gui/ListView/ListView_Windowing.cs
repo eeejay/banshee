@@ -46,7 +46,7 @@ namespace Hyena.Data.Gui
         protected Rectangle ListAllocation {
             get { return list_rendering_alloc; }
         }
-       
+        
         protected override void OnRealized ()
         {
             WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
@@ -79,6 +79,7 @@ namespace Hyena.Data.Gui
             event_window.UserData = Handle;
             
             OnDragSourceSet ();
+            MoveResize (Allocation);
         }
         
         protected override void OnUnrealized ()
@@ -88,6 +89,8 @@ namespace Hyena.Data.Gui
             event_window.UserData = IntPtr.Zero;
             event_window.Destroy ();
             event_window = null;
+            
+            DisposeCanvases ();
             
             base.OnUnrealized ();
         }
@@ -127,12 +130,29 @@ namespace Hyena.Data.Gui
             
             list_interaction_alloc = list_rendering_alloc;
             list_interaction_alloc.Offset (-allocation.X, -allocation.Y);
+            
+            canvas_alloc.Height = Math.Max (1, RowsInView * RowHeight);
+            canvas_alloc.Width = Math.Max (1, list_rendering_alloc.Width);
+            
+            DisposeCanvases ();
+        }
+        
+        private void DisposeCanvases ()
+        {
+            if (canvas1 != null) {
+                canvas1.Dispose ();
+                canvas1 = null;
+            }
+            if (canvas2 != null) {
+                canvas2.Dispose ();
+                canvas2 = null;
+            }
         }
         
         protected override void OnSizeRequested (ref Requisition requisition)
         {
             // TODO give the minimum height of the header
-            if (!IsRealized) {
+            if (Theme == null) {
                 return;
             }
             requisition.Width = Theme.InnerBorderWidth * 2;
@@ -143,11 +163,9 @@ namespace Hyena.Data.Gui
         {
             base.OnSizeAllocated (allocation);
             
-            if (!IsRealized) {
-                return;
+            if (IsRealized) {
+                event_window.MoveResize (allocation);
             }
-            
-            event_window.MoveResize (allocation);
             
             MoveResize (allocation);
            
@@ -163,6 +181,7 @@ namespace Hyena.Data.Gui
             }
             
             RegenerateColumnCache ();
+            InvalidateList ();
         }
         
         private int RowsInView {

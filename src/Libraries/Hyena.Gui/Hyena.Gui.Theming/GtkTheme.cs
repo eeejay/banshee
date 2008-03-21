@@ -110,7 +110,46 @@ namespace Hyena.Gui.Theming
             cr.Translate (-0.5, -0.5);
         }
 
+        public override void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
+        {
+            color.A = Context.FillAlpha;
+            cr.Color = color;
+            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, CairoCorners.All);
+            cr.Fill ();
+        }
+        
+        public override void DrawFrameBorder (Cairo.Context cr, Gdk.Rectangle alloc)
+        {
+            cr.LineWidth = BorderWidth;
+            cr.Color = border_color;
+            double offset = (double)BorderWidth / 2.0;
+            CairoExtensions.RoundedRectangle (cr, alloc.X + offset, alloc.Y + offset,
+                alloc.Width - BorderWidth, alloc.Height - BorderWidth, Context.Radius, CairoCorners.All);
+            cr.Stroke();
+        }
+        
+        public override void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc)
+        {
+            Cairo.Color gtk_background_color = Colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal);
+            Cairo.Color light_color = CairoExtensions.ColorShade (gtk_background_color, 1.1);
+            Cairo.Color dark_color = CairoExtensions.ColorShade (gtk_background_color, 0.95);
+            
+            CairoCorners corners = CairoCorners.TopLeft | CairoCorners.TopRight;
 
+            LinearGradient grad = new LinearGradient (alloc.X, alloc.Y, alloc.X, alloc.Bottom);
+            grad.AddColorStop (0, light_color);
+            grad.AddColorStop (0.75, dark_color);
+            grad.AddColorStop (0, light_color);
+        
+            cr.Pattern = grad;
+            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, corners);
+            cr.Fill ();
+            
+            cr.Color = border_color;
+            cr.Rectangle (alloc.X, alloc.Bottom, alloc.Width, BorderWidth);
+            cr.Fill ();
+        }
+        
         public override void DrawHeaderSeparator (Cairo.Context cr, Gdk.Rectangle alloc, int x)
         {
             Cairo.Color gtk_background_color = Colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal);
@@ -136,44 +175,12 @@ namespace Hyena.Gui.Theming
             cr.Antialias = Cairo.Antialias.Default;
         }
         
-        public override void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc)
-        {
-            Cairo.Color gtk_background_color = Colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal);
-            Cairo.Color light_color = CairoExtensions.ColorShade (gtk_background_color, 1.1);
-            Cairo.Color dark_color = CairoExtensions.ColorShade (gtk_background_color, 0.95);
-            
-            CairoCorners corners = CairoCorners.TopLeft | CairoCorners.TopRight;
-
-            LinearGradient grad = new LinearGradient (alloc.X, alloc.Y, alloc.X, alloc.Bottom);
-            grad.AddColorStop (0, light_color);
-            grad.AddColorStop (0.75, dark_color);
-            grad.AddColorStop (0, light_color);
-        
-            cr.Pattern = grad;
-            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, corners);
-            cr.Fill ();
-            
-            cr.Color = border_color;
-            cr.Rectangle (alloc.X, alloc.Bottom, alloc.Width, BorderWidth);
-            cr.Fill ();
-        }
-        
-        public override void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
+        public override void DrawListBackground (Context cr, Gdk.Rectangle alloc, Color color)
         {
             color.A = Context.FillAlpha;
             cr.Color = color;
-            CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, CairoCorners.All);
+            cr.Rectangle (alloc.X, alloc.Y, alloc.Width, alloc.Height);
             cr.Fill ();
-        }
-        
-        public override void DrawFrameBorder (Cairo.Context cr, Gdk.Rectangle alloc)
-        {
-            cr.LineWidth = BorderWidth;
-            cr.Color = border_color;
-            double offset = (double)BorderWidth / 2.0;
-            CairoExtensions.RoundedRectangle (cr, alloc.X + offset, alloc.Y + offset,
-                alloc.Width - BorderWidth, alloc.Height - BorderWidth, Context.Radius, CairoCorners.All);
-            cr.Stroke();
         }
 
         public override void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)

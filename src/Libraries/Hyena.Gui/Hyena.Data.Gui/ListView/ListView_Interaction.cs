@@ -499,7 +499,7 @@ namespace Hyena.Data.Gui
         
         private void OnAdjustmentChanged (object o, EventArgs args)
         {
-            InvalidateList ();
+            InvalidateList (false);
         }
         
         public void ScrollTo (double val)

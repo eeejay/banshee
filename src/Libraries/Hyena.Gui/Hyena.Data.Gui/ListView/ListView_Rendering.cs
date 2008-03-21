@@ -31,7 +31,6 @@ using System.Collections.Generic;
 
 using Gtk;
 using Gdk;
-using Cairo;
 
 using Hyena.Gui;
 using Hyena.Gui.Theming;
@@ -41,51 +40,73 @@ namespace Hyena.Data.Gui
 {
     public partial class ListView<T> : Container
     {
-        private Theme theme;
-        protected Theme Theme {
-            get { return theme; }
-        }
-
+        // The list is rendered to an off-screen Drawable; the "canvas". The canvas is large enough to hold
+        // the maximum number of rows that can be seen in the list. When new rows comes into view b/c of
+        // scrolling, the contents of the canvas are shifted up or down (depending on whether the user is
+        // scrolling up or down) to accommodate the new rows. The new rows are then painted in situ on the
+        // canvas. The canvas is then painted onto the GdkWindow, offset properly. This means that a row
+        // is only rendered once when it comes into view and that rendering persists on the canvas for as
+        // long as that row remains in view.
+        
+        private Pixmap canvas1;
+        private Pixmap canvas2;
+        private Rectangle canvas_alloc;
+        private int canvas_first_row;
+        private int canvas_last_row;
+        private bool render_everything;
+        
         private Cairo.Context cairo_context;
         
         private Pango.Layout header_pango_layout;
         private Pango.Layout list_pango_layout;
-
-        protected virtual void ChildClassPostRender (Gdk.EventExpose evnt, Cairo.Context cr, Gdk.Rectangle clip)
-        {
+        
+        private Theme theme;
+        protected Theme Theme {
+            get { return theme; }
         }
          
-        protected override bool OnExposeEvent (Gdk.EventExpose evnt)
-        {         
-            cairo_context = Gdk.CairoHelper.Create (evnt.Window);
-            
-            Gdk.Rectangle damage = new Gdk.Rectangle ();
-            foreach (Gdk.Rectangle rect in evnt.Region.GetRectangles ()) {
+        protected override bool OnExposeEvent (EventExpose evnt)
+        {
+            Rectangle damage = new Rectangle ();
+            foreach (Rectangle rect in evnt.Region.GetRectangles ()) {
                 damage = damage.Union (rect);
             }
-            PaintRegion (evnt, damage);
             
+            // First we render the list to the offscreen canvas.
+            if (canvas1 == null) {
+                canvas1 = new Pixmap (GdkWindow, canvas_alloc.Width, canvas_alloc.Height);
+                render_everything = true;
+            }
+            PaintList (damage);
+
+            // Then we create a cairo context for rendering to the GdkWindow.
+            cairo_context = CairoHelper.Create (evnt.Window);
+            
+            // We render the background, the header (if we have one), and the
+            // border to the GdkWindow.
+            Theme.DrawFrameBackground (cairo_context, Allocation, true);
+            if (header_visible && column_controller != null) {
+                PaintHeader (damage);
+            }
+            Theme.DrawFrameBorder (cairo_context, Allocation);
+            
+            // Now we blit the offscreen canvas onto the GdkWindow.
+            GdkWindow.DrawDrawable (Style.WhiteGC, canvas1, 0, (int)vadjustment.Value % RowHeight,
+                list_rendering_alloc.X, list_rendering_alloc.Y, list_rendering_alloc.Width, list_rendering_alloc.Height);
+            
+            // Finally, render the dragging box and dispose of the cairo context.
+            PaintDraggingColumn (damage);
             ((IDisposable)cairo_context.Target).Dispose ();
             ((IDisposable)cairo_context).Dispose ();
             
+            render_everything = false;
+            
             return true;
         }
-                
-        private void PaintRegion (Gdk.EventExpose evnt, Gdk.Rectangle clip)
-        {
-            Theme.DrawFrameBackground (cairo_context, Allocation, true);
-            if (header_visible && column_controller != null) {
-                PaintHeader (clip);
-            }
-            PaintList (evnt, clip);
-            Theme.DrawFrameBorder (cairo_context, Allocation);
-            cairo_context.Translate (list_rendering_alloc.X, list_rendering_alloc.Y);
-            ChildClassPostRender (evnt, cairo_context, clip);
-        }
         
-        private void PaintHeader (Gdk.Rectangle clip)
+        private void PaintHeader (Rectangle clip)
         {
-            Gdk.Rectangle rect = header_rendering_alloc;
+            Rectangle rect = header_rendering_alloc;
             rect.Height += Theme.BorderWidth;
             clip.Intersect (rect);
             cairo_context.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
@@ -94,7 +115,7 @@ namespace Hyena.Data.Gui
             header_pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
             Theme.DrawHeaderBackground (cairo_context, header_rendering_alloc);
             
-            Gdk.Rectangle cell_area = new Gdk.Rectangle ();
+            Rectangle cell_area = new Rectangle ();
             cell_area.Y = header_rendering_alloc.Y;
             cell_area.Height = header_rendering_alloc.Height;
 
@@ -117,7 +138,7 @@ namespace Hyena.Data.Gui
             cairo_context.ResetClip ();
         }
         
-        private void PaintHeaderCell (Gdk.Rectangle area, Gdk.Rectangle clip, int ci, bool dragging)
+        private void PaintHeaderCell (Rectangle area, Rectangle clip, int ci, bool dragging)
         {
             ColumnCell cell = column_cache[ci].Column.HeaderCell;
             
@@ -157,29 +178,95 @@ namespace Hyena.Data.Gui
             }
         }
 
-        private void PaintList (Gdk.EventExpose evnt, Gdk.Rectangle clip)
+        private void PaintList (Rectangle clip)
         {
             if (model == null) {
                 return;
             }
+
+            int rows_in_view = RowsInView;
+            int top = (int)vadjustment.Value / RowHeight;
+            int bottom = top + rows_in_view;
             
-            clip.Intersect (list_rendering_alloc);
-            cairo_context.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
-            cairo_context.Clip ();
+            if (!render_everything && canvas_first_row == top && canvas_last_row == bottom) {
+                // We haven't been told to render everything, and all of the same rows are
+                // still in view, so we don't render anything.
+                return;
+            }
             
+            // Swap the canvases if nessisary
+            if (canvas2 == null) {
+                canvas2 = new Pixmap (GdkWindow, canvas_alloc.Width, canvas_alloc.Height);
+            } else {
+                Pixmap tmp = canvas1;
+                canvas1 = canvas2;
+                canvas2 = tmp;
+            }
+            
+            // Build a cairo context for the primary canvas.
+            cairo_context = CairoHelper.Create (canvas1);
             list_pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
-
-            int vadjustment_value = (int)vadjustment.Value;
-            int first_row = vadjustment_value / RowHeight;
-            int last_row = Math.Min (model.Count, first_row + RowsInView);     
-
-            Gdk.Rectangle selected_focus_alloc = Gdk.Rectangle.Zero;
-            Gdk.Rectangle single_list_alloc = new Gdk.Rectangle ();
             
-            single_list_alloc.Width = list_rendering_alloc.Width;
+            // Render the background to the primary canvas.
+            Theme.DrawListBackground (cairo_context, canvas_alloc, true);
+            
+            int first_row = top;
+            int last_row = bottom;
+            int first_row_y = 0;
+            
+            if (render_everything) {
+                // We need to render everything
+            } else if (canvas_last_row < last_row && canvas_last_row > first_row) {
+                // We're scrolling down, so shift the contents of the list up and
+                // render the new stuff in situ at the bottom.
+                int delta = (last_row - canvas_last_row) * RowHeight;
+                canvas1.DrawDrawable (Style.WhiteGC, canvas2, 0, delta, 0, 0,
+                    list_rendering_alloc.Width, rows_in_view - delta);
+                
+                // If the bottom of the stuff we're shifting up is part of a selection
+                // that continues down into the new stuff, be sure that we render the
+                // whole selection block so the gradient looks nice.
+                while (Selection.Contains (canvas_last_row) && canvas_last_row > first_row) {
+                    canvas_last_row--;
+                }
+                
+                first_row_y = (canvas_last_row - first_row) * RowHeight;
+                first_row = canvas_last_row;
+            } else if (canvas_first_row > first_row && canvas_first_row < last_row) {
+                // We're scrolling up, so shift the contents of the list down and
+                // render the new stuff in situ at the top.
+                int delta = (canvas_first_row - first_row) * RowHeight;
+                canvas1.DrawDrawable (Style.WhiteGC, canvas2, 0, 0, 0, delta,
+                    list_rendering_alloc.Width, rows_in_view - delta);
+                
+                // If the top of the stuff we're shifting down is part of a selection
+                // that continues up into the new stuff, be sure that we render the
+                // whole selection block so the gradient looks nice.
+                while (Selection.Contains (canvas_first_row) && canvas_first_row < last_row) {
+                    canvas_first_row++;
+                }
+                
+                last_row = canvas_first_row;
+            }
+            
+            PaintRows (first_row, Math.Min (model.Count, last_row), first_row_y, clip);
+            
+            // Destroy the cairo context.
+            ((IDisposable)cairo_context.Target).Dispose ();
+            ((IDisposable)cairo_context).Dispose ();
+            
+            canvas_first_row = top;
+            canvas_last_row = bottom;
+        }
+        
+        private void PaintRows (int first_row, int last_row, int first_row_y, Rectangle clip)
+        {
+            Rectangle selected_focus_alloc = Rectangle.Zero;
+            Rectangle single_list_alloc = new Rectangle ();
+            
+            single_list_alloc.Y = first_row_y;
+            single_list_alloc.Width = canvas_alloc.Width;
             single_list_alloc.Height = RowHeight;
-            single_list_alloc.X = list_rendering_alloc.X;
-            single_list_alloc.Y = list_rendering_alloc.Y - vadjustment_value + (first_row * single_list_alloc.Height);
             
             int selection_height = 0;
             int selection_y = 0;
@@ -206,7 +293,7 @@ namespace Hyena.Data.Gui
                     if (ri == drag_reorder_row_index && Reorderable) {
                         cairo_context.Save ();
                         cairo_context.LineWidth = 1.0;
-                        cairo_context.Antialias = Antialias.None;
+                        cairo_context.Antialias = Cairo.Antialias.None;
                         cairo_context.MoveTo (single_list_alloc.Left, single_list_alloc.Top);
                         cairo_context.LineTo (single_list_alloc.Right, single_list_alloc.Top);
                         cairo_context.Color = Theme.Colors.GetWidgetColor (GtkColorClass.Text, StateType.Normal);
@@ -232,7 +319,7 @@ namespace Hyena.Data.Gui
                     
                     if (selection_height > 0) {
                         Theme.DrawRowSelection (
-                            cairo_context, list_rendering_alloc.X, selection_y, list_rendering_alloc.Width, selection_height);
+                            cairo_context, 0, selection_y, canvas_alloc.Width, selection_height);
                         selection_height = 0;
                     }
                     
@@ -243,26 +330,23 @@ namespace Hyena.Data.Gui
             }
             
             if (selection_height > 0) {
-                Theme.DrawRowSelection (cairo_context, list_rendering_alloc.X, selection_y, 
-                    list_rendering_alloc.Width, selection_height);
+                Theme.DrawRowSelection (cairo_context, 0, selection_y, 
+                    canvas_alloc.Width, selection_height);
             }
             
-            if (Selection.Count > 1 && !selected_focus_alloc.Equals (Gdk.Rectangle.Zero) && HasFocus) {
+            if (Selection.Count > 1 && !selected_focus_alloc.Equals (Rectangle.Zero) && HasFocus) {
                 Theme.DrawRowSelection (cairo_context, selected_focus_alloc.X, selected_focus_alloc.Y, 
                     selected_focus_alloc.Width, selected_focus_alloc.Height, false, true, 
                     Theme.Colors.GetWidgetColor (GtkColorClass.Dark, StateType.Selected));
             }
             
             foreach (int ri in selected_rows) {
-                single_list_alloc.Y = list_rendering_alloc.Y + ri * single_list_alloc.Height - vadjustment_value;
+                single_list_alloc.Y = (ri - first_row) * single_list_alloc.Height + first_row_y;
                 PaintRow (ri, clip, single_list_alloc, StateType.Selected);
             }
-            
-            cairo_context.ResetClip ();
-            PaintDraggingColumn (evnt, clip);
         }
 
-        private void PaintRow (int row_index, Gdk.Rectangle clip, Gdk.Rectangle area, StateType state)
+        private void PaintRow (int row_index, Rectangle clip, Rectangle area, StateType state)
         {
             if (column_cache == null) {
                 return;
@@ -271,7 +355,7 @@ namespace Hyena.Data.Gui
             object item = model[row_index];
             bool sensitive = IsRowSensitive (item);
             
-            Gdk.Rectangle cell_area = new Gdk.Rectangle ();
+            Rectangle cell_area = new Rectangle ();
             cell_area.Height = RowHeight;
             cell_area.Y = area.Y;
             
@@ -287,13 +371,13 @@ namespace Hyena.Data.Gui
             
             if (pressed_column_is_dragging && pressed_column_index >= 0) {
                 cell_area.Width = column_cache[pressed_column_index].Width;
-                cell_area.X = pressed_column_x_drag + Allocation.X;
+                cell_area.X = pressed_column_x_drag - list_interaction_alloc.X;
                 PaintCell (item, pressed_column_index, row_index, cell_area, clip, state, true);
             }
         }
         
-        private void PaintCell (object item, int column_index, int row_index, Gdk.Rectangle area, 
-            Gdk.Rectangle clip, StateType state, bool dragging)
+        private void PaintCell (object item, int column_index, int row_index, Rectangle area, 
+            Rectangle clip, StateType state, bool dragging)
         {
             ColumnCell cell = column_cache[column_index].Column.GetCell (0);
             cell.BindListItem (item);
@@ -308,12 +392,12 @@ namespace Hyena.Data.Gui
             
             cairo_context.Save ();
             cairo_context.Translate (area.X, area.Y);
-            cell.Render (new CellContext (cairo_context, list_pango_layout, this, GdkWindow, theme, area, clip), 
+            cell.Render (new CellContext (cairo_context, list_pango_layout, this, canvas1, theme, area, clip), 
                 dragging ? StateType.Normal : state, area.Width, area.Height);
             cairo_context.Restore ();
         }
         
-        private void PaintDraggingColumn (Gdk.EventExpose evnt, Gdk.Rectangle clip)
+        private void PaintDraggingColumn (Rectangle clip)
         {
             if (!pressed_column_is_dragging || pressed_column_index < 0) {
                 return;
@@ -347,7 +431,13 @@ namespace Hyena.Data.Gui
         
         private void InvalidateList ()
         {
+            InvalidateList (true);
+        }
+        
+        private void InvalidateList (bool render_everything)
+        {
             if (IsRealized) {
+                this.render_everything |= render_everything;
                 GdkWindow.InvalidateRect (list_rendering_alloc, true);
                 QueueDraw ();
             }

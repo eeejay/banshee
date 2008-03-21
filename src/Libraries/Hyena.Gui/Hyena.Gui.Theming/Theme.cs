@@ -79,10 +79,6 @@ namespace Hyena.Gui.Theming
         public abstract void DrawPie (double fraction);
         
         public abstract void DrawArrow (Cairo.Context cr, Gdk.Rectangle alloc, Hyena.Data.SortType type);
-
-        public abstract void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x);
-        
-        public abstract void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc);
         
         public void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
         {
@@ -106,6 +102,19 @@ namespace Hyena.Gui.Theming
         public abstract void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);
         
         public abstract void DrawFrameBorder (Cairo.Context cr, Gdk.Rectangle alloc);
+        
+        public abstract void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc);
+        
+        public abstract void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x);
+        
+        public void DrawListBackground (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
+        {
+            DrawListBackground (cr, alloc,  baseColor 
+                ? colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal)
+                : colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal));
+        }
+        
+        public abstract void DrawListBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);
         
         public void DrawColumnHighlight (Cairo.Context cr, double cellWidth, double cellHeight)
         {

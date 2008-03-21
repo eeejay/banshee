@@ -1,3 +1,25 @@
+2008-03-21  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Added some rendering fixes, hook up the Pixmap canvases.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Rendering of the list is now done to an off-screen Pixmap. This is
+	done so that we can recycle pixels when scrolling the list: the
+	contents of the pixmap are shifted up or down by the amount of
+	scrolling, and only the newly visible rows are rendered in place.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Don't paint everything when we're scrolling vertically.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	Paint everything when the model changes.
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/Theme.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Add
+	DrawListBackground, re-ordered some methods to match their
+	execution order for readability.
+
 2008-03-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:
