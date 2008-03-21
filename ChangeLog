@@ -1,5 +1,13 @@
 2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Fixed rendering in with non-composited window managers.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Got rid of private method - instead use Gdk.Rectangle.Contains()
+
+2008-03-20  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
 	Got rid of padding stuff. That will be taken care of in
 	AnimatedVBox.

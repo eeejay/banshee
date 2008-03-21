@@ -193,29 +193,14 @@ namespace Hyena.Data.Gui
             return base.OnKeyPressEvent (press);
         }
         
-        private static bool IsEventInAlloc (Gdk.EventButton evnt, Gdk.Rectangle alloc)
-        {
-            if (evnt.X < alloc.Left) {
-                return false;
-            } else if (evnt.X > alloc.Right) {
-                return false;
-            } else if (evnt.Y < alloc.Top) {
-                return false;
-            } else if (evnt.Y > alloc.Bottom) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        
 #region OnButtonPress
 
         protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
         {
             HasFocus = true;
-            if (IsEventInAlloc (evnt, header_interaction_alloc)) {
+            if (header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y)) {
                 return OnHeaderButtonPressEvent (evnt);
-            } else if (IsEventInAlloc (evnt, list_interaction_alloc) && model != null) {
+            } else if (list_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) && model != null) {
                 return OnListButtonPressEvent (evnt);
             }
             return true;
@@ -341,9 +326,9 @@ namespace Hyena.Data.Gui
                 return true;
             }
             
-            if (IsEventInAlloc (evnt, header_interaction_alloc)) {
+            if (header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y)) {
                 return OnHeaderButtonRelease (evnt);
-            } else if (IsEventInAlloc (evnt, list_interaction_alloc) && model != null &&
+            } else if (list_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) && model != null &&
                 (evnt.State & (Gdk.ModifierType.ShiftMask | Gdk.ModifierType.ControlMask)) == 0) {
                 return OnListButtonRelease (evnt);
             }

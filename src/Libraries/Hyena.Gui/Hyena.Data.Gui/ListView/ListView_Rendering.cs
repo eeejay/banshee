@@ -58,10 +58,12 @@ namespace Hyena.Data.Gui
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {         
             cairo_context = Gdk.CairoHelper.Create (evnt.Window);
-               
+            
+            Gdk.Rectangle damage = new Gdk.Rectangle ();
             foreach (Gdk.Rectangle rect in evnt.Region.GetRectangles ()) {
-                PaintRegion (evnt, rect);
+                damage = damage.Union (rect);
             }
+            PaintRegion (evnt, damage);
             
             ((IDisposable)cairo_context.Target).Dispose ();
             ((IDisposable)cairo_context).Dispose ();
@@ -83,8 +85,10 @@ namespace Hyena.Data.Gui
         
         private void PaintHeader (Gdk.Rectangle clip)
         {
-            clip.Intersect (header_rendering_alloc);
-            cairo_context.Rectangle (clip.X, clip.Y, clip.Width, clip.Height + Theme.BorderWidth);
+            Gdk.Rectangle rect = header_rendering_alloc;
+            rect.Height += Theme.BorderWidth;
+            clip.Intersect (rect);
+            cairo_context.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cairo_context.Clip ();
             
             header_pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
