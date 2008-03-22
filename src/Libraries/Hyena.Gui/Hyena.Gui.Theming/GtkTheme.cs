@@ -123,7 +123,7 @@ namespace Hyena.Gui.Theming
             
             cr.Color = Colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
             cr.FillPreserve ();
-            cr.Color = border_color;
+            cr.Color = Colors.GetWidgetColor (GtkColorClass.Text, StateType.Normal);
             cr.Stroke ();
             cr.Translate (-0.5, -0.5);
         }
