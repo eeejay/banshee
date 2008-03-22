@@ -440,6 +440,7 @@ gst_playback_construct(GstPlayback *engine)
     GstElement *audiosink;
     GstElement *audiosinkqueue;
     GstElement *audioconvert;
+    GstElement *vis_element;
     GstPad *teepad;
     
     g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
@@ -511,6 +512,11 @@ gst_playback_construct(GstPlayback *engine)
                 g_object_set (G_OBJECT (videosink), "sync", TRUE, NULL);
             }
         }
+    }
+    
+    vis_element = gst_element_factory_make ("goom", "vis_element");
+    if (vis_element != NULL) {
+        g_object_set (G_OBJECT (engine->playbin), "vis-plugin", vis_element, NULL);
     }
     
     g_object_set (G_OBJECT (engine->playbin), "video-sink", videosink, NULL);
