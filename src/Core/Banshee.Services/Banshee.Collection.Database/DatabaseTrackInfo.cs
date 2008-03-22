@@ -69,6 +69,18 @@ namespace Banshee.Collection.Database
         {
         }
 
+        public override void IncrementPlayCount ()
+        {
+            base.IncrementPlayCount ();
+            Save ();
+        }
+
+        public override void IncrementSkipCount ()
+        {
+            base.IncrementSkipCount ();
+            Save ();
+        }
+
         public override bool TrackEqual (TrackInfo track)
         {
             if (!(track is DatabaseTrackInfo)) {
@@ -316,6 +328,12 @@ namespace Banshee.Collection.Database
         public override DateTime LastPlayed {
             get { return base.LastPlayed; }
             set { base.LastPlayed = value; }
+        }
+
+        [DatabaseColumn ("LastSkippedStamp")]
+        public override DateTime LastSkipped {
+            get { return base.LastSkipped; }
+            set { base.LastSkipped = value; }
         }
         
         [DatabaseColumn ("DateAddedStamp")]

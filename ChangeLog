@@ -1,3 +1,39 @@
+2008-03-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This patch implements actually updating the play/skip counts and last
+	played/skipped stamps.
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Update the status bar when
+	the active source is Updated.
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Add
+	IncrementSkipCount method and LastSkipped property, and update LastSkipped
+	and LastPlayed within their respective Increment methods.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Save the track after incremting its play/skip count.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add a LastSkippedStamp column to CoreTracks.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	When opening a new track or uri, if there is a currently playing song, if
+	it's over half way done, call IncrementPlayCount on it, otherwise call
+	IncrementSkipCount.
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs: 
+	Add a NOTE about refactoring to allow models to provide the random track
+	functionality.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Add LastSkipped
+	query field and sorting.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Add a Last Skipped column.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmTrackInfo.cs:
+	Within IncrementPlayCount override call the base method.
+
 2008-03-21  Aaron Bockover  <abock@gnome.org>
 
 	This commit should make Banshee look better on darker themes

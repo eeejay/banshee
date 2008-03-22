@@ -227,6 +227,7 @@ namespace Banshee.PlaybackController
         
         private TrackInfo QueryTrackRandom ()
         {
+            // TODO let the TrackModel give us a random track
             return Source.TrackModel[random.Next (0, Source.TrackModel.Count - 1)];
         }
         

@@ -85,6 +85,8 @@ namespace Banshee.Lastfm.Radio
 
         public override void IncrementPlayCount ()
         {
+            base.IncrementPlayCount ();
+
             station.PlayCount++;
             station.Save ();
         }

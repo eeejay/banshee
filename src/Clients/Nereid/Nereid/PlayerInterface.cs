@@ -232,6 +232,7 @@ namespace Nereid
         {
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
+            ServiceManager.SourceManager.SourceUpdated += OnSourceUpdated;
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
             
             ActionService.TrackActions ["SearchForSameArtistAction"].Activated += OnProgrammaticSearch;
@@ -324,6 +325,13 @@ namespace Nereid
             
             UpdateStatusBar ();
             view_container.SearchEntry.Ready = true;
+        }
+
+        private void OnSourceUpdated (SourceEventArgs args)
+        {
+            if (args.Source == ServiceManager.SourceManager.ActiveSource) {
+                UpdateStatusBar ();
+            }
         }
         
         private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args) 

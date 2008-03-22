@@ -61,7 +61,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 3;
+        protected const int CURRENT_VERSION = 4;
         
         protected class DatabaseVersionAttribute : Attribute 
         {
@@ -249,6 +249,13 @@ namespace Banshee.Database
             Execute ("UPDATE CoreSmartPlaylists SET PrimarySourceID = 1");
             return true;
         }
+
+        [DatabaseVersion (4)]
+        private bool Migrate_4 ()
+        {
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN LastSkippedStamp INTEGER");
+            return true;
+        }
         
 #pragma warning restore 0169
         
@@ -318,6 +325,7 @@ namespace Banshee.Database
                     PlayCount           INTEGER,
                     SkipCount           INTEGER,
                     LastPlayedStamp     INTEGER,
+                    LastSkippedStamp    INTEGER,
                     DateAddedStamp      INTEGER,
                     DateUpdatedStamp    INTEGER
                 )
@@ -332,7 +340,7 @@ namespace Banshee.Database
             Execute("CREATE INDEX CoreTracksPlayCountIndex ON CoreTracks(PlayCount)");
             Execute("CREATE INDEX CoreTracksDiscIndex ON CoreTracks(Disc)");
             Execute("CREATE INDEX CoreTracksTrackNumberIndex ON CoreTracks(TrackNumber)");
-            Execute("CREATE INDEX CoreTracksTitleeIndex ON CoreTracks(Title)");
+            Execute("CREATE INDEX CoreTracksTitleIndex ON CoreTracks(Title)");
             
             Execute(@"
                 CREATE TABLE CoreAlbums (
@@ -490,6 +498,7 @@ namespace Banshee.Database
                         NumberOfPlays,
                         0,
                         LastPlayedStamp,
+                        NULL,
                         DateAddedStamp,
                         DateAddedStamp
                         FROM Tracks

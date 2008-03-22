@@ -66,6 +66,7 @@ namespace Banshee.Collection
         private int play_count;
         private int skip_count;
         private DateTime last_played;
+        private DateTime last_skipped;
         
         private StreamPlaybackError playback_error = StreamPlaybackError.None;
 
@@ -75,7 +76,14 @@ namespace Banshee.Collection
 
         public virtual void IncrementPlayCount ()
         {
+            LastPlayed = DateTime.Now;
             PlayCount++;
+        }
+
+        public virtual void IncrementSkipCount ()
+        {
+            LastSkipped = DateTime.Now;
+            SkipCount++;
         }
 
         public override string ToString ()
@@ -245,6 +253,11 @@ namespace Banshee.Collection
         public virtual DateTime LastPlayed {
             get { return last_played; }
             set { last_played = value; }
+        }
+
+        public virtual DateTime LastSkipped {
+            get { return last_skipped; }
+            set { last_skipped = value; }
         }
         
         public virtual StreamPlaybackError PlaybackError {

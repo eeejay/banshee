@@ -176,6 +176,13 @@ namespace Banshee.Query
             "lastplayed", "played", "playedon"
         );
 
+        public static QueryField LastSkippedField = new QueryField (
+            "lastskipped", Catalog.GetString ("Last Skipped Date"), "CoreTracks.LastSkippedStamp", typeof(DateQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("lastskipped"), Catalog.GetString ("skipped"), Catalog.GetString ("skippedon"),
+            "lastskipped", "skipped", "skippedon"
+        );
+
         public static QueryField DateAddedField = new QueryField (
             "added", Catalog.GetString ("Date Added"), "CoreTracks.DateAddedStamp", typeof(DateQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
@@ -197,7 +204,7 @@ namespace Banshee.Query
 
         public static QueryFieldSet FieldSet = new QueryFieldSet (
             ArtistField, AlbumField, DiscField, TitleField, YearField, GenreField, ComposerField, RatingField, PlayCountField,
-            SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField,
+            SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField, LastSkippedField,
             DateAddedField, PlaylistField, SmartPlaylistField
         );
 
@@ -256,6 +263,7 @@ namespace Banshee.Query
                 case "PlayCount":
                 case "SkipCount":
                 case "LastPlayedStamp":
+                case "LastSkippedStamp":
                 case "DateAddedStamp":
                 case "Uri":
                 case "Composer":
