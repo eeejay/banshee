@@ -62,19 +62,18 @@ namespace Hyena.Data.Gui
             if (use_cairo_pango) {
                 context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
                 PangoCairoHelper.LayoutPath (context.Context, context.Layout);
-                context.Context.Color = context.Theme.Colors.GetWidgetColor (GtkColorClass.Text, state);
+                context.Context.Color = context.Theme.Colors.GetWidgetColor (
+                    context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
                 context.Context.Fill ();
             } else {
-                Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, context.Clip,
-                    context.Widget, "text", context.Area.X + 4, context.Area.Y + (((int)cellHeight - text_height) / 2),
-                    context.Layout);
+                Style.PaintLayout (context.Widget.Style, context.Drawable, state, !context.TextAsForeground, 
+                    context.Clip, context.Widget, "text", context.Area.X + 4, 
+                    context.Area.Y + (((int)cellHeight - text_height) / 2), context.Layout);
             }
         }
         
         protected virtual string Text {
-            get {
-                return BoundObject == null ? String.Empty : BoundObject.ToString();
-            }
+            get { return BoundObject == null ? String.Empty : BoundObject.ToString(); }
         }
         
         protected int TextWidth {

@@ -426,8 +426,8 @@ namespace Banshee.Widgets
 
                 text_gc = new Gdk.GC(text_window);
                 text_gc.Copy(Style.TextGC(StateType.Normal));
-                Gdk.Color color_a = parent.Style.Foreground(StateType.Normal);
-                Gdk.Color color_b = parent.Style.Background(StateType.Normal);
+                Gdk.Color color_a = parent.Style.Base(StateType.Normal);
+                Gdk.Color color_b = parent.Style.Text(StateType.Normal);
                 text_gc.RgbFgColor = DrawingUtilities.ColorBlend(color_a, color_b, 0.5);
             }
 

@@ -199,9 +199,7 @@ namespace Nereid
             footer_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
 
             status_label = new Label ();
-            status_label.ModifyFg (StateType.Normal, Hyena.Gui.GtkUtilities.ColorBlend (
-                status_label.Style.Foreground (StateType.Normal), status_label.Style.Background (StateType.Normal)));
-
+            
             Alignment status_align = new Alignment (0.5f, 0.5f, 1.0f, 1.0f);
             status_align.Add (status_label);
 

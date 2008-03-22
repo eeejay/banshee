@@ -41,6 +41,7 @@ namespace Hyena.Data.Gui
         private Theme theme;
         private Gdk.Rectangle area;
         private Gdk.Rectangle clip;
+        private bool text_as_foreground = false;
         
         public CellContext (Cairo.Context context, Pango.Layout layout, Gtk.Widget widget,
             Gdk.Drawable drawable, Theme theme, Gdk.Rectangle area, Gdk.Rectangle clip)
@@ -80,6 +81,11 @@ namespace Hyena.Data.Gui
         
         public Gdk.Rectangle Clip {
             get { return clip; }
+        }
+        
+        public bool TextAsForeground {
+            get { return text_as_foreground; }
+            set { text_as_foreground = value; }
         }
     }
 }

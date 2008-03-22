@@ -82,6 +82,10 @@ namespace Banshee.Gui
             
             PlatformHacks.GdkSetProgramClass (Application.InternalName);
 
+            if (ApplicationContext.Debugging) {
+                GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
+            }
+            
             ServiceManager.ServiceStarted += OnServiceStarted;
             
             // Register specific services this client will care about

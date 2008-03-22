@@ -47,7 +47,7 @@ namespace Hyena.Gui
     }
     
     public static class CairoExtensions
-    {        
+    {
         public static Cairo.Color GdkColorToCairoColor(Gdk.Color color)
         {
             return GdkColorToCairoColor(color, 1.0);
@@ -60,6 +60,13 @@ namespace Hyena.Gui
                 (double)(color.Green >> 8) / 255.0,
                 (double)(color.Blue >> 8) / 255.0,
                 alpha);
+        }
+        
+        public static bool ColorIsDark (Cairo.Color color)
+        {
+            double h, s, b;
+            HsbFromColor (color, out h, out s, out b);
+            return b < 0.5;
         }
         
         public static void HsbFromColor(Cairo.Color color, out double hue, 

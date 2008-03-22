@@ -162,8 +162,8 @@ namespace Banshee.Sources.Gui
                 
             Gdk.GC mod_gc = widget.Style.TextGC (state);
             if (!state.Equals (StateType.Selected)) {
-                Gdk.Color fgcolor = widget.Style.Foreground (state);
-                Gdk.Color bgcolor = widget.Style.Background (state);
+                Gdk.Color fgcolor = widget.Style.Base (state);
+                Gdk.Color bgcolor = widget.Style.Text (state);
                 
                 mod_gc = new Gdk.GC (drawable);
                 mod_gc.Copy (widget.Style.TextGC (state));

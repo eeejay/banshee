@@ -40,6 +40,24 @@ namespace Hyena.Gui.Theming
         public GtkTheme (Widget widget) : base (widget)
         {
         }
+        
+        public static Cairo.Color GetCairoTextMidColor (Widget widget)
+        {
+            Cairo.Color text_color = CairoExtensions.GdkColorToCairoColor (widget.Style.Foreground (StateType.Normal));
+            Cairo.Color background_color = CairoExtensions.GdkColorToCairoColor (widget.Style.Background (StateType.Normal));
+            // This is lame
+            Cairo.Color c = CairoExtensions.ColorAdjustBrightness (text_color, 
+                CairoExtensions.ColorIsDark (background_color) ? 0.65 : 0.5);
+            return c;
+        }
+        
+        public static Gdk.Color GetGdkTextMidColor (Widget widget)
+        {
+            Cairo.Color color = GetCairoTextMidColor (widget);
+            Gdk.Color gdk_color = new Gdk.Color ((byte)(color.R * 255), (byte)(color.G * 255), (byte)(color.B * 255));
+            Gdk.Colormap.System.AllocColor (ref gdk_color, true, true);
+            return gdk_color;
+        }
 
         protected override void OnColorsRefreshed ()
         {
@@ -85,11 +103,11 @@ namespace Hyena.Gui.Theming
         public override void DrawArrow (Context cr, Gdk.Rectangle alloc, Hyena.Data.SortType type)
         {
             cr.Translate (0.5, 0.5);
-            int x1 = alloc.X;
-            int x3 = alloc.X + alloc.Width / 2;
-            int x2 = x3 + (x3 - x1);
-            int y1 = alloc.Y;
-            int y2 = alloc.Bottom;
+            double x1 = alloc.X;
+            double x3 = alloc.X + alloc.Width / 2.0;
+            double x2 = x3 + (x3 - x1);
+            double y1 = alloc.Y;
+            double y2 = alloc.Bottom;
             
             if (type == Hyena.Data.SortType.Ascending) {
                 cr.MoveTo (x1, y1);
@@ -103,9 +121,9 @@ namespace Hyena.Gui.Theming
                 cr.LineTo (x3, y1);
             }
             
-            cr.Color = new Color (1, 1, 1, 0.4);
+            cr.Color = Colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
             cr.FillPreserve ();
-            cr.Color = new Color (0, 0, 0, 1);
+            cr.Color = border_color;
             cr.Stroke ();
             cr.Translate (-0.5, -0.5);
         }
@@ -128,6 +146,20 @@ namespace Hyena.Gui.Theming
             cr.Stroke();
         }
         
+        public override void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
+        {
+            Cairo.Color light_color = CairoExtensions.ColorShade (color, 1.6);
+            Cairo.Color dark_color = CairoExtensions.ColorShade (color, 1.3);
+            
+            LinearGradient grad = new LinearGradient (alloc.X, alloc.Y, alloc.X, alloc.Bottom - 1);
+            grad.AddColorStop (0, light_color);
+            grad.AddColorStop (1, dark_color);
+            
+            cr.Pattern = grad;
+            cr.Rectangle (alloc.X + 1.5, alloc.Y + 1.5, alloc.Width - 3, alloc.Height - 2);
+            cr.Fill();
+        }
+
         public override void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc)
         {
             Cairo.Color gtk_background_color = Colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal);
@@ -181,20 +213,6 @@ namespace Hyena.Gui.Theming
             cr.Color = color;
             cr.Rectangle (alloc.X, alloc.Y, alloc.Width, alloc.Height);
             cr.Fill ();
-        }
-
-        public override void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
-        {
-            Cairo.Color light_color = CairoExtensions.ColorShade (color, 1.6);
-            Cairo.Color dark_color = CairoExtensions.ColorShade (color, 1.3);
-            
-            LinearGradient grad = new LinearGradient (alloc.X, alloc.Y, alloc.X, alloc.Bottom - 1);
-            grad.AddColorStop (0, light_color);
-            grad.AddColorStop (1, dark_color);
-            
-            cr.Pattern = grad;
-            cr.Rectangle (alloc.X + 1.5, alloc.Y + 1.5, alloc.Width - 3, alloc.Height - 2);
-            cr.Fill();
         }
         
         public override void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height,

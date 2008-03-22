@@ -102,7 +102,7 @@ namespace Banshee.Widgets
                 rect.Width = evnt.Area.Width - rect.Width;
             }
             
-            Gtk.Style.PaintLayout (Style, GdkWindow, StateType.Normal, true, rect, this, null, x, y, layout);
+            Gtk.Style.PaintLayout (Style, GdkWindow, StateType.Normal, false, rect, this, null, x, y, layout);
             
             return true;
         }

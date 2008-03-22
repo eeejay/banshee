@@ -210,6 +210,15 @@ namespace Hyena.Data.Gui
             // Render the background to the primary canvas.
             Theme.DrawListBackground (cairo_context, canvas_alloc, true);
             
+            for (int ci = 0; ci < column_cache.Length; ci++) {
+                ColumnHeaderCellText cell = column_cache[ci].Column.HeaderCell as ColumnHeaderCellText;
+                if (cell != null && cell.HasSort) {
+                    cairo_context.Rectangle (column_cache[ci].X1, list_rendering_alloc.Y, column_cache[ci].Width, list_rendering_alloc.Height);
+                    cairo_context.Color = new Cairo.Color (0, 0, 0, 0.2);
+                    cairo_context.Fill ();
+                }
+            }
+            
             int first_row = top;
             int last_row = bottom;
             int first_row_y = 0;
@@ -220,7 +229,7 @@ namespace Hyena.Data.Gui
                 // We're scrolling down, so shift the contents of the list up and
                 // render the new stuff in situ at the bottom.
                 int delta = (last_row - canvas_last_row) * RowHeight;
-                canvas1.DrawDrawable (Style.WhiteGC, canvas2, 0, delta, 0, 0,
+                canvas1.DrawDrawable (Style.BaseGC (StateType.Normal), canvas2, 0, delta, 0, 0,
                     list_rendering_alloc.Width, rows_in_view - delta);
                 
                 // If the bottom of the stuff we're shifting up is part of a selection
@@ -236,7 +245,7 @@ namespace Hyena.Data.Gui
                 // We're scrolling up, so shift the contents of the list down and
                 // render the new stuff in situ at the top.
                 int delta = (canvas_first_row - first_row) * RowHeight;
-                canvas1.DrawDrawable (Style.WhiteGC, canvas2, 0, 0, 0, delta,
+                canvas1.DrawDrawable (Style.BaseGC (StateType.Normal), canvas2, 0, 0, 0, delta,
                     list_rendering_alloc.Width, rows_in_view - delta);
                 
                 // If the top of the stuff we're shifting down is part of a selection
@@ -414,8 +423,8 @@ namespace Hyena.Data.Gui
                 GtkColorClass.Base, StateType.Normal), 0.0);
             stroke_color.A = 0.3;
             
-            cairo_context.Rectangle (x, header_rendering_alloc.Bottom, column.Width - 2,
-                list_rendering_alloc.Bottom - header_rendering_alloc.Bottom);
+            cairo_context.Rectangle (x, header_rendering_alloc.Bottom + 1, column.Width - 2,
+                list_rendering_alloc.Bottom - header_rendering_alloc.Bottom - 1);
             cairo_context.Color = fill_color;
             cairo_context.Fill ();
             

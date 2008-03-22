@@ -236,9 +236,9 @@ namespace Banshee.Gui.Widgets
 
         protected override void OnStyleSet (Style previous)
         {
-            text_color = CairoExtensions.GdkColorToCairoColor (Style.Text (StateType.Normal));          
-            text_light_color = CairoExtensions.ColorAdjustBrightness (text_color, 0.5);
+            text_color = CairoExtensions.GdkColorToCairoColor (Style.Foreground (StateType.Normal));
             background_color = CairoExtensions.GdkColorToCairoColor (Style.Background (StateType.Normal));
+            text_light_color = Hyena.Gui.Theming.GtkTheme.GetCairoTextMidColor (this);
             
             if (missing_audio_pixbuf != null) {
                 missing_audio_pixbuf.Dispose ();

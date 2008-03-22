@@ -1,3 +1,46 @@
+2008-03-21  Aaron Bockover  <abock@gnome.org>
+
+	This commit should make Banshee look better on darker themes
+
+	* src/Clients/Nereid/Nereid/Client.cs: Allow ignoring the gtkrc if
+	--no-gtkrc is passed; nice for debugging
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Remove the subtle 
+	midtone coloring since I can't figure out a reliable way to make it
+	work on darker themes and lighter themes; GTK themes seriously suck and
+	I hate them and where in the hell is GTK 3. Seriously.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Hacky version of the mid tone stuff since it's absolutely necessary here
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs:
+	Set a GLib log handler when in --debug mode
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/SearchEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Get a proper mid tone using the base and text colors
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:
+	Render text using the foreground, not text colors, like other text that
+	should be rendered on background and not base
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/CellContext.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs: Allow
+	rendering text in the cell as foreground or text colors
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Fixed some small rendering/theme issues; do not render a highlight under
+	the sorted column since it looks like ass on some themes and I'm tired
+	of GTK themes
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Add some 
+	color foo
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/ShadingTestWindow.cs: Just something
+	I'm working on, nothing interesting, never used
+
 2008-03-21  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:

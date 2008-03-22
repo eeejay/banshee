@@ -46,9 +46,11 @@ namespace Hyena.Data.Gui
     
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
-            if(data_handler == null) {
+            if (data_handler == null) {
                 return;
             }
+            
+            context.TextAsForeground = true;
             
             if (!has_sort) {
                 base.Render (context, state, cellWidth - 10, cellHeight);
@@ -56,12 +58,11 @@ namespace Hyena.Data.Gui
             }
             
             Gdk.Rectangle alloc = new Gdk.Rectangle ();
-            alloc.Width = (int)(cellHeight / 3.5);
+            alloc.Width = (int)(cellHeight / 3.0);
             alloc.Height = (int)((double)alloc.Width / 1.6);
             alloc.X = (int)cellWidth - alloc.Width - 10;
             alloc.Y = ((int)cellHeight - alloc.Height) / 2;
             
-            context.Theme.DrawColumnHighlight (context.Context, cellWidth, cellHeight);
             base.Render (context, state, cellWidth - 2 * alloc.Width - 10, cellHeight);
             context.Theme.DrawArrow (context.Context, alloc, ((ISortableColumn)data_handler ()).SortType);
         }

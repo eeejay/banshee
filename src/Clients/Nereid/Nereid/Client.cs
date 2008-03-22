@@ -37,7 +37,7 @@ namespace Nereid
             // This could go into GtkBaseClient, but it's probably something we
             // should really only support at each client level
             string user_gtkrc = Path.Combine (Banshee.Base.Paths.ApplicationData, "gtkrc"); 
-            if (File.Exists (user_gtkrc)) {
+            if (File.Exists (user_gtkrc) && !Banshee.Base.ApplicationContext.CommandLine.Contains ("no-gtkrc")) {
                 Gtk.Rc.AddDefaultFile (user_gtkrc);
             } 
             
