@@ -1,5 +1,17 @@
 2008-03-21  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	Fixed rendering issue when dragging ends.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	New column sorting effect.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Fixed column resize cursor appearing when the mouse is over the
+	list.
+
+2008-03-21  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
 	Minor improvements to rendering. Vertical resizing is now much more
 	efficient, only rendering new rows that com into view as a result

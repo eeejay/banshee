@@ -60,6 +60,8 @@ namespace Hyena.Data.Gui
         private Pango.Layout header_pango_layout;
         private Pango.Layout list_pango_layout;
         
+        private int sort_column_index = -1;
+        
         private Theme theme;
         protected Theme Theme {
             get { return theme; }
@@ -72,14 +74,7 @@ namespace Hyena.Data.Gui
                 damage = damage.Union (rect);
             }
             
-            // First we render the list to the offscreen canvas.
-            if (canvas1 == null) {
-                canvas1 = new Pixmap (GdkWindow, canvas_alloc.Width, canvas_alloc.Height);
-                render_everything = true;
-            }
-            PaintList (damage);
-
-            // Then we create a cairo context for rendering to the GdkWindow.
+            // First we create a cairo context for rendering to the GdkWindow.
             cairo_context = CairoHelper.Create (evnt.Window);
             
             // We render the background, the header (if we have one), and the
@@ -89,6 +84,13 @@ namespace Hyena.Data.Gui
                 PaintHeader (damage);
             }
             Theme.DrawFrameBorder (cairo_context, Allocation);
+            
+            // Then we render the list to the offscreen canvas.
+            if (canvas1 == null) {
+                canvas1 = new Pixmap (GdkWindow, canvas_alloc.Width, canvas_alloc.Height);
+                render_everything = true;
+            }
+            PaintList (damage);
             
             // Now we blit the offscreen canvas onto the GdkWindow.
             GdkWindow.DrawDrawable (Style.BaseGC (StateType.Normal), canvas1, 0, (int)vadjustment.Value % RowHeight,
@@ -114,6 +116,8 @@ namespace Hyena.Data.Gui
             
             header_pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
             Theme.DrawHeaderBackground (cairo_context, header_rendering_alloc);
+            
+            sort_column_index = -1;
             
             Rectangle cell_area = new Rectangle ();
             cell_area.Y = header_rendering_alloc.Y;
@@ -163,6 +167,9 @@ namespace Hyena.Data.Gui
             if (column_cell != null && sortable != null) {
                 ISortableColumn sort_column = column_cache[ci].Column as ISortableColumn;
                 column_cell.HasSort = sort_column != null && sortable.SortColumn == sort_column;
+                if (column_cell.HasSort) {
+                    sort_column_index = ci;
+                }
             }
             
             if (cell != null) {
@@ -182,6 +189,12 @@ namespace Hyena.Data.Gui
         {
             if (model == null) {
                 return;
+            }
+            
+            if (sort_column_index != -1 && (!pressed_column_is_dragging || pressed_column_index != sort_column_index)) {
+                CachedColumn col = column_cache[sort_column_index];
+                Theme.DrawRowRule (cairo_context, list_rendering_alloc.X + col.X1, header_rendering_alloc.Bottom + Theme.BorderWidth,
+                    col.Width, list_rendering_alloc.Height + Theme.InnerBorderWidth * 2);
             }
 
             int rows_in_view = RowsInView;
@@ -204,11 +217,17 @@ namespace Hyena.Data.Gui
             }
             
             // Build a cairo context for the primary canvas.
+            Cairo.Context tmp_cr = cairo_context;
             cairo_context = CairoHelper.Create (canvas1);
             list_pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
             
             // Render the background to the primary canvas.
             Theme.DrawListBackground (cairo_context, canvas_alloc, true);
+            
+            if (sort_column_index != -1 && (!pressed_column_is_dragging || pressed_column_index != sort_column_index)) {
+                CachedColumn col = column_cache[sort_column_index];
+                Theme.DrawRowRule (cairo_context, col.X1, 0, col.Width, canvas_alloc.Height);
+            }
             
             int first_row = top;
             int last_row = bottom;
@@ -254,6 +273,7 @@ namespace Hyena.Data.Gui
             // Destroy the cairo context.
             ((IDisposable)cairo_context.Target).Dispose ();
             ((IDisposable)cairo_context).Dispose ();
+            cairo_context = tmp_cr;
             
             canvas_first_row = top;
             canvas_last_row = bottom;
@@ -271,16 +291,6 @@ namespace Hyena.Data.Gui
             int selection_height = 0;
             int selection_y = 0;
             List<int> selected_rows = new List<int> ();
-            
-            /* FIXME: Render the background under the sorted column 
-            for (int ci = 0; ci < column_cache.Length; ci++) {
-                ColumnHeaderCellText cell = column_cache[ci].Column.HeaderCell as ColumnHeaderCellText;
-                if (cell != null && cell.HasSort) {
-                    cairo_context.Rectangle (column_cache[ci].X1, list_rendering_alloc.Y, column_cache[ci].Width, list_rendering_alloc.Height);
-                    cairo_context.Color = new Cairo.Color (0, 0, 0, 0.2);
-                    cairo_context.Fill ();
-                }
-            }*/
 
             for (int ri = first_row; ri < last_row; ri++) {
                 if (Selection.Contains (ri)) {

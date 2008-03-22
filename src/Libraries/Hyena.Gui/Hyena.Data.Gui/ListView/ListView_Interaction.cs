@@ -419,8 +419,9 @@ namespace Hyena.Data.Gui
                 InvalidateListView ();
                 return true;
             }
-        
-            GdkWindow.Cursor = resizing_column_index >= 0 || GetColumnForResizeHandle (x) != null 
+            
+            GdkWindow.Cursor = (resizing_column_index >= 0 || GetColumnForResizeHandle (x) != null) &&
+                header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) 
                 ? resize_x_cursor 
                 : null;
             

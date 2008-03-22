@@ -158,6 +158,7 @@ namespace Hyena.Data.Gui
             StopDragScroll ();
             drag_reorder_row_index = -1;
             drag_reorder_motion_y = -1;
+            InvalidateList ();
         }
         
         private bool OnDragScrollTimeout ()
