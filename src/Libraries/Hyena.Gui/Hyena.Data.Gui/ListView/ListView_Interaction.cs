@@ -416,8 +416,7 @@ namespace Hyena.Data.Gui
                 
                 pressed_column_x_drag = x - pressed_column_x_offset;
                 
-                InvalidateHeader ();
-                InvalidateList ();
+                InvalidateListView ();
                 return true;
             }
         

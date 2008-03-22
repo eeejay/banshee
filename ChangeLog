@@ -1,3 +1,15 @@
+2008-03-21  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Minor improvements to rendering. Vertical resizing is now much more
+	efficient, only rendering new rows that com into view as a result
+	of resizing (rather than rendering everything on every pass).
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Minor improvements to rendering.
+
 2008-03-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This patch implements actually updating the play/skip counts and last

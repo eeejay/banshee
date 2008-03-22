@@ -115,7 +115,7 @@ namespace Hyena.Data.Gui
         protected virtual void OnColumnControllerUpdated ()
         {
             RegenerateColumnCache ();
-            QueueDraw ();
+            InvalidateListView ();
         }
         
         protected virtual void OnColumnRightClicked (Column clickedColumn, int x, int y)
@@ -185,8 +185,7 @@ namespace Hyena.Data.Gui
             }
             
             RegenerateColumnCache ();
-            InvalidateHeader ();
-            InvalidateList ();
+            InvalidateListView ();
         }
         
         private Column GetColumnForResizeHandle (int x)
@@ -241,7 +240,7 @@ namespace Hyena.Data.Gui
                 column_controller = value;
                 
                 RegenerateColumnCache ();
-                QueueDraw ();
+                InvalidateListView ();
                 
                 if (column_controller != null) {
                     column_controller.Updated += OnColumnControllerUpdatedHandler;

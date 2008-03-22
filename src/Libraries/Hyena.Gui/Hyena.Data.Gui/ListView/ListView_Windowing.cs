@@ -131,10 +131,14 @@ namespace Hyena.Data.Gui
             list_interaction_alloc = list_rendering_alloc;
             list_interaction_alloc.Offset (-allocation.X, -allocation.Y);
             
-            canvas_alloc.Height = Math.Max (1, RowsInView * RowHeight);
-            canvas_alloc.Width = Math.Max (1, list_rendering_alloc.Width);
+            int canvas_width = Math.Max (1, list_rendering_alloc.Width);
+            int canvas_height = Math.Max (1, RowsInView * RowHeight);
             
-            DisposeCanvases ();
+            if (canvas_alloc.Width != canvas_width || canvas_alloc.Height != canvas_height) {
+                DisposeCanvases ();
+                canvas_alloc.Width = canvas_width;
+                canvas_alloc.Height = canvas_height;
+            }
         }
         
         private void DisposeCanvases ()
@@ -181,7 +185,7 @@ namespace Hyena.Data.Gui
             }
             
             RegenerateColumnCache ();
-            InvalidateList ();
+            InvalidateList (false);
         }
         
         private int RowsInView {

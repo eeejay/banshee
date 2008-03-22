@@ -91,7 +91,7 @@ namespace Hyena.Data.Gui
             Theme.DrawFrameBorder (cairo_context, Allocation);
             
             // Now we blit the offscreen canvas onto the GdkWindow.
-            GdkWindow.DrawDrawable (Style.WhiteGC, canvas1, 0, (int)vadjustment.Value % RowHeight,
+            GdkWindow.DrawDrawable (Style.BaseGC (StateType.Normal), canvas1, 0, (int)vadjustment.Value % RowHeight,
                 list_rendering_alloc.X, list_rendering_alloc.Y, list_rendering_alloc.Width, list_rendering_alloc.Height);
             
             // Finally, render the dragging box and dispose of the cairo context.
@@ -439,7 +439,7 @@ namespace Hyena.Data.Gui
             cairo_context.Stroke ();
         }
         
-        public new void QueueDraw ()
+        private void InvalidateListView ()
         {
             InvalidateHeader ();
             InvalidateList ();
@@ -455,7 +455,7 @@ namespace Hyena.Data.Gui
             if (IsRealized) {
                 this.render_everything |= render_everything;
                 GdkWindow.InvalidateRect (list_rendering_alloc, true);
-                base.QueueDraw ();
+                QueueDraw ();
             }
         }
         
@@ -463,7 +463,7 @@ namespace Hyena.Data.Gui
         {
             if (IsRealized) {
                 GdkWindow.InvalidateRect (header_rendering_alloc, true);
-                base.QueueDraw ();
+                QueueDraw ();
             }
         }
         
@@ -472,7 +472,7 @@ namespace Hyena.Data.Gui
             get { return rules_hint; }
             set { 
                 rules_hint = value; 
-                QueueDraw ();
+                InvalidateList ();
             }
         }
         
