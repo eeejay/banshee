@@ -210,15 +210,6 @@ namespace Hyena.Data.Gui
             // Render the background to the primary canvas.
             Theme.DrawListBackground (cairo_context, canvas_alloc, true);
             
-            for (int ci = 0; ci < column_cache.Length; ci++) {
-                ColumnHeaderCellText cell = column_cache[ci].Column.HeaderCell as ColumnHeaderCellText;
-                if (cell != null && cell.HasSort) {
-                    cairo_context.Rectangle (column_cache[ci].X1, list_rendering_alloc.Y, column_cache[ci].Width, list_rendering_alloc.Height);
-                    cairo_context.Color = new Cairo.Color (0, 0, 0, 0.2);
-                    cairo_context.Fill ();
-                }
-            }
-            
             int first_row = top;
             int last_row = bottom;
             int first_row_y = 0;
@@ -280,6 +271,16 @@ namespace Hyena.Data.Gui
             int selection_height = 0;
             int selection_y = 0;
             List<int> selected_rows = new List<int> ();
+            
+            /* FIXME: Render the background under the sorted column 
+            for (int ci = 0; ci < column_cache.Length; ci++) {
+                ColumnHeaderCellText cell = column_cache[ci].Column.HeaderCell as ColumnHeaderCellText;
+                if (cell != null && cell.HasSort) {
+                    cairo_context.Rectangle (column_cache[ci].X1, list_rendering_alloc.Y, column_cache[ci].Width, list_rendering_alloc.Height);
+                    cairo_context.Color = new Cairo.Color (0, 0, 0, 0.2);
+                    cairo_context.Fill ();
+                }
+            }*/
 
             for (int ri = first_row; ri < last_row; ri++) {
                 if (Selection.Contains (ri)) {
