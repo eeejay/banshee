@@ -1,3 +1,13 @@
+2008-03-22  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: Added MaxWidth
+	property (currently not used anywhere).
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Began reworking the column layout code. Columns will now resize
+	themselves to take up the header width. No logic yet for min or max
+	column widths: that's tommorrow!
+
 2008-03-22  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* libbanshee/gst-playback-0.10.c: Hookup the 'goom' visualisation element

@@ -42,6 +42,7 @@ namespace Hyena.Data.Gui
             public int X1;
             public int X2;
             public int Width;
+            public int MinWidth;
             public int ResizeX1;
             public int ResizeX2;
             public int Index;
@@ -65,31 +66,16 @@ namespace Hyena.Data.Gui
         
         private void InvalidateColumnCache ()
         {
-            if (column_cache == null) {
-                return;
-            }
-        
-            for (int i = 0; i < column_cache.Length; i++) {
-                column_cache[i] = CachedColumn.Zero;
-            }
-            
             column_cache = null;
         }
         
-        private void RegenerateColumnCache ()
+        private void GenerateColumnCache ()
         {
-            if (!IsRealized) {
-                return;
-            }
-            
-            InvalidateColumnCache ();
-            
-            if (column_controller == null) {
-                return;
-            }
+            column_cache = new CachedColumn[column_controller.Count];
             
             int i = 0;
-            column_cache = new CachedColumn[column_controller.Count];
+            int min_header_width = 0;
+            double total = 0.0;
             
             foreach (Column column in column_controller) {
                 if (!column.Visible) {
@@ -99,21 +85,50 @@ namespace Hyena.Data.Gui
                 column_cache[i] = new CachedColumn ();
                 column_cache[i].Column = column;
                 
-                column_cache[i].Width = (int)Math.Round (((double)header_interaction_alloc.Width * column.Width));
+                // TODO can this be done in the constructor? Will the title change?
+                int w;
+                int h;
+                column_layout.SetText (column.Title);
+                column_layout.GetPixelSize (out w, out h);
+                // 10 is arbitrary. Should we have a good way of getting the arrow width?
+                min_header_width += column_cache[i].MinWidth = Math.Max (column.MinWidth, w + 10); 
+                
+                total += column.Width;
+                i++;
+            }
+            
+            Array.Resize (ref column_cache, i);
+            
+            double scale_factor = 1.0 / total;
+            
+            for (i = 0; i < column_cache.Length; i++) {
+                column_cache[i].Column.Width *= scale_factor;
+            }
+        }
+        
+        private void RegenerateColumnCache ()
+        {
+            if (!IsRealized || column_controller == null) {
+                return;
+            }
+            
+            if (column_cache == null) {
+                GenerateColumnCache ();
+            }
+            
+            for (int i = 0; i < column_cache.Length; i++) {
+                column_cache[i].Width = (int)Math.Round (((double)header_interaction_alloc.Width * column_cache[i].Column.Width));
                 column_cache[i].X1 = i == 0 ? 0 : column_cache[i - 1].X2;
                 column_cache[i].X2 = column_cache[i].X1 + column_cache[i].Width;
                 column_cache[i].ResizeX1 = column_cache[i].X2;
                 column_cache[i].ResizeX2 = column_cache[i].ResizeX1 + 2;
                 column_cache[i].Index = i;
-                
-                i++;
             }
-            
-            Array.Resize (ref column_cache, i);
         }
         
         protected virtual void OnColumnControllerUpdated ()
         {
+            InvalidateColumnCache ();
             RegenerateColumnCache ();
             InvalidateListView ();
         }

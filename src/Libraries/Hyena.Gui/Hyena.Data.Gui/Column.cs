@@ -42,6 +42,7 @@ namespace Hyena.Data.Gui
         private List<ColumnCell> cells = new List<ColumnCell> ();
         
         private int minWidth = 0;
+        private int maxWidth = Int32.MaxValue;
         private double minRelativeWidth = 0;
         private double relativeWidth = 0;
         private bool isVisible = true;
@@ -114,6 +115,11 @@ namespace Hyena.Data.Gui
         {
             get { return minRelativeWidth; }
             set { minRelativeWidth = value; }
+        }
+        
+        public int MaxWidth {
+            get { return maxWidth; }
+            set { maxWidth = value; }
         }
 
         public double RelativeWidth
