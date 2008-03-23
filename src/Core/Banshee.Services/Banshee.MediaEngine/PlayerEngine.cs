@@ -225,6 +225,10 @@ namespace Banshee.MediaEngine
             OnEventChanged (PlayerEngineEvent.TrackInfoUpdated);
         }
         
+        public virtual void SetCurrentVisualisation (string name, int width, int height, int fps)
+        {
+        }
+        
         public TrackInfo CurrentTrack {
             get { return current_track; }
         }
@@ -285,6 +289,10 @@ namespace Banshee.MediaEngine
         
         public virtual IntPtr VideoWindow {
             set { }
+        }
+        
+        public virtual string [] Visualisations {
+            get { return null; }
         }
     }
 }

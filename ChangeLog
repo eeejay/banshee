@@ -1,3 +1,18 @@
+2008-03-23  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Extensions/Banshee.NowPlaying/Makefile.am:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying.mdp:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VisualisationConfigBox.cs:
+	Add a new cool-looking visualisation switcher bar to the top of the
+	visualisation display. Hides away if we watch video.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	* libbanshee/gst-playback-0.10.c: Add support for multiple visualisations,
+	with configurable sizes.
+
 2008-03-22  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
