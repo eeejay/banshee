@@ -442,15 +442,15 @@ gst_playback_bus_element_sync_message (GstBus *bus, GstMessage *message, GstPlay
 static gboolean
 filter_features (GstPluginFeature * feature, gpointer data)
 {
-	GstElementFactory *f;
+    GstElementFactory *f;
 
-	if (!GST_IS_ELEMENT_FACTORY (feature))
-		return FALSE;
-	f = GST_ELEMENT_FACTORY (feature);
-		if (!g_strrstr (gst_element_factory_get_klass (f), "Visualization"))
-	return FALSE;
+    if (!GST_IS_ELEMENT_FACTORY (feature))
+        return FALSE;
+    f = GST_ELEMENT_FACTORY (feature);
+        if (!g_strrstr (gst_element_factory_get_klass (f), "Visualization"))
+    return FALSE;
 
-	return TRUE;
+    return TRUE;
 }
 
 void
@@ -458,23 +458,23 @@ gst_playback_set_active_visualisation (GstPlayback *engine, const gchar *name, g
 {
     //g_debug ("Setting active visulisation: %s", name);
     GList *feature;
-	GstElementFactory *tmp;
-	GstElementFactory *fac = NULL;
+    GstElementFactory *tmp;
+    GstElementFactory *fac = NULL;
     GstElement *vis_bin;
-	GstElement *vis_element;
-	GstElement *vis_capsfilter;
+    GstElement *vis_element;
+    GstElement *vis_capsfilter;
     GstPad *pad;
-	GstCaps *caps;
-	
-	if (engine == NULL || name == NULL || engine->visualisations == NULL) {
-	    return;
-	}
+    GstCaps *caps;
+    
+    if (engine == NULL || name == NULL || engine->visualisations == NULL) {
+        return;
+    }
     
     for (feature = engine->visualisations; feature; feature = feature->next) {
-		tmp = GST_ELEMENT_FACTORY(feature->data);
-		if (!strcmp(GST_PLUGIN_FEATURE_NAME(tmp), name))
-			fac = tmp;
-	}
+        tmp = GST_ELEMENT_FACTORY(feature->data);
+        if (!strcmp(GST_PLUGIN_FEATURE_NAME(tmp), name))
+            fac = tmp;
+    }
     
     vis_element = gst_element_factory_create (fac, "vis_element");
     if (vis_element == NULL) {
@@ -482,49 +482,49 @@ gst_playback_set_active_visualisation (GstPlayback *engine, const gchar *name, g
     }
     
     vis_capsfilter = gst_element_factory_make("capsfilter", "vis_capsfilter");
-	g_return_if_fail(GST_IS_ELEMENT(vis_capsfilter));
+    g_return_if_fail(GST_IS_ELEMENT(vis_capsfilter));
 
-	vis_bin = gst_bin_new ("vis_bin");
-	g_return_if_fail(GST_IS_ELEMENT (vis_bin));
+    vis_bin = gst_bin_new ("vis_bin");
+    g_return_if_fail(GST_IS_ELEMENT (vis_bin));
 
-	gst_bin_add_many(GST_BIN(vis_bin), vis_element, vis_capsfilter, NULL);
+    gst_bin_add_many(GST_BIN(vis_bin), vis_element, vis_capsfilter, NULL);
 
-	/* Sink ghostpad */
-	pad = gst_element_get_pad(vis_element, "sink");
-	gst_element_add_pad(vis_bin, gst_ghost_pad_new("sink", pad));
-	gst_object_unref(pad);
+    /* Sink ghostpad */
+    pad = gst_element_get_pad(vis_element, "sink");
+    gst_element_add_pad(vis_bin, gst_ghost_pad_new("sink", pad));
+    gst_object_unref(pad);
 
-	/* Source ghostpad, link with vis_element */
-	pad = gst_element_get_pad(vis_capsfilter, "src");
-	gst_element_add_pad(vis_bin, gst_ghost_pad_new("src", pad));
-	gst_element_link_pads(vis_element, "src", vis_capsfilter, "sink");
-	gst_object_unref (pad);
+    /* Source ghostpad, link with vis_element */
+    pad = gst_element_get_pad(vis_capsfilter, "src");
+    gst_element_add_pad(vis_bin, gst_ghost_pad_new("src", pad));
+    gst_element_link_pads(vis_element, "src", vis_capsfilter, "sink");
+    gst_object_unref (pad);
 
-	/* Get allowed output caps from visualisation element */
-	pad = gst_element_get_pad(vis_element, "src");
-	caps = gst_pad_get_allowed_caps(pad);
-	gst_object_unref(pad);
+    /* Get allowed output caps from visualisation element */
+    pad = gst_element_get_pad(vis_element, "src");
+    caps = gst_pad_get_allowed_caps(pad);
+    gst_object_unref(pad);
 
-	/* Can we fixate ? */
-	if (caps && !gst_caps_is_fixed(caps)) {
-		guint i;
+    /* Can we fixate ? */
+    if (caps && !gst_caps_is_fixed(caps)) {
+        guint i;
 
-		caps = gst_caps_make_writable(caps);
+        caps = gst_caps_make_writable(caps);
 
-		/* Get visualization size */
-		for (i = 0; i < gst_caps_get_size (caps); ++i) {
-			GstStructure *s = gst_caps_get_structure (caps, i);
+        /* Get visualization size */
+        for (i = 0; i < gst_caps_get_size (caps); ++i) {
+            GstStructure *s = gst_caps_get_structure (caps, i);
 
-			/* Fixate */
-			gst_structure_fixate_field_nearest_int(s, "width", width);
-			gst_structure_fixate_field_nearest_int(s, "height", height);
-			gst_structure_fixate_field_nearest_fraction(s, "framerate", fps, 1);
-		}
+            /* Fixate */
+            gst_structure_fixate_field_nearest_int(s, "width", width);
+            gst_structure_fixate_field_nearest_int(s, "height", height);
+            gst_structure_fixate_field_nearest_fraction(s, "framerate", fps, 1);
+        }
 
-		/* set this */
-		g_object_set(vis_capsfilter, "caps", caps, NULL);
-	}
-	
+        /* set this */
+        g_object_set(vis_capsfilter, "caps", caps, NULL);
+    }
+    
     if (vis_bin != NULL) {
         g_object_set (G_OBJECT (engine->playbin), "vis-plugin", vis_bin, NULL);
     }
@@ -540,8 +540,8 @@ gst_playback_construct(GstPlayback *engine)
     GstElement *audioconvert;
     GstPad *teepad;
     
-	GList *feature;
-	gchar *default_vis;
+    GList *feature;
+    gchar *default_vis;
     
     g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
     
@@ -615,7 +615,7 @@ gst_playback_construct(GstPlayback *engine)
     }
     
     engine->visualisations = gst_registry_feature_filter(gst_registry_get_default(),
-					       filter_features, FALSE, NULL);
+                           filter_features, FALSE, NULL);
     
     // Set first as default
     if (engine->visualisations != NULL && g_list_length (engine->visualisations) > 0) {
