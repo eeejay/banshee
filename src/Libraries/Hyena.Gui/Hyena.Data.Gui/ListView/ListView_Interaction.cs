@@ -342,6 +342,7 @@ namespace Hyena.Data.Gui
             if (column != null && Model is ISortable && column is ISortableColumn) {
                 ((ISortable)Model).Sort ((ISortableColumn)column);
                 Model.Reload ();
+                RegenerateColumnCache ();
                 InvalidateHeader ();
             }
             

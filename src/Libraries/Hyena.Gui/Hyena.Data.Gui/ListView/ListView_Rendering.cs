@@ -60,8 +60,6 @@ namespace Hyena.Data.Gui
         private Pango.Layout header_pango_layout;
         private Pango.Layout list_pango_layout;
         
-        private int sort_column_index = -1;
-        
         private Theme theme;
         protected Theme Theme {
             get { return theme; }
@@ -117,8 +115,6 @@ namespace Hyena.Data.Gui
             header_pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
             Theme.DrawHeaderBackground (cairo_context, header_rendering_alloc);
             
-            sort_column_index = -1;
-            
             Rectangle cell_area = new Rectangle ();
             cell_area.Y = header_rendering_alloc.Y;
             cell_area.Height = header_rendering_alloc.Height;
@@ -144,8 +140,6 @@ namespace Hyena.Data.Gui
         
         private void PaintHeaderCell (Rectangle area, Rectangle clip, int ci, bool dragging)
         {
-            ColumnCell cell = column_cache[ci].Column.HeaderCell;
-            
             if (dragging) {
                 Theme.DrawColumnHighlight (cairo_context, area, 
                     CairoExtensions.ColorShade (Theme.Colors.GetWidgetColor (GtkColorClass.Dark, StateType.Normal), 0.9));
@@ -162,15 +156,7 @@ namespace Hyena.Data.Gui
                 cairo_context.Stroke ();
             }
             
-            ColumnHeaderCellText column_cell = cell as ColumnHeaderCellText;
-            ISortable sortable = Model as ISortable;
-            if (column_cell != null && sortable != null) {
-                ISortableColumn sort_column = column_cache[ci].Column as ISortableColumn;
-                column_cell.HasSort = sort_column != null && sortable.SortColumn == sort_column;
-                if (column_cell.HasSort) {
-                    sort_column_index = ci;
-                }
-            }
+            ColumnCell cell = column_cache[ci].Column.HeaderCell;
             
             if (cell != null) {
                 cairo_context.Save ();
@@ -191,6 +177,7 @@ namespace Hyena.Data.Gui
                 return;
             }
             
+            // Render the sort effect to the GdkWindow.
             if (sort_column_index != -1 && (!pressed_column_is_dragging || pressed_column_index != sort_column_index)) {
                 CachedColumn col = column_cache[sort_column_index];
                 Theme.DrawRowRule (cairo_context, list_rendering_alloc.X + col.X1, header_rendering_alloc.Bottom + Theme.BorderWidth,
@@ -224,6 +211,7 @@ namespace Hyena.Data.Gui
             // Render the background to the primary canvas.
             Theme.DrawListBackground (cairo_context, canvas_alloc, true);
             
+            // Render the sort effect to the canvas.
             if (sort_column_index != -1 && (!pressed_column_is_dragging || pressed_column_index != sort_column_index)) {
                 CachedColumn col = column_cache[sort_column_index];
                 Theme.DrawRowRule (cairo_context, col.X1, 0, col.Width, canvas_alloc.Height);
@@ -240,7 +228,7 @@ namespace Hyena.Data.Gui
                 // render the new stuff in situ at the bottom.
                 int delta = (last_row - canvas_last_row) * RowHeight;
                 canvas1.DrawDrawable (Style.BaseGC (StateType.Normal), canvas2, 0, delta, 0, 0,
-                    list_rendering_alloc.Width, rows_in_view - delta);
+                    list_rendering_alloc.Width, canvas_alloc.Height - delta);
                 
                 // If the bottom of the stuff we're shifting up is part of a selection
                 // that continues down into the new stuff, be sure that we render the
@@ -256,7 +244,7 @@ namespace Hyena.Data.Gui
                 // render the new stuff in situ at the top.
                 int delta = (canvas_first_row - first_row) * RowHeight;
                 canvas1.DrawDrawable (Style.BaseGC (StateType.Normal), canvas2, 0, 0, 0, delta,
-                    list_rendering_alloc.Width, rows_in_view - delta);
+                    list_rendering_alloc.Width, canvas_alloc.Height - delta);
                 
                 // If the top of the stuff we're shifting down is part of a selection
                 // that continues up into the new stuff, be sure that we render the

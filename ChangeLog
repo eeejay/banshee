@@ -1,5 +1,20 @@
 2008-03-22  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Moved the ColumnHeaderCellText.HasSort determination from
+	PaintHeaderCell into RegenerateColumnCache. This means we run that
+	code less often.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Fixed stupid bug in rendering which I can't believe I missed.
+	Better, faster, stronger.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Regenerate the column cache after the sort column changes so that
+	we re-assign the HasSort properties of the ColumnHeaderCellText
+
+2008-03-22  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: Added MaxWidth
 	property (currently not used anywhere).
 

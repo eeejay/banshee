@@ -51,6 +51,7 @@ namespace Hyena.Data.Gui
         private static Gdk.Cursor resize_x_cursor = new Gdk.Cursor (Gdk.CursorType.SbHDoubleArrow);
         private static Gdk.Cursor drag_cursor = new Gdk.Cursor (Gdk.CursorType.Fleur);
 
+        private int sort_column_index = -1;
         private int resizing_column_index = -1;
         private int pressed_column_index = -1;
         private int pressed_column_x_start = -1;
@@ -108,13 +109,16 @@ namespace Hyena.Data.Gui
         
         private void RegenerateColumnCache ()
         {
-            if (!IsRealized || column_controller == null) {
+            if (column_controller == null) {
                 return;
             }
             
             if (column_cache == null) {
                 GenerateColumnCache ();
             }
+            
+            ISortable sortable = Model as ISortable;
+            sort_column_index = -1;
             
             for (int i = 0; i < column_cache.Length; i++) {
                 column_cache[i].Width = (int)Math.Round (((double)header_interaction_alloc.Width * column_cache[i].Column.Width));
@@ -123,6 +127,17 @@ namespace Hyena.Data.Gui
                 column_cache[i].ResizeX1 = column_cache[i].X2;
                 column_cache[i].ResizeX2 = column_cache[i].ResizeX1 + 2;
                 column_cache[i].Index = i;
+                
+                if (sortable != null) {
+                    ColumnHeaderCellText column_cell = column_cache[i].Column.HeaderCell as ColumnHeaderCellText;
+                    if (column_cell != null) {
+                        ISortableColumn sort_column = column_cache[i].Column as ISortableColumn;
+                        column_cell.HasSort = sort_column != null && sortable.SortColumn == sort_column;
+                        if (column_cell.HasSort) {
+                            sort_column_index = i;
+                        }
+                    }
+                }
             }
         }
         
@@ -209,10 +224,10 @@ namespace Hyena.Data.Gui
                 return null;
             }
             
-            foreach (CachedColumn column in column_cache) {
-                if (x >= column.ResizeX1 - 2 && 
-                    x <= column.ResizeX2 + 2) {
-                    return column.Column;
+            for (int i = 0; i < column_cache.Length - 1; i++) {
+                if (x >= column_cache[i].ResizeX1 - 2 && 
+                    x <= column_cache[i].ResizeX2 + 2) {
+                    return column_cache[i].Column;
                 }
             }
             
