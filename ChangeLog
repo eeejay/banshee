@@ -1,5 +1,11 @@
 2008-03-24  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/gst-playback-0.10.c: Disable the equalizer
+	temporarily as it is causing a few audio problems for some people
+	and is not properly implemented in the pipeline (BGO #523878)
+
+2008-03-24  Aaron Bockover  <abock@gnome.org>
+
 	* libbanshee/gst-playback-0.10.c:
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:

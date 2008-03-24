@@ -439,7 +439,7 @@ gst_playback_construct(GstPlayback *engine)
     GstElement *videosink;
     GstElement *audiosink;
     GstElement *audiosinkqueue;
-    GstElement *audioconvert;
+    //GstElement *audioconvert;
     GstPad *teepad;
     
     g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
@@ -465,17 +465,17 @@ gst_playback_construct(GstPlayback *engine)
     audiosinkqueue = gst_element_factory_make("queue", "audiosinkqueue");
     g_return_val_if_fail(audiosinkqueue != NULL, FALSE);
     
-    audioconvert = gst_element_factory_make("audioconvert", "audioconvert");
-    engine->equalizer = gst_element_factory_make("equalizer-10bands", "equalizer-10bands");
-    engine->preamp = gst_element_factory_make("volume", "preamp");
+    //audioconvert = gst_element_factory_make("audioconvert", "audioconvert");
+    //engine->equalizer = gst_element_factory_make("equalizer-10bands", "equalizer-10bands");
+    //engine->preamp = gst_element_factory_make("volume", "preamp");
     
     // add elements to custom audio sink
     gst_bin_add(GST_BIN(engine->audiobin), engine->audiotee);
-    if(engine->equalizer != NULL) {
-        gst_bin_add(GST_BIN(engine->audiobin), audioconvert);
-        gst_bin_add(GST_BIN(engine->audiobin), engine->equalizer);
-        gst_bin_add(GST_BIN(engine->audiobin), engine->preamp);
-    }
+    //if(engine->equalizer != NULL) {
+    //    gst_bin_add(GST_BIN(engine->audiobin), audioconvert);
+    //    gst_bin_add(GST_BIN(engine->audiobin), engine->equalizer);
+    //    gst_bin_add(GST_BIN(engine->audiobin), engine->preamp);
+    //}
     gst_bin_add(GST_BIN(engine->audiobin), audiosinkqueue);
     gst_bin_add(GST_BIN(engine->audiobin), audiosink);
    
@@ -488,17 +488,17 @@ gst_playback_construct(GstPlayback *engine)
     gst_pad_link(gst_element_get_request_pad(engine->audiotee, "src0"), 
         gst_element_get_pad(audiosinkqueue, "sink"));
 
-    if (engine->equalizer != NULL)
-    {
-        // link in equalizer, preamp and audioconvert.
-        gst_element_link(audiosinkqueue, engine->preamp);
-        gst_element_link(engine->preamp, engine->equalizer);
-        gst_element_link(engine->equalizer, audioconvert);
-        gst_element_link(audioconvert, audiosink);
-    } else {
-        // link the queue with the real audio sink
+    //if (engine->equalizer != NULL)
+    //{
+    //    //link in equalizer, preamp and audioconvert.
+    //    gst_element_link(audiosinkqueue, engine->preamp);
+    //    gst_element_link(engine->preamp, engine->equalizer);
+    //    gst_element_link(engine->equalizer, audioconvert);
+    //    gst_element_link(audioconvert, audiosink);
+    //} else {
+    //    // link the queue with the real audio sink
         gst_element_link(audiosinkqueue, audiosink);
-    }
+    //}
     
     g_object_set (G_OBJECT (engine->playbin), "audio-sink", engine->audiobin, NULL);
     
