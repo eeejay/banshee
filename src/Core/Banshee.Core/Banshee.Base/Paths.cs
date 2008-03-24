@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2005-2007 Novell, Inc.
+// Copyright (C) 2005-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -35,56 +35,7 @@ using Banshee.Configuration.Schema;
 namespace Banshee.Base
 {
     public class Paths
-    {
-        // TODO: A corlib version of this method will be committed to Mono's Environment.GetFolderPath,
-        // so many many Mono versions in the future we will be able to drop this private copy and
-        // use the pure .NET API - but it's here to stay for now (compat!)
-        private static string ReadXdgUserDir (string key, string fallback)
-        {
-            string home_dir = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
-            string config_dir = Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData);
-            
-            string env_path = Environment.GetEnvironmentVariable (key);
-            if (!String.IsNullOrEmpty (env_path)) {
-                return env_path;
-            }
-
-            string user_dirs_path = Path.Combine (config_dir, "user-dirs.dirs");
-
-            if (!File.Exists (user_dirs_path)) {
-                return Path.Combine (home_dir, fallback);
-            }
-
-            try {
-                using (StreamReader reader = new StreamReader (user_dirs_path)) {
-                    string line;
-                    while ((line = reader.ReadLine ()) != null) {
-                        line = line.Trim ();
-                        int delim_index = line.IndexOf ('=');
-                        if (delim_index > 8 && line.Substring (0, delim_index) == key) {
-                            string path = line.Substring (delim_index + 1).Trim ('"');
-                            bool relative = false;
-
-                            if (path.StartsWith ("$HOME/")) {
-                                relative = true;
-                                path = path.Substring (6);
-                            } else if (path.StartsWith ("~")) {
-                                relative = true;
-                                path = path.Substring (1);
-                            } else if (!path.StartsWith ("/")) {
-                                relative = true;
-                            }
-
-                            return relative ? Path.Combine (home_dir, path) : path;
-                        }
-                    }
-                }
-            } catch (FileNotFoundException) {
-            }
-            
-            return Path.Combine (home_dir, fallback);
-        }
-        
+    {        
         public static string Combine (string first, params string [] components)
         {
             if (String.IsNullOrEmpty (first)) {
@@ -135,17 +86,24 @@ namespace Banshee.Base
             }
         }
         
-        public static string ExtensionsData {
-            get { return Path.Combine (ApplicationData, "extensions"); }
+        private static string application_cache = Path.Combine (XdgBaseDirectorySpec.GetUserDirectory (
+            "XDG_CACHE_HOME", ".cache"), "banshee-1");
+        
+        public static string ApplicationCache {
+            get { return application_cache; }
+        }
+        
+        public static string ExtensionCacheRoot {
+            get { return Path.Combine (ApplicationCache, "extensions"); }
         }
         
         public static string DefaultLibraryPath {
-            get { return ReadXdgUserDir ("XDG_MUSIC_DIR", "Music"); }
+            get { return XdgBaseDirectorySpec.GetUserDirectory ("XDG_MUSIC_DIR", "Music"); }
         }
         
         public static string TempDir {
             get {
-                string dir = Path.Combine (Paths.ApplicationData, "temp");
+                string dir = Path.Combine (ApplicationCache, "temp");
         
                 if (File.Exists (dir)) {
                     File.Delete (dir);

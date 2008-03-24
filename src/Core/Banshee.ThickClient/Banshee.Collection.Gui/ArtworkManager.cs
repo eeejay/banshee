@@ -60,12 +60,12 @@ namespace Banshee.Collection.Gui
             
             // FIXME: Replace with Directory.Move for release
             
+            Directory.CreateDirectory (CoverArtSpec.RootPath);
+            
             string legacy_artwork_path = Path.Combine (Paths.LegacyApplicationData, "covers");
             int artwork_count = 0;
             
             if (Directory.Exists (legacy_artwork_path)) {
-                Directory.CreateDirectory (CoverArtSpec.RootPath);
-                    
                 foreach (string path in Directory.GetFiles (legacy_artwork_path)) {
                     string dest_path = Path.Combine (CoverArtSpec.RootPath, Path.GetFileName (path));
                         

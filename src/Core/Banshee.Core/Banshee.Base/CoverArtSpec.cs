@@ -90,8 +90,8 @@ namespace Banshee.Base
             return Regex.Replace (part, @"[^A-Za-z0-9]*", "").ToLower ();
         }
         
-        private static string root_path =
-            Path.Combine (Environment.GetFolderPath (Environment.SpecialFolder.LocalApplicationData), "album-art");
+        private static string root_path = Path.Combine (XdgBaseDirectorySpec.GetUserDirectory (
+            "XDG_CACHE_HOME", ".cache"),  "album-art");
             
         public static string RootPath {
             get { return root_path; }

@@ -13,6 +13,7 @@ SOURCES =  \
 	Banshee.Base/Resource.cs \
 	Banshee.Base/SafeUri.cs \
 	Banshee.Base/UriList.cs \
+	Banshee.Base/XdgBaseDirectorySpec.cs \
 	Banshee.Collection/AlbumInfo.cs \
 	Banshee.Collection/ArtistInfo.cs \
 	Banshee.Collection/FileTrackInfo.cs \
