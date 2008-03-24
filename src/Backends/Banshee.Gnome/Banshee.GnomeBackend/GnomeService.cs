@@ -48,7 +48,7 @@ namespace Banshee.GnomeBackend
         
         public void Dispose ()
         {
-            if (Browser.OpenHandler == OpenUrl) {
+            if (Browser.OpenHandler == (Banshee.Web.Browser.OpenUrlHandler) OpenUrl) {
                 Browser.OpenHandler = null;
             }
         }
