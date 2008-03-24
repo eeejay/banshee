@@ -28,6 +28,7 @@
 
 using System;
 
+using Mono.Unix;
 using Gtk;
 
 using Banshee.Sources;
@@ -41,23 +42,11 @@ namespace Banshee.NowPlaying
         private NowPlayingSource source;
         private VideoDisplay video_display;
         private Hyena.Widgets.RoundedFrame frame;
-        private Hyena.Gui.AnimatedVBox anim_vbox;
-        
-        private VisualisationConfigBox vis_box;
-        private VisualisationConfigBox old_box;
         
         public NowPlayingInterface ()
         {
             video_display = new VideoDisplay ();
             video_display.Show ();
-            
-            vis_box = new VisualisationConfigBox ();
-            vis_box.BorderWidth = 6;
-            vis_box.Show ();
-            
-            anim_vbox = new Hyena.Gui.AnimatedVBox ();
-            anim_vbox.Spacing = 6;
-            anim_vbox.Show ();
             
             frame = new Hyena.Widgets.RoundedFrame ();
             frame.SetFillColor (new Cairo.Color (0, 0, 0));
@@ -65,29 +54,7 @@ namespace Banshee.NowPlaying
             frame.Add (video_display);
             frame.Show ();
             
-            ShowVisualisationBox ();
-            PackStart (anim_vbox, false, false, 0);
             PackStart (frame, true, true, 0);
-        }
-        
-        public void ShowVisualisationBox ()
-        {
-            if (!anim_vbox.Contains (vis_box)) {
-                if (old_box != null) {
-                    vis_box = new VisualisationConfigBox (old_box);
-                    old_box.Dispose ();
-                }
-                
-                anim_vbox.Add (vis_box);
-            }
-        }
-        
-        public void HideVisualisationBox ()
-        {
-            if (anim_vbox.Contains (vis_box)) {
-                anim_vbox.Remove (vis_box, Hyena.Gui.Easing.QuadraticOut);
-                old_box = vis_box;
-            }
         }
         
 #region ISourceContents

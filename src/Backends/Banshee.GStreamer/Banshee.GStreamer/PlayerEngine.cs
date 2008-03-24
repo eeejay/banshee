@@ -280,12 +280,6 @@ namespace Banshee.GStreamer
             return item;
         }
         
-        public override void SetCurrentVisualisation (string name, int width, int height, int fps)
-        {
-            gst_playback_set_active_visualisation (handle, name, width, height, fps);
-        }
-
-        
         public override ushort Volume {
             get { return (ushort)gst_playback_get_volume (handle); }
             set { 
@@ -347,25 +341,6 @@ namespace Banshee.GStreamer
         
         public override IntPtr VideoWindow {
             set { gst_playback_set_video_window (handle, value); }
-        }
-
-        public override string [] Visualisations {
-            get {
-                // Yes, this is yucky, but it's *much* cleaner than trying
-                // to marshal string arrays nicely. :)
-                
-                string [] ret = null;
-                int count = gst_playback_get_visualisation_count (handle);
-                
-                if (count > 0) {
-                    ret = new string [count];
-                    for (int i = 0; i < count; i++) {
-                        ret [i] = gst_playback_get_visualisation_name (handle, i);
-                    }
-                }
-                
-                return ret;
-            }
         }
         
         public double AmplifierLevel {
@@ -488,16 +463,7 @@ namespace Banshee.GStreamer
         
         [DllImport ("libbanshee")]
         private static extern void gst_playback_expose_video_window (HandleRef engine, IntPtr window, bool direct);
-        
-        [DllImport ("libbanshee")]
-        private static extern void gst_playback_set_active_visualisation (HandleRef engine, string name, int width, int height, int fps);
-        
-        [DllImport ("libbanshee")]
-        private static extern int gst_playback_get_visualisation_count (HandleRef engine);
-        
-        [DllImport ("libbanshee")]
-        private static extern string gst_playback_get_visualisation_name (HandleRef engine, int count);
-        
+                                                                   
         [DllImport ("libbanshee")]
         private static extern void gst_playback_get_error_quarks (out uint core, out uint library, 
             out uint resource, out uint stream);

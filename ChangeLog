@@ -1,3 +1,16 @@
+2008-03-24  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/gst-playback-0.10.c:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VisualisationConfigBox.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying.mdp:
+	* src/Extensions/Banshee.NowPlaying/Makefile.am: Reverted Alexander Hixon's
+	visualization patches from 2008-03-23 since a number of people have been
+	reporting playback issues after this landed - also it had no review
+
 2008-03-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeService.cs: Attempt

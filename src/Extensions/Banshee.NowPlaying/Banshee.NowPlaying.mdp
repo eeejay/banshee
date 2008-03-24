@@ -12,7 +12,6 @@
     <File name="Banshee.NowPlaying/NowPlayingSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.NowPlaying/NowPlayingInterface.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.NowPlaying/VideoDisplay.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.NowPlaying/VisualisationConfigBox.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />

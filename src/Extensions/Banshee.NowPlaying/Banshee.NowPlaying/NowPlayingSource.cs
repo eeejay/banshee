@@ -42,14 +42,11 @@ namespace Banshee.NowPlaying
     public class NowPlayingSource : Source, IDisposable
     {
         private TrackInfo transitioned_track;
-        private NowPlayingInterface nowplaying_interface;
         
         public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 0)
         {
-            nowplaying_interface = new NowPlayingInterface ();
-            
             Properties.SetString ("Icon.Name", "media-playback-start");
-            Properties.Set<ISourceContents> ("Nereid.SourceContents", nowplaying_interface);
+            Properties.Set<ISourceContents> ("Nereid.SourceContents", new NowPlayingInterface ());
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
             
             ServiceManager.SourceManager.AddSource (this);
@@ -66,15 +63,9 @@ namespace Banshee.NowPlaying
         private void OnPlaybackControllerTrackStarted (object o, EventArgs args)
         { 
             TrackInfo current_track = ServiceManager.PlaybackController.CurrentTrack;
-            if (current_track != null && 
+            if (current_track != null && transitioned_track != current_track && 
                 (current_track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
-                if (transitioned_track != current_track) {
-                    ServiceManager.SourceManager.SetActiveSource (this);
-                }
-                
-                nowplaying_interface.HideVisualisationBox ();
-            } else {
-                nowplaying_interface.ShowVisualisationBox ();
+                ServiceManager.SourceManager.SetActiveSource (this);
             }
         }
         

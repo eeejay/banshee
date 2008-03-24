@@ -54,11 +54,6 @@
 #define IS_GST_PLAYBACK(e) (e != NULL)
 #define SET_CALLBACK(cb_name) { if(engine != NULL) { engine->cb_name = cb; } }
 
-// Visualisation defaults
-#define DEFAULT_FPS 20
-#define DEFAULT_WIDTH 320
-#define DEFAULT_HEIGHT 240
-
 typedef struct GstPlayback GstPlayback;
 
 typedef void (* GstPlaybackEosCallback) (GstPlayback *engine);
@@ -83,8 +78,6 @@ struct GstPlayback {
     GstXOverlay *xoverlay;
     GdkWindow *video_window;
     #endif
-    
-    GList *visualisations;
 
     guint iterate_timeout_id;
     gchar *cdda_device;
@@ -439,97 +432,6 @@ gst_playback_bus_element_sync_message (GstBus *bus, GstMessage *message, GstPlay
     #endif
 }
 
-static gboolean
-filter_features (GstPluginFeature * feature, gpointer data)
-{
-    GstElementFactory *f;
-
-    if (!GST_IS_ELEMENT_FACTORY (feature))
-        return FALSE;
-    f = GST_ELEMENT_FACTORY (feature);
-        if (!g_strrstr (gst_element_factory_get_klass (f), "Visualization"))
-    return FALSE;
-
-    return TRUE;
-}
-
-void
-gst_playback_set_active_visualisation (GstPlayback *engine, const gchar *name, gint width, gint height, gint fps)
-{
-    //g_debug ("Setting active visulisation: %s", name);
-    GList *feature;
-    GstElementFactory *tmp;
-    GstElementFactory *fac = NULL;
-    GstElement *vis_bin;
-    GstElement *vis_element;
-    GstElement *vis_capsfilter;
-    GstPad *pad;
-    GstCaps *caps;
-    
-    if (engine == NULL || name == NULL || engine->visualisations == NULL) {
-        return;
-    }
-    
-    for (feature = engine->visualisations; feature; feature = feature->next) {
-        tmp = GST_ELEMENT_FACTORY(feature->data);
-        if (!strcmp(GST_PLUGIN_FEATURE_NAME(tmp), name))
-            fac = tmp;
-    }
-    
-    vis_element = gst_element_factory_create (fac, "vis_element");
-    if (vis_element == NULL) {
-        return;
-    }
-    
-    vis_capsfilter = gst_element_factory_make("capsfilter", "vis_capsfilter");
-    g_return_if_fail(GST_IS_ELEMENT(vis_capsfilter));
-
-    vis_bin = gst_bin_new ("vis_bin");
-    g_return_if_fail(GST_IS_ELEMENT (vis_bin));
-
-    gst_bin_add_many(GST_BIN(vis_bin), vis_element, vis_capsfilter, NULL);
-
-    /* Sink ghostpad */
-    pad = gst_element_get_pad(vis_element, "sink");
-    gst_element_add_pad(vis_bin, gst_ghost_pad_new("sink", pad));
-    gst_object_unref(pad);
-
-    /* Source ghostpad, link with vis_element */
-    pad = gst_element_get_pad(vis_capsfilter, "src");
-    gst_element_add_pad(vis_bin, gst_ghost_pad_new("src", pad));
-    gst_element_link_pads(vis_element, "src", vis_capsfilter, "sink");
-    gst_object_unref (pad);
-
-    /* Get allowed output caps from visualisation element */
-    pad = gst_element_get_pad(vis_element, "src");
-    caps = gst_pad_get_allowed_caps(pad);
-    gst_object_unref(pad);
-
-    /* Can we fixate ? */
-    if (caps && !gst_caps_is_fixed(caps)) {
-        guint i;
-
-        caps = gst_caps_make_writable(caps);
-
-        /* Get visualization size */
-        for (i = 0; i < gst_caps_get_size (caps); ++i) {
-            GstStructure *s = gst_caps_get_structure (caps, i);
-
-            /* Fixate */
-            gst_structure_fixate_field_nearest_int(s, "width", width);
-            gst_structure_fixate_field_nearest_int(s, "height", height);
-            gst_structure_fixate_field_nearest_fraction(s, "framerate", fps, 1);
-        }
-
-        /* set this */
-        g_object_set(vis_capsfilter, "caps", caps, NULL);
-    }
-    
-    if (vis_bin != NULL) {
-        g_object_set (G_OBJECT (engine->playbin), "vis-plugin", vis_bin, NULL);
-    }
-}
-
 static gboolean 
 gst_playback_construct(GstPlayback *engine)
 {
@@ -539,9 +441,6 @@ gst_playback_construct(GstPlayback *engine)
     GstElement *audiosinkqueue;
     GstElement *audioconvert;
     GstPad *teepad;
-    
-    GList *feature;
-    gchar *default_vis;
     
     g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
     
@@ -612,16 +511,6 @@ gst_playback_construct(GstPlayback *engine)
                 g_object_set (G_OBJECT (videosink), "sync", TRUE, NULL);
             }
         }
-    }
-    
-    engine->visualisations = gst_registry_feature_filter(gst_registry_get_default(),
-                           filter_features, FALSE, NULL);
-    
-    // Set first as default
-    if (engine->visualisations != NULL && g_list_length (engine->visualisations) > 0) {
-        feature = g_list_first (engine->visualisations);
-        default_vis = GST_PLUGIN_FEATURE_NAME (GST_ELEMENT_FACTORY (feature->data));
-        gst_playback_set_active_visualisation (engine, default_vis, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_FPS);
     }
     
     g_object_set (G_OBJECT (engine->playbin), "video-sink", videosink, NULL);
@@ -706,8 +595,6 @@ gst_playback_free(GstPlayback *engine)
     g_return_if_fail(IS_GST_PLAYBACK(engine));
     
     g_mutex_free (engine->mutex);
-    
-    g_list_free(engine->visualisations);
     
     if(GST_IS_OBJECT(engine->playbin)) {
         engine->target_state = GST_STATE_NULL;
@@ -968,37 +855,6 @@ gst_playback_get_error_quarks(GQuark *core, GQuark *library, GQuark *resource, G
     *library = GST_LIBRARY_ERROR;
     *resource = GST_RESOURCE_ERROR;
     *stream = GST_STREAM_ERROR;
-}
-
-gchar *
-gst_playback_get_visualisation_name (GstPlayback *engine, gint index)
-{
-    GList *feature;
-    gchar *ret;
-    
-    if (engine == NULL || index < 0) {
-        return NULL;
-    }
-
-    //g_debug ("Getting nth feature %d", index);
-    feature = g_list_nth (engine->visualisations, index);
-    if (feature != NULL) {
-        ret = g_strdup (GST_PLUGIN_FEATURE_NAME (GST_ELEMENT_FACTORY (feature->data)));
-    } else {
-        return NULL;
-    }
-    
-    return ret;
-}
-
-gint
-gst_playback_get_visualisation_count (GstPlayback *engine)
-{
-    if (engine == NULL) {
-        return 0;
-    }
-    
-    return g_list_length (engine->visualisations);
 }
 
 /* Region XOverlay */

@@ -6,8 +6,7 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 SOURCES =  \
 	Banshee.NowPlaying/NowPlayingInterface.cs \
 	Banshee.NowPlaying/NowPlayingSource.cs \
-	Banshee.NowPlaying/VideoDisplay.cs \
-	Banshee.NowPlaying/VisualisationConfigBox.cs
+	Banshee.NowPlaying/VideoDisplay.cs
 
 RESOURCES = Banshee.NowPlaying.addin.xml
 
