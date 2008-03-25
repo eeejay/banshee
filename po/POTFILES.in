@@ -77,7 +77,6 @@ src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs
-src/Extensions/Banshee.Lastfm/banshee-plugin-lastfm.schemas.in
 src/Extensions/Banshee.Lastfm/Resources/lastfm.glade
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs
