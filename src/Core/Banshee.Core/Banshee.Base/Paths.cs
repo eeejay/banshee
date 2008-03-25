@@ -135,5 +135,30 @@ namespace Banshee.Base
         public static string CachedLibraryLocation {
             get { return cached_library_location ?? LibraryLocation; }
         }
+        
+        private static string installed_application_prefix = null;
+        public static string InstalledApplicationPrefix {
+            get {
+                if (installed_application_prefix == null) {
+                    installed_application_prefix = Path.GetDirectoryName (
+                        System.Reflection.Assembly.GetEntryAssembly ().Location);
+                    DirectoryInfo entry_directory = new DirectoryInfo (installed_application_prefix);
+                    
+                    if (entry_directory != null && entry_directory.Parent != null && entry_directory.Parent.Parent != null) {
+                        installed_application_prefix = entry_directory.Parent.Parent.FullName;
+                    }
+                }
+                
+                return installed_application_prefix;
+            }
+        }
+        
+        public static string InstalledApplicationDataRoot {
+            get { return Path.Combine (InstalledApplicationPrefix, "share"); }
+        }
+        
+        public static string InstalledApplicationData {
+            get { return Path.Combine (InstalledApplicationDataRoot, "banshee-1"); }
+        }
     }
 }

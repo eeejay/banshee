@@ -1,5 +1,17 @@
 2008-03-24  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Use
+	InstalledApplicationData to build the catalog path for gettext and 
+	initialize it (whoops) (BGO #523047)
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Added
+	InstalledApplicationPrefix, InstalledApplicationDataRoot, and 
+	InstalledApplicationData properties that are detected at runtime based
+	on the path of the entry assembly (used to figure out datadir, basically,
+	without having to hardcode the paths at compile time)
+
+2008-03-24  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Nereid/Nereid/Client.cs: Implement new ClientId property
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Support
