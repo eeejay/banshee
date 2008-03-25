@@ -125,7 +125,6 @@ namespace Banshee.Lastfm.Radio
             ServiceManager.PlayerEngine.StateChanged += OnPlayerStateChanged;
             lastfm.Connection.StateChanged += HandleConnectionStateChanged;
 
-            Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/LastfmStationSourcePopup");
             Properties.SetString ("SourcePropertiesActionLabel", Catalog.GetString ("Edit Last.fm Station"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Last.fm Station"));
