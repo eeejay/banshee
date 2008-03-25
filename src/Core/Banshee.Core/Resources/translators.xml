@@ -38,6 +38,7 @@
   </language>
   <language code="es" name="Spanish">
     <person>Maria Majadas</person>
+    <person>Andrés Herrera</person>
     <person>Jorge González</person>
     <person>Francisco Javier F. Serrador</person>
   </language>
@@ -93,6 +94,7 @@
   </language>
   <language code="pl" name="Polish">
     <person>Tomasz Dominikowski</person>
+    <person>wadim dziedzic</person>
   </language>
   <language code="pt" name="Portuguese">
     <person>Filipe Gomes</person>

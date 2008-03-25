@@ -79,6 +79,14 @@ namespace Banshee.NowPlaying
             get { return 0; }
         }
 
+        public override bool CanRename {
+            get { return false; }
+        }
+
+        public override bool CanSearch {
+            get { return false; }
+        }
+
 #endregion
 
     }
