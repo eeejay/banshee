@@ -214,6 +214,8 @@ namespace Hyena.Data.Gui
                     even_distribution) / (double)list_rendering_alloc.Width;
             }
             
+            ColumnController.QueueUpdate ();
+            
             RegenerateColumnCache ();
             InvalidateListView ();
         }

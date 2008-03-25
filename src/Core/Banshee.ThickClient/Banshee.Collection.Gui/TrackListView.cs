@@ -49,28 +49,29 @@ namespace Banshee.Collection.Gui
 
         public TrackListView () : base ()
         {
-            column_controller = new PersistentColumnController ("track_view_columns");
+            column_controller = new PersistentColumnController (String.Format ("{0}.{1}", 
+                Banshee.ServiceStack.Application.ActiveClient.ClientId, "track_view_columns"));
 
-            SortableColumn artist_column = new SortableColumn (Catalog.GetString ("Artist"), new ColumnCellText ("ArtistName", true), 0.225, "Artist");
+            SortableColumn artist_column = new SortableColumn (Catalog.GetString ("Artist"), new ColumnCellText ("ArtistName", true), 0.225, "Artist", true);
 
             column_controller.AddRange (
-                new Column (null, "indicator", new ColumnCellPlaybackIndicator (null), 0.05),
-                new SortableColumn (Catalog.GetString ("Track"), new ColumnCellTrackNumber ("TrackNumber", true), 0.10, "Track"),
-                new SortableColumn (Catalog.GetString ("Title"), new ColumnCellText ("TrackTitle", true), 0.25, "Title"),
+                new Column (null, "indicator", new ColumnCellPlaybackIndicator (null), 0.05, true),
+                new SortableColumn (Catalog.GetString ("Track"), new ColumnCellTrackNumber ("TrackNumber", true), 0.10, "Track", true),
+                new SortableColumn (Catalog.GetString ("Title"), new ColumnCellText ("TrackTitle", true), 0.25, "Title", true),
                 artist_column,
-                new SortableColumn (Catalog.GetString ("Album"), new ColumnCellText ("AlbumTitle", true), 0.225, "Album"),
-                new SortableColumn (Catalog.GetString ("Duration"), new ColumnCellDuration ("Duration", true), 0.15, "Duration"),
+                new SortableColumn (Catalog.GetString ("Album"), new ColumnCellText ("AlbumTitle", true), 0.225, "Album", true),
+                new SortableColumn (Catalog.GetString ("Composer"), new ColumnCellText ("Composer", true), 0.25, "Composer", false),
+                new SortableColumn (Catalog.GetString ("Duration"), new ColumnCellDuration ("Duration", true), 0.15, "Duration", true),
                 
-                new SortableColumn (Catalog.GetString ("Year"), new ColumnCellText ("Year", true), 0.15, "Year"),
-                new SortableColumn (Catalog.GetString ("Genre"), new ColumnCellText ("Genre", true), 0.25, "Genre"),
-                new SortableColumn (Catalog.GetString ("Play Count"), new ColumnCellText ("PlayCount", true), 0.15, "PlayCount"),
-                new SortableColumn (Catalog.GetString ("Skip Count"), new ColumnCellText ("SkipCount", true), 0.15, "SkipCount"),
+                new SortableColumn (Catalog.GetString ("Year"), new ColumnCellText ("Year", true), 0.15, "Year", false),
+                new SortableColumn (Catalog.GetString ("Genre"), new ColumnCellText ("Genre", true), 0.25, "Genre", false),
+                new SortableColumn (Catalog.GetString ("Play Count"), new ColumnCellText ("PlayCount", true), 0.15, "PlayCount", false),
+                new SortableColumn (Catalog.GetString ("Skip Count"), new ColumnCellText ("SkipCount", true), 0.15, "SkipCount", false),
                 //new SortableColumn ("Rating", new RatingColumnCell (null, true), 0.15, "Rating"),
-                new SortableColumn (Catalog.GetString ("Last Played"), new ColumnCellDateTime ("LastPlayed", true), 0.15, "LastPlayedStamp"),
-                new SortableColumn (Catalog.GetString ("Last Skipped"), new ColumnCellDateTime ("LastSkipped", true), 0.15, "LastSkippedStamp"),
-                new SortableColumn (Catalog.GetString ("Date Added"), new ColumnCellDateTime ("DateAdded", true), 0.15, "DateAddedStamp"),
-                new SortableColumn (Catalog.GetString ("Location"), new ColumnCellText ("Uri", true), 0.15, "Uri"),
-                new SortableColumn (Catalog.GetString ("Composer"), new ColumnCellText ("Composer", true), 0.25, "Composer")
+                new SortableColumn (Catalog.GetString ("Last Played"), new ColumnCellDateTime ("LastPlayed", true), 0.15, "LastPlayedStamp", false),
+                new SortableColumn (Catalog.GetString ("Last Skipped"), new ColumnCellDateTime ("LastSkipped", true), 0.15, "LastSkippedStamp", false),
+                new SortableColumn (Catalog.GetString ("Date Added"), new ColumnCellDateTime ("DateAdded", true), 0.15, "DateAddedStamp", false),
+                new SortableColumn (Catalog.GetString ("Location"), new ColumnCellText ("Uri", true), 0.15, "Uri", false)
             );
             
             column_controller.Load ();

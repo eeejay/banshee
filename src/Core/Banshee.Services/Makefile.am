@@ -92,6 +92,7 @@ SOURCES =  \
 	Banshee.Query/SmartPlaylistQueryValue.cs \
 	Banshee.Query/YearQueryValue.cs \
 	Banshee.ServiceStack/Application.cs \
+	Banshee.ServiceStack/Client.cs \
 	Banshee.ServiceStack/DBusServiceManager.cs \
 	Banshee.ServiceStack/IDBusExportable.cs \
 	Banshee.ServiceStack/IExtensionService.cs \

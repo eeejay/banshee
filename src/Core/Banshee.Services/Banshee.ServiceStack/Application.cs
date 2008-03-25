@@ -29,6 +29,7 @@
 
 using System;
 using System.Reflection;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Library;
@@ -50,7 +51,9 @@ namespace Banshee.ServiceStack
     public static class Application
     {   
         public static event ShutdownRequestHandler ShutdownRequested;
-        
+
+        private static Stack<Client> running_clients = new Stack<Client> ();
+
         public static void Run ()
         {
             Banshee.Base.PlatformHacks.TrapMonoJitSegv ();
@@ -89,12 +92,30 @@ namespace Banshee.ServiceStack
             }
         }
         
-        private static bool OnShutdownRequested()
+        public static void PushClient (Client client)
+        {
+            lock (running_clients) {
+                running_clients.Push (client);
+            }
+        }
+        
+        public static Client PopClient ()
+        {
+            lock (running_clients) {
+                return running_clients.Pop ();
+            }
+        }
+        
+        public static Client ActiveClient {
+            get { lock (running_clients) { return running_clients.Peek (); } } 
+        }
+        
+        private static bool OnShutdownRequested ()
         {
             ShutdownRequestHandler handler = ShutdownRequested;
             if (handler != null) {
                 foreach (ShutdownRequestHandler del in handler.GetInvocationList ()) {
-                    if(!del ()) {
+                    if (!del ()) {
                         return false;
                     }
                 }
@@ -143,6 +164,12 @@ namespace Banshee.ServiceStack
         private static void Dispose ()
         {
             ServiceManager.Shutdown ();
+            
+            lock (running_clients) {
+                while (running_clients.Count > 0) {
+                    running_clients.Pop ().Dispose ();
+                }
+            }
         }
         
         private static ShutdownRequestHandler shutdown_prompt_handler = null;

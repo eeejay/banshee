@@ -1,5 +1,38 @@
 2008-03-24  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Nereid/Nereid/Client.cs: Implement new ClientId property
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Support
+	a stack of client objects; ideally we'll be able to run multiple clients
+	in a single application instance (think mini mode) - this is probably
+	not well thought out, but it's a start
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Client.cs: Added a new
+	base Client class that is not GUI based
+	
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:
+	Support loading/saving the column widths
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Set up some good visibility defaults for the columns
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Extend the
+	new Client class and push itself into the application client stack
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/SortableColumn.cs: Some new ctor
+	signatures
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: Some new ctor signatures
+	and removed the IsVisible property
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs: Added a 
+	QueueUpdate method
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Call QueueUpdate on the column controller when a column is resized
+
+2008-03-24  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs: Use XDG_CACHE_HOME
 	as the base directory for the album art disk cache
 

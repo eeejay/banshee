@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,34 +26,22 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System.IO;
+using System;
 
-namespace Nereid
+namespace Banshee.ServiceStack
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public abstract class Client : IDisposable
     {
-        public static void Main ()
+        public Client ()
         {
-            // This could go into GtkBaseClient, but it's probably something we
-            // should really only support at each client level
-            string user_gtkrc = Path.Combine (Banshee.Base.Paths.ApplicationData, "gtkrc"); 
-            if (File.Exists (user_gtkrc) && !Banshee.Base.ApplicationContext.CommandLine.Contains ("no-gtkrc")) {
-                Gtk.Rc.AddDefaultFile (user_gtkrc);
-            } 
-            
-            // Boot the client
-            Banshee.Gui.GtkBaseClient.Entry<Client> ();
         }
         
-        protected override void OnRegisterServices ()
+        public virtual void Dispose ()
         {
-            // Register the main interface
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
         }
         
-        public override string ClientId {
-            get { return "nereid"; }
+        public abstract string ClientId {
+            get; 
         }
     }
 }
-

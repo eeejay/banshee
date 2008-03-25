@@ -38,14 +38,14 @@ namespace Hyena.Data.Gui
         private string sort_key;
         private SortType sort_type;
         
-        public SortableColumn(string title, ColumnCell cell, double width, string sort_key) : 
-            base(title, cell, width)
+        public SortableColumn(string title, ColumnCell cell, double width, string sort_key, bool visible) : 
+            base(title, cell, width, visible)
         {
             this.sort_key = sort_key;
         }
         
-        public SortableColumn(ColumnCell header_cell, string title, ColumnCell cell, double width, string sort_key) :
-            base(header_cell, title, cell, width)
+        public SortableColumn(ColumnCell header_cell, string title, ColumnCell cell, double width, string sort_key, bool visible) :
+            base(header_cell, title, cell, width, visible)
         {
             this.sort_key = sort_key;
         }

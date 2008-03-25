@@ -45,7 +45,6 @@ namespace Hyena.Data.Gui
         private int maxWidth = Int32.MaxValue;
         private double minRelativeWidth = 0;
         private double relativeWidth = 0;
-        private bool isVisible = true;
         
         public Column (ColumnDescription description) :
             this (description, new ColumnCellText (description.Property, true))
@@ -53,18 +52,28 @@ namespace Hyena.Data.Gui
         }
         
         public Column (ColumnDescription description, ColumnCell cell) :
-            this (description.Title, cell, description.Width)
+            this (description.Title, cell, description.Width, description.Visible)
         {
-            Visible = description.Visible;
         }
         
-        public Column (string title, ColumnCell cell, double width) : this (null, title, cell, width)
+        public Column (string title, ColumnCell cell, double width) 
+            : this (null, title, cell, width, true)
+        {
+        }
+        
+        public Column (string title, ColumnCell cell, double width, bool visible) 
+            : this (null, title, cell, width, visible)
         {
             this.header_cell = new ColumnHeaderCellText(HeaderCellDataHandler);
         }
         
-        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width) :
-            base (cell.Property, title, width, true)
+        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width)
+            : this (header_cell, title, cell, width, true)
+        {
+        }
+        
+        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width, bool visible)
+            : base (cell.Property, title, width, visible)
         {
             this.header_cell = header_cell;
             PackStart(cell);
@@ -128,20 +137,6 @@ namespace Hyena.Data.Gui
             set { relativeWidth = value; }
         }
 
-        public bool IsVisible
-        {
-            get { return isVisible; }
-            set
-            {
-                bool old = isVisible;
-                isVisible = value;
-
-                if (value != old) {
-                    OnVisibilityChanged ();
-                }
-            }
-        }
-        
         public string Id {
             get { return StringUtil.CamelCaseToUnderCase (GetCell (0).Property); }
         }

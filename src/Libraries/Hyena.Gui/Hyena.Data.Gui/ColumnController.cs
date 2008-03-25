@@ -51,6 +51,11 @@ namespace Hyena.Data.Gui
             }
         }
         
+        public virtual void QueueUpdate ()
+        {
+            OnUpdated ();
+        }
+        
         public void Clear ()
         {
             lock (this) {

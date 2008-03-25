@@ -36,7 +36,7 @@ using Banshee.Gui.Dialogs;
 
 namespace Banshee.Gui
 {
-    public abstract class GtkBaseClient
+    public abstract class GtkBaseClient : Client
     {
         private static Type client_type; 
         
@@ -101,6 +101,8 @@ namespace Banshee.Gui
             Application.IdleTimeoutRemoveHandler = IdleTimeoutRemove;
             
             // Start the core boot process
+            
+            Application.PushClient (this);
             Application.Run ();
             
             Log.Notify += OnLogNotify;

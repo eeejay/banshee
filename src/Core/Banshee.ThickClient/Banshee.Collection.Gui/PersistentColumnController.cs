@@ -53,8 +53,9 @@ namespace Banshee.Collection.Gui
             lock (this) {
                 foreach (Column column in this) {
                     if (column.Id != null) {
-                        column.Visible = ConfigurationClient.Get<bool> (MakeNamespace (column.Id), 
-                            "visible", column.Visible);
+                        string @namespace = MakeNamespace (column.Id); 
+                        column.Visible = ConfigurationClient.Get<bool> (@namespace, "visible", column.Visible);
+                        column.Width = ConfigurationClient.Get<double> (@namespace, "width", column.Width);
                     }
                 }
                 
@@ -92,6 +93,7 @@ namespace Banshee.Collection.Gui
             string @namespace = MakeNamespace (column.Id);
             ConfigurationClient.Set<int> (@namespace, "order", index);
             ConfigurationClient.Set<bool> (@namespace, "visible", column.Visible);
+            ConfigurationClient.Set<double> (@namespace, "width", column.Width);
         }
         
         protected override void OnUpdated ()
