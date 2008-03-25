@@ -1,3 +1,8 @@
+2008-03-25  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Emergency fix0rz!!1!
+
 2008-03-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
