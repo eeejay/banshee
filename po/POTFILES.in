@@ -42,7 +42,6 @@ src/Core/Banshee.Services/Banshee.Sources/Source.cs
 src/Core/Banshee.Services/Banshee.Web/Browser.cs
 src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileComboBox.cs
 src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs
-src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs
