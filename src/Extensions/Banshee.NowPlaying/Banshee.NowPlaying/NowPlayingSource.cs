@@ -45,7 +45,7 @@ namespace Banshee.NowPlaying
         
         public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 0)
         {
-            Properties.SetString ("Icon.Name", "media-playback-start");
+            Properties.SetString ("Icon.Name", "applications-multimedia");
             Properties.Set<ISourceContents> ("Nereid.SourceContents", new NowPlayingInterface ());
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
             

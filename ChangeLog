@@ -1,3 +1,17 @@
+2008-03-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Change icon to application-multimedia.  Not perfect, but at least not
+	confusing with the play button.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Override
+	clear, calling base and resetting the first_order_id, fixing bug in
+	IndexOf that was causing playback issues with smart playlists.
+
+	* src/Libraries/Hyena/Hyena.Data/ArrayModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data/DictionaryModelCache.cs:  Remove lock
+	around Clear method since now done in subclass.
+
 2008-03-25  Wouter Bolsterlee  <wbolster@svn.gnome.org>
 
 	reviewed by: Gabriel Burt  <gabriel.burt@gmail.com>

@@ -69,10 +69,8 @@ namespace Hyena.Data
 
         public override void Clear ()
         {
-            lock (this) {
-                offset = -1;
-                limit = 0;
-            }
+            offset = -1;
+            limit = 0;
         }
     }
 }

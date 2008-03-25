@@ -253,6 +253,13 @@ namespace Hyena.Data.Sqlite
                 Clear ();
                 //Log.DebugFormat ("Reloading {0} with {1}", model, last_reload_command.Text);
                 connection.Execute (last_reload_command);
+            }
+        }
+
+        public override void Clear ()
+        {
+            lock (this) {
+                base.Clear ();
                 first_order_id = -1;
             }
         }
