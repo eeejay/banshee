@@ -306,6 +306,11 @@ namespace Nereid
                 }
                 composite_view.SetSource (source);
                 composite_view.TrackModel.Reloaded += HandleTrackModelReloaded;
+                PersistentColumnController column_controller = 
+                    composite_view.TrackView.ColumnController as PersistentColumnController;
+                if (column_controller != null) {
+                    column_controller.Source = source;
+                }
                 view_container.Content = composite_view;
                 view_container.Show ();
             } else if (source is Hyena.Data.IObjectListModel) {

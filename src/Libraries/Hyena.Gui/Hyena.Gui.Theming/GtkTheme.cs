@@ -248,7 +248,7 @@ namespace Hyena.Gui.Theming
         
         public override void DrawRowRule(Cairo.Context cr, int x, int y, int width, int height)
         {
-            cr.Color = rule_color;
+            cr.Color = new Cairo.Color (rule_color.R, rule_color.G, rule_color.B, Context.FillAlpha);
             cr.Rectangle (x, y, width, height);
             cr.Fill ();
         }

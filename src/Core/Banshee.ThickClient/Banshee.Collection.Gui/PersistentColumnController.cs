@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 
 using Hyena.Data.Gui;
+using Banshee.Sources;
 using Banshee.Configuration;
 
 namespace Banshee.Collection.Gui
@@ -38,6 +39,31 @@ namespace Banshee.Collection.Gui
     {
         private string root_namespace;
         private bool loaded = false;
+        
+        private string source_id;
+        private Source source;
+        public Source Source {
+            get { return source; }
+            set { 
+                if (source == value) {
+                    return;
+                }
+                
+                if (source != null) {
+                    Save ();
+                }
+                
+                source = value;
+                source_id = null;
+                
+                if (source != null) {
+                    // FIXME: Build a real source ID based on the source's primary source
+                    source_id = "default";
+                    source_id = source_id.ToLower ().Replace ('.', '_');
+                    Load ();
+                }
+            }
+        }
         
         public PersistentColumnController (string rootNamespace) : base ()
         {
@@ -49,8 +75,12 @@ namespace Banshee.Collection.Gui
         }
         
         public void Load ()
-        {
+        {    
             lock (this) {
+                if (source == null) {
+                    return;
+                }
+                
                 foreach (Column column in this) {
                     if (column.Id != null) {
                         string @namespace = MakeNamespace (column.Id); 
@@ -80,6 +110,10 @@ namespace Banshee.Collection.Gui
         public void Save ()
         {
             lock (this) {
+                if (source == null) {
+                    return;
+                }
+            
                 for (int i = 0; i < Count; i++) {
                     if (Columns[i].Id != null) {
                         Save (Columns[i], i);
@@ -107,7 +141,7 @@ namespace Banshee.Collection.Gui
         
         private string MakeNamespace (string name)
         {
-            return String.Format ("{0}.{1}", root_namespace, name);
+            return String.Format ("{0}.{1}.{2}", root_namespace, source_id, name);
         }
         
         public override bool EnableColumnMenu {

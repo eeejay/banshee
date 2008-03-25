@@ -1,3 +1,19 @@
+2008-03-25  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	Set the source on the track view column controller when it changes
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:
+	Preliminary work to allow column settings to persist against each primary
+	source; all settings go to the default save location for now
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Set the FillAlpha when rendering the sort rectangle for the column so it
+	blends with the row rules
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Render the
+	row rule with a set FillAlpha
+
 2008-03-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
