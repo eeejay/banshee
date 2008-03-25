@@ -215,7 +215,7 @@ namespace Hyena.Data.Gui
             if (sort_column_index != -1 && (!pressed_column_is_dragging || pressed_column_index != sort_column_index)) {
                 CachedColumn col = column_cache[sort_column_index];
                 Theme.PushContext ();
-                Theme.Context.FillAlpha = 0.6;
+                Theme.Context.FillAlpha = 0.5;
                 Theme.DrawRowRule (cairo_context, col.X1, 0, col.Width, canvas_alloc.Height);
                 Theme.PopContext ();
             }
