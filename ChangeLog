@@ -1,3 +1,21 @@
+2008-03-25  Aaron Bockover  <abock@gnome.org>
+
+	* build/Makefile.am: Removed the old .pc file, SUBDIRS the new pkg-config 
+
+	* build/pkg-config/Makefile.am: Generate .pc files from the .pc.in files
+
+	* build/pkg-config/banshee-1-core.pc.in:
+	* build/pkg-config/banshee-1-hyena-gui.pc.in:
+	* build/pkg-config/banshee-1-hyena.pc.in:
+	* build/pkg-config/banshee-1-lastfm-gui.pc.in:
+	* build/pkg-config/banshee-1-lastfm.pc.in:
+	* build/pkg-config/banshee-1-mono-media.pc.in:
+	* build/pkg-config/banshee-1-services.pc.in:
+	* build/pkg-config/banshee-1-thickclient.pc.in: .pc files that represent
+	the entire assembly layout of the core Banshee Media Framework
+
+	* configure.ac: Bumped version
+
 2008-03-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:

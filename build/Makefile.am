@@ -1,10 +1,7 @@
-SUBDIRS = m4
+SUBDIRS = pkg-config m4
 
 GCONF_SCHEMA_EXTRACTOR_ASSEMBLY = gconf-schema-extractor.exe
 TRANSLATOR_EXTRACTOR_ASSEMBLY = translator-extractor.exe
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = banshee-1.pc
 
 bansheedir = $(pkglibdir)
 banshee_SCRIPTS = $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY)
@@ -24,10 +21,8 @@ EXTRA_DIST = \
 	icon-theme-installer \
 	GConfSchemaExtractor.cs \
 	TranslatorExtractor.cs \
-	gconf-schema-rules \
-	banshee-1.pc.in
+	gconf-schema-rules
 
 CLEANFILES = *.exe *.mdb
-DISTCLEANFILES = banshee-preview.pc
 MAINTAINERCLEANFILES = Makefile.in
 

@@ -2,8 +2,8 @@ dnl Automake setup
 
 # 0.98.* = Alpha *
 # 0.99.* = Beta *
-AC_INIT([banshee-1], [0.98.1]) 
-ASM_DISPLAY_VERSION="1.0 Alpha 1"
+AC_INIT([banshee-1], [0.98.2]) 
+ASM_DISPLAY_VERSION="1.0 Alpha 2"
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
@@ -105,7 +105,7 @@ Makefile
 
 build/Makefile
 build/m4/Makefile
-build/banshee-1.pc
+build/pkg-config/Makefile
 
 data/Makefile
 data/org.bansheeproject.Banshee.service
