@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-16 20:34+0100\n"
-"PO-Revision-Date: 2008-03-16 20:34+0100\n"
+"POT-Creation-Date: 2008-03-25 20:52+0100\n"
+"PO-Revision-Date: 2008-03-25 20:52+0100\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -275,11 +275,11 @@ msgstr "Aanmaken pipeline mislukt"
 msgid "Could not initialize GStreamer library"
 msgstr "Initialisatie GStreamer-bibliotheek mislukt"
 
-#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:187
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:192
 msgid "Unknown Error"
 msgstr "Onbekend fout"
 
-#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:245
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:250
 #: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:114
 msgid "Buffering"
 msgstr "Buffer vullen"
@@ -320,16 +320,13 @@ msgstr "Albumtitel"
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:110
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:53
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:112
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:66
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:48
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:781
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:67
 msgid "Genre"
 msgstr "Genre"
 
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:111
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:105
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:65
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:808
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:66
 msgid "Year"
 msgstr "Jaar"
 
@@ -342,8 +339,6 @@ msgstr "Filtere op {0}"
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:51
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:77
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:55
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:47
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:778
 msgid "Artist"
 msgstr "Artiest"
 
@@ -351,16 +346,12 @@ msgstr "Artiest"
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:50
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:84
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:62
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:46
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:780
 msgid "Album"
 msgstr "Album"
 
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:97
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:52
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:60
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:49
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:779
 msgid "Title"
 msgstr "Titel"
 
@@ -380,17 +371,17 @@ msgstr "Aantal (ongesorteerd)"
 msgid "Number (unsorted)"
 msgstr "Aantal (gesorteerd)"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:148
-#: ../src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:65
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:156
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:69
 msgid "Unknown Artist"
 msgstr "Onbekende artiest"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:157
-#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:66
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:165
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:71
 msgid "Unknown Album"
 msgstr "Onbekend album"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:166
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:174
 msgid "Unknown Title"
 msgstr "Onbekende titel"
 
@@ -401,19 +392,17 @@ msgstr "Tags voor {0} opslaan"
 
 # Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:76
-msgid "Scanning for songs"
-msgstr "Zoeken naar muziek"
+msgid "Scanning for media"
+msgstr "Zoeken naar media"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:115
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:539
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:570
 msgid "Scanning..."
 msgstr "Bezig met zoeken…"
 
-# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:277
-#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:54
-msgid "Importing Songs"
-msgstr "Muziek importeren"
+msgid "Importing Media"
+msgstr "Media importeren"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:283
 #: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:113
@@ -426,18 +415,18 @@ msgstr "Er worden momenteel bestanden geïmporteerd. Wilt u dit stoppen?"
 msgid "Importing {0} of {1}"
 msgstr "Importeren van {0} van {1}"
 
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:211
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:212
 msgid "Upgrading your Banshee Database"
 msgstr "Banshee-database opwaarderen"
 
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:212
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:213
 msgid ""
 "Please wait while your old Banshee database is migrated to the new format."
 msgstr ""
 "Even geduld tijdens het omzetten van de oude Banshee-database naar het "
 "nieuwe formaat."
 
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:538
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:569
 msgid "Refreshing Metadata"
 msgstr "Metadata bijwerken"
 
@@ -445,13 +434,14 @@ msgstr "Metadata bijwerken"
 msgid "Home Directory"
 msgstr "Persoonlijke map"
 
-#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:49
-msgid "Library"
-msgstr "Bibliotheek"
-
-#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:55
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:52
 msgid "Remove From Library"
 msgstr "Uit bibliotheek verwijderen"
+
+# Vrij vertaald (Wouter Bolsterlee)
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:54
+msgid "Importing Songs"
+msgstr "Muziek importeren"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:107
 #, csharp-format
@@ -491,8 +481,7 @@ msgid "Amarok"
 msgstr "Amarok"
 
 #: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:57
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:187
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:789
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:194
 msgid "Playlist"
 msgstr "Afspeellijst"
 
@@ -507,7 +496,7 @@ msgstr "Afspeellijst verwijderen"
 #: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:326
 #: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:332
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:104
-#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:57
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:605
 msgid "New Playlist"
 msgstr "Nieuwe afspeellijst"
 
@@ -524,69 +513,54 @@ msgid "Shoutcast Playlist version 2 (*.pls)"
 msgstr "Shoutcast-afspeellijst versie 2 (*.pls)"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:46
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:45
 msgid "Random"
 msgstr "Willekeurig"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:55
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:50
 msgid "Highest Rating"
 msgstr "Hoogste waardering"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:56
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:51
 msgid "Lowest Rating"
 msgstr "Laagste waardering"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:58
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:53
 msgid "Most Often Played"
 msgstr "Meest afgespeeld"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:59
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:52
 msgid "Least Often Played"
 msgstr "Minst afgespeeld"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:61
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:56
 msgid "Most Recently Played"
 msgstr "Meest recent afgespeeld"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:62
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:57
 msgid "Least Recently Played"
 msgstr "Minst recent afgespeeld"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:64
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:54
 msgid "Most Recently Added"
 msgstr "Meest recent toegevoegd"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:65
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:55
 msgid "Least Recently Added"
 msgstr "Minst recent toegevoegd"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:69
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:62
-msgid "songs"
-msgstr "nummers"
+msgid "items"
+msgstr "items"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:70
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:63
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs:61
 msgid "minutes"
 msgstr "minuten"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:71
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:64
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs:62
 msgid "hours"
 msgstr "uren"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:72
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:65
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:61
 msgid "MB"
 msgstr "MB"
@@ -681,6 +655,7 @@ msgid "genre"
 msgstr "genre"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:118
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:63
 msgid "Composer"
 msgstr "Componist"
 
@@ -690,10 +665,10 @@ msgid "composer"
 msgstr "componist"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:124
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:806
 msgid "Rating"
 msgstr "Waardering"
 
+#. , typeof(NullQueryValue)},
 #. Translators: These are unique search fields.  Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:126
 msgid "rating"
@@ -704,8 +679,7 @@ msgid "stars"
 msgstr "sterren"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:131
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:67
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:785
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:68
 msgid "Play Count"
 msgstr "Aantal maal gespeeld"
 
@@ -724,7 +698,7 @@ msgid "listens"
 msgstr "geluisterd"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:138
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:68
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:69
 msgid "Skip Count"
 msgstr "Aantal maal doorgespoeld"
 
@@ -772,8 +746,7 @@ msgid "location"
 msgstr "locatie"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:159
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:63
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:784
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:64
 msgid "Duration"
 msgstr "Duur"
 
@@ -829,88 +802,113 @@ msgid "playedon"
 msgstr "gespeeldop"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:180
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:71
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:782
+msgid "Last Skipped Date"
+msgstr "Laatst overgeslagen"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+msgid "lastskipped"
+msgstr "laatstovergeslagen"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+msgid "skipped"
+msgstr "overgeslagen"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+msgid "skippedon"
+msgstr "overgeslagenop"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:187
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:73
 msgid "Date Added"
 msgstr "Datum van toevoegen"
 
 #. Translators: These are unique search fields.  Please, no spaces. Blank ok.
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:189
 msgid "added"
 msgstr "toevoegdatum"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:189
 msgid "imported"
 msgstr "geimporteerd"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:189
 msgid "addedon"
 msgstr "toegevoegdop"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:189
 msgid "dateadded"
 msgstr "datumtoegevoegd"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:189
 msgid "importedon"
 msgstr "geimporteerdop"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:193
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:200
 #: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:54
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:803
 msgid "Smart Playlist"
 msgstr "Slimme afspeellijst"
 
 #. Set translated names for operators
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:306
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:313
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:320
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:315
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:334
 msgid "is"
 msgstr "is"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:307
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:314
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:321
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:316
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:335
 msgid "is not"
 msgstr "is niet"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:308
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:315
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:317
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:332
 msgid "at most"
 msgstr "ten hoogste"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:309
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:316
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:318
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:331
 msgid "at least"
 msgstr "ten minste"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:310
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:317
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:319
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:330
 msgid "less than"
 msgstr "minder dan"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:311
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:318
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:320
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:329
 msgid "more than"
 msgstr "meer dan"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:322
+#. DateQueryValue.Equal.Label               = Catalog.GetString ("is");
+#. DateQueryValue.NotEqual.Label            = Catalog.GetString ("is not");
+#. DateQueryValue.LessThanEqual.Label       = Catalog.GetString ("at most");
+#. DateQueryValue.GreaterThanEqual.Label    = Catalog.GetString ("at least");
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:326
+msgid "before"
+msgstr "voor"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:327
+msgid "after"
+msgstr "na"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:336
 msgid "contains"
 msgstr "bevat"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:323
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:337
 msgid "doesn't contain"
 msgstr "bevat niet"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:324
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:338
 msgid "starts with"
 msgstr "begint met"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:325
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:339
 msgid "ends with"
 msgstr "eindigt op"
 
-#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:186
+#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:222
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:313
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:336
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:67
@@ -927,7 +925,7 @@ msgid "Please file a bug with this error: {0}"
 msgstr "Vul alstublieft een foutrapportage in met deze fout: {0}"
 
 #: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:55
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:48
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:50
 msgid "Edit Smart Playlist"
 msgstr "Slimme afspeellijst bewerken"
 
@@ -953,43 +951,40 @@ msgstr "Details"
 msgid "Import Errors"
 msgstr "Importfouten"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:278
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:363
 msgid "Name"
 msgstr "Naam"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:283
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:368
 msgid "GenericName"
 msgstr "AlgemeneNaam"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:301
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:390
 msgid "FilterQuery"
 msgstr "FilterQuery"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:340
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:429
 #, csharp-format
-msgid "{0} song"
-msgid_plural "{0} songs"
-msgstr[0] "{0} nummer"
-msgstr[1] "{0} nummers"
+msgid "{0} item"
+msgid_plural "{0} items"
+msgstr[0] "{0} item"
+msgstr[1] "{0} items"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:348
-#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:203
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:437
 #, csharp-format
 msgid "{0} day"
 msgid_plural "{0:0.0} days"
 msgstr[0] "{0} dag"
 msgstr[1] "{0:0.0} dagen"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:352
-#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:202
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:441
 #, csharp-format
 msgid "{0} hour"
 msgid_plural "{0:0.0} hours"
 msgstr[0] "{0} uur"
 msgstr[1] "{0:0.0} uur"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:356
-#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:201
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:445
 #, csharp-format
 msgid "{0} minute"
 msgid_plural "{0:0.0} minutes"
@@ -998,7 +993,7 @@ msgstr[1] "{0:0.0} minuten"
 
 #: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:61
 msgid "Could not launch URL"
-msgstr "Openen URL mislukt"
+msgstr "Kon URL niet opstarten"
 
 #: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:62
 #, csharp-format
@@ -1019,84 +1014,38 @@ msgstr "Geen profielen beschikbaar"
 msgid "Advanced"
 msgstr "Geavanceerd"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:69
-msgid "Welcome to the Banshee 1.0 Alpha 1 release!"
-msgstr "Welkom bij de Banshee 1.0 Alpha 1-uitgave!"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:71
-msgid ""
-"It is <i>very</i> important to note that this is a <i>preview release</i> "
-"and does <i>not yet</i> contain all of the features you may be used to in "
-"previous Banshee releases."
-msgstr ""
-"Het is <i>erg</i> belangrijk dat u begrijp dat dit een <i>voorproefje</i> is "
-"en<i>nog niet</i> alle functionaliteit bevat die u uit vorige Banshee-"
-"uitgaven kende."
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:75
-msgid ""
-"Most notably, hardware features are not yet available (Audio CDs, Digital "
-"Audio Players), and the Podcasting, Internet Radio, Recommendations, Mini "
-"Mode, and DAAP (iTunes Music Sharing) plugins are not available."
-msgstr ""
-"Het meest opvallend is het ontbreken van hardware-functionaliteit (muziek-"
-"cd's, digitale muziekspelers). Ook de plugins voor podcasts, internetradio, "
-"aanbevelingen, mini-modus en DAAP (muziek delen zoals iTunes) zijn niet "
-"beschikbaar."
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:80
-msgid ""
-"All of the features you have come to love in Banshee will be added back "
-"before the final 1.0 release."
-msgstr ""
-"Alle ontbrekende functionaliteit uit de vorige uitgaven zal toegevoegd "
-"worden voor de 1.0-versie uitkomt."
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:82
-msgid "Enjoy the preview!"
-msgstr "Veel plezier met het voorproefje!"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:92
-msgid "Message.Id"
-msgstr "Message.Id"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:102
-msgid "Please confirm your understanding of the message above."
-msgstr "U dient akkoord te gaan met de bovenstaande mededeling."
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BetaReleaseViewOverlay.cs:107
-msgid "I understand this is a preview release"
-msgstr "Ik begrijp dat dit slechts een voorproefje is"
-
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:59
 msgid "Track"
 msgstr "Nummer"
 
 #. new SortableColumn ("Rating", new RatingColumnCell (null, true), 0.15, "Rating"),
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:70
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:783
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:71
 msgid "Last Played"
 msgstr "Laatst afgespeeld"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:72
+msgid "Last Skipped"
+msgstr "Laatst overgeslagen"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:74
 msgid "Location"
 msgstr "Locatie"
 
 # Vrij vertaald (Wouter Bolsterlee)
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:47
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:49
 msgid "Primary Development"
 msgstr "Ontwikkeling:"
 
 # Vrij vertaald (Wouter Bolsterlee)
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:55
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:57
 msgid "Contributors"
 msgstr "Bijdragen van:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:84
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:89
 msgid "Extraordinary Multimedia Management and Playback"
 msgstr "Beheren en afspelen van uw muziek"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:86
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:91
 msgid ""
 "Copyright © 2005–2008 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
@@ -1104,7 +1053,7 @@ msgstr ""
 "Copyright © 2005–2008 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:91
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:96
 msgid "Banshee Wiki"
 msgstr "Banshee-wiki"
 
@@ -1154,18 +1103,18 @@ msgstr "Bladeren…"
 msgid "Open Location"
 msgstr "Locatie openen"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:69
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:71
 msgid "Select library location"
 msgstr "Kies de bibliotheeklocatie"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:122
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:124
 msgid ""
 "Enable this option to save tags and other metadata inside supported audio "
 "files"
 msgstr ""
 "Schakel deze optie in om metadata op te slaan in ondersteunde audiobestanden."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:126
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:128
 msgid ""
 "Error correction tries to work around problem areas on a disc, such as "
 "surface scratches, but will slow down importing substantially."
@@ -1220,7 +1169,7 @@ msgstr "Nooit afgespeeld"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:325
 #, csharp-format
-msgid "Editing song {0} of {1}"
+msgid "Editing item {0} of {1}"
 msgstr "Nummer {0} van {1} aan het bewerken"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:326
@@ -1233,12 +1182,12 @@ msgid "_Music"
 msgstr "_Muziek"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:53
-msgid "Import _Music..."
-msgstr "_Muziek importeren…"
+msgid "Import _Media..."
+msgstr "_Media importeren…"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:54
-msgid "Import music from a variety of sources"
-msgstr "Muziek importeren van verschillende bronnen"
+msgid "Import media from a variety of sources"
+msgstr "Media importeren van verschillende bronnen"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:57
 msgid "Import Playlist..."
@@ -1381,44 +1330,50 @@ msgid "ActiveSourceUIResource"
 msgstr "ActiveSourceUIResource"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:58
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:158
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:161
 msgid "_Play"
 msgstr "Afs_pelen"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:59
-msgid "Play or pause the current song"
+msgid "Play or pause the current item"
 msgstr "Huidige nummer afspelen of pauzeren"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:62
 msgid "_Next"
 msgstr "_Volgende"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:63
-msgid "Play the next song"
+msgid "Play the next item"
 msgstr "Volgende nummer afspelen"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:66
 msgid "Pre_vious"
 msgstr "V_orige"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:67
-msgid "Play the previous song"
+msgid "Play the previous item"
 msgstr "Vorige nummer afspelen"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:70
 msgid "Seek _to..."
 msgstr "Spoelen naar…"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:71
-msgid "Seek to a specific location in current song"
+msgid "Seek to a specific location in current item"
 msgstr "Speoelen naar een specifieke plaats in het huidige nummer"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:74
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:129
 msgid "_Restart Song"
 msgstr "Nummer _herstarten"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:75
-msgid "Restart the current song"
+msgid "Restart the current item"
 msgstr "Huidige nummer opnieuw afspelen"
 
 # Net zo vertalen als in Muine (Wouter Bolsterlee)
@@ -1434,8 +1389,9 @@ msgstr "‘Door elkaar’-modus aan- of uitzetten"
 msgid "_Stop When Finished"
 msgstr "_Stoppen na afloop"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:86
-msgid "Stop playback after the current song finishes playing"
+msgid "Stop playback after the current item finishes playing"
 msgstr "Afspelen stoppen nadat het huidige nummer afgelopen is"
 
 # Vrij vertaald (Wouter Bolsterlee)
@@ -1443,7 +1399,11 @@ msgstr "Afspelen stoppen nadat het huidige nummer afgelopen is"
 msgid "_Playback"
 msgstr "_Bediening"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:152
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:130
+msgid "_Restart Video"
+msgstr "Video _herstarten"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:155
 msgid "_Pause"
 msgstr "_Pauze"
 
@@ -1472,84 +1432,84 @@ msgstr "Nu_mmer herhalen"
 msgid "Repeat the current playing song"
 msgstr "Het huidige nummer herhalen"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:71
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:75
 msgid "_New Playlist"
 msgstr "_Nieuwe afspeellijst"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:72
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:76
 msgid "Create a new empty playlist"
 msgstr "Nieuwe afspeellijst aanmaken"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:75
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:79
 msgid "New _Smart Playlist"
 msgstr "Nieuwe slimme afspeellijst"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:76
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:80
 msgid "Create a new smart playlist"
 msgstr "Nieuwe slimme afspeellijst aanmaken"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:86
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:90
 msgid "Import Source"
 msgstr "Bron importeren"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:87
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:91
 msgid "Import source to library"
 msgstr "Bron importeren in bibliotheek"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:93
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:97
 msgid "Export Playlist..."
 msgstr "Afspeellijst exporteren…"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:94
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:98
 msgid "Export a playlist"
 msgstr "Afspeellijst exporteren"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:105
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:109
 msgid "Refresh"
 msgstr "Herladen"
 
 # Niet helemaal zeker of dit is wat bedoeld wordt (Wouter Bolsterlee)
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:106
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:110
 msgid "Refresh this randomly sorted smart playlist"
 msgstr "Deze afspeellijst in willekeurige volgorde herladen"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:111
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:115
 msgid "Sort Children"
 msgstr "Kinderen sorteren"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:114
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:118
 msgid "Name Ascending"
 msgstr "Naam (oplopend)"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:118
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:122
 msgid "Name Descending"
 msgstr "Naam (aflopend)"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:122
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:126
 msgid "Size Ascending"
 msgstr "Grootte (oplopend)"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:126
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:130
 msgid "Size Descending"
 msgstr "Grootte (aflopend)"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:205
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:210
 msgid "GtkActionPath"
 msgstr "GtkActionPath"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:262
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:267
 msgid "Could not export playlist"
 msgstr "Kon afspeellijst niet exporteren"
 
 # Urgh, hele slechte string voor i18n. Voor de zekerheid maar tussen haakjes
 # gezet, want je weet nooit wat er op de plaats van de placeholder gaat komen…
 # (Wouter Bolsterlee)
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:333
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:338
 #, csharp-format
 msgid "Are you sure you want to delete this {0}?"
 msgstr "Weet u zeker dat u deze ({0}) wilt verwijderen?"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:342
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:347
 #, csharp-format
 msgid "Do not ask me this again"
 msgstr "Niet opnieuw vragen"
@@ -1582,10 +1542,11 @@ msgstr "Metadata van het geselecteerde nummer bewerken"
 msgid "Add _to Playlist"
 msgstr "_Toevoegen aan afspeellijst"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:100
-msgid "Append selected songs to playlist or create new playlist from selection"
+msgid "Append selected items to playlist or create new playlist from selection"
 msgstr ""
-"Geselecteerde nummer aan de afspeellijst toevoegen of een nieuwe "
+"Geselecteerde nummers aan de afspeellijst toevoegen of een nieuwe "
 "afspeellijst maken van de selectie"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:105
@@ -1612,16 +1573,18 @@ msgstr "Nummer(s) uit bibliotheek verwijderen"
 msgid "_Delete From Drive"
 msgstr "Verwijderen van _schijf"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:118
-msgid "Permanently delete selected song(s) from medium"
+msgid "Permanently delete selected item(s) from medium"
 msgstr "Geselecteerde nummer(s) permanent van opslagmedium verwijderen"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:124
-msgid "_Search for Songs"
-msgstr "Nummers _zoeken"
+msgid "_Search"
+msgstr "_Zoeken"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:125
-msgid "Search for songs matching certain criteria"
+msgid "Search for items matching certain criteria"
 msgstr "Nummers met bepaalde eigenschappen zoeken"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:128
@@ -1640,11 +1603,12 @@ msgstr "Van dezelfde artiest"
 msgid "Search all songs of this artist"
 msgstr "Alle nummers van deze artiest opzoeken"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:435
 #, csharp-format
-msgid "Are you sure you want to permanently delete this song?"
+msgid "Are you sure you want to permanently delete this item?"
 msgid_plural ""
-"Are you sure you want to permanently delete the selected {0} songs?"
+"Are you sure you want to permanently delete the selected {0} items?"
 msgstr[0] "Weet u zeker dat u dit nummer voorgoed wilt verwijderen?"
 msgstr[1] ""
 "Weet u zeker dat u de {0} geselecteerde nummers voorgoed wilt verwijderen?"
@@ -1660,11 +1624,12 @@ msgid "Remove selection from {0}?"
 msgstr "Selectie verwijderen uit ‘{0}’?"
 
 # Urgh, en nog zo een… (Wouter Bolsterlee)
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:445
 #, csharp-format
-msgid "Are you sure you want to remove the selected song from your {1}?"
+msgid "Are you sure you want to remove the selected item from your {1}?"
 msgid_plural ""
-"Are you sure you want to remove the selected {0} songs from your {1}?"
+"Are you sure you want to remove the selected {0} items from your {1}?"
 msgstr[0] ""
 "Weet u zeker dat u het geselecteerde nummer wilt verwijderen uit {1}?"
 msgstr[1] ""
@@ -1697,15 +1662,6 @@ msgstr "_Albumafbeelding tonen"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:62
 msgid "Toggle display of album cover art"
 msgstr "Tonen van album aan- of uitzetten"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:62
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:156
-msgid "Message.Text"
-msgstr "Message.Text"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:105
-msgid "Message.Action.Label"
-msgstr "Message.Action.Label"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:132
 msgid "Stop Operation"
@@ -1765,103 +1721,25 @@ msgstr "Exporteren"
 msgid "Select Format: "
 msgstr "Formaat selecteren:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:66
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:69
 msgid "New Smart Playlist"
 msgstr "Nieuwe slimme afspeellijst"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:93
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:96
 msgid "700 MB of Favorites"
 msgstr "700 MB aan favorieten"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:101
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:104
 msgid "80 Minutes of Favorites"
 msgstr "80 minuten aan favorieten"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:109
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:112
 msgid "Unheard"
 msgstr "Nog nooit geluisterd"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:117
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:120
 msgid "Unheard Podcasts"
 msgstr "Niet geluisterde podcasts"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:115
-msgid "to"
-msgstr "tot"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:489
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:104
-msgid "_Match"
-msgstr "_Zoek nummers met"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:496
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:111
-msgid "all"
-msgstr "alle"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:497
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:112
-msgid "any"
-msgstr "één of meer"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:502
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:117
-msgid "of the following:"
-msgstr "van de volgende kenmerken:"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:521
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:58
-msgid "_Limit to"
-msgstr "_Beperk tot:"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilder.cs:538
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:82
-msgid "selected by"
-msgstr "geselecteerd op"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:317
-msgid "Seconds"
-msgstr "Seconden"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:318
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:452
-msgid "Minutes"
-msgstr "Minuten"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:319
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:453
-msgid "Hours"
-msgstr "Uren"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:454
-msgid "Days"
-msgstr "Dagen"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:455
-msgid "Weeks"
-msgstr "Weken"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:456
-msgid "Months"
-msgstr "Maanden"
-
-# Expres zo vertaald (Wouter Bolsterlee)
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:457
-msgid "Years"
-msgstr "Jaar"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:568
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:593
-msgid "ago"
-msgstr "geleden"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:786
-msgid "Track Number"
-msgstr "Nummer"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/QueryBuilderModel.cs:807
-msgid "Path"
-msgstr "Pad"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:103
 msgid "Browser on Left"
@@ -2005,8 +1883,8 @@ msgid "<b>_Year:</b>"
 msgstr "<b>_Jaar:</b>"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:30
-msgid "<big><b>Import Music to Library</b></big>"
-msgstr "<big><b>Muziek importeren in bibliotheek</b></big>"
+msgid "<big><b>Import Media to Library</b></big>"
+msgstr "<big><b>Media importeren in bibliotheek</b></big>"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:31
 msgid "Apply common field values to all tracks"
@@ -2094,12 +1972,12 @@ msgid "Forward"
 msgstr "Vooruit"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:54
-msgid "Import Music Source"
-msgstr "Muziekbron importeren"
+msgid "Import Media Source"
+msgstr "Mediabron importeren"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:55
-msgid "Import Music to Library"
-msgstr "Muziek naar bibliotheek importeren"
+msgid "Import Media to Library"
+msgstr "Media naar bibliotheek importeren"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:56
 msgid "Metadata"
@@ -2159,10 +2037,10 @@ msgstr "Schrijfsnelheid:"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:72
 msgid ""
-"Your music library is empty. You may import new music into your library now, "
-"or choose to do so later."
+"Your media library is empty. You may import new music and videos into your "
+"library now, or choose to do so later."
 msgstr ""
-"Uw muziekbibliotheek is leeg. U kunt nu of later nieuwe muziek importeren in "
+"Uw mediabibliotheek is leeg. U kunt nu of later nieuwe muziek importeren in "
 "uw bibliotheek."
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:73
@@ -2194,11 +2072,11 @@ msgstr "Inactief"
 msgid "{0} of {1}"
 msgstr "{0} van {1}"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:517
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:519
 msgid "Muted"
 msgstr "Gedempt"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:519
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:521
 msgid "Full Volume"
 msgstr "Volledig volume"
 
@@ -2386,7 +2264,7 @@ msgstr "Meest recent afgespeeld"
 msgid "Edit Last.fm Settings"
 msgstr "Last.fm-instellingen bewerken"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:299
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:300
 msgid "Last.fm (Disconnected)"
 msgstr "Last.fm (niet verbonden)"
 
@@ -2402,71 +2280,75 @@ msgstr "Nieuwe zender"
 msgid "Last.fm Station"
 msgstr "Last.fm-zender"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:129
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:130
 msgid "Edit Last.fm Station"
 msgstr "Last.fm-zender bewerken"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:130
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:131
 msgid "Delete Last.fm Station"
 msgstr "Last.fm-zender verwijderen"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:222
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:223
 #, csharp-format
 msgid "Tuning Last.fm to {0}."
 msgstr "Last.fm afstellen op {0}."
 
 #. Translators: {0} is an error message sentence from RadioConnection.cs.
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:232
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:233
 #, csharp-format
 msgid "Failed to tune in station. {0}"
 msgstr "Kon niet op zender afstellen. {0}"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:255
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:261
 msgid "Account Settings"
 msgstr "Accountinstellingen"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:336
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:263
+msgid "Join Last.fm"
+msgstr "Bij Last.fm registreren"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:335
 #, csharp-format
 msgid "Getting new songs for {0}."
 msgstr "Nieuwe nummers voor {0} ophalen."
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:343
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:342
 #, csharp-format
 msgid "No new songs available for {0}."
 msgstr "Geen nieuwe nummers voor {0} beschikbaar."
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:367
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:366
 #, csharp-format
 msgid "Failed to get new songs for {0}."
 msgstr "Kon geen nieuwe nummers voor {0} ophalen."
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:427
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:426
 #, csharp-format
 msgid "{0} song played"
 msgid_plural "{0} songs played"
 msgstr[0] "{0} nummer gespeeld"
 msgstr[1] "{0} nummers gespeeld"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:546
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:545
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:83
 msgid "Recommended"
 msgstr "Aanbevolen"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:547
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:546
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:92
 msgid "Personal"
 msgstr "Persoonlijk"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:548
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:547
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:101
 msgid "Loved"
 msgstr "Favoriet"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:549
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:548
 msgid "Banshee Group"
 msgstr "Banshee-groep"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:550
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:549
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:110
 msgid "Neighbors"
 msgstr "Buren"
@@ -2566,9 +2448,10 @@ msgstr "Sluiten"
 msgid "_Show Notifications"
 msgstr "Notificaties tonen"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:123
-msgid "Show notifications when song changes"
-msgstr "Notificaties tonen wanneer een nieuw nummer begint"
+msgid "Show notifications when item changes"
+msgstr "Notificaties tonen wanneer het nummer verandert"
 
 # Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:258
@@ -2587,8 +2470,9 @@ msgstr ""
 msgid "Now Playing"
 msgstr "Nu aan het afspelen"
 
+# Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:367
-msgid "Play next song"
+msgid "Play next item"
 msgstr "Volgend nummer afspelen"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:373
@@ -2627,7 +2511,7 @@ msgstr "Wissen bij afsluiten"
 msgid "Clear the play queue when quitting"
 msgstr "De afspeellijst wissen bij afsluiten"
 
-#: ../src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:331
+#: ../src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:349
 #, csharp-format
 msgid "Hide {0}"
 msgstr "{0} verbergen"
@@ -2656,26 +2540,6 @@ msgstr "Assembly-naam"
 msgid "Version"
 msgstr "Versie"
 
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs:60
-msgid "seconds"
-msgstr "seconden"
-
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs:63
-msgid "days"
-msgstr "dagen"
-
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs:64
-msgid "weeks"
-msgstr "weken"
-
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs:65
-msgid "months"
-msgstr "maanden"
-
-#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs:66
-msgid "years"
-msgstr "jaren"
-
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:59
 msgid "bytes"
 msgstr "bytes"
@@ -2688,38 +2552,29 @@ msgstr "KB"
 msgid "Condition:"
 msgstr "Voorwaarde:"
 
-#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:200
-#, csharp-format
-msgid "{0} second"
-msgid_plural "{0} seconds"
-msgstr[0] "{0} seconde"
-msgstr[1] "{0} seconden"
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:104
+msgid "_Match"
+msgstr "_Zoek nummers met"
 
-#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:204
-#, csharp-format
-msgid "{0} week"
-msgid_plural "{0} weeks"
-msgstr[0] "{0} week"
-msgstr[1] "{0} weken"
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:111
+msgid "all"
+msgstr "alle"
 
-#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:205
-#, csharp-format
-msgid "{0} month"
-msgid_plural "{0} months"
-msgstr[0] "{0} maand"
-msgstr[1] "{0} maanden"
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:112
+msgid "any"
+msgstr "één of meer"
 
-#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:206
-#, csharp-format
-msgid "{0} year"
-msgid_plural "{0} years"
-msgstr[0] "{0} jaar"
-msgstr[1] "{0} jaren"
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:117
+msgid "of the following:"
+msgstr "van de volgende kenmerken:"
 
-#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:211
-#, csharp-format
-msgid "{0} ago"
-msgstr "{0} geleden"
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:58
+msgid "_Limit to"
+msgstr "_Beperk tot:"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:82
+msgid "selected by"
+msgstr "geselecteerd op"
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:49
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:76
@@ -2805,3 +2660,136 @@ msgstr "Verbinden met Last.fm"
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:461
 msgid "Connected to Last.fm."
 msgstr "Verbonden met Last.fm"
+
+#~ msgid "Library"
+#~ msgstr "Bibliotheek"
+
+#~ msgid "songs"
+#~ msgstr "nummers"
+
+#~ msgid "{0} song"
+#~ msgid_plural "{0} songs"
+#~ msgstr[0] "{0} nummer"
+#~ msgstr[1] "{0} nummers"
+
+#~ msgid "Welcome to the Banshee 1.0 Alpha 1 release!"
+#~ msgstr "Welkom bij de Banshee 1.0 Alpha 1-uitgave!"
+
+#~ msgid ""
+#~ "It is <i>very</i> important to note that this is a <i>preview release</i> "
+#~ "and does <i>not yet</i> contain all of the features you may be used to in "
+#~ "previous Banshee releases."
+#~ msgstr ""
+#~ "Het is <i>erg</i> belangrijk dat u begrijp dat dit een <i>voorproefje</i> "
+#~ "is en<i>nog niet</i> alle functionaliteit bevat die u uit vorige Banshee-"
+#~ "uitgaven kende."
+
+#~ msgid ""
+#~ "Most notably, hardware features are not yet available (Audio CDs, Digital "
+#~ "Audio Players), and the Podcasting, Internet Radio, Recommendations, Mini "
+#~ "Mode, and DAAP (iTunes Music Sharing) plugins are not available."
+#~ msgstr ""
+#~ "Het meest opvallend is het ontbreken van hardware-functionaliteit (muziek-"
+#~ "cd's, digitale muziekspelers). Ook de plugins voor podcasts, "
+#~ "internetradio, aanbevelingen, mini-modus en DAAP (muziek delen zoals "
+#~ "iTunes) zijn niet beschikbaar."
+
+#~ msgid ""
+#~ "All of the features you have come to love in Banshee will be added back "
+#~ "before the final 1.0 release."
+#~ msgstr ""
+#~ "Alle ontbrekende functionaliteit uit de vorige uitgaven zal toegevoegd "
+#~ "worden voor de 1.0-versie uitkomt."
+
+#~ msgid "Enjoy the preview!"
+#~ msgstr "Veel plezier met het voorproefje!"
+
+#~ msgid "Message.Id"
+#~ msgstr "Message.Id"
+
+#~ msgid "Please confirm your understanding of the message above."
+#~ msgstr "U dient akkoord te gaan met de bovenstaande mededeling."
+
+#~ msgid "I understand this is a preview release"
+#~ msgstr "Ik begrijp dat dit slechts een voorproefje is"
+
+#~ msgid "_Search for Songs"
+#~ msgstr "Nummers _zoeken"
+
+#~ msgid "Message.Text"
+#~ msgstr "Message.Text"
+
+#~ msgid "Message.Action.Label"
+#~ msgstr "Message.Action.Label"
+
+#~ msgid "to"
+#~ msgstr "tot"
+
+#~ msgid "Seconds"
+#~ msgstr "Seconden"
+
+#~ msgid "Minutes"
+#~ msgstr "Minuten"
+
+#~ msgid "Hours"
+#~ msgstr "Uren"
+
+#~ msgid "Days"
+#~ msgstr "Dagen"
+
+#~ msgid "Weeks"
+#~ msgstr "Weken"
+
+#~ msgid "Months"
+#~ msgstr "Maanden"
+
+# Expres zo vertaald (Wouter Bolsterlee)
+#~ msgid "Years"
+#~ msgstr "Jaar"
+
+#~ msgid "ago"
+#~ msgstr "geleden"
+
+#~ msgid "Track Number"
+#~ msgstr "Nummer"
+
+#~ msgid "Path"
+#~ msgstr "Pad"
+
+#~ msgid "seconds"
+#~ msgstr "seconden"
+
+#~ msgid "days"
+#~ msgstr "dagen"
+
+#~ msgid "weeks"
+#~ msgstr "weken"
+
+#~ msgid "months"
+#~ msgstr "maanden"
+
+#~ msgid "years"
+#~ msgstr "jaren"
+
+#~ msgid "{0} second"
+#~ msgid_plural "{0} seconds"
+#~ msgstr[0] "{0} seconde"
+#~ msgstr[1] "{0} seconden"
+
+#~ msgid "{0} week"
+#~ msgid_plural "{0} weeks"
+#~ msgstr[0] "{0} week"
+#~ msgstr[1] "{0} weken"
+
+#~ msgid "{0} month"
+#~ msgid_plural "{0} months"
+#~ msgstr[0] "{0} maand"
+#~ msgstr[1] "{0} maanden"
+
+#~ msgid "{0} year"
+#~ msgid_plural "{0} years"
+#~ msgstr[0] "{0} jaar"
+#~ msgstr[1] "{0} jaren"
+
+#~ msgid "{0} ago"
+#~ msgstr "{0} geleden"
