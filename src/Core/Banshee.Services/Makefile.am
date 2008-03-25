@@ -13,8 +13,8 @@ SOURCES =  \
 	Banshee.Collection.Database/AlbumListDatabaseModel.cs \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
 	Banshee.Collection.Database/DatabaseAlbumInfo.cs \
+	Banshee.Collection.Database/DatabaseArtistInfo.cs \
 	Banshee.Collection.Database/DatabaseTrackInfo.cs \
-	Banshee.Collection.Database/LibraryArtistInfo.cs \
 	Banshee.Collection.Database/TrackListDatabaseModel.cs \
 	Banshee.Collection/AlbumListModel.cs \
 	Banshee.Collection/ArtistListModel.cs \

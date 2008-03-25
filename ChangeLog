@@ -1,5 +1,18 @@
 2008-03-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	* src/Core/Banshee.Services/Makefile.am: Rename LibraryArtistInfo class to
+	DatabaseArtistInfo.
+
+2008-03-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Resources/translators.xml: Updated.
 
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:

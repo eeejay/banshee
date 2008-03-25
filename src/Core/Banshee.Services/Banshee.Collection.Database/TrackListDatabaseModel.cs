@@ -376,11 +376,11 @@ namespace Banshee.Collection.Database
             set {
                 ModelHelper.BuildIdFilter<ArtistInfo> (value, "CoreTracks.ArtistID", artist_id_filter_query,
                     delegate (ArtistInfo artist) {
-                        if (!(artist is LibraryArtistInfo)) {
+                        if (!(artist is DatabaseArtistInfo)) {
                             return null;
                         }
                         
-                        return ((LibraryArtistInfo)artist).DbId.ToString ();
+                        return ((DatabaseArtistInfo)artist).DbId.ToString ();
                     },
                 
                     delegate (string new_filter) {

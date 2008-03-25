@@ -102,6 +102,12 @@ namespace Banshee.Collection.Database
             DateUpdated = DateTime.Now;
             bool is_new = TrackId == 0;
             Provider.Save (this);
+
+            // Pattern for saving artist / album:
+            // 1) if not dirty, ignore
+            // 2) if dirty, look up, update our id if found, otherwise create
+            // 3) delete unused ones
+
             if (notify) {
                 if (is_new) {
                     PrimarySource.NotifyTracksAdded ();

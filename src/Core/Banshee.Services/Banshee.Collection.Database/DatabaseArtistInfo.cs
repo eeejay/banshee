@@ -1,5 +1,5 @@
 //
-// LibraryArtistInfo.cs
+// DatabaseArtistInfo.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -38,13 +38,13 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
-    public class LibraryArtistInfo : ArtistInfo, ICacheableItem
+    public class DatabaseArtistInfo : ArtistInfo, ICacheableItem
     {
-        private static BansheeModelProvider<LibraryArtistInfo> provider = new BansheeModelProvider<LibraryArtistInfo> (
+        private static BansheeModelProvider<DatabaseArtistInfo> provider = new BansheeModelProvider<DatabaseArtistInfo> (
             ServiceManager.DbConnection, "CoreArtists"
         );
 
-        public static BansheeModelProvider<LibraryArtistInfo> Provider {
+        public static BansheeModelProvider<DatabaseArtistInfo> Provider {
             get { return provider; }
         }
 
@@ -57,18 +57,18 @@ namespace Banshee.Collection.Database
             Name
         }
 
-        public static LibraryArtistInfo FindOrCreate (string artistName)
+        public static DatabaseArtistInfo FindOrCreate (string artistName)
         {
-            LibraryArtistInfo artist;
+            DatabaseArtistInfo artist;
 
             if (artistName == null || artistName.Trim () == String.Empty)
                 artistName = Catalog.GetString ("Unknown Artist");
 
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artistName)) {
                 if (reader.Read ()) {
-                    artist = new LibraryArtistInfo (reader);
+                    artist = new DatabaseArtistInfo (reader);
                 } else {
-                    artist = new LibraryArtistInfo ();
+                    artist = new DatabaseArtistInfo ();
                     artist.Name = artistName;
                     artist.Save ();
                 }
@@ -76,11 +76,11 @@ namespace Banshee.Collection.Database
             return artist;
         }
         
-        public LibraryArtistInfo () : base (null)
+        public DatabaseArtistInfo () : base (null)
         {
         }
 
-        protected LibraryArtistInfo (IDataReader reader) : base (null)
+        protected DatabaseArtistInfo (IDataReader reader) : base (null)
         {
             LoadFromReader (reader);
         }

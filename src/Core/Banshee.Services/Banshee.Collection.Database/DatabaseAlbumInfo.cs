@@ -58,7 +58,7 @@ namespace Banshee.Collection.Database
             ArtistName
         }
 
-        public static DatabaseAlbumInfo FindOrCreate (LibraryArtistInfo artist, string title)
+        public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, string title)
         {
             DatabaseAlbumInfo album;
 

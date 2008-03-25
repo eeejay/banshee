@@ -135,7 +135,7 @@ namespace Banshee.Library
                     track.Uri = newpath;
                 }
 
-                LibraryArtistInfo artist = LibraryArtistInfo.FindOrCreate (track.ArtistName);
+                DatabaseArtistInfo artist = DatabaseArtistInfo.FindOrCreate (track.ArtistName);
                 DatabaseAlbumInfo album = DatabaseAlbumInfo.FindOrCreate (artist, track.AlbumTitle);
 
                 track.DateAdded = DateTime.Now;

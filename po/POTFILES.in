@@ -19,7 +19,7 @@ src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs
 src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs
 src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs
 src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs
-src/Core/Banshee.Services/Banshee.Collection.Database/LibraryArtistInfo.cs
+src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs
 src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs
 src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs
 src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs
