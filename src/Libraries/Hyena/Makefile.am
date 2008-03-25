@@ -40,6 +40,7 @@ SOURCES =  \
 	Hyena.Query/FileSizeQueryValue.cs \
 	Hyena.Query/IntegerKeyedObjectQueryValue.cs \
 	Hyena.Query/IntegerQueryValue.cs \
+	Hyena.Query/NullQueryValue.cs \
 	Hyena.Query/QueryField.cs \
 	Hyena.Query/QueryFieldSet.cs \
 	Hyena.Query/QueryLimit.cs \
@@ -51,7 +52,9 @@ SOURCES =  \
 	Hyena.Query/QueryTermNode.cs \
 	Hyena.Query/QueryToken.cs \
 	Hyena.Query/QueryValue.cs \
+	Hyena.Query/RelativeTimeSpanQueryValue.cs \
 	Hyena.Query/StringQueryValue.cs \
+	Hyena.Query/TimeSpanQueryValue.cs \
 	Hyena.Query/UserQueryParser.cs \
 	Hyena.Query/XmlQueryParser.cs \
 	Hyena.SExpEngine/ArithmeticFunctionSet.cs \

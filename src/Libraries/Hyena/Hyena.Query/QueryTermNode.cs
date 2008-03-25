@@ -48,20 +48,30 @@ namespace Hyena.Query
             string field_alias = field_set.FindAlias (token);
             if (field_alias != null) {
                 term.Field = field_set [field_alias];
-                term.Value = term.Field.CreateQueryValue ();
-                string op_alias = term.Value.OperatorSet.FindAlias (token);
-                if (op_alias != null) {
-                    term.Operator = term.Value.OperatorSet [op_alias];
-                    int field_separator = token.IndexOf (op_alias);
-                    token = token.Substring (field_separator + op_alias.Length);
-                    term.Value.ParseUserQuery (token);
-                } else {
+
+                foreach (QueryValue val in term.Field.CreateQueryValues ()) {
+                    term.Value = val;
+
+                    string op_alias = term.Value.OperatorSet.FindAlias (token);
+                    if (op_alias != null) {
+                        term.Operator = term.Value.OperatorSet [op_alias];
+                        int field_separator = token.IndexOf (op_alias);
+                        string temp = token.Substring (field_separator + op_alias.Length);
+
+                        term.Value.ParseUserQuery (temp);
+
+                        if (!term.Value.IsEmpty) {
+                            break;
+                        }
+                    }
+
+                    term.Operator = null;
                     term.Value = null;
-                    term.Field = null;
                 }
             }
 
             if (term.Value == null) {
+                term.Field = null;
                 term.Value = QueryValue.CreateFromUserQuery (token, term.Field);
             }
 
@@ -74,8 +84,9 @@ namespace Hyena.Query
 
         public override QueryNode Trim ()
         {
-            if (Parent != null && (qvalue == null || qvalue.IsEmpty || (field != null && op == null)))
+            if (Parent != null && (qvalue == null || qvalue.IsEmpty || (field != null && op == null))) {
                 Parent.RemoveChild (this);
+            }
             return this;
         }
         
@@ -121,8 +132,9 @@ namespace Hyena.Query
 
         private bool EmitTermMatch (StringBuilder sb, QueryField field, bool emit_or)
         {
-            if (Value.IsEmpty)
+            if (Value.IsEmpty) {
                 return false;
+            }
 
             if (emit_or) {
                 sb.Append (" OR ");

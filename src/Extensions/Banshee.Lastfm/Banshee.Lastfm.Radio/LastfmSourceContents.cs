@@ -29,7 +29,7 @@ namespace Banshee.Lastfm.Radio
 
         static LastfmSourceContents () {
             DataCore.UserAgent = Banshee.Web.Browser.UserAgent;
-            DataCore.CachePath = System.IO.Path.Combine (Banshee.Base.Paths.ApplicationData, "cache");
+            DataCore.CachePath = System.IO.Path.Combine (Banshee.Base.Paths.ExtensionCacheRoot, "lastfm");
         }
 
         // "Coming Soon: Profile, Friends, Recently Loved Songs, etc")

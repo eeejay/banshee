@@ -234,13 +234,13 @@ namespace Banshee.SmartPlaylist
             new_op = new_op.Replace ('<', '>');
             new_op = new_op.Replace ('^', '<');
 
-            DateQueryValue date_value = new DateQueryValue ();
+            RelativeTimeSpanQueryValue date_value = new RelativeTimeSpanQueryValue ();
 
             // Have to flip the operator b/c of how we used to construct the SQL query
             term.Operator = date_value.OperatorSet [new_op];
 
             // Have to negate the value b/c of how we used to constuct the SQL query
-            date_value.SetRelativeValue (-Convert.ToInt64 (val), RelativeDateFactor.Second);
+            date_value.SetRelativeValue (Convert.ToInt64 (val), TimeFactor.Second);
             term.Value = date_value;
         }
 

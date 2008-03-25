@@ -29,6 +29,7 @@
 
 using System;
 using System.Text;
+using System.Collections.Generic;
 
 using Gtk;
 using Hyena;
@@ -45,7 +46,10 @@ namespace Hyena.Query.Gui
         public event EventHandler RemoveRequest;
 
         private QueryField field;
-        private QueryValueEntry value_entry;
+        private List<QueryValueEntry> value_entries = new List<QueryValueEntry> ();
+        private List<Operator> operators = new List<Operator> ();
+        private Dictionary<Operator, QueryValueEntry> operator_entries = new Dictionary<Operator, QueryValueEntry> ();
+        private QueryValueEntry current_value_entry;
         private Operator op;
 
         private QueryField [] sorted_fields;
@@ -82,6 +86,7 @@ namespace Hyena.Query.Gui
             field_chooser.Changed += HandleFieldChanged;
             
             op_chooser = ComboBox.NewText ();
+            op_chooser.RowSeparatorFunc = IsRowSeparator;
             op_chooser.Changed += HandleOperatorChanged;
             
             value_box = new HBox ();
@@ -106,6 +111,11 @@ namespace Hyena.Query.Gui
             field_chooser.Active = 0;
         }
 
+        private bool IsRowSeparator (TreeModel model, TreeIter iter)
+        {
+            return String.IsNullOrEmpty (model.GetValue (iter, 0) as string);
+        }
+
         public void Show ()
         {
             field_chooser.ShowAll ();
@@ -115,12 +125,25 @@ namespace Hyena.Query.Gui
         }
         
         private bool first = true;
+        private void SetValueEntry (QueryValueEntry entry)
+        {
+            if (first) {
+                first = false;
+            } else {
+                value_box.Remove (value_box.Children [0]);
+            }
+
+            current_value_entry = entry;
+            value_box.PackStart (current_value_entry, false, true, 0);
+            current_value_entry.ShowAll ();
+        }
+
         private void HandleFieldChanged (object o, EventArgs args)
         {
             QueryField field = sorted_fields [field_chooser.Active];
 
             // Leave everything as is unless the new field is a different type
-            if (this.field != null && (field == this.field || field.ValueType == this.field.ValueType)) {
+            if (this.field != null && (field.ValueTypes.Length == 1 && this.field.ValueTypes.Length == 1 && field.ValueTypes[0] == this.field.ValueTypes[0])) {
                 this.field = field;
                 return;
             }
@@ -129,26 +152,34 @@ namespace Hyena.Query.Gui
 
             this.field = field;
 
-            if (first) {
-                first = false;
-            } else {
-                value_box.Remove (value_box.Children [0]);
-            }
-
-            value_entry = QueryValueEntry.Create (this.field.CreateQueryValue ());
-            value_box.PackStart (value_entry, false, true, 0);
-            value_entry.ShowAll ();
-
             // Remove old type's operators
             while (op_chooser.Model.IterNChildren () > 0) {
                 op_chooser.RemoveText (0);
             }
 
-            // Add new type's operators
-            foreach (Operator op in value_entry.QueryValue.OperatorSet) {
-                op_chooser.AppendText (op.Label);
+            // Add new field's operators
+            int val_count = 0;
+            value_entries.Clear ();
+            operators.Clear ();
+            operator_entries.Clear ();
+            foreach (QueryValue val in this.field.CreateQueryValues ()) {
+                QueryValueEntry entry = QueryValueEntry.Create (val);
+                value_entries.Add (entry);
+
+                if (val_count++ > 0) {
+                    op_chooser.AppendText (String.Empty);
+                    operators.Add (null);
+                }
+
+                foreach (Operator op in val.OperatorSet) {
+                    op_chooser.AppendText (op.Label);
+                    operators.Add (op);
+                    operator_entries [op] = entry;
+                }
             }
-            
+
+            SetValueEntry (value_entries[0]);
+
             // TODO: If we have the same operator that was previously selected, select it
             op_chooser.Changed += HandleOperatorChanged;
             op_chooser.Active = 0;
@@ -156,7 +187,14 @@ namespace Hyena.Query.Gui
         
         private void HandleOperatorChanged (object o, EventArgs args)
         {
-            this.op = value_entry.QueryValue.OperatorSet.Objects [op_chooser.Active];
+            if (op_chooser.Active < 0 || op_chooser.Active >= operators.Count) {
+                return;
+            }
+
+            this.op = operators [op_chooser.Active];
+            if (operator_entries [this.op] != current_value_entry) {
+                SetValueEntry (operator_entries [this.op]);
+            }
 
             //value_entry = new QueryValueEntry <field.ValueType> ();
         }
@@ -185,17 +223,26 @@ namespace Hyena.Query.Gui
                 QueryTermNode node = new QueryTermNode ();
                 node.Field = field;
                 node.Operator = op;
-                node.Value = value_entry.QueryValue;
+                node.Value = current_value_entry.QueryValue;
                 return node;
             }
+
             set {
                 if (value == null) {
                     return;
                 }
 
                 field_chooser.Active = Array.IndexOf (sorted_fields, value.Field);
-                value_entry.QueryValue = value.Value;
-                op_chooser.Active = Array.IndexOf (value.Value.OperatorSet.Objects, value.Operator);
+
+                foreach (QueryValueEntry entry in value_entries) {
+                    if (QueryValueEntry.GetValueType (entry) == value.Value.GetType ()) {
+                        entry.QueryValue = value.Value;
+                        SetValueEntry (entry);
+                        break;
+                    }
+                }
+
+                op_chooser.Active = operators.IndexOf (value.Operator);
             }
         }
     }

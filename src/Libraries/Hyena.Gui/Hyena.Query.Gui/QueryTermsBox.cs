@@ -113,6 +113,11 @@ namespace Hyena.Query.Gui
             entry_box.PackStart  (row.ValueEntry, false, false, 0);
             button_box.PackStart (row.Buttons, false, false, 0);
 
+            if (terms.Count > 0) {
+                row.FieldChooser.Active = terms[terms.Count - 1].FieldChooser.Active;
+                row.OpChooser.Active = terms[terms.Count - 1].OpChooser.Active;
+            }
+
             row.Show ();
 
             row.CanDelete = canDelete;

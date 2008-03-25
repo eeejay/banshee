@@ -47,16 +47,31 @@ namespace Hyena.Query
 
         public static QueryValue CreateFromUserQuery (string input, QueryField field)
         {
-            QueryValue val = (field == null) ? new StringQueryValue () : field.CreateQueryValue ();
-            val.ParseUserQuery (input);
-            return val;
+            if (field == null) {
+                QueryValue val = new StringQueryValue ();
+                val.ParseUserQuery (input);
+                return val;
+            } else {
+                foreach (QueryValue val in field.CreateQueryValues ()) {
+                    val.ParseUserQuery (input);
+                    if (!val.IsEmpty) {
+                        return val;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public static QueryValue CreateFromXml (XmlElement parent, QueryField field)
         {
             if (field != null) {
-                QueryValue val = field.CreateQueryValue ();
-                return CreateFromXml (val, parent) ? val : null;
+                foreach (QueryValue val in field.CreateQueryValues ()) {
+                    if (CreateFromXml (val, parent)) {
+                        return val;
+                    }
+                }
+                return null;
             } else {
                 foreach (Type subtype in subtypes) {
                     QueryValue val = Activator.CreateInstance (subtype) as QueryValue;

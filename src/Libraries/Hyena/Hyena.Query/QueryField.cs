@@ -35,9 +35,9 @@ namespace Hyena.Query
 {
     public class QueryField : IAliasedObject
     {
-        private Type value_type;
-        public Type ValueType {
-            get { return value_type; }
+        private Type [] value_types;
+        public Type [] ValueTypes {
+            get { return value_types; }
         }
 
         private string name;
@@ -77,30 +77,39 @@ namespace Hyena.Query
         }
 
         public QueryField (string name, string label, string column, bool isDefault, params string [] aliases)
-            : this (name, label, column, typeof(StringQueryValue), isDefault, aliases)
+            : this (name, label, column, new Type [] {typeof(StringQueryValue)}, isDefault, aliases)
         {
         }
 
         public QueryField (string name, string label, string column, Type valueType, params string [] aliases)
-            : this (name, label, column, valueType, false, aliases)
+            : this (name, label, column, new Type [] {valueType}, false, aliases)
         {
         }
 
-        public QueryField (string name, string label, string column, Type valueType, bool isDefault, params string [] aliases)
+        public QueryField (string name, string label, string column, Type [] valueTypes, params string [] aliases)
+            : this (name, label, column, valueTypes, false, aliases)
+        {
+        }
+
+        public QueryField (string name, string label, string column, Type [] valueTypes, bool isDefault, params string [] aliases)
         {
             this.name = name;
             this.label = label;
             this.column = column;
-            this.value_type = valueType;
+            this.value_types = valueTypes;
             this.is_default = isDefault;
             this.aliases = aliases;
 
-            QueryValue.AddValueType (value_type);
+            foreach (Type value_type in valueTypes) {
+                QueryValue.AddValueType (value_type);
+            }
         }
 
-        public QueryValue CreateQueryValue ()
+        public IEnumerable<QueryValue> CreateQueryValues ()
         {
-            return Activator.CreateInstance (ValueType) as QueryValue;
+            foreach (Type type in ValueTypes) {
+                yield return Activator.CreateInstance (type) as QueryValue;
+            }
         }
 
         public string ToTermString (string op, string value)
@@ -113,7 +122,7 @@ namespace Hyena.Query
             string value = qv.ToSql ();
             if (op == null) op = qv.OperatorSet.First;
             if (Column.IndexOf ("{0}") == -1 && Column.IndexOf ("{1}") == -1) {
-                if (ValueType == typeof(StringQueryValue)) {
+                if (qv is StringQueryValue) {
                     // Match string values literally and against a lower'd version 
                     return String.Format ("({0} {1} OR LOWER({0}) {2})", Column,
                         String.Format (op.SqlFormat, value),

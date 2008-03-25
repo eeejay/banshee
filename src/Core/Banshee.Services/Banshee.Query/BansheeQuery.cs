@@ -67,8 +67,8 @@ namespace Banshee.Query
 
         public static QueryLimit [] Limits = new QueryLimit [] {
             new QueryLimit ("songs",   Catalog.GetString ("items"), true),
-            new QueryLimit ("minutes", Catalog.GetString ("minutes"), "CoreTracks.Duration", (int) RelativeDateFactor.Minute),
-            new QueryLimit ("hours",   Catalog.GetString ("hours"), "CoreTracks.Duration", (int) RelativeDateFactor.Hour),
+            new QueryLimit ("minutes", Catalog.GetString ("minutes"), "CoreTracks.Duration", (int) TimeFactor.Minute),
+            new QueryLimit ("hours",   Catalog.GetString ("hours"), "CoreTracks.Duration", (int) TimeFactor.Hour),
             new QueryLimit ("MB",      Catalog.GetString ("MB"), "CoreTracks.FileSize", (int) FileSizeFactor.MB),
             new QueryLimit ("GB",      Catalog.GetString ("GB"), "CoreTracks.FileSize", (int) FileSizeFactor.GB)
         };
@@ -121,7 +121,7 @@ namespace Banshee.Query
         );
 
         public static QueryField RatingField = new QueryField (
-            "rating", Catalog.GetString ("Rating"), "CoreTracks.Rating", typeof(RatingQueryValue),
+            "rating", Catalog.GetString ("Rating"), "CoreTracks.Rating", new Type [] {typeof(RatingQueryValue)},//, typeof(NullQueryValue)},
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("rating"), Catalog.GetString ("stars"),
             "rating", "stars"
@@ -156,7 +156,7 @@ namespace Banshee.Query
         );
 
         public static QueryField DurationField = new QueryField (
-            "duration", Catalog.GetString ("Duration"), "CoreTracks.Duration", typeof(IntegerQueryValue),
+            "duration", Catalog.GetString ("Duration"), "CoreTracks.Duration", typeof(TimeSpanQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("duration"), Catalog.GetString ("length"), Catalog.GetString ("time"),
             "duration", "length", "time"
@@ -170,21 +170,21 @@ namespace Banshee.Query
         );
 
         public static QueryField LastPlayedField = new QueryField (
-            "lastplayed", Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", typeof(DateQueryValue),
+            "lastplayed", Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("lastplayed"), Catalog.GetString ("played"), Catalog.GetString ("playedon"),
             "lastplayed", "played", "playedon"
         );
 
         public static QueryField LastSkippedField = new QueryField (
-            "lastskipped", Catalog.GetString ("Last Skipped Date"), "CoreTracks.LastSkippedStamp", typeof(DateQueryValue),
+            "lastskipped", Catalog.GetString ("Last Skipped Date"), "CoreTracks.LastSkippedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("lastskipped"), Catalog.GetString ("skipped"), Catalog.GetString ("skippedon"),
             "lastskipped", "skipped", "skippedon"
         );
 
         public static QueryField DateAddedField = new QueryField (
-            "added", Catalog.GetString ("Date Added"), "CoreTracks.DateAddedStamp", typeof(DateQueryValue),
+            "added", Catalog.GetString ("Date Added"), "CoreTracks.DateAddedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("added"), Catalog.GetString ("imported"), Catalog.GetString ("addedon"), Catalog.GetString ("dateadded"), Catalog.GetString ("importedon"),
             "added", "imported", "addedon", "dateadded", "importedon"
@@ -319,12 +319,17 @@ namespace Banshee.Query
             IntegerQueryValue.LessThan.Label         = Catalog.GetString ("less than");
             IntegerQueryValue.GreaterThan.Label      = Catalog.GetString ("more than");
 
-            DateQueryValue.Equal.Label               = Catalog.GetString ("is");
-            DateQueryValue.NotEqual.Label            = Catalog.GetString ("is not");
-            DateQueryValue.LessThanEqual.Label       = Catalog.GetString ("at most");
-            DateQueryValue.GreaterThanEqual.Label    = Catalog.GetString ("at least");
-            DateQueryValue.LessThan.Label            = Catalog.GetString ("less than");
-            DateQueryValue.GreaterThan.Label         = Catalog.GetString ("more than");
+            //DateQueryValue.Equal.Label               = Catalog.GetString ("is");
+            //DateQueryValue.NotEqual.Label            = Catalog.GetString ("is not");
+            //DateQueryValue.LessThanEqual.Label       = Catalog.GetString ("at most");
+            //DateQueryValue.GreaterThanEqual.Label    = Catalog.GetString ("at least");
+            DateQueryValue.LessThan.Label            = Catalog.GetString ("before");
+            DateQueryValue.GreaterThan.Label         = Catalog.GetString ("after");
+
+            RelativeTimeSpanQueryValue.GreaterThan.Label         = Catalog.GetString ("more than");
+            RelativeTimeSpanQueryValue.LessThan.Label            = Catalog.GetString ("less than");
+            RelativeTimeSpanQueryValue.GreaterThanEqual.Label    = Catalog.GetString ("at least");
+            RelativeTimeSpanQueryValue.LessThanEqual.Label       = Catalog.GetString ("at most");
 
             StringQueryValue.Equal.Label             = Catalog.GetString ("is");
             StringQueryValue.NotEqual.Label          = Catalog.GetString ("is not");

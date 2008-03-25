@@ -85,11 +85,19 @@ namespace Hyena.Query.Gui
             types[entry_type] = query_value_type;
         }
 
+        public static Type GetValueType (QueryValueEntry entry)
+        {
+            return types [entry.GetType ()];
+        }
+
         static QueryValueEntry () {
             AddSubType (typeof(StringQueryValueEntry), typeof(StringQueryValue));
             AddSubType (typeof(IntegerQueryValueEntry), typeof(IntegerQueryValue));
             AddSubType (typeof(DateQueryValueEntry), typeof(DateQueryValue));
             AddSubType (typeof(FileSizeQueryValueEntry), typeof(FileSizeQueryValue));
+            AddSubType (typeof(TimeSpanQueryValueEntry), typeof(TimeSpanQueryValue));
+            AddSubType (typeof(RelativeTimeSpanQueryValueEntry), typeof(RelativeTimeSpanQueryValue));
+            AddSubType (typeof(NullQueryValueEntry), typeof(NullQueryValue));
         }
     }
 }

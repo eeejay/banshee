@@ -1,11 +1,10 @@
 //
-// QueryOperator.cs
+// NullQueryValue.cs
 //
-// Author:
-//   Aaron Bockover <abockover@novell.com>
+// Authors:
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -30,53 +29,53 @@
 using System;
 using System.Xml;
 using System.Text;
-using System.Collections.Generic;
+
+using Hyena;
 
 namespace Hyena.Query
 {
-    public class Operator : IAliasedObject
+    public class NullQueryValue : QueryValue
     {
-        public string name;
-        public string Name {
-            get { return name; }
+        public static readonly Operator IsNullOrEmpty  = new Operator ("empty", "IS NULL", "!");
+
+        public override string XmlElementName {
+            get { return "empty"; }
         }
 
-        public string label;
-        public string Label {
-            get { return label ?? Name; }
-            set { label = value; }
+        public override object Value {
+            get { return null; }
         }
 
-        private string [] aliases;
-        public string [] Aliases {
-            get { return aliases; }
+        protected static AliasedObjectSet<Operator> operators = new AliasedObjectSet<Operator> (IsNullOrEmpty);
+        public override AliasedObjectSet<Operator> OperatorSet {
+            get { return operators; }
         }
 
-        public string PrimaryAlias {
-            get { return aliases [0]; }
+        public NullQueryValue ()
+        {
+            IsEmpty = false;
         }
 
-        private string sql_format;
-        public string SqlFormat {
-            get { return sql_format; }
-        }
-
-        // FIXME get rid of this
-        private bool is_not;
-        public bool IsNot {
-            get { return is_not; }
-        }
-        
-        internal Operator (string name, string sql_format, params string [] userOps) : this (name, sql_format, false, userOps)
+        public override void ParseUserQuery (string input)
         {
         }
 
-        internal Operator (string name, string sql_format, bool is_not, params string [] userOps)
+        public override void ParseXml (XmlElement node)
         {
-            this.name = name;
-            this.sql_format = sql_format;
-            this.aliases = userOps;
-            this.is_not = is_not;
+        }
+
+        public override void AppendXml (XmlElement node)
+        {
+            node.InnerText = String.Empty;
+        }
+
+        public void SetValue (string str)
+        {
+        }
+
+        public override string ToSql ()
+        {
+            return null;
         }
     }
 }

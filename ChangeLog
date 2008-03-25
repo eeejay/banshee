@@ -1,3 +1,67 @@
+2008-03-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This patch fixes issues with smart playlist/search date fields not working
+	right/at all.  Also adds support for different widgets within one field on
+	the smart playlist editor dialog (eg absolute dates vs relative dates for
+	date fields).
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Use new
+	TimeSpanQueryValue for DurationField, and use RelativeTimeSpanQueryValue
+	in addition to DateQueryValue for LastPlayed/Skipped.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs: Use new
+	RelativeTimeSpanQueryValue class.
+
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs:
+	Avoid crashing if there are no smart playlists.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs: Old code
+	moved mostly to *TimeSpanQueryValueEntry, replaced with an actual abs date
+	entry.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/NullQueryValueEntry.cs: Empty,
+	if the user has selected this 'operator', no more UI is needed.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs: Handle
+	QueryFields having multiple ValueTypes (each with their own set of
+	operators).  This allows us to have both relative dates and absolute date
+	widegts for one field (LastPlayed, say).
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryTermsBox.cs: When creating
+	a new row, set it to the previous row's field/operator.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryValueEntry.cs: Connect new
+	QueryValue types to their Entry types.  Add static lookup method.
+
+	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs: Move the
+	relative/TimeSpan code out.
+
+	* src/Libraries/Hyena.Gui/Makefile.am:
+	* src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs: New QueryValue class with
+	one operator to see if a value is null.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs: New
+	classes, mostly a copy of the old DateQueryValueEntry code, with an entry
+	and a units (factors) dropdown (and an "ago" label for the Relative one).
+
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Instead of QueryFields
+	having one ValueType, make it an array.
+
+	* src/Libraries/Hyena/Hyena.Query/QueryTermNode.cs:
+	* src/Libraries/Hyena/Hyena.Query/QueryValue.cs: Handle multiple ValueTypes.
+
+	* src/Libraries/Hyena/Hyena.Query/QueryOperator.cs: If the Label is null
+	return the Name.  Useful for debugging with adding new operators.
+
+	* src/Libraries/Hyena/Makefile.am:
+	* src/Libraries/Hyena/Hyena.Query/TimeSpanQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs: New files
+	for representing time spans in queries.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	Use new ExtensionCacheRoot.
+
 2008-03-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Use

@@ -37,57 +37,61 @@ namespace Hyena.Query.Gui
 {
     public class DateQueryValueEntry : QueryValueEntry
     {
-        protected SpinButton spin_button;
-        protected ComboBox combo;
         protected DateQueryValue query_value;
 
-        protected static readonly RelativeDateFactor [] factors = new RelativeDateFactor [] {
-            RelativeDateFactor.Second, RelativeDateFactor.Minute, RelativeDateFactor.Hour, RelativeDateFactor.Day,
-            RelativeDateFactor.Week, RelativeDateFactor.Month, RelativeDateFactor.Year
-        };
+        protected SpinButton year_entry = new SpinButton (Double.MinValue, Double.MaxValue, 1.0);
+        protected SpinButton month_entry = new SpinButton (0.0, 12.0, 1.0);
+        protected SpinButton day_entry = new SpinButton (0.0, 31.0, 1.0);
 
-        // Relative: [<|>] [num] [minutes|hours] ago
-        // TODO: Absolute: [>|>=|=|<|<=] [date/time]
         public DateQueryValueEntry () : base ()
         {
-            spin_button = new SpinButton (0.0, 1.0, 1.0);
-            spin_button.Digits = 0;
-            spin_button.WidthChars = 4;
-            spin_button.SetRange (0.0, Double.MaxValue);
-            Add (spin_button);
+            year_entry.MaxLength = year_entry.WidthChars = 4;
+            month_entry.MaxLength = month_entry.WidthChars = 2;
+            day_entry.MaxLength = day_entry.WidthChars = 2;
+            year_entry.Numeric = month_entry.Numeric = day_entry.Numeric = true;
+            month_entry.Wrap = day_entry.Wrap = true;
 
-            combo = ComboBox.NewText ();
-            combo.AppendText (Catalog.GetString ("seconds"));
-            combo.AppendText (Catalog.GetString ("minutes"));
-            combo.AppendText (Catalog.GetString ("hours"));
-            combo.AppendText (Catalog.GetString ("days"));
-            combo.AppendText (Catalog.GetString ("weeks"));
-            combo.AppendText (Catalog.GetString ("months"));
-            combo.AppendText (Catalog.GetString ("years"));
-            combo.Realized += delegate { combo.Active = 1; };
-            Add (combo);
+            year_entry.Value = (double) DateTime.Now.Year;
+            month_entry.Value = (double) DateTime.Now.Month;
+            day_entry.Value = (double) DateTime.Now.Day;
 
-            Add (new Label ("ago"));
+            year_entry.Changed += HandleValueChanged;
+            month_entry.Changed += HandleValueChanged;
+            day_entry.Changed += HandleValueChanged;
 
-            spin_button.ValueChanged += HandleValueChanged;
-            combo.Changed += HandleValueChanged;
+            Add (year_entry);
+            Add (new Label ("-"));
+            Add (month_entry);
+            Add (new Label ("-"));
+            Add (day_entry);
         }
 
         public override QueryValue QueryValue {
             get { return query_value; }
-            set { 
-                spin_button.ValueChanged -= HandleValueChanged;
-                combo.Changed -= HandleValueChanged;
+            set {
+                year_entry.Changed -= HandleValueChanged;
+                month_entry.Changed -= HandleValueChanged;
+                day_entry.Changed -= HandleValueChanged;
+
                 query_value = value as DateQueryValue;
-                combo.Active = Array.IndexOf (factors, query_value.Factor);
-                spin_button.ValueChanged += HandleValueChanged;
-                combo.Changed += HandleValueChanged;
+                year_entry.Value = (double) query_value.DateTime.Year;
+                month_entry.Value = (double) query_value.DateTime.Month;
+                day_entry.Value = (double) query_value.DateTime.Day;
+
+                year_entry.Changed += HandleValueChanged;
+                month_entry.Changed += HandleValueChanged;
+                day_entry.Changed += HandleValueChanged;
             }
         }
 
         protected void HandleValueChanged (object o, EventArgs args)
         {
-            query_value.SetRelativeValue (-spin_button.ValueAsInt, factors [combo.Active]);
+            try {
+                DateTime dt = new DateTime (year_entry.ValueAsInt, month_entry.ValueAsInt, day_entry.ValueAsInt);
+                query_value.SetValue (dt);
+            } catch {
+                Log.Debug ("Caught exception raised because of invalid date");
+            }
         }
     }
 }

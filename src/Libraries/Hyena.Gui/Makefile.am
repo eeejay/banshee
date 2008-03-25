@@ -40,12 +40,15 @@ SOURCES =  \
 	Hyena.Query.Gui/DateQueryValueEntry.cs \
 	Hyena.Query.Gui/FileSizeQueryValueEntry.cs \
 	Hyena.Query.Gui/IntegerQueryValueEntry.cs \
+	Hyena.Query.Gui/NullQueryValueEntry.cs \
 	Hyena.Query.Gui/QueryBox.cs \
 	Hyena.Query.Gui/QueryLimitBox.cs \
 	Hyena.Query.Gui/QueryTermBox.cs \
 	Hyena.Query.Gui/QueryTermsBox.cs \
 	Hyena.Query.Gui/QueryValueEntry.cs \
+	Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs \
 	Hyena.Query.Gui/StringQueryValueEntry.cs \
+	Hyena.Query.Gui/TimeSpanQueryValueEntry.cs \
 	Hyena.Widgets/AnimatedBox.cs \
 	Hyena.Widgets/AnimatedHBox.cs \
 	Hyena.Widgets/AnimatedImage.cs \

@@ -83,7 +83,11 @@ namespace Banshee.Query.Gui
                         combo.Active = playlist_id_combo_map [(int)query_value.IntValue];
                     } catch {}
                 }
-                query_value.SetValue (combo_playlist_id_map [combo.Active]);
+
+                if (combo_playlist_id_map.ContainsKey (combo.Active)) {
+                    query_value.SetValue (combo_playlist_id_map [combo.Active]);
+                }
+
                 combo.Changed += HandleValueChanged;
             }
         }
