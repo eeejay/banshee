@@ -440,7 +440,7 @@ namespace Hyena.Data.Gui
             cairo_context.Stroke ();
         }
         
-        private void InvalidateListView ()
+        public new void QueueDraw ()
         {
             InvalidateHeader ();
             InvalidateList ();
