@@ -135,9 +135,6 @@ namespace Banshee.Library
                     track.Uri = newpath;
                 }
 
-                DatabaseArtistInfo artist = DatabaseArtistInfo.FindOrCreate (track.ArtistName);
-                DatabaseAlbumInfo album = DatabaseAlbumInfo.FindOrCreate (artist, track.AlbumTitle);
-
                 track.DateAdded = DateTime.Now;
 
                 if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
@@ -148,8 +145,6 @@ namespace Banshee.Library
                     music_count++;
                 }
 
-                track.ArtistId = artist.DbId;
-                track.AlbumId = album.DbId;
                 track.Save (false);
 
                 ServiceManager.DbConnection.CommitTransaction ();

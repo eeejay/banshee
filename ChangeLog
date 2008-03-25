@@ -1,5 +1,25 @@
 2008-03-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	In FindOrCreate methods, cache the last result to avoid looking up an
+	artist and album for each track in an album.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Within the Save method make sure the artist and album are up to date and
+	in the database.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	Album/artist creation now done in DatabaseTrackInfo.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
+	Re-enable editing of artist/albums.
+
+	* src/Libraries/Hyena/Hyena.Data/ArrayModelCache.cs: Forgot to put
+	threading fix in this when previously updated DictionaryModelCache.
+
+2008-03-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:

@@ -51,6 +51,8 @@ namespace Banshee.Collection.Database
 {
     public class DatabaseTrackInfo : TrackInfo, ICacheableItem
     {
+        private bool? artist_changed = null, album_changed = null;
+        
         private static BansheeModelProvider<DatabaseTrackInfo> provider = new BansheeModelProvider<DatabaseTrackInfo> (
             ServiceManager.DbConnection, "CoreTracks"
         );
@@ -99,14 +101,20 @@ namespace Banshee.Collection.Database
 
         public void Save (bool notify)
         {
+            // If either the artist or album changed, 
+            if (ArtistId == 0 || AlbumId == 0 || artist_changed == true || album_changed == true) {
+                DatabaseArtistInfo artist = DatabaseArtistInfo.FindOrCreate (ArtistName);
+                ArtistId = artist.DbId;
+           
+                DatabaseAlbumInfo album = DatabaseAlbumInfo.FindOrCreate (artist, AlbumTitle);
+                AlbumId = album.DbId;
+                
+                // TODO get rid of unused artists/albums
+            }
+            
             DateUpdated = DateTime.Now;
             bool is_new = TrackId == 0;
             Provider.Save (this);
-
-            // Pattern for saving artist / album:
-            // 1) if not dirty, ignore
-            // 2) if dirty, look up, update our id if found, otherwise create
-            // 3) delete unused ones
 
             if (notify) {
                 if (is_new) {
@@ -152,13 +160,25 @@ namespace Banshee.Collection.Database
         [VirtualDatabaseColumn ("Name", "CoreArtists", "ArtistID", "ArtistID")]
         public override string ArtistName {
             get { return base.ArtistName; }
-            set { base.ArtistName = value; }
+            set {
+                if (value == ArtistName)
+                    return;
+
+                base.ArtistName = value;
+                artist_changed = artist_changed != null;
+            }
         }
         
         [VirtualDatabaseColumn ("Title", "CoreAlbums", "AlbumID", "AlbumID")]
         public override string AlbumTitle {
             get { return base.AlbumTitle; }
-            set { base.AlbumTitle = value; }
+            set {
+                if (value == AlbumTitle)
+                    return;
+
+                base.AlbumTitle = value;
+                album_changed = album_changed != null;
+            }
         }
         
         private int tag_set_id;

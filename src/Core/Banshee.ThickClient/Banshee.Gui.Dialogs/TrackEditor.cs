@@ -40,6 +40,8 @@ using Banshee.ServiceStack;
 using Banshee.Widgets;
 using Banshee.Configuration.Schema;
 using Banshee.Collection;
+using Banshee.Sources;
+using Banshee.Collection.Database;
 
 using Hyena.Gui;
 
@@ -201,10 +203,6 @@ namespace Banshee.Gui.Dialogs
             RatingSync.Clicked += OnRatingSyncClicked;
             EnterNextTitle.Clicked += OnEnterNextTitleClicked;
             CoverButton.Clicked += OnCoverButtonClicked;
-            
-            // FIXME artist/album editing disabled for now in trunk
-            Artist.Sensitive = false;
-            Album.Sensitive = false;
             
             Artist.Changed += OnValueEdited;
             Album.Changed += OnValueEdited;
@@ -600,10 +598,13 @@ namespace Banshee.Gui.Dialogs
         {
             UpdateCurrent();
             
+            // TODO improve performance by not notifying each track's source until
+            // we've saved all tracks.  Right now, if you edit two tracks in your library, the
+            // Library is reloaded twice.
             foreach(EditorTrack track in TrackSet) {
                 SaveTrack(track, true);
             }
-
+            
             EventHandler handler = Saved;
             if(handler != null) {
                 handler(this, new EventArgs());

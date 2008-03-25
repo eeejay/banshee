@@ -58,26 +58,34 @@ namespace Banshee.Collection.Database
             ArtistName
         }
 
+        private static int last_artist_id;
+        private static string last_title;
+        private static DatabaseAlbumInfo last_album;
         public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, string title)
         {
-            DatabaseAlbumInfo album;
+            if (title == last_title && artist.DbId == last_artist_id) {
+                return last_album;
+            }
 
             if (title == null || title.Trim () == String.Empty)
                 title = Catalog.GetString ("Unknown Album");
 
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, title)) {
                 if (reader.Read ()) {
-                    album = new DatabaseAlbumInfo (reader);
-                    album.ArtistName = artist.Name;
+                    last_album = new DatabaseAlbumInfo (reader);
+                    last_album.ArtistName = artist.Name;
                 } else {
-                    album = new DatabaseAlbumInfo ();
-                    album.Title = title;
-                    album.ArtistId = artist.DbId;
-                    album.ArtistName = artist.Name;
-                    album.Save ();
+                    last_album = new DatabaseAlbumInfo ();
+                    last_album.Title = title;
+                    last_album.ArtistId = artist.DbId;
+                    last_album.ArtistName = artist.Name;
+                    last_album.Save ();
                 }
             }
-            return album;
+            
+            last_title = title;
+            last_artist_id = artist.DbId;
+            return last_album;
         }
 
         public DatabaseAlbumInfo () : base (null)
