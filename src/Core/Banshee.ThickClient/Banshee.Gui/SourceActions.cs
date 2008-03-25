@@ -59,7 +59,7 @@ namespace Banshee.Gui
         }
 
         public Source ActionSource {
-            get { return SourceView.HighlightedSource ?? ActiveSource; }
+            get { return ((SourceView == null) ? null :  SourceView.HighlightedSource) ?? ActiveSource; }
         }
 
         public override PrimarySource ActivePrimarySource {

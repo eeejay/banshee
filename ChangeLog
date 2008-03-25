@@ -1,3 +1,14 @@
+2008-03-25  Wouter Bolsterlee  <wbolster@svn.gnome.org>
+
+	reviewed by: Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+
+	Correctly guard against null SourceView instances, so
+	that non-Nereid clients without a SourceView do not
+	instantly crash upon startup. Patch suggested by Gabriel
+	Burt on IRC.
+
 2008-03-25  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
