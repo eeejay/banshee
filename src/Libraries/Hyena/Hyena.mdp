@@ -84,6 +84,9 @@
     <File name="Hyena/ConsoleCrayon.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Sqlite/ICacheableItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data/ISelectable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query/NullQueryValue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query/RelativeTimeSpanQueryValue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query/TimeSpanQueryValue.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

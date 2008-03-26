@@ -17,8 +17,9 @@ SOURCES =  \
 	Banshee.NotificationArea/NotificationAreaService.cs \
 	Banshee.NotificationArea/TrackInfoPopup.cs \
 	Banshee.NotificationArea/X11NotificationArea.cs \
-	Banshee.NotificationArea/X11NotificationAreaBox.cs \
-	$(NOTIFY_SHARP_SOURCES)
+	Banshee.NotificationArea/X11NotificationAreaBox.cs
+
+SOURCES += $(NOTIFY_SHARP_SOURCES)
 
 RESOURCES =  \
 	Resources/Banshee.NotificationArea.addin.xml \
