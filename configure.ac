@@ -65,6 +65,9 @@ BANSHEE_CHECK_NDESK_DBUS
 dnl Mono.Addins libraries
 BANSHEE_CHECK_MONO_ADDINS
 
+dnl notify-sharp library
+BANSHEE_CHECK_NOTIFY_SHARP
+
 dnl Monodoc (optional through --disable-docs)
 SHAMROCK_CHECK_MONODOC
 

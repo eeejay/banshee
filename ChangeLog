@@ -1,3 +1,12 @@
+2008-03-26  Sebastian Dröge  <slomo@circular-chaos.org>
+
+	* build/m4/banshee/notify-sharp.m4:
+	* src/Extensions/Banshee.NotificationArea/Makefile.am:
+	* configure.ac: Allow building against an external notify-sharp if one
+	is found. This is especially important as the next notification-daemon
+	release in a few days changes the DBus API and a newer notify-sharp is
+	required then.
+
 2008-03-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:

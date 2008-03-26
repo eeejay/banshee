@@ -1,6 +1,14 @@
+if EXTERNAL_NOTIFY_SHARP
+NOTIFY_SHARP_SOURCES = 
+NOTIFY_SHARP_LIBS = $(NOTIFY_SHARP_LIBS)
+else
+NOTIFY_SHARP_SOURCES = Notifications/Notifications.cs Notifications/Notification.cs
+NOTIFY_SHARP_LIBS = 
+endif
+
 ASSEMBLY = Banshee.NotificationArea
 TARGET = library
-LINK = $(REF_EXTENSION_NOTIFICATIONAREA)
+LINK = $(REF_EXTENSION_NOTIFICATIONAREA) $(NOTIFY_SHARP_LIBS)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
@@ -10,8 +18,7 @@ SOURCES =  \
 	Banshee.NotificationArea/TrackInfoPopup.cs \
 	Banshee.NotificationArea/X11NotificationArea.cs \
 	Banshee.NotificationArea/X11NotificationAreaBox.cs \
-	Notifications/Notification.cs \
-	Notifications/Notifications.cs 
+	$(NOTIFY_SHARP_SOURCES)
 
 RESOURCES =  \
 	Resources/Banshee.NotificationArea.addin.xml \
