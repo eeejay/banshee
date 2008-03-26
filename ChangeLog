@@ -1,5 +1,12 @@
 2008-03-26  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea.dll.config:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationArea.cs:
+	Change the default DllImport for libX11 directly to libX11.so.6 and then
+	provide a .config file map that distributors could override if necessary
+
+2008-03-26  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
 	Some code clean up and render the idle logo when there is no video playing
 

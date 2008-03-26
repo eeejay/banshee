@@ -27,3 +27,6 @@ RESOURCES =  \
 
 include $(top_srcdir)/build/build.mk
 
+module_SCRIPTS += Banshee.NotificationArea.dll.config
+EXTRA_DIST += Banshee.NotificationArea.dll.config
+

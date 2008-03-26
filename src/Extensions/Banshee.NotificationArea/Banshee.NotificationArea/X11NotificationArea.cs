@@ -346,36 +346,36 @@ public class X11NotificationArea : Plug
 	[DllImport ("libgdk-x11-2.0.so.0")]
 	private static extern int gdk_error_trap_pop ();
 
-	[DllImport ("libX11")]
+	[DllImport ("libX11.so.6")]
 	private extern static IntPtr XInternAtom(IntPtr display, string atom_name, bool only_if_exists);
 
-	[DllImport ("libX11")]
+	[DllImport ("libX11.so.6")]
 	private extern static void XGrabServer (IntPtr display);
 
-	[DllImport ("libX11")]
+	[DllImport ("libX11.so.6")]
 	private extern static void XUngrabServer (IntPtr display);
 
-	[DllImport ("libX11")]
+	[DllImport ("libX11.so.6")]
 	private extern static int XFlush (IntPtr display);
 
-	[DllImport ("libX11")]
+	[DllImport ("libX11.so.6")]
 	private extern static int XSync (IntPtr display, bool discard);
 
-	[DllImport ("libX11")]
+	[DllImport ("libX11.so.6")]
 	private extern static int XFree (IntPtr display);
 
-	[DllImport ("libX11")]
+	[DllImport ("libX11.so.6")]
 	private extern static IntPtr XGetSelectionOwner (IntPtr display, IntPtr atom);
 
-	[DllImport ("libX11")]
+	[DllImport ("libX11.so.6")]
 	private extern static IntPtr XSelectInput (IntPtr display, IntPtr window, IntPtr mask);
 
-	[DllImport ("libX11")]
-	private extern static int XSendEvent(IntPtr display, IntPtr window, bool propagate, IntPtr event_mask, 
+	[DllImport ("libX11.so.6")]
+	private extern static int XSendEvent (IntPtr display, IntPtr window, bool propagate, IntPtr event_mask, 
 					     ref XClientMessageEvent send_event);
 
-	[DllImport("libX11")]
-	private extern static int XGetWindowProperty(IntPtr display, IntPtr w, IntPtr property, IntPtr long_offset, 
+	[DllImport ("libX11.so.6")]
+	private extern static int XGetWindowProperty (IntPtr display, IntPtr w, IntPtr property, IntPtr long_offset, 
 						     IntPtr long_length, bool deleteProp, IntPtr req_type,
 						     out IntPtr actual_type_return, out int actual_format_return, 
 						     out IntPtr nitems_return, out IntPtr bytes_after_return, 
