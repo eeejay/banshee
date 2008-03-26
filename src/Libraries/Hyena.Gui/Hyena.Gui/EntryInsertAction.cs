@@ -70,7 +70,7 @@ namespace Hyena.Gui
         public bool CanMerge(IUndoAction action) 
         {
             EntryInsertAction insert = action as EntryInsertAction;
-            if(insert == null) {
+            if(insert == null || String.IsNullOrEmpty(text)) {
                 return false;
             }
 

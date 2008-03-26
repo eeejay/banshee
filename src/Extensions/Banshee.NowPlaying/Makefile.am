@@ -8,7 +8,9 @@ SOURCES =  \
 	Banshee.NowPlaying/NowPlayingSource.cs \
 	Banshee.NowPlaying/VideoDisplay.cs
 
-RESOURCES = Banshee.NowPlaying.addin.xml
+RESOURCES =  \
+	Banshee.NowPlaying.addin.xml \
+	Resources/idle-logo.png
 
 include $(top_srcdir)/build/build.mk
 

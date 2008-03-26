@@ -29,9 +29,11 @@
 using System;
 using Gtk;
 
-using Banshee.Gui;
 using Banshee.MediaEngine;
 using Banshee.ServiceStack;
+using Banshee.Collection;
+
+using Banshee.Gui;
 
 namespace Banshee.NowPlaying
 {   
@@ -39,10 +41,13 @@ namespace Banshee.NowPlaying
     {
         private Gdk.Pixbuf idle_pixbuf;
         private Gdk.Window video_window;
+        private bool render_idle = true;
     
         public VideoDisplay ()
         {
             CreateVideoWindow ();
+            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ToggleIdleVisibility ();
         }
         
         private void CreateVideoWindow ()
@@ -64,7 +69,7 @@ namespace Banshee.NowPlaying
                 
             video_window = new Gdk.Window (null, attributes, attributes_mask);
             video_window.UserData = Handle;
-            
+                        
             video_window.SetBackPixmap (null, false);
             
             ServiceManager.PlayerEngine.VideoWindow = video_window.Handle;
@@ -90,30 +95,24 @@ namespace Banshee.NowPlaying
             GdkWindow.UserData = Handle;
             
             video_window.Reparent (Parent.GdkWindow, Allocation.X, Allocation.Y);
-            
-            Style = Style.Attach (GdkWindow);
         }
         
         protected override void OnUnrealized ()
         {
-            WidgetFlags ^= WidgetFlags.Realized;
-            GdkWindow.UserData = IntPtr.Zero;
-            GdkWindow.Destroy ();
             video_window.Reparent (null, 0, 0);
+            base.OnUnrealized ();
         }
 
         protected override void OnMapped ()
         {
-            WidgetFlags |= WidgetFlags.Mapped;
             video_window.Show ();
-            GdkWindow.Show ();
+            base.OnMapped ();
         }
         
         protected override void OnUnmapped ()
         {
-            WidgetFlags ^= WidgetFlags.Mapped;
             video_window.Hide ();
-            GdkWindow.Hide ();
+            base.OnUnmapped ();
         }
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
@@ -130,7 +129,7 @@ namespace Banshee.NowPlaying
         
         protected override bool OnConfigureEvent (Gdk.EventConfigure evnt)
         {
-            if (ServiceManager.PlayerEngine.SupportsVideo) {
+            if (IsRealized && IsMapped && ServiceManager.PlayerEngine.SupportsVideo) {
                 ServiceManager.PlayerEngine.VideoExpose (video_window.Handle, true);
             }
             
@@ -143,13 +142,13 @@ namespace Banshee.NowPlaying
                 return true;
             }
             
-            if (ServiceManager.PlayerEngine.SupportsVideo) {
+            if (!render_idle && ServiceManager.PlayerEngine.SupportsVideo) {
                 ServiceManager.PlayerEngine.VideoExpose (video_window.Handle, false);
                 return true;
             }
             
             if (idle_pixbuf == null) {
-                idle_pixbuf = IconThemeUtils.LoadIcon (128, "media-player-banshee");
+                idle_pixbuf = Gdk.Pixbuf.LoadFromResource ("idle-logo.png");
             }
             
             if (idle_pixbuf == null) {
@@ -161,6 +160,28 @@ namespace Banshee.NowPlaying
                 idle_pixbuf.Width, idle_pixbuf.Height, Gdk.RgbDither.Normal, 0, 0);
             
             return true;
+        }
+        
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        {
+            if (args.Event == PlayerEngineEvent.StartOfStream || args.Event == PlayerEngineEvent.EndOfStream) {
+                ToggleIdleVisibility ();
+            }
+        }
+        
+        private void ToggleIdleVisibility ()
+        {
+            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
+            render_idle = track == null || (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0;
+            QueueDraw ();
+        }
+        
+        public new void QueueDraw ()
+        {
+            base.QueueDraw ();
+            if (IsRealized && video_window != null) {
+                video_window.InvalidateRect (new Gdk.Rectangle (0, 0, Allocation.Width, Allocation.Height), true);
+            }
         }
     }
 }
