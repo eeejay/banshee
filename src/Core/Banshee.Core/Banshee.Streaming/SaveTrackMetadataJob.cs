@@ -56,7 +56,7 @@ namespace Banshee.Streaming
         
             // Note: this should be kept in sync with the metadata read in StreamTagger.cs
             TagLib.File file = StreamTagger.ProcessUri(track.Uri);
-            file.Tag.AlbumArtists = new string [] { track.ArtistName };
+            file.Tag.Performers = new string [] { track.ArtistName };
             file.Tag.Album = track.AlbumTitle;
             file.Tag.Genres = new string [] { track.Genre };
             file.Tag.Title = track.TrackTitle;

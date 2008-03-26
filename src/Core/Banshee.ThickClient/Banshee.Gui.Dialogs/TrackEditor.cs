@@ -116,7 +116,6 @@ namespace Banshee.Gui.Dialogs
     public class TrackEditor : GladeWindow
     {
         [Widget] private Notebook EditorNotebook;
-        [Widget] private VBox EditorVBox;
         [Widget] private Button CancelButton;
         [Widget] private Button SaveButton;
         [Widget] private Button Previous;
@@ -173,13 +172,6 @@ namespace Banshee.Gui.Dialogs
                 if (track != null)
                     TrackSet.Add(new EditorTrack(track));
             }
-            
-            Label notice = new Label ();
-            notice.Wrap = true;
-            notice.Markup = "<i>Note: The artist and album fields are not editable in this preview release.</i>";
-            notice.ShowAll ();
-            EditorVBox.PackStart (notice, false, true, 6);
-            EditorVBox.ReorderChild (notice, 0);
             
             rating_entry.Show();
             (Glade["RatingLabel"] as Label).MnemonicWidget = rating_entry;
@@ -613,27 +605,26 @@ namespace Banshee.Gui.Dialogs
             Window.Destroy();
         }
         
-        private void SaveTrack(EditorTrack track, bool writeToDatabase)
+        private void SaveTrack (EditorTrack track, bool writeToDatabase)
         {
-            track.Save();
+            track.Save ();
             
-            if(writeToDatabase) {
-                track.Track.Save();
+            if (writeToDatabase) {
+                track.Track.Save ();
                 
-                if(LibrarySchema.WriteMetadata.Get()) {
-                    SaveToFile(track);
+                if (LibrarySchema.WriteMetadata.Get ()) {
+                    SaveToFile (track);
                 }
             }
                 
-            if(track.Track == ServiceManager.PlayerEngine.CurrentTrack) {
-                ServiceManager.PlayerEngine.TrackInfoUpdated();
+            if (track.Track == ServiceManager.PlayerEngine.CurrentTrack) {
+                ServiceManager.PlayerEngine.TrackInfoUpdated ();
             }
         }
         
-        private void SaveToFile(EditorTrack track)
+        private void SaveToFile (EditorTrack track)
         {
-            Banshee.Kernel.Scheduler.Schedule(new SaveTrackMetadataJob(track.Track), 
-                Banshee.Kernel.JobPriority.Highest);
+            Banshee.Kernel.Scheduler.Schedule (new SaveTrackMetadataJob (track.Track), Banshee.Kernel.JobPriority.Highest);
         }
     }
 }
