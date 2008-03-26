@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.0 ALPHA 1! (0.98.1)
+WELCOME TO BANSHEE 1.0 ALPHA 2! (0.98.2)
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,14 +10,14 @@ WELCOME TO BANSHEE 1.0 ALPHA 1! (0.98.1)
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/Releases/0.98.1
+  * Learn More: http://banshee-project.org/Releases/0.98.2
 
 
 ===============================================================================
 ALPHA RELEASE DISCLAIMER
 ===============================================================================
 
-    This is the first release in the Banshee 1.0 series. This Alpha 1 release 
+    This is the second release in the Banshee 1.0 series. This Alpha 2 release 
     does not have feature parity with previous Banshee releases (the last 
     being Banshee 0.13.2). This means there are a number of features in this 
     release that users may have come to know and love in Banshee that are 
@@ -37,16 +37,16 @@ ALPHA RELEASE DISCLAIMER
 
       * Some plugins have not yet been ported to the new 1.0 architecture:
         - Podcasting, DAAP/iTunes Music Sharing, Internet Radio
-        - Recommendations, Mini Mode, Bookmarks, Batch Cover Art Fetching
+        - Recommendations, Mini Mode, Batch Cover Art Fetching
 
     Do not despair, these features will be added back before the final 1.0 
     release. Many hardware related features are projected to land in the 
-    Alpha 2 and 3 releases of Banshee 1.0. We expect releases in quick 
+    Alpha 3 release of Banshee 1.0. We expect releases in quick 
     succession leading up to the final 1.0 release. 
 
     Please read the full release notes on the Banshee Wiki for more details:
 
-      * http://banshee-project.org/Releases/0.98.1
+      * http://banshee-project.org/Releases/0.98.2
 
 
 ===============================================================================
@@ -72,9 +72,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 0.98.1 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-0.98.1.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-0.98.1.tar.gz
+    * Banshee 0.98.2 Tarballs:
+      http://banshee-project.org/files/banshee/banshee-1-0.98.2.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-0.98.2.tar.gz
 
 Packages
 --------
@@ -90,7 +90,7 @@ Packages
 ChangeLogs
 ----------
 
-    * http://banshee-project.org/files/banshee/banshee-1-0.98.1.changes
+    * http://banshee-project.org/files/banshee/banshee-1-0.98.2.changes
 
 
 ===============================================================================
@@ -125,7 +125,7 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.0 Alpha 1 represents the first release since we began rewriting
+    Banshee 1.0 Alpha 2 represents the second release since we began rewriting
     much of the core of Banshee. The primary reason for rewriting this core
     was to deliver much needed performance improvements.
 
@@ -139,13 +139,20 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     New features in this release include:
 
-    * Artist/Album Browser
-    * Powerful new query/search capabilities
-    * Playback from a dedicated source while interacting with other sources
-    * Play Queue taking control of playback over other sources when populated
-    * Tightly integrated Last.fm and Audioscrobbler support
-    * Create your own custom Last.fm radio stations to suit your tastes
-    * 10 band software equalizer (requires additional GStreamer dependencies)
+    * Video management and playback
+    * Now Playing source where video plays and info on playing songs will appear
+
+    Other features, bug fixes, and errata:
+
+    * Play Count, Skip Count, Last Played, and Last Skipped all now kept up to date
+    * Allow editing of artist and album names
+    * Start playing when artist or album browser is double clicked
+    * Bookmarks extension is now available
+    * Date-based searches and smart playlists should be working much better
+    * Initialize the translation Catalog so translations can actually be used
+    * Improved support for dark themes
+    * Use XDG_CACHE_HOME directory for cache files
+    * Disable the equalizer temporarily until gstreamer pipeline issues resolved
 
 
 ===============================================================================
@@ -159,7 +166,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.98.1
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.98.2
 
 
 ===============================================================================
@@ -172,14 +179,12 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
       
-      Aaron Bockover, Alan McGovern, Alexander Hixon, Gabriel Burt, 
-      James Willcox, Michael Monreal, Ruben Vermeersch, Scott Peterson, 
-      Sebastian Dröge, Will Farrington
+      Aaron Bockover, Alexander Hixon, Gabriel Burt, Scott Peterson,
+      Sebastian Dröge, Wouter Bolsterlee
 
     The release notes and screenshots for this release were crafted by:
 
-      Aaron Bockover, Gabriel Burt, Jorge Castro, Josiah Ritchie,
-      Scott Peterson
+      Aaron Bockover, Gabriel Burt, Jorge Castro, Paul Cutler
 
 Contributors In Past Releases
 -----------------------------
@@ -194,5 +199,5 @@ Contributors In Past Releases
     Jorge Castro, Juri Pakaste, Ken Vandine, Larry Ewing, Lauri Kotilainen,
     Michael Monreal, Miguel de Icaza, Mike Urbanski, Nathan Palmer, 
     Oscar Forero, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch,
-    Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington
+    Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington, Wouter Bolsterlee
 

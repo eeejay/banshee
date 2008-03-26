@@ -1,3 +1,7 @@
+2008-03-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* NEWS: Update for forthcoming 0.98.2 release.
+
 2008-03-26  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* build/m4/banshee/notify-sharp.m4:
@@ -617,6 +621,7 @@
 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Slightly more
 	awesome status bar text, shamelessly ported from stable.
+
 	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Removed
 	more mentions of 'songs' and replaced with 'media'.
 
@@ -836,8 +841,8 @@
 
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerView.cs:
-	  Change the unit of the preamp setting into dB, otherwise the scale
-	  next to it is confusing.
+	Change the unit of the preamp setting into dB, otherwise the scale
+	next to it is confusing.
 
 2008-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
@@ -983,7 +988,7 @@
 2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena/Hyena/DateTimeUtil.cs: Super ugly hack to work
-	around ArguemtnOutOfRangeException thrown by DateTime parser.
+	around ArgumentOutOfRangeException thrown by DateTime parser.
 
 2008-03-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
