@@ -45,8 +45,11 @@ namespace Banshee.Collection.Gui
         {
             column_controller = new ColumnController();
             column_controller.Add(new Column("Artist", new ColumnCellText("Name", true), 1.0));
-            
             ColumnController = column_controller;
+            
+            RowActivated += delegate {
+                ServiceManager.PlaybackController.First ();
+            };
         }
 
         protected override bool OnFocusInEvent(Gdk.EventFocus evnt)

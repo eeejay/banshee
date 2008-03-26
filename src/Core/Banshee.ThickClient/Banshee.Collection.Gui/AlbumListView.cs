@@ -45,10 +45,12 @@ namespace Banshee.Collection.Gui
         {
             column_controller = new ColumnController();
             column_controller.Add(new Column("Album", new ColumnCellAlbum(), 1.0));
-            
             ColumnController = column_controller;
-            
             RowHeight = ColumnCellAlbum.RowHeight;
+            
+            RowActivated += delegate {
+                ServiceManager.PlaybackController.First ();
+            };
         }
 
         protected override bool OnFocusInEvent(Gdk.EventFocus evnt)

@@ -121,12 +121,14 @@ namespace Banshee.Collection.Gui
             
             string orig_path = CoverArtSpec.GetPathForSize (id, 0);
             if (File.Exists (orig_path)) {
-                Pixbuf pixbuf = new Pixbuf (orig_path);
-                Pixbuf scaled_pixbuf = pixbuf.ScaleSimple (size, size, Gdk.InterpType.Bilinear);
-                Directory.CreateDirectory (Path.GetDirectoryName (path));
-                scaled_pixbuf.Save (path, "jpeg");
-                ArtworkRenderer.DisposePixbuf (pixbuf);
-                return scaled_pixbuf;
+                try {
+                    Pixbuf pixbuf = new Pixbuf (orig_path);
+                    Pixbuf scaled_pixbuf = pixbuf.ScaleSimple (size, size, Gdk.InterpType.Bilinear);
+                    Directory.CreateDirectory (Path.GetDirectoryName (path));
+                    scaled_pixbuf.Save (path, "jpeg");
+                    ArtworkRenderer.DisposePixbuf (pixbuf);
+                    return scaled_pixbuf;
+                } catch {}
             }
             
             return null;
