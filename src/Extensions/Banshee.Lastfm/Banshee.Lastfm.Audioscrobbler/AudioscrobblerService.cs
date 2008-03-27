@@ -217,8 +217,8 @@ namespace Banshee.Lastfm.Audioscrobbler
                 st.PlayTime, track.Duration.TotalMilliseconds, queued, track, st.PlayTime / 1000);
             
             if (!queued && track.Duration.TotalSeconds > 30 && 
-                track.ArtistName != "" && track.TrackTitle != "" &&
-                (st.PlayTime >  track.Duration.TotalMilliseconds / 2 || st.PlayTime > 240 * 1000)) {
+                !String.IsNullOrEmpty (track.ArtistName) && !String.IsNullOrEmpty (track.TrackTitle) &&
+                (st.PlayTime > track.Duration.TotalMilliseconds / 2 || st.PlayTime > 240 * 1000)) {
                     if (!connection.Started) {
                         connection.Start ();
                     }

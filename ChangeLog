@@ -1,3 +1,8 @@
+2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Change some string comparisons to use IsNullOrEmpty.
+
 2008-03-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs: Stubbed
