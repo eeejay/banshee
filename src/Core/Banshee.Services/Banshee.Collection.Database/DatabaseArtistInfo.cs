@@ -61,12 +61,13 @@ namespace Banshee.Collection.Database
         private static DatabaseArtistInfo last_artist = null;
         public static DatabaseArtistInfo FindOrCreate (string artistName)
         {
-            if (artistName == last_artist_name) {
+            if (artistName == last_artist_name && last_artist != null) {
                 return last_artist;
             }
 
-            if (artistName == null || artistName.Trim () == String.Empty)
+            if (String.IsNullOrEmpty (artistName) || artistName.Trim () == String.Empty) {
                 artistName = Catalog.GetString ("Unknown Artist");
+            }
 
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artistName)) {
                 if (reader.Read ()) {
@@ -124,6 +125,11 @@ namespace Banshee.Collection.Database
         public override string Name {
             get { return base.Name; }
             set { base.Name = value; }
+        }
+
+        public override string ToString ()
+        {
+            return String.Format ("DatabaseArtistInfo<DbId: {0}, Name: {1}>", DbId, Name);
         }
     }
 }

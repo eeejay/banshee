@@ -1,5 +1,12 @@
 2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	Fix issue with importing items that have null artist or album names.
+	Fixes BGO #524600.
+
+2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
 	The First () method is used to start playback when a source, artist, or album
 	is activated, and represents a break from the previous playback.  It should

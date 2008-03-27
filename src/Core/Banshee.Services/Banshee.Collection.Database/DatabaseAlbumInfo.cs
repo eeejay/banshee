@@ -63,12 +63,13 @@ namespace Banshee.Collection.Database
         private static DatabaseAlbumInfo last_album;
         public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, string title)
         {
-            if (title == last_title && artist.DbId == last_artist_id) {
+            if (title == last_title && artist.DbId == last_artist_id && last_album != null) {
                 return last_album;
             }
 
-            if (title == null || title.Trim () == String.Empty)
+            if (String.IsNullOrEmpty (title) || title.Trim () == String.Empty) {
                 title = Catalog.GetString ("Unknown Album");
+            }
 
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, title)) {
                 if (reader.Read ()) {
