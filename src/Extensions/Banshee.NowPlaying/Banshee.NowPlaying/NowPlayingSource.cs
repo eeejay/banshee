@@ -71,6 +71,8 @@ namespace Banshee.NowPlaying
                 (current_track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
                 ServiceManager.SourceManager.SetActiveSource (this);
             }
+
+            OnUserNotifyUpdated ();
         }
         
         public void Dispose ()

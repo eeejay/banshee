@@ -1,5 +1,11 @@
 2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Pulse the Now Playing source when a song or video starts playing and it's
+	not the active source.
+
+2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* data/mimetypes.txt: List of mimetypes, one per line, combining what we
 	already had with Totem's list.
 
