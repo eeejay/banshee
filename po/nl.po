@@ -4,14 +4,14 @@
 #
 # Stijn Verslycken <mailstijn@gmail.com>, 2005
 # Pepijn van de Geer <pvandegeer@gmail.com>, 2006
-# Wouter Bolsterlee <uws+gnome@xs4all.nl>, 2006-2008
+# Wouter Bolsterlee <wbolster@gnome.org>, 2006–2008
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-26 19:49+0100\n"
-"PO-Revision-Date: 2008-03-26 19:50+0100\n"
+"POT-Creation-Date: 2008-03-27 23:07+0100\n"
+"PO-Revision-Date: 2008-03-27 23:09+0100\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -178,10 +178,11 @@ msgstr "Een variable bitrate gebruiken"
 msgid "Windows Media Audio"
 msgstr "Windows Media-audio"
 
-#: ../data/banshee-1.desktop.in.in.h:1 ../libbanshee/gst-cd-rip-0.10.c:406
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:58
-msgid "Banshee"
-msgstr "Banshee"
+#: ../data/banshee-1.desktop.in.in.h:1
+#: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:71
+#: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:98
+msgid "Banshee Media Player"
+msgstr "Banshee muziekspeler"
 
 #: ../data/banshee-1.desktop.in.in.h:2
 msgid "Media Player"
@@ -226,6 +227,11 @@ msgstr "Kon wachtrij niet aan encoder koppelen"
 #: ../libbanshee/gst-cd-rip-0.10.c:299
 msgid "Could not link encoder to gnomevfssink"
 msgstr "Kon encoder niet aan gnomevfssink koppelen"
+
+#: ../libbanshee/gst-cd-rip-0.10.c:406
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:58
+msgid "Banshee"
+msgstr "Banshee"
 
 #: ../libbanshee/gst-cd-rip-0.10.c:432
 msgid "Encoding element does not support tagging!"
@@ -284,11 +290,6 @@ msgstr "Onbekend fout"
 msgid "Buffering"
 msgstr "Buffer vullen"
 
-#: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:71
-#: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:98
-msgid "Banshee Media Player"
-msgstr "Banshee muziekspeler"
-
 #. Translators: this is the window title when a track is playing
 #. {0} is the track title, {1} is the artist name
 #: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:95
@@ -333,7 +334,7 @@ msgstr "Jaar"
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:121
 #, csharp-format
 msgid "Filter on {0}"
-msgstr "Filtere op {0}"
+msgstr "Filteren op {0}"
 
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:87
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:51
@@ -845,7 +846,7 @@ msgid "importedon"
 msgstr "geimporteerdop"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:200
-#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:54
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:66
 msgid "Smart Playlist"
 msgstr "Slimme afspeellijst"
 
@@ -908,7 +909,7 @@ msgstr "begint met"
 msgid "ends with"
 msgstr "eindigt op"
 
-#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:222
+#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:230
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:305
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:328
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:67
@@ -924,25 +925,25 @@ msgstr "Kon slimme sfspeellijst niet migreren"
 msgid "Please file a bug with this error: {0}"
 msgstr "Vul alstublieft een foutrapportage in met deze fout: {0}"
 
-#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:55
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:67
 #: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:50
 msgid "Edit Smart Playlist"
 msgstr "Slimme afspeellijst bewerken"
 
-#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:210
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:214
 msgid "Delete Smart Playlist"
 msgstr "Slimme sfspeellijst verwijderen"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:50
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:56
 msgid "Close Error Report"
 msgstr "Foutrapport sluiten"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:78
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:84
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:50
 msgid "Error"
 msgstr "Fout"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:79
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:85
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:39
 msgid "Details"
 msgstr "Details"
@@ -951,45 +952,45 @@ msgstr "Details"
 msgid "Import Errors"
 msgstr "Importfouten"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:363
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:370
 msgid "Name"
 msgstr "Naam"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:368
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:375
 msgid "GenericName"
 msgstr "AlgemeneNaam"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:390
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:397
 msgid "FilterQuery"
 msgstr "FilterQuery"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:429
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:436
 #, csharp-format
 msgid "{0} item"
 msgid_plural "{0} items"
 msgstr[0] "{0} item"
 msgstr[1] "{0} items"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:437
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:444
 #, csharp-format
 msgid "{0} day"
-msgid_plural "{0:0.0} days"
+msgid_plural "{0} days"
 msgstr[0] "{0} dag"
-msgstr[1] "{0:0.0} dagen"
+msgstr[1] "{0} dagen"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:441
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:447
 #, csharp-format
 msgid "{0} hour"
-msgid_plural "{0:0.0} hours"
+msgid_plural "{0} hours"
 msgstr[0] "{0} uur"
-msgstr[1] "{0:0.0} uur"
+msgstr[1] "{0} uur"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:445
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:450
 #, csharp-format
 msgid "{0} minute"
-msgid_plural "{0:0.0} minutes"
+msgid_plural "{0} minutes"
 msgstr[0] "{0} minuut"
-msgstr[1] "{0:0.0} minuten"
+msgstr[1] "{0} minuten"
 
 #: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:61
 msgid "Could not launch URL"
@@ -2260,11 +2261,11 @@ msgstr "Recentelijk als favoriet bestempeld"
 msgid "Recently Played Tracks"
 msgstr "Meest recent afgespeeld"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:100
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:104
 msgid "Edit Last.fm Settings"
 msgstr "Last.fm-instellingen bewerken"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:300
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:304
 msgid "Last.fm (Disconnected)"
 msgstr "Last.fm (niet verbonden)"
 
@@ -2280,75 +2281,75 @@ msgstr "Nieuwe zender"
 msgid "Last.fm Station"
 msgstr "Last.fm-zender"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:129
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:133
 msgid "Edit Last.fm Station"
 msgstr "Last.fm-zender bewerken"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:130
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:134
 msgid "Delete Last.fm Station"
 msgstr "Last.fm-zender verwijderen"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:222
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:226
 #, csharp-format
 msgid "Tuning Last.fm to {0}."
 msgstr "Last.fm afstellen op {0}."
 
 #. Translators: {0} is an error message sentence from RadioConnection.cs.
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:232
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:236
 #, csharp-format
 msgid "Failed to tune in station. {0}"
 msgstr "Kon niet op zender afstellen. {0}"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:260
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:264
 msgid "Account Settings"
 msgstr "Accountinstellingen"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:262
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:266
 msgid "Join Last.fm"
 msgstr "Bij Last.fm registreren"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:334
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:338
 #, csharp-format
 msgid "Getting new songs for {0}."
 msgstr "Nieuwe nummers voor {0} ophalen."
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:341
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:345
 #, csharp-format
 msgid "No new songs available for {0}."
 msgstr "Geen nieuwe nummers voor {0} beschikbaar."
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:365
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:369
 #, csharp-format
 msgid "Failed to get new songs for {0}."
 msgstr "Kon geen nieuwe nummers voor {0} ophalen."
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:425
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:429
 #, csharp-format
 msgid "{0} song played"
 msgid_plural "{0} songs played"
 msgstr[0] "{0} nummer gespeeld"
 msgstr[1] "{0} nummers gespeeld"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:544
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:548
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:83
 msgid "Recommended"
 msgstr "Aanbevolen"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:545
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:549
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:92
 msgid "Personal"
 msgstr "Persoonlijk"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:546
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:550
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:101
 msgid "Loved"
 msgstr "Favoriet"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:547
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:551
 msgid "Banshee Group"
 msgstr "Banshee-groep"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:548
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:552
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:110
 msgid "Neighbors"
 msgstr "Buren"
