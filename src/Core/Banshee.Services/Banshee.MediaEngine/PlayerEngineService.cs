@@ -45,7 +45,7 @@ using Banshee.Equalizer;
 
 namespace Banshee.MediaEngine
 {
-    public class PlayerEngineService : IService, IPlayerEngineService
+    public class PlayerEngineService : IRequiredService, IPlayerEngineService
     {   
         private List<PlayerEngine> engines = new List<PlayerEngine> ();
         private PlayerEngine active_engine;

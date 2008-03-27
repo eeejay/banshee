@@ -40,7 +40,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Database
 {
-    public sealed class BansheeDbConnection : HyenaSqliteConnection, IInitializeService
+    public sealed class BansheeDbConnection : HyenaSqliteConnection, IInitializeService, IRequiredService
     {
         private BansheeDbFormatMigrator migrator;
 

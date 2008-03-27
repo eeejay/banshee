@@ -131,6 +131,13 @@
     <File name="Banshee.Library/VideoLibrarySource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/Client.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Database/DatabaseArtistInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Hardware" subtype="Directory" buildaction="Compile" />
+    <File name="Banshee.Hardware/HardwareManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Hardware/IDevice.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Hardware/IBlockDevice.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Hardware/IVolume.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Hardware/IHardwareManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/IRequiredService.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

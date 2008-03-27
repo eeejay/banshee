@@ -1,3 +1,29 @@
+2008-03-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs: Stubbed
+	the base hardware manager service out; load extension managers from MA
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IBlockDevice.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IDevice.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IHardwareManager.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IVolume.cs: Stubbed some
+	basic hardware related interfaces
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJobManager.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Implement IRequiredService since we can't survive without these
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IRequiredService.cs: 
+	Services that are important enough to cause startup to fail if they cannot
+	be started should implement IRequiredService
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Do not bail if a core service throws an exception that is not an 
+	IRequiredService
+
 2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Fix formatting

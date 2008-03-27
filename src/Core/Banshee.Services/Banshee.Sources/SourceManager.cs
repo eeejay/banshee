@@ -49,7 +49,7 @@ namespace Banshee.Sources
         public int Position;
     }
     
-    public class SourceManager : ISourceManager, IDisposable
+    public class SourceManager : ISourceManager, IRequiredService, IDisposable
     {
         private List<Source> sources = new List<Source>();
         private Source active_source;

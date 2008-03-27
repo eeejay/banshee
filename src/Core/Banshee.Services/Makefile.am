@@ -35,6 +35,11 @@ SOURCES =  \
 	Banshee.Equalizer/EqualizerManager.cs \
 	Banshee.Equalizer/EqualizerSetting.cs \
 	Banshee.Equalizer/EqualizerSettingEvent.cs \
+	Banshee.Hardware/HardwareManager.cs \
+	Banshee.Hardware/IBlockDevice.cs \
+	Banshee.Hardware/IDevice.cs \
+	Banshee.Hardware/IHardwareManager.cs \
+	Banshee.Hardware/IVolume.cs \
 	Banshee.Library/HomeDirectoryImportSource.cs \
 	Banshee.Library/IImportSource.cs \
 	Banshee.Library/ImportSourceManager.cs \
@@ -97,6 +102,7 @@ SOURCES =  \
 	Banshee.ServiceStack/IDBusExportable.cs \
 	Banshee.ServiceStack/IExtensionService.cs \
 	Banshee.ServiceStack/IInitializeService.cs \
+	Banshee.ServiceStack/IRequiredService.cs \
 	Banshee.ServiceStack/IService.cs \
 	Banshee.ServiceStack/IUserJob.cs \
 	Banshee.ServiceStack/ServiceManager.cs \

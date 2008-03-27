@@ -39,7 +39,7 @@ using Banshee.MediaEngine;
 
 namespace Banshee.PlaybackController
 {
-    public class PlaybackControllerService : IService, ICanonicalPlaybackController, IPlaybackControllerExportable
+    public class PlaybackControllerService : IRequiredService, ICanonicalPlaybackController, IPlaybackControllerExportable
     {
         private enum Direction
         {

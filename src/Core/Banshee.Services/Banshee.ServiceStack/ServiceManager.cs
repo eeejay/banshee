@@ -68,6 +68,7 @@ namespace Banshee.ServiceStack
             RegisterService<ImportSourceManager> ();
             RegisterService<LibraryImportManager> ();
             RegisterService<UserJobManager> ();
+            RegisterService<Banshee.Hardware.HardwareManager> ();
             
             AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
                 ? "." : Paths.ApplicationData);
@@ -94,21 +95,32 @@ namespace Banshee.ServiceStack
                 uint cumulative_timer_id = Log.InformationTimerStart ();
                 
                 foreach (Type type in service_types) {
-                    uint timer_id = Log.DebugTimerStart (); 
-                    IService service = (IService)Activator.CreateInstance (type);
-                    RegisterService (service);
+                    IService service = null;
                     
-                    Log.DebugTimerPrint (timer_id, String.Format (
-                        "Core service started ({0}, {{0}})", service.ServiceName));
-                    
-                    OnServiceStarted (service);
-                    
-                    if (service is IDisposable) {
-                        dispose_services.Push (service);
-                    }
+                    try {
+                        uint timer_id = Log.DebugTimerStart ();
+                        service = (IService)Activator.CreateInstance (type);
+                        RegisterService (service);
+                        
+                        Log.DebugTimerPrint (timer_id, String.Format (
+                            "Core service started ({0}, {{0}})", service.ServiceName));
+                        
+                        OnServiceStarted (service);
+                        
+                        if (service is IDisposable) {
+                            dispose_services.Push (service);
+                        }
 
-                    if (service is IInitializeService) {
-                        ((IInitializeService)service).Initialize ();
+                        if (service is IInitializeService) {
+                            ((IInitializeService)service).Initialize ();
+                        }
+                    } catch (Exception e) {
+                        if (service is IRequiredService) {
+                            throw;
+                        }
+                        
+                        Log.Warning (String.Format ("Service `{0}' not started: {1}", type.FullName, 
+                            e.InnerException != null ? e.InnerException.Message : e.Message));
                     }
                 }
                 

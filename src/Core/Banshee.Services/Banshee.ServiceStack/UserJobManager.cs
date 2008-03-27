@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 namespace Banshee.ServiceStack
 {
-    public class UserJobManager : IService, IEnumerable<IUserJob>
+    public class UserJobManager : IRequiredService, IEnumerable<IUserJob>
     {
         private List<IUserJob> user_jobs = new List<IUserJob> ();
         
