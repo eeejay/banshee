@@ -1,5 +1,13 @@
 2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	When an artist or album is activated, make sure we switch playback to the
+	active source before playing the first song in the playback source.  Fixes
+	BGO #524609.
+
+2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
 	Pulse the Now Playing source when a song or video starts playing and it's
 	not the active source.

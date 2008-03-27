@@ -49,6 +49,7 @@ namespace Banshee.Collection.Gui
             RowHeight = ColumnCellAlbum.RowHeight;
             
             RowActivated += delegate {
+                ServiceManager.PlaybackController.Source = (ServiceManager.SourceManager.ActiveSource as Banshee.Sources.ITrackModelSource);
                 ServiceManager.PlaybackController.First ();
             };
         }
