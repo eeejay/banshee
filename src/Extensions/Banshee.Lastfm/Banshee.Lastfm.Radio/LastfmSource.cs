@@ -68,6 +68,10 @@ namespace Banshee.Lastfm.Radio
         public LastfmActions Actions {
             get { return actions; }
         }
+        
+        protected override string TypeUniqueId {
+            get { return lastfm; }
+        }
 
         public LastfmSource () : base (lastfm, lastfm, 150)
         {

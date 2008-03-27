@@ -42,6 +42,10 @@ namespace Banshee.NowPlaying
     public class NowPlayingSource : Source, IDisposable
     {
         private TrackInfo transitioned_track;
+
+        protected override string TypeUniqueId {
+            get { return "now-playing"; }
+        }
         
         public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 0)
         {
@@ -61,7 +65,7 @@ namespace Banshee.NowPlaying
         }
         
         private void OnPlaybackControllerTrackStarted (object o, EventArgs args)
-        { 
+        {
             TrackInfo current_track = ServiceManager.PlaybackController.CurrentTrack;
             if (current_track != null && transitioned_track != current_track && 
                 (current_track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {

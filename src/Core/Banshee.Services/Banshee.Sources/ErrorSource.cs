@@ -43,6 +43,12 @@ namespace Banshee.Sources
         
         public event EventHandler Cleared;
         public event EventHandler Reloaded;
+        
+        private static Random rand = new Random ();
+        private string tuid = rand.Next ().ToString ();
+        protected override string TypeUniqueId {
+            get { return tuid; }
+        }
 
         public ErrorSource (string name) : base (name, name, 0)
         {

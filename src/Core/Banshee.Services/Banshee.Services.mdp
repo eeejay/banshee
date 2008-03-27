@@ -78,7 +78,6 @@
     <File name="Banshee.Playlist/AbstractPlaylistSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Playlist/PlaylistFileUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.SmartPlaylist/Migrator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.SmartPlaylist/SmartPlaylistCore.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.SmartPlaylist/SmartPlaylistSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/IImportable.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/IUnmapableSource.cs" subtype="Code" buildaction="Compile" />

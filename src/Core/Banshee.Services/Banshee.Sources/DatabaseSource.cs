@@ -57,12 +57,17 @@ namespace Banshee.Sources
 
         protected RateLimiter reload_limiter;
         
+        private string type_unique_id;
+        protected override string TypeUniqueId {
+            get { return type_unique_id; }
+        }
+        
         public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order)
         {
-            string uuid = String.Format ("{0}-{1}", this.GetType().Name, id);
-            track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, uuid);
-            artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, uuid);
-            album_model = new AlbumListDatabaseModel (track_model, artist_model, ServiceManager.DbConnection, uuid);
+            type_unique_id = id;
+            track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, UniqueId);
+            artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, UniqueId);
+            album_model = new AlbumListDatabaseModel (track_model, artist_model, ServiceManager.DbConnection, UniqueId);
             reload_limiter = new RateLimiter (RateLimitedReload);
         }
 
@@ -130,7 +135,7 @@ namespace Banshee.Sources
 
 #region Public Methods
 
-        public void Reload ()
+        public virtual void Reload ()
         {
             reload_limiter.Execute ();
         }

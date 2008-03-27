@@ -38,7 +38,7 @@ namespace Banshee.Query
     {
         protected sealed override SmartPlaylistSource Resolve ()
         {
-            return ServiceManager.Get<SmartPlaylistCore>().GetSmartPlaylistFromDbId ((int)IntValue);
+            return SmartPlaylistSource.GetById ((int)IntValue);
         }
     }
 }

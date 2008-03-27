@@ -350,6 +350,13 @@ namespace Banshee.Sources
         public Source Parent {
             get { return parent; }
         }
+        
+        private string unique_id;
+        public string UniqueId {
+            get { return unique_id ?? unique_id = String.Format ("{0}-{1}", this.GetType ().Name, TypeUniqueId); }
+        }
+        
+        protected abstract string TypeUniqueId { get; }
 
         public virtual bool CanRename {
             get { return true; }

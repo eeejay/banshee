@@ -75,6 +75,14 @@ namespace Banshee.ServiceStack
                     }
                 }
 
+                foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll ()) {
+                    if (pl.PrimarySource != null) {
+                        pl.PrimarySource.AddChildSource (pl);
+                    } else {
+                        Console.WriteLine ("Loading playlist {0} with ps id {1}, ps is null {2}", pl.Name, pl.PrimarySourceId, pl.PrimarySource == null);
+                    }
+                }
+
                 ServiceManager.SourceManager.LoadExtensionSources ();
             }
             

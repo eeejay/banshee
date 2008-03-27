@@ -1,3 +1,51 @@
+2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* data/mimetypes.txt: List of mimetypes, one per line, combining what we
+	already had with Totem's list.
+
+	* data/mimetypes.pl: Perl script that sorts and removes duplicates from
+	mimetypes.txt, and prints out a ; separated list suitable for the .desktop
+	file.
+
+	* data/banshee-1.desktop.in.in: Use the output from mimetypes.pl, and
+	change the name to Banshee Media Player.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs: Add
+	some more file extensions to the whitelist.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Load
+	smart playlists here just like we load playlists.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Banshee.Query/SmartPlaylistQueryValue.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistCore.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Remove
+	SmartPlaylistCore.  The functionality from it that remained is now in
+	SmartPlaylistSource, mostly as static methods.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Moved the SmartPlaylistCore code into here.  On the first Reload call, if
+	we haven't yet Refresh'd, do it.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Avoid
+	activating a source twice by returning if it's already the active souce.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:
+	If the source has a Parent, use its UniqueId to determine what columns to
+	show, otherwise use the source's UniqueId.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add UniqueId
+	property, and protected abstract TypeUniqueId that doesn't have to be
+	unique across different Source subclasses.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Override TypeUniqueId and use UniqueId.
+
 2008-03-26  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.0 Alpha 2 (0.98.2) Released

@@ -106,7 +106,6 @@ SOURCES =  \
 	Banshee.ServiceStack/UserJobEventHandler.cs \
 	Banshee.ServiceStack/UserJobManager.cs \
 	Banshee.SmartPlaylist/Migrator.cs \
-	Banshee.SmartPlaylist/SmartPlaylistCore.cs \
 	Banshee.SmartPlaylist/SmartPlaylistSource.cs \
 	Banshee.Sources/DatabaseSource.cs \
 	Banshee.Sources/ErrorSource.cs \

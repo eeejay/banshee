@@ -47,10 +47,22 @@ using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 
+#pragma warning disable 0169
+
 namespace Banshee.SmartPlaylist
 {
     public class SmartPlaylistSource : AbstractPlaylistSource, IUnmapableSource
     {
+        private static List<SmartPlaylistSource> playlists = new List<SmartPlaylistSource> ();
+        private static uint timeout_id = 0;
+        
+        static SmartPlaylistSource () {
+            Migrator.MigrateAll ();
+
+            ServiceManager.SourceManager.SourceAdded += HandleSourceAdded;
+            ServiceManager.SourceManager.SourceRemoved += HandleSourceRemoved;
+        }
+
         private static string generic_name = Catalog.GetString ("Smart Playlist");
         private static string properties_label = Catalog.GetString ("Edit Smart Playlist");
     
@@ -191,16 +203,8 @@ namespace Banshee.SmartPlaylist
             DbId = dbid;
 
             InstallProperties ();
+
             UpdateDependencies ();
-
-            //Globals.Library.TrackRemoved += OnLibraryTrackRemoved;
-
-            //if (Globals.Library.IsLoaded)
-                //OnLibraryReloaded(Globals.Library, new EventArgs());
-            //else
-                //Globals.Library.Reloaded += OnLibraryReloaded;
-
-            //ListenToPlaylists();
         }
 
         protected void InstallProperties ()
@@ -298,6 +302,15 @@ namespace Banshee.SmartPlaylist
             Reload ();
         }
 
+        private bool refreshed = false;
+        public override void Reload ()
+        {
+            if (!refreshed)
+                Refresh ();
+
+            base.Reload ();
+        }
+
         public void Refresh ()
         {
             // Wipe the member list clean and repopulate it 
@@ -310,6 +323,7 @@ namespace Banshee.SmartPlaylist
                         {1} {2}",
                 DbId, PrependCondition("AND"), OrderAndLimit, PrimarySourceId
             ));
+            refreshed = true;
         }
 
 #endregion
@@ -419,5 +433,106 @@ namespace Banshee.SmartPlaylist
                 }
             }
         }
+
+        private static void HandleSourceAdded (SourceEventArgs args)
+        {
+            SmartPlaylistSource playlist = args.Source as SmartPlaylistSource;
+            if (playlist == null)
+                return;
+
+            StartTimer (playlist);
+            playlists.Add (playlist);
+            SortPlaylists();
+        }
+
+        private static void HandleSourceRemoved (SourceEventArgs args)
+        {
+            SmartPlaylistSource playlist = args.Source as SmartPlaylistSource;
+            if (playlist == null)
+                return;
+
+            playlists.Remove (playlist);
+
+            StopTimer();
+        }
+
+        public static void StartTimer (SmartPlaylistSource playlist)
+        {
+            // Check if the playlist is time-dependent, and if it is,
+            // start the auto-refresh timer.
+            if (timeout_id == 0 && playlist.TimeDependent) {
+                Log.Information (
+                    "Starting Smart Playlist Auto-Refresh",
+                    "Time-dependent smart playlist added, so starting one-minute auto-refresh timer.",
+                    false
+                );
+                timeout_id = GLib.Timeout.Add(1000*60, OnTimerBeep);
+            }
+        }
+
+        public static void StopTimer ()
+        {
+            // If the timer is going and there are no more time-dependent playlists,
+            // stop the timer.
+            if (timeout_id != 0) {
+                foreach (SmartPlaylistSource p in playlists) {
+                    if (p.TimeDependent) {
+                        return;
+                    }
+                }
+
+                // No more time-dependent playlists, so remove the timer
+                Log.Information (
+                    "Stopping timer",
+                    "There are no time-dependent smart playlists, so stopping auto-refresh timer.",
+                    false
+                );
+
+                GLib.Source.Remove (timeout_id);
+                timeout_id = 0;
+            }
+        }
+
+        private static bool OnTimerBeep ()
+        {
+            foreach (SmartPlaylistSource p in playlists) {
+                if (p.TimeDependent) {
+                    p.Reload();
+                }
+            }
+
+            // Keep the timer going
+            return true;
+        }
+
+        public static void SortPlaylists () {
+            playlists.Sort (new DependencyComparer ());
+        }
+
+        public static SmartPlaylistSource GetById (int dbId)
+        {
+            // TODO use a dictionary
+            foreach (SmartPlaylistSource sp in playlists) {
+                if (sp.DbId == dbId) {
+                    return sp;
+                }
+            }
+            return null;
+        }
+    }
+
+    public class DependencyComparer : IComparer<SmartPlaylistSource> {
+        public int Compare(SmartPlaylistSource a, SmartPlaylistSource b)
+        {
+            if (b.DependsOn (a)) {
+                return -1;
+            } else if (a.DependsOn (b)) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
     }
 }
+
+#pragma warning restore 0169

@@ -44,7 +44,7 @@ namespace Banshee.Collection.Gui
         private Source source;
         public Source Source {
             get { return source; }
-            set { 
+            set {
                 if (source == value) {
                     return;
                 }
@@ -57,9 +57,8 @@ namespace Banshee.Collection.Gui
                 source_id = null;
                 
                 if (source != null) {
-                    // FIXME: Build a real source ID based on the source's primary source
-                    source_id = "default";
-                    source_id = source_id.ToLower ().Replace ('.', '_');
+                    // If we have a parent, use their UniqueId so all children of a parent persist the same columns
+                    source_id = (source.Parent == null ? source.UniqueId : source.Parent.UniqueId).Replace ('.', '_');
                     Load ();
                 }
             }
