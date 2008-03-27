@@ -1,5 +1,10 @@
 2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Fix formatting
+	issue with showing full precision in certain cases when the value was < 2.
+
+2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
 	Fix issue with importing items that have null artist or album names.

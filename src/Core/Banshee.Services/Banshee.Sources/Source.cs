@@ -441,16 +441,13 @@ namespace Banshee.Sources
                 TimeSpan span = (this as IDurationAggregator).Duration; 
                 if (span.Days > 0) {
                     double days = span.Days + (span.Hours / 24.0);
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0:0.0} days", 
-                        (int)Math.Ceiling (days)), days);
+                    builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", DoubleToPluralInt (days)), FormatDouble (days));
                 } else if (span.Hours > 0) {
                     double hours = span.Hours + (span.Minutes / 60.0);
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0:0.0} hours", 
-                        (int)Math.Ceiling (hours)), hours);
+                    builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", DoubleToPluralInt (hours)), FormatDouble (hours));
                 } else {
                     double minutes = span.Minutes + (span.Seconds / 60.0);
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0:0.0} minutes", 
-                        (int)Math.Ceiling (minutes)), minutes);
+                    builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", DoubleToPluralInt (minutes)), FormatDouble (minutes));
                 }
             }
 
@@ -463,6 +460,22 @@ namespace Banshee.Sources
             }
             
             return builder.ToString ();
+        }
+
+        private static string FormatDouble (double num)
+        {
+            if (num == (int)num)
+                return Convert.ToString ((int)num);
+            else
+                return String.Format ("{0:0.0}", num);
+        }
+        
+        private static int DoubleToPluralInt (double num)
+        {
+            if (num == (int)num)
+                return (int)num;
+            else
+                return (int)num + 1;
         }
         
         string IService.ServiceName {
