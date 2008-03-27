@@ -1,3 +1,12 @@
+2008-03-28  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs::
+	Make sure we only scrobble and set the Now Playing information on Music
+	tracks, rather than anything played.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs:
+	Removed some extra debug spew that was unnecessary.
+
 2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:

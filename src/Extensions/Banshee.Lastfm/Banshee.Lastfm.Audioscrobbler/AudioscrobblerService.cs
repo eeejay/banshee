@@ -185,8 +185,6 @@ namespace Banshee.Lastfm.Audioscrobbler
                 }
                 
                 previouspos = ServiceManager.PlayerEngine.Position;
-                
-                //Console.WriteLine ("Position now {0} (increased by {1} msec) : {2}", playtime, increase, ignorenext);
             }
             
             public void SkipPosition ()
@@ -207,7 +205,7 @@ namespace Banshee.Lastfm.Audioscrobbler
         SongTimer st = new SongTimer ();
         
         private void Queue (TrackInfo track) {
-            if (track == null || st.PlayTime == 0 ||
+            if (track == null || st.PlayTime == 0 || 
                 !(actions["AudioscrobblerEnableAction"] as ToggleAction).Active) {
                 
                 return;
@@ -217,6 +215,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                 st.PlayTime, track.Duration.TotalMilliseconds, queued, track, st.PlayTime / 1000);
             
             if (!queued && track.Duration.TotalSeconds > 30 && 
+                (track.MediaAttributes & TrackMediaAttributes.Music) != 0 && 
                 !String.IsNullOrEmpty (track.ArtistName) && !String.IsNullOrEmpty (track.TrackTitle) &&
                 (st.PlayTime > track.Duration.TotalMilliseconds / 2 || st.PlayTime > 240 * 1000)) {
                     if (!connection.Started) {
@@ -252,7 +251,8 @@ namespace Banshee.Lastfm.Audioscrobbler
                     // Queue as now playing
                     if (!now_playing_sent && iterate_countdown == 0) {
                         if (last_track != null && last_track.Duration.TotalSeconds > 30 &&
-                            (actions["AudioscrobblerEnableAction"] as ToggleAction).Active) {
+                            (actions["AudioscrobblerEnableAction"] as ToggleAction).Active &&
+                            (last_track.MediaAttributes & TrackMediaAttributes.Music) != 0) {
                             
                             connection.NowPlaying (last_track.ArtistName, last_track.TrackTitle,
                                 last_track.AlbumTitle, last_track.Duration.TotalSeconds, last_track.TrackNumber);

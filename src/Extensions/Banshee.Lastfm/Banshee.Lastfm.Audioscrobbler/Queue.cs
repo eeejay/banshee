@@ -268,7 +268,6 @@ namespace Banshee.Lastfm.Audioscrobbler
         {
             TrackInfo t = (track as TrackInfo);
             if (t != null) {
-                Log.DebugFormat ("Queued: {0}", t);
                 queue.Add (new QueuedTrack (t, started_at));
                 dirty = true;
                 RaiseTrackAdded (this, new EventArgs ());
