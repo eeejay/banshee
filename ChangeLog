@@ -1,5 +1,12 @@
 2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	The First () method is used to start playback when a source, artist, or album
+	is activated, and represents a break from the previous playback.  It should
+	not raise the Transition event.  Fixes BGO #524556.
+
+2008-03-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
 	When an artist or album is activated, make sure we switch playback to the

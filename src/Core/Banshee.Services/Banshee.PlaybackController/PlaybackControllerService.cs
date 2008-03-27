@@ -127,7 +127,8 @@ namespace Banshee.PlaybackController
         
         public void First ()
         {
-            raise_started_after_transition = true;
+            // This and OnTransition() below commented out b/c of BGO #524556
+            //raise_started_after_transition = true;
             
             if (Source is IBasicPlaybackController) {
                 ((IBasicPlaybackController)Source).First ();
@@ -135,7 +136,7 @@ namespace Banshee.PlaybackController
                 ((ICanonicalPlaybackController)this).First ();
             }
             
-            OnTransition ();
+            //OnTransition ();
         }
         
         public void Next ()
