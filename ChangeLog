@@ -1,5 +1,36 @@
 2008-03-28  Aaron Bockover  <abock@gnome.org>
 
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/HardwareManager.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IHardwareManager.cs: Added
+	hardware add/remove events and properly resolve the devices in the HAL
+	backend 
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs: Resolve a 
+	volume device manually if no parent is passed
+
+	* src/Core/Banshee.Services/Banshee.Collection/MemoryTrackListModel.cs:
+	Moved from Last.fm since it's useful for other sources; provides a 
+	track model that uses an in-memory generic List for storage
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: 
+	Provide a property for easily accessing the HardwareManager
+	
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDisc.cs: Empty
+	stub of the disc object we'll need soon
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
+	Implemented most of the service that manages disc sources from the 
+	HardwareManager; awesome
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Stubbed out most things we'll need in the audio CD source
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	Use the MemoryTrackListModel object
+
+2008-03-28  Aaron Bockover  <abock@gnome.org>
+
 	* build/build.environment.mk:
 	* configure.ac:
 	* src/Extensions/Extensions.mds:

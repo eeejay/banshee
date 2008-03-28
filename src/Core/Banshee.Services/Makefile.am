@@ -24,6 +24,7 @@ SOURCES =  \
 	Banshee.Collection/IHasTrackSelection.cs \
 	Banshee.Collection/ImportEventHandler.cs \
 	Banshee.Collection/ImportManager.cs \
+	Banshee.Collection/MemoryTrackListModel.cs \
 	Banshee.Collection/ModelHelper.cs \
 	Banshee.Collection/SelectAllSelection.cs \
 	Banshee.Collection/TrackListModel.cs \

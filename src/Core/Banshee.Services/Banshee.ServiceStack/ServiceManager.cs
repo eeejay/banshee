@@ -40,6 +40,7 @@ using Banshee.Database;
 using Banshee.MediaEngine;
 using Banshee.PlaybackController;
 using Banshee.Library;
+using Banshee.Hardware;
 
 namespace Banshee.ServiceStack
 {
@@ -280,6 +281,10 @@ namespace Banshee.ServiceStack
         
         public static PlaybackControllerService PlaybackController {
             get { return (PlaybackControllerService)Get ("PlaybackController"); }
+        }
+        
+        public static HardwareManager HardwareManager {
+            get { return Get<HardwareManager> (); }
         }
     }
 }

@@ -3,7 +3,10 @@ TARGET = library
 LINK = $(REF_EXTENSION_AUDIOCD)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
-SOURCES = Banshee.AudioCd/AudioCdService.cs
+SOURCES =  \
+	Banshee.AudioCd/AudioCdDisc.cs \
+	Banshee.AudioCd/AudioCdService.cs \
+	Banshee.AudioCd/AudioCdSource.cs
 
 RESOURCES = Banshee.AudioCd.addin.xml
 

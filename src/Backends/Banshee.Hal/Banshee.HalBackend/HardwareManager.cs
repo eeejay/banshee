@@ -38,11 +38,14 @@ namespace Banshee.HalBackend
     {
         private Hal.Manager manager;
         
+        public event DeviceAddedHandler DeviceAdded;
+        public event DeviceRemovedHandler DeviceRemoved;
+        
         public HardwareManager ()
         {
             manager = new Hal.Manager ();
-            manager.DeviceAdded += OnDeviceAdded;
-            manager.DeviceRemoved += OnDeviceRemoved;
+            manager.DeviceAdded += OnHalDeviceAdded;
+            manager.DeviceRemoved += OnHalDeviceRemoved;
         }
         
         public void Dispose ()
@@ -74,12 +77,41 @@ namespace Banshee.HalBackend
             return GetAllBlockDevices<IDiskDevice> ();
         }
         
-        private void OnDeviceAdded (object o, Hal.DeviceAddedArgs args)
+        private void OnHalDeviceAdded (object o, Hal.DeviceAddedArgs args)
         {
+            if (!args.Device.QueryCapability ("block")) {
+                return;
+            }
+            
+            IDevice device = BlockDevice.Resolve<IBlockDevice> (manager, args.Device);
+            if (device == null) {
+                device = Volume.Resolve (null, manager, args.Device);
+            }
+            
+            if (device != null) {
+                OnDeviceAdded (device);
+            }
         }
         
-        private void OnDeviceRemoved (object o, Hal.DeviceRemovedArgs args)
+        private void OnHalDeviceRemoved (object o, Hal.DeviceRemovedArgs args)
         {
+            OnDeviceRemoved (args.Udi);
+        }
+        
+        private void OnDeviceAdded (IDevice device)
+        {
+            DeviceAddedHandler handler = DeviceAdded;
+            if (handler != null) {
+                handler (this, new DeviceAddedArgs (device));
+            }
+        }
+        
+        private void OnDeviceRemoved (string uuid)
+        {
+            DeviceRemovedHandler handler = DeviceRemoved;
+            if (handler != null) {
+                handler (this, new DeviceRemovedArgs (uuid));
+            }
         }
     }
 }

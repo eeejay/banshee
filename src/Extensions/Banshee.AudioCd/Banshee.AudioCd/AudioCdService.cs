@@ -27,7 +27,9 @@
 //
 
 using System;
+using System.Collections.Generic;
 
+using Hyena;
 using Banshee.ServiceStack;
 using Banshee.Hardware;
 
@@ -35,16 +37,79 @@ namespace Banshee.AudioCd
 {
     public class AudioCdService : IExtensionService, IDisposable
     {
+        private Dictionary<string, AudioCdSource> sources = new Dictionary<string, AudioCdSource> ();
+        
         public AudioCdService ()
         {
         }
         
         public void Initialize ()
         {
+            foreach (ICdromDevice device in ServiceManager.HardwareManager.GetAllCdromDevices ()) {
+                MapCdromDevice (device);
+            }
+            
+            ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
+            ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
         }
         
         public void Dispose ()
         {
+            ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;
+            ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
+        }
+        
+        private void MapCdromDevice (ICdromDevice device)
+        {
+            lock (this) {
+                foreach (IVolume volume in device) {
+                    if (volume is IDiscVolume) {
+                        MapDiscVolume ((IDiscVolume)volume);
+                    }
+                }
+            }
+        }
+        
+        private void MapDiscVolume (IDiscVolume volume)
+        {
+            lock (this) {
+                if (!sources.ContainsKey (volume.Uuid) && volume.HasAudio) {
+                    AudioCdSource source = new AudioCdSource (new AudioCdDisc (volume));
+                    sources.Add (volume.Uuid, source);
+                    ServiceManager.SourceManager.AddSource (source);
+                    Log.DebugFormat ("Mapping audio CD ({0})", volume.Uuid);
+                }
+            }
+        }
+        
+        private void UnmapDiscVolume (string uuid)
+        {
+            lock (this) {
+                if (sources.ContainsKey (uuid)) {
+                    AudioCdSource source = sources[uuid];
+                    ServiceManager.SourceManager.RemoveSource (source);
+                    sources.Remove (uuid);
+                    Log.DebugFormat ("Unmapping audio CD ({0})", uuid);
+                }
+            }
+        }
+        
+        private void OnHardwareDeviceAdded (object o, DeviceAddedArgs args)
+        {
+            lock (this) {
+                if (args.Device is ICdromDevice) {
+                    MapCdromDevice ((ICdromDevice)args.Device);
+                } else if (args.Device is IDiscVolume) {
+                    MapDiscVolume ((IDiscVolume)args.Device);
+                }
+            }
+        }
+        
+        private void OnHardwareDeviceRemoved (object o, DeviceRemovedArgs args)
+        {
+            lock (this) {
+                UnmapDiscVolume (args.DeviceUuid);
+            }
         }
         
         string IService.ServiceName {

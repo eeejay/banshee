@@ -1,5 +1,5 @@
 //
-// HardwareManager.cs
+// AudioCdDisc.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,48 +27,30 @@
 //
 
 using System;
-using System.Collections.Generic;
 
-namespace Banshee.Hardware
+using Banshee.Hardware;
+
+namespace Banshee.AudioCd
 {
-    public interface IHardwareManager : IDisposable
+    public class AudioCdDisc
     {
-        event DeviceAddedHandler DeviceAdded;
-        event DeviceRemovedHandler DeviceRemoved;
-    
-        IEnumerable<IBlockDevice> GetAllBlockDevices ();
-        IEnumerable<ICdromDevice> GetAllCdromDevices ();
-        IEnumerable<IDiskDevice> GetAllDiskDevices ();
-    }
-
-    public delegate void DeviceAddedHandler (object o, DeviceAddedArgs args);
-    public delegate void DeviceRemovedHandler (object o, DeviceRemovedArgs args);
-    
-    public sealed class DeviceAddedArgs : EventArgs
-    {
-        private IDevice device;
+        private IDiscVolume volume;
         
-        public DeviceAddedArgs (IDevice device)
+        public AudioCdDisc (IDiscVolume volume)
         {
-            this.device = device;
+            this.volume = volume;
         }
         
-        public IDevice Device {
-            get { return device; }
-        }
-    }
-    
-    public sealed class DeviceRemovedArgs : EventArgs
-    {
-        private string device_uuid;
-        
-        public DeviceRemovedArgs (string deviceUuid)
-        {
-            this.device_uuid = deviceUuid;
+        public IDiscVolume Volume {
+            get { return volume; }
         }
         
-        public string DeviceUuid {
-            get { return device_uuid; }
+        public string Title {
+            get { return "New CD"; }
+        }
+        
+        public int TrackCount {
+            get { return 0; }
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Banshee.HalBackend
                 return null;
             }
             
-            return parent is ICdromDevice 
+            return (parent is ICdromDevice || (parent == null && device.QueryCapability ("volume.disc")))
                 ? DiscVolume.Resolve (parent, manager, device)
                 : new Volume (parent, manager, device);
         }
@@ -49,7 +49,7 @@ namespace Banshee.HalBackend
         
         protected Volume (BlockDevice parent, Hal.Manager manager, Hal.Device device) : base (manager, device)
         {
-            this.parent = parent;
+            this.parent = parent ?? BlockDevice.Resolve<IBlockDevice> (manager, device.Parent);
         }
 
         public string MountPoint {

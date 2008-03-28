@@ -1,8 +1,9 @@
 //
-// LastfmTrackListModell.cs
+// MemoryTrackListModell.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
+//   Aaron Bockover <abockover@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -30,54 +31,62 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using Banshee.Collection;
- 
-namespace Banshee.Lastfm.Radio
+namespace Banshee.Collection
 {
-    public class LastfmTrackListModel : TrackListModel, IEnumerable<TrackInfo>
+    public class MemoryTrackListModel : TrackListModel, IEnumerable<TrackInfo>
     {
         private List<TrackInfo> tracks = new List<TrackInfo> ();
 
-        public LastfmTrackListModel () : base ()
+        public MemoryTrackListModel () : base ()
         {
         }
 
         public override void Clear ()
         {
-            tracks.Clear ();
+            lock (this) {
+                tracks.Clear ();
+            }
         }
         
         public override void Reload ()
         {
-            OnReloaded ();
+            lock (this) {
+                OnReloaded ();
+            }
         }
 
         public void Add (TrackInfo track)
         {
-            tracks.Add (track);
+            lock (this) {
+                tracks.Add (track);
+            }
         }
 
         public void Remove (TrackInfo track)
         {
-            tracks.Remove (track);
+            lock (this) {
+                tracks.Remove (track);
+            }
         }
 
         public bool Contains (TrackInfo track)
         {
-            return IndexOf (track) != -1;
+            lock (this) {
+                return IndexOf (track) != -1;
+            }
         }
     
         public override TrackInfo this[int index] {
-            get { return (index < tracks.Count) ? tracks[index] : null; }
+            get { lock (this) { return (index < tracks.Count) ? tracks[index] : null; } }
         }
 
         public override int Count { 
-            get { return tracks.Count; }
+            get { lock (this) { return tracks.Count; } }
         }
         
         public override int IndexOf (TrackInfo track)
         {
-            return tracks.IndexOf (track);
+            lock (this) { return tracks.IndexOf (track); }
         }
 
         public IEnumerator<TrackInfo> GetEnumerator ()

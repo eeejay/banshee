@@ -40,6 +40,16 @@ namespace Banshee.Hardware
     {
         private IHardwareManager manager;
         
+        public event DeviceAddedHandler DeviceAdded {
+            add { manager.DeviceAdded += value; }
+            remove { manager.DeviceAdded -= value; }
+        }
+        
+        public event DeviceRemovedHandler DeviceRemoved {
+            add { manager.DeviceRemoved += value; }
+            remove { manager.DeviceRemoved -= value; }
+        }
+        
         public HardwareManager ()
         {
             foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/Platform/HardwareManager")) {

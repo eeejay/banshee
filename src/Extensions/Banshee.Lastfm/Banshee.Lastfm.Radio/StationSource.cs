@@ -54,7 +54,7 @@ namespace Banshee.Lastfm.Radio
     {
         private static string generic_name = Catalog.GetString ("Last.fm Station");
         
-        private LastfmTrackListModel track_model;
+        private MemoryTrackListModel track_model;
         private SourceMessage status_message;
         
         private LastfmSource lastfm;
@@ -124,7 +124,7 @@ namespace Banshee.Lastfm.Radio
 
         private void Initialize ()
         {
-            track_model = new LastfmTrackListModel ();
+            track_model = new MemoryTrackListModel ();
 
             ServiceManager.PlayerEngine.StateChanged += OnPlayerStateChanged;
             lastfm.Connection.StateChanged += HandleConnectionStateChanged;
