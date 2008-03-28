@@ -1,5 +1,18 @@
 2008-03-28  Aaron Bockover  <abock@gnome.org>
 
+	* build/build.environment.mk:
+	* configure.ac:
+	* src/Extensions/Extensions.mds:
+	* src/Extensions/Makefile.am: Build the new audio CD service
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd.addin.xml: Addin mainifest
+	for the audio CD extension
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs: 
+	Stubbed out the empty audio CD service object
+
+2008-03-28  Aaron Bockover  <abock@gnome.org>
+
 	* src/Backends/Banshee.Hal/Banshee.HalBackend/BlockDevice.cs: Implement
 	GetEnumerator to provide child volumes
 

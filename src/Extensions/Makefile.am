@@ -1,4 +1,5 @@
 SUBDIRS = \
+	Banshee.AudioCd \
 	Banshee.Bookmarks \
 	Banshee.Lastfm \
 	Banshee.MultimediaKeys \
