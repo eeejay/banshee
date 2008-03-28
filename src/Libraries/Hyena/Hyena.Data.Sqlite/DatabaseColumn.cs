@@ -50,7 +50,7 @@ namespace Hyena.Data.Sqlite
         protected AbstractDatabaseColumn (PropertyInfo property_info, AbstractDatabaseColumnAttribute attribute) :
             this (attribute, property_info, property_info.PropertyType)
         {
-            if (!property_info.CanRead || !property_info.CanWrite) {
+            if (!property_info.CanRead || (attribute.Select && !property_info.CanWrite)) {
                 throw new Exception (String.Format (
                     "{0}: The property {1} must have both a get and a set " +
                     "block in order to be bound to a database column.",

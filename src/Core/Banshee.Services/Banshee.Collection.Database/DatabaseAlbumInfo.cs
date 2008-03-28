@@ -74,6 +74,7 @@ namespace Banshee.Collection.Database
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, title)) {
                 if (reader.Read ()) {
                     last_album = new DatabaseAlbumInfo (reader);
+                    last_album.ArtistId = artist.DbId;
                     last_album.ArtistName = artist.Name;
                 } else {
                     last_album = new DatabaseAlbumInfo ();
@@ -138,6 +139,11 @@ namespace Banshee.Collection.Database
         public override string Title {
             get { return base.Title; }
             set { base.Title = value; }
+        }
+        
+        [DatabaseColumn(Select = false)]
+        protected string TitleLowered {
+            get { return Title.ToLower (); }
         }
 
         [VirtualDatabaseColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]

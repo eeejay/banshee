@@ -66,11 +66,16 @@ namespace Banshee.Collection.Database
         {
             track_model.Reload (ReloadTrigger.ArtistFilter);
         }
-    
+
         public override void Reload ()
         {
+            Reload (true);
+        }
+    
+        internal void Reload (bool notify)
+        {
             reload_fragment = String.Format (
-                "FROM CoreArtists {0} ORDER BY Name",
+                "FROM CoreArtists {0} ORDER BY NameLowered",
                 track_model == null ? null : String.Format (@"
                     WHERE CoreArtists.ArtistID IN
                         (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreCache{1}
@@ -92,9 +97,10 @@ namespace Banshee.Collection.Database
             count = cache.Count + 1;
             select_all_artist.Name = String.Format("All Artists ({0})", count - 1);
 
-            OnReloaded();
+            if (notify)
+                OnReloaded();
         }
-        
+
         public override ArtistInfo this[int index] {
             get {
                 if (index == 0)

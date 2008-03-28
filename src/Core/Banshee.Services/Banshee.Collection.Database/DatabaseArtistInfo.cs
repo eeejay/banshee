@@ -126,6 +126,11 @@ namespace Banshee.Collection.Database
             get { return base.Name; }
             set { base.Name = value; }
         }
+        
+        [DatabaseColumn(Select = false)]
+        protected string NameLowered {
+            get { return Name.ToLower (); }
+        }
 
         public override string ToString ()
         {

@@ -291,29 +291,29 @@ namespace Hyena.Data.Sqlite
 
         public void RestoreSelection ()
         {
-            long selected_id = -1;
-            long first_id = FirstOrderId;
-
-            // Compensate for the first, fake 'All *' item
-            if (has_select_all_item) {
-                first_id -= 1;
-            }
-
-            model.Selection.Clear (false);
-
             if (saved_selection) {
+                long selected_id = -1;
+                long first_id = FirstOrderId;
+
+                // Compensate for the first, fake 'All *' item
+                if (has_select_all_item) {
+                    first_id -= 1;
+                }
+
+                model.Selection.Clear (false);
+
                 using (IDataReader reader = connection.Query (get_selection_command)) {
                     while (reader.Read ()) {
                         selected_id = Convert.ToInt64 (reader[0]) - first_id;
                         model.Selection.QuietSelect ((int)selected_id);
                     }
                 }
-            }
 
-            if (has_select_all_item && model.Selection.Count == 0) {
-                model.Selection.QuietSelect (0);
+                if (has_select_all_item && model.Selection.Count == 0) {
+                    model.Selection.QuietSelect (0);
+                }
+                saved_selection = false;
             }
-            saved_selection = false;
         }
 
         protected override void FetchSet (long offset, long limit)

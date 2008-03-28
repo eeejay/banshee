@@ -42,12 +42,12 @@ namespace Banshee.Lastfm.Radio
         {
         }
 
-        public override void Clear()
+        public override void Clear ()
         {
             tracks.Clear ();
         }
         
-        public override void Reload()
+        public override void Reload ()
         {
             OnReloaded ();
         }

@@ -98,15 +98,23 @@ namespace Banshee.Collection.Database
         {
             Save (true);
         }
+        
+        public DatabaseArtistInfo Artist {
+            get { return DatabaseArtistInfo.FindOrCreate (ArtistName); }
+        }
+        
+        public DatabaseAlbumInfo Album{
+            get { return DatabaseAlbumInfo.FindOrCreate (Artist, AlbumTitle); }
+        }
 
         public void Save (bool notify)
         {
             // If either the artist or album changed, 
             if (ArtistId == 0 || AlbumId == 0 || artist_changed == true || album_changed == true) {
-                DatabaseArtistInfo artist = DatabaseArtistInfo.FindOrCreate (ArtistName);
+                DatabaseArtistInfo artist = Artist;
                 ArtistId = artist.DbId;
            
-                DatabaseAlbumInfo album = DatabaseAlbumInfo.FindOrCreate (artist, AlbumTitle);
+                DatabaseAlbumInfo album = Album;
                 AlbumId = album.DbId;
                 
                 // TODO get rid of unused artists/albums
@@ -132,7 +140,7 @@ namespace Banshee.Collection.Database
         }
 
 
-        [DatabaseColumn ("PrimarySourceID", Index = "CoreTracksSourceIndex")]
+        [DatabaseColumn ("PrimarySourceID")]
         private int primary_source_id;
         public int PrimarySourceId {
             get { return primary_source_id; }
@@ -143,14 +151,14 @@ namespace Banshee.Collection.Database
             set { primary_source_id = value.DbId; }
         }
 
-        [DatabaseColumn ("ArtistID", Index = "CoreTracksArtistIndex")]
+        [DatabaseColumn ("ArtistID")]
         private int artist_id;
         public int ArtistId {
             get { return artist_id; }
             set { artist_id = value; }
         }
 
-        [DatabaseColumn ("AlbumID", Index = "CoreTracksAlbumIndex")]
+        [DatabaseColumn ("AlbumID")]
         private int album_id;
         public int AlbumId {
             get { return album_id; }
@@ -270,6 +278,11 @@ namespace Banshee.Collection.Database
         public override string TrackTitle {
             get { return base.TrackTitle; }
             set { base.TrackTitle = value; }
+        }
+        
+        [DatabaseColumn(Select = false)]
+        protected string TitleLowered {
+            get { return TrackTitle.ToLower (); }
         }
         
         [DatabaseColumn]

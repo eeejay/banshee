@@ -203,6 +203,7 @@ namespace Banshee.Collection.Database
 
         public void Reload (ReloadTrigger trigger)
         {
+            bool artist_reloaded = false, album_reloaded = false;
             GenerateFilterQueryPart ();
 
             UpdateUnfilteredAggregates ();
@@ -214,10 +215,12 @@ namespace Banshee.Collection.Database
                 ReloadWithoutArtistAlbumFilters ();
 
                 if (trigger == ReloadTrigger.Query) {
-                    artist_model.Reload ();
+                    artist_reloaded = true;
+                    artist_model.Reload (false);
                 }
 
-                album_model.Reload ();
+                album_reloaded = true;
+                album_model.Reload (false);
 
                 // Unless both artist/album selections are "all" (eg unfiltered), reload
                 // the track model again with the artist/album filters now in place.
@@ -232,6 +235,13 @@ namespace Banshee.Collection.Database
             filtered_count = cache.Count;
 
             OnReloaded ();
+
+            // Trigger these after the track list, b/c visually it's more important for it to update first
+            if (artist_reloaded)
+                artist_model.RaiseReloaded ();
+
+            if (album_reloaded)
+                album_model.RaiseReloaded ();
         }
 
         private void ReloadWithoutArtistAlbumFilters ()

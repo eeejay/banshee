@@ -74,6 +74,11 @@ namespace Banshee.Collection.Database
 
         public override void Reload ()
         {
+            Reload (false);
+        }
+
+        internal void Reload (bool notify)
+        {
             ArtistInfoFilter = artist_model == null ? null : artist_model.SelectedItems;
 
             bool either = (artist_id_filter_query != null) || (track_model != null);
@@ -81,7 +86,7 @@ namespace Banshee.Collection.Database
 
             reload_fragment = String.Format (@"
                 FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID
-                    {0} {1} {2} {3} ORDER BY CoreAlbums.Title, CoreArtists.Name",
+                    {0} {1} {2} {3} ORDER BY CoreAlbums.TitleLowered, CoreArtists.NameLowered",
                 either ? "WHERE" : null,
                 track_model == null ? null :
                     String.Format (@"
@@ -108,7 +113,8 @@ namespace Banshee.Collection.Database
             count = cache.Count + 1;
             select_all_album.Title = String.Format ("All Albums ({0})", count - 1);
 
-            OnReloaded ();
+            if (notify)
+                OnReloaded ();
         }
         
         public override AlbumInfo this[int index] {

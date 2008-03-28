@@ -69,6 +69,11 @@ namespace Banshee.Collection
                 }
             });
         }
+
+        internal void RaiseReloaded ()
+        {
+            OnReloaded ();
+        }
         
         public virtual void Clear()
         {

@@ -45,6 +45,7 @@ namespace Hyena.Data.Sqlite
     public abstract class AbstractDatabaseColumnAttribute : Attribute
     {
         private string column_name;
+        private bool select = true;
         
         public AbstractDatabaseColumnAttribute ()
         {
@@ -57,6 +58,11 @@ namespace Hyena.Data.Sqlite
         
         public string ColumnName {
             get { return column_name; }
+        }
+
+        public bool Select {
+            get { return select; }
+            set { select = value; }
         }
     }
     

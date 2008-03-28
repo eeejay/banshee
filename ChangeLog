@@ -1,3 +1,58 @@
+2008-03-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This patch adds proper case-insensitive sorting and searching.  It should
+	also speed searching and other ops up a bit.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	Add internal Reload method that doesn't raise Reloaded right way, so that
+	the track model can trigger them to reload, reload itself, but get its
+	alert out first so its can start redrawing while the others refresh. Also,
+	sort by new *Lowered column.
+
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs: Add
+	internal RaiseReload method for the track model to use on artist/album
+	models.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Do the above mentioned shenanigans.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Add Title/NameLowered properties with Select = false, meaning the value is
+	not retrieved in SELECT queries, but is INSERTed/UPDATEd.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Set
+	some more pragas in the quest for better performance.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add Title/NameLowered columns to CoreTracks/Artists/Albums.  Is literally
+	just obj.Name/Title.ToLower (), but means we can do case-insensitive
+	sorting and searching w/o having to use Sqlite's lower() method (which is
+	slow to use on the fly vs caching this, and only works for latin1.)  Also,
+	remove a bunch of indicies and add some new ones, in search of
+	performance. Trigger another metadata refresh to fill the *Lowered columns.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Use the
+	*Lowered columns for sorting and querying.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumnAttribute.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Allow
+	setting Select = True/false on the DatabaseColumn attribute, and if its
+	false, do not SELECT it (or requier a setter on the property/field).
+	Also, do not UPDATE or INSERT the primary key.
+
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Determine once (instead
+	of every time we generate SQL) whether the given column is a custom
+	format.  Also, scan for 'Lowered' and if it's there, do not use the hacky
+	"a like b OR lower(a) like b.ToLower ()".
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmTrackListModel.cs:
+	Whitespace.
+
 2008-03-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Backends/Banshee.Hal: First pass at the HAL implementation for the

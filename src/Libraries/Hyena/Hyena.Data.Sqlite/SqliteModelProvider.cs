@@ -37,6 +37,7 @@ namespace Hyena.Data.Sqlite
     public abstract class SqliteModelProvider<T>
     {
         private readonly List<DatabaseColumn> columns = new List<DatabaseColumn> ();
+        private readonly List<DatabaseColumn> select_columns = new List<DatabaseColumn> ();
         private readonly List<VirtualDatabaseColumn> virtual_columns = new List<VirtualDatabaseColumn> ();
         
         private DatabaseColumn key;
@@ -198,6 +199,10 @@ namespace Hyena.Data.Sqlite
                 }
                 
                 columns.Add (c);
+
+                if (column.Select) {
+                    select_columns.Add (c);
+                }
                 
                 if ((c.Constraints & DatabaseColumnConstraints.PrimaryKey) > 0) {
                     if (key != null) {
@@ -242,13 +247,12 @@ namespace Hyena.Data.Sqlite
         
         protected virtual void PrepareInsertCommand (T target)
         {
-            object [] values = new object [columns.Count];
+            object [] values = new object [columns.Count - 1];
+            int j = 0;
             for (int i = 0; i < columns.Count; i++) {
                 if (columns[i] != key) {
-                    values[i] = columns[i].GetValue (target);
-                } else {
-                    // On insert, the key needs to be NULL to be automatically set by Sqlite
-                    values[i] = null;
+                    values[j] = columns[i].GetValue (target);
+                    j++;
                 }
             }
             InsertCommand.ApplyValues (values);
@@ -262,11 +266,15 @@ namespace Hyena.Data.Sqlite
 
         protected virtual void PrepareUpdateCommand (T target)
         {
-            object [] values = new object [columns.Count + 1];
+            object [] values = new object [columns.Count];
+            int j = 0;
             for (int i = 0; i < columns.Count; i++) {
-                values [i] = columns[i].GetValue (target);
+                if (columns[i] != key) {
+                    values[j] = columns[i].GetValue (target);
+                    j++;
+                }
             }
-            values[columns.Count] = key.GetValue (target);
+            values[j] = key.GetValue (target);
             UpdateCommand.ApplyValues (values);
         }
         
@@ -289,7 +297,7 @@ namespace Hyena.Data.Sqlite
             
             AbstractDatabaseColumn bad_column = null;
             try {
-                foreach (DatabaseColumn column in columns) {
+                foreach (DatabaseColumn column in select_columns) {
                     bad_column = column;
                     column.SetValue (target, reader, i++);
                 }
@@ -383,14 +391,16 @@ namespace Hyena.Data.Sqlite
                     StringBuilder vals = new StringBuilder ();
                     bool first = true;
                     foreach (DatabaseColumn column in columns) {
-                        if (first) {
-                            first = false;
-                        } else {
-                            cols.Append (',');
-                            vals.Append (',');
+                        if (column != key) {
+                            if (first) {
+                                first = false;
+                            } else {
+                                cols.Append (',');
+                                vals.Append (',');
+                            }
+                            cols.Append (column.Name);
+                            vals.Append ('?');
                         }
-                        cols.Append (column.Name);
-                        vals.Append ('?');
                     }
 
                     insert_command = new HyenaSqliteCommand (String.Format (
@@ -411,13 +421,15 @@ namespace Hyena.Data.Sqlite
                     builder.Append (" SET ");
                     bool first = true;
                     foreach (DatabaseColumn column in columns) {
-                        if (first) {
-                            first = false;
-                        } else {
-                            builder.Append (',');
+                        if (column != key) {
+                            if (first) {
+                                first = false;
+                            } else {
+                                builder.Append (',');
+                            }
+                            builder.Append (column.Name);
+                            builder.Append (" = ?");
                         }
-                        builder.Append (column.Name);
-                        builder.Append (" = ?");
                     }
                     builder.Append (" WHERE ");
                     builder.Append (key.Name);
@@ -516,7 +528,7 @@ namespace Hyena.Data.Sqlite
         {
             StringBuilder select_builder = new StringBuilder ();
             bool first = true;
-            foreach (DatabaseColumn column in columns) {
+            foreach (DatabaseColumn column in select_columns) {
                 if (first) {
                     first = false;
                 } else {

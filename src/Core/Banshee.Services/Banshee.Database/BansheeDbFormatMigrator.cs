@@ -61,7 +61,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 4;
+        protected const int CURRENT_VERSION = 5;
         
         protected class DatabaseVersionAttribute : Attribute 
         {
@@ -257,6 +257,48 @@ namespace Banshee.Database
             return true;
         }
         
+        [DatabaseVersion (5)]
+        private bool Migrate_5 ()
+        {
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN TitleLowered TEXT");
+            Execute ("ALTER TABLE CoreArtists ADD COLUMN NameLowered TEXT");
+            Execute ("ALTER TABLE CoreAlbums ADD COLUMN TitleLowered TEXT");
+
+            // Set default so sorting isn't whack while we regenerate
+            Execute ("UPDATE CoreTracks SET TitleLowered = lower(Title)");
+            Execute ("UPDATE CoreArtists SET NameLowered = lower(Name)");
+            Execute ("UPDATE CoreAlbums SET TitleLowered = lower(Title)");
+
+            // Drop old indexes
+            Execute ("DROP INDEX IF EXISTS CoreTracksPrimarySourceIndex");
+            Execute ("DROP INDEX IF EXISTS CoreTracksArtistIndex");
+            Execute ("DROP INDEX IF EXISTS CoreTracksAlbumIndex");
+            Execute ("DROP INDEX IF EXISTS CoreTracksRatingIndex");
+            Execute ("DROP INDEX IF EXISTS CoreTracksLastPlayedStampIndex");
+            Execute ("DROP INDEX IF EXISTS CoreTracksDateAddedStampIndex");
+            Execute ("DROP INDEX IF EXISTS CoreTracksPlayCountIndex");
+            Execute ("DROP INDEX IF EXISTS CoreTracksTitleIndex");
+            Execute ("DROP INDEX IF EXISTS CoreAlbumsIndex");
+            Execute ("DROP INDEX IF EXISTS CoreAlbumsArtistID");
+            Execute ("DROP INDEX IF EXISTS CoreArtistsIndex");
+            Execute ("DROP INDEX IF EXISTS CorePlaylistEntriesIndex");
+            Execute ("DROP INDEX IF EXISTS CorePlaylistTrackIDIndex");
+            Execute ("DROP INDEX IF EXISTS CoreSmartPlaylistEntriesPlaylistIndex");
+            Execute ("DROP INDEX IF EXISTS CoreSmartPlaylistEntriesTrackIndex");
+
+            // Create new indexes
+            Execute ("CREATE INDEX IF NOT EXISTS CoreTracksIndex ON CoreTracks(ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri)");
+            Execute ("CREATE INDEX IF NOT EXISTS CoreArtistsIndex ON CoreArtists(NameLowered)");
+            Execute ("CREATE INDEX IF NOT EXISTS CoreAlbumsIndex       ON CoreAlbums(ArtistID, TitleLowered)");
+            Execute ("CREATE INDEX IF NOT EXISTS CoreSmartPlaylistEntriesIndex ON CoreSmartPlaylistEntries(SmartPlaylistID, TrackID)");
+            Execute ("CREATE INDEX IF NOT EXISTS CorePlaylistEntriesIndex ON CorePlaylistEntries(PlaylistID, TrackID)");
+            
+            refresh_from_file = false;
+            ServiceManager.ServiceStarted += OnServiceStarted;
+            
+            return true;
+        }
+        
 #pragma warning restore 0169
         
         private void InitializeFreshDatabase()
@@ -310,6 +352,7 @@ namespace Banshee.Database
                     Attributes          INTEGER DEFAULT {0},
                     
                     Title               TEXT,
+                    TitleLowered        TEXT,
                     TrackNumber         INTEGER,
                     TrackCount          INTEGER,
                     Disc                INTEGER,
@@ -330,17 +373,8 @@ namespace Banshee.Database
                     DateUpdatedStamp    INTEGER
                 )
             ", (int)TrackMediaAttributes.Default));
-            Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(PrimarySourceID)");
+            Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri)");
             Execute("CREATE INDEX CoreTracksAggregatesIndex ON CoreTracks(FileSize, Duration)");
-            Execute("CREATE INDEX CoreTracksArtistIndex ON CoreTracks(ArtistID)");
-            Execute("CREATE INDEX CoreTracksAlbumIndex  ON CoreTracks(AlbumID)");
-            Execute("CREATE INDEX CoreTracksRatingIndex ON CoreTracks(Rating)");
-            Execute("CREATE INDEX CoreTracksLastPlayedStampIndex ON CoreTracks(LastPlayedStamp)");
-            Execute("CREATE INDEX CoreTracksDateAddedStampIndex ON CoreTracks(DateAddedStamp)");
-            Execute("CREATE INDEX CoreTracksPlayCountIndex ON CoreTracks(PlayCount)");
-            Execute("CREATE INDEX CoreTracksDiscIndex ON CoreTracks(Disc)");
-            Execute("CREATE INDEX CoreTracksTrackNumberIndex ON CoreTracks(TrackNumber)");
-            Execute("CREATE INDEX CoreTracksTitleIndex ON CoreTracks(Title)");
             
             Execute(@"
                 CREATE TABLE CoreAlbums (
@@ -351,6 +385,7 @@ namespace Banshee.Database
                     MusicBrainzID       TEXT,
 
                     Title               TEXT,
+                    TitleLowered        TEXT,
 
                     ReleaseDate         INTEGER,
                     Duration            INTEGER,
@@ -359,8 +394,7 @@ namespace Banshee.Database
                     Rating              INTEGER
                 )
             ");
-            Execute("CREATE INDEX CoreAlbumsIndex       ON CoreAlbums(Title)");
-            Execute("CREATE INDEX CoreAlbumsArtistID    ON CoreAlbums(ArtistID)");
+            Execute("CREATE INDEX CoreAlbumsIndex       ON CoreAlbums(ArtistID, TitleLowered)");
 
             Execute(@"
                 CREATE TABLE CoreArtists (
@@ -368,10 +402,11 @@ namespace Banshee.Database
                     TagSetID            INTEGER,
                     MusicBrainzID       TEXT,
                     Name                TEXT,
+                    NameLowered         TEXT,
                     Rating              INTEGER
                 )
             ");
-            Execute("CREATE INDEX CoreArtistsIndex      ON CoreArtists(Name)");
+            Execute("CREATE INDEX CoreArtistsIndex ON CoreArtists(NameLowered)");
             
             Execute(@"
                 CREATE TABLE CorePlaylists (
@@ -392,8 +427,7 @@ namespace Banshee.Database
                     ViewOrder           INTEGER NOT NULL DEFAULT 0
                 )
             ");
-            Execute("CREATE INDEX CorePlaylistEntriesIndex ON CorePlaylistEntries(PlaylistID)");
-            Execute("CREATE INDEX CorePlaylistTrackIDIndex ON CorePlaylistEntries(TrackID)");
+            Execute("CREATE INDEX CorePlaylistEntriesIndex ON CorePlaylistEntries(PlaylistID, TrackID)");
             
             Execute(@"
                 CREATE TABLE CoreSmartPlaylists (
@@ -414,8 +448,7 @@ namespace Banshee.Database
                     TrackID             INTEGER NOT NULL
                 )
             ");
-            Execute("CREATE INDEX CoreSmartPlaylistEntriesPlaylistIndex ON CoreSmartPlaylistEntries(SmartPlaylistID)");
-            Execute("CREATE INDEX CoreSmartPlaylistEntriesTrackIndex ON CoreSmartPlaylistEntries(TrackID)");
+            Execute("CREATE INDEX CoreSmartPlaylistEntriesPlaylistIndex ON CoreSmartPlaylistEntries(SmartPlaylistID, TrackID)");
 
             Execute(@"
                 CREATE TABLE CoreRemovedTracks (
@@ -439,6 +472,7 @@ namespace Banshee.Database
                     ItemID              INTEGER
                 )
             ");
+
             // This index slows down queries were we shove data into the CoreCache.
             // Since we do that frequently, not using it.
             //Execute("CREATE INDEX CoreCacheModelId      ON CoreCache(ModelID)");
@@ -449,7 +483,7 @@ namespace Banshee.Database
             Thread.Sleep (3000);
             Execute(@"
                 INSERT INTO CoreArtists 
-                    SELECT DISTINCT null, 0, null, Artist, 0 
+                    SELECT DISTINCT null, 0, null, Artist, NULL, 0 
                         FROM Tracks 
                         ORDER BY Artist
             ");
@@ -461,7 +495,7 @@ namespace Banshee.Database
                             FROM CoreArtists 
                             WHERE Name = Tracks.Artist
                             LIMIT 1),
-                        0, null, AlbumTitle, ReleaseDate, 0, 0, 0
+                        0, null, AlbumTitle, NULL, ReleaseDate, 0, 0, 0
                         FROM Tracks
                         ORDER BY AlbumTitle
             ");
@@ -486,7 +520,7 @@ namespace Banshee.Database
                         MimeType,
                         0,
                         {0},
-                        Title,
+                        Title, NULL,
                         TrackNumber,
                         TrackCount,
                         0,
@@ -524,6 +558,7 @@ namespace Banshee.Database
             Execute ("UPDATE CoreSmartPlaylists SET PrimarySourceID = 1");
             Execute ("UPDATE CorePlaylists SET PrimarySourceID = 1");
 
+            refresh_from_file = true;
             ServiceManager.ServiceStarted += OnServiceStarted;
         }
 
@@ -541,7 +576,7 @@ namespace Banshee.Database
 
         private void OnSourceAdded (SourceAddedArgs args)
         {
-            if (args.Source is Banshee.Library.MusicLibrarySource) {
+            if (ServiceManager.SourceManager.MusicLibrary != null && ServiceManager.SourceManager.VideoLibrary != null) {
                 ServiceManager.SourceManager.SourceAdded -= OnSourceAdded;
                 RefreshMetadataDelayed ();
             }
@@ -558,9 +593,10 @@ namespace Banshee.Database
             return false;
         }
 
+        private bool refresh_from_file = false;
         private void RefreshMetadataThread (object state)
         {
-            int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks WHERE PrimarySourceID = 1");
+            int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks");
 
             if (total <= 0) {
                 return;
@@ -573,7 +609,7 @@ namespace Banshee.Database
 
             HyenaSqliteCommand select_command = new HyenaSqliteCommand (
                 String.Format (
-                    "SELECT {0} FROM {1} WHERE {2} AND CoreTracks.PrimarySourceID = 1",
+                    "SELECT {0} FROM {1} WHERE {2}",
                     DatabaseTrackInfo.Provider.Select,
                     DatabaseTrackInfo.Provider.From,
                     DatabaseTrackInfo.Provider.Where
@@ -583,19 +619,23 @@ namespace Banshee.Database
             int count = 0;
             using (System.Data.IDataReader reader = ServiceManager.DbConnection.Query (select_command)) {
                 while (reader.Read ()) {
-                    DatabaseTrackInfo track = null;
+                    DatabaseTrackInfo track = DatabaseTrackInfo.Provider.Load (reader, 0);
+                    
                     try {
-                        track = DatabaseTrackInfo.Provider.Load (reader, 0);
-                        TagLib.File file = StreamTagger.ProcessUri (track.Uri);
-                        StreamTagger.TrackInfoMerge (track, file, true);
-                        track.Save (false);
-
-                        job.Status = String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle);
+                        if (refresh_from_file) {
+                            TagLib.File file = StreamTagger.ProcessUri (track.Uri);
+                            StreamTagger.TrackInfoMerge (track, file, true);
+                        }
                     } catch (Exception e) {
                         Log.Warning (String.Format ("Failed to update metadata for {0}", track),
                             e.GetType ().ToString (), false);
                     }
+                    
+                    track.Save (false);
+                    track.Artist.Save ();
+                    track.Album.Save ();
 
+                    job.Status = String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle);
                     job.Progress = (double)++count / (double)total;
                 }
             }

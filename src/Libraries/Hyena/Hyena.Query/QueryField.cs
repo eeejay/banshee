@@ -35,6 +35,9 @@ namespace Hyena.Query
 {
     public class QueryField : IAliasedObject
     {
+        private bool no_custom_format;
+        private bool column_lowered;
+
         private Type [] value_types;
         public Type [] ValueTypes {
             get { return value_types; }
@@ -100,6 +103,9 @@ namespace Hyena.Query
             this.is_default = isDefault;
             this.aliases = aliases;
 
+            this.no_custom_format = (Column.IndexOf ("{0}") == -1 && Column.IndexOf ("{1}") == -1);
+            this.column_lowered = (Column.IndexOf ("Lowered") != -1);
+
             foreach (Type value_type in valueTypes) {
                 QueryValue.AddValueType (value_type);
             }
@@ -120,14 +126,23 @@ namespace Hyena.Query
         public string ToSql (Operator op, QueryValue qv)
         {
             string value = qv.ToSql ();
+
             if (op == null) op = qv.OperatorSet.First;
-            if (Column.IndexOf ("{0}") == -1 && Column.IndexOf ("{1}") == -1) {
+
+            if (no_custom_format) {
                 if (qv is StringQueryValue) {
-                    // Match string values literally and against a lower'd version 
-                    return String.Format ("({0} {1} OR LOWER({0}) {2})", Column,
-                        String.Format (op.SqlFormat, value),
-                        String.Format (op.SqlFormat, value.ToLower ())
-                    );
+                    if (column_lowered) {
+                        // The column is pre-lowered, only no need to call lower() in SQL
+                        return String.Format ("{0} {1}", Column, String.Format (op.SqlFormat, value.ToLower ()));
+                    } else {
+                        // Match string values literally and against a lower'd version.  Mostly a workaround
+                        // the fact that Sqlite's lower() method only works for ASCII (meaning even with this,
+                        // we're not getting 100% case-insensitive matching).
+                        return String.Format ("({0} {1} OR LOWER({0}) {2})", Column,
+                            String.Format (op.SqlFormat, value),
+                            String.Format (op.SqlFormat, value.ToLower ())
+                        );
+                    }
                 } else {
                     return String.Format ("{0} {1}", Column, String.Format (op.SqlFormat, value));
                 }
