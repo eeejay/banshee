@@ -36,7 +36,7 @@ namespace Banshee.Hardware
         bool IsMounted { get; }
         bool IsMountedReadOnly { get; }
         ulong Capacity { get; }
-        ulong Available { get; }
+        long Available { get; }
         new IBlockDevice Parent { get; }
     }
 }

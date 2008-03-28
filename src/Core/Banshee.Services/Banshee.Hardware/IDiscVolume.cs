@@ -36,5 +36,6 @@ namespace Banshee.Hardware
         bool HasData { get; }
         bool IsRewritable { get; }
         bool IsBlank { get; }
+        ulong MediaCapacity { get; }
     }
 }

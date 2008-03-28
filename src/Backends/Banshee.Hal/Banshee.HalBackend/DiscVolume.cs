@@ -1,5 +1,5 @@
 //
-// HardwareManager.cs
+// DiscVolume.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,59 +27,46 @@
 //
 
 using System;
-using System.Collections.Generic;
 
-using Hyena;
 using Banshee.Hardware;
 
 namespace Banshee.HalBackend
 {
-    public sealed class HardwareManager : IHardwareManager
+    public class DiscVolume : Volume, IDiscVolume
     {
-        private Hal.Manager manager;
-        
-        public HardwareManager ()
+        public new static DiscVolume Resolve (BlockDevice parent, Hal.Manager manager, Hal.Device device)
         {
-            manager = new Hal.Manager ();
-            manager.DeviceAdded += OnDeviceAdded;
-            manager.DeviceRemoved += OnDeviceRemoved;
+            return device.QueryCapability ("volume.disc") ? new DiscVolume (parent, manager, device) : null;
         }
         
-        public void Dispose ()
+        private DiscVolume (BlockDevice parent, Hal.Manager manager, Hal.Device device) : base (parent, manager, device)
         {
         }
         
-        private IEnumerable<T> GetAllBlockDevices<T> () where T : IBlockDevice
-        {
-            foreach (Hal.Device hal_device in manager.FindDeviceByCapabilityAsDevice ("block")) {
-                IBlockDevice device = BlockDevice.Resolve<T> (manager, hal_device);
-                if (device != null) {
-                    yield return (T)device;
-                }
-            }
+        public bool HasAudio {
+            get { return HalDevice.GetPropertyBoolean ("volume.disc.has_audio"); }
         }
         
-        public IEnumerable<IBlockDevice> GetAllBlockDevices ()
-        {
-            return GetAllBlockDevices<IBlockDevice> ();
+        public bool HasData {
+            get { return HalDevice.GetPropertyBoolean ("volume.disc.has_data"); }
         }
         
-        public IEnumerable<ICdromDevice> GetAllCdromDevices ()
-        {
-            return GetAllBlockDevices<ICdromDevice> ();
+        public bool IsBlank {
+            get { return HalDevice.GetPropertyBoolean ("volume.disc.is_blank"); }
         }
         
-        public IEnumerable<IDiskDevice> GetAllDiskDevices ()
-        {
-            return GetAllBlockDevices<IDiskDevice> ();
+        public bool IsRewritable {
+            get { return HalDevice.GetPropertyBoolean ("volume.disc.is_rewritable"); }
         }
         
-        private void OnDeviceAdded (object o, Hal.DeviceAddedArgs args)
-        {
+        public ulong MediaCapacity {
+            get { return HalDevice.GetPropertyUInt64 ("volume.disc.capacity"); }
         }
         
-        private void OnDeviceRemoved (object o, Hal.DeviceRemovedArgs args)
+        public override string ToString ()
         {
+            return String.Format ("Optical Disc, Audio = {0}, Data = {1}, Blank = {2}, Rewritable = {3}, Media Capacity = {4}",
+                HasAudio, HasData, IsBlank, IsRewritable, MediaCapacity);
         }
     }
 }

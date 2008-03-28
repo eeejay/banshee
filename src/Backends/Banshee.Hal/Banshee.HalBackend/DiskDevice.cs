@@ -36,16 +36,16 @@ namespace Banshee.HalBackend
 {
     public class DiskDevice : BlockDevice, IDiskDevice
     {
-        public new static DiskDevice Resolve (Hal.Device device)
+        public new static DiskDevice Resolve (Hal.Manager manager, Hal.Device device)
         {
             if (device["storage.drive_type"] == "disk") {
-                return new DiskDevice (device);
+                return new DiskDevice (manager, device);
             }
             
             return null;
         }
         
-        internal DiskDevice (Hal.Device device) : base (device)
+        private DiskDevice (Hal.Manager manager, Hal.Device device) : base (manager, device)
         {
         }
     }

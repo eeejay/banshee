@@ -38,9 +38,15 @@ namespace Banshee.HalBackend
         protected Hal.Device HalDevice {
             get { return device; }
         }
+        
+        private Hal.Manager manager;
+        protected Hal.Manager HalManager {
+            get { return manager; }
+        }
 
-        internal Device (Hal.Device device)
+        protected Device (Hal.Manager manager, Hal.Device device)
         {
+            this.manager = manager;
             this.device = device;
         }
         

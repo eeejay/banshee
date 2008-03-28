@@ -1,3 +1,29 @@
+2008-03-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/BlockDevice.cs: Implement
+	GetEnumerator to provide child volumes
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/DiskDevice.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/CdromDevice.cs: 
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/HardwareManager.cs: Fix up
+	protection levels and support holding on to the manager reference
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs: Implemented the
+	base HAL volume object with some properties
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/DiscVolume.cs: Implemented
+	a child HAL volume object for optical disc volumes
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IDiscVolume.cs: Added 
+	MediaCapacity property
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IVolume.cs: Make Available
+	long instead of ulong since it could be invalid (-1)
+	
+	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs: Add
+	some more tests/debug
+
 2008-03-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This patch adds proper case-insensitive sorting and searching.  It should

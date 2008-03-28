@@ -36,23 +36,24 @@ namespace Banshee.HalBackend
 {
     public abstract class BlockDevice : Device, IBlockDevice
     {
-        public static BlockDevice Resolve<T> (Hal.Device device) where T : IBlockDevice
+        public static BlockDevice Resolve<T> (Hal.Manager manager, Hal.Device device) where T : IBlockDevice
         {
             if (device["info.category"] == "storage" && device.QueryCapability ("block") && 
                 device.PropertyExists ("block.device")) {
                 if (typeof (T) == typeof (ICdromDevice)) {
-                    return CdromDevice.Resolve (device);
+                    return CdromDevice.Resolve (manager, device);
                 } else if (typeof (T) == typeof (IDiskDevice)) {
-                    return DiskDevice.Resolve (device);
+                    return DiskDevice.Resolve (manager, device);
                 }
                 
-                return (BlockDevice)CdromDevice.Resolve (device) ?? (BlockDevice)DiskDevice.Resolve (device);
+                return (BlockDevice)CdromDevice.Resolve (manager, device) 
+                    ?? (BlockDevice)DiskDevice.Resolve (manager, device);
             }
             
             return null;
         }
         
-        internal BlockDevice (Hal.Device device) : base (device)
+        protected BlockDevice (Hal.Manager manager, Hal.Device device) : base (manager, device)
         {
         }
         
@@ -66,7 +67,12 @@ namespace Banshee.HalBackend
         
         public IEnumerator<IVolume> GetEnumerator ()
         {
-            return null;
+            foreach (Hal.Device hal_device in HalDevice.GetChildrenAsDevice (HalManager)) {
+                Volume volume = Volume.Resolve (this, HalManager, hal_device);
+                if (volume != null) {
+                    yield return volume;
+                }
+            }
         }
         
         IEnumerator IEnumerable.GetEnumerator ()

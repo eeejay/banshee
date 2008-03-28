@@ -84,18 +84,22 @@ namespace Banshee.Hardware
         public void Test ()
         {
             Console.WriteLine ("All Block Devices:");
-            foreach (IBlockDevice device in GetAllBlockDevices ()) {
-                Console.WriteLine ("  {0}, {1}", device.GetType ().FullName, device);
-            }
+            PrintBlockDeviceList (GetAllBlockDevices ());
             
             Console.WriteLine ("All CD-ROM Devices:");
-            foreach (ICdromDevice device in GetAllCdromDevices ()) {
-                Console.WriteLine ("  {0}, {1}", device.GetType ().FullName, device);
-            }
+            PrintBlockDeviceList (GetAllCdromDevices ());
             
             Console.WriteLine ("All Disk Devices:");
-            foreach (IDiskDevice device in GetAllDiskDevices ()) {
-                Console.WriteLine ("  {0}, {1}", device.GetType ().FullName, device);
+            PrintBlockDeviceList (GetAllDiskDevices ());
+        }
+        
+        private void PrintBlockDeviceList (System.Collections.IEnumerable devices)
+        {
+            foreach (IBlockDevice device in devices) {
+                Console.WriteLine ("{0}, {1}", device.GetType ().FullName, device);
+                foreach (IVolume volume in device.Volumes) {
+                    Console.WriteLine ("  {0}, {1}", volume.GetType ().FullName, volume);
+                }
             }
         }
              

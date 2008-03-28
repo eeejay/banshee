@@ -17,6 +17,8 @@
     <File name="Banshee.HalBackend/BlockDevice.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.HalBackend/CdromDevice.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.HalBackend/DiskDevice.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.HalBackend/Volume.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.HalBackend/DiscVolume.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />
