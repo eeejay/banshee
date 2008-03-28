@@ -34,6 +34,8 @@ namespace Banshee.HalBackend
 {
     public class Volume : Device, IVolume
     {
+        private const string method_names_property = "org.freedesktop.Hal.Device.Volume.method_names";
+        
         public static Volume Resolve (BlockDevice parent, Hal.Manager manager, Hal.Device device)
         {
             if (!device.IsVolume) {
@@ -46,10 +48,15 @@ namespace Banshee.HalBackend
         }
         
         private BlockDevice parent;
+        private string [] method_names;
         
         protected Volume (BlockDevice parent, Hal.Manager manager, Hal.Device device) : base (manager, device)
         {
             this.parent = parent ?? BlockDevice.Resolve<IBlockDevice> (manager, device.Parent);
+            
+            method_names = HalDevice.PropertyExists (method_names_property) 
+                ? device.GetPropertyStringList (method_names_property)
+                : new string[0];
         }
 
         public string MountPoint {
@@ -88,6 +95,28 @@ namespace Banshee.HalBackend
         
         public IBlockDevice Parent {
             get { return parent; }
+        }
+        
+        public bool CanEject {
+            get { return Array.IndexOf<string> (method_names, "Eject") >= 0; }
+        }
+        
+        public void Eject ()
+        {
+            if (CanEject && HalDevice.IsVolume) {
+                HalDevice.Volume.Eject ();
+            }
+        }
+        
+        public bool CanUnmount {
+            get { return Array.IndexOf<string> (method_names, "Unmount") >= 0; }
+        }
+        
+        public void Unmount ()
+        {
+            if (CanUnmount && HalDevice.IsVolume) {
+                HalDevice.Volume.Unmount ();
+            }
         }
         
         public override string ToString ()

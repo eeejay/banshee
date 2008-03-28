@@ -29,6 +29,7 @@
 using System;
 using Mono.Unix;
 
+using Hyena;
 using Banshee.Sources;
 using Banshee.Collection;
 
@@ -36,11 +37,14 @@ namespace Banshee.AudioCd
 {
     public class AudioCdSource : Source, ITrackModelSource, IUnmapableSource, IDisposable
     {
+        private AudioCdService service;
         private AudioCdDisc disc;
         private MemoryTrackListModel track_model;
         
-        public AudioCdSource (AudioCdDisc disc) : base (Catalog.GetString ("Audio CD"), disc.Title, 200)
+        public AudioCdSource (AudioCdService service, AudioCdDisc disc) 
+            : base (Catalog.GetString ("Audio CD"), disc.Title, 200)
         {
+            this.service = service;
             this.disc = disc;
             
             track_model = new MemoryTrackListModel ();
@@ -131,6 +135,18 @@ namespace Banshee.AudioCd
 
         public bool Unmap ()
         {
+            System.Threading.ThreadPool.QueueUserWorkItem (delegate {
+                try {
+                    disc.Volume.Unmount ();
+                    disc.Volume.Eject ();
+                } catch (Exception e) {
+                    Log.Error (Catalog.GetString ("Could not eject Audio CD"), e.Message, true);
+                    Log.Exception (e);
+                }
+            });
+            
+            service.UnmapDiscVolume (disc.Volume.Uuid);
+            
             return true;
         }
 

@@ -356,5 +356,15 @@ namespace Hyena
         }
         
         #endregion
+        
+        #region Public Exception Methods
+        
+        public static void Exception (Exception e)
+        {
+            // FIXME: We should save these to an actual log file
+            Console.WriteLine (e);
+        }
+        
+        #endregion
     }
 }

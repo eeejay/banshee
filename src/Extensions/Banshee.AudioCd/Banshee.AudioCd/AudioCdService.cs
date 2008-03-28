@@ -74,7 +74,7 @@ namespace Banshee.AudioCd
         {
             lock (this) {
                 if (!sources.ContainsKey (volume.Uuid) && volume.HasAudio) {
-                    AudioCdSource source = new AudioCdSource (new AudioCdDisc (volume));
+                    AudioCdSource source = new AudioCdSource (this, new AudioCdDisc (volume));
                     sources.Add (volume.Uuid, source);
                     ServiceManager.SourceManager.AddSource (source);
                     Log.DebugFormat ("Mapping audio CD ({0})", volume.Uuid);
@@ -82,7 +82,7 @@ namespace Banshee.AudioCd
             }
         }
         
-        private void UnmapDiscVolume (string uuid)
+        internal void UnmapDiscVolume (string uuid)
         {
             lock (this) {
                 if (sources.ContainsKey (uuid)) {

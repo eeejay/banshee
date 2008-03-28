@@ -1,5 +1,24 @@
 2008-03-28  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Hardware/IVolume.cs: Added Eject
+	and Unmount properties/methods
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs: Implemented
+	the new Eject/Unmount members
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
+	Make UnmapDiscVolume internal so the source can call it when being
+	unmapped by the user
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Implement the unmap method to eject the disc from the drive
+
+	* src/Libraries/Hyena/Hyena/Log.cs: Added an Exception method to which
+	all exceptions that are handled should be logged; currently it just
+	prints the exception, but we should later save them to a log file
+
+2008-03-28  Aaron Bockover  <abock@gnome.org>
+
 	* src/Backends/Banshee.Hal/Banshee.HalBackend/HardwareManager.cs:
 	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs:
 	* src/Core/Banshee.Services/Banshee.Hardware/IHardwareManager.cs: Added

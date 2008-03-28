@@ -38,5 +38,11 @@ namespace Banshee.Hardware
         ulong Capacity { get; }
         long Available { get; }
         new IBlockDevice Parent { get; }
+        
+        bool CanEject { get; }
+        void Eject ();
+        
+        bool CanUnmount { get; }
+        void Unmount ();
     }
 }
