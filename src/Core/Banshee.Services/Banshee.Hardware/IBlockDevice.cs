@@ -33,7 +33,7 @@ namespace Banshee.Hardware
 {
     public interface IBlockDevice : IDevice, IEnumerable<IVolume>
     {
-        int VolumeCount { get; }
+        string DeviceNode { get; }
         IEnumerable<IVolume> Volumes { get; }
     }
 }

@@ -1,10 +1,10 @@
 //
-// IDevice.cs
+// Volume.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,12 +27,55 @@
 //
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace Banshee.Hardware
+using NDesk.DBus;
+
+namespace Hal
 {
-    public interface IDevice
+    [Interface("org.freedesktop.Hal.Device.Volume")]
+    internal interface IVolume
     {
-        string Uuid { get; }
-        string Name { get; }
+        void Mount(string [] args);
+        void Unmount(string [] args);
+        void Eject(string [] args);
+    }
+    
+    public class Volume : Device
+    {
+        public Volume(string udi) : base(udi)
+        {
+        }
+
+        public void Mount()
+        {
+            Mount(new string [] { String.Empty });
+        }
+        
+        public void Mount(params string [] args)
+        {
+            CastDevice<IVolume>().Mount(args);
+        }
+        
+        public void Unmount()
+        {
+            Unmount(new string [] { String.Empty });
+        }
+        
+        public void Unmount(params string [] args)
+        {
+            CastDevice<IVolume>().Unmount(args);
+        }
+        
+        public void Eject()
+        {
+            Eject(new string [] { String.Empty });
+        }
+        
+        public void Eject(params string [] args)
+        {
+            CastDevice<IVolume>().Eject(args);
+        }
     }
 }

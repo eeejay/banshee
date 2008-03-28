@@ -1,5 +1,5 @@
 //
-// IDevice.cs
+// DiskDevice.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,12 +27,26 @@
 //
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace Banshee.Hardware
+using Banshee.Hardware;
+
+namespace Banshee.HalBackend
 {
-    public interface IDevice
+    public class DiskDevice : BlockDevice, IDiskDevice
     {
-        string Uuid { get; }
-        string Name { get; }
+        public new static DiskDevice Resolve (Hal.Device device)
+        {
+            if (device["storage.drive_type"] == "disk") {
+                return new DiskDevice (device);
+            }
+            
+            return null;
+        }
+        
+        internal DiskDevice (Hal.Device device) : base (device)
+        {
+        }
     }
 }

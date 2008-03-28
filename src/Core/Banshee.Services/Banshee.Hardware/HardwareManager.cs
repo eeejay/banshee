@@ -27,6 +27,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+
 using Mono.Addins;
 using Hyena;
 
@@ -58,9 +60,47 @@ namespace Banshee.Hardware
                 throw new Exception ("No HardwareManager extensions could be loaded. Hardware support will be disabled.");
             }
         }
+        
+        public void Dispose ()
+        {
+            manager.Dispose ();
+        }
+        
+        public IEnumerable<IBlockDevice> GetAllBlockDevices ()
+        {
+            return manager.GetAllBlockDevices ();
+        }
+        
+        public IEnumerable<ICdromDevice> GetAllCdromDevices ()
+        {
+            return manager.GetAllCdromDevices ();
+        }
+        
+        public IEnumerable<IDiskDevice> GetAllDiskDevices ()
+        {
+            return manager.GetAllDiskDevices ();
+        }
+        
+        public void Test ()
+        {
+            Console.WriteLine ("All Block Devices:");
+            foreach (IBlockDevice device in GetAllBlockDevices ()) {
+                Console.WriteLine ("  {0}, {1}", device.GetType ().FullName, device);
+            }
+            
+            Console.WriteLine ("All CD-ROM Devices:");
+            foreach (ICdromDevice device in GetAllCdromDevices ()) {
+                Console.WriteLine ("  {0}, {1}", device.GetType ().FullName, device);
+            }
+            
+            Console.WriteLine ("All Disk Devices:");
+            foreach (IDiskDevice device in GetAllDiskDevices ()) {
+                Console.WriteLine ("  {0}, {1}", device.GetType ().FullName, device);
+            }
+        }
              
         string IService.ServiceName {
             get { return "HardwareManager"; }
-        }   
+        } 
     }
 }

@@ -27,10 +27,14 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 namespace Banshee.Hardware
 {
-    public interface IHardwareManager
+    public interface IHardwareManager : IDisposable
     {
+        IEnumerable<IBlockDevice> GetAllBlockDevices ();
+        IEnumerable<ICdromDevice> GetAllCdromDevices ();
+        IEnumerable<IDiskDevice> GetAllDiskDevices ();
     }
 }

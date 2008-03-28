@@ -37,7 +37,10 @@ SOURCES =  \
 	Banshee.Equalizer/EqualizerSettingEvent.cs \
 	Banshee.Hardware/HardwareManager.cs \
 	Banshee.Hardware/IBlockDevice.cs \
+	Banshee.Hardware/ICdromDevice.cs \
 	Banshee.Hardware/IDevice.cs \
+	Banshee.Hardware/IDiscVolume.cs \
+	Banshee.Hardware/IDiskDevice.cs \
 	Banshee.Hardware/IHardwareManager.cs \
 	Banshee.Hardware/IVolume.cs \
 	Banshee.Library/HomeDirectoryImportSource.cs \

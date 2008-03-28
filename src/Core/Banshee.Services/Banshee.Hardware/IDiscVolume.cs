@@ -1,5 +1,5 @@
 //
-// IDevice.cs
+// IDiscVolume.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -30,9 +30,11 @@ using System;
 
 namespace Banshee.Hardware
 {
-    public interface IDevice
+    public interface IDiscVolume : IVolume
     {
-        string Uuid { get; }
-        string Name { get; }
+        bool HasAudio { get; }
+        bool HasData { get; }
+        bool IsRewritable { get; }
+        bool IsBlank { get; }
     }
 }

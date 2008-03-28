@@ -1,4 +1,5 @@
 SUBDIRS = \
+	Banshee.Hal \
 	Banshee.Gnome \
 	Banshee.GStreamer \
 	Banshee.Unix

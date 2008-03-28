@@ -1,5 +1,5 @@
 //
-// IDevice.cs
+// Device.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -28,11 +28,28 @@
 
 using System;
 
-namespace Banshee.Hardware
+using Banshee.Hardware;
+
+namespace Banshee.HalBackend
 {
-    public interface IDevice
-    {
-        string Uuid { get; }
-        string Name { get; }
+    public abstract class Device : IDevice
+    {    
+        private Hal.Device device;
+        protected Hal.Device HalDevice {
+            get { return device; }
+        }
+
+        internal Device (Hal.Device device)
+        {
+            this.device = device;
+        }
+        
+        public string Uuid {
+            get { return device.Udi; }
+        }
+
+        public virtual string Name {
+            get { return device["info.product"]; }
+        }
     }
 }

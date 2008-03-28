@@ -1,5 +1,5 @@
 //
-// IBlockDevice.cs
+// IVolume.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -34,6 +34,7 @@ namespace Banshee.Hardware
     {
         string MountPoint { get; }
         bool IsMounted { get; }
+        bool IsMountedReadOnly { get; }
         ulong Capacity { get; }
         ulong Available { get; }
         new IBlockDevice Parent { get; }

@@ -1,5 +1,5 @@
 //
-// IDevice.cs
+// ICdromDevice.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,12 +27,11 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 namespace Banshee.Hardware
 {
-    public interface IDevice
+    public interface ICdromDevice : IBlockDevice
     {
-        string Uuid { get; }
-        string Name { get; }
     }
 }

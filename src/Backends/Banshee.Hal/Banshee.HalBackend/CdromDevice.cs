@@ -1,5 +1,5 @@
 //
-// IDevice.cs
+// CdromDevice.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,12 +27,26 @@
 //
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace Banshee.Hardware
+using Banshee.Hardware;
+
+namespace Banshee.HalBackend
 {
-    public interface IDevice
+    public class CdromDevice : BlockDevice, ICdromDevice
     {
-        string Uuid { get; }
-        string Name { get; }
+        public new static CdromDevice Resolve (Hal.Device device)
+        {
+            if (device["storage.drive_type"] == "cdrom") {
+                return new CdromDevice (device);
+            }
+            
+            return null;
+        }
+        
+        internal CdromDevice (Hal.Device device) : base (device)
+        {
+        }
     }
 }

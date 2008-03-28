@@ -1,3 +1,24 @@
+2008-03-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Backends/Banshee.Hal: First pass at the HAL implementation for the
+	new hardware layer; very incomplete
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IHardwareManager.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs: Filled
+	out some functionality; GetAllBlockDevices, GetAllCdromDevices, and
+	GetAllDiskDevices
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IBlockDevice.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/ICdromDevice.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IDevice.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IDiscVolume.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IDiskDevice.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IVolume.cs: Stubbed out
+	more interfaces for the hardware object model
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml: Added the 
+	hardware manager extension point
+
 2008-03-28  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs::

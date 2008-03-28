@@ -16,4 +16,8 @@
     <ExtensionNode name="PlayerEngine"/>
   </ExtensionPoint>
 
+  <ExtensionPoint path="/Banshee/Platform/HardwareManager">
+    <ExtensionNode name="HardwareManager"/>
+  </ExtensionPoint>
+
 </Addin>

@@ -143,6 +143,7 @@ src/Core/Banshee.Widgets/Makefile
 src/Backends/Makefile
 src/Backends/Banshee.Gnome/Makefile
 src/Backends/Banshee.GStreamer/Makefile
+src/Backends/Banshee.Hal/Makefile
 src/Backends/Banshee.Unix/Makefile
 
 src/Libraries/Makefile
