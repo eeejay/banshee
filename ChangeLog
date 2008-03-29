@@ -1,5 +1,10 @@
 2008-03-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	Remove all children when refreshing.  And add playcount to top artist tiles.
+
+2008-03-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection/MemoryTrackListModel.cs:
 	Fully bounds check the index before accessing it.  Fixes BGO #524805.
 

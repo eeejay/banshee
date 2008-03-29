@@ -114,10 +114,8 @@ namespace Banshee.Lastfm.Radio
 
             last_user = username;
 
-            if (recently_loved != null) {
-                main_box.Remove (recently_loved);
-                main_box.Remove (recently_played);
-                main_box.Remove (top_artists);
+            while (main_box.Children.Length != 0) {
+                main_box.Remove (main_box.Children[0]);
             }
 
             recently_loved = new NumberedList (lastfm, Catalog.GetString ("Recently Loved Tracks"));
@@ -212,6 +210,7 @@ namespace Banshee.Lastfm.Radio
                 foreach (UserTopArtist artist in artists) {
                     MenuTile tile = new MenuTile ();
                     tile.PrimaryText = artist.Name;
+                    tile.SecondaryText = String.Format (Catalog.GetString ("{0} plays"), artist.PlayCount);
                     tile_view.AddNumberedWidget (tile);
                 }
 
