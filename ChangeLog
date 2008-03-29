@@ -1,5 +1,30 @@
 2008-03-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	Make much much prettier.  Pack in a RoundedFrame, draw white bg, add Top
+	Artists, make button presses pretty, make vertically scrollable.
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/TileView.cs: Fix bug where
+	wouldn't expand set a height request of more than 1, so unless packed in a
+	vbox with fill/expand = true, it wasn't visible.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Fix bug with not
+	having the child calculate its size request before trying to get it.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add improved metadata refreshing support - store a value in the
+	CoreConfiguration when its successful, meaning it will keep retrying unti
+	it is (so if you close it or it dies before its done, no big deal).
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:
+	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Clean up
+	comments/debugging.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/IconThemeUtils.cs: Check name
+	and return if null/empty.
+
+2008-03-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Be more
 	careful with types when iterating over action proxies.  Should fix BGO
 	#524706.  Thanks to Matt Enright for the pointer.

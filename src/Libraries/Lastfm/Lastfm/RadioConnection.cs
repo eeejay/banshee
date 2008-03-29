@@ -272,7 +272,8 @@ namespace Lastfm
                     // Set us as connecting, assuming the connection attempt wasn't changed out from under us
                     if (ParseHandshake (new StreamReader (stream).ReadToEnd ()) && session != null) {
                         State = ConnectionState.Connected;
-                        Log.Debug (String.Format ("Logged into Last.fm as {0}", LastfmCore.Account.UserName), null);
+                        Log.Debug (String.Format ("Logged into Last.fm as {0} ({1}subscriber)",
+                            LastfmCore.Account.UserName, subscriber ? null : "not a "), null);
                         return;
                     }
                 } catch (Exception e) {
@@ -288,7 +289,6 @@ namespace Lastfm
 
         private bool ParseHandshake (string content) 
         {
-            Log.Debug ("Got Last.fm Handshake Response", content);
             string [] lines = content.Split (new Char[] {'\n'});
             foreach (string line in lines) {
                 string [] opts = line.Split (new Char[] {'='});

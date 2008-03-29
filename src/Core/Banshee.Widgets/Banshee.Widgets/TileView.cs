@@ -1,30 +1,31 @@
-/***************************************************************************
- *  TileView.cs
- *
- *  Copyright (C) 2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
- ****************************************************************************/
-
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// TileView.cs
+//
+// Authors:
+//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
+//
+// Copyright (C) 2006-2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
  
 using System;
 using System.Collections.Generic;
@@ -46,9 +47,14 @@ namespace Banshee.Widgets
             current_column_count = initialColumnCount;
             
             Table table = new Table(1, 1, true);
+
             table.Show();
             cached_tables.Add(table);
             Add(table);
+
+            Show ();
+
+            ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
         }
         
         public void AddWidget(Widget widget)
@@ -69,14 +75,6 @@ namespace Banshee.Widgets
             LayoutTableDefault(cached_tables[0], widgets);
         }
 
-        protected override void OnSizeRequested(ref Requisition requisition)
-        {
-            SetSizeRequest(requisition.Width, requisition.Height);
-            base.OnSizeRequested(ref requisition);
-        }
-
-        private bool first_size_allocation = true;
-        
         protected override void OnSizeAllocated(Gdk.Rectangle allocation)
         {
             Widget child = null;
@@ -85,10 +83,9 @@ namespace Banshee.Widgets
                 child = Children[0];
             }
 
-            if(first_size_allocation || child == null) {
+            if(child == null) {
                 base.OnSizeAllocated(allocation);
                 SetSize((uint)allocation.Width, (uint)allocation.Height);
-                first_size_allocation = false;
                 return;
             }
             
@@ -103,7 +100,6 @@ namespace Banshee.Widgets
 
                 child.SizeAllocate(child_allocation);
                 SetSize((uint)child_allocation.Width, (uint)child_allocation.Height);
-                
                 return;
             }
             
@@ -117,7 +113,8 @@ namespace Banshee.Widgets
             }
             
             base.OnSizeAllocated(allocation);
-            SetSize((uint)child.Allocation.Width, (uint)child.Allocation.Height);
+            SetSizeRequest (child.Allocation.Width, child.Allocation.Height);
+            SetSize ((uint)child.Allocation.Width, (uint)child.Allocation.Height);
         }
 
         private void RemoveContainerEntries(Container widget)

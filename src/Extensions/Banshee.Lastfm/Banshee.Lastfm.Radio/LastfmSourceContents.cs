@@ -19,22 +19,47 @@ using Lastfm.Data;
 
 namespace Banshee.Lastfm.Radio
 {
-    public class LastfmSourceContents : VBox, ISourceContents
+    public class LastfmSourceContents : Hyena.Widgets.ScrolledWindow, ISourceContents
     {
+        private VBox main_box;
         private LastfmSource lastfm;
 
         private NumberedList recently_loved;
         private NumberedList recently_played;
-        //private NumberedList recommended_artists;
+        private NumberedList top_artists;
+
+        private Viewport viewport;
 
         static LastfmSourceContents () {
             DataCore.UserAgent = Banshee.Web.Browser.UserAgent;
             DataCore.CachePath = System.IO.Path.Combine (Banshee.Base.Paths.ExtensionCacheRoot, "lastfm");
         }
 
-        // "Coming Soon: Profile, Friends, Recently Loved Songs, etc")
+        // "Coming Soon: Profile, Friends, Events etc")
         public LastfmSourceContents () : base ()
         {
+            HscrollbarPolicy = PolicyType.Never;
+            VscrollbarPolicy = PolicyType.Automatic;
+
+            viewport = new Viewport ();
+            viewport.ShadowType = ShadowType.None;
+
+            main_box = new VBox ();
+            main_box.Spacing = 6;
+            main_box.BorderWidth = 5;
+            main_box.ReallocateRedraws = true;
+
+            // Clamp the width, preventing horizontal scrolling
+            SizeAllocated += delegate (object o, SizeAllocatedArgs args) {
+                main_box.WidthRequest = args.Allocation.Width - 10;
+            };
+
+            viewport.Add (main_box);
+            
+            StyleSet += delegate { viewport.ModifyBg (StateType.Normal, Style.Base (StateType.Normal)); };
+
+            AddWithFrame (viewport);
+            ShowAll ();
         }
 
         public bool SetSource (ISource src)
@@ -66,7 +91,21 @@ namespace Banshee.Lastfm.Radio
             get { return this; }
         }
 
+        public void Refresh ()
+        {
+            if (user != null) {
+                user.RecentLovedTracks.Refresh ();
+                user.RecentTracks.Refresh ();
+                user.GetTopArtists (TopType.Overall).Refresh ();
+
+                recently_loved.SetList (user.RecentLovedTracks);
+                recently_played.SetList (user.RecentTracks);
+                top_artists.SetList (user.GetTopArtists (TopType.Overall));
+            }
+        }
+
         private string last_user;
+        private LastfmUserData user;
         private void UpdateForUser (string username)
         {
             if (username == last_user) {
@@ -76,31 +115,30 @@ namespace Banshee.Lastfm.Radio
             last_user = username;
 
             if (recently_loved != null) {
-                Remove (recently_loved);
-                Remove (recently_played);
+                main_box.Remove (recently_loved);
+                main_box.Remove (recently_played);
+                main_box.Remove (top_artists);
             }
 
             recently_loved = new NumberedList (lastfm, Catalog.GetString ("Recently Loved Tracks"));
             recently_played = new NumberedList (lastfm, Catalog.GetString ("Recently Played Tracks"));
+            top_artists = new NumberedList (lastfm, Catalog.GetString ("My Top Artists"));
             //recommended_artists = new NumberedList (Catalog.GetString ("Recommended Artists"));
 
-            PackStart (recently_loved, true, true, 0);
-            PackStart (recently_played, true, true, 0);
+            main_box.PackStart (recently_loved, false, false, 0);
+            main_box.PackStart (new HSeparator (), false, false, 5);
+            main_box.PackStart (recently_played, false, false, 0);
+            main_box.PackStart (new HSeparator (), false, false, 5);
+            main_box.PackStart (top_artists, false, false, 0);
             //PackStart (recommended_artists, true, true, 0);
 
-            LastfmUserData user = new LastfmUserData (username);
+            user = new LastfmUserData (username);
             recently_loved.SetList (user.RecentLovedTracks);
             recently_played.SetList (user.RecentTracks);
-
+            top_artists.SetList (user.GetTopArtists (TopType.Overall));
+            
             ShowAll ();
         }
-
-        /*private void TileMenuPosition (Menu menu, out int x, out int y, out bool push_in)
-        {
-            push_in = false;
-            x = 0;
-            y = 0;
-        }*/
 
         private void HandleConnectionStateChanged (object sender, ConnectionStateChangedArgs args)
         {
@@ -131,11 +169,18 @@ namespace Banshee.Lastfm.Radio
 
         public class NumberedTileView : TileView
         {
+            private int i = 1;
+
             public NumberedTileView (int cols) : base (cols)
             {
             }
 
-            private int i = 1;
+            public new void ClearWidgets ()
+            {
+                i = 1;
+                base.ClearWidgets ();
+            }
+
             public void AddNumberedWidget (Tile tile)
             {
                 tile.PrimaryText = String.Format ("{0}. {1}", i++, tile.PrimaryText);
@@ -157,6 +202,20 @@ namespace Banshee.Lastfm.Radio
                 tile_view = new NumberedTileView (1);
                 PackStart (tile_view, true, true, 0);
                 tile_view.Show ();
+            }
+
+            // TODO generalize this
+            public void SetList (LastfmData<UserTopArtist> artists)
+            {
+                tile_view.ClearWidgets ();
+
+                foreach (UserTopArtist artist in artists) {
+                    MenuTile tile = new MenuTile ();
+                    tile.PrimaryText = artist.Name;
+                    tile_view.AddNumberedWidget (tile);
+                }
+
+                tile_view.ShowAll ();
             }
 
             public void SetList (LastfmData<RecentTrack> tracks)
@@ -182,12 +241,14 @@ namespace Banshee.Lastfm.Radio
                     }
 
                     tile_view.AddNumberedWidget (tile);
-                    tile.Show ();
                 }
+
+                tile_view.ShowAll ();
             }
 
             private void OnTileActivated (object sender, EventArgs args)
             {
+                (sender as Button).Relief = ReliefStyle.Normal;
                 RecentTrack track = widget_track_map [sender];
                 lastfm.Actions.CurrentArtist = track.Artist;
                 lastfm.Actions.CurrentAlbum = track.Album;
@@ -207,6 +268,9 @@ namespace Banshee.Lastfm.Radio
 
                 menu.ShowAll (); 
                 menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
+                menu.Deactivated += delegate {
+                    (sender as Button).Relief = ReliefStyle.None;
+                };
             }
         }
     }

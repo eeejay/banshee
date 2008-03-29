@@ -1,8 +1,9 @@
 //
 // RoundedFrame.cs
 //
-// Author:
+// Authors:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -85,6 +86,7 @@ namespace Hyena.Widgets
             int width = requisition.Width;
             int height = requisition.Height;
                 
+            child.SizeRequest ();
             child.GetSizeRequest (out width, out height);
             if (width == -1 || height == -1) {
                 width = height = 80;

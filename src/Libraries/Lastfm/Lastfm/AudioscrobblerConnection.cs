@@ -108,7 +108,7 @@ namespace Lastfm
         
         public void UpdateNetworkState (bool connected)
         {
-            Log.DebugFormat ("Changing Audioscrobbler connected state: {0}", connected ? "connected" : "disconnected");
+            Log.DebugFormat ("Audioscrobbler state: {0}", connected ? "connected" : "disconnected");
             this.connected = connected;
         }
 
@@ -169,10 +169,9 @@ namespace Lastfm
 
         private void StateTransitionHandler (object o, ElapsedEventArgs e)
         {
-            Hyena.Log.DebugFormat ("State transition handler running; state: {0}, connected: {1}", state, connected);
+            Log.DebugFormat ("State transition handler running; state: {0}, connected: {1}", state, connected);
             
-            /* if we're not connected, don't bother doing anything
-             * involving the network. */
+            // if we're not connected, don't bother doing anything involving the network.
             if (!connected) {
                 return;
             }
@@ -182,9 +181,7 @@ namespace Lastfm
                 hard_failures = 0;
             }
             
-            
-
-            /* and address changes in our engine state */
+            // and address changes in our engine state
             switch (state) {
             case State.Idle:
                 if (LastfmCore.Account.UserName != null &&
@@ -218,7 +215,7 @@ namespace Lastfm
             case State.WaitingForResponse:
             case State.WaitingForRequestStream:
             case State.WaitingForHandshakeResp:
-                /* nothing here */
+                // nothing here
                 break;
             }
         }
@@ -236,9 +233,9 @@ namespace Lastfm
         {
             int num_tracks_transmitted;
 
-            /* save here in case we're interrupted before we complete
-             * the request.  we save it again when we get an OK back
-             * from the server */
+            // save here in case we're interrupted before we complete
+            // the request.  we save it again when we get an OK back
+            // from the server
             queue.Save ();
 
             next_interval = DateTime.MinValue;
@@ -464,7 +461,7 @@ namespace Lastfm
             }
             
             if (success == true) {
-                Hyena.Log.Debug ("Audioscrobbler sign-on succeeded", "Session ID received"); 
+                Log.Debug ("Audioscrobbler sign-on succeeded", "Session ID received"); 
                 session_id = sr.ReadLine ().Trim ();
                 now_playing_url = sr.ReadLine ().Trim ();
                 post_url = sr.ReadLine ().Trim ();

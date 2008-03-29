@@ -61,7 +61,8 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 5;
+        protected const int CURRENT_VERSION = 6;
+        protected const int CURRENT_METADATA_VERSION = 1;
         
         protected class DatabaseVersionAttribute : Attribute 
         {
@@ -130,6 +131,12 @@ namespace Banshee.Database
                 Execute ("BEGIN");
                 InnerMigrate ();
                 Execute ("COMMIT");
+
+                // Trigger metadata refreshes if necessary
+                int metadata_version = connection.Query<int> ("SELECT Value FROM CoreConfiguration WHERE Key = 'MetadataVersion'");
+                if (DatabaseVersion == CURRENT_VERSION && metadata_version < CURRENT_METADATA_VERSION) {
+                    ServiceManager.ServiceStarted += OnServiceStarted;
+                }
             } catch (Exception e) {
                 Console.WriteLine ("Rolling back transaction");
                 Console.WriteLine (e);
@@ -293,9 +300,13 @@ namespace Banshee.Database
             Execute ("CREATE INDEX IF NOT EXISTS CoreSmartPlaylistEntriesIndex ON CoreSmartPlaylistEntries(SmartPlaylistID, TrackID)");
             Execute ("CREATE INDEX IF NOT EXISTS CorePlaylistEntriesIndex ON CorePlaylistEntries(PlaylistID, TrackID)");
             
-            refresh_from_file = false;
-            ServiceManager.ServiceStarted += OnServiceStarted;
-            
+            return true;
+        }
+
+        [DatabaseVersion (6)]
+        private bool Migrate_6 ()
+        {
+            Execute ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', 0)");
             return true;
         }
         
@@ -557,9 +568,6 @@ namespace Banshee.Database
 
             Execute ("UPDATE CoreSmartPlaylists SET PrimarySourceID = 1");
             Execute ("UPDATE CorePlaylists SET PrimarySourceID = 1");
-
-            refresh_from_file = true;
-            ServiceManager.ServiceStarted += OnServiceStarted;
         }
 
         private void OnServiceStarted (ServiceStartedArgs args)
@@ -593,7 +601,6 @@ namespace Banshee.Database
             return false;
         }
 
-        private bool refresh_from_file = false;
         private void RefreshMetadataThread (object state)
         {
             int total = ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreTracks");
@@ -619,26 +626,32 @@ namespace Banshee.Database
             int count = 0;
             using (System.Data.IDataReader reader = ServiceManager.DbConnection.Query (select_command)) {
                 while (reader.Read ()) {
-                    DatabaseTrackInfo track = DatabaseTrackInfo.Provider.Load (reader, 0);
-                    
+                    DatabaseTrackInfo track = null;
                     try {
-                        if (refresh_from_file) {
+                        track = DatabaseTrackInfo.Provider.Load (reader, 0);
+                        
+                        try {
                             TagLib.File file = StreamTagger.ProcessUri (track.Uri);
                             StreamTagger.TrackInfoMerge (track, file, true);
+                        } catch (Exception e) {
+                            Log.Warning (String.Format ("Failed to update metadata for {0}", track),
+                                e.GetType ().ToString (), false);
                         }
+                        
+                        track.Save (false);
+                        track.Artist.Save ();
+                        track.Album.Save ();
                     } catch (Exception e) {
-                        Log.Warning (String.Format ("Failed to update metadata for {0}", track),
-                            e.GetType ().ToString (), false);
+                        Log.Warning (String.Format ("Failed to update metadata for {0}", track), e.ToString (), false);
+                        throw;
                     }
-                    
-                    track.Save (false);
-                    track.Artist.Save ();
-                    track.Album.Save ();
 
                     job.Status = String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle);
                     job.Progress = (double)++count / (double)total;
                 }
             }
+
+            Execute (String.Format ("UPDATE CoreConfiguration SET Value = {0} WHERE Key = 'MetadataVersion'", CURRENT_METADATA_VERSION));
 
             job.Finish ();
             ServiceManager.SourceManager.MusicLibrary.NotifyTracksChanged ();

@@ -70,6 +70,9 @@ namespace Banshee.Gui
 
         public static Gdk.Pixbuf LoadIcon (Assembly assembly, string name, int size, bool fallBackOnResource)
         {
+            if (String.IsNullOrEmpty (name))
+                return null;
+
             Gdk.Pixbuf pixbuf = null;
             try {
                 pixbuf = IconTheme.Default.LoadIcon (name, size, (IconLookupFlags)0);
