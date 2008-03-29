@@ -155,6 +155,8 @@ namespace Banshee.Widgets
 
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
         {
+            base.OnExposeEvent(evnt);
+            
             PropagateExpose(Child, evnt);
             
             if(HasFocus && draw_focus) {

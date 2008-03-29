@@ -1,5 +1,15 @@
 2008-03-29  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Widgets/Banshee.Widgets/SearchEntry.cs: Properly fix
+	the style/color issue with the search entry (BGO #504633) by doing a style
+	update when the entry style changes and when the entry state changes
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/HoverImageButton.cs: Call the
+	base expose event, which was preventing the style changes from being
+	reflected (BGO #504633)
+
+2008-03-29  Aaron Bockover  <abock@gnome.org>
+
 	* libbanshee/gst-playback-0.10.c: Actually set the pipeline to NULL, not
 	PAUSED when stopping the pipeline so any resources locked by the pipeline
 	are released
