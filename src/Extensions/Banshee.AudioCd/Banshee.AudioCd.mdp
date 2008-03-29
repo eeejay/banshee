@@ -11,13 +11,14 @@
     <File name="Banshee.AudioCd.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.AudioCd/AudioCdService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.AudioCd/AudioCdSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioCd/AudioCdDisc.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.AudioCd/AudioCdDiscModel.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Services" />
     <ProjectReference type="Project" localcopy="True" refto="Hyena" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="MusicBrainz" />
   </References>
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />

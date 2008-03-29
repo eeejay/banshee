@@ -1,5 +1,24 @@
 2008-03-28  Aaron Bockover  <abock@gnome.org>
 
+	* build/build.environment.mk:
+	* build/pkg-config/banshee-1-core.pc.in:
+	* build/pkg-config/banshee-1-musicbrainz.pc.in:
+	* configure.ac:
+	* src/Libraries/Libraries.mds:
+	* src/Libraries/Makefile.am:
+	* src/Libraries/MusicBrainz/: Added Scott's musicbrainz-sharp code locally
+	to the project for now; in the future we will just depend on the library
+	but for now we'll incubate it
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Renamed from AudioCdDisc, inhereit MemoryTrackListModel
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Changes to reflect the model stuff
+
+2008-03-28  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Hardware/IVolume.cs: Added Eject
 	and Unmount properties/methods
 

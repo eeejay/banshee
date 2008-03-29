@@ -4,7 +4,7 @@ LINK = $(REF_EXTENSION_AUDIOCD)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
-	Banshee.AudioCd/AudioCdDisc.cs \
+	Banshee.AudioCd/AudioCdDiscModel.cs \
 	Banshee.AudioCd/AudioCdService.cs \
 	Banshee.AudioCd/AudioCdSource.cs
 

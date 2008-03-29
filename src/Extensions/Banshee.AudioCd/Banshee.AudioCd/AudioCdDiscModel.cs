@@ -28,17 +28,25 @@
 
 using System;
 
+using MusicBrainz;
 using Banshee.Hardware;
+using Banshee.Collection;
 
 namespace Banshee.AudioCd
 {
-    public class AudioCdDisc
+    public class AudioCdDiscModel : MemoryTrackListModel
     {
         private IDiscVolume volume;
         
-        public AudioCdDisc (IDiscVolume volume)
+        public AudioCdDiscModel (IDiscVolume volume)
         {
             this.volume = volume;
+            ReadDisc ();
+        }
+        
+        private void ReadDisc ()
+        {
+            
         }
         
         public IDiscVolume Volume {

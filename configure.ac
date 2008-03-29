@@ -152,6 +152,7 @@ src/Libraries/Hyena.Gui/Makefile
 src/Libraries/Lastfm/Makefile
 src/Libraries/Lastfm.Gui/Makefile
 src/Libraries/Mono.Media/Makefile
+src/Libraries/MusicBrainz/Makefile
 
 src/Extensions/Makefile
 src/Extensions/Banshee.AudioCd/Makefile

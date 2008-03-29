@@ -2,6 +2,7 @@ SUBDIRS = \
    Hyena \
    Hyena.Gui \
    Mono.Media \
+   MusicBrainz \
    Lastfm \
    Lastfm.Gui
 

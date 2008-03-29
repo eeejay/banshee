@@ -38,16 +38,13 @@ namespace Banshee.AudioCd
     public class AudioCdSource : Source, ITrackModelSource, IUnmapableSource, IDisposable
     {
         private AudioCdService service;
-        private AudioCdDisc disc;
-        private MemoryTrackListModel track_model;
+        private AudioCdDiscModel disc_model;
         
-        public AudioCdSource (AudioCdService service, AudioCdDisc disc) 
-            : base (Catalog.GetString ("Audio CD"), disc.Title, 200)
+        public AudioCdSource (AudioCdService service, AudioCdDiscModel discModel) 
+            : base (Catalog.GetString ("Audio CD"), discModel.Title, 200)
         {
             this.service = service;
-            this.disc = disc;
-            
-            track_model = new MemoryTrackListModel ();
+            this.disc_model = discModel;
             
             Properties.SetStringList ("Icon.Name", "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Eject Disc"));
@@ -57,8 +54,8 @@ namespace Banshee.AudioCd
         {
         }
         
-        public AudioCdDisc Disc {
-            get { return disc; }
+        public AudioCdDiscModel DiscModel {
+            get { return disc_model; }
         }
 
 #region Source Overrides
@@ -77,7 +74,7 @@ namespace Banshee.AudioCd
         }
         
         public override int Count {
-            get { return track_model.Count; }
+            get { return disc_model.Count; }
         }
 
 #endregion
@@ -85,7 +82,7 @@ namespace Banshee.AudioCd
 #region ITrackModelSource Implementation
 
         public TrackListModel TrackModel {
-            get { return track_model; }
+            get { return disc_model; }
         }
 
         public AlbumListModel AlbumModel {
@@ -98,7 +95,7 @@ namespace Banshee.AudioCd
 
         public void Reload ()
         {
-            track_model.Reload ();
+            disc_model.Reload ();
         }
 
         public void RemoveSelectedTracks ()
@@ -137,15 +134,15 @@ namespace Banshee.AudioCd
         {
             System.Threading.ThreadPool.QueueUserWorkItem (delegate {
                 try {
-                    disc.Volume.Unmount ();
-                    disc.Volume.Eject ();
+                    disc_model.Volume.Unmount ();
+                    disc_model.Volume.Eject ();
                 } catch (Exception e) {
                     Log.Error (Catalog.GetString ("Could not eject Audio CD"), e.Message, true);
                     Log.Exception (e);
                 }
             });
             
-            service.UnmapDiscVolume (disc.Volume.Uuid);
+            service.UnmapDiscVolume (disc_model.Volume.Uuid);
             
             return true;
         }
