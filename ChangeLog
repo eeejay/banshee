@@ -1,3 +1,9 @@
+2008-03-29  Sebastian Dröge  <slomo@circular-chaos.org>
+
+	* libbanshee/gst-transcode-0.10.c:
+	Remove 'const' keyword from the output_uri as we don't use it as
+	const and this produces compiler warnings.
+
 2008-03-29  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:

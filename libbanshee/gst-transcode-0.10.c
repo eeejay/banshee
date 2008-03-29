@@ -50,7 +50,7 @@ struct GstTranscoder {
     GstElement *pipeline;
     GstElement *sink_bin;
     GstElement *conv_elem;
-    const gchar *output_uri;
+    gchar *output_uri;
     GstTranscoderProgressCallback progress_cb;
     GstTranscoderFinishedCallback finished_cb;
     GstTranscoderErrorCallback error_cb;
