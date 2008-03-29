@@ -92,7 +92,7 @@ namespace Nereid
             if (track != null) {
                 // Translators: this is the window title when a track is playing
                 //              {0} is the track title, {1} is the artist name
-                Title = String.Format (Catalog.GetString ("{0} ({1})"), 
+                Title = String.Format (Catalog.GetString ("{0} by {1}"), 
                     track.DisplayTrackTitle, track.DisplayArtistName);
             } else {
                 Title = Catalog.GetString ("Banshee Media Player");

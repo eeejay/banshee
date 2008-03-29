@@ -1,3 +1,13 @@
+2008-03-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Thanks to Allan Day for suggesting these changes.
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Change the title to be
+	"title by artist" instead of "title (artist)".
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Change the skip button text to 'Skip this item' instead of 'Play next item'.
+
 2008-03-29  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* libbanshee/gst-transcode-0.10.c:
