@@ -27,18 +27,22 @@
 //
 
 using System;
+using System.Threading;
 using Mono.Unix;
 
 using Hyena;
+using Banshee.Base;
+using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
 
 namespace Banshee.AudioCd
 {
-    public class AudioCdSource : Source, ITrackModelSource, IUnmapableSource, IDisposable
+    public class AudioCdSource : Source, ITrackModelSource, IUnmapableSource, IDurationAggregator, IDisposable
     {
         private AudioCdService service;
         private AudioCdDiscModel disc_model;
+        private SourceMessage query_message;
         
         public AudioCdSource (AudioCdService service, AudioCdDiscModel discModel) 
             : base (Catalog.GetString ("Audio CD"), discModel.Title, 200)
@@ -46,18 +50,77 @@ namespace Banshee.AudioCd
             this.service = service;
             this.disc_model = discModel;
             
+            disc_model.MetadataQueryStarted += OnMetadataQueryStarted;
+            disc_model.MetadataQueryFinished += OnMetadataQueryFinished;
             disc_model.LoadModelFromDisc ();
             
             Properties.SetStringList ("Icon.Name", "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Eject Disc"));
         }
         
+        public TimeSpan Duration {
+            get { return disc_model.Duration; }
+        }
+        
         public void Dispose ()
         {
+            ClearMessages ();
+            disc_model.MetadataQueryStarted -= OnMetadataQueryStarted;
+            disc_model.MetadataQueryFinished -= OnMetadataQueryFinished;
+            service = null;
+            disc_model = null;
         }
         
         public AudioCdDiscModel DiscModel {
             get { return disc_model; }
+        }
+        
+        private void OnMetadataQueryStarted (object o, EventArgs args)
+        {
+            if (query_message != null) {
+                DestroyQueryMessage ();
+            }
+            
+            query_message = new SourceMessage (this);
+            query_message.FreezeNotify ();
+            query_message.CanClose = false;
+            query_message.IsSpinning = true;
+            query_message.Text = Catalog.GetString ("Searching for CD metadata...");
+            query_message.ThawNotify ();
+            
+            PushMessage (query_message);
+        }
+        
+        private void OnMetadataQueryFinished (object o, EventArgs args)
+        {
+            if (disc_model.Title != Name) {
+                Name = disc_model.Title;
+                OnUpdated ();
+            }
+        
+            if (query_message == null) {
+                return;
+            }
+            
+            if (disc_model.MetadataQuerySuccess) {
+                DestroyQueryMessage ();
+                return;
+            }
+            
+            query_message.FreezeNotify ();
+            query_message.IsSpinning = false;
+            query_message.SetIconName ("dialog-error");
+            query_message.Text = Catalog.GetString ("Could not fetch metadata for CD.");
+            query_message.CanClose = true;
+            query_message.ThawNotify ();
+        }
+        
+        private void DestroyQueryMessage ()
+        {
+            if (query_message != null) {
+                RemoveMessage (query_message);
+                query_message = null;
+            }
         }
 
 #region Source Overrides
@@ -134,17 +197,40 @@ namespace Banshee.AudioCd
 
         public bool Unmap ()
         {
-            System.Threading.ThreadPool.QueueUserWorkItem (delegate {
+            AudioCdTrackInfo playing_track = ServiceManager.PlayerEngine.CurrentTrack as AudioCdTrackInfo;
+            if (playing_track != null && playing_track.Model == disc_model) {
+                ServiceManager.PlayerEngine.Close ();
+            }
+            
+            SourceMessage eject_message = new SourceMessage (this);
+            eject_message.FreezeNotify ();
+            eject_message.IsSpinning = true;
+            eject_message.CanClose = false;
+            eject_message.Text = Catalog.GetString ("Ejecting audio CD...");
+            eject_message.ThawNotify ();
+            PushMessage (eject_message);
+        
+            ThreadPool.QueueUserWorkItem (delegate {
                 try {
                     disc_model.Volume.Unmount ();
                     disc_model.Volume.Eject ();
+                    
+                    ThreadAssist.ProxyToMain (delegate {
+                        service.UnmapDiscVolume (disc_model.Volume.Uuid);
+                        Dispose ();
+                    });
                 } catch (Exception e) {
-                    Log.Error (Catalog.GetString ("Could not eject Audio CD"), e.Message, true);
+                    ThreadAssist.ProxyToMain (delegate {
+                        ClearMessages ();
+                        eject_message.IsSpinning = false;
+                        eject_message.SetIconName ("dialog-error");
+                        eject_message.Text = String.Format (Catalog.GetString ("Could not eject audio CD: {0}"), e.Message);
+                        PushMessage (eject_message);
+                    });
+                    
                     Log.Exception (e);
                 }
             });
-            
-            service.UnmapDiscVolume (disc_model.Volume.Uuid);
             
             return true;
         }

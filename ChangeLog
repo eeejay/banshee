@@ -1,3 +1,23 @@
+2008-03-29  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/gst-playback-0.10.c: Actually set the pipeline to NULL, not
+	PAUSED when stopping the pipeline so any resources locked by the pipeline
+	are released
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Added ClearMessages
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Search for metadata using MusicBrainz
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Show status messages when searching for metadata and ejecting; if the
+	playing track is located on the disc that is to be ejected, stop the
+	playback before ejecting to release the device lock
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
+	Hold a reference to the model on each track in the model so it can
+	be checked when ejecting
+
 2008-03-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Thanks to Allan Day for suggesting these changes.

@@ -721,8 +721,8 @@ gst_playback_stop(GstPlayback *engine)
     g_return_if_fail(IS_GST_PLAYBACK(engine));
     gst_playback_stop_iterate_timeout(engine);
     if(GST_IS_ELEMENT(engine->playbin)) {
-        engine->target_state = GST_STATE_PAUSED;
-        gst_element_set_state(engine->playbin, GST_STATE_PAUSED);
+        engine->target_state = GST_STATE_NULL;
+        gst_element_set_state(engine->playbin, GST_STATE_NULL);
     }
 }
 

@@ -235,6 +235,16 @@ namespace Banshee.Sources
             }
         }
         
+        protected virtual void ClearMessages ()
+        {
+            lock (this) {
+                if (messages.Count > 0) {
+                    messages.Clear ();
+                    OnMessageNotify ();
+                }
+            }
+        }
+        
         private void TestMessages ()
         {
             int count = 0;

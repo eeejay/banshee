@@ -27,9 +27,15 @@
 //
 
 using System;
-using Mono.Unix;
+using System.Threading;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
+using Mono.Unix;
 using MusicBrainz;
+
+using Hyena;
+using Banshee.Base;
 using Banshee.Hardware;
 using Banshee.Collection;
 
@@ -39,6 +45,21 @@ namespace Banshee.AudioCd
     {
         private IDiscVolume volume;
         
+        public event EventHandler MetadataQueryStarted;
+        public event EventHandler MetadataQueryFinished;
+        
+        private bool metadata_query_success;
+        private DateTime metadata_query_start_time;
+        
+        public bool MetadataQuerySuccess {
+            get { return metadata_query_success; }
+        }
+        
+        private TimeSpan duration;
+        public TimeSpan Duration {
+            get { return duration; }
+        }
+        
         public AudioCdDiscModel (IDiscVolume volume)
         {
             this.volume = volume;
@@ -47,13 +68,15 @@ namespace Banshee.AudioCd
         
         public void LoadModelFromDisc ()
         {
+            Clear ();
+        
             LocalDisc mb_disc = LocalDisc.GetFromDevice (volume.DeviceNode);
             if (mb_disc == null) {
                 throw new ApplicationException ("Could not read contents of the disc. Platform may not be supported.");
             }
             
             for (int i = 0, n = mb_disc.TrackDurations.Length; i < n; i++) {
-                AudioCdTrackInfo track = new AudioCdTrackInfo (volume.DeviceNode, i);
+                AudioCdTrackInfo track = new AudioCdTrackInfo (this, volume.DeviceNode, i);
                 track.TrackNumber = i + 1;
                 track.TrackCount = n;
                 track.Duration = TimeSpan.FromSeconds (mb_disc.TrackDurations[i]);
@@ -61,7 +84,98 @@ namespace Banshee.AudioCd
                 track.AlbumTitle = Catalog.GetString ("Unknown Album");
                 track.TrackTitle = String.Format(Catalog.GetString ("Track {0}"), track.TrackNumber);
                 Add (track);
+                
+                duration += track.Duration;
             }
+            
+            Reload ();
+            
+            ThreadPool.QueueUserWorkItem (LoadDiscMetadata, mb_disc);
+        }
+        
+        private void LoadDiscMetadata (object state)
+        {
+            LocalDisc mb_disc = (LocalDisc)state;
+            
+            OnMetadataQueryStarted (mb_disc);
+            
+            ReleaseQueryParameters parameters = new ReleaseQueryParameters ();
+            parameters.DiscID = mb_disc.Id;
+            
+            Query<Release> results = Release.Query (parameters);
+            if (results == null) {
+                OnMetadataQueryFinished (false);
+                return;
+            }
+                
+            Release release = results.PerfectMatch ();
+            if (release == null) {
+                OnMetadataQueryFinished (false);
+                return;
+            }
+            
+            ReadOnlyCollection<Track> tracks = release.Tracks;
+            if (tracks == null || tracks.Count != Count) {
+                OnMetadataQueryFinished (false);
+                return;
+            }
+            
+            disc_title = release.Title;
+            
+            int i = 0;
+            
+            // FIXME: Ugly hack to work around either a horrid design or a bug
+            // in mb-sharp; the track doesn't seem to get loaded from the web
+            // service until the properties are accessed on the object. This
+            // makes loading the metadata *waaaayyy* slower than it needs to be.
+            foreach (Track track in tracks) {
+                DevNull (track.Title);
+                DevNull (track.Artist.Name);
+            }
+            
+            foreach (Track track in tracks) {
+                // FIXME: Gather more details from MB to save to the DB
+                this[i].TrackTitle = track.Title;
+                this[i].ArtistName = track.Artist.Name;
+                this[i].AlbumTitle = release.Title;
+                i++;
+            }
+            
+            OnMetadataQueryFinished (true);
+        }
+        
+        private void DevNull (object o)
+        {
+        }
+        
+        private void OnMetadataQueryStarted (LocalDisc mb_disc)
+        {
+            metadata_query_success = false;
+            metadata_query_start_time = DateTime.Now;
+            Log.InformationFormat ("Querying MusicBrainz for Disc Release ({0})", mb_disc.Id);
+        
+            ThreadAssist.ProxyToMain (delegate { 
+                EventHandler handler = MetadataQueryStarted;
+                if (handler != null) {
+                    handler (this, EventArgs.Empty);
+                }
+            });
+        }
+        
+        private void OnMetadataQueryFinished (bool success)
+        {
+            metadata_query_success = success;
+            Log.InformationFormat ("Query finished (success: {0}, {1} seconds)", 
+                success, (DateTime.Now - metadata_query_start_time).TotalSeconds);
+            
+            ThreadAssist.ProxyToMain (delegate {
+                Reload ();
+                
+                EventHandler handler = MetadataQueryFinished;
+                if (handler != null) {
+                    handler (this, EventArgs.Empty);
+                }
+            });
         }
         
         public IDiscVolume Volume {

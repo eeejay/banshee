@@ -35,10 +35,17 @@ namespace Banshee.AudioCd
 {
     public class AudioCdTrackInfo : TrackInfo
     {
-        public AudioCdTrackInfo (string deviceNode, int index)
+        public AudioCdTrackInfo (AudioCdDiscModel model, string deviceNode, int index)
         {
-            index_on_disc = index;            
+            this.model = model;
+            this.index_on_disc = index;
+            
             Uri = new SafeUri ("cdda://" + index_on_disc + "#" + deviceNode); 
+        }
+        
+        private AudioCdDiscModel model;
+        public AudioCdDiscModel Model {
+            get { return model; }
         }
         
         private int index_on_disc;
