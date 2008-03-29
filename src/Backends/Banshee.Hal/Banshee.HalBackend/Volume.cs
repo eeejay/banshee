@@ -59,6 +59,10 @@ namespace Banshee.HalBackend
                 : new string[0];
         }
 
+        public string DeviceNode {
+            get { return HalDevice["block.device"]; }
+        }
+
         public string MountPoint {
             get { return HalDevice["volume.mount_point"]; }
         }

@@ -46,6 +46,8 @@ namespace Banshee.AudioCd
             this.service = service;
             this.disc_model = discModel;
             
+            disc_model.LoadModelFromDisc ();
+            
             Properties.SetStringList ("Icon.Name", "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Eject Disc"));
         }

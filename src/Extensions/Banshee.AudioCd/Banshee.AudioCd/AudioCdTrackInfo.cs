@@ -1,5 +1,5 @@
 //
-// IVolume.cs
+// AudioCdTrackInfo.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -28,22 +28,22 @@
 
 using System;
 
-namespace Banshee.Hardware
+using Banshee.Base;
+using Banshee.Collection;
+
+namespace Banshee.AudioCd
 {
-    public interface IVolume : IDevice
+    public class AudioCdTrackInfo : TrackInfo
     {
-        string DeviceNode { get; }
-        string MountPoint { get; }
-        bool IsMounted { get; }
-        bool IsMountedReadOnly { get; }
-        ulong Capacity { get; }
-        long Available { get; }
-        new IBlockDevice Parent { get; }
+        public AudioCdTrackInfo (string deviceNode, int index)
+        {
+            index_on_disc = index;            
+            Uri = new SafeUri ("cdda://" + index_on_disc + "#" + deviceNode); 
+        }
         
-        bool CanEject { get; }
-        void Eject ();
-        
-        bool CanUnmount { get; }
-        void Unmount ();
+        private int index_on_disc;
+        public int IndexOnDisc {
+            get { return index_on_disc; }
+        }
     }
 }

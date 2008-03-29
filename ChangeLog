@@ -1,5 +1,23 @@
 2008-03-28  Aaron Bockover  <abock@gnome.org>
 
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/BlockDevice.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs: Actually return
+	a real device node
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IVolume.cs: Added a DeviceNode
+	property since volumes have 'em as well
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Read the audio CD tracks from the disc and push to the model
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Load the model
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
+	TrackInfo object specific to the audio cd
+
+2008-03-28  Aaron Bockover  <abock@gnome.org>
+
 	* build/build.environment.mk:
 	* build/pkg-config/banshee-1-core.pc.in:
 	* build/pkg-config/banshee-1-musicbrainz.pc.in:

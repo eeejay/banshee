@@ -6,7 +6,8 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 SOURCES =  \
 	Banshee.AudioCd/AudioCdDiscModel.cs \
 	Banshee.AudioCd/AudioCdService.cs \
-	Banshee.AudioCd/AudioCdSource.cs
+	Banshee.AudioCd/AudioCdSource.cs \
+	Banshee.AudioCd/AudioCdTrackInfo.cs
 
 RESOURCES = Banshee.AudioCd.addin.xml
 

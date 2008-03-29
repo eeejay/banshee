@@ -27,6 +27,7 @@
 //
 
 using System;
+using Mono.Unix;
 
 using MusicBrainz;
 using Banshee.Hardware;
@@ -41,20 +42,35 @@ namespace Banshee.AudioCd
         public AudioCdDiscModel (IDiscVolume volume)
         {
             this.volume = volume;
-            ReadDisc ();
+            disc_title = Catalog.GetString ("Audio CD");
         }
         
-        private void ReadDisc ()
+        public void LoadModelFromDisc ()
         {
+            LocalDisc mb_disc = LocalDisc.GetFromDevice (volume.DeviceNode);
+            if (mb_disc == null) {
+                throw new ApplicationException ("Could not read contents of the disc. Platform may not be supported.");
+            }
             
+            for (int i = 0, n = mb_disc.TrackDurations.Length; i < n; i++) {
+                AudioCdTrackInfo track = new AudioCdTrackInfo (volume.DeviceNode, i);
+                track.TrackNumber = i + 1;
+                track.TrackCount = n;
+                track.Duration = TimeSpan.FromSeconds (mb_disc.TrackDurations[i]);
+                track.ArtistName = Catalog.GetString ("Unknown Artist");
+                track.AlbumTitle = Catalog.GetString ("Unknown Album");
+                track.TrackTitle = String.Format(Catalog.GetString ("Track {0}"), track.TrackNumber);
+                Add (track);
+            }
         }
         
         public IDiscVolume Volume {
             get { return volume; }
         }
         
+        private string disc_title;
         public string Title {
-            get { return "New CD"; }
+            get { return disc_title; }
         }
         
         public int TrackCount {

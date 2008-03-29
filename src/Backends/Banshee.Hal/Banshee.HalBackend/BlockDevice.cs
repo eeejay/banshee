@@ -58,7 +58,7 @@ namespace Banshee.HalBackend
         }
         
         public string DeviceNode {
-            get { return HalDevice.Udi; }
+            get { return HalDevice["block.device"]; }
         }
         
         public IEnumerable<IVolume> Volumes {
