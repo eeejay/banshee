@@ -65,7 +65,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Play all songs before repeating playlist"), 1),
                     
                 new RadioActionEntry ("RepeatSingleAction", "media-repeat-single",
-                    Catalog.GetString ("Repeat Si_ngle"), null,
+                    Catalog.GetString ("Repeat Singl_e"), null,
                     Catalog.GetString ("Repeat the current playing song"), 2)
             }, 0, OnChanged);
 

@@ -1,5 +1,11 @@
 2008-03-29  Alexander Hixon  <hixon.alexander@mediati.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:
+	Simple fix that removes the mnemonic conflict between 'Repeat Single' and
+	'Next'. Closes BGO #501889. Based on patch from Alex Kloss.
+
+2008-03-29  Alexander Hixon  <hixon.alexander@mediati.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Remember
 	the shuffle state over restarts. Fixes BGO #523681.
 
