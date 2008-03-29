@@ -32,6 +32,7 @@ using Gtk;
 
 using Banshee.Base;
 using Banshee.Collection;
+using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.PlaybackController;
@@ -79,24 +80,28 @@ namespace Banshee.Gui
                 new ToggleActionEntry ("ShuffleAction", "media-playlist-shuffle",
                     Catalog.GetString ("Shu_ffle"), null,
                     Catalog.GetString ("Toggle between shuffle or continuous playback modes"), 
-                    OnShuffleAction, false),
+                    OnShuffleAction, ShuffleEnabled.Get ()),
                     
                 new ToggleActionEntry ("StopWhenFinishedAction", null,
                     Catalog.GetString ("_Stop When Finished"), "<Shift>space",
                     Catalog.GetString ("Stop playback after the current item finishes playing"), 
                     OnStopWhenFinishedAction, false)
             });
-
+            
             actionService.GlobalActions.Add (new ActionEntry [] {
                 new ActionEntry ("PlaybackMenuAction", null,
                     Catalog.GetString ("_Playback"), null, null, null),
             });
             
+            ServiceManager.PlaybackController.ShuffleMode = ShuffleEnabled.Get () 
+                ? PlaybackShuffleMode.Shuffle
+                : PlaybackShuffleMode.Linear;
+            
+            action_service = actionService;
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
-            action_service = actionService;
         }
-            
+        
         private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
         {
             if (play_pause_action == null) {
@@ -201,6 +206,15 @@ namespace Banshee.Gui
             ServiceManager.PlaybackController.ShuffleMode = ((ToggleAction)o).Active 
                 ? PlaybackShuffleMode.Shuffle
                 : PlaybackShuffleMode.Linear;
+            
+            ShuffleEnabled.Set ((o as ToggleAction).Active);
         }
+        
+        public static readonly SchemaEntry<bool> ShuffleEnabled = new SchemaEntry<bool> (
+            "playback", "shuffle",
+            false,
+            "Shuffle playback",
+            "Enable shuffle mode"
+        );
     }
 }

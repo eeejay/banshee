@@ -46,6 +46,7 @@ namespace Banshee.Widgets
         
         private string empty_message;
         private bool ready = false;
+        private StateType current_state = StateType.Normal;
 
         private event EventHandler filter_changed;
         private event EventHandler entry_changed;
@@ -195,12 +196,23 @@ namespace Banshee.Widgets
 
         private void OnInnerEntryStyleSet(object o, StyleSetArgs args)
         {
-            Gdk.Color color = entry.Style.Base(StateType.Normal);
-            filter_button.ModifyBg(StateType.Normal, color);
-            clear_button.ModifyBg(StateType.Normal, color);
+            Gdk.Color color = entry.Style.Base (current_state);
+            filter_button.ModifyBg (current_state, color);
+            clear_button.ModifyBg (current_state, color);
 
             box.BorderWidth = (uint)entry.Style.XThickness;
         }
+        
+        public new bool Sensitive {
+                get { return current_state == StateType.Normal; }
+                set {
+                    current_state = value ? StateType.Normal : StateType.Insensitive;
+                    box.Sensitive = value;
+                    
+                    // Now, redraw the background and text colors.
+                    OnInnerEntryStyleSet (null, null);
+                }
+            }
 
         private void OnInnerEntryFocusEvent(object o, EventArgs args)
         {
@@ -367,6 +379,7 @@ namespace Banshee.Widgets
             get { return entry.HasFocus; }
             set { entry.HasFocus = true; }
         }
+
         
         public Entry InnerEntry {
             get { return entry; }

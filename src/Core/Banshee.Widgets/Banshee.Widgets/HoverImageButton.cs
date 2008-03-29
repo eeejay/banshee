@@ -79,6 +79,12 @@ namespace Banshee.Widgets
                 handler(this, EventArgs.Empty);
             }
         }
+        
+        private bool sensitive;
+        public new bool Sensitive {
+            get { return sensitive; }
+            set { sensitive = value; }
+        }
 
         private bool changing_style = false;
         protected override void OnStyleSet(Style previous_style)
