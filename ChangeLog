@@ -1,5 +1,10 @@
 2008-03-29  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Widgets/Banshee.Widgets/HoverImageButton.cs: Removed
+	unnecessary property override
+
+2008-03-29  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Widgets/Banshee.Widgets/SearchEntry.cs: Properly fix
 	the style/color issue with the search entry (BGO #504633) by doing a style
 	update when the entry style changes and when the entry state changes
