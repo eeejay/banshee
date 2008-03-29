@@ -77,7 +77,7 @@ namespace Banshee.Collection
         }
     
         public override TrackInfo this[int index] {
-            get { lock (this) { return (index < tracks.Count) ? tracks[index] : null; } }
+            get { lock (this) { return (index >= 0 && index < tracks.Count) ? tracks[index] : null; } }
         }
 
         public override int Count { 

@@ -1,5 +1,10 @@
 2008-03-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection/MemoryTrackListModel.cs:
+	Fully bounds check the index before accessing it.  Fixes BGO #524805.
+
+2008-03-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
 	Make much much prettier.  Pack in a RoundedFrame, draw white bg, add Top
 	Artists, make button presses pretty, make vertically scrollable.
