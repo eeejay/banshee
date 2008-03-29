@@ -1,3 +1,9 @@
+2008-03-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Be more
+	careful with types when iterating over action proxies.  Should fix BGO
+	#524706.  Thanks to Matt Enright for the pointer.
+
 2008-03-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Backends/Banshee.Hal/Banshee.HalBackend/BlockDevice.cs:
