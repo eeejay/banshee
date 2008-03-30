@@ -65,6 +65,7 @@ namespace Banshee.Gui.Widgets
         
         private ArtworkPopup popup;
         private uint popup_timeout_id;
+        private uint idle_timeout_id;
         private bool in_popup;
         private bool in_thumbnail_region;
         
@@ -81,12 +82,21 @@ namespace Banshee.Gui.Widgets
             }
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
         }
         
         public override void Dispose ()
         {
+            if (idle_timeout_id > 0) {
+                GLib.Source.Remove (idle_timeout_id);
+            }
+            
             ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.StateChanged -= OnPlayerEngineStateChanged;
+            
             stage.Iteration -= OnStageIteration;
+            stage = null;
+            
             HidePopup ();
             
             base.Dispose ();
@@ -416,6 +426,33 @@ namespace Banshee.Gui.Widgets
             if (args.Event == PlayerEngineEvent.StartOfStream || args.Event == PlayerEngineEvent.TrackInfoUpdated) {
                 LoadCurrentTrack ();
             }
+        }
+        
+        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
+        {
+            if (args.State == PlayerEngineState.Idle && (incoming_track != null || incoming_pixbuf != null)) {
+                if (idle_timeout_id > 0) {
+                    GLib.Source.Remove (idle_timeout_id);
+                } else {
+                    GLib.Timeout.Add (100, IdleTimeout);
+                }
+            }
+        }
+        
+        private bool IdleTimeout ()
+        {
+            if (ServiceManager.PlayerEngine.CurrentTrack == null || 
+                ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Idle) {
+                incoming_track = null;
+                incoming_pixbuf = null;
+                
+                if (stage != null && stage.Actor == null) {
+                    stage.Reset ();
+                }
+            }
+            
+            idle_timeout_id = 0;
+            return false;
         }
         
         private void LoadCurrentTrack ()

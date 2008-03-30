@@ -56,6 +56,7 @@ namespace Banshee.AudioCd
             
             Properties.SetStringList ("Icon.Name", "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Eject Disc"));
+            Properties.SetString ("UnmapSourceActionIconName", "media-eject");
         }
         
         public TimeSpan Duration {
@@ -140,6 +141,10 @@ namespace Banshee.AudioCd
         
         public override int Count {
             get { return disc_model.Count; }
+        }
+        
+        public override bool CanRename {
+            get { return false; }
         }
 
 #endregion

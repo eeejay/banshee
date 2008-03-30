@@ -1,5 +1,21 @@
 2008-03-29  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Queue a timeout when the engine goes to idle; if when the timeout handler
+	runs the engine is still idle, then fade the display out; the timeout is
+	necessary to avoid a fade when we are really just transitioning tracks
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Set
+	action.StockId if the <Action>IconName property is set
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: Set
+	the unmap icon to eject and do not allow renaming of the source
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Update the source title
+	in the view container when the active source is updated
+
+2008-03-29  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Widgets/Banshee.Widgets/HoverImageButton.cs: Removed
 	unnecessary property override
 

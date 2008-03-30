@@ -336,6 +336,7 @@ namespace Nereid
         {
             if (args.Source == ServiceManager.SourceManager.ActiveSource) {
                 UpdateStatusBar ();
+                view_container.Title = args.Source.Name;
             }
         }
         

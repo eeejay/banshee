@@ -83,7 +83,11 @@ namespace Banshee.Gui
                     //Console.WriteLine ("action label {0} for {1} just not saved", action.Label, action_name);
                 }
                 string label = source.Properties.GetString (String.Format ("{0}Label", action_name));
-                action.Label = (label == null || label == String.Empty) ? labels[action_name] : label;
+                string icon = source.Properties.GetString (String.Format ("{0}IconName", action_name));
+                action.Label = String.IsNullOrEmpty (label) ? labels[action_name] : label;
+                if (!String.IsNullOrEmpty (icon)) {
+                    action.StockId = icon;
+                }
                 //Console.WriteLine ("for source {0} and action {1} got label {2}, so set action.Label = {3}", source.Name, action_name, label, action.Label);
             }
         }
