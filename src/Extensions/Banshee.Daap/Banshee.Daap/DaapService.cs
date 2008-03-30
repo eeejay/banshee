@@ -62,9 +62,6 @@ namespace Banshee.Daap
             locator.Removed += OnServiceRemoved;
             locator.ShowLocalServices = true;
             locator.Start ();
-            
-            proxy_server = new DaapProxyWebServer ();
-            proxy_server.Start ();
         }
         
         public void Dispose ()
@@ -75,6 +72,14 @@ namespace Banshee.Daap
                 locator.Removed -= OnServiceRemoved;
                 locator = null;
             }
+            
+            // Dispose any remaining child sources
+            foreach (KeyValuePair <string, DaapSource> kv in source_map) {
+                kv.Value.Disconnect (true);
+                kv.Value.Dispose ();
+            }
+            
+            source_map.Clear ();
         }
         
         private void OnServiceFound (object o, ServiceArgs args)

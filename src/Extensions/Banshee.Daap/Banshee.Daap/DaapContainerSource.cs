@@ -55,6 +55,10 @@ namespace Banshee.Daap
             get { return false; }
         }
         
+        public override int Count {
+            get { return 0; }
+        }
+        
         /*private int count;
         public override int Count {
             get { return count; }

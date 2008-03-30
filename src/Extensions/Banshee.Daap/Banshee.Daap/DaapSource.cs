@@ -73,8 +73,12 @@ namespace Banshee.Daap
                     // XXX: We get connect failures if we try with IPv6 address - what's up with that?!
                     // Investigate.
                     
-                    //client = new Client (service);
-                    client = new Client (System.Net.IPAddress.Parse ("127.0.0.1"), service.Port);
+                    if (service.Address.ToString ().Contains (".")) {
+                        client = new DAAP.Client (service);
+                    } else {
+                        Console.WriteLine ("Was IPv6 address - we're probably going to die... :(");
+                    }
+                    //client = new Client (System.Net.IPAddress.Parse ("127.0.0.1"), service.Port);
                     client.Updated += OnClientUpdated;
                     
                     if (client.AuthenticationMethod == AuthenticationMethod.None) {

@@ -1,5 +1,32 @@
 2008-03-30  Alexander Hixon  <hixon.alexander@mediati.org>
 
+	* src/Extensions/Banshee.Daap/daap-sharp/Server.cs
+	* src/Extensions/Banshee.Daap/daap-sharp/Database.cs:
+	* src/Extensions/Banshee.Daap/daap-sharp/Client.cs: Fix some warnings so
+	it is actually possible to build the thing.
+
+	* src/Extensions/Banshee.Daap/daap-sharp/ContentCodeBag.cs: Only load the
+	content-code resource, instead of everything.
+
+	* src/Extensions/Banshee.Daap/daap-sharp/ServiceLocator.cs:
+	* src/Extensions/Banshee.Daap/daap-sharp/Server.cs: Use Mono.Zeroconf
+	instead of having #if statements all over the place to support both direct
+	Avahi support and Mono.Zeroconf.
+
+	* src/Extensions/Banshee.Daap/Makefile.am: Use the Mono.Zeroconf package
+	directly. We should probably build this info the build/*.mk stuff.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Try to connect
+	to the source anyway, even if we fail - wrap it in a try as well.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Dispose any
+	child sources that are connected to stuff when we dispose the service.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:
+	Implement Count override. Woops.
+
+2008-03-30  Alexander Hixon  <hixon.alexander@mediati.org>
+
 	* src/Extensions/Banshee.Daap/daap-sharp: Copy across daap-sharp from
 	old-code.
 

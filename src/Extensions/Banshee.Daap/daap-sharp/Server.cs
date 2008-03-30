@@ -30,11 +30,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Web;
 
-#if ENABLE_MDNSD
 using Mono.Zeroconf;
-#else
-using Avahi;
-#endif
 
 namespace DAAP {
 
@@ -297,7 +293,7 @@ namespace DAAP {
                         }
 
                         return handler (client, user, uri.AbsolutePath, query, range);
-                    } catch (IOException e) {
+                    } catch (IOException) {
                         ret = false;
                     } catch (Exception e) {
                         ret = false;
@@ -314,7 +310,7 @@ namespace DAAP {
 
             try {
                 while (HandleRequest (client)) { }
-            } catch (IOException e) {
+            } catch (IOException) {
                 // ignore
             } catch (Exception e) {
                 Console.Error.WriteLine ("Error handling request: " + e);
@@ -333,7 +329,7 @@ namespace DAAP {
                     Socket client = server.Accept ();
                     clients.Add (client);
                     ThreadPool.QueueUserWorkItem (HandleConnection, client);
-                } catch (SocketException e) {
+                } catch (SocketException) {
                     break;
                 }
             }
@@ -450,12 +446,7 @@ namespace DAAP {
         private int maxUsers = 0;
         private bool running;
 
-#if !ENABLE_MDNSD
-        private Avahi.Client client;
-        private EntryGroup eg;
-#else
         private RegisterService zc_service;
-#endif
 
         private object eglock = new object ();
         private RevisionManager revmgr = new RevisionManager ();
@@ -535,11 +526,6 @@ namespace DAAP {
             running = true;
             ws.Start ();
 
-#if !ENABLE_MDNSD
-            client = new Avahi.Client ();
-            client.StateChanged += OnClientStateChanged;
-#endif
-
             if (publish)
                 RegisterService ();
         }
@@ -554,13 +540,6 @@ namespace DAAP {
             lock (revmgr) {
                 Monitor.PulseAll (revmgr);
             }
-
-#if !ENABLE_MDNSD
-            if (client != null) {
-                client.Dispose ();
-                client = null;
-            }
-#endif
         }
 
         public void AddDatabase (Database db) {
@@ -591,7 +570,6 @@ namespace DAAP {
             }
         }
 
-#if ENABLE_MDNSD
         private void RegisterService () {
             lock (eglock) {
                 if (zc_service != null) {
@@ -600,15 +578,18 @@ namespace DAAP {
                 
                 string auth = serverInfo.AuthenticationMethod == AuthenticationMethod.None ? "false" : "true";
                 
-                zc_service = new RegisterService (serverInfo.Name, null, "_daap._tcp");
+                zc_service = new RegisterService ();
+                zc_service.Name = serverInfo.Name;
+                zc_service.RegType = "_daap._tcp";
                 zc_service.Port = (short)ws.BoundPort;
                 zc_service.TxtRecord = new TxtRecord ();
                 zc_service.TxtRecord.Add ("Password", auth);
                 zc_service.TxtRecord.Add ("Machine Name", serverInfo.Name);
                 zc_service.TxtRecord.Add ("txtvers", "1");
                 zc_service.Response += OnRegisterServiceResponse;
-                zc_service.AutoRename = false;
-                zc_service.RegisterAsync ();
+                //zc_service.AutoRename = false;
+                zc_service.Register ();
+                //zc_service.RegisterAsync ();
             }
         }
         
@@ -627,60 +608,10 @@ namespace DAAP {
         }
         
         private void OnRegisterServiceResponse (object o, RegisterServiceEventArgs args) {
-            if (args.NameConflict && Collision != null) {
+            if (Collision != null) {
                 Collision (this, new EventArgs ());
             }
         }
-#else
-        private void OnClientStateChanged (object o, ClientStateArgs args) {
-            if (publish && args.State == ClientState.Running) {
-                RegisterService ();
-            }
-        }
-        
-        private void RegisterService () {
-            lock (eglock) {
-                
-                if (eg != null) {
-                    eg.Reset ();
-                } else {
-                    eg = new EntryGroup (client);
-                    eg.StateChanged += OnEntryGroupStateChanged;
-                }
-
-                try {
-                    string auth = serverInfo.AuthenticationMethod == AuthenticationMethod.None ? "false" : "true";
-                    eg.AddService (serverInfo.Name, "_daap._tcp", "", ws.BoundPort,
-                                   new string[] { "Password=" + auth, "Machine Name=" + serverInfo.Name,
-                                                  "txtvers=1" });
-                    eg.Commit ();
-                } catch (ClientException e) {
-                    if (e.ErrorCode == ErrorCode.Collision && Collision != null) {
-                        Collision (this, new EventArgs ());
-                    } else {
-                        throw e;
-                    }
-                }
-            }
-        }
-
-        private void UnregisterService () {
-            lock (eglock) {
-                if (eg == null)
-                    return;
-
-                eg.Reset ();
-                eg.Dispose ();
-                eg = null;
-            }
-        }
-
-        private void OnEntryGroupStateChanged (object o, EntryGroupStateArgs args) {
-            if (args.State == EntryGroupState.Collision && Collision != null) {
-                Collision (this, new EventArgs ());
-            }
-        }
-#endif
 
         private void ExpireSessions () {
             lock (sessions) {
@@ -837,7 +768,7 @@ namespace DAAP {
                         
                         try {
                             ws.WriteResponseStream (client, trackStream, trackLength);
-                        } catch (IOException e) {
+                        } catch (IOException) {
                         }
                     } else {
                         ws.WriteResponse (client, HttpStatusCode.InternalServerError, "no file");

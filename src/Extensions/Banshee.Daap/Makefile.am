@@ -1,6 +1,6 @@
 ASSEMBLY = Banshee.Daap
 TARGET = library
-LINK = $(REF_EXTENSION_PLAYQUEUE) $(LINK_MONOZEROCONF) $(LINK_ICSHARP_ZIP_LIB) $(LINK_SYSTEM_WEB) -r:/home/alex/Desktop/Downloads/mono-zeroconf-0.7.5/src/Mono.Zeroconf/Mono.Zeroconf.dll
+LINK = $(REF_EXTENSION_PLAYQUEUE) $(LINK_MONOZEROCONF) $(LINK_ICSHARP_ZIP_LIB) $(LINK_SYSTEM_WEB) -pkg:mono-zeroconf
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES = Banshee.Daap/DaapService.cs \
