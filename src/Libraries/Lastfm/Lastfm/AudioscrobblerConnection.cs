@@ -314,7 +314,7 @@ namespace Lastfm
                 resp = current_web_req.EndGetResponse (ar);
             }
             catch (Exception e) {
-                Hyena.Log.Warning (String.Format("Failed to get the response: {0}", e));
+                Hyena.Log.Warning (String.Format("Failed to get the response: {0}", e), false);
 
                 state = State.Idle;
                 next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
@@ -337,7 +337,7 @@ namespace Lastfm
                     last_upload_failed_logged = now;
                 }
                 
-                /* retransmit the queue on the next interval */
+                // retransmit the queue on the next interval
                 hard_failures++;
                 state = State.NeedTransmit;
             }
@@ -347,7 +347,7 @@ namespace Lastfm
                     last_upload_failed_logged = now;
                 }
                 
-                /* attempt to re-handshake (and retransmit) on the next interval */
+                // attempt to re-handshake (and retransmit) on the next interval
                 session_id = null;
                 next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
                 state = State.NeedHandshake;
@@ -361,14 +361,14 @@ namespace Lastfm
                 
                 hard_failures = 0;
                 
-                /* we succeeded, pop the elements off our queue */
+                // we succeeded, pop the elements off our queue
                 queue.RemoveRange (0, ts.Count);
                 queue.Save ();
                 
                 state = State.Idle;
             } else {
                 if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
-                    Hyena.Log.Warning ("Audioscrobbler upload failed", String.Format ("Unrecognized response: {0}", line));
+                    Hyena.Log.Warning ("Audioscrobbler upload failed", String.Format ("Unrecognized response: {0}", line), false);
                     last_upload_failed_logged = now;
                 }
                 
@@ -424,7 +424,7 @@ namespace Lastfm
             catch (Exception e) {
                 Hyena.Log.Warning ("Failed to handshake: {0}", e.ToString (), false);
 
-                /* back off for a time before trying again */
+                // back off for a time before trying again
                 state = State.Idle;
                 next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
                 return;
@@ -578,7 +578,7 @@ namespace Lastfm
                 
                 if (line.StartsWith ("BADSESSION")) {
                     Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "Session ID sent was invalid", false);
-                    /* attempt to re-handshake on the next interval */
+                    // attempt to re-handshake on the next interval
                     session_id = null;
                     next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
                     state = State.NeedHandshake;
