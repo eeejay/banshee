@@ -1,5 +1,22 @@
 2008-03-30  Alexander Hixon  <hixon.alexander@mediati.org>
 
+	* src/Extensions/Banshee.Daap/daap-sharp: Copy across daap-sharp from
+	old-code.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap.mdp:
+	* src/Extensions/Banshee.Daap/Makefile.am:
+	* src/Extensions/Banshee.Daap/Banshee.Daap:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:
+	* src/Extensions/Banshee.Daap/Resources/Banshee.Daap.addin.xml: Import
+	Daap extension that I've completed so far. Isn't hooked up to the 
+	the Extensions Makefile yet, so this doesn't build. Also, if you did
+	hook it up, my autotools foo isn't up to scratch so you'd probably have
+	to modify something. :)
+
+2008-03-30  Alexander Hixon  <hixon.alexander@mediati.org>
+
 	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Changed a few
 	multiline comments to single line comments. Fixed some logging bits that
 	would accidentally be displayed to the user instead of silently being
