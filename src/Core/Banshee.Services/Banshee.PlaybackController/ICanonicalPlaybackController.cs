@@ -31,7 +31,7 @@ namespace Banshee.PlaybackController
     public interface ICanonicalPlaybackController : IPlaybackController
     {
         new void First ();
-        new void Next ();
+        new void Next (bool restart);
         new void Previous ();
     }
 }

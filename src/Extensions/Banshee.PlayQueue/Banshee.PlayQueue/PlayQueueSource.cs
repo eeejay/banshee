@@ -194,10 +194,10 @@ namespace Banshee.PlayQueue
         
         void IBasicPlaybackController.First ()
         {
-            ((IBasicPlaybackController)this).Next ();
+            ((IBasicPlaybackController)this).Next (false);
         }
         
-        void IBasicPlaybackController.Next ()
+        void IBasicPlaybackController.Next (bool restart)
         {
             RemovePlayingTrack ();
             

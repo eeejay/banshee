@@ -34,6 +34,8 @@ using Gtk;
 
 using Hyena;
 using Banshee.Configuration;
+using Banshee.ServiceStack;
+using Banshee.PlaybackController;
 
 namespace Banshee.Gui
 {
@@ -46,6 +48,13 @@ namespace Banshee.Gui
             set {
                 active_action = value;
                 RepeatMode.Set (active_action == null ? String.Empty : ActionNameToConfigId (active_action.Name));
+                if (active_action.Value == 0) {
+                    ServiceManager.PlaybackController.RepeatMode = PlaybackRepeatMode.None;
+                } else if (active_action.Value == 1) {
+                    ServiceManager.PlaybackController.RepeatMode = PlaybackRepeatMode.RepeatAll;
+                } else {
+                    ServiceManager.PlaybackController.RepeatMode = PlaybackRepeatMode.RepeatSingle;
+                }
             }
         }
 
@@ -76,10 +85,6 @@ namespace Banshee.Gui
                 Active = (RadioAction)this["RepeatNoneAction"];
             }
             Active.Activate ();
-
-            foreach (RadioAction iter_action in this) {
-                iter_action.Sensitive = false;
-            }
         }
 
         private void OnChanged (object o, ChangedArgs args)

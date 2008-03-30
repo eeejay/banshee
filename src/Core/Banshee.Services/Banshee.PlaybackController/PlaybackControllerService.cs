@@ -100,7 +100,11 @@ namespace Banshee.PlaybackController
             switch (args.Event) {
                 case PlayerEngineEvent.EndOfStream:
                     if (!StopWhenFinished) {
-                        Next ();
+                        if (RepeatMode == PlaybackRepeatMode.RepeatSingle) {
+                            QueuePlayTrack ();
+                        } else {
+                            Next ();
+                        }
                     } else {
                         OnStopped ();
                     }
@@ -141,12 +145,17 @@ namespace Banshee.PlaybackController
         
         public void Next ()
         {
+            Next (RepeatMode == PlaybackRepeatMode.RepeatAll);
+        }
+        
+        public void Next (bool restart)
+        {
             raise_started_after_transition = true;
             
             if (Source is IBasicPlaybackController) {
-                ((IBasicPlaybackController)Source).Next ();
+                ((IBasicPlaybackController)Source).Next (restart);
             } else {
-                ((ICanonicalPlaybackController)this).Next ();
+                ((ICanonicalPlaybackController)this).Next (restart);
             }
             
             OnTransition ();
@@ -172,7 +181,7 @@ namespace Banshee.PlaybackController
             }
         }
         
-        void ICanonicalPlaybackController.Next ()
+        void ICanonicalPlaybackController.Next (bool restart)
         {
             TrackInfo tmp_track = CurrentTrack;
 
@@ -187,6 +196,14 @@ namespace Banshee.PlaybackController
                     if (tmp_track != null) {
                         previous_stack.Push (tmp_track);
                     }
+                } else if (restart && Source.Count > 0) {
+                    if (tmp_track != null) {
+                        previous_stack.Push (tmp_track);
+                    }
+                    
+                    CurrentTrack = Source.TrackModel[0];
+                    QueuePlayTrack ();
+                    return;
                 } else {
                     return;
                 }
