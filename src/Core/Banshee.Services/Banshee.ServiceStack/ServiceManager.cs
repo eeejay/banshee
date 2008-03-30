@@ -120,6 +120,7 @@ namespace Banshee.ServiceStack
                             throw;
                         }
                         
+                        Log.Exception (e.InnerException ?? e);
                         Log.Warning (String.Format ("Service `{0}' not started: {1}", type.FullName, 
                             e.InnerException != null ? e.InnerException.Message : e.Message));
                     }

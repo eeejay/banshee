@@ -1,3 +1,21 @@
+2008-03-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GConfConfigurationClient.cs:
+	Optimize CreateKey method.
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Use the CachedLibraryLocation to save a lot of unnecessary work.
+	LibraryLocation should probably just be cached itself.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: If a
+	service fails to start, log the exception.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Add a
+	couple TODOs about reusing some object [].
+
+	* tests/Hyena/StringUtilTests.cs: Add another test case.
+
 2008-03-30  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* src/Core/Banshee.Services/Banshee.PlaybackController/ICanonicalPlaybackController.cs:

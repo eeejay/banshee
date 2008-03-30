@@ -46,6 +46,7 @@ public class StringUtilTests
         new Map ("SRSLYHowAreYou", "srsly_how_are_you"),
         new Map ("OMGThisShitIsBananas", "omg_this_shit_is_bananas"),
         new Map ("KTHXBAI", "kthxbai"),
+        new Map ("nereid.track_view_columns.MusicLibrarySource-Library/composer", "nereid.track_view_columns._music_library_source_-_library/composer"),
         new Map ("", null),
         new Map ("H", "h")
     };

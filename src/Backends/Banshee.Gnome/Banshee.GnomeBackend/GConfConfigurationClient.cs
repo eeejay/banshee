@@ -58,22 +58,22 @@ namespace Banshee.GnomeBackend
             }
         }
         
-        private string CreateKeyPart (string part)
+        private string CreateKey (string @namespace, string part)
         {
+            string hash_key = String.Format ("{0}{1}", @namespace, part);
             lock (((ICollection)key_table).SyncRoot) {
-                if (!key_table.ContainsKey (part)) {
-                    key_table.Add (part, StringUtil.CamelCaseToUnderCase (part));
+                if (!key_table.ContainsKey (hash_key)) {
+                    if (@namespace == null) {
+                        key_table.Add (hash_key, String.Format ("{0}{1}", base_key, StringUtil.CamelCaseToUnderCase (part)));
+                    } else {
+                        key_table.Add (hash_key, String.Format ("{0}{1}",
+                            base_key, StringUtil.CamelCaseToUnderCase (String.Format ("{0}/{1}", @namespace.Replace (".", "/"), part))
+                        ));
+                    }
                 }
                 
-                return key_table[part];
+                return key_table[hash_key];
             }
-        }
-        
-        private string CreateKey (string @namespace, string key)
-        {
-            return @namespace == null 
-                ? base_key + CreateKeyPart (key)
-                : base_key + CreateKeyPart (@namespace.Replace (".", "/")) + "/" + CreateKeyPart (key);
         }
         
         public T Get<T> (SchemaEntry<T> entry)

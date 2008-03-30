@@ -251,7 +251,7 @@ namespace Banshee.Collection.Database
             set_up = true;
             
             if (uri_type_field.Value == (int)UriType.RelativePath) {
-                uri_field = System.IO.Path.Combine (Paths.LibraryLocation, uri_field);
+                uri_field = System.IO.Path.Combine (Paths.CachedLibraryLocation, uri_field);
             }
             Uri = new SafeUri (uri_field);
         }

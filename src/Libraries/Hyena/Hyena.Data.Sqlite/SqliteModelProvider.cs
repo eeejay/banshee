@@ -247,6 +247,7 @@ namespace Hyena.Data.Sqlite
         
         protected virtual void PrepareInsertCommand (T target)
         {
+            // TODO create an instance variable object array and reuse it?
             object [] values = new object [columns.Count - 1];
             int j = 0;
             for (int i = 0; i < columns.Count; i++) {
@@ -266,6 +267,7 @@ namespace Hyena.Data.Sqlite
 
         protected virtual void PrepareUpdateCommand (T target)
         {
+            // TODO create an instance variable object array and reuse it?
             object [] values = new object [columns.Count];
             int j = 0;
             for (int i = 0; i < columns.Count; i++) {
