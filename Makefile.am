@@ -64,6 +64,11 @@ run:
 	$(MONO) --debug $(BANSHEE_DEV_MONO_OPTIONS) Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
 	popd;
 
+test:
+	@pushd tests; \
+	make run-test \
+	popd;
+
 clean-local:
 	rm -rf $(top_builddir)/bin
 

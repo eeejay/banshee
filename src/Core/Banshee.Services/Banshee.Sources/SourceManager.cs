@@ -249,7 +249,7 @@ namespace Banshee.Sources
         
         public void SetActiveSource(Source source, bool notify)
         {
-            if(active_source == source) {
+            if(source == null || active_source == source) {
                 return;
             }
             

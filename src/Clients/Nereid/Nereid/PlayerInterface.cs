@@ -324,7 +324,15 @@ namespace Nereid
             } else {
                 view_container.Hide ();
             }
-            
+
+            // Associate the view with the model
+            if (view_container.Visible && view_container.Content is ITrackModelSourceContents) {
+                ITrackModelSourceContents track_content = view_container.Content as ITrackModelSourceContents;
+                source.Properties.Set<IListView<TrackInfo>>  ("Track.IListView", track_content.TrackView);
+                source.Properties.Set<IListView<ArtistInfo>> ("Artist.IListView", track_content.ArtistView);
+                source.Properties.Set<IListView<AlbumInfo>>  ("Album.IListView", track_content.AlbumView);
+            }
+
             view_container.Header.Visible = source.Properties.Contains ("Nereid.SourceContents.HeaderVisible") ?
                 source.Properties.Get<bool> ("Nereid.SourceContents.HeaderVisible") : true;
             

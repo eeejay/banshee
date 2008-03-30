@@ -1,10 +1,10 @@
-//
-// ListView.cs
+// 
+// ITrackModelSourceContents.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,15 +26,19 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Hyena.Data.Gui
+using System;
+
+using Hyena.Data.Gui;
+
+using Banshee.Collection;
+using Banshee.Sources;
+
+namespace Banshee.Sources.Gui
 {
-    public partial class ListView<T> : Gtk.Container, IListView<T>
+    public interface ITrackModelSourceContents : ISourceContents
     {
-        public ListView ()
-        {
-            column_layout = new Pango.Layout (PangoContext);
-            CanFocus = true;
-            selection_proxy.Changed += delegate { InvalidateList (); };
-        }
+        IListView<TrackInfo> TrackView { get; }
+        IListView<ArtistInfo> ArtistView { get; }
+        IListView<AlbumInfo> AlbumView { get; }
     }
 }

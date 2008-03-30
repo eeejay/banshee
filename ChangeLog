@@ -1,3 +1,51 @@
+2008-03-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit adds Jump to Playing support, and hides the search box for
+	sources that can't be search.
+
+	* Makefile.am: Add make test target.
+
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Keep the visibility of the
+	search entry tied to whether its sensitive (eg hide if !source.CanSearch).
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: When changing the active
+	source is changed, if the view used implements the new
+	ITrackModelSourceContents interface, set some properties on the source
+	itself linking ith with the Track/Artist/Album views.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Be even more
+	defensive when setting the active source.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Add Jump to
+	Playing Song/Video action.
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ITrackModelSourceContents.cs:
+	New interface for source contents that have track, artist, and album
+	IListView<T>s.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Implement ITrackModelSourceContents.
+
+	* src/Libraries/Hyena.Gui/Makefile.am:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/IListView.cs: New interface that
+	ListView implements.  Will allow us to implement alternative views for
+	track/artist/albums but still have some sharing functionality (like jump
+	to playing track).
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: Fix newlines.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView.cs: Implement
+	IListView.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Change ScrollToRow to ScrollTo, and add CenterOn method (both implementing
+	IListView).
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs: Use
+	CenterOn method instead of implementing it here too.
+
 2008-03-30  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* src/Extensions/Banshee.Daap/daap-sharp/Mono.Zeroconf: Nuke this since

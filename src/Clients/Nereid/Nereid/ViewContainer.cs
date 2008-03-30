@@ -159,6 +159,8 @@ namespace Nereid
             set { 
                 search_entry.Sensitive = value;
                 search_label.Sensitive = value;
+                search_entry.Visible = value;
+                search_label.Visible = value;
             }
         }
     }

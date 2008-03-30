@@ -1,10 +1,10 @@
 //
-// ListView.cs
+// IListView.cs
 //
-// Author:
-//   Aaron Bockover <abockover@novell.com>
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,13 +28,13 @@
 
 namespace Hyena.Data.Gui
 {
-    public partial class ListView<T> : Gtk.Container, IListView<T>
+    public interface IListView<T>
     {
-        public ListView ()
-        {
-            column_layout = new Pango.Layout (PangoContext);
-            CanFocus = true;
-            selection_proxy.Changed += delegate { InvalidateList (); };
-        }
+        void SetModel (IListModel<T> model);
+        IListModel<T> Model { get; }
+
+        void ScrollTo (int index);
+        void CenterOn (int index);
+        ColumnController ColumnController { get; set; }
     }
 }

@@ -114,7 +114,7 @@ namespace Hyena.Data.Gui
             set { header_cell = value; }
         }
         
-         public int MinWidth
+        public int MinWidth
         {
             get { return minWidth; }
             set { minWidth = value; }

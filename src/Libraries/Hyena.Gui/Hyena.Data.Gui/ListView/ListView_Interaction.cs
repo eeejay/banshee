@@ -503,14 +503,19 @@ namespace Hyena.Data.Gui
             InvalidateList (false);
         }
         
-        public void ScrollTo (double val)
+        protected void ScrollTo (double val)
         {
             vadjustment.Value = Math.Max (0.0, Math.Min (val, vadjustment.Upper - vadjustment.PageSize));
         }
 
-        public void ScrollToRow (int row_index)
+        public void ScrollTo (int index)
         {
-            ScrollTo (GetYAtRow (row_index));
+            ScrollTo (GetYAtRow (index));
+        }
+
+        public void CenterOn (int index)
+        {
+            ScrollTo (index - RowsInView/2 + 1);
         }
                 
         protected override void OnSetScrollAdjustments (Adjustment hadj, Adjustment vadj)

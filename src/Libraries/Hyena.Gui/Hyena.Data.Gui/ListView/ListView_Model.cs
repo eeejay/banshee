@@ -87,7 +87,7 @@ namespace Hyena.Data.Gui
                     }
 
                     if (!selection_in_view) {
-                        ScrollToRow (Selection.Ranges[0].Start + 1 - RowsInView/2);
+                        CenterOn (Selection.Ranges[0].Start);
                     }
                 } else {
                     ScrollTo (vadjustment.Value);

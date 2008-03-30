@@ -9,6 +9,7 @@ SOURCES =  \
 	Hyena.Data.Gui/ColumnController.cs \
 	Hyena.Data.Gui/ColumnHeaderCellText.cs \
 	Hyena.Data.Gui/IHeaderCell.cs \
+	Hyena.Data.Gui/IListView.cs \
 	Hyena.Data.Gui/ListView/ListView.cs \
 	Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs \
 	Hyena.Data.Gui/ListView/ListView_Header.cs \

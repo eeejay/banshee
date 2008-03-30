@@ -71,6 +71,7 @@
       <menuitem name="SeekForward" action="SeekForwardAction"/>
       -->
       <menuitem name="SeekTo" action="SeekToAction"/>
+      <menuitem name="JumpToPlayingTrack" action="JumpToPlayingTrackAction"/>
       <menuitem name="RestartSong" action="RestartSongAction"/>
       <separator/>
       <placeholder name="PlaybackMenuAdditions"/>
@@ -142,7 +143,7 @@
       <menuitem name="SearchForSameAlbum" action="SearchForSameAlbumAction"/>
     </menu>
     <separator/>
-    <!--<menuitem name="JumpToPlayingTrack" action="JumpToPlayingTrackAction"/>-->
+    <menuitem name="JumpToPlayingTrack" action="JumpToPlayingTrackAction"/>
     <separator/>
     <menuitem name="TrackProperties" action="TrackPropertiesAction"/>
   </popup>

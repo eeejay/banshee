@@ -46,7 +46,7 @@ using Banshee.Collection.Gui;
 
 namespace Banshee.Sources.Gui
 {
-    public class CompositeTrackSourceContents : VBox, ISourceContents
+    public class CompositeTrackSourceContents : VBox, ITrackModelSourceContents
     {
         private ArtistListView artist_view;
         private AlbumListView album_view;
@@ -321,6 +321,18 @@ namespace Banshee.Sources.Gui
             }
         }
         
+        IListView<TrackInfo> ITrackModelSourceContents.TrackView {
+            get { return track_view; }
+        }
+        
+        IListView<ArtistInfo> ITrackModelSourceContents.ArtistView {
+            get { return artist_view; }
+        }
+        
+        IListView<AlbumInfo> ITrackModelSourceContents.AlbumView {
+            get { return album_view; }
+        }
+
         public TrackListView TrackView {
             get { return track_view; }
         }
@@ -367,7 +379,7 @@ namespace Banshee.Sources.Gui
             }
 
             SetModels (track_source.TrackModel, track_source.ArtistModel, track_source.AlbumModel);
-            TrackView.HeaderVisible = true;
+            track_view.HeaderVisible = true;
             return true;
         }
 
@@ -375,7 +387,7 @@ namespace Banshee.Sources.Gui
         {
             track_source = null;
             SetModels (null, null, null);
-            TrackView.HeaderVisible = false;
+            track_view.HeaderVisible = false;
         }
 
         public ISource Source {

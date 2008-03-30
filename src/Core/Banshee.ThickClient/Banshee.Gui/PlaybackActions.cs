@@ -30,8 +30,11 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Hyena.Data.Gui;
+
 using Banshee.Base;
 using Banshee.Collection;
+using Banshee.Sources;
 using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
@@ -70,6 +73,10 @@ namespace Banshee.Gui
                 new ActionEntry ("SeekToAction", null,
                     Catalog.GetString ("Seek _to..."), "T",
                     Catalog.GetString ("Seek to a specific location in current item"), OnSeekToAction),
+
+                new ActionEntry ("JumpToPlayingTrackAction", null,
+                    Catalog.GetString("_Jump to Playing Song"), "<control>J",
+                    Catalog.GetString ("Jump to the currently playing item"), OnJumpToPlayingTrack),
                 
                 new ActionEntry ("RestartSongAction", null,
                     Catalog.GetString ("_Restart Song"), "R",
@@ -133,6 +140,9 @@ namespace Banshee.Gui
                     action_service["Playback.RestartSongAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
                         ? Catalog.GetString ("_Restart Song")
                         : Catalog.GetString ("_Restart Video");
+                    action_service["Playback.JumpToPlayingTrackAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
+                        ? Catalog.GetString ("_Jump to Playing Song")
+                        : Catalog.GetString ("_Jump to Playing Video");
                     break;
                 case PlayerEngineEvent.EndOfStream:
                     ToggleAction stop_action = (ToggleAction)action_service["Playback.StopWhenFinishedAction"];
@@ -199,6 +209,27 @@ namespace Banshee.Gui
         private void OnStopWhenFinishedAction (object o, EventArgs args)
         {
             ServiceManager.PlaybackController.StopWhenFinished = ((ToggleAction)o).Active;
+        }
+
+        private void OnJumpToPlayingTrack (object o, EventArgs args)
+        {
+            Source playback_src = ServiceManager.PlaybackController.Source as Source;
+
+            if (playback_src != null && playback_src is ITrackModelSource) {
+                ITrackModelSource track_src = (playback_src as ITrackModelSource);
+                int i = track_src.TrackModel.IndexOf (ServiceManager.PlaybackController.CurrentTrack);
+                if (i != -1) {
+                    // TODO clear the search/filters if there are any, since they might be hiding the currently playing item?
+                    IListView<TrackInfo> track_list = (track_src as Source).Properties.Get<IListView<TrackInfo>> ("Track.IListView");
+                    if (track_list != null) {
+                        Console.WriteLine ("playing track is index {0}, jumping!", i);
+                        ServiceManager.SourceManager.SetActiveSource (playback_src);
+                        track_src.TrackModel.Selection.Clear (false);
+                        track_src.TrackModel.Selection.Select (i);
+                        track_list.CenterOn (i);
+                    }
+                }
+            }
         }
         
         private void OnShuffleAction (object o, EventArgs args)
