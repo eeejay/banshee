@@ -37,7 +37,7 @@ namespace Banshee.AudioCd
 {
     public class AudioCdService : IExtensionService, IDisposable
     {
-        private Dictionary<string, AudioCdSource> sources = new Dictionary<string, AudioCdSource> ();
+        private Dictionary<string, AudioCdSource> sources;
         
         public AudioCdService ()
         {
@@ -45,18 +45,31 @@ namespace Banshee.AudioCd
         
         public void Initialize ()
         {
-            foreach (ICdromDevice device in ServiceManager.HardwareManager.GetAllCdromDevices ()) {
-                MapCdromDevice (device);
+            lock (this) {
+                sources = new Dictionary<string, AudioCdSource> ();
+                
+                foreach (ICdromDevice device in ServiceManager.HardwareManager.GetAllCdromDevices ()) {
+                    MapCdromDevice (device);
+                }
+                
+                ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
+                ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
             }
-            
-            ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
-            ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
         }
         
         public void Dispose ()
         {
-            ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;
-            ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
+            lock (this) {
+                ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;
+                ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
+                
+                foreach (AudioCdSource source in sources.Values) {
+                    ServiceManager.SourceManager.RemoveSource (source);
+                }
+                
+                sources.Clear ();
+                sources = null;
+            }    
         }
         
         private void MapCdromDevice (ICdromDevice device)

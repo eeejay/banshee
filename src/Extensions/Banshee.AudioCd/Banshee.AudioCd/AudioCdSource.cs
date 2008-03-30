@@ -63,6 +63,13 @@ namespace Banshee.AudioCd
             get { return disc_model.Duration; }
         }
         
+        public bool DiscIsPlaying {
+            get {
+                AudioCdTrackInfo playing_track = ServiceManager.PlayerEngine.CurrentTrack as AudioCdTrackInfo;
+                return playing_track != null && playing_track.Model == disc_model;
+            }
+        }            
+        
         public void Dispose ()
         {
             ClearMessages ();
@@ -105,6 +112,9 @@ namespace Banshee.AudioCd
             
             if (disc_model.MetadataQuerySuccess) {
                 DestroyQueryMessage ();
+                if (DiscIsPlaying) {
+                    ServiceManager.PlayerEngine.TrackInfoUpdated ();
+                }
                 return;
             }
             
@@ -202,10 +212,15 @@ namespace Banshee.AudioCd
 
         public bool Unmap ()
         {
-            AudioCdTrackInfo playing_track = ServiceManager.PlayerEngine.CurrentTrack as AudioCdTrackInfo;
-            if (playing_track != null && playing_track.Model == disc_model) {
+            if (DiscIsPlaying) {
                 ServiceManager.PlayerEngine.Close ();
             }
+            
+            foreach (TrackInfo track in disc_model) {
+                track.CanPlay = false;
+            }
+            
+            OnUpdated ();
             
             SourceMessage eject_message = new SourceMessage (this);
             eject_message.FreezeNotify ();
@@ -231,6 +246,11 @@ namespace Banshee.AudioCd
                         eject_message.SetIconName ("dialog-error");
                         eject_message.Text = String.Format (Catalog.GetString ("Could not eject audio CD: {0}"), e.Message);
                         PushMessage (eject_message);
+                        
+                        foreach (TrackInfo track in disc_model) {
+                            track.CanPlay = true;
+                        }
+                        OnUpdated ();
                     });
                     
                     Log.Exception (e);

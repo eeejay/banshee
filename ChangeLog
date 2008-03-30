@@ -1,5 +1,15 @@
 2008-03-29  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
+	Remove all AudioCdSources when disposing the service and clear the map
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	If the disc is playing, tell the player engine that track information was
+	updated after the metadata is loaded from MB; disable all tracks when
+	ejecting so they can't be played while the eject is in progress
+
+2008-03-29  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
 	Queue a timeout when the engine goes to idle; if when the timeout handler
 	runs the engine is still idle, then fade the display out; the timeout is
