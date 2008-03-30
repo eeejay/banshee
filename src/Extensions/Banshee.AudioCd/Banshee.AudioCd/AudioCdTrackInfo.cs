@@ -40,7 +40,7 @@ namespace Banshee.AudioCd
             this.model = model;
             this.index_on_disc = index;
             
-            Uri = new SafeUri ("cdda://" + index_on_disc + "#" + deviceNode); 
+            Uri = new SafeUri (String.Format ("cdda://{0}#{1}", index_on_disc + 1, deviceNode)); 
         }
         
         private AudioCdDiscModel model;

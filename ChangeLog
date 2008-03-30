@@ -1,5 +1,10 @@
 2008-03-29  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
+	Prepare the CDDA URI properly (it needs the track number, not index)
+
+2008-03-29  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
 	Remove all AudioCdSources when disposing the service and clear the map
 
