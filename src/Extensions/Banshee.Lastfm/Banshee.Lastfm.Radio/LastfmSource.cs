@@ -304,7 +304,38 @@ namespace Banshee.Lastfm.Radio
             }
 
             Name = (Connection.State == ConnectionState.Connected ) ? lastfm : Catalog.GetString ("Last.fm (Disconnected)");
+
+            if (Connection.Connected) {
+                HideStatus ();
+            } else {
+                SetStatus (RadioConnection.MessageFor (Connection.State), Connection.State != ConnectionState.Connecting, Connection.State);
+            }
+
             OnUpdated ();
+        }
+
+        protected override void SetStatus (string message, bool error)
+        {
+            base.SetStatus (message, error);
+            SetStatus (status_message, this, error, ConnectionState.Connected);
+        }
+
+        private void SetStatus (string message, bool error, ConnectionState state)
+        {
+            base.SetStatus (message, error);
+            SetStatus (status_message, this, error, state);
+        }
+
+        internal static void SetStatus (SourceMessage status_message, LastfmSource lastfm, bool error, ConnectionState state)
+        {
+            status_message.FreezeNotify ();
+            if (error && (state == ConnectionState.NoAccount || state == ConnectionState.InvalidAccount)) {
+                status_message.AddAction (new MessageAction (Catalog.GetString ("Account Settings"),
+                    delegate { lastfm.Actions.ShowLoginDialog (); }));
+                status_message.AddAction (new MessageAction (Catalog.GetString ("Join Last.fm"),
+                    delegate { lastfm.Account.SignUp (); }));
+            }
+            status_message.ThawNotify ();
         }
 
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool> (

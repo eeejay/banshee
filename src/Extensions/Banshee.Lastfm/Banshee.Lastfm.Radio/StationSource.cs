@@ -55,7 +55,6 @@ namespace Banshee.Lastfm.Radio
         private static string generic_name = Catalog.GetString ("Last.fm Station");
         
         private MemoryTrackListModel track_model;
-        private SourceMessage status_message;
         
         private LastfmSource lastfm;
         public LastfmSource LastfmSource {
@@ -239,43 +238,16 @@ namespace Banshee.Lastfm.Radio
             }
         }
 
-        private void SetStatus (string message, bool error)
+        protected override void SetStatus (string message, bool error)
         {
-            SetStatus (message, error, ConnectionState.Connected);
+            base.SetStatus (message, error);
+            LastfmSource.SetStatus (status_message, lastfm, error, ConnectionState.Connected);
         }
 
         private void SetStatus (string message, bool error, ConnectionState state)
         {
-            if (status_message == null) {
-                status_message = new SourceMessage (this);
-                PushMessage (status_message);
-            }
-            
-            string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
-            
-            status_message.FreezeNotify ();
-            status_message.Text = String.Format (GLib.Markup.EscapeText (message), status_name);
-            status_message.CanClose = !error;
-            status_message.IsSpinning = !error;
-            status_message.SetIconName (error ? "dialog-error" : null);
-            status_message.ClearActions ();
-            
-            if (error && (state == ConnectionState.NoAccount || state == ConnectionState.InvalidAccount)) {
-                status_message.AddAction (new MessageAction (Catalog.GetString ("Account Settings"),
-                    delegate { lastfm.Actions.ShowLoginDialog (); }));
-                status_message.AddAction (new MessageAction (Catalog.GetString ("Join Last.fm"),
-                    delegate { lastfm.Account.SignUp (); }));
-            }
-            
-            status_message.ThawNotify ();
-        }
-
-        private void HideStatus ()
-        {
-            if (status_message != null) {
-                RemoveMessage (status_message);
-                status_message = null;
-            }
+            base.SetStatus (message, error);
+            LastfmSource.SetStatus (status_message, lastfm, error, state);
         }
 
         /*public override void ShowPropertiesDialog ()

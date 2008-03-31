@@ -48,6 +48,7 @@ namespace Banshee.Sources
     {
         private Source parent;
         private PropertyStore properties = new PropertyStore ();
+        protected SourceMessage status_message;
         private List<SourceMessage> messages = new List<SourceMessage> ();
         private List<Source> child_sources = new List<Source> ();
         private ReadOnlyCollection<Source> read_only_children;
@@ -208,6 +209,34 @@ namespace Banshee.Sources
 #endregion
         
 #region Protected Methods
+        
+        protected virtual void SetStatus (string message, bool error)
+        {
+            if (status_message == null) {
+                status_message = new SourceMessage (this);
+                PushMessage (status_message);
+            }
+            
+            string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
+            
+            status_message.FreezeNotify ();
+            status_message.Text = String.Format (GLib.Markup.EscapeText (message), status_name);
+            status_message.CanClose = !error;
+            status_message.IsSpinning = !error;
+            status_message.SetIconName (error ? "dialog-error" : null);
+            status_message.ClearActions ();
+            
+            status_message.ThawNotify ();
+        }
+
+        protected virtual void HideStatus ()
+        {
+            if (status_message != null) {
+                RemoveMessage (status_message);
+                status_message = null;
+            }
+        }
+
 
         protected virtual void PushMessage (SourceMessage message)
         {

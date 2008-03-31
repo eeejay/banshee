@@ -1,5 +1,17 @@
 2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Move SetStatus and
+	HideStatus methods here from StationSource since they are generally useful.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs: Use
+	Source's SetStatus and HideStatus methods, and move the account button
+	status code into a static method on LastfmSource.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Set
+	the status when not connected.
+
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: When one of our
 	SourceMessages is updated, notify the message bar.  Fixes bug where the
 	message bar didn't update with new icon/text etc.
