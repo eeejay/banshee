@@ -1,5 +1,10 @@
 2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.IO/Utilities.cs: Uncomment
+	DeleteFileTrimmingParentDirectories method, fixes BGO #524914.
+
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	Before incrementing play/skip count, Refresh the track so we don't
 	overwrite any changes that have been made since it started playing.  Fixes
