@@ -110,7 +110,6 @@ namespace Banshee.Collection.Gui
         
         public void Save ()
         {
-            Console.WriteLine ("Save");
             if (timer_id == 0) {
                 timer_id = GLib.Timeout.Add (500, OnTimeout);
             } else {

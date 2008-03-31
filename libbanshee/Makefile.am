@@ -13,17 +13,17 @@ bansheelib_LTLIBRARIES = libbanshee.la
 libbanshee_la_LDFLAGS = -avoid-version -module
 libbanshee_la_SOURCES =  \
 	banshee-player.c \
-	banshee-player-cdda.h \
+	banshee-player-cdda.c \
 	gst-cd-rip-0.10.c \
 	gst-misc-0.10.c \
-	gst-playback.h \
 	gst-transcode-0.10.c
 
-OLD_CODE = \
-	gst-mbtrm.h \
-	gst-mbtrm.c \
-	nautilus-burn.c \
-	misc-glue.c
+noinst_HEADERS =  \
+	banshee-player.h \
+	banshee-player-cdda.h \
+	gst-cd-rip.h \
+	gst-misc.h \
+	gst-transcode.h
 
 libbanshee_la_LIBADD = \
 	$(LIBBANSHEE_LIBS) \

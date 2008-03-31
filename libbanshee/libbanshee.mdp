@@ -8,24 +8,23 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="." subtype="Directory" buildaction="Nothing" />
-    <File name="gst-cd-rip.h" subtype="Code" buildaction="Nothing" />
     <File name="gst-cd-rip-0.10.c" subtype="Code" buildaction="Compile" />
-    <File name="gst-mbtrm.h" subtype="Code" buildaction="Nothing" />
-    <File name="gst-misc.h" subtype="Code" buildaction="Nothing" />
     <File name="gst-misc-0.10.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player.c" subtype="Code" buildaction="Compile" />
-    <File name="gst-transcode.h" subtype="Code" buildaction="Nothing" />
     <File name="gst-transcode-0.10.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player.h" subtype="Code" buildaction="Nothing" />
-    <File name="banshee-player-cdda.h" subtype="Code" buildaction="Compile" />
+    <File name="banshee-player-cdda.h" subtype="Code" buildaction="Nothing" />
+    <File name="gst-cd-rip.h" subtype="Code" buildaction="Nothing" />
+    <File name="gst-misc.h" subtype="Code" buildaction="Nothing" />
+    <File name="gst-transcode.h" subtype="Code" buildaction="Nothing" />
+    <File name="banshee-player-cdda.c" subtype="Code" buildaction="Compile" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="libbanshee_la_SOURCES" />
     <DeployFilesVar />
     <ResourcesVar />
-    <OthersVar />
+    <OthersVar Sync="True" Name="noinst_HEADERS" />
     <GacRefVar />
     <AsmRefVar />
     <ProjectRefVar />

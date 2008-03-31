@@ -410,7 +410,7 @@ bp_construct(BansheePlayer *player)
     g_signal_connect (bus, "sync-message::element", 
         G_CALLBACK (bp_bus_element_sync_message), player);
 
-    g_signal_connect (player->playbin, "notify::source", G_CALLBACK (bp_cdda_on_notify_source), player);
+    g_signal_connect (player->playbin, "notify::source", G_CALLBACK (_bp_cdda_on_notify_source), player);
     
     if (GST_IS_BIN (videosink)) {
         g_signal_connect (videosink, "element-added",
@@ -560,7 +560,7 @@ bp_open(BansheePlayer *player, const gchar *uri)
         return;
     }
 
-    if (bp_cdda_handle_uri (player, uri)) {
+    if (_bp_cdda_handle_uri (player, uri)) {
         return;
     }
     

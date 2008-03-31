@@ -10,6 +10,16 @@
       <Entry build="True" name="Banshee.AudioCd" configuration="Debug" />
     </Configuration>
   </Configurations>
+  <StartMode single="True">
+    <Execute type="None" entry="Banshee.Daap" />
+    <Execute type="None" entry="Banshee.NotificationArea" />
+    <Execute type="None" entry="Banshee.MultimediaKeys" />
+    <Execute type="None" entry="Banshee.PlayQueue" />
+    <Execute type="None" entry="Banshee.Plugins.Lastfm" />
+    <Execute type="None" entry="Banshee.NowPlaying" />
+    <Execute type="None" entry="Banshee.Bookmarks" />
+    <Execute type="None" entry="Banshee.AudioCd" />
+  </StartMode>
   <Entries>
     <Entry filename="Banshee.NotificationArea/Banshee.Daap.mdp" />
     <Entry filename="Banshee.NotificationArea/Banshee.NotificationArea.mdp" />
