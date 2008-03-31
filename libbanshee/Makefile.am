@@ -14,6 +14,7 @@ libbanshee_la_LDFLAGS = -avoid-version -module
 libbanshee_la_SOURCES =  \
 	banshee-player.c \
 	banshee-player-cdda.c \
+	banshee-player-missing-elements.c \
 	gst-cd-rip-0.10.c \
 	gst-misc-0.10.c \
 	gst-transcode-0.10.c
@@ -21,6 +22,7 @@ libbanshee_la_SOURCES =  \
 noinst_HEADERS =  \
 	banshee-player.h \
 	banshee-player-cdda.h \
+	banshee-player-missing-elements.h \
 	gst-cd-rip.h \
 	gst-misc.h \
 	gst-transcode.h

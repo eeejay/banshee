@@ -27,10 +27,9 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-#define _BANSHEE_PLAYER_C
- 
 #include "banshee-player.h"
 #include "banshee-player-cdda.h"
+#include "banshee-player-missing-elements.h"
 
 #ifdef GDK_WINDOWING_X11
 static gboolean bp_find_xoverlay (BansheePlayer *player);
@@ -54,20 +53,6 @@ bp_process_tag(const GstTagList *tag_list, const gchar *tag_name, BansheePlayer 
     }
 }
 
-// private methods
-
-static void
-bp_nuke_slist(GSList *list)
-{   
-    GSList *node = list;
-    
-    for(; node != NULL; node = node->next) {
-        g_free(node->data);
-    }
-    
-    g_slist_free(list);
-}
-
 static void
 bp_destroy_pipeline(BansheePlayer *player)
 {
@@ -85,89 +70,6 @@ bp_destroy_pipeline(BansheePlayer *player)
     
     player->playbin = NULL;
 }
-
-#ifdef HAVE_GST_PBUTILS
-static gchar **
-bp_missing_element_details_vectorize(const GSList *elements)
-{
-    GPtrArray *vector = g_ptr_array_new();
-    
-    while(elements != NULL) {
-        g_ptr_array_add(vector, g_strdup(elements->data));
-        elements = elements->next;
-    }
-    
-    g_ptr_array_add(vector, NULL);
-    return (gchar **)g_ptr_array_free(vector, FALSE);
-}
-
-static void
-bp_handle_missing_elements_failed(BansheePlayer *player)
-{
-    bp_nuke_slist(player->missing_element_details);
-    player->missing_element_details = NULL;
-    gst_element_set_state(player->playbin, GST_STATE_READY);
-    
-    if(player->error_cb != NULL) {
-       player->error_cb(player, GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN, NULL, NULL);
-    }
-}
-
-static void
-bp_handle_missing_elements_installer_result(GstInstallPluginsReturn result, gpointer data)
-{
-    BansheePlayer *player = (BansheePlayer *)data;
-    
-    g_return_if_fail(IS_BANSHEE_PLAYER(player));
-    
-    // TODO: Actually handle a successful plugin installation
-    // if(result == GST_INSTALL_PLUGINS_SUCCESS) {
-    // }
-    
-    player->install_plugins_noprompt = TRUE;
-    
-    bp_handle_missing_elements_failed(player);
-    
-    gst_install_plugins_context_free(player->install_plugins_context);
-    player->install_plugins_context = NULL;
-}
-
-static void
-bp_handle_missing_elements(BansheePlayer *player)
-{
-    GstInstallPluginsReturn install_return;
-    gchar **details;
-    
-    if(player->install_plugins_context != NULL) {
-        return;
-    } else if(player->install_plugins_noprompt) {
-        bp_handle_missing_elements_failed(player);
-        return;
-    }
-    
-    details = bp_missing_element_details_vectorize(player->missing_element_details);
-    player->install_plugins_context = gst_install_plugins_context_new();
-    
-    #ifdef GDK_WINDOWING_X11
-    if(player->window != NULL) {
-        gst_install_plugins_context_set_xid(player->install_plugins_context, 
-        GDK_WINDOW_XWINDOW(player->window));
-    }
-    #endif
-    
-    install_return = gst_install_plugins_async(details, player->install_plugins_context, 
-        bp_handle_missing_elements_installer_result, player);
-    
-    if(install_return != GST_INSTALL_PLUGINS_STARTED_OK) {
-        bp_handle_missing_elements_failed(player);
-        
-        gst_install_plugins_context_free(player->install_plugins_context);
-        player->install_plugins_context = NULL;
-    } 
-    
-    g_strfreev(details);
-}
-#endif
 
 static gboolean
 bp_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
@@ -200,39 +102,30 @@ bp_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
             break;
         } 
         
-        #ifdef HAVE_GST_PBUTILS
         case GST_MESSAGE_ELEMENT: {
-            if(gst_is_missing_plugin_message(message)) {
-                player->missing_element_details = g_slist_append(player->missing_element_details, 
-                    gst_missing_plugin_message_get_installer_detail(message));
-            }
-            
+            _bp_missing_elements_process_message (player, message);
             break;
         }
-        #endif
         
-        case GST_MESSAGE_EOS:
+        case GST_MESSAGE_EOS: {
             if(player->eos_cb != NULL) {
                 player->eos_cb(player);
             }
             break;
+        }
+            
         case GST_MESSAGE_STATE_CHANGED: {
             GstState old, new, pending;
-            gst_message_parse_state_changed(message, &old, &new, &pending);
+            gst_message_parse_state_changed (message, &old, &new, &pending);
             
-            #ifdef HAVE_GST_PBUTILS
-            if(old == GST_STATE_READY && new == GST_STATE_PAUSED) {
-                if(player->missing_element_details != NULL) {
-                    bp_handle_missing_elements(player);
-                }
-            }
-            #endif
+            _bp_missing_elements_handle_state_changed (player, old, new);
             
-            if(player->state_changed_cb != NULL) {
-                player->state_changed_cb(player, old, new, pending);
+            if (player->state_changed_cb != NULL) {
+                player->state_changed_cb (player, old, new, pending);
             }
             break;
         }
+        
         case GST_MESSAGE_BUFFERING: {
             const GstStructure *buffering_struct;
             gint buffering_progress = 0;
@@ -476,35 +369,30 @@ bp_new()
 }
 
 void
-bp_free(BansheePlayer *player)
+bp_free (BansheePlayer *player)
 {
-    g_return_if_fail(IS_BANSHEE_PLAYER(player));
+    g_return_if_fail (IS_BANSHEE_PLAYER (player));
     
     g_mutex_free (player->mutex);
     
-    if(GST_IS_OBJECT(player->playbin)) {
+    if (GST_IS_OBJECT (player->playbin)) {
         player->target_state = GST_STATE_NULL;
-        gst_element_set_state(player->playbin, GST_STATE_NULL);
-        gst_object_unref(GST_OBJECT(player->playbin));
+        gst_element_set_state (player->playbin, GST_STATE_NULL);
+        gst_object_unref (GST_OBJECT (player->playbin));
     }
     
-    if(player->cdda_device != NULL) {
-        g_free(player->cdda_device);
-        player->cdda_device = NULL;
+    if (player->cdda_device != NULL) {
+        g_free (player->cdda_device);
     }
     
-    bp_nuke_slist(player->missing_element_details);
-    player->missing_element_details = NULL;
+    _bp_missing_elements_destroy (player);
     
-    #ifdef HAVE_GST_PBUTILS
-    if(player->install_plugins_context != NULL) {
-        gst_install_plugins_context_free(player->install_plugins_context);
-        player->install_plugins_context = NULL;
-    }
-    #endif
+    memset (player, 0, sizeof (BansheePlayer));
     
-    g_free(player);
+    g_free (player);
     player = NULL;
+    
+    bp_debug ("bp: disposed player");
 }
 
 void

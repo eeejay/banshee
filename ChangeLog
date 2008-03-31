@@ -1,3 +1,11 @@
+2008-03-31  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/banshee-player.c: 
+	* libbanshee/banshee-player.h:
+	* libbanshee/banshee-player-missing-elements.c: 
+	* libbanshee/banshee-player-missing-elements.h: Moved code that handles
+	missing plugins/plugin installation into a separate module
+
 2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.IO/Utilities.cs: Uncomment

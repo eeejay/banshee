@@ -3,15 +3,31 @@ TARGET = library
 LINK = $(REF_EXTENSION_DAAP)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
-SOURCES = \
+SOURCES =  \
+	Banshee.Daap/DaapContainerSource.cs \
 	Banshee.Daap/DaapService.cs \
-    Banshee.Daap/DaapContainerSource.cs \
-    Banshee.Daap/DaapSource.cs \
-    Daap/*.cs
+	Banshee.Daap/DaapSource.cs \
+	Daap/AuthenticationException.cs \
+	Daap/BrokenMD5.cs \
+	Daap/Client.cs \
+	Daap/ContentCodeBag.cs \
+	Daap/ContentFetcher.cs \
+	Daap/ContentParser.cs \
+	Daap/ContentWriter.cs \
+	Daap/Database.cs \
+	Daap/Hasher.cs \
+	Daap/LoginException.cs \
+	Daap/Playlist.cs \
+	Daap/Server.cs \
+	Daap/ServerInfo.cs \
+	Daap/ServiceLocator.cs \
+	Daap/Track.cs \
+	Daap/User.cs \
+	Daap/Utility.cs
 
-RESOURCES = \
+RESOURCES =  \
 	Daap/content-codes \
-    Resources/Banshee.Daap.addin.xml
+	Resources/Banshee.Daap.addin.xml
 
 include $(top_srcdir)/build/build.mk
 

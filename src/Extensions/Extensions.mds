@@ -21,7 +21,7 @@
     <Execute type="None" entry="Banshee.AudioCd" />
   </StartMode>
   <Entries>
-    <Entry filename="Banshee.NotificationArea/Banshee.Daap.mdp" />
+    <Entry filename="Banshee.Daap/Banshee.Daap.mdp" />
     <Entry filename="Banshee.NotificationArea/Banshee.NotificationArea.mdp" />
     <Entry filename="Banshee.MultimediaKeys/Banshee.MultimediaKeys.mdp" />
     <Entry filename="Banshee.PlayQueue/Banshee.PlayQueue.mdp" />

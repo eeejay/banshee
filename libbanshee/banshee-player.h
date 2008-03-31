@@ -5,22 +5,17 @@
 #  include "config.h"
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <glib.h>
-#include <glib/gstdio.h>
-
 #include <gst/gst.h>
+#include <gdk/gdk.h>
 
 #ifdef HAVE_GST_PBUTILS
 #  include <gst/pbutils/pbutils.h>
 #endif
 
-#include <gdk/gdk.h>
 #ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
-#include <gst/interfaces/xoverlay.h>
+#  include <gdk/gdkx.h>
+#  include <gst/interfaces/xoverlay.h>
 #endif
 
 #define IS_BANSHEE_PLAYER(e) (e != NULL)
