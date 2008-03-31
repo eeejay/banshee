@@ -45,7 +45,7 @@ using Banshee.Equalizer;
 
 namespace Banshee.MediaEngine
 {
-    public class PlayerEngineService : IRequiredService, IPlayerEngineService
+    public class PlayerEngineService : IInitializeService, IRequiredService, IPlayerEngineService, IDisposable
     {   
         private List<PlayerEngine> engines = new List<PlayerEngine> ();
         private PlayerEngine active_engine;
@@ -71,6 +71,10 @@ namespace Banshee.MediaEngine
         }
         
         public PlayerEngineService ()
+        {
+        }
+        
+        public void Initialize ()
         {
             preferred_engine_id = EngineSchema.Get();
             
@@ -124,6 +128,19 @@ namespace Banshee.MediaEngine
 
         public void Dispose ()
         {
+            MetadataService.Instance.HaveResult -= OnMetadataServiceHaveResult;
+            
+            foreach (PlayerEngine engine in engines) {
+                engine.Dispose ();
+            }
+            
+            active_engine = null;
+            default_engine = null;
+            pending_engine = null;
+            
+            preferred_engine_id = null;
+            
+            engines.Clear ();
         }
         
         private void OnMetadataServiceHaveResult (object o, MetadataLookupResultArgs args)

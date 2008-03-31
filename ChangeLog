@@ -1,5 +1,19 @@
 2008-03-31  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/banshee-player.c:
+	* libbanshee/banshee-player.h:
+	* libbanshee/banshee-player-video.c: 
+	* libbanshee/banshee-player-video.h: Split out video related code into a
+	separate module
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs: 
+	Updated to reflect changes in libbanshee
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Make the engine service IDisposable and dispose of its child engines
+
+2008-03-31  Aaron Bockover  <abock@gnome.org>
+
 	* libbanshee/banshee-player.c: 
 	* libbanshee/banshee-player.h:
 	* libbanshee/banshee-player-missing-elements.c: 

@@ -18,6 +18,7 @@
 #  include <gst/interfaces/xoverlay.h>
 #endif
 
+#define P_INVOKE
 #define IS_BANSHEE_PLAYER(e) (e != NULL)
 #define SET_CALLBACK(cb_name) { if(player != NULL) { player->cb_name = cb; } }
 

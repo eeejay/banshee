@@ -20,6 +20,8 @@
     <File name="banshee-player-cdda.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-missing-elements.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-missing-elements.h" subtype="Code" buildaction="Nothing" />
+    <File name="banshee-player-video.c" subtype="Code" buildaction="Compile" />
+    <File name="banshee-player-video.h" subtype="Code" buildaction="Nothing" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">

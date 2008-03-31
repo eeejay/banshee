@@ -15,6 +15,7 @@ libbanshee_la_SOURCES =  \
 	banshee-player.c \
 	banshee-player-cdda.c \
 	banshee-player-missing-elements.c \
+	banshee-player-video.c \
 	gst-cd-rip-0.10.c \
 	gst-misc-0.10.c \
 	gst-transcode-0.10.c
@@ -23,6 +24,7 @@ noinst_HEADERS =  \
 	banshee-player.h \
 	banshee-player-cdda.h \
 	banshee-player-missing-elements.h \
+	banshee-player-video.h \
 	gst-cd-rip.h \
 	gst-misc.h \
 	gst-transcode.h

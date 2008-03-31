@@ -159,7 +159,7 @@ namespace Banshee.GStreamer
         
         public override void VideoExpose (IntPtr window, bool direct)
         {
-            bp_expose_video_window (handle, window, direct);
+            bp_video_window_expose (handle, window, direct);
         }
 
         public override IntPtr [] GetBaseElements ()
@@ -340,7 +340,7 @@ namespace Banshee.GStreamer
         }
         
         public override IntPtr VideoWindow {
-            set { bp_set_video_window (handle, value); }
+            set { bp_video_set_window (handle, value); }
         }
         
         public double AmplifierLevel {
@@ -459,10 +459,10 @@ namespace Banshee.GStreamer
         private static extern bool bp_video_is_supported (HandleRef player);
         
         [DllImport ("libbanshee")]
-        private static extern void bp_set_video_window (HandleRef player, IntPtr window);
+        private static extern void bp_video_set_window (HandleRef player, IntPtr window);
         
         [DllImport ("libbanshee")]
-        private static extern void bp_expose_video_window (HandleRef player, IntPtr window, bool direct);
+        private static extern void bp_video_window_expose (HandleRef player, IntPtr window, bool direct);
                                                                    
         [DllImport ("libbanshee")]
         private static extern void bp_get_error_quarks (out uint core, out uint library, 
