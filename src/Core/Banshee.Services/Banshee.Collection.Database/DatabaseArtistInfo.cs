@@ -129,7 +129,7 @@ namespace Banshee.Collection.Database
         
         [DatabaseColumn(Select = false)]
         protected string NameLowered {
-            get { return Name.ToLower (); }
+            get { return Name == null ? null : Name.ToLower (); }
         }
 
         public override string ToString ()

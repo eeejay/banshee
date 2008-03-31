@@ -143,7 +143,7 @@ namespace Banshee.Collection.Database
         
         [DatabaseColumn(Select = false)]
         protected string TitleLowered {
-            get { return Title.ToLower (); }
+            get { return Title == null ? null : Title.ToLower (); }
         }
 
         [VirtualDatabaseColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]

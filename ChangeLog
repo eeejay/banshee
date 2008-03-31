@@ -1,5 +1,12 @@
 2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Handle Title/Name being null in *Lowered getter. Fixes BGO #525448.
+
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:
 	* src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:
 	* src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:

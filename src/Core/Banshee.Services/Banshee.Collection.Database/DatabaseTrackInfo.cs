@@ -285,7 +285,7 @@ namespace Banshee.Collection.Database
         
         [DatabaseColumn(Select = false)]
         protected string TitleLowered {
-            get { return TrackTitle.ToLower (); }
+            get { return TrackTitle == null ? null : TrackTitle.ToLower (); }
         }
         
         [DatabaseColumn]
