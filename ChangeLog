@@ -1,5 +1,18 @@
 2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Before incrementing play/skip count, Refresh the track so we don't
+	overwrite any changes that have been made since it started playing.  Fixes
+	BGO #525061.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Remove
+	debug WriteLine.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Add
+	Refresh method that takes an object and reloads its data from the database.
+
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
 	Only pulse Now Playing if the new item is a video and we're not auto
 	switching to Now Playing.

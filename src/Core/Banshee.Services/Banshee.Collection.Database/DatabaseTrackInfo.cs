@@ -73,14 +73,18 @@ namespace Banshee.Collection.Database
 
         public override void IncrementPlayCount ()
         {
-            base.IncrementPlayCount ();
-            Save ();
+            if (Provider.Refresh (this)) {
+                base.IncrementPlayCount ();
+                Save ();
+            }
         }
 
         public override void IncrementSkipCount ()
         {
-            base.IncrementSkipCount ();
-            Save ();
+            if (Provider.Refresh (this)) {
+                base.IncrementSkipCount ();
+                Save ();
+            }
         }
 
         public override bool TrackEqual (TrackInfo track)
@@ -138,7 +142,6 @@ namespace Banshee.Collection.Database
         public int TrackId {
             get { return track_id; }
         }
-
 
         [DatabaseColumn ("PrimarySourceID")]
         private int primary_source_id;

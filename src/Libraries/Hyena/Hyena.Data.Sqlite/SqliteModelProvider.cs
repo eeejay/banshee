@@ -361,6 +361,25 @@ namespace Hyena.Data.Sqlite
             }
             return default(T);
         }
+
+        public bool Refresh (T item)
+        {
+            if (key == null || item == null)
+                return false;
+
+            int id = (int) key.GetValue (item);
+            if (id < 1)
+                return false;
+
+            PrepareSelectSingleCommand (id);
+            using (IDataReader reader = connection.Query (SelectSingleCommand)) {
+                if (reader.Read ()) {
+                    Load (reader, item);
+                    return true;
+                }
+            }
+            return false;
+        }
         
         protected virtual HyenaSqliteCommand CreateCommand {
             get {

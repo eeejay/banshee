@@ -220,9 +220,9 @@ namespace Banshee.Gui
                 int i = track_src.TrackModel.IndexOf (ServiceManager.PlaybackController.CurrentTrack);
                 if (i != -1) {
                     // TODO clear the search/filters if there are any, since they might be hiding the currently playing item?
+                    // and/or switch to the track's primary source?  what if it's been removed from the library all together?
                     IListView<TrackInfo> track_list = (track_src as Source).Properties.Get<IListView<TrackInfo>> ("Track.IListView");
                     if (track_list != null) {
-                        Console.WriteLine ("playing track is index {0}, jumping!", i);
                         ServiceManager.SourceManager.SetActiveSource (playback_src);
                         track_src.TrackModel.Selection.Clear (false);
                         track_src.TrackModel.Selection.Select (i);
