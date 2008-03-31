@@ -77,7 +77,14 @@ namespace Hyena.Data.Gui
         }
         
         public int MinWidth {
-            get { return TextWidth + 25; }
+            get {
+                int min_width = data_handler ().MinWidth + 20;
+                if (HasSort) {
+                    min_width += 20;
+                }
+                return min_width;
+            }
         }
+
     }
 }

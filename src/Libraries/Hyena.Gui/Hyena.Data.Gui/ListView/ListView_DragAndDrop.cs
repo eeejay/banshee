@@ -117,6 +117,22 @@ namespace Hyena.Data.Gui
             }
         }
         
+        private void OnDragScroll (GLib.TimeoutHandler handler, double threshold, int total, int position)
+        {
+            if (position < threshold) {
+                drag_scroll_velocity = -1.0 + (position / threshold);
+            } else if (position > total - threshold) {
+                drag_scroll_velocity = 1.0 - ((total - position) / threshold);
+            } else {
+                StopDragScroll ();
+                return;
+            }
+            
+            if (drag_scroll_timeout_id == 0) {
+                drag_scroll_timeout_id = GLib.Timeout.Add (drag_scroll_timeout_duration, handler);
+            }
+        }
+        
         protected override bool OnDragMotion (Gdk.DragContext context, int x, int y, uint time)
         {
             if (!Reorderable) {
@@ -130,20 +146,7 @@ namespace Hyena.Data.Gui
             drag_reorder_motion_y = y;
             DragReorderUpdateRow ();
             
-            double scroll_threshold = Allocation.Height * 0.3;
-            
-            if (y < scroll_threshold) {
-                drag_scroll_velocity = -1.0 + (y / scroll_threshold);
-            } else if (y > Allocation.Height - scroll_threshold) {
-                drag_scroll_velocity = 1.0 - ((Allocation.Height - y) / scroll_threshold);
-            } else {
-                StopDragScroll ();
-                return true;
-            }
-            
-            if (drag_scroll_timeout_id == 0) {
-                drag_scroll_timeout_id = GLib.Timeout.Add (drag_scroll_timeout_duration, OnDragScrollTimeout);
-            }
+            OnDragScroll (OnDragVScrollTimeout, Allocation.Height * 0.3, Allocation.Height, y);
             
             return true;
         }
@@ -161,7 +164,7 @@ namespace Hyena.Data.Gui
             InvalidateList ();
         }
         
-        private bool OnDragScrollTimeout ()
+        private bool OnDragVScrollTimeout ()
         {
             ScrollTo (vadjustment.Value + (drag_scroll_velocity * drag_scroll_velocity_max));
             DragReorderUpdateRow ();

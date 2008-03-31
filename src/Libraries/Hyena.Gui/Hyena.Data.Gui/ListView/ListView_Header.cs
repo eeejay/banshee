@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 
@@ -46,22 +47,29 @@ namespace Hyena.Data.Gui
             public int ResizeX1;
             public int ResizeX2;
             public int Index;
+            public double ElasticWidth;
+            public double ElasticPercent;
         }
         
         private static Gdk.Cursor resize_x_cursor = new Gdk.Cursor (Gdk.CursorType.SbHDoubleArrow);
         private static Gdk.Cursor drag_cursor = new Gdk.Cursor (Gdk.CursorType.Fleur);
 
+        private bool resizable;
+        private int header_width;
         private int sort_column_index = -1;
         private int resizing_column_index = -1;
         private int pressed_column_index = -1;
+        private int pressed_column_x = -1;
         private int pressed_column_x_start = -1;
         private int pressed_column_x_offset = -1;
         private int pressed_column_x_drag = -1;
+        private int pressed_column_x_start_hadjustment = -1;
         private bool pressed_column_is_dragging = false;
         
         private Pango.Layout column_layout;
         
         private CachedColumn [] column_cache;
+        private List<int> elastic_columns;
         
 #region Columns
         
@@ -75,7 +83,6 @@ namespace Hyena.Data.Gui
             column_cache = new CachedColumn[column_controller.Count];
             
             int i = 0;
-            int min_header_width = 0;
             double total = 0.0;
             
             foreach (Column column in column_controller) {
@@ -83,16 +90,17 @@ namespace Hyena.Data.Gui
                     continue;
                 }
                 
+                if (column.MinWidth == 0) {
+                    int w;
+                    int h;
+                    column_layout.SetText (column.Title);
+                    column_layout.GetPixelSize (out w, out h);
+                    column.MinWidth = w;
+                }
+                
                 column_cache[i] = new CachedColumn ();
                 column_cache[i].Column = column;
-                
-                // TODO can this be done in the constructor? Will the title change?
-                int w;
-                int h;
-                column_layout.SetText (column.Title);
-                column_layout.GetPixelSize (out w, out h);
-                // 10 is arbitrary. Should we have a good way of getting the arrow width?
-                min_header_width += column_cache[i].MinWidth = Math.Max (column.MinWidth, w + 10); 
+                column_cache[i].Index = i;
                 
                 total += column.Width;
                 i++;
@@ -105,6 +113,8 @@ namespace Hyena.Data.Gui
             for (i = 0; i < column_cache.Length; i++) {
                 column_cache[i].Column.Width *= scale_factor;
             }
+            
+            RecalculateColumnSizes ();
         }
         
         private void RegenerateColumnCache ()
@@ -117,17 +127,30 @@ namespace Hyena.Data.Gui
                 GenerateColumnCache ();
             }
             
-            ISortable sortable = Model as ISortable;
-            sort_column_index = -1;
-            
             for (int i = 0; i < column_cache.Length; i++) {
-                column_cache[i].Width = (int)Math.Round (((double)header_interaction_alloc.Width * column_cache[i].Column.Width));
+                column_cache[i].Width = (int)Math.Round (((double)header_width * column_cache[i].Column.Width));
                 column_cache[i].X1 = i == 0 ? 0 : column_cache[i - 1].X2;
                 column_cache[i].X2 = column_cache[i].X1 + column_cache[i].Width;
                 column_cache[i].ResizeX1 = column_cache[i].X2;
                 column_cache[i].ResizeX2 = column_cache[i].ResizeX1 + 2;
-                column_cache[i].Index = i;
-                
+            }
+            
+            // TODO handle max width
+            int index = column_cache.Length - 1;
+            column_cache[index].X2 = header_width;
+            column_cache[index].Width = column_cache[index].X2 - column_cache[index].X1;
+        }
+        
+        private void RecalculateColumnSizes ()
+        {
+            if (column_cache == null) {
+                return;
+            }
+            
+            ISortable sortable = Model as ISortable;
+            sort_column_index = -1;
+            int min_header_width = 0;
+            for (int i = 0; i < column_cache.Length; i++) {
                 if (sortable != null) {
                     ColumnHeaderCellText column_cell = column_cache[i].Column.HeaderCell as ColumnHeaderCellText;
                     if (column_cell != null) {
@@ -138,13 +161,82 @@ namespace Hyena.Data.Gui
                         }
                     }
                 }
+                
+                int min_width = 25;
+                IHeaderCell header_cell = column_cache[i].Column.HeaderCell as IHeaderCell;
+                if (header_cell != null) {
+                    min_width = header_cell.MinWidth;
+                }
+                column_cache[i].MinWidth = min_width;
+                min_header_width += column_cache[i].MinWidth = Math.Max (min_width, column_cache[i].Column.MinWidth);
             }
+            
+            if (min_header_width >= header_interaction_alloc.Width) {
+                header_width = min_header_width;
+                resizable = false;
+                for (int i = 0; i < column_cache.Length; i++) {
+                    column_cache[i].Column.Width = (double)column_cache[i].MinWidth / (double)header_width;
+                }
+            } else {
+                header_width = header_interaction_alloc.Width;
+                resizable = true;
+                
+                if (elastic_columns == null) {
+                    elastic_columns = new List<int> (column_cache.Length);
+                }
+                elastic_columns.Clear ();
+                for (int i = 0; i < column_cache.Length; i++) {
+                    elastic_columns.Add (i);
+                    column_cache[i].ElasticWidth = 0.0;
+                    column_cache[i].ElasticPercent = column_cache[i].Column.Width * header_width;
+                }
+                
+                double remaining_width = RecalculateColumnSizes (header_width, header_width);
+                
+                while (remaining_width != 0 && elastic_columns.Count > 0) {
+                    double total_elastic_width = 0.0;
+                    foreach (int i in elastic_columns) {
+                        total_elastic_width += column_cache[i].ElasticWidth;
+                    }
+                    remaining_width = RecalculateColumnSizes (remaining_width, total_elastic_width);
+                }
+                
+                for (int i = 0; i < column_cache.Length; i++) {
+                    column_cache[i].Column.Width = column_cache[i].ElasticWidth / (double)header_width;
+                }
+            }
+        }
+        
+        private double RecalculateColumnSizes (double total_width, double total_elastic_width)
+        {
+            double remaining_width = total_width;
+            
+            for (int index = 0; index < elastic_columns.Count; index++) {
+                int i = elastic_columns[index];
+                double percent = column_cache[i].ElasticPercent / total_elastic_width;
+                double delta = total_width * percent;
+                
+                // TODO handle max widths
+                if (column_cache[i].ElasticWidth + delta < column_cache[i].MinWidth) {
+                    delta = column_cache[i].MinWidth - column_cache[i].ElasticWidth;
+                    elastic_columns.RemoveAt (index);
+                    index--;
+                }
+                
+                remaining_width -= delta;
+                column_cache[i].ElasticWidth += delta;
+            }
+            
+            remaining_width = Math.Round (remaining_width);
+            return remaining_width;
         }
         
         protected virtual void OnColumnControllerUpdated ()
         {
             InvalidateColumnCache ();
             RegenerateColumnCache ();
+            RegenerateCanvases ();
+            UpdateAdjustments ();
             QueueDraw ();
         }
         
@@ -185,50 +277,58 @@ namespace Hyena.Data.Gui
         private void ResizeColumn (double x)
         {
             CachedColumn resizing_column = column_cache[resizing_column_index];
-
             double resize_delta = x - resizing_column.ResizeX2;
-            double subsequent_columns = column_cache.Length - resizing_column.Index - 1;
-            double even_distribution = 0.0;
             
-            int min_width = 25;
-            IHeaderCell header_cell = resizing_column.Column.HeaderCell as IHeaderCell;
-            if (header_cell != null) {
-                min_width = header_cell.MinWidth;
+            if (resizing_column.Width + resize_delta < resizing_column.MinWidth) {
+                resize_delta = resizing_column.MinWidth - resizing_column.Width;
             }
             
-            if (resizing_column.Width + resize_delta < min_width) {
-                resize_delta = min_width - resizing_column.Width;
+            if (resize_delta == 0) {
+                return;
             }
-                        
-            for (int i = 0; i <= resizing_column_index; i++) {
-                even_distribution += column_cache[i].Column.Width * resize_delta;
-            }
-
-            even_distribution /= subsequent_columns;
-
-            resizing_column.Column.Width = (resizing_column.Width + resize_delta) / (double)list_rendering_alloc.Width;
-
+            
+            int sign = Math.Sign (resize_delta);
+            resize_delta = Math.Abs (resize_delta);
+            double total_elastic_width = 0.0;
+            
             for (int i = resizing_column_index + 1; i < column_cache.Length; i++) {
-                column_cache[i].Column.Width = (column_cache[i].Width - 
-                    (column_cache[i].Column.Width * resize_delta) - 
-                    even_distribution) / (double)list_rendering_alloc.Width;
+                total_elastic_width += column_cache[i].ElasticWidth = sign == 1
+                    ? column_cache[i].Width - column_cache[i].MinWidth
+                    : column_cache[i].Column.MaxWidth - column_cache[i].Width;
             }
             
-            ColumnController.QueueUpdate ();
+            if (total_elastic_width == 0) {
+                return;
+            }
             
+            if (resize_delta > total_elastic_width) {
+                resize_delta = total_elastic_width;
+            }
+            
+            resize_delta = sign * resize_delta / (double)header_width;
+            
+            for (int i = resizing_column_index + 1; i < column_cache.Length; i++) {
+                column_cache[i].Column.Width += -resize_delta * (column_cache[i].ElasticWidth / total_elastic_width);
+            }
+            
+            resizing_column.Column.Width += resize_delta;
+        
             RegenerateColumnCache ();
             QueueDraw ();
         }
         
         private Column GetColumnForResizeHandle (int x)
         {
-            if (column_cache == null) {
+            if (column_cache == null || !resizable) {
                 return null;
             }
             
+            x += (int)hadjustment.Value;
+            
             for (int i = 0; i < column_cache.Length - 1; i++) {
                 if (x >= column_cache[i].ResizeX1 - 2 && 
-                    x <= column_cache[i].ResizeX2 + 2) {
+                    x <= column_cache[i].ResizeX2 + 2 &&
+                    column_cache[i].Column.MaxWidth != column_cache[i].Column.MinWidth) {
                     return column_cache[i].Column;
                 }
             }
@@ -241,6 +341,8 @@ namespace Hyena.Data.Gui
             if (column_cache == null) {
                 return null;
             }
+            
+            x += (int)hadjustment.Value;
             
             foreach (CachedColumn column in column_cache) {
                 if (x >= column.X1 && x <= column.X2) {
@@ -310,6 +412,7 @@ namespace Hyena.Data.Gui
             set { 
                 header_visible = value;
                 MoveResize (Allocation);
+                RegenerateCanvases ();
             }
         }
         

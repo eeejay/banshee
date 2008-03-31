@@ -39,6 +39,8 @@ namespace Banshee.Collection.Gui
     {
         private string root_namespace;
         private bool loaded = false;
+        private volatile bool pending_changes;
+        private uint timer_id = 0;
         
         private string source_id;
         private Source source;
@@ -74,7 +76,7 @@ namespace Banshee.Collection.Gui
         }
         
         public void Load ()
-        {    
+        {
             lock (this) {
                 if (source == null) {
                     return;
@@ -108,6 +110,28 @@ namespace Banshee.Collection.Gui
         
         public void Save ()
         {
+            Console.WriteLine ("Save");
+            if (timer_id == 0) {
+                timer_id = GLib.Timeout.Add (500, OnTimeout);
+            } else {
+                pending_changes = true;
+            }
+        }
+        
+        private bool OnTimeout ()
+        {
+            if (pending_changes) {
+                pending_changes = false;
+                return true;
+            } else {
+                SaveCore ();
+                timer_id = 0;
+                return false;
+            }
+        }
+        
+        private void SaveCore ()
+        {
             lock (this) {
                 if (source == null) {
                     return;
@@ -129,13 +153,13 @@ namespace Banshee.Collection.Gui
             ConfigurationClient.Set<double> (@namespace, "width", column.Width);
         }
         
-        protected override void OnUpdated ()
+        protected override void OnWidthsChanged ()
         {
             if (loaded) {
                 Save ();
             }
             
-            base.OnUpdated ();
+            base.OnWidthsChanged ();
         }
         
         private string MakeNamespace (string name)

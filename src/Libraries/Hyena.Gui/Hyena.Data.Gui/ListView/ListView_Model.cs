@@ -69,7 +69,7 @@ namespace Hyena.Data.Gui
 
         private void RefreshViewForModel (double? vpos)
         {
-            UpdateAdjustments (null, null);
+            UpdateAdjustments ();
 
             if (vpos != null) {
                 ScrollTo ((double) vpos);

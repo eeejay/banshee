@@ -45,6 +45,11 @@ namespace Hyena.Data.Gui
             get { return vadjustment; }
         }
         
+        private Adjustment hadjustment;
+        public Adjustment Hadjustment {
+            get { return hadjustment; }
+        }
+        
         private SelectionProxy selection_proxy = new SelectionProxy ();
         public SelectionProxy SelectionProxy {
             get { return selection_proxy; }
@@ -233,6 +238,7 @@ namespace Hyena.Data.Gui
                     pressed_column_index = column_c.Index;
                     pressed_column_x_start = x;
                     pressed_column_x_offset = pressed_column_x_start - column_c.X1;
+                    pressed_column_x_start_hadjustment = (int)hadjustment.Value;
                 }
             }
             
@@ -309,6 +315,7 @@ namespace Hyena.Data.Gui
         protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
         {
             OnDragSourceSet ();
+            StopDragScroll ();
             
             if (resizing_column_index >= 0) {
                 pressed_column_index = -1;
@@ -342,6 +349,7 @@ namespace Hyena.Data.Gui
             if (column != null && Model is ISortable && column is ISortableColumn) {
                 ((ISortable)Model).Sort ((ISortableColumn)column);
                 Model.Reload ();
+                RecalculateColumnSizes ();
                 RegenerateColumnCache ();
                 InvalidateHeader ();
             }
@@ -388,36 +396,9 @@ namespace Hyena.Data.Gui
                 InvalidateList ();
             }
             
-            if (pressed_column_is_dragging) {
-                GdkWindow.Cursor = drag_cursor;
-                
-                Column swap_column = GetColumnAt (x);
-                
-                if (swap_column != null) {
-                    CachedColumn swap_column_c = GetCachedColumnForColumn (swap_column);
-                    bool reorder = false;
-                    
-                    if (swap_column_c.Index < pressed_column_index) {
-                        // Moving from right to left
-                        reorder = pressed_column_x_drag <= swap_column_c.X1 + swap_column_c.Width / 2;
-                    } else if (swap_column_c.Index > pressed_column_index) {
-                        // Moving from left to right
-                        reorder = pressed_column_x_drag + column_cache[pressed_column_index].Width >= 
-                            swap_column_c.X1 + swap_column_c.Width / 2;
-                    }
-                    
-                    if (reorder) {
-                        int actual_pressed_index = ColumnController.IndexOf (column_cache[pressed_column_index].Column);
-                        int actual_swap_index = ColumnController.IndexOf (swap_column_c.Column);
-                        ColumnController.Reorder (actual_pressed_index, actual_swap_index);
-                        pressed_column_index = swap_column_c.Index;
-                        RegenerateColumnCache ();
-                    }
-                }
-                
-                pressed_column_x_drag = x - pressed_column_x_offset;
-                
-                QueueDraw ();
+            pressed_column_x = x;
+            
+            if (OnMotionNotifyEvent (x)) {
                 return true;
             }
             
@@ -427,9 +408,56 @@ namespace Hyena.Data.Gui
                 : null;
             
             if (resizing_column_index >= 0) {
-                ResizeColumn ((double)x);
+                ResizeColumn (x);
             }
             
+            return true;
+        }
+        
+        private bool OnMotionNotifyEvent (int x)
+        {
+            if (!pressed_column_is_dragging) {
+                return false;
+            }
+            
+            OnDragScroll (OnDragHScrollTimeout, header_interaction_alloc.Width * 0.1, header_interaction_alloc.Width, x);
+            
+            GdkWindow.Cursor = drag_cursor;
+            
+            Column swap_column = GetColumnAt (x);
+            
+            if (swap_column != null) {
+                CachedColumn swap_column_c = GetCachedColumnForColumn (swap_column);
+                bool reorder = false;
+                
+                if (swap_column_c.Index < pressed_column_index) {
+                    // Moving from right to left
+                    reorder = pressed_column_x_drag <= swap_column_c.X1 + swap_column_c.Width / 2;
+                } else if (swap_column_c.Index > pressed_column_index) {
+                    // Moving from left to right
+                    reorder = pressed_column_x_drag + column_cache[pressed_column_index].Width >= 
+                        swap_column_c.X1 + swap_column_c.Width / 2;
+                }
+                
+                if (reorder) {
+                    int actual_pressed_index = ColumnController.IndexOf (column_cache[pressed_column_index].Column);
+                    int actual_swap_index = ColumnController.IndexOf (swap_column_c.Column);
+                    ColumnController.Reorder (actual_pressed_index, actual_swap_index);
+                    pressed_column_index = swap_column_c.Index;
+                    RegenerateColumnCache ();
+                }
+            }
+            
+            pressed_column_x_drag = x - pressed_column_x_offset - (pressed_column_x_start_hadjustment - (int)hadjustment.Value);
+            
+            QueueDraw ();
+            return true;
+        }
+        
+        private bool OnDragHScrollTimeout ()
+        {
+            ScrollTo (hadjustment, hadjustment.Value + (drag_scroll_velocity * drag_scroll_velocity_max));
+            OnMotionNotifyEvent (pressed_column_x);
             return true;
         }
         
@@ -484,10 +512,27 @@ namespace Hyena.Data.Gui
 
 #region Adjustments & Scrolling
         
+        private void UpdateAdjustments ()
+        {
+            UpdateAdjustments (null, null);
+        }
+        
         private void UpdateAdjustments (Adjustment hadj, Adjustment vadj)
         {
+            if (hadj != null) {
+                hadjustment = hadj;
+            }
+            
             if (vadj != null) {
                 vadjustment = vadj;
+            }
+            
+            if (hadjustment != null) {
+                hadjustment.Upper = header_width;
+                hadjustment.StepIncrement = 10.0;
+                if (hadjustment.Value + hadjustment.PageSize > hadjustment.Upper) {
+                    hadjustment.Value = hadjustment.Upper - hadjustment.PageSize;
+                }
             }
             
             if (vadjustment != null && model != null) {
@@ -495,17 +540,29 @@ namespace Hyena.Data.Gui
                 vadjustment.StepIncrement = RowHeight;
             }
             
+            hadjustment.Change ();
             vadjustment.Change ();
         }
         
-        private void OnAdjustmentChanged (object o, EventArgs args)
+        private void OnHadjustmentChanged (object o, EventArgs args)
+        {
+            InvalidateHeader ();
+            InvalidateList (false);
+        }
+        
+        private void OnVadjustmentChanged (object o, EventArgs args)
         {
             InvalidateList (false);
         }
         
-        protected void ScrollTo (double val)
+        public void ScrollTo (double val)
         {
-            vadjustment.Value = Math.Max (0.0, Math.Min (val, vadjustment.Upper - vadjustment.PageSize));
+            ScrollTo (vadjustment, val);
+        }
+        
+        private void ScrollTo (Adjustment adjustment, double val)
+        {
+            adjustment.Value = Math.Max (0.0, Math.Min (val, adjustment.Upper - adjustment.PageSize));
         }
 
         public void ScrollTo (int index)
@@ -520,12 +577,12 @@ namespace Hyena.Data.Gui
                 
         protected override void OnSetScrollAdjustments (Adjustment hadj, Adjustment vadj)
         {
-            if (vadj == null || hadj == null) {
+            if (hadj == null || vadj == null) {
                 return;
             }
             
-            vadj.ValueChanged += OnAdjustmentChanged;
-            hadj.ValueChanged += OnAdjustmentChanged;
+            hadj.ValueChanged += OnHadjustmentChanged;
+            vadj.ValueChanged += OnVadjustmentChanged;
             
             UpdateAdjustments (hadj, vadj);
         }

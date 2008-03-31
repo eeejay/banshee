@@ -1,3 +1,50 @@
+2008-03-31  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:
+	Queue saving of column widths.
+
+	* src/Libraries/Hyena/Hyena.Data/ColumnDescription.cs: Added a
+	WidthChanged event.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs:
+	Better MinWidth math.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: Formatting fixes.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs: Seperate
+	reaction to width changes from visibility changes. Get rid of
+	QueueUpdate since it is no longer used.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	Abstracted out the drag scroll stuff so that it can be used for
+	both the hadjustment and vadjustment.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Call new column resize methods when nessisary. Moved canvas
+	generation into its own method so that it can be done after column
+	resizing.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Loads of fun stuff. Columns now never get smaller than their
+	minimum size. All availible width is used, and when there is no
+	more room, we have an hadjustment. Lots of math to make sure that
+	columns maintain their reletive sizes for as long as possible.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Take the hadjustment into account when rendering.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Added horizontal adjustment. Abstracted some of the
+	OnMotionNotifyEvent stuff so we can send synthetic motion events
+	when the list is automatically scrolling horizontally, but the
+	mouse is not moving.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	Use new UpdateAdjustments override.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Use virtual
+	property rather than private field for ellipsize mode.
+
 2008-03-30  Aaron Bockover  <abock@gnome.org>
 
 	* build/m4/banshee/gstreamer.m4: Link against CDDA base library

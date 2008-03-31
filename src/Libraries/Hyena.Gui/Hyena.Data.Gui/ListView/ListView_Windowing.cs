@@ -80,6 +80,7 @@ namespace Hyena.Data.Gui
             
             OnDragSourceSet ();
             MoveResize (Allocation);
+            RegenerateCanvases ();
         }
         
         protected override void OnUnrealized ()
@@ -131,7 +132,12 @@ namespace Hyena.Data.Gui
             list_interaction_alloc = list_rendering_alloc;
             list_interaction_alloc.Offset (-allocation.X, -allocation.Y);
             
-            int canvas_width = Math.Max (1, list_rendering_alloc.Width);
+            header_width = header_interaction_alloc.Width;
+        }
+        
+        private void RegenerateCanvases ()
+        {
+            int canvas_width = Math.Max (1, header_width);
             int canvas_height = Math.Max (1, RowsInView * RowHeight);
             
             if (canvas_alloc.Width != canvas_width || canvas_alloc.Height != canvas_height) {
@@ -159,8 +165,8 @@ namespace Hyena.Data.Gui
             if (Theme == null) {
                 return;
             }
-            requisition.Width = Theme.InnerBorderWidth * 2;
-            requisition.Height = HeaderHeight;
+            requisition.Width = Theme.TotalBorderWidth * 2;
+            requisition.Height = HeaderHeight + Theme.TotalBorderWidth * 2;
         }
         
         protected override void OnSizeAllocated (Rectangle allocation)
@@ -172,11 +178,16 @@ namespace Hyena.Data.Gui
             }
             
             MoveResize (allocation);
+            RecalculateColumnSizes ();
+            RegenerateColumnCache ();
+            RegenerateCanvases ();
            
             if (vadjustment != null) {
+                hadjustment.PageSize = header_interaction_alloc.Width;
+                hadjustment.PageIncrement = header_interaction_alloc.Width;
                 vadjustment.PageSize = list_rendering_alloc.Height;
                 vadjustment.PageIncrement = list_rendering_alloc.Height;
-                UpdateAdjustments (null, null);
+                UpdateAdjustments ();
             }
             
             ICareAboutView model = Model as ICareAboutView;
@@ -184,7 +195,6 @@ namespace Hyena.Data.Gui
                 model.RowsInView = RowsInView;
             }
             
-            RegenerateColumnCache ();
             InvalidateList (false);
         }
         

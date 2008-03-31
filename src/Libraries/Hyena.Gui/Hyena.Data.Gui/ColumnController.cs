@@ -43,7 +43,16 @@ namespace Hyena.Data.Gui
         
         public event EventHandler Updated;
         
-        protected virtual void OnUpdated ()
+        protected virtual void OnVisibilitiesChanged ()
+        {
+            OnUpdated ();
+        }
+        
+        protected virtual void OnWidthsChanged ()
+        {
+        }
+        
+        protected void OnUpdated ()
         {
             EventHandler handler = Updated;
             if (handler != null) {
@@ -51,16 +60,12 @@ namespace Hyena.Data.Gui
             }
         }
         
-        public virtual void QueueUpdate ()
-        {
-            OnUpdated ();
-        }
-        
         public void Clear ()
         {
             lock (this) {
                 foreach (Column column in columns) {
                     column.VisibilityChanged -= OnColumnVisibilityChanged;
+                    column.WidthChanged -= OnColumnWidthChanged;
                 }
                 columns.Clear ();
             }
@@ -73,6 +78,7 @@ namespace Hyena.Data.Gui
             lock (this) {
                 foreach (Column column in range) {
                     column.VisibilityChanged += OnColumnVisibilityChanged;
+                    column.WidthChanged += OnColumnWidthChanged;
                 }
                 columns.AddRange (range);
             }
@@ -84,6 +90,7 @@ namespace Hyena.Data.Gui
         {
             lock (this) {
                 column.VisibilityChanged += OnColumnVisibilityChanged;
+                column.WidthChanged += OnColumnWidthChanged;
                 columns.Add (column);
             }
             
@@ -94,6 +101,7 @@ namespace Hyena.Data.Gui
         {
             lock (this) {
                 column.VisibilityChanged += OnColumnVisibilityChanged;
+                column.WidthChanged += OnColumnWidthChanged;
                 columns.Insert (index, column);
             }
             
@@ -104,6 +112,7 @@ namespace Hyena.Data.Gui
         {
             lock (this) {
                 column.VisibilityChanged -= OnColumnVisibilityChanged;
+                column.WidthChanged -= OnColumnWidthChanged;
                 columns.Remove (column);
             }
             
@@ -115,6 +124,7 @@ namespace Hyena.Data.Gui
             lock (this) {
                 Column column = columns[index];
                 column.VisibilityChanged -= OnColumnVisibilityChanged;
+                column.WidthChanged -= OnColumnWidthChanged;
                 columns.RemoveAt (index);
             }
             
@@ -156,7 +166,12 @@ namespace Hyena.Data.Gui
         
         private void OnColumnVisibilityChanged (object o, EventArgs args)
         {
-            OnUpdated ();
+            OnVisibilitiesChanged ();
+        }
+        
+        private void OnColumnWidthChanged (object o, EventArgs args)
+        {
+            OnWidthsChanged ();
         }
         
         public Column this[int index] {

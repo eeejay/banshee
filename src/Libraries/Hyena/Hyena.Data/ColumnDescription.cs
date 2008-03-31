@@ -38,6 +38,7 @@ namespace Hyena.Data
         private string property;
         
         public event EventHandler VisibilityChanged;
+        public event EventHandler WidthChanged;
         
         public ColumnDescription (string property, string title, double width) : this (property, title, width, true)
         {
@@ -59,6 +60,14 @@ namespace Hyena.Data
             }
         }
         
+        protected virtual void OnWidthChanged ()
+        {
+            EventHandler handler = WidthChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+        
         public string Title {
             get { return title; }
             set { title = value; }
@@ -66,7 +75,14 @@ namespace Hyena.Data
         
         public double Width {
             get { return width; }
-            set { width = value; }
+            set {
+                double old = width;
+                width = value;
+                
+                if (value != old) {
+                    OnWidthChanged ();
+                }
+            }
         }
         
         public string Property {
@@ -81,7 +97,7 @@ namespace Hyena.Data
                 visible = value;
                 
                 if(value != old) {
-                    OnVisibilityChanged();
+                    OnVisibilityChanged ();
                 }
             }
         }

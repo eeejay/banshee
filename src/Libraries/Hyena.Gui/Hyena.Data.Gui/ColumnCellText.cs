@@ -54,7 +54,7 @@ namespace Hyena.Data.Gui
             context.Layout.Width = (int)((cellWidth - 8) * Pango.Scale.PangoScale);
             context.Layout.FontDescription = context.Widget.PangoContext.FontDescription.Copy ();
             context.Layout.FontDescription.Weight = font_weight;
-            context.Layout.Ellipsize = ellipsize_mode;
+            context.Layout.Ellipsize = EllipsizeMode;
             
             context.Layout.SetText (Text);
             context.Layout.GetPixelSize (out text_width, out text_height);

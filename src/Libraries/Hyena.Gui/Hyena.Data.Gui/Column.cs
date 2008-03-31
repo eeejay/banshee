@@ -114,14 +114,12 @@ namespace Hyena.Data.Gui
             set { header_cell = value; }
         }
         
-        public int MinWidth
-        {
+        public int MinWidth {
             get { return minWidth; }
             set { minWidth = value; }
         }
 
-        internal double MinRelativeWidth
-        {
+        internal double MinRelativeWidth {
             get { return minRelativeWidth; }
             set { minRelativeWidth = value; }
         }
@@ -131,8 +129,7 @@ namespace Hyena.Data.Gui
             set { maxWidth = value; }
         }
 
-        public double RelativeWidth
-        {
+        public double RelativeWidth {
             get { return relativeWidth; }
             set { relativeWidth = value; }
         }
