@@ -1,3 +1,25 @@
+2008-03-31  Aaron Bockover  <abock@gnome.org>
+	
+	* libbanshee/banshee-player-cdda.h: Split out all of the special code
+	for handling CDDA nicely into a separate easy to maintain file; fixes
+	some CDDA bugs and is documented so I don't forget why I wrote half
+	this crap again
+	
+	* libbanshee/banshee-player.c: Renamed a lot of stuff to be less confusing
+	with actual GStreamer API, uses bp_ function prefix and BansheePlayer 
+	prefix for structs and callbacks
+
+	* libbanshee/banshee-player.h: Split out some stuff to a proper header 
+	file even though it should never be used outside of p/invoke from managed
+
+	* libbanshee/gst-tagger.c:
+	* libbanshee/gst-tagger.h: Nuked, this code has never actually been used
+	since we use a fully managed tagging solution (TagLibg#) - it's just been
+	library bloat for a couple of years - awesome
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs: 
+	Updated to call into the new bp_ functions
+
 2008-03-31  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:

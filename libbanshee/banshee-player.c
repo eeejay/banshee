@@ -26,89 +26,38 @@
  *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
  *  DEALINGS IN THE SOFTWARE.
  */
+
+#define _BANSHEE_PLAYER_C
  
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <glib.h>
-#include <glib/gstdio.h>
-
-#include <gst/gst.h>
-
-#ifdef HAVE_GST_PBUTILS
-#  include <gst/pbutils/pbutils.h>
-#endif
-
-#include <gdk/gdk.h>
-#ifdef GDK_WINDOWING_X11
-#include <gdk/gdkx.h>
-#include <gst/interfaces/xoverlay.h>
-#endif
-
-#include "gst-tagger.h"
-
-#define IS_GST_PLAYBACK(e) (e != NULL)
-#define SET_CALLBACK(cb_name) { if(engine != NULL) { engine->cb_name = cb; } }
-
-typedef struct GstPlayback GstPlayback;
-
-typedef void (* GstPlaybackEosCallback) (GstPlayback *engine);
-typedef void (* GstPlaybackErrorCallback) (GstPlayback *engine, 
-    GQuark domain, gint code, const gchar *error, const gchar *debug);
-typedef void (* GstPlaybackStateChangedCallback) (
-    GstPlayback *engine, GstState old_state, 
-    GstState new_state, GstState pending_state);
-typedef void (* GstPlaybackIterateCallback) (GstPlayback *engine);
-typedef void (* GstPlaybackBufferingCallback) (GstPlayback *engine, gint buffering_progress);
-
-struct GstPlayback {
-    GstElement *playbin;
-    GstElement *audiotee;
-    GstElement *audiobin;
-    GstElement *equalizer;
-    GstElement *preamp;
-    
-    GMutex *mutex;
-
-    #ifdef GDK_WINDOWING_X11
-    GstXOverlay *xoverlay;
-    GdkWindow *video_window;
-    #endif
-
-    guint iterate_timeout_id;
-    gchar *cdda_device;
-    
-    GstState target_state;
-    gboolean buffering;
-    
-    GstPlaybackEosCallback eos_cb;
-    GstPlaybackErrorCallback error_cb;
-    GstPlaybackStateChangedCallback state_changed_cb;
-    GstPlaybackIterateCallback iterate_cb;
-    GstPlaybackBufferingCallback buffering_cb;
-    GstTaggerTagFoundCallback tag_found_cb;
-    
-    GdkWindow *window;
-    GSList *missing_element_details;
-    gboolean install_plugins_noprompt;
-    
-    #ifdef HAVE_GST_PBUTILS
-    GstInstallPluginsContext *install_plugins_context;
-    #endif
-};
+#include "banshee-player.h"
+#include "banshee-player-cdda.h"
 
 #ifdef GDK_WINDOWING_X11
-static gboolean gst_playback_find_xoverlay (GstPlayback *engine);
+static gboolean bp_find_xoverlay (BansheePlayer *player);
 #endif
+
+static void
+bp_process_tag(const GstTagList *tag_list, const gchar *tag_name, BansheePlayer *player)
+{
+    const GValue *value;
+    gint value_count;
+
+    value_count = gst_tag_list_get_tag_size(tag_list, tag_name);
+    if(value_count < 1) {
+        return;
+    }
+    
+    value = gst_tag_list_get_value_index(tag_list, tag_name, 0);
+
+    if(player != NULL && player->tag_found_cb != NULL) {
+        player->tag_found_cb(player, tag_name, value);
+    }
+}
 
 // private methods
 
 static void
-gst_playback_nuke_slist(GSList *list)
+bp_nuke_slist(GSList *list)
 {   
     GSList *node = list;
     
@@ -120,26 +69,26 @@ gst_playback_nuke_slist(GSList *list)
 }
 
 static void
-gst_playback_destroy_pipeline(GstPlayback *engine)
+bp_destroy_pipeline(BansheePlayer *player)
 {
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
     
-    if(engine->playbin == NULL) {
+    if(player->playbin == NULL) {
         return;
     }
     
-    if(GST_IS_ELEMENT(engine->playbin)) {
-        engine->target_state = GST_STATE_NULL;
-        gst_element_set_state(engine->playbin, GST_STATE_NULL);
-        gst_object_unref(GST_OBJECT(engine->playbin));
+    if(GST_IS_ELEMENT(player->playbin)) {
+        player->target_state = GST_STATE_NULL;
+        gst_element_set_state(player->playbin, GST_STATE_NULL);
+        gst_object_unref(GST_OBJECT(player->playbin));
     }
     
-    engine->playbin = NULL;
+    player->playbin = NULL;
 }
 
 #ifdef HAVE_GST_PBUTILS
 static gchar **
-gst_playback_missing_element_details_vectorize(const GSList *elements)
+bp_missing_element_details_vectorize(const GSList *elements)
 {
     GPtrArray *vector = g_ptr_array_new();
     
@@ -153,67 +102,67 @@ gst_playback_missing_element_details_vectorize(const GSList *elements)
 }
 
 static void
-gst_playback_handle_missing_elements_failed(GstPlayback *engine)
+bp_handle_missing_elements_failed(BansheePlayer *player)
 {
-    gst_playback_nuke_slist(engine->missing_element_details);
-    engine->missing_element_details = NULL;
-    gst_element_set_state(engine->playbin, GST_STATE_READY);
+    bp_nuke_slist(player->missing_element_details);
+    player->missing_element_details = NULL;
+    gst_element_set_state(player->playbin, GST_STATE_READY);
     
-    if(engine->error_cb != NULL) {
-       engine->error_cb(engine, GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN, NULL, NULL);
+    if(player->error_cb != NULL) {
+       player->error_cb(player, GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN, NULL, NULL);
     }
 }
 
 static void
-gst_playback_handle_missing_elements_installer_result(GstInstallPluginsReturn result, gpointer data)
+bp_handle_missing_elements_installer_result(GstInstallPluginsReturn result, gpointer data)
 {
-    GstPlayback *engine = (GstPlayback *)data;
+    BansheePlayer *player = (BansheePlayer *)data;
     
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
     
     // TODO: Actually handle a successful plugin installation
     // if(result == GST_INSTALL_PLUGINS_SUCCESS) {
     // }
     
-    engine->install_plugins_noprompt = TRUE;
+    player->install_plugins_noprompt = TRUE;
     
-    gst_playback_handle_missing_elements_failed(engine);
+    bp_handle_missing_elements_failed(player);
     
-    gst_install_plugins_context_free(engine->install_plugins_context);
-    engine->install_plugins_context = NULL;
+    gst_install_plugins_context_free(player->install_plugins_context);
+    player->install_plugins_context = NULL;
 }
 
 static void
-gst_playback_handle_missing_elements(GstPlayback *engine)
+bp_handle_missing_elements(BansheePlayer *player)
 {
     GstInstallPluginsReturn install_return;
     gchar **details;
     
-    if(engine->install_plugins_context != NULL) {
+    if(player->install_plugins_context != NULL) {
         return;
-    } else if(engine->install_plugins_noprompt) {
-        gst_playback_handle_missing_elements_failed(engine);
+    } else if(player->install_plugins_noprompt) {
+        bp_handle_missing_elements_failed(player);
         return;
     }
     
-    details = gst_playback_missing_element_details_vectorize(engine->missing_element_details);
-    engine->install_plugins_context = gst_install_plugins_context_new();
+    details = bp_missing_element_details_vectorize(player->missing_element_details);
+    player->install_plugins_context = gst_install_plugins_context_new();
     
     #ifdef GDK_WINDOWING_X11
-    if(engine->window != NULL) {
-        gst_install_plugins_context_set_xid(engine->install_plugins_context, 
-        GDK_WINDOW_XWINDOW(engine->window));
+    if(player->window != NULL) {
+        gst_install_plugins_context_set_xid(player->install_plugins_context, 
+        GDK_WINDOW_XWINDOW(player->window));
     }
     #endif
     
-    install_return = gst_install_plugins_async(details, engine->install_plugins_context, 
-        gst_playback_handle_missing_elements_installer_result, engine);
+    install_return = gst_install_plugins_async(details, player->install_plugins_context, 
+        bp_handle_missing_elements_installer_result, player);
     
     if(install_return != GST_INSTALL_PLUGINS_STARTED_OK) {
-        gst_playback_handle_missing_elements_failed(engine);
+        bp_handle_missing_elements_failed(player);
         
-        gst_install_plugins_context_free(engine->install_plugins_context);
-        engine->install_plugins_context = NULL;
+        gst_install_plugins_context_free(player->install_plugins_context);
+        player->install_plugins_context = NULL;
     } 
     
     g_strfreev(details);
@@ -221,11 +170,11 @@ gst_playback_handle_missing_elements(GstPlayback *engine)
 #endif
 
 static gboolean
-gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
+bp_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 {
-    GstPlayback *engine = (GstPlayback *)data;
+    BansheePlayer *player = (BansheePlayer *)data;
 
-    g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
+    g_return_val_if_fail(IS_BANSHEE_PLAYER(player), FALSE);
 
     switch(GST_MESSAGE_TYPE(message)) {
         case GST_MESSAGE_ERROR: {
@@ -239,11 +188,11 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
                 break;
             }
             
-            gst_playback_destroy_pipeline(engine);
+            bp_destroy_pipeline(player);
             
-            if(engine->error_cb != NULL) {
+            if(player->error_cb != NULL) {
                 gst_message_parse_error(message, &error, &debug);
-                engine->error_cb(engine, error->domain, error->code, error->message, debug);
+                player->error_cb(player, error->domain, error->code, error->message, debug);
                 g_error_free(error);
                 g_free(debug);
             }
@@ -254,7 +203,7 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
         #ifdef HAVE_GST_PBUTILS
         case GST_MESSAGE_ELEMENT: {
             if(gst_is_missing_plugin_message(message)) {
-                engine->missing_element_details = g_slist_append(engine->missing_element_details, 
+                player->missing_element_details = g_slist_append(player->missing_element_details, 
                     gst_missing_plugin_message_get_installer_detail(message));
             }
             
@@ -263,8 +212,8 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
         #endif
         
         case GST_MESSAGE_EOS:
-            if(engine->eos_cb != NULL) {
-                engine->eos_cb(engine);
+            if(player->eos_cb != NULL) {
+                player->eos_cb(player);
             }
             break;
         case GST_MESSAGE_STATE_CHANGED: {
@@ -273,14 +222,14 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
             
             #ifdef HAVE_GST_PBUTILS
             if(old == GST_STATE_READY && new == GST_STATE_PAUSED) {
-                if(engine->missing_element_details != NULL) {
-                    gst_playback_handle_missing_elements(engine);
+                if(player->missing_element_details != NULL) {
+                    bp_handle_missing_elements(player);
                 }
             }
             #endif
             
-            if(engine->state_changed_cb != NULL) {
-                engine->state_changed_cb(engine, old, new, pending);
+            if(player->state_changed_cb != NULL) {
+                player->state_changed_cb(player, old, new, pending);
             }
             break;
         }
@@ -295,38 +244,34 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
             }
             
             if(buffering_progress >= 100) {
-                engine->buffering = FALSE;
-                if(engine->target_state == GST_STATE_PLAYING) {
-                    gst_element_set_state(engine->playbin, GST_STATE_PLAYING);
+                player->buffering = FALSE;
+                if(player->target_state == GST_STATE_PLAYING) {
+                    gst_element_set_state(player->playbin, GST_STATE_PLAYING);
                 }
-            } else if(!engine->buffering && engine->target_state == GST_STATE_PLAYING) {
+            } else if(!player->buffering && player->target_state == GST_STATE_PLAYING) {
                 GstState current_state;
-                gst_element_get_state(engine->playbin, &current_state, NULL, 0);
+                gst_element_get_state(player->playbin, &current_state, NULL, 0);
                 if(current_state == GST_STATE_PLAYING) {
-                    gst_element_set_state(engine->playbin, GST_STATE_PAUSED);
+                    gst_element_set_state(player->playbin, GST_STATE_PAUSED);
                 }
-                engine->buffering = TRUE;
+                player->buffering = TRUE;
             } 
 
-            if(engine->buffering_cb != NULL) {
-                engine->buffering_cb(engine, buffering_progress);
+            if(player->buffering_cb != NULL) {
+                player->buffering_cb(player, buffering_progress);
             }
         }
         case GST_MESSAGE_TAG: {
             GstTagList *tags;
-            GstTaggerInvoke invoke;
             
             if(GST_MESSAGE_TYPE(message) != GST_MESSAGE_TAG) {
                 break;
             }
             
-            invoke.callback = engine->tag_found_cb;
-            invoke.user_data = engine;
-            
             gst_message_parse_tag(message, &tags);
             
             if(GST_IS_TAG_LIST(tags)) {
-                gst_tag_list_foreach(tags, (GstTagForeachFunc)gst_tagger_process_tag, &invoke);
+                gst_tag_list_foreach(tags, (GstTagForeachFunc)bp_process_tag, player);
                 gst_tag_list_free(tags);
             }
             break;
@@ -339,81 +284,23 @@ gst_playback_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 }
 
 static void
-gst_playback_on_notify_source_cb(GstElement *playbin, gpointer unknown, GstPlayback *engine)
+bp_video_sink_element_added (GstBin *videosink, GstElement *element, BansheePlayer *player)
 {
-    GstElement *source_element = NULL;
-    
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
-    
-    if(engine->cdda_device == NULL) {
-        return;
-    }
-    
-    g_object_get(playbin, "source", &source_element, NULL);
-    if(source_element == NULL) {
-        return;
-    }
-    
-    if(g_object_class_find_property(G_OBJECT_GET_CLASS(source_element), "paranoia-mode") &&
-        g_object_class_find_property(G_OBJECT_GET_CLASS(source_element), "device")) {
-        g_object_set(source_element, "paranoia-mode", 0, NULL);
-        g_object_set(source_element, "device", engine->cdda_device, NULL);
-    }
-    
-    g_object_unref(source_element);
-}
-
-static gboolean
-gst_playback_cdda_source_set_track(GstElement *playbin, guint track)
-{
-    static GstFormat format = 0;
-    GstElement *source_element = NULL;
-    GstState state;
-    
-    gst_element_get_state(playbin, &state, NULL, 0);
-    if(state < GST_STATE_PAUSED) {
-        return FALSE;
-    }
-
-    g_object_get(playbin, "source", &source_element, NULL);
-    if(source_element == NULL) {
-        return FALSE;
-    }
-    
-    if(strcmp(G_OBJECT_TYPE_NAME(source_element), "GstCdParanoiaSrc") == 0) {
-        if(format == 0) {
-            format = gst_format_get_by_nick("track");
-        }
-        
-        if(gst_element_seek(playbin, 1.0, format, GST_SEEK_FLAG_FLUSH,
-            GST_SEEK_TYPE_SET, track - 1, GST_SEEK_TYPE_NONE, -1)) {
-            g_object_unref(source_element);
-            return TRUE;
-        }
-    }
-    
-    g_object_unref(source_element);
-    return FALSE;
-}
-
-static void
-gst_playback_video_sink_element_added (GstBin *videosink, GstElement *element, GstPlayback *engine)
-{
-    g_return_if_fail (IS_GST_PLAYBACK (engine));
+    g_return_if_fail (IS_BANSHEE_PLAYER (player));
 
     #ifdef GDK_WINDOWING_X11
-    g_mutex_lock (engine->mutex);
-    gst_playback_find_xoverlay (engine);
-    g_mutex_unlock (engine->mutex);    
+    g_mutex_lock (player->mutex);
+    bp_find_xoverlay (player);
+    g_mutex_unlock (player->mutex);    
     #endif
 }
 
 static void
-gst_playback_bus_element_sync_message (GstBus *bus, GstMessage *message, GstPlayback *engine)
+bp_bus_element_sync_message (GstBus *bus, GstMessage *message, BansheePlayer *player)
 {
     gboolean found_xoverlay;
     
-    g_return_if_fail (IS_GST_PLAYBACK (engine));
+    g_return_if_fail (IS_BANSHEE_PLAYER (player));
 
     #ifdef GDK_WINDOWING_X11
 
@@ -421,19 +308,19 @@ gst_playback_bus_element_sync_message (GstBus *bus, GstMessage *message, GstPlay
         return;
     }
 
-    g_mutex_lock (engine->mutex);
-    found_xoverlay = gst_playback_find_xoverlay (engine);
-    g_mutex_unlock (engine->mutex);
+    g_mutex_lock (player->mutex);
+    found_xoverlay = bp_find_xoverlay (player);
+    g_mutex_unlock (player->mutex);
 
     if (found_xoverlay) {
-        gst_x_overlay_set_xwindow_id (engine->xoverlay, GDK_WINDOW_XWINDOW (engine->video_window));
+        gst_x_overlay_set_xwindow_id (player->xoverlay, GDK_WINDOW_XWINDOW (player->video_window));
     }
 
     #endif
 }
 
 static gboolean 
-gst_playback_construct(GstPlayback *engine)
+bp_construct(BansheePlayer *player)
 {
     GstBus *bus;
     GstElement *videosink;
@@ -442,11 +329,11 @@ gst_playback_construct(GstPlayback *engine)
     //GstElement *audioconvert;
     GstPad *teepad;
     
-    g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
+    g_return_val_if_fail(IS_BANSHEE_PLAYER(player), FALSE);
     
     // create necessary elements
-    engine->playbin = gst_element_factory_make("playbin", "playbin");
-    g_return_val_if_fail(engine->playbin != NULL, FALSE);
+    player->playbin = gst_element_factory_make("playbin", "playbin");
+    g_return_val_if_fail(player->playbin != NULL, FALSE);
 
     audiosink = gst_element_factory_make("gconfaudiosink", "audiosink");
     g_return_val_if_fail(audiosink != NULL, FALSE);
@@ -456,51 +343,51 @@ gst_playback_construct(GstPlayback *engine)
         g_object_set(G_OBJECT(audiosink), "profile", 1, NULL);
     }
     
-    engine->audiobin = gst_bin_new("audiobin");
-    g_return_val_if_fail(engine->audiobin != NULL, FALSE);
+    player->audiobin = gst_bin_new("audiobin");
+    g_return_val_if_fail(player->audiobin != NULL, FALSE);
     
-    engine->audiotee = gst_element_factory_make("tee", "audiotee");
-    g_return_val_if_fail(engine->audiotee != NULL, FALSE);
+    player->audiotee = gst_element_factory_make("tee", "audiotee");
+    g_return_val_if_fail(player->audiotee != NULL, FALSE);
     
     audiosinkqueue = gst_element_factory_make("queue", "audiosinkqueue");
     g_return_val_if_fail(audiosinkqueue != NULL, FALSE);
     
     //audioconvert = gst_element_factory_make("audioconvert", "audioconvert");
-    //engine->equalizer = gst_element_factory_make("equalizer-10bands", "equalizer-10bands");
-    //engine->preamp = gst_element_factory_make("volume", "preamp");
+    //player->equalizer = gst_element_factory_make("equalizer-10bands", "equalizer-10bands");
+    //player->preamp = gst_element_factory_make("volume", "preamp");
     
     // add elements to custom audio sink
-    gst_bin_add(GST_BIN(engine->audiobin), engine->audiotee);
-    //if(engine->equalizer != NULL) {
-    //    gst_bin_add(GST_BIN(engine->audiobin), audioconvert);
-    //    gst_bin_add(GST_BIN(engine->audiobin), engine->equalizer);
-    //    gst_bin_add(GST_BIN(engine->audiobin), engine->preamp);
+    gst_bin_add(GST_BIN(player->audiobin), player->audiotee);
+    //if(player->equalizer != NULL) {
+    //    gst_bin_add(GST_BIN(player->audiobin), audioconvert);
+    //    gst_bin_add(GST_BIN(player->audiobin), player->equalizer);
+    //    gst_bin_add(GST_BIN(player->audiobin), player->preamp);
     //}
-    gst_bin_add(GST_BIN(engine->audiobin), audiosinkqueue);
-    gst_bin_add(GST_BIN(engine->audiobin), audiosink);
+    gst_bin_add(GST_BIN(player->audiobin), audiosinkqueue);
+    gst_bin_add(GST_BIN(player->audiobin), audiosink);
    
     // ghost pad the audio bin
-    teepad = gst_element_get_pad(engine->audiotee, "sink");
-    gst_element_add_pad(engine->audiobin, gst_ghost_pad_new("sink", teepad));
+    teepad = gst_element_get_pad(player->audiotee, "sink");
+    gst_element_add_pad(player->audiobin, gst_ghost_pad_new("sink", teepad));
     gst_object_unref(teepad);
 
     // link the tee/queue pads for the default
-    gst_pad_link(gst_element_get_request_pad(engine->audiotee, "src0"), 
+    gst_pad_link(gst_element_get_request_pad(player->audiotee, "src0"), 
         gst_element_get_pad(audiosinkqueue, "sink"));
 
-    //if (engine->equalizer != NULL)
+    //if (player->equalizer != NULL)
     //{
     //    //link in equalizer, preamp and audioconvert.
-    //    gst_element_link(audiosinkqueue, engine->preamp);
-    //    gst_element_link(engine->preamp, engine->equalizer);
-    //    gst_element_link(engine->equalizer, audioconvert);
+    //    gst_element_link(audiosinkqueue, player->preamp);
+    //    gst_element_link(player->preamp, player->equalizer);
+    //    gst_element_link(player->equalizer, audioconvert);
     //    gst_element_link(audioconvert, audiosink);
     //} else {
     //    // link the queue with the real audio sink
         gst_element_link(audiosinkqueue, audiosink);
     //}
     
-    g_object_set (G_OBJECT (engine->playbin), "audio-sink", engine->audiobin, NULL);
+    g_object_set (G_OBJECT (player->playbin), "audio-sink", player->audiobin, NULL);
     
     videosink = gst_element_factory_make ("gconfvideosink", "videosink");
     if (videosink == NULL) {
@@ -513,261 +400,233 @@ gst_playback_construct(GstPlayback *engine)
         }
     }
     
-    g_object_set (G_OBJECT (engine->playbin), "video-sink", videosink, NULL);
+    g_object_set (G_OBJECT (player->playbin), "video-sink", videosink, NULL);
 
-    bus = gst_pipeline_get_bus (GST_PIPELINE (engine->playbin));
+    bus = gst_pipeline_get_bus (GST_PIPELINE (player->playbin));
     
-    gst_bus_add_watch (bus, gst_playback_bus_callback, engine);
-    gst_bus_set_sync_handler (bus, gst_bus_sync_signal_handler, engine);
+    gst_bus_add_watch (bus, bp_bus_callback, player);
+    gst_bus_set_sync_handler (bus, gst_bus_sync_signal_handler, player);
 
     g_signal_connect (bus, "sync-message::element", 
-        G_CALLBACK (gst_playback_bus_element_sync_message), engine);
+        G_CALLBACK (bp_bus_element_sync_message), player);
 
-    g_signal_connect (engine->playbin, "notify::source", 
-        G_CALLBACK (gst_playback_on_notify_source_cb), engine);
+    g_signal_connect (player->playbin, "notify::source", G_CALLBACK (bp_cdda_on_notify_source), player);
     
     if (GST_IS_BIN (videosink)) {
         g_signal_connect (videosink, "element-added",
-            G_CALLBACK (gst_playback_video_sink_element_added), engine);
+            G_CALLBACK (bp_video_sink_element_added), player);
     }
 
     return TRUE;
 }
 
 static gboolean
-gst_playback_iterate_timeout(GstPlayback *engine)
+bp_iterate_timeout(BansheePlayer *player)
 {
-    g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
+    g_return_val_if_fail(IS_BANSHEE_PLAYER(player), FALSE);
     
-    if(engine->iterate_cb != NULL) {
-        engine->iterate_cb(engine);
+    if(player->iterate_cb != NULL) {
+        player->iterate_cb(player);
     }
     
     return TRUE;
 }
 
 static void
-gst_playback_start_iterate_timeout(GstPlayback *engine)
+bp_start_iterate_timeout(BansheePlayer *player)
 {
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
 
-    if(engine->iterate_timeout_id != 0) {
+    if(player->iterate_timeout_id != 0) {
         return;
     }
     
-    engine->iterate_timeout_id = g_timeout_add(200, 
-        (GSourceFunc)gst_playback_iterate_timeout, engine);
+    player->iterate_timeout_id = g_timeout_add(200, 
+        (GSourceFunc)bp_iterate_timeout, player);
 }
 
 static void
-gst_playback_stop_iterate_timeout(GstPlayback *engine)
+bp_stop_iterate_timeout(BansheePlayer *player)
 {
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
     
-    if(engine->iterate_timeout_id == 0) {
+    if(player->iterate_timeout_id == 0) {
         return;
     }
     
-    g_source_remove(engine->iterate_timeout_id);
-    engine->iterate_timeout_id = 0;
+    g_source_remove(player->iterate_timeout_id);
+    player->iterate_timeout_id = 0;
 }
 
 // public methods
 
-GstPlayback *
-gst_playback_new()
+BansheePlayer *
+bp_new()
 {
-    GstPlayback *engine = g_new0(GstPlayback, 1);
+    BansheePlayer *player = g_new0(BansheePlayer, 1);
     
-    engine->mutex = g_mutex_new ();
+    player->mutex = g_mutex_new ();
     
-    if(!gst_playback_construct(engine)) {
-        g_free(engine);
+    if(!bp_construct(player)) {
+        g_free(player);
         return NULL;
     }
     
-    return engine;
+    return player;
 }
 
 void
-gst_playback_free(GstPlayback *engine)
+bp_free(BansheePlayer *player)
 {
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
     
-    g_mutex_free (engine->mutex);
+    g_mutex_free (player->mutex);
     
-    if(GST_IS_OBJECT(engine->playbin)) {
-        engine->target_state = GST_STATE_NULL;
-        gst_element_set_state(engine->playbin, GST_STATE_NULL);
-        gst_object_unref(GST_OBJECT(engine->playbin));
+    if(GST_IS_OBJECT(player->playbin)) {
+        player->target_state = GST_STATE_NULL;
+        gst_element_set_state(player->playbin, GST_STATE_NULL);
+        gst_object_unref(GST_OBJECT(player->playbin));
     }
     
-    if(engine->cdda_device != NULL) {
-        g_free(engine->cdda_device);
-        engine->cdda_device = NULL;
+    if(player->cdda_device != NULL) {
+        g_free(player->cdda_device);
+        player->cdda_device = NULL;
     }
     
-    gst_playback_nuke_slist(engine->missing_element_details);
-    engine->missing_element_details = NULL;
+    bp_nuke_slist(player->missing_element_details);
+    player->missing_element_details = NULL;
     
     #ifdef HAVE_GST_PBUTILS
-    if(engine->install_plugins_context != NULL) {
-        gst_install_plugins_context_free(engine->install_plugins_context);
-        engine->install_plugins_context = NULL;
+    if(player->install_plugins_context != NULL) {
+        gst_install_plugins_context_free(player->install_plugins_context);
+        player->install_plugins_context = NULL;
     }
     #endif
     
-    g_free(engine);
-    engine = NULL;
+    g_free(player);
+    player = NULL;
 }
 
 void
-gst_playback_set_eos_callback(GstPlayback *engine, 
-    GstPlaybackEosCallback cb)
+bp_set_eos_callback(BansheePlayer *player, 
+    BansheePlayerEosCallback cb)
 {
     SET_CALLBACK(eos_cb);
 }
 
 void
-gst_playback_set_error_callback(GstPlayback *engine, 
-    GstPlaybackErrorCallback cb)
+bp_set_error_callback(BansheePlayer *player, 
+    BansheePlayerErrorCallback cb)
 {
     SET_CALLBACK(error_cb);
 }
 
 void
-gst_playback_set_state_changed_callback(GstPlayback *engine, 
-    GstPlaybackStateChangedCallback cb)
+bp_set_state_changed_callback(BansheePlayer *player, 
+    BansheePlayerStateChangedCallback cb)
 {
     SET_CALLBACK(state_changed_cb);
 }
 
 void
-gst_playback_set_iterate_callback(GstPlayback *engine, 
-    GstPlaybackIterateCallback cb)
+bp_set_iterate_callback(BansheePlayer *player, 
+    BansheePlayerIterateCallback cb)
 {
     SET_CALLBACK(iterate_cb);
 }
 
 void
-gst_playback_set_buffering_callback(GstPlayback *engine, 
-    GstPlaybackBufferingCallback cb)
+bp_set_buffering_callback(BansheePlayer *player, 
+    BansheePlayerBufferingCallback cb)
 {
     SET_CALLBACK(buffering_cb);
 }
 
 void
-gst_playback_set_tag_found_callback(GstPlayback *engine, 
-    GstTaggerTagFoundCallback cb)
+bp_set_tag_found_callback(BansheePlayer *player, 
+    BansheePlayerTagFoundCallback cb)
 {
     SET_CALLBACK(tag_found_cb);
 }
 
 void
-gst_playback_open(GstPlayback *engine, const gchar *uri)
+bp_open(BansheePlayer *player, const gchar *uri)
 {
     GstState state;
     
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
     
-    if(engine->playbin == NULL && !gst_playback_construct(engine)) {
+    if(player->playbin == NULL && !bp_construct(player)) {
         return;
     }
 
-    if(uri != NULL && g_str_has_prefix(uri, "cdda://")) {
-        const gchar *p = g_utf8_strchr(uri, -1, '#');
-        const gchar *new_cdda_device;
-        
-        if(p != NULL) {
-            new_cdda_device = p + 1;
-            
-            if(engine->cdda_device == NULL) {
-                engine->cdda_device = g_strdup(new_cdda_device);
-            } else if(strcmp(new_cdda_device, engine->cdda_device) == 0) {
-                guint track_num;
-                gchar *track_str = g_strndup(uri + 7, strlen(uri) - strlen(new_cdda_device) - 8);
-                track_num = atoi(track_str);
-                g_free(track_str);
-                
-                if(gst_playback_cdda_source_set_track(engine->playbin, track_num)) {
-                    return;
-                }
-            } else {
-                if(engine->cdda_device != NULL) {
-                    g_free(engine->cdda_device);
-                    engine->cdda_device = NULL;
-                }
-            
-                engine->cdda_device = g_strdup(new_cdda_device);
-            }
-        }
-    } else if(engine->cdda_device != NULL) {
-        g_free(engine->cdda_device);
-        engine->cdda_device = NULL;
+    if (bp_cdda_handle_uri (player, uri)) {
+        return;
     }
     
-    gst_element_get_state(engine->playbin, &state, NULL, 0);
+    gst_element_get_state(player->playbin, &state, NULL, 0);
     if(state >= GST_STATE_PAUSED) {
-        engine->target_state = GST_STATE_READY;
-        gst_element_set_state(engine->playbin, GST_STATE_READY);
+        player->target_state = GST_STATE_READY;
+        gst_element_set_state(player->playbin, GST_STATE_READY);
     }
     
-    g_object_set(G_OBJECT(engine->playbin), "uri", uri, NULL);
+    g_object_set(G_OBJECT(player->playbin), "uri", uri, NULL);
 }
 
 void
-gst_playback_stop(GstPlayback *engine)
+bp_stop(BansheePlayer *player, gboolean nullstate)
 {
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
-    gst_playback_stop_iterate_timeout(engine);
-    if(GST_IS_ELEMENT(engine->playbin)) {
-        engine->target_state = GST_STATE_NULL;
-        gst_element_set_state(engine->playbin, GST_STATE_NULL);
+    GstState state = nullstate ? GST_STATE_NULL : GST_STATE_PAUSED;
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
+    bp_stop_iterate_timeout(player);
+    if(GST_IS_ELEMENT(player->playbin)) {
+        player->target_state = state;
+        gst_element_set_state(player->playbin, state);
     }
 }
 
 void
-gst_playback_pause(GstPlayback *engine)
+bp_pause(BansheePlayer *player)
 {
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
-    gst_playback_stop_iterate_timeout(engine);
-    engine->target_state = GST_STATE_PAUSED;
-    gst_element_set_state(engine->playbin, GST_STATE_PAUSED);
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
+    bp_stop_iterate_timeout(player);
+    player->target_state = GST_STATE_PAUSED;
+    gst_element_set_state(player->playbin, GST_STATE_PAUSED);
 }
 
 void
-gst_playback_play(GstPlayback *engine)
+bp_play(BansheePlayer *player)
 {
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
-    engine->target_state = GST_STATE_PLAYING;
-    gst_element_set_state(engine->playbin, GST_STATE_PLAYING);
-    gst_playback_start_iterate_timeout(engine);
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
+    player->target_state = GST_STATE_PLAYING;
+    gst_element_set_state(player->playbin, GST_STATE_PLAYING);
+    bp_start_iterate_timeout(player);
 }
 
 void
-gst_playback_set_volume(GstPlayback *engine, gint volume)
+bp_set_volume(BansheePlayer *player, gint volume)
 {
     gdouble act_volume;
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
     act_volume = CLAMP(volume, 0, 100) / 100.0;
-    g_object_set(G_OBJECT(engine->playbin), "volume", act_volume, NULL);
+    g_object_set(G_OBJECT(player->playbin), "volume", act_volume, NULL);
 }
 
 gint
-gst_playback_get_volume(GstPlayback *engine)
+bp_get_volume(BansheePlayer *player)
 {
     gdouble volume = 0.0;
-    g_return_val_if_fail(IS_GST_PLAYBACK(engine), 0);
-    g_object_get(engine->playbin, "volume", &volume, NULL);
+    g_return_val_if_fail(IS_BANSHEE_PLAYER(player), 0);
+    g_object_get(player->playbin, "volume", &volume, NULL);
     return (gint)(volume * 100.0);
 }
 
 void
-gst_playback_set_position(GstPlayback *engine, guint64 time_ms)
+bp_set_position(BansheePlayer *player, guint64 time_ms)
 {
-    g_return_if_fail(IS_GST_PLAYBACK(engine));
+    g_return_if_fail(IS_BANSHEE_PLAYER(player));
     
-    if(!gst_element_seek(engine->playbin, 1.0, 
+    if(!gst_element_seek(player->playbin, 1.0, 
         GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH,
         GST_SEEK_TYPE_SET, time_ms * GST_MSECOND, 
         GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE)) {
@@ -776,14 +635,14 @@ gst_playback_set_position(GstPlayback *engine, guint64 time_ms)
 }
 
 guint64
-gst_playback_get_position(GstPlayback *engine)
+bp_get_position(BansheePlayer *player)
 {
     GstFormat format = GST_FORMAT_TIME;
     gint64 position;
 
-    g_return_val_if_fail(IS_GST_PLAYBACK(engine), 0);
+    g_return_val_if_fail(IS_BANSHEE_PLAYER(player), 0);
 
-    if(gst_element_query_position(engine->playbin, &format, &position)) {
+    if(gst_element_query_position(player->playbin, &format, &position)) {
         return position / 1000000;
     }
     
@@ -791,14 +650,14 @@ gst_playback_get_position(GstPlayback *engine)
 }
 
 guint64
-gst_playback_get_duration(GstPlayback *engine)
+bp_get_duration(BansheePlayer *player)
 {
     GstFormat format = GST_FORMAT_TIME;
     gint64 duration;
 
-    g_return_val_if_fail(IS_GST_PLAYBACK(engine), 0);
+    g_return_val_if_fail(IS_BANSHEE_PLAYER(player), 0);
 
-    if(gst_element_query_duration(engine->playbin, &format, &duration)) {
+    if(gst_element_query_duration(player->playbin, &format, &duration)) {
         return duration / 1000000;
     }
     
@@ -806,21 +665,21 @@ gst_playback_get_duration(GstPlayback *engine)
 }
 
 gboolean
-gst_playback_can_seek(GstPlayback *engine)
+bp_can_seek(BansheePlayer *player)
 {
     GstQuery *query;
     gboolean can_seek = TRUE;
     
-    g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
-    g_return_val_if_fail(engine->playbin != NULL, FALSE);
+    g_return_val_if_fail(IS_BANSHEE_PLAYER(player), FALSE);
+    g_return_val_if_fail(player->playbin != NULL, FALSE);
     
     query = gst_query_new_seeking(GST_FORMAT_TIME);
-    if(!gst_element_query(engine->playbin, query)) {
+    if(!gst_element_query(player->playbin, query)) {
         // This will probably fail, 100% of the time, because it's apparently 
         // very unimplemented in GStreamer... when it's fixed
         // we will return FALSE here, and show the warning
         // g_warning("Could not query pipeline for seek ability");
-        return gst_playback_get_duration(engine) > 0;
+        return bp_get_duration(player) > 0;
     }
     
     gst_query_parse_seeking(query, NULL, &can_seek, NULL, NULL);
@@ -830,26 +689,26 @@ gst_playback_can_seek(GstPlayback *engine)
 }
 
 gboolean
-gst_playback_get_pipeline_elements(GstPlayback *engine, GstElement **playbin, GstElement **audiobin, 
+bp_get_pipeline_elements(BansheePlayer *player, GstElement **playbin, GstElement **audiobin, 
     GstElement **audiotee)
 {
-    g_return_val_if_fail(IS_GST_PLAYBACK(engine), FALSE);
+    g_return_val_if_fail(IS_BANSHEE_PLAYER(player), FALSE);
     
-    *playbin = engine->playbin;
-    *audiobin = engine->audiobin;
-    *audiotee = engine->audiotee;
+    *playbin = player->playbin;
+    *audiobin = player->audiobin;
+    *audiotee = player->audiotee;
     
     return TRUE;
 }
 
 void
-gst_playback_set_application_gdk_window(GstPlayback *engine, GdkWindow *window)
+bp_set_application_gdk_window(BansheePlayer *player, GdkWindow *window)
 {
-    engine->window = window;
+    player->window = window;
 }
 
 void
-gst_playback_get_error_quarks(GQuark *core, GQuark *library, GQuark *resource, GQuark *stream)
+bp_get_error_quarks(GQuark *core, GQuark *library, GQuark *resource, GQuark *stream)
 {
     *core = GST_CORE_ERROR;
     *library = GST_LIBRARY_ERROR;
@@ -862,24 +721,24 @@ gst_playback_get_error_quarks(GQuark *core, GQuark *library, GQuark *resource, G
 #ifdef GDK_WINDOWING_X11
 
 gboolean
-gst_playback_video_is_supported (GstPlayback *engine)
+bp_video_is_supported (BansheePlayer *player)
 {
-    return TRUE; // gst_playback_find_xoverlay (engine);
+    return TRUE; // bp_find_xoverlay (player);
 }
 
 static gboolean
-gst_playback_find_xoverlay (GstPlayback *engine)
+bp_find_xoverlay (BansheePlayer *player)
 {
     GstElement *video_sink = NULL;
     GstElement *xoverlay;
     GstXOverlay *previous_xoverlay;
 
-    previous_xoverlay = engine->xoverlay;
+    previous_xoverlay = player->xoverlay;
     
-    g_object_get (engine->playbin, "video-sink", &video_sink, NULL);
+    g_object_get (player->playbin, "video-sink", &video_sink, NULL);
     
     if (video_sink == NULL) {
-        engine->xoverlay = NULL;
+        player->xoverlay = NULL;
         if (previous_xoverlay != NULL) {
             gst_object_unref (previous_xoverlay);
         }
@@ -891,71 +750,71 @@ gst_playback_find_xoverlay (GstPlayback *engine)
         ? gst_bin_get_by_interface (GST_BIN (video_sink), GST_TYPE_X_OVERLAY)
         : video_sink;
     
-    engine->xoverlay = GST_IS_X_OVERLAY (xoverlay) ? GST_X_OVERLAY (xoverlay) : NULL;
+    player->xoverlay = GST_IS_X_OVERLAY (xoverlay) ? GST_X_OVERLAY (xoverlay) : NULL;
     
     if (previous_xoverlay != NULL) {
         gst_object_unref (previous_xoverlay);
     }
         
-    if (engine->xoverlay != NULL && g_object_class_find_property (
-        G_OBJECT_GET_CLASS (engine->xoverlay), "force-aspect-ratio")) {
-        g_object_set (G_OBJECT (engine->xoverlay), "force-aspect-ratio", TRUE, NULL);
+    if (player->xoverlay != NULL && g_object_class_find_property (
+        G_OBJECT_GET_CLASS (player->xoverlay), "force-aspect-ratio")) {
+        g_object_set (G_OBJECT (player->xoverlay), "force-aspect-ratio", TRUE, NULL);
     }
 
     gst_object_unref (video_sink);
 
-    return engine->xoverlay != NULL;
+    return player->xoverlay != NULL;
 }
 
 void
-gst_playback_set_video_window (GstPlayback *engine, GdkWindow *window)
+bp_set_video_window (BansheePlayer *player, GdkWindow *window)
 {
-    engine->video_window = window;
+    player->video_window = window;
 }
 
 void
-gst_playback_expose_video_window (GstPlayback *engine, GdkWindow *window, gboolean direct)
+bp_expose_video_window (BansheePlayer *player, GdkWindow *window, gboolean direct)
 {
     XID window_id;
     
-    if (direct && engine->xoverlay != NULL && GST_IS_X_OVERLAY (engine->xoverlay)) {
-        gst_x_overlay_expose (engine->xoverlay);
+    if (direct && player->xoverlay != NULL && GST_IS_X_OVERLAY (player->xoverlay)) {
+        gst_x_overlay_expose (player->xoverlay);
         return;
     }
    
-    g_mutex_lock (engine->mutex);
+    g_mutex_lock (player->mutex);
    
-    if (engine->xoverlay == NULL && !gst_playback_find_xoverlay (engine)) {
-        g_mutex_unlock (engine->mutex);
+    if (player->xoverlay == NULL && !bp_find_xoverlay (player)) {
+        g_mutex_unlock (player->mutex);
         return;
     }
     
-    gst_object_ref (engine->xoverlay);
-    g_mutex_unlock (engine->mutex);
+    gst_object_ref (player->xoverlay);
+    g_mutex_unlock (player->mutex);
 
     window_id = GDK_WINDOW_XWINDOW (window);
 
-    gst_x_overlay_set_xwindow_id (engine->xoverlay, window_id);
-    gst_x_overlay_expose (engine->xoverlay);
+    gst_x_overlay_set_xwindow_id (player->xoverlay, window_id);
+    gst_x_overlay_expose (player->xoverlay);
 
-    gst_object_unref (engine->xoverlay);
+    gst_object_unref (player->xoverlay);
 }
 
 #else
 
 gboolean
-gst_playback_video_is_supported (GstPlayback *engine)
+bp_video_is_supported (BansheePlayer *player)
 {
     return FALSE;
 }
 
 void
-gst_playback_set_video_window (GstPlayback *engine, GdkWindow *window)
+bp_set_video_window (BansheePlayer *player, GdkWindow *window)
 {
 }
 
 void
-gst_playback_expose_video_window (GstPlayback *engine, GdkWindow *window, gboolean direct)
+bp_expose_video_window (BansheePlayer *player, GdkWindow *window, gboolean direct)
 {
 }
 
@@ -964,31 +823,31 @@ gst_playback_expose_video_window (GstPlayback *engine, GdkWindow *window, gboole
 /* Region Equalizer */
 
 gboolean
-gst_equalizer_is_supported(GstPlayback *engine)
+gst_equalizer_is_supported(BansheePlayer *player)
 {
-    return engine != NULL && engine->equalizer != NULL && engine->preamp != NULL;
+    return player != NULL && player->equalizer != NULL && player->preamp != NULL;
 }
 
 void
-gst_equalizer_set_preamp_level(GstPlayback *engine, gdouble level)
+gst_equalizer_set_preamp_level(BansheePlayer *player, gdouble level)
 {
-    if (engine->equalizer != NULL && engine->preamp != NULL)
-        g_object_set (engine->preamp, "volume", level, NULL);
+    if (player->equalizer != NULL && player->preamp != NULL)
+        g_object_set (player->preamp, "volume", level, NULL);
 }
 
 void
-gst_equalizer_set_gain(GstPlayback *engine, guint bandnum, gdouble gain)
+gst_equalizer_set_gain(BansheePlayer *player, guint bandnum, gdouble gain)
 {
-    if (engine->equalizer != NULL) {
+    if (player->equalizer != NULL) {
         GstObject *band;   
-        band = gst_child_proxy_get_child_by_index (GST_CHILD_PROXY (engine->equalizer), bandnum);
+        band = gst_child_proxy_get_child_by_index (GST_CHILD_PROXY (player->equalizer), bandnum);
         g_object_set (band, "gain", gain, NULL);
         g_object_unref (band);
     }
 }
 
 void
-gst_equalizer_get_bandrange(GstPlayback *engine, gint *min, gint *max)
+gst_equalizer_get_bandrange(BansheePlayer *player, gint *min, gint *max)
 {    
     /*
      * NOTE: This only refers to the newer version of the equalizer element.
@@ -1002,18 +861,18 @@ gst_equalizer_get_bandrange(GstPlayback *engine, gint *min, gint *max)
      * If that didn't make any sense, yay for late-night coding. :)
      */
     
-    if (engine->equalizer != NULL) {
+    if (player->equalizer != NULL) {
         GParamSpecDouble *pspec;
         
         // Fetch gain range of first band (since it should be the same for the rest)
-        pspec = (GParamSpecDouble*) g_object_class_find_property (G_OBJECT_GET_CLASS (engine->equalizer), "band0");
+        pspec = (GParamSpecDouble*) g_object_class_find_property (G_OBJECT_GET_CLASS (player->equalizer), "band0");
         if (pspec) {
             // Assume old equalizer.
             *min = pspec->minimum;
             *max = pspec->maximum;
         }
         else {
-            pspec = (GParamSpecDouble*) g_object_class_find_property (G_OBJECT_GET_CLASS (engine->equalizer), "band0::gain");
+            pspec = (GParamSpecDouble*) g_object_class_find_property (G_OBJECT_GET_CLASS (player->equalizer), "band0::gain");
             if (pspec && pspec->maximum == 12) {
                 // New equalizer - return even scale.
                 *min = -12;
@@ -1032,7 +891,7 @@ gst_equalizer_get_bandrange(GstPlayback *engine, gint *min, gint *max)
 }
 
 void
-gst_equalizer_get_frequencies(GstPlayback *engine, gdouble *freq[])
+gst_equalizer_get_frequencies(BansheePlayer *player, gdouble *freq[])
 {
     gint i;
     gdouble bandfreq[10];
@@ -1040,7 +899,7 @@ gst_equalizer_get_frequencies(GstPlayback *engine, gdouble *freq[])
     for(i = 0; i < 10; i++) {
         GstObject *band;
         
-        band = gst_child_proxy_get_child_by_index (GST_CHILD_PROXY (engine->equalizer), i);
+        band = gst_child_proxy_get_child_by_index (GST_CHILD_PROXY (player->equalizer), i);
         g_object_get (G_OBJECT (band), "freq", &bandfreq[i], NULL);
         g_object_unref (band);
     }

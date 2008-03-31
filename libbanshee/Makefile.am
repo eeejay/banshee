@@ -13,10 +13,10 @@ bansheelib_LTLIBRARIES = libbanshee.la
 libbanshee_la_LDFLAGS = -avoid-version -module
 libbanshee_la_SOURCES =  \
 	banshee-player.c \
+	banshee-player-cdda.h \
 	gst-cd-rip-0.10.c \
 	gst-misc-0.10.c \
 	gst-playback.h \
-	gst-tagger.c \
 	gst-transcode-0.10.c
 
 OLD_CODE = \
