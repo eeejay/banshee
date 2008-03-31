@@ -80,6 +80,9 @@ dnl Boo libraries and compiler (optional)
 dnl External TagLib# libraries (optional)
 BANSHEE_CHECK_TAGLIB_SHARP
 
+dnl External Mono.Zeroconf
+BANSHEE_CHECK_MONO_ZEROCONF
+
 dnl Required dependencies (managed/core)
 BANSHEE_CHECK_GTK_SHARP
 BANSHEE_CHECK_GNOME_SHARP
@@ -157,6 +160,7 @@ src/Libraries/MusicBrainz/Makefile
 src/Extensions/Makefile
 src/Extensions/Banshee.AudioCd/Makefile
 src/Extensions/Banshee.Bookmarks/Makefile
+src/Extensions/Banshee.Daap/Makefile
 src/Extensions/Banshee.Lastfm/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
