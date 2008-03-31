@@ -1,3 +1,10 @@
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/TileView.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	Fix up some style issues on the last.fm data screen.  Still have white
+	fonts on darkilouche when should be black.
+
 2008-03-31  Aaron Bockover  <abock@gnome.org>
 
 	* build/build.environment.mk:

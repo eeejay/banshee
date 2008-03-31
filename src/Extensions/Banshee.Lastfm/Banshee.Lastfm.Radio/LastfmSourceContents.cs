@@ -56,7 +56,10 @@ namespace Banshee.Lastfm.Radio
 
             viewport.Add (main_box);
             
-            StyleSet += delegate { viewport.ModifyBg (StateType.Normal, Style.Base (StateType.Normal)); };
+            StyleSet += delegate {
+                viewport.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
+                viewport.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
+            };
 
             AddWithFrame (viewport);
             ShowAll ();
@@ -162,6 +165,11 @@ namespace Banshee.Lastfm.Radio
 
                 PackStart (title, false, false, 0);
                 title.Show ();
+
+                StyleSet += delegate {
+                    title.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
+                    title.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
+                };
             }
         }
 
@@ -200,6 +208,11 @@ namespace Banshee.Lastfm.Radio
                 tile_view = new NumberedTileView (1);
                 PackStart (tile_view, true, true, 0);
                 tile_view.Show ();
+
+                StyleSet += delegate {
+                    tile_view.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
+                    tile_view.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
+                };
             }
 
             // TODO generalize this

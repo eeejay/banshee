@@ -53,8 +53,6 @@ namespace Banshee.Widgets
             Add(table);
 
             Show ();
-
-            ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
         }
         
         public void AddWidget(Widget widget)
