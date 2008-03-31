@@ -1,5 +1,11 @@
 2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Only pulse Now Playing if the new item is a video and we're not auto
+	switching to Now Playing.
+
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Move SetStatus and
 	HideStatus methods here from StationSource since they are generally useful.
 
