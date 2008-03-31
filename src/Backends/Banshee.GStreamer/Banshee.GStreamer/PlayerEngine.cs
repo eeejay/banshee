@@ -120,7 +120,7 @@ namespace Banshee.GStreamer
         public override void Dispose ()
         {
             base.Dispose ();
-            bp_free (handle);
+            bp_destroy (handle);
         }
         
         public override void Close ()
@@ -321,7 +321,7 @@ namespace Banshee.GStreamer
         public override bool SupportsEqualizer {
             get { 
                 if (supports_equalizer == null) {
-                    supports_equalizer = gst_equalizer_is_supported (handle); 
+                    supports_equalizer = bp_equalizer_is_supported (handle); 
                 }
                 
                 return supports_equalizer.Value;
@@ -346,7 +346,7 @@ namespace Banshee.GStreamer
         public double AmplifierLevel {
             set {
                 double db = Math.Pow (10.0, value / 20.0);
-                gst_equalizer_set_preamp_level (handle, db);
+                bp_equalizer_set_preamp_level (handle, db);
             }
         }
         
@@ -355,7 +355,7 @@ namespace Banshee.GStreamer
                 int min = -1;
                 int max = -1;
                 
-                gst_equalizer_get_bandrange (handle, out min, out max);
+                bp_equalizer_get_bandrange (handle, out min, out max);
                 
                 return new int [] { min, max };
             }
@@ -364,7 +364,7 @@ namespace Banshee.GStreamer
         public uint [] EqualizerFrequencies {
             get {
                 double [] freq = new double[10];
-                gst_equalizer_get_frequencies (handle, out freq);
+                bp_equalizer_get_frequencies (handle, out freq);
                 
                 uint [] ret = new uint[freq.Length];
                 for (int i = 0; i < freq.Length; i++) {
@@ -377,7 +377,7 @@ namespace Banshee.GStreamer
         
         public void SetEqualizerGain (uint band, double gain)
         {
-            gst_equalizer_set_gain (handle, band, gain);
+            bp_equalizer_set_gain (handle, band, gain);
         }
         
         private static string [] source_capabilities = { "file", "http", "cdda" };
@@ -394,7 +394,7 @@ namespace Banshee.GStreamer
         private static extern IntPtr bp_new ();
         
         [DllImport ("libbanshee")]
-        private static extern void bp_free (HandleRef player);
+        private static extern void bp_destroy (HandleRef player);
         
         [DllImport ("libbanshee")]
         private static extern void bp_set_eos_callback (HandleRef player, BansheePlayerEosCallback cb);
@@ -419,7 +419,7 @@ namespace Banshee.GStreamer
             GstTaggerTagFoundCallback cb);
         
         [DllImport ("libbanshee")]
-        private static extern void bp_open (HandleRef player, IntPtr uri);
+        private static extern bool bp_open (HandleRef player, IntPtr uri);
         
         [DllImport ("libbanshee")]
         private static extern void bp_stop (HandleRef player, bool nullstate);
@@ -440,7 +440,7 @@ namespace Banshee.GStreamer
         private static extern bool bp_can_seek (HandleRef player);
         
         [DllImport ("libbanshee")]
-        private static extern void bp_set_position (HandleRef player, ulong time_ms);
+        private static extern bool bp_set_position (HandleRef player, ulong time_ms);
         
         [DllImport ("libbanshee")]
         private static extern ulong bp_get_position (HandleRef player);
@@ -469,19 +469,19 @@ namespace Banshee.GStreamer
             out uint resource, out uint stream);
         
         [DllImport ("libbanshee")]
-        private static extern bool gst_equalizer_is_supported (HandleRef player);
+        private static extern bool bp_equalizer_is_supported (HandleRef player);
         
         [DllImport ("libbanshee")]
-        private static extern void gst_equalizer_set_preamp_level (HandleRef player, double level);
+        private static extern void bp_equalizer_set_preamp_level (HandleRef player, double level);
         
         [DllImport ("libbanshee")]
-        private static extern void gst_equalizer_set_gain (HandleRef player, uint bandnum, double gain);
+        private static extern void bp_equalizer_set_gain (HandleRef player, uint bandnum, double gain);
         
         [DllImport ("libbanshee")]
-        private static extern void gst_equalizer_get_bandrange (HandleRef player, out int min, out int max);
+        private static extern void bp_equalizer_get_bandrange (HandleRef player, out int min, out int max);
         
         [DllImport ("libbanshee")]
-        private static extern void gst_equalizer_get_frequencies (HandleRef player,
+        private static extern void bp_equalizer_get_frequencies (HandleRef player,
             [MarshalAs (UnmanagedType.LPArray)] out double [] freq);
     }
 }

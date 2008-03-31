@@ -51,6 +51,10 @@ bp_slist_destroy (GSList *list)
 {   
     GSList *node = list;
     
+    if (node == NULL) {
+        return;
+    }
+    
     for (; node != NULL; node = node->next) {
         g_free (node->data);
     }

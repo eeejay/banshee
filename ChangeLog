@@ -1,3 +1,23 @@
+2008-03-31  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/banshee-player-cdda.c:
+	* libbanshee/banshee-player-cdda.h:
+	* libbanshee/banshee-player-equalizer.c:
+	* libbanshee/banshee-player-missing-elements.c:
+	* libbanshee/banshee-player-missing-elements.h:
+	* libbanshee/banshee-player-pipeline.c: 
+	* libbanshee/banshee-player-pipeline.h:
+	* libbanshee/banshee-player-private.h:
+	* libbanshee/banshee-player-video.h:
+	* libbanshee/banshee-player.c: 
+	* libbanshee/banshee-player.h: Hopefully the last big round of changes
+	to the player engine; moved the main pipeline and equalizer code into
+	separate modules so banshee-player is basically just the p/invokable 
+	'public' API and doesn't contain much logic at all
+	
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs: 
+	Updated to reflect API changes in libbanshee
+
 2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:

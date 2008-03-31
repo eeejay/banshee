@@ -1,5 +1,5 @@
 //
-// banshee-player-video.h
+// banshee-player-pipeline.h
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -26,11 +26,12 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#ifndef _BANSHEE_PLAYER_VIDEO_H
-#define _BANSHEE_PLAYER_VIDEO_H
+#ifndef _BANSHEE_PLAYER_PIPELINE_H
+#define _BANSHEE_PLAYER_PIPELINE_H
 
 #include "banshee-player-private.h"
 
-void  _bp_video_pipeline_setup  (BansheePlayer *player, GstBus *bus);
+gboolean  _bp_pipeline_construct (BansheePlayer *player);
+void      _bp_pipeline_destroy   (BansheePlayer *player);
 
-#endif /* _BANSHEE_PLAYER_VIDEO_H */
+#endif /* _BANSHEE_PLAYER_PIPELINE_H */

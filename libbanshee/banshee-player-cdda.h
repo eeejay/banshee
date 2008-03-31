@@ -29,9 +29,9 @@
 #ifndef _BANSHEE_PLAYER_CDDA_H
 #define _BANSHEE_PLAYER_CDDA_H
 
-#include "banshee-player.h"
+#include "banshee-player-private.h"
 
-void      _bp_cdda_on_notify_source  (GstElement *playbin, gpointer unknown, BansheePlayer *player);
+void      _bp_cdda_pipeline_setup    (BansheePlayer *player);
 gboolean  _bp_cdda_handle_uri        (BansheePlayer *player, const gchar *uri);
 
 #endif /* _BANSHEE_PLAYER_CDDA_H */

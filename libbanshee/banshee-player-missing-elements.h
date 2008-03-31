@@ -29,7 +29,7 @@
 #ifndef _BANSHEE_PLAYER_MISSING_ELEMENTS_H
 #define _BANSHEE_PLAYER_MISSING_ELEMENTS_H
 
-#include "banshee-player.h"
+#include "banshee-player-private.h"
 
 void  _bp_missing_elements_destroy               (BansheePlayer *player);
 void  _bp_missing_elements_process_message       (BansheePlayer *player, GstMessage *message);

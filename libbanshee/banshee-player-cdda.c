@@ -55,6 +55,36 @@ bp_cdda_get_cdda_source (GstElement *playbin)
     return source;
 }
 
+static void
+bp_cdda_on_notify_source (GstElement *playbin, gpointer unknown, BansheePlayer *player)
+{
+    GstElement *cdda_src = NULL;
+    
+    g_return_if_fail (IS_BANSHEE_PLAYER (player));
+    
+    if (player->cdda_device == NULL) {
+        return;
+    }
+    
+    cdda_src = bp_cdda_get_cdda_source (playbin);
+    if (cdda_src == NULL) {
+        return;
+    }
+    
+    // Technically don't need to check the class, since GstCddaBaseSrc elements will always have this
+    if (G_LIKELY (g_object_class_find_property (G_OBJECT_GET_CLASS (cdda_src), "device"))) {
+        bp_debug ("bp_cdda: setting device property on source (%s)", player->cdda_device);
+        g_object_set (cdda_src, "device", player->cdda_device, NULL);
+    }
+    
+    // If the GstCddaBaseSrc is cdparanoia, it will have this property, so set it
+    if (g_object_class_find_property (G_OBJECT_GET_CLASS (cdda_src), "paranoia-mode")) {
+        g_object_set (cdda_src, "paranoia-mode", 0, NULL);
+    }
+    
+    g_object_unref (cdda_src);
+}
+
 static gboolean
 bp_cdda_source_seek_to_track (GstElement *playbin, guint track)
 {
@@ -96,33 +126,11 @@ bp_cdda_source_seek_to_track (GstElement *playbin, guint track)
 // ---------------------------------------------------------------------------
 
 void
-_bp_cdda_on_notify_source (GstElement *playbin, gpointer unknown, BansheePlayer *player)
+_bp_cdda_pipeline_setup (BansheePlayer *player)
 {
-    GstElement *cdda_src = NULL;
-    
-    g_return_if_fail (IS_BANSHEE_PLAYER (player));
-    
-    if (player->cdda_device == NULL) {
-        return;
+    if (player != NULL && player->playbin != NULL) {
+        g_signal_connect (player->playbin, "notify::source", G_CALLBACK (bp_cdda_on_notify_source), player);
     }
-    
-    cdda_src = bp_cdda_get_cdda_source (playbin);
-    if (cdda_src == NULL) {
-        return;
-    }
-    
-    // Technically don't need to check the class, since GstCddaBaseSrc elements will always have this
-    if (G_LIKELY (g_object_class_find_property (G_OBJECT_GET_CLASS (cdda_src), "device"))) {
-        bp_debug ("bp_cdda: setting device property on source (%s)", player->cdda_device);
-        g_object_set (cdda_src, "device", player->cdda_device, NULL);
-    }
-    
-    // If the GstCddaBaseSrc is cdparanoia, it will have this property, so set it
-    if (g_object_class_find_property (G_OBJECT_GET_CLASS (cdda_src), "paranoia-mode")) {
-        g_object_set (cdda_src, "paranoia-mode", 0, NULL);
-    }
-    
-    g_object_unref (cdda_src);
 }
 
 gboolean
