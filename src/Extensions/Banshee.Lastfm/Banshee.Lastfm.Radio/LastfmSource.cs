@@ -233,9 +233,11 @@ namespace Banshee.Lastfm.Radio
                 ClearChildSources ();
                 sorting = true;
                 foreach (StationSource child in StationSource.LoadAll (this, Account.UserName)) {
-                    if (!child.Type.SubscribersOnly || Connection.Subscriber) {
+                    if (Connection.Subscriber ||
+                            (!child.Type.SubscribersOnly &&
+                                !(child.Type == StationType.Personal && child.Arg != null && child.Arg.Trim().ToLower() == last_username.Trim().ToLower())))
+                    {
                         AddChildSource (child);
-                        //SourceManager.AddSource (child);
                     }
                 }
                 sorting = false;

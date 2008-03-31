@@ -1,3 +1,21 @@
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: When one of our
+	SourceMessages is updated, notify the message bar.  Fixes bug where the
+	message bar didn't update with new icon/text etc.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceMessage.cs: Get rid of
+	unnecessary Interlocked calls.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Add
+	check for whether personal station is for this user, and if so, don't load
+	for non-subscribers.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs: Don't
+	set the personal station type as subscriber-only - this was my
+	misunderstanding; non-subscribers can have personal stations for any user
+	but themselves.
+
 2008-03-31  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* build/m4/banshee/daap.m4: Remove old, obsolete file.

@@ -213,6 +213,7 @@ namespace Banshee.Sources
         {
             lock (this) {
                 messages.Insert (0, message);
+                message.Updated += HandleMessageUpdated;
             }
             
             OnMessageNotify ();
@@ -224,6 +225,7 @@ namespace Banshee.Sources
                 lock (this) {
                     if (messages.Count > 0) {
                         SourceMessage message = messages[0];
+                        message.Updated -= HandleMessageUpdated;
                         messages.RemoveAt (0);
                         return message;
                     }
@@ -290,6 +292,11 @@ namespace Banshee.Sources
                     OnMessageNotify ();
                 }
             }   
+        }
+
+        private void HandleMessageUpdated (object o, EventArgs args)
+        {
+            OnMessageNotify ();
         }
         
         protected virtual void OnMessageNotify ()

@@ -93,7 +93,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("For User:"),
             "user/{0}/personal",
             "personal",
-            true
+            false
         );
 
         public static StationType Loved = new StationType (

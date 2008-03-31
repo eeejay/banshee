@@ -85,7 +85,7 @@ namespace Banshee.Sources
         public void FreezeNotify ()
         {
             lock (this) {
-                System.Threading.Interlocked.Increment (ref freeze_count);
+                freeze_count++;
             }
         }
         
@@ -93,7 +93,7 @@ namespace Banshee.Sources
         {
             lock (this) {
                 if (freeze_count > 0) {
-                    System.Threading.Interlocked.Decrement (ref freeze_count);
+                    freeze_count--;
                 }
                 
                 if (freeze_count == 0 && updated_when_frozen) {
