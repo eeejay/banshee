@@ -90,11 +90,11 @@ namespace MusicBrainz
         {
         }
 
-        internal Track (XmlReader reader) : base (reader, false)
+        internal Track (XmlReader reader) : base (reader, null, false)
         {
         }
 
-        internal Track (XmlReader reader, bool all_rels_loaded) : base (reader, all_rels_loaded)
+        internal Track (XmlReader reader, Artist artist, bool all_rels_loaded) : base (reader, artist, all_rels_loaded)
         {
         }
 

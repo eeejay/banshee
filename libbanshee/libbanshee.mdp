@@ -1,0 +1,34 @@
+<Project name="libbanshee" fileversion="2.0" language="C" ctype="CProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CProjectConfiguration">
+      <Output directory="../bin" output="libbanshee" />
+      <Build debugmode="True" target="SharedLibrary" />
+      <Execution runwithwarnings="True" consolepause="True" />
+      <CodeGeneration WarningLevel="Normal" WarningsAsErrors="False" OptimizationLevel="0" ExtraCompilerArguments="" ExtraLinkerArguments="" DefineSymbols="DEBUG MONODEVELOP" ctype="CCompilationParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="." subtype="Directory" buildaction="Nothing" />
+    <File name="gst-cd-rip.h" subtype="Code" buildaction="Nothing" />
+    <File name="gst-cd-rip-0.10.c" subtype="Code" buildaction="Compile" />
+    <File name="gst-mbtrm.h" subtype="Code" buildaction="Nothing" />
+    <File name="gst-misc.h" subtype="Code" buildaction="Nothing" />
+    <File name="gst-misc-0.10.c" subtype="Code" buildaction="Compile" />
+    <File name="banshee-player.c" subtype="Code" buildaction="Compile" />
+    <File name="gst-tagger.c" subtype="Code" buildaction="Compile" />
+    <File name="gst-tagger.h" subtype="Code" buildaction="Nothing" />
+    <File name="gst-transcode.h" subtype="Code" buildaction="Nothing" />
+    <File name="gst-transcode-0.10.c" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <compiler ctype="GccCompiler" />
+  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
+    <BuildFilesVar Sync="True" Name="libbanshee_la_SOURCES" />
+    <DeployFilesVar />
+    <ResourcesVar />
+    <OthersVar />
+    <GacRefVar />
+    <AsmRefVar />
+    <ProjectRefVar />
+    <MessageRegex Name="gcc" />
+  </MonoDevelop.Autotools.MakefileInfo>
+</Project>

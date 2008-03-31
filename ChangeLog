@@ -1,3 +1,14 @@
+2008-03-30  Aaron Bockover  <abock@gnome.org>
+
+	* build/m4/banshee/gstreamer.m4: Link against CDDA base library
+
+	* libbanshee/: Starting to reorganize some things, added an MD project
+
+	* src/Libraries/MusicBrainz/MusicBrainz/MusicBrainzItem.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Release.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Track.cs: Fix synced from 
+	main repository 
+
 2008-03-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit adds Jump to Playing support, and hides the search box for

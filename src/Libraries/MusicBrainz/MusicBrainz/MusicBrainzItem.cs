@@ -90,8 +90,9 @@ namespace MusicBrainz
         {
         }
 
-        internal MusicBrainzItem (XmlReader reader, bool all_rels_loaded) : base (reader, all_rels_loaded)
+        internal MusicBrainzItem (XmlReader reader, Artist artist, bool all_rels_loaded) : base (reader, all_rels_loaded)
         {
+            if (this.artist == null) this.artist = artist;
         }
 
         protected override void HandleCreateInc (StringBuilder builder)

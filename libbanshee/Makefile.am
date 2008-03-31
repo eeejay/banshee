@@ -11,17 +11,13 @@ bansheelibdir = $(pkglibdir)
 bansheelib_LTLIBRARIES = libbanshee.la
 
 libbanshee_la_LDFLAGS = -avoid-version -module
-libbanshee_la_SOURCES = \
-	gst-playback.h \
-	gst-misc.h \
-	gst-transcode.h \
-	gst-cd-rip.h \
-	gst-tagger.c \
-	gst-tagger.h \
-	gst-playback-0.10.c \
+libbanshee_la_SOURCES =  \
+	banshee-player.c \
+	gst-cd-rip-0.10.c \
 	gst-misc-0.10.c \
-	gst-transcode-0.10.c \
-	gst-cd-rip-0.10.c
+	gst-playback.h \
+	gst-tagger.c \
+	gst-transcode-0.10.c
 
 OLD_CODE = \
 	gst-mbtrm.h \

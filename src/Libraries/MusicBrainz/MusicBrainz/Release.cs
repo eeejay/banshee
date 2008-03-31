@@ -137,16 +137,18 @@ namespace MusicBrainz
         {
         }
 
-        internal Release (XmlReader reader) : base(reader, false)
+        internal Release (XmlReader reader) : base (reader, null, false)
         {
         }
+        
+        static readonly string [] track_params = new string [] { "tracks", "track-level-rels", "artist" };
         
         protected override void HandleCreateInc (StringBuilder builder)
         {
             AppendIncParameters (builder, "release-events", "labels");
             if (discs == null) AppendIncParameters (builder, "discs");
             if (tracks == null) {
-                AppendIncParameters (builder, "tracks", "track-level-rels");
+                AppendIncParameters (builder, track_params);
                 AllRelsLoaded = false;
             }
             base.HandleCreateInc (builder);
@@ -222,7 +224,7 @@ namespace MusicBrainz
                         track_number = int.Parse (offset) + 1;
                     if (reader.ReadToDescendant ("track")) {
                         List<Track> tracks = new List<Track> ();
-                        do tracks.Add (new Track (reader.ReadSubtree (), AllDataLoaded));
+                        do tracks.Add (new Track (reader.ReadSubtree (), Artist, AllDataLoaded));
                         while (reader.ReadToNextSibling ("track"));
                         this.tracks = tracks.AsReadOnly ();
                     }
