@@ -86,7 +86,7 @@ namespace Hyena.Data.Sqlite
             execution_exception = null;
             result = null;
 
-            SqliteCommand sql_command = new SqliteCommand (CurrentSqlText ());
+            SqliteCommand sql_command = new SqliteCommand (CurrentSqlText);
             sql_command.Connection = connection;
             //Log.DebugFormat ("Executing {0}", sql_command.CommandText);
 
@@ -140,12 +140,20 @@ namespace Hyena.Data.Sqlite
                 CreateParameters ();
             }
 
+            // Special case for if a single null values is the paramter array
+            if (parameter_count == 1 && param_values == null) {
+                current_values = new object [] { "NULL" };
+                command_formatted = null;
+                return this;
+            }
+
             if (param_values.Length != parameter_count) {
                 throw new ArgumentException (String.Format (
                     "Command has {0} parameters, but {1} values given.", parameter_count, param_values.Length
                 ));
             }
 
+            // Transform values as necessary - not needed for numerical types
             for (int i = 0; i < parameter_count; i++) {
                 if (param_values[i] is string) {
                     param_values[i] = String.Format ("'{0}'", (param_values[i] as string).Replace ("'", "''"));
@@ -161,17 +169,18 @@ namespace Hyena.Data.Sqlite
             return this;
         }
 
-        private string CurrentSqlText ()
-        {
-            if (command_format == null) {
-                return command;
-            }
+        private string CurrentSqlText {
+            get {
+                if (command_format == null) {
+                    return command;
+                }
 
-            if (command_formatted == null) {
-                command_formatted = String.Format (command_format, current_values);
-            }
+                if (command_formatted == null) {
+                    command_formatted = String.Format (System.Globalization.CultureInfo.InvariantCulture, command_format, current_values);
+                }
 
-            return command_formatted;
+                return command_formatted;
+            }
         }
 
         private void CreateParameters ()

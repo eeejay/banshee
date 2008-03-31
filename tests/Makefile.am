@@ -8,7 +8,8 @@ ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_CSFILES =  \
 	$(srcdir)/Hyena/CryptoUtilTests.cs \
 	$(srcdir)/Hyena/RangeCollectionTests.cs \
-	$(srcdir)/Hyena/StringUtilTests.cs
+	$(srcdir)/Hyena/StringUtilTests.cs \
+	$(srcdir)/Hyena/SqliteCommandTests.cs
 
 #	Banshee.Core/KernelTests.cs
 #	Banshee.Core/FileNamePatternTests.cs
@@ -31,7 +32,7 @@ if ENABLE_TESTS
 all: $(ASSEMBLY)
 
 run-test: $(NUNIT_TESTER) $(ASSEMBLY)
-	MONO_PATH="$(top_builddir)/bin" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
+	LANG=it_IT MONO_PATH="$(top_builddir)/bin" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
 endif
 
 EXTRA_DIST = $(ASSEMBLY_CSFILES)

@@ -1,3 +1,15 @@
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Make sure
+	to create the SQL with culturally invariant string formatting.  Fixes BGO
+	#524871.
+
+	* tests/Hyena/SqliteCommandTests.cs: Test HyenaSqliteCommand in many ways,
+	including testing for the above bug.
+
+	* tests/Makefile.am: Set to run in it_IT so we can check for cultural
+	issues.
+
 2008-03-31  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/banshee-player.c:
