@@ -97,7 +97,7 @@ namespace Hyena.Query
 
         public override string ToSql ()
         {
-            return Convert.ToString (value);
+            return Convert.ToString (value, System.Globalization.CultureInfo.InvariantCulture);
         }
     }
 }

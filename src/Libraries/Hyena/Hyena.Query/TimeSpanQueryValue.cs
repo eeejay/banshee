@@ -150,7 +150,7 @@ namespace Hyena.Query
 
         public override string ToSql ()
         {
-            return Convert.ToString (offset * 1000);
+            return Convert.ToString (offset * 1000, System.Globalization.CultureInfo.InvariantCulture);
         }
 
         protected virtual string FactorString (TimeFactor factor, int count)

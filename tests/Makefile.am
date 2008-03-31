@@ -9,7 +9,8 @@ ASSEMBLY_CSFILES =  \
 	$(srcdir)/Hyena/CryptoUtilTests.cs \
 	$(srcdir)/Hyena/RangeCollectionTests.cs \
 	$(srcdir)/Hyena/StringUtilTests.cs \
-	$(srcdir)/Hyena/SqliteCommandTests.cs
+	$(srcdir)/Hyena/SqliteCommandTests.cs \
+	$(srcdir)/Hyena/QueryTests.cs
 
 #	Banshee.Core/KernelTests.cs
 #	Banshee.Core/FileNamePatternTests.cs
@@ -23,7 +24,7 @@ NUNIT_TESTER_CSFILES =  \
 	ConsoleUi.cs
 
 $(ASSEMBLY): $(ASSEMBLY_CSFILES)
-	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:System.Xml $(LINK_HYENA_DEPS) $(ASSEMBLY_CSFILES)
+	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:System.Xml $(LINK_HYENA_DEPS) $(LINK_BANSHEE_THICKCLIENT_DEPS) $(ASSEMBLY_CSFILES)
 
 $(NUNIT_TESTER): $(NUNIT_TESTER_CSFILES)
 	$(MCS) $(MCS_FLAGS) -out:$@ $(NUNIT_FLAGS) $(NUNIT_TESTER_CSFILES)

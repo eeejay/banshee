@@ -72,7 +72,7 @@ namespace Hyena.Query
 
         public override string ToSql ()
         {
-            return DateTimeUtil.FromDateTime (DateTime.Now + TimeSpan.FromSeconds ((double) offset)).ToString ();
+            return DateTimeUtil.FromDateTime (DateTime.Now + TimeSpan.FromSeconds ((double) offset)).ToString (System.Globalization.CultureInfo.InvariantCulture);
         }
 
         protected override string FactorString (TimeFactor factor, int count)

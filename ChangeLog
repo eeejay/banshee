@@ -1,5 +1,18 @@
 2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/TimeSpanQueryValue.cs: Pass
+	InvariantCulture in ToString calls, though probably not too necessary for
+	ints and strings.
+
+	* tests/Makefile.am:
+	* tests/Hyena/QueryTests.cs: New tests for query parsing etc.
+	Currently failing to round trip a couple user queries.
+
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Make sure
 	to create the SQL with culturally invariant string formatting.  Fixes BGO
 	#524871.

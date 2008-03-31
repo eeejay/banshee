@@ -108,7 +108,7 @@ namespace Hyena.Query
 
         public override string ToSql ()
         {
-            return DateTimeUtil.FromDateTime (value).ToString ();
+            return DateTimeUtil.FromDateTime (value).ToString (System.Globalization.CultureInfo.InvariantCulture);
         }
 
         public DateTime DateTime {
