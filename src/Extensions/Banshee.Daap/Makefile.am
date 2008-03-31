@@ -1,14 +1,16 @@
 ASSEMBLY = Banshee.Daap
 TARGET = library
-LINK = $(REF_EXTENSION_PLAYQUEUE) $(LINK_ICSHARP_ZIP_LIB) $(LINK_SYSTEM_WEB) $(MONO_ZEROCONF_LIBS)
+LINK = $(REF_EXTENSION_DAAP)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
-SOURCES = Banshee.Daap/DaapService.cs \
+SOURCES = \
+	Banshee.Daap/DaapService.cs \
     Banshee.Daap/DaapContainerSource.cs \
     Banshee.Daap/DaapSource.cs \
-    daap-sharp/*.cs
+    Daap/*.cs
 
-RESOURCES = daap-sharp/content-codes \
+RESOURCES = \
+	Daap/content-codes \
     Resources/Banshee.Daap.addin.xml
 
 include $(top_srcdir)/build/build.mk
