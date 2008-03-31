@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-31 22:57+0200\n"
-"PO-Revision-Date: 2008-03-31 20:23+0100\n"
+"POT-Creation-Date: 2008-04-01 00:31+0200\n"
+"PO-Revision-Date: 2008-04-01 00:22+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Polish <dominikowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -446,11 +446,11 @@ msgstr "Importowanie utworów"
 msgid "Importing Songs from {0}"
 msgstr "Importowanie utworów z {0}"
 
-#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:87
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:91
 msgid "Default player engine"
 msgstr "Domyślny silnik odtwarzania"
 
-#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:94
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:98
 msgid ""
 "No player engines were found. Please ensure Banshee has been cleanly "
 "installed."
@@ -458,7 +458,7 @@ msgstr ""
 "Nie odnaleziono silników odtwarzania. Proszę sprawdzić poprawność instalacji "
 "Banshee."
 
-#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:257
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:274
 msgid "Problem with Player Engine"
 msgstr "Problem z silnikiem odtwarzania"
 
@@ -1371,7 +1371,7 @@ msgstr "Skok do odtwarzanego utworu"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:82
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:141
 msgid "_Restart Song"
-msgstr "_Odtwórz utwór ponownie"
+msgstr "Odtwórz _utwór ponownie"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:83
 msgid "Restart the current item"
@@ -1379,7 +1379,7 @@ msgstr "Powtarza odtwarzanie bieżącego elementu"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:88
 msgid "Shu_ffle"
-msgstr "Odtwarzanie lo_sowe"
+msgstr "Odtwarzanie _losowe"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:89
 msgid "Toggle between shuffle or continuous playback modes"
@@ -1411,7 +1411,7 @@ msgstr "_Pauzuj"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:69
 msgid "Repeat N_one"
-msgstr "Bez p_owtarzania utworów"
+msgstr "Bez po_wtarzania utworów"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:70
 msgid "Do not repeat playlist"
@@ -1427,7 +1427,7 @@ msgstr "Odtwórz wszystkie utwory przed powtórzeniem listy odtwarzania"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:77
 msgid "Repeat Singl_e"
-msgstr "Powtórz _jeden"
+msgstr "Powtarzani_e pojedynczego utworu"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:78
 msgid "Repeat the current playing song"
@@ -1537,7 +1537,7 @@ msgstr "Modyfikuje metadane w zaznaczonych utworach"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:99
 msgid "Add _to Playlist"
-msgstr "Dodaj _do listy odtwarzania"
+msgstr "Dodaj do _listy odtwarzania"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:100
 msgid "Append selected items to playlist or create new playlist from selection"
@@ -2404,7 +2404,7 @@ msgstr "_Nazwa:"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:115
 msgid "_Close"
-msgstr "Za_mknij"
+msgstr "Zamkni_j"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:116
 msgid "Close"
