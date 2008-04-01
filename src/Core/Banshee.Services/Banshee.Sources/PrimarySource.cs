@@ -147,6 +147,10 @@ namespace Banshee.Sources
             }
         }
 
+        public override bool CanSearch {
+            get { return true; }
+        }
+
         public override void SetParentSource (Source source)
         {
             if (source is PrimarySource) {

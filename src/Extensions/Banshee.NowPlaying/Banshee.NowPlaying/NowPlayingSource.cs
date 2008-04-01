@@ -80,22 +80,5 @@ namespace Banshee.NowPlaying
         public void Dispose ()
         {
         }
-        
-#region Source Overrides
-
-        public override int Count {
-            get { return 0; }
-        }
-
-        public override bool CanRename {
-            get { return false; }
-        }
-
-        public override bool CanSearch {
-            get { return false; }
-        }
-
-#endregion
-
     }
 }

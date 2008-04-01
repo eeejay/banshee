@@ -1,3 +1,23 @@
+2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Change the default for CanSearch and CanRename to false, and add a virtual
+	Count implementation that returns 0.  Less cruft for many subclasses to
+	implement.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Don't show
+	the menu unless it has > 0 visible items.
+
 2008-03-31  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/banshee-player-cdda.c:

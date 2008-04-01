@@ -402,6 +402,11 @@ namespace Banshee.Lastfm.Radio
             );
         }
 
+        public override bool CanRename {
+            get { return true; }
+        }
+
+
 #region ITrackModelSource Implementation
 
         public TrackListModel TrackModel {
@@ -478,14 +483,6 @@ namespace Banshee.Lastfm.Radio
             Save ();
         }
         
-        public override bool CanSearch {
-            get { return false; }
-        }
-
-        public override int Count {
-            get { return 0; }
-        }
-
         public override bool HasProperties {
             get { return true; }
         }

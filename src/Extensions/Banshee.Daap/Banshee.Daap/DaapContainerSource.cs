@@ -43,20 +43,12 @@ namespace Banshee.Daap
             Properties.SetString ("Icon.Name", "applications-internet");
         }
         
-        public override bool CanRename {
-            get { return false; }
-        }
-        
         public override bool? AutoExpand {
             get { return true; }
         }
         
         public override bool CanActivate {
             get { return false; }
-        }
-        
-        public override int Count {
-            get { return 0; }
         }
         
         /*private int count;

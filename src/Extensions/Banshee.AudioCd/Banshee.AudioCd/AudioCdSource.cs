@@ -136,15 +136,6 @@ namespace Banshee.AudioCd
 
 #region Source Overrides
 
-        public override void Rename (string newName)
-        {
-            base.Rename (newName);
-        }
-
-        public override bool CanSearch {
-            get { return false; }
-        }
-        
         protected override string TypeUniqueId {
             get { return "audio-cd"; }
         }
@@ -153,10 +144,6 @@ namespace Banshee.AudioCd
             get { return disc_model.Count; }
         }
         
-        public override bool CanRename {
-            get { return false; }
-        }
-
 #endregion
         
 #region ITrackModelSource Implementation

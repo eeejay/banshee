@@ -210,10 +210,6 @@ namespace Banshee.Daap
             Console.WriteLine ("Added: {0}", args.Track);
         }
         
-        public override bool CanRename {
-            get { return false; }
-        }
-        
         public override bool CanRemoveTracks {
             get { return false; }
         }

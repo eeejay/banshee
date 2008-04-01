@@ -253,14 +253,6 @@ namespace Banshee.Lastfm.Radio
             }
         }
 
-        public override bool CanSearch {
-            get { return false; }
-        }
-
-        public override int Count {
-             get { return 0; }
-        }
-        
         public override bool? AutoExpand {
             get { return ExpandedSchema.Get (); }
         }

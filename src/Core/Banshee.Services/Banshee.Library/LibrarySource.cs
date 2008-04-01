@@ -89,9 +89,5 @@ namespace Banshee.Library
             
             ((IImportSource)source).Import ();
         }
-        
-        public override bool CanRename {
-            get { return false; }
-        }
     }
 }

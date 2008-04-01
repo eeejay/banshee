@@ -128,14 +128,6 @@ namespace Banshee.Sources
             get { return messages.Count; }
         }
         
-        public override bool CanSearch {
-            get { return false; }
-        }
-
-        public override bool CanRename {
-            get { return false; }
-        }
-
         public virtual bool CanUnmap {
             get { return true; }
         }

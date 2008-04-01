@@ -134,6 +134,14 @@ namespace Banshee.Playlist
             Save ();
         }
 
+        public override bool CanRename {
+            get { return true; }
+        }
+
+        public override bool CanSearch {
+            get { return true; }
+        }
+
         public virtual void Save ()
         {
             if (dbid == null || dbid <= 0)

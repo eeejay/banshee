@@ -405,7 +405,7 @@ namespace Banshee.Sources
         protected abstract string TypeUniqueId { get; }
 
         public virtual bool CanRename {
-            get { return true; }
+            get { return false; }
         }
 
         public virtual bool HasProperties {
@@ -436,7 +436,7 @@ namespace Banshee.Sources
         }
         
         public virtual bool CanSearch {
-            get { return true; }
+            get { return false; }
         }
                 
         public virtual string FilterQuery {
@@ -466,7 +466,10 @@ namespace Banshee.Sources
             get { return true; }
         }
         
-        public abstract int Count { get; }
+        public virtual int Count {
+            get { return 0; }
+        }
+
         public virtual int FilteredCount { get { return Count; } }
 
         public virtual string GetStatusText ()
