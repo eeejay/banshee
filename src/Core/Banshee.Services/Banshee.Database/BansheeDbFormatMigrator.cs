@@ -309,7 +309,7 @@ namespace Banshee.Database
             Execute ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', 0)");
             return true;
         }
-        
+
 #pragma warning restore 0169
         
         private void InitializeFreshDatabase()
@@ -334,6 +334,7 @@ namespace Banshee.Database
                 )
             ");
             Execute (String.Format ("INSERT INTO CoreConfiguration VALUES (null, 'DatabaseVersion', {0})", CURRENT_VERSION));
+            Execute ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', 0)");
             
             Execute(@"
                 CREATE TABLE CorePrimarySources (
@@ -651,7 +652,11 @@ namespace Banshee.Database
                 }
             }
 
-            Execute (String.Format ("UPDATE CoreConfiguration SET Value = {0} WHERE Key = 'MetadataVersion'", CURRENT_METADATA_VERSION));
+            if (ServiceManager.DbConnection.Query<int> ("SELECT count(*) FROM CoreConfiguration WHERE Key = 'MetadataVersion'") == 0) {
+                Execute (String.Format ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', {0})", CURRENT_METADATA_VERSION));
+            } else {
+                Execute (String.Format ("UPDATE CoreConfiguration SET Value = {0} WHERE Key = 'MetadataVersion'", CURRENT_METADATA_VERSION));
+            }
 
             job.Finish ();
             ServiceManager.SourceManager.MusicLibrary.NotifyTracksChanged ();

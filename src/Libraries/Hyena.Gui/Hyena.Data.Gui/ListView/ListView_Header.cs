@@ -137,8 +137,10 @@ namespace Hyena.Data.Gui
             
             // TODO handle max width
             int index = column_cache.Length - 1;
-            column_cache[index].X2 = header_width;
-            column_cache[index].Width = column_cache[index].X2 - column_cache[index].X1;
+            if (index >= 0) {
+                column_cache[index].X2 = header_width;
+                column_cache[index].Width = column_cache[index].X2 - column_cache[index].X1;
+            }
         }
         
         private void RecalculateColumnSizes ()
