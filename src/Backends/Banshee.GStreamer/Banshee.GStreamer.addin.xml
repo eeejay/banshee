@@ -8,8 +8,12 @@
     <Service class="Banshee.GStreamer.Service"/>
   </Extension>
   
-  <Extension path="/Banshee/PlayerEngines/PlayerEngine">
+  <Extension path="/Banshee/MediaEngine/PlayerEngine">
     <PlayerEngine class="Banshee.GStreamer.PlayerEngine"/>
+  </Extension>
+  
+  <Extension path="/Banshee/MediaEngine/AudioCdRipper">
+    <AudioCdRipper class="Banshee.GStreamer.AudioCdRipper"/>
   </Extension>
 
 </Addin>

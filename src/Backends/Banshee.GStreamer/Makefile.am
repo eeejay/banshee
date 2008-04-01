@@ -2,6 +2,7 @@ ASSEMBLY = Banshee.GStreamer
 TARGET = library
 LINK = $(REF_BACKEND_GSTREAMER)
 SOURCES =  \
+	Banshee.GStreamer/AudioCdRipper.cs \
 	Banshee.GStreamer/GstErrors.cs \
 	Banshee.GStreamer/PlayerEngine.cs \
 	Banshee.GStreamer/Service.cs

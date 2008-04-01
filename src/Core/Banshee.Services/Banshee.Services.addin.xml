@@ -12,8 +12,12 @@
     <ExtensionNode name="ImportSource"/>
   </ExtensionPoint>
 
-  <ExtensionPoint path="/Banshee/PlayerEngines/PlayerEngine">
+  <ExtensionPoint path="/Banshee/MediaEngine/PlayerEngine">
     <ExtensionNode name="PlayerEngine"/>
+  </ExtensionPoint>
+  
+  <ExtensionPoint path="/Banshee/MediaEngine/AudioCdRipper">
+    <ExtensionNode name="AudioCdRipper"/>
   </ExtensionPoint>
 
   <ExtensionPoint path="/Banshee/Platform/HardwareManager">

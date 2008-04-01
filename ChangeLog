@@ -1,3 +1,31 @@
+2008-04-01  Aaron Bockover  <abock@gnome.org>
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.addin.xml:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
+	Stub an implementation of IAudioCdRipper and expose it as an extension
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IAudioCdRipper.cs:
+	Interface for implementing an audio CD ripping engine
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Added the AudioCdRipper extension point, rename the PlayerEngine extenion
+	point so that there is a common parent node in the path
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Log extension exceptions
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeIconFactory.cs:
+	Make AddResourceToIconSet public
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	Stubbed an implementation of the AudioCdRipper (engine agnostic)
+
+	* src/Extensions/Banshee.AudioCd/Resources/ActiveSourceUI.xml:
+	* src/Extensions/Banshee.AudioCd/Resources/GlobalUI.xml:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Implement the UI actions for duplicating and ripping CDs
+
 2008-04-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Disable

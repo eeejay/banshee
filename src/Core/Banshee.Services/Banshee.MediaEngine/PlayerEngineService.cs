@@ -82,7 +82,7 @@ namespace Banshee.MediaEngine
                 default_engine = engines[0];
             }
             
-            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/PlayerEngines/PlayerEngine")) {
+            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/MediaEngine/PlayerEngine")) {
                 LoadEngine (node);
             }
             

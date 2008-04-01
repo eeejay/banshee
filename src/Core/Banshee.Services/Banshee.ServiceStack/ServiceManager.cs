@@ -145,6 +145,7 @@ namespace Banshee.ServiceStack
                             dispose_services.Push (service);
                         }
                     } catch (Exception e) {
+                        Log.Exception (e.InnerException ?? e);
                         Log.Warning (String.Format ("Extension `{0}' not started: {1}", 
                             service == null ? node.Path : service.GetType ().FullName, e.Message));
                     }

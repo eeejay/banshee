@@ -36,6 +36,9 @@ using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
 
+using Gtk;
+using Banshee.Gui;
+
 namespace Banshee.AudioCd
 {
     public class AudioCdSource : Source, ITrackModelSource, IUnmapableSource, IDurationAggregator, IDisposable
@@ -54,9 +57,7 @@ namespace Banshee.AudioCd
             disc_model.MetadataQueryFinished += OnMetadataQueryFinished;
             disc_model.LoadModelFromDisc ();
             
-            Properties.SetStringList ("Icon.Name", "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
-            Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Eject Disc"));
-            Properties.SetString ("UnmapSourceActionIconName", "media-eject");
+            SetupGui ();
         }
         
         public TimeSpan Duration {
@@ -132,6 +133,16 @@ namespace Banshee.AudioCd
                 RemoveMessage (query_message);
                 query_message = null;
             }
+        }
+
+        private void OnImportDisc (object o, EventArgs args)
+        {
+            Hyena.Log.Information ("This feature is not implemented yet.", true);
+        }
+
+        private void OnDuplicateDisc (object o, EventArgs args)
+        {
+            Hyena.Log.Information ("This feature is not implemented yet.", true);
         }
 
 #region Source Overrides
@@ -255,6 +266,89 @@ namespace Banshee.AudioCd
             get { return false; }
         }
 
+#endregion
+
+#region GUI/ThickClient
+
+        private bool actions_loaded = false;
+        private static bool stock_icons_registered = false;
+
+        private void SetupGui ()
+        {                                       
+            Properties.SetStringList ("Icon.Name", "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
+            Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Eject Disc"));
+            Properties.SetString ("UnmapSourceActionIconName", "media-eject");
+            
+            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
+            uia_service.GlobalActions.AddImportant (new ActionEntry [] {
+                new ActionEntry ("RipDiscAction", null,
+                    Catalog.GetString ("Import CD"), null,
+                    Catalog.GetString ("Import this audio CD to the library"),
+                    OnImportDisc)
+            });
+            
+            uia_service.GlobalActions.AddImportant (
+                new ActionEntry ("DuplicateDiscAction", null,
+                    Catalog.GetString ("Duplicate CD"), null,
+                    Catalog.GetString ("Duplicate this audio CD"),
+                    OnDuplicateDisc)
+            );
+            
+            uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
+            
+            Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
+            Properties.SetString ("GtkActionPath", "/AudioCdContextMenu");
+            
+            actions_loaded = true;
+            
+            if (!stock_icons_registered) {
+                GtkElementsService gtk_service = ServiceManager.Get<GtkElementsService> ();
+                System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly ();
+                Gtk.IconSet icon_set = new Gtk.IconSet ();
+                gtk_service.IconFactory.AddResourceToIconSet (asm, "cd-action-rip", 16, IconSize.Menu, icon_set);
+                gtk_service.IconFactory.AddResourceToIconSet (asm, "cd-action-rip", 22, IconSize.SmallToolbar, icon_set);
+                gtk_service.IconFactory.Add ("cd-action-rip", icon_set);
+                stock_icons_registered = true;
+            }
+            
+            UpdateActions ();
+        }
+        
+        private void UpdateActions ()
+        {
+            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
+            if (uia_service == null) {
+                return;
+            }
+            
+            Gtk.Action rip_action = uia_service.GlobalActions["RipDiscAction"];
+            if (rip_action != null) {
+                string title = disc_model.Title;
+                int max_title_length = 20;
+                title = title.Length > max_title_length 
+                    ? String.Format ("{0}\u2026", title.Substring (0, max_title_length).Trim ())
+                    : title;
+                rip_action.Label = String.Format (Catalog.GetString ("Import \u201f{0}\u201d"), title);
+                rip_action.ShortLabel = Catalog.GetString ("Import CD");
+                rip_action.StockId = "cd-action-rip";
+                rip_action.Sensitive = AudioCdRipper.Supported;
+            }
+            
+            Gtk.Action duplicate_action = uia_service.GlobalActions["DuplicateDiscAction"];
+            if (duplicate_action != null) {
+                duplicate_action.IconName = "media-cdrom";
+            }
+        }
+        
+        protected override void OnUpdated ()
+        {
+            if (actions_loaded) {
+                UpdateActions ();
+            }
+            
+            base.OnUpdated ();
+        }
+        
 #endregion
 
     }

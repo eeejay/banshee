@@ -71,7 +71,7 @@ namespace Banshee.Gui
             Initialize ();
         }
         
-        private void AddResourceToIconSet (Assembly asm, string stockId, int size, 
+        public void AddResourceToIconSet (Assembly asm, string stockId, int size, 
             IconSize iconSize, IconSet iconSet)
         {
             string resource_name = stockId + "-" + size.ToString () + ".png";
