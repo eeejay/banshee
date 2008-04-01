@@ -1,5 +1,18 @@
 2008-04-01  Alexander Hixon  <hixon.alexander@mediati.org>
 
+	* src/Extensions/Banshee.Daap/Daap/ServiceLocator.cs: Use Generics instead
+	of Hashtable. Use IPv4 addresses where available, but still provide
+	fallbacks to whatever we first got if we didn't get any other alternatives.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Update from
+	changes in ServiceLocator, since we get OnServiceAdded multiple times now.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Spit out a
+	warning dialog if we fail to connect. Hookup the TrackAdded callback, and
+	stubbed out TrackRemoved. Implement IImportSource (doesn't do much yet).
+
+2008-04-01  Alexander Hixon  <hixon.alexander@mediati.org>
+
 	* src/Extensions/Banshee.Daap/Daap/ServiceLocator.cs: Slightly better
 	workaround for IPv6 addresses (that is, only listen for IPv4 addresses).
 

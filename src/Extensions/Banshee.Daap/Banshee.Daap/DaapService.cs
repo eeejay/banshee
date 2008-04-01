@@ -85,13 +85,23 @@ namespace Banshee.Daap
         private void OnServiceFound (object o, ServiceArgs args)
         {
             DaapSource source = new DaapSource (args.Service);
-            source_map.Add (String.Format ("{0}:{1}", args.Service.Address, args.Service.Port), source);
+            string key = String.Format ("{0}:{1}", args.Service.Name, args.Service.Port);
+            
+            if (source_map.ContainsKey (key)) {
+                // Received new connection info for service
+                container.RemoveChildSource (source_map [key]);
+                source_map [key] = source;
+            } else {
+                // New service information
+                source_map.Add (key, source);
+            }
+            
             container.AddChildSource (source);
         }
         
         private void OnServiceRemoved (object o, ServiceArgs args)
         {
-            string key = String.Format ("{0}:{1}", args.Service.Address, args.Service.Port);
+            string key = String.Format ("{0}:{1}", args.Service.Name, args.Service.Port);
             DaapSource source = source_map [key];
             
             source.Disconnect (true);

@@ -33,12 +33,13 @@ using DAAP;
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Collection.Database;
+using Banshee.Library;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 
 namespace Banshee.Daap
 {
-    public class DaapSource : PrimarySource, IDurationAggregator, IDisposable, IUnmapableSource
+    public class DaapSource : PrimarySource, IDurationAggregator, IDisposable, IUnmapableSource, IImportSource
     {
         private Service service;
         private DAAP.Client client;
@@ -92,7 +93,13 @@ namespace Banshee.Daap
                         box.PackStart(error_view, true, true, 0);
                         error_view.Show();
                     });*/
-                    Console.WriteLine ("Error while connecting to remote: {0}", e);
+                    
+                    string details = String.Format ("Couldn't connect to service {0} on {1}:{2} - {3}",
+                                                      service.Name,
+                                                      service.Address,
+                                                      service.Port, e.ToString ().Replace ("<", "&lt;").Replace (">", "&gt;"));
+                    Hyena.Log.Warning ("Failed to connect", details, true);
+                    DestroyStatusMessage ();
                 }
                
                 is_activating = false;
@@ -131,8 +138,7 @@ namespace Banshee.Daap
             
             if (database != null) {
                 database.TrackAdded -= OnDatabaseTrackAdded;
-                // TODO
-                //database.TrackRemoved -= OnDatabaseTrackRemoved;
+                database.TrackRemoved -= OnDatabaseTrackRemoved;
                 database = null;
             }
 
@@ -209,9 +215,9 @@ namespace Banshee.Daap
             if (database == null && client.Databases.Count > 0) {
                 database = client.Databases[0];
                 database.TrackAdded += OnDatabaseTrackAdded;
-                //database.TrackRemoved += OnDatabaseTrackRemoved;
-                //database_proxy.Database = database;
-                //DaapCore.ProxyServer.RegisterDatabase (database);
+                database.TrackRemoved += OnDatabaseTrackRemoved;
+                
+                // TODO
                 //AddPlaylistSources ();
                 
                 foreach (Track track in database.Tracks) {
@@ -233,7 +239,13 @@ namespace Banshee.Daap
         
         public void OnDatabaseTrackAdded (object o, TrackArgs args)
         {
-            Console.WriteLine ("Added: {0}", args.Track);
+            DaapTrackInfo track = new DaapTrackInfo (args.Track, this);
+            track.Save ();
+        }
+        
+        public void OnDatabaseTrackRemoved (object o, TrackArgs args)
+        {
+            // FIXME
         }
         
         public override bool CanRemoveTracks {
@@ -284,6 +296,24 @@ namespace Banshee.Daap
         
         public bool ConfirmBeforeUnmap {
             get { return false; }
+        }
+        
+        public void Import ()
+        {
+            Console.WriteLine ("Import called.");
+            foreach (TrackInfo track in TrackModel.SelectedItems) {
+                Console.WriteLine ("Selected: {0}", track);
+            }
+            
+            Console.WriteLine ("Selection count: {0}", TrackModel.Selection.Count);
+        }
+        
+        public bool CanImport {
+            get { return false; }
+        }
+        
+        public string [] IconNames {
+            get { return null; }
         }
     }
 }
