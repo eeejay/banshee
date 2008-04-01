@@ -1,3 +1,18 @@
+2008-04-01  Scott Peterson <lunchtimemama@gmail.com> 
+
+	This fixes BGO #525453
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Set the indicator column's min and max width to 30.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: Add constructor
+	that takes min and max width (we need C# 3! Object initialization
+	FTW).
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Added support for MaxWidth. Some scenearios are still not supported
+	but I'll get the corner cases later.
+
 2008-04-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:

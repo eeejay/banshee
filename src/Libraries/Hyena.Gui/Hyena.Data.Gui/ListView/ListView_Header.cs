@@ -44,6 +44,7 @@ namespace Hyena.Data.Gui
             public int X2;
             public int Width;
             public int MinWidth;
+            public int MaxWidth;
             public int ResizeX1;
             public int ResizeX2;
             public int Index;
@@ -164,12 +165,13 @@ namespace Hyena.Data.Gui
                     }
                 }
                 
-                int min_width = 25;
+                int min_width = column_cache[i].Column.MinWidth;
                 IHeaderCell header_cell = column_cache[i].Column.HeaderCell as IHeaderCell;
                 if (header_cell != null) {
                     min_width = header_cell.MinWidth;
                 }
                 column_cache[i].MinWidth = min_width;
+                column_cache[i].MaxWidth = column_cache[i].Column.MaxWidth;
                 min_header_width += column_cache[i].MinWidth = Math.Max (min_width, column_cache[i].Column.MinWidth);
             }
             
@@ -219,8 +221,13 @@ namespace Hyena.Data.Gui
                 double delta = total_width * percent;
                 
                 // TODO handle max widths
-                if (column_cache[i].ElasticWidth + delta < column_cache[i].MinWidth) {
+                double width = column_cache[i].ElasticWidth + delta;
+                if (width < column_cache[i].MinWidth) {
                     delta = column_cache[i].MinWidth - column_cache[i].ElasticWidth;
+                    elastic_columns.RemoveAt (index);
+                    index--;
+                } else if (width > column_cache[i].MaxWidth) {
+                    delta = column_cache[i].MaxWidth - column_cache[i].ElasticWidth;
                     elastic_columns.RemoveAt (index);
                     index--;
                 }

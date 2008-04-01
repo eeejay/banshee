@@ -73,8 +73,15 @@ namespace Hyena.Data.Gui
         }
         
         public Column (ColumnCell header_cell, string title, ColumnCell cell, double width, bool visible)
+            : this (header_cell, title, cell, width, visible, 0, Int32.MaxValue)
+        {
+        }
+        
+        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width, bool visible, int minWidth, int maxWidth)
             : base (cell.Property, title, width, visible)
         {
+            this.minWidth = minWidth;
+            this.maxWidth = maxWidth;
             this.header_cell = header_cell;
             PackStart(cell);
         }

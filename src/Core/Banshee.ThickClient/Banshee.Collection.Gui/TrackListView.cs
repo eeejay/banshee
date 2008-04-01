@@ -55,7 +55,7 @@ namespace Banshee.Collection.Gui
             SortableColumn artist_column = new SortableColumn (Catalog.GetString ("Artist"), new ColumnCellText ("ArtistName", true), 0.225, "Artist", true);
 
             column_controller.AddRange (
-                new Column (null, "indicator", new ColumnCellPlaybackIndicator (null), 0.05, true),
+                new Column (null, "indicator", new ColumnCellPlaybackIndicator (null), 0.05, true, 30, 30),
                 new SortableColumn (Catalog.GetString ("Track"), new ColumnCellTrackNumber ("TrackNumber", true), 0.10, "Track", true),
                 new SortableColumn (Catalog.GetString ("Title"), new ColumnCellText ("TrackTitle", true), 0.25, "Title", true),
                 artist_column,
