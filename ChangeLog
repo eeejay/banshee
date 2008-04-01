@@ -1,3 +1,24 @@
+2008-04-01  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Extensions/Extensions.mds:
+	* src/Extensions/Banshee.Daap/Banshee.Daap.mdp: Add the DAAP extension to
+	the Extensions solution, and add new files.
+	
+	* src/Extensions/Banshee.Daap/Daap/ServiceLocator.cs: Workaround for bug
+	in Mono where we can't correctly work with IPv6 addresses.
+	
+	* src/Extensions/Banshee.Daap/Makefile.am:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Add Unmap
+	support, remove hacky Client connecting code, remove tracks from DB once
+	we're finished with them, cleaned up status messages, and use new classes.
+	
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs: Port login
+	dialog from stable.
+	
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapTrackInfo.cs: Move
+	DAAP.Track to TrackInfo logic out into seperate class that inherits from
+	DatabaseTrackInfo.
+
 2008-03-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:

@@ -19,6 +19,7 @@
 
 using System;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Collections;
 
@@ -142,7 +143,13 @@ namespace DAAP {
                 }
             }
             
-            DAAP.Service svc = new DAAP.Service (service.HostEntry.AddressList[0], (ushort)service.Port, 
+            IPAddress address = args.Service.HostEntry.AddressList[0];
+            if (address.AddressFamily == AddressFamily.InterNetworkV6) {
+                // XXX: Workaround a Mono bug where we can't resolve IPv6 addresses properly, so we fix it here
+                address = Dns.GetHostEntry (args.Service.HostEntry.HostName).AddressList[0];
+            }
+            
+            DAAP.Service svc = new DAAP.Service (address, (ushort)service.Port, 
                 name, pwRequired);
             
             services[svc.Name] = svc;

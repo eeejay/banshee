@@ -55,6 +55,10 @@ namespace Banshee.Base
         
         public static string MakePathRelativeToLibrary (string path)
         {
+            if (String.IsNullOrEmpty (path)) {
+                return null;
+            }
+            
             string library_location = CachedLibraryLocation;
             
             if (path.Length < library_location.Length + 1) {

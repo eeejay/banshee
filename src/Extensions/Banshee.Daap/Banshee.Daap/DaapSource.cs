@@ -38,11 +38,15 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Daap
 {
-    public class DaapSource : PrimarySource, IDurationAggregator, IDisposable
+    public class DaapSource : PrimarySource, IDurationAggregator, IDisposable, IUnmapableSource
     {
         private Service service;
         private DAAP.Client client;
         private DAAP.Database database;
+        
+        public DAAP.Database Database {
+            get { return database; }
+        }
         
         private bool is_activating;
         private SourceMessage status_message;
@@ -51,6 +55,7 @@ namespace Banshee.Daap
         {
             this.service = service;
             Properties.SetString ("Icon.Name", "computer");
+            Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Disconnect"));
             
             AfterInitialized ();
         }
@@ -69,23 +74,15 @@ namespace Banshee.Daap
             Console.WriteLine ("Connecting to {0}:{1}", service.Address, service.Port);
             
             ThreadAssist.Spawn (delegate {
-                try {
-                    // XXX: We get connect failures if we try with IPv6 address - what's up with that?!
-                    // Investigate.
-                    
-                    if (service.Address.ToString ().Contains (".")) {
-                        client = new DAAP.Client (service);
-                    } else {
-                        Console.WriteLine ("Was IPv6 address - we're probably going to die... :(");
-                    }
-                    //client = new Client (System.Net.IPAddress.Parse ("127.0.0.1"), service.Port);
+                try {                    
+                    client = new DAAP.Client (service);
                     client.Updated += OnClientUpdated;
                     
                     if (client.AuthenticationMethod == AuthenticationMethod.None) {
                         client.Login ();
-                    }/* else {
+                    } else {
                         ThreadAssist.ProxyToMain (PromptLogin);
-                    }*/
+                    }
                 } catch(Exception e) {
                     /*ThreadAssist.ProxyToMain(delegate {
                         DaapErrorView error_view = new DaapErrorView(this, DaapErrorType.BrokenAuthentication);
@@ -106,6 +103,22 @@ namespace Banshee.Daap
         
         internal bool Disconnect (bool logout)
         {
+            // Stop currently playing track if its from us.
+            try {
+                if (ServiceManager.PlayerEngine.CurrentState == Banshee.MediaEngine.PlayerEngineState.Playing) {
+                    DatabaseTrackInfo track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo;
+                    if (track != null && track.PrimarySource == this) {
+                        ServiceManager.PlayerEngine.Close ();
+                    }
+                }
+            } catch { }
+            
+            // Remove tracks associated with this source, since we don't want
+            // them after we unmap - we'll refetch.
+            if (Count > 0) {
+                RemoveTrackRange ((TrackListDatabaseModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
+            }
+            
             if (client != null) {
                 if (logout) {
                     client.Logout ();
@@ -135,29 +148,26 @@ namespace Banshee.Daap
         
         private void SetMessage (string message, bool spinner)
         {
-            if (status_message == null) {
-                status_message = new SourceMessage (this);
-                PushMessage (status_message);
-                
-                // Nice hack here.
-                status_message.FreezeNotify ();
-                status_message.Text = message;
-                status_message.CanClose = !spinner;
-                status_message.IsSpinning = spinner;
-                status_message.SetIconName (null);
-                
-                status_message.ThawNotify ();
+            if (status_message != null) {
+                DestroyStatusMessage ();
             }
             
-            //string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
-            
+            status_message = new SourceMessage (this);
             status_message.FreezeNotify ();
-            status_message.Text = message;
-            status_message.CanClose = !spinner;
+            status_message.CanClose = false;
             status_message.IsSpinning = spinner;
-            status_message.SetIconName (null);
-            
+            status_message.Text = message;
             status_message.ThawNotify ();
+            
+            PushMessage (status_message);
+        }
+        
+        private void DestroyStatusMessage ()
+        {
+            if (status_message != null) {
+                RemoveMessage (status_message);
+                status_message = null;
+            }
         }
         
         private void HideMessage ()
@@ -166,6 +176,32 @@ namespace Banshee.Daap
                 RemoveMessage (status_message);
                 status_message = null;
             }
+        }
+        
+        private void PromptLogin (object o, EventArgs args)
+        {
+            SetMessage (String.Format (Catalog.GetString ("Logging in to {0}"), Name), true);
+            
+            DaapLoginDialog dialog = new DaapLoginDialog (client.Name, 
+            client.AuthenticationMethod == AuthenticationMethod.UserAndPassword);
+            if (dialog.Run () == (int) Gtk.ResponseType.Ok) {
+                AuthenticatedLogin (dialog.Username, dialog.Password);
+            } else {
+                Unmap ();
+            }
+
+            dialog.Destroy ();
+        }
+        
+        private void AuthenticatedLogin (string username, string password)
+        {
+            ThreadAssist.Spawn (delegate {
+                try {
+                    client.Login (username, password);
+                } catch (AuthenticationException) {
+                    ThreadAssist.ProxyToMain (PromptLogin);
+                }
+            });
         }
         
         private void OnClientUpdated (object o, EventArgs args)
@@ -179,18 +215,8 @@ namespace Banshee.Daap
                 //AddPlaylistSources ();
                 
                 foreach (Track track in database.Tracks) {
-                    //track_model.Add (track);
-                    DatabaseTrackInfo r = new DatabaseTrackInfo ();
-                    r.TrackTitle = track.Title;
-                    r.AlbumTitle = track.Album;
-                    r.ArtistName = track.Artist;
-                    
-                    r.TrackNumber = track.TrackNumber;
-                    r.Year = track.Year;
-                    r.Duration = track.Duration;
-                    r.PrimarySource = this;
-                    
-                    r.Save ();
+                    DaapTrackInfo daaptrack = new DaapTrackInfo (track, this);
+                    daaptrack.Save ();
                 }
                 
                 Reload ();
@@ -237,6 +263,27 @@ namespace Banshee.Daap
         
         protected override string TypeUniqueId {
             get { return "daap"; }
+        }
+        
+        public bool Unmap ()
+        {
+            // TODO: Maybe keep track of where we came from, or pick the next source up on the list?
+            ServiceManager.SourceManager.SetActiveSource (ServiceManager.SourceManager.MusicLibrary);
+            
+            // Disconnect and clear out our tracks and such.
+            Disconnect (true);
+            
+            Reload ();
+            
+            return true;
+        }
+        
+        public bool CanUnmap {
+            get { return true; }
+        }
+        
+        public bool ConfirmBeforeUnmap {
+            get { return false; }
         }
     }
 }

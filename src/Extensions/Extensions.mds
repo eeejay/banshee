@@ -8,6 +8,7 @@
       <Entry build="True" name="Banshee.NowPlaying" configuration="Debug" />
       <Entry build="True" name="Banshee.PlayQueue" configuration="Debug" />
       <Entry build="True" name="Banshee.AudioCd" configuration="Debug" />
+      <Entry build="True" name="Banshee.Daap" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode single="True">
