@@ -16,7 +16,7 @@
   </toolbar>
 
   <menubar name="MainMenu">
-    <menu name="MusicMenu" action="MusicMenuAction">
+    <menu name="MediaMenu" action="MediaMenuAction">
       <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
       <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
       <!--<menuitem name="NewSmartPlaylistFromSearch" action="NewSmartPlaylistFromSearchAction"/>-->

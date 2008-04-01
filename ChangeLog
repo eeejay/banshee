@@ -1,3 +1,14 @@
+2008-04-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Disable
+	actions that require a playing track when there is none.  In restart
+	song action, check that the track is not null.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Extensions/Banshee.NotificationArea/Resources/NotificationAreaMenu.xml:
+	Change the Music menu to the Media menu.
+
 2008-04-01  Scott Peterson <lunchtimemama@gmail.com> 
 
 	This fixes BGO #525453

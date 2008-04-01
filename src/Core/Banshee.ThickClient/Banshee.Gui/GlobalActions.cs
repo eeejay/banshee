@@ -45,9 +45,9 @@ namespace Banshee.Gui
         public GlobalActions (InterfaceActionService actionService) : base ("Global")
         {
             Add (new ActionEntry [] {
-                // Music Menu
-                new ActionEntry ("MusicMenuAction", null, 
-                    Catalog.GetString ("_Music"), null, null, null),
+                // Media Menu
+                new ActionEntry ("MediaMenuAction", null, 
+                    Catalog.GetString ("_Media"), null, null, null),
 
                 new ActionEntry ("ImportAction", Stock.Open,
                     Catalog.GetString ("Import _Media..."), "<control>I",
@@ -122,7 +122,7 @@ namespace Banshee.Gui
             this["ExtensionsAction"].Visible = false;
         }
             
-#region Music Menu Actions
+#region Media Menu Actions
 
         private void OnImport (object o, EventArgs args)
         {

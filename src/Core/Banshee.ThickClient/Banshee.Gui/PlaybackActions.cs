@@ -103,6 +103,10 @@ namespace Banshee.Gui
             ServiceManager.PlaybackController.ShuffleMode = ShuffleEnabled.Get () 
                 ? PlaybackShuffleMode.Shuffle
                 : PlaybackShuffleMode.Linear;
+
+            this["JumpToPlayingTrackAction"].Sensitive = false;
+            this["RestartSongAction"].Sensitive = false;
+            this["SeekToAction"].Sensitive = false;
             
             action_service = actionService;
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
@@ -136,16 +140,25 @@ namespace Banshee.Gui
             switch (args.Event) {
                 case PlayerEngineEvent.StartOfStream:
                     TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack; 
-                    action_service["Playback.RestartSongAction"].Sensitive = !track.IsLive;
-                    action_service["Playback.RestartSongAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
+                    this["SeekToAction"].Sensitive = !track.IsLive;
+                    this["RestartSongAction"].Sensitive = !track.IsLive;
+                    this["RestartSongAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
                         ? Catalog.GetString ("_Restart Song")
                         : Catalog.GetString ("_Restart Video");
-                    action_service["Playback.JumpToPlayingTrackAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
+
+                    this["JumpToPlayingTrackAction"].Sensitive = true;
+                    this["JumpToPlayingTrackAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
                         ? Catalog.GetString ("_Jump to Playing Song")
                         : Catalog.GetString ("_Jump to Playing Video");
                     break;
+
+                case PlayerEngineEvent.Error:
                 case PlayerEngineEvent.EndOfStream:
-                    ToggleAction stop_action = (ToggleAction)action_service["Playback.StopWhenFinishedAction"];
+                    this["JumpToPlayingTrackAction"].Sensitive = false;
+                    this["RestartSongAction"].Sensitive = false;
+                    this["SeekToAction"].Sensitive = false;
+
+                    ToggleAction stop_action = (ToggleAction) this["StopWhenFinishedAction"];
                     // Kinda lame, but we don't want to actually reset StopWhenFinished inside the controller
                     // since it is also listening to EOS and needs to actually stop playback; we listen here
                     // just to keep the UI in sync.
@@ -202,8 +215,10 @@ namespace Banshee.Gui
         private void OnRestartSongAction (object o, EventArgs args)
         {
             TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
-            ServiceManager.PlayerEngine.Close ();
-            ServiceManager.PlayerEngine.OpenPlay (track);
+            if (track != null) {
+                ServiceManager.PlayerEngine.Close ();
+                ServiceManager.PlayerEngine.OpenPlay (track);
+            }
         }
         
         private void OnStopWhenFinishedAction (object o, EventArgs args)
