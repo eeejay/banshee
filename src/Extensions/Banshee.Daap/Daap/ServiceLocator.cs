@@ -145,8 +145,9 @@ namespace DAAP {
             
             IPAddress address = args.Service.HostEntry.AddressList[0];
             if (address.AddressFamily == AddressFamily.InterNetworkV6) {
-                // XXX: Workaround a Mono bug where we can't resolve IPv6 addresses properly, so we fix it here
-                address = Dns.GetHostEntry (args.Service.HostEntry.HostName).AddressList[0];
+                // XXX: Workaround a Mono bug where we can't resolve IPv6 addresses properly
+                //address = Dns.GetHostEntry (args.Service.HostEntry.HostName).AddressList[0];
+                return;
             }
             
             DAAP.Service svc = new DAAP.Service (address, (ushort)service.Port, 

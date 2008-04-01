@@ -51,23 +51,6 @@ namespace Banshee.Daap
             get { return false; }
         }
         
-        /*private int count;
-        public override int Count {
-            get { return count; }
-        }
-        
-        public override void AddChildSource (Source child)
-        {
-            count++;
-            base.AddChildSource (child);
-        }
-        
-        public override void RemoveChildSource (Source child)
-        {
-            count--;
-            base.RemoveChildSource (child);
-        }*/
-        
         protected override string TypeUniqueId {
             get { return "daap-container"; }
         }
