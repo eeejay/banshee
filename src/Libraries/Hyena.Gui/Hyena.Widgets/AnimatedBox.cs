@@ -34,7 +34,7 @@ using Gtk;
 
 using Hyena.Gui.Theatrics;
 
-namespace Hyena.Gui
+namespace Hyena.Widgets
 {
     public abstract class AnimatedBox : Container
     {

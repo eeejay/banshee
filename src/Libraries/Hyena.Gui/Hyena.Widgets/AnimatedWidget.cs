@@ -31,7 +31,9 @@ using System.Collections.Generic;
 using Gdk;
 using Gtk;
 
-namespace Hyena.Gui
+using Hyena.Gui.Theatrics;
+
+namespace Hyena.Widgets
 {
     internal enum AnimationState
     {

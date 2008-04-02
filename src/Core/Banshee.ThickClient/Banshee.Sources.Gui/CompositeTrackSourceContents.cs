@@ -36,6 +36,7 @@ using Mono.Unix;
 
 using Hyena.Data;
 using Hyena.Data.Gui;
+using Hyena.Widgets;
 
 using Banshee.Sources;
 using Banshee.ServiceStack;
@@ -58,9 +59,9 @@ namespace Banshee.Sources.Gui
 
         private Dictionary<object, double> model_positions = new Dictionary<object, double> ();
         
-        private ScrolledWindow artist_scrolled_window;
-        private ScrolledWindow album_scrolled_window;
-        private ScrolledWindow track_scrolled_window;
+        private Gtk.ScrolledWindow artist_scrolled_window;
+        private Gtk.ScrolledWindow album_scrolled_window;
+        private Gtk.ScrolledWindow track_scrolled_window;
         private bool view_is_built = false;
         
         private Paned container;
@@ -140,17 +141,24 @@ namespace Banshee.Sources.Gui
             artist_view.HeaderVisible = false;
             album_view.HeaderVisible = false;
             
-            artist_scrolled_window = new ScrolledWindow ();
+            if (Banshee.Base.ApplicationContext.CommandLine.Contains ("smooth-scroll")) {
+                artist_scrolled_window = new SmoothScrolledWindow ();
+                album_scrolled_window = new SmoothScrolledWindow ();
+                track_scrolled_window = new SmoothScrolledWindow ();
+            } else {
+                artist_scrolled_window = new Gtk.ScrolledWindow ();
+                album_scrolled_window = new Gtk.ScrolledWindow ();
+                track_scrolled_window = new Gtk.ScrolledWindow ();
+            }
+            
             artist_scrolled_window.Add (artist_view);
             artist_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
             artist_scrolled_window.VscrollbarPolicy = PolicyType.Automatic;
             
-            album_scrolled_window = new ScrolledWindow ();
             album_scrolled_window.Add (album_view);
             album_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
             album_scrolled_window.VscrollbarPolicy = PolicyType.Automatic;
             
-            track_scrolled_window = new ScrolledWindow ();
             track_scrolled_window.Add (track_view);
             track_scrolled_window.HscrollbarPolicy = PolicyType.Automatic;
             track_scrolled_window.VscrollbarPolicy = PolicyType.Automatic;

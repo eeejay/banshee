@@ -1,3 +1,23 @@
+2008-04-02  Scott Peterson <lunchtimemama@gmail.com> 
+
+	This adds experimental smooth scrolling. The behavior still needs to be
+	tweaked, and comments/opinions are welcome. To enable smooth
+	scrolling, run banshee with the command line argument --smooth-scroll.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedVBox.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedHBox.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedWidget.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Choreographer.cs: Fixed
+	some namespace stuff.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Use smooth scrolling if --smooth-scroll command argument is passed.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SmoothScrolledWindow.cs: A
+	first-pass smooth scrolling widget.
+
 2008-04-02  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* src/Extensions/Makefile.am: Include the Daap extension here too.

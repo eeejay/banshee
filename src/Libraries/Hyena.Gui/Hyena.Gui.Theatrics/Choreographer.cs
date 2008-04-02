@@ -27,8 +27,9 @@
 //
 
 using System;
+using Hyena.Widgets;
 
-namespace Hyena.Gui
+namespace Hyena.Widgets
 {
     public enum Blocking
     {
@@ -46,7 +47,10 @@ namespace Hyena.Gui
         ExponentialOut,
         ExponentialInOut
     }
-    
+}
+
+namespace Hyena.Gui.Theatrics
+{
     public static class Choreographer
     {
         public static int Compose (double percent, int size, Easing easing)

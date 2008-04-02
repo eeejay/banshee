@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
-using Hyena.Gui;
+using Hyena.Widgets;
 using Banshee.Base;
 using Banshee.ServiceStack;
 

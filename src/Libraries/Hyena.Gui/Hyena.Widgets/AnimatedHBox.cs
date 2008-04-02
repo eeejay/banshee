@@ -30,7 +30,7 @@ using System;
 using Gdk;
 using Gtk;
 
-namespace Hyena.Gui
+namespace Hyena.Widgets
 {
     public class AnimatedHBox : AnimatedBox
     {

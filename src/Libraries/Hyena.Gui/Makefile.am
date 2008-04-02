@@ -57,7 +57,8 @@ SOURCES =  \
 	Hyena.Widgets/AnimatedWidget.cs \
 	Hyena.Widgets/MessageBar.cs \
 	Hyena.Widgets/RoundedFrame.cs \
-	Hyena.Widgets/ScrolledWindow.cs
+	Hyena.Widgets/ScrolledWindow.cs \
+	Hyena.Widgets/SmoothScrolledWindow.cs
 
 include $(top_srcdir)/build/build.mk
 
