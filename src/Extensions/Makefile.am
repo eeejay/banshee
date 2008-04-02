@@ -1,6 +1,7 @@
+# DO NOT ENABLE DAAP!!!!!!!
+
 SUBDIRS = \
 	Banshee.AudioCd \
-	Banshee.Daap \
 	Banshee.Bookmarks \
 	Banshee.Lastfm \
 	Banshee.MultimediaKeys \
