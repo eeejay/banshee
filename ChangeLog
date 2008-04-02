@@ -1,5 +1,11 @@
 2008-04-01  Aaron Bockover  <abock@gnome.org>
 
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IAudioCdRipper.cs: More
+	stubbing, no real glory yet
+
+2008-04-01  Aaron Bockover  <abock@gnome.org>
+
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.addin.xml:
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
 	Stub an implementation of IAudioCdRipper and expose it as an extension

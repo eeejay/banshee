@@ -36,6 +36,9 @@ namespace Banshee.GStreamer
 {
     public class AudioCdRipper : IAudioCdRipper
     {
+        public event AudioCdRipperProgressHandler Progress;
+        public event AudioCdRipperTrackFinishedHandler TrackFinished;
+        
         public void Begin ()
         {
         }
@@ -48,9 +51,25 @@ namespace Banshee.GStreamer
         {
         }
         
-        public bool RipTrack (TrackInfo track, SafeUri outputUri)
+        public void RipTrack (TrackInfo track, SafeUri outputUri)
         {
-            return false;
+            return;
+        }
+        
+        protected virtual void OnProgress ()
+        {
+            AudioCdRipperProgressHandler handler = Progress;
+            if (handler != null) {
+                handler (this, new AudioCdRipperProgressArgs (null, TimeSpan.Zero, TimeSpan.Zero));
+            }
+        }
+        
+        protected virtual void OnTrackFinished ()
+        {
+            AudioCdRipperTrackFinishedHandler handler = TrackFinished;
+            if (handler != null) {
+                handler (this, new AudioCdRipperTrackFinishedArgs (null, null));
+            }
         }
     }
 }

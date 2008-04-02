@@ -33,12 +33,62 @@ using Banshee.Collection;
 
 namespace Banshee.MediaEngine
 {
+    public delegate void AudioCdRipperProgressHandler (object o, AudioCdRipperProgressArgs args);
+    public delegate void AudioCdRipperTrackFinishedHandler (object o, AudioCdRipperTrackFinishedArgs args);
+ 
     public interface IAudioCdRipper
     {
+        event AudioCdRipperProgressHandler Progress;
+        event AudioCdRipperTrackFinishedHandler TrackFinished;
+        
         void Begin ();
         void Finish ();
         void Cancel ();
         
-        bool RipTrack (TrackInfo track, SafeUri outputUri);
+        void RipTrack (TrackInfo track, SafeUri outputUri);
+    }
+                             
+    public sealed class AudioCdRipperProgressArgs : EventArgs
+    {
+        public AudioCdRipperProgressArgs (TrackInfo track, TimeSpan encodedTime, TimeSpan totalTime)
+        {
+            this.track = track;
+            this.encoded_time = encodedTime;
+            this.total_time = totalTime;
+        }
+        
+        private TimeSpan encoded_time;
+        public TimeSpan EncodedTime {
+            get { return encoded_time; }
+        }
+
+        private TimeSpan total_time;
+        public TimeSpan TotalTime {
+            get { return total_time; }
+        }
+
+        private TrackInfo track;
+        public TrackInfo Track {
+            get { return track; }
+        }
+    }
+
+    public sealed class AudioCdRipperTrackFinishedArgs : EventArgs
+    {
+        public AudioCdRipperTrackFinishedArgs (TrackInfo track, SafeUri uri)
+        {
+            this.track = track;
+            this.uri = uri;
+        }
+
+        private TrackInfo track;
+        public TrackInfo Track {
+            get { return track; }
+        }
+        
+        private SafeUri uri;
+        public SafeUri Uri {
+            get { return uri; }
+        }
     }
 }
