@@ -1,5 +1,9 @@
 2008-04-02  Sebastian Dröge  <slomo@circular-chaos.org>
 
+	* src/Extensions/Makefile.am: Include the Daap extension here too.
+
+2008-04-02  Sebastian Dröge  <slomo@circular-chaos.org>
+
 	* src/Backends/Banshee.Unix/Banshee.IO.Unix/Directory.cs:
 	* src/Core/Banshee.Core/Banshee.Base/SafeUri.cs:
 	* src/Core/Banshee.Widgets/Banshee.Widgets/RadialProgress.cs:
