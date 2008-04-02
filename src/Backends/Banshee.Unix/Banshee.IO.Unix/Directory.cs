@@ -38,7 +38,7 @@ namespace Banshee.IO.Unix
 {
     public class Directory : IDirectory
     {
-        [System.Runtime.InteropServices.DllImport ("libglib-2.0.so")]
+        [System.Runtime.InteropServices.DllImport ("libglib-2.0.so.0")]
         private static extern int g_mkdir_with_parents (IntPtr path, int mode);
     
         public void Create (string directory)

@@ -51,7 +51,7 @@ namespace Banshee.Widgets
             AppPaintable = true;
         }
 
-        [DllImport("libgdk-x11-2.0.so")]
+        [DllImport("libgdk-x11-2.0.so.0")]
         private static extern IntPtr gdk_cairo_create(IntPtr raw);
 
         private static Cairo.Context CreateCairoDrawable(Gdk.Drawable drawable)

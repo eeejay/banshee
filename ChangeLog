@@ -1,3 +1,12 @@
+2008-04-02  Sebastian Dröge  <slomo@circular-chaos.org>
+
+	* src/Backends/Banshee.Unix/Banshee.IO.Unix/Directory.cs:
+	* src/Core/Banshee.Core/Banshee.Base/SafeUri.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RadialProgress.cs:
+	DllImport libglib-2.0.so.0 and libgdk-x11-2.0.so.0 instead of
+	libglib-2.0.so and libgdk-x11-2.0.so as the latter are only
+	in the development packages for many distributions.
+
 2008-04-01  Aaron Bockover  <abock@gnome.org>
 
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
