@@ -129,29 +129,39 @@ namespace Hyena.Query
 
             if (op == null) op = qv.OperatorSet.First;
 
+            StringBuilder sb = new StringBuilder ();
+
             if (no_custom_format) {
                 if (qv is StringQueryValue) {
                     if (column_lowered) {
                         // The column is pre-lowered, only no need to call lower() in SQL
-                        return String.Format ("{0} {1}", Column, String.Format (op.SqlFormat, value.ToLower ()));
+                        sb.AppendFormat ("{0} {1}", Column, String.Format (op.SqlFormat, value.ToLower ()));
                     } else {
                         // Match string values literally and against a lower'd version.  Mostly a workaround
                         // the fact that Sqlite's lower() method only works for ASCII (meaning even with this,
                         // we're not getting 100% case-insensitive matching).
-                        return String.Format ("({0} {1} OR LOWER({0}) {2})", Column,
+                        sb.AppendFormat ("({0} {1} OR LOWER({0}) {2})", Column,
                             String.Format (op.SqlFormat, value),
                             String.Format (op.SqlFormat, value.ToLower ())
                         );
                     }
                 } else {
-                    return String.Format ("{0} {1}", Column, String.Format (op.SqlFormat, value));
+                    sb.AppendFormat ("{0} {1}", Column, String.Format (op.SqlFormat, value));
+                }
+
+                if (op.IsNot) {
+                    return String.Format ("({0} OR {1} IS NULL)", sb.ToString (), Column);
+                } else {
+                    return String.Format ("({0} AND {1} IS NOT NULL)", sb.ToString (), Column);
                 }
             } else {
-                return String.Format (
+                sb.AppendFormat (
                     Column, String.Format (op.SqlFormat, value),
                     value, op.IsNot ? "NOT" : null
                 );
             }
+
+            return sb.ToString ();
         }
 
         public static string ToTermString (string alias, string op, string value)

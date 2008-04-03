@@ -1,3 +1,8 @@
+2008-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Fix issue with searching
+	and NULL values, eg "a not like '%a%'" would not match NULL values.
+
 2008-04-02  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/SmoothScrolledWindow.cs: More
