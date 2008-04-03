@@ -27,6 +27,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+
 using Mono.Unix;
 using Mono.Addins;
 
@@ -60,14 +62,29 @@ namespace Banshee.AudioCd
             }
         }
         
+        // State that does real work
         private IAudioCdRipper ripper;
         private AudioCdSource source;
         private UserJob user_job;
-         
+        
+        // State to process the rip operation
+        private Queue<AudioCdTrackInfo> queue = new Queue<AudioCdTrackInfo> ();
+        private TimeSpan ripped_duration;
+        private TimeSpan total_duration;
+        private int track_index;
+        
+        // State to compute/display the rip speed (i.e. 24x)
+        private TimeSpan last_speed_poll_duration;
+        private DateTime last_speed_poll_time;
+        private double last_speed_poll_factor;
+        private string status;
+        
         public AudioCdRipper (AudioCdSource source)
         {
             if (ripper_extension_node != null) {
                 ripper = (IAudioCdRipper)ripper_extension_node.CreateInstance ();
+                ripper.TrackFinished += OnTrackFinished;
+                ripper.Progress += OnProgress;
             } else {
                 throw new ApplicationException ("No AudioCdRipper extension is installed");
             }
@@ -76,14 +93,139 @@ namespace Banshee.AudioCd
         }
         
         public void Start ()
-        {
-            source.LockAllTracks ();
-            ripper.Begin ();
+        {   
+            ResetState ();
+
+            foreach (AudioCdTrackInfo track in (AudioCdDiscModel)source.TrackModel) {
+                if (track.RipEnabled) {
+                    total_duration += track.Duration;
+                    queue.Enqueue (track);
+                }
+            }
             
-            user_job = new UserJob (Catalog.GetString ("Importing Audio CD"), Catalog.GetString ("Initializing Drive"));
-            user_job.IconNames = new string [] { "cd-action-rip" };
+            if (queue.Count == 0) {
+                return;
+            }
+            
+            source.LockAllTracks ();
+                                                
+            user_job = new UserJob (Catalog.GetString ("Importing Audio CD"), 
+                Catalog.GetString ("Initializing Drive"), "media-import-audio-cd");
             user_job.CanCancel = true;
+            user_job.CancelRequested += OnCancelRequested;
+            user_job.Finished += OnFinished;
             user_job.Register ();
+            
+            ripper.Begin ();
+            RipNextTrack ();
         }
+        
+        private void ResetState ()
+        {
+            track_index = 0;
+            ripped_duration = TimeSpan.Zero;
+            total_duration = TimeSpan.Zero;
+            last_speed_poll_duration = TimeSpan.Zero;
+            last_speed_poll_time = DateTime.MinValue;
+            last_speed_poll_factor = 0;
+            status = null;
+            queue.Clear ();
+        }
+        
+        private void RipNextTrack ()
+        {
+            if (queue.Count == 0) {
+                ResetState ();
+                
+                if (ripper != null) {
+                    ripper.Finish ();
+                }
+                
+                if (user_job != null) {
+                    user_job.Finish ();
+                }
+                return;
+            }
+            
+            AudioCdTrackInfo track = queue.Dequeue ();
+
+            user_job.Title = String.Format (Catalog.GetString ("Importing {0} of {1}"), 
+                ++track_index, source.TrackModel.Count);
+            status = String.Format("{0} - {1}", track.ArtistName, track.TrackTitle);
+            user_job.Status = status;
+
+            SafeUri uri = new SafeUri (FileNamePattern.BuildFull (track, "mp3"));
+            ripper.RipTrack (track, uri);
+        }
+
+#region Ripper Event Handlers
+
+        private void OnTrackFinished (object o, AudioCdRipperTrackFinishedArgs args)
+        {
+            if (user_job == null || ripper == null) {
+                return;
+            }
+        
+            ripped_duration += args.Track.Duration;
+            args.Track.Uri = args.Uri;
+            source.UnlockTrack ((AudioCdTrackInfo)args.Track);
+            RipNextTrack ();
+        }
+        
+        private void OnProgress (object o, AudioCdRipperProgressArgs args)
+        {
+            if (user_job == null) {
+                return;
+            }
+        
+            TimeSpan total_ripped_duration = ripped_duration + args.EncodedTime;
+            user_job.Progress = total_ripped_duration.TotalMilliseconds / total_duration.TotalMilliseconds;
+            
+            TimeSpan poll_diff = DateTime.Now - last_speed_poll_time;
+            double factor = 0;
+            
+            if (poll_diff.TotalMilliseconds >= 1000) {
+                factor = ((total_ripped_duration - last_speed_poll_duration).TotalMilliseconds 
+                    * (poll_diff.TotalMilliseconds / 1000.0)) / 1000.0;
+                
+                last_speed_poll_duration = total_ripped_duration;
+                last_speed_poll_time = DateTime.Now;
+                last_speed_poll_factor = factor > 1 ? factor : 0;
+            }
+            
+            user_job.Status = last_speed_poll_factor > 1 ? String.Format ("{0} ({1:0.0}x)", 
+                status, last_speed_poll_factor) : status;
+        }
+
+#endregion
+                                
+#region User Job Event Handlers        
+        
+        private void OnCancelRequested (object o, EventArgs args)
+        {
+            ResetState ();
+            
+            if (ripper != null) {
+                ripper.Cancel ();
+            }
+        
+            if (user_job != null) {
+                user_job.Finish ();
+            }
+        }
+        
+        private void OnFinished (object o, EventArgs args)
+        {
+            if (user_job != null) {
+                user_job.CancelRequested -= OnCancelRequested;
+                user_job.Finished -= OnFinished;
+                user_job = null;
+            }
+            
+            source.UnlockAllTracks ();
+        }
+        
+#endregion
+
     }
 }

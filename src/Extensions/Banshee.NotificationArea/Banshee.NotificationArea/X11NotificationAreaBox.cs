@@ -59,6 +59,7 @@ namespace Banshee.NotificationArea
         {
             event_box = new EventBox ();
             image = new Image ();
+            image.IconSize = 22;
             image.IconName = Banshee.ServiceStack.Application.IconName;
             event_box.Add (image);
             Add (event_box);

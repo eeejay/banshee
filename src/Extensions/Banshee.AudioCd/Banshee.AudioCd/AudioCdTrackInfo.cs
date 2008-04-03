@@ -52,5 +52,11 @@ namespace Banshee.AudioCd
         public int IndexOnDisc {
             get { return index_on_disc; }
         }
+        
+        private bool rip_enabled = true;
+        public bool RipEnabled {
+            get { return rip_enabled; }
+            set { rip_enabled = value; }
+        }
     }
 }

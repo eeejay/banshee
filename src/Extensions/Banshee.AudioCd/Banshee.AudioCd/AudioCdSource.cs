@@ -166,6 +166,15 @@ namespace Banshee.AudioCd
             OnUpdated ();
         }
         
+        internal void UnlockAllTracks ()
+        {
+            foreach (AudioCdTrackInfo track in disc_model) {
+                track.CanPlay = true;
+            }
+            
+            OnUpdated ();
+        }
+        
         internal void UnlockTrack (AudioCdTrackInfo track)
         {
             track.CanPlay = true;

@@ -1,5 +1,27 @@
 2008-04-03  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	Implemented all of the rip queue/interaction logic and user job stuff;
+	very nice and pretty status reporting including speed calculations; this
+	part of the ripper is mostly done, only need to do the GStreamer work now
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
+	Implemented a dummy ripper that pretends to be ripping but is really
+	just some fancy clock work so I could have something to test the 
+	extension ripper code as I went without destroying my drive
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Added UnlockAllTracks
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
+	Added RipEnabled property that we'll connect to check boxes at some point
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Force the icon size to 22px so it doesn't look funny - the image was 
+	choosing a 16px icon which looked like ass and didn't fit in
+
+2008-04-03  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:
 	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJob.cs:
 	* src/Core/Banshee.Services/Banshee.ServiceStack/TestUserJob.cs:

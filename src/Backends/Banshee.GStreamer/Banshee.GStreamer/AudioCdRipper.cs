@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Threading;
 
 using Banshee.Base;
 using Banshee.Collection;
@@ -49,26 +50,48 @@ namespace Banshee.GStreamer
         
         public void Cancel ()
         {
+            Finish ();
         }
         
         public void RipTrack (TrackInfo track, SafeUri outputUri)
         {
+            ThreadPool.QueueUserWorkItem (delegate {
+                DateTime start_time = DateTime.Now;    
+                TimeSpan duration = TimeSpan.FromSeconds (5);
+                
+                while (true) {
+                    TimeSpan ellapsed = DateTime.Now - start_time;
+                    if (ellapsed >= duration) {
+                        break;
+                    }
+                    
+                    TimeSpan progress = TimeSpan.FromMilliseconds ((ellapsed.TotalMilliseconds 
+                        / duration.TotalMilliseconds) * track.Duration.TotalMilliseconds);
+                    
+                    ThreadAssist.ProxyToMain (delegate { OnProgress (track, progress); });
+                    
+                    Thread.Sleep (50);
+                }
+                
+                ThreadAssist.ProxyToMain (delegate { OnTrackFinished (track, outputUri); });
+            });
+            
             return;
         }
         
-        protected virtual void OnProgress ()
+        protected virtual void OnProgress (TrackInfo track, TimeSpan ellapsedTime)
         {
             AudioCdRipperProgressHandler handler = Progress;
             if (handler != null) {
-                handler (this, new AudioCdRipperProgressArgs (null, TimeSpan.Zero, TimeSpan.Zero));
+                handler (this, new AudioCdRipperProgressArgs (track, ellapsedTime, track.Duration));
             }
         }
         
-        protected virtual void OnTrackFinished ()
+        protected virtual void OnTrackFinished (TrackInfo track, SafeUri outputUri)
         {
             AudioCdRipperTrackFinishedHandler handler = TrackFinished;
             if (handler != null) {
-                handler (this, new AudioCdRipperTrackFinishedArgs (null, null));
+                handler (this, new AudioCdRipperTrackFinishedArgs (track, outputUri));
             }
         }
     }
