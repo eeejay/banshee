@@ -243,8 +243,10 @@ namespace Banshee.SmartPlaylist
             if (ConditionTree != null) {
                 foreach (SmartPlaylistQueryValue value in ConditionTree.SearchForValues<SmartPlaylistQueryValue> ()) {
                     SmartPlaylistSource playlist = value.ObjectValue;
-                    playlist.Updated += OnDependencyUpdated;
-                    dependencies.Add (playlist);
+                    if (playlist != null) {
+                        playlist.Updated += OnDependencyUpdated;
+                        dependencies.Add (playlist);
+                    }
                 }
             }
         }

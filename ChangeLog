@@ -1,5 +1,10 @@
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Avoid NRE when loading dependents of smart playlist.
+
+2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Playlists
 	and smart playlsits loaded by each PrimarySource now.
 
