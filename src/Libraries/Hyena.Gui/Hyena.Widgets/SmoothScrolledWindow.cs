@@ -53,12 +53,12 @@ namespace Hyena.Widgets
         
         protected virtual double AccelerateCore (double velocity)
         {
-            return velocity + 2;
+            return velocity + 3;
         }
         
         protected virtual double DecelerateCore (double velocity)
         {
-            return velocity - 1;
+            return velocity - 2;
         }
         
         private double TargetValue {
@@ -89,7 +89,7 @@ namespace Hyena.Widgets
             
             velocity = TimeToDecelerate (delta) ? Decelerate (velocity) : Accelerate (velocity);
             
-            value += Math.Max (velocity, 0.5) * sign;
+            value += Math.Max (velocity, 1) * sign;
             ignore_value_changed = true;
             Vadjustment.Value = Math.Round (value);
             ignore_value_changed = false;

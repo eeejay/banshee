@@ -342,11 +342,11 @@ namespace Hyena.Data.Sqlite
             connection.Close ();
         }
         
-        internal void OnExecuting (ExecutingEventArgs args)
+        internal void OnExecuting (SqliteCommand command)
         {
             EventHandler<ExecutingEventArgs> handler = Executing;
             if (handler != null) {
-                handler (this, args);
+                handler (this, new ExecutingEventArgs (command));
             }
         }
 

@@ -1,5 +1,10 @@
 2008-04-02  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SmoothScrolledWindow.cs: More
+	better.
+
+2008-04-02  Scott Peterson <lunchtimemama@gmail.com> 
+
 	You can now pass --debug-sql to get a full log of all SQL commands
 	executed.
 

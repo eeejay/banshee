@@ -89,7 +89,7 @@ namespace Hyena.Data.Sqlite
             SqliteCommand sql_command = new SqliteCommand (CurrentSqlText);
             sql_command.Connection = connection;
             //Log.DebugFormat ("Executing {0}", sql_command.CommandText);
-            hconnection.OnExecuting (new ExecutingEventArgs (sql_command));
+            hconnection.OnExecuting (sql_command);
 
             try {
                 switch (command_type) {
