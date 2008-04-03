@@ -53,6 +53,15 @@ namespace Banshee.Collection.Gui
             };
         }
 
+        // TODO add context menu for artists/albums...probably need a Banshee.Gui/ArtistActions.cs file.  Should
+        // make TrackActions.cs more generic with regards to the TrackSelection stuff, using the new properties
+        // set on the sources themselves that give us access to the IListView<T>.
+        /*protected override bool OnPopupMenu ()
+        {
+            ServiceManager.Get<InterfaceActionService> ().TrackActions["TrackContextMenuAction"].Activate ();
+            return true;
+        }*/
+
         protected override bool OnFocusInEvent(Gdk.EventFocus evnt)
         {
             ServiceManager.Get<InterfaceActionService> ().TrackActions.SuppressSelectActions ();

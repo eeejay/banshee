@@ -1,3 +1,72 @@
+2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
+	
+	This patch adds the first support for DAPs to trunk.  It currently only
+	support loading the songs/videos on a USB drive, but synching, adding,
+	removing, transcoding etc are not implemented yet.
+
+	* configure.ac:
+	* build/build.environment.mk:
+	* src/Extensions/Makefile.am:
+	* src/Extensions/Extensions.mds: Add Banshee.Dap.MassStorage
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs: Make Uuid virtual
+	and HalDevice internal.
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs: Do not treat
+	unmounted volumes as existing - intead, wait for them to be mounted and
+	then notify they've been added.
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/HardwareManager.cs: Make
+	method internal so Volume can access them.
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Add
+	property to keep the user job hidden, used by MassStorageSource when
+	loading its tracks.
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/BlockDevice.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IBlockDevice.cs: Add
+	IsRemovable property.
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IVolume.cs: Remove IsMounted
+	property, rename IsMountedReadOnly to IsReadOnly, and add ShouldIgnore and
+	FileSystem properites.
+
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs: Authors.
+
+	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
+	Call renamed ImportTrack method.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Lazy
+	initialize the ErrorSource.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	Factor most everythign out into DatabaseImportManager so can be reused for
+	all sorts of disk-based primary sources.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Take most methods from LibraryImportManager, allow setting the ErrorSource
+	and the method that chooses what primary source to put a DatabaseTrackInfo
+	into.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add SetStatus that
+	gives access to every detail of the StatusMessage.
+
+	* src/Extensions/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.addin.xml:
+	* src/Extensions/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.mdp:
+	* src/Extensions/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/DapService.cs:
+	* src/Extensions/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/DapSource.cs:
+	* src/Extensions/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Extensions/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/RemovableSource.cs:
+	* src/Extensions/Banshee.Dap.MassStorage/Makefile.am: New extension, first
+	pass at loading disk-based volumes.  Currently only loads usb mass storage
+	drives.  Adding and deleting tracks on these drives is not yet tested.
+
+	* src/Libraries/Hyena/Hyena.Data/PropertyStore.cs: Handle set value == null.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	Add todo for artist/browser context menu.
+
 2008-04-03  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:

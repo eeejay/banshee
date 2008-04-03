@@ -14,6 +14,7 @@ SOURCES =  \
 	Banshee.Collection.Database/ArtistListDatabaseModel.cs \
 	Banshee.Collection.Database/DatabaseAlbumInfo.cs \
 	Banshee.Collection.Database/DatabaseArtistInfo.cs \
+	Banshee.Collection.Database/DatabaseImportManager.cs \
 	Banshee.Collection.Database/DatabaseTrackInfo.cs \
 	Banshee.Collection.Database/TrackListDatabaseModel.cs \
 	Banshee.Collection/AlbumListModel.cs \

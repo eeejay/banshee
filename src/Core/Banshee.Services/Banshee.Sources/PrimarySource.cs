@@ -69,7 +69,7 @@ namespace Banshee.Sources
 
     public abstract class PrimarySource : DatabaseSource
     {
-        protected ErrorSource error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
+        protected ErrorSource error_source;
         protected bool error_source_visible = false;
 
         protected string remove_range_sql = @"
@@ -87,7 +87,14 @@ namespace Banshee.Sources
         }
 
         public ErrorSource ErrorSource {
-            get { return error_source; }
+            get {
+                if (error_source == null) {
+                    error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
+                    ErrorSource.Updated += OnErrorSourceUpdated;
+                    OnErrorSourceUpdated (null, null);
+                }
+                return error_source;
+            }
         }
 
         public delegate void TrackEventHandler (Source sender, TrackEventArgs args);
@@ -110,8 +117,6 @@ namespace Banshee.Sources
             }
 
             track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", dbid);
-            error_source.Updated += OnErrorSourceUpdated;
-            OnErrorSourceUpdated (null, null);
 
             primary_sources[dbid] = this;
         }

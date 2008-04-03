@@ -212,6 +212,11 @@ namespace Banshee.Sources
         
         protected virtual void SetStatus (string message, bool error)
         {
+            SetStatus (message, !error, !error, error ? "dialog-error" : null);
+        }
+
+        protected virtual void SetStatus (string message, bool can_close, bool is_spinning, string icon_name)
+        {
             if (status_message == null) {
                 status_message = new SourceMessage (this);
                 PushMessage (status_message);
@@ -221,9 +226,9 @@ namespace Banshee.Sources
             
             status_message.FreezeNotify ();
             status_message.Text = String.Format (GLib.Markup.EscapeText (message), status_name);
-            status_message.CanClose = !error;
-            status_message.IsSpinning = !error;
-            status_message.SetIconName (error ? "dialog-error" : null);
+            status_message.CanClose = can_close;
+            status_message.IsSpinning = is_spinning;
+            status_message.SetIconName (icon_name);
             status_message.ClearActions ();
             
             status_message.ThawNotify ();
@@ -412,12 +417,12 @@ namespace Banshee.Sources
             get { return false; }
         }
 
-        public string Name {
+        public virtual string Name {
             get { return properties.GetString ("Name"); }
             set { properties.SetString ("Name", value); }
         }
 
-        public string GenericName {
+        public virtual string GenericName {
             get { return properties.GetString ("GenericName"); }
             set { properties.SetString ("GenericName", value); }
         }

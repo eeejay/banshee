@@ -1,8 +1,8 @@
 //
-// IBlockDevice.cs
+// DapSource.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -28,13 +28,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using Mono.Unix;
 
-namespace Banshee.Hardware
+using Hyena;
+using Banshee.Base;
+using Banshee.ServiceStack;
+using Banshee.Sources;
+using Banshee.Collection;
+using Banshee.Collection.Database;
+using Banshee.Hardware;
+
+namespace Banshee.Dap.MassStorage
 {
-    public interface IBlockDevice : IDevice, IEnumerable<IVolume>
+    public abstract class DapSource : RemovableSource
     {
-        string DeviceNode { get; }
-        IEnumerable<IVolume> Volumes { get; }
-        bool IsRemovable { get; }
+        public DapSource (string name, string generic_name, string uuid) : base (generic_name, name, uuid)
+        {
+            Properties.SetStringList ("Icon.Name", "multimedia-player");
+        }
     }
 }

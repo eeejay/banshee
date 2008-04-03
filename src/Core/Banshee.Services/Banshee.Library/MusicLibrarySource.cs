@@ -1,7 +1,7 @@
 //
 // MusicLibrarySource.cs
 //
-// Author:
+// Authors:
 //   Aaron Bockover <abockover@novell.com>
 //   Gabriel Burt <gburt@novell.com>
 //

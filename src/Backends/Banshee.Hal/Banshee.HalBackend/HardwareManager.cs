@@ -37,7 +37,7 @@ namespace Banshee.HalBackend
     public sealed class HardwareManager : IHardwareManager
     {
         private Hal.Manager manager;
-        
+
         public event DeviceAddedHandler DeviceAdded;
         public event DeviceRemovedHandler DeviceRemoved;
         
@@ -46,6 +46,8 @@ namespace Banshee.HalBackend
             manager = new Hal.Manager ();
             manager.DeviceAdded += OnHalDeviceAdded;
             manager.DeviceRemoved += OnHalDeviceRemoved;
+
+            Volume.HardwareManager = this;
         }
         
         public void Dispose ()
@@ -76,23 +78,27 @@ namespace Banshee.HalBackend
         {
             return GetAllBlockDevices<IDiskDevice> ();
         }
-        
+
         private void OnHalDeviceAdded (object o, Hal.DeviceAddedArgs args)
         {
             if (!args.Device.QueryCapability ("block")) {
                 return;
             }
-            
+
             IDevice device = BlockDevice.Resolve<IBlockDevice> (manager, args.Device);
             if (device == null) {
                 device = Volume.Resolve (null, manager, args.Device);
             }
-            
+            OnHalDeviceAdded (device);
+        }
+
+        internal void OnHalDeviceAdded (IDevice device)
+        {
             if (device != null) {
                 OnDeviceAdded (device);
             }
         }
-        
+
         private void OnHalDeviceRemoved (object o, Hal.DeviceRemovedArgs args)
         {
             OnDeviceRemoved (args.Udi);
@@ -106,7 +112,7 @@ namespace Banshee.HalBackend
             }
         }
         
-        private void OnDeviceRemoved (string uuid)
+        internal void OnDeviceRemoved (string uuid)
         {
             DeviceRemovedHandler handler = DeviceRemoved;
             if (handler != null) {

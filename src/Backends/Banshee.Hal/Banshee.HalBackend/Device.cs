@@ -35,7 +35,7 @@ namespace Banshee.HalBackend
     public abstract class Device : IDevice
     {    
         private Hal.Device device;
-        protected Hal.Device HalDevice {
+        internal Hal.Device HalDevice {
             get { return device; }
         }
         
@@ -50,12 +50,22 @@ namespace Banshee.HalBackend
             this.device = device;
         }
         
-        public string Uuid {
+        public virtual string Uuid {
             get { return device.Udi; }
         }
 
+        private string name;
         public virtual string Name {
-            get { return device["info.product"]; }
+            get {
+                if (name == null) {
+                    name = device["info.product"];
+                    if (String.IsNullOrEmpty (name)) {
+                        name = device["volume.label"];
+                    }
+                }
+
+                return name;
+            }
         }
     }
 }

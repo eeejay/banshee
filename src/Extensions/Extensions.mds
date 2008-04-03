@@ -9,6 +9,7 @@
       <Entry build="True" name="Banshee.PlayQueue" configuration="Debug" />
       <Entry build="True" name="Banshee.AudioCd" configuration="Debug" />
       <Entry build="True" name="Banshee.Daap" configuration="Debug" />
+      <Entry build="True" name="Banshee.Dap.MassStorage" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode single="True">
@@ -20,6 +21,7 @@
     <Execute type="None" entry="Banshee.NowPlaying" />
     <Execute type="None" entry="Banshee.Bookmarks" />
     <Execute type="None" entry="Banshee.AudioCd" />
+    <Execute type="None" entry="Banshee.Dap.MassStorage" />
   </StartMode>
   <Entries>
     <Entry filename="Banshee.Daap/Banshee.Daap.mdp" />
@@ -30,5 +32,6 @@
     <Entry filename="Banshee.NowPlaying/Banshee.NowPlaying.mdp" />
     <Entry filename="Banshee.Bookmarks/Banshee.Bookmarks.mdp" />
     <Entry filename="Banshee.AudioCd/Banshee.AudioCd.mdp" />
+    <Entry filename="Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.mdp" />
   </Entries>
 </Combine>

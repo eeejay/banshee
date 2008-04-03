@@ -166,7 +166,7 @@ namespace Banshee.PlayerMigration
                          UpdateUserJob (processed, count, artist, title);
                      
                          try {
-                             DatabaseTrackInfo track = import_manager.AddTrackToLibrary (uri);
+                             DatabaseTrackInfo track = import_manager.ImportTrack (uri);
                             
                              if (track == null) {
                                  throw new Exception (String.Format ("Unable to import track: {0}", uri.AbsoluteUri));

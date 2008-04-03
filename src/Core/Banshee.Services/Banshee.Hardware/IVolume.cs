@@ -34,11 +34,13 @@ namespace Banshee.Hardware
     {
         string DeviceNode { get; }
         string MountPoint { get; }
-        bool IsMounted { get; }
-        bool IsMountedReadOnly { get; }
+        bool IsReadOnly { get; }
         ulong Capacity { get; }
         long Available { get; }
         new IBlockDevice Parent { get; }
+
+        bool ShouldIgnore { get; }
+        string FileSystem { get; }
         
         bool CanEject { get; }
         void Eject ();

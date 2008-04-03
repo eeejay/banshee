@@ -65,6 +65,12 @@ namespace Banshee.Collection
         public bool IsImportInProgress {
             get { return processing_queue; }
         }
+
+        private bool keep_user_job_hidden = false;
+        public bool KeepUserJobHidden {
+            get { return keep_user_job_hidden; }
+            set { keep_user_job_hidden = value; }
+        }
         
         private void CreateUserJob ()
         {
@@ -77,7 +83,10 @@ namespace Banshee.Collection
                 user_job.IconNames = new string [] { "system-search", "gtk-find" };
                 user_job.CancelMessage = CancelMessage;
                 user_job.CanCancel = true;
-                user_job.Register ();
+
+                if (!KeepUserJobHidden) {
+                    user_job.Register ();
+                }
                 
                 total_count = 0;
                 processed_count = 0;

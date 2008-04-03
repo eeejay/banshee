@@ -60,7 +60,11 @@ namespace Banshee.HalBackend
         public string DeviceNode {
             get { return HalDevice["block.device"]; }
         }
-        
+
+        public bool IsRemovable {
+            get { return HalDevice.GetPropertyBoolean ("storage.removable"); }
+        }
+
         public IEnumerable<IVolume> Volumes {
             get { return this; }
         }

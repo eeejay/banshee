@@ -136,7 +136,7 @@ namespace Hyena.Data
 
                 if(object_store.ContainsKey(name)) {
                     old_value = (T)object_store[name];
-                    if (value.Equals (old_value))
+                    if ((value == null && old_value == null) || value.Equals (old_value))
                         return;
                     object_store[name] = value;
                 } else {
