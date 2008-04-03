@@ -1,3 +1,13 @@
+2008-04-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Explicitly set TextAsForeground as necessary when entering the header
+	and row drawing methods since now we use a single cell context object;
+	fixes regression where lists with headers had all cell text drawn using
+	the foreground color, not the foreground color for the header and the
+	text color for the rows
+
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 	
 	This patch adds the first support for DAPs to trunk.  It currently only

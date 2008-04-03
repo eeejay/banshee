@@ -125,6 +125,7 @@ namespace Hyena.Data.Gui
             cell_context.Context = cairo_context;
             cell_context.Drawable = GdkWindow;
             cell_context.Layout = header_pango_layout;
+            cell_context.TextAsForeground = true;
 
             for (int ci = 0; ci < column_cache.Length; ci++) {
                 if (pressed_column_is_dragging && pressed_column_index == ci) {
@@ -286,6 +287,7 @@ namespace Hyena.Data.Gui
             cell_context.Drawable = canvas1;
             cell_context.Layout = list_pango_layout;
             cell_context.Clip = canvas_alloc;
+            cell_context.TextAsForeground = false;
             
             Rectangle selected_focus_alloc = Rectangle.Zero;
             Rectangle single_list_alloc = new Rectangle ();

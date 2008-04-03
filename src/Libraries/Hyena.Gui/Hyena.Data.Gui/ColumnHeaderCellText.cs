@@ -50,8 +50,6 @@ namespace Hyena.Data.Gui
                 return;
             }
             
-            context.TextAsForeground = true;
-            
             if (!has_sort) {
                 base.Render (context, state, cellWidth - 10, cellHeight);
                 return;
