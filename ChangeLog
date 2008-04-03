@@ -1,5 +1,10 @@
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Dap.MassStorage/*:
+	* src/Dap/Banshee.Dap.MassStorage/*: Move from Extensions to Dap.
+
+2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/*: Remove obsolete code.
 
 2008-04-03  Aaron Bockover  <abock@gnome.org>
