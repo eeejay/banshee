@@ -83,7 +83,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Recommended"),
             Catalog.GetString ("For User:"),
             "user/{0}/recommended/100",
-            "recommended",
+            "lastfm-recommended",
             false
         );
 
@@ -92,7 +92,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Personal"),
             Catalog.GetString ("For User:"),
             "user/{0}/personal",
-            "personal",
+            "lastfm-personal",
             false
         );
 
@@ -128,7 +128,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Tag"),
             Catalog.GetString ("Tag Name:"),
             "globaltags/{0}",
-            "tag",
+            "lastfm-tag",
             false
         );
 
@@ -146,7 +146,7 @@ namespace Banshee.Lastfm.Radio
             Catalog.GetString ("Similar"),
             Catalog.GetString ("Similar to:"),
             "artist/{0}/similarartists",
-            "personal",
+            "lastfm-personal",
             false
         );
 

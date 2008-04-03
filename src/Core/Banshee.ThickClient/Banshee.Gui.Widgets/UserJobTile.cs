@@ -128,30 +128,30 @@ namespace Banshee.Gui.Widgets
             
             cancel_dialog = new Banshee.Widgets.HigMessageDialog (parent, 
                 DialogFlags.Modal, MessageType.Question, ButtonsType.None,
-                job.Name == null
+                job.Title == null
                     ? Catalog.GetString ("Stop Operation")
-                    : String.Format (Catalog.GetString ("Stop {0}"), job.Name),
+                    : String.Format (Catalog.GetString ("Stop {0}"), job.Title),
                 job.CancelMessage == null 
-                    ? (job.Name == null 
+                    ? (job.Title == null 
                         ? Catalog.GetString ("This operation is still performing work. Would you like to stop it?")
                         : String.Format (Catalog.GetString (
-                            "The '{0}' operation is still performing work. Would you like to stop it?"), job.Name))
+                            "The '{0}' operation is still performing work. Would you like to stop it?"), job.Title))
                     : job.CancelMessage);
                         
-            cancel_dialog.AddButton (job.Name == null 
+            cancel_dialog.AddButton (job.Title == null 
                 ? Catalog.GetString ("Continue")
-                : String.Format (Catalog.GetString ("Continue {0}"), job.Name), 
+                : String.Format (Catalog.GetString ("Continue {0}"), job.Title), 
                 ResponseType.No, true);
             cancel_dialog.AddButton (Stock.Stop, ResponseType.Yes, false);
             cancel_dialog.DefaultResponse = ResponseType.Cancel;
                 
-            if(cancel_dialog.Run () == (int)ResponseType.Yes) {
+            if (cancel_dialog.Run () == (int)ResponseType.Yes) {
                 if (job.CanCancel) {
                     job.Cancel ();
                 }
             }
         
-            cancel_dialog.Destroy();
+            cancel_dialog.Destroy ();
             cancel_dialog = null;
         }
         

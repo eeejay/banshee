@@ -296,7 +296,6 @@ namespace Banshee.AudioCd
 #region GUI/ThickClient
 
         private bool actions_loaded = false;
-        private static bool stock_icons_registered = false;
 
         private void SetupGui ()
         {                                       
@@ -326,16 +325,6 @@ namespace Banshee.AudioCd
             
             actions_loaded = true;
             
-            if (!stock_icons_registered) {
-                GtkElementsService gtk_service = ServiceManager.Get<GtkElementsService> ();
-                System.Reflection.Assembly asm = System.Reflection.Assembly.GetExecutingAssembly ();
-                Gtk.IconSet icon_set = new Gtk.IconSet ();
-                gtk_service.IconFactory.AddResourceToIconSet (asm, "cd-action-rip", 16, IconSize.Menu, icon_set);
-                gtk_service.IconFactory.AddResourceToIconSet (asm, "cd-action-rip", 22, IconSize.SmallToolbar, icon_set);
-                gtk_service.IconFactory.Add ("cd-action-rip", icon_set);
-                stock_icons_registered = true;
-            }
-            
             UpdateActions ();
         }
         
@@ -355,7 +344,7 @@ namespace Banshee.AudioCd
                     : title;
                 rip_action.Label = String.Format (Catalog.GetString ("Import \u201f{0}\u201d"), title);
                 rip_action.ShortLabel = Catalog.GetString ("Import CD");
-                rip_action.StockId = "cd-action-rip";
+                rip_action.IconName = "media-import-audio-cd";
                 rip_action.Sensitive = AudioCdRipper.Supported;
             }
             

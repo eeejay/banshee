@@ -108,6 +108,7 @@ SOURCES =  \
 	Banshee.ServiceStack/IDBusExportable.cs \
 	Banshee.ServiceStack/IExtensionService.cs \
 	Banshee.ServiceStack/IInitializeService.cs \
+	Banshee.ServiceStack/InterfaceAction.cs \
 	Banshee.ServiceStack/IRequiredService.cs \
 	Banshee.ServiceStack/IService.cs \
 	Banshee.ServiceStack/IUserJob.cs \

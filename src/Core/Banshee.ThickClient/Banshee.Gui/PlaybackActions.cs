@@ -58,15 +58,15 @@ namespace Banshee.Gui
             repeat_actions = new PlaybackRepeatActions (actionService);
 
             Add (new ActionEntry [] {
-                new ActionEntry ("PlayPauseAction", "media-playback-start",
+                new ActionEntry ("PlayPauseAction", null,
                     Catalog.GetString ("_Play"), "space",
                     Catalog.GetString ("Play or pause the current item"), OnPlayPauseAction),
                     
-                new ActionEntry ("NextAction", "media-skip-forward",
+                new ActionEntry ("NextAction", null,
                     Catalog.GetString ("_Next"), "N",
                     Catalog.GetString ("Play the next item"), OnNextAction),
                     
-                new ActionEntry ("PreviousAction", "media-skip-backward",
+                new ActionEntry ("PreviousAction", null,
                     Catalog.GetString ("Pre_vious"), "B",
                     Catalog.GetString ("Play the previous item"), OnPreviousAction),
 
@@ -84,7 +84,7 @@ namespace Banshee.Gui
             });
             
             Add (new ToggleActionEntry [] {
-                new ToggleActionEntry ("ShuffleAction", "media-playlist-shuffle",
+                new ToggleActionEntry ("ShuffleAction", null,
                     Catalog.GetString ("Shu_ffle"), null,
                     Catalog.GetString ("Toggle between shuffle or continuous playback modes"), 
                     OnShuffleAction, ShuffleEnabled.Get ()),
@@ -107,6 +107,11 @@ namespace Banshee.Gui
             this["JumpToPlayingTrackAction"].Sensitive = false;
             this["RestartSongAction"].Sensitive = false;
             this["SeekToAction"].Sensitive = false;
+            
+            this["PlayPauseAction"].IconName = "media-playback-start";
+            this["NextAction"].IconName = "media-skip-forward";
+            this["PreviousAction"].IconName = "media-skip-backward";
+            this["ShuffleAction"].IconName = "media-playlist-shuffle";
             
             action_service = actionService;
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;

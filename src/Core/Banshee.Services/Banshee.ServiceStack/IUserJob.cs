@@ -39,7 +39,6 @@ namespace Banshee.ServiceStack
         
         void Cancel ();
         
-        string Name { get; }
         string Title { get; }
         string Status { get; }
         double Progress { get; }

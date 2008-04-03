@@ -5,6 +5,8 @@ RESOURCES_EXPANDED = $(addprefix $(srcdir)/, $(RESOURCES))
 RESOURCES_BUILD = $(foreach resource, $(RESOURCES_EXPANDED), \
 	-resource:$(resource),$(notdir $(resource)))
 
+THEME_ICONS = $(wildcard $(srcdir)/ThemeIcons/*/*/*.png)
+
 ASSEMBLY_EXTENSION = $(strip $(patsubst library, dll, $(TARGET)))
 ASSEMBLY_FILE = $(top_builddir)/bin/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
 
@@ -28,6 +30,7 @@ build-debug:
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	@mkdir -p $(top_builddir)/bin
+	@(test -d $(srcdir)/ThemeIcons && mkdir -p $(top_builddir)/bin/icons/hicolor && cp -rf $(srcdir)/ThemeIcons/* $(top_builddir)/bin/icons/hicolor) || true
 	@colors=no; \
 	case $$TERM in \
 		"xterm" | "rxvt" | "rxvt-unicode") \
@@ -45,7 +48,7 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 		cp $(notdir $@.config) $(top_builddir)/bin; \
 	fi;
 
-EXTRA_DIST = $(SOURCES_BUILD) $(RESOURCES_EXPANDED)
+EXTRA_DIST = $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(THEME_ICONS)
 
 CLEANFILES = $(OUTPUT_FILES) *.dll *.mdb *.exe
 DISTCLEANFILES = *.pidb

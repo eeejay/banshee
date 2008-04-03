@@ -1,4 +1,4 @@
-<Project name="Hyena.Gui" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Hyena.Gui" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assembly="Hyena.Gui" />
@@ -73,6 +73,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">

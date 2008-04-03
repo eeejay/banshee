@@ -17,14 +17,9 @@ SOURCES =  \
 RESOURCES =  \
 	Banshee.Lastfm.addin.xml \
 	Resources/ActiveSourceUI.xml \
-	Resources/audioscrobbler.png \
 	Resources/AudioscrobblerMenu.xml \
 	Resources/GlobalUI.xml \
-	Resources/lastfm.glade \
-	Resources/neighbour.png \
-	Resources/personal.png \
-	Resources/recommended.png \
-	Resources/tag.png
+	Resources/lastfm.glade
 
 include $(top_srcdir)/build/build.mk
 

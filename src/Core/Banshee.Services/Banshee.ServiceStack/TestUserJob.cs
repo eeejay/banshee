@@ -50,7 +50,7 @@ namespace Banshee.ServiceStack
             "face-wink"
         };
         
-        public TestUserJob () : base ("Test Job", "UserJob Test Job", "Waiting for 7.5 seconds...")
+        public TestUserJob () : base ("UserJob Test Job", "Waiting for 7.5 seconds...")
         {
             DelayShow = true;
             Register ();

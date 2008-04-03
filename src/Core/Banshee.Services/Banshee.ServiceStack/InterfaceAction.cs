@@ -1,10 +1,10 @@
 //
-// BansheeIconFactory.cs
+// InterfaceAction.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,42 +27,13 @@
 //
 
 using System;
-using System.IO;
-using System.Reflection;
 
-using Gtk;
-
-namespace Banshee.Gui
+namespace Banshee.ServiceStack
 {
-    public class BansheeIconFactory : IconFactory
+    public class InterfaceAction
     {
-        private IconTheme theme;
-        public IconTheme Theme {
-            get { return theme; }
-        }
-    
-        public BansheeIconFactory ()
+        public InterfaceAction ()
         {
-            theme = IconTheme.Default;
-        
-            Assembly entry_asm = Assembly.GetEntryAssembly ();
-            string icon_theme_path = Path.Combine (Path.GetDirectoryName (entry_asm.Location), "icons");
-            if (Directory.Exists (icon_theme_path)) {
-                Hyena.Log.DebugFormat ("Adding icon theme search path: {0}", icon_theme_path);
-                Theme.AppendSearchPath (icon_theme_path);
-            }
-            
-            AddDefault ();
-        }
-        
-        public void Add (string name)
-        {
-            IconSet icon_set = new IconSet ();
-            IconSource source = new IconSource ();
-            source.IconName = name;
-            icon_set.AddSource (source);
-            
-            Add (name, icon_set);
         }
     }
 }

@@ -1,3 +1,32 @@
+2008-04-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJob.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/TestUserJob.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/InterfaceAction.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IUserJob.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:
+	Removed the Name property from UserJob as it's a bit redundant and annoying
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Set the
+	IconName property instead of StockId
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeIconFactory.cs: Removed
+	a ton of legacy code to load theme and resource icons into the icon theme
+	and stock icon set; support loading of a custom proper icon theme from 
+	disk; no more resources - much easier to maintain and properly flexible
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: Updated
+	to use theme icons
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Stubbed
+	the user job stuff
+
+	* build/build.rules.mk: Copy theme icons into a proper private icon theme
+	that will work when running uninstalled
+
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs: Bring a function

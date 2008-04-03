@@ -27,9 +27,11 @@
 //
 
 using System;
+using Mono.Unix;
 using Mono.Addins;
 
 using Banshee.Base;
+using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.MediaEngine;
 
@@ -60,7 +62,8 @@ namespace Banshee.AudioCd
         
         private IAudioCdRipper ripper;
         private AudioCdSource source;
-        
+        private UserJob user_job;
+         
         public AudioCdRipper (AudioCdSource source)
         {
             if (ripper_extension_node != null) {
@@ -76,6 +79,11 @@ namespace Banshee.AudioCd
         {
             source.LockAllTracks ();
             ripper.Begin ();
+            
+            user_job = new UserJob (Catalog.GetString ("Importing Audio CD"), Catalog.GetString ("Initializing Drive"));
+            user_job.IconNames = new string [] { "cd-action-rip" };
+            user_job.CanCancel = true;
+            user_job.Register ();
         }
     }
 }
