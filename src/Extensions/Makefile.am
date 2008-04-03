@@ -3,7 +3,6 @@
 SUBDIRS = \
 	Banshee.AudioCd \
 	Banshee.Bookmarks \
-	Banshee.Dap.MassStorage \
 	Banshee.Lastfm \
 	Banshee.MultimediaKeys \
 	Banshee.NotificationArea \

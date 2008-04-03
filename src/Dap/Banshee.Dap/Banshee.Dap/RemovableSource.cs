@@ -39,7 +39,7 @@ using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Hardware;
 
-namespace Banshee.Dap.MassStorage
+namespace Banshee.Dap
 {
     public abstract class RemovableSource : PrimarySource, IUnmapableSource, IDisposable
     {

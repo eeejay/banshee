@@ -1,5 +1,32 @@
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Almost done with move.  Banshee.Dap* not in build yet.
+
+	* build/build.environment.mk:
+	* configure.ac: Add Banshee.Dap setup.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/DapService.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/DapSource.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/RemovableSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Moved.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.mdp:
+	* src/Dap/Banshee.Dap.MassStorage/Makefile.am: Removed the above files.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.addin.xml:
+	* src/Dap/Banshee.Dap/Banshee.Dap.mdp:
+	* src/Dap/Banshee.Dap/Makefile.am: New files for Banshee.Dap.
+
+	* src/Dap/Dap.mds:
+	* src/Dap/Makefile.am: Add Banshee.Dap.
+
+	* src/Extensions/Extensions.mds:
+	* src/Extensions/Makefile.am: Remove the Dap.MassStorage extension entries.
+
+2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Dap.MassStorage/*:
 	* src/Dap/Banshee.Dap.MassStorage/*: Move from Extensions to Dap.
 

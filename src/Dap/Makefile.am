@@ -1,5 +1,5 @@
 SUBDIRS = \
-	Banshee.DapCore \
+	Banshee.Dap \
 	Banshee.Dap.MassStorage
 
 run:
