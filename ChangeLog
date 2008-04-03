@@ -1,3 +1,28 @@
+2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Playlists
+	and smart playlsits loaded by each PrimarySource now.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: When loaded,
+	load our playlists and smart playlists.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: In AddChildSource
+	check that we don't already have this child.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Hide the
+	Remove and Delete actions unless CanRemove/Delete true.  Previously just
+	set them insensitive.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	RemovableSource context menu.
+
+	* src/Extensions/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/RemovableSource.cs:
+	Set the context menu action path property.  On dispose, clear children.
+	And don't allow removing tracks (delete only).  Add Merge* foo from
+	PlaylistSource, but not really hooked up yet.
+
+	* src/Extensions/Banshee.Dap.MassStorage/Makefile.am: MD sorted.
+
 2008-04-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs:

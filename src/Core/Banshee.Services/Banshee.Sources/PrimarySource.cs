@@ -38,6 +38,8 @@ using Hyena.Collections;
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Sources;
+using Banshee.Playlist;
+using Banshee.SmartPlaylist;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Query;
@@ -119,6 +121,15 @@ namespace Banshee.Sources
             track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", dbid);
 
             primary_sources[dbid] = this;
+            
+            
+            foreach (PlaylistSource pl in PlaylistSource.LoadAll ())
+                if (pl.PrimarySourceId == dbid)
+                    AddChildSource (pl);
+
+            foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll ())
+                if (pl.PrimarySourceId == dbid)
+                    AddChildSource (pl);
         }
 
         internal void NotifyTracksAdded ()

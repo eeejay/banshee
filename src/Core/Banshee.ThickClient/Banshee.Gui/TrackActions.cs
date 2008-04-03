@@ -218,14 +218,8 @@ namespace Banshee.Gui
                        "SearchMenuAction", "SearchForSameArtistAction", "SearchForSameAlbumAction"
                     );
 
-                    UpdateAction ("RemoveTracksAction", is_track_source,
-                        has_selection && is_track_source && track_source.CanRemoveTracks, source
-                    );
-
-                    UpdateAction ("DeleteTracksFromDriveAction", is_track_source,
-                        has_selection && is_track_source && track_source.CanDeleteTracks, source
-                    );
-
+                    UpdateAction ("RemoveTracksAction", is_track_source && track_source.CanRemoveTracks, has_selection, source);
+                    UpdateAction ("DeleteTracksFromDriveAction", is_track_source && track_source.CanDeleteTracks, has_selection && is_track_source , source);
                     UpdateAction ("RemoveTracksFromLibraryAction", source.Parent is LibrarySource, has_selection, null);
                     
                     UpdateAction ("TrackPropertiesAction", in_database, has_selection, null);

@@ -48,6 +48,7 @@ namespace Banshee.Dap.MassStorage
             Name = name;
 
             Properties.SetString ("UnmapSourceActionIconName", "media-eject");
+            Properties.SetString ("GtkActionPath", "/RemovableSourceContextMenu");
             AfterInitialized ();
         }
 
@@ -62,11 +63,12 @@ namespace Banshee.Dap.MassStorage
 
         public void Dispose ()
         {
+            ClearChildSources ();
             ServiceManager.SourceManager.RemoveSource (this);
         }
         
         public override bool CanRemoveTracks {
-            get { return !IsReadOnly; }
+            get { return false; }
         }
 
         public override bool CanDeleteTracks {
@@ -76,6 +78,40 @@ namespace Banshee.Dap.MassStorage
         /*public double DiskUsageFraction {
             get { return (double)device.StorageUsed / (double)device.StorageCapacity; }
         }*/
+
+#region Source Overrides
+
+        public override bool AcceptsInputFromSource (Source source)
+        {
+            // TODO: Probably should be more restrictive than this
+            return source is DatabaseSource;
+        }
+        
+        public override void MergeSourceInput (Source from, SourceMergeType mergeType)
+        {
+            DatabaseSource source = from as DatabaseSource;
+            if (source == null || !(source.TrackModel is TrackListDatabaseModel)) {
+                return;
+            }
+            
+            //TrackListDatabaseModel model = (TrackListDatabaseModel)source.TrackModel;
+            
+            switch (mergeType) {
+                case SourceMergeType.ModelSelection:
+                    //AddSelectedTracks (model);
+                    break;
+                case SourceMergeType.Source:
+                    //AddTrackRange (model, new RangeCollection.Range (0, model.Count));
+                    Reload ();
+                    break;
+            }
+        }
+        
+        public override SourceMergeType SupportedMergeTypes {
+            get { return IsReadOnly ? SourceMergeType.None : SourceMergeType.All; }
+        }
+
+#endregion
 
 #region IUnmapableSource Implementation
 
@@ -107,8 +143,9 @@ namespace Banshee.Dap.MassStorage
             return true;
         }
 
+        private bool syncing = false;
         public bool CanUnmap {
-            get { return true; }
+            get { return !syncing; }
         }
 
         public bool ConfirmBeforeUnmap {

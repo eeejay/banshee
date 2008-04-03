@@ -143,9 +143,11 @@ namespace Banshee.Sources
         public virtual void AddChildSource (Source child)
         {
             lock (Children) {
-                child.SetParentSource (this);
-                child_sources.Add (child);
-                OnChildSourceAdded (child);
+                if (!child_sources.Contains (child)) {
+                    child.SetParentSource (this);
+                    child_sources.Add (child);
+                    OnChildSourceAdded (child);
+                }
             }
         }
 
@@ -159,7 +161,7 @@ namespace Banshee.Sources
                 child_sources.Remove (child);
                 
                 if (ServiceManager.SourceManager.ActiveSource == child) {
-                    ServiceManager.SourceManager.SetActiveSource (ServiceManager.SourceManager.DefaultSource);
+                    ServiceManager.SourceManager.SetActiveSource (this);
                 }
                 
                 OnChildSourceRemoved (child);

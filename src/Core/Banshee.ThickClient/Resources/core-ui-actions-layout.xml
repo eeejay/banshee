@@ -113,6 +113,24 @@
     </menu>
   </popup>
 
+  <popup name="RemovableSourceContextMenu" action="RemovableSourceContextMenuAction">
+    <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
+    <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
+    <separator/>
+    <menu name="SortChildren" action="SortChildrenAction">
+      <menuitem name="SortChildrenNameAsc" action="SortChildrenNameAscAction"/>
+      <menuitem name="SortChildrenNameDesc" action="SortChildrenNameDescAction"/>
+      <menuitem name="SortChildrenSizeAsc" action="SortChildrenSizeAscAction"/>
+      <menuitem name="SortChildrenSizeDesc" action="SortChildrenSizeDescAction"/>
+    </menu>
+    <separator/>
+    <menuitem name="ImportSource" action="ImportSourceAction"/>
+    <menuitem name="RenameSource" action="RenameSourceAction"/>
+    <menuitem name="UnmapSource" action="UnmapSourceAction"/>
+    <separator/>
+    <menuitem name="SourceProperties" action="SourcePropertiesAction"/>
+  </popup>
+
   <popup name="ErrorSourceContextMenu" action="ErrorSourceContextMenuAction">
     <menuitem name="UnmapSource" action="UnmapSourceAction"/>
   </popup>
@@ -124,7 +142,6 @@
     <menuitem name="RefreshSmartPlaylist" action="RefreshSmartPlaylistAction"/>
     <menuitem name="ExportPlaylist" action="ExportPlaylistAction"/>
     <menuitem name="UnmapSource" action="UnmapSourceAction"/>
-    <!--<menuitem name="SyncDap" action="SyncDapAction"/>-->
     <separator/>
     <menuitem name="SourceProperties" action="SourcePropertiesAction"/>
   </popup>
