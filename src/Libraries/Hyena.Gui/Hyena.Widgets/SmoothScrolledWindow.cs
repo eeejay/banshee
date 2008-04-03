@@ -37,10 +37,6 @@ namespace Hyena.Widgets
         private double target_value;
         private double velocity = 0;
         
-        protected virtual double MaxVelocity {
-            get { return Vadjustment.StepIncrement * 4; }
-        }
-        
         private double Accelerate (double velocity)
         {
             return AccelerateCore (velocity);
@@ -87,7 +83,14 @@ namespace Hyena.Widgets
             int sign = Math.Sign (delta);
             delta = Math.Abs (delta);
             
-            velocity = TimeToDecelerate (delta) ? Decelerate (velocity) : Accelerate (velocity);
+            double hypothetical = delta;
+            double v = Accelerate (velocity);
+            while (v > 0 && hypothetical > 0) {
+                hypothetical -= v;
+                v = Decelerate (v);
+            }
+            
+            velocity = hypothetical <= 0 ? Decelerate (velocity) : Accelerate (velocity);
             
             value += Math.Max (velocity, 1) * sign;
             ignore_value_changed = true;
@@ -95,17 +98,6 @@ namespace Hyena.Widgets
             ignore_value_changed = false;
             
             return true;
-        }
-        
-        private bool TimeToDecelerate (double delta)
-        {
-            double hypothetical = delta;
-            double v = Accelerate (velocity);
-            while (v > 0) {
-                hypothetical -= v;
-                v = Decelerate (v);
-            }
-            return hypothetical <= 0;
         }
         
         protected override bool OnScrollEvent (Gdk.EventScroll evnt)

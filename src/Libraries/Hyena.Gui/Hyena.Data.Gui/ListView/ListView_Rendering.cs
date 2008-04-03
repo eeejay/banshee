@@ -56,6 +56,7 @@ namespace Hyena.Data.Gui
         private bool render_everything;
         
         private Cairo.Context cairo_context;
+        private CellContext cell_context;
         
         private Pango.Layout header_pango_layout;
         private Pango.Layout list_pango_layout;
@@ -120,6 +121,10 @@ namespace Hyena.Data.Gui
             Rectangle cell_area = new Rectangle ();
             cell_area.Y = header_rendering_alloc.Y;
             cell_area.Height = header_rendering_alloc.Height;
+            
+            cell_context.Context = cairo_context;
+            cell_context.Drawable = GdkWindow;
+            cell_context.Layout = header_pango_layout;
 
             for (int ci = 0; ci < column_cache.Length; ci++) {
                 if (pressed_column_is_dragging && pressed_column_index == ci) {
@@ -163,8 +168,9 @@ namespace Hyena.Data.Gui
             if (cell != null) {
                 cairo_context.Save ();
                 cairo_context.Translate (area.X, area.Y);
-                cell.Render (new CellContext (cairo_context, header_pango_layout, this, GdkWindow, 
-                    theme, area, clip), StateType.Normal, area.Width, area.Height);
+                cell_context.Area = area;
+                cell_context.Clip = clip;
+                cell.Render (cell_context, StateType.Normal, area.Width, area.Height);
                 cairo_context.Restore ();
             }
             
@@ -276,6 +282,11 @@ namespace Hyena.Data.Gui
         
         private void PaintRows (int first_row, int last_row, int first_row_y)
         {
+            cell_context.Context = cairo_context;
+            cell_context.Drawable = canvas1;
+            cell_context.Layout = list_pango_layout;
+            cell_context.Clip = canvas_alloc;
+            
             Rectangle selected_focus_alloc = Rectangle.Zero;
             Rectangle single_list_alloc = new Rectangle ();
             
@@ -407,8 +418,8 @@ namespace Hyena.Data.Gui
             
             cairo_context.Save ();
             cairo_context.Translate (area.X, area.Y);
-            cell.Render (new CellContext (cairo_context, list_pango_layout, this, canvas1, theme, area, canvas_alloc), 
-                dragging ? StateType.Normal : state, area.Width, area.Height);
+            cell_context.Area = area;
+            cell.Render (cell_context, dragging ? StateType.Normal : state, area.Width, area.Height);
             cairo_context.Restore ();
         }
         

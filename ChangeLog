@@ -1,3 +1,18 @@
+2008-04-03  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Instantiate the CellContext on realization.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Use one CellContext all the time, just changing properties when we
+	need to.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/CellContext.cs: Made all
+	properties settable and got rid of fancy constructor.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SmoothScrolledWindow.cs: Made
+	slightly better.
+
 2008-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Fix issue with searching

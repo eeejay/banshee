@@ -43,44 +43,39 @@ namespace Hyena.Data.Gui
         private Gdk.Rectangle clip;
         private bool text_as_foreground = false;
         
-        public CellContext (Cairo.Context context, Pango.Layout layout, Gtk.Widget widget,
-            Gdk.Drawable drawable, Theme theme, Gdk.Rectangle area, Gdk.Rectangle clip)
-        {
-            this.context = context;
-            this.layout = layout;
-            this.widget = widget;
-            this.drawable = drawable;
-            this.theme = theme;
-            this.area = area;
-            this.clip = clip;
-        }
-        
         public Cairo.Context Context {
             get { return context; }
+            set { context = value; }
         }
 
         public Pango.Layout Layout {
             get { return layout; }
+            set { layout = value; }
         }
 
         public Gtk.Widget Widget {
             get { return widget; }
+            set { widget = value; }
         }
 
         public Gdk.Drawable Drawable {
             get { return drawable; }
+            set { drawable = value; }
         }
 
         public Theme Theme {
             get { return theme; }
+            set { theme = value; }
         }
 
         public Gdk.Rectangle Area {
             get { return area; }
+            set { area = value; }
         }
         
         public Gdk.Rectangle Clip {
             get { return clip; }
+            set { clip = value; }
         }
         
         public bool TextAsForeground {

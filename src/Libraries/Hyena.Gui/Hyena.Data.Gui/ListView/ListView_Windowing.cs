@@ -53,6 +53,9 @@ namespace Hyena.Data.Gui
             
             GdkWindow = Parent.GdkWindow;
             theme = new GtkTheme (this);
+            cell_context = new CellContext ();
+            cell_context.Theme = theme;
+            cell_context.Widget = this;
             //graphics.RefreshColors ();
             
             WindowAttr attributes = new WindowAttr ();
