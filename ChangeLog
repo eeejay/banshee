@@ -1,3 +1,21 @@
+2008-04-02  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/banshee-player.c: Implement better null/pause state selection
+	when handling a playback stop request; always go to NULL if the caller
+	requests it, but override PAUSED requests with NULL if the playing
+	resource is not CDDA
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Allow Close callers to force the NULL state (e.g. release all resources
+	forcefully so ejecting media can happen cleanly, for instance)
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: 
+	Stubbed some more stuff out, still not working (ripping); ejecting while
+	playing works again
+
 2008-04-02  Scott Peterson <lunchtimemama@gmail.com> 
 
 	This adds experimental smooth scrolling. The behavior still needs to be

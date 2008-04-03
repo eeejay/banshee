@@ -59,14 +59,14 @@ namespace Banshee.MediaEngine
             OnStateChanged (idle_state);
         }
         
-        public virtual void Close ()
+        public virtual void Close (bool fullShutdown)
         {
             OnStateChanged (idle_state);
         }
         
         public virtual void Dispose ()
         {
-            Close ();
+            Close (true);
         }
         
         public void Open (TrackInfo track)
@@ -88,7 +88,7 @@ namespace Banshee.MediaEngine
         private void HandleOpen (SafeUri uri)
         {
             if (current_state != PlayerEngineState.Idle && current_state != PlayerEngineState.NotReady) {
-                Close ();
+                Close (false);
             }
         
             try {

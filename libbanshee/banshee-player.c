@@ -113,7 +113,7 @@ bp_destroy (BansheePlayer *player)
     g_free (player);
     player = NULL;
     
-    bp_debug ("bp: disposed player");
+    bp_debug ("bp_destroy: disposed player");
 }
 
 P_INVOKE BansheePlayer *
@@ -167,7 +167,17 @@ bp_stop (BansheePlayer *player, gboolean nullstate)
 {
     // Some times "stop" really means "pause", particularly with
     // CDDA track transitioning; a NULL state will release resources
-    bp_pipeline_set_state (player, nullstate ? GST_STATE_NULL : GST_STATE_PAUSED);
+    GstState state = nullstate ? GST_STATE_NULL : GST_STATE_PAUSED;
+    
+    if (!nullstate && player->cdda_device == NULL) {
+        // only allow going to PAUSED if we're playing CDDA
+        state = GST_STATE_NULL;
+    }
+    
+    bp_debug ("bp_stop: setting state to %s", 
+        state == GST_STATE_NULL ? "GST_STATE_NULL" : "GST_STATE_PAUSED");
+    
+    bp_pipeline_set_state (player, state);
 }
 
 P_INVOKE void
@@ -181,7 +191,6 @@ bp_play (BansheePlayer *player)
 {
     bp_pipeline_set_state (player, GST_STATE_PLAYING);
 }
-
 
 P_INVOKE gboolean
 bp_set_position (BansheePlayer *player, guint64 time_ms)

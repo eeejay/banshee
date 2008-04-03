@@ -58,8 +58,24 @@ namespace Banshee.AudioCd
             }
         }
         
+        private IAudioCdRipper ripper;
+        private AudioCdSource source;
+        
         public AudioCdRipper (AudioCdSource source)
         {
+            if (ripper_extension_node != null) {
+                ripper = (IAudioCdRipper)ripper_extension_node.CreateInstance ();
+            } else {
+                throw new ApplicationException ("No AudioCdRipper extension is installed");
+            }
+            
+            this.source = source;
+        }
+        
+        public void Start ()
+        {
+            source.LockAllTracks ();
+            ripper.Begin ();
         }
     }
 }

@@ -347,8 +347,13 @@ namespace Banshee.MediaEngine
         
         public void Close ()
         {
+            Close (false);
+        }
+        
+        public void Close (bool fullShutdown)
+        {
             active_engine.Reset ();
-            active_engine.Close ();
+            active_engine.Close (fullShutdown);
         }
         
         public void Play ()

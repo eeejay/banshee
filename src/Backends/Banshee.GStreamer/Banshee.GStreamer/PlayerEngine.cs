@@ -123,10 +123,10 @@ namespace Banshee.GStreamer
             bp_destroy (handle);
         }
         
-        public override void Close ()
+        public override void Close (bool fullShutdown)
         {
-            bp_stop (handle, false);
-            base.Close ();
+            bp_stop (handle, fullShutdown);
+            base.Close (fullShutdown);
         }
         
         protected override void OpenUri (SafeUri uri)
@@ -175,7 +175,7 @@ namespace Banshee.GStreamer
 
         private void OnEos (IntPtr player)
         {
-            Close ();
+            Close (false);
             OnEventChanged (PlayerEngineEvent.EndOfStream);
         }
         
@@ -186,7 +186,7 @@ namespace Banshee.GStreamer
         
         private void OnError (IntPtr player, uint domain, int code, IntPtr error, IntPtr debug)
         {
-            Close ();
+            Close (true);
             
             string error_message = error == IntPtr.Zero
                 ? Catalog.GetString ("Unknown Error")

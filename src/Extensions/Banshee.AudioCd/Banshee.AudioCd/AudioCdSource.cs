@@ -71,6 +71,13 @@ namespace Banshee.AudioCd
             }
         }            
         
+        public void StopPlayingDisc ()
+        {
+            if (DiscIsPlaying) {
+                ServiceManager.PlayerEngine.Close (true);
+            }
+        }
+        
         public void Dispose ()
         {
             ClearMessages ();
@@ -137,12 +144,32 @@ namespace Banshee.AudioCd
 
         private void OnImportDisc (object o, EventArgs args)
         {
-            Hyena.Log.Information ("This feature is not implemented yet.", true);
+            if (AudioCdRipper.Supported) {
+                AudioCdRipper ripper = new AudioCdRipper (this);
+                ripper.Start ();
+            }
         }
 
         private void OnDuplicateDisc (object o, EventArgs args)
         {
             Hyena.Log.Information ("This feature is not implemented yet.", true);
+        }
+        
+        internal void LockAllTracks ()
+        {
+            StopPlayingDisc ();
+        
+            foreach (AudioCdTrackInfo track in disc_model) {
+                track.CanPlay = false;
+            }
+            
+            OnUpdated ();
+        }
+        
+        internal void UnlockTrack (AudioCdTrackInfo track)
+        {
+            track.CanPlay = true;
+            OnUpdated ();
         }
 
 #region Source Overrides
@@ -210,9 +237,7 @@ namespace Banshee.AudioCd
 
         public bool Unmap ()
         {
-            if (DiscIsPlaying) {
-                ServiceManager.PlayerEngine.Close ();
-            }
+            StopPlayingDisc ();
             
             foreach (TrackInfo track in disc_model) {
                 track.CanPlay = false;
