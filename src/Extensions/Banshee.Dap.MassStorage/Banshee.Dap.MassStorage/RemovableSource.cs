@@ -75,9 +75,9 @@ namespace Banshee.Dap.MassStorage
             get { return !IsReadOnly; }
         }
 
-        /*public double DiskUsageFraction {
-            get { return (double)device.StorageUsed / (double)device.StorageCapacity; }
-        }*/
+        public double StorageUsageFraction {
+            get { return (double) BytesUsed / (double) BytesCapacity; }
+        }
 
 #region Source Overrides
 
@@ -161,6 +161,9 @@ namespace Banshee.Dap.MassStorage
         }
 
         protected abstract bool IsReadOnly { get; }
+        
+        public abstract long BytesUsed { get; }
+        public abstract long BytesCapacity { get; }
 
 #endregion
 

@@ -1,5 +1,16 @@
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs: Bring a function
+	for getting the best name for a Hal.Device over from stable.
+
+	* src/Extensions/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/RemovableSource.cs:
+	Add BytesUsed, BytesCapacity, and StorageUsageFraction properties.
+
+	* src/Extensions/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Implement BytesUsed, BytesCapacity.
+
+2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
 	Avoid NRE when loading dependents of smart playlist.
 

@@ -68,6 +68,14 @@ namespace Banshee.Dap.MassStorage
                 importer.QueueSource (new string [] { volume.MountPoint });
             });
         }
+        
+        public override long BytesUsed {
+            get { return BytesCapacity - volume.Available; }
+        }
+        
+        public override long BytesCapacity {
+            get { return (long) volume.Capacity; }
+        }
 
         protected override bool IsReadOnly {
             get { return volume.IsReadOnly; }
