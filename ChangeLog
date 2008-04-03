@@ -1,5 +1,23 @@
 2008-04-02  Scott Peterson <lunchtimemama@gmail.com> 
 
+	You can now pass --debug-sql to get a full log of all SQL commands
+	executed.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Listen to Executing event and log the command text if we're
+	debugging the SQL.
+
+	* src/Core/Banshee.Core/Banshee.Base/ApplicationContext.cs: We're also
+	debugging if --debug-sql was passed.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Raise
+	HyenaSqliteConnection.Executing event.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Added
+	Executing event.
+
+2008-04-02  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/SmoothScrolledWindow.cs:
 	Removed max velocity limit.
 

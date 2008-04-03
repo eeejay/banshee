@@ -39,6 +39,15 @@ using Mono.Data.SqliteClient;
 
 namespace Hyena.Data.Sqlite
 {
+    public class ExecutingEventArgs : EventArgs
+    {
+        public readonly SqliteCommand Command;
+        public ExecutingEventArgs (SqliteCommand command)
+        {
+            Command = command;
+        }
+    }
+    
     public enum HyenaCommandType {
         Reader,
         Scalar,
@@ -63,6 +72,8 @@ namespace Hyena.Data.Sqlite
         internal ManualResetEvent ResultReadySignal {
             get { return result_ready_signal; }
         }
+        
+        public event EventHandler<ExecutingEventArgs> Executing;
         
         public HyenaSqliteConnection(string dbpath)
         {
@@ -315,8 +326,8 @@ namespace Hyena.Data.Sqlite
                     lock (command_queue) {
                         command = command_queue.Dequeue ();
                     }
-
-                    command.Execute (connection);
+                    
+                    command.Execute (this, connection);
 
                     lock (command_queue) {
                         results_ready++;
@@ -329,6 +340,14 @@ namespace Hyena.Data.Sqlite
 
             // Finish
             connection.Close ();
+        }
+        
+        internal void OnExecuting (ExecutingEventArgs args)
+        {
+            EventHandler<ExecutingEventArgs> handler = Executing;
+            if (handler != null) {
+                handler (this, args);
+            }
         }
 
 #endregion

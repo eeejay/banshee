@@ -55,6 +55,12 @@ namespace Banshee.Database
             Execute ("PRAGMA case_sensitive_like=ON");
 
             migrator = new BansheeDbFormatMigrator (this);
+            
+            if (Banshee.Base.ApplicationContext.CommandLine.Contains ("debug-sql")) {
+                this.Executing += delegate (object sender, ExecutingEventArgs args) {
+                    Log.Debug (String.Format ("Executing: {0}", args.Command.CommandText));
+                };
+            }
         }
 
         void IInitializeService.Initialize ()

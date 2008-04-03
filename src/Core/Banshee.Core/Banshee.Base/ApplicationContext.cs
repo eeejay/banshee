@@ -52,6 +52,7 @@ namespace Banshee.Base
             get {
                 if (debugging == null) {
                     debugging = CommandLine.Contains ("debug");
+                    debugging |= CommandLine.Contains ("debug-sql");
                     debugging |= EnvironmentIsSet ("BANSHEE_DEBUG");
                 }
                 

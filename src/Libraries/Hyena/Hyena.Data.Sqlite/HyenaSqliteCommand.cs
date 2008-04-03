@@ -77,7 +77,7 @@ namespace Hyena.Data.Sqlite
             ApplyValues (param_values);
         }
 
-        internal void Execute (SqliteConnection connection)
+        internal void Execute (HyenaSqliteConnection hconnection, SqliteConnection connection)
         {
             if (finished) {
                 throw new Exception ("Command is already set to finished; result needs to be claimed before command can be rerun");
@@ -89,6 +89,7 @@ namespace Hyena.Data.Sqlite
             SqliteCommand sql_command = new SqliteCommand (CurrentSqlText);
             sql_command.Connection = connection;
             //Log.DebugFormat ("Executing {0}", sql_command.CommandText);
+            hconnection.OnExecuting (new ExecutingEventArgs (sql_command));
 
             try {
                 switch (command_type) {
