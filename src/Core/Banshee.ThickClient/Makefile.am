@@ -4,11 +4,6 @@ ASSEMBLY_BUILD_FLAGS = -unsafe
 LINK = $(REF_BANSHEE_THICKCLIENT)
 
 SOURCES =  \
-	Banshee.AudioProfiles.Gui/ProfileComboBox.cs \
-	Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs \
-	Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs \
-	Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs \
-	Banshee.AudioProfiles.Gui/TextViewLabel.cs \
 	Banshee.Collection.Gui/AlbumListView.cs \
 	Banshee.Collection.Gui/ArtistListView.cs \
 	Banshee.Collection.Gui/ArtworkManager.cs \
@@ -69,6 +64,11 @@ SOURCES =  \
 	Banshee.Library.Gui/FileImportSource.cs \
 	Banshee.Library.Gui/FolderImportSource.cs \
 	Banshee.Library.Gui/ImportDialog.cs \
+	Banshee.MediaProfiles.Gui/ProfileComboBox.cs \
+	Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs \
+	Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs \
+	Banshee.MediaProfiles.Gui/ProfileConfigureButton.cs \
+	Banshee.MediaProfiles.Gui/TextViewLabel.cs \
 	Banshee.Playlist.Gui/PlaylistExportDialog.cs \
 	Banshee.Query.Gui/BansheeQueryBox.cs \
 	Banshee.Query.Gui/PlaylistQueryValueEntry.cs \

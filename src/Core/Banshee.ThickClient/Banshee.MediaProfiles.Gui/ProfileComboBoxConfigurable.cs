@@ -29,7 +29,7 @@
 using System;
 using Gtk;
 
-namespace Banshee.AudioProfiles.Gui
+namespace Banshee.MediaProfiles.Gui
 {
     public class ProfileComboBoxConfigurable : VBox
     {
@@ -38,12 +38,12 @@ namespace Banshee.AudioProfiles.Gui
         private TextViewLabel description;
         private string configuration_id;
         
-        public ProfileComboBoxConfigurable(ProfileManager manager, string configurationId) 
+        public ProfileComboBoxConfigurable(MediaProfileManager manager, string configurationId) 
             : this(manager, configurationId, null)
         {
         }
         
-        public ProfileComboBoxConfigurable(ProfileManager manager, string configurationId, Box parent) 
+        public ProfileComboBoxConfigurable(MediaProfileManager manager, string configurationId, Box parent) 
         {
             HBox editor = new HBox();
             

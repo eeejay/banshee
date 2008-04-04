@@ -36,7 +36,7 @@ using System.Text.RegularExpressions;
 using Hyena.SExpEngine;
 using Banshee.Base;
 
-namespace Banshee.AudioProfiles
+namespace Banshee.MediaProfiles
 {
     public class Pipeline : IEnumerable<PipelineVariable>
     {
@@ -81,7 +81,7 @@ namespace Banshee.AudioProfiles
         private Dictionary<string, string> processes = new Dictionary<string, string>();
         private List<Process> processes_pending = new List<Process>();
         
-        internal Pipeline(ProfileManager manager, XmlNode node)
+        internal Pipeline(MediaProfileManager manager, XmlNode node)
         {
             foreach(XmlNode process_node in node.SelectNodes("process")) {
                 string process_id = process_node.Attributes["id"].Value.Trim();

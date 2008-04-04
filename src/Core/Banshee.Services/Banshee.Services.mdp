@@ -70,11 +70,6 @@
     <File name="Banshee.Sources/ErrorSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MediaEngine/IPlayerEngineService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/BansheeListModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles/Pipeline.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles/PipelineVariable.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles/Profile.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles/ProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles/ProfileManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Playlist/AbstractPlaylistSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Playlist/PlaylistFileUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.SmartPlaylist/Migrator.cs" subtype="Code" buildaction="Compile" />
@@ -144,6 +139,11 @@
     <File name="Banshee.MediaEngine/IAudioCdRipper.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Database/DatabaseImportManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/InterfaceAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles/MediaProfileManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles/Pipeline.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles/PipelineVariable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles/Profile.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles/ProfileConfiguration.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

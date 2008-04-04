@@ -30,7 +30,7 @@ build-debug:
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	@mkdir -p $(top_builddir)/bin
-	@(test -d $(srcdir)/ThemeIcons && mkdir -p $(top_builddir)/bin/icons/hicolor && cp -rf $(srcdir)/ThemeIcons/* $(top_builddir)/bin/icons/hicolor) || true
+	@(test -d $(srcdir)/ThemeIcons && mkdir -p $(top_builddir)/bin/share/$(PACKAGE)/icons/hicolor && cp -rf $(srcdir)/ThemeIcons/* $(top_builddir)/bin/share/$(PACKAGE)/icons/hicolor) || true
 	@colors=no; \
 	case $$TERM in \
 		"xterm" | "rxvt" | "rxvt-unicode") \

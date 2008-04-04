@@ -1,3 +1,35 @@
+2008-04-03  Aaron Bockover  <abock@gnome.org>
+
+	* build/build.rules.mk:
+	* data/audio-profiles/Makefile.am: Changed the uninstall data directory
+	layout inside of bin/; copy audio profiles as well so they'll work 
+	bundled or uninstalled
+
+	* src/Core/Banshee.Core/Banshee.Base/ApplicationContext.cs: Minor fixes
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Fixed up the code to detect
+	what to use as 'datadir' - if there is a share directory in the directory
+	that contains the entry assembly, we will use that directory as the
+	installation prefix which means external datadir files will work 
+	when running uninstalled or if bundled, like we'll ship on Windows; 
+	otherwise the proper prefix is calculated (i.e. /usr)
+
+	* src/Core/Banshee.Services/Banshee.MediaProfiles:
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui: Renamed from
+	Banshee.AudioProfiles* since one day we'll support video profiles as well
+
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/MediaProfileManager.cs:
+	Fix up the profile loading/path code so profiles actually load now
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:
+	Reflect the API
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeIconFactory.cs:
+	Use the new datadir detection path
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	Stubbbbs
+
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This patch adds back the extension code from DapCore and completes the

@@ -61,11 +61,11 @@
     <File name="Banshee.Collection.Gui/ArtworkRenderer.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/TrackActions.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/ArtworkPopup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles.Gui/ProfileComboBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles.Gui/ProfileComboBoxConfigurable.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles.Gui/ProfileConfigureButton.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.AudioProfiles.Gui/TextViewLabel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles.Gui/ProfileComboBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles.Gui/ProfileConfigureButton.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaProfiles.Gui/TextViewLabel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/ColumnCellDateTime.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/BansheeActionGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui/IHasSourceView.cs" subtype="Code" buildaction="Compile" />

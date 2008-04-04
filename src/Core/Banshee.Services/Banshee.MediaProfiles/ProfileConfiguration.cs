@@ -34,7 +34,7 @@ using System.Collections.Generic;
 
 using Banshee.Configuration;
 
-namespace Banshee.AudioProfiles
+namespace Banshee.MediaProfiles
 {
     public class ProfileConfiguration : IEnumerable<KeyValuePair<string, string>>
     {
@@ -49,7 +49,7 @@ namespace Banshee.AudioProfiles
             return configuration;
         }
 
-        public static Profile LoadActiveProfile(ProfileManager manager, string id)
+        public static Profile LoadActiveProfile(MediaProfileManager manager, string id)
         {
             string profile_id = ConfigurationClient.Get<string>(MakeConfNamespace(id), "active_profile", string.Empty);
 

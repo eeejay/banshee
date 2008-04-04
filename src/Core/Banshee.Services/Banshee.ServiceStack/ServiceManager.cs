@@ -34,7 +34,7 @@ using Mono.Addins;
 
 using Hyena;
 using Banshee.Base;
-using Banshee.AudioProfiles;
+using Banshee.MediaProfiles;
 using Banshee.Sources;
 using Banshee.Database;
 using Banshee.MediaEngine;
@@ -63,7 +63,7 @@ namespace Banshee.ServiceStack
             RegisterService<DBusServiceManager> ();
             RegisterService<BansheeDbConnection> ();
             RegisterService<SourceManager> ();
-            RegisterService<ProfileManager> ();
+            RegisterService<MediaProfileManager> ();
             RegisterService<PlayerEngineService> ();
             RegisterService<PlaybackControllerService> ();
             RegisterService<ImportSourceManager> ();
@@ -269,8 +269,8 @@ namespace Banshee.ServiceStack
             get { return (BansheeDbConnection)Get ("DbConnection"); }
         }
 
-        public static ProfileManager ProfileManager {
-            get { return (ProfileManager)Get ("ProfileManager"); }
+        public static MediaProfileManager MediaProfileManager {
+            get { return Get<MediaProfileManager> (); }
         }
         
         public static SourceManager SourceManager {

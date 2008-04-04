@@ -108,6 +108,11 @@ namespace Banshee.AudioCd
                 return;
             }
             
+//            ServiceManager.
+//            
+//            profile = Globals.AudioProfileManager.GetConfiguredActiveProfile ("cd-importing", 
+//                new string [] { "audio/ogg", "audio/mp3", "audio/wav" });
+//            
             source.LockAllTracks ();
                                                 
             user_job = new UserJob (Catalog.GetString ("Importing Audio CD"), 

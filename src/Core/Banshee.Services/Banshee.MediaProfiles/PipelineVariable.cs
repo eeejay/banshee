@@ -32,7 +32,7 @@ using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Banshee.AudioProfiles
+namespace Banshee.MediaProfiles
 {
     public enum PipelineVariableControlType 
     {
@@ -220,7 +220,7 @@ namespace Banshee.AudioProfiles
         private static double ToDouble(string str)
         {
             try {
-                return Convert.ToDouble(str, ProfileManager.CultureInfo);
+                return Convert.ToDouble(str, MediaProfileManager.CultureInfo);
             } catch {
             }
 
@@ -318,13 +318,13 @@ namespace Banshee.AudioProfiles
                 try {
                     return DefaultValue == null || DefaultValue == String.Empty ?
                         (double?)null :
-                        Convert.ToDouble(DefaultValue, ProfileManager.CultureInfo);
+                        Convert.ToDouble(DefaultValue, MediaProfileManager.CultureInfo);
                 } catch {
                     return null;
                 }
             }
 
-            set { DefaultValue = Convert.ToString(value, ProfileManager.CultureInfo); }
+            set { DefaultValue = Convert.ToString(value, MediaProfileManager.CultureInfo); }
         }
 
         public double? CurrentValueNumeric {
@@ -332,13 +332,13 @@ namespace Banshee.AudioProfiles
                 try {
                     return CurrentValue == null || CurrentValue == String.Empty ?
                         (double?)null :
-                        Convert.ToDouble(CurrentValue, ProfileManager.CultureInfo);
+                        Convert.ToDouble(CurrentValue, MediaProfileManager.CultureInfo);
                 } catch {
                     return null;
                 }
             }
 
-            set { CurrentValue = Convert.ToString(value, ProfileManager.CultureInfo); }
+            set { CurrentValue = Convert.ToString(value, MediaProfileManager.CultureInfo); }
         }
 
         public double MinValue {

@@ -39,8 +39,8 @@ using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Widgets;
-using Banshee.AudioProfiles;
-using Banshee.AudioProfiles.Gui;
+using Banshee.MediaProfiles;
+using Banshee.MediaProfiles.Gui;
 using Banshee.Configuration.Schema;
 
 namespace Banshee.Gui.Dialogs
@@ -74,7 +74,7 @@ namespace Banshee.Gui.Dialogs
             (Glade["library_location_label"] as Label).MnemonicWidget = library_location_chooser;
             library_location_chooser.Show();
             
-            cd_importing_profile_box = new ProfileComboBoxConfigurable(ServiceManager.ProfileManager, "cd-importing", 
+            cd_importing_profile_box = new ProfileComboBoxConfigurable(ServiceManager.MediaProfileManager, "cd-importing", 
                 Glade["cd_importing_profile_description"] as Box);
             (Glade["cd_importing_profile_container"] as Box).PackStart(cd_importing_profile_box, false, false, 0);  
             (Glade["cd_importing_profile_label"] as Label).MnemonicWidget = cd_importing_profile_box.Combo;        

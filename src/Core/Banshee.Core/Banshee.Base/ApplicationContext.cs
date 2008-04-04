@@ -35,6 +35,11 @@ namespace Banshee.Base
 {
     public static class ApplicationContext
     {
+        static ApplicationContext () 
+        {
+            Log.Debugging = Debugging;
+        }
+    
         private static CommandLineParser command_line = new CommandLineParser ("enqueue");
         public static CommandLineParser CommandLine {
             set { command_line = value; }
@@ -65,13 +70,8 @@ namespace Banshee.Base
             return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
         }
         
-        private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo ("en-US");
         public static System.Globalization.CultureInfo InternalCultureInfo {
-            get { return culture_info; }
-        }
-
-        static ApplicationContext () {
-            Log.Debugging = Debugging;
+            get { return System.Globalization.CultureInfo.InvariantCulture; }
         }
     }
 }

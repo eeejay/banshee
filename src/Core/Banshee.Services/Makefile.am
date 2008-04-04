@@ -3,11 +3,6 @@ TARGET = library
 LINK = $(REF_BANSHEE_SERVICES)
 
 SOURCES =  \
-	Banshee.AudioProfiles/Pipeline.cs \
-	Banshee.AudioProfiles/PipelineVariable.cs \
-	Banshee.AudioProfiles/Profile.cs \
-	Banshee.AudioProfiles/ProfileConfiguration.cs \
-	Banshee.AudioProfiles/ProfileManager.cs \
 	Banshee.Base/RateLimiter.cs \
 	Banshee.Base/ThreadAssist.cs \
 	Banshee.Collection.Database/AlbumListDatabaseModel.cs \
@@ -61,6 +56,11 @@ SOURCES =  \
 	Banshee.MediaEngine/PlayerEngineEvent.cs \
 	Banshee.MediaEngine/PlayerEngineService.cs \
 	Banshee.MediaEngine/PlayerEngineState.cs \
+	Banshee.MediaProfiles/MediaProfileManager.cs \
+	Banshee.MediaProfiles/Pipeline.cs \
+	Banshee.MediaProfiles/PipelineVariable.cs \
+	Banshee.MediaProfiles/Profile.cs \
+	Banshee.MediaProfiles/ProfileConfiguration.cs \
 	Banshee.Metadata.Embedded/EmbeddedMetadataProvider.cs \
 	Banshee.Metadata.Embedded/EmbeddedQueryJob.cs \
 	Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs \

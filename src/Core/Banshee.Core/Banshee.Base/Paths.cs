@@ -146,6 +146,11 @@ namespace Banshee.Base
                 if (installed_application_prefix == null) {
                     installed_application_prefix = Path.GetDirectoryName (
                         System.Reflection.Assembly.GetEntryAssembly ().Location);
+                    
+                    if (Directory.Exists (Paths.Combine (installed_application_prefix, "share", "banshee-1"))) {
+                        return installed_application_prefix;
+                    }
+                        
                     DirectoryInfo entry_directory = new DirectoryInfo (installed_application_prefix);
                     
                     if (entry_directory != null && entry_directory.Parent != null && entry_directory.Parent.Parent != null) {
@@ -163,6 +168,11 @@ namespace Banshee.Base
         
         public static string InstalledApplicationData {
             get { return Path.Combine (InstalledApplicationDataRoot, "banshee-1"); }
+        }
+        
+        public static string GetInstalledDataDirectory (string path)
+        {
+            return Path.Combine (InstalledApplicationData, path);
         }
     }
 }

@@ -35,7 +35,7 @@ using System.Collections.Generic;
 
 using Banshee.ServiceStack;
 
-namespace Banshee.AudioProfiles
+namespace Banshee.MediaProfiles
 {
     public class TestProfileArgs : EventArgs
     {
@@ -59,12 +59,10 @@ namespace Banshee.AudioProfiles
 
     public delegate void TestProfileHandler(object o, TestProfileArgs args);
 
-    public class ProfileManager : IEnumerable<Profile>, IService
+    public class MediaProfileManager : IEnumerable<Profile>, IService
     {
-        private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo("en-US");
-        
         internal static System.Globalization.CultureInfo CultureInfo {
-            get { return culture_info; }
+            get { return System.Globalization.CultureInfo.InvariantCulture; }
         }
     
         private XmlDocument document;
@@ -73,10 +71,9 @@ namespace Banshee.AudioProfiles
 
         public event TestProfileHandler TestProfile;
 
-        public ProfileManager()
+        public MediaProfileManager()
         {
-            // TODO replace w/ real path code or property
-            string path = "";
+            string path = Banshee.Base.Paths.GetInstalledDataDirectory ("audio-profiles");
             if(File.Exists(path)) {
                 LoadFromFile(path);
             } else if(Directory.Exists(path)) {
@@ -256,7 +253,7 @@ namespace Banshee.AudioProfiles
         }
 
         string Banshee.ServiceStack.IService.ServiceName {
-            get { return "ProfileManager"; }
+            get { return "MediaProfileManager"; }
         }
         
         public override string ToString()

@@ -32,10 +32,10 @@ using Mono.Unix;
 
 using Gtk;
 
-using Banshee.AudioProfiles;
+using Banshee.MediaProfiles;
 using Banshee.Base;
 
-namespace Banshee.AudioProfiles.Gui
+namespace Banshee.MediaProfiles.Gui
 {
     internal class PipelineVariableComboBox : Gtk.ComboBox
     {

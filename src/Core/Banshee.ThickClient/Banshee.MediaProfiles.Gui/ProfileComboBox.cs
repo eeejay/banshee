@@ -32,17 +32,17 @@ using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 
-namespace Banshee.AudioProfiles.Gui
+namespace Banshee.MediaProfiles.Gui
 {
     public class ProfileComboBox : ComboBox
     {
-        private ProfileManager manager;
+        private MediaProfileManager manager;
         private ListStore store;
         private string [] mimetype_filter;
         
         public event EventHandler Updated;
         
-        public ProfileComboBox(ProfileManager manager)
+        public ProfileComboBox(MediaProfileManager manager)
         {
             this.manager = manager;
             

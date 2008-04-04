@@ -29,7 +29,7 @@
 using System;
 using Gtk;
 
-namespace Banshee.AudioProfiles.Gui
+namespace Banshee.MediaProfiles.Gui
 {
     public class TextViewLabel : TextView
     {

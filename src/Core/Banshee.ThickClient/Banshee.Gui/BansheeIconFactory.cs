@@ -45,13 +45,12 @@ namespace Banshee.Gui
         {
             theme = IconTheme.Default;
         
-            Assembly entry_asm = Assembly.GetEntryAssembly ();
-            string icon_theme_path = Path.Combine (Path.GetDirectoryName (entry_asm.Location), "icons");
+            string icon_theme_path = Banshee.Base.Paths.GetInstalledDataDirectory ("icons");
             if (Directory.Exists (icon_theme_path)) {
                 Hyena.Log.DebugFormat ("Adding icon theme search path: {0}", icon_theme_path);
                 Theme.AppendSearchPath (icon_theme_path);
             }
-            
+               
             AddDefault ();
         }
         

@@ -32,7 +32,7 @@ using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Banshee.AudioProfiles
+namespace Banshee.MediaProfiles
 {
     public class Profile
     {
@@ -45,7 +45,7 @@ namespace Banshee.AudioProfiles
         private Pipeline pipeline;
         private ProfileConfiguration configuration;
 
-        internal Profile(ProfileManager manager, XmlNode node)
+        internal Profile(MediaProfileManager manager, XmlNode node)
         {
             id = node.Attributes["id"].Value.Trim();
             name = Banshee.Base.Localization.SelectSingleNode(node, "name").InnerText.Trim();
