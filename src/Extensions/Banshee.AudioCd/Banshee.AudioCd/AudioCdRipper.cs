@@ -39,7 +39,7 @@ using Banshee.MediaEngine;
 
 namespace Banshee.AudioCd
 {
-    public class AudioCdRipper
+    public class AudioCdRipper : IDisposable
     {
         private static bool ripper_extension_queried = false;
         private static TypeExtensionNode ripper_extension_node = null;
@@ -85,6 +85,7 @@ namespace Banshee.AudioCd
                 ripper = (IAudioCdRipper)ripper_extension_node.CreateInstance ();
                 ripper.TrackFinished += OnTrackFinished;
                 ripper.Progress += OnProgress;
+                ripper.Error += OnError;
             } else {
                 throw new ApplicationException ("No AudioCdRipper extension is installed");
             }
@@ -96,7 +97,7 @@ namespace Banshee.AudioCd
         {   
             ResetState ();
 
-            foreach (AudioCdTrackInfo track in (AudioCdDiscModel)source.TrackModel) {
+            foreach (AudioCdTrackInfo track in source.DiscModel) {
                 if (track.RipEnabled) {
                     total_duration += track.Duration;
                     queue.Enqueue (track);
@@ -111,13 +112,42 @@ namespace Banshee.AudioCd
                                                 
             user_job = new UserJob (Catalog.GetString ("Importing Audio CD"), 
                 Catalog.GetString ("Initializing Drive"), "media-import-audio-cd");
+            user_job.CancelMessage = String.Format (Catalog.GetString (
+                "<i>{0}</i> is still being imported into the music library. Would you like to stop it?"
+                ), GLib.Markup.EscapeText (source.DiscModel.Title));
             user_job.CanCancel = true;
             user_job.CancelRequested += OnCancelRequested;
             user_job.Finished += OnFinished;
             user_job.Register ();
             
+            if (source != null && source.DiscModel != null) {
+                if (!source.DiscModel.LockDoor ()) {
+                    Hyena.Log.Warning ("Could not lock CD-ROM door", false);
+                }
+            }
+            
             ripper.Begin ();
+            
             RipNextTrack ();
+        }
+        
+        public void Dispose ()
+        {
+            ResetState ();
+            
+            if (source != null && source.DiscModel != null) {
+                source.DiscModel.UnlockDoor ();
+            }
+                            
+            if (ripper != null) {
+                ripper.Finish ();
+                ripper = null;
+            }
+            
+            if (user_job != null) {
+                user_job.Finish ();
+                user_job = null;
+            }
         }
         
         private void ResetState ()
@@ -135,15 +165,7 @@ namespace Banshee.AudioCd
         private void RipNextTrack ()
         {
             if (queue.Count == 0) {
-                ResetState ();
-                
-                if (ripper != null) {
-                    ripper.Finish ();
-                }
-                
-                if (user_job != null) {
-                    user_job.Finish ();
-                }
+                Dispose ();
                 return;
             }
             
@@ -153,7 +175,7 @@ namespace Banshee.AudioCd
                 ++track_index, source.TrackModel.Count);
             status = String.Format("{0} - {1}", track.ArtistName, track.TrackTitle);
             user_job.Status = status;
-
+            
             SafeUri uri = new SafeUri (FileNamePattern.BuildFull (track, "mp3"));
             ripper.RipTrack (track, uri);
         }
@@ -196,6 +218,12 @@ namespace Banshee.AudioCd
             user_job.Status = last_speed_poll_factor > 1 ? String.Format ("{0} ({1:0.0}x)", 
                 status, last_speed_poll_factor) : status;
         }
+        
+        private void OnError (object o, AudioCdRipperErrorArgs args)
+        {
+            Dispose ();
+            Hyena.Log.Error (Catalog.GetString ("Cannot Import CD"), args.Message, true);
+        }
 
 #endregion
                                 
@@ -203,15 +231,7 @@ namespace Banshee.AudioCd
         
         private void OnCancelRequested (object o, EventArgs args)
         {
-            ResetState ();
-            
-            if (ripper != null) {
-                ripper.Cancel ();
-            }
-        
-            if (user_job != null) {
-                user_job.Finish ();
-            }
+            Dispose ();
         }
         
         private void OnFinished (object o, EventArgs args)

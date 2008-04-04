@@ -144,9 +144,20 @@ namespace Banshee.AudioCd
 
         private void OnImportDisc (object o, EventArgs args)
         {
-            if (AudioCdRipper.Supported) {
-                AudioCdRipper ripper = new AudioCdRipper (this);
-                ripper.Start ();
+            AudioCdRipper ripper = null;
+            
+            try {
+                if (AudioCdRipper.Supported) {
+                    ripper = new AudioCdRipper (this);
+                    ripper.Start ();
+                }
+            } catch (Exception e) {
+                if (ripper != null) {
+                    ripper.Dispose ();
+                }
+                
+                Log.Error (Catalog.GetString ("Could not import CD"), e.Message, true);
+                Log.Exception (e);
             }
         }
 
@@ -293,7 +304,7 @@ namespace Banshee.AudioCd
         }
 
         public bool CanUnmap {
-            get { return true; }
+            get { return DiscModel != null ? !DiscModel.IsDoorLocked : true; }
         }
 
         public bool ConfirmBeforeUnmap {

@@ -33,5 +33,8 @@ namespace Banshee.Hardware
 {
     public interface ICdromDevice : IBlockDevice
     {
+        bool LockDoor ();
+        bool UnlockDoor ();
+        bool IsDoorLocked { get; }
     }
 }

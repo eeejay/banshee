@@ -1,3 +1,20 @@
+2008-04-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IAudioCdRipper.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
+	Added error reporting
+	
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/CdromDevice.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/ICdromDevice.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Added drive door locking support
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Handle
+	errors and dispose better; lock and unlock the drive door
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Better error handling and do not allow ejecting if the door is locked
+
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Almost done with move.  Banshee.Dap* not in build yet.

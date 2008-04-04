@@ -39,6 +39,7 @@ namespace Banshee.GStreamer
     {
         public event AudioCdRipperProgressHandler Progress;
         public event AudioCdRipperTrackFinishedHandler TrackFinished;
+        public event AudioCdRipperErrorHandler Error;
         
         public void Begin ()
         {
@@ -68,12 +69,12 @@ namespace Banshee.GStreamer
                     TimeSpan progress = TimeSpan.FromMilliseconds ((ellapsed.TotalMilliseconds 
                         / duration.TotalMilliseconds) * track.Duration.TotalMilliseconds);
                     
-                    ThreadAssist.ProxyToMain (delegate { OnProgress (track, progress); });
+                    OnProgress (track, progress);
                     
                     Thread.Sleep (50);
                 }
                 
-                ThreadAssist.ProxyToMain (delegate { OnTrackFinished (track, outputUri); });
+                OnTrackFinished (track, outputUri);
             });
             
             return;
@@ -92,6 +93,14 @@ namespace Banshee.GStreamer
             AudioCdRipperTrackFinishedHandler handler = TrackFinished;
             if (handler != null) {
                 handler (this, new AudioCdRipperTrackFinishedArgs (track, outputUri));
+            }
+        }
+        
+        protected virtual void OnError (TrackInfo track, string message)
+        {
+            AudioCdRipperErrorHandler handler = Error;
+            if (handler != null) {
+                handler (this, new AudioCdRipperErrorArgs (track, message));
             }
         }
     }

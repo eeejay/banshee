@@ -178,6 +178,29 @@ namespace Banshee.AudioCd
             });
         }
         
+        private ICdromDevice Drive {
+            get { return Volume == null ? null : (Volume.Parent as ICdromDevice); }
+        }
+        
+        public bool LockDoor ()
+        {
+            ICdromDevice drive = Drive;
+            return drive != null ? drive.LockDoor () : false;
+        }
+        
+        public bool UnlockDoor ()
+        {
+            ICdromDevice drive = Drive;
+            return drive != null ? drive.UnlockDoor () : false;
+        }
+        
+        public bool IsDoorLocked {
+            get { 
+                ICdromDevice drive = Drive;
+                return drive != null ? drive.IsDoorLocked : false;
+            }
+        }
+        
         public IDiscVolume Volume {
             get { return volume; }
         }
