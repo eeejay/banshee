@@ -48,9 +48,27 @@ namespace Banshee.Dap.MassStorage
             get { return volume; }
         }
 
-        public MassStorageSource (IVolume volume) : base (Catalog.GetString ("Media"), volume.Name ?? "Media" , volume.Uuid)
+        public MassStorageSource () : base ()
         {
-            this.volume = volume;
+        }
+
+        // Override PrimarySource's Initialize method
+        protected override void Initialize ()
+        {
+            base.Initialize ();
+        }
+
+        public override bool Initialize (IDevice device)
+        {
+            this.volume = device as IVolume;
+            if (volume == null)
+                return false;
+
+            type_unique_id = volume.Uuid;
+            Name = volume.Name;
+            GenericName = Catalog.GetString ("Media");
+
+            Initialize ();
 
             Properties.SetStringList ("Icon.Name", "harddrive");
 
@@ -67,6 +85,8 @@ namespace Banshee.Dap.MassStorage
                 importer.ImportFinished += delegate  { HideStatus (); };
                 importer.QueueSource (new string [] { volume.MountPoint });
             });
+
+            return true;
         }
         
         public override long BytesUsed {

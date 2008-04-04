@@ -1,3 +1,39 @@
+2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This patch adds back the extension code from DapCore and completes the
+	separation of the MassStorage support from the DapService.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Provide a way for Sources
+	to be lazily initialized with a protected virtual Initialize method that
+	each subclass overrides, calling base and then its own intialization.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	Rename Initialize method so doesn't conflict with above.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.addin.xml:
+	Extend the DeviceClass node.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Lazily intialize, after its seen that the Initialize (IDevice) will
+	succeed.
+
+	* src/Dap/Banshee.Dap/Makefile.am:
+	* src/Dap/Banshee.Dap.MassStorage/Makefile.am: Fix build.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.addin.xml: Define DeviceClass extension
+	point, from DapCore.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: When new DAP
+	DeviceClasses are loaded, check existing devices to see if they are now
+	supported.
+
+	* src/Makefile.am: Add Dap back to the build.
+
 2008-04-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.MediaEngine/IAudioCdRipper.cs:

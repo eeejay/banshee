@@ -43,9 +43,16 @@ namespace Banshee.Dap
 {
     public abstract class DapSource : RemovableSource
     {
-        public DapSource (string name, string generic_name, string uuid) : base (generic_name, name, uuid)
+        protected DapSource () : base ()
         {
+        }
+
+        protected override void Initialize ()
+        {
+            base.Initialize ();
             Properties.SetStringList ("Icon.Name", "multimedia-player");
         }
+
+        public abstract bool Initialize (IDevice device);
     }
 }

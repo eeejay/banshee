@@ -57,7 +57,7 @@ namespace Banshee.Sources
 
         protected RateLimiter reload_limiter;
         
-        private string type_unique_id;
+        protected string type_unique_id;
         protected override string TypeUniqueId {
             get { return type_unique_id; }
         }
@@ -65,6 +65,21 @@ namespace Banshee.Sources
         public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order)
         {
             type_unique_id = id;
+            DatabaseSourceInitialize ();
+        }
+
+        protected DatabaseSource () : base ()
+        {
+        }
+
+        protected override void Initialize ()
+        {
+            base.Initialize ();
+            DatabaseSourceInitialize ();
+        }
+
+        private void DatabaseSourceInitialize ()
+        {
             track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, UniqueId);
             artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, UniqueId);
             album_model = new AlbumListDatabaseModel (track_model, artist_model, ServiceManager.DbConnection, UniqueId);

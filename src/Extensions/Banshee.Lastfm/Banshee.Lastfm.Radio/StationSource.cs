@@ -106,7 +106,7 @@ namespace Banshee.Lastfm.Radio
             PlayCount = playCount;
             Station = Type.GetStationFor (arg);
 
-            Initialize ();
+            StationInitialize ();
         }
 
         public StationSource (LastfmSource lastfm, string name, string type, string arg) : base (generic_name, name, 150)
@@ -118,10 +118,10 @@ namespace Banshee.Lastfm.Radio
 
             Save ();
 
-            Initialize ();
+            StationInitialize ();
         }
 
-        private void Initialize ()
+        private void StationInitialize ()
         {
             track_model = new MemoryTrackListModel ();
 

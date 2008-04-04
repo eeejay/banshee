@@ -96,7 +96,8 @@ namespace Banshee.Lastfm.Radio
                 connection.UpdateNetworkState (args.Connected);
             };
 
-            Initialize ();
+            Connection.StateChanged += HandleConnectionStateChanged;
+            UpdateUI ();
 
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/LastfmSourcePopup");
@@ -110,17 +111,6 @@ namespace Banshee.Lastfm.Radio
             actions = new LastfmActions (this);
 
             ServiceManager.SourceManager.AddSource (this);
-        }
-
-        public void Initialize ()
-        {
-            Connection.StateChanged += HandleConnectionStateChanged;
-            
-            /*if (Account.UserName != null && Account.CryptedPassword != null) {
-                Connection.Connect ();
-            }*/
-            
-            UpdateUI ();
         }
 
         public void Dispose ()

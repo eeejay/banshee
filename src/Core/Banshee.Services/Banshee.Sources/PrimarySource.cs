@@ -113,15 +113,30 @@ namespace Banshee.Sources
 
         protected PrimarySource (string generic_name, string name, string id, int order) : base (generic_name, name, id, order)
         {
-            dbid = ServiceManager.DbConnection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = ?", id);
+            type_unique_id = id;
+            PrimarySourceInitialize ();
+        }
+
+        protected PrimarySource () : base ()
+        {
+        }
+
+        protected override void Initialize ()
+        {
+            base.Initialize ();
+            PrimarySourceInitialize ();
+        }
+
+        private void PrimarySourceInitialize ()
+        {
+            dbid = ServiceManager.DbConnection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = ?", TypeUniqueId);
             if (dbid == 0) {
-                dbid = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", id);
+                dbid = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", TypeUniqueId);
             }
 
             track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", dbid);
 
             primary_sources[dbid] = this;
-            
             
             foreach (PlaylistSource pl in PlaylistSource.LoadAll ())
                 if (pl.PrimarySourceId == dbid)

@@ -65,6 +65,22 @@ namespace Banshee.Sources
             Name = name;
             Order = order;
 
+            SourceInitialize ();
+        }
+
+        protected Source ()
+        {
+        }
+
+        // This method is chained to subclasses intialize methods,
+        // allowing at any state for delayed intialization by using the empty ctor.
+        protected virtual void Initialize ()
+        {
+            SourceInitialize ();
+        }
+
+        private void SourceInitialize ()
+        {
             // If this source is not defined in Banshee.Services, set its
             // ResourceAssembly to the assembly where it is defined.
             Assembly asm = Assembly.GetAssembly (this.GetType ());//Assembly.GetCallingAssembly ();

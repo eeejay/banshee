@@ -12,11 +12,11 @@
     defaultEnabled="true">
 
   <Dependencies>
-    <Addin id="Banshee.Services" version="1.0"/>
+    <Addin id="Banshee.Dap" version="1.0"/>
   </Dependencies>
 
-  <Extension path="/Banshee/ServiceManager/Service">
-    <Service class="Banshee.Dap.MassStorage.DapService"/>
+  <Extension path="/Banshee/Dap/DeviceClass">
+    <DeviceClass class="Banshee.Dap.MassStorage.MassStorageSource"/>
   </Extension>
 
 </Addin>

@@ -43,10 +43,15 @@ namespace Banshee.Dap
 {
     public abstract class RemovableSource : PrimarySource, IUnmapableSource, IDisposable
     {
-        public RemovableSource (string name, string generic_name, string uuid) : base (generic_name, name, uuid, 175)
+        protected RemovableSource () : base ()
         {
-            Name = name;
+        }
 
+        protected override void Initialize ()
+        {
+            base.Initialize ();
+
+            Order = 175;
             Properties.SetString ("UnmapSourceActionIconName", "media-eject");
             Properties.SetString ("GtkActionPath", "/RemovableSourceContextMenu");
             AfterInitialized ();

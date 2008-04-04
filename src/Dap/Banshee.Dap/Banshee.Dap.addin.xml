@@ -3,11 +3,11 @@
     id="Banshee.Dap"
     version="1.0"
     compatVersion="1.0"
-    copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
+    copyright="© 2007-2008 Novell Inc. Licensed under the MIT X11 license."
     name="Digital Audio Player Support"
     category="Hardware"
     description="Provides support for Digital Audio Players."
-    author="Gabriel Burt"
+    author="Gabriel Burt, Aaron Bockover, Ruben Vermeersch"
     url="http://banshee-project.org/"
     defaultEnabled="true">
 
@@ -18,5 +18,9 @@
   <Extension path="/Banshee/ServiceManager/Service">
     <Service class="Banshee.Dap.DapService"/>
   </Extension>
+
+  <ExtensionPoint path="/Banshee/Dap/DeviceClass">
+    <ExtensionNode name="DeviceClass"/>
+  </ExtensionPoint>
 
 </Addin>
