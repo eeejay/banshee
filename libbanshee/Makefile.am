@@ -28,8 +28,7 @@ noinst_HEADERS =  \
 	banshee-player-missing-elements.h \
 	banshee-player-pipeline.h \
 	banshee-player-private.h \
-	banshee-player-video.h \
-	gst-transcode.h
+	banshee-player-video.h
 
 libbanshee_la_LIBADD = \
 	$(LIBBANSHEE_LIBS) \
