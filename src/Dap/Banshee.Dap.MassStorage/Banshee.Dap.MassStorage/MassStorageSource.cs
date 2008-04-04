@@ -64,6 +64,9 @@ namespace Banshee.Dap.MassStorage
             if (volume == null)
                 return false;
 
+            if (!System.IO.File.Exists (IsAudioPlayerPath))
+                return false;
+
             type_unique_id = volume.Uuid;
             Name = volume.Name;
             GenericName = Catalog.GetString ("Media");
@@ -87,6 +90,10 @@ namespace Banshee.Dap.MassStorage
             });
 
             return true;
+        }
+
+        protected string IsAudioPlayerPath {
+            get { return System.IO.Path.Combine (volume.MountPoint, ".is_audio_player"); }
         }
         
         public override long BytesUsed {

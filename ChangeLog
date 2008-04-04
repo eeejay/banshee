@@ -1,5 +1,10 @@
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Only load volumes that have a .is_audio_player file.  For now.
+
+2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
 	When the Play Queue is initialized, if it has tracks and the PlayerEngine
 	is not already playing, set it as the playback source.
