@@ -1,3 +1,17 @@
+2008-04-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
+	Get the cd importing profile and generate the pipeline for the encoder
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/Service.cs: Ported
+	the GStreamer media profile process stuff, including the SExpEngine 
+	extensions/GStreamer binding, fully enabling GStreamer media profiles
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	Cleaned up
+
+	* src/Libraries/Hyena/Hyena.SExpEngine/EvaluatorBase.cs: Minor API fix
+
 2008-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:

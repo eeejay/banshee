@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,9 +27,13 @@
 //
 
 using System;
+using System.Text;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+using Hyena.SExpEngine;
 using Banshee.ServiceStack;
+using Banshee.MediaProfiles;
 
 namespace Banshee.GStreamer
 {
@@ -39,16 +43,157 @@ namespace Banshee.GStreamer
         {
         }
         
+        [DllImport ("libbanshee")]
+        private static extern void gstreamer_initialize ();
+        
         void IExtensionService.Initialize ()
         {
             gstreamer_initialize ();
+            
+            MediaProfileManager profile_manager = ServiceManager.MediaProfileManager;
+            if (profile_manager != null) {
+                Pipeline.AddSExprFunction ("gst-element-is-available", SExprTestElement);
+                Pipeline.AddSExprFunction ("gst-construct-pipeline", SExprConstructPipeline);
+                Pipeline.AddSExprFunction ("gst-construct-caps", SExprConstructCaps);
+                Pipeline.AddSExprFunction ("gst-construct-element", SExprConstructElement);
+                
+                profile_manager.TestProfile += OnTestMediaProfile;
+                profile_manager.TestAll ();
+            }
+        }
+        
+        private static void OnTestMediaProfile (object o, TestProfileArgs args)
+        {
+            bool no_test = Banshee.Base.ApplicationContext.EnvironmentIsSet ("BANSHEE_PROFILES_NO_TEST");
+            bool available = false;
+            
+            foreach (Pipeline.Process process in args.Profile.Pipeline.GetPendingProcessesById ("gstreamer")) {
+                string pipeline = args.Profile.Pipeline.CompileProcess (process);
+                if (no_test || TestPipeline (pipeline)) {
+                    args.Profile.Pipeline.AddProcess (process);
+                    available = true;
+                    break;
+                } else if (!no_test) {
+                    Hyena.Log.DebugFormat ("GStreamer pipeline does not run: {0}", pipeline);
+                }
+            }
+            
+            args.ProfileAvailable = available;
+        }
+        
+        [DllImport ("libbanshee")]
+        private static extern bool gstreamer_test_pipeline (IntPtr pipeline);
+        
+        internal static bool TestPipeline (string pipeline)
+        {
+            if (String.IsNullOrEmpty (pipeline)) {
+                return false;
+            }
+        
+            IntPtr pipeline_ptr = GLib.Marshaller.StringToPtrGStrdup (pipeline);
+            
+            if (pipeline_ptr == IntPtr.Zero) {
+                return false;
+            }
+            
+            try {
+                return gstreamer_test_pipeline (pipeline_ptr);
+            } finally {
+                GLib.Marshaller.Free (pipeline_ptr);
+            }
+        }
+        
+        private TreeNode SExprTestElement (EvaluatorBase evaluator, TreeNode [] args)
+        {
+            if (args.Length != 1) {
+                throw new ArgumentException ("gst-test-element accepts one argument");
+            }
+            
+            TreeNode arg = evaluator.Evaluate (args[0]);
+            if (!(arg is StringLiteral)) {
+                throw new ArgumentException ("gst-test-element requires a string argument");
+            }
+            
+            StringLiteral element_node = (StringLiteral)arg;
+            return new BooleanLiteral (TestPipeline (element_node.Value));
+        }
+        
+        private TreeNode SExprConstructPipeline (EvaluatorBase evaluator, TreeNode [] args)
+        {
+            StringBuilder builder = new StringBuilder ();
+            List<string> elements = new List<string> ();
+            
+            for (int i = 0; i < args.Length; i++) {
+                TreeNode node = evaluator.Evaluate (args[i]);
+                if (!(node is LiteralNodeBase)) {
+                    throw new ArgumentException ("node must evaluate to a literal");
+                }
+                
+                string value = node.ToString ().Trim ();
+                
+                if (value.Length == 0) {
+                    continue;
+                }
+                
+                elements.Add (value);
+            }
+            
+            for (int i = 0; i < elements.Count; i++) {
+                builder.Append (elements[i]);
+                if (i < elements.Count - 1) {
+                    builder.Append (" ! ");
+                }
+            }
+            
+            return new StringLiteral (builder.ToString ());
+        }
+        
+        private TreeNode SExprConstructElement (EvaluatorBase evaluator, TreeNode [] args)
+        {
+            return SExprConstructPipelinePart (evaluator, args, true);
+        }
+        
+        private TreeNode SExprConstructCaps (EvaluatorBase evaluator, TreeNode [] args)
+        {
+            return SExprConstructPipelinePart (evaluator, args, false);
+        }
+        
+        private TreeNode SExprConstructPipelinePart (EvaluatorBase evaluator, TreeNode [] args, bool element)
+        {
+            StringBuilder builder = new StringBuilder ();
+            
+            TreeNode list = new TreeNode ();
+            foreach (TreeNode arg in args) {
+                list.AddChild (evaluator.Evaluate (arg));
+            }
+            
+            list = list.Flatten ();
+            
+            for (int i = 0; i < list.ChildCount; i++) {
+                TreeNode node = list.Children[i];
+                
+                string value = node.ToString ().Trim ();
+                
+                builder.Append (value);
+                
+                if (i == 0) {
+                    if (list.ChildCount > 1) {
+                        builder.Append (element ? ' ' : ',');
+                    }
+                    
+                    continue;
+                } else if (i % 2 == 1) {
+                    builder.Append ('=');
+                } else if (i < list.ChildCount - 1) {
+                    builder.Append (element ? ' ' : ',');
+                }
+            }
+            
+            return new StringLiteral (builder.ToString ());
         }
         
         string IService.ServiceName {
             get { return "GStreamerCoreService"; }
         }
-        
-        [DllImport("libbanshee")]
-        private static extern void gstreamer_initialize ();
     }
 }

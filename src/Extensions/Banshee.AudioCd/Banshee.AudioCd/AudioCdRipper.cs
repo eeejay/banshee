@@ -69,6 +69,7 @@ namespace Banshee.AudioCd
         
         // State to process the rip operation
         private Queue<AudioCdTrackInfo> queue = new Queue<AudioCdTrackInfo> ();
+        
         private TimeSpan ripped_duration;
         private TimeSpan total_duration;
         private int track_index;
@@ -107,12 +108,7 @@ namespace Banshee.AudioCd
             if (queue.Count == 0) {
                 return;
             }
-            
-//            ServiceManager.
-//            
-//            profile = Globals.AudioProfileManager.GetConfiguredActiveProfile ("cd-importing", 
-//                new string [] { "audio/ogg", "audio/mp3", "audio/wav" });
-//            
+
             source.LockAllTracks ();
                                                 
             user_job = new UserJob (Catalog.GetString ("Importing Audio CD"), 

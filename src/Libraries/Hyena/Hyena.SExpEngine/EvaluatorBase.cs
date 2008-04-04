@@ -195,7 +195,7 @@ namespace Hyena.SExpEngine
             return null;
         }
        
-        internal TreeNode Evaluate(TreeNode node)
+        public TreeNode Evaluate(TreeNode node)
         {
             if(!node.HasChildren || node is FunctionNode) {
                 return EvaluateNode(node);

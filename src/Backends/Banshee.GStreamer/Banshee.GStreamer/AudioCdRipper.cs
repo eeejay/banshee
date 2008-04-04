@@ -28,21 +28,41 @@
 
 using System;
 using System.Threading;
+using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.Collection;
+using Banshee.ServiceStack;
 using Banshee.MediaEngine;
+using Banshee.MediaProfiles;
 
 namespace Banshee.GStreamer
 {
     public class AudioCdRipper : IAudioCdRipper
     {
+        private string encoder_pipeline;
+    
         public event AudioCdRipperProgressHandler Progress;
         public event AudioCdRipperTrackFinishedHandler TrackFinished;
         public event AudioCdRipperErrorHandler Error;
         
         public void Begin ()
         {
+            try {
+                Profile profile = ServiceManager.MediaProfileManager.GetConfiguredActiveProfile ("cd-importing");
+                if (profile != null) {
+                    encoder_pipeline = profile.Pipeline.GetProcessById ("gstreamer");
+                }
+                
+                if (String.IsNullOrEmpty (encoder_pipeline)) {
+                    throw new ApplicationException ();
+                }
+                
+                Hyena.Log.InformationFormat ("Ripping using encoder profile `{0}' with pipeline: {1}", 
+                    profile.Name, encoder_pipeline);
+            } catch (Exception e) {
+                throw new ApplicationException (Catalog.GetString ("Could not find an encoder for ripping."), e);
+            }
         }
         
         public void Finish ()
