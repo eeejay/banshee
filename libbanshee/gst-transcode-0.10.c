@@ -36,8 +36,6 @@
 
 #include <libgnomevfs/gnome-vfs.h>
 
-#include "gst-misc.h"
-
 typedef struct GstTranscoder GstTranscoder;
 
 typedef void (* GstTranscoderProgressCallback) (GstTranscoder *transcoder, gdouble progress);
@@ -317,24 +315,9 @@ gst_transcoder_create_pipeline(GstTranscoder *transcoder,
 // public methods
 
 GstTranscoder *
-gst_transcoder_new()
+gst_transcoder_new ()
 {
-    GstTranscoder *transcoder;
-    
-    gstreamer_initialize();
-    
-    transcoder = g_new0(GstTranscoder, 1);
-    transcoder->is_transcoding = FALSE;
-    transcoder->pipeline = NULL;
-    transcoder->sink_bin = NULL;
-    transcoder->conv_elem = NULL;
-    transcoder->output_uri = NULL;
-    transcoder->progress_cb = NULL;
-    transcoder->error_cb = NULL;
-    transcoder->finished_cb = NULL;
-    transcoder->iterate_timeout_id = 0;
-    
-    return transcoder;
+    return g_new0 (GstTranscoder, 1);
 }
 
 void

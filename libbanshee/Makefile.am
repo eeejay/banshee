@@ -19,7 +19,7 @@ libbanshee_la_SOURCES =  \
 	banshee-player-missing-elements.c \
 	banshee-player-pipeline.c \
 	banshee-player-video.c \
-	gst-cd-rip-0.10.c \
+	banshee-ripper.c \
 	gst-misc-0.10.c \
 	gst-transcode-0.10.c
 
@@ -29,8 +29,6 @@ noinst_HEADERS =  \
 	banshee-player-pipeline.h \
 	banshee-player-private.h \
 	banshee-player-video.h \
-	gst-cd-rip.h \
-	gst-misc.h \
 	gst-transcode.h
 
 libbanshee_la_LIBADD = \

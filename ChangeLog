@@ -1,3 +1,13 @@
+2008-04-04  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/banshee-ripper.c: Renamed and new API akin to what I did
+	for the player engine; started cleaning up the code, but not finished
+
+	* libbanshee/gst-cd-rip.h:
+	* libbanshee/gst-misc.h: Removed, not needed
+
+	* libbanshee/gst-transcode-0.10.c: Fixed bloated ctor and removed dead code
+
 2008-04-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
