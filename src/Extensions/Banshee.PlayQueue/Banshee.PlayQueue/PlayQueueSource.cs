@@ -101,11 +101,15 @@ namespace Banshee.PlayQueue
             UpdateActions ();
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
 
-            // TODO listen to all primary sources
+            // TODO listen to all primary sources, and handle transient primary sources
             ServiceManager.SourceManager.MusicLibrary.TracksChanged += HandleTracksChanged;
             ServiceManager.SourceManager.MusicLibrary.TracksDeleted += HandleTracksDeleted;
             ServiceManager.SourceManager.VideoLibrary.TracksChanged += HandleTracksChanged;
             ServiceManager.SourceManager.VideoLibrary.TracksDeleted += HandleTracksDeleted;
+
+            if (Count > 0 && ServiceManager.PlayerEngine.CurrentState != PlayerEngineState.Playing) {
+                ServiceManager.PlaybackController.Source = this;
+            }
         }
         
         public void Dispose ()
