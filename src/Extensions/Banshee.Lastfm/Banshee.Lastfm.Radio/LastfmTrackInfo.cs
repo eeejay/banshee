@@ -46,11 +46,6 @@ namespace Banshee.Lastfm.Radio
         private bool loved, hated;
         private string trackauth;
 
-        public LastfmTrackInfo ()
-        {
-            CanSaveToDatabase = false;
-        }
-
         public Track XspfTrack {
             get { return track; }
             set { track = value; }
@@ -79,6 +74,8 @@ namespace Banshee.Lastfm.Radio
             Duration = track.Duration;
             TrackNumber = (int) track.TrackNumber;
             XspfTrack = track;
+
+            MediaAttributes = TrackMediaAttributes.AudioStream | TrackMediaAttributes.Music;
 
             CanSaveToDatabase = false;
         }

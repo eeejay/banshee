@@ -1,3 +1,9 @@
+2008-04-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmTrackInfo.cs:
+	Whoops, I had Alex only scrobble TrackInfos with the Music attribute, but
+	I forgot Last.fm radio tracks didn't.  Fixes BGO #525464.
+
 2008-04-04  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/banshee-ripper.c: Renamed and new API akin to what I did
