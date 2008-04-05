@@ -1,5 +1,10 @@
 2008-04-05  Alexander Hixon  <hixon.alexander@mediati.org>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs: Small
+	woops.
+
+2008-04-05  Alexander Hixon  <hixon.alexander@mediati.org>
+
 	* src/Extensions/Banshee.Daap/Daap/ServiceLocator.cs: Try to resolve all
 	possible addresses for the first resolved hostname if it gives us an IPv6
 	address.

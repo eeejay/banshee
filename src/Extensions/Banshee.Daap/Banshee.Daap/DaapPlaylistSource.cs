@@ -38,7 +38,7 @@ using DAAP;
 
 namespace Banshee.Daap
 {
-    public class DaapPlaylistSource : Source, ITrackModelSource, IDaapSource
+    public class DaapPlaylistSource : Source, ITrackModelSource
     {
         private DaapSource parent;
         public DAAP.Database Database {
