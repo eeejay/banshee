@@ -185,8 +185,7 @@ namespace Banshee.Collection.Database
         private void UpdateUnfilteredAggregates ()
         {
             HyenaSqliteCommand count_command = new HyenaSqliteCommand (String.Format (
-                "SELECT COUNT(*) FROM {0}{1} {2}{3}",
-                provider.From, JoinFragment, String.IsNullOrEmpty (Condition) ? String.Empty : "WHERE ", Condition
+                "SELECT COUNT(*) {0}", UnfilteredQuery
             ));
             count = connection.Query<long> (count_command);
         }

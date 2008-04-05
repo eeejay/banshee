@@ -1,6 +1,11 @@
 2008-04-05  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	Reverted last change - it apparently borks migration :(
+
+2008-04-05  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	Minor SQL improvement when getting the count of items in an
 	unfiltered model.
 
