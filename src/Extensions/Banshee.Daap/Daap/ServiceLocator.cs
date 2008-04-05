@@ -148,11 +148,21 @@ namespace DAAP {
             
             IPAddress address = args.Service.HostEntry.AddressList[0];
             
+            // XXX: Workaround a Mono bug where we can't resolve IPv6 addresses properly
             if (services.ContainsKey (name) && address.AddressFamily == AddressFamily.InterNetworkV6) {
-                // XXX: Workaround a Mono bug where we can't resolve IPv6 addresses properly
                 // Only skip this service if it resolves to a IPv6 address, and we already have info
                 // for this service already.
                 return;
+            } else if (!services.ContainsKey (name) && address.AddressFamily == AddressFamily.InterNetworkV6) {
+                // This is the first address we've resolved, however, it's an IPv6 address.
+                // Try and resolve the hostname in hope that it'll end up as an IPv4 address - it doesn't
+                // really matter if it still ends up with an IPv6 address, we're not risking anything.
+                
+                foreach (IPAddress addr in Dns.GetHostEntry (args.Service.HostEntry.HostName).AddressList) {
+                    if (addr.AddressFamily == AddressFamily.InterNetwork) {
+                        address = addr;
+                    }
+                }
             }
             
             DAAP.Service svc = new DAAP.Service (address, (ushort)service.Port, 

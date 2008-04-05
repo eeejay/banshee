@@ -1,3 +1,18 @@
+2008-04-05  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Extensions/Banshee.Daap/Daap/ServiceLocator.cs: Try to resolve all
+	possible addresses for the first resolved hostname if it gives us an IPv6
+	address.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs: Child
+	playlist source for DAAP sources. Uses DaapTrackInfo from parent source to
+	populate trackmodel.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Create playlist
+	sources if the DAAP share provides any. Also hookup different icons for
+	protected/unprotected shares. Now also handles the remote removing tracks
+	from the share and updating our local view to reflect changes.
+
 2008-04-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmTrackInfo.cs:
