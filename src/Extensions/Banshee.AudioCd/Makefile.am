@@ -13,8 +13,6 @@ SOURCES =  \
 RESOURCES =  \
 	Banshee.AudioCd.addin.xml \
 	Resources/ActiveSourceUI.xml \
-	Resources/cd-action-rip-16.png \
-	Resources/cd-action-rip-22.png \
 	Resources/GlobalUI.xml
 
 include $(top_srcdir)/build/build.mk
