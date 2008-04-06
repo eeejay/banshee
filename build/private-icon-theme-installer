@@ -10,7 +10,7 @@ for icon in $@; do
 	dest_dir_build="${dest_dir}/icons/hicolor/$(dirname ${icon})"
 	if [[ ${action} == "-i" || ${action} == "-il" ]]; then
 		src_file="${src_dir}/ThemeIcons/${icon}"
-		$mkinstalldirs "${dest_dir_build}"
+		$mkinstalldirs "${dest_dir_build}" &>/dev/null
 		if [[ ${action} == "-i" ]]; then 
 			echo "Installing private icon theme icon: ${icon}"
 		fi
