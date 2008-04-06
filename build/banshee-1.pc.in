@@ -1,8 +1,0 @@
-prefix=@prefix@
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-
-Name: Banshee
-Description: Mono-based Media Playback and Organization Framework
-Version: @VERSION@
-

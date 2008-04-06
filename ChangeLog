@@ -1,5 +1,17 @@
 2008-04-06  Aaron Bockover  <abock@gnome.org>
 
+	* build/build.rules.mk: Fixed up the new private icon theme rules so the
+	icons get 'installed' when building, installing, and uninstalling; this
+	should fix the missing icon issues now when you run banshee installed
+
+	* build/private-icon-theme-installer: A script for installing and 
+	uninstalling the private icon theme files
+
+	* src/Extensions/Makefile.am: Enabled DAAP again, halex says it won't
+	ruin the database now
+
+2008-04-06  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
 	Fixed the icon sizing issue hopefully once and for all - still the same
 	proper result but without the invalid size warning

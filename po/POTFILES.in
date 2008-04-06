@@ -10,8 +10,9 @@ data/audio-profiles/wavpack.xml.in
 data/audio-profiles/wav.xml.in
 data/audio-profiles/wma.xml.in
 data/banshee-1.desktop.in.in
-libbanshee/gst-cd-rip-0.10.c
+libbanshee/banshee-ripper.c
 libbanshee/gst-transcode-0.10.c
+src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs
 src/Clients/Nereid/Nereid/PlayerInterface.cs
 src/Clients/Nereid/Nereid/ViewContainer.cs
@@ -24,7 +25,9 @@ src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs
 src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs
 src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs
 src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs
+src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs
 src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs
+src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs
 src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs
 src/Core/Banshee.Services/Banshee.Networking/NetworkDetect.cs
 src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs
@@ -40,8 +43,6 @@ src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs
 src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs
 src/Core/Banshee.Services/Banshee.Sources/Source.cs
 src/Core/Banshee.Services/Banshee.Web/Browser.cs
-src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileComboBox.cs
-src/Core/Banshee.ThickClient/Banshee.AudioProfiles.Gui/ProfileConfigurationDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs
@@ -60,6 +61,8 @@ src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs
+src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs
+src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs
 src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs
@@ -70,6 +73,16 @@ src/Core/Banshee.Widgets/Banshee.Widgets/DiscUsageDisplay.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/RatingMenuItem.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs
+src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs
+src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs
+src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs
+src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs
+src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs
+src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs
+src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs
+src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs
+src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs
+src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs
@@ -80,6 +93,7 @@ src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs
 src/Extensions/Banshee.Lastfm/Resources/lastfm.glade
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs
+src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs
 src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs
@@ -88,7 +102,10 @@ src/Libraries/Hyena.Gui/Hyena.Query.Gui/DateQueryValueEntry.cs
 src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs
 src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs
 src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs
+src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs
+src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs
 src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs
 src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs

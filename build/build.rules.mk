@@ -1,3 +1,6 @@
+UNIQUE_FILTER_PIPE = tr [:space:] \\n | sort | uniq
+BUILD_DATA_DIR = $(top_builddir)/bin/share/$(PACKAGE)
+
 SOURCES_BUILD = $(addprefix $(srcdir)/, $(SOURCES))
 SOURCES_BUILD += $(top_srcdir)/src/AssemblyInfo.cs
 
@@ -5,16 +8,17 @@ RESOURCES_EXPANDED = $(addprefix $(srcdir)/, $(RESOURCES))
 RESOURCES_BUILD = $(foreach resource, $(RESOURCES_EXPANDED), \
 	-resource:$(resource),$(notdir $(resource)))
 
-THEME_ICONS = $(wildcard $(srcdir)/ThemeIcons/*/*/*.png)
+INSTALL_ICONS = $(top_srcdir)/build/private-icon-theme-installer "$(mkinstalldirs)" "$(INSTALL_DATA)"
+THEME_ICONS_SOURCE = $(wildcard $(srcdir)/ThemeIcons/*/*/*.png)
+THEME_ICONS_RELATIVE = $(subst $(srcdir)/ThemeIcons/, , $(THEME_ICONS_SOURCE))
 
 ASSEMBLY_EXTENSION = $(strip $(patsubst library, dll, $(TARGET)))
 ASSEMBLY_FILE = $(top_builddir)/bin/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
 
 INSTALL_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_INSTALL_DIR), $(INSTALL_DIR)))
 
-FILTER_LINK_PIPE = tr [:space:] \\n | sort | uniq
-FILTERED_LINK = $(shell echo "$(LINK)" | $(FILTER_LINK_PIPE))
-DEP_LINK = $(shell echo "$(LINK)" | $(FILTER_LINK_PIPE) | sed s,-r:,,g | grep '$(top_builddir)/bin/')
+FILTERED_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE))
+DEP_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE) | sed s,-r:,,g | grep '$(top_builddir)/bin/')
 
 OUTPUT_FILES = \
 	$(ASSEMBLY_FILE) \
@@ -23,14 +27,13 @@ OUTPUT_FILES = \
 moduledir = $(INSTALL_DIR_RESOLVED)
 module_SCRIPTS = $(OUTPUT_FILES)
 
-all: $(ASSEMBLY_FILE)
+all: $(ASSEMBLY_FILE) theme-icons
 
 build-debug:
 	@echo $(DEP_LINK)
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	@mkdir -p $(top_builddir)/bin
-	@(test -d $(srcdir)/ThemeIcons && mkdir -p $(top_builddir)/bin/share/$(PACKAGE)/icons/hicolor && cp -rf $(srcdir)/ThemeIcons/* $(top_builddir)/bin/share/$(PACKAGE)/icons/hicolor) || true
 	@colors=no; \
 	case $$TERM in \
 		"xterm" | "rxvt" | "rxvt-unicode") \
@@ -48,8 +51,18 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 		cp $(notdir $@.config) $(top_builddir)/bin; \
 	fi;
 
-EXTRA_DIST = $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(THEME_ICONS)
+theme-icons: $(THEME_ICONS_SOURCE)
+	@$(INSTALL_ICONS) -il "$(BUILD_DATA_DIR)" "$(srcdir)" $(THEME_ICONS_RELATIVE)
+
+install-data-local: $(THEME_ICONS_SOURCE)
+	@$(INSTALL_ICONS) -i "$(DESTDIR)$(pkgdatadir)" "$(srcdir)" $(THEME_ICONS_RELATIVE)
+	
+uninstall-local: $(THEME_ICONS_SOURCE)
+	@$(INSTALL_ICONS) -u "$(DESTDIR)$(pkgdatadir)" "$(srcdir)" $(THEME_ICONS_RELATIVE)
+
+EXTRA_DIST = $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(THEME_ICONS_SOURCE)
 
 CLEANFILES = $(OUTPUT_FILES) *.dll *.mdb *.exe
 DISTCLEANFILES = *.pidb
 MAINTAINERCLEANFILES = Makefile.in
+

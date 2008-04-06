@@ -19,6 +19,7 @@ $(TRANSLATOR_EXTRACTOR_ASSEMBLY): TranslatorExtractor.cs
 
 EXTRA_DIST = \
 	icon-theme-installer \
+	private-icon-theme-installer \
 	GConfSchemaExtractor.cs \
 	TranslatorExtractor.cs \
 	gconf-schema-rules

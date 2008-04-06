@@ -1,8 +1,7 @@
-# DO NOT ENABLE DAAP!!!!!!!
-
 SUBDIRS = \
 	Banshee.AudioCd \
 	Banshee.Bookmarks \
+	Banshee.Daap \
 	Banshee.Lastfm \
 	Banshee.MultimediaKeys \
 	Banshee.NotificationArea \
