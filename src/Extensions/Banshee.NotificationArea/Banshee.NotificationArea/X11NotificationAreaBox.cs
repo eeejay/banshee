@@ -41,7 +41,6 @@ namespace Banshee.NotificationArea
     public class X11NotificationAreaBox : X11NotificationArea, INotificationAreaBox
     {
         private EventBox event_box;
-        private Image image;
         
         private TrackInfoPopup popup;
         private bool can_show_popup = false;
@@ -58,10 +57,7 @@ namespace Banshee.NotificationArea
         public X11NotificationAreaBox () : base (Catalog.GetString ("Banshee"))
         {
             event_box = new EventBox ();
-            image = new Image ();
-            image.IconSize = 22;
-            image.IconName = Banshee.ServiceStack.Application.IconName;
-            event_box.Add (image);
+            event_box.Add (Image.NewFromIconName (Banshee.ServiceStack.Application.IconName, IconSize.LargeToolbar));
             Add (event_box);
             
             event_box.ButtonPressEvent += OnButtonPressEvent;

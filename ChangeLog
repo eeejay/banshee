@@ -1,5 +1,11 @@
 2008-04-06  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Fixed the icon sizing issue hopefully once and for all - still the same
+	proper result but without the invalid size warning
+
+2008-04-06  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/RepeatActionButton.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
