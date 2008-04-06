@@ -1,4 +1,4 @@
-<Project name="Banshee.Widgets" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Banshee.Widgets" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assembly="Banshee.Widgets" />
@@ -10,34 +10,23 @@
   <Contents>
     <File name="Resources/rating-rated.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/rating-unrated.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Banshee.Widgets/ActionButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/ComplexMenuItem.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/CoverArtThumbnail.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/CoverArtView.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/DateButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/DictionaryComboBox.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/DiscUsageDisplay.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/DrawingUtilities.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/EllipsizeLabel.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/FadingAlignment.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/HigMessageDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/HoverImageButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/LinearProgress.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/LinkLabel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/MessagePane.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/MultiStateToggleButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/PropertyTable.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/RadialProgress.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/RatingEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/RatingMenuItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/SearchEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/SeekSlider.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/ShadowContainer.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/SimpleNotebook.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/StreamPositionLabel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/Tile.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/TileView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/ToggleState.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/VolumeButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/GenericToolItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/CustomActionProxy.cs" subtype="Code" buildaction="Compile" />
@@ -52,6 +41,8 @@
     <ProjectReference type="Gac" localcopy="True" refto="gnome-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Project" localcopy="True" refto="Hyena.Gui" />
+    <ProjectReference type="Project" localcopy="True" refto="Hyena" />
   </References>
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />

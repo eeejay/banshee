@@ -70,7 +70,7 @@ namespace Banshee.Gui.Widgets
                 return;
             }
 
-            image.Stock = action.StockId;
+            image.IconName = action.IconName;
             label.TextWithMnemonic = action.Label;
             box.Sensitive = action.Sensitive && action.Visible;
         }

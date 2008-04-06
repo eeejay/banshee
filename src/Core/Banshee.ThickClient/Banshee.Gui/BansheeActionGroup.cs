@@ -86,7 +86,7 @@ namespace Banshee.Gui
                 string icon = source.Properties.GetString (String.Format ("{0}IconName", action_name));
                 action.Label = String.IsNullOrEmpty (label) ? labels[action_name] : label;
                 if (!String.IsNullOrEmpty (icon)) {
-                    action.StockId = icon;
+                    action.IconName = icon;
                 }
                 //Console.WriteLine ("for source {0} and action {1} got label {2}, so set action.Label = {3}", source.Name, action_name, label, action.Label);
             }

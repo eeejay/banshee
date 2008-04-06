@@ -186,13 +186,13 @@ namespace Banshee.Gui
         private void ShowPause ()
         {
             play_pause_action.Label = Catalog.GetString ("_Pause");
-            play_pause_action.StockId = "media-playback-pause";
+            play_pause_action.IconName = "media-playback-pause";
         }
         
         private void ShowPlay ()
         {
             play_pause_action.Label = Catalog.GetString ("_Play");
-            play_pause_action.StockId = "media-playback-start";
+            play_pause_action.IconName = "media-playback-start";
         }
                 
         private void OnPlayPauseAction (object o, EventArgs args)

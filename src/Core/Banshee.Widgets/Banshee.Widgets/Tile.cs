@@ -66,8 +66,8 @@ namespace Banshee.Widgets
             secondary_label.Xalign = 0.0f;
             secondary_label.Yalign = 0.0f;
             
-            secondary_label.ModifyFg(StateType.Normal, DrawingUtilities.ColorBlend(
-                Style.Foreground(StateType.Normal), Style.Background(StateType.Normal), 0.5));
+            secondary_label.ModifyFg(StateType.Normal, Hyena.Gui.GtkUtilities.ColorBlend(
+                Style.Foreground(StateType.Normal), Style.Background(StateType.Normal)));
                 
             Relief = ReliefStyle.None;
         }

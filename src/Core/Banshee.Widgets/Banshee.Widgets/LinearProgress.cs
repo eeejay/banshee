@@ -48,8 +48,8 @@ namespace Banshee.Widgets
         {
             if(bar_gc == null) {
                 bar_gc = new Gdk.GC(GdkWindow);
-                Gdk.Color color = DrawingUtilities.ColorBlend(Style.Background(StateType.Normal), 
-                    Style.Foreground(StateType.Normal), 0.2);
+                Gdk.Color color = Hyena.Gui.GtkUtilities.ColorBlend(Style.Background(StateType.Normal), 
+                    Style.Foreground(StateType.Normal));
                 bar_gc.Background = color;
                 bar_gc.Foreground = color;
             }

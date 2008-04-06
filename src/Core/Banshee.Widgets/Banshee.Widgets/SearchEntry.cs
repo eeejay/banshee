@@ -440,7 +440,7 @@ namespace Banshee.Widgets
                 text_gc.Copy(Style.TextGC(StateType.Normal));
                 Gdk.Color color_a = parent.Style.Base(StateType.Normal);
                 Gdk.Color color_b = parent.Style.Text(StateType.Normal);
-                text_gc.RgbFgColor = DrawingUtilities.ColorBlend(color_a, color_b, 0.5);
+                text_gc.RgbFgColor = Hyena.Gui.GtkUtilities.ColorBlend(color_a, color_b);
             }
 
             protected override bool OnExposeEvent(Gdk.EventExpose evnt)

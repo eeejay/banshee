@@ -91,9 +91,6 @@ RESOURCES =  \
 	Resources/banshee-logo.png \
 	Resources/browser-album-cover.png \
 	Resources/core-ui-actions-layout.xml \
-	Resources/media-repeat-all.png \
-	Resources/media-repeat-none.png \
-	Resources/media-repeat-single.png \
 	Resources/source-cd-audio.png \
 	Resources/source-library.png \
 	Resources/source-localqueue.png \

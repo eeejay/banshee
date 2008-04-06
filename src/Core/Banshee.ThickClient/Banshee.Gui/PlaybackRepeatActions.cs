@@ -65,18 +65,22 @@ namespace Banshee.Gui
             actionService.AddActionGroup (this);
 
             Add (new RadioActionEntry [] {
-                new RadioActionEntry ("RepeatNoneAction", "media-repeat-none", 
+                new RadioActionEntry ("RepeatNoneAction", null, 
                     Catalog.GetString ("Repeat N_one"), null,
                     Catalog.GetString ("Do not repeat playlist"), 0),
                     
-                new RadioActionEntry ("RepeatAllAction", "media-repeat-all",
+                new RadioActionEntry ("RepeatAllAction", null,
                     Catalog.GetString ("Repeat _All"), null,
                     Catalog.GetString ("Play all songs before repeating playlist"), 1),
                     
-                new RadioActionEntry ("RepeatSingleAction", "media-repeat-single",
+                new RadioActionEntry ("RepeatSingleAction", null,
                     Catalog.GetString ("Repeat Singl_e"), null,
                     Catalog.GetString ("Repeat the current playing song"), 2)
             }, 0, OnChanged);
+
+            this["RepeatNoneAction"].IconName = "media-repeat-none";
+            this["RepeatAllAction"].IconName = "media-repeat-all";
+            this["RepeatSingleAction"].IconName = "media-repeat-single";
 
             Gtk.Action action = this[ConfigIdToActionName (RepeatMode.Get ())];
             if (action is RadioAction) {
@@ -84,6 +88,7 @@ namespace Banshee.Gui
             } else {
                 Active = (RadioAction)this["RepeatNoneAction"];
             }
+            
             Active.Activate ();
         }
 

@@ -1,5 +1,34 @@
 2008-04-06  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/RepeatActionButton.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs: Fixed
+	some more icon theme issues relating to switching a lot of stuff from
+	stock icons to theme icons
+
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerLevelsBox.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/DiscUsageDisplay.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/SearchEntry.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/Tile.cs: Updated to use some
+	of the drawing utilites that moved into Hyena.Gui
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/ActionButton.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/CoverArtThumbnail.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/CoverArtView.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/DrawingUtilities.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/EllipsizeLabel.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/FadingAlignment.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/LinearProgress.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/MultiStateToggleButton.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RadialProgress.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/ShadowContainer.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/SimpleNotebook.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/ToggleState.cs: Deleted these
+	legacy widgets, hooray for bloat cut
+
+2008-04-06  Aaron Bockover  <abock@gnome.org>
+
 	* libbanshee/banshee-ripper.c: More cleanup and refactoring, it's mostly
 	working but tags are not yet saved since I changed the way we do tagging
 	and I'm not done

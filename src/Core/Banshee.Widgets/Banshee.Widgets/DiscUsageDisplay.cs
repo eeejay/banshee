@@ -31,6 +31,8 @@ using System;
 using Gtk;
 using Cairo;
 
+using Hyena.Gui;
+
 namespace Banshee.Widgets
 {
     public class DiscUsageDisplay : Gtk.DrawingArea
@@ -67,13 +69,13 @@ namespace Banshee.Widgets
         
         protected override void OnStyleSet(Gtk.Style style)
         {
-            fill_color_a = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Selected));
-            fill_color_b = DrawingUtilities.GdkColorToCairoColor(Style.Foreground(StateType.Selected));
-            fill_color_c = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Normal));
-            stroke_color = DrawingUtilities.GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.6);
-            inner_stroke_color = DrawingUtilities.GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.4);
-            text_color = DrawingUtilities.GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.8);
-            text_bg_color = DrawingUtilities.GdkColorToCairoColor(Style.Background(StateType.Normal), 0.6);
+            fill_color_a = CairoExtensions.GdkColorToCairoColor(Style.Background(StateType.Selected));
+            fill_color_b = CairoExtensions.GdkColorToCairoColor(Style.Foreground(StateType.Selected));
+            fill_color_c = CairoExtensions.GdkColorToCairoColor(Style.Background(StateType.Normal));
+            stroke_color = CairoExtensions.GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.6);
+            inner_stroke_color = CairoExtensions.GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.4);
+            text_color = CairoExtensions.GdkColorToCairoColor(Style.Foreground(StateType.Normal), 0.8);
+            text_bg_color = CairoExtensions.GdkColorToCairoColor(Style.Background(StateType.Normal), 0.6);
         }
         
         protected override void OnSizeAllocated(Gdk.Rectangle rect)
