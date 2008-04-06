@@ -1,5 +1,30 @@
 2008-04-05  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Got rid of now unnessiary work around and use new Query overload.
+
+	* src/Libraries/MusicBrainz/MusicBrainz/MusicBrainzObject.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Relation.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Label.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Release.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Event.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Disc.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/MusicBrainzEntity.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/XmlRequestEventArgs.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/LocalDisc.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Utils.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/DiscLinux.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Track.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/MusicBrainzItem.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Query.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/MusicBrainzException.cs:
+	 src/Libraries/MusicBrainz/MusicBrainz/DiscWin32.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/Artist.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/MusicBrainzService.cs: Synced
+	MusicBrainz# code.
+
+2008-04-05  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
 	Reverted last change - it apparently borks migration :(
 

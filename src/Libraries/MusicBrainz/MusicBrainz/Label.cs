@@ -1,10 +1,25 @@
-/***************************************************************************
- *  Label.cs
- *
- *  Authored by Scott Peterson <lunchtimemama@gmail.com>
- * 
- *  The author disclaims copyright to this source code.
- ****************************************************************************/
+// Label.cs
+//
+// Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 
 using System;
 using System.Text;
@@ -42,23 +57,23 @@ namespace MusicBrainz
         {
         }
 
-        protected override void HandleLoadMissingData ()
+        protected override void LoadMissingDataCore ()
         {
             Label label = new Label (Id, CreateInc ());
             type = label.Type;
-            base.HandleLoadMissingData (label);
+            base.LoadMissingDataCore (label);
         }
 
-        protected override bool HandleAttributes (XmlReader reader)
+        protected override bool ProcessAttributes (XmlReader reader)
         {
             type = Utils.StringToEnum<LabelType> (reader ["type"]);
             return this.type != null;
         }
 
-        protected override bool HandleXml (XmlReader reader)
+        protected override bool ProcessXml (XmlReader reader)
         {
             reader.Read ();
-            bool result = base.HandleXml (reader);
+            bool result = base.ProcessXml (reader);
             if (!result) {
                 if (reader.Name == "country") {
                     result = true;

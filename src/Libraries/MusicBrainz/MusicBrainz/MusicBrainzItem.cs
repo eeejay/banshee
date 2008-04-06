@@ -1,10 +1,25 @@
-/***************************************************************************
- *  MusicBrainzItem.cs
- *
- *  Authored by Scott Peterson <lunchtimemama@gmail.com>
- * 
- *  The author disclaims copyright to this source code.
- ****************************************************************************/
+// MusicBrainzItem.cs
+//
+// Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 
 using System;
 using System.Text;
@@ -86,6 +101,9 @@ namespace MusicBrainz
     // The item-like product of an artist, such as a track or a release.
     public abstract class MusicBrainzItem : MusicBrainzObject
     {
+        
+        #region Constructors
+        
         internal MusicBrainzItem (string mbid, string parameters) : base (mbid, parameters)
         {
         }
@@ -94,21 +112,25 @@ namespace MusicBrainz
         {
             if (this.artist == null) this.artist = artist;
         }
+        
+        #endregion
+        
+        #region Protected Overrides
 
-        protected override void HandleCreateInc (StringBuilder builder)
+        protected override void CreateIncCore (StringBuilder builder)
         {
             if (artist == null) AppendIncParameters(builder, "artist");
-            base.HandleCreateInc (builder);
+            base.CreateIncCore (builder);
         }
 
-        protected void HandleLoadMissingData (MusicBrainzItem item)
+        protected void LoadMissingDataCore (MusicBrainzItem item)
         {
             title = item.Title;
             if (artist == null) artist = item.Artist;
-            base.HandleLoadMissingData (item);
+            base.LoadMissingDataCore (item);
         }
 
-        protected override bool HandleXml (XmlReader reader)
+        protected override bool ProcessXml (XmlReader reader)
         {
             bool result = true;
             switch (reader.Name) {
@@ -126,7 +148,11 @@ namespace MusicBrainz
             }
             return result;
         }
+        
+        #endregion
 
+        #region Properties
+        
         string title;
         public virtual string Title {
             get { return GetPropertyOrNull (ref title); }
@@ -137,8 +163,11 @@ namespace MusicBrainz
         public virtual Artist Artist {
             get { return GetPropertyOrNull (ref artist); }
         }
+        
+        #endregion
 
-        public override string ToString () {
+        public override string ToString ()
+        {
             return title;
         }
     }

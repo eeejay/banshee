@@ -1,10 +1,25 @@
-/***************************************************************************
- *  MusicBrainzObject.cs
- *
- *  Authored by Scott Peterson <lunchtimemama@gmail.com>
- * 
- *  The author disclaims copyright to this source code.
- ****************************************************************************/
+// MusicBrainzObject.cs
+//
+// Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 
 using System;
 using System.Collections.Generic;
@@ -54,11 +69,11 @@ namespace MusicBrainz
         protected string CreateInc ()
         {
             StringBuilder builder = new StringBuilder ();
-            HandleCreateInc (builder);
+            CreateIncCore (builder);
             return builder.ToString ();
         }
         
-        static string [] rels_params = new string [] {
+        static readonly string [] rels_params = new string [] {
             "artist-rels",
             "release-rels",
             "track-rels",
@@ -66,7 +81,7 @@ namespace MusicBrainz
             "url-rels"
         };
 
-        protected virtual void HandleCreateInc (StringBuilder builder)
+        protected virtual void CreateIncCore (StringBuilder builder)
         {
             if (!all_rels_loaded)
                 AppendIncParameters (builder, rels_params);
@@ -105,14 +120,15 @@ namespace MusicBrainz
             );
         }
 
-        protected abstract bool HandleAttributes (XmlReader reader);
-        protected abstract bool HandleXml (XmlReader reader);
+        protected abstract bool ProcessAttributes (XmlReader reader);
+        protected abstract bool ProcessXml (XmlReader reader);
+        
         void CreateFromXml (XmlReader reader)
         {
             reader.Read ();
             id = reader ["id"];
             byte.TryParse (reader ["ext:score"], out score);
-            HandleAttributes (reader);
+            ProcessAttributes (reader);
             while (reader.Read () && reader.NodeType != XmlNodeType.EndElement) {
                 if (reader.Name == "relation-list") {
                     all_rels_loaded = true;
@@ -160,21 +176,21 @@ namespace MusicBrainz
                         break;
                     }
                 } else
-                    HandleXml (reader.ReadSubtree ());
-			}
+                    ProcessXml (reader.ReadSubtree ());
+            }
             reader.Close ();
-		}
+        }
 
         protected void LoadMissingData ()
         {
             if (!all_data_loaded) {
-                HandleLoadMissingData ();
+                LoadMissingDataCore ();
                 all_data_loaded = true;
             }
         }
 
-        protected abstract void HandleLoadMissingData ();
-        protected void HandleLoadMissingData (MusicBrainzObject obj)
+        protected abstract void LoadMissingDataCore ();
+        protected void LoadMissingDataCore (MusicBrainzObject obj)
         {
             if (!all_rels_loaded) {
                 artist_rels = obj.ArtistRelations;
@@ -329,8 +345,7 @@ namespace MusicBrainz
             try {
                 request.CachePolicy = MusicBrainzService.CachePolicy;
                 cache_implemented = true;
-            } catch (NotImplementedException) {
-            }
+            } catch (NotImplementedException) {}
             
             HttpWebResponse response = null;
             

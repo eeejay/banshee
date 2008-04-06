@@ -99,10 +99,7 @@ namespace Banshee.AudioCd
             
             OnMetadataQueryStarted (mb_disc);
             
-            ReleaseQueryParameters parameters = new ReleaseQueryParameters ();
-            parameters.DiscID = mb_disc.Id;
-            
-            Query<Release> results = Release.Query (parameters);
+            Query<Release> results = Release.Query (mb_disc);
             if (results == null) {
                 OnMetadataQueryFinished (false);
                 return;
@@ -124,15 +121,6 @@ namespace Banshee.AudioCd
             
             int i = 0;
             
-            // FIXME: Ugly hack to work around either a horrid design or a bug
-            // in mb-sharp; the track doesn't seem to get loaded from the web
-            // service until the properties are accessed on the object. This
-            // makes loading the metadata *waaaayyy* slower than it needs to be.
-            foreach (Track track in tracks) {
-                DevNull (track.Title);
-                DevNull (track.Artist.Name);
-            }
-            
             foreach (Track track in tracks) {
                 // FIXME: Gather more details from MB to save to the DB
                 this[i].TrackTitle = track.Title;
@@ -142,10 +130,6 @@ namespace Banshee.AudioCd
             }
             
             OnMetadataQueryFinished (true);
-        }
-        
-        private void DevNull (object o)
-        {
         }
         
         private void OnMetadataQueryStarted (LocalDisc mb_disc)

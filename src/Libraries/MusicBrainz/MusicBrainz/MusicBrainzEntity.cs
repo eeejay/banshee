@@ -1,10 +1,25 @@
-/***************************************************************************
- *  MusicBrainzEntity.cs
- *
- *  Authored by Scott Peterson <lunchtimemama@gmail.com>
- * 
- *  The author disclaims copyright to this source code.
- ****************************************************************************/
+// MusicBrainzEntity.cs
+//
+// Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 
 using System;
 using System.Collections.Generic;
@@ -17,6 +32,9 @@ namespace MusicBrainz
     // A person-like entity, such as an artist or a label.
     public abstract class MusicBrainzEntity : MusicBrainzObject
     {
+        
+        #region Constructors
+        
         internal MusicBrainzEntity (string mbid, string parameters) : base (mbid, parameters)
         {
         }
@@ -24,14 +42,18 @@ namespace MusicBrainz
         internal MusicBrainzEntity (XmlReader reader, bool all_rels_loaded) : base (reader, all_rels_loaded)
         {
         }
+        
+        #endregion
+        
+        #region Protected Overrides
 
-        protected override void HandleCreateInc (StringBuilder builder)
+        protected override void CreateIncCore (StringBuilder builder)
         {
             if (aliases == null) AppendIncParameters (builder, "aliases");
-            base.HandleCreateInc (builder);
+            base.CreateIncCore (builder);
         }
 
-        protected void HandleLoadMissingData (MusicBrainzEntity entity)
+        protected void LoadMissingDataCore (MusicBrainzEntity entity)
         {
             name = entity.Name;
             sort_name = entity.SortName;
@@ -39,10 +61,10 @@ namespace MusicBrainz
             begin_date = entity.BeginDate;
             end_date = entity.EndDate;
             if (aliases == null) aliases = entity.Aliases;
-            base.HandleLoadMissingData (entity);
+            base.LoadMissingDataCore (entity);
         }
 
-        protected override bool HandleXml (XmlReader reader)
+        protected override bool ProcessXml (XmlReader reader)
         {
             bool result = true;
             switch (reader.Name) {
@@ -82,8 +104,10 @@ namespace MusicBrainz
             }
             return result;
         }
+        
+        #endregion
 
-        # region Properties
+        #region Properties
 
         string name;
         public virtual string Name {

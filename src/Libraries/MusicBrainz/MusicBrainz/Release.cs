@@ -1,10 +1,25 @@
-/***************************************************************************
- *  Release.cs
- *
- *  Authored by Scott Peterson <lunchtimemama@gmail.com>
- * 
- *  The author disclaims copyright to this source code.
- ****************************************************************************/
+// Release.cs
+//
+// Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +29,8 @@ using System.Xml;
 
 namespace MusicBrainz
 {
-    # region Enums
+    
+    #region Enums
 
     public enum ReleaseType
     {
@@ -64,7 +80,7 @@ namespace MusicBrainz
     public sealed class ReleaseQueryParameters : ItemQueryParameters
     {
         string disc_id;
-        public string DiscID {
+        public string DiscId {
             get { return disc_id; }
             set { disc_id = value; }
         }
@@ -125,9 +141,7 @@ namespace MusicBrainz
     {
         const string EXTENSION = "release";
         
-        protected override string UrlExtension {
-            get { return EXTENSION; }
-        }
+        #region Constructors
 
         Release (string mbid) : base (mbid, null)
         {
@@ -141,9 +155,17 @@ namespace MusicBrainz
         {
         }
         
+        #endregion
+        
+        #region Protected Overrides
+        
+        protected override string UrlExtension {
+            get { return EXTENSION; }
+        }
+        
         static readonly string [] track_params = new string [] { "tracks", "track-level-rels", "artist" };
         
-        protected override void HandleCreateInc (StringBuilder builder)
+        protected override void CreateIncCore (StringBuilder builder)
         {
             AppendIncParameters (builder, "release-events", "labels");
             if (discs == null) AppendIncParameters (builder, "discs");
@@ -151,10 +173,10 @@ namespace MusicBrainz
                 AppendIncParameters (builder, track_params);
                 AllRelsLoaded = false;
             }
-            base.HandleCreateInc (builder);
+            base.CreateIncCore (builder);
         }
 
-        protected override void HandleLoadMissingData ()
+        protected override void LoadMissingDataCore ()
         {
             Release release = new Release (Id, CreateInc ());
             type = release.Type;
@@ -165,10 +187,10 @@ namespace MusicBrainz
             events = release.Events;
             if (discs == null) discs = release.Discs;
             if (tracks == null) tracks = release.Tracks;
-            base.HandleLoadMissingData (release);
+            base.LoadMissingDataCore (release);
         }
 
-        protected override bool HandleAttributes (XmlReader reader)
+        protected override bool ProcessAttributes (XmlReader reader)
         {
             // How sure am I about getting the type and status in the "Type Status" format?
             // MB really ought to specify these two things seperatly.
@@ -184,10 +206,10 @@ namespace MusicBrainz
             return this.type != null || this.status != null;
         }
 
-        protected override bool HandleXml (XmlReader reader)
+        protected override bool ProcessXml (XmlReader reader)
         {
             reader.Read ();
-            bool result = base.HandleXml (reader);
+            bool result = base.ProcessXml (reader);
             if (!result) {
                 result = true;
                 switch (reader.Name) {
@@ -239,6 +261,8 @@ namespace MusicBrainz
             reader.Close ();
             return result;
         }
+        
+        #endregion
 
         #region Properties
 
@@ -262,7 +286,6 @@ namespace MusicBrainz
         [Queryable]
         public ReleaseStatus Status {
             get { return GetPropertyOrDefault (ref status, ReleaseStatus.None); }
-
         }
 
         string language;
@@ -333,6 +356,15 @@ namespace MusicBrainz
             parameters.Artist = artist;
             return Query (parameters);
         }
+        
+        public static Query<Release> Query (Disc disc)
+        {
+            if (disc == null) throw new ArgumentNullException ("disc");
+            
+            ReleaseQueryParameters parameters = new ReleaseQueryParameters ();
+            parameters.DiscId = disc.Id;
+            return Query (parameters);
+        }
 
         public static Query<Release> Query (ReleaseQueryParameters parameters)
         {
@@ -345,7 +377,7 @@ namespace MusicBrainz
             if (device == null) throw new ArgumentNullException ("device");
             
             ReleaseQueryParameters parameters = new ReleaseQueryParameters ();
-            parameters.DiscID = LocalDisc.GetFromDevice (device).Id;
+            parameters.DiscId = LocalDisc.GetFromDevice (device).Id;
             return Query (parameters);
         }
 

@@ -1,10 +1,25 @@
-/***************************************************************************
- *  Artist.cs
- *
- *  Authored by Scott Peterson <lunchtimemama@gmail.com>
- * 
- *  The author disclaims copyright to this source code.
- ****************************************************************************/
+// Artist.cs
+//
+// Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
 
 using System;
 using System.Collections.Generic;
@@ -32,12 +47,27 @@ namespace MusicBrainz
         public ArtistReleaseType (ReleaseStatus status, bool various) : this ((Enum)status, various)
         {
         }
+        
+        public ArtistReleaseType (ReleaseType type, ReleaseStatus status, bool various)
+        {
+            StringBuilder builder = new StringBuilder ();
+            Format (builder, type, various);
+            builder.Append ('+');
+            Format (builder, status, various);
+            str = builder.ToString ();
+        }
 
         ArtistReleaseType (Enum enumeration, bool various)
         {
-            str = various
-                ? "va-" + Utils.EnumToString (enumeration)
-                : "sa-" + Utils.EnumToString (enumeration);
+            StringBuilder builder = new StringBuilder ();
+            Format (builder, enumeration, various);
+            str = builder.ToString ();
+        }
+        
+        void Format (StringBuilder builder, Enum enumeration, bool various)
+        {
+            builder.Append (various ? "va-" : "sa-");
+            Utils.EnumToString (builder, enumeration.ToString ());
         }
 
         public override string ToString ()
@@ -51,23 +81,7 @@ namespace MusicBrainz
     {
         const string EXTENSION = "artist";
         
-        protected override string UrlExtension {
-            get { return EXTENSION; }
-        }
-
-        public static ArtistReleaseType DefaultArtistReleaseType =
-            new ArtistReleaseType (ReleaseStatus.Official, false);
-        
-        ArtistReleaseType artist_release_type = DefaultArtistReleaseType;
-        
-        public ArtistReleaseType ArtistReleaseType {
-            get { return artist_release_type; }
-            set {
-                artist_release_type = value;
-                releases = null;
-                have_all_releases = false;
-            }
-        }
+        #region Constructors
 
         Artist (string mbid) : base (mbid, null)
         {
@@ -87,21 +101,29 @@ namespace MusicBrainz
         internal Artist (XmlReader reader) : base (reader, false)
         {
         }
-
-        protected override void HandleCreateInc (StringBuilder builder)
-        {
-            AppendIncParameters (builder, artist_release_type.ToString ());
-            base.HandleCreateInc (builder);
+        
+        #endregion
+        
+        #region Protected Overrides
+        
+        protected override string UrlExtension {
+            get { return EXTENSION; }
         }
 
-        protected override void HandleLoadMissingData ()
+        protected override void CreateIncCore (StringBuilder builder)
+        {
+            AppendIncParameters (builder, artist_release_type.ToString ());
+            base.CreateIncCore (builder);
+        }
+
+        protected override void LoadMissingDataCore ()
         {
             Artist artist = new Artist (Id, CreateInc ());
             type = artist.Type;
-            base.HandleLoadMissingData (artist);
+            base.LoadMissingDataCore (artist);
         }
 
-        protected override bool HandleAttributes (XmlReader reader)
+        protected override bool ProcessAttributes (XmlReader reader)
         {
             switch (reader ["type"]) {
             case "Group":
@@ -114,10 +136,10 @@ namespace MusicBrainz
             return type != ArtistType.Unknown;
         }
 
-        protected override bool HandleXml (XmlReader reader)
+        protected override bool ProcessXml (XmlReader reader)
         {
             reader.Read ();
-            bool result = base.HandleXml (reader);
+            bool result = base.ProcessXml (reader);
             if (!result) {
                 result = true;
                 switch (reader.Name) {
@@ -138,8 +160,24 @@ namespace MusicBrainz
             reader.Close ();
             return result;
         }
+        
+        #endregion
 
         #region Properties
+        
+        public static ArtistReleaseType DefaultArtistReleaseType =
+            new ArtistReleaseType (ReleaseStatus.Official, false);
+        
+        ArtistReleaseType artist_release_type = DefaultArtistReleaseType;
+        
+        public ArtistReleaseType ArtistReleaseType {
+            get { return artist_release_type; }
+            set {
+                artist_release_type = value;
+                releases = null;
+                have_all_releases = false;
+            }
+        }
 
         [Queryable ("arid")]
         public override string Id {
