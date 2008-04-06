@@ -1,6 +1,11 @@
 2008-04-05  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Got rid of unnessisary null checks.
+
+2008-04-05  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
 	Got rid of now unnessiary work around and use new Query overload.
 
 	* src/Libraries/MusicBrainz/MusicBrainz/MusicBrainzObject.cs:

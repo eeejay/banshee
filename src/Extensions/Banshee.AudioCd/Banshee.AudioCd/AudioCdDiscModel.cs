@@ -99,20 +99,8 @@ namespace Banshee.AudioCd
             
             OnMetadataQueryStarted (mb_disc);
             
-            Query<Release> results = Release.Query (mb_disc);
-            if (results == null) {
-                OnMetadataQueryFinished (false);
-                return;
-            }
-                
-            Release release = results.PerfectMatch ();
-            if (release == null) {
-                OnMetadataQueryFinished (false);
-                return;
-            }
-            
-            ReadOnlyCollection<Track> tracks = release.Tracks;
-            if (tracks == null || tracks.Count != Count) {
+            Release release = Release.Query (mb_disc).PerfectMatch ();
+            if (release == null || release.Tracks.Count != Count) {
                 OnMetadataQueryFinished (false);
                 return;
             }
@@ -121,7 +109,7 @@ namespace Banshee.AudioCd
             
             int i = 0;
             
-            foreach (Track track in tracks) {
+            foreach (Track track in release.Tracks) {
                 // FIXME: Gather more details from MB to save to the DB
                 this[i].TrackTitle = track.Title;
                 this[i].ArtistName = track.Artist.Name;
