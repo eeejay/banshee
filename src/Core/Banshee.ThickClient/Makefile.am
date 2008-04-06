@@ -90,14 +90,7 @@ RESOURCES =  \
 	Resources/banshee-dialogs.glade \
 	Resources/banshee-logo.png \
 	Resources/browser-album-cover.png \
-	Resources/core-ui-actions-layout.xml \
-	Resources/source-cd-audio.png \
-	Resources/source-library.png \
-	Resources/source-localqueue.png \
-	Resources/source-playlist-16.png \
-	Resources/source-playlist-22.png \
-	Resources/source-smart-playlist-16.png \
-	Resources/source-smart-playlist-22.png
+	Resources/core-ui-actions-layout.xml
 
 include $(top_srcdir)/build/build.mk
 

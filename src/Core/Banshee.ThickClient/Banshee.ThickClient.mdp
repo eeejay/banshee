@@ -1,4 +1,4 @@
-<Project name="Banshee.ThickClient" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Banshee.ThickClient" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assembly="Banshee.ThickClient" />
@@ -32,13 +32,6 @@
     <File name="Banshee.Gui/GlobalActions.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/ConnectedVolumeButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Resources/source-cd-audio.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/source-library.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/source-localqueue.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/source-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/source-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/source-smart-playlist-16.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/source-smart-playlist-22.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Gui.Widgets/ConnectedSeekSlider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/TrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/UserJobTile.cs" subtype="Code" buildaction="Compile" />
