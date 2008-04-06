@@ -1,5 +1,10 @@
 2008-04-06  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Fixed column
+	separator height
+
+2008-04-06  Aaron Bockover  <abock@gnome.org>
+
 	* build/build.rules.mk: Fixed up the new private icon theme rules so the
 	icons get 'installed' when building, installing, and uninstalling; this
 	should fix the missing icon issues now when you run banshee installed

@@ -189,7 +189,7 @@ namespace Hyena.Gui.Theming
             Cairo.Color light_color = CairoExtensions.ColorShade (gtk_background_color, 1.1);
             
             int y_1 = alloc.Top + 4;
-            int y_2 = alloc.Bottom - 4;
+            int y_2 = alloc.Bottom - 3;
             
             cr.LineWidth = 1;
             cr.Antialias = Cairo.Antialias.None;
