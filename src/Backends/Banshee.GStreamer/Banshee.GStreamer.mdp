@@ -1,4 +1,4 @@
-<Project name="Banshee.GStreamer" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Banshee.GStreamer" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assemblyKeyFile="." assembly="Banshee.MediaEngine.GStreamer" />
@@ -13,6 +13,7 @@
     <File name="Banshee.GStreamer/GstErrors.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.GStreamer/Service.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.GStreamer/AudioCdRipper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.GStreamer/TagList.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />

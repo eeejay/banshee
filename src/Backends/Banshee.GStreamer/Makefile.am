@@ -5,7 +5,8 @@ SOURCES =  \
 	Banshee.GStreamer/AudioCdRipper.cs \
 	Banshee.GStreamer/GstErrors.cs \
 	Banshee.GStreamer/PlayerEngine.cs \
-	Banshee.GStreamer/Service.cs
+	Banshee.GStreamer/Service.cs \
+	Banshee.GStreamer/TagList.cs
 RESOURCES = Banshee.GStreamer.addin.xml
 INSTALL_DIR = $(BACKENDS_INSTALL_DIR)
 

@@ -20,6 +20,7 @@ libbanshee_la_SOURCES =  \
 	banshee-player-pipeline.c \
 	banshee-player-video.c \
 	banshee-ripper.c \
+	banshee-tagger.c \
 	gst-misc-0.10.c \
 	gst-transcode-0.10.c
 

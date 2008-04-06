@@ -27,9 +27,12 @@
 //
 
 using System;
+using System.IO;
 using System.Threading;
+using System.Runtime.InteropServices;
 using Mono.Unix;
 
+using Hyena;
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.ServiceStack;
@@ -40,13 +43,21 @@ namespace Banshee.GStreamer
 {
     public class AudioCdRipper : IAudioCdRipper
     {
+        private HandleRef handle;
         private string encoder_pipeline;
+        private string output_extension;
+        private string output_path;
+        private TrackInfo current_track;
+        
+        private RipperProgressHandler progress_handler;
+        private RipperFinishedHandler finished_handler;
+        private RipperErrorHandler error_handler;
     
         public event AudioCdRipperProgressHandler Progress;
         public event AudioCdRipperTrackFinishedHandler TrackFinished;
         public event AudioCdRipperErrorHandler Error;
         
-        public void Begin ()
+        public void Begin (string device)
         {
             try {
                 Profile profile = ServiceManager.MediaProfileManager.GetConfiguredActiveProfile ("cd-importing");
@@ -63,10 +74,32 @@ namespace Banshee.GStreamer
             } catch (Exception e) {
                 throw new ApplicationException (Catalog.GetString ("Could not find an encoder for ripping."), e);
             }
+            
+            try {   
+                handle = new HandleRef (this, br_new (device, 0, encoder_pipeline));
+                
+                progress_handler = new RipperProgressHandler (OnNativeProgress);
+                br_set_progress_callback (handle, progress_handler);
+                
+                finished_handler = new RipperFinishedHandler (OnNativeFinished);
+                br_set_finished_callback (handle, finished_handler);
+                
+                error_handler = new RipperErrorHandler (OnNativeError);
+                br_set_error_callback (handle, error_handler);
+            } catch (Exception e) {
+                throw new ApplicationException (Catalog.GetString ("Could not create CD ripping driver."), e);
+            }
         }
         
         public void Finish ()
         {
+            TrackReset ();
+            
+            encoder_pipeline = null;
+            output_extension = null;
+            
+            br_destroy (handle);
+            handle = new HandleRef (this, IntPtr.Zero);
         }
         
         public void Cancel ()
@@ -74,30 +107,23 @@ namespace Banshee.GStreamer
             Finish ();
         }
         
-        public void RipTrack (TrackInfo track, SafeUri outputUri)
+        private void TrackReset ()
         {
-            ThreadPool.QueueUserWorkItem (delegate {
-                DateTime start_time = DateTime.Now;    
-                TimeSpan duration = TimeSpan.FromSeconds (5);
-                
-                while (true) {
-                    TimeSpan ellapsed = DateTime.Now - start_time;
-                    if (ellapsed >= duration) {
-                        break;
-                    }
-                    
-                    TimeSpan progress = TimeSpan.FromMilliseconds ((ellapsed.TotalMilliseconds 
-                        / duration.TotalMilliseconds) * track.Duration.TotalMilliseconds);
-                    
-                    OnProgress (track, progress);
-                    
-                    Thread.Sleep (50);
-                }
-                
-                OnTrackFinished (track, outputUri);
-            });
+            current_track = null;
+            output_path = null;
+        }
+        
+        public void RipTrack (int trackIndex, TrackInfo track, SafeUri outputUri, out bool taggingSupported)
+        {
+            TrackReset ();
+            current_track = track;
             
-            return;
+            using (TagList tags = new TagList (track)) {
+                output_path = Path.ChangeExtension (outputUri.LocalPath, output_extension); 
+                br_rip_track (handle, trackIndex + 1, output_path, tags.Handle, out taggingSupported);
+                
+                Log.DebugFormat ("GStreamer ripping track {0} to {1}", trackIndex, output_path);
+            }
         }
         
         protected virtual void OnProgress (TrackInfo track, TimeSpan ellapsedTime)
@@ -123,5 +149,52 @@ namespace Banshee.GStreamer
                 handler (this, new AudioCdRipperErrorArgs (track, message));
             }
         }
+        
+        private void OnNativeProgress (IntPtr ripper, int mseconds)
+        {
+            OnProgress (current_track, TimeSpan.FromMilliseconds (mseconds));
+        }
+        
+        private void OnNativeFinished (IntPtr ripper)
+        {
+            OnTrackFinished (current_track, new SafeUri (output_path));
+        }
+        
+        private void OnNativeError (IntPtr ripper, IntPtr error, IntPtr debug)
+        {
+            string error_message = GLib.Marshaller.Utf8PtrToString (error);
+            
+            if (debug != IntPtr.Zero) {
+                string debug_string = GLib.Marshaller.Utf8PtrToString (debug);
+                if (!String.IsNullOrEmpty (debug_string)) {
+                    error_message = String.Format ("{0}: {1}", error_message, debug_string);
+                }
+            }
+            
+            OnError (current_track, error_message);
+        }
+        
+        private delegate void RipperProgressHandler (IntPtr ripper, int mseconds);
+        private delegate void RipperFinishedHandler (IntPtr ripper);
+        private delegate void RipperErrorHandler (IntPtr ripper, IntPtr error, IntPtr debug);
+        
+        [DllImport ("libbanshee")]
+        private static extern IntPtr br_new (string device, int paranoia_mode, string encoder_pipeline);
+
+        [DllImport ("libbanshee")]
+        private static extern void br_destroy (HandleRef handle);
+        
+        [DllImport ("libbanshee")]
+        private static extern void br_rip_track (HandleRef handle, int track_number, string output_path, 
+            HandleRef tag_list, out bool tagging_supported);
+        
+        [DllImport ("libbanshee")]
+        private static extern void br_set_progress_callback (HandleRef handle, RipperProgressHandler callback);
+        
+        [DllImport ("libbanshee")]
+        private static extern void br_set_finished_callback (HandleRef handle, RipperFinishedHandler callback);
+        
+        [DllImport ("libbanshee")]
+        private static extern void br_set_error_callback (HandleRef handle, RipperErrorHandler callback);
     }
 }

@@ -43,11 +43,11 @@ namespace Banshee.MediaEngine
         event AudioCdRipperTrackFinishedHandler TrackFinished;
         event AudioCdRipperErrorHandler Error;
         
-        void Begin ();
+        void Begin (string device);
         void Finish ();
         void Cancel ();
         
-        void RipTrack (TrackInfo track, SafeUri outputUri);
+        void RipTrack (int trackIndex, TrackInfo track, SafeUri outputUri, out bool taggingSupported);
     }
                              
     public sealed class AudioCdRipperProgressArgs : EventArgs

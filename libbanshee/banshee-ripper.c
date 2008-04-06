@@ -82,12 +82,6 @@ br_raise_error (BansheeRipper *ripper, const gchar *error, const gchar *debug)
 }
 
 static gboolean
-br_gvfs_allow_overwrite_cb (GstElement *element, gpointer filename, gpointer user_data)
-{
-    return TRUE;
-}
-
-static gboolean
 br_iterate_timeout (BansheeRipper *ripper)
 {
     GstFormat format = GST_FORMAT_TIME;
@@ -240,34 +234,16 @@ br_pipeline_construct (BansheeRipper *ripper)
     
     g_object_set (G_OBJECT (queue), "max-size-time", 120 * GST_SECOND, NULL);
     
-    ripper->filesink = gst_element_factory_make ("gnomevfssink", "gnomevfssink");
+    ripper->filesink = gst_element_factory_make ("filesink", "filesink");
     if (ripper->filesink == NULL) {
-        br_raise_error (ripper, _("Could not create GNOME VFS output plugin"), NULL);
+        br_raise_error (ripper, _("Could not create filesink plugin"), NULL);
         return FALSE;
     }
     
-    g_signal_connect (G_OBJECT (ripper->filesink), "allow-overwrite", G_CALLBACK (br_gvfs_allow_overwrite_cb), ripper);
-    
-    gst_bin_add_many (GST_BIN (ripper->pipeline),
-        ripper->cddasrc,
-        queue,
-        ripper->encoder,
-        ripper->filesink,
-        NULL);
+    gst_bin_add_many (GST_BIN (ripper->pipeline), ripper->cddasrc, queue, ripper->encoder, ripper->filesink, NULL);
         
-    if (!gst_element_link (ripper->cddasrc, queue)) {
-        br_raise_error (ripper, _("Could not link cddasrc to queue"), NULL);
-        return FALSE;
-    }
-    
-    if (!gst_element_link(queue, ripper->encoder)) {
-        br_raise_error (ripper, _("Could not link queue to encoder"), NULL);
-        return FALSE;
-    }
-        
-    if (!gst_element_link (ripper->encoder, ripper->filesink)) {
-        br_raise_error (ripper, _("Could not link encoder to gnomevfssink"), NULL);
-        return FALSE;
+    if (!gst_element_link_many (ripper->cddasrc, queue, ripper->encoder, ripper->filesink, NULL)) {
+        br_raise_error (ripper, _("Could not link pipeline elements"), NULL);
     }
     
     gst_bus_add_watch (gst_pipeline_get_bus (GST_PIPELINE (ripper->pipeline)), br_pipeline_bus_callback, ripper);
@@ -280,114 +256,91 @@ br_pipeline_construct (BansheeRipper *ripper)
 // ---------------------------------------------------------------------------
 
 BansheeRipper *
-br_new(gchar *device, gint paranoia_mode, gchar *encoder_pipeline)
+br_new (gchar *device, gint paranoia_mode, gchar *encoder_pipeline)
 {
-    BansheeRipper *ripper = g_new0(BansheeRipper, 1);
+    BansheeRipper *ripper = g_new0 (BansheeRipper, 1);
     
-    if(ripper == NULL) {
+    if (ripper == NULL) {
         return NULL;
     }
         
-    ripper->device = g_strdup(device);
+    ripper->device = g_strdup (device);
     ripper->paranoia_mode = paranoia_mode;
-    ripper->encoder_pipeline = g_strdup(encoder_pipeline);
-    
-    ripper->pipeline = NULL;
-    ripper->cddasrc = NULL;
-    ripper->encoder = NULL;
-    ripper->filesink = NULL;
-    
-    ripper->track_format = 0;
-    
-    ripper->progress_cb = NULL;
-    ripper->error_cb = NULL;
-    ripper->finished_cb = NULL;
-    
+    ripper->encoder_pipeline = g_strdup (encoder_pipeline);
+
     return ripper;
 }
 
 void 
-br_cancel(BansheeRipper *ripper)
+br_cancel (BansheeRipper *ripper)
 {
-    g_return_if_fail(ripper != NULL);
+    g_return_if_fail (ripper != NULL);
     
-    br_stop_iterate_timeout(ripper);
+    br_stop_iterate_timeout (ripper);
     
-    if(ripper->pipeline != NULL && GST_IS_ELEMENT(ripper->pipeline)) {
-        gst_element_set_state(GST_ELEMENT(ripper->pipeline), GST_STATE_NULL);
-        gst_object_unref(GST_OBJECT(ripper->pipeline));
+    if (ripper->pipeline != NULL && GST_IS_ELEMENT (ripper->pipeline)) {
+        gst_element_set_state (GST_ELEMENT (ripper->pipeline), GST_STATE_NULL);
+        gst_object_unref (GST_OBJECT (ripper->pipeline));
         ripper->pipeline = NULL;
     }
     
-    g_remove(ripper->output_uri);
+    g_remove (ripper->output_uri);
 }
 
 void
-br_free(BansheeRipper *ripper)
+br_destroy (BansheeRipper *ripper)
 {
-    g_return_if_fail(ripper != NULL);
+    g_return_if_fail (ripper != NULL);
     
-    br_cancel(ripper);
+    br_cancel (ripper);
     
-    if(ripper->device != NULL) {
-        g_free(ripper->device);
+    if (ripper->device != NULL) {
+        g_free (ripper->device);
     }
     
-    if(ripper->encoder_pipeline != NULL) {
-        g_free(ripper->encoder_pipeline);
+    if (ripper->encoder_pipeline != NULL) {
+        g_free (ripper->encoder_pipeline);
     }
     
-    g_free(ripper);
+    g_free (ripper);
+    ripper = NULL;
 }
 
 gboolean
-br_rip_track(BansheeRipper *ripper, gchar *uri, gint track_number, 
-    gchar *md_artist, gchar *md_album, gchar *md_title, gchar *md_genre,
-    gint md_track_number, gint md_track_count, gpointer user_info)
+br_rip_track (BansheeRipper *ripper, gint track_number, gchar *output_path, 
+    GstTagList *tags, gboolean *tagging_supported)
 {
     GstIterator *bin_iterator;
     GstElement *bin_element;
     gboolean can_tag = FALSE;
     gboolean iterate_done = FALSE;
 
-    g_return_val_if_fail(ripper != NULL, FALSE);
+    g_return_val_if_fail (ripper != NULL, FALSE);
 
-    if(!br_pipeline_construct(ripper)) {
+    if (!br_pipeline_construct (ripper)) {
         return FALSE;
     }
     
     // initialize the pipeline, set the sink output location
-    gst_element_set_state(ripper->filesink, GST_STATE_NULL);
-    g_object_set(G_OBJECT(ripper->filesink), "location", uri, NULL);
+    gst_element_set_state (ripper->filesink, GST_STATE_NULL);
+    g_object_set (G_OBJECT (ripper->filesink), "location", output_path, NULL);
     
     // find an element to do the tagging and set tag data
-    bin_iterator = gst_bin_iterate_all_by_interface(GST_BIN(ripper->encoder), GST_TYPE_TAG_SETTER);
-    while(!iterate_done) {
-        switch(gst_iterator_next(bin_iterator, (gpointer)&bin_element)) {
+    bin_iterator = gst_bin_iterate_all_by_interface (GST_BIN (ripper->encoder), GST_TYPE_TAG_SETTER);
+    while (!iterate_done) {
+        switch (gst_iterator_next (bin_iterator, (gpointer)&bin_element)) {
             case GST_ITERATOR_OK:
-                gst_tag_setter_add_tags(GST_TAG_SETTER(bin_element),
-                    GST_TAG_MERGE_REPLACE_ALL,
-                    GST_TAG_TITLE,  md_title,
-                    GST_TAG_ARTIST, md_artist,
-                    GST_TAG_ALBUM,  md_album,
-                    GST_TAG_TRACK_NUMBER, md_track_number,
-                    GST_TAG_TRACK_COUNT,  md_track_count,
+                gst_tag_setter_add_tags (GST_TAG_SETTER (bin_element),
+                    GST_TAG_MERGE_APPEND,
                     GST_TAG_ENCODER, _("Banshee"),
                     GST_TAG_ENCODER_VERSION, VERSION,
                     NULL);
                     
-                if(md_genre && strlen(md_genre) == 0) {
-                    gst_tag_setter_add_tags(GST_TAG_SETTER(bin_element),
-                        GST_TAG_MERGE_APPEND,
-                        GST_TAG_GENRE, md_genre,
-                        NULL);
-                }
-        
                 can_tag = TRUE;    
-                gst_object_unref(bin_element);
+                gst_object_unref (bin_element);
                 break;
             case GST_ITERATOR_RESYNC:
-                gst_iterator_resync(bin_iterator);
+                gst_iterator_resync (bin_iterator);
                 break;
             default:
                 iterate_done = TRUE;
@@ -395,48 +348,43 @@ br_rip_track(BansheeRipper *ripper, gchar *uri, gint track_number,
         }
     }
     
-    gst_iterator_free(bin_iterator);
+    gst_iterator_free (bin_iterator);
     
-    if(!can_tag) {
-        g_warning(_("Encoding element does not support tagging!"));
-    }
+    // We'll warn the user in the UI if we can't tag the encoded audio files
+    *tagging_supported = can_tag;
     
-    // start the ripping
-    g_object_set(G_OBJECT(ripper->cddasrc), "track", track_number, NULL);
-    
-    gst_element_set_state(ripper->pipeline, GST_STATE_PLAYING);
-    br_start_iterate_timeout(ripper);
+    // Begin the rip
+    g_object_set (G_OBJECT (ripper->cddasrc), "track", track_number, NULL);
+    gst_element_set_state (ripper->pipeline, GST_STATE_PLAYING);
+    br_start_iterate_timeout (ripper);
     
     return TRUE;
 }
 
 void
-br_set_progress_callback(BansheeRipper *ripper, 
-    BansheeRipperProgressCallback cb)
+br_set_progress_callback (BansheeRipper *ripper, BansheeRipperProgressCallback cb)
 {
-    g_return_if_fail(ripper != NULL);
+    g_return_if_fail (ripper != NULL);
     ripper->progress_cb = cb;
 }
 
 void
-br_set_finished_callback(BansheeRipper *ripper, 
-    BansheeRipperFinishedCallback cb)
+br_set_finished_callback (BansheeRipper *ripper, BansheeRipperFinishedCallback cb)
 {
-    g_return_if_fail(ripper != NULL);
+    g_return_if_fail (ripper != NULL);
     ripper->finished_cb = cb;
 }
 
 void
-br_set_error_callback(BansheeRipper *ripper, 
-    BansheeRipperErrorCallback cb)
+br_set_error_callback (BansheeRipper *ripper, BansheeRipperErrorCallback cb)
 {
-    g_return_if_fail(ripper != NULL);
+    g_return_if_fail (ripper != NULL);
     ripper->error_cb = cb;
 }
 
 gboolean
-br_get_is_ripping(BansheeRipper *ripper)
+br_get_is_ripping (BansheeRipper *ripper)
 {
-    g_return_val_if_fail(ripper != NULL, FALSE);
+    g_return_val_if_fail (ripper != NULL, FALSE);
     return ripper->is_ripping;
 }

@@ -127,7 +127,7 @@ namespace Banshee.AudioCd
                 }
             }
             
-            ripper.Begin ();
+            ripper.Begin (source.DiscModel.Volume.DeviceNode);
             
             RipNextTrack ();
         }
@@ -177,8 +177,9 @@ namespace Banshee.AudioCd
             status = String.Format("{0} - {1}", track.ArtistName, track.TrackTitle);
             user_job.Status = status;
             
-            SafeUri uri = new SafeUri (FileNamePattern.BuildFull (track, "mp3"));
-            ripper.RipTrack (track, uri);
+            SafeUri uri = new SafeUri (FileNamePattern.BuildFull (track, null));
+            bool tagging_supported;
+            ripper.RipTrack (track.IndexOnDisc, track, uri, out tagging_supported);
         }
 
 #region Ripper Event Handlers

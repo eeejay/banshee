@@ -252,7 +252,7 @@ namespace Banshee.GStreamer
         
         private void OnTagFound (IntPtr player, string tagName, ref GLib.Value value)
         {
-            OnTagFound(ProcessNativeTagResult (tagName, ref value));
+            OnTagFound (ProcessNativeTagResult (tagName, ref value));
         }
             
         private static StreamTag ProcessNativeTagResult (string tagName, ref GLib.Value valueRaw)

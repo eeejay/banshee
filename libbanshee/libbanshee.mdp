@@ -14,7 +14,6 @@
     <File name="gst-transcode-0.10.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-private.h" subtype="Code" buildaction="Nothing" />
     <File name="banshee-player-cdda.h" subtype="Code" buildaction="Nothing" />
-    <File name="gst-transcode.h" subtype="Code" buildaction="Nothing" />
     <File name="banshee-player-cdda.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-missing-elements.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-missing-elements.h" subtype="Code" buildaction="Nothing" />
@@ -23,6 +22,7 @@
     <File name="banshee-player-equalizer.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-pipeline.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-pipeline.h" subtype="Code" buildaction="Nothing" />
+    <File name="banshee-tagger.c" subtype="Code" buildaction="Compile" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
