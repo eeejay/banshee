@@ -1,3 +1,5 @@
+#region License
+
 // Label.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Text;
@@ -27,23 +30,18 @@ using System.Xml;
 
 namespace MusicBrainz
 {
-    public enum LabelType
-    {
-        Unspecified,
-        Distributor,
-        Holding,
-        OriginalProduction,
-        BootlegProduction,
-        ReissueProduction
-    }
-
     public sealed class Label : MusicBrainzEntity
     {
-        const string EXTENSION = "label";
         
-        protected override string UrlExtension {
-            get { return EXTENSION; }
-        }
+        #region Private
+        
+        const string EXTENSION = "label";
+        string country;
+        LabelType? type;
+        
+        #endregion
+        
+        #region Constructors
 
         Label (string mbid) : base (mbid, null)
         {
@@ -55,6 +53,14 @@ namespace MusicBrainz
 
         internal Label (XmlReader reader) : base (reader, false)
         {
+        }
+        
+        #endregion
+        
+        #region Protected
+        
+        protected override string UrlExtension {
+            get { return EXTENSION; }
         }
 
         protected override void LoadMissingDataCore ()
@@ -85,16 +91,20 @@ namespace MusicBrainz
             reader.Close ();
             return result;
         }
+        
+        #endregion
 
-        string country;
+        #region Properties
+        
         public string Country {
             get { return GetPropertyOrNull (ref country); }
         }
 
-        LabelType? type;
         public LabelType Type {
-            get { return GetPropertyOrDefault (ref type, LabelType.Unspecified); }
+            get { return GetPropertyOrDefault (ref type, LabelType.None); }
         }
+        
+        #endregion
         
         #region Static
 
@@ -124,4 +134,19 @@ namespace MusicBrainz
         #endregion
 
     }
+    
+    #region Ancillary Types
+    
+    public enum LabelType
+    {
+        None,
+        Distributor,
+        Holding,
+        OriginalProduction,
+        BootlegProduction,
+        ReissueProduction
+    }
+    
+    #endregion
+    
 }

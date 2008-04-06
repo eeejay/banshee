@@ -1,3 +1,5 @@
+#region License
+
 // MusicBrainzItem.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Text;
@@ -27,6 +30,92 @@ using System.Xml;
 
 namespace MusicBrainz
 {
+    // The item-like product of an artist, such as a track or a release.
+    public abstract class MusicBrainzItem : MusicBrainzObject
+    {
+        
+        #region Private
+        
+        string title;
+        Artist artist;
+        
+        #endregion
+        
+        #region Constructors
+        
+        internal MusicBrainzItem (string mbid, string parameters) : base (mbid, parameters)
+        {
+        }
+
+        internal MusicBrainzItem (XmlReader reader, Artist artist, bool all_rels_loaded) : base (reader, all_rels_loaded)
+        {
+            if (this.artist == null) this.artist = artist;
+        }
+        
+        #endregion
+        
+        #region Protected Overrides
+
+        protected override void CreateIncCore (StringBuilder builder)
+        {
+            if (artist == null) AppendIncParameters(builder, "artist");
+            base.CreateIncCore (builder);
+        }
+
+        protected void LoadMissingDataCore (MusicBrainzItem item)
+        {
+            title = item.Title;
+            if (artist == null) artist = item.Artist;
+            base.LoadMissingDataCore (item);
+        }
+
+        protected override bool ProcessXml (XmlReader reader)
+        {
+            bool result = true;
+            switch (reader.Name) {
+            case "title":
+                reader.Read ();
+                if (reader.NodeType == XmlNodeType.Text)
+                    title = reader.ReadContentAsString ();
+                break;
+            case "artist":
+                artist = new Artist (reader.ReadSubtree ());
+                break;
+            default:
+                result = false;
+                break;
+            }
+            return result;
+        }
+        
+        #endregion
+
+        #region Properties
+        
+        public virtual string Title {
+            get { return GetPropertyOrNull (ref title); }
+        }
+
+        [Queryable ("artist")]
+        public virtual Artist Artist {
+            get { return GetPropertyOrNull (ref artist); }
+        }
+        
+        #endregion
+
+        #region Public
+        
+        public override string ToString ()
+        {
+            return title;
+        }
+        
+        #endregion
+        
+    }
+    
+    #region Ancillary Types
+    
     public abstract class ItemQueryParameters
     {
         internal ItemQueryParameters ()
@@ -97,78 +186,7 @@ namespace MusicBrainz
             }
         }
     }
-
-    // The item-like product of an artist, such as a track or a release.
-    public abstract class MusicBrainzItem : MusicBrainzObject
-    {
-        
-        #region Constructors
-        
-        internal MusicBrainzItem (string mbid, string parameters) : base (mbid, parameters)
-        {
-        }
-
-        internal MusicBrainzItem (XmlReader reader, Artist artist, bool all_rels_loaded) : base (reader, all_rels_loaded)
-        {
-            if (this.artist == null) this.artist = artist;
-        }
-        
-        #endregion
-        
-        #region Protected Overrides
-
-        protected override void CreateIncCore (StringBuilder builder)
-        {
-            if (artist == null) AppendIncParameters(builder, "artist");
-            base.CreateIncCore (builder);
-        }
-
-        protected void LoadMissingDataCore (MusicBrainzItem item)
-        {
-            title = item.Title;
-            if (artist == null) artist = item.Artist;
-            base.LoadMissingDataCore (item);
-        }
-
-        protected override bool ProcessXml (XmlReader reader)
-        {
-            bool result = true;
-            switch (reader.Name) {
-            case "title":
-                reader.Read ();
-                if (reader.NodeType == XmlNodeType.Text)
-                    title = reader.ReadContentAsString ();
-                break;
-            case "artist":
-                artist = new Artist (reader.ReadSubtree ());
-                break;
-            default:
-                result = false;
-                break;
-            }
-            return result;
-        }
-        
-        #endregion
-
-        #region Properties
-        
-        string title;
-        public virtual string Title {
-            get { return GetPropertyOrNull (ref title); }
-        }
-
-        Artist artist;
-        [Queryable ("artist")]
-        public virtual Artist Artist {
-            get { return GetPropertyOrNull (ref artist); }
-        }
-        
-        #endregion
-
-        public override string ToString ()
-        {
-            return title;
-        }
-    }
+    
+    #endregion
+    
 }

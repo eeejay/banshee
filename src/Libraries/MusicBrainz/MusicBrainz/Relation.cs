@@ -1,3 +1,5 @@
+#region License
+
 // Relation.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,29 +21,24 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 
 namespace MusicBrainz
 {
-    public enum RelationDirection
-    {
-        Forward,
-        Backward
-    }
-    
     public abstract class RelationBase<T>
     {
         T target;
         string type;
-        string[] attributes;
+        string [] attributes;
         RelationDirection direction;
         string begin;
         string end;
 
         internal RelationBase (string type, T target, RelationDirection direction,
-            string begin, string end, string[] attributes)
+            string begin, string end, string [] attributes)
         {
             this.type = type;
             this.target = target;
@@ -100,5 +97,11 @@ namespace MusicBrainz
             : base (type, target, direction, begin, end, attributes)
         {
         }
+    }
+    
+    public enum RelationDirection
+    {
+        Forward,
+        Backward
     }
 }

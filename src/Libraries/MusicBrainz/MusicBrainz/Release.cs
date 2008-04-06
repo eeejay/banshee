@@ -1,3 +1,5 @@
+#region License
+
 // Release.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -29,117 +32,23 @@ using System.Xml;
 
 namespace MusicBrainz
 {
-    
-    #region Enums
-
-    public enum ReleaseType
-    {
-        None,
-        Album,
-        Single,
-        EP,
-        Compilation,
-        Soundtrack,
-        Spokenword,
-        Interview,
-        Audiobook,
-        Live,
-        Remix,
-        Other
-    }
-
-    public enum ReleaseStatus
-    {
-        None,
-        Official,
-        Promotion,
-        Bootleg,
-        PsudoRelease
-    }
-
-    public enum ReleaseFormat
-    {
-        None,
-        Cartridge,
-        Cassette,
-        CD,
-        DAT,
-        Digital,
-        DualDisc,
-        DVD,
-        LaserDisc,
-        MiniDisc,
-        Other,
-        ReelToReel,
-        SACD,
-        Vinyl
-    }
-
-    #endregion
-
-    public sealed class ReleaseQueryParameters : ItemQueryParameters
-    {
-        string disc_id;
-        public string DiscId {
-            get { return disc_id; }
-            set { disc_id = value; }
-        }
-
-        string date;
-        public string Date {
-            get { return date; }
-            set { date = value; }
-        }
-
-        string asin;
-        public string Asin {
-            get { return asin; }
-            set { asin = value; }
-        }
-
-        string language;
-        public string Language {
-            get { return language; }
-            set { language = value; }
-        }
-
-        string script;
-        public string Script {
-            get { return script; }
-            set { script = value; }
-        }
-
-        public override string ToString ()
-        {
-            StringBuilder builder = new StringBuilder ();
-            if (disc_id != null) {
-                builder.Append ("&discid=");
-                builder.Append (disc_id);
-            }
-            if (date != null) {
-                builder.Append ("&date=");
-                Utils.PercentEncode (builder, date);
-            }
-            if (asin != null) {
-                builder.Append ("&asin=");
-                builder.Append (asin);
-            }
-            if (language != null) {
-                builder.Append ("&lang=");
-                builder.Append (language);
-            }
-            if (script != null) {
-                builder.Append ("&script=");
-                builder.Append (script);
-            }
-            AppendBaseToBuilder (builder);
-            return builder.ToString ();
-        }
-    }
-
     public sealed class Release : MusicBrainzItem
     {
+        
+        #region Private
+        
         const string EXTENSION = "release";
+        ReleaseType? type;
+        ReleaseStatus? status;
+        string language;
+        string script;
+        string asin;
+        ReadOnlyCollection<Disc> discs;
+        ReadOnlyCollection<Event> events;
+        ReadOnlyCollection<Track> tracks;
+        int? track_number;
+        
+        #endregion
         
         #region Constructors
 
@@ -276,55 +185,46 @@ namespace MusicBrainz
             get { return base.Title; }
         }
 
-        ReleaseType? type;
         [Queryable]
         public ReleaseType Type {
             get { return GetPropertyOrDefault (ref type, ReleaseType.None); }
         }
 
-        ReleaseStatus? status;
         [Queryable]
         public ReleaseStatus Status {
             get { return GetPropertyOrDefault (ref status, ReleaseStatus.None); }
         }
 
-        string language;
         public string Language {
             get { return GetPropertyOrNull (ref language); }
         }
 
-        string script;
         [Queryable]
         public string Script {
             get { return GetPropertyOrNull (ref script); }
         }
 
-        string asin;
         [Queryable]
         public string Asin {
             get { return GetPropertyOrNull (ref asin); }
         }
 
-        ReadOnlyCollection<Disc> discs;
         [QueryableMember("Count", "discids")]
         public ReadOnlyCollection<Disc> Discs {
             get { return GetPropertyOrNew (ref discs); }
         }
 
-        ReadOnlyCollection<Event> events;
         public ReadOnlyCollection<Event> Events {
             get { return GetPropertyOrNew (ref events); }
         }
 
-        ReadOnlyCollection<Track> tracks;
         [QueryableMember ("Count", "tracks")]
         public ReadOnlyCollection<Track> Tracks {
             get { return GetPropertyOrNew (ref tracks); }
         }
 
-        int? track_number;
         internal int TrackNumber {
-            get { return track_number != null ? track_number.Value : -1; }
+            get { return track_number ?? -1; }
         }
 
         #endregion
@@ -395,4 +295,112 @@ namespace MusicBrainz
         #endregion
 
     }
+    
+    #region Ancillary Types
+    
+    public enum ReleaseType
+    {
+        None,
+        Album,
+        Single,
+        EP,
+        Compilation,
+        Soundtrack,
+        Spokenword,
+        Interview,
+        Audiobook,
+        Live,
+        Remix,
+        Other
+    }
+
+    public enum ReleaseStatus
+    {
+        None,
+        Official,
+        Promotion,
+        Bootleg,
+        PsudoRelease
+    }
+
+    public enum ReleaseFormat
+    {
+        None,
+        Cartridge,
+        Cassette,
+        CD,
+        DAT,
+        Digital,
+        DualDisc,
+        DVD,
+        LaserDisc,
+        MiniDisc,
+        Other,
+        ReelToReel,
+        SACD,
+        Vinyl
+    }
+
+    public sealed class ReleaseQueryParameters : ItemQueryParameters
+    {
+        string disc_id;
+        public string DiscId {
+            get { return disc_id; }
+            set { disc_id = value; }
+        }
+
+        string date;
+        public string Date {
+            get { return date; }
+            set { date = value; }
+        }
+
+        string asin;
+        public string Asin {
+            get { return asin; }
+            set { asin = value; }
+        }
+
+        string language;
+        public string Language {
+            get { return language; }
+            set { language = value; }
+        }
+
+        string script;
+        public string Script {
+            get { return script; }
+            set { script = value; }
+        }
+
+        public override string ToString ()
+        {
+            StringBuilder builder = new StringBuilder ();
+            if (disc_id != null) {
+                builder.Append ("&discid=");
+                builder.Append (disc_id);
+            }
+            if (date != null) {
+                builder.Append ("&date=");
+                Utils.PercentEncode (builder, date);
+            }
+            if (asin != null) {
+                builder.Append ("&asin=");
+                builder.Append (asin);
+            }
+            if (language != null) {
+                builder.Append ("&lang=");
+                builder.Append (language);
+            }
+            if (script != null) {
+                builder.Append ("&script=");
+                builder.Append (script);
+            }
+            AppendBaseToBuilder (builder);
+            return builder.ToString ();
+        }
+    }
+    
+    #endregion
+    
 }

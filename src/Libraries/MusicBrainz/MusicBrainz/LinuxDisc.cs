@@ -1,4 +1,6 @@
-// DiscLinux.cs
+#region License
+
+// LinuxDisc.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
 //
@@ -19,14 +21,15 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Runtime.InteropServices;
 
 namespace MusicBrainz
 {
-    internal sealed class DiscLinux : LocalDisc
+    internal sealed class LinuxDisc : LocalDisc
     {
         const int O_RDONLY = 0x0;
         const int O_NONBLOCK = 0x4000;
@@ -135,7 +138,7 @@ namespace MusicBrainz
             return ReadTocEntry (fd, CDROM_LEADOUT, ref lba);
         }
         
-        internal DiscLinux (string device)
+        internal LinuxDisc (string device)
         {
             int fd = open (device, O_RDONLY | O_NONBLOCK);
             

@@ -1,3 +1,5 @@
+#region License
+
 // Artist.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -29,57 +32,18 @@ using System.Xml;
 
 namespace MusicBrainz
 {
-    public enum ArtistType
-    {
-        Unknown,
-        Group,
-        Person
-    }
-
-    public sealed class ArtistReleaseType
-    {
-        string str;
-
-        public ArtistReleaseType (ReleaseType type, bool various) : this ((Enum)type, various)
-        {
-        }
-
-        public ArtistReleaseType (ReleaseStatus status, bool various) : this ((Enum)status, various)
-        {
-        }
-        
-        public ArtistReleaseType (ReleaseType type, ReleaseStatus status, bool various)
-        {
-            StringBuilder builder = new StringBuilder ();
-            Format (builder, type, various);
-            builder.Append ('+');
-            Format (builder, status, various);
-            str = builder.ToString ();
-        }
-
-        ArtistReleaseType (Enum enumeration, bool various)
-        {
-            StringBuilder builder = new StringBuilder ();
-            Format (builder, enumeration, various);
-            str = builder.ToString ();
-        }
-        
-        void Format (StringBuilder builder, Enum enumeration, bool various)
-        {
-            builder.Append (various ? "va-" : "sa-");
-            Utils.EnumToString (builder, enumeration.ToString ());
-        }
-
-        public override string ToString ()
-        {
-            return str;
-        }
-
-    }
-
     public sealed class Artist : MusicBrainzEntity
     {
+        
+        #region Private
+        
         const string EXTENSION = "artist";
+        ArtistReleaseType artist_release_type = DefaultArtistReleaseType;
+        ArtistType? type;
+        ReadOnlyCollection<Release> releases;
+        bool have_all_releases;
+        
+        #endregion
         
         #region Constructors
 
@@ -104,7 +68,7 @@ namespace MusicBrainz
         
         #endregion
         
-        #region Protected Overrides
+        #region Protected
         
         protected override string UrlExtension {
             get { return EXTENSION; }
@@ -168,8 +132,6 @@ namespace MusicBrainz
         public static ArtistReleaseType DefaultArtistReleaseType =
             new ArtistReleaseType (ReleaseStatus.Official, false);
         
-        ArtistReleaseType artist_release_type = DefaultArtistReleaseType;
-        
         public ArtistReleaseType ArtistReleaseType {
             get { return artist_release_type; }
             set {
@@ -189,14 +151,11 @@ namespace MusicBrainz
             get { return base.Name; }
         }
 
-        ArtistType? type;
         [Queryable ("artype")]
         public ArtistType Type {
             get { return GetPropertyOrDefault (ref type, ArtistType.Unknown); }
         }
 
-        ReadOnlyCollection<Release> releases;
-        bool have_all_releases;
         public ReadOnlyCollection<Release> Releases {
             get {
                 return releases ?? (have_all_releases
@@ -235,4 +194,57 @@ namespace MusicBrainz
         #endregion
         
     }
+    
+    #region Ancillary Types
+    
+    public enum ArtistType
+    {
+        Unknown,
+        Group,
+        Person
+    }
+    
+    public sealed class ArtistReleaseType
+    {
+        string str;
+
+        public ArtistReleaseType (ReleaseType type, bool various) : this ((Enum)type, various)
+        {
+        }
+
+        public ArtistReleaseType (ReleaseStatus status, bool various) : this ((Enum)status, various)
+        {
+        }
+        
+        public ArtistReleaseType (ReleaseType type, ReleaseStatus status, bool various)
+        {
+            StringBuilder builder = new StringBuilder ();
+            Format (builder, type, various);
+            builder.Append ('+');
+            Format (builder, status, various);
+            str = builder.ToString ();
+        }
+
+        ArtistReleaseType (Enum enumeration, bool various)
+        {
+            StringBuilder builder = new StringBuilder ();
+            Format (builder, enumeration, various);
+            str = builder.ToString ();
+        }
+        
+        void Format (StringBuilder builder, Enum enumeration, bool various)
+        {
+            builder.Append (various ? "va-" : "sa-");
+            Utils.EnumToString (builder, enumeration.ToString ());
+        }
+
+        public override string ToString ()
+        {
+            return str;
+        }
+
+    }
+    
+    #endregion
+    
 }

@@ -1,3 +1,5 @@
+#region License
+
 // MusicBrainzObject.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -33,26 +36,36 @@ using System.Xml;
 
 namespace MusicBrainz
 {
-    internal delegate void XmlProcessingDelegate (XmlReader reader);
-
     public abstract class MusicBrainzObject
     {
-        static TimeSpan min_interval = new TimeSpan (0, 0, 1); // 1 second
+        
+        #region Private Fields
+        
         static DateTime last_accessed;
+        static readonly TimeSpan min_interval = new TimeSpan (0, 0, 1); // 1 second
         static readonly object server_mutex = new object ();
-
+        static readonly string [] rels_params = new string [] {
+            "artist-rels",
+            "release-rels",
+            "track-rels",
+            "label-rels",
+            "url-rels"
+        };
+        
         bool all_data_loaded;
-        protected bool AllDataLoaded {
-            get { return all_data_loaded; }
-        }
-
         bool all_rels_loaded;
-        protected bool AllRelsLoaded {
-            get { return all_rels_loaded; }
-            set { all_rels_loaded = value; }
-        }
-
-        protected abstract string UrlExtension { get; }
+        
+        string id;
+        byte score;
+        ReadOnlyCollection<Relation<Artist>> artist_rels;
+        ReadOnlyCollection<Relation<Release>> release_rels;
+        ReadOnlyCollection<Relation<Track>> track_rels;
+        ReadOnlyCollection<Relation<Label>> label_rels;
+        ReadOnlyCollection<UrlRelation> url_rels;
+        
+        #endregion
+        
+        #region Constructors
 
         internal MusicBrainzObject (string mbid, string parameters)
         {
@@ -65,48 +78,11 @@ namespace MusicBrainz
             this.all_rels_loaded = all_rels_loaded;
             CreateFromXml (reader);
         }
-
-        protected string CreateInc ()
-        {
-            StringBuilder builder = new StringBuilder ();
-            CreateIncCore (builder);
-            return builder.ToString ();
-        }
         
-        static readonly string [] rels_params = new string [] {
-            "artist-rels",
-            "release-rels",
-            "track-rels",
-            "label-rels",
-            "url-rels"
-        };
-
-        protected virtual void CreateIncCore (StringBuilder builder)
-        {
-            if (!all_rels_loaded)
-                AppendIncParameters (builder, rels_params);
-        }
+        #endregion
         
-        protected void AppendIncParameters (StringBuilder builder, string parameter)
-        {
-            builder.Append (builder.Length == 0 ? "&inc=" : "+");
-            builder.Append (parameter);
-        }
+        #region Private Methods
         
-        protected void AppendIncParameters (StringBuilder builder, string parameter1, string parameter2)
-        {
-            builder.Append (builder.Length == 0 ? "&inc=" : "+");
-            builder.Append (parameter1);
-            builder.Append ('+');
-            builder.Append (parameter2);
-        }
-
-        protected void AppendIncParameters (StringBuilder builder, string [] parameters)
-        {
-            foreach (string parameter in parameters)
-                AppendIncParameters (builder, parameter);
-        }
-
         void CreateFromMbid (string mbid, string parameters)
         {
             XmlProcessingClosure (
@@ -119,9 +95,6 @@ namespace MusicBrainz
                 }
             );
         }
-
-        protected abstract bool ProcessAttributes (XmlReader reader);
-        protected abstract bool ProcessXml (XmlReader reader);
         
         void CreateFromXml (XmlReader reader)
         {
@@ -180,7 +153,53 @@ namespace MusicBrainz
             }
             reader.Close ();
         }
+        
+        #endregion
+        
+        #region Protected
+        
+        protected bool AllDataLoaded {
+            get { return all_data_loaded; }
+        }
+        
+        protected bool AllRelsLoaded {
+            get { return all_rels_loaded; }
+            set { all_rels_loaded = value; }
+        }
+        
+        protected string CreateInc ()
+        {
+            StringBuilder builder = new StringBuilder ();
+            CreateIncCore (builder);
+            return builder.ToString ();
+        }
+        
+        protected virtual void CreateIncCore (StringBuilder builder)
+        {
+            if (!all_rels_loaded)
+                AppendIncParameters (builder, rels_params);
+        }
+        
+        protected void AppendIncParameters (StringBuilder builder, string parameter)
+        {
+            builder.Append (builder.Length == 0 ? "&inc=" : "+");
+            builder.Append (parameter);
+        }
+        
+        protected void AppendIncParameters (StringBuilder builder, string parameter1, string parameter2)
+        {
+            builder.Append (builder.Length == 0 ? "&inc=" : "+");
+            builder.Append (parameter1);
+            builder.Append ('+');
+            builder.Append (parameter2);
+        }
 
+        protected void AppendIncParameters (StringBuilder builder, string [] parameters)
+        {
+            foreach (string parameter in parameters)
+                AppendIncParameters (builder, parameter);
+        }
+        
         protected void LoadMissingData ()
         {
             if (!all_data_loaded) {
@@ -189,7 +208,6 @@ namespace MusicBrainz
             }
         }
 
-        protected abstract void LoadMissingDataCore ();
         protected void LoadMissingDataCore (MusicBrainzObject obj)
         {
             if (!all_rels_loaded) {
@@ -200,7 +218,14 @@ namespace MusicBrainz
                 url_rels = obj.UrlRelations;
             }
         }
-
+        
+        protected abstract void LoadMissingDataCore ();
+        protected abstract bool ProcessAttributes (XmlReader reader);
+        protected abstract bool ProcessXml (XmlReader reader);
+        protected abstract string UrlExtension { get; }
+        
+        #endregion
+        
         #region Properties
         
         protected T GetPropertyOrNull<T> (ref T field_reference) where T : class
@@ -226,41 +251,38 @@ namespace MusicBrainz
             return field_reference ?? new ReadOnlyCollection<T> (new T [0]);
         }
 
-        string id;
         public virtual string Id {
             get { return id; }
         }
 
-        byte score;
         public virtual byte Score {
             get { return score; }
         }
 
-        ReadOnlyCollection<Relation<Artist>> artist_rels;
         public virtual ReadOnlyCollection<Relation<Artist>> ArtistRelations {
             get { return GetPropertyOrNew (ref artist_rels, !all_rels_loaded); }
         }
 
-        ReadOnlyCollection<Relation<Release>> release_rels;
         public virtual ReadOnlyCollection<Relation<Release>> ReleaseRelations {
             get { return GetPropertyOrNew (ref release_rels, !all_rels_loaded); }
         }
 
-        ReadOnlyCollection<Relation<Track>> track_rels;
         public virtual ReadOnlyCollection<Relation<Track>> TrackRelations {
             get { return GetPropertyOrNew (ref track_rels, !all_rels_loaded); }
         }
 
-        ReadOnlyCollection<Relation<Label>> label_rels;
         public virtual ReadOnlyCollection<Relation<Label>> LabelRelations {
             get { return GetPropertyOrNew (ref label_rels, !all_rels_loaded); }
         }
 
-        ReadOnlyCollection<UrlRelation> url_rels;
         public virtual ReadOnlyCollection<UrlRelation> UrlRelations {
             get { return GetPropertyOrNew (ref url_rels, !all_rels_loaded); }
         }
 
+        #endregion
+        
+        #region Public
+        
         public override bool Equals (object obj)
         {
             MusicBrainzObject mbobj = obj as MusicBrainzObject;
@@ -271,7 +293,7 @@ namespace MusicBrainz
         {
             return (GetType ().Name + Id).GetHashCode ();
         }
-
+        
         #endregion
 
         #region Static
@@ -320,8 +342,8 @@ namespace MusicBrainz
         static string CreateUrl (string url_extension, string mbid, string parameters)
         {
             StringBuilder builder = new StringBuilder (
-                MusicBrainzService.ProviderUrl.Length + mbid.Length + parameters.Length + 9);
-            builder.Append (MusicBrainzService.ProviderUrl);
+                MusicBrainzService.ServiceUrl.Length + mbid.Length + parameters.Length + 9);
+            builder.Append (MusicBrainzService.ServiceUrl);
             builder.Append (url_extension);
             builder.Append ('/');
             builder.Append (mbid);
@@ -433,4 +455,6 @@ namespace MusicBrainz
         #endregion
 
     }
+    
+    internal delegate void XmlProcessingDelegate (XmlReader reader);
 }

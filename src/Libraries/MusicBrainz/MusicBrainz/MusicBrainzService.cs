@@ -1,3 +1,5 @@
+#region License
+
 // MusicBrainzService.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Net.Cache;
@@ -28,7 +31,7 @@ namespace MusicBrainz
 {
     public static class MusicBrainzService
     {
-        public static string ProviderUrl = @"http://musicbrainz.org/ws/1/";
+        public static string ServiceUrl = @"http://musicbrainz.org/ws/1/";
         public static RequestCachePolicy CachePolicy;
         public static event EventHandler<XmlRequestEventArgs> XmlRequest;
         

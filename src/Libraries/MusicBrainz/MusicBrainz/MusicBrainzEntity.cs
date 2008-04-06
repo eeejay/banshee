@@ -1,3 +1,5 @@
+#region License
+
 // MusicBrainzEntity.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -33,6 +36,17 @@ namespace MusicBrainz
     public abstract class MusicBrainzEntity : MusicBrainzObject
     {
         
+        #region Private
+        
+        string name;
+        string sort_name;
+        string disambiguation;
+        string begin_date;
+        string end_date;
+        ReadOnlyCollection<string> aliases;
+        
+        #endregion
+        
         #region Constructors
         
         internal MusicBrainzEntity (string mbid, string parameters) : base (mbid, parameters)
@@ -45,7 +59,7 @@ namespace MusicBrainz
         
         #endregion
         
-        #region Protected Overrides
+        #region Protected
 
         protected override void CreateIncCore (StringBuilder builder)
         {
@@ -105,40 +119,39 @@ namespace MusicBrainz
             return result;
         }
         
+        protected static string CreateNameParameter (string name)
+        {
+            return "&name=" + Utils.PercentEncode (name);
+        }
+        
         #endregion
 
         #region Properties
 
-        string name;
         public virtual string Name {
             get { return GetPropertyOrNull (ref name); }
         }
 
-        string sort_name;
         [Queryable]
         public virtual string SortName {
             get { return GetPropertyOrNull (ref sort_name); }
         }
 
-        string disambiguation;
         [Queryable ("comment")]
         public virtual string Disambiguation {
             get { return GetPropertyOrNull (ref disambiguation); }
         }
 
-        string begin_date;
         [Queryable ("begin")]
         public virtual string BeginDate {
             get { return GetPropertyOrNull (ref begin_date); }
         }
 
-        string end_date;
         [Queryable ("end")]
         public virtual string EndDate {
             get { return GetPropertyOrNull (ref end_date); }
         }
 
-        ReadOnlyCollection<string> aliases;
         [QueryableMember ("Contains", "alias")]
         public virtual ReadOnlyCollection<string> Aliases {
             get { return GetPropertyOrNew (ref aliases); }
@@ -146,14 +159,14 @@ namespace MusicBrainz
 
         #endregion
 
-        protected static string CreateNameParameter (string name)
-        {
-            return "&name=" + Utils.PercentEncode (name);
-        }
-
+        #region Public
+        
         public override string ToString ()
         {
             return name;
         }
+        
+        #endregion
+        
     }
 }

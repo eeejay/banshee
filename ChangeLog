@@ -1,5 +1,9 @@
 2008-04-05  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/MusicBrainz/*: Synced w/ MB#
+
+2008-04-05  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
 	Got rid of unnessisary null checks.
 

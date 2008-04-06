@@ -1,3 +1,5 @@
+#region License
+
 // Query.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Collections;
@@ -30,16 +33,15 @@ namespace MusicBrainz
 {
     public sealed class Query<T> : IEnumerable<T> where T : MusicBrainzObject
     {
+        
+        #region Private
+        
         string parameters;
         string url_extension;
         byte limit;
-
-        internal Query (string url_extension, byte limit, string parameters)
-        {
-            this.url_extension = url_extension;
-            this.limit = limit;
-            this.parameters = parameters;
-        }
+        
+        int offset;
+        int? count;
         
         List<T> results;
         List<T> ResultsWindow {
@@ -50,7 +52,6 @@ namespace MusicBrainz
             }
         }
 
-        int offset;
         Dictionary<int, WeakReference> weak_references = new Dictionary<int, WeakReference> ();
         int Offset {
             get { return offset; }
@@ -70,8 +71,22 @@ namespace MusicBrainz
                 }
             }
         }
+        
+        #endregion
 
-        int? count;
+        #region Constructors
+        
+        internal Query (string url_extension, byte limit, string parameters)
+        {
+            this.url_extension = url_extension;
+            this.limit = limit;
+            this.parameters = parameters;
+        }
+        
+        #endregion
+
+        #region Public
+        
         public int Count {
             get {
                 if(count == null && ResultsWindow == null) { } // just accessing ResultsWindow will give count a value
@@ -87,7 +102,41 @@ namespace MusicBrainz
                 return ResultsWindow [i - offset];
             }
         }
-
+        
+        public T First ()
+        {
+            byte tmp_limit = limit;
+            limit = 1;
+            T result = Count > 0 ? this [0] : null;
+            limit = tmp_limit;
+            return result;
+        }
+        
+        public T PerfectMatch ()
+        {
+            byte tmp_limit = limit;
+            limit = 2;
+            T result1 = Count > 0 ? this [0] : null;
+            T result2 = Count > 1 ? this [1] : null;
+            limit = tmp_limit;
+            
+            return (result1 != null && result1.Score == 100 && (result2 == null || result2.Score < 100))
+                ? result1 : null;
+        }
+        
+        public IEnumerable<T> Best ()
+        {
+            return Best (100);
+        }
+        
+        public IEnumerable<T> Best (int score_threshold)
+        {
+            foreach (T result in this) {
+                if (result.Score < score_threshold) yield break;
+                yield return result;
+            }
+        }
+        
         public List<T> ToList ()
         {
             return ToList (0);
@@ -106,7 +155,7 @@ namespace MusicBrainz
             for(int i = 0; i < Count; i++) array [i] = this [i];
             return array;
         }
-
+        
         public IEnumerator<T> GetEnumerator ()
         {
             for (int i = 0; i < Count; i++) yield return this [i];
@@ -117,44 +166,13 @@ namespace MusicBrainz
             return GetEnumerator ();
         }
         
-        public IEnumerable<T> Best ()
-        {
-            return Best (100);
-        }
-        
-        public IEnumerable<T> Best (int score_threshold)
-        {
-            foreach (T result in this) {
-                if (result.Score < score_threshold) yield break;
-                yield return result;
-            }
-        }
-        
-        public T PerfectMatch ()
-        {
-            byte tmp_limit = limit;
-            limit = 2;
-            T result1 = Count > 0 ? this [0] : null;
-            T result2 = Count > 1 ? this [1] : null;
-            limit = tmp_limit;
-            
-            return (result1 != null && result1.Score == 100 && (result2 == null || result2.Score < 100))
-                ? result1 : null;
-        }
-        
-        public T First ()
-        {
-            byte tmp_limit = limit;
-            limit = 1;
-            T result = Count > 0 ? this [0] : null;
-            limit = tmp_limit;
-            return result;
-        }
-        
         public static implicit operator T (Query<T> query)
         {
             return query.First ();
         }
+        
+        #endregion
+        
     }
 
     [AttributeUsage (AttributeTargets.Property)]
@@ -177,6 +195,7 @@ namespace MusicBrainz
     {
         public readonly string Name;
         public readonly string Member;
+        
         public QueryableMemberAttribute (string member, string name)
         {
             Member = member;

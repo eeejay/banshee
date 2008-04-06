@@ -1,3 +1,5 @@
+#region License
+
 // LocalDisc.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Security.Cryptography;
@@ -29,6 +32,8 @@ namespace MusicBrainz
 {
     public abstract class LocalDisc : Disc
     {
+        public static string SubmissionServiceUrl = "http://mm.musicbrainz.org/bare/cdlookup.html";
+        
         byte first_track;
         byte last_track;
         int [] track_durations;
@@ -94,35 +99,36 @@ namespace MusicBrainz
         
         string submission_url;
         public string SubmissionUrl {
-            get {
-                if (submission_url == null) {
-                    StringBuilder builder = new StringBuilder ();
-                    builder.Append ("http://mm.musicbrainz.org/bare/cdlookup.html");
-                    builder.Append ("?id=");
-                    builder.Append (Id);
-                    builder.Append ("&tracks=");
-                    builder.Append (last_track);
-                    builder.Append ("&toc=");
-                    builder.Append (first_track);
-                    builder.Append ('+');
-                    builder.Append (last_track);
-                    builder.Append ('+');
-                    builder.Append (track_offsets [0]);
-                    for (int i = first_track; i <= last_track; i++) {
-                        builder.Append ('+');
-                        builder.Append (track_offsets [i]);
-                    }
-                    submission_url = builder.ToString ();
-                }
-                return submission_url;
+            get { return submission_url ?? submission_url = BuildSubmissionUrl (); }
+        }
+        
+        string BuildSubmissionUrl ()
+        {
+            StringBuilder builder = new StringBuilder ();
+            builder.Append (SubmissionServiceUrl);
+            builder.Append ("?id=");
+            builder.Append (Id);
+            builder.Append ("&tracks=");
+            builder.Append (last_track);
+            builder.Append ("&toc=");
+            builder.Append (first_track);
+            builder.Append ('+');
+            builder.Append (last_track);
+            builder.Append ('+');
+            builder.Append (track_offsets [0]);
+            for (int i = first_track; i <= last_track; i++) {
+                builder.Append ('+');
+                builder.Append (track_offsets [i]);
             }
+            return builder.ToString ();
         }
         
         public static LocalDisc GetFromDevice (string device)
         {
             if (device == null) throw new ArgumentNullException ("device");
             return Environment.OSVersion.Platform != PlatformID.Unix
-                ? (LocalDisc)new DiscWin32 (device) : new DiscLinux (device);
+                ? (LocalDisc)new Win32Disc (device)
+                : new LinuxDisc (device);
         }
     }
 }

@@ -1,4 +1,6 @@
-// DiscWin32.cs
+#region License
+
+// Win32Disc.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
 //
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -28,25 +31,19 @@ using System.Threading;
 
 namespace MusicBrainz
 {
-    internal sealed class DiscWin32 : LocalDisc
+    internal sealed class Win32Disc : LocalDisc
     {
         [DllImport ("winmm")]
-        static extern Int32 mciSendString (String command,
-                                           StringBuilder buffer,
-                                           Int32 bufferSize,
-                                           IntPtr hwndCallback);
+        static extern Int32 mciSendString (String command, StringBuilder buffer, Int32 bufferSize, IntPtr hwndCallback);
 
         [DllImport ("winmm")]
-        static extern Int32 mciGetErrorString (Int32 errorCode,
-                                               StringBuilder errorText,
-                                               Int32 errorTextSize);
+        static extern Int32 mciGetErrorString (Int32 errorCode, StringBuilder errorText, Int32 errorTextSize);
         
         delegate void MciCall (string result);
 
-        internal DiscWin32 (string device)
+        internal Win32Disc (string device)
         {
-            string device_string = device.Length == 0
-                ? "cdaudio" : string.Format ("{0} type cdaudio", device);
+            string device_string = device.Length == 0 ? "cdaudio" : string.Format ("{0} type cdaudio", device);
 
             string alias = string.Format ("musicbrainz_cdio_{0}_{1}",
                 Environment.TickCount, Thread.CurrentThread.ManagedThreadId);

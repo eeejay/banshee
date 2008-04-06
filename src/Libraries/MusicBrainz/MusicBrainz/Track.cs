@@ -1,3 +1,5 @@
+#region License
+
 // Track.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -19,7 +21,8 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-//
+
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -29,69 +32,17 @@ using System.Xml;
 
 namespace MusicBrainz
 {
-    public sealed class TrackQueryParameters : ItemQueryParameters
-    {
-        string release;
-        public string Release {
-            get { return release; }
-            set { release = value; }
-        }
-
-        string release_id;
-        public string ReleaseId {
-            get { return release_id; }
-            set { release_id = value; }
-        }
-
-        uint? duration;
-        public uint? Duration {
-            get { return duration; }
-            set { duration = value; }
-        }
-
-        int? track_number;
-        public int? TrackNumber {
-            get { return track_number; }
-            set { track_number = value; }
-        }
-
-        string puid;
-        public string Puid {
-            get { return puid; }
-            set { puid = value; }
-        }
-
-        public override string ToString ()
-        {
-            StringBuilder builder = new StringBuilder ();
-            if (release != null) {
-                builder.Append ("&release=");
-                Utils.PercentEncode (builder, release);
-            }
-            if (release_id != null) {
-                builder.Append ("&releaseid=");
-                builder.Append (release_id);
-            }
-            if (duration != null) {
-                builder.Append ("&duration=");
-                builder.Append (duration.Value);
-            }
-            if (track_number != null) {
-                builder.Append ("&tracknumber=");
-                builder.Append (track_number.Value);
-            }
-            if (puid != null) {
-                builder.Append ("&puid=");
-                builder.Append (puid);
-            }
-            AppendBaseToBuilder (builder);
-            return builder.ToString ();
-        }
-    }
-
     public sealed class Track : MusicBrainzItem
     {
+        
+        #region Private
+        
         const string EXTENSION = "track";
+        uint duration;
+        ReadOnlyCollection<Release> releases;
+        ReadOnlyCollection<string> puids;
+        
+        #endregion
         
         #region Constructors
 
@@ -192,20 +143,17 @@ namespace MusicBrainz
             get { return base.Title; }
         }
 
-        uint duration;
         [Queryable ("dur")]
         public uint Duration {
             get { return duration; }
         }
 
-        ReadOnlyCollection<Release> releases;
         [QueryableMember ("Contains", "release")]
         public ReadOnlyCollection<Release> Releases {
             get { return GetPropertyOrNew (ref releases); }
 
         }
 
-        ReadOnlyCollection<string> puids;
         public ReadOnlyCollection<string> Puids {
             get { return GetPropertyOrNew (ref puids); }
         }
@@ -283,4 +231,69 @@ namespace MusicBrainz
         #endregion
 
     }
+    
+    #region Ancillary Types
+    
+    public sealed class TrackQueryParameters : ItemQueryParameters
+    {
+        string release;
+        public string Release {
+            get { return release; }
+            set { release = value; }
+        }
+
+        string release_id;
+        public string ReleaseId {
+            get { return release_id; }
+            set { release_id = value; }
+        }
+
+        uint? duration;
+        public uint? Duration {
+            get { return duration; }
+            set { duration = value; }
+        }
+
+        int? track_number;
+        public int? TrackNumber {
+            get { return track_number; }
+            set { track_number = value; }
+        }
+
+        string puid;
+        public string Puid {
+            get { return puid; }
+            set { puid = value; }
+        }
+
+        public override string ToString ()
+        {
+            StringBuilder builder = new StringBuilder ();
+            if (release != null) {
+                builder.Append ("&release=");
+                Utils.PercentEncode (builder, release);
+            }
+            if (release_id != null) {
+                builder.Append ("&releaseid=");
+                builder.Append (release_id);
+            }
+            if (duration != null) {
+                builder.Append ("&duration=");
+                builder.Append (duration.Value);
+            }
+            if (track_number != null) {
+                builder.Append ("&tracknumber=");
+                builder.Append (track_number.Value);
+            }
+            if (puid != null) {
+                builder.Append ("&puid=");
+                builder.Append (puid);
+            }
+            AppendBaseToBuilder (builder);
+            return builder.ToString ();
+        }
+    }
+    
+    #endregion
+    
 }
