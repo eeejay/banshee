@@ -92,8 +92,8 @@ namespace Banshee.Gui
                     Catalog.GetString("Unselect all tracks"), OnSelectNone),
 
                 new ActionEntry ("TrackPropertiesAction", Stock.Edit,
-                    Catalog.GetString ("_Edit Track Metadata"), "E",
-                    Catalog.GetString ("Edit metadata on selected tracks"), OnTrackProperties),
+                    Catalog.GetString ("_Edit Track Information"), "E",
+                    Catalog.GetString ("Edit information on selected tracks"), OnTrackProperties),
 
                 new ActionEntry ("AddToPlaylistAction", null,
                     Catalog.GetString ("Add _to Playlist"), null,

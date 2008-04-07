@@ -61,33 +61,53 @@ namespace Banshee.Collection.Database
         private static int last_artist_id;
         private static string last_title;
         private static DatabaseAlbumInfo last_album;
+
         public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, string title)
         {
-            if (title == last_title && artist.DbId == last_artist_id && last_album != null) {
+            DatabaseAlbumInfo album = new DatabaseAlbumInfo ();
+            album.Title = title;
+            return FindOrCreate (artist, album);
+        }
+
+        public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, DatabaseAlbumInfo album)
+        {
+            if (album.Title == last_title && artist.DbId == last_artist_id && last_album != null) {
                 return last_album;
             }
 
-            if (String.IsNullOrEmpty (title) || title.Trim () == String.Empty) {
-                title = Catalog.GetString ("Unknown Album");
+            if (String.IsNullOrEmpty (album.Title) || album.Title.Trim () == String.Empty) {
+                album.Title = Catalog.GetString ("Unknown Album");
             }
 
-            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, title)) {
+            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, album.Title)) {
                 if (reader.Read ()) {
                     last_album = new DatabaseAlbumInfo (reader);
                     last_album.ArtistId = artist.DbId;
                     last_album.ArtistName = artist.Name;
                 } else {
-                    last_album = new DatabaseAlbumInfo ();
-                    last_album.Title = title;
+                    last_album = album;
                     last_album.ArtistId = artist.DbId;
                     last_album.ArtistName = artist.Name;
                     last_album.Save ();
                 }
             }
             
-            last_title = title;
+            last_title = album.Title;
             last_artist_id = artist.DbId;
             return last_album;
+        }
+
+        public static DatabaseAlbumInfo UpdateOrCreate (DatabaseArtistInfo artist, DatabaseAlbumInfo album)
+        {
+            DatabaseAlbumInfo found = FindOrCreate (artist, album);
+            if (found != album) {
+                // Overwrite the found album
+                album.Title = found.Title;
+                album.dbid = found.DbId;
+                album.ArtistId = found.ArtistId;
+                album.Save ();
+            }
+            return album;
         }
 
         public DatabaseAlbumInfo () : base (null)

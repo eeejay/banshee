@@ -59,28 +59,47 @@ namespace Banshee.Collection.Database
 
         private static string last_artist_name = null;
         private static DatabaseArtistInfo last_artist = null;
+
         public static DatabaseArtistInfo FindOrCreate (string artistName)
         {
-            if (artistName == last_artist_name && last_artist != null) {
+            DatabaseArtistInfo artist = new DatabaseArtistInfo ();
+            artist.Name = artistName;
+            return FindOrCreate (artist);
+        }
+
+        public static DatabaseArtistInfo FindOrCreate (DatabaseArtistInfo artist)
+        {
+            if (artist.Name == last_artist_name && last_artist != null) {
                 return last_artist;
             }
 
-            if (String.IsNullOrEmpty (artistName) || artistName.Trim () == String.Empty) {
-                artistName = Catalog.GetString ("Unknown Artist");
+            if (String.IsNullOrEmpty (artist.Name) || artist.Name.Trim () == String.Empty) {
+                artist.Name = Catalog.GetString ("Unknown Artist");
             }
 
-            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artistName)) {
+            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.Name)) {
                 if (reader.Read ()) {
                     last_artist = new DatabaseArtistInfo (reader);
                 } else {
-                    last_artist = new DatabaseArtistInfo ();
-                    last_artist.Name = artistName;
+                    last_artist = artist;
                     last_artist.Save ();
                 }
             }
             
-            last_artist_name = artistName;
+            last_artist_name = artist.Name;
             return last_artist;
+        }
+
+        public static DatabaseArtistInfo UpdateOrCreate (DatabaseArtistInfo artist)
+        {
+            DatabaseArtistInfo found = FindOrCreate (artist);
+            if (found != artist) {
+                // Overwrite the found artist
+                artist.Name = found.Name;
+                artist.dbid = found.DbId;
+                artist.Save ();
+            }
+            return artist;
         }
         
         public DatabaseArtistInfo () : base (null)

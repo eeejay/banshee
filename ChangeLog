@@ -1,5 +1,16 @@
 2008-04-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	Add UpdateOrCreate methods that will overwrite an artist/album if it
+	already exists, otherwise will just save the new one.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Change Edit
+	Track Metadata to Edit Track Information in pursuit of user-friendliness.
+	Thanks to Chris Lord for the suggestion.
+
+2008-04-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This patch extends the relative-Uri goodness we use for Library tracks to
 	any PrimarySource's tracks, meaning if your DAP has one mount point one
 	time, and another the next, we'll detect the songs that are already in the
