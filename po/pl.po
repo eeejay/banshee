@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-07 22:01+0200\n"
-"PO-Revision-Date: 2008-04-03 19:53+0100\n"
+"POT-Creation-Date: 2008-04-07 22:49+0200\n"
+"PO-Revision-Date: 2008-04-07 22:44+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Polish <dominikowski@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -207,14 +207,12 @@ msgid "Could not create queue plugin"
 msgstr "Nie można utworzyć wtyczki kolejki"
 
 #: ../libbanshee/banshee-ripper.c:235
-#, fuzzy
 msgid "Could not create filesink plugin"
-msgstr "Nie można utworzyć wtyczki \"sinkben\""
+msgstr "Nie można utworzyć wtyczki \"filesink\""
 
 #: ../libbanshee/banshee-ripper.c:242
-#, fuzzy
 msgid "Could not link pipeline elements"
-msgstr "Nie można utworzyć potoku"
+msgstr "Nie można powiązać elementów potoku"
 
 #: ../libbanshee/gst-transcode-0.10.c:158
 msgid "No decoder could be found for source format."
@@ -257,14 +255,12 @@ msgid "Could not construct pipeline"
 msgstr "Nie można zbudować potoku"
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:75
-#, fuzzy
 msgid "Could not find an encoder for ripping."
-msgstr "Nie można utworzyć potoku kodera"
+msgstr "Nie można odnaleźć kodera do zgrywania."
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:90
-#, fuzzy
 msgid "Could not create CD ripping driver."
-msgstr "Nie można utworzyć rippera CD"
+msgstr "Nie można utworzyć sterownika zgrywania CD."
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:92
 msgid "Could not initialize GStreamer library"
@@ -441,9 +437,8 @@ msgid "Importing Songs from {0}"
 msgstr "Importowanie utworów z {0}"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:37
-#, fuzzy
 msgid "Video Library"
-msgstr "Kolekcja"
+msgstr "Kolekcja wideo"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:91
 msgid "Default player engine"
@@ -1444,9 +1439,8 @@ msgid "Create a new smart playlist"
 msgstr "Tworzy nową inteligentną listę odtwarzania"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:90
-#, fuzzy
 msgid "Import to Library"
-msgstr "Importuj pliki do kolekcji"
+msgstr "Importuj do kolekcji"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:91
 msgid "Import source to library"
@@ -1460,48 +1454,48 @@ msgstr "Eksportuj listę odtwarzania..."
 msgid "Export a playlist"
 msgstr "Eksportowanie listy odtwarzania"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:109
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:114
 msgid "Refresh"
 msgstr "Odśwież"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:110
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:115
 msgid "Refresh this randomly sorted smart playlist"
 msgstr "Odświeża tą losowo posortowaną inteligentną listę odtwarzania"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:115
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:120
 msgid "Sort Children"
 msgstr "Sortuj elementy potomne"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:118
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:123
 msgid "Name Ascending"
 msgstr "Wg nazwy rosnąco"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:122
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:127
 msgid "Name Descending"
 msgstr "Wg nazwy malejąco"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:126
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:131
 msgid "Size Ascending"
 msgstr "Wg rozmiaru rosnąco"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:130
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:135
 msgid "Size Descending"
 msgstr "Wg rozmiaru malejąco"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:210
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:215
 msgid "GtkActionPath"
 msgstr "GtkActionPath"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:281
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:286
 msgid "Could not export playlist"
 msgstr "Nie można wyeksportować listy odtwarzania"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:353
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:358
 #, csharp-format
 msgid "Are you sure you want to delete this {0}?"
 msgstr "Na pewno usunąć {0}?"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:362
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:367
 #, csharp-format
 msgid "Do not ask me this again"
 msgstr "Nie pytaj ponownie"
@@ -1523,14 +1517,12 @@ msgid "Unselect all tracks"
 msgstr "Odznacza wszystkie utwory"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:95
-#, fuzzy
 msgid "_Edit Track Information"
-msgstr "_Modyfikuj metadane utworu"
+msgstr "_Modyfikuj informacje o ścieżce"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:96
-#, fuzzy
 msgid "Edit information on selected tracks"
-msgstr "Modyfikuje metadane w zaznaczonych utworach"
+msgstr "Modyfikuje informacje o zaznaczonych ścieżkach"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:99
 msgid "Add _to Playlist"
@@ -2072,9 +2064,9 @@ msgid "Full Volume"
 msgstr "Pełna głośność"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:64
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Delete From {0}"
-msgstr "Usuń {0}"
+msgstr "Usuń z {0}"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:65
 #, csharp-format
@@ -2082,28 +2074,27 @@ msgid "Eject {0}"
 msgstr "Wysuń {0}"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:134
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Ejecting {0}..."
-msgstr "Wysuń {0}"
+msgstr "Wysuwanie {0}..."
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:145
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Could not eject {0}: {1}"
-msgstr "Nie można odmontować iPoda"
+msgstr "Nie można wysunąć {0}: {1}"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:66
-#, fuzzy
 msgid "Media"
-msgstr "_Multimedia"
+msgstr "Multimedia"
 
 #. TODO differentiate between Audio Players and normal Disks, and include the size, eg "2GB Audio Player"?
 #. GenericName = Catalog.GetString ("Audio Player");
 #. TODO construct device-specific icon name as preferred icon
 #. Properties.SetStringList ("Icon.Name", "media-player");
 #: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:79
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Loading {0}"
-msgstr "Wczytywanie"
+msgstr "Wczytywanie {0}"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:67
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:51
@@ -2144,24 +2135,21 @@ msgid "Could not fetch metadata for CD."
 msgstr "Nie można pobrać metadanych dla CD."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:159
-#, fuzzy
 msgid "Could not import CD"
-msgstr "Nie można zaimportować ścieżek"
+msgstr "Nie można zaimportować płyty CD"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:272
-#, fuzzy
 msgid "Ejecting audio CD..."
-msgstr "Importowanie CD-Audio"
+msgstr "Wysuwanie płyty CD-Audio..."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:290
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Could not eject audio CD: {0}"
-msgstr "Nie można odmontować iPoda"
+msgstr "Nie można wysunąć płyty CD-Audio: {0}"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:323
-#, fuzzy
 msgid "Eject Disc"
-msgstr "Wysuń płytę CD"
+msgstr "Wysuń płytę"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:329
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:366
@@ -2169,24 +2157,21 @@ msgid "Import CD"
 msgstr "Importuj CD"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:330
-#, fuzzy
 msgid "Import this audio CD to the library"
-msgstr "Importuj CD-Audio do kolekcji"
+msgstr "Zaimportowanie tej płyty CD-Audio do kolekcji"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:336
-#, fuzzy
 msgid "Duplicate CD"
-msgstr "Nagraj CD"
+msgstr "Powiel płytę CD"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:337
-#, fuzzy
 msgid "Duplicate this audio CD"
-msgstr "Zapisuje zaznaczenie na CD-Audio"
+msgstr "Powielenie tej płyty CD-Audio"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:365
 #, csharp-format
 msgid "Import ‟{0}”"
-msgstr ""
+msgstr "Importuj \"{0}\""
 
 #: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:84
 msgid "_Bookmarks"
@@ -2224,9 +2209,8 @@ msgid "Authentication Required"
 msgstr "Wymagane uwierzytelnienie"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:104
-#, fuzzy
 msgid "Username:"
-msgstr "Nazwa użytkownika"
+msgstr "Nazwa użytkownika:"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:112
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:61
@@ -2238,19 +2222,17 @@ msgid "Login"
 msgstr "Login"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:61
-#, fuzzy
 msgid "Music Share"
 msgstr "Współdzielenie muzyki"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:66
-#, fuzzy
 msgid "Disconnect"
-msgstr "Połącz"
+msgstr "Rozłącz"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:91
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Connecting to {0}"
-msgstr "Łączenie z Last.fm."
+msgstr "Łączenie z {0}"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:210
 #, csharp-format
@@ -2736,9 +2718,8 @@ msgid "selected by"
 msgstr "wybranych wg"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs:42
-#, fuzzy
 msgid "ago"
-msgstr "Etykieta"
+msgstr "temu"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:59
 msgid "seconds"
