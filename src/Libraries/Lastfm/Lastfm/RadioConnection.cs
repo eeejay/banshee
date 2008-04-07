@@ -187,7 +187,7 @@ namespace Lastfm
                     this.station = station;
                     return StationError.None;
                 } catch (Exception e) {
-                    Console.WriteLine (e.ToString ());
+                    Log.Exception (e);
                     return StationError.Unknown;
                 }
             }
@@ -202,7 +202,6 @@ namespace Lastfm
                 string url = StationRefreshUrl;
                 Playlist pl = new Playlist ();
                 Stream stream = null;
-                Console.WriteLine ("StationSource Loading: {0}", url);
                 try {
                     stream = GetXspfStream (url);
                     pl.Load (stream);
@@ -360,9 +359,9 @@ namespace Lastfm
 
             HttpWebResponse response = (HttpWebResponse) request.GetResponse ();
             using (Stream stream = response.GetResponseStream ()) {
-                using (StreamReader reader = new StreamReader (stream)) {
+                /*using (StreamReader reader = new StreamReader (stream)) {
                     Console.WriteLine ("Posted {0} got response {1}", body, reader.ReadToEnd ());
-                }
+                }*/
             }
             return response.StatusCode;
         }

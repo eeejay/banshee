@@ -1,3 +1,11 @@
+2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Fix love/ban icons.
+
+	* src/Libraries/Lastfm/Lastfm/RadioConnection.cs: Remove unnecessary
+	logging, log exceptions with Log.Exception (e).
+
 2008-04-06  Aaron Bockover  <abock@gnome.org>
 
 	This commit functionally complete ripping. Ripped albums will now show

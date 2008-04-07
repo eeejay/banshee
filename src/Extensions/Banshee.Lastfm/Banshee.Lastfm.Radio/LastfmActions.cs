@@ -136,12 +136,12 @@ namespace Banshee.Lastfm.Radio
             // Track actions
             Add (new ActionEntry [] {
                 new ActionEntry (
-                    "LastfmLoveAction", "face-smile",
+                    "LastfmLoveAction", null,
                     Catalog.GetString ("Love Track"), null,
                     Catalog.GetString ("Mark current track as loved"), OnLoved),
 
                 new ActionEntry (
-                    "LastfmHateAction", "face-sad",
+                    "LastfmHateAction", null,
                     Catalog.GetString ("Ban Track"), null,
                     Catalog.GetString ("Mark current track as banned"), OnHated),
 
@@ -153,6 +153,9 @@ namespace Banshee.Lastfm.Radio
                     Catalog.GetString ("Recommend to"), null,
                     Catalog.GetString ("Recommend this track to someone"), OnTrackRecommend)
             });
+
+            this["LastfmLoveAction"].IconName = "face-smile";
+            this["LastfmHateAction"].IconName = "face-sad";
 
             Add (
                 new RadioActionEntry [] {
