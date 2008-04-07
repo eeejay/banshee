@@ -38,6 +38,8 @@ namespace Banshee.Collection
         private string title;
         private string artist_name;
         private string artwork_id;
+        private DateTime release_date = DateTime.MinValue;
+        private string musicbrainz_id;
         
         public AlbumInfo (string title)
         {
@@ -52,6 +54,16 @@ namespace Banshee.Collection
         public virtual string Title {
             get { return title; }
             set { title = value; }
+        }
+        
+        public virtual string MusicBrainzId {
+            get { return musicbrainz_id; }
+            set { musicbrainz_id = value; }
+        }
+        
+        public virtual DateTime ReleaseDate {
+            get { return release_date; }
+            set { release_date = value; }
         }
         
         public virtual string ArtworkId {

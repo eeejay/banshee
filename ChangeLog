@@ -1,3 +1,43 @@
+2008-04-06  Aaron Bockover  <abock@gnome.org>
+
+	This commit functionally complete ripping. Ripped albums will now show
+	up in the library with all the metadata properly stored and organized.
+	There are now only a few things to polish regarding ripping.
+
+	* libbanshee/banshee-ripper.c: Removed a bad unref call - the pipeline
+	should only be unreffed when destroying it
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/TagList.cs: Merge
+	release date, and musicbrainz ID properties into the tag list
+
+	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs: Added Release
+	Date and MusicBrainzId properties
+
+	* src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Added 
+	MusicBrainzId properties
+
+	* src/Core/Banshee.Core/Banshee.Streaming/CommonTags.cs: Added GStreamer
+	tag names for MusicBrainz
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Bind MusicBrainzId properties to respective database columns so these
+	are now stored/loaded properly
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Support saving a lot of extra information from MusicBrainz and properly
+	create the album, artist, and album artist records
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	Save the track, artist, and album artist records into the database
+	when a track finishes ripping
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
+	Extend DatabaseTrackInfo and persist artist, album, and album artist
+	objects on the track which can be saved to the database when ripped
+
 2008-04-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:

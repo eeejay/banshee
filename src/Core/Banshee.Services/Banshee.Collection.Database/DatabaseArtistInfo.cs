@@ -136,6 +136,12 @@ namespace Banshee.Collection.Database
             get { return base.Name; }
             set { base.Name = value; }
         }
+               
+        [DatabaseColumn("MusicBrainzID")]
+        public override string MusicBrainzId {
+            get { return base.MusicBrainzId; }
+            set { base.MusicBrainzId = value; }
+        }
         
         [DatabaseColumn(Select = false)]
         protected string NameLowered {

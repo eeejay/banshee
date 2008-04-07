@@ -31,10 +31,16 @@ namespace Banshee.Collection
     public class ArtistInfo 
     {
         private string name;
+        private string musicbrainz_id;
         
         public ArtistInfo(string name)
         {
             this.name = name;
+        }
+                
+        public virtual string MusicBrainzId {
+            get { return musicbrainz_id; }
+            set { musicbrainz_id = value; }
         }
         
         public virtual string Name {

@@ -145,6 +145,18 @@ namespace Banshee.Collection.Database
             get { return artist_id; }
             set { artist_id = value; }
         }
+        
+        [DatabaseColumn("MusicBrainzID")]
+        public override string MusicBrainzId {
+            get { return base.MusicBrainzId; }
+            set { base.MusicBrainzId = value; }
+        }
+        
+        [DatabaseColumn]
+        public override DateTime ReleaseDate {
+            get { return base.ReleaseDate; }
+            set { base.ReleaseDate = value; }
+        }
 
         [DatabaseColumn]
         public override string Title {

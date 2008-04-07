@@ -52,6 +52,7 @@ namespace Banshee.Collection
         private string composer;
         private string copyright;
         private string license_uri;
+        private string musicbrainz_id;
 
         private string comment;
         private int track_number;
@@ -61,6 +62,7 @@ namespace Banshee.Collection
         private int rating;
 
         private TimeSpan duration;
+        private DateTime release_date;
         private DateTime date_added;
 
         private int play_count;
@@ -148,6 +150,24 @@ namespace Banshee.Collection
             get { return track_title; }
             set { track_title = value; }
         }
+        
+        public virtual string MusicBrainzId {
+            get { return musicbrainz_id; }
+            set { musicbrainz_id = value; }
+        }
+        
+        public virtual string ArtistMusicBrainzId {
+            get { return null; }
+        }
+        
+        public virtual string AlbumMusicBrainzId {
+            get { return null; }
+        }
+        
+        public virtual DateTime ReleaseDate {
+            get { return release_date; }
+            set { release_date = value; }
+        }        
         
         public string DisplayArtistName { 
             get {

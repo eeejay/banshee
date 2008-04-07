@@ -109,7 +109,7 @@ namespace Banshee.Collection.Database
             get { return DatabaseArtistInfo.FindOrCreate (ArtistName); }
         }
         
-        public DatabaseAlbumInfo Album{
+        public DatabaseAlbumInfo Album {
             get { return DatabaseAlbumInfo.FindOrCreate (Artist, AlbumTitle); }
         }
 
@@ -205,11 +205,10 @@ namespace Banshee.Collection.Database
             set { tag_set_id = value; }
         }
         
-        private string music_brainz_id;
-        [DatabaseColumn]
-        public string MusicBrainzID {
-            get { return music_brainz_id; }
-            set { music_brainz_id = value; }
+        [DatabaseColumn ("MusicBrainzID")]
+        public override string MusicBrainzId {
+            get { return base.MusicBrainzId; }
+            set { base.MusicBrainzId = value; }
         }
 
         public override SafeUri Uri {

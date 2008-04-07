@@ -73,5 +73,9 @@ namespace Banshee.Streaming
         public const string StreamType        = "stream-type";
         public const string AlbumCoverId      = "album-cover-id"; 
         public const string MoreInfoUri       = "more-info-uri";
+        public const string MusicBrainzTrackId = "musicbrainz-trackid";
+        public const string MusicBrainzArtistId = "musicbrainz-artistid";
+        public const string MusicBrainzAlbumId = "musicbrainz-albumid";
+        public const string MusicBrainzDiscId = "musicbrainz-discid";
     }
 }

@@ -30,10 +30,11 @@ using System;
 
 using Banshee.Base;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 
 namespace Banshee.AudioCd
 {
-    public class AudioCdTrackInfo : TrackInfo
+    public class AudioCdTrackInfo : DatabaseTrackInfo
     {
         public AudioCdTrackInfo (AudioCdDiscModel model, string deviceNode, int index)
         {
@@ -53,6 +54,43 @@ namespace Banshee.AudioCd
             get { return index_on_disc; }
         }
         
+        public DatabaseArtistInfo album_artist_info;
+        public DatabaseArtistInfo AlbumArtist {
+            get { return album_artist_info; }
+            set { album_artist_info = value; }
+        }
+        
+        private DatabaseAlbumInfo album_info;
+        public new DatabaseAlbumInfo Album {
+            get { return album_info; }
+            set { album_info = value; }
+        }
+        
+        public DatabaseArtistInfo artist_info;
+        public new DatabaseArtistInfo Artist {
+            get { return artist_info; }
+            set { artist_info = value; }
+        }
+        
+        public override string AlbumMusicBrainzId {
+            get { return Album == null ? null : Album.MusicBrainzId; }
+        }
+
+        public override string ArtistMusicBrainzId {
+            get { return Artist == null ? null : Artist.MusicBrainzId; }
+        }
+        
+        public override DateTime ReleaseDate {
+            get { return Album == null ? base.ReleaseDate : Album.ReleaseDate; }
+            set { 
+                if (Album == null) {
+                    base.ReleaseDate = value;
+                } else {
+                    Album.ReleaseDate = value;
+                }
+            }
+        }
+
         private bool rip_enabled = true;
         public bool RipEnabled {
             get { return rip_enabled; }

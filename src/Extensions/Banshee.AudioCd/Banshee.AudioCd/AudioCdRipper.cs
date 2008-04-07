@@ -35,6 +35,7 @@ using Mono.Addins;
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.MediaEngine;
 
 namespace Banshee.AudioCd
@@ -190,9 +191,26 @@ namespace Banshee.AudioCd
                 return;
             }
         
-            ripped_duration += args.Track.Duration;
-            args.Track.Uri = args.Uri;
-            source.UnlockTrack ((AudioCdTrackInfo)args.Track);
+            AudioCdTrackInfo track = (AudioCdTrackInfo)args.Track;
+        
+            ripped_duration += track.Duration;
+            track.PrimarySource = ServiceManager.SourceManager.MusicLibrary;
+            track.Uri = args.Uri;
+            
+            if (track.Artist != null) {
+                track.Artist = DatabaseArtistInfo.UpdateOrCreate (track.Artist);
+                track.ArtistId = track.Artist.DbId;
+            }
+            
+            if (track.Album != null && track.AlbumArtist != null) {
+                DatabaseArtistInfo.UpdateOrCreate (track.AlbumArtist);
+                track.Album = DatabaseAlbumInfo.UpdateOrCreate (track.AlbumArtist, track.Album);
+                track.AlbumId = track.Album.DbId;
+            }
+            
+            track.Save ();
+            
+            source.UnlockTrack (track);
             RipNextTrack ();
         }
         

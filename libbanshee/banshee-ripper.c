@@ -154,7 +154,6 @@ br_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer data)
             
         case GST_MESSAGE_EOS: {
             gst_element_set_state (GST_ELEMENT (ripper->pipeline), GST_STATE_NULL);
-            g_object_unref (G_OBJECT (ripper->pipeline));
             
             ripper->is_ripping = FALSE;
             br_stop_iterate_timeout (ripper);

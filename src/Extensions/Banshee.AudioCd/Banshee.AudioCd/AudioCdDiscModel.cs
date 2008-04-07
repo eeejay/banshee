@@ -38,6 +38,7 @@ using Hyena;
 using Banshee.Base;
 using Banshee.Hardware;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 
 namespace Banshee.AudioCd
 {
@@ -105,7 +106,7 @@ namespace Banshee.AudioCd
                 OnMetadataQueryFinished (false);
                 return;
             }
-            
+                        
             disc_title = release.Title;
             
             int disc_number = 1;
@@ -135,20 +136,36 @@ namespace Banshee.AudioCd
                     ApplicationContext.InternalCultureInfo);
             }
             
+            DatabaseArtistInfo artist = new DatabaseArtistInfo ();
+            artist.Name = release.Artist.Name;
+            artist.MusicBrainzId = release.Artist.Id;
+            
+            DatabaseAlbumInfo album = new DatabaseAlbumInfo ();
+            album.Title = release.Title;
+            album.ArtistName = artist.Name;
+            album.MusicBrainzId = release.Id;
+            album.ReleaseDate = release_date;
+            
             i = 0;
             
             foreach (Track track in release.Tracks) {
-                this[i].TrackTitle = track.Title;
-                this[i].ArtistName = track.Artist.Name;
-                this[i].AlbumTitle = release.Title;
-                this[i].Disc = disc_number;
+                AudioCdTrackInfo model_track = (AudioCdTrackInfo)this[i++];
+                
+                model_track.MusicBrainzId = track.Id;
+                model_track.TrackTitle = track.Title;
+                model_track.ArtistName = track.Artist.Name;
+                model_track.AlbumTitle = release.Title;
+                model_track.Disc = disc_number;
+                
+                model_track.Album = album;
+                model_track.AlbumArtist = artist;
+                model_track.Artist = new DatabaseArtistInfo ();
+                model_track.Artist.Name = track.Artist.Name;
+                model_track.Artist.MusicBrainzId = track.Artist.Id;
                 
                 if (!release_date.Equals (DateTime.MinValue)) {
-                    // FIXME: We need to change the Year column to a Release Date column
-                    this[i].Year = release_date.Year;
+                    model_track.Year = release_date.Year;
                 }
-                
-                i++;
             }
             
             OnMetadataQueryFinished (true);

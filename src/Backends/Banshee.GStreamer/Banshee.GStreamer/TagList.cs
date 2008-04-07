@@ -58,11 +58,18 @@ namespace Banshee.GStreamer
             AddTag (CommonTags.TrackNumber, (uint)track.TrackNumber);
             AddTag (CommonTags.TrackCount, (uint)track.TrackCount);
             AddTag (CommonTags.AlbumVolumeNumber, (uint)track.Disc);
+            
             AddYear (track.Year);
+            AddDate (track.ReleaseDate);
             
             AddTag (CommonTags.Composer, track.Composer);
             AddTag (CommonTags.Copyright, track.Copyright);
             AddTag (CommonTags.Comment, track.Comment);
+            
+            AddTag (CommonTags.MusicBrainzTrackId, track.MusicBrainzId);
+            AddTag (CommonTags.MusicBrainzArtistId, track.ArtistMusicBrainzId);
+            AddTag (CommonTags.MusicBrainzAlbumId, track.AlbumMusicBrainzId);
+            
         }
         
         public void AddTag (string tagName, string value)
