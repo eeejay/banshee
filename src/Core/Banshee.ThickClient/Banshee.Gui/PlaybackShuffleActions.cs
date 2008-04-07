@@ -1,10 +1,10 @@
 //
-// PlaybackRepeatActions.cs
+// PlaybackShuffleActions.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Scott Peterson <lunchtimemama@gmail.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2008 Scott Peterson
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -40,7 +40,7 @@ using Banshee.PlaybackController;
 
 namespace Banshee.Gui
 {
-    public class PlaybackRepeatActions : BansheeActionGroup, IRadioActionGroup
+    public class PlaybackShuffleActions : BansheeActionGroup, IRadioActionGroup
     {
         private RadioAction active_action;
 
@@ -48,43 +48,51 @@ namespace Banshee.Gui
             get { return active_action; }
             set {
                 active_action = value;
-                RepeatMode.Set (active_action == null ? String.Empty : ActionNameToConfigId (active_action.Name));
-                ServiceManager.PlaybackController.RepeatMode = (PlaybackRepeatMode)active_action.Value;
+                ShuffleMode.Set (active_action == null ? String.Empty : ActionNameToConfigId (active_action.Name));
+                ServiceManager.PlaybackController.ShuffleMode = (PlaybackShuffleMode)active_action.Value;
             }
         }
 
         public event ChangedHandler Changed;
         
-        public PlaybackRepeatActions (InterfaceActionService actionService) : base ("PlaybackRepeat")
+        public PlaybackShuffleActions (InterfaceActionService actionService) : base ("PlaybackShuffle")
         {
             actionService.AddActionGroup (this);
 
             Add (new RadioActionEntry [] {
-                new RadioActionEntry ("RepeatNoneAction", null, 
-                    Catalog.GetString ("Repeat N_one"), null,
-                    Catalog.GetString ("Do not repeat playlist"),
-                    (int)PlaybackRepeatMode.None),
+                new RadioActionEntry ("ShuffleOffAction", null, 
+                    Catalog.GetString ("Shuffle _Off"), null,
+                    Catalog.GetString ("Do not shuffle playlist"),
+                    (int)PlaybackShuffleMode.Linear),
                     
-                new RadioActionEntry ("RepeatAllAction", null,
-                    Catalog.GetString ("Repeat _All"), null,
-                    Catalog.GetString ("Play all songs before repeating playlist"),
-                    (int)PlaybackRepeatMode.RepeatAll),
+                new RadioActionEntry ("ShuffleSongAction", null,
+                    Catalog.GetString ("Shuffle by _Song"), null,
+                    Catalog.GetString ("Play songs randomly from the playlist"),
+                    (int)PlaybackShuffleMode.Song),
                     
-                new RadioActionEntry ("RepeatSingleAction", null,
-                    Catalog.GetString ("Repeat Singl_e"), null,
-                    Catalog.GetString ("Repeat the current playing song"),
-                    (int)PlaybackRepeatMode.RepeatSingle)
+                new RadioActionEntry ("ShuffleArtistAction", null,
+                    Catalog.GetString ("Shuffle by A_rtist"), null,
+                    Catalog.GetString ("Play all songs by an artist, then randomly choose another artist"),
+                    (int)PlaybackShuffleMode.Artist),
+                    
+                new RadioActionEntry ("ShuffleAlbumAction", null,
+                    Catalog.GetString ("Shuffle by A_lbum"), null,
+                    Catalog.GetString ("Play all songs from an album, then randomly choose another album"),
+                    (int)PlaybackShuffleMode.Album)
             }, 0, OnChanged);
+                
+            this["ShuffleOffAction"].IconName = "media-skip-forward";
+            this["ShuffleSongAction"].IconName = "media-playlist-shuffle";
+            this["ShuffleArtistAction"].IconName = "media-playlist-shuffle";
+            this["ShuffleAlbumAction"].IconName = "media-playlist-shuffle";
+            this["ShuffleArtistAction"].Sensitive = false;
+            this["ShuffleAlbumAction"].Sensitive = false;
 
-            this["RepeatNoneAction"].IconName = "media-repeat-none";
-            this["RepeatAllAction"].IconName = "media-repeat-all";
-            this["RepeatSingleAction"].IconName = "media-repeat-single";
-
-            Gtk.Action action = this[ConfigIdToActionName (RepeatMode.Get ())];
+            Gtk.Action action = this[ConfigIdToActionName (ShuffleMode.Get ())];
             if (action is RadioAction) {
                 active_action = (RadioAction)action;
             } else {
-                Active = (RadioAction)this["RepeatNoneAction"];
+                Active = (RadioAction)this["ShuffleOffAction"];
             }
             
             Active.Activate ();
@@ -102,9 +110,10 @@ namespace Banshee.Gui
 
         public IEnumerator<RadioAction> GetEnumerator ()
         {
-            yield return (RadioAction)this["RepeatNoneAction"];
-            yield return (RadioAction)this["RepeatAllAction"];
-            yield return (RadioAction)this["RepeatSingleAction"];
+            yield return (RadioAction)this["ShuffleOffAction"];
+            yield return (RadioAction)this["ShuffleSongAction"];
+            yield return (RadioAction)this["ShuffleArtistAction"];
+            yield return (RadioAction)this["ShuffleAlbumAction"];
         }
 
         IEnumerator IEnumerable.GetEnumerator ()
@@ -123,11 +132,11 @@ namespace Banshee.Gui
                 actionName.Length - (actionName.EndsWith ("Action") ? 6 : 0)));
         }
 
-        public static readonly SchemaEntry<string> RepeatMode = new SchemaEntry<string> (
-            "playback", "repeat_mode",
-            "none",
-            "Repeat playback",
-            "Repeat mode (repeat_none, repeat_all, repeat_single)"
+        public static readonly SchemaEntry<string> ShuffleMode = new SchemaEntry<string> (
+            "playback", "shuffle_mode",
+            "off",
+            "Shuffle playback",
+            "Shuffle mode (shuffle_off, shuffle_song, shuffle_artist, shuffle_album)"
         );
     }
 }

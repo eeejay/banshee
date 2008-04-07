@@ -33,6 +33,8 @@ namespace Banshee.PlaybackController
     public enum PlaybackShuffleMode
     {
         Linear,
-        Shuffle
+        Song,
+        Artist,
+        Album
     }
 }

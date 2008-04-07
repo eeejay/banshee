@@ -29,102 +29,19 @@
 using System;
 using Gtk;
 
-using Banshee.Gui;
+using Hyena.Gui;
+using Hyena.Widgets;
+
 using Banshee.ServiceStack;
 
 namespace Banshee.Gui.Widgets
 {
-    public class RepeatActionButton : Button
+    public class RepeatActionButton : ActionButton
     {
-        private HBox box = new HBox ();
-        private Image image = new Image ();
-        private Label label = new Label ();
-
-        public RepeatActionButton () : base ()
-        {
-            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
-            service.PlaybackActions.RepeatActions.Changed += OnActionChanged;
-
-            Relief = ReliefStyle.None;
-            
-            label.UseUnderline = true;
-            image.IconSize = (int)IconSize.Menu;
-
-            box.Spacing = 4;
-            box.PackStart (image, false, false, 0);
-            box.PackStart (label, true, true, 0);
-            box.ShowAll ();
-            Add (box);
-            
-            SetActiveItem (service.PlaybackActions.RepeatActions.Active);
-        }
-
-        private void OnActionChanged (object o, ChangedArgs args)
-        {
-            SetActiveItem ((RadioAction)args.Current);
-        }
-
-        private void SetActiveItem (RadioAction action)
-        {
-            if (action == null) {
-                return;
-            }
-
-            image.IconName = action.IconName;
-            label.TextWithMnemonic = action.Label;
-            box.Sensitive = action.Sensitive && action.Visible;
-        }
-
-        protected override void OnActivated ()
-        {
-            BuildMenu ().Popup (null, null, PositionMenu, 1, Gtk.Global.CurrentEventTime);
-        }
-
-        protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
-        {
-            if (evnt.Button == 1 || evnt.Button == 3) {
-                BuildMenu ().Popup (null, null, PositionMenu, 1, evnt.Time);
-            }
-
-            return true;
-        }
-
-        private Menu BuildMenu ()
-        {
-            Menu menu = new Menu ();
-            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
-            foreach (RadioAction action in service.PlaybackActions.RepeatActions) {
-                menu.Append (action.CreateMenuItem ());
-            }
-
-            menu.ShowAll ();
-            return menu;
-        }
-
-        private void PositionMenu (Menu menu, out int x, out int y, out bool push_in) 
-        {
-            Gtk.Requisition menu_req = menu.SizeRequest ();
-            int monitor_num = Screen.GetMonitorAtWindow (GdkWindow);
-            Gdk.Rectangle monitor = Screen.GetMonitorGeometry (monitor_num < 0 ? 0 : monitor_num);
-
-            GdkWindow.GetOrigin (out x, out y);
-            
-            y += Allocation.Y;
-            x += Allocation.X + (Direction == TextDirection.Ltr
-                ? Math.Max (Allocation.Width - menu_req.Width, 0)
-                : - (menu_req.Width - Allocation.Width));
-            
-            if (y + Allocation.Height + menu_req.Height <= monitor.Y + monitor.Height) {
-                y += Allocation.Height;
-            } else if (y - menu_req.Height >= monitor.Y) {
-                y -= menu_req.Height;
-            } else if (monitor.Y + monitor.Height - (y + Allocation.Height) > y) {
-                y += Allocation.Height;
-            } else {
-                y -= menu_req.Height;
-            }
-
-            push_in = false;
+        private InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
+        
+        protected override IRadioActionGroup ActionGroup {
+            get { return service.PlaybackActions.RepeatActions; }
         }
     }
 }

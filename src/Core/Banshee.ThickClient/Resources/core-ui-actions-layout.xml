@@ -2,7 +2,7 @@
   <toolbar name="HeaderToolbar">
     <toolitem action="PreviousAction"/>
     <toolitem action="PlayPauseAction"/>
-    <toolitem action="NextAction"/>
+    <placeholder name="NextArrowButton"/>
     <placeholder name="SeekSlider"/>
     <placeholder name="TrackInfoDisplay"/>
     <placeholder name="SourceActions">
@@ -79,7 +79,10 @@
       <menuitem name="RepeatAll" action="RepeatAllAction"/>
       <menuitem name="RepeatSingle" action="RepeatSingleAction"/>
       <separator/>
-      <menuitem name="Shuffle" action="ShuffleAction"/>
+      <menuitem name="ShuffleOff" action="ShuffleOffAction"/>
+      <menuitem name="ShuffleSong" action="ShuffleSongAction"/>
+      <menuitem name="ShuffleArtist" action="ShuffleArtistAction"/>
+      <menuitem name="ShuffleAlbum" action="ShuffleAlbumAction"/>
     </menu>
     
     <menu name="ToolsMenu" action="ToolsMenuAction">

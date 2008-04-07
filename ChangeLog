@@ -1,3 +1,45 @@
+2008-04-07  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Pack in the
+	NextArrowButton.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:
+	Adds all of the shuffle action definitions.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Use new
+	shuffle actions.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:
+	Replaced if/elses with a cast of the action value to the enum type.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/NextArrowButton.cs:
+	The next button now has a drop-down menu to select the shuffle
+	setting.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/RepeatActionButton.cs:
+	Moved all of the logic into Hyena.Widgets.ActionButton.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Added new shuffle actions to the menu, replace the old next button
+	with a placeholder for the fancy new one.
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackShuffleMode.cs:
+	Added values for shuffling by song, artist, album.
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/IRadioActionGroup.cs: An interface
+	we seem to need until someone comes up with a more creative
+	solution.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ArrowButton.cs: This widget
+	visually works just the Firefox 2 forward/back buttons. There is a
+	main button which is tied to the active action and an arrow to the
+	right side. Clicking the arrow brings up a menu of the actions in
+	the IRadioActionGroup.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ActionButton.cs: An
+	ActionButton is a button which pops up a menu when you click on it.
+	It is tied to an IRadioActionGroup.
+
 2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Remove

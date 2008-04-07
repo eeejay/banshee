@@ -36,6 +36,7 @@ SOURCES =  \
 	Hyena.Gui/EntryInsertAction.cs \
 	Hyena.Gui/EntryUndoAdapter.cs \
 	Hyena.Gui/GtkUtilities.cs \
+	Hyena.Gui/IRadioActionGroup.cs \
 	Hyena.Gui/PangoCairoHelper.cs \
 	Hyena.Gui/ShadingTestWindow.cs \
 	Hyena.Query.Gui/DateQueryValueEntry.cs \
@@ -50,11 +51,13 @@ SOURCES =  \
 	Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs \
 	Hyena.Query.Gui/StringQueryValueEntry.cs \
 	Hyena.Query.Gui/TimeSpanQueryValueEntry.cs \
+	Hyena.Widgets/ActionButton.cs \
 	Hyena.Widgets/AnimatedBox.cs \
 	Hyena.Widgets/AnimatedHBox.cs \
 	Hyena.Widgets/AnimatedImage.cs \
 	Hyena.Widgets/AnimatedVBox.cs \
 	Hyena.Widgets/AnimatedWidget.cs \
+	Hyena.Widgets/ArrowButton.cs \
 	Hyena.Widgets/MessageBar.cs \
 	Hyena.Widgets/RoundedFrame.cs \
 	Hyena.Widgets/ScrolledWindow.cs \

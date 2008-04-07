@@ -48,14 +48,20 @@ namespace Banshee.Gui
         private InterfaceActionService action_service;
         private Gtk.Action play_pause_action;
         private PlaybackRepeatActions repeat_actions;
+        private PlaybackShuffleActions shuffle_actions;
 
         public PlaybackRepeatActions RepeatActions {
             get { return repeat_actions; }
         }
         
+        public PlaybackShuffleActions ShuffleActions {
+            get { return shuffle_actions; }
+        }
+        
         public PlaybackActions (InterfaceActionService actionService) : base ("Playback")
         {
             repeat_actions = new PlaybackRepeatActions (actionService);
+            shuffle_actions = new PlaybackShuffleActions (actionService);
 
             Add (new ActionEntry [] {
                 new ActionEntry ("PlayPauseAction", null,
@@ -84,11 +90,6 @@ namespace Banshee.Gui
             });
             
             Add (new ToggleActionEntry [] {
-                new ToggleActionEntry ("ShuffleAction", null,
-                    Catalog.GetString ("Shu_ffle"), null,
-                    Catalog.GetString ("Toggle between shuffle or continuous playback modes"), 
-                    OnShuffleAction, ShuffleEnabled.Get ()),
-                    
                 new ToggleActionEntry ("StopWhenFinishedAction", null,
                     Catalog.GetString ("_Stop When Finished"), "<Shift>space",
                     Catalog.GetString ("Stop playback after the current item finishes playing"), 
@@ -99,10 +100,6 @@ namespace Banshee.Gui
                 new ActionEntry ("PlaybackMenuAction", null,
                     Catalog.GetString ("_Playback"), null, null, null),
             });
-            
-            ServiceManager.PlaybackController.ShuffleMode = ShuffleEnabled.Get () 
-                ? PlaybackShuffleMode.Shuffle
-                : PlaybackShuffleMode.Linear;
 
             this["JumpToPlayingTrackAction"].Sensitive = false;
             this["RestartSongAction"].Sensitive = false;
@@ -111,7 +108,6 @@ namespace Banshee.Gui
             this["PlayPauseAction"].IconName = "media-playback-start";
             this["NextAction"].IconName = "media-skip-forward";
             this["PreviousAction"].IconName = "media-skip-backward";
-            this["ShuffleAction"].IconName = "media-playlist-shuffle";
             
             action_service = actionService;
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
@@ -251,21 +247,5 @@ namespace Banshee.Gui
                 }
             }
         }
-        
-        private void OnShuffleAction (object o, EventArgs args)
-        {
-            ServiceManager.PlaybackController.ShuffleMode = ((ToggleAction)o).Active 
-                ? PlaybackShuffleMode.Shuffle
-                : PlaybackShuffleMode.Linear;
-            
-            ShuffleEnabled.Set ((o as ToggleAction).Active);
-        }
-        
-        public static readonly SchemaEntry<bool> ShuffleEnabled = new SchemaEntry<bool> (
-            "playback", "shuffle",
-            false,
-            "Shuffle playback",
-            "Enable shuffle mode"
-        );
     }
 }

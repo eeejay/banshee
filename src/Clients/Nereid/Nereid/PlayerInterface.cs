@@ -147,6 +147,10 @@ namespace Nereid
             
             primary_vbox.PackStart (toolbar_alignment, false, false, 0);
             
+            NextArrowButton next_button = new NextArrowButton ();
+            next_button.Show ();
+            ActionService.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/NextArrowButton", next_button);
+            
             ConnectedSeekSlider seek_slider = new ConnectedSeekSlider ();
             seek_slider.Show ();
             ActionService.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/SeekSlider", seek_slider);

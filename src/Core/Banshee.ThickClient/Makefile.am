@@ -40,6 +40,7 @@ SOURCES =  \
 	Banshee.Gui.Widgets/ConnectedMessageBar.cs \
 	Banshee.Gui.Widgets/ConnectedSeekSlider.cs \
 	Banshee.Gui.Widgets/ConnectedVolumeButton.cs \
+	Banshee.Gui.Widgets/NextArrowButton.cs \
 	Banshee.Gui.Widgets/PlaylistMenuItem.cs \
 	Banshee.Gui.Widgets/RepeatActionButton.cs \
 	Banshee.Gui.Widgets/TrackInfoDisplay.cs \
@@ -58,6 +59,7 @@ SOURCES =  \
 	Banshee.Gui/InterfaceActionService.cs \
 	Banshee.Gui/PlaybackActions.cs \
 	Banshee.Gui/PlaybackRepeatActions.cs \
+	Banshee.Gui/PlaybackShuffleActions.cs \
 	Banshee.Gui/SourceActions.cs \
 	Banshee.Gui/TrackActions.cs \
 	Banshee.Gui/ViewActions.cs \
