@@ -56,10 +56,12 @@ namespace Banshee.Library
             get { return ServiceManager.SourceManager.MusicLibrary.ErrorSource; }
         }
 
-        protected override string PrimarySourceIds {
+        protected override int [] PrimarySourceIds {
             get {
                 if (primary_source_ids == null) {
-                    primary_source_ids = String.Format ("{0}, {1}", ServiceManager.SourceManager.VideoLibrary.DbId, ServiceManager.SourceManager.MusicLibrary.DbId);
+                    primary_source_ids = new int [] {
+                        ServiceManager.SourceManager.VideoLibrary.DbId, ServiceManager.SourceManager.MusicLibrary.DbId
+                    };
                 }
                 return primary_source_ids;
             }

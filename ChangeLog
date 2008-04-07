@@ -2,6 +2,24 @@
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	Make sure to load all columns in FindOrCreate methods.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	Change PrimarySourceIds to a int [].
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Fix bug in ContainsUri method.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Add support
+	for Arrays as query values (for use in "IN (?)" conditions).
+
+	* tests/Hyena/SqliteCommandTests.cs: Test array support.
+
+2008-04-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
 	Add UpdateOrCreate methods that will overwrite an artist/album if it
 	already exists, otherwise will just save the new one.
 

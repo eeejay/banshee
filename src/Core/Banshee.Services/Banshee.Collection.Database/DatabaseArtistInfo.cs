@@ -48,9 +48,11 @@ namespace Banshee.Collection.Database
             get { return provider; }
         }
 
-        private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (
-            "SELECT ArtistID, Name FROM CoreArtists WHERE Name = ?"
-        );
+        private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (String.Format (
+            "SELECT {0} FROM {1} WHERE {2} AND CoreArtists.Name = ?",
+            provider.Select, provider.From,
+            (String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where)
+        ));
 
         private enum Column : int {
             ArtistID,
@@ -79,7 +81,7 @@ namespace Banshee.Collection.Database
 
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.Name)) {
                 if (reader.Read ()) {
-                    last_artist = new DatabaseArtistInfo (reader);
+                    last_artist = provider.Load (reader, 0);
                 } else {
                     last_artist = artist;
                     last_artist.Save ();
@@ -106,20 +108,9 @@ namespace Banshee.Collection.Database
         {
         }
 
-        protected DatabaseArtistInfo (IDataReader reader) : base (null)
-        {
-            LoadFromReader (reader);
-        }
-
         public void Save ()
         {
             Provider.Save (this);
-        }
-
-        private void LoadFromReader (IDataReader reader)
-        {
-            dbid = Convert.ToInt32 (reader[(int)Column.ArtistID]);
-            Name = reader[(int)Column.Name] as string;
         }
 
         [DatabaseColumn("ArtistID", Constraints = DatabaseColumnConstraints.PrimaryKey)]

@@ -93,15 +93,15 @@ namespace Banshee.Collection.Database
         protected bool can_copy_to_library = false;
         private Dictionary<int, int> counts;
         private ErrorSource error_source;
-        protected string primary_source_ids;
+        protected int [] primary_source_ids;
         protected string base_directory;
     
         public DatabaseImportManager (PrimarySource psource) :
-            this (psource.ErrorSource, delegate { return psource; }, psource.DbId.ToString (), psource.BaseDirectory)
+            this (psource.ErrorSource, delegate { return psource; }, new int [] {psource.DbId}, psource.BaseDirectory)
         {
         }
 
-        public DatabaseImportManager (ErrorSource error_source, TrackPrimarySourceChooser chooser, string primarySourceIds, string baseDirectory) : this (chooser)
+        public DatabaseImportManager (ErrorSource error_source, TrackPrimarySourceChooser chooser, int [] primarySourceIds, string baseDirectory) : this (chooser)
         {
             this.error_source = error_source;
             primary_source_ids = primarySourceIds;
@@ -118,7 +118,7 @@ namespace Banshee.Collection.Database
             get { return error_source; }
         }
 
-        protected virtual string PrimarySourceIds {
+        protected virtual int [] PrimarySourceIds {
             get { return primary_source_ids; }
         }
 

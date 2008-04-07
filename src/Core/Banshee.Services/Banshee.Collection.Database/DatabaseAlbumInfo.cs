@@ -48,9 +48,11 @@ namespace Banshee.Collection.Database
             get { return provider; }
         }
 
-        private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (
-            "SELECT AlbumID, Title FROM CoreAlbums WHERE ArtistID = ? AND Title = ?"
-        );
+        private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (String.Format (
+            "SELECT {0} FROM {1} WHERE {2} AND CoreAlbums.ArtistID = ? AND CoreAlbums.Title = ?",
+            provider.Select, provider.From,
+            (String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where)
+        ));
 
         private enum Column : int {
             AlbumID,
@@ -81,7 +83,7 @@ namespace Banshee.Collection.Database
 
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, album.Title)) {
                 if (reader.Read ()) {
-                    last_album = new DatabaseAlbumInfo (reader);
+                    last_album = provider.Load (reader, 0);
                     last_album.ArtistId = artist.DbId;
                     last_album.ArtistName = artist.Name;
                 } else {
@@ -112,17 +114,6 @@ namespace Banshee.Collection.Database
 
         public DatabaseAlbumInfo () : base (null)
         {
-        }
-
-        protected DatabaseAlbumInfo (IDataReader reader) : base (null)
-        {
-            LoadFromReader (reader);
-        }
-
-        private void LoadFromReader (IDataReader reader)
-        {
-            dbid = Convert.ToInt32 (reader[(int) Column.AlbumID]);
-            Title = reader[(int) Column.Title] as string;
         }
 
         public void Save ()

@@ -54,6 +54,10 @@ public class SqliteCommandTests
 
         HyenaSqliteCommand cmd2 = new HyenaSqliteCommand ("select foo from bar where baz = ?, bar = ?, boo = ?");
         Assert.AreEqual ("select foo from bar where baz = NULL, bar = NULL, boo = 22", GetGeneratedSql (cmd2.ApplyValues (null, null, 22)));
+
+        HyenaSqliteCommand cmd3 = new HyenaSqliteCommand ("select foo from bar where id in (?) and foo not in (?)");
+        Assert.AreEqual ("select foo from bar where id in (1,2,4) and foo not in ('foo','baz')",
+                GetGeneratedSql (cmd3.ApplyValues (new int [] {1, 2, 4}, new string [] {"foo", "baz"})));
     }
 
     static PropertyInfo tf = typeof(HyenaSqliteCommand).GetProperty ("CurrentSqlText", BindingFlags.Instance | BindingFlags.NonPublic);

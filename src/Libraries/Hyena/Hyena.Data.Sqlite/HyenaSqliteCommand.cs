@@ -156,18 +156,37 @@ namespace Hyena.Data.Sqlite
 
             // Transform values as necessary - not needed for numerical types
             for (int i = 0; i < parameter_count; i++) {
-                if (param_values[i] is string) {
-                    param_values[i] = String.Format ("'{0}'", (param_values[i] as string).Replace ("'", "''"));
-                } else if (param_values[i] is DateTime) {
-                    param_values[i] = DateTimeUtil.FromDateTime ((DateTime) param_values[i]);
-                } else if (param_values[i] == null) {
-                    param_values[i] = "NULL";
-                }
+                param_values[i] = SqlifyObject (param_values[i]);
             }
 
             current_values = param_values;
             command_formatted = null;
             return this;
+        }
+
+        protected static object SqlifyObject (object o)
+        {
+            if (o is string) {
+                return String.Format ("'{0}'", (o as string).Replace ("'", "''"));
+            } else if (o is DateTime) {
+                return DateTimeUtil.FromDateTime ((DateTime) o);
+            } else if (o == null) {
+                return "NULL";
+            } else if (o is Array) {
+                StringBuilder sb = new StringBuilder ();
+                bool first = true;
+                foreach (object i in (o as Array)) {
+                    if (!first)
+                        sb.Append (",");
+                    else
+                        first = false;
+
+                    sb.Append (SqlifyObject (i));
+                }
+                return sb.ToString ();
+            } else {
+                return o;
+            }
         }
 
         private string CurrentSqlText {

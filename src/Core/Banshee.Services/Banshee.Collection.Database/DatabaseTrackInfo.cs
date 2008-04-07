@@ -448,7 +448,7 @@ namespace Banshee.Collection.Database
             "SELECT COUNT(*) FROM CoreTracks WHERE PrimarySourceId IN (?) AND (Uri = ? OR Uri = ?)"
         );
         
-        public static bool ContainsUri (SafeUri uri, string relative_path, string primary_sources)
+        public static bool ContainsUri (SafeUri uri, string relative_path, int [] primary_sources)
         {
             return ServiceManager.DbConnection.Query<int> (check_command.ApplyValues (primary_sources, relative_path, uri.AbsoluteUri)) > 0;
         }
