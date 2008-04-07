@@ -41,7 +41,7 @@ using Banshee.Hardware;
 
 namespace Banshee.Dap
 {
-    public abstract class RemovableSource : PrimarySource, IUnmapableSource, IDisposable
+    public abstract class RemovableSource : PrimarySource, IUnmapableSource, IDisposable, Banshee.Library.IImportSource
     {
         protected RemovableSource () : base ()
         {
@@ -78,6 +78,10 @@ namespace Banshee.Dap
 
         public override bool CanDeleteTracks {
             get { return !IsReadOnly; }
+        }
+
+        public virtual bool CanImport {
+            get { return true; }
         }
 
         public double StorageUsageFraction {
@@ -169,6 +173,12 @@ namespace Banshee.Dap
         
         public abstract long BytesUsed { get; }
         public abstract long BytesCapacity { get; }
+
+        public abstract void Import ();
+
+        public virtual string [] IconNames {
+            get { return Properties.GetStringList ("Icon.Name"); }
+        }
 
 #endregion
 

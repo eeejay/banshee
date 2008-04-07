@@ -90,11 +90,11 @@ namespace Banshee.Collection.Database
         public delegate PrimarySource TrackPrimarySourceChooser (DatabaseTrackInfo track);
 
         private TrackPrimarySourceChooser trackPrimarySourceChooser;
-        protected bool can_copy_to_library = false;
         private Dictionary<int, int> counts;
         private ErrorSource error_source;
         protected int [] primary_source_ids;
         protected string base_directory;
+        protected bool force_copy;
     
         public DatabaseImportManager (PrimarySource psource) :
             this (psource.ErrorSource, delegate { return psource; }, new int [] {psource.DbId}, psource.BaseDirectory)
@@ -133,7 +133,7 @@ namespace Banshee.Collection.Database
                 return;
             }
 
-            try {            
+            try {
                 DatabaseTrackInfo track = ImportTrack (path);
                 if (track != null && track.TrackId > 0) {
                     IncrementProcessedCount (String.Format ("{0} - {1}", 
@@ -167,19 +167,15 @@ namespace Banshee.Collection.Database
                 track = new DatabaseTrackInfo ();
                 StreamTagger.TrackInfoMerge (track, file);
                 
-                if (can_copy_to_library) {
-                    SafeUri newpath = track.CopyToLibrary ();
-                    if (newpath != null) {
-                        track.Uri = newpath;
-                    }
+                track.DateAdded = DateTime.Now;
+                track.PrimarySource = trackPrimarySourceChooser (track);
+
+                if (track.PrimarySource is Banshee.Library.LibrarySource) {
+                    track.CopyToLibraryIfAppropriate (force_copy);
                 }
 
-                track.DateAdded = DateTime.Now;
-
-                track.PrimarySource = trackPrimarySourceChooser (track);
-                counts[track.PrimarySourceId] = counts.ContainsKey (track.PrimarySourceId) ? counts[track.PrimarySourceId] + 1 : 1;
-
                 track.Save (false);
+                counts[track.PrimarySourceId] = counts.ContainsKey (track.PrimarySourceId) ? counts[track.PrimarySourceId] + 1 : 1;
 
                 ServiceManager.DbConnection.CommitTransaction ();
 

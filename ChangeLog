@@ -1,3 +1,27 @@
+2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Add force_copy protected bool that we pass to CopyToLibraryIfAppropriate.
+	Used when importing DAPs to force copy to library.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Rename CopyToLibrary method, and add bool arg that forces it to copy the
+	track, even if the user's preference is not to do so.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Fix up
+	ImportSourceAction so it's now functional.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Avoid spawning unnecessary thread.  Fix bug with accessing the
+	BaseDirectory; cache the Hal.Device's mount point property.  Implement
+	IImportSource, so can now import MassStorageSources from the Media ->
+	Import menu and via its context menu (dnd to come).
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Implement most of
+	IImportSource.
+
 2008-04-07  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Only show the

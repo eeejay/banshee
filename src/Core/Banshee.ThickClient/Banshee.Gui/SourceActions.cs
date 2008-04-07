@@ -87,7 +87,7 @@ namespace Banshee.Gui
                     String.Empty, null, null, OnSourceContextMenu),
 
                 new ActionEntry ("ImportSourceAction", null,
-                    Catalog.GetString ("Import Source"), null,
+                    Catalog.GetString ("Import to Library"), null,
                     Catalog.GetString ("Import source to library"), OnImportSource),
 
                 new ActionEntry ("RenameSourceAction", "gtk-edit", 
@@ -236,6 +236,7 @@ namespace Banshee.Gui
             
         private void OnImportSource (object o, EventArgs args)
         {
+            (ActionSource as IImportSource).Import ();
         }
 
         private void OnRenameSource (object o, EventArgs args)
@@ -317,10 +318,11 @@ namespace Banshee.Gui
 
             if (source != last_source && source != null) {
                 IUnmapableSource unmapable = source as IUnmapableSource;
+                IImportSource import_source = source as IImportSource;
                 SmartPlaylistSource smart_playlist = source as SmartPlaylistSource;
                 UpdateAction ("UnmapSourceAction", unmapable != null, unmapable != null && unmapable.CanUnmap, source);
                 UpdateAction ("RenameSourceAction", source.CanRename, true, null);
-                UpdateAction ("ImportSourceAction", source is IImportable, true, source);
+                UpdateAction ("ImportSourceAction", import_source != null, import_source != null && import_source.CanImport, source);
                 UpdateAction ("ExportPlaylistAction", source is AbstractPlaylistSource, true, source);
                 UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
                 UpdateAction ("RefreshSmartPlaylistAction", smart_playlist != null && smart_playlist.CanRefresh, true, source);

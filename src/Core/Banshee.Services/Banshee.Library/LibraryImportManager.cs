@@ -47,9 +47,13 @@ namespace Banshee.Library
 {
     public class LibraryImportManager : DatabaseImportManager, IService
     {
-        public LibraryImportManager () : base (DefaultTrackPrimarySourceChooser)
+        public LibraryImportManager () : this (false)
         {
-            can_copy_to_library = true;
+        }
+
+        public LibraryImportManager (bool force_copy) : base (DefaultTrackPrimarySourceChooser)
+        {
+            this.force_copy = force_copy;
         }
 
         protected override ErrorSource ErrorSource {
@@ -68,7 +72,7 @@ namespace Banshee.Library
         }
 
         protected override string BaseDirectory {
-            get { return ServiceManager.SourceManager.VideoLibrary.BaseDirectory; }
+            get { return ServiceManager.SourceManager.MusicLibrary.BaseDirectory; }
         }
 
         protected static PrimarySource DefaultTrackPrimarySourceChooser (DatabaseTrackInfo track)

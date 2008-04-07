@@ -67,7 +67,6 @@ namespace Banshee.Collection.Database
 
         private bool? artist_changed = null, album_changed = null;
         private bool uri_fields_dirty = false;
-        private bool updating_uri = false;
         
         public DatabaseTrackInfo () : base ()
         {
@@ -225,7 +224,7 @@ namespace Banshee.Collection.Database
             get {
                 if (uri_fields_dirty) {
                     PrimarySource.UriToFields (Uri, out uri_type, out uri_field);
-                    uri_fields_dirty = !updating_uri;
+                    uri_fields_dirty = false;
                 }
                 return uri_field;
             }
@@ -400,47 +399,36 @@ namespace Banshee.Collection.Database
         private void UpdateUri ()
         {
             if (Uri == null && uri_type_set && UriField != null && PrimarySource != null) {
-                updating_uri = true;
                 Uri = PrimarySource.UriAndTypeToSafeUri (UriType, UriField);
-                updating_uri = false;
             }
         }
         
-        public SafeUri CopyToLibrary ()
+        public void CopyToLibraryIfAppropriate (bool force_copy)
         {
             SafeUri old_uri = this.Uri;
             if (old_uri == null) {
                 // Get out quick, no URI set yet.
-                return null;
+                return;
             }
             
-            SafeUri library_check = new SafeUri (Paths.LibraryLocation + Path.DirectorySeparatorChar);
-        
-            bool in_library = old_uri.ToString ().StartsWith (library_check.ToString ());
+            bool in_library = old_uri.AbsolutePath.StartsWith (Paths.CachedLibraryLocation);
             //Console.WriteLine ("{0} is{1}in library.", old_uri.ToString (), in_library ? " " : " not ");
 
-            if (!in_library && LibrarySchema.CopyOnImport.Get ()) {
-                string new_filename = FileNamePattern.BuildFull (this,
-                    Path.GetExtension (old_uri.ToString ()).Substring (1));
+            if (!in_library && (LibrarySchema.CopyOnImport.Get () || force_copy)) {
+                string new_filename = FileNamePattern.BuildFull (this, Path.GetExtension (old_uri.ToString ()).Substring (1));
                 SafeUri new_uri = new SafeUri (new_filename);
 
                 try {
                     if (Banshee.IO.File.Exists (new_uri)) {
-                        return null;
+                        return;
                     }
                     
-                    // TODO: Once GnomeVfs and Unix have proper Copy providers, use IOProxy.File.Copy instead.
-                    System.IO.File.Copy (old_uri.LocalPath, new_uri.LocalPath);
-                    
-                    // Return new SafeUri after copy
-                    return new_uri;
+                    Banshee.IO.File.Copy (old_uri, new_uri, false);
+                    Uri = new_uri;
                 } catch (Exception e) {
                     Log.Error (String.Format("Exception copying into library: {0}", e), false);
-                    return null;
                 }
             }
-            
-            return null;
         }
 
         private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (

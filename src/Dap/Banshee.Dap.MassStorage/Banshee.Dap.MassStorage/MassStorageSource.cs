@@ -36,6 +36,7 @@ using Hyena.Collections;
 
 using Banshee.Base;
 using Banshee.ServiceStack;
+using Banshee.Library;
 using Banshee.Sources;
 using Banshee.Collection;
 using Banshee.Collection.Database;
@@ -46,18 +47,9 @@ namespace Banshee.Dap.MassStorage
     public class MassStorageSource : DapSource
     {
         protected IVolume volume;
-        public IVolume Volume {
-            get { return volume; }
-        }
 
         public MassStorageSource () : base ()
         {
-        }
-
-        // Override PrimarySource's Initialize method
-        protected override void Initialize ()
-        {
-            base.Initialize ();
         }
 
         public override bool Initialize (IDevice device)
@@ -76,6 +68,7 @@ namespace Banshee.Dap.MassStorage
             Initialize ();
 
             Properties.SetStringList ("Icon.Name", "harddrive");
+            mount_point = volume.MountPoint;
 
             // TODO differentiate between Audio Players and normal Disks, and include the size, eg "2GB Audio Player"?
             //GenericName = Catalog.GetString ("Audio Player");
@@ -83,28 +76,27 @@ namespace Banshee.Dap.MassStorage
             // TODO construct device-specific icon name as preferred icon
             //Properties.SetStringList ("Icon.Name", "media-player");
 
-            ThreadPool.QueueUserWorkItem (delegate {
-                DatabaseImportManager importer = new DatabaseImportManager (this);
-                importer.KeepUserJobHidden = true;
-                SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
-                importer.ImportFinished += delegate  { HideStatus (); };
-                importer.QueueSource (new string [] { volume.MountPoint });
-            });
+            SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
+            DatabaseImportManager importer = new DatabaseImportManager (this);
+            importer.KeepUserJobHidden = true;
+            importer.ImportFinished += delegate  { HideStatus (); };
+            importer.QueueSource (BaseDirectory);
 
             return true;
         }
 
-        protected override void DeleteTrack (DatabaseTrackInfo track)
+        public override void Import ()
         {
-            try {
-                Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
-            } catch (System.IO.FileNotFoundException) {
-            } catch (System.IO.DirectoryNotFoundException) {
-            }
+            new LibraryImportManager (true).QueueSource (BaseDirectory);
         }
 
+        public IVolume Volume {
+            get { return volume; }
+        }
+
+        private string mount_point;
         public override string BaseDirectory {
-            get { return volume.MountPoint; }
+            get { return mount_point; }
         }
 
         protected string IsAudioPlayerPath {
@@ -121,6 +113,15 @@ namespace Banshee.Dap.MassStorage
 
         protected override bool IsReadOnly {
             get { return volume.IsReadOnly; }
+        }
+
+        protected override void DeleteTrack (DatabaseTrackInfo track)
+        {
+            try {
+                Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
+            } catch (System.IO.FileNotFoundException) {
+            } catch (System.IO.DirectoryNotFoundException) {
+            }
         }
 
         protected override void Eject ()
