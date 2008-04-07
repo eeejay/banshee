@@ -40,6 +40,7 @@ namespace Banshee.Gui
     public class BansheeActionGroup : ActionGroup
     {
         protected Dictionary<string, string> labels = new Dictionary<string, string> ();
+        protected Dictionary<string, string> icons = new Dictionary<string, string> ();
 
         public BansheeActionGroup (string name) : base (name)
         {
@@ -78,17 +79,26 @@ namespace Banshee.Gui
             action.Sensitive = visible && sensitive;
 
             if (source != null && action.Visible) {
-                if (!labels.ContainsKey (action_name)) {
+                // Save the original label
+                if (!labels.ContainsKey (action_name))
                     labels.Add (action_name, action.Label);
-                    //Console.WriteLine ("action label {0} for {1} just not saved", action.Label, action_name);
-                }
-                string label = source.Properties.GetString (String.Format ("{0}Label", action_name));
-                string icon = source.Properties.GetString (String.Format ("{0}IconName", action_name));
-                action.Label = String.IsNullOrEmpty (label) ? labels[action_name] : label;
+
+                // Save the original icon name
+                if (!icons.ContainsKey (action_name))
+                    icons.Add (action_name, action.IconName);
+
+                // If this source has a label property for this action, override the current label, otherwise reset it
+                // to the original label
+                string label = source.Properties.GetString (String.Format ("{0}Label", action_name)) ?? labels[action_name];
+                action.Label = label;
+
+                // If this source has an icon property for this action, override the current icon, othewise reset it
+                // to the original icon
+                string icon = source.Properties.GetString (String.Format ("{0}IconName", action_name)) ?? icons[action_name];
                 if (!String.IsNullOrEmpty (icon)) {
+                    Console.WriteLine ("Setting icon for {1} to {0}", icon, action_name);
                     action.IconName = icon;
                 }
-                //Console.WriteLine ("for source {0} and action {1} got label {2}, so set action.Label = {3}", source.Name, action_name, label, action.Label);
             }
         }
 

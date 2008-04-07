@@ -1,5 +1,15 @@
 2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Save the
+	original IconName for an action within UpdateAction, like we do for
+	labels, so we can restore it when we switch to a source that doesn't
+	override it.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Use IconName
+	instead of the StockId so icons can be overridden.
+
+2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
 	Add force_copy protected bool that we pass to CopyToLibraryIfAppropriate.
 	Used when importing DAPs to force copy to library.

@@ -71,7 +71,7 @@ namespace Banshee.Gui
             action_service = actionService;
 
             Add (new ActionEntry [] {
-                new ActionEntry ("NewPlaylistAction", Stock.New,
+                new ActionEntry ("NewPlaylistAction", null,
                     Catalog.GetString ("_New Playlist"), "<control>N",
                     Catalog.GetString ("Create a new empty playlist"), OnNewPlaylist),
 
@@ -90,19 +90,24 @@ namespace Banshee.Gui
                     Catalog.GetString ("Import to Library"), null,
                     Catalog.GetString ("Import source to library"), OnImportSource),
 
-                new ActionEntry ("RenameSourceAction", "gtk-edit", 
+                new ActionEntry ("RenameSourceAction", null,
                     "Rename", "F2", "Rename", OnRenameSource),
 
                 new ActionEntry ("ExportPlaylistAction", null,
                     Catalog.GetString ("Export Playlist..."), null,
                     Catalog.GetString ("Export a playlist"), OnExportPlaylist),
 
-                new ActionEntry ("UnmapSourceAction", Stock.Delete,
+                new ActionEntry ("UnmapSourceAction", null,
                     "Unmap", "<shift>Delete", null, OnUnmapSource),
                     
-                new ActionEntry ("SourcePropertiesAction", Stock.Properties,
+                new ActionEntry ("SourcePropertiesAction", null,
                     "Source Properties", null, null, OnSourceProperties),
             });
+
+            this["NewPlaylistAction"].IconName = Stock.New;
+            this["UnmapSourceAction"].IconName = Stock.Delete;
+            this["RenameSourceAction"].IconName = "gtk-edit";
+            this["SourcePropertiesAction"].IconName = Stock.Properties;
 
             AddImportant (
                 new ActionEntry ("RefreshSmartPlaylistAction", Stock.Refresh,
