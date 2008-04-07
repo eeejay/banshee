@@ -30,8 +30,37 @@
 #  include "config.h"
 #endif
 
-#include <gst/gst.h>
-#include <gst/tag/tag.h>
+#include <glib/gstdio.h>
+
+#include "banshee-tagger.h"
+
+// ---------------------------------------------------------------------------
+// Private Functions
+// ---------------------------------------------------------------------------
+
+static void
+bt_tag_list_foreach (const GstTagList *list, const gchar *tag, gpointer userdata)
+{
+    gint i, tag_count;
+    
+    tag_count  = gst_tag_list_get_tag_size (list, tag);
+    g_printf ("Found %d '%s' tag%s:", tag_count, tag, tag_count == 1 ? "" : "s");
+    for (i = 0; i < tag_count; i++) {
+        const GValue *value;
+        gchar *value_str;
+        gchar *padding = tag_count == 1 ? " " : "    ";
+        
+        value = gst_tag_list_get_value_index (list, tag, i);
+        if (value == NULL) {
+            g_printf ("%s(null)\n", padding);
+            continue;
+        }
+        
+        value_str = g_strdup_value_contents (value);
+        g_printf ("%s%s\n", padding, value_str);
+        g_free (value_str);
+    }
+}
 
 // ---------------------------------------------------------------------------
 // Internal Functions
@@ -53,4 +82,26 @@ void
 bt_tag_list_add_value (GstTagList *list, const gchar *tag_name, const GValue *value)
 {
     gst_tag_list_add_values (list, GST_TAG_MERGE_REPLACE_ALL, tag_name, value, NULL);
+}
+
+void
+bt_tag_list_add_date (GstTagList *list, gint year, gint month, gint day)
+{
+    GDate *date;
+    
+    if (!g_date_valid_dmy (day, month, year)) {
+        return;
+    }
+    
+    date = g_date_new ();
+    g_date_clear (date, 1);
+    g_date_set_dmy (date, day, month, year);
+    
+    gst_tag_list_add (list, GST_TAG_MERGE_REPLACE_ALL, GST_TAG_DATE, date, NULL);
+}
+
+void
+bt_tag_list_dump (const GstTagList *list)
+{
+    gst_tag_list_foreach (list, bt_tag_list_foreach, NULL);
 }

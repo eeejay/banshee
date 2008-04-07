@@ -31,13 +31,10 @@
 #endif
 
 #include <string.h>
-
-#include <glib.h>
 #include <glib/gi18n.h>
-#include <glib/gstdio.h>
 
-#include <gst/gst.h>
-#include <gst/tag/tag.h>
+#include "banshee-gst.h"
+#include "banshee-tagger.h"
 
 typedef struct BansheeRipper BansheeRipper;
 
@@ -283,8 +280,6 @@ br_cancel (BansheeRipper *ripper)
         gst_object_unref (GST_OBJECT (ripper->pipeline));
         ripper->pipeline = NULL;
     }
-    
-    g_remove (ripper->output_uri);
 }
 
 void
@@ -329,22 +324,39 @@ br_rip_track (BansheeRipper *ripper, gint track_number, gchar *output_path,
     bin_iterator = gst_bin_iterate_all_by_interface (GST_BIN (ripper->encoder), GST_TYPE_TAG_SETTER);
     while (!iterate_done) {
         switch (gst_iterator_next (bin_iterator, (gpointer)&bin_element)) {
-            case GST_ITERATOR_OK:
-                gst_tag_setter_add_tags (GST_TAG_SETTER (bin_element),
-                    GST_TAG_MERGE_APPEND,
-                    GST_TAG_ENCODER, _("Banshee"),
-                    GST_TAG_ENCODER_VERSION, VERSION,
+            case GST_ITERATOR_OK: {
+                GstTagSetter *tag_setter = GST_TAG_SETTER (bin_element);
+                if (tag_setter == NULL) {
+                    break;
+                }
+                
+                gst_tag_setter_add_tags (tag_setter, GST_TAG_MERGE_REPLACE_ALL,
+                    GST_TAG_ENCODER, "Banshee " VERSION,
+                    GST_TAG_ENCODER_VERSION, banshee_get_version_number (),
                     NULL);
+                    
+                if (tags != NULL) {
+                    gst_tag_setter_merge_tags (tag_setter, tags, GST_TAG_MERGE_APPEND);
+                }
+                
+                if (banshee_is_debugging ()) {
+                    bt_tag_list_dump (gst_tag_setter_get_tag_list (tag_setter));
+                }
                     
                 can_tag = TRUE;    
                 gst_object_unref (bin_element);
                 break;
-            case GST_ITERATOR_RESYNC:
+            }
+            
+            case GST_ITERATOR_RESYNC: {
                 gst_iterator_resync (bin_iterator);
                 break;
-            default:
+            }
+            
+            default: {
                 iterate_done = TRUE;
                 break;
+            }
         }
     }
     

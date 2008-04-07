@@ -57,7 +57,8 @@ namespace Banshee.GStreamer
             
             AddTag (CommonTags.TrackNumber, (uint)track.TrackNumber);
             AddTag (CommonTags.TrackCount, (uint)track.TrackCount);
-            AddTag (CommonTags.Disc, (uint)track.Disc);
+            AddTag (CommonTags.AlbumVolumeNumber, (uint)track.Disc);
+            AddYear (track.Year);
             
             AddTag (CommonTags.Composer, track.Composer);
             AddTag (CommonTags.Copyright, track.Copyright);
@@ -75,6 +76,18 @@ namespace Banshee.GStreamer
         {
             if (value > 0) {
                 AddTag (tagName, (object)value);
+            }
+        }
+        
+        public void AddDate (DateTime date)
+        {
+            bt_tag_list_add_date (Handle, date.Year, date.Month, date.Day);
+        }
+        
+        public void AddYear (int year)
+        {
+            if (year > 1) {
+                bt_tag_list_add_date (Handle, year, 1, 1);
             }
         }
         
@@ -106,5 +119,8 @@ namespace Banshee.GStreamer
         
         [DllImport ("libbanshee")]
         private static extern void bt_tag_list_add_value (HandleRef tag_list, string tag_name, ref GLib.Value value);
+        
+        [DllImport ("libbanshee")]
+        private static extern void bt_tag_list_add_date (HandleRef tag_list, int year, int month, int day);
     }
 }

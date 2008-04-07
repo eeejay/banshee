@@ -9,7 +9,7 @@
   </Configurations>
   <Contents>
     <File name="banshee-ripper.c" subtype="Code" buildaction="Compile" />
-    <File name="gst-misc-0.10.c" subtype="Code" buildaction="Compile" />
+    <File name="banshee-gst.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player.c" subtype="Code" buildaction="Compile" />
     <File name="gst-transcode-0.10.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-private.h" subtype="Code" buildaction="Nothing" />
@@ -23,6 +23,8 @@
     <File name="banshee-player-pipeline.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-pipeline.h" subtype="Code" buildaction="Nothing" />
     <File name="banshee-tagger.c" subtype="Code" buildaction="Compile" />
+    <File name="banshee-tagger.h" subtype="Code" buildaction="Nothing" />
+    <File name="banshee-gst.h" subtype="Code" buildaction="Nothing" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">

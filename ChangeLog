@@ -1,5 +1,32 @@
 2008-04-06  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/banshee-gst.c: Added banshee_is_debugging and 
+	banshee_get_version_number functions; gstreamer_initialize now takes a
+	debugging argument that banshee_is_debugging will return
+
+	* libbanshee/banshee-ripper.c: Save the GstTagList that is passed to
+	the rip function to the encoder element; fixed bug with setting the
+	encoder version tag
+
+	* libbanshee/banshee-tagger.c: Added bt_tag_list_add_date and 
+	bt_tag_list_dump, which will dump the entire contents of a GstTagList
+	for debugging purposes
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
+	Delete a ripped file if the file was not finished
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/Service.cs:
+	Pass the debug mode to libbanshee
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/TagList.cs:
+	Added AddDate and AddYear functions, binding bt_tag_list_add_date
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Read the disc number and release date from musicbrainz and set it on
+	the disc tracks so this information will be written to the output files
+
+2008-04-06  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Fixed column
 	separator height
 

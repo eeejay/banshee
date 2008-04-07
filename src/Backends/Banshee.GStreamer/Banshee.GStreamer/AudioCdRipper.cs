@@ -27,7 +27,6 @@
 //
 
 using System;
-using System.IO;
 using System.Threading;
 using System.Runtime.InteropServices;
 using Mono.Unix;
@@ -63,6 +62,7 @@ namespace Banshee.GStreamer
                 Profile profile = ServiceManager.MediaProfileManager.GetConfiguredActiveProfile ("cd-importing");
                 if (profile != null) {
                     encoder_pipeline = profile.Pipeline.GetProcessById ("gstreamer");
+                    output_extension = profile.OutputFileExtension;
                 }
                 
                 if (String.IsNullOrEmpty (encoder_pipeline)) {
@@ -93,6 +93,10 @@ namespace Banshee.GStreamer
         
         public void Finish ()
         {
+            if (output_path != null) {
+                System.IO.File.Delete (output_path);
+            }
+        
             TrackReset ();
             
             encoder_pipeline = null;
@@ -119,10 +123,10 @@ namespace Banshee.GStreamer
             current_track = track;
             
             using (TagList tags = new TagList (track)) {
-                output_path = Path.ChangeExtension (outputUri.LocalPath, output_extension); 
-                br_rip_track (handle, trackIndex + 1, output_path, tags.Handle, out taggingSupported);
-                
+                output_path = String.Format ("{0}.{1}", outputUri.LocalPath, output_extension);
                 Log.DebugFormat ("GStreamer ripping track {0} to {1}", trackIndex, output_path);
+                
+                br_rip_track (handle, trackIndex + 1, output_path, tags.Handle, out taggingSupported);
             }
         }
         
@@ -157,7 +161,12 @@ namespace Banshee.GStreamer
         
         private void OnNativeFinished (IntPtr ripper)
         {
-            OnTrackFinished (current_track, new SafeUri (output_path));
+            SafeUri uri = new SafeUri (output_path);
+            TrackInfo track = current_track;
+            
+            TrackReset ();
+            
+            OnTrackFinished (track, uri);
         }
         
         private void OnNativeError (IntPtr ripper, IntPtr error, IntPtr debug)

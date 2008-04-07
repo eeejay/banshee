@@ -13,6 +13,7 @@ bansheelib_LTLIBRARIES = libbanshee.la
 
 libbanshee_la_LDFLAGS = -avoid-version -module
 libbanshee_la_SOURCES =  \
+	banshee-gst.c \
 	banshee-player.c \
 	banshee-player-cdda.c \
 	banshee-player-equalizer.c \
@@ -21,15 +22,16 @@ libbanshee_la_SOURCES =  \
 	banshee-player-video.c \
 	banshee-ripper.c \
 	banshee-tagger.c \
-	gst-misc-0.10.c \
 	gst-transcode-0.10.c
 
 noinst_HEADERS =  \
+	banshee-gst.h \
 	banshee-player-cdda.h \
 	banshee-player-missing-elements.h \
 	banshee-player-pipeline.h \
 	banshee-player-private.h \
-	banshee-player-video.h
+	banshee-player-video.h \
+	banshee-tagger.h
 
 libbanshee_la_LIBADD = \
 	$(LIBBANSHEE_LIBS) \

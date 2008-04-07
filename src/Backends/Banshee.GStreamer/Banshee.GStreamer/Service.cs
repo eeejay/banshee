@@ -44,11 +44,11 @@ namespace Banshee.GStreamer
         }
         
         [DllImport ("libbanshee")]
-        private static extern void gstreamer_initialize ();
+        private static extern void gstreamer_initialize (bool debugging);
         
         void IExtensionService.Initialize ()
         {
-            gstreamer_initialize ();
+            gstreamer_initialize (Banshee.Base.ApplicationContext.Debugging);
             
             MediaProfileManager profile_manager = ServiceManager.MediaProfileManager;
             if (profile_manager != null) {

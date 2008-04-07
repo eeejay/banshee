@@ -79,6 +79,7 @@ namespace Banshee.AudioCd
                 AudioCdTrackInfo track = new AudioCdTrackInfo (this, volume.DeviceNode, i);
                 track.TrackNumber = i + 1;
                 track.TrackCount = n;
+                track.Disc = 1;
                 track.Duration = TimeSpan.FromSeconds (mb_disc.TrackDurations[i]);
                 track.ArtistName = Catalog.GetString ("Unknown Artist");
                 track.AlbumTitle = Catalog.GetString ("Unknown Album");
@@ -107,13 +108,46 @@ namespace Banshee.AudioCd
             
             disc_title = release.Title;
             
+            int disc_number = 1;
             int i = 0;
             
+            foreach (Disc disc in release.Discs) {
+                i++;
+                if (disc.Id == mb_disc.Id) {
+                    disc_number = i;
+                }
+            }
+            
+            DateTime release_date = DateTime.MinValue;
+            int release_event_index = -1;
+            
+            for (i = 0; i < release.Events.Count; i++) {
+                // FIXME: This is sort of lame, but from what I've seen, 
+                // the US releases generally contain more info
+                if (release.Events[i].Country == "US") {
+                    release_event_index = i;
+                    break;
+                }
+            }
+            
+            if (release_event_index >= 0) {
+                release_date = DateTime.Parse (release.Events[release_event_index].Date, 
+                    ApplicationContext.InternalCultureInfo);
+            }
+            
+            i = 0;
+            
             foreach (Track track in release.Tracks) {
-                // FIXME: Gather more details from MB to save to the DB
                 this[i].TrackTitle = track.Title;
                 this[i].ArtistName = track.Artist.Name;
                 this[i].AlbumTitle = release.Title;
+                this[i].Disc = disc_number;
+                
+                if (!release_date.Equals (DateTime.MinValue)) {
+                    // FIXME: We need to change the Year column to a Release Date column
+                    this[i].Year = release_date.Year;
+                }
+                
                 i++;
             }
             
