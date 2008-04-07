@@ -10,7 +10,8 @@ ASSEMBLY_CSFILES =  \
 	$(srcdir)/Hyena/RangeCollectionTests.cs \
 	$(srcdir)/Hyena/StringUtilTests.cs \
 	$(srcdir)/Hyena/SqliteCommandTests.cs \
-	$(srcdir)/Hyena/QueryTests.cs
+	$(srcdir)/Hyena/QueryTests.cs \
+	$(srcdir)/Banshee.Core/TaglibReadWriteTests.cs
 
 #	Banshee.Core/KernelTests.cs
 #	Banshee.Core/FileNamePatternTests.cs

@@ -53,20 +53,18 @@ namespace Banshee.Base
             return result;
         }
         
-        public static string MakePathRelativeToLibrary (string path)
+        public static string MakePathRelative (string path, string to)
         {
-            if (String.IsNullOrEmpty (path)) {
+            if (String.IsNullOrEmpty (path) || String.IsNullOrEmpty (to)) {
                 return null;
             }
             
-            string library_location = CachedLibraryLocation;
-            
-            if (path.Length < library_location.Length + 1) {
+            if (path.Length < to.Length + 1) {
                 return null;
             }
             
-            return path.StartsWith (library_location)
-                ? path.Substring (library_location.Length + 1)
+            return path.StartsWith (to)
+                ? path.Substring (to.Length + 1)
                 : null;
         }
         

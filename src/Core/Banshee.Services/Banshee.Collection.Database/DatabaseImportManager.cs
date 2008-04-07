@@ -93,14 +93,19 @@ namespace Banshee.Collection.Database
         protected bool can_copy_to_library = false;
         private Dictionary<int, int> counts;
         private ErrorSource error_source;
+        protected string primary_source_ids;
+        protected string base_directory;
     
-        public DatabaseImportManager (PrimarySource psource) : this (psource.ErrorSource, delegate { return psource; })
+        public DatabaseImportManager (PrimarySource psource) :
+            this (psource.ErrorSource, delegate { return psource; }, psource.DbId.ToString (), psource.BaseDirectory)
         {
         }
 
-        public DatabaseImportManager (ErrorSource error_source, TrackPrimarySourceChooser chooser) : this (chooser)
+        public DatabaseImportManager (ErrorSource error_source, TrackPrimarySourceChooser chooser, string primarySourceIds, string baseDirectory) : this (chooser)
         {
             this.error_source = error_source;
+            primary_source_ids = primarySourceIds;
+            base_directory = baseDirectory;
         }
 
         public DatabaseImportManager (TrackPrimarySourceChooser chooser)
@@ -109,8 +114,16 @@ namespace Banshee.Collection.Database
             counts = new Dictionary<int, int> ();
         }
 
-        protected virtual ErrorSource ErrorSource { 
+        protected virtual ErrorSource ErrorSource {
             get { return error_source; }
+        }
+
+        protected virtual string PrimarySourceIds {
+            get { return primary_source_ids; }
+        }
+
+        protected virtual string BaseDirectory {
+            get { return base_directory; }
         }
 
         protected override void OnImportRequested (string path)
@@ -141,7 +154,9 @@ namespace Banshee.Collection.Database
         {
             DatabaseTrackInfo track = null;
             
-            if (DatabaseTrackInfo.ContainsUri (uri)) {
+            if (DatabaseTrackInfo.ContainsUri (uri, Paths.MakePathRelative (uri.AbsolutePath, BaseDirectory) ?? uri.AbsoluteUri, PrimarySourceIds)) {
+                // TODO add DatabaseTrackInfo.SyncedStamp property, and if the file has been
+                // updated since the last sync, fetch its metadata into the db.
                 IncrementProcessedCount (null);
                 return null;
             }

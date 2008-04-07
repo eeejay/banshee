@@ -219,7 +219,7 @@ namespace Banshee.Gui
                     );
 
                     UpdateAction ("RemoveTracksAction", is_track_source && track_source.CanRemoveTracks, has_selection, source);
-                    UpdateAction ("DeleteTracksFromDriveAction", is_track_source && track_source.CanDeleteTracks, has_selection && is_track_source , source);
+                    UpdateAction ("DeleteTracksFromDriveAction", is_track_source && track_source.CanDeleteTracks, has_selection, source);
                     UpdateAction ("RemoveTracksFromLibraryAction", source.Parent is LibrarySource, has_selection, null);
                     
                     UpdateAction ("TrackPropertiesAction", in_database, has_selection, null);
@@ -261,6 +261,19 @@ namespace Banshee.Gui
             ResetRating ();
 
             Gtk.Menu menu = action_service.UIManager.GetWidget ("/TrackContextMenu") as Menu;
+            if (menu == null || menu.Children.Length == 0) {
+                return;
+            }
+
+            int visible_children = 0;
+            foreach (Widget child in menu)
+                if (child.Visible)
+                    visible_children++;
+
+            if (visible_children == 0) {
+                return;
+            }
+
             menu.Show (); 
             menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
         }
@@ -277,7 +290,6 @@ namespace Banshee.Gui
         // Generates the menu of playlists to which you can add the selected tracks.
         private void OnAddToPlaylistMenu (object o, EventArgs args)
         {
-            Gdk.Pixbuf pl_pb = Gdk.Pixbuf.LoadFromResource ("source-playlist-16.png");
             Source active_source = ServiceManager.SourceManager.ActiveSource;
 
             // TODO find just the menu that was activated instead of modifying all proxies
@@ -301,7 +313,7 @@ namespace Banshee.Gui
                         }
                         
                         PlaylistMenuItem item = new PlaylistMenuItem (playlist);
-                        item.Image = new Gtk.Image (pl_pb);
+                        item.Image = new Gtk.Image ("playlist-source", IconSize.Menu);
                         item.Activated += OnAddToExistingPlaylist;
                         item.Sensitive = playlist != active_source;
                         submenu.Append (item);

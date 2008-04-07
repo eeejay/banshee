@@ -1,3 +1,50 @@
+2008-04-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This patch extends the relative-Uri goodness we use for Library tracks to
+	any PrimarySource's tracks, meaning if your DAP has one mount point one
+	time, and another the next, we'll detect the songs that are already in the
+	database since we now check against the relative Uri.  Also, delete from
+	MassStorage sources is working.
+
+	* src/Core/Banshee.Core/Banshee.IO/IFile.cs:
+	* src/Core/Banshee.Core/Banshee.IO/File.cs:
+	* src/Core/Banshee.Core/Banshee.IO.SystemIO/File.cs:
+	* src/Backends/Banshee.Unix/Banshee.IO.Unix/File.cs: Add Copy method.
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Factory MakePathRelative
+	out, not-library specific.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Add a couple virtual properties for making the relative-Uri stuff
+	PrimarySource agnostic.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Make the process of making a Uri relative and reconstructing it from the
+	relative path saved in the db generic so it can be used by other
+	PrimarySources.  Scope ContainsUri method to one or more primary sources,
+	since it's fine if a track is on a DAP and in the library.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add methods
+	for making the Uri of a track relative (if possible).  Add default
+	DeleteTrackRange implementation pulled from LibrarySource, but make it
+	call a virtual DeleteTrack method that each PrimarySource can implement.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Override
+	DeleteTrack method to delete files from disk.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Don't show the
+	context menu at all if it has no visible items.  Fix crasher with the
+	playlist menu b/c of recent icon changes.
+
+	* tests/Makefile.am:
+	* tests/Banshee.Core/TaglibReadWriteTests.cs: Test our read/write tags to
+	file code. Commented out b/c abock doesn't want the 390KB of music files
+	in svn.
+
+	* tests/Hyena/QueryTests.cs: Changes to AssertForEach method.
+
 2008-04-06  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/banshee-gst.c: Added banshee_is_debugging and 

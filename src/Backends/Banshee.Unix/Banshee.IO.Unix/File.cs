@@ -78,6 +78,11 @@ namespace Banshee.IO.Unix
         {
             Mono.Unix.Native.Stdlib.rename (from.LocalPath, to.LocalPath);
         }
+
+        public void Copy (SafeUri from, SafeUri to, bool overwrite)
+        {
+            System.IO.File.Copy (from.LocalPath, to.LocalPath, overwrite);
+        }
         
         public Stream OpenRead (SafeUri uri)
         {

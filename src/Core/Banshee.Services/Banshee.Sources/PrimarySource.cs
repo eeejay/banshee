@@ -28,8 +28,9 @@
 
 using System;
 using System.Collections.Generic;
-
 using Mono.Unix;
+
+using Hyena;
 using Hyena.Data;
 using Hyena.Query;
 using Hyena.Data.Sqlite;
@@ -109,6 +110,27 @@ namespace Banshee.Sources
         public static PrimarySource GetById (int id)
         {
             return (primary_sources.ContainsKey (id)) ? primary_sources[id] : null;
+        }
+
+        public virtual SafeUri UriAndTypeToSafeUri (TrackUriType type, string uri_field)
+        {
+            if (type == TrackUriType.RelativePath && BaseDirectory != null)
+                return new SafeUri (System.IO.Path.Combine (BaseDirectory, uri_field));
+            else
+                return new SafeUri (uri_field);
+        }
+
+        public virtual void UriToFields (SafeUri uri, out TrackUriType type, out string uri_field)
+        {
+            uri_field = Paths.MakePathRelative (uri.AbsolutePath, BaseDirectory);
+            type = (uri_field == null) ? TrackUriType.AbsoluteUri : TrackUriType.RelativePath;
+            if (uri_field == null) {
+                uri_field = uri.AbsoluteUri;
+            }
+        }
+
+        public virtual string BaseDirectory {
+            get { return null; }
         }
 
         protected PrimarySource (string generic_name, string name, string id, int order) : base (generic_name, name, id, order)
@@ -241,6 +263,31 @@ namespace Banshee.Sources
                 model.CacheId, range.Start, range.End - range.Start + 1,
                 model.CacheId, range.Start, range.End - range.Start + 1
             );
+        }
+
+        protected override void DeleteTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        {
+            // Remove from file system
+            for (int i = range.Start; i <= range.End; i++) {
+                DatabaseTrackInfo track = model [i] as DatabaseTrackInfo;
+                if (track == null)
+                    continue;
+
+                try {
+                    DeleteTrack (track);
+                } catch (Exception e) {
+                    Log.Exception (e);
+                    ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
+                }
+            }
+
+            // Remove from database
+            RemoveTrackRange (model, range);
+        }
+
+        protected virtual void DeleteTrack (DatabaseTrackInfo track)
+        {
+            throw new Exception ("PrimarySource DeleteTrack method not implemented");
         }
 
         protected override void PruneArtistsAlbums ()

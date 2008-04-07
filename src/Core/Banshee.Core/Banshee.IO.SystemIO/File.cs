@@ -49,6 +49,11 @@ namespace Banshee.IO.SystemIO
         {
             System.IO.File.Move (from.LocalPath, to.LocalPath);
         }
+
+        public void Copy (SafeUri from, SafeUri to, bool overwrite)
+        {
+            System.IO.File.Copy (from.LocalPath, to.LocalPath, overwrite);
+        }
         
         public long GetSize (SafeUri uri)
         {

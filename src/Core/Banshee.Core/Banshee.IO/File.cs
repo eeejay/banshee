@@ -49,6 +49,11 @@ namespace Banshee.IO
     	    Provider.File.Move (from, to);
     	}
 
+    	public static void Copy (SafeUri from, SafeUri to, bool overwrite)
+    	{
+    	    Provider.File.Copy (from, to, overwrite);
+    	}
+
     	public static long GetSize (SafeUri uri)
     	{
     	    return Provider.File.GetSize (uri);

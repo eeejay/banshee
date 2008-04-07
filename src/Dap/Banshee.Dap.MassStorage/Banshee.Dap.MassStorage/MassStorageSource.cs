@@ -32,6 +32,8 @@ using System.Threading;
 using Mono.Unix;
 
 using Hyena;
+using Hyena.Collections;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Sources;
@@ -90,6 +92,19 @@ namespace Banshee.Dap.MassStorage
             });
 
             return true;
+        }
+
+        protected override void DeleteTrack (DatabaseTrackInfo track)
+        {
+            try {
+                Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
+            } catch (System.IO.FileNotFoundException) {
+            } catch (System.IO.DirectoryNotFoundException) {
+            }
+        }
+
+        public override string BaseDirectory {
+            get { return volume.MountPoint; }
         }
 
         protected string IsAudioPlayerPath {

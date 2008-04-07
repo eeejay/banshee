@@ -52,28 +52,18 @@ namespace Banshee.Library
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Library"));
             AfterInitialized ();
         }
-        
-        protected override void DeleteTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+
+        public override string BaseDirectory {
+            get { return Paths.CachedLibraryLocation; }
+        }
+
+        protected override void DeleteTrack (DatabaseTrackInfo track)
         {
-            // Remove from file system
-            for (int i = range.Start; i <= range.End; i++) {
-                DatabaseTrackInfo track = model [i] as DatabaseTrackInfo;
-                if (track == null)
-                    continue;
-
-                try {
-                    try {
-                        Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
-                    } catch (System.IO.FileNotFoundException) {
-                    } catch (System.IO.DirectoryNotFoundException) {
-                    }
-                } catch (Exception e) {
-                    ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
-                }
+            try {
+                Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
+            } catch (System.IO.FileNotFoundException) {
+            } catch (System.IO.DirectoryNotFoundException) {
             }
-
-            // Remove from database
-            RemoveTrackRange (model, range);
         }
 
         public override bool AcceptsInputFromSource (Source source)

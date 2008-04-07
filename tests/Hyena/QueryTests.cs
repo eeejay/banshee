@@ -77,11 +77,12 @@ public class QueryTests
         System.Text.StringBuilder sb = new System.Text.StringBuilder ();
         foreach (T o in objects) {
             try { runner (o); }
-            catch (Exception e) { sb.AppendFormat ("{0}\n", e.Message); }
+            catch (AssertionException e) { sb.AppendFormat ("Failed processing {0}: {1}\n", o, e.Message); }
+            catch (Exception e) { sb.AppendFormat ("Failed processing {0}: {1}\n", o, e.ToString ()); }
         }
 
         if (sb.Length > 0)
-            Assert.Fail (sb.ToString ());
+            Assert.Fail ("\n" + sb.ToString ());
     }
 
     private static void UserQueryParsesAndGenerates (string query)

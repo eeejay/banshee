@@ -56,6 +56,19 @@ namespace Banshee.Library
             get { return ServiceManager.SourceManager.MusicLibrary.ErrorSource; }
         }
 
+        protected override string PrimarySourceIds {
+            get {
+                if (primary_source_ids == null) {
+                    primary_source_ids = String.Format ("{0}, {1}", ServiceManager.SourceManager.VideoLibrary.DbId, ServiceManager.SourceManager.MusicLibrary.DbId);
+                }
+                return primary_source_ids;
+            }
+        }
+
+        protected override string BaseDirectory {
+            get { return ServiceManager.SourceManager.VideoLibrary.BaseDirectory; }
+        }
+
         protected static PrimarySource DefaultTrackPrimarySourceChooser (DatabaseTrackInfo track)
         {
             if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {

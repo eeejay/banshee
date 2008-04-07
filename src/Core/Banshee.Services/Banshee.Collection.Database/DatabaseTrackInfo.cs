@@ -49,10 +49,14 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
+    public enum TrackUriType : int {
+        AbsolutePath = 0,
+        RelativePath = 1,
+        AbsoluteUri = 2
+    }
+
     public class DatabaseTrackInfo : TrackInfo, ICacheableItem
     {
-        private bool? artist_changed = null, album_changed = null;
-        
         private static BansheeModelProvider<DatabaseTrackInfo> provider = new BansheeModelProvider<DatabaseTrackInfo> (
             ServiceManager.DbConnection, "CoreTracks"
         );
@@ -61,11 +65,9 @@ namespace Banshee.Collection.Database
             get { return provider; }
         }
 
-        private enum UriType : int {
-            AbsolutePath,
-            RelativePath,
-            AbsoluteUri
-        }
+        private bool? artist_changed = null, album_changed = null;
+        private bool uri_fields_dirty = false;
+        private bool updating_uri = false;
         
         public DatabaseTrackInfo () : base ()
         {
@@ -143,10 +145,14 @@ namespace Banshee.Collection.Database
             get { return track_id; }
         }
 
-        [DatabaseColumn ("PrimarySourceID")]
         private int primary_source_id;
+        [DatabaseColumn ("PrimarySourceID")]
         public int PrimarySourceId {
             get { return primary_source_id; }
+            set {
+                primary_source_id = value;
+                UpdateUri ();
+            }
         }
 
         public PrimarySource PrimarySource {
@@ -205,58 +211,47 @@ namespace Banshee.Collection.Database
             get { return music_brainz_id; }
             set { music_brainz_id = value; }
         }
+
+        public override SafeUri Uri {
+            get { return base.Uri; }
+            set {
+                base.Uri = value;
+                uri_fields_dirty = true;
+            }
+        }
         
         private string uri_field;
         [DatabaseColumn ("Uri")]
-        private string uri {
+        private string UriField {
             get {
-                return
-                    uri_field ??
-                    (Uri == null
-                        ? null
-                        : (Paths.MakePathRelativeToLibrary (Uri.AbsolutePath) ?? Uri.AbsoluteUri)
-                    );
+                if (uri_fields_dirty) {
+                    PrimarySource.UriToFields (Uri, out uri_type, out uri_field);
+                    uri_fields_dirty = !updating_uri;
+                }
+                return uri_field;
             }
             set {
                 uri_field = value;
-                if (uri_type_field.HasValue) {
-                    SetUpUri ();
-                }
+                UpdateUri ();
             }
         }
         
-        private int? uri_type_field;
+        private bool uri_type_set;
+        private TrackUriType uri_type;
         [DatabaseColumn ("UriType")]
-        private int uri_type {
+        private TrackUriType UriType {
             get {
-                return uri_type_field.HasValue
-                    ? uri_type_field.Value
-                    : (Uri == null
-                        ? (int)UriType.RelativePath
-                        : (Paths.MakePathRelativeToLibrary (Uri.AbsolutePath) != null
-                            ? (int)UriType.RelativePath
-                            : (int)UriType.AbsoluteUri));
+                if (uri_fields_dirty) {
+                    PrimarySource.UriToFields (Uri, out uri_type, out uri_field);
+                    uri_fields_dirty = false;
+                }
+                return uri_type;
             }
             set {
-                uri_type_field = value;
-                if (uri_field != null) {
-                    SetUpUri ();
-                }
+                uri_type = value;
+                uri_type_set = true;
+                UpdateUri ();
             }
-        }
-        
-        bool set_up;
-        private void SetUpUri ()
-        {
-            if (set_up) {
-                return;
-            }
-            set_up = true;
-            
-            if (uri_type_field.Value == (int)UriType.RelativePath) {
-                uri_field = System.IO.Path.Combine (Paths.CachedLibraryLocation, uri_field);
-            }
-            Uri = new SafeUri (uri_field);
         }
         
         [DatabaseColumn]
@@ -403,16 +398,13 @@ namespace Banshee.Collection.Database
             set { cache_model_id = value; }
         }
 
-
-        private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (
-            "SELECT COUNT(*) FROM CoreTracks WHERE Uri = ? OR Uri = ?"
-        );
-        
-        public static bool ContainsUri (SafeUri uri)
+        private void UpdateUri ()
         {
-            string relative_path = Paths.MakePathRelativeToLibrary (uri.AbsolutePath) ?? uri.AbsoluteUri;
-            return ServiceManager.DbConnection.Query<int> (
-                check_command.ApplyValues (relative_path, uri.AbsoluteUri)) > 0;
+            if (Uri == null && uri_type_set && UriField != null && PrimarySource != null) {
+                updating_uri = true;
+                Uri = PrimarySource.UriAndTypeToSafeUri (UriType, UriField);
+                updating_uri = false;
+            }
         }
         
         public SafeUri CopyToLibrary ()
@@ -450,6 +442,15 @@ namespace Banshee.Collection.Database
             }
             
             return null;
+        }
+
+        private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (
+            "SELECT COUNT(*) FROM CoreTracks WHERE PrimarySourceId IN (?) AND (Uri = ? OR Uri = ?)"
+        );
+        
+        public static bool ContainsUri (SafeUri uri, string relative_path, string primary_sources)
+        {
+            return ServiceManager.DbConnection.Query<int> (check_command.ApplyValues (primary_sources, relative_path, uri.AbsoluteUri)) > 0;
         }
     }
 }
