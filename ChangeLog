@@ -1,5 +1,10 @@
 2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Remove
+	unnecessary Reload calls and method/property overrides.
+
+2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Save the
 	original IconName for an action within UpdateAction, like we do for
 	labels, so we can restore it when we switch to a source that doesn't

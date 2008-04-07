@@ -56,7 +56,6 @@ namespace Banshee.Daap
         }
         
         private bool is_activating;
-        private SourceMessage status_message;
         
         public DaapSource (Service service) : base (Catalog.GetString ("Music Share"), service.Name, 
                                                     (service.Address.ToString () + service.Port).Replace (":", "").Replace (".", ""), 300)
@@ -88,7 +87,7 @@ namespace Banshee.Daap
             is_activating = true;
             base.Activate ();
             
-            SetMessage (String.Format (Catalog.GetString ("Connecting to {0}"), service.Name), true);
+            SetStatus (String.Format (Catalog.GetString ("Connecting to {0}"), service.Name), false);
             
             Console.WriteLine ("Connecting to {0}:{1}", service.Address, service.Port);
             
@@ -118,13 +117,11 @@ namespace Banshee.Daap
                                                       service.Port, e.ToString ().Replace ("&", "&amp;")
                                                     .Replace ("<", "&lt;").Replace (">", "&gt;"));
                     Hyena.Log.Warning ("Failed to connect", details, true);
-                    DestroyStatusMessage ();
+                    HideStatus ();
                 }
                
                 is_activating = false;
             });
-            
-            Reload ();
         }
         
         internal bool Disconnect (bool logout)
@@ -173,41 +170,9 @@ namespace Banshee.Daap
             Disconnect (true);
         }
         
-        private void SetMessage (string message, bool spinner)
-        {
-            if (status_message != null) {
-                DestroyStatusMessage ();
-            }
-            
-            status_message = new SourceMessage (this);
-            status_message.FreezeNotify ();
-            status_message.CanClose = false;
-            status_message.IsSpinning = spinner;
-            status_message.Text = message;
-            status_message.ThawNotify ();
-            
-            PushMessage (status_message);
-        }
-        
-        private void DestroyStatusMessage ()
-        {
-            if (status_message != null) {
-                RemoveMessage (status_message);
-                status_message = null;
-            }
-        }
-        
-        private void HideMessage ()
-        {
-            if (status_message != null) {
-                RemoveMessage (status_message);
-                status_message = null;
-            }
-        }
-        
         private void PromptLogin (object o, EventArgs args)
         {
-            SetMessage (String.Format (Catalog.GetString ("Logging in to {0}"), Name), true);
+            SetStatus (String.Format (Catalog.GetString ("Logging in to {0}"), Name), false);
             
             DaapLoginDialog dialog = new DaapLoginDialog (client.Name, 
             client.AuthenticationMethod == AuthenticationMethod.UserAndPassword);
@@ -250,7 +215,7 @@ namespace Banshee.Daap
                 Reload ();
                 
                 ThreadAssist.ProxyToMain(delegate {
-                    HideMessage ();
+                    HideStatus ();
                 });
             }
             
@@ -277,8 +242,6 @@ namespace Banshee.Daap
             if (!daap_track_map.ContainsKey (args.Track.Id)) {
                 daap_track_map.Add (args.Track.Id, track);
             }
-            
-            Reload ();
         }
         
         public void OnDatabaseTrackRemoved (object o, TrackArgs args)
@@ -287,8 +250,6 @@ namespace Banshee.Daap
                 DaapTrackInfo track = daap_track_map [args.Track.Id];
                 RemoveTrack (track);
             }
-            
-            Reload ();
         }
         
         public override bool CanRemoveTracks {
@@ -303,23 +264,6 @@ namespace Banshee.Daap
             get { return false; }
         }
 
-        public override void RemoveSelectedTracks ()
-        {
-        }
-
-        public override void DeleteSelectedTracks ()
-        {
-            throw new Exception ("Should not call DeleteSelectedTracks on DaapSource");
-        }
-        
-        public override bool HasDependencies {
-            get { return false; }
-        }
-        
-        protected override string TypeUniqueId {
-            get { return "daap"; }
-        }
-        
         public bool Unmap ()
         {
             // TODO: Maybe keep track of where we came from, or pick the next source up on the list?
@@ -356,7 +300,7 @@ namespace Banshee.Daap
         }
         
         public string [] IconNames {
-            get { return null; }
+            get { return Properties.GetStringList ("Icon.Name"); }
         }
     }
 }
