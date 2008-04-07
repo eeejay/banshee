@@ -1,3 +1,14 @@
+2008-04-07  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Only show the
+	DAAP container source if we actually have any shares available, otherwise
+	don't spam the source list.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs: Make
+	sure elements are actually in the list before we do any operations on
+	them.
+
 2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:

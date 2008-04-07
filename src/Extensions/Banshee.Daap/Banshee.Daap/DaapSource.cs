@@ -274,7 +274,9 @@ namespace Banshee.Daap
             DaapTrackInfo track = new DaapTrackInfo (args.Track, this);
             track.Save ();
             
-            daap_track_map.Add (args.Track.Id, track);
+            if (!daap_track_map.ContainsKey (args.Track.Id)) {
+                daap_track_map.Add (args.Track.Id, track);
+            }
             
             Reload ();
         }

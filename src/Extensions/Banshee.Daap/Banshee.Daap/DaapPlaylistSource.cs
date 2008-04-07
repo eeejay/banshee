@@ -55,7 +55,9 @@ namespace Banshee.Daap
             Properties.SetString ("Icon.Name", "source-playlist");
             
             foreach (Track track in playlist.Tracks) {
-                track_model.Add (parent.TrackMap [track.Id]);
+                if (parent.TrackMap.ContainsKey (track.Id)) {
+                    track_model.Add (parent.TrackMap [track.Id]);
+                }
             }
         }
         

@@ -51,7 +51,6 @@ namespace Banshee.Daap
             // plugin is enabled, just no child sources yet.
             source_map = new Dictionary<string, DaapSource> ();
             container = new DaapContainerSource ();
-            ServiceManager.SourceManager.AddSource (container);
             
             // Now start looking for services.
             // We do this after creating the source because if we do it before
@@ -87,6 +86,10 @@ namespace Banshee.Daap
             DaapSource source = new DaapSource (args.Service);
             string key = String.Format ("{0}:{1}", args.Service.Name, args.Service.Port);
             
+            if (source_map.Count == 0) {
+                ServiceManager.SourceManager.AddSource (container);
+            }
+            
             if (source_map.ContainsKey (key)) {
                 // Received new connection info for service
                 container.RemoveChildSource (source_map [key]);
@@ -107,6 +110,10 @@ namespace Banshee.Daap
             source.Disconnect (true);
             container.RemoveChildSource (source);
             source_map.Remove (key);
+            
+            if (source_map.Count == 0) {
+                ServiceManager.SourceManager.RemoveSource (container);
+            }
         }
         
         string IService.ServiceName {
