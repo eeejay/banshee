@@ -8,8 +8,6 @@
         <menuitem name="RepeatAll" action="RepeatAllAction" />
         <menuitem name="RepeatSingle" action="RepeatSingleAction" />-->
         <separator />
-        <menuitem name="Shuffle" action="ShuffleAction" />
-        <separator />
         <menuitem name="ToggleNotifications" action="ToggleNotificationsAction" />
         <separator />
         <menuitem name="Quit" action="QuitAction" />

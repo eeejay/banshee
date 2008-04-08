@@ -181,9 +181,6 @@ namespace Banshee.Lastfm.Radio
         public override void Activate ()
         {
             base.Activate ();
-            //shuffle = (action_service.GlobalActions ["ShuffleAction"] as ToggleAction).Active;
-            //(action_service.GlobalActions ["ShuffleAction"] as ToggleAction).Active = false;
-            //Globals.ActionManager["ShuffleAction"].Sensitive = false;
 
             //action_service.GlobalActions ["PreviousAction"].Sensitive = false;
 
@@ -209,9 +206,6 @@ namespace Banshee.Lastfm.Radio
 
         public override void Deactivate ()
         {
-            //(Globals.ActionManager["ShuffleAction"] as ToggleAction).Active = shuffle;
-            //Globals.ActionManager["ShuffleAction"].Sensitive = true;
-
             //Globals.ActionManager["PreviousAction"].Sensitive = true;
         }
 

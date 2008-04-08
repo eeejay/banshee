@@ -1,5 +1,11 @@
 2008-04-08  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Extensions/Banshee.NotificationArea/Resources/NotificationAreaMenu.xml:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	Got rid of references to old ShuffleAction.
+
+2008-04-08  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/ActionButton.cs: Fixed stupid
 	NRE error.
 
