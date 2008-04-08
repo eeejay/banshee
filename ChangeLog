@@ -1,3 +1,32 @@
+2008-04-08  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:
+	Ctor now takes a PlaybackActions object so that it always has a
+	reference to the next action.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Move
+	instantiation of the repeat and shuffle actions to after the other
+	actions so that the shuffle action can change the next action's
+	icon.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/NextArrowButton.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/RepeatActionButton.cs:
+	Set visual style in ctor.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ArrowButton.cs: Derives from
+	ActionGroupButton and uses an ActionButton for the "main" button
+	part. Also proxies things like style, relief, &c. to the main
+	ActionButton.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ActionGroupButton.cs: Now
+	derives from ActionButton.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ActionButton.cs: ActionButton
+	is now the base of custom action-bound buttons. It doesn't do the
+	cool Action.ConnectProxy shit that ToolButton does (because Gtk+
+	Suxorz Teh Big One!!1!11), but it's pretty close. It also
+	integrates with the style of a Toolbar you pass it.
+
 2008-04-08  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:

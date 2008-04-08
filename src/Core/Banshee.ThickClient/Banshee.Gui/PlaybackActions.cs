@@ -60,9 +60,6 @@ namespace Banshee.Gui
         
         public PlaybackActions (InterfaceActionService actionService) : base ("Playback")
         {
-            repeat_actions = new PlaybackRepeatActions (actionService);
-            shuffle_actions = new PlaybackShuffleActions (actionService);
-
             Add (new ActionEntry [] {
                 new ActionEntry ("PlayPauseAction", null,
                     Catalog.GetString ("_Play"), "space",
@@ -112,6 +109,9 @@ namespace Banshee.Gui
             action_service = actionService;
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            
+            repeat_actions = new PlaybackRepeatActions (actionService);
+            shuffle_actions = new PlaybackShuffleActions (actionService, this);
         }
         
         private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)

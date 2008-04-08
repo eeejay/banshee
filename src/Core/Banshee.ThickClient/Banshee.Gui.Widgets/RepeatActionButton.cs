@@ -36,9 +36,16 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Gui.Widgets
 {
-    public class RepeatActionButton : ActionButton
+    public class RepeatActionButton : ActionGroupButton
     {
         private InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
+        
+        public RepeatActionButton ()
+        {
+            ActionButtonStyle = ActionButtonStyle.BothHoriz;
+            IconSize = Gtk.IconSize.Menu;
+            Relief = ReliefStyle.None;
+        }
         
         protected override IRadioActionGroup ActionGroup {
             get { return service.PlaybackActions.RepeatActions; }

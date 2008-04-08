@@ -43,6 +43,7 @@ namespace Banshee.Gui
     public class PlaybackShuffleActions : BansheeActionGroup, IRadioActionGroup
     {
         private RadioAction active_action;
+        private PlaybackActions playback_actions;
 
         public RadioAction Active {
             get { return active_action; }
@@ -55,8 +56,10 @@ namespace Banshee.Gui
 
         public event ChangedHandler Changed;
         
-        public PlaybackShuffleActions (InterfaceActionService actionService) : base ("PlaybackShuffle")
+        public PlaybackShuffleActions (InterfaceActionService actionService, PlaybackActions playbackActions)
+            : base ("PlaybackShuffle")
         {
+            playback_actions = playbackActions;
             actionService.AddActionGroup (this);
 
             Add (new RadioActionEntry [] {
@@ -101,6 +104,8 @@ namespace Banshee.Gui
         private void OnChanged (object o, ChangedArgs args)
         {
             Active = args.Current;
+            
+            playback_actions["NextAction"].IconName = Active.IconName;
             
             ChangedHandler handler = Changed;
             if (handler != null) {

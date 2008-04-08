@@ -34,36 +34,73 @@ using Hyena.Gui.Theming;
 
 namespace Hyena.Widgets
 {
-    public abstract class ArrowButton : ActionButton
+    public abstract class ArrowButton : ActionGroupButton
     {
         private Gtk.Action action;
-        private Button button;
+        private ActionButton button;
         private ReliefStyle relief;
         private Rectangle arrow_alloc;
         
-        protected ArrowButton () : this (null)
+        protected ArrowButton () : this (null, null)
         {
         }
         
-        protected ArrowButton (Gtk.Action action)
+        protected ArrowButton (Gtk.Action action) : this (action, null)
         {
+        }
+        
+        protected ArrowButton (Toolbar toolbar) : this (null, toolbar)
+        {
+        }
+        
+        protected ArrowButton (Gtk.Action action, Toolbar toolbar)
+        {
+            base.ActionButtonStyle = ActionButtonStyle.None;
+            
             this.action = action;
-            button = new Button ();
-            button.FocusOnClick = false;
-            button.Entered += delegate { base.Relief = ReliefStyle.Normal; };
-            button.Left += delegate { base.Relief = relief; };
-            button.StateChanged += delegate { State = button.State; };
-            button.Clicked += delegate { OnActivate (); };
+            
             arrow_alloc.Width = 5;
             arrow_alloc.Height = 3;
-            TargetButton = button;
-            ActionButtonStyle = ActionButtonStyle.IconOnly;
-            IconSize = (int)Gtk.IconSize.LargeToolbar;
-            Relief = base.Relief;
+            
+            button = new ActionButton (action);
+            button.Entered += delegate { base.Relief = ReliefStyle.Normal; };
+            button.Left += delegate { base.Relief = relief;};
+            button.StateChanged += delegate { State = button.State; };
+            
+            ActionGroup.Changed += delegate { button.Action = this.action ?? ActionGroup.Active; };
+            Toolbar = toolbar;
         }
         
-        protected new virtual Gtk.Action Action {
-            get { return action ?? ActionGroup.Active; }
+        public new Gtk.Action Action {
+            get { return button.Action; }
+            set {
+                action = value;
+                button.Action = action;
+            }
+        }
+        
+        public override ActionButtonStyle ActionButtonStyle {
+            get { return button == null ? base.ActionButtonStyle : button.ActionButtonStyle; }
+            set {
+                if (button == null) {
+                    base.ActionButtonStyle = value;
+                } else {
+                    button.ActionButtonStyle = value;
+                }
+            }
+        }
+        
+        public override Toolbar Toolbar {
+            get { return button.Toolbar; }
+            set {
+                if (button == null) {
+                    return;
+                }
+                button.Toolbar = value;
+                if (value != null) {
+                    Relief = value.ReliefStyle;
+                }
+            }
         }
         
         public new ReliefStyle Relief {
@@ -75,10 +112,15 @@ namespace Hyena.Widgets
             }
         }
         
+        public override IconSize IconSize {
+            get { return button.IconSize; }
+            set { button.IconSize = value; }
+        }
+        
         protected override void OnRealized ()
         {
             base.OnRealized ();
-            button.Parent = this.Parent;
+            button.Parent = Parent;
             button.Realize ();
         }
         
@@ -119,35 +161,21 @@ namespace Hyena.Widgets
         {
             base.OnExposeEvent (evnt);
             button.SendExpose (evnt);
-            
             Gtk.Style.PaintArrow (Style, GdkWindow, State, ShadowType.None, arrow_alloc, this, null,
                 ArrowType.Down, true, arrow_alloc.X, arrow_alloc.Y, arrow_alloc.Width, arrow_alloc.Height);
-            
             return true;
         }
         
-        protected override bool OnEnterNotifyEvent (EventCrossing evnt)
+        protected override void OnEntered ()
         {
             button.Relief = ReliefStyle.None;
-            return base.OnEnterNotifyEvent (evnt);
+            base.OnEntered ();
         }
         
-        protected override bool OnLeaveNotifyEvent (EventCrossing evnt)
+        protected override void OnLeft ()
         {
             button.Relief = relief;
-            return base.OnLeaveNotifyEvent (evnt);
+            base.OnLeft ();
         }
-        
-        protected override bool OnButtonPressEvent (EventButton evnt)
-        {
-            ShowMenu ();
-            return true;
-        }
-        
-        protected override void OnActivate ()
-        {
-            Action.Activate ();
-        }
-
     }
 }

@@ -37,10 +37,13 @@ namespace Banshee.Gui.Widgets
 {
     public class NextArrowButton : ArrowButton
     {
-        private InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
+        private static InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
         
-        public NextArrowButton() : base (ServiceManager.Get<InterfaceActionService> ().PlaybackActions["NextAction"])
+        public NextArrowButton() : base (service.PlaybackActions["NextAction"])
         {
+            ActionButtonStyle = ActionButtonStyle.Icon;
+            IconSize = Gtk.IconSize.LargeToolbar;
+            Relief = ReliefStyle.None;
         }
         
         protected override IEnumerable<Widget> MenuItems {

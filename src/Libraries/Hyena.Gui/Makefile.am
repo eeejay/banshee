@@ -52,6 +52,7 @@ SOURCES =  \
 	Hyena.Query.Gui/StringQueryValueEntry.cs \
 	Hyena.Query.Gui/TimeSpanQueryValueEntry.cs \
 	Hyena.Widgets/ActionButton.cs \
+	Hyena.Widgets/ActionGroupButton.cs \
 	Hyena.Widgets/AnimatedBox.cs \
 	Hyena.Widgets/AnimatedHBox.cs \
 	Hyena.Widgets/AnimatedImage.cs \

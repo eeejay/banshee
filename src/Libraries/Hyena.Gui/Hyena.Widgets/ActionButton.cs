@@ -27,7 +27,6 @@
 //
 
 using System;
-using System.Collections.Generic;
 using Gtk;
 
 using Hyena.Gui;
@@ -36,150 +35,155 @@ namespace Hyena.Widgets
 {
     public enum ActionButtonStyle
     {
-        IconOnly,
-        TextOnly,
-        IconAndText
+        Icon,
+        Text,
+        Both,
+        BothHoriz,
+        None
     }
     
-    public abstract class ActionButton : Button
+    public class ActionButton : Button
     {
-        private Button target_button;
-        private HBox box = new HBox ();
+        private Gtk.Action action;
         private Label label = new Label ();
         private Image image = new Image ();
-        private ActionButtonStyle? style;
+        private HBox hbox = new HBox ();
+        private VBox vbox = new VBox ();
+        private Box box;
+        private Toolbar toolbar;
+        private ActionButtonStyle style;
         
-        protected ActionButton ()
+        public ActionButton () : this (null, null)
         {
-            ActionGroup.Changed += OnActionChanged;
+        }
+        
+        public ActionButton (Toolbar toolbar) : this (null, toolbar)
+        {
+        }
+        
+        public ActionButton (Gtk.Action action) : this (action, null)
+        {
+        }
+        
+        public ActionButton (Gtk.Action action, Toolbar toolbar)
+        {
+            FocusOnClick = false;
+            ActionButtonStyle = ActionButtonStyle.Icon;
             
-            Relief = ReliefStyle.None;
-            box.Spacing = 4;
-            image.IconSize = (int)Gtk.IconSize.Menu;
+            Action = action;
+            Toolbar = toolbar;
+            
             label.UseUnderline = true;
-            
-            TargetButton = this;
-            ActionButtonStyle = ActionButtonStyle.IconAndText;
-            
-            SetActiveItem (ActionGroup.Active);
+            hbox.Spacing = 4;
+            vbox.Spacing = 4;
         }
         
-        protected abstract IRadioActionGroup ActionGroup { get; }
-        
-        private void OnActionChanged (object o, ChangedArgs args)
-        {
-            SetActiveItem (args.Current);
-        }
-        
-        private void SetActiveItem (RadioAction action)
-        {
-            if (action == null) {
-                return;
-            }
-
-            image.IconName = action.IconName;
-            label.TextWithMnemonic = action.Label;
-            target_button.Sensitive = action.Sensitive && action.Visible;
-        }
-        
-        protected void ShowMenu ()
-        {
-            BuildMenu ().Popup (null, null, PositionMenu, 1, Gtk.Global.CurrentEventTime);
-        }
-        
-        private Menu BuildMenu ()
-        {
-            Menu menu = new Menu ();
-            foreach (Widget widget in MenuItems) {
-                menu.Append (widget);
-            }
-
-            menu.ShowAll ();
-            return menu;
-        }
-        
-        protected virtual IEnumerable<Widget> MenuItems {
-            get {
-                foreach (RadioAction action in ActionGroup) {
-                    yield return action.CreateMenuItem ();
-                }
-            }
-        }
-
-        private void PositionMenu (Menu menu, out int x, out int y, out bool push_in) 
-        {
-            Gtk.Requisition menu_req = menu.SizeRequest ();
-            int monitor_num = Screen.GetMonitorAtWindow (target_button.GdkWindow);
-            Gdk.Rectangle monitor = Screen.GetMonitorGeometry (monitor_num < 0 ? 0 : monitor_num);
-
-            target_button.GdkWindow.GetOrigin (out x, out y);
-            
-            y += target_button.Allocation.Y;
-            x += target_button.Allocation.X + (Direction == TextDirection.Ltr
-                ? Math.Max (target_button.Allocation.Width - menu_req.Width, 0)
-                : - (menu_req.Width - target_button.Allocation.Width));
-            
-            if (y + target_button.Allocation.Height + menu_req.Height <= monitor.Y + monitor.Height) {
-                y += target_button.Allocation.Height;
-            } else if (y - menu_req.Height >= monitor.Y) {
-                y -= menu_req.Height;
-            } else if (monitor.Y + monitor.Height - (y + target_button.Allocation.Height) > y) {
-                y += target_button.Allocation.Height;
-            } else {
-                y -= menu_req.Height;
-            }
-
-            push_in = false;
-        }
-        
-        protected override void OnActivated ()
-        {
-            ShowMenu ();
-        }
-
-        protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
-        {
-            ShowMenu ();
-            return true;
-        }
-        
-        public Button TargetButton {
-            get { return target_button; }
-            protected set {
-                if (target_button != null) {
-                    target_button.Remove (box);
-                }
-                target_button = value;
-                target_button.Add (box);
-            }
-        }
-        
-        protected int IconSize {
-            get { return image.IconSize; }
-            set { image.IconSize = value; }
-        }
-        
-        protected ActionButtonStyle ActionButtonStyle {
-            get { return style ?? ActionButtonStyle.IconAndText; }
+        public virtual ActionButtonStyle ActionButtonStyle {
+            get { return style; }
             set {
-                if (style != null) {
-                    if (style.Value != ActionButtonStyle.TextOnly) {
+                if (box != null) {
+                    if (style != ActionButtonStyle.Text) {
                         box.Remove (image);
                     }
-                    if (style.Value != ActionButtonStyle.IconOnly) {
+                    if (style != ActionButtonStyle.Icon) {
                         box.Remove (label);
                     }
+                    Remove (box);
                 }
                 
                 style = value;
                 
-                if (style.Value != ActionButtonStyle.TextOnly) {
+                if (style == ActionButtonStyle.None) {
+                    box = null;
+                    return;
+                }
+                
+                box = style == ActionButtonStyle.BothHoriz ? (Box)hbox : vbox;
+                
+                if (style != ActionButtonStyle.Text) {
                     box.PackStart (image, false, false, 0);
                 }
-                if (style.Value != ActionButtonStyle.IconOnly) {
+                if (style != ActionButtonStyle.Icon) {
                     box.PackStart (label, true, true, 0);
                 }
+                
+                Add (box);
                 box.ShowAll ();
+            }
+        }
+        
+        public virtual new Gtk.Action Action {
+            get { return action; }
+            set {
+                action = value;
+                if (action == null) {
+                    if (image.IconName != null) {
+                        image.IconName = null;
+                    }
+                    if (image.Stock != null) {
+                        image.Stock = null;
+                    }
+                    label.TextWithMnemonic = String.Empty;
+                    Sensitive = false;
+                } else {
+                    if (!String.IsNullOrEmpty (action.IconName)) {
+                        image.IconName = action.IconName;
+                    } else if (!String.IsNullOrEmpty (action.StockId)) {
+                        image.Stock = action.StockId;
+                    }
+                    label.TextWithMnemonic = action.Label;
+                    Sensitive = action.Sensitive && action.Visible;
+                }
+            }
+        }
+        
+        public virtual Toolbar Toolbar {
+            get { return toolbar; }
+            set {
+                if (toolbar != null) {
+                    toolbar.StyleChanged -= OnToolbarStyleChanged;
+                }
+                
+                toolbar = value;
+                
+                if (toolbar != null) {
+                    toolbar.StyleChanged += OnToolbarStyleChanged;
+                    Relief = toolbar.ReliefStyle;
+                    OnToolbarStyleChanged (null, null);
+                }
+            }
+        }
+        
+        public virtual IconSize IconSize {
+            get { return (IconSize)image.IconSize; }
+            set { image.IconSize = (int)value; }
+        }
+        
+        protected override void OnActivated ()
+        {
+            action.Activate ();
+        }
+        
+        protected override void OnClicked ()
+        {
+            action.Activate ();
+        }
+        
+        private void OnToolbarStyleChanged (object o, StyleChangedArgs args)
+        {
+            switch (toolbar.ToolbarStyle) {
+            case ToolbarStyle.Icons:
+                ActionButtonStyle = ActionButtonStyle.Icon;
+                break;
+            case ToolbarStyle.Text:
+                ActionButtonStyle = ActionButtonStyle.Text;
+                break;
+            case ToolbarStyle.Both:
+                ActionButtonStyle = ActionButtonStyle.Both;
+                break;
+            case ToolbarStyle.BothHoriz:
+                ActionButtonStyle = ActionButtonStyle.BothHoriz;
+                break;
             }
         }
     }
