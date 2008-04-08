@@ -1,5 +1,11 @@
 2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Disable the case-sensitive LIKEs pragma as it was breaking queries.  Fixes
+	BGO #526371.
+
+2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Patch from
 	Michael Monreal adding a disconnect icon.  Fixes BGO #526815.
 

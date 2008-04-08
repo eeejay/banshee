@@ -52,7 +52,9 @@ namespace Banshee.Database
             Execute ("PRAGMA synchronous = OFF");
             Execute ("PRAGMA temp_store = MEMORY");
             Execute ("PRAGMA count_changes = OFF");
-            Execute ("PRAGMA case_sensitive_like=ON");
+
+            // don't want this on because it breaks searching/smart playlists.  See BGO #526371
+            //Execute ("PRAGMA case_sensitive_like=ON");
 
             migrator = new BansheeDbFormatMigrator (this);
             
