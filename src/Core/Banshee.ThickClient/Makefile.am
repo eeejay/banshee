@@ -25,6 +25,7 @@ SOURCES =  \
 	Banshee.Gui.Dialogs/AboutDialog.cs \
 	Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs \
 	Banshee.Gui.Dialogs/ErrorListDialog.cs \
+	Banshee.Gui.Dialogs/ExtensionManagerDialog.cs \
 	Banshee.Gui.Dialogs/FileChooserDialog.cs \
 	Banshee.Gui.Dialogs/GladeDialog.cs \
 	Banshee.Gui.Dialogs/GladeWindow.cs \

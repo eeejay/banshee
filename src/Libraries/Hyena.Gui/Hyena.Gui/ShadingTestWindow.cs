@@ -68,9 +68,8 @@ namespace Hyena.Gui
                     
                     cr.Translate (0.5, 0.5);
                     cr.MoveTo (x + (step_width - tw) / 2.0, y + (step_height - th) / 2.0);
-                    PangoCairoHelper.LayoutPath (cr, layout);
                     cr.Color = CairoExtensions.ColorFromHsb (h, s, fg_b);
-                    cr.Fill ();
+                    PangoCairoHelper.ShowLayout (cr, layout);
                     cr.Translate (-0.5, -0.5);
                 }
             }

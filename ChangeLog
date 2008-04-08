@@ -1,3 +1,28 @@
+2008-04-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ExtensionManagerDialog.cs:
+	Nothing here yet, hopefully I can actually spare some time for it
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui/ShadingTestWindow.cs: Removed rogue
+	LayoutPath calls, replaced with ShowLayout
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Did some 
+	profiling and switched the text renderer to Cairo since it's actually
+	faster than GTK - this is fucking awesome:
+
+	    Cairo (pango_cairo_show_layout): 0.303
+	    GTK   (gtk_paint_layout):        0.369
+	    Cairo (pango_cairo_layout_path): 0.980
+
+	This means text is now drawn directly to the cairo context and not to
+	the GdkDrawable, which means we'll be able to cache the rendering to
+	an image surface which supports an alpha channel (unlike GdkPixmap), which
+	will lead to more performance improvements, specifically when dragging
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/PangoCairoHelper.cs: Added a contract
+	argument to LayoutPath that conveys it has crappy performance
+
 2008-04-07  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Pack in the

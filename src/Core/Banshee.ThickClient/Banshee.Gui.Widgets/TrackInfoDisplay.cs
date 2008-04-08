@@ -399,9 +399,8 @@ namespace Banshee.Gui.Widgets
             
             if (renderTrack) {
                 cr.MoveTo (x, y);
-                PangoCairoHelper.LayoutPath (cr, first_line_layout);
                 cr.Color = text_color;
-                cr.Fill ();
+                PangoCairoHelper.ShowLayout (cr, first_line_layout);
             }
 
             if (!renderArtistAlbum) {

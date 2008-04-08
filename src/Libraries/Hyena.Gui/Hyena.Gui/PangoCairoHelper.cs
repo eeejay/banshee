@@ -54,7 +54,8 @@ namespace Hyena.Gui
         [DllImport ("libpangocairo-1.0.so.0")]
         private static extern void pango_cairo_layout_path (IntPtr cr, IntPtr layout);
 
-        public static void LayoutPath (Cairo.Context cr, Pango.Layout layout) 
+        public static void LayoutPath (Cairo.Context cr, Pango.Layout layout, 
+            bool iUnderstandThePerformanceImplications) 
         {
             pango_cairo_layout_path (cr == null ? IntPtr.Zero : cr.Handle, 
                 layout == null ? IntPtr.Zero : layout.Handle);

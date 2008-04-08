@@ -37,14 +37,21 @@ namespace Hyena.Data.Gui
 {
     public class ColumnCellText : ColumnCell
     {
+        private static bool use_cairo_pango;
+        
+        static ColumnCellText ()
+        {
+            use_cairo_pango = String.IsNullOrEmpty (Environment.GetEnvironmentVariable ("USE_GTK_PANGO"));
+            Log.DebugFormat ("Text renderer: {0}", use_cairo_pango ? "Cairo" : "GTK");
+        }
+        
         public delegate string DataHandler ();
     
         private Pango.Weight font_weight = Pango.Weight.Normal;
         private Pango.EllipsizeMode ellipsize_mode = Pango.EllipsizeMode.End;
         private int text_width;
         private int text_height;
-        private bool use_cairo_pango = !String.IsNullOrEmpty (Environment.GetEnvironmentVariable ("USE_CAIRO_PANGO"));
-
+        
         public ColumnCellText (string property, bool expand) : base (property, expand)
         {
         }
@@ -61,10 +68,9 @@ namespace Hyena.Data.Gui
             
             if (use_cairo_pango) {
                 context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
-                PangoCairoHelper.LayoutPath (context.Context, context.Layout);
                 context.Context.Color = context.Theme.Colors.GetWidgetColor (
                     context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
-                context.Context.Fill ();
+                PangoCairoHelper.ShowLayout (context.Context, context.Layout);
             } else {
                 Style.PaintLayout (context.Widget.Style, context.Drawable, state, !context.TextAsForeground, 
                     context.Clip, context.Widget, "text", context.Area.X + 4, 
