@@ -63,6 +63,7 @@ namespace Banshee.Daap
             this.service = service;
             daap_track_map = new Dictionary <int, DaapTrackInfo> ();
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Disconnect"));
+            Properties.SetString ("UnmapSourceActionIconName", "gtk-disconnect");
             
             UpdateIcon ();
             

@@ -1,4 +1,9 @@
 2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Patch from
+	Michael Monreal adding a disconnect icon.  Fixes BGO #526815.
+
+2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
 	
 	* ChangeLog: Forgot to thank Bertrand two commits ago.
 
