@@ -546,6 +546,10 @@ namespace Hyena.Data.Gui
                     row_height = RowHeightProvider != null 
                         ? RowHeightProvider (this) 
                         : ColumnCellText.ComputeRowHeight (this);
+                    
+                    header_height = 0;
+                    MoveResize (Allocation);
+                    
                     RecomputeRowHeight = false;
                 }
                 

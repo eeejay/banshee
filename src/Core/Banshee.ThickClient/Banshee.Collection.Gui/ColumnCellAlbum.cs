@@ -39,14 +39,10 @@ namespace Banshee.Collection.Gui
     public class ColumnCellAlbum : ColumnCell
     {
         private static int pixbuf_spacing = 4;
+        private static int pixbuf_size = 48;
         
-        private static Gdk.Pixbuf default_cover_pixbuf = IconThemeUtils.LoadIcon (48, "media-optical");
+        private static Gdk.Pixbuf default_cover_pixbuf = IconThemeUtils.LoadIcon (pixbuf_size, "media-optical");
         
-        public int ComputeRowHeight (Widget widget)
-        {
-            return 54;
-        }
-    
         private ArtworkManager artwork_manager;
 
         public ColumnCellAlbum () : base (null, true)
@@ -66,11 +62,7 @@ namespace Banshee.Collection.Gui
             
             AlbumInfo album = (AlbumInfo)BoundObject;
             
-            int pixbuf_size = (int)cellHeight - 8;
-            bool is_default = false;
-            int x = pixbuf_spacing;
-            int y = ((int)cellHeight - pixbuf_size) / 2;
-            
+            bool is_default = false;          
             Gdk.Pixbuf pixbuf = artwork_manager == null ? null : artwork_manager.LookupScale (album.ArtworkId, pixbuf_size);
             
             if (pixbuf == null) {
@@ -78,8 +70,13 @@ namespace Banshee.Collection.Gui
                 is_default = true;
             }
             
-            ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, true, x, y, pixbuf_size, pixbuf_size, 
-                !is_default, context.Theme.Context.Radius);
+            // int pixbuf_render_size = is_default ? pixbuf.Height : (int)cellHeight - 8;
+            int pixbuf_render_size = pixbuf_size;
+            int x = pixbuf_spacing;
+            int y = ((int)cellHeight - pixbuf_render_size) / 2;
+            
+            ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, true, x, y, 
+                pixbuf_render_size, pixbuf_render_size, !is_default, context.Theme.Context.Radius);
                 
             int fl_width = 0, fl_height = 0, sl_width = 0, sl_height = 0;
             
@@ -130,6 +127,31 @@ namespace Banshee.Collection.Gui
             
             Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, context.Clip, context.Widget, "text",
                context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
+        }
+        
+        public int ComputeRowHeight (Widget widget)
+        {
+            int height;
+            int text_w, text_h;
+            
+            Pango.Layout layout = new Pango.Layout (widget.PangoContext);
+            layout.FontDescription = widget.PangoContext.FontDescription.Copy ();
+            
+            layout.FontDescription.Weight = Pango.Weight.Bold;
+            layout.SetText ("W");
+            layout.GetPixelSize (out text_w, out text_h);
+            height = text_h;
+            
+            layout.FontDescription.Weight = Pango.Weight.Normal;
+            layout.FontDescription.Size = (int)(layout.FontDescription.Size * Pango.Scale.Small);
+            layout.FontDescription.Style = Pango.Style.Italic;
+            layout.SetText ("W");
+            layout.GetPixelSize (out text_w, out text_h);
+            height += text_h;
+            
+            layout.Dispose ();
+            
+            return (height < pixbuf_size ? pixbuf_size : height) + 6;
         }
     }
 }

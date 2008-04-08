@@ -1,3 +1,12 @@
+2008-04-08  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	Properly calculate the row height based on actual pango layout calculations
+	so that the row height will adapt to DPI changes
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Recalculate the header size when DPI changes
+
 2008-04-07  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui/PangoCairoHelper.cs:
