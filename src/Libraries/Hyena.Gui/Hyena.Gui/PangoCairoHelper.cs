@@ -60,5 +60,22 @@ namespace Hyena.Gui
             pango_cairo_layout_path (cr == null ? IntPtr.Zero : cr.Handle, 
                 layout == null ? IntPtr.Zero : layout.Handle);
         }
+        
+        [DllImport ("libpangocairo-1.0.so.0")]
+        private static extern void pango_cairo_context_set_resolution (IntPtr pango_context, double dpi);
+        
+        public static void ContextSetResolution (Pango.Context context, double dpi)
+        {
+            pango_cairo_context_set_resolution (context == null ? IntPtr.Zero : context.Handle, dpi);
+        }
+        
+        [DllImport ("libpangocairo-1.0.so.0")]
+        private static extern IntPtr pango_layout_get_context (IntPtr layout);
+        
+        public static Pango.Context LayoutGetContext (Pango.Layout layout)
+        {
+            IntPtr handle = pango_layout_get_context (layout.Handle);
+            return handle.Equals (IntPtr.Zero) ? null : GLib.Object.GetObject (handle) as Pango.Context;
+        }
     }
 }

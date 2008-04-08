@@ -50,7 +50,7 @@ namespace Banshee.Collection.Gui
             
             ColumnController = column_controller;
             
-            RowHeight = renderer.ComputeRowHeight (this);
+            RowHeightProvider = renderer.ComputeRowHeight;
             HeaderVisible = false;
             RulesHint = true;
         }

@@ -1,3 +1,27 @@
+2008-04-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/PangoCairoHelper.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Let Cairo know what DPI we're using so text is rendered at the right size,
+	and recalculate the row height on style set in case the DPI changed; 
+	fixes BGO #522500, and is completely awesome - I recommend people change
+	their DPI settings while Banshee is running a few times to really take in
+	the awesomeness of this fix. Really.
+
+	I also added a nicer way for row heights to be queried so renderers can
+	provide their desired heights; it's a better solution than the previous
+	hack, which was not nice. 
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrack.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Provide
+	row height calculating functions; ColumnCellText's version is static and
+	is referenced by ListView as the default calculator
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TerseTrackListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	Set the renderer row height computing functions to the view
+
 2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:

@@ -42,8 +42,9 @@ namespace Banshee.Collection.Gui
         
         private static Gdk.Pixbuf default_cover_pixbuf = IconThemeUtils.LoadIcon (48, "media-optical");
         
-        public static int RowHeight {
-            get { return 54; }
+        public int ComputeRowHeight (Widget widget)
+        {
+            return 54;
         }
     
         private ArtworkManager artwork_manager;

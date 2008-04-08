@@ -41,12 +41,15 @@ namespace Banshee.Collection.Gui
     {
         private ColumnController column_controller;
         
-        public AlbumListView() : base()
+        public AlbumListView () : base ()
         {
-            column_controller = new ColumnController();
-            column_controller.Add(new Column("Album", new ColumnCellAlbum(), 1.0));
+            ColumnCellAlbum renderer = new ColumnCellAlbum ();
+            
+            column_controller = new ColumnController ();
+            column_controller.Add (new Column ("Album", renderer, 1.0));
             ColumnController = column_controller;
-            RowHeight = ColumnCellAlbum.RowHeight;
+            
+            RowHeightProvider = renderer.ComputeRowHeight;
             
             RowActivated += delegate {
                 ServiceManager.PlaybackController.Source = (ServiceManager.SourceManager.ActiveSource as Banshee.Sources.ITrackModelSource);

@@ -59,7 +59,6 @@ namespace Hyena.Data.Gui
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
             context.Layout.Width = (int)((cellWidth - 8) * Pango.Scale.PangoScale);
-            context.Layout.FontDescription = context.Widget.PangoContext.FontDescription.Copy ();
             context.Layout.FontDescription.Weight = font_weight;
             context.Layout.Ellipsize = EllipsizeMode;
             
@@ -79,7 +78,7 @@ namespace Hyena.Data.Gui
         }
         
         protected virtual string Text {
-            get { return BoundObject == null ? String.Empty : BoundObject.ToString(); }
+            get { return BoundObject == null ? String.Empty : BoundObject.ToString (); }
         }
         
         protected int TextWidth {
@@ -90,10 +89,6 @@ namespace Hyena.Data.Gui
             get { return text_height; }
         }
         
-        internal bool UseCairoPango {
-            set { use_cairo_pango = value; }
-        }
-        
         public virtual Pango.Weight FontWeight {
             get { return font_weight; }
             set { font_weight = value; }
@@ -102,6 +97,16 @@ namespace Hyena.Data.Gui
         public virtual Pango.EllipsizeMode EllipsizeMode {
             get { return ellipsize_mode; }
             set { ellipsize_mode = value; }
+        }
+        
+        internal static int ComputeRowHeight (Widget widget)
+        {
+            int w_width, row_height;
+            Pango.Layout layout = new Pango.Layout (widget.PangoContext);
+            layout.SetText ("W");
+            layout.GetPixelSize (out w_width, out row_height);
+            layout.Dispose ();
+            return row_height + 8;
         }
     }
 }

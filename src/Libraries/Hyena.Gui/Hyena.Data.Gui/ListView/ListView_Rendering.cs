@@ -38,6 +38,8 @@ using GtkColorClass=Hyena.Gui.Theming.GtkColorClass;
 
 namespace Hyena.Data.Gui
 {
+    public delegate int ListViewRowHeightHandler (Widget widget);
+
     public partial class ListView<T> : Container
     {
         // The list is rendered to an off-screen Drawable; the "canvas". The canvas is large enough to hold
@@ -57,13 +59,33 @@ namespace Hyena.Data.Gui
         
         private Cairo.Context cairo_context;
         private CellContext cell_context;
-        
-        private Pango.Layout header_pango_layout;
-        private Pango.Layout list_pango_layout;
+        private Pango.Layout pango_layout;
         
         private Theme theme;
         protected Theme Theme {
             get { return theme; }
+        }
+        
+        private void CreateLayout (Cairo.Context cairo_context)
+        {
+            if (pango_layout != null) {
+                pango_layout.Dispose ();
+            }
+            
+            pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
+            pango_layout.FontDescription = PangoContext.FontDescription.Copy ();
+            
+            double resolution = Screen.Resolution;
+            if (resolution != -1) {
+                Pango.Context context = PangoCairoHelper.LayoutGetContext (pango_layout);
+                PangoCairoHelper.ContextSetResolution (context, resolution);
+            }
+        }
+        
+        protected override void OnStyleSet (Gtk.Style old_style)
+        {
+            base.OnStyleSet (old_style);
+            RecomputeRowHeight = true;
         }
          
         protected override bool OnExposeEvent (EventExpose evnt)
@@ -82,6 +104,7 @@ namespace Hyena.Data.Gui
             if (header_visible && column_controller != null) {
                 PaintHeader (damage);
             }
+            
             Theme.DrawFrameBorder (cairo_context, Allocation);
             
             // Then we render the list to the offscreen canvas.
@@ -89,6 +112,7 @@ namespace Hyena.Data.Gui
                 canvas1 = new Pixmap (GdkWindow, canvas_alloc.Width, canvas_alloc.Height);
                 render_everything = true;
             }
+            
             PaintList ();
             
             // Now we blit the offscreen canvas onto the GdkWindow.
@@ -115,7 +139,7 @@ namespace Hyena.Data.Gui
             cairo_context.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cairo_context.Clip ();
             
-            header_pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
+            CreateLayout (cairo_context);
             Theme.DrawHeaderBackground (cairo_context, header_rendering_alloc);
             
             Rectangle cell_area = new Rectangle ();
@@ -124,7 +148,7 @@ namespace Hyena.Data.Gui
             
             cell_context.Context = cairo_context;
             cell_context.Drawable = GdkWindow;
-            cell_context.Layout = header_pango_layout;
+            cell_context.Layout = pango_layout;
             cell_context.TextAsForeground = true;
 
             for (int ci = 0; ci < column_cache.Length; ci++) {
@@ -217,7 +241,7 @@ namespace Hyena.Data.Gui
             // Build a cairo context for the primary canvas.
             Cairo.Context tmp_cr = cairo_context;
             cairo_context = CairoHelper.Create (canvas1);
-            list_pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
+            CreateLayout (cairo_context);
             
             // Render the background to the primary canvas.
             Theme.DrawListBackground (cairo_context, canvas_alloc, true);
@@ -285,7 +309,7 @@ namespace Hyena.Data.Gui
         {
             cell_context.Context = cairo_context;
             cell_context.Drawable = canvas1;
-            cell_context.Layout = list_pango_layout;
+            cell_context.Layout = pango_layout;
             cell_context.Clip = canvas_alloc;
             cell_context.TextAsForeground = false;
             
@@ -333,11 +357,11 @@ namespace Hyena.Data.Gui
                         CairoCorners corners = CairoCorners.All;
                         
                         if (Selection.Contains (ri - 1)) {
-                            corners ^= CairoCorners.TopLeft | CairoCorners.TopRight;
+                            corners &= ~(CairoCorners.TopLeft | CairoCorners.TopRight);
                         }
                         
                         if (Selection.Contains (ri + 1)) {
-                            corners ^= CairoCorners.BottomLeft | CairoCorners.BottomRight;
+                            corners &= ~(CairoCorners.BottomLeft | CairoCorners.BottomRight);
                         }
                         
                         Theme.DrawRowSelection (cairo_context, single_list_alloc.X, single_list_alloc.Y, 
@@ -346,8 +370,7 @@ namespace Hyena.Data.Gui
                     }
                     
                     if (selection_height > 0) {
-                        Theme.DrawRowSelection (
-                            cairo_context, 0, selection_y, canvas_alloc.Width, selection_height);
+                        Theme.DrawRowSelection (cairo_context, 0, selection_y, canvas_alloc.Width, selection_height);
                         selection_height = 0;
                     }
                     
@@ -494,21 +517,40 @@ namespace Hyena.Data.Gui
             }
         }
         
-        private int row_height = 0;
-        protected int RowHeight {
+        private ListViewRowHeightHandler row_height_handler;
+        public virtual ListViewRowHeightHandler RowHeightProvider {
+            get { return row_height_handler; }
+            set {
+                if (value != row_height_handler) {
+                    row_height_handler = value;
+                    RecomputeRowHeight = true;
+                }
+            }
+        }
+        
+        private bool recompute_row_height = true;
+        protected bool RecomputeRowHeight {
+            get { return recompute_row_height; }
+            set { 
+                recompute_row_height = value;
+                if (value && IsMapped && IsRealized) {
+                    QueueDraw ();
+                }
+            }
+        }
+        
+        private int row_height = 32;
+        private int RowHeight {
             get {
-                if (row_height == 0) {
-                    int w_width;
-                    Pango.Layout layout = new Pango.Layout (PangoContext);
-                    layout.SetText ("W");
-                    layout.GetPixelSize (out w_width, out row_height);
-                    row_height += 8;
+                if (RecomputeRowHeight) {
+                    row_height = RowHeightProvider != null 
+                        ? RowHeightProvider (this) 
+                        : ColumnCellText.ComputeRowHeight (this);
+                    RecomputeRowHeight = false;
                 }
                 
                 return row_height;
             }
-            
-            set { row_height = value; }
         }
     }
 }

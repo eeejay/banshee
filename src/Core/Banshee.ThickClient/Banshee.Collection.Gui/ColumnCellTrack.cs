@@ -46,7 +46,8 @@ namespace Banshee.Collection.Gui
             Pango.Layout layout = new Pango.Layout (widget.PangoContext);
             layout.SetMarkup ("<b>W</b>\n<small><i>W</i></small>");
             layout.GetPixelSize (out lw, out lh);
-            return lh + 4;
+            layout.Dispose ();
+            return lh + 8;
         }
         
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
