@@ -1,4 +1,13 @@
 2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
+	
+	* ChangeLog: Forgot to thank Bertrand two commits ago.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/AlbumSet.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpDap.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpDapTrackInfo.cs: Copied over
+	from stable, not yet built.
+
+2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.Mtp/Makefile.am: Don't build unless enabled.
 
@@ -10,7 +19,8 @@
 
 	* build/m4/banshee/mono-zeroconf.m4:
 	* src/Extensions/Banshee.Daap/Makefile.am: Make Daap support optional,
-	though on by default.
+	though on by default.  Thanks to Bertrand Lorentz for the patch.  Fixes
+	BGO #526797.
 
 	* build/m4/banshee/dap-mtp.m4:
 	* configure.ac: Check for libmtp, and make MTP support optional (currently
