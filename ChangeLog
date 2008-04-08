@@ -1,5 +1,9 @@
 2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.Mtp/Makefile.am: Don't build unless enabled.
+
+2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* build/build.environment.mk: Add Mtp and Banshee.Dap.Mtp deps.
 
 	* build/build.rules.mk: Handle *.config files.
