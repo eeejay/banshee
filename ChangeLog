@@ -1,3 +1,29 @@
+2008-04-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* build/build.environment.mk: Add Mtp and Banshee.Dap.Mtp deps.
+
+	* build/build.rules.mk: Handle *.config files.
+
+	* build/m4/banshee/mono-zeroconf.m4:
+	* src/Extensions/Banshee.Daap/Makefile.am: Make Daap support optional,
+	though on by default.
+
+	* build/m4/banshee/dap-mtp.m4:
+	* configure.ac: Check for libmtp, and make MTP support optional (currently
+	off by default, enable with --enable-mtp).
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp.addin.xml:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp.mdp:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Dap/Banshee.Dap.Mtp/Makefile.am:
+	* src/Dap/Dap.mds:
+	* src/Dap/Makefile.am: New skeleton for Mtp device support.
+
+	* src/Libraries/Libraries.mds:
+	* src/Libraries/Makefile.am:
+	* src/Libraries/Mtp/*: Move libmtp-sharp code over from latest in stable.
+	Reorganize.
+
 2008-04-07  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ExtensionManagerDialog.cs:

@@ -1,0 +1,4 @@
+<configuration>
+  <dllmap dll="libmtp.dll" target="@LIBMTP_SO_MAP@"/>
+</configuration>
+

@@ -1,3 +1,4 @@
+if DAAP_ENABLED
 ASSEMBLY = Banshee.Daap
 TARGET = library
 LINK = $(REF_EXTENSION_DAAP)
@@ -34,3 +35,4 @@ RESOURCES =  \
 
 include $(top_srcdir)/build/build.mk
 
+endif

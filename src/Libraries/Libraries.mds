@@ -6,6 +6,7 @@
       <Entry build="True" name="Lastfm" configuration="Debug" />
       <Entry build="True" name="Lastfm.Gui" configuration="Debug" />
       <Entry build="True" name="Mono.Media" configuration="Debug" />
+      <Entry build="True" name="Mtp" configuration="Debug" />
       <Entry build="True" name="MusicBrainz" configuration="Debug" />
     </Configuration>
   </Configurations>
@@ -15,6 +16,7 @@
     <Execute type="None" entry="Lastfm" />
     <Execute type="None" entry="Lastfm.Gui" />
     <Execute type="None" entry="Mono.Media" />
+    <Execute type="None" entry="Mtp" />
     <Execute type="None" entry="MusicBrainz" />
   </StartMode>
   <Entries>
@@ -22,6 +24,7 @@
     <Entry filename="Hyena.Gui/Hyena.Gui.mdp" />
     <Entry filename="Lastfm/Lastfm.mdp" />
     <Entry filename="Lastfm.Gui/Lastfm.Gui.mdp" />
+    <Entry filename="Mtp/Mtp.mdp" />
     <Entry filename="Mono.Media/Mono.Media.mdp" />
     <Entry filename="MusicBrainz/MusicBrainz.mdp" />
   </Entries>

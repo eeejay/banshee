@@ -96,7 +96,7 @@ AM_GCONF_SOURCE_2
 dnl DAP support (each module is optional)
 #BANSHEE_CHECK_DAP_IPOD
 #BANSHEE_CHECK_DAP_NJB
-#BANSHEE_CHECK_DAP_MTP
+BANSHEE_CHECK_DAP_MTP
 #BANSHEE_CHECK_DAP_KARMA
 
 dnl DAAP support (optional)
@@ -155,11 +155,14 @@ src/Libraries/Hyena.Gui/Makefile
 src/Libraries/Lastfm/Makefile
 src/Libraries/Lastfm.Gui/Makefile
 src/Libraries/Mono.Media/Makefile
+src/Libraries/Mtp/Makefile
+src/Libraries/Mtp/Mtp.dll.config
 src/Libraries/MusicBrainz/Makefile
 
 src/Dap/Makefile
 src/Dap/Banshee.Dap/Makefile
 src/Dap/Banshee.Dap.MassStorage/Makefile
+src/Dap/Banshee.Dap.Mtp/Makefile
 
 src/Extensions/Makefile
 src/Extensions/Banshee.AudioCd/Makefile
@@ -191,6 +194,12 @@ ${PACKAGE}-${VERSION}
     Mono Runtime:      ${MONO}
     Mono >= 1.2.4:     ${HAVE_MONO_1_2_4}
     Gtk# >= 2.10:      ${HAVE_GTK_2_10}
+
+    Digital Audio Player (DAP) Support:
+      Mass Storage:    yes (unstable)
+      MTP:             ${enable_mtp_dap} (unstable)
+
+    DAAP Support:      ${enable_daap} (unstable)
 "
 #    Digital Audio Players (DAP):
 #      iPod:            ${enable_ipodsharp}
