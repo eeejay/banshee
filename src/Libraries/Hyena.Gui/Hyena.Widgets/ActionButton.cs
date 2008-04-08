@@ -116,6 +116,10 @@ namespace Hyena.Widgets
             get { return action; }
             set {
                 action = value;
+                if (action == null) {
+                    Sensitive = false;
+                    return;
+                }
                 if (!String.IsNullOrEmpty (action.IconName)) {
                     image.IconName = action.IconName;
                 } else if (!String.IsNullOrEmpty (action.StockId)) {

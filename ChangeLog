@@ -1,5 +1,10 @@
 2008-04-08  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ActionButton.cs: Fixed stupid
+	NRE error.
+
+2008-04-08  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/ArrowButton.cs: Cosmetic
 	change.
 
