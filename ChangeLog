@@ -1,5 +1,14 @@
 2008-04-08  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ArrowButton.cs: Cosmetic
+	change.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ActionButton.cs: Got rid of
+	some useless checks. There are some cornercases I'm just not
+	prepared to spend the energy to handle properly.
+
+2008-04-08  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:
 	Ctor now takes a PlaybackActions object so that it always has a
 	reference to the next action.

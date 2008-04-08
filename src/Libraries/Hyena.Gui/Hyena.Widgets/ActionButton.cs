@@ -116,24 +116,13 @@ namespace Hyena.Widgets
             get { return action; }
             set {
                 action = value;
-                if (action == null) {
-                    if (image.IconName != null) {
-                        image.IconName = null;
-                    }
-                    if (image.Stock != null) {
-                        image.Stock = null;
-                    }
-                    label.TextWithMnemonic = String.Empty;
-                    Sensitive = false;
-                } else {
-                    if (!String.IsNullOrEmpty (action.IconName)) {
-                        image.IconName = action.IconName;
-                    } else if (!String.IsNullOrEmpty (action.StockId)) {
-                        image.Stock = action.StockId;
-                    }
-                    label.TextWithMnemonic = action.Label;
-                    Sensitive = action.Sensitive && action.Visible;
+                if (!String.IsNullOrEmpty (action.IconName)) {
+                    image.IconName = action.IconName;
+                } else if (!String.IsNullOrEmpty (action.StockId)) {
+                    image.Stock = action.StockId;
                 }
+                label.TextWithMnemonic = action.Label;
+                Sensitive = action.Sensitive && action.Visible;
             }
         }
         

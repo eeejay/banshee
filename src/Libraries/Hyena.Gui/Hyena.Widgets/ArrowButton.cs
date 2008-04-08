@@ -55,9 +55,8 @@ namespace Hyena.Widgets
         
         protected ArrowButton (Gtk.Action action, Toolbar toolbar)
         {
-            base.ActionButtonStyle = ActionButtonStyle.None;
-            
             this.action = action;
+            base.ActionButtonStyle = ActionButtonStyle.None;
             
             arrow_alloc.Width = 5;
             arrow_alloc.Height = 3;
