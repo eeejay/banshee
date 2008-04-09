@@ -331,14 +331,14 @@ namespace Banshee.Gui
             playlist.Save ();
             playlist.PrimarySource.AddChildSource (playlist);
             ThreadAssist.SpawnFromMain (delegate {
-                playlist.AddSelectedTracks (TrackSelector.TrackModel);
+                playlist.AddSelectedTracks (ActiveSource);
             });
         }
 
         private void OnAddToExistingPlaylist (object o, EventArgs args)
         {
             ThreadAssist.SpawnFromMain (delegate {
-                ((PlaylistMenuItem)o).Playlist.AddSelectedTracks (TrackSelector.TrackModel);
+                ((PlaylistMenuItem)o).Playlist.AddSelectedTracks (ActiveSource);
             });
         }
 

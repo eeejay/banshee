@@ -96,7 +96,6 @@ namespace Banshee.Gui
                 // to the original icon
                 string icon = source.Properties.GetString (String.Format ("{0}IconName", action_name)) ?? icons[action_name];
                 if (!String.IsNullOrEmpty (icon)) {
-                    Console.WriteLine ("Setting icon for {1} to {0}", icon, action_name);
                     action.IconName = icon;
                 }
             }

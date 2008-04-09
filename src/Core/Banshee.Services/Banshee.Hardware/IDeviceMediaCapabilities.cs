@@ -1,8 +1,8 @@
 //
-// IDevice.cs
+// IDeviceMediaCapabilities.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -27,17 +27,17 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 namespace Banshee.Hardware
 {
-    public interface IDevice
+    public interface IDeviceMediaCapabilities
     {
-        string Uuid { get; }
-        string Name { get; }
-
-        string Product { get; }
-        string Vendor { get; }
-
-        IDeviceMediaCapabilities MediaCapabilities { get; }
+        int FolderDepth { get; }
+        string [] AudioFolders { get; }
+        string [] PlaylistFormats { get; }
+        string PlaylistPath { get; }
+        string [] PlaybackMimeTypes { get; }
+        bool IsType (string type);
     }
 }

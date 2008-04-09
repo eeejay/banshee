@@ -72,6 +72,10 @@ namespace Banshee.Daap
         public TrackListModel TrackModel {
             get { return track_model; }
         }
+
+        public bool CanAddTracks {
+            get { return false; }
+        }
         
         public bool CanRemoveTracks {
             get { return false; }

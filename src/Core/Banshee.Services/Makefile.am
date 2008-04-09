@@ -39,6 +39,7 @@ SOURCES =  \
 	Banshee.Hardware/IDiscVolume.cs \
 	Banshee.Hardware/IDiskDevice.cs \
 	Banshee.Hardware/IHardwareManager.cs \
+	Banshee.Hardware/IDeviceMediaCapabilities.cs \
 	Banshee.Hardware/IVolume.cs \
 	Banshee.Library/HomeDirectoryImportSource.cs \
 	Banshee.Library/IImportSource.cs \

@@ -80,6 +80,10 @@ namespace Banshee.SmartPlaylist
             get { return true; }
         }
 
+        public override bool CanAddTracks {
+            get { return false; }
+        }
+
         public override bool CanRemoveTracks {
             get { return false; }
         }

@@ -380,6 +380,15 @@ namespace Hyena.Data.Sqlite
             }
             return false;
         }
+
+        public void Copy (T original, T copy)
+        {
+            foreach (DatabaseColumn column in select_columns) {
+                if (column != key) {
+                    column.SetValue (copy, column.GetRawValue (original));
+                }
+            }
+        }
         
         protected virtual HyenaSqliteCommand CreateCommand {
             get {

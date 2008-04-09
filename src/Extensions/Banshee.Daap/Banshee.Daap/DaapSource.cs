@@ -40,7 +40,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Daap
 {
-    public class DaapSource : PrimarySource, IDurationAggregator, IDisposable, IUnmapableSource, IImportSource
+    public class DaapSource : PrimarySource, IDurationAggregator, IUnmapableSource, IImportSource
     {
         private Service service;
         private DAAP.Client client;
@@ -166,9 +166,10 @@ namespace Banshee.Daap
             return true;
         }
         
-        public void Dispose ()
+        public override void Dispose ()
         {
             Disconnect (true);
+            base.Dispose ();
         }
         
         private void PromptLogin (object o, EventArgs args)

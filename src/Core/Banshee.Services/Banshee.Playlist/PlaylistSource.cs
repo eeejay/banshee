@@ -116,8 +116,7 @@ namespace Banshee.Playlist
 
         public override bool AcceptsInputFromSource (Source source)
         {
-            // TODO: Probably should be more restrictive than this
-            return source is DatabaseSource;
+            return base.AcceptsInputFromSource (source) && (Parent == null || source == Parent || source.Parent == Parent);
         }
         
         public override void MergeSourceInput (Source from, SourceMergeType mergeType)
@@ -131,7 +130,7 @@ namespace Banshee.Playlist
             
             switch (mergeType) {
                 case SourceMergeType.ModelSelection:
-                    AddSelectedTracks (model);
+                    AddSelectedTracks (from);
                     break;
                 case SourceMergeType.Source:
                     AddTrackRange (model, new RangeCollection.Range (0, model.Count));
@@ -183,6 +182,14 @@ namespace Banshee.Playlist
             }
         }
 
+        // We can add tracks only if our parent can
+        public override bool CanAddTracks {
+            get {
+                DatabaseSource ds = Parent as DatabaseSource;
+                return ds != null ? ds.CanAddTracks : base.CanAddTracks;
+            }
+        }
+
         // Have our parent handle deleting tracks
         public override void DeleteSelectedTracks (TrackListDatabaseModel model)
         {
@@ -226,19 +233,22 @@ namespace Banshee.Playlist
             Reload ();
         }*/
         
-        public virtual void AddSelectedTracks (TrackListDatabaseModel from)
+        public override void AddSelectedTracks (Source source)
         {
-            if (from == track_model)
-                return;
-
-            WithTrackSelection (from, AddTrackRange);
-            Reload ();
-            OnUserNotifyUpdated ();
+            if (Parent == null || source == Parent || source.Parent == Parent) {
+                base.AddSelectedTracks (source);
+                Reload ();
+            /*} else {
+                // Adding from a different primary source, so add to our primary source first
+                PrimarySource primary = Parent as PrimarySource;
+                primary.AddSelectedTracks (model);
+                // then add to us*/
+            }
         }
 
         TrackListDatabaseModel last_add_range_from_model;
         HyenaSqliteCommand last_add_range_command = null;
-        protected virtual void AddTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
+        protected override void AddTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
         {
             last_add_range_command = (!from.CachesJoinTableEntries)
                 ? add_track_range_command

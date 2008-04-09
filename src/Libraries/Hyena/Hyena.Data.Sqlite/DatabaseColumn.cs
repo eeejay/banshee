@@ -72,6 +72,11 @@ namespace Hyena.Data.Sqlite
             this.name = attribute.ColumnName ?? member_info.Name;
             this.type = type;
         }
+
+        public object GetRawValue (object target)
+        {
+            return field_info != null ? field_info.GetValue (target) : property_info.GetValue (target, null);
+        }
         
         public object GetValue (object target)
         {

@@ -41,7 +41,7 @@ using Banshee.Hardware;
 
 namespace Banshee.Dap
 {
-    public abstract class RemovableSource : PrimarySource, IUnmapableSource, IDisposable, Banshee.Library.IImportSource
+    public abstract class RemovableSource : PrimarySource, IUnmapableSource, Banshee.Library.IImportSource
     {
         protected RemovableSource () : base ()
         {
@@ -66,17 +66,15 @@ namespace Banshee.Dap
             }
         }
 
-        public void Dispose ()
-        {
-            ClearChildSources ();
-            ServiceManager.SourceManager.RemoveSource (this);
-        }
-        
         public override bool CanRemoveTracks {
             get { return false; }
         }
 
         public override bool CanDeleteTracks {
+            get { return !IsReadOnly; }
+        }
+
+        public override bool CanAddTracks {
             get { return !IsReadOnly; }
         }
 
@@ -87,40 +85,6 @@ namespace Banshee.Dap
         public double StorageUsageFraction {
             get { return (double) BytesUsed / (double) BytesCapacity; }
         }
-
-#region Source Overrides
-
-        public override bool AcceptsInputFromSource (Source source)
-        {
-            // TODO: Probably should be more restrictive than this
-            return source is DatabaseSource;
-        }
-        
-        public override void MergeSourceInput (Source from, SourceMergeType mergeType)
-        {
-            DatabaseSource source = from as DatabaseSource;
-            if (source == null || !(source.TrackModel is TrackListDatabaseModel)) {
-                return;
-            }
-            
-            //TrackListDatabaseModel model = (TrackListDatabaseModel)source.TrackModel;
-            
-            switch (mergeType) {
-                case SourceMergeType.ModelSelection:
-                    //AddSelectedTracks (model);
-                    break;
-                case SourceMergeType.Source:
-                    //AddTrackRange (model, new RangeCollection.Range (0, model.Count));
-                    Reload ();
-                    break;
-            }
-        }
-        
-        public override SourceMergeType SupportedMergeTypes {
-            get { return IsReadOnly ? SourceMergeType.None : SourceMergeType.All; }
-        }
-
-#endregion
 
 #region IUnmapableSource Implementation
 

@@ -43,6 +43,8 @@ namespace Banshee.Dap
 {
     public abstract class DapSource : RemovableSource
     {
+        protected IDevice device;
+
         protected DapSource () : base ()
         {
         }
@@ -50,9 +52,36 @@ namespace Banshee.Dap
         protected override void Initialize ()
         {
             base.Initialize ();
-            Properties.SetStringList ("Icon.Name", "multimedia-player");
+
+            if (!String.IsNullOrEmpty (device.Vendor) && !String.IsNullOrEmpty (device.Product)) {
+                string device_icon_name = (device.Vendor.Trim () + "-" + device.Product.Trim ()).Replace (' ', '-').ToLower ();
+                Properties.SetStringList ("Icon.Name", device_icon_name, FallbackIcon);
+            } else {
+                Properties.SetStringList ("Icon.Name", FallbackIcon);
+            }
+
+            GenericName = IsMediaDevice ? Catalog.GetString ("Audio Player") : Catalog.GetString ("Media Device");
         }
 
-        public abstract bool Initialize (IDevice device);
+        public bool Resolve (IDevice device)
+        {
+            this.device = device;
+            type_unique_id = device.Uuid;
+            return Initialize (device);
+        }
+
+        protected abstract bool Initialize (IDevice device);
+
+        protected virtual bool IsMediaDevice {
+            get { return device.MediaCapabilities != null; }
+        }
+
+        protected virtual string FallbackIcon {
+            get { return IsMediaDevice ? "multimedia-player" : "harddrive"; }
+        }
+
+        protected IDeviceMediaCapabilities MediaCapabilities {
+            get { return device.MediaCapabilities; }
+        }
     }
 }

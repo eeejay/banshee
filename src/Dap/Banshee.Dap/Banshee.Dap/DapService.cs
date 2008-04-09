@@ -149,7 +149,7 @@ namespace Banshee.Dap
             foreach (TypeExtensionNode node in supported_dap_types) {
                 try {
                     DapSource src = (DapSource) node.CreateInstance ();
-                    if (src.Initialize (device)) {
+                    if (src.Resolve (device)) {
                         return src;
                     }
                 } catch (Exception e) {

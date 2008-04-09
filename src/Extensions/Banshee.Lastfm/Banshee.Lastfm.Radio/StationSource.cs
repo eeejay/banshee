@@ -429,6 +429,10 @@ namespace Banshee.Lastfm.Radio
             throw new Exception ("Should not call DeleteSelectedTracks on StationSource");
         }
 
+        public bool CanAddTracks {
+            get { return false; }
+        }
+
         public bool CanRemoveTracks {
             get { return false; }
         }

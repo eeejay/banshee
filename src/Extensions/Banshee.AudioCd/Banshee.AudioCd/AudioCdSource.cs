@@ -231,6 +231,10 @@ namespace Banshee.AudioCd
         {
         }
 
+        public bool CanAddTracks {
+            get { return false; }
+        }
+
         public bool CanRemoveTracks {
             get { return false; }
         }

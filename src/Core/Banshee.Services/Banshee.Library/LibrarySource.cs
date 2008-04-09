@@ -66,18 +66,32 @@ namespace Banshee.Library
             }
         }
 
-        public override bool AcceptsInputFromSource (Source source)
+        protected override void AddTrack (DatabaseTrackInfo track)
         {
-            return source is IImportSource;
-        }
+            // Ignore if already have it
+            if (track.PrimarySourceId == DbId)
+                return;
 
-        public override void MergeSourceInput (Source source, SourceMergeType mergeType)
-        {
-            if (!(source is IImportSource) || mergeType != SourceMergeType.Source) {
+            // Move it if its from another library source
+            if (track.PrimarySource is LibrarySource) {
+                PrimarySource old_primary = track.PrimarySource;
+                track.PrimarySource = this;
+                track.Save (false);
+                old_primary.NotifyTracksChanged ();
                 return;
             }
-            
-            ((IImportSource)source).Import ();
+
+            // Otherwise, copy it
+            if (track.PrimarySource is LibrarySource) {
+                // queue in importer or something?
+            }
+
+            /*try {
+                Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
+            } catch (System.IO.FileNotFoundException) {
+            } catch (System.IO.DirectoryNotFoundException) {
+            }*/
         }
+
     }
 }

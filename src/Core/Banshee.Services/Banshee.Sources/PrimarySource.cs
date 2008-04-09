@@ -70,7 +70,7 @@ namespace Banshee.Sources
         }
     }
 
-    public abstract class PrimarySource : DatabaseSource
+    public abstract class PrimarySource : DatabaseSource, IDisposable
     {
         protected ErrorSource error_source;
         protected bool error_source_visible = false;
@@ -92,7 +92,7 @@ namespace Banshee.Sources
         public ErrorSource ErrorSource {
             get {
                 if (error_source == null) {
-                    error_source = new ErrorSource (Catalog.GetString ("Import Errors"));
+                    error_source = new ErrorSource (Catalog.GetString ("Errors"));
                     ErrorSource.Updated += OnErrorSourceUpdated;
                     OnErrorSourceUpdated (null, null);
                 }
@@ -141,6 +141,20 @@ namespace Banshee.Sources
 
         protected PrimarySource () : base ()
         {
+        }
+
+        public virtual void Dispose ()
+        {
+            if (Application.ShuttingDown)
+                return;
+
+            DatabaseTrackInfo track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo;
+            if (track != null && track.PrimarySourceId == this.DbId) {
+                ServiceManager.PlayerEngine.Close ();
+            }
+
+            ClearChildSources ();
+            ServiceManager.SourceManager.RemoveSource (this);
         }
 
         protected override void Initialize ()
@@ -286,6 +300,43 @@ namespace Banshee.Sources
         }
 
         protected virtual void DeleteTrack (DatabaseTrackInfo track)
+        {
+            throw new Exception ("PrimarySource DeleteTrack method not implemented");
+        }
+
+        public override bool AcceptsInputFromSource (Source source)
+        {
+            return base.AcceptsInputFromSource (source) && source.Parent != this;
+        }
+
+        public override void MergeSourceInput (Source source, SourceMergeType mergeType)
+        {
+            AddSelectedTracks (source);
+            /*if (!(source is IImportSource) || mergeType != SourceMergeType.Source) {
+                return;
+            }
+            
+            ((IImportSource)source).Import ();
+            */
+        }
+
+        protected override void AddTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        {
+            for (int i = range.Start; i <= range.End; i++) {
+                DatabaseTrackInfo track = model [i] as DatabaseTrackInfo;
+                if (track == null)
+                    continue;
+
+                try {
+                    AddTrack (track);
+                } catch (Exception e) {
+                    Log.Exception (e);
+                    ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
+                }
+            }
+        }
+
+        protected virtual void AddTrack (DatabaseTrackInfo track)
         {
             throw new Exception ("PrimarySource DeleteTrack method not implemented");
         }

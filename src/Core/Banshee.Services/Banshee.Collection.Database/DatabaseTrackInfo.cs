@@ -72,6 +72,11 @@ namespace Banshee.Collection.Database
         {
         }
 
+        public DatabaseTrackInfo (DatabaseTrackInfo original) : base ()
+        {
+            Provider.Copy (original, this);
+        }
+
         public override void IncrementPlayCount ()
         {
             if (Provider.Refresh (this)) {
@@ -126,7 +131,10 @@ namespace Banshee.Collection.Database
             }
             
             DateUpdated = DateTime.Now;
-            bool is_new = TrackId == 0;
+
+            bool is_new = (TrackId == 0);
+            if (is_new) DateAdded = DateUpdated;
+
             Provider.Save (this);
 
             if (notify) {
@@ -156,7 +164,7 @@ namespace Banshee.Collection.Database
 
         public PrimarySource PrimarySource {
             get { return PrimarySource.GetById (primary_source_id); }
-            set { primary_source_id = value.DbId; }
+            set { PrimarySourceId = value.DbId; }
         }
 
         [DatabaseColumn ("ArtistID")]

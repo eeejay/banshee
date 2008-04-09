@@ -162,7 +162,7 @@ namespace Banshee.PlayQueue
         
         private void OnAddToPlayQueue (object o, EventArgs args)
         {
-            AddSelectedTracks (ServiceManager.Get<InterfaceActionService> ().TrackActions.TrackSelector.TrackModel);
+            AddSelectedTracks (ServiceManager.SourceManager.ActiveSource);
         }
         
         private void OnClearPlayQueue (object o, EventArgs args)

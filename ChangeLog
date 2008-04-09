@@ -1,7 +1,73 @@
+2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* build/build.environment.mk: Banshee.Dap.Mtp depends on Mtp library.
+
+	* src/Backends/Banshee.Hal/Makefile.am:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/DeviceMediaCapabilities.cs:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Hardware/IDeviceMediaCapabilities.cs:
+	New files for exposing portable_audio_player properties.
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IDevice.cs: Add Product,
+	Vendor, and MediaCapabilities properties.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Add copy ctor.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Add
+	ShuttingDown bool property.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add
+	CanAddTracks and Merge-related overrides.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add Dispose
+	method, and override AddTrack/Merge methods.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Get rid
+	of WriteLine.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Add the ability to add tracks to DAPs.  No transcoding yet, and doesn't
+	respect FolderDepth yet.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Copy more
+	initialization code over.  Still far from usable.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Call DapSource.Resolve
+	instead of Initialize.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Add better defaults.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Move Dispose method
+	up to PrimarySource.  Get rid of Merge/AcceptsInput overrides.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ITrackModelSource.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs: Add
+	CanAddTracks property.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Call
+	base.Dispose ().
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Use updated AddSelectedTracks method.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Add GetRawValue
+	method for use in provider's Copy method.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Add Copy
+	method for transferring all db fields (except pk) from one instance to another.
+
 2008-04-09  Mike Urbanski  <michael.c.urbanski@gmail.com>    
-    
-    * src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeed.cs:
-    Fixes table name clashes on dbs migrated from banshee 0.x.  drr...
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeed.cs:
+	Fixes table name clashes on dbs migrated from banshee 0.x.  drr...
 
 2008-04-08  Aaron Bockover  <abock@gnome.org>
 

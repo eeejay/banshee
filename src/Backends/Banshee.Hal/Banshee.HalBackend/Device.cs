@@ -69,8 +69,26 @@ namespace Banshee.HalBackend
                 return name;
             }
         }
+
+        public virtual string Product {
+            get { return device["info.product"]; }
+        }
+
+        public virtual string Vendor {
+            get { return device["info.vendor"]; }
+        }
+
+        protected IDeviceMediaCapabilities media_capabilities;
+        public IDeviceMediaCapabilities MediaCapabilities {
+            get {
+                if (media_capabilities == null && device.PropertyExists ("portable_audio_player.output_formats")) {
+                    media_capabilities = new DeviceMediaCapabilities (device);
+                }
+                return media_capabilities;
+            }
+        }
         
-       private static Stack<Hal.Device> CollectUsbDeviceStack(Hal.Device device)
+        private static Stack<Hal.Device> CollectUsbDeviceStack(Hal.Device device)
         {
             Stack<Hal.Device> device_stack = new Stack<Hal.Device>();
             int usb_vendor_id = -1;

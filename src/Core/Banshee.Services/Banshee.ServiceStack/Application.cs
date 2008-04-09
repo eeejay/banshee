@@ -53,6 +53,7 @@ namespace Banshee.ServiceStack
         public static event ShutdownRequestHandler ShutdownRequested;
 
         private static Stack<Client> running_clients = new Stack<Client> ();
+        private static bool shutting_down;
 
         public static void Run ()
         {
@@ -71,12 +72,18 @@ namespace Banshee.ServiceStack
             
             Banshee.Base.PlatformHacks.RestoreMonoJitSegv ();
         }
+
+        public static bool ShuttingDown {
+            get { return shutting_down; }
+        }
      
         public static void Shutdown ()
         {
+            shutting_down = true;
             if (Banshee.Kernel.Scheduler.IsScheduled (typeof (Banshee.Kernel.IInstanceCriticalJob)) ||
                 Banshee.Kernel.Scheduler.CurrentJob is Banshee.Kernel.IInstanceCriticalJob) {
                 if (shutdown_prompt_handler != null && !shutdown_prompt_handler ()) {
+                    shutting_down = false;
                     return;
                 }
             }
@@ -84,6 +91,7 @@ namespace Banshee.ServiceStack
             if (OnShutdownRequested ()) {
                 Dispose ();
             }
+            shutting_down = false;
         }
         
         public static void PushClient (Client client)

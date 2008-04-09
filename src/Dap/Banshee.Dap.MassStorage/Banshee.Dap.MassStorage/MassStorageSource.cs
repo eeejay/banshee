@@ -34,6 +34,7 @@ using Mono.Unix;
 using Hyena;
 using Hyena.Collections;
 
+using Banshee.IO;
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Library;
@@ -52,23 +53,22 @@ namespace Banshee.Dap.MassStorage
         {
         }
 
-        public override bool Initialize (IDevice device)
+        protected override bool Initialize (IDevice device)
         {
             this.volume = device as IVolume;
             if (volume == null)
                 return false;
 
-            if (!System.IO.File.Exists (IsAudioPlayerPath))
+            // TODO set up a ui for selecting volumes we want mounted/shown within Banshee
+            // (so people don't have to touch .is_audio_player, and so we can give them a harddrive icon
+            // instead of pretending they are DAPs).
+            if (!IsMediaDevice)
                 return false;
 
-            type_unique_id = volume.Uuid;
             Name = volume.Name;
-            GenericName = Catalog.GetString ("Media");
+            mount_point = volume.MountPoint;
 
             Initialize ();
-
-            Properties.SetStringList ("Icon.Name", "harddrive");
-            mount_point = volume.MountPoint;
 
             // TODO differentiate between Audio Players and normal Disks, and include the size, eg "2GB Audio Player"?
             //GenericName = Catalog.GetString ("Audio Player");
@@ -99,6 +99,10 @@ namespace Banshee.Dap.MassStorage
             get { return mount_point; }
         }
 
+        protected override bool IsMediaDevice {
+            get { return base.IsMediaDevice || Banshee.IO.File.Exists (new SafeUri (IsAudioPlayerPath)); }
+        }
+
         protected string IsAudioPlayerPath {
             get { return System.IO.Path.Combine (volume.MountPoint, ".is_audio_player"); }
         }
@@ -111,8 +115,51 @@ namespace Banshee.Dap.MassStorage
             get { return (long) volume.Capacity; }
         }
 
+        private bool had_write_error = false;
         protected override bool IsReadOnly {
-            get { return volume.IsReadOnly; }
+            get { return volume.IsReadOnly || had_write_error; }
+        }
+
+        private string write_path = null;
+        protected string WritePath {
+            get {
+                if (write_path == null) {
+                    write_path = BaseDirectory;
+                    // According to the HAL spec, the first folder listed in the audio_folders property
+                    // is the folder to write files to.
+                    if (MediaCapabilities != null && MediaCapabilities.AudioFolders.Length > 0) {
+                        write_path = System.IO.Path.Combine(write_path, MediaCapabilities.AudioFolders[0]);
+                    }
+                }
+                return write_path;
+            }
+
+            set { write_path = value; }
+        }
+
+        protected override void AddTrack (DatabaseTrackInfo track)
+        {
+            if (track.PrimarySourceId == DbId)
+                return;
+
+            SafeUri new_uri = new SafeUri (GetTrackPath (track));
+            try {
+                // If it already is on the device but it's out of date, remove it
+                //if (File.Exists(new_uri) && File.GetLastWriteTime(track.Uri.LocalPath) > File.GetLastWriteTime(new_uri))
+                    //RemoveTrack(new MassStorageTrackInfo(new SafeUri(new_uri)));
+                if (!File.Exists (new_uri)) {
+                    Directory.Create (System.IO.Path.GetDirectoryName (new_uri.LocalPath));
+                    File.Copy (track.Uri, new_uri, false);
+
+                    DatabaseTrackInfo copied_track = new DatabaseTrackInfo (track);
+                    copied_track.PrimarySource = this;
+                    copied_track.Uri = new_uri;
+                    copied_track.Save (false);
+                }
+            } catch (System.IO.FileNotFoundException) {
+                had_write_error = true;
+                throw;
+            }
         }
 
         protected override void DeleteTrack (DatabaseTrackInfo track)
@@ -131,6 +178,57 @@ namespace Banshee.Dap.MassStorage
 
             if (volume.CanEject)
                 volume.Eject ();
+        }
+
+        protected int FolderDepth {
+            get { return MediaCapabilities == null ? -1 : MediaCapabilities.FolderDepth; }
+        }
+
+        private string GetTrackPath (TrackInfo track)
+        {
+            string file_path = WritePath;
+
+            /*string artist = FileNamePattern.Escape (track.ArtistName);
+            string album = FileNamePattern.Escape (track.AlbumTitle);
+            string number_title = FileNamePattern.Escape (track.TrackNumberTitle);
+
+            // If the folder_depth property exists, we have to put the files in a hiearchy of
+            // the exact given depth (not including the mount point/audio_folder).
+            if (FolderDepth != -1) {
+                int depth = FolderDepth;
+
+                if (depth == 0) {
+                    // Artist - Album - 01 - Title
+                    file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1} - {2}", artist, album, number_title));
+                } else if (depth == 1) {
+                    // Artist - Album/01 - Title
+                    file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1}", artist, album));
+                    file_path = System.IO.Path.Combine (file_path, number_title);
+                } else if (depth == 2) {
+                    // Artist/Album/01 - Title
+                    file_path = System.IO.Path.Combine (file_path, artist);
+                    file_path = System.IO.Path.Combine (file_path, album);
+                    file_path = System.IO.Path.Combine (file_path, number_title);
+                } else {
+                    // If the *required* depth is more than 2..go nuts!
+                    for (int i = 0; i < depth - 2; i++) {
+                        file_path = System.IO.Path.Combine (file_path, artist.Substring (0, Math.Min (i, artist.Length)).Trim ());
+                    }
+
+                    // Finally add on the Artist/Album/01 - Track
+                    file_path = System.IO.Path.Combine (file_path, artist);
+                    file_path = System.IO.Path.Combine (file_path, album);
+                    file_path = System.IO.Path.Combine (file_path, number_title);
+                }
+            } else {
+                file_path = System.IO.Path.Combine (file_path, FileNamePattern.CreateFromTrackInfo (track));
+            }
+            */
+
+            file_path = System.IO.Path.Combine (file_path, FileNamePattern.CreateFromTrackInfo (track));
+            file_path += System.IO.Path.GetExtension (track.Uri.LocalPath);
+
+            return file_path;
         }
     }
 }

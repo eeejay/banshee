@@ -114,6 +114,10 @@ namespace Banshee.Sources
             }
         }
 
+        public virtual bool CanAddTracks {
+            get { return true; }
+        }
+
         public virtual bool CanRemoveTracks {
             get { return true; }
         }
@@ -144,6 +148,11 @@ namespace Banshee.Sources
         
         public virtual bool ShowBrowser { 
             get { return true; }
+        }
+
+        public override bool AcceptsInputFromSource (Source source)
+        {
+            return CanAddTracks && source != this;
         }
 
 #endregion
@@ -202,6 +211,16 @@ namespace Banshee.Sources
             OnTracksDeleted ();
         }
 
+        public virtual void AddSelectedTracks (Source source)
+        {
+            if (!AcceptsInputFromSource (source))
+                return;
+
+            TrackListDatabaseModel model = (source as ITrackModelSource).TrackModel as TrackListDatabaseModel;
+            WithTrackSelection (model, AddTrackRange);
+            OnTracksAdded ();
+        }
+
         public virtual void RateSelectedTracks (int rating)
         {
             RateSelectedTracks (track_model, rating);
@@ -219,6 +238,10 @@ namespace Banshee.Sources
                 }
             }
             OnTracksChanged (BansheeQuery.RatingField);
+        }
+
+        public override SourceMergeType SupportedMergeTypes {
+            get { return SourceMergeType.All; }
         }
 
 #endregion
@@ -322,6 +345,11 @@ namespace Banshee.Sources
 
 
         protected virtual void DeleteTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        {
+            throw new NotImplementedException(); 
+        }
+
+        protected virtual void AddTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
         {
             throw new NotImplementedException(); 
         }

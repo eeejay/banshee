@@ -47,6 +47,7 @@ namespace Banshee.Sources
         void RemoveSelectedTracks ();
         void DeleteSelectedTracks ();
 
+        bool CanAddTracks { get; }
         bool CanRemoveTracks { get; }
         bool CanDeleteTracks { get; }
         bool ConfirmRemoveTracks { get; }
