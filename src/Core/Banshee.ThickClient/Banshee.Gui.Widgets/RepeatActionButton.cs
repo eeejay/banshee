@@ -29,26 +29,41 @@
 using System;
 using Gtk;
 
-using Hyena.Gui;
 using Hyena.Widgets;
 
 using Banshee.ServiceStack;
 
 namespace Banshee.Gui.Widgets
 {
-    public class RepeatActionButton : ActionGroupButton
+    public class RepeatActionButton : HBox
     {
-        private InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
+        private PlaybackRepeatActions actions = ServiceManager.Get<InterfaceActionService> ().PlaybackActions.RepeatActions;
+        
+        private MenuButton button;
+        private HBox box = new HBox ();
+        private Image image = new Image ();
+        private Label label = new Label ();
         
         public RepeatActionButton ()
         {
-            ActionButtonStyle = ActionButtonStyle.BothHoriz;
-            IconSize = Gtk.IconSize.Menu;
-            Relief = ReliefStyle.None;
+            box.Spacing = 4;
+            label.UseUnderline = true;
+            image.IconSize = (int)IconSize.Menu;
+            
+            actions.Changed += delegate { OnActionChanged (); };
+            OnActionChanged ();
+            
+            box.PackStart (image, false, false, 0);
+            box.PackStart (label, true, true, 0);
+            button = new MenuButton (box, actions.CreateMenu (), false);
+            Add (button);
+            ShowAll ();
         }
         
-        protected override IRadioActionGroup ActionGroup {
-            get { return service.PlaybackActions.RepeatActions; }
+        private void OnActionChanged ()
+        {
+            image.IconName = actions.Active.IconName;
+            label.TextWithMnemonic = actions.Active.Label;
         }
     }
 }

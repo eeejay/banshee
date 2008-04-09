@@ -1,3 +1,38 @@
+2008-04-09  Scott Peterson <lunchtimemama@gmail.com> 
+
+	OK, I totally re-did the arrow button stuff. We still don't use the
+	standard Gtk MenuToolButton because I am WAY to cool for it.
+	It like _thought_ it was all cool enough to sit at my lunch table,
+	but I was all like Ut-Uh! So we now use the sufficiently cool and
+	totally custom MenuButton. This sucker is lean, mean, with an
+	emphasis on correctness. No hacky-hacky here. Nosiree. I'd
+	maybe entertain the idea that there's a better way to handle
+	the RepeatActionButton, but I'm seriously fine with it as-is.
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Use the new stuff.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs,
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:
+	Added nice CreateMenu() method which does just what you think.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/NextArrowButton.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui/IRadioActionGroup.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ArrowButton.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ActionGroupButton.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ActionButton.cs: Got rid of
+	these god-aweful classes.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/RepeatActionButton.cs:
+	Redone to use MenuButton.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs: This is the
+	lovely new widget. Pass it a widget (like a Button or a MenuButton,
+	for example) and it will menu-fy it! If showArrow is true, a
+	way-pretty arrow will appear to the side of the widget you pass,
+	providing access to the menu. If showArrow is false, the widget you
+	pass will get packed inside the button and clicking anywhere will
+	open the menu.
+
 2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* build/build.environment.mk: Banshee.Dap.Mtp depends on Mtp library.

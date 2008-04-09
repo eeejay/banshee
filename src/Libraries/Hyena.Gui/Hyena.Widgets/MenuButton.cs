@@ -1,11 +1,10 @@
 //
-// ActionGroupButton.cs
+// MenuButton.cs
 //
-// Authors:
-//   Aaron Bockover <abockover@novell.com>
+// Author:
 //   Scott Peterson <lunchtimemama@gmail.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (c) 2008 Scott Peterson
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,60 +26,85 @@
 //
 
 using System;
-using System.Collections.Generic;
 using Gtk;
-
-using Hyena.Gui;
+using Gdk;
 
 namespace Hyena.Widgets
 {
-    public abstract class ActionGroupButton : ActionButton
+    public class MenuButton : Container
     {
-        protected abstract IRadioActionGroup ActionGroup { get; }
+        private ToggleButton button = new ToggleButton ();
+        private HBox box = new HBox ();
+        private Alignment alignment;
+        private Arrow arrow;
+        private Widget button_widget;
+        private Menu menu;
+        private Widget size_widget;
         
-        protected ActionGroupButton () : this (null)
+        public MenuButton (Widget buttonWidget, Menu menu, bool showArrow)
         {
+            button_widget = buttonWidget;
+            this.menu = menu;
+            menu.Deactivated += delegate { button.Active = false; };
+            
+            button.Parent = this;
+            button.FocusOnClick = false;
+            button.Relief = ReliefStyle.None;
+            button.Pressed += delegate { button.Active = true; ShowMenu (); };
+            button.Activated += delegate { ShowMenu (); };
+            
+            box.Parent = this;
+            
+            if (showArrow) {
+                box.PackStart (button_widget, true, true, 0);
+                alignment = new Alignment (0f, 0.5f, 0f, 0f);
+                arrow = new Arrow (ArrowType.Down, ShadowType.None);
+                alignment.Add (arrow);
+                box.PackStart (alignment, false, false, 5);
+                size_widget = box;
+            } else {
+                button.Add (button_widget);
+                size_widget = button;
+            }
+            
+            ShowAll ();
         }
         
-        protected ActionGroupButton (Toolbar toolbar) : base (toolbar)
+        public Widget ButtonWidget {
+            get { return button_widget; }
+        }
+        
+        public Menu Menu {
+            get { return menu; }
+        }
+        
+        protected override void OnRealized ()
         {
-            ActionGroup.Changed += delegate { Action = ActionGroup.Active; };
-            Action = ActionGroup.Active;
+            WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
+            GdkWindow = Parent.GdkWindow;
+        }
+        
+        protected override void OnSizeRequested (ref Requisition requisition)
+        {
+            requisition = size_widget.SizeRequest ();
+        }
+        
+        protected override void OnSizeAllocated (Rectangle allocation)
+        {
+            box.SizeAllocate (allocation);
+            button.SizeAllocate (allocation);
+            base.OnSizeAllocated (allocation);
+        }
+        
+        protected override void ForAll (bool include_internals, Callback callback)
+        {
+            callback (button);
+            callback (box);
         }
         
         protected void ShowMenu ()
         {
-            BuildMenu ().Popup (null, null, PositionMenu, 1, Gtk.Global.CurrentEventTime);
-        }
-        
-        protected override void OnActivated ()
-        {
-            ShowMenu ();
-        }
-        
-        protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
-        {
-            ShowMenu ();
-            return true;
-        }
-        
-        private Menu BuildMenu ()
-        {
-            Menu menu = new Menu ();
-            foreach (Widget widget in MenuItems) {
-                menu.Append (widget);
-            }
-
-            menu.ShowAll ();
-            return menu;
-        }
-        
-        protected virtual IEnumerable<Widget> MenuItems {
-            get {
-                foreach (RadioAction action in ActionGroup) {
-                    yield return action.CreateMenuItem ();
-                }
-            }
+            menu.Popup (null, null, PositionMenu, 1, Gtk.Global.CurrentEventTime);
         }
 
         private void PositionMenu (Menu menu, out int x, out int y, out bool push_in) 

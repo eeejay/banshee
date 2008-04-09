@@ -35,6 +35,7 @@ using Gtk;
 using Hyena.Gui;
 using Hyena.Data;
 using Hyena.Data.Gui;
+using Hyena.Widgets;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
@@ -147,7 +148,9 @@ namespace Nereid
             
             primary_vbox.PackStart (toolbar_alignment, false, false, 0);
             
-            NextArrowButton next_button = new NextArrowButton ();
+            Widget button = ActionService.PlaybackActions["NextAction"].CreateToolItem ();
+            Menu menu = ActionService.PlaybackActions.ShuffleActions.CreateMenu ();
+            MenuButton next_button = new MenuButton (button, menu, true);
             next_button.Show ();
             ActionService.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/NextArrowButton", next_button);
             

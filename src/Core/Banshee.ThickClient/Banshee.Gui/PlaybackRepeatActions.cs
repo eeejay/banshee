@@ -40,7 +40,7 @@ using Banshee.PlaybackController;
 
 namespace Banshee.Gui
 {
-    public class PlaybackRepeatActions : BansheeActionGroup, IRadioActionGroup
+    public class PlaybackRepeatActions : BansheeActionGroup, IEnumerable<RadioAction>
     {
         private RadioAction active_action;
 
@@ -98,6 +98,16 @@ namespace Banshee.Gui
             if (handler != null) {
                 handler (o, args);
             }
+        }
+            
+        public Menu CreateMenu ()
+        {
+            Menu menu = new Gtk.Menu ();
+            foreach (RadioAction action in this) {
+                menu.Append (action.CreateMenuItem ());
+            }
+            menu.ShowAll ();
+            return menu;
         }
 
         public IEnumerator<RadioAction> GetEnumerator ()

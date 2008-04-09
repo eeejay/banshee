@@ -40,7 +40,7 @@ using Banshee.PlaybackController;
 
 namespace Banshee.Gui
 {
-    public class PlaybackShuffleActions : BansheeActionGroup, IRadioActionGroup
+    public class PlaybackShuffleActions : BansheeActionGroup, IEnumerable<RadioAction>
     {
         private RadioAction active_action;
         private PlaybackActions playback_actions;
@@ -111,6 +111,18 @@ namespace Banshee.Gui
             if (handler != null) {
                 handler (o, args);
             }
+        }
+            
+        public Menu CreateMenu ()
+        {
+            Menu menu = new Menu ();
+            menu.Append (this["ShuffleOffAction"].CreateMenuItem ());
+            menu.Append (new SeparatorMenuItem ());
+            menu.Append (this["ShuffleSongAction"].CreateMenuItem ());
+            menu.Append (this["ShuffleArtistAction"].CreateMenuItem ());
+            menu.Append (this["ShuffleAlbumAction"].CreateMenuItem ());
+            menu.ShowAll ();
+            return menu;
         }
 
         public IEnumerator<RadioAction> GetEnumerator ()
