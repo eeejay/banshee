@@ -162,21 +162,21 @@ namespace Banshee.Podcasting.Data
         static PodcastFeed ()
         {
             try {
-                if (!ServiceManager.DbConnection.TableExists ("PodcastFeeds")) {
+                if (!ServiceManager.DbConnection.TableExists ("PodcastSyndications")) {
                     ServiceManager.DbConnection.Execute (@"
-                        CREATE TABLE PodcastFeeds (
+                        CREATE TABLE PodcastSyndications (
                             ID             INTEGER PRIMARY KEY,
                             FeedID         INTEGER NOT NULL DEFAULT 0,
                             SyncPreference INTEGER NOT NULL DEFAULT 0
                         );
                         
-                        CREATE INDEX podcast_feed_id_index ON PodcastFeeds(ID);                    
-                        CREATE INDEX feed_id_index ON PodcastFeeds(FeedID);
+                        CREATE INDEX podcast_feed_id_index ON PodcastSyndications(ID);                    
+                        CREATE INDEX feed_id_index ON PodcastSyndications(FeedID);
                     ");
                 }             
 
                 provider = new BansheeModelProvider<PodcastFeed> (
-                    ServiceManager.DbConnection, "PodcastFeeds"
+                    ServiceManager.DbConnection, "PodcastSyndications"
                 );   
             } catch/* (Exception e)*/ { /*Console.WriteLine (e.Message);*/ throw; }
         }   
