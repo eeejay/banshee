@@ -154,6 +154,7 @@ src/Libraries/Hyena/Makefile
 src/Libraries/Hyena.Gui/Makefile
 src/Libraries/Lastfm/Makefile
 src/Libraries/Lastfm.Gui/Makefile
+src/Libraries/Migo/Makefile
 src/Libraries/Mono.Media/Makefile
 src/Libraries/Mtp/Makefile
 src/Libraries/Mtp/Mtp.dll.config
@@ -173,6 +174,7 @@ src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
 src/Extensions/Banshee.NowPlaying/Makefile
 src/Extensions/Banshee.PlayQueue/Makefile
+src/Extensions/Banshee.Podcasting/Makefile
 ])
 
 if test "x${enable_daap}" = "xyes"; then

@@ -1,3 +1,21 @@
+2008-04-08  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds the initial checkin of the new podcasting code by
+	Mike Urbanski. It's rough in many areas around the extension, but it 
+	works for the most part. It's very much a WIP, but it's quite awesome.
+
+	* build/build.environment.mk:
+	* configure.ac: Integrate the Migo and Banshee.Podcasting assemblies
+	into the build
+
+	* src/Libraries/Migo: Migo is the new library that does all the feed
+	reading and downloading, among other things; it's reusable and not
+	Banshee specific, sort of like Hyena for feed related problems
+
+	* src/Extensions/Banshee.Podcasting: Banshee.Podcasting is the extension
+	that provides the actual podcast support in Banshee, and uses Migo to 
+	do the heavy lifting
+
 2008-04-08  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Extensions/Banshee.NotificationArea/Resources/NotificationAreaMenu.xml:
