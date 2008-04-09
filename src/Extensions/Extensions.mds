@@ -10,6 +10,7 @@
       <Entry build="True" name="Banshee.AudioCd" configuration="Debug" />
       <Entry build="True" name="Banshee.Daap" configuration="Debug" />
       <Entry build="True" name="Banshee.Podcasting" configuration="Debug" />
+      <Entry build="True" name="Banshee.Sample" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee.Daap" single="True">
@@ -22,6 +23,7 @@
     <Execute type="None" entry="Banshee.Bookmarks" />
     <Execute type="None" entry="Banshee.AudioCd" />
     <Execute type="None" entry="Banshee.Podcasting" />
+    <Execute type="None" entry="Banshee.Sample" />
   </StartMode>
   <Entries>
     <Entry filename="Banshee.Daap/Banshee.Daap.mdp" />
@@ -33,5 +35,6 @@
     <Entry filename="Banshee.Bookmarks/Banshee.Bookmarks.mdp" />
     <Entry filename="Banshee.AudioCd/Banshee.AudioCd.mdp" />
     <Entry filename="Banshee.Podcasting/Banshee.Podcasting.mdp" />
+    <Entry filename="Banshee.Sample/Banshee.Sample.mdp" />
   </Entries>
 </Combine>

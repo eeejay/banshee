@@ -45,6 +45,8 @@ using Banshee.Equalizer;
 
 namespace Banshee.MediaEngine
 {
+    public delegate bool TrackInterceptHandler (TrackInfo track);
+
     public class PlayerEngineService : IInitializeService, IRequiredService, IPlayerEngineService, IDisposable
     {   
         private List<PlayerEngine> engines = new List<PlayerEngine> ();
@@ -57,6 +59,7 @@ namespace Banshee.MediaEngine
         public event PlayerEngineEventHandler EventChanged;
         public event PlayerEngineStateHandler StateChanged;
         public event EventHandler PlayWhenIdleRequest;
+        public event TrackInterceptHandler TrackIntercept;
         
         private event DBusPlayerEngineEventHandler dbus_event_changed;
         event DBusPlayerEngineEventHandler IPlayerEngineService.EventChanged {
@@ -242,9 +245,25 @@ namespace Banshee.MediaEngine
             }
         }
         
+        private bool OnTrackIntercept (TrackInfo track)
+        {
+            TrackInterceptHandler handler = TrackIntercept;
+            if (handler == null) {
+                return false;
+            }
+            
+            bool handled = false;
+            
+            foreach (TrackInterceptHandler single_handler in handler.GetInvocationList ()) {
+                handled |= single_handler (track);
+            }
+            
+            return handled;
+        }
+        
         public void Open (TrackInfo track)
         {
-            if (!track.CanPlay) {
+            if (!track.CanPlay || OnTrackIntercept (track)) {
                 return;
             }
                
@@ -263,7 +282,7 @@ namespace Banshee.MediaEngine
         
         public void OpenPlay (TrackInfo track)
         {
-            if (!track.CanPlay) {
+            if (!track.CanPlay || OnTrackIntercept (track)) {
                 return;
             }
         

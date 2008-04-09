@@ -1,3 +1,15 @@
+2008-04-09  Aaron Bockover  <abock@gnome.org>
+
+	* build/build.environment.mk:
+	* configure.ac: Set up the sample extension in the build
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Added a new TrackIntercept event that allows objects to stop the
+	player engine from opening a trac
+
+	* src/Extensions/Banshee.Sample/: Set up a quick sample extension to help
+	new developers; it sort of breaks things right now, but I'll fix that soon
+
 2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:

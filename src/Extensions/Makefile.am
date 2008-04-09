@@ -7,6 +7,7 @@ SUBDIRS = \
 	Banshee.NotificationArea \
 	Banshee.NowPlaying \
 	Banshee.PlayQueue \
-	Banshee.Podcasting
+	Banshee.Podcasting \
+	Banshee.Sample
 
 MAINTAINERCLEANFILES = Makefile.in
