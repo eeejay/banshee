@@ -1,3 +1,20 @@
+2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fix issue
+	with reloading way too many things when adding tracks to a source.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Fix issues with the 'New Playlist' that appears when you drag over the
+	source list.  It now will appear under any LibrarySource when you hover
+	over it or its children.  And it will only expand the LibrarySource when
+	within it, and collapse it when out of it (if it was collapsed to start
+	with).
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	When items are added to the play queue and the PlayerEngine is not already
+	playing, set us as the playback source.
+
 2008-04-09  Scott Peterson <lunchtimemama@gmail.com> 
 
 	OK, I totally re-did the arrow button stuff. We still don't use the

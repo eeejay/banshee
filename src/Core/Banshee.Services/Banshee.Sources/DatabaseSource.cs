@@ -250,10 +250,7 @@ namespace Banshee.Sources
 
         protected virtual void OnTracksAdded ()
         {
-            HandleTracksAdded (this, new TrackEventArgs ());
-            foreach (PrimarySource psource in PrimarySources) {
-                psource.NotifyTracksAdded ();
-            }
+            Reload ();
         }
 
         protected void OnTracksChanged ()

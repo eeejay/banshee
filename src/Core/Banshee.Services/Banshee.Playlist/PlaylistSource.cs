@@ -237,7 +237,6 @@ namespace Banshee.Playlist
         {
             if (Parent == null || source == Parent || source.Parent == Parent) {
                 base.AddSelectedTracks (source);
-                Reload ();
             /*} else {
                 // Adding from a different primary source, so add to our primary source first
                 PrimarySource primary = Parent as PrimarySource;

@@ -107,11 +107,16 @@ namespace Banshee.PlayQueue
             ServiceManager.SourceManager.VideoLibrary.TracksChanged += HandleTracksChanged;
             ServiceManager.SourceManager.VideoLibrary.TracksDeleted += HandleTracksDeleted;
 
+            SetAsPlayingSource ();
+        }
+        
+        private void SetAsPlayingSource ()
+        {
             if (Count > 0 && ServiceManager.PlayerEngine.CurrentState != PlayerEngineState.Playing) {
                 ServiceManager.PlaybackController.Source = this;
             }
         }
-        
+
         public void Dispose ()
         {
             if (ClearOnQuitSchema.Get ()) {
@@ -133,6 +138,12 @@ namespace Banshee.PlayQueue
                     INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType, Special) VALUES (NULL, ?, -1, 0, 1)
                 ", special_playlist_name));
             }
+        }
+
+        protected override void OnTracksAdded ()
+        {
+            base.OnTracksAdded ();
+            SetAsPlayingSource ();
         }
         
         protected override void OnUpdated ()
@@ -163,6 +174,7 @@ namespace Banshee.PlayQueue
         private void OnAddToPlayQueue (object o, EventArgs args)
         {
             AddSelectedTracks (ServiceManager.SourceManager.ActiveSource);
+            OnUserNotifyUpdated ();
         }
         
         private void OnClearPlayQueue (object o, EventArgs args)
