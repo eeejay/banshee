@@ -16,6 +16,6 @@ all: $(audioprofiles_DATA)
 	mkdir -p $(top_builddir)/bin/share/$(PACKAGE)/audio-profiles && cp $(audioprofiles_DATA) $(top_builddir)/bin/share/$(PACKAGE)/audio-profiles
 
 EXTRA_DIST = $(audioprofiles_in_files)
-CLEANFILES = *.xml
+DISTCLEANFILES = *.xml
 MAINTAINERCLEANFILES = Makefile.in
 
