@@ -46,7 +46,7 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	test "x$$colors" = "xyes" && \
 		echo -e "\033[1mCompiling $(notdir $@)...\033[0m" || \
 		echo "Compiling $(notdir $@)...";
-	@test "x$(HAVE_MONO_1_2_4)" = "xyes" && warn="-warnaserror"; test "x$(HAVE_GTK_2_10)" = "xyes" && gtk_210="-define:HAVE_GTK_2_10"; $(BUILD) -target:$(TARGET) -out:$@ $$warn $$gtk_210 $(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD) 
+	@test "x$(DEVEL_BUILD)" = "xyes" && warn="-warnaserror"; $(BUILD) -target:$(TARGET) -out:$@ $$warn -define:HAVE_GTK_2_10 $(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD) 
 	@if [ -e $(notdir $@.config) ]; then \
 		cp $(notdir $@.config) $(top_builddir)/bin; \
 	fi;
@@ -60,7 +60,7 @@ install-data-local: $(THEME_ICONS_SOURCE)
 uninstall-local: $(THEME_ICONS_SOURCE)
 	@$(INSTALL_ICONS) -u "$(DESTDIR)$(pkgdatadir)" "$(srcdir)" $(THEME_ICONS_RELATIVE)
 
-EXTRA_DIST = $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(THEME_ICONS_SOURCE) $(CONFIG_FILES_IN)
+EXTRA_DIST = $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(THEME_ICONS_SOURCE)
 
 CLEANFILES = $(OUTPUT_FILES)
 DISTCLEANFILES = *.pidb

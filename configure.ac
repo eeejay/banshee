@@ -4,6 +4,7 @@ dnl Automake setup
 # 0.99.* = Beta *
 AC_INIT([banshee-1], [0.98.3]) 
 ASM_DISPLAY_VERSION="1.0 Alpha 3"
+DEVEL_BUILD=yes
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
@@ -16,6 +17,7 @@ AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 ASM_VERSION="$VERSION.*"
 AC_SUBST(ASM_VERSION)
 AC_SUBST(ASM_DISPLAY_VERSION)
+AC_SUBST(DEVEL_BUILD)
 
 dnl Pieces needed by autogen; can't be parsed from macros
 AM_CONFIG_HEADER(config.h)
@@ -34,7 +36,6 @@ BANSHEE_CHECK_LIBBANSHEE
 BANSHEE_CHECK_GSTREAMER
 
 dnl Mono and gmcs
-SHAMROCK_CHECK_MONO_MODULE_NOBAIL(1.2.4)
 SHAMROCK_CHECK_MONO_MODULE(1.2.2)
 SHAMROCK_FIND_MONO_2_0_COMPILER
 SHAMROCK_FIND_MONO_RUNTIME
@@ -47,9 +48,6 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 	Mono.Posix
 	ICSharpCode.SharpZipLib
 ])
-
-HAVE_MONO_1_2_4=$HAVE_MONO_MODULE
-AC_SUBST(HAVE_MONO_1_2_4)
 
 dnl NDesk DBus libraries
 BANSHEE_CHECK_NDESK_DBUS
@@ -178,8 +176,6 @@ ${PACKAGE}-${VERSION}
     C Compiler:        ${CC}
     Mono C# Compiler:  ${MCS}
     Mono Runtime:      ${MONO}
-    Mono >= 1.2.4:     ${HAVE_MONO_1_2_4}
-    Gtk# >= 2.10:      ${HAVE_GTK_2_10}
 
     Digital Audio Player (DAP) Support:
       Mass Storage:    yes	(unstable)

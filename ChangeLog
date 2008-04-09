@@ -1,5 +1,17 @@
 2008-04-09  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac:
+	* build/build.rules.mk: Added a DEVEL_BUILD variable - if set, compiler
+	warnings will be treated as errors. We'll always keep it on except for
+	when we distcheck for a release
+
+	* build/m4/banshee/gtk-sharp.m4: Require Gtk# 2.10
+
+	* data/icon-theme-hicolor/Makefile.am: Copy the app icons to the local
+	uninstalled icon theme
+
+2008-04-09  Aaron Bockover  <abock@gnome.org>
+
 	* build/build.rules.mk:
 	* build/m4/banshee/daap.m4:
 	* build/m4/banshee/libbanshee.m4:
