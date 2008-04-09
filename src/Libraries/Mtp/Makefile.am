@@ -1,9 +1,6 @@
-if ENABLE_MTP
 ASSEMBLY = Mtp
 TARGET = library
 LINK = $(REF_MTP)
-
-#EXTRA_DIST = $(ASSEMBLY_SOURCES) $(ASSEMBLY).config.in
 
 SOURCES = \
 	Mtp/FileType.cs \
@@ -15,5 +12,9 @@ SOURCES = \
 	Mtp/MtpDevice.cs \
 	Mtp/Track.cs
 
+if ENABLE_MTP
 include $(top_srcdir)/build/build.mk
+else
+EXTRA_DIST = $(SOURCES) *.config.in
 endif
+
