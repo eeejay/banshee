@@ -12,9 +12,6 @@ INSTALL_ICONS = $(top_srcdir)/build/private-icon-theme-installer "$(mkinstalldir
 THEME_ICONS_SOURCE = $(wildcard $(srcdir)/ThemeIcons/*/*/*.png)
 THEME_ICONS_RELATIVE = $(subst $(srcdir)/ThemeIcons/, , $(THEME_ICONS_SOURCE))
 
-CONFIG_FILES_IN = $(wildcard $(srcdir)/*.config.in)
-CONFIG_FILES_IN_CLEAN = $(CONFIG_FILES_IN:.config.in=.config)
-
 ASSEMBLY_EXTENSION = $(strip $(patsubst library, dll, $(TARGET)))
 ASSEMBLY_FILE = $(top_builddir)/bin/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
 
@@ -66,6 +63,6 @@ uninstall-local: $(THEME_ICONS_SOURCE)
 EXTRA_DIST = $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(THEME_ICONS_SOURCE) $(CONFIG_FILES_IN)
 
 CLEANFILES = $(OUTPUT_FILES)
-DISTCLEANFILES = *.pidb $(CONFIG_FILES_IN_CLEAN)
+DISTCLEANFILES = *.pidb
 MAINTAINERCLEANFILES = Makefile.in
 

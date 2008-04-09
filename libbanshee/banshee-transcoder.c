@@ -1,31 +1,31 @@
-/***************************************************************************
- *  gst-transcode-0.10.c
- *
- *  Copyright (C) 2005-2006 Novell, Inc.
- *  Written by Aaron Bockover <aaron@abock.org>
- ****************************************************************************/
+//
+// banshee-transcoder.c
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2005-2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
- 
 #include <gst/gst.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -33,8 +33,6 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <glib/gstdio.h>
-
-#include <libgnomevfs/gnome-vfs.h>
 
 typedef struct GstTranscoder GstTranscoder;
 
@@ -63,13 +61,6 @@ gst_transcoder_raise_error(GstTranscoder *transcoder, const gchar *error, const 
     g_return_if_fail(transcoder->error_cb != NULL);
     
     transcoder->error_cb(transcoder, error, debug);
-}
-
-static gboolean
-gst_transcoder_gvfs_allow_overwrite_cb(GstElement *element, gpointer filename,
-    gpointer user_data)
-{
-    return TRUE;
 }
 
 static gboolean
@@ -122,7 +113,6 @@ gst_transcoder_stop_iterate_timeout(GstTranscoder *transcoder)
 static gboolean
 gst_transcoder_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
 {
-    GnomeVFSFileInfo fileinfo;
     GstTranscoder *transcoder = (GstTranscoder *)data;
 
     g_return_val_if_fail(transcoder != NULL, FALSE);
@@ -151,6 +141,9 @@ gst_transcoder_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
             transcoder->is_transcoding = FALSE;
             gst_transcoder_stop_iterate_timeout(transcoder);
 
+            /*
+             FIXME: Replace with regular stat
+             GnomeVFSFileInfo fileinfo;
             if(gnome_vfs_get_file_info(transcoder->output_uri, &fileinfo, 
                 GNOME_VFS_FILE_INFO_DEFAULT) == GNOME_VFS_OK) {
                 if(fileinfo.size < 100) {
@@ -162,7 +155,7 @@ gst_transcoder_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
             } else {
                 gst_transcoder_raise_error(transcoder, _("Could not stat encoded file"), NULL);
                 break;
-            }
+            }*/
             
             if(transcoder->finished_cb != NULL) {
                 transcoder->finished_cb(transcoder);
@@ -242,9 +235,9 @@ gst_transcoder_create_pipeline(GstTranscoder *transcoder,
     
     transcoder->pipeline = gst_pipeline_new("pipeline");
 
-    source_elem = gst_element_factory_make("gnomevfssrc", "source");
+    source_elem = gst_element_factory_make("filesrc", "source");
     if(source_elem == NULL) {
-        gst_transcoder_raise_error(transcoder, _("Could not create 'gnomevfssrc' plugin"), NULL);
+        gst_transcoder_raise_error(transcoder, _("Could not create 'filesrc' plugin"), NULL);
         return FALSE;
     }
 
@@ -254,9 +247,9 @@ gst_transcoder_create_pipeline(GstTranscoder *transcoder,
         return FALSE;
     }
     
-    sink_elem = gst_element_factory_make("gnomevfssink", "sink");
+    sink_elem = gst_element_factory_make("filesink", "sink");
     if(sink_elem == NULL) {
-        gst_transcoder_raise_error(transcoder, _("Could not create 'gnomevfssink' plugin"), NULL);
+        gst_transcoder_raise_error(transcoder, _("Could not create 'filesink' plugin"), NULL);
         return FALSE;
     }
     
@@ -289,9 +282,6 @@ gst_transcoder_create_pipeline(GstTranscoder *transcoder,
     
     gst_element_add_pad(transcoder->sink_bin, gst_ghost_pad_new("sink", encoder_pad));
     gst_object_unref(encoder_pad);
-    
-    g_signal_connect(G_OBJECT(sink_elem), "allow-overwrite",
-        G_CALLBACK(gst_transcoder_gvfs_allow_overwrite_cb), transcoder);
     
     gst_bin_add_many(GST_BIN(transcoder->pipeline), source_elem, decoder_elem, 
         transcoder->sink_bin, NULL);

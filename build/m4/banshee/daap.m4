@@ -1,4 +1,4 @@
-AC_DEFUN([BANSHEE_CHECK_MONO_ZEROCONF],
+AC_DEFUN([BANSHEE_CHECK_DAAP],
 [
 	AC_ARG_ENABLE([daap], AC_HELP_STRING([--disable-daap], 
 		[Do not build with DAAP support]),
@@ -8,7 +8,7 @@ AC_DEFUN([BANSHEE_CHECK_MONO_ZEROCONF],
 			elif test "x$enableval" = "xyes"; then
 				enable_daap=yes
 			fi
-		], enable_daap=yes
+		], enable_daap=no
 	)
 
 	if test "x$enable_daap" = "xyes"; then

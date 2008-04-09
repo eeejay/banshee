@@ -3,10 +3,8 @@ INCLUDES = \
 	-Wall \
 	-ggdb3 \
 	-D_FORTIFY_SOURCE=2 \
-	-DINSIDE_LIBBANSHEE_I_SWEAR \
 	$(LIBBANSHEE_CFLAGS) \
-	$(GST_CFLAGS) \
-	$(LIBNAUTILUS_BURN_CFLAGS)
+	$(GST_CFLAGS) 
 
 bansheelibdir = $(pkglibdir)
 bansheelib_LTLIBRARIES = libbanshee.la
@@ -22,7 +20,7 @@ libbanshee_la_SOURCES =  \
 	banshee-player-video.c \
 	banshee-ripper.c \
 	banshee-tagger.c \
-	gst-transcode-0.10.c
+	banshee-transcoder.c
 
 noinst_HEADERS =  \
 	banshee-gst.h \

@@ -11,7 +11,7 @@
     <File name="banshee-ripper.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-gst.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player.c" subtype="Code" buildaction="Compile" />
-    <File name="gst-transcode-0.10.c" subtype="Code" buildaction="Compile" />
+    <File name="banshee-transcoder.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-private.h" subtype="Code" buildaction="Nothing" />
     <File name="banshee-player-cdda.h" subtype="Code" buildaction="Nothing" />
     <File name="banshee-player-cdda.c" subtype="Code" buildaction="Compile" />

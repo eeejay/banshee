@@ -5,10 +5,10 @@ LINK = $(REF_BANSHEE_SERVICES)
 SOURCES =  \
 	Banshee.Base/RateLimiter.cs \
 	Banshee.Base/ThreadAssist.cs \
-	Banshee.Collection.Database/DatabaseAlbumListModel.cs \
-	Banshee.Collection.Database/DatabaseArtistListModel.cs \
 	Banshee.Collection.Database/DatabaseAlbumInfo.cs \
+	Banshee.Collection.Database/DatabaseAlbumListModel.cs \
 	Banshee.Collection.Database/DatabaseArtistInfo.cs \
+	Banshee.Collection.Database/DatabaseArtistListModel.cs \
 	Banshee.Collection.Database/DatabaseImportManager.cs \
 	Banshee.Collection.Database/DatabaseTrackInfo.cs \
 	Banshee.Collection.Database/DatabaseTrackListModel.cs \
@@ -36,10 +36,10 @@ SOURCES =  \
 	Banshee.Hardware/IBlockDevice.cs \
 	Banshee.Hardware/ICdromDevice.cs \
 	Banshee.Hardware/IDevice.cs \
+	Banshee.Hardware/IDeviceMediaCapabilities.cs \
 	Banshee.Hardware/IDiscVolume.cs \
 	Banshee.Hardware/IDiskDevice.cs \
 	Banshee.Hardware/IHardwareManager.cs \
-	Banshee.Hardware/IDeviceMediaCapabilities.cs \
 	Banshee.Hardware/IVolume.cs \
 	Banshee.Library/HomeDirectoryImportSource.cs \
 	Banshee.Library/IImportSource.cs \

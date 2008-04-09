@@ -10,7 +10,7 @@ AC_PREREQ(2.13)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
 AM_MAINTAINER_MODE
 
-DISTCHECK_CONFIGURE_FLAGS="--disable-docs"
+DISTCHECK_CONFIGURE_FLAGS="--disable-docs --enable-mtp --enable-daap --enable-podcast"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 
 ASM_VERSION="$VERSION.*"
@@ -32,14 +32,6 @@ dnl libbanshee/native dependencies (required)
 BANSHEE_CHECK_LIBBANSHEE
 #BANSHEE_CHECK_NAUTILUS_BURN
 BANSHEE_CHECK_GSTREAMER
-SHAMROCK_CHECK_GSTREAMER_0_10_PLUGINS([
-	decodebin
-	playbin
-	gnomevfssink
-	gnomevfssrc
-	audioconvert
-	gconfaudiosink
-])
 
 dnl Mono and gmcs
 SHAMROCK_CHECK_MONO_MODULE_NOBAIL(1.2.4)
@@ -74,14 +66,8 @@ SHAMROCK_CHECK_MONODOC
 dnl NUnit (optional)
 SHAMROCK_CHECK_MONO_NUNIT
 
-dnl Boo libraries and compiler (optional)
-#BANSHEE_CHECK_BOO
-
 dnl External TagLib# libraries (optional)
 BANSHEE_CHECK_TAGLIB_SHARP
-
-dnl External Mono.Zeroconf
-BANSHEE_CHECK_MONO_ZEROCONF
 
 dnl Required dependencies (managed/core)
 BANSHEE_CHECK_GTK_SHARP
@@ -94,16 +80,20 @@ AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
 AM_GCONF_SOURCE_2
 
 dnl DAP support (each module is optional)
+BANSHEE_CHECK_DAP_MTP
 #BANSHEE_CHECK_DAP_IPOD
 #BANSHEE_CHECK_DAP_NJB
-BANSHEE_CHECK_DAP_MTP
 #BANSHEE_CHECK_DAP_KARMA
 
 dnl DAAP support (optional)
-#BANSHEE_CHECK_DAAP
+BANSHEE_CHECK_DAAP
 
 dnl i18n
 SHAMROCK_CONFIGURE_I18N($PACKAGE)
+
+AC_ARG_ENABLE(podcast, AC_HELP_STRING([--enable-podcast], 
+	[Enable Podcast extension]), , enable_podcast="no")
+AM_CONDITIONAL(ENABLE_PODCAST, test "x$enable_podcast" = "xyes")
 
 dnl generated files
 AC_OUTPUT([
@@ -178,13 +168,6 @@ src/Extensions/Banshee.Podcasting/Makefile
 src/Extensions/Banshee.Sample/Makefile
 ])
 
-if test "x${enable_daap}" = "xyes"; then
-	zeroconf_lib=", Avahi"
-	if test "x${enable_mdnsd}" = "xyes"; then
-		zeroconf_lib=", mDNSResponder"
-	fi
-fi
-
 echo "
 ${PACKAGE}-${VERSION}
 
@@ -199,20 +182,12 @@ ${PACKAGE}-${VERSION}
     Gtk# >= 2.10:      ${HAVE_GTK_2_10}
 
     Digital Audio Player (DAP) Support:
-      Mass Storage:    yes (unstable)
-      MTP:             ${enable_mtp_dap} (unstable)
+      Mass Storage:    yes	(unstable)
+      MTP:             ${enable_mtp_dap}	(unstable)
 
-    DAAP Support:      ${enable_daap} (unstable)
+    DAAP Support:      ${enable_daap}	(unstable)
+    Podcast Support:   ${enable_podcast}	(unstable)
 "
-#    Digital Audio Players (DAP):
-#      iPod:            ${enable_ipodsharp}
-#      NJB:             ${enable_njbsharp}
-#      MTP:             ${enable_mtp_dap}
-#      Karma:           ${enable_karmasharp}
-#
-#    DAAP Support:      ${enable_daap}${zeroconf_lib}
-#"
-
 if test -d ${expanded_libdir}/${PACKAGE}; then
 	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/${PACKAGE}"
 	echo "         Remove the existing install before installing this build."

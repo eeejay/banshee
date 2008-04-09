@@ -29,10 +29,6 @@
 #ifndef _BANSHEE_PLAYER_PRIVATE_H
 #define _BANSHEE_PLAYER_PRIVATE_H
 
-#ifndef INSIDE_LIBBANSHEE_I_SWEAR
-#error libbanshee is not a stable API and is not meant to be used by third party applications
-#endif
-
 #ifdef HAVE_CONFIG_H
 #  include "config.h"
 #endif

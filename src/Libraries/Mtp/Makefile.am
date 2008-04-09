@@ -2,19 +2,24 @@ ASSEMBLY = Mtp
 TARGET = library
 LINK = $(REF_MTP)
 
-SOURCES = \
-	Mtp/FileType.cs \
-	Mtp/ErrorCode.cs \
-	Mtp/Error.cs \
-	Mtp/FileSampleData.cs \
+SOURCES =  \
 	Mtp/Album.cs \
+	Mtp/Error.cs \
+	Mtp/ErrorCode.cs \
+	Mtp/FileSampleData.cs \
+	Mtp/FileType.cs \
 	Mtp/Folder.cs \
 	Mtp/MtpDevice.cs \
 	Mtp/Track.cs
 
 if ENABLE_MTP
 include $(top_srcdir)/build/build.mk
+module_SCRIPTS += Mtp.dll.config
+EXTRA_DIST += Mtp.dll.config.in
+DISTCLEANFILES += Mtp.dll.config
 else
-EXTRA_DIST = $(SOURCES) *.config.in
+EXTRA_DIST = $(SOURCES) Mtp.dll.config.in
+DISTCLEANFILES = Mtp.dll.config
 endif
+
 

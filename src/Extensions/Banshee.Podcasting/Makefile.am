@@ -37,5 +37,9 @@ RESOURCES =  \
 	Resources/Images/podcast-icon-48.png \
 	Resources/Images/podcast-new-16.png
 
+if ENABLE_PODCAST
 include $(top_srcdir)/build/build.mk
+else
+EXTRA_DIST = $(SOURCES) $(RESOURCES)
+endif
 

@@ -1,3 +1,15 @@
+2008-04-09  Aaron Bockover  <abock@gnome.org>
+
+	* build/build.rules.mk:
+	* build/m4/banshee/daap.m4:
+	* build/m4/banshee/libbanshee.m4:
+	* build/m4/banshee/mono-zeroconf.m4:
+	* build/m4/shamrock/gstreamer.m4:
+	* configure.ac: Lots of build fixes, disable DAAP and Podcasting by default;
+	only link against core gstreamer libraries and gdk-x11
+
+	* libbanshee/banshee-transcoder.c: Remove all GnomeVFS code
+
 2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
