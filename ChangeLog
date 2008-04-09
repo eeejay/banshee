@@ -9,7 +9,7 @@
 	source list.  It now will appear under any LibrarySource when you hover
 	over it or its children.  And it will only expand the LibrarySource when
 	within it, and collapse it when out of it (if it was collapsed to start
-	with).
+	with).  Fixes BGO #410121.
 
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
 	When items are added to the play queue and the PlayerEngine is not already
