@@ -204,7 +204,7 @@ namespace Banshee.Podcasting.Data
             PodcastFeed.Delete (this);
         }
         
-        private static string deleteBaseQuery = "DELETE FROM PodcastFeeds WHERE ID ";
+        private static string deleteBaseQuery = "DELETE FROM PodcastSyndications WHERE ID ";
         
         public static void Delete (PodcastFeed feed)
         {
