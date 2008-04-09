@@ -269,7 +269,7 @@ namespace Banshee.Sources
             OnTracksDeleted ();
         }
 
-        protected override void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        protected override void RemoveTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
             ServiceManager.DbConnection.Execute (
                 String.Format (remove_range_sql, model.TrackIdsSql),
@@ -279,7 +279,7 @@ namespace Banshee.Sources
             );
         }
 
-        protected override void DeleteTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        protected override void DeleteTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
             // Remove from file system
             for (int i = range.Start; i <= range.End; i++) {
@@ -320,7 +320,7 @@ namespace Banshee.Sources
             */
         }
 
-        protected override void AddTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        protected override void AddTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
             for (int i = range.Start; i <= range.End; i++) {
                 DatabaseTrackInfo track = model [i] as DatabaseTrackInfo;

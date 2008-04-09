@@ -49,11 +49,11 @@ namespace Banshee.Sources
 {
     public abstract class DatabaseSource : Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator
     {
-        protected delegate void TrackRangeHandler (TrackListDatabaseModel model, RangeCollection.Range range);
+        protected delegate void TrackRangeHandler (DatabaseTrackListModel model, RangeCollection.Range range);
 
-        protected TrackListDatabaseModel track_model;
-        protected AlbumListDatabaseModel album_model;
-        protected ArtistListDatabaseModel artist_model;
+        protected DatabaseTrackListModel track_model;
+        protected DatabaseAlbumListModel album_model;
+        protected DatabaseArtistListModel artist_model;
 
         protected RateLimiter reload_limiter;
         
@@ -80,9 +80,9 @@ namespace Banshee.Sources
 
         private void DatabaseSourceInitialize ()
         {
-            track_model = new TrackListDatabaseModel (ServiceManager.DbConnection, UniqueId);
-            artist_model = new ArtistListDatabaseModel (track_model, ServiceManager.DbConnection, UniqueId);
-            album_model = new AlbumListDatabaseModel (track_model, artist_model, ServiceManager.DbConnection, UniqueId);
+            track_model = new DatabaseTrackListModel (ServiceManager.DbConnection, UniqueId);
+            artist_model = new DatabaseArtistListModel (track_model, ServiceManager.DbConnection, UniqueId);
+            album_model = new DatabaseAlbumListModel (track_model, artist_model, ServiceManager.DbConnection, UniqueId);
             reload_limiter = new RateLimiter (RateLimitedReload);
         }
 
@@ -194,7 +194,7 @@ namespace Banshee.Sources
             RemoveSelectedTracks (track_model);
         }
 
-        public virtual void RemoveSelectedTracks (TrackListDatabaseModel model)
+        public virtual void RemoveSelectedTracks (DatabaseTrackListModel model)
         {
             WithTrackSelection (model, RemoveTrackRange);
             OnTracksRemoved ();
@@ -205,7 +205,7 @@ namespace Banshee.Sources
             DeleteSelectedTracks (track_model);
         }
 
-        public virtual void DeleteSelectedTracks (TrackListDatabaseModel model)
+        public virtual void DeleteSelectedTracks (DatabaseTrackListModel model)
         {
             WithTrackSelection (model, DeleteTrackRange);
             OnTracksDeleted ();
@@ -216,7 +216,7 @@ namespace Banshee.Sources
             if (!AcceptsInputFromSource (source))
                 return;
 
-            TrackListDatabaseModel model = (source as ITrackModelSource).TrackModel as TrackListDatabaseModel;
+            DatabaseTrackListModel model = (source as ITrackModelSource).TrackModel as DatabaseTrackListModel;
             WithTrackSelection (model, AddTrackRange);
             OnTracksAdded ();
         }
@@ -226,7 +226,7 @@ namespace Banshee.Sources
             RateSelectedTracks (track_model, rating);
         }
 
-        public virtual void RateSelectedTracks (TrackListDatabaseModel model, int rating)
+        public virtual void RateSelectedTracks (DatabaseTrackListModel model, int rating)
         {
             Selection selection = model.Selection;
             if (selection.Count == 0)
@@ -335,29 +335,29 @@ namespace Banshee.Sources
             });
         }
 
-        protected virtual void RemoveTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        protected virtual void RemoveTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
             throw new NotImplementedException(); 
         }
 
 
-        protected virtual void DeleteTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        protected virtual void DeleteTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
             throw new NotImplementedException(); 
         }
 
-        protected virtual void AddTrackRange (TrackListDatabaseModel model, RangeCollection.Range range)
+        protected virtual void AddTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
             throw new NotImplementedException(); 
         }
 
-        protected virtual void RateTrackRange (TrackListDatabaseModel model, RangeCollection.Range range, int rating)
+        protected virtual void RateTrackRange (DatabaseTrackListModel model, RangeCollection.Range range, int rating)
         {
             RateTrackRangeCommand.ApplyValues (rating, DateTime.Now, range.Start, range.End - range.Start + 1);
             ServiceManager.DbConnection.Execute (RateTrackRangeCommand);
         }
 
-        protected void WithTrackSelection (TrackListDatabaseModel model, TrackRangeHandler handler)
+        protected void WithTrackSelection (DatabaseTrackListModel model, TrackRangeHandler handler)
         {
             Selection selection = model.Selection;
             if (selection.Count == 0)

@@ -122,11 +122,11 @@ namespace Banshee.Playlist
         public override void MergeSourceInput (Source from, SourceMergeType mergeType)
         {
             DatabaseSource source = from as DatabaseSource;
-            if (source == null || !(source.TrackModel is TrackListDatabaseModel)) {
+            if (source == null || !(source.TrackModel is DatabaseTrackListModel)) {
                 return;
             }
             
-            TrackListDatabaseModel model = (TrackListDatabaseModel)source.TrackModel;
+            DatabaseTrackListModel model = (DatabaseTrackListModel)source.TrackModel;
             
             switch (mergeType) {
                 case SourceMergeType.ModelSelection:
@@ -191,7 +191,7 @@ namespace Banshee.Playlist
         }
 
         // Have our parent handle deleting tracks
-        public override void DeleteSelectedTracks (TrackListDatabaseModel model)
+        public override void DeleteSelectedTracks (DatabaseTrackListModel model)
         {
             (Parent as DatabaseSource).DeleteSelectedTracks (model);
         }
@@ -245,9 +245,9 @@ namespace Banshee.Playlist
             }
         }
 
-        TrackListDatabaseModel last_add_range_from_model;
+        DatabaseTrackListModel last_add_range_from_model;
         HyenaSqliteCommand last_add_range_command = null;
-        protected override void AddTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
+        protected override void AddTrackRange (DatabaseTrackListModel from, RangeCollection.Range range)
         {
             last_add_range_command = (!from.CachesJoinTableEntries)
                 ? add_track_range_command
@@ -261,7 +261,7 @@ namespace Banshee.Playlist
             last_add_range_from_model = from;
         }
 
-        protected override void RemoveTrackRange (TrackListDatabaseModel from, RangeCollection.Range range)
+        protected override void RemoveTrackRange (DatabaseTrackListModel from, RangeCollection.Range range)
         {
             remove_track_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
             ServiceManager.DbConnection.Execute (remove_track_range_command);

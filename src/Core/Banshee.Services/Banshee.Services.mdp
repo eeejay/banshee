@@ -10,10 +10,10 @@
   <Contents>
     <File name="Banshee.Database/BansheeDbConnection.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Database/BansheeDbFormatMigrator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Database/AlbumListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Database/ArtistListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/DatabaseAlbumListModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/DatabaseArtistListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Database/DatabaseTrackInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Database/TrackListDatabaseModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/DatabaseTrackListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/Source.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/SourceManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/DatabaseSource.cs" subtype="Code" buildaction="Compile" />

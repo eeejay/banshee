@@ -1,5 +1,5 @@
 //
-// TrackListDatabaseModel.cs
+// DatabaseTrackListModel.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -51,7 +51,7 @@ namespace Banshee.Collection.Database
         AlbumFilter
     };
         
-    public class TrackListDatabaseModel : TrackListModel, IExportableModel, 
+    public class DatabaseTrackListModel : TrackListModel, IExportableModel, 
         ICacheableDatabaseModel, IFilterable, ISortable, ICareAboutView
     {
         private readonly BansheeDbConnection connection;
@@ -75,14 +75,14 @@ namespace Banshee.Collection.Database
         private string artist_id_filter_query;
         private string album_id_filter_query;
 
-        private ArtistListDatabaseModel artist_model;
-        private AlbumListDatabaseModel album_model;
+        private DatabaseArtistListModel artist_model;
+        private DatabaseAlbumListModel album_model;
 
         private string uuid;
         
         private int rows_in_view;
         
-        public TrackListDatabaseModel (BansheeDbConnection connection, string uuid)
+        public DatabaseTrackListModel (BansheeDbConnection connection, string uuid)
         {
             this.connection = connection;
             this.uuid = uuid;
@@ -90,7 +90,7 @@ namespace Banshee.Collection.Database
         }
 
         private bool initialized = false;
-        public void Initialize (ArtistListDatabaseModel artist_model, AlbumListDatabaseModel album_model)
+        public void Initialize (DatabaseArtistListModel artist_model, DatabaseAlbumListModel album_model)
         {
             if (initialized)
                 return;

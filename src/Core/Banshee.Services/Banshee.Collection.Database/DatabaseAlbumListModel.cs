@@ -1,5 +1,5 @@
 //
-// AlbumListDatabaseModel.cs
+// DatabaseAlbumListModel.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -39,19 +39,19 @@ using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class AlbumListDatabaseModel : AlbumListModel, ICacheableDatabaseModel
+    public class DatabaseAlbumListModel : AlbumListModel, ICacheableDatabaseModel
     {
         private readonly BansheeModelProvider<DatabaseAlbumInfo> provider;
         private readonly BansheeModelCache<DatabaseAlbumInfo> cache;
-        private readonly TrackListDatabaseModel track_model;
-        private readonly ArtistListDatabaseModel artist_model;
+        private readonly DatabaseTrackListModel track_model;
+        private readonly DatabaseArtistListModel artist_model;
         private long count;
         private string artist_id_filter_query;
         private string reload_fragment;
         
         private readonly AlbumInfo select_all_album = new AlbumInfo (null);
         
-        public AlbumListDatabaseModel (BansheeDbConnection connection, string uuid)
+        public DatabaseAlbumListModel (BansheeDbConnection connection, string uuid)
         {
             provider = DatabaseAlbumInfo.Provider;
             cache = new BansheeModelCache <DatabaseAlbumInfo> (connection, uuid, this, provider);
@@ -60,7 +60,7 @@ namespace Banshee.Collection.Database
             Selection.Changed += HandleSelectionChanged;
         }
 
-        public AlbumListDatabaseModel (TrackListDatabaseModel trackModel, ArtistListDatabaseModel artistModel,
+        public DatabaseAlbumListModel (DatabaseTrackListModel trackModel, DatabaseArtistListModel artistModel,
                 BansheeDbConnection connection, string uuid) : this (connection, uuid)
         {
             this.track_model = trackModel;

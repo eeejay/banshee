@@ -410,8 +410,8 @@ namespace Nereid
             get { return composite_view.TrackView.SelectionProxy; }
         }
 
-        public TrackListDatabaseModel TrackModel {
-            get { return composite_view.TrackModel as TrackListDatabaseModel; }
+        public DatabaseTrackListModel TrackModel {
+            get { return composite_view.TrackModel as DatabaseTrackListModel; }
         }
 
         // IHasSourceView

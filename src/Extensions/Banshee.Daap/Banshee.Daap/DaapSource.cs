@@ -140,7 +140,7 @@ namespace Banshee.Daap
             // Remove tracks associated with this source, since we don't want
             // them after we unmap - we'll refetch.
             if (Count > 0) {
-                RemoveTrackRange ((TrackListDatabaseModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
+                RemoveTrackRange ((DatabaseTrackListModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
             }
             
             daap_track_map.Clear ();

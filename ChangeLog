@@ -1,3 +1,23 @@
+2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/AlbumListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/ArtistListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/TrackListDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/IHasTrackSelection.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Rename *ListDatabaseModel to Database*ListModel.
+
 2008-04-09  Aaron Bockover  <abock@gnome.org>
 
 	* build/build.environment.mk:

@@ -368,7 +368,7 @@ namespace Banshee.Gui
                     }
 
                     ThreadAssist.SpawnFromMain (delegate {
-                        library.RemoveSelectedTracks (source.TrackModel as TrackListDatabaseModel);
+                        library.RemoveSelectedTracks (source.TrackModel as DatabaseTrackListModel);
                     });
                 }
             }

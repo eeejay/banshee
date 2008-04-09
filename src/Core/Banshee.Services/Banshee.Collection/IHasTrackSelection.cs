@@ -37,7 +37,7 @@ namespace Banshee.Collection
     public interface IHasTrackSelection
     {
         SelectionProxy TrackSelectionProxy { get; }
-        TrackListDatabaseModel TrackModel { get; }
+        DatabaseTrackListModel TrackModel { get; }
         IEnumerable<TrackInfo> GetSelectedTracks ();
     }
 }

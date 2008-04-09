@@ -62,7 +62,7 @@ namespace Banshee.PlayQueue
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
             
-            ((TrackListDatabaseModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID ASC";
+            ((DatabaseTrackListModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID ASC";
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
             ServiceManager.PlaybackController.Transition += OnCanonicalPlaybackControllerTransition;
@@ -179,7 +179,7 @@ namespace Banshee.PlayQueue
         
         private void OnClearPlayQueue (object o, EventArgs args)
         {
-            RemoveTrackRange ((TrackListDatabaseModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
+            RemoveTrackRange ((DatabaseTrackListModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
             Reload ();
         }
         
