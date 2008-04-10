@@ -105,6 +105,7 @@ SOURCES =  \
 	Banshee.Query/SmartPlaylistQueryValue.cs \
 	Banshee.Query/YearQueryValue.cs \
 	Banshee.ServiceStack/Application.cs \
+	Banshee.ServiceStack/BatchUserJob.cs \
 	Banshee.ServiceStack/Client.cs \
 	Banshee.ServiceStack/DBusServiceManager.cs \
 	Banshee.ServiceStack/IDBusExportable.cs \
@@ -117,7 +118,6 @@ SOURCES =  \
 	Banshee.ServiceStack/ServiceManager.cs \
 	Banshee.ServiceStack/ServiceStartedHandler.cs \
 	Banshee.ServiceStack/TestUserJob.cs \
-	Banshee.ServiceStack/BatchUserJob.cs \
 	Banshee.ServiceStack/UserJob.cs \
 	Banshee.ServiceStack/UserJobEventHandler.cs \
 	Banshee.ServiceStack/UserJobManager.cs \

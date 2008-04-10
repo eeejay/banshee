@@ -1,5 +1,16 @@
 2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Add
+	information popup if user tries to add track(s) to a playlist from outside
+	its primary source (since not yet implemented).
+
+	* src/Core/Banshee.Services/Makefile.am: Reorder.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs:
+	Set CanAddTracks to false since it doesn't work.
+
+2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This commit makes adding and deleting from a PrimarySource async, and pops
 	up UserJobs if those operations take very long.  Very importantly, it also
 	adds the ability to copy the track model selection so slow running jobs

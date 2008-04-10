@@ -34,6 +34,7 @@ using System.Collections.Generic;
 
 using Mono.Unix;
 
+using Hyena;
 using Hyena.Data;
 using Hyena.Data.Sqlite;
 using Hyena.Collections;
@@ -219,11 +220,12 @@ namespace Banshee.Playlist
         {
             if (Parent == null || source == Parent || source.Parent == Parent) {
                 return base.AddSelectedTracks (source);
-            /*} else {
+            } else {
                 // Adding from a different primary source, so add to our primary source first
-                PrimarySource primary = Parent as PrimarySource;
-                primary.AddSelectedTracks (model);
-                // then add to us*/
+                //PrimarySource primary = Parent as PrimarySource;
+                //primary.AddSelectedTracks (model);
+                // then add to us
+                Log.Information ("Note: Feature Not Implemented", String.Format ("In this alpha release, you can only add tracks to {0} from {1} or its playlists.", Name, Parent.Name), true);
             }
             return false;
         }

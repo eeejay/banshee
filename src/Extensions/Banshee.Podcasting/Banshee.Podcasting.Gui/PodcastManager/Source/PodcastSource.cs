@@ -115,8 +115,11 @@ namespace Banshee.Podcasting.Gui
             get { return tuid; }
         }
 
-        public override bool CanSearch 
-        {
+        public override bool CanSearch {
+            get { return false; }
+        }
+        
+        public override bool CanAddTracks {
             get { return false; }
         }
 
