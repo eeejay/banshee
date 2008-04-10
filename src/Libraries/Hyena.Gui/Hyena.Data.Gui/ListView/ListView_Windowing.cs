@@ -34,7 +34,7 @@ using Hyena.Gui.Theming;
 
 namespace Hyena.Data.Gui
 {
-    public partial class ListView<T> : Container
+    public partial class ListView<T> : Widget
     {
         private Rectangle list_rendering_alloc;
         private Rectangle header_rendering_alloc;
@@ -52,11 +52,6 @@ namespace Hyena.Data.Gui
             WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
             
             GdkWindow = Parent.GdkWindow;
-            theme = new GtkTheme (this);
-            cell_context = new CellContext ();
-            cell_context.Theme = theme;
-            cell_context.Widget = this;
-            //graphics.RefreshColors ();
             
             WindowAttr attributes = new WindowAttr ();
             attributes.WindowType = Gdk.WindowType.Child;
@@ -66,7 +61,6 @@ namespace Hyena.Data.Gui
             attributes.Height = Allocation.Height;
             attributes.Wclass = WindowClass.InputOnly;
             attributes.EventMask = (int)(
-                GdkWindow.Events |
                 EventMask.PointerMotionMask |
                 EventMask.KeyPressMask |
                 EventMask.KeyReleaseMask |
@@ -84,6 +78,8 @@ namespace Hyena.Data.Gui
             OnDragSourceSet ();
             MoveResize (Allocation);
             RegenerateCanvases ();
+            
+            base.OnRealized ();
         }
         
         protected override void OnUnrealized ()

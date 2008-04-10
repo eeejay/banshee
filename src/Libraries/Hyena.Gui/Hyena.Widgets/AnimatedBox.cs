@@ -363,6 +363,7 @@ namespace Hyena.Widgets
         {
             WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
             GdkWindow = Parent.GdkWindow;
+            base.OnRealized ();
         }
         
         protected override void ForAll (bool include_internals, Callback callback)

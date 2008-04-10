@@ -35,7 +35,7 @@ using Selection = Hyena.Collections.Selection;
 
 namespace Hyena.Data.Gui
 {
-    public partial class ListView<T> : Container
+    public partial class ListView<T> : Widget
     {
         private int focused_row_index = -1;
 

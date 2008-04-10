@@ -32,7 +32,7 @@ using System.Collections;
 using Mono.Unix;
 
 using Gtk;
-using Cairo;
+using Gdk;
 
 using Hyena;
 using Hyena.Gui;
@@ -46,13 +46,15 @@ using Banshee.MediaEngine;
 
 namespace Banshee.Gui.Widgets
 {
-    public class TrackInfoDisplay : Bin
+    public class TrackInfoDisplay : Widget
     {
+        private Gdk.Window event_window;
+        
         private ArtworkManager artwork_manager;
-        private Gdk.Pixbuf current_pixbuf;
-        private Gdk.Pixbuf incoming_pixbuf;
-        private Gdk.Pixbuf missing_audio_pixbuf;
-        private Gdk.Pixbuf missing_video_pixbuf;
+        private Pixbuf current_pixbuf;
+        private Pixbuf incoming_pixbuf;
+        private Pixbuf missing_audio_pixbuf;
+        private Pixbuf missing_video_pixbuf;
         
         private Cairo.Color background_color;
         private Cairo.Color text_color;
@@ -106,57 +108,52 @@ namespace Banshee.Gui.Widgets
         
         protected override void OnRealized ()
         {
-            WidgetFlags |= WidgetFlags.Realized;
+            WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
+            GdkWindow = Parent.GdkWindow;
             
-            Gdk.WindowAttr attributes = new Gdk.WindowAttr ();
+            WindowAttr attributes = new WindowAttr ();
             attributes.WindowType = Gdk.WindowType.Child;
             attributes.X = Allocation.X;
             attributes.Y = Allocation.Y;
             attributes.Width = Allocation.Width;
             attributes.Height = Allocation.Height;
-            attributes.Visual = Visual;
-            attributes.Wclass = Gdk.WindowClass.InputOutput;
-            attributes.Colormap = Colormap;
+            attributes.Wclass = WindowClass.InputOnly;
             attributes.EventMask = (int)(
-                Gdk.EventMask.VisibilityNotifyMask |
-                Gdk.EventMask.ExposureMask |
-                Gdk.EventMask.PointerMotionMask |
-                Gdk.EventMask.EnterNotifyMask |
-                Gdk.EventMask.LeaveNotifyMask |
-                Events);
+                EventMask.PointerMotionMask |
+                EventMask.EnterNotifyMask |
+                EventMask.LeaveNotifyMask |
+                EventMask.ExposureMask);
             
-            Gdk.WindowAttributesType attributes_mask = 
-                Gdk.WindowAttributesType.X | 
-                Gdk.WindowAttributesType.Y | 
-                Gdk.WindowAttributesType.Visual | 
-                Gdk.WindowAttributesType.Colormap;
-                
-            GdkWindow = new Gdk.Window (Parent.GdkWindow, attributes, attributes_mask);
-            GdkWindow.UserData = Handle;
+            WindowAttributesType attributes_mask =
+                WindowAttributesType.X | WindowAttributesType.Y | WindowAttributesType.Wmclass;
             
-            GdkWindow.SetBackPixmap (null, false);
-            Style.SetBackground (GdkWindow, StateType.Normal);
-            Style = Style.Attach (GdkWindow);
+            event_window = new Gdk.Window (GdkWindow, attributes, attributes_mask);
+            event_window.UserData = Handle;
+            
+            base.OnRealized ();
         }
         
         protected override void OnUnrealized ()
         {
             WidgetFlags ^= WidgetFlags.Realized;
-            GdkWindow.UserData = IntPtr.Zero;
-            GdkWindow.Destroy ();
-            GdkWindow = null;
-        }
-
-        protected override void OnMapped ()
-        {
-            WidgetFlags |= WidgetFlags.Mapped;
-            GdkWindow.Show ();
+            
+            event_window.UserData = IntPtr.Zero;
+            event_window.Destroy ();
+            event_window = null;
+            
+            base.OnUnrealized ();
         }
         
+        protected override void OnMapped ()
+        {
+            event_window.Show ();
+            base.OnMapped ();
+        }
+
         protected override void OnUnmapped ()
         {
-            WidgetFlags ^= WidgetFlags.Mapped;
-            GdkWindow.Hide ();
+            event_window.Hide ();
+            base.OnUnmapped ();
         }
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
@@ -164,14 +161,12 @@ namespace Banshee.Gui.Widgets
             base.OnSizeAllocated (allocation);
             
             if (IsRealized) {
-                GdkWindow.MoveResize (allocation);
+                event_window.MoveResize (allocation);
             }
             
             if (current_track == null) {
                 LoadCurrentTrack ();
             }
-            
-            QueueDraw ();
         }
         
         protected override void OnSizeRequested (ref Requisition requisition)
@@ -193,19 +188,19 @@ namespace Banshee.Gui.Widgets
 
 #region Interaction Events
 
-        protected override bool OnEnterNotifyEvent (Gdk.EventCrossing evnt)
+        protected override bool OnEnterNotifyEvent (EventCrossing evnt)
         {
             in_thumbnail_region = evnt.X <= Allocation.Height;
             return ShowHideCoverArt ();
         }
         
-        protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
+        protected override bool OnLeaveNotifyEvent (EventCrossing evnt)
         {
             in_thumbnail_region = false;
             return ShowHideCoverArt ();
         }
         
-        protected override bool OnMotionNotifyEvent (Gdk.EventMotion evnt)
+        protected override bool OnMotionNotifyEvent (EventMotion evnt)
         {
             in_thumbnail_region = evnt.X <= Allocation.Height;
             return ShowHideCoverArt ();
@@ -261,6 +256,8 @@ namespace Banshee.Gui.Widgets
 
         protected override void OnStyleSet (Style previous)
         {
+            base.OnStyleSet (previous);
+            
             text_color = CairoExtensions.GdkColorToCairoColor (Style.Foreground (StateType.Normal));
             background_color = CairoExtensions.GdkColorToCairoColor (Style.Background (StateType.Normal));
             text_light_color = Hyena.Gui.Theming.GtkTheme.GetCairoTextMidColor (this);
@@ -276,38 +273,22 @@ namespace Banshee.Gui.Widgets
             }
         }
         
-        protected override bool OnExposeEvent (Gdk.EventExpose evnt)
+        protected override bool OnExposeEvent (EventExpose evnt)
         {
-            if (!Visible || !IsMapped) {
+            if (!Visible || !IsMapped || (incoming_track == null && current_track == null)) {
                 return true;
             }
-        
-            Style.ApplyDefaultBackground (GdkWindow, true, StateType.Normal, evnt.Area, 
-                0, 0, Allocation.Width, Allocation.Height);
-        
+            
             Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
-        
-            foreach (Gdk.Rectangle rect in evnt.Region.GetRectangles ()) {
-                PaintRegion (cr, evnt, rect);
-            }
-
+            cr.Rectangle (Allocation.X, Allocation.Y, Allocation.Width, Allocation.Height);
+            cr.Clip ();
+            RenderAnimation (cr);
             CairoExtensions.DisposeContext (cr);
-            cr = null;
             
             return true;
         }
-                
-        private void PaintRegion (Cairo.Context cr, Gdk.EventExpose evnt, Gdk.Rectangle clip)
-        {
-            cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
-            cr.Clip ();
-            
-            if (incoming_track != null || current_track != null) {
-                RenderAnimation (cr, clip);
-            }
-        }
         
-        private void RenderAnimation (Cairo.Context cr, Gdk.Rectangle clip)
+        private void RenderAnimation (Cairo.Context cr)
         {
             if (stage.Actor == null) {
                 // We are not in a transition, just render
@@ -324,11 +305,8 @@ namespace Banshee.Gui.Widgets
                 cr.PaintWithAlpha (stage.Actor.Percent);
                 return;
             }
-
+            
             // XFade only the cover art
-            cr.Rectangle (0, 0, Allocation.Height, Allocation.Height);
-            cr.Clip ();
-
             RenderCoverArt (cr, incoming_pixbuf);
             
             CairoExtensions.PushGroup (cr);
@@ -336,19 +314,15 @@ namespace Banshee.Gui.Widgets
             CairoExtensions.PopGroupToSource (cr);
             
             cr.PaintWithAlpha (1.0 - stage.Actor.Percent);
-
+            
             // Fade in/out the text
-            cr.ResetClip ();
-            cr.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
-            cr.Clip ();
-
             bool same_artist_album = incoming_track != null ? incoming_track.ArtistAlbumEqual (current_track) : false;
             bool same_track = incoming_track != null ? incoming_track.Equals (current_track) : false;
             
             if (same_artist_album) {
                 RenderTrackInfo (cr, incoming_track, same_track, true);
             } 
-                   
+            
             if (stage.Actor.Percent <= 0.5) {
                 // Fade out old text
                 CairoExtensions.PushGroup (cr);
@@ -366,19 +340,19 @@ namespace Banshee.Gui.Widgets
             }
         }
         
-        private void RenderStage (Cairo.Context cr, TrackInfo track, Gdk.Pixbuf pixbuf)
+        private void RenderStage (Cairo.Context cr, TrackInfo track, Pixbuf pixbuf)
         {
             RenderCoverArt (cr, pixbuf);
             RenderTrackInfo (cr, track, true, true);
         }
         
-        private void RenderCoverArt (Cairo.Context cr, Gdk.Pixbuf pixbuf)
+        private void RenderCoverArt (Cairo.Context cr, Pixbuf pixbuf)
         {
-            ArtworkRenderer.RenderThumbnail (cr, pixbuf, false, 0, 0, Allocation.Height, Allocation.Height, 
+            ArtworkRenderer.RenderThumbnail (cr, pixbuf, false, Allocation.X, Allocation.Y, Allocation.Height, Allocation.Height, 
                 !IsMissingPixbuf (pixbuf), 0, IsMissingPixbuf (pixbuf), background_color);
         }
 
-        private bool IsMissingPixbuf (Gdk.Pixbuf pb)
+        private bool IsMissingPixbuf (Pixbuf pb)
         {
             return (pb == missing_audio_pixbuf || pb == missing_video_pixbuf);
         }
@@ -389,8 +363,9 @@ namespace Banshee.Gui.Widgets
                 return;
             }
             
-            double x = Allocation.Height + 10, y = 0;
-            double width = Allocation.Width - x;
+            double offset = Allocation.Height + 10, y = 0;
+            double x = Allocation.X + offset;
+            double width = Allocation.Width - offset;
             int fl_width, fl_height, sl_width, sl_height;
 
             // Set up the text layouts
@@ -411,7 +386,7 @@ namespace Banshee.Gui.Widgets
                 SetSizeRequest (-1, fl_height + sl_height);
             }
             
-            y = (Allocation.Height - (fl_height + sl_height)) / 2;
+            y = Allocation.Y + (Allocation.Height - (fl_height + sl_height)) / 2;
             
             // Render the layouts
             cr.Antialias = Cairo.Antialias.Default;
@@ -433,15 +408,6 @@ namespace Banshee.Gui.Widgets
             
             first_line_layout.Dispose ();
             second_line_layout.Dispose ();
-        }
-        
-        public new void QueueDraw ()
-        {
-            if (GdkWindow != null) {
-                GdkWindow.InvalidateRect (new Gdk.Rectangle (0, 0, Allocation.Width, Allocation.Height), false);
-            }
-            
-            base.QueueDraw ();
         }
         
         private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)

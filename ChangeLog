@@ -1,3 +1,24 @@
+2008-04-10  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	We now inherit from Widget and render to the parent GdkWindow and
+	call base.OnRealize (). This fixes BGO #524429.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	Call base.OnRealize () and inherit from Widget.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedWidget.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs: Call
+	base.OnRealize ().
+
 2008-04-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:

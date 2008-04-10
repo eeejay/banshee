@@ -40,7 +40,7 @@ namespace Hyena.Data.Gui
 {
     public delegate int ListViewRowHeightHandler (Widget widget);
 
-    public partial class ListView<T> : Container
+    public partial class ListView<T> : Widget
     {
         // The list is rendered to an off-screen Drawable; the "canvas". The canvas is large enough to hold
         // the maximum number of rows that can be seen in the list. When new rows comes into view b/c of
@@ -66,10 +66,14 @@ namespace Hyena.Data.Gui
             get { return theme; }
         }
         
-        protected override void OnStyleSet (Gtk.Style old_style)
+        protected override void OnStyleSet (Style old_style)
         {
             base.OnStyleSet (old_style);
             RecomputeRowHeight = true;
+            theme = new GtkTheme (this);
+            cell_context = new CellContext ();
+            cell_context.Theme = theme;
+            cell_context.Widget = this;
         }
          
         protected override bool OnExposeEvent (EventExpose evnt)

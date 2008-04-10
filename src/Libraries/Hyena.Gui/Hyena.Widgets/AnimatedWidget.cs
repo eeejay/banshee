@@ -122,9 +122,9 @@ namespace Hyena.Widgets
                 Gdk.WindowAttributesType.Y;
                 
             GdkWindow = new Gdk.Window (Parent.GdkWindow, attributes, attributes_mask);
-            Style = Style.Attach (GdkWindow);
             GdkWindow.UserData = Handle;
             GdkWindow.Background = Style.Background (State);
+            base.OnRealized ();
         }
         
         protected override void OnSizeRequested (ref Requisition requisition)

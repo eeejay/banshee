@@ -33,7 +33,7 @@ using Gtk;
 
 namespace Hyena.Data.Gui
 {
-    public partial class ListView<T> : Container
+    public partial class ListView<T> : Widget
     {
         public void SetModel (IListModel<T> model)
         {
