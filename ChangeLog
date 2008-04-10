@@ -1,3 +1,9 @@
+2008-04-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	Refresh when a track info updated event is raised by the player engine;
+	this fixes BGO #524865
+
 2008-04-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:

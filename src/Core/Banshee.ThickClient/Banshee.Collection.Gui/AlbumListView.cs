@@ -33,6 +33,7 @@ using Hyena.Data.Gui;
 
 using Banshee.Collection;
 using Banshee.ServiceStack;
+using Banshee.MediaEngine;
 using Banshee.Gui;
 
 namespace Banshee.Collection.Gui
@@ -52,9 +53,12 @@ namespace Banshee.Collection.Gui
             RowHeightProvider = renderer.ComputeRowHeight;
             
             RowActivated += delegate {
-                ServiceManager.PlaybackController.Source = (ServiceManager.SourceManager.ActiveSource as Banshee.Sources.ITrackModelSource);
+                ServiceManager.PlaybackController.Source = (ServiceManager.SourceManager.ActiveSource 
+                    as Banshee.Sources.ITrackModelSource);
                 ServiceManager.PlaybackController.Next ();
             };
+            
+            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
         }
 
         protected override bool OnFocusInEvent(Gdk.EventFocus evnt)
@@ -67,6 +71,15 @@ namespace Banshee.Collection.Gui
         {
             ServiceManager.Get<InterfaceActionService> ().TrackActions.UnsuppressSelectActions ();
             return base.OnFocusOutEvent(evnt);
+        }
+        
+        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        {
+            if (args.Event == PlayerEngineEvent.TrackInfoUpdated) {
+                // TODO: a) Figure out if the track that changed is actually in view
+                //       b) xfade the artwork if it is, that'd be slick
+                QueueDraw ();
+            }
         }
     }
 }
