@@ -77,7 +77,6 @@ namespace Nereid
         {
             BuildPrimaryLayout ();
             ConnectEvents ();
-            LoadSettings ();
             
             ActionService.TrackActions.TrackSelector = this;
             ActionService.SourceActions.SourceView = this;
@@ -172,6 +171,7 @@ namespace Nereid
             VBox source_box = new VBox ();
             
             views_pane = new HPaned ();
+            PersistentPaneController.Control (views_pane, SourceViewWidth);
             view_container = new ViewContainer ();
             
             source_view = new SourceView ();
@@ -222,15 +222,6 @@ namespace Nereid
             primary_vbox.PackStart (footer_toolbar, false, true, 0);
         }
 
-#endregion
-
-#region Configuration Loading/Saving
-        
-        private void LoadSettings ()
-        {
-            views_pane.Position = SourceViewWidth.Get ();
-        }
-        
 #endregion
         
 #region Events and Logic Setup

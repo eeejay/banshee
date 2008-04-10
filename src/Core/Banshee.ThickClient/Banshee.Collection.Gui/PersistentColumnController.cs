@@ -39,7 +39,7 @@ namespace Banshee.Collection.Gui
     {
         private string root_namespace;
         private bool loaded = false;
-        private volatile bool pending_changes;
+        private bool pending_changes;
         private uint timer_id = 0;
         
         private string source_id;

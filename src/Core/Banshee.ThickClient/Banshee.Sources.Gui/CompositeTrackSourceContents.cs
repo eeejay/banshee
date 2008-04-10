@@ -209,6 +209,7 @@ namespace Banshee.Sources.Gui
             artist_album_box.Add2 (album_scrolled_window);
 
             artist_album_box.Position = 350;
+            PersistentPaneController.Control (artist_album_box, "browser.left.artist_album_box");
             
             container.Add1 (artist_album_box);
             container.Add2 (track_scrolled_window);
@@ -216,6 +217,7 @@ namespace Banshee.Sources.Gui
             browser_container = artist_album_box;
             
             container.Position = 275;
+            PersistentPaneController.Control (container, "browser.left");
             ShowPack ();
         }
         
@@ -236,6 +238,7 @@ namespace Banshee.Sources.Gui
             browser_container = artist_album_box;
             
             container.Position = 175;
+            PersistentPaneController.Control (container, "browser.top");
             ShowPack ();
         }
         

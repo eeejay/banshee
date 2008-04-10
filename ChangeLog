@@ -1,5 +1,28 @@
 2008-04-10  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Use the fancy new
+	PersistantPanController. FANCY!
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:
+	Got rid of now-unnessisary volatile modifier.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PersistentPaneController.cs:
+	The PersistentPanController can be used to save/restore the
+	position of a Gtk.Pane automatically. Passing a Gtk.Paned and some
+	schema info to the static Control method will set it up and it will
+	always do the right thing.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Use PeristentPaneController for browser panes. This fixes BGO
+	#522470.
+
+	* src/Core/Banshee.Core/Banshee.Configuration/SchemaEntry.cs: Since
+	this is a public struct, we do the neighborly thing and impliment
+	IEquatable. I thought I was going to use this but ended up not
+	doing so. Still, it's the right thing to do.
+
+2008-04-10  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
 	Added a ViewActions property.
 

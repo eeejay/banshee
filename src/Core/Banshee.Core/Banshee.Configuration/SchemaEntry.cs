@@ -26,9 +26,11 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
+
 namespace Banshee.Configuration
 {
-    public struct SchemaEntry<T>
+    public struct SchemaEntry<T> : IEquatable<SchemaEntry<T>>
     {
         public static SchemaEntry<T> Zero;
     
@@ -62,5 +64,20 @@ namespace Banshee.Configuration
         public readonly T DefaultValue;
         public readonly string ShortDescription;
         public readonly string LongDescription;
+        
+        public bool Equals (SchemaEntry<T> entry)
+        {
+            return Namespace == entry.Namespace && Key == entry.Key;
+        }
+        
+        public override bool Equals (object o)
+        {
+            return (o is SchemaEntry<T>) && Equals ((SchemaEntry<T>)o);
+        }
+        
+        public override int GetHashCode ()
+        {
+            return Namespace.GetHashCode () ^ Key.GetHashCode ();
+        }
     }
 }

@@ -58,6 +58,7 @@ SOURCES =  \
 	Banshee.Gui/IconThemeUtils.cs \
 	Banshee.Gui/IHasSourceView.cs \
 	Banshee.Gui/InterfaceActionService.cs \
+	Banshee.Gui/PersistentPaneController.cs \
 	Banshee.Gui/PlaybackActions.cs \
 	Banshee.Gui/PlaybackRepeatActions.cs \
 	Banshee.Gui/PlaybackShuffleActions.cs \
