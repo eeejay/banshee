@@ -1,3 +1,10 @@
+2008-04-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPositiveInt.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	* src/Core/Banshee.ThickClient/Makefile.am: Add Disc column.  Fixes
+	BGO #385543.
+
 2008-04-10  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:

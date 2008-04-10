@@ -67,6 +67,7 @@ namespace Banshee.Collection.Gui
                 new SortableColumn (Catalog.GetString ("Genre"), new ColumnCellText ("Genre", true), 0.25, "Genre", false),
                 new SortableColumn (Catalog.GetString ("Play Count"), new ColumnCellText ("PlayCount", true), 0.15, "PlayCount", false),
                 new SortableColumn (Catalog.GetString ("Skip Count"), new ColumnCellText ("SkipCount", true), 0.15, "SkipCount", false),
+                new SortableColumn (Catalog.GetString ("Disc"), new ColumnCellPositiveInt ("Disc", true), 0.10, "Disc", false),
                 //new SortableColumn ("Rating", new RatingColumnCell (null, true), 0.15, "Rating"),
                 new SortableColumn (Catalog.GetString ("Last Played"), new ColumnCellDateTime ("LastPlayed", true), 0.15, "LastPlayedStamp", false),
                 new SortableColumn (Catalog.GetString ("Last Skipped"), new ColumnCellDateTime ("LastSkipped", true), 0.15, "LastSkippedStamp", false),
