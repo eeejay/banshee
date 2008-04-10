@@ -88,6 +88,8 @@ namespace Hyena.Widgets
         protected override void OnUnrealized ()
         {
             WidgetFlags &= ~(WidgetFlags.Realized | WidgetFlags.NoWindow);
+            GdkWindow = null;
+            Style = null;
         }
         
         protected override void OnSizeRequested (ref Requisition requisition)

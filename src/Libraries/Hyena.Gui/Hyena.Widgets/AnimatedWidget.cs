@@ -58,7 +58,8 @@ namespace Hyena.Widgets
         
         private double percent;
         private int size;
-        private int? value;
+        private int value;
+        private bool has_value;
         private Pixmap canvas;
         
         public AnimatedWidget (Widget widget, uint duration, Easing easing, Blocking blocking)
@@ -172,7 +173,7 @@ namespace Hyena.Widgets
             get { return size; }
             set {
                 size = value;
-                this.value = null;
+                has_value = false;
             }
         }
         
@@ -180,16 +181,16 @@ namespace Hyena.Widgets
             get { return percent; }
             set {
                 percent = value * Bias;
-                this.value = null;
+                has_value = false;
             }
         }
         
         public int Value {
             get {
-                if (this.value == null) {
+                if (!has_value) {
                     this.value = Choreographer.Compose (percent, size, Easing);
                 }
-                return this.value.Value;
+                return this.value;
             }
         }
         

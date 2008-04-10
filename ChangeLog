@@ -1,3 +1,14 @@
+2008-04-10  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Better vadjustment handling. This fixes BGO #526689.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs: Minor, perhaps
+	unessiary, changes.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedWidget.cs: Use a bool
+	instead of a nullable type.
+
 2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Add

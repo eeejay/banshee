@@ -538,6 +538,9 @@ namespace Hyena.Data.Gui
             if (vadjustment != null && model != null) {
                 vadjustment.Upper = (RowHeight * (model.Count));
                 vadjustment.StepIncrement = RowHeight;
+                if (vadjustment.Value + vadjustment.PageSize > vadjustment.Upper) {
+                    vadjustment.Value = vadjustment.Upper - vadjustment.PageSize;
+                }
             }
             
             hadjustment.Change ();
