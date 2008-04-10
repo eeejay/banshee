@@ -99,7 +99,7 @@ DEPENDENCIES
 
     * Mono 1.2.2 (.NET 2.0 Profile / gmcs)
     * SQlite 3.4
-    * Gtk# 2.8
+    * Gtk# 2.10
     * GStreamer 0.10.3
 
     * NDesk DBus (ndesk-dbus) 0.5
