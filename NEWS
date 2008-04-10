@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.0 ALPHA 2! (0.98.2)
+WELCOME TO BANSHEE 1.0 ALPHA 3! (0.98.3)
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,14 +10,14 @@ WELCOME TO BANSHEE 1.0 ALPHA 2! (0.98.2)
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/Releases/0.98.2
+  * Learn More: http://banshee-project.org/Releases/0.98.3
 
 
 ===============================================================================
 ALPHA RELEASE DISCLAIMER
 ===============================================================================
 
-    This is the second release in the Banshee 1.0 series. This Alpha 2 release 
+    This is the third release in the Banshee 1.0 series. This Alpha 3 release 
     does not have feature parity with previous Banshee releases (the last 
     being Banshee 0.13.2). This means there are a number of features in this 
     release that users may have come to know and love in Banshee that are 
@@ -31,22 +31,22 @@ ALPHA RELEASE DISCLAIMER
 
     Missing features include:
 
-      * No hardware support 
-        - Audio CDs, CD Burning
-        - iPod, MTP, Mass Storage and other Digital Audio Player support
+      * Some hardware support 
+        - CD Burning
+        - iPod, MTP, and other Digital Audio Player support
 
       * Some plugins have not yet been ported to the new 1.0 architecture:
         - Podcasting, DAAP/iTunes Music Sharing, Internet Radio
         - Recommendations, Mini Mode, Batch Cover Art Fetching
 
     Do not despair, these features will be added back before the final 1.0 
-    release. Many hardware related features are projected to land in the 
-    Alpha 3 release of Banshee 1.0. We expect releases in quick 
+    release. Many more hardware related features are projected to land in the 
+    Beta 1 release of Banshee 1.0. We expect releases in quick 
     succession leading up to the final 1.0 release. 
 
     Please read the full release notes on the Banshee Wiki for more details:
 
-      * http://banshee-project.org/Releases/0.98.2
+      * http://banshee-project.org/Releases/0.98.3
 
 
 ===============================================================================
@@ -72,9 +72,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 0.98.2 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-0.98.2.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-0.98.2.tar.gz
+    * Banshee 0.98.3 Tarballs:
+      http://banshee-project.org/files/banshee/banshee-1-0.98.3.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-0.98.3.tar.gz
 
 Packages
 --------
@@ -90,7 +90,7 @@ Packages
 ChangeLogs
 ----------
 
-    * http://banshee-project.org/files/banshee/banshee-1-0.98.2.changes
+    * http://banshee-project.org/files/banshee/banshee-1-0.98.3.changes
 
 
 ===============================================================================
@@ -125,7 +125,7 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.0 Alpha 2 represents the second release since we began rewriting
+    Banshee 1.0 Alpha 3 represents the third release since we began rewriting
     much of the core of Banshee. The primary reason for rewriting this core
     was to deliver much needed performance improvements.
 
@@ -139,20 +139,13 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     New features in this release include:
 
-    * Video management and playback
-    * Now Playing source where video plays and info on playing songs will appear
+    * XXX
+    * 
 
     Other features, bug fixes, and errata:
 
-    * Play Count, Skip Count, Last Played, and Last Skipped all now kept up to date
-    * Allow editing of artist and album names
-    * Start playing when artist or album browser is double clicked
-    * Bookmarks extension is now available
-    * Date-based searches and smart playlists should be working much better
-    * Initialize the translation Catalog so translations can actually be used
-    * Improved support for dark themes
-    * Use XDG_CACHE_HOME directory for cache files
-    * Disable the equalizer temporarily until gstreamer pipeline issues resolved
+    * XXX
+    *
 
 
 ===============================================================================
@@ -166,7 +159,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.98.2
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.98.3
 
 
 ===============================================================================
@@ -179,12 +172,18 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
       
-      Aaron Bockover, Alexander Hixon, Gabriel Burt, Scott Peterson,
-      Sebastian Dröge, Wouter Bolsterlee
+      Aaron Bockover, Alex Kloss, Alexander Hixon, Bertrand Lorentz,
+      Gabriel Burt, Michael Monreal, Mike Urbanski, Scott Peterson,
+      Sebastian Dröge
+
+    The following people contributed updated translations to this release. 
+    Without them, our project's reach would be much more limited.
+
+      Artur Flinta (pl), Daniel Nylander (sv), Wouter Bolsterlee (nl)
 
     The release notes and screenshots for this release were crafted by:
 
-      Aaron Bockover, Gabriel Burt, Jorge Castro, Paul Cutler
+      Aaron Bockover, Gabriel Burt, Jorge Castro
 
 Contributors In Past Releases
 -----------------------------
