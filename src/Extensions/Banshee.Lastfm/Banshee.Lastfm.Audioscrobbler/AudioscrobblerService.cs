@@ -116,21 +116,21 @@ namespace Banshee.Lastfm.Audioscrobbler
             
             actions.Add (new ActionEntry [] {
                 new ActionEntry ("AudioscrobblerAction", null,
-                    Catalog.GetString ("_Audioscrobbler"), null,
+                    Catalog.GetString ("_Last.fm"), null,
                     Catalog.GetString ("Configure the Audioscrobbler plugin"), null),
                     
                 new ActionEntry ("AudioscrobblerVisitAction", null,
-                    Catalog.GetString ("Visit _user profile page"), null,
-                    Catalog.GetString ("Visit your Audioscrobbler profile page"), OnVisitOwnProfile),
+                    Catalog.GetString ("Visit _User Profile Page"), null,
+                    Catalog.GetString ("Visit Your Last.fm Profile Page"), OnVisitOwnProfile),
                 
                 new ActionEntry ("AudioscrobblerConfigureAction", Stock.Properties,
                     Catalog.GetString ("_Configure..."), null,
-                    Catalog.GetString ("Configure the Audioscrobbler plugin"), OnConfigurePlugin)
+                    Catalog.GetString ("Configure the Last.fm Extension"), OnConfigurePlugin)
             });
             
             actions.Add (new ToggleActionEntry [] { 
                 new ToggleActionEntry ("AudioscrobblerEnableAction", null,
-                    Catalog.GetString ("_Enable song reporting"), "<control>U",
+                    Catalog.GetString ("_Enable Song Reporting"), "<control>U",
                     Catalog.GetString ("Enable song reporting"), OnToggleEnabled, Enabled)
             });
             

@@ -46,7 +46,7 @@ namespace Lastfm.Gui
     
         public AccountLoginDialog (Account account, bool addCloseButton) : base ()
         {
-            Title = Catalog.GetString ("Last.fm Account Login");
+            Title = Catalog.GetString ("Log in to Last.fm");
             HasSeparator = false;
             BorderWidth = 5;
             
@@ -100,7 +100,15 @@ namespace Lastfm.Gui
             VBox.PackEnd (bottom_box, false, false, 0);
             
             if (addCloseButton) {
-                AddButton (Stock.Close, ResponseType.Close);
+                AddButton (Stock.Cancel, ResponseType.Cancel);
+                Button button = new Button ();
+                button.Label = Catalog.GetString ("Save and Log In");
+                button.Image = new Image ("gtk-save", IconSize.Button);
+                button.ShowAll ();
+                button.Activated += delegate {
+                    login_form.Save ();
+                };
+                AddActionWidget (button, ResponseType.Ok);
             }
         }
         

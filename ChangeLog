@@ -1,5 +1,19 @@
 2008-04-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	Fix capitalization of menu items, use 'Last.fm' instead of 'Audioscrobbler'.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Encode url bits.
+
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs: Replace Close
+	button with Cancel / Save and Log In buttons.  Should fix BGO #525585.
+
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs: Make Save
+	method public.
+
+2008-04-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:

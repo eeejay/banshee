@@ -51,7 +51,7 @@ namespace Lastfm.Gui
             RowSpacing = 5;
             ColumnSpacing = 5;
         
-            Label username_label = new Label (Catalog.GetString ("User Name:"));
+            Label username_label = new Label (Catalog.GetString ("Username:"));
             username_label.Xalign = 1.0f;
             username_label.Show ();
             
@@ -78,14 +78,14 @@ namespace Lastfm.Gui
             Attach (password_entry, 1, 2, 1, 2, AttachOptions.Fill | AttachOptions.Expand, 
                 AttachOptions.Shrink, 0, 0);
                 
-            username_entry.Text = account.UserName;
-            password_entry.Text = account.Password;
+            username_entry.Text = account.UserName ?? String.Empty;
+            password_entry.Text = account.Password ?? String.Empty;
         }
         
         protected override void OnDestroyed ()
         {
             if (save_on_edit) {
-                UpdateLogin ();
+                Save ();
             }
             
             base.OnDestroyed ();
@@ -98,17 +98,15 @@ namespace Lastfm.Gui
             }
             
             Resize (3, 2);
-            signup_button = new LinkButton ("Sign Up for Last.fm");
+            signup_button = new LinkButton (Catalog.GetString ("Sign up for Last.fm"));
             signup_button.Clicked += delegate { account.SignUp (); };
             signup_button.Show ();
             Attach (signup_button, 1, 2, 2, 3, AttachOptions.Shrink, AttachOptions.Shrink, 0, 0);
         }
         
-        private void UpdateLogin ()
+        public void Save ()
         {
-            if (account.UserName != username_entry.Text.Trim () ||
-                account.Password != password_entry.Text.Trim ()) {
-                
+            if (account.UserName != username_entry.Text.Trim () || account.Password != password_entry.Text.Trim ()) {
                 account.UserName = username_entry.Text.Trim ();
                 account.Password = password_entry.Text.Trim ();
                 account.Save ();

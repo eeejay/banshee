@@ -86,6 +86,9 @@ namespace Banshee.Lastfm.Radio
                 )
             });
 
+            string listen_to = Catalog.GetString ("Listen to {0} Station");
+            string listen_to_long = Catalog.GetString ("Listen to the Last.fm {0} station for this artist");
+
             // Artist actions
             Add (new ActionEntry [] {
                 new ActionEntry ("LastfmArtistVisitLastfmAction", "audioscrobbler",
@@ -105,12 +108,14 @@ namespace Banshee.Lastfm.Radio
                     Catalog.GetString ("Find videos by this artist"), OnArtistViewVideos),
 
                 new ActionEntry ("LastfmArtistPlayFanRadioAction", StationType.Fan.IconName,
-                    Catalog.GetString ("Listen to 'fans of' Station"), null,
-                    Catalog.GetString ("Listen to the Last.fm 'fans of' station for this artist"), OnArtistPlayFanRadio),
+                    String.Format (listen_to, String.Format ("'{0}'", Catalog.GetString ("Fans of"))), null,
+                    String.Format (listen_to_long, String.Format ("'{0}'", Catalog.GetString ("Fans of"))),
+                    OnArtistPlayFanRadio),
 
                 new ActionEntry ("LastfmArtistPlaySimilarRadioAction", StationType.Similar.IconName,
-                    Catalog.GetString ("Listen to 'similar to' Station"), null,
-                    Catalog.GetString ("Listen to the Last.fm 'similar to' station for this artist"), OnArtistPlaySimilarRadio),
+                    String.Format (listen_to, String.Format ("'{0}'", Catalog.GetString ("Similar to"))), null,
+                    String.Format (listen_to_long, String.Format ("'{0}'", Catalog.GetString ("Similar to"))), 
+                    OnArtistPlaySimilarRadio),
 
                 new ActionEntry ("LastfmArtistRecommendAction", "",
                     Catalog.GetString ("Recommend to"), null,
@@ -255,7 +260,7 @@ namespace Banshee.Lastfm.Radio
         {
             Browser.Open (String.Format (
                 Catalog.GetString ("http://last.fm/music/{0}"),
-                CurrentArtist
+                Encode (CurrentArtist)
             ));
         }
 
@@ -263,7 +268,7 @@ namespace Banshee.Lastfm.Radio
         {
             Browser.Open (String.Format (
                 Catalog.GetString ("http://last.fm/music/{0}/{1}"),
-                CurrentArtist, CurrentAlbum
+                Encode (CurrentArtist), Encode (CurrentAlbum)
             ));
         }
 
@@ -271,7 +276,7 @@ namespace Banshee.Lastfm.Radio
         {
             Browser.Open (String.Format (
                 Catalog.GetString ("http://last.fm/music/{0}/{1}"),
-                CurrentArtist, CurrentTrack
+                Encode (CurrentArtist), Encode (CurrentTrack)
             ));
         }
 
@@ -279,7 +284,7 @@ namespace Banshee.Lastfm.Radio
         {
             Browser.Open (String.Format (
                 Catalog.GetString ("http://www.last.fm/music/{0}/+videos"),
-                CurrentArtist
+                Encode (CurrentArtist)
             ));
         }
 
@@ -287,8 +292,13 @@ namespace Banshee.Lastfm.Radio
         {
             Browser.Open (String.Format (
                 Catalog.GetString ("http://en.wikipedia.org/wiki/{0}"),
-                CurrentArtist
+                Encode (CurrentArtist)
             ));
+        }
+
+        private static string Encode (string i)
+        {
+            return System.Web.HttpUtility.UrlEncode (i);
         }
 
         /*private void OnArtistVisitAmazon (object sender, EventArgs args)
@@ -380,7 +390,7 @@ namespace Banshee.Lastfm.Radio
         public void ShowLoginDialog ()
         {
             AccountLoginDialog dialog = new AccountLoginDialog (lastfm.Account, true);
-            dialog.SaveOnEdit = true;
+            dialog.SaveOnEdit = false;
             if (lastfm.Account.UserName == null) {
                 dialog.AddSignUpButton ();
             }
