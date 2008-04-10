@@ -82,12 +82,12 @@ namespace Hyena.Widgets
         {
             WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
             GdkWindow = Parent.GdkWindow;
+            Style = Style.Attach (GdkWindow);
         }
         
         protected override void OnUnrealized ()
         {
             WidgetFlags &= ~(WidgetFlags.Realized | WidgetFlags.NoWindow);
-            GdkWindow = null;
         }
         
         protected override void OnSizeRequested (ref Requisition requisition)

@@ -1,3 +1,10 @@
+2008-04-09  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedWidget.cs: Fixed
+	style attachtment problem which was gave spew when the theme was
+	changed.
+
 2008-04-09  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
