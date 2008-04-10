@@ -208,47 +208,49 @@ namespace Banshee.Collection.Database
 
         public void Reload (ReloadTrigger trigger)
         {
-            bool artist_reloaded = false, album_reloaded = false;
-            GenerateFilterQueryPart ();
+            lock (this) {
+                bool artist_reloaded = false, album_reloaded = false;
+                GenerateFilterQueryPart ();
 
-            UpdateUnfilteredAggregates ();
-            cache.SaveSelection ();
+                UpdateUnfilteredAggregates ();
+                cache.SaveSelection ();
 
-            if (trigger == ReloadTrigger.AlbumFilter) {
-                ReloadWithFilters ();
-            } else {
-                ReloadWithoutArtistAlbumFilters ();
+                if (trigger == ReloadTrigger.AlbumFilter) {
+                    ReloadWithFilters ();
+                } else {
+                    ReloadWithoutArtistAlbumFilters ();
 
-                if (artist_model != null && album_model != null) {
-                    if (trigger == ReloadTrigger.Query) {
-                        artist_reloaded = true;
-                        artist_model.Reload (false);
-                    }
+                    if (artist_model != null && album_model != null) {
+                        if (trigger == ReloadTrigger.Query) {
+                            artist_reloaded = true;
+                            artist_model.Reload (false);
+                        }
 
-                    album_reloaded = true;
-                    album_model.Reload (false);
+                        album_reloaded = true;
+                        album_model.Reload (false);
 
-                    // Unless both artist/album selections are "all" (eg unfiltered), reload
-                    // the track model again with the artist/album filters now in place.
-                    if (!artist_model.Selection.AllSelected || !album_model.Selection.AllSelected) {
-                        ReloadWithFilters ();
+                        // Unless both artist/album selections are "all" (eg unfiltered), reload
+                        // the track model again with the artist/album filters now in place.
+                        if (!artist_model.Selection.AllSelected || !album_model.Selection.AllSelected) {
+                            ReloadWithFilters ();
+                        }
                     }
                 }
+
+                cache.UpdateAggregates ();
+                cache.RestoreSelection ();
+
+                filtered_count = cache.Count;
+
+                OnReloaded ();
+
+                // Trigger these after the track list, b/c visually it's more important for it to update first
+                if (artist_reloaded)
+                    artist_model.RaiseReloaded ();
+
+                if (album_reloaded)
+                    album_model.RaiseReloaded ();
             }
-
-            cache.UpdateAggregates ();
-            cache.RestoreSelection ();
-
-            filtered_count = cache.Count;
-
-            OnReloaded ();
-
-            // Trigger these after the track list, b/c visually it's more important for it to update first
-            if (artist_reloaded)
-                artist_model.RaiseReloaded ();
-
-            if (album_reloaded)
-                album_model.RaiseReloaded ();
         }
 
         private void ReloadWithoutArtistAlbumFilters ()
@@ -315,25 +317,31 @@ namespace Banshee.Collection.Database
         private static string random_fragment = "AND (LastPlayedStamp < ? OR LastPlayedStamp IS NULL) AND (LastSkippedStamp < ? OR LastSkippedStamp IS NULL) ORDER BY RANDOM()";
         public override TrackInfo GetRandom (DateTime notPlayedSince, bool repeat)
         {
-            if (Count == 0)
-                return null;
+            lock (this) {
+                if (Count == 0)
+                    return null;
 
-            if (random_began_at < notPlayedSince)
-                random_began_at = last_random = notPlayedSince;
+                if (random_began_at < notPlayedSince)
+                    random_began_at = last_random = notPlayedSince;
 
-            TrackInfo track = cache.GetSingle (random_fragment, random_began_at, random_began_at);
+                TrackInfo track = cache.GetSingle (random_fragment, random_began_at, random_began_at);
 
-            if (track == null && repeat) {
-                random_began_at = last_random;
-                track = cache.GetSingle (random_fragment, random_began_at, random_began_at);
+                if (track == null && repeat) {
+                    random_began_at = last_random;
+                    track = cache.GetSingle (random_fragment, random_began_at, random_began_at);
+                }
+
+                last_random = DateTime.Now;
+                return track;
             }
-
-            last_random = DateTime.Now;
-            return track;
         }
 
         public override TrackInfo this[int index] {
-            get { return cache.GetValue (index); }
+            get {
+                lock (this) {
+                    return cache.GetValue (index);
+                }
+            }
         }
 
         public override int Count {

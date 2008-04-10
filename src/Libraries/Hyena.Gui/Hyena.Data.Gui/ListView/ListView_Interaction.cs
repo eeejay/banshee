@@ -37,7 +37,6 @@ namespace Hyena.Data.Gui
 {
     public partial class ListView<T> : Container
     {
-        private int last_click_row_index = -1;
         private int focused_row_index = -1;
 
         private Adjustment vadjustment;
@@ -267,10 +266,8 @@ namespace Hyena.Data.Gui
                 return true;
             }
 
-            if (evnt.Button == 1 && evnt.Type == Gdk.EventType.TwoButtonPress && 
-                row_index == last_click_row_index) {
+            if (evnt.Button == 1 && evnt.Type == Gdk.EventType.TwoButtonPress) {
                 OnRowActivated ();
-                last_click_row_index = -1;
             } else {
                 if ((evnt.State & Gdk.ModifierType.ControlMask) != 0) {
                     if (evnt.Button == 3) {
@@ -297,10 +294,7 @@ namespace Hyena.Data.Gui
                 FocusRow (row_index);
 
                 if (evnt.Button == 3) {
-                    last_click_row_index = -1;
                     OnPopupMenu ();
-                } else {
-                    last_click_row_index = row_index;
                 }
             }
             

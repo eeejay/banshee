@@ -49,7 +49,7 @@ namespace Banshee.Collection.Gui
             
             RowActivated += delegate {
                 ServiceManager.PlaybackController.Source = (ServiceManager.SourceManager.ActiveSource as Banshee.Sources.ITrackModelSource);
-                ServiceManager.PlaybackController.First ();
+                ServiceManager.PlaybackController.Next ();
             };
         }
 

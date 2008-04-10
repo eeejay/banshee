@@ -1,5 +1,21 @@
 2008-04-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	Call Next () instead of First () when source/artist/album activated, so that
+	random works.  Fixes BGO #527218.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Lock around Reload, GetRandom, and this[] to avoid refresh race.  Fixes
+	BGO #525031.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Fix bug with double clicking on an item not activating it every other
+	time.
+
+2008-04-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection/MemoryTrackListModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
