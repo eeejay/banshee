@@ -55,7 +55,7 @@ namespace Banshee.PlaybackController
         private bool raise_started_after_transition = false;
         private bool transition_track_started = false;
         
-        private Random random = new Random ();
+        //private Random random = new Random ();
     
         private PlaybackShuffleMode shuffle_mode;
         private PlaybackRepeatMode repeat_mode;
@@ -151,6 +151,8 @@ namespace Banshee.PlaybackController
         public void Next (bool restart)
         {
             raise_started_after_transition = true;
+
+            player_engine.IncrementLastPlayed ();
             
             if (Source is IBasicPlaybackController) {
                 ((IBasicPlaybackController)Source).Next (restart);
@@ -160,15 +162,22 @@ namespace Banshee.PlaybackController
             
             OnTransition ();
         }
-        
+
         public void Previous ()
         {
+            Previous (RepeatMode == PlaybackRepeatMode.RepeatAll);
+        }
+        
+        public void Previous (bool restart)
+        {
             raise_started_after_transition = true;
+
+            player_engine.IncrementLastPlayed ();
             
             if (Source is IBasicPlaybackController) {
-                ((IBasicPlaybackController)Source).Previous ();
+                ((IBasicPlaybackController)Source).Previous (restart);
             } else {
-                ((ICanonicalPlaybackController)this).Previous ();
+                ((ICanonicalPlaybackController)this).Previous (restart);
             }
             
             OnTransition ();
@@ -191,19 +200,11 @@ namespace Banshee.PlaybackController
                     previous_stack.Push (tmp_track);
                 }
             } else {
-                TrackInfo next_track = QueryTrack (Direction.Next);
+                TrackInfo next_track = QueryTrack (Direction.Next, restart);
                 if (next_track != null) {
                     if (tmp_track != null) {
                         previous_stack.Push (tmp_track);
                     }
-                } else if (restart && Source.Count > 0) {
-                    if (tmp_track != null) {
-                        previous_stack.Push (tmp_track);
-                    }
-                    
-                    CurrentTrack = Source.TrackModel[0];
-                    QueuePlayTrack ();
-                    return;
                 } else {
                     return;
                 }
@@ -214,7 +215,7 @@ namespace Banshee.PlaybackController
             QueuePlayTrack ();
         }
         
-        void ICanonicalPlaybackController.Previous ()
+        void ICanonicalPlaybackController.Previous (bool restart)
         {
             if (CurrentTrack != null && previous_stack.Count > 0) {
                 next_stack.Push (current_track);
@@ -223,30 +224,51 @@ namespace Banshee.PlaybackController
             if (previous_stack.Count > 0) {
                 CurrentTrack = previous_stack.Pop ();
             } else {
-                CurrentTrack = QueryTrack (Direction.Previous);
+                TrackInfo track = CurrentTrack = QueryTrack (Direction.Previous, restart);
+                if (track != null) {
+                    CurrentTrack = track;
+                } else {
+                    return;
+                }
             }
             
             QueuePlayTrack ();
         }
         
-        private TrackInfo QueryTrack (Direction direction)
+        private TrackInfo QueryTrack (Direction direction, bool restart)
         {
             Log.DebugFormat ("Querying model for track to play in {0}:{1} mode", ShuffleMode, direction);
             return ShuffleMode == PlaybackShuffleMode.Linear
-                ? QueryTrackLinear (direction)
-                : QueryTrackRandom ();
+                ? QueryTrackLinear (direction, restart)
+                : QueryTrackRandom (restart);
         }
         
-        private TrackInfo QueryTrackLinear (Direction direction)
+        private TrackInfo QueryTrackLinear (Direction direction, bool restart)
         {
+            if (Source.TrackModel.Count == 0)
+                return null;
+
             int index = Source.TrackModel.IndexOf (CurrentTrack);
-            return Source.TrackModel[index < 0 ? 0 : index + (direction == Direction.Next ? 1 : -1)];
+            if (index == -1) {
+                return Source.TrackModel[0];
+            } else {
+                index += (direction == Direction.Next ? 1 : -1);
+                if (index >= 0 && index < Source.TrackModel.Count) {
+                    return Source.TrackModel[index];
+                } else if (!restart) {
+                    return null;
+                } else if (index < 0) {
+                    return Source.TrackModel[Source.TrackModel.Count - 1];
+                } else {
+                    return Source.TrackModel[0];
+                }
+            }
         }
         
-        private TrackInfo QueryTrackRandom ()
+        private TrackInfo QueryTrackRandom (bool restart)
         {
-            // TODO let the TrackModel give us a random track
-            return Source.TrackModel[random.Next (0, Source.TrackModel.Count - 1)];
+            return Source.TrackModel.GetRandom (source_set_at, restart);
+            //return Source.TrackModel[random.Next (0, Source.TrackModel.Count - 1)];
         }
         
         private void QueuePlayTrack ()
@@ -304,6 +326,7 @@ namespace Banshee.PlaybackController
             protected set { current_track = value; }
         }
         
+        protected DateTime source_set_at;
         public ITrackModelSource Source {
             get { 
                 if (source == null && ServiceManager.SourceManager.DefaultSource is ITrackModelSource) {
@@ -315,6 +338,7 @@ namespace Banshee.PlaybackController
             set {
                 if (source != value) {
                     source = value;
+                    source_set_at = DateTime.Now;
                     OnSourceChanged ();
                 }
             }

@@ -45,6 +45,7 @@ namespace Hyena.Data.Sqlite
         private HyenaSqliteCommand save_selection_command;
         private HyenaSqliteCommand get_selection_command;
 
+        private string select_str;
         private string reload_sql;
         private long uid;
         private long selection_uid;
@@ -100,23 +101,19 @@ namespace Hyena.Data.Sqlite
             }
 
             if (model.CachesJoinTableEntries) {
-                select_range_command = new HyenaSqliteCommand (
-                    String.Format (@"
-                        SELECT {0}, {5}.ItemID  FROM {1}
-                            INNER JOIN {2}
-                                ON {3} = {2}.{4}
-                            INNER JOIN {5}
-                                ON {2}.{6} = {5}.ItemID
-                            WHERE
-                                {5}.ModelID = {7} {8}
-                                {9}
-                            LIMIT ?, ?",
-                        provider.Select, provider.From,
-                        model.JoinTable, provider.PrimaryKey, model.JoinColumn,
-                        CacheTableName, model.JoinPrimaryKey, uid,
-                        String.IsNullOrEmpty (provider.Where) ? null : "AND",
-                        provider.Where
-                    )
+                select_str = String.Format (
+                    @"SELECT {0}, {5}.ItemID  FROM {1}
+                        INNER JOIN {2}
+                            ON {3} = {2}.{4}
+                        INNER JOIN {5}
+                            ON {2}.{6} = {5}.ItemID
+                        WHERE
+                            {5}.ModelID = {7} {8} {9}",
+                    provider.Select, provider.From,
+                    model.JoinTable, provider.PrimaryKey, model.JoinColumn,
+                    CacheTableName, model.JoinPrimaryKey, uid,
+                    String.IsNullOrEmpty (provider.Where) ? null : "AND",
+                    provider.Where
                 );
 
                 select_single_command = new HyenaSqliteCommand (
@@ -135,22 +132,18 @@ namespace Hyena.Data.Sqlite
                     CacheTableName, uid, model.JoinPrimaryKey
                 );
             } else {
-                select_range_command = new HyenaSqliteCommand (
-                    String.Format (@"
-                        SELECT {0}, {2}.ItemID FROM {1}
-                            INNER JOIN {2} 
-                                ON {3} = {2}.ItemID
-                            WHERE
-                                {2}.ModelID = {4} {5}
-                                {6}
-                            LIMIT ?, ?",
-                        provider.Select, provider.From, CacheTableName,
-                        provider.PrimaryKey, uid,
-                        String.IsNullOrEmpty (provider.Where) ? String.Empty : "AND",
-                        provider.Where
-                    )
+                select_str = String.Format (
+                    @"SELECT {0}, {2}.ItemID FROM {1}
+                        INNER JOIN {2} 
+                            ON {3} = {2}.ItemID
+                        WHERE
+                            {2}.ModelID = {4} {5} {6}",
+                    provider.Select, provider.From, CacheTableName,
+                    provider.PrimaryKey, uid,
+                    String.IsNullOrEmpty (provider.Where) ? String.Empty : "AND",
+                    provider.Where
                 );
-            
+
                 select_single_command = new HyenaSqliteCommand (
                     String.Format (@"
                         SELECT OrderID FROM {0}
@@ -167,7 +160,11 @@ namespace Hyena.Data.Sqlite
                     CacheTableName, uid, provider.PrimaryKey
                 );
             }
-            
+
+            select_range_command = new HyenaSqliteCommand (
+                String.Format ("{0} {1}", select_str, "LIMIT ?, ?")
+            );
+
             select_first_command = new HyenaSqliteCommand (
                 String.Format (
                     "SELECT OrderID FROM {0} WHERE ModelID = {1} LIMIT 1",
@@ -243,6 +240,29 @@ namespace Hyena.Data.Sqlite
                 return target_id - FirstOrderId;
             }
         }
+
+        private HyenaSqliteCommand get_single_command;
+        private string last_get_single_fragment;
+        public T GetSingle (string fragment, params object [] args)
+        {
+            if (fragment != last_get_single_fragment || get_single_command == null) {
+                last_get_single_fragment = fragment;
+                get_single_command = new HyenaSqliteCommand (
+                    String.Format ("{0} {1} {2}", select_str, fragment, "LIMIT 1")
+                );
+            }
+
+            using (IDataReader reader = connection.Query (get_single_command, args)) {
+                if (reader.Read ()) {
+                    T item = provider.Load (reader, 0);
+                    item.CacheEntryId = Convert.ToInt64 (reader[reader.FieldCount - 1]);
+                    item.CacheModelId = uid;
+                    return item;
+                }
+            }
+            return default(T);
+        }
+
 
         private HyenaSqliteCommand last_reload_command;
         private string last_reload_fragment;

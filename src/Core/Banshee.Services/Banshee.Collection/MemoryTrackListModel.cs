@@ -35,6 +35,7 @@ namespace Banshee.Collection
 {
     public class MemoryTrackListModel : TrackListModel, IEnumerable<TrackInfo>
     {
+        private static Random random = new Random ();
         private List<TrackInfo> tracks = new List<TrackInfo> ();
 
         public MemoryTrackListModel () : base ()
@@ -78,6 +79,14 @@ namespace Banshee.Collection
     
         public override TrackInfo this[int index] {
             get { lock (this) { return (index >= 0 && index < tracks.Count) ? tracks[index] : null; } }
+        }
+
+        public override TrackInfo GetRandom (DateTime since, bool repeat)
+        {
+            if (Count == 0)
+                return null;
+
+            return this [random.Next (0, Count - 1)];
         }
 
         public override int Count { 

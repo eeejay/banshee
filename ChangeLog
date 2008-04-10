@@ -1,3 +1,27 @@
+2008-04-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/MemoryTrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Implement GetRandom method, using SQL for DatabaseTrackListModel.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Move IncrementPlay/SkipCount logic into public IncrementLastPlayed method.
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Cann IncrementLastPlayed before getting the next song since that affects
+	the random query method.  Fix repeat/restart in linear query.  Change
+	QueryTrackRandom to call GetRandom on TrackModel.
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/IBasicPlaybackController.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/ICanonicalPlaybackController.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Add restart arg to Previous.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Add GetSingle
+	method that can be passed a condition/order by fragment and returns one
+	item.
+
 2008-04-10  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Use the fancy new

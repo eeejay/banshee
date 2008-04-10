@@ -53,6 +53,8 @@ namespace Banshee.Collection
         {
             throw new NotImplementedException();
         }
+
+        public abstract TrackInfo GetRandom (DateTime notPlayedSince, bool repeat);
         
         public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
             set { throw new NotImplementedException(); }

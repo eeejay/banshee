@@ -32,6 +32,6 @@ namespace Banshee.PlaybackController
     {
         new void First ();
         new void Next (bool restart);
-        new void Previous ();
+        new void Previous (bool restart);
     }
 }

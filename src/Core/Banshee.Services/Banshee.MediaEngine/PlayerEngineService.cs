@@ -314,23 +314,32 @@ namespace Banshee.MediaEngine
             } else {
                 return;
             }
+
+            IncrementLastPlayed ();
             
             FindSupportingEngine (uri);
             CheckPending ();
             
-            if (active_engine.CurrentTrack != null) {
+            if (track != null) {
+                active_engine.Open (track);
+                incremented_last_played = false;
+            } else if (uri != null) {
+                active_engine.Open (uri);
+                incremented_last_played = false;
+            }
+        }
+
+        private bool incremented_last_played = true;
+        public void IncrementLastPlayed ()
+        {
+            if (!incremented_last_played && active_engine.CurrentTrack != null) {
                 // If we're at least 50% done playing a song, mark it as played, otherwise as skipped
                 if (active_engine.Length > 0 && active_engine.Position >= active_engine.Length / 2) {
                     active_engine.CurrentTrack.IncrementPlayCount ();
                 } else {
                     active_engine.CurrentTrack.IncrementSkipCount ();
                 }
-            }
-            
-            if (track != null) {
-                active_engine.Open (track);
-            } else if (uri != null) {
-                active_engine.Open (uri);
+                incremented_last_played = true;
             }
         }
         
@@ -371,6 +380,7 @@ namespace Banshee.MediaEngine
         
         public void Close (bool fullShutdown)
         {
+            IncrementLastPlayed ();
             active_engine.Reset ();
             active_engine.Close (fullShutdown);
         }

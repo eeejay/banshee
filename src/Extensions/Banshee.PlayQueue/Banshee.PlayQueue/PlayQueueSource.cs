@@ -226,7 +226,7 @@ namespace Banshee.PlayQueue
             ServiceManager.PlayerEngine.OpenPlay ((DatabaseTrackInfo)TrackModel[0]);
         }
         
-        void IBasicPlaybackController.Previous ()
+        void IBasicPlaybackController.Previous (bool restart)
         {
         }
         

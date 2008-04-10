@@ -310,6 +310,28 @@ namespace Banshee.Collection.Database
             return (int) (db_track == null ? -1 : cache.IndexOf ((int)db_track.TrackId));
         }
 
+        private DateTime random_began_at = DateTime.MinValue;
+        private DateTime last_random = DateTime.MinValue;
+        private static string random_fragment = "AND (LastPlayedStamp < ? OR LastPlayedStamp IS NULL) AND (LastSkippedStamp < ? OR LastSkippedStamp IS NULL) ORDER BY RANDOM()";
+        public override TrackInfo GetRandom (DateTime notPlayedSince, bool repeat)
+        {
+            if (Count == 0)
+                return null;
+
+            if (random_began_at < notPlayedSince)
+                random_began_at = last_random = notPlayedSince;
+
+            TrackInfo track = cache.GetSingle (random_fragment, random_began_at, random_began_at);
+
+            if (track == null && repeat) {
+                random_began_at = last_random;
+                track = cache.GetSingle (random_fragment, random_began_at, random_began_at);
+            }
+
+            last_random = DateTime.Now;
+            return track;
+        }
+
         public override TrackInfo this[int index] {
             get { return cache.GetValue (index); }
         }
