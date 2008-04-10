@@ -1,5 +1,9 @@
 2008-04-10  Aaron Bockover  <abock@gnome.org>
 
+	Banshee 1.0 Alpha 3 (0.98.3) Released
+
+2008-04-10  Aaron Bockover  <abock@gnome.org>
+
 	* NEWS: Updated
 	
 	* configure.ac: Turned off the DEVEL_BUILD flag for the release
