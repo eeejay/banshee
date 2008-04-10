@@ -1,5 +1,19 @@
 2008-04-09  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:
+	Fix DPI and size request issues
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Use the generic CreateLayout cairo method in CairoExtensions
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Moved the 
+	CreateLayout method from the list view to this utils class
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs: Added OnUnrealized
+
+2008-04-09  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac:
 	* build/build.rules.mk: Added a DEVEL_BUILD variable - if set, compiler
 	warnings will be treated as errors. We'll always keep it on except for

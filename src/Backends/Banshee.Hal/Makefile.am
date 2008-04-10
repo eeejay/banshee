@@ -7,9 +7,9 @@ SOURCES =  \
 	Banshee.HalBackend/BlockDevice.cs \
 	Banshee.HalBackend/CdromDevice.cs \
 	Banshee.HalBackend/Device.cs \
+	Banshee.HalBackend/DeviceMediaCapabilities.cs \
 	Banshee.HalBackend/DiscVolume.cs \
 	Banshee.HalBackend/DiskDevice.cs \
-	Banshee.HalBackend/DeviceMediaCapabilities.cs \
 	Banshee.HalBackend/HardwareManager.cs \
 	Banshee.HalBackend/Volume.cs \
 	Hal/Device.cs \

@@ -48,6 +48,22 @@ namespace Hyena.Gui
     
     public static class CairoExtensions
     {
+        public static void CreateLayout (Gtk.Widget widget, Cairo.Context cairo_context, ref Pango.Layout layout)
+        {
+            if (layout != null) {
+                layout.Dispose ();
+            }
+            
+            layout = PangoCairoHelper.CreateLayout (cairo_context);
+            layout.FontDescription = widget.PangoContext.FontDescription.Copy ();
+            
+            double resolution = widget.Screen.Resolution;
+            if (resolution != -1) {
+                Pango.Context context = PangoCairoHelper.LayoutGetContext (layout);
+                PangoCairoHelper.ContextSetResolution (context, resolution);
+            }
+        }
+    
         public static Cairo.Color GdkColorToCairoColor(Gdk.Color color)
         {
             return GdkColorToCairoColor(color, 1.0);

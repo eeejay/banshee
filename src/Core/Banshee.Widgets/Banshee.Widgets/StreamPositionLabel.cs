@@ -89,6 +89,10 @@ namespace Banshee.Widgets
             int width, height;
             layout.GetPixelSize (out width, out height);
             
+            if (width > Allocation.Width) {
+                WidthRequest = width;
+            }
+            
             int x = Allocation.X + ((Allocation.Width - width) / 2);
             int y = Allocation.Y + ((Allocation.Height - HeightRequest) / 2);
             Gdk.Rectangle rect = evnt.Area;

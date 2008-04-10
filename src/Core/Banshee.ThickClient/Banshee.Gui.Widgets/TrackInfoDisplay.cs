@@ -174,6 +174,21 @@ namespace Banshee.Gui.Widgets
             QueueDraw ();
         }
         
+        protected override void OnSizeRequested (ref Requisition requisition)
+        {
+            requisition.Height = ComputeWidgetHeight ();
+        }
+        
+        private int ComputeWidgetHeight ()
+        {
+            int width, height;
+            Pango.Layout layout = new Pango.Layout (PangoContext);
+            layout.SetText ("W");
+            layout.GetPixelSize (out width, out height);
+            layout.Dispose ();
+            return 2 * height;
+        }
+
 #endregion
 
 #region Interaction Events
@@ -379,11 +394,11 @@ namespace Banshee.Gui.Widgets
             int fl_width, fl_height, sl_width, sl_height;
 
             // Set up the text layouts
-            Pango.Layout first_line_layout = PangoCairoHelper.CreateLayout (cr);
+            Pango.Layout first_line_layout = null;
+            CairoExtensions.CreateLayout (this, cr, ref first_line_layout);
             first_line_layout.Width = (int)(width * Pango.Scale.PangoScale);
             first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
-            first_line_layout.FontDescription = PangoContext.FontDescription.Copy ();
-            
+                        
             Pango.Layout second_line_layout = first_line_layout.Copy ();
             
             // Compute the layout coordinates
@@ -391,6 +406,10 @@ namespace Banshee.Gui.Widgets
             first_line_layout.GetPixelSize (out fl_width, out fl_height);
             second_line_layout.SetMarkup (GetSecondLineText (track));
             second_line_layout.GetPixelSize (out sl_width, out sl_height);
+            
+            if (fl_height + sl_height > Allocation.Height) {
+                SetSizeRequest (-1, fl_height + sl_height);
+            }
             
             y = (Allocation.Height - (fl_height + sl_height)) / 2;
             
@@ -404,11 +423,16 @@ namespace Banshee.Gui.Widgets
             }
 
             if (!renderArtistAlbum) {
+                first_line_layout.Dispose ();
+                second_line_layout.Dispose ();
                 return;
             }
             
             cr.MoveTo (x, y + fl_height);
             PangoCairoHelper.ShowLayout (cr, second_line_layout);
+            
+            first_line_layout.Dispose ();
+            second_line_layout.Dispose ();
         }
         
         public new void QueueDraw ()

@@ -66,22 +66,6 @@ namespace Hyena.Data.Gui
             get { return theme; }
         }
         
-        private void CreateLayout (Cairo.Context cairo_context)
-        {
-            if (pango_layout != null) {
-                pango_layout.Dispose ();
-            }
-            
-            pango_layout = PangoCairoHelper.CreateLayout (cairo_context);
-            pango_layout.FontDescription = PangoContext.FontDescription.Copy ();
-            
-            double resolution = Screen.Resolution;
-            if (resolution != -1) {
-                Pango.Context context = PangoCairoHelper.LayoutGetContext (pango_layout);
-                PangoCairoHelper.ContextSetResolution (context, resolution);
-            }
-        }
-        
         protected override void OnStyleSet (Gtk.Style old_style)
         {
             base.OnStyleSet (old_style);
@@ -139,7 +123,7 @@ namespace Hyena.Data.Gui
             cairo_context.Rectangle (clip.X, clip.Y, clip.Width, clip.Height);
             cairo_context.Clip ();
             
-            CreateLayout (cairo_context);
+            CairoExtensions.CreateLayout (this, cairo_context, ref pango_layout);
             Theme.DrawHeaderBackground (cairo_context, header_rendering_alloc);
             
             Rectangle cell_area = new Rectangle ();
@@ -241,7 +225,7 @@ namespace Hyena.Data.Gui
             // Build a cairo context for the primary canvas.
             Cairo.Context tmp_cr = cairo_context;
             cairo_context = CairoHelper.Create (canvas1);
-            CreateLayout (cairo_context);
+            CairoExtensions.CreateLayout (this, cairo_context, ref pango_layout);
             
             // Render the background to the primary canvas.
             Theme.DrawListBackground (cairo_context, canvas_alloc, true);
