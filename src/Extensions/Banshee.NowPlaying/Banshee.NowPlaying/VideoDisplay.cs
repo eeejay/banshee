@@ -95,7 +95,6 @@ namespace Banshee.NowPlaying
             GdkWindow.UserData = Handle;
             
             video_window.Reparent (Parent.GdkWindow, Allocation.X, Allocation.Y);
-            base.OnRealized ();
         }
         
         protected override void OnUnrealized ()
