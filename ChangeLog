@@ -1,3 +1,9 @@
+2008-04-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Choreographer.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs: Avoid using
+	nullable types for some stuffs
+
 2008-04-09  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs:

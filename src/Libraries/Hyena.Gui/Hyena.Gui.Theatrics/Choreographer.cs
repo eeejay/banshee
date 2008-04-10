@@ -33,12 +33,14 @@ namespace Hyena.Widgets
 {
     public enum Blocking
     {
+        None,
         Upstage,
         Downstage
     }
     
     public enum Easing
     {
+        None,
         Linear,
         QuadraticIn,
         QuadraticOut,

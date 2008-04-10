@@ -228,37 +228,37 @@ namespace Hyena.Widgets
         
         public new void Remove (Widget widget)
         {
-            RemoveCore (widget, null, null, null);
+            RemoveCore (widget, 0, Easing.None, Blocking.None);
         }
         
         public void Remove (Widget widget, uint duration)
         {
-            RemoveCore (widget, duration, null, null);
+            RemoveCore (widget, duration, Easing.None, Blocking.None);
         }
         
         public void Remove (Widget widget, Easing easing)
         {
-            RemoveCore (widget, null, easing, null);
+            RemoveCore (widget, 0, easing, Blocking.None);
         }
         
         public void Remove (Widget widget, uint duration, Easing easing)
         {
-            RemoveCore (widget, duration, easing, null);
+            RemoveCore (widget, duration, easing, Blocking.None);
         }
         
         public void Remove (Widget widget, Blocking blocking)
         {
-            RemoveCore (widget, null, null, blocking);
+            RemoveCore (widget, 0, Easing.None, blocking);
         }
         
         public void Remove (Widget widget, uint duration, Blocking blocking)
         {
-            RemoveCore (widget, duration, null, blocking);
+            RemoveCore (widget, duration, Easing.None, blocking);
         }
         
         public void Remove (Widget widget, Easing easing, Blocking blocking)
         {
-            RemoveCore (widget, null, easing, blocking);
+            RemoveCore (widget, 0, easing, blocking);
         }
         
         public void Remove (Widget widget, uint duration, Easing easing, Blocking blocking)
@@ -266,7 +266,7 @@ namespace Hyena.Widgets
             RemoveCore (widget, duration, easing, blocking);
         }
         
-        private void RemoveCore (Widget widget, uint? duration, Easing? easing, Blocking? blocking)
+        private void RemoveCore (Widget widget, uint duration, Easing easing, Blocking blocking)
         {
             if (widget == null) {
                 throw new ArgumentNullException ("widget");
@@ -292,19 +292,19 @@ namespace Hyena.Widgets
             RemoveCore (widget, widget.Duration, widget.Easing, widget.Blocking);
         }
         
-        private void RemoveCore (AnimatedWidget widget, uint? duration, Easing? easing, Blocking? blocking)
+        private void RemoveCore (AnimatedWidget widget, uint duration, Easing easing, Blocking blocking)
         {
             lock (widget) {
-                if (duration != null) {
-                    widget.Duration = duration.Value;
+                if (duration > 0) {
+                    widget.Duration = duration;
                 }
                 
-                if (easing != null) {
-                    widget.Easing = easing.Value;
+                if (easing != Easing.None) {
+                    widget.Easing = easing;
                 }
                 
-                if (blocking != null) {
-                    widget.Blocking = blocking.Value;
+                if (blocking != Blocking.None) {
+                    widget.Blocking = blocking;
                 }
             
                 if (widget.AnimationState == AnimationState.Coming) {
