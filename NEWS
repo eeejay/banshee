@@ -139,13 +139,17 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     New features in this release include:
 
-    * XXX
-    * 
+    * Audio CD playback and ripping
+    * Mass Storage Digital Audio Player support
 
     Other features, bug fixes, and errata:
 
-    * XXX
-    *
+    * Over 40 bugs were fixed since Alpha 2
+    * The main view now respects your system DPI settings and 
+	  has seen massive performance improvements.
+	* Jump to playing song is now implemented (Ctrl-J) 
+	* The Last.fm data screen has some visual improvements.
+	* The repeat drop down button now works. 
 
 
 ===============================================================================
@@ -198,5 +202,6 @@ Contributors In Past Releases
     Jorge Castro, Juri Pakaste, Ken Vandine, Larry Ewing, Lauri Kotilainen,
     Michael Monreal, Miguel de Icaza, Mike Urbanski, Nathan Palmer, 
     Oscar Forero, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch,
-    Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington, Wouter Bolsterlee
+    Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington, 
+	Wouter Bolsterlee
 

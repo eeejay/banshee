@@ -1,5 +1,11 @@
 2008-04-10  Aaron Bockover  <abock@gnome.org>
 
+	* NEWS: Updated
+	
+	* configure.ac: Turned off the DEVEL_BUILD flag for the release
+
+2008-04-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
 	Do /not/ call base.OnRealized because we don't like to crash
 
