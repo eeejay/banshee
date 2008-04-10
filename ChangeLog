@@ -1,5 +1,10 @@
 2008-04-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
+	Added an override for TrackEqual that addresses audio CD track equality
+
+2008-04-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
 	Refresh when a track info updated event is raised by the player engine;
 	this fixes BGO #524865

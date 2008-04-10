@@ -44,6 +44,12 @@ namespace Banshee.AudioCd
             Uri = new SafeUri (String.Format ("cdda://{0}#{1}", index_on_disc + 1, deviceNode)); 
         }
         
+        public override bool TrackEqual (TrackInfo track)
+        {
+            AudioCdTrackInfo cd_track = track as AudioCdTrackInfo;
+            return cd_track == null ? false : (cd_track.Model == Model && cd_track.IndexOnDisc == IndexOnDisc);
+        }
+        
         private AudioCdDiscModel model;
         public AudioCdDiscModel Model {
             get { return model; }
