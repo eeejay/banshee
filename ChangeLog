@@ -1,3 +1,11 @@
+2008-04-10  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	Added a ViewActions property.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Handle
+	fullscreen toggling. This fixes BGO #526618.
+
 2008-04-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPositiveInt.cs:

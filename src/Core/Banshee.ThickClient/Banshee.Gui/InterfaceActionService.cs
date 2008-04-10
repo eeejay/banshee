@@ -211,6 +211,10 @@ namespace Banshee.Gui
             get { return source_actions; }
         }
         
+        public ViewActions ViewActions {
+            get { return view_actions; }
+        }
+        
         string IService.ServiceName {
             get { return "InterfaceActionService"; }
         }

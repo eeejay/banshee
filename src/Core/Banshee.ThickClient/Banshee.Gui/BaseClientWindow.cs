@@ -36,6 +36,8 @@ namespace Banshee.Gui
 {
     public abstract class BaseClientWindow : Window
     {
+        private ToggleAction fullscreen_action;
+        
         private GtkElementsService elements_service;
         protected GtkElementsService ElementsService {
             get { return elements_service; }
@@ -60,7 +62,7 @@ namespace Banshee.Gui
             
             AddAccelGroup (action_service.UIManager.AccelGroup);
             
-            Initialize ();
+            InitializeWindow ();
         }
         
         public void ToggleVisibility ()
@@ -95,6 +97,20 @@ namespace Banshee.Gui
                 Resize (w, h);
                 Move (x, y);
             }
+        }
+        
+        private void InitializeWindow ()
+        {
+            fullscreen_action = (ToggleAction)action_service.ViewActions["FullScreenAction"];
+            fullscreen_action.Activated += delegate {
+                if (fullscreen_action.Active) {
+                    Fullscreen ();
+                } else {
+                    Unfullscreen ();
+                }
+            };
+            
+            Initialize ();
         }
         
         protected abstract void Initialize ();
@@ -161,6 +177,8 @@ namespace Banshee.Gui
         
         protected override bool OnWindowStateEvent (Gdk.EventWindowState evnt)
         {
+            fullscreen_action.Active = (evnt.NewWindowState & Gdk.WindowState.Fullscreen) != 0;
+            
             if ((evnt.NewWindowState & Gdk.WindowState.Withdrawn) == 0) {
                 MaximizedSchema.Set ((evnt.NewWindowState & Gdk.WindowState.Maximized) != 0);
             }
