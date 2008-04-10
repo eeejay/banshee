@@ -389,9 +389,11 @@ namespace Banshee.Sources
         
         protected virtual void OnUserNotifyUpdated ()
         {
-            EventHandler handler = UserNotifyUpdated;
-            if (handler != null) {
-                handler (this, EventArgs.Empty);
+            if (this != ServiceManager.SourceManager.ActiveSource) {
+                EventHandler handler = UserNotifyUpdated;
+                if (handler != null) {
+                    handler (this, EventArgs.Empty);
+                }
             }
         }
         

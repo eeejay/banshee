@@ -205,20 +205,39 @@ namespace Banshee.Sources
             DeleteSelectedTracks (track_model);
         }
 
-        public virtual void DeleteSelectedTracks (DatabaseTrackListModel model)
+        protected virtual void DeleteSelectedTracks (DatabaseTrackListModel model)
         {
+            if (model == null)
+                return;
+
             WithTrackSelection (model, DeleteTrackRange);
             OnTracksDeleted ();
         }
 
-        public virtual void AddSelectedTracks (Source source)
+        public virtual bool AddSelectedTracks (Source source)
         {
             if (!AcceptsInputFromSource (source))
-                return;
+                return false;
 
             DatabaseTrackListModel model = (source as ITrackModelSource).TrackModel as DatabaseTrackListModel;
             WithTrackSelection (model, AddTrackRange);
             OnTracksAdded ();
+            OnUserNotifyUpdated ();
+            return true;
+        }
+
+        public virtual bool AddAllTracks (Source source)
+        {
+            if (!AcceptsInputFromSource (source) || source.Count == 0)
+                return false;
+
+            DatabaseTrackListModel model = (source as ITrackModelSource).TrackModel as DatabaseTrackListModel;
+            lock (model) {
+                AddTrackRange (model, new RangeCollection.Range (0, source.Count));
+            }
+            OnTracksAdded ();
+            OnUserNotifyUpdated ();
+            return true;
         }
 
         public virtual void RateSelectedTracks (int rating)
@@ -242,6 +261,15 @@ namespace Banshee.Sources
 
         public override SourceMergeType SupportedMergeTypes {
             get { return SourceMergeType.All; }
+        }
+
+        public override void MergeSourceInput (Source source, SourceMergeType mergeType)
+        {
+            if (mergeType == SourceMergeType.Source) {
+                AddAllTracks (source);
+            } else if (mergeType == SourceMergeType.ModelSelection) {
+                AddSelectedTracks (source);
+            }
         }
 
 #endregion
@@ -374,8 +402,8 @@ namespace Banshee.Sources
         protected HyenaSqliteCommand PruneCommand {
             get {
                 return prune_command ?? prune_command = new HyenaSqliteCommand (String.Format (
-                        @"DELETE FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT ArtistID FROM CoreTracks WHERE TrackID IN ({0}));
-                          DELETE FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT AlbumID FROM CoreTracks WHERE TrackID IN ({0}));",
+                        @"DELETE FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT ArtistID FROM CoreTracks WHERE TrackID IN (SELECT {0}));
+                          DELETE FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT AlbumID FROM CoreTracks WHERE TrackID IN (SELECT {0}));",
                         track_model.TrackIdsSql
                     ),
                     artist_model.CacheId, artist_model.CacheId, 0, artist_model.Count,

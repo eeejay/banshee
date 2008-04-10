@@ -119,26 +119,6 @@ namespace Banshee.Playlist
             return base.AcceptsInputFromSource (source) && (Parent == null || source == Parent || source.Parent == Parent);
         }
         
-        public override void MergeSourceInput (Source from, SourceMergeType mergeType)
-        {
-            DatabaseSource source = from as DatabaseSource;
-            if (source == null || !(source.TrackModel is DatabaseTrackListModel)) {
-                return;
-            }
-            
-            DatabaseTrackListModel model = (DatabaseTrackListModel)source.TrackModel;
-            
-            switch (mergeType) {
-                case SourceMergeType.ModelSelection:
-                    AddSelectedTracks (from);
-                    break;
-                case SourceMergeType.Source:
-                    AddTrackRange (model, new RangeCollection.Range (0, model.Count));
-                    Reload ();
-                    break;
-            }
-        }
-        
         public override SourceMergeType SupportedMergeTypes {
             get { return SourceMergeType.All; }
         }
@@ -191,9 +171,11 @@ namespace Banshee.Playlist
         }
 
         // Have our parent handle deleting tracks
-        public override void DeleteSelectedTracks (DatabaseTrackListModel model)
+        public override void DeleteSelectedTracks ()
         {
-            (Parent as DatabaseSource).DeleteSelectedTracks (model);
+            if (Parent is PrimarySource) {
+                (Parent as PrimarySource).DeleteSelectedTracksFromChild (this);
+            }
         }
 
 #endregion
@@ -233,16 +215,17 @@ namespace Banshee.Playlist
             Reload ();
         }*/
         
-        public override void AddSelectedTracks (Source source)
+        public override bool AddSelectedTracks (Source source)
         {
             if (Parent == null || source == Parent || source.Parent == Parent) {
-                base.AddSelectedTracks (source);
+                return base.AddSelectedTracks (source);
             /*} else {
                 // Adding from a different primary source, so add to our primary source first
                 PrimarySource primary = Parent as PrimarySource;
                 primary.AddSelectedTracks (model);
                 // then add to us*/
             }
+            return false;
         }
 
         DatabaseTrackListModel last_add_range_from_model;
@@ -255,7 +238,7 @@ namespace Banshee.Playlist
                     ? last_add_range_command
                     : new HyenaSqliteCommand (String.Format (add_track_range_from_joined_model_sql, from.JoinTable, from.JoinPrimaryKey));
 
-            last_add_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
+            last_add_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.Count);
             ServiceManager.DbConnection.Execute (last_add_range_command);
 
             last_add_range_from_model = from;
@@ -263,7 +246,7 @@ namespace Banshee.Playlist
 
         protected override void RemoveTrackRange (DatabaseTrackListModel from, RangeCollection.Range range)
         {
-            remove_track_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.End - range.Start + 1);
+            remove_track_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.Count);
             ServiceManager.DbConnection.Execute (remove_track_range_command);
         }
 

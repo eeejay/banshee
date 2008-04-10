@@ -90,6 +90,11 @@ namespace Banshee.Collection.Database
         }
 
         private bool initialized = false;
+        public void Initialize ()
+        {
+            Initialize (null, null);
+        }
+
         public void Initialize (DatabaseArtistListModel artist_model, DatabaseAlbumListModel album_model)
         {
             if (initialized)
@@ -214,18 +219,20 @@ namespace Banshee.Collection.Database
             } else {
                 ReloadWithoutArtistAlbumFilters ();
 
-                if (trigger == ReloadTrigger.Query) {
-                    artist_reloaded = true;
-                    artist_model.Reload (false);
-                }
+                if (artist_model != null && album_model != null) {
+                    if (trigger == ReloadTrigger.Query) {
+                        artist_reloaded = true;
+                        artist_model.Reload (false);
+                    }
 
-                album_reloaded = true;
-                album_model.Reload (false);
+                    album_reloaded = true;
+                    album_model.Reload (false);
 
-                // Unless both artist/album selections are "all" (eg unfiltered), reload
-                // the track model again with the artist/album filters now in place.
-                if (!artist_model.Selection.AllSelected || !album_model.Selection.AllSelected) {
-                    ReloadWithFilters ();
+                    // Unless both artist/album selections are "all" (eg unfiltered), reload
+                    // the track model again with the artist/album filters now in place.
+                    if (!artist_model.Selection.AllSelected || !album_model.Selection.AllSelected) {
+                        ReloadWithFilters ();
+                    }
                 }
             }
 
@@ -467,10 +474,10 @@ namespace Banshee.Collection.Database
             get {
                 if (track_ids_sql == null) {
                     if (!CachesJoinTableEntries) {
-                        track_ids_sql = "SELECT ItemID FROM CoreCache WHERE ModelID = ? LIMIT ?, ?";
+                        track_ids_sql = "ItemID FROM CoreCache WHERE ModelID = ? LIMIT ?, ?";
                     } else {
                         track_ids_sql = String.Format (
-                            "SELECT {0} FROM {1} WHERE {2} IN (SELECT ItemID FROM CoreCache WHERE ModelID = ? LIMIT ?, ?)",
+                            "{0} FROM {1} WHERE {2} IN (SELECT ItemID FROM CoreCache WHERE ModelID = ? LIMIT ?, ?)",
                             JoinColumn, JoinTable, JoinPrimaryKey
                         );
                     }

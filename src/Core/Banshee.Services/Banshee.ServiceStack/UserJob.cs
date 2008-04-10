@@ -82,8 +82,10 @@ namespace Banshee.ServiceStack
         
         public void Finish ()
         {
-            is_finished = true;
-            OnFinished ();
+            if (!is_finished) {
+                is_finished = true;
+                OnFinished ();
+            }
         }
         
         protected void FreezeUpdate ()

@@ -198,11 +198,14 @@ namespace Banshee.Sources.Gui
                 if (Gtk.Drag.GetSourceWidget (context) == this) {
                     DragDropList<Source> sources = selectionData;
                     if(sources.Count > 0) {
-                        drop_source.MergeSourceInput (sources[0], SourceMergeType.Source);
+                        Banshee.Base.ThreadAssist.SpawnFromMain (delegate {
+                            drop_source.MergeSourceInput (sources[0], SourceMergeType.Source);
+                        });
                     }
                 } else {   
-                    drop_source.MergeSourceInput (ServiceManager.SourceManager.ActiveSource, 
-                        SourceMergeType.ModelSelection);
+                    Banshee.Base.ThreadAssist.SpawnFromMain (delegate {
+                        drop_source.MergeSourceInput (ServiceManager.SourceManager.ActiveSource, SourceMergeType.ModelSelection);
+                    });
                 }
                 
                 Gtk.Drag.Finish (context, true, false, time);

@@ -5,6 +5,7 @@ LINK = $(REF_BANSHEE_SERVICES)
 SOURCES =  \
 	Banshee.Base/RateLimiter.cs \
 	Banshee.Base/ThreadAssist.cs \
+	Banshee.Collection.Database/CachedList.cs \
 	Banshee.Collection.Database/DatabaseAlbumInfo.cs \
 	Banshee.Collection.Database/DatabaseAlbumListModel.cs \
 	Banshee.Collection.Database/DatabaseArtistInfo.cs \
@@ -116,6 +117,7 @@ SOURCES =  \
 	Banshee.ServiceStack/ServiceManager.cs \
 	Banshee.ServiceStack/ServiceStartedHandler.cs \
 	Banshee.ServiceStack/TestUserJob.cs \
+	Banshee.ServiceStack/BatchUserJob.cs \
 	Banshee.ServiceStack/UserJob.cs \
 	Banshee.ServiceStack/UserJobEventHandler.cs \
 	Banshee.ServiceStack/UserJobManager.cs \

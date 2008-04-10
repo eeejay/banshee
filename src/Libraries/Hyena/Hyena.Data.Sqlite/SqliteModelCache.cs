@@ -94,7 +94,10 @@ namespace Hyena.Data.Sqlite
             }
 
             uid = FindOrCreateCacheModelId (String.Format ("{0}-{1}", uuid, typeof(T).Name));
-            selection_uid = FindOrCreateCacheModelId (String.Format ("{0}-{1}-Selection", uuid, typeof(T).Name));
+
+            if (model.Selection != null) {
+                selection_uid = FindOrCreateCacheModelId (String.Format ("{0}-{1}-Selection", uuid, typeof(T).Name));
+            }
 
             if (model.CachesJoinTableEntries) {
                 select_range_command = new HyenaSqliteCommand (
@@ -172,19 +175,21 @@ namespace Hyena.Data.Sqlite
                 )
             );
 
-            delete_selection_command = new HyenaSqliteCommand (String.Format (
-                "DELETE FROM {0} WHERE ModelID = {1}", CacheTableName, selection_uid
-            ));
-            
-            save_selection_command = new HyenaSqliteCommand (String.Format (
-                "INSERT INTO {0} (ModelID, ItemID) SELECT {1}, ItemID FROM {0} WHERE ModelID = {2} LIMIT ?, ?",
-                CacheTableName, selection_uid, uid
-            ));
+            if (model.Selection != null) {
+                delete_selection_command = new HyenaSqliteCommand (String.Format (
+                    "DELETE FROM {0} WHERE ModelID = {1}", CacheTableName, selection_uid
+                ));
+                
+                save_selection_command = new HyenaSqliteCommand (String.Format (
+                    "INSERT INTO {0} (ModelID, ItemID) SELECT {1}, ItemID FROM {0} WHERE ModelID = {2} LIMIT ?, ?",
+                    CacheTableName, selection_uid, uid
+                ));
 
-            get_selection_command = new HyenaSqliteCommand (String.Format (
-                "SELECT OrderID FROM {0} WHERE ModelID = {1} AND ItemID IN (SELECT ItemID FROM {0} WHERE ModelID = {2})",
-                CacheTableName, uid, selection_uid
-            ));
+                get_selection_command = new HyenaSqliteCommand (String.Format (
+                    "SELECT OrderID FROM {0} WHERE ModelID = {1} AND ItemID IN (SELECT ItemID FROM {0} WHERE ModelID = {2})",
+                    CacheTableName, uid, selection_uid
+                ));
+            }
         }
 
         private bool has_select_all_item = false;
@@ -245,9 +250,9 @@ namespace Hyena.Data.Sqlite
         public override void Reload ()
         {
             lock (this) {
-                if (last_reload_fragment != model.ReloadFragment) {
+                if (last_reload_fragment != model.ReloadFragment || last_reload_command == null) {
                     last_reload_fragment = model.ReloadFragment;
-                    last_reload_command = new HyenaSqliteCommand (reload_sql + last_reload_fragment);
+                    last_reload_command = new HyenaSqliteCommand (String.Format ("{0}{1}", reload_sql, last_reload_fragment));
                 }
 
                 Clear ();
@@ -267,7 +272,9 @@ namespace Hyena.Data.Sqlite
         private bool saved_selection = false;
         public void SaveSelection ()
         {
-            if (model.Selection.Count > 0 && !(has_select_all_item && model.Selection.AllSelected)) {
+            if (model.Selection != null && model.Selection.Count > 0 &&
+                !(has_select_all_item && model.Selection.AllSelected))
+            {
                 connection.Execute (delete_selection_command);
                 saved_selection = true;
 

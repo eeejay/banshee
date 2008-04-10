@@ -28,7 +28,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Mono.Unix;
 
 using Hyena;
@@ -73,9 +72,6 @@ namespace Banshee.Dap.MassStorage
             // TODO differentiate between Audio Players and normal Disks, and include the size, eg "2GB Audio Player"?
             //GenericName = Catalog.GetString ("Audio Player");
 
-            // TODO construct device-specific icon name as preferred icon
-            //Properties.SetStringList ("Icon.Name", "media-player");
-
             SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
             DatabaseImportManager importer = new DatabaseImportManager (this);
             importer.KeepUserJobHidden = true;
@@ -100,7 +96,7 @@ namespace Banshee.Dap.MassStorage
         }
 
         protected override bool IsMediaDevice {
-            get { return base.IsMediaDevice || Banshee.IO.File.Exists (new SafeUri (IsAudioPlayerPath)); }
+            get { return base.IsMediaDevice || File.Exists (new SafeUri (IsAudioPlayerPath)); }
         }
 
         protected string IsAudioPlayerPath {
@@ -128,7 +124,7 @@ namespace Banshee.Dap.MassStorage
                     // According to the HAL spec, the first folder listed in the audio_folders property
                     // is the folder to write files to.
                     if (MediaCapabilities != null && MediaCapabilities.AudioFolders.Length > 0) {
-                        write_path = System.IO.Path.Combine(write_path, MediaCapabilities.AudioFolders[0]);
+                        write_path = System.IO.Path.Combine (write_path, MediaCapabilities.AudioFolders[0]);
                     }
                 }
                 return write_path;
@@ -173,11 +169,13 @@ namespace Banshee.Dap.MassStorage
 
         protected override void Eject ()
         {
-            if (volume.CanUnmount)
+            if (volume.CanUnmount) {
                 volume.Unmount ();
+            }
 
-            if (volume.CanEject)
+            if (volume.CanEject) {
                 volume.Eject ();
+            }
         }
 
         protected int FolderDepth {

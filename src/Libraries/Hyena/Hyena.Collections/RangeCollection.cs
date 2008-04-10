@@ -87,6 +87,10 @@ namespace Hyena.Collections
                     : (Start + (End - Start)).CompareTo (
                         x.Start + (x.End - x.Start));
             }
+
+            public int Count {
+                get { return End - Start + 1; }
+            }
         }
 
         private const int MIN_CAPACITY = 16;

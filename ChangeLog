@@ -1,3 +1,56 @@
+2008-04-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit makes adding and deleting from a PrimarySource async, and pops
+	up UserJobs if those operations take very long.  Very importantly, it also
+	adds the ability to copy the track model selection so slow running jobs
+	can process it w/o risking it changing on them.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Handle having no artist or album model gracefully.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Fixed up
+	Add/Delete methods.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJob.cs: Handle
+	multiple Finish calls gracefully.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: New
+	AddAllTracks method for use by MergeSource method.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Change slow
+	operations to use a new CachedList object instead of iterating over the
+	model's Selection, since it or the model might change underneath us.  Add
+	UserJobs for adding/deleting.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Don't raise
+	UserNotifyUpdated if we're the active source.
+
+	* src/Core/Banshee.Services/Makefile.am: New files
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/CachedList.cs: New
+	class that contains a SqliteModelCache, so it's backed by CoreCache and
+	can be used to store info (eg the selected tracks from a source) so they
+	can be operated on independent of the original selection/model.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/BatchUserJob.cs: UserJob
+	convenience subclass.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Do MergeSource operations in a thread.  Should probably be done in
+	PrimarySource.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Whitespace.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Get rid of OnUserNotifyUpdated, this is done in DatabaseSource now.
+
+	* src/Libraries/Hyena/Hyena.Collections/RangeCollection.cs: Add Count
+	property to Range to avoid doing End - Start + 1 everywhere.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Make work
+	without a Selection.
+
 2008-04-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Choreographer.cs:

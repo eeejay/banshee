@@ -76,8 +76,13 @@ namespace Banshee.Sources
         protected bool error_source_visible = false;
 
         protected string remove_range_sql = @"
-            INSERT INTO CoreRemovedTracks SELECT ?, TrackID, Uri FROM CoreTracks WHERE TrackID IN ({0});
-            DELETE FROM CoreTracks WHERE TrackID IN ({0})";
+            INSERT INTO CoreRemovedTracks SELECT ?, TrackID, Uri FROM CoreTracks WHERE TrackID IN (SELECT {0});
+            DELETE FROM CoreTracks WHERE TrackID IN (SELECT {0})";
+
+        protected HyenaSqliteCommand remove_list_command = new HyenaSqliteCommand (@"
+            INSERT INTO CoreRemovedTracks SELECT ?, TrackID, Uri FROM CoreTracks WHERE TrackID IN (SELECT ItemID FROM CoreCache WHERE ModelID = ?);
+            DELETE FROM CoreTracks WHERE TrackID IN (SELECT ItemID FROM CoreCache WHERE ModelID = ?)
+        ");
 
         protected HyenaSqliteCommand prune_artists_albums_command = new HyenaSqliteCommand (@"
             DELETE FROM CoreArtists WHERE ArtistID NOT IN (SELECT ArtistID FROM CoreTracks);
@@ -279,13 +284,37 @@ namespace Banshee.Sources
             );
         }
 
-        protected override void DeleteTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
+        public void DeleteSelectedTracksFromChild (DatabaseSource source)
         {
+            if (source.Parent != this)
+                return;
+
+            DeleteSelectedTracks (source.TrackModel as DatabaseTrackListModel);
+        }
+
+        protected override void DeleteSelectedTracks (DatabaseTrackListModel model)
+        {
+            ThreadAssist.SpawnFromMain (delegate {
+                if (model == null)
+                    return;
+
+                CachedList<DatabaseTrackInfo> list = CachedList<DatabaseTrackInfo>.CreateFromModelSelection (model);
+                DeleteTrackList (list);
+
+                OnTracksDeleted ();
+            });
+        }
+
+        protected virtual void DeleteTrackList (CachedList<DatabaseTrackInfo> list)
+        {
+            DeleteTrackJob.Total += (int) list.Count;
+
             // Remove from file system
-            for (int i = range.Start; i <= range.End; i++) {
-                DatabaseTrackInfo track = model [i] as DatabaseTrackInfo;
-                if (track == null)
+            foreach (DatabaseTrackInfo track in list) {
+                if (track == null) {
+                    DeleteTrackJob.Completed++;
                     continue;
+                }
 
                 try {
                     DeleteTrack (track);
@@ -293,10 +322,16 @@ namespace Banshee.Sources
                     Log.Exception (e);
                     ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
                 }
+                DeleteTrackJob.Completed++;
+            }
+
+            if (DeleteTrackJob.Total == DeleteTrackJob.Completed) {
+                delete_track_job.Finish ();
+                delete_track_job = null;
             }
 
             // Remove from database
-            RemoveTrackRange (model, range);
+            ServiceManager.DbConnection.Execute (remove_list_command, DateTime.Now, list.CacheId, list.CacheId);
         }
 
         protected virtual void DeleteTrack (DatabaseTrackInfo track)
@@ -309,23 +344,30 @@ namespace Banshee.Sources
             return base.AcceptsInputFromSource (source) && source.Parent != this;
         }
 
-        public override void MergeSourceInput (Source source, SourceMergeType mergeType)
+        public override bool AddSelectedTracks (Source source)
         {
-            AddSelectedTracks (source);
-            /*if (!(source is IImportSource) || mergeType != SourceMergeType.Source) {
-                return;
-            }
-            
-            ((IImportSource)source).Import ();
-            */
+            if (!AcceptsInputFromSource (source))
+                return false;
+
+            DatabaseTrackListModel model = (source as ITrackModelSource).TrackModel as DatabaseTrackListModel;
+
+            CachedList<DatabaseTrackInfo> cached_list = CachedList<DatabaseTrackInfo>.CreateFromModelSelection (model);
+            AddTrackList (cached_list);
+
+            OnTracksAdded ();
+            OnUserNotifyUpdated ();
+            return true;
         }
 
-        protected override void AddTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
+        protected virtual void AddTrackList (CachedList<DatabaseTrackInfo> list)
         {
-            for (int i = range.Start; i <= range.End; i++) {
-                DatabaseTrackInfo track = model [i] as DatabaseTrackInfo;
-                if (track == null)
+            AddTrackJob.Total += (int)list.Count;
+
+            foreach (DatabaseTrackInfo track in list) {
+                if (track == null) {
+                    AddTrackJob.Completed++;
                     continue;
+                }
 
                 try {
                     AddTrack (track);
@@ -333,6 +375,12 @@ namespace Banshee.Sources
                     Log.Exception (e);
                     ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
                 }
+                AddTrackJob.Completed++;
+            }
+
+            if (AddTrackJob.Total == AddTrackJob.Completed) {
+                add_track_job.Finish ();
+                add_track_job = null;
             }
         }
 
@@ -345,6 +393,30 @@ namespace Banshee.Sources
         {
             ServiceManager.DbConnection.Execute (prune_artists_albums_command);
             base.PruneArtistsAlbums ();
+        }
+
+        private BatchUserJob add_track_job;
+        protected BatchUserJob AddTrackJob {
+            get {
+                if (add_track_job == null) {
+                    add_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Adding Items to {0}"), Name), Catalog.GetString ("Adding {0} of {1}"), Properties.GetStringList ("Icon.Name"));
+                    add_track_job.DelayShow = true;
+                    add_track_job.Register ();
+                }
+                return add_track_job;
+            }
+        }
+
+        private BatchUserJob delete_track_job;
+        protected BatchUserJob DeleteTrackJob {
+            get {
+                if (delete_track_job == null) {
+                    delete_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Deleting Items From {0}"), Name), Catalog.GetString ("Deleting {0} of {1}"), Properties.GetStringList ("Icon.Name"));
+                    delete_track_job.DelayShow = true;
+                    delete_track_job.Register ();
+                }
+                return delete_track_job;
+            }
         }
     }
 }
