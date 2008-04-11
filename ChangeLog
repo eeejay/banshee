@@ -1,11 +1,11 @@
+2008-04-10  Aaron Bockover  <abock@gnome.org>
+
+	Banshee 1.0 Alpha 3 (0.98.3) Released
+
 2008-04-10  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedWidget.cs: Fixed stupid
 	stupid crash.
-
-2008-04-10  Aaron Bockover  <abock@gnome.org>
-
-	Banshee 1.0 Alpha 3 (0.98.3) Released
 
 2008-04-10  Aaron Bockover  <abock@gnome.org>
 
