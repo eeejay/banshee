@@ -1,3 +1,8 @@
+2008-04-11  Sebastian Dröge  <slomo@circular-chaos.org>
+
+	* build/m4/banshee/gtk-sharp.m4: gconf-sharp is part of gnome-sharp
+	so check for it there and not a second time here.
+
 2008-04-11  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs: Use bools
