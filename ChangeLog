@@ -1,3 +1,15 @@
+2008-04-11  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs: Use bools
+	instead of the None enums (previously instituted to eliminate some
+	nullables.
+	
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs: Got rid of
+	OnRealized OnUnrealized overrides - we don't really need them.
+	
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Choreographer.cs: Got rid
+	of Easing and Blocking.None
+
 2008-04-10  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.0 Alpha 3 (0.98.3) Released

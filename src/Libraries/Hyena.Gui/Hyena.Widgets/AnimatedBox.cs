@@ -61,6 +61,8 @@ namespace Hyena.Widgets
         
         protected AnimatedBox ()
         {
+            WidgetFlags |= WidgetFlags.NoWindow;
+            
             stage.ActorStep += OnActorStep;
             stage.Iteration += OnIteration;
         }
@@ -228,45 +230,45 @@ namespace Hyena.Widgets
         
         public new void Remove (Widget widget)
         {
-            RemoveCore (widget, 0, Easing.None, Blocking.None);
+            RemoveCore (widget, 0, 0, 0, false, false);
         }
         
         public void Remove (Widget widget, uint duration)
         {
-            RemoveCore (widget, duration, Easing.None, Blocking.None);
+            RemoveCore (widget, duration, 0, 0, false, false);
         }
         
         public void Remove (Widget widget, Easing easing)
         {
-            RemoveCore (widget, 0, easing, Blocking.None);
+            RemoveCore (widget, 0, easing, 0, true, false);
         }
         
         public void Remove (Widget widget, uint duration, Easing easing)
         {
-            RemoveCore (widget, duration, easing, Blocking.None);
+            RemoveCore (widget, duration, easing, 0, true, false);
         }
         
         public void Remove (Widget widget, Blocking blocking)
         {
-            RemoveCore (widget, 0, Easing.None, blocking);
+            RemoveCore (widget, 0, 0, blocking, false, true);
         }
         
         public void Remove (Widget widget, uint duration, Blocking blocking)
         {
-            RemoveCore (widget, duration, Easing.None, blocking);
+            RemoveCore (widget, duration, 0, blocking, false, true);
         }
         
         public void Remove (Widget widget, Easing easing, Blocking blocking)
         {
-            RemoveCore (widget, 0, easing, blocking);
+            RemoveCore (widget, 0, easing, blocking, true, true);
         }
         
         public void Remove (Widget widget, uint duration, Easing easing, Blocking blocking)
         {
-            RemoveCore (widget, duration, easing, blocking);
+            RemoveCore (widget, duration, easing, blocking, true, true);
         }
         
-        private void RemoveCore (Widget widget, uint duration, Easing easing, Blocking blocking)
+        private void RemoveCore (Widget widget, uint duration, Easing easing, Blocking blocking, bool use_easing, bool use_blocking)
         {
             if (widget == null) {
                 throw new ArgumentNullException ("widget");
@@ -284,26 +286,26 @@ namespace Hyena.Widgets
                 throw new ArgumentException ("Cannot remove the specified widget because it has not been added to this container or it has already been removed.", "widget");
             }
             
-            RemoveCore (animated_widget, duration, easing, blocking);
+            RemoveCore (animated_widget, duration, easing, blocking, use_easing, use_blocking);
         }
         
         private void RemoveCore (AnimatedWidget widget)
         {
-            RemoveCore (widget, widget.Duration, widget.Easing, widget.Blocking);
+            RemoveCore (widget, widget.Duration, 0, 0, false, false);
         }
         
-        private void RemoveCore (AnimatedWidget widget, uint duration, Easing easing, Blocking blocking)
+        private void RemoveCore (AnimatedWidget widget, uint duration, Easing easing, Blocking blocking, bool use_easing, bool use_blocking)
         {
             lock (widget) {
                 if (duration > 0) {
                     widget.Duration = duration;
                 }
                 
-                if (easing != Easing.None) {
+                if (use_easing) {
                     widget.Easing = easing;
                 }
                 
-                if (blocking != Blocking.None) {
+                if (use_blocking) {
                     widget.Blocking = blocking;
                 }
             
@@ -357,13 +359,6 @@ namespace Hyena.Widgets
         protected override void OnAdded (Widget widget)
         {
             PackStart (widget, duration, easing, blocking);
-        }
-        
-        protected override void OnRealized ()
-        {
-            WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
-            GdkWindow = Parent.GdkWindow;
-            base.OnRealized ();
         }
         
         protected override void ForAll (bool include_internals, Callback callback)

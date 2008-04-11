@@ -43,6 +43,8 @@ namespace Hyena.Widgets
         
         public MenuButton (Widget buttonWidget, Menu menu, bool showArrow)
         {
+            WidgetFlags |= WidgetFlags.NoWindow;
+            
             button_widget = buttonWidget;
             this.menu = menu;
             menu.Deactivated += delegate { button.Active = false; };
@@ -76,19 +78,6 @@ namespace Hyena.Widgets
         
         public Menu Menu {
             get { return menu; }
-        }
-        
-        protected override void OnRealized ()
-        {
-            WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
-            GdkWindow = Parent.GdkWindow;
-            base.OnRealized ();
-        }
-        
-        protected override void OnUnrealized ()
-        {
-            WidgetFlags ^= WidgetFlags.Realized;
-            base.OnUnrealized ();
         }
         
         protected override void OnSizeRequested (ref Requisition requisition)
