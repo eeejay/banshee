@@ -339,17 +339,21 @@ namespace Hyena.Data.Gui
         
         private bool OnHeaderButtonRelease (Gdk.EventButton evnt)
         {
-            Column column = column_cache[pressed_column_index].Column;
-            if (column != null && Model is ISortable && column is ISortableColumn) {
-                ((ISortable)Model).Sort ((ISortableColumn)column);
-                Model.Reload ();
-                RecalculateColumnSizes ();
-                RegenerateColumnCache ();
-                InvalidateHeader ();
+            if (pressed_column_index > 0 && pressed_column_index < column_cache.Length) {
+                Column column = column_cache[pressed_column_index].Column;
+                if (column != null && Model is ISortable && column is ISortableColumn) {
+                    ((ISortable)Model).Sort ((ISortableColumn)column);
+                    Model.Reload ();
+                    RecalculateColumnSizes ();
+                    RegenerateColumnCache ();
+                    InvalidateHeader ();
+                }
+                
+                pressed_column_index = -1;
+                return true;
+            } else {
+                return false;
             }
-            
-            pressed_column_index = -1;
-            return true;
         }
         
         private bool OnListButtonRelease (Gdk.EventButton evnt)
