@@ -2,9 +2,9 @@ dnl Automake setup
 
 # 0.98.* = Alpha *
 # 0.99.* = Beta *
-AC_INIT([banshee-1], [0.98.3]) 
-ASM_DISPLAY_VERSION="1.0 Alpha 3"
-DEVEL_BUILD=no
+AC_INIT([banshee-1], [0.98.4]) 
+ASM_DISPLAY_VERSION="1.0 Alpha 4"
+DEVEL_BUILD=yes
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
