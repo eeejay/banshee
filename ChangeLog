@@ -1,5 +1,10 @@
 2008-04-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Do not automatically
+	resize the source view (BGO #527340)
+
+2008-04-11  Aaron Bockover  <abock@gnome.org>
+
 	* libbanshee/banshee-gst.c: 
 	* libbanshee/banshee-gst.h: Implemented our own logging functions that
 	can call a handler function which is defined in managed code; this allows

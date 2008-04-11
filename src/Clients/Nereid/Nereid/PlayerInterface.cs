@@ -189,7 +189,7 @@ namespace Nereid
             source_view.SetSizeRequest (125, -1);
             view_container.SetSizeRequest (425, -1);
             
-            views_pane.Pack1 (source_box, true, false);
+            views_pane.Pack1 (source_box, false, false);
             views_pane.Pack2 (view_container, true, false);
             
             source_box.ShowAll ();
