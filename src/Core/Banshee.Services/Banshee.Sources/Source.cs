@@ -40,6 +40,7 @@ using Hyena.Query;
 
 using Banshee.Base;
 using Banshee.Collection;
+using Banshee.Configuration;
 using Banshee.ServiceStack;
 
 namespace Banshee.Sources
@@ -494,8 +495,31 @@ namespace Banshee.Sources
         public virtual int Count {
             get { return 0; }
         }
+        
+        public string ConfigurationId {
+            get { return (Parent == null ? UniqueId : Parent.UniqueId).Replace ('.', '_'); }
+        }
 
         public virtual int FilteredCount { get { return Count; } }
+        
+        protected virtual int StatusFormatsCount {
+            get { return 3; }
+        }
+        
+        protected virtual int CurrentStatusFormat {
+            get { return ConfigurationClient.Get<int> (String.Format ("sources.{0}", ConfigurationId), "status_format", 0); }
+            set { ConfigurationClient.Set<int> (String.Format ("sources.{0}", ConfigurationId), "status_format", value); }
+        }
+        
+        public void CycleStatusFormat ()
+        {
+            int new_status_format = CurrentStatusFormat + 1;
+            if (new_status_format >= StatusFormatsCount) {
+                new_status_format = 0;
+            }
+            
+            CurrentStatusFormat = new_status_format;
+        }
 
         public virtual string GetStatusText ()
         {
@@ -512,16 +536,45 @@ namespace Banshee.Sources
             if (this is IDurationAggregator) {
                 builder.Append (", ");
 
-                TimeSpan span = (this as IDurationAggregator).Duration; 
-                if (span.Days > 0) {
-                    double days = span.Days + (span.Hours / 24.0);
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", DoubleToPluralInt (days)), FormatDouble (days));
-                } else if (span.Hours > 0) {
-                    double hours = span.Hours + (span.Minutes / 60.0);
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", DoubleToPluralInt (hours)), FormatDouble (hours));
-                } else {
-                    double minutes = span.Minutes + (span.Seconds / 60.0);
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", DoubleToPluralInt (minutes)), FormatDouble (minutes));
+                TimeSpan span = (this as IDurationAggregator).Duration;
+                int format = CurrentStatusFormat;
+                
+                if (format == 0) {
+                    if (span.Days > 0) {
+                        double days = span.Days + (span.Hours / 24.0);
+                        builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", 
+                            DoubleToPluralInt (days)), FormatDouble (days));
+                    } else if (span.Hours > 0) {
+                        double hours = span.Hours + (span.Minutes / 60.0);
+                        builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", 
+                            DoubleToPluralInt (hours)), FormatDouble (hours));
+                    } else {
+                        double minutes = span.Minutes + (span.Seconds / 60.0);
+                        builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", 
+                            DoubleToPluralInt (minutes)), FormatDouble (minutes));
+                    }
+                } else if (format == 1) {
+                    if (span.Days > 0) {
+                        builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", span.Days), span.Days);
+                        builder.Append (", ");
+                    }
+                    
+                    if (span.Hours > 0) {
+                        builder.AppendFormat(Catalog.GetPluralString ("{0} hour", "{0} hours", span.Hours), span.Hours);
+                        builder.Append (", ");
+                    }
+
+                    builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", span.Minutes), span.Minutes);
+                    builder.Append (", ");
+                    builder.AppendFormat (Catalog.GetPluralString ("{0} second", "{0} seconds", span.Seconds), span.Seconds);
+                } else if (format == 2) {
+                    if (span.Days > 0) {
+                        builder.AppendFormat ("{0}:{1:00}:", span.Days, span.Hours);
+                    } else if (span.Hours > 0) {
+                        builder.AppendFormat ("{0}:", span.Hours);
+                    }
+                    
+                    builder.AppendFormat ("{0:00}:{1:00}", span.Minutes, span.Seconds);
                 }
             }
 

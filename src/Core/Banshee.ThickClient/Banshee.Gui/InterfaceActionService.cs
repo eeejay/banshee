@@ -111,6 +111,17 @@ namespace Banshee.Gui
             }
         }
         
+        public ActionGroup FindActionGroup (string actionGroupId)
+        {
+            foreach (ActionGroup group in action_groups.Values) {
+                if (group.Name == actionGroupId) {
+                    return group;
+                }
+            }
+            
+            return null;
+        }
+        
         public Action FindAction (string actionId)
         {
             string [] parts = actionId.Split ('.');
@@ -122,15 +133,8 @@ namespace Banshee.Gui
             string group_name = parts[0];
             string action_name = parts[1];
             
-            foreach (ActionGroup group in action_groups.Values) {
-                if (group.Name != group_name) {
-                    continue;
-                }
-                
-                return group.GetAction (action_name);
-            }
-            
-            return null;
+            ActionGroup group = FindActionGroup (group_name);
+            return group == null ? null : group.GetAction (action_name);
         }
         
         public void PopulateToolbarPlaceholder (Toolbar toolbar, string path, Widget item)

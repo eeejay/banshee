@@ -42,8 +42,9 @@ namespace Banshee.Gui
 {
     public class PlaybackRepeatActions : BansheeActionGroup, IEnumerable<RadioAction>
     {
+        private InterfaceActionService action_service;
         private RadioAction active_action;
-
+        
         public RadioAction Active {
             get { return active_action; }
             set {
@@ -57,11 +58,18 @@ namespace Banshee.Gui
         
         public PlaybackRepeatActions (InterfaceActionService actionService) : base ("PlaybackRepeat")
         {
+            action_service = actionService;
             actionService.AddActionGroup (this);
+            
+            Add (new ActionEntry [] {
+                new ActionEntry ("RepeatMenuAction", null,
+                    Catalog.GetString ("Repeat"), null,
+                    Catalog.GetString ("Repeat"), null)
+            });
 
             Add (new RadioActionEntry [] {
                 new RadioActionEntry ("RepeatNoneAction", null, 
-                    Catalog.GetString ("Repeat N_one"), null,
+                    Catalog.GetString ("Repeat _Off"), null,
                     Catalog.GetString ("Do not repeat playlist"),
                     (int)PlaybackRepeatMode.None),
                     
@@ -99,12 +107,30 @@ namespace Banshee.Gui
                 handler (o, args);
             }
         }
+        
+        public void AttachSubmenu (string menuItemPath)
+        {
+            MenuItem parent = action_service.UIManager.GetWidget (menuItemPath) as MenuItem;
+            parent.Submenu = CreateMenu ();
+        }
+        
+        public MenuItem CreateSubmenu ()
+        {
+            MenuItem parent = (MenuItem)this["RepeatMenuAction"].CreateMenuItem ();
+            parent.Submenu = CreateMenu ();
+            return parent;
+        }
             
         public Menu CreateMenu ()
         {
             Menu menu = new Gtk.Menu ();
+            bool separator = false;
             foreach (RadioAction action in this) {
                 menu.Append (action.CreateMenuItem ());
+                if (!separator) {
+                    separator = true;
+                    menu.Append (new SeparatorMenuItem ());
+                }
             }
             menu.ShowAll ();
             return menu;

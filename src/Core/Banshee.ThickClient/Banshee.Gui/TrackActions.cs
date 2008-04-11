@@ -197,6 +197,10 @@ namespace Banshee.Gui
 
         private void UpdateActions ()
         {
+            if (TrackSelector == null || TrackSelector.TrackSelectionProxy == null) {
+                return;
+            }
+            
             Hyena.Collections.Selection selection = TrackSelector.TrackSelectionProxy.Selection;
             Source source = ServiceManager.SourceManager.ActiveSource;
             bool in_database = source is DatabaseSource;

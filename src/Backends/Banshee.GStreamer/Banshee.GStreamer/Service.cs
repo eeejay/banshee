@@ -31,6 +31,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+using Hyena;
 using Hyena.SExpEngine;
 using Banshee.ServiceStack;
 using Banshee.MediaProfiles;
@@ -39,16 +40,25 @@ namespace Banshee.GStreamer
 {
     public class Service : IExtensionService
     {
+        private delegate void BansheeLogHandler (LogEntryType type, IntPtr component, IntPtr message);
+        
+        private BansheeLogHandler native_log_handler = null;
+        
         public Service ()
         {
         }
         
         [DllImport ("libbanshee")]
-        private static extern void gstreamer_initialize (bool debugging);
+        private static extern void gstreamer_initialize (bool debugging, BansheeLogHandler log_handler);
         
         void IExtensionService.Initialize ()
         {
-            gstreamer_initialize (Banshee.Base.ApplicationContext.Debugging);
+            bool debugging = Banshee.Base.ApplicationContext.Debugging;
+            if (debugging) {
+                native_log_handler = new BansheeLogHandler (NativeLogHandler);
+            }
+            
+            gstreamer_initialize (debugging, native_log_handler);
             
             MediaProfileManager profile_manager = ServiceManager.MediaProfileManager;
             if (profile_manager != null) {
@@ -60,6 +70,20 @@ namespace Banshee.GStreamer
                 profile_manager.TestProfile += OnTestMediaProfile;
                 profile_manager.TestAll ();
             }
+        }
+        
+        private void NativeLogHandler (LogEntryType type, IntPtr componentPtr, IntPtr messagePtr)
+        {
+            string component = componentPtr == IntPtr.Zero ? null : GLib.Marshaller.Utf8PtrToString (componentPtr);
+            string message = componentPtr == IntPtr.Zero ? null : GLib.Marshaller.Utf8PtrToString (messagePtr);
+            
+            if (message == null) {
+                return;
+            } else if (component != null) {
+                message = String.Format ("(libbanshee:{0}) {1}", component, message);
+            }
+            
+            Log.Commit (type, message, null, false);
         }
         
         private static void OnTestMediaProfile (object o, TestProfileArgs args)

@@ -75,14 +75,8 @@
       <menuitem name="RestartSong" action="RestartSongAction"/>
       <separator/>
       <placeholder name="PlaybackMenuAdditions"/>
-      <menuitem name="RepeatNone" action="RepeatNoneAction"/>
-      <menuitem name="RepeatAll" action="RepeatAllAction"/>
-      <menuitem name="RepeatSingle" action="RepeatSingleAction"/>
-      <separator/>
-      <menuitem name="ShuffleOff" action="ShuffleOffAction"/>
-      <menuitem name="ShuffleSong" action="ShuffleSongAction"/>
-      <menuitem name="ShuffleArtist" action="ShuffleArtistAction"/>
-      <menuitem name="ShuffleAlbum" action="ShuffleAlbumAction"/>
+      <menuitem name="RepeatMenu" action="RepeatMenuAction"/>
+      <menuitem name="ShuffleMenu" action="ShuffleMenuAction"/>
     </menu>
     
     <menu name="ToolsMenu" action="ToolsMenuAction">

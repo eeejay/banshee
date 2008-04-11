@@ -131,6 +131,23 @@ namespace Banshee.NotificationArea
             
             for (int i = 0; i < menu.Children.Length; i++) {
                 if (menu.Children[i].Name == "Next") {
+                    int j = i;
+                    PlaybackRepeatActions repeat_group = interface_action_service.FindActionGroup ("PlaybackRepeat")
+                         as PlaybackRepeatActions;
+                    if (repeat_group != null) {
+                        menu.Insert (repeat_group.CreateSubmenu (), i++ + 2);
+                    }
+                    
+                    PlaybackShuffleActions shuffle_group = interface_action_service.FindActionGroup ("PlaybackShuffle")
+                         as PlaybackShuffleActions;
+                    if (shuffle_group != null) {
+                        menu.Insert (shuffle_group.CreateSubmenu (), i++ + 2);
+                    }
+                    
+                    if (j != i) {
+                        menu.Insert (new SeparatorMenuItem (), i++ + 2);
+                    }
+                    
                     rating_menu_item = new RatingMenuItem ();
                     rating_menu_item.Activated += OnItemRatingActivated;
                     ToggleRatingMenuSensitive ();

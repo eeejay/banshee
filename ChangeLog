@@ -1,3 +1,51 @@
+2008-04-11  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/banshee-gst.c: 
+	* libbanshee/banshee-gst.h: Implemented our own logging functions that
+	can call a handler function which is defined in managed code; this allows
+	libbanshee to use the same logging facilities that are available to managed
+	code
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/Service.cs: Implement
+	the native logging function and proxy calls to the Hyena logger
+
+	* libbanshee/banshee-player-private.h: Made the bp_debug macro expand to
+	the new native logging function
+
+	* src/Libraries/Hyena/Hyena/Log.cs: Made Commit method public
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Pack the status label in
+	an EventBox; when the event box is clicked, call CycleStatusFormat on
+	the active source; use the new MainMenu widget instead of fetching it
+	directly from the UI manager
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Implemented
+	CycleStatusFormat and some supporting properties; and two new status
+	formatters for time; added a ConfigurationId property
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:
+	Use the Source.ConfigurationId property
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/MainMenu.cs: Load the
+	main menu from the UI manager and connect the new repeat and shuffle menus
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	Split FindAction into a FindActionGroup method
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:
+	Implemented CreateSubmenu and AttachSubmenu methods
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Add some
+	NRE defenses
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Removed the hardcoded menu entries for shuffle and repeat
+
+	* src/Extensions/Banshee.NotificationArea/Resources/NotificationAreaMenu.xm:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Added shuffle and repeat menus back to the tray menu
+
 2008-04-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:

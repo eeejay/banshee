@@ -60,7 +60,7 @@ namespace Banshee.Collection.Gui
                 
                 if (source != null) {
                     // If we have a parent, use their UniqueId so all children of a parent persist the same columns
-                    source_id = (source.Parent == null ? source.UniqueId : source.Parent.UniqueId).Replace ('.', '_');
+                    source_id = source.ConfigurationId;
                     Load ();
                 }
             }

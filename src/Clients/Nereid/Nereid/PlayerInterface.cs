@@ -120,7 +120,7 @@ namespace Nereid
         {
             primary_vbox = new VBox ();
             
-            Widget menu = ActionService.UIManager.GetWidget ("/MainMenu");
+            Widget menu = new MainMenu ();
             menu.Show ();
             primary_vbox.PackStart (menu, false, false, 0);
            
@@ -205,10 +205,19 @@ namespace Nereid
             footer_toolbar.ShowArrow = false;
             footer_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
 
+            EventBox status_event_box = new EventBox ();
+            status_event_box.ButtonPressEvent += delegate (object o, ButtonPressEventArgs args) {
+                Source source = ServiceManager.SourceManager.ActiveSource;
+                if (source != null) {
+                    source.CycleStatusFormat ();
+                    UpdateStatusBar ();
+                }
+            };
             status_label = new Label ();
+            status_event_box.Add (status_label);
             
             Alignment status_align = new Alignment (0.5f, 0.5f, 1.0f, 1.0f);
-            status_align.Add (status_label);
+            status_align.Add (status_event_box);
 
             RepeatActionButton repeat_button = new RepeatActionButton ();
             repeat_button.SizeAllocated += delegate (object o, Gtk.SizeAllocatedArgs args) {

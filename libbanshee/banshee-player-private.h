@@ -46,11 +46,13 @@
 #  include <gst/interfaces/xoverlay.h>
 #endif
 
+#include "banshee-gst.h"
+
 #define P_INVOKE
 #define IS_BANSHEE_PLAYER(e) (e != NULL)
 #define SET_CALLBACK(cb_name) { if(player != NULL) { player->cb_name = cb; } }
 
-#define bp_debug g_debug
+#define bp_debug(x...) banshee_log_debug ("player", x)
 
 typedef struct BansheePlayer BansheePlayer;
 

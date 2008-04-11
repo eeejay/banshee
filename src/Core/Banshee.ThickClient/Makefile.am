@@ -42,6 +42,7 @@ SOURCES =  \
 	Banshee.Gui.Widgets/ConnectedMessageBar.cs \
 	Banshee.Gui.Widgets/ConnectedSeekSlider.cs \
 	Banshee.Gui.Widgets/ConnectedVolumeButton.cs \
+	Banshee.Gui.Widgets/MainMenu.cs \
 	Banshee.Gui.Widgets/PlaylistMenuItem.cs \
 	Banshee.Gui.Widgets/RepeatActionButton.cs \
 	Banshee.Gui.Widgets/TrackInfoDisplay.cs \

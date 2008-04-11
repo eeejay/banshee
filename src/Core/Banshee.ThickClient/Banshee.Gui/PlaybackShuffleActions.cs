@@ -44,6 +44,7 @@ namespace Banshee.Gui
     {
         private RadioAction active_action;
         private PlaybackActions playback_actions;
+        private InterfaceActionService action_service;
 
         public RadioAction Active {
             get { return active_action; }
@@ -60,7 +61,14 @@ namespace Banshee.Gui
             : base ("PlaybackShuffle")
         {
             playback_actions = playbackActions;
+            action_service = actionService;
             actionService.AddActionGroup (this);
+            
+            Add (new ActionEntry [] {
+                new ActionEntry ("ShuffleMenuAction", null,
+                    Catalog.GetString ("Shuffle"), null,
+                    Catalog.GetString ("Shuffle"), null)
+            });
 
             Add (new RadioActionEntry [] {
                 new RadioActionEntry ("ShuffleOffAction", null, 
@@ -112,15 +120,31 @@ namespace Banshee.Gui
                 handler (o, args);
             }
         }
+        
+        public void AttachSubmenu (string menuItemPath)
+        {
+            MenuItem parent = action_service.UIManager.GetWidget (menuItemPath) as MenuItem;
+            parent.Submenu = CreateMenu ();
+        }
+        
+        public MenuItem CreateSubmenu ()
+        {
+            MenuItem parent = (MenuItem)this["ShuffleMenuAction"].CreateMenuItem ();
+            parent.Submenu = CreateMenu ();
+            return parent;
+        }
             
         public Menu CreateMenu ()
         {
-            Menu menu = new Menu ();
-            menu.Append (this["ShuffleOffAction"].CreateMenuItem ());
-            menu.Append (new SeparatorMenuItem ());
-            menu.Append (this["ShuffleSongAction"].CreateMenuItem ());
-            menu.Append (this["ShuffleArtistAction"].CreateMenuItem ());
-            menu.Append (this["ShuffleAlbumAction"].CreateMenuItem ());
+            Menu menu = new Gtk.Menu ();
+            bool separator = false;
+            foreach (RadioAction action in this) {
+                menu.Append (action.CreateMenuItem ());
+                if (!separator) {
+                    separator = true;
+                    menu.Append (new SeparatorMenuItem ());
+                }
+            }
             menu.ShowAll ();
             return menu;
         }

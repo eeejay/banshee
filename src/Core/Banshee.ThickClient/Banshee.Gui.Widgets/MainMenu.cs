@@ -1,5 +1,5 @@
 //
-// banshee-gst.h
+// MainMenu.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -26,14 +26,30 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#ifndef _BANSHEE_GST_H
-#define _BANSHEE_GST_H
+using System;
+using Gtk;
 
-#include <glib.h>
+using Banshee.ServiceStack;
+using Banshee.Gui;
 
-gboolean  banshee_is_debugging ();
-guint     banshee_get_version_number ();
-
-void      banshee_log_debug (const gchar *component, const gchar *format, ...);
-
-#endif /* _BANSHEE_GST_H */
+namespace Banshee.Gui.Widgets
+{
+    public class MainMenu : VBox
+    {
+        public MainMenu ()
+        {
+            InterfaceActionService interface_service = ServiceManager.Get<InterfaceActionService> ();
+            
+            MenuShell menu = (MenuShell)interface_service.UIManager.GetWidget ("/MainMenu");
+            
+            ((PlaybackRepeatActions)interface_service.FindActionGroup ("PlaybackRepeat")).AttachSubmenu (
+                "/MainMenu/PlaybackMenu/RepeatMenu");
+                
+            ((PlaybackShuffleActions)interface_service.FindActionGroup ("PlaybackShuffle")).AttachSubmenu (
+                "/MainMenu/PlaybackMenu/ShuffleMenu");
+            
+            menu.Show ();
+            PackStart (menu, true, true, 0);
+        }
+    }
+}

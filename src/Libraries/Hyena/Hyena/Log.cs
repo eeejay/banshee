@@ -100,7 +100,7 @@ namespace Hyena
             set { debugging = value; }
         }
         
-        private static void Commit (LogEntryType type, string message, string details, bool showUser)
+        public static void Commit (LogEntryType type, string message, string details, bool showUser)
         {
             if (type == LogEntryType.Debug && !Debugging) {
                 return;

@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdarg.h>
 
 #include <gst/gst.h>
 
@@ -43,17 +44,29 @@
 #  include <gst/pbutils/pbutils.h>
 #endif
 
+typedef enum {
+    BANSHEE_LOG_TYPE_DEBUG,
+    BANSHEE_LOG_TYPE_WARNING,
+    BANSHEE_LOG_TYPE_INFORMATION,
+    BANSHEE_LOG_TYPE_ERROR
+} BansheeLogType;
+
+typedef void (* BansheeLogHandler) (BansheeLogType type, const gchar *component, const gchar *message);
+
 static gboolean gstreamer_initialized = FALSE;
 static gboolean banshee_debugging;
+static BansheeLogHandler banshee_log_handler = NULL;
 static gint banshee_version = -1;
 
-void gstreamer_initialize (gboolean debugging)
+void 
+gstreamer_initialize (gboolean debugging, BansheeLogHandler log_handler)
 {
     if (gstreamer_initialized) {
         return;
     }
     
     banshee_debugging = debugging;
+    banshee_log_handler = log_handler;
 
     gst_init (NULL, NULL);
     
@@ -105,4 +118,38 @@ banshee_get_version_number ()
     }   
     
     return (guint)banshee_version;
+}
+
+static void
+banshee_log (BansheeLogType type, const gchar *component, const gchar *message)
+{
+    if (banshee_log_handler == NULL) {
+        switch (type) {
+            case BANSHEE_LOG_TYPE_WARNING: g_warning ("%s: %s", component, message); break;
+            case BANSHEE_LOG_TYPE_ERROR:   g_error ("%s: %s", component, message); break;
+            default:                       g_debug ("%s: %s", component, message); break;
+        }
+        return;
+    }
+    
+    (banshee_log_handler) (type, component, message);
+}
+
+void
+banshee_log_debug (const gchar *component, const gchar *format, ...)
+{
+    va_list args;
+    gchar *message;
+    
+    if (!banshee_debugging) {
+        return;
+    }
+    
+    va_start (args, format);
+    message = g_strdup_vprintf (format, args);
+    va_end (args);
+    
+    banshee_log (BANSHEE_LOG_TYPE_DEBUG, component, message);
+    
+    g_free (message);
 }
