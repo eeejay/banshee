@@ -202,7 +202,7 @@ namespace Hyena.Data.Gui
         protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
         {
             HasFocus = true;
-            if (header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y)) {
+            if (header_visible && header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y)) {
                 return OnHeaderButtonPressEvent (evnt);
             } else if (list_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) && model != null) {
                 return OnListButtonPressEvent (evnt);
@@ -327,7 +327,7 @@ namespace Hyena.Data.Gui
                 return true;
             }
             
-            if (header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y)) {
+            if (header_visible && header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y)) {
                 return OnHeaderButtonRelease (evnt);
             } else if (list_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) && model != null &&
                 (evnt.State & (Gdk.ModifierType.ShiftMask | Gdk.ModifierType.ControlMask)) == 0) {

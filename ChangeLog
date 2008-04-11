@@ -1,3 +1,9 @@
+2008-04-11  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Make sure we don't handle header-related interaction stuff if the
+	header isn't shown. Fixes BGO #527510.
+
 2008-04-11  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* build/m4/banshee/gtk-sharp.m4: gconf-sharp is part of gnome-sharp
