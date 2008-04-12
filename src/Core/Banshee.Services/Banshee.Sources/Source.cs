@@ -35,6 +35,7 @@ using System.Collections.ObjectModel;
 
 using Mono.Unix;
 
+using Hyena;
 using Hyena.Data;
 using Hyena.Query;
 
@@ -543,15 +544,15 @@ namespace Banshee.Sources
                     if (span.Days > 0) {
                         double days = span.Days + (span.Hours / 24.0);
                         builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", 
-                            DoubleToPluralInt (days)), FormatDouble (days));
+                            StringUtil.DoubleToPluralInt (days)), StringUtil.FormatDouble (days));
                     } else if (span.Hours > 0) {
                         double hours = span.Hours + (span.Minutes / 60.0);
                         builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", 
-                            DoubleToPluralInt (hours)), FormatDouble (hours));
+                            StringUtil.DoubleToPluralInt (hours)), StringUtil.FormatDouble (hours));
                     } else {
                         double minutes = span.Minutes + (span.Seconds / 60.0);
                         builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", 
-                            DoubleToPluralInt (minutes)), FormatDouble (minutes));
+                            StringUtil.DoubleToPluralInt (minutes)), StringUtil.FormatDouble (minutes));
                     }
                 } else if (format == 1) {
                     if (span.Days > 0) {
@@ -588,25 +589,9 @@ namespace Banshee.Sources
             
             return builder.ToString ();
         }
-
-        private static string FormatDouble (double num)
-        {
-            if (num == (int)num)
-                return Convert.ToString ((int)num);
-            else
-                return String.Format ("{0:0.0}", num);
-        }
-        
-        private static int DoubleToPluralInt (double num)
-        {
-            if (num == (int)num)
-                return (int)num;
-            else
-                return (int)num + 1;
-        }
         
         string IService.ServiceName {
-            get { return DBusServiceManager.MakeDBusSafeString (Name) + "Source"; }
+            get { return String.Format ("{0}{1}", DBusServiceManager.MakeDBusSafeString (Name), "Source"); }
         }
         
         IDBusExportable IDBusExportable.Parent {

@@ -53,6 +53,17 @@ namespace Banshee.HalBackend
         public void Dispose ()
         {
         }
+
+        public IEnumerable<IDevice> GetAllDevices ()
+        {
+            IDevice device;
+            foreach (string udi in manager.GetAllDevices ()) {
+                device = Resolve (new Hal.Device (udi));
+                if (device != null) {
+                    yield return device;
+                }
+            }
+        }
         
         private IEnumerable<T> GetAllBlockDevices<T> () where T : IBlockDevice
         {
@@ -81,15 +92,21 @@ namespace Banshee.HalBackend
 
         private void OnHalDeviceAdded (object o, Hal.DeviceAddedArgs args)
         {
-            if (!args.Device.QueryCapability ("block")) {
-                return;
-            }
+            OnHalDeviceAdded (Resolve (args.Device));
+        }
 
-            IDevice device = BlockDevice.Resolve<IBlockDevice> (manager, args.Device);
-            if (device == null) {
-                device = Volume.Resolve (null, manager, args.Device);
-            }
-            OnHalDeviceAdded (device);
+        private IDevice Resolve (Hal.Device hal_device)
+        {
+            if (!hal_device.QueryCapability ("block") && !hal_device.QueryCapability ("portable_audio_player"))
+                return null;
+
+            IDevice device = BlockDevice.Resolve<IBlockDevice> (manager, hal_device);
+            if (device == null)
+                device = Volume.Resolve (null, manager, hal_device);
+                if (device == null)
+                    device = new Device (manager, hal_device);
+
+            return device;
         }
 
         internal void OnHalDeviceAdded (IDevice device)

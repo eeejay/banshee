@@ -45,6 +45,10 @@ namespace Banshee.Dap
     {
         protected IDevice device;
 
+        internal IDevice Device {
+            get { return device; }
+        }
+
         protected DapSource () : base ()
         {
         }
@@ -60,14 +64,19 @@ namespace Banshee.Dap
                 Properties.SetStringList ("Icon.Name", FallbackIcon);
             }
 
+            if (String.IsNullOrEmpty (Name)) Name = device.Name;
             GenericName = IsMediaDevice ? Catalog.GetString ("Audio Player") : Catalog.GetString ("Media Device");
         }
+
+        bool initialized = false;
 
         public bool Resolve (IDevice device)
         {
             this.device = device;
             type_unique_id = device.Uuid;
-            return Initialize (device);
+            bool ret = Initialize (device);
+            initialized = true;
+            return ret;
         }
 
         protected abstract bool Initialize (IDevice device);
@@ -82,6 +91,14 @@ namespace Banshee.Dap
 
         protected IDeviceMediaCapabilities MediaCapabilities {
             get { return device.MediaCapabilities; }
+        }
+
+        public override void AddChildSource (Source child)
+        {
+            if (initialized && child is Banshee.Playlist.AbstractPlaylistSource) {
+                Log.Information ("Note: playlists added to digital audio players within Banshee are not yet saved to the device.", true);
+            }
+            base.AddChildSource (child);
         }
     }
 }

@@ -36,6 +36,7 @@ namespace Banshee.Hardware
         event DeviceAddedHandler DeviceAdded;
         event DeviceRemovedHandler DeviceRemoved;
     
+        IEnumerable<IDevice> GetAllDevices ();
         IEnumerable<IBlockDevice> GetAllBlockDevices ();
         IEnumerable<ICdromDevice> GetAllCdromDevices ();
         IEnumerable<IDiskDevice> GetAllDiskDevices ();

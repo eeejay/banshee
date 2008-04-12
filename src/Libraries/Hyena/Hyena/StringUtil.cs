@@ -112,5 +112,21 @@ namespace Hyena
 
             return builder.ToString ();
         }
+
+        public static string FormatDouble (double num)
+        {
+            if (num == (int)num)
+                return Convert.ToString ((int)num);
+            else
+                return String.Format ("{0:0.0}", num);
+        }
+        
+        public static int DoubleToPluralInt (double num)
+        {
+            if (num == (int)num)
+                return (int)num;
+            else
+                return (int)num + 1;
+        }
     }
 }

@@ -36,7 +36,7 @@ using Banshee.Configuration;
 
 namespace Banshee.IO
 {
-    internal static class Provider
+    public static class Provider
     {
         private static IProvider provider;
         private static IDirectory directory;
@@ -68,21 +68,26 @@ namespace Banshee.IO
                 file = (IFile)Activator.CreateInstance (provider.FileProvider);
             }
         }
+
+        public static void SetProvider (IProvider customProvider)
+        {
+            provider = customProvider;
+        }
         
-        public static IDirectory Directory {
+        internal static IDirectory Directory {
             get { return directory; }
         }
         
-        public static IFile File {
+        internal static IFile File {
             get { return file; }
         }
         
-        public static IDemuxVfs CreateDemuxVfs (string file)
+        internal static IDemuxVfs CreateDemuxVfs (string file)
         {
             return (IDemuxVfs)Activator.CreateInstance (provider.DemuxVfsProvider, new object [] { file });
         }
         
-        public static readonly SchemaEntry<string> ProviderSchema = new SchemaEntry<string> (
+        internal static readonly SchemaEntry<string> ProviderSchema = new SchemaEntry<string> (
             "core", "io_provider",
             "Banshee.IO.Unix.Provider",
             "Set the IO provider backend in Banshee",

@@ -52,6 +52,7 @@ namespace Banshee.Dap.Mtp
 
 		private MtpDevice mtp_device;
         //private bool supports_jpegs = false;
+        private Dictionary<int, Track> track_map;
 
         public MtpSource () : base ()
         {
@@ -59,9 +60,7 @@ namespace Banshee.Dap.Mtp
 
         protected override bool Initialize (IDevice device)
         {
-            Log.DebugFormat ("MTP testing device {0}", device.Uuid);
             if (MediaCapabilities == null || !MediaCapabilities.IsType ("mtp")) {
-                Log.DebugFormat ("FAILED");
                 return false;
             }
 
@@ -75,8 +74,6 @@ namespace Banshee.Dap.Mtp
 				return false;
             }
 
-            string serial = "";//hal_device ["usb.serial"];
-
 			List<MtpDevice> devices = null;
 			try {
 				devices = MtpDevice.Detect ();
@@ -89,6 +86,7 @@ namespace Banshee.Dap.Mtp
 				return false;
 			} catch (Exception e) {
                 Log.Exception (e);
+                Log.Debug (e.ToString ());
 				//ShowGeneralExceptionDialog (e);
 				return false;
 			}
@@ -100,8 +98,8 @@ namespace Banshee.Dap.Mtp
                 );
             } else {
                 string mtp_serial = devices[0].SerialNumber;
-                if (!String.IsNullOrEmpty (mtp_serial) && !String.IsNullOrEmpty (serial)) {
-                    if (mtp_serial.Contains (serial)) {
+                if (!String.IsNullOrEmpty (mtp_serial)) {
+                    if (mtp_serial.Contains (device.Uuid)) {
                         mtp_device = devices[0];
                         mtp_source = this;
                     }
@@ -120,66 +118,153 @@ namespace Banshee.Dap.Mtp
                 return false;
             }
 
-			/*Log.Debug ("Loading MTP Device",
-                String.Format ("Name: {0}, ProductID: {1}, VendorID: {2}, Serial: {3}",
-                    hal_name, product_id, vendor_id, serial
-                )
-            );*/
-
+            Name = mtp_device.Name;
             Initialize ();
 
-            // TODO differentiate between Audio Players and normal Disks, and include the size, eg "2GB Audio Player"?
-            //GenericName = Catalog.GetString ("Audio Player");
+            //ServiceManager.DbConnection.Execute ("
 
-            // TODO construct device-specific icon name as preferred icon
-            //Properties.SetStringList ("Icon.Name", "media-player");
-
-            //SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
-            /*DatabaseImportManager importer = new DatabaseImportManager (this);
-            importer.KeepUserJobHidden = true;
-            importer.ImportFinished += delegate  { HideStatus (); };
-            importer.QueueSource (BaseDirectory);*/
+            ThreadPool.QueueUserWorkItem (delegate {
+                track_map = new Dictionary<int, Track> ();
+                SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
+                try {
+                    List<Track> files = mtp_device.GetAllTracks (delegate (ulong current, ulong total, IntPtr data) {
+                        //user_event.Progress = (double)current / total;
+                        SetStatus (String.Format (Catalog.GetString ("Loading {0} - {1} of {2}"), Name, current, total), false);
+                        return 0;
+                    });
+                    
+                    /*if (user_event.IsCancelRequested) {
+                        return;
+                    }*/
+                    
+                    int [] source_ids = new int [] { DbId };
+                    foreach (Track mtp_track in files) {
+                        int track_id;
+                        if ((track_id = DatabaseTrackInfo.GetTrackIdForUri (MtpTrackInfo.GetPathFromMtpTrack (mtp_track), source_ids)) > 0) {
+                            track_map[track_id] = mtp_track;
+                        } else {
+                            MtpTrackInfo track = new MtpTrackInfo (mtp_track);
+                            track.PrimarySource = this;
+                            track.Save (false);
+                            track_map[track.TrackId] = mtp_track;
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.Exception (e);
+                }
+                OnTracksAdded ();
+                HideStatus ();
+            });
 
             return true;
         }
 
         public override void Import ()
         {
+            Log.Information ("Import to Library is not implemented for MTP devices yet", true);
             //new LibraryImportManager (true).QueueSource (BaseDirectory);
         }
 
+        public override bool CanRename {
+            get { return !(IsAdding || IsDeleting); }
+        }
+
+        protected override void OnTracksDeleted ()
+        {
+            // Hack to get the disk usage indicate to be accurate, which seems to
+            // only be updated when tracks are added, not removed.
+            SafeUri empty_file = new SafeUri (Paths.Combine (Paths.ApplicationCache, "mtp.mp3"));
+            try {
+                using (System.IO.TextWriter writer = new System.IO.StreamWriter (Banshee.IO.File.OpenWrite (empty_file, true))) {
+                    writer.Write ("foo");
+                }
+                Track mtp_track = new Track (System.IO.Path.GetFileName (empty_file.LocalPath), 3);
+                mtp_device.UploadTrack (empty_file.AbsolutePath, mtp_track);
+                mtp_device.Remove (mtp_track);
+            } finally {
+                Banshee.IO.File.Delete (empty_file);
+            }
+
+            base.OnTracksDeleted ();
+        }
+
+        public override void Rename (string newName)
+        {
+            base.Rename (newName);
+            mtp_device.Name = newName;
+
+            Console.WriteLine ("BytesUsed = {0}", BytesUsed);
+        }
+
         public override long BytesUsed {
-            //get { return BytesCapacity - volume.Available; }
-            get { return 0; }
+            get {
+				long count = 0;
+				foreach (DeviceStorage s in mtp_device.GetStorage ()) {
+					count += (long) s.MaxCapacity - (long) s.FreeSpaceInBytes;
+                }
+				return count;
+            }
         }
         
         public override long BytesCapacity {
-            //get { return (long) volume.Capacity; }
-            get { return 0; }
+            get {
+				long count = 0;
+				foreach (DeviceStorage s in mtp_device.GetStorage ()) {
+					count += (long) s.MaxCapacity;
+                }
+				return count;
+            }
         }
 
         protected override bool IsReadOnly {
-            //get { return volume.IsReadOnly; }
             get { return false; }
+        }
+
+        protected override void AddTrack (DatabaseTrackInfo track)
+        {
+            if (track.PrimarySourceId == DbId)
+                return;
+
+            Track mtp_track = TrackInfoToMtpTrack (track);
+            mtp_device.UploadTrack (track.Uri.AbsolutePath, mtp_track);
+
+            MtpTrackInfo new_track = new MtpTrackInfo (mtp_track);
+            new_track.PrimarySource = this;
+            new_track.Save (false);
+            track_map[new_track.TrackId] = mtp_track;
         }
 
         protected override void DeleteTrack (DatabaseTrackInfo track)
         {
-            /*try {
-                Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
-            } catch (System.IO.FileNotFoundException) {
-            } catch (System.IO.DirectoryNotFoundException) {
-            }*/
+            mtp_device.Remove (track_map [track.TrackId]);
+            track_map.Remove (track.TrackId);
+        }
+
+        public Track TrackInfoToMtpTrack (TrackInfo track)
+        {
+			Track f = new Track (System.IO.Path.GetFileName (track.Uri.LocalPath), (ulong) track.FileSize);
+			f.Album = track.AlbumTitle;
+			f.Artist = track.ArtistName;
+			f.Duration = (uint)track.Duration.TotalMilliseconds;
+			f.Genre = track.Genre;
+			f.Rating = (ushort)(track.Rating * 20);
+			f.Title = track.TrackTitle;
+			f.TrackNumber = (ushort)track.TrackNumber;
+			f.UseCount = (uint)track.PlayCount;
+            f.ReleaseDate = track.Year + "0101T0000.0";
+            return f;
+		}
+
+        public override void Dispose ()
+        {
+			base.Dispose ();
+			mtp_device.Dispose ();
+            mtp_source = null;
         }
 
         protected override void Eject ()
         {
-            /*if (volume.CanUnmount)
-                volume.Unmount ();
-
-            if (volume.CanEject)
-                volume.Eject ();
-                */
+            Dispose ();
         }
     }
 }

@@ -47,6 +47,8 @@ namespace Nereid
         private HBox header;
         private Label title_label;
         private Label search_label;
+        private Label disk_usage_label;
+        private ProgressBar disk_usage_bar;
         
         private ISourceContents content;
         
@@ -62,16 +64,35 @@ namespace Nereid
         {
             header = new HBox ();
             
+            EventBox title_box = new EventBox ();
             title_label = new Label ();
             title_label.Xalign = 0.0f;
             title_label.Ellipsize = Pango.EllipsizeMode.End;
+
+            title_box.Add (title_label);
+
+            // Show the source context menu when the title is right clicked
+            title_box.PopupMenu += delegate {
+                ServiceManager.Get<InterfaceActionService> ().SourceActions ["SourceContextMenuAction"].Activate ();
+            };
+
+            title_box.ButtonPressEvent += delegate (object o, ButtonPressEventArgs press) {
+                if (press.Event.Button == 3) {
+                    ServiceManager.Get<InterfaceActionService> ().SourceActions ["SourceContextMenuAction"].Activate ();
+                }
+            };
+
+            disk_usage_label = new Label (Catalog.GetString ("Disk Usage:"));
+            disk_usage_bar = new ProgressBar ();
             
             BuildSearchEntry ();
             
             search_label = new Label (Catalog.GetString ("_Search:"));
             search_label.MnemonicWidget = search_entry.InnerEntry;
             
-            header.PackStart (title_label, true, true, 0);
+            header.PackStart (title_box, true, true, 0);
+            header.PackStart (disk_usage_label, false, false, 5);
+            header.PackStart (disk_usage_bar, false, false, 5);
             header.PackStart (search_label, false, false, 5);
             header.PackStart (search_entry, false, false, 0);
             
@@ -129,6 +150,10 @@ namespace Nereid
         public SearchEntry SearchEntry {
             get { return search_entry; }
         }
+
+        public ProgressBar DiskUsageBar {
+            get { return disk_usage_bar; }
+        }
         
         public ISourceContents Content {
             get { return content; }
@@ -161,6 +186,14 @@ namespace Nereid
                 search_label.Sensitive = value;
                 search_entry.Visible = value;
                 search_label.Visible = value;
+            }
+        }
+
+        public bool DiskUsageVisible {
+            get { return disk_usage_bar.Visible; }
+            set {
+                disk_usage_label.Visible = value;
+                disk_usage_bar.Visible = value;
             }
         }
     }

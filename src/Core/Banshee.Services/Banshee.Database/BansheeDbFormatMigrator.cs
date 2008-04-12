@@ -61,7 +61,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 6;
+        protected const int CURRENT_VERSION = 7;
         protected const int CURRENT_METADATA_VERSION = 1;
         
         protected class DatabaseVersionAttribute : Attribute 
@@ -307,6 +307,16 @@ namespace Banshee.Database
         private bool Migrate_6 ()
         {
             Execute ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', 0)");
+            return true;
+        }
+
+        [DatabaseVersion (7)]
+        private bool Migrate_7 ()
+        {
+            Execute ("UPDATE CorePrimarySources SET StringID = 'MusicLibrarySource-Library' WHERE StringID = 'Library'");
+            Execute ("UPDATE CorePrimarySources SET StringID = 'VideoLibrarySource-VideoLibrary' WHERE StringID = 'VideoLibrary'");
+            Execute ("UPDATE CorePrimarySources SET StringID = 'PodcastSource-podcasting' WHERE StringID = 'podcasting'");
+            Execute ("DELETE FROM CoreCache; DELETE FROM CoreCacheModels");
             return true;
         }
 

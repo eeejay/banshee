@@ -3,7 +3,9 @@ TARGET = library
 LINK = $(REF_DAP_MTP)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
-SOURCES = Banshee.Dap.Mtp/MtpSource.cs
+SOURCES = \
+	Banshee.Dap.Mtp/MtpSource.cs \
+	Banshee.Dap.Mtp/MtpTrackInfo.cs
 
 RESOURCES = Banshee.Dap.Mtp.addin.xml
 

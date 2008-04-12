@@ -75,6 +75,11 @@ namespace Banshee.Hardware
         {
             manager.Dispose ();
         }
+
+        public IEnumerable<IDevice> GetAllDevices ()
+        {
+            return manager.GetAllDevices ();
+        }
         
         public IEnumerable<IBlockDevice> GetAllBlockDevices ()
         {

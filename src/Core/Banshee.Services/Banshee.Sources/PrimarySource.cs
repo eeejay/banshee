@@ -170,9 +170,9 @@ namespace Banshee.Sources
 
         private void PrimarySourceInitialize ()
         {
-            dbid = ServiceManager.DbConnection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = ?", TypeUniqueId);
+            dbid = ServiceManager.DbConnection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = ?", UniqueId);
             if (dbid == 0) {
-                dbid = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", TypeUniqueId);
+                dbid = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", UniqueId);
             }
 
             track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", dbid);
@@ -302,11 +302,16 @@ namespace Banshee.Sources
                 DeleteTrackList (list);
 
                 OnTracksDeleted ();
+                OnUserNotifyUpdated ();
+                ThreadAssist.ProxyToMain (delegate {
+                    OnUpdated ();
+                });
             });
         }
 
         protected virtual void DeleteTrackList (CachedList<DatabaseTrackInfo> list)
         {
+            is_deleting = true;
             DeleteTrackJob.Total += (int) list.Count;
 
             // Remove from file system
@@ -322,8 +327,14 @@ namespace Banshee.Sources
                     Log.Exception (e);
                     ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
                 }
+
                 DeleteTrackJob.Completed++;
+                if (DeleteTrackJob.Completed % 10 == 0 && !DeleteTrackJob.IsFinished) {
+                    OnTracksDeleted ();
+                }
             }
+
+            is_deleting = false;
 
             if (DeleteTrackJob.Total == DeleteTrackJob.Completed) {
                 delete_track_job.Finish ();
@@ -359,8 +370,19 @@ namespace Banshee.Sources
             return true;
         }
 
+        private bool is_adding;
+        public bool IsAdding {
+            get { return is_adding; }
+        }
+
+        private bool is_deleting;
+        public bool IsDeleting {
+            get { return is_deleting; }
+        }
+
         protected virtual void AddTrackList (CachedList<DatabaseTrackInfo> list)
         {
+            is_adding = true;
             AddTrackJob.Total += (int)list.Count;
 
             foreach (DatabaseTrackInfo track in list) {
@@ -375,8 +397,13 @@ namespace Banshee.Sources
                     Log.Exception (e);
                     ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
                 }
+
                 AddTrackJob.Completed++;
+                if (AddTrackJob.Completed % 10 == 0 && !AddTrackJob.IsFinished) {
+                    OnTracksAdded ();
+                }
             }
+            is_adding = false;
 
             if (AddTrackJob.Total == AddTrackJob.Completed) {
                 add_track_job.Finish ();

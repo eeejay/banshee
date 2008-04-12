@@ -160,6 +160,9 @@ namespace Hyena.Data.Gui
         
         private void PaintHeaderCell (Rectangle area, Rectangle clip, int ci, bool dragging)
         {
+            if (ci < 0 || column_cache.Length <= ci)
+                return;
+
             if (dragging) {
                 Theme.DrawColumnHighlight (cairo_context, area, 
                     CairoExtensions.ColorShade (Theme.Colors.GetWidgetColor (GtkColorClass.Dark, StateType.Normal), 0.9));
@@ -175,7 +178,7 @@ namespace Hyena.Data.Gui
                 cairo_context.LineTo (area.Right - 0.5, area.Bottom);
                 cairo_context.Stroke ();
             }
-            
+
             ColumnCell cell = column_cache[ci].Column.HeaderCell;
             
             if (cell != null) {

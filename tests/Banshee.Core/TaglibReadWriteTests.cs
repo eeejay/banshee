@@ -10,66 +10,46 @@ using Banshee.Configuration.Schema;
 [TestFixture]
 public class TaglibReadWriteTests
 {
-    /*
-    static string [] files, blank_files;
+    static string [] files;
     static string pwd;
 
     static TaglibReadWriteTests () {
+        Hyena.Log.Debugging = true;
+
         pwd = Mono.Unix.UnixDirectoryInfo.GetCurrentDirectory ();
         AddinManager.Initialize (pwd + "/../bin/");
         Banshee.Configuration.ConfigurationClient.Initialize ();
 
         files = new string [] {
-            pwd + "/data/test1.ogg",
-            // TODO this flac file doesn't have metadata yet
-            //"data/test2.flac",
-            pwd + "/data/test3.mp3",
-        };
-
-        blank_files = new string [] {
-            pwd + "/data/no_metadata1.ogg",
-            // TODO this flac file doesn't have metadata yet
-            //"data/test2.flac",
-            pwd + "/data/no_metadata3.mp3",
+            pwd + "/data/test.mp3",
         };
     }
 
     [Test]
-    public void ReadMetadata ()
+    public void TestSystemIO ()
     {
-        QueryTests.AssertForEach<string> (files, delegate (string uri) {
-            VerifyRead (new SafeUri (uri));
-        });
+        Banshee.IO.Provider.SetProvider (new Banshee.IO.SystemIO.Provider ());
+        WriteMetadata (files);
     }
 
     [Test]
-    public void UpdateMetadata ()
+    public void TestUnixIO ()
     {
-        WriteMetadata (files, true);
+        Banshee.IO.Provider.SetProvider (new Banshee.IO.Unix.Provider ());
+        WriteMetadata (files);
     }
 
-    [Test]
-    public void CreateMetadata ()
-    {
-        WriteMetadata (blank_files, false);
-    }
-
-    private static void WriteMetadata (string [] files, bool verify_start_state)
+    private static void WriteMetadata (string [] files)
     {
         SafeUri newuri = null;
         bool write_metadata = LibrarySchema.WriteMetadata.Get();
         LibrarySchema.WriteMetadata.Set (true);
         try {
             QueryTests.AssertForEach<string> (files, delegate (string uri) {
-                string [] p = uri.Split ('.');
-                string extension = p[p.Length - 1];
+                string extension = System.IO.Path.GetExtension (uri);
                 newuri = new SafeUri (pwd + "/data/test_write." + extension);
 
                 Banshee.IO.File.Copy (new SafeUri (uri), newuri, true);
-
-                if (verify_start_state) {
-                    VerifyRead (newuri);
-                }
 
                 ChangeAndVerify (newuri);
             });
@@ -81,21 +61,6 @@ public class TaglibReadWriteTests
     }
 
 #region Utility methods
-
-    private static void VerifyRead (SafeUri uri)
-    {
-        TagLib.File file = StreamTagger.ProcessUri (uri);
-        TrackInfo track = new TrackInfo ();
-        StreamTagger.TrackInfoMerge (track, file);
-
-        Assert.AreEqual ("TestTitle", track.TrackTitle);
-        Assert.AreEqual ("TestArtist", track.ArtistName);
-        Assert.AreEqual ("TestAlbum", track.AlbumTitle);
-        Assert.AreEqual ("TestGenre", track.Genre);
-        Assert.AreEqual (2, track.TrackNumber);
-        Assert.AreEqual (2, track.Disc);
-        Assert.AreEqual (2001, track.Year);
-    }
 
     private static void ChangeAndVerify (SafeUri uri)
     {
@@ -131,6 +96,5 @@ public class TaglibReadWriteTests
     }
 
 #endregion
-    */
 
 }

@@ -33,8 +33,8 @@ using Banshee.Hardware;
 
 namespace Banshee.HalBackend
 {
-    public abstract class Device : IDevice
-    {    
+    public class Device : IDevice
+    {
         private Hal.Device device;
         internal Hal.Device HalDevice {
             get { return device; }
@@ -45,14 +45,14 @@ namespace Banshee.HalBackend
             get { return manager; }
         }
 
-        protected Device (Hal.Manager manager, Hal.Device device)
+        public Device (Hal.Manager manager, Hal.Device device)
         {
             this.manager = manager;
             this.device = device;
         }
         
         public virtual string Uuid {
-            get { return device.Udi; }
+            get { return String.IsNullOrEmpty (HalDevice["usb.serial"]) ? device.Udi : HalDevice["usb.serial"]; }
         }
 
         private string name;

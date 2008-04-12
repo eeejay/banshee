@@ -41,7 +41,7 @@ using Banshee.Hardware;
 
 namespace Banshee.Dap
 {
-    public abstract class RemovableSource : PrimarySource, IUnmapableSource, Banshee.Library.IImportSource
+    public abstract class RemovableSource : PrimarySource, IUnmapableSource, Banshee.Library.IImportSource, IDiskUsageReporter
     {
         protected RemovableSource () : base ()
         {
@@ -80,10 +80,6 @@ namespace Banshee.Dap
 
         public virtual bool CanImport {
             get { return true; }
-        }
-
-        public double StorageUsageFraction {
-            get { return (double) BytesUsed / (double) BytesCapacity; }
         }
 
 #region IUnmapableSource Implementation

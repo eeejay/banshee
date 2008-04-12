@@ -238,7 +238,7 @@ namespace Banshee.Gui
                 UpdateActions ();
             };
         }
-            
+
         private void OnImportSource (object o, EventArgs args)
         {
             (ActionSource as IImportSource).Import ();

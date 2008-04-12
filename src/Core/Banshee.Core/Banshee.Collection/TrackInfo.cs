@@ -306,7 +306,7 @@ namespace Banshee.Collection
             set { can_play = value; }
         }
         
-        private TrackMediaAttributes media_attributes;
+        private TrackMediaAttributes media_attributes = TrackMediaAttributes.Default;
         public virtual TrackMediaAttributes MediaAttributes {
             get { return media_attributes; }
             set { media_attributes = value; }

@@ -125,6 +125,7 @@ SOURCES =  \
 	Banshee.SmartPlaylist/SmartPlaylistSource.cs \
 	Banshee.Sources/DatabaseSource.cs \
 	Banshee.Sources/ErrorSource.cs \
+	Banshee.Sources/IDiskUsageReporter.cs \
 	Banshee.Sources/IDurationAggregator.cs \
 	Banshee.Sources/IFileSizeAggregator.cs \
 	Banshee.Sources/IImportable.cs \

@@ -210,7 +210,7 @@ namespace Nereid
                 Source source = ServiceManager.SourceManager.ActiveSource;
                 if (source != null) {
                     source.CycleStatusFormat ();
-                    UpdateStatusBar ();
+                    UpdateSourceInformation ();
                 }
             };
             status_label = new Label ();
@@ -342,15 +342,17 @@ namespace Nereid
 
             view_container.Header.Visible = source.Properties.Contains ("Nereid.SourceContents.HeaderVisible") ?
                 source.Properties.Get<bool> ("Nereid.SourceContents.HeaderVisible") : true;
+
+            view_container.DiskUsageVisible = (source is IDiskUsageReporter);
             
-            UpdateStatusBar ();
+            UpdateSourceInformation ();
             view_container.SearchEntry.Ready = true;
         }
 
         private void OnSourceUpdated (SourceEventArgs args)
         {
             if (args.Source == ServiceManager.SourceManager.ActiveSource) {
-                UpdateStatusBar ();
+                UpdateSourceInformation ();
                 view_container.Title = args.Source.Name;
             }
         }
@@ -479,7 +481,7 @@ namespace Nereid
 
         private void HandleTrackModelReloaded (object sender, EventArgs args)
         {
-            UpdateStatusBar ();
+            UpdateSourceInformation ();
         }
 
         private void SetPlaybackControllerSource (Source source)
@@ -493,14 +495,31 @@ namespace Nereid
             ServiceManager.PlaybackController.Source = (ITrackModelSource)source;    
         }
 
-        private void UpdateStatusBar ()
+        private void UpdateSourceInformation ()
         {
-            if (ServiceManager.SourceManager.ActiveSource == null) {
+            Source source = ServiceManager.SourceManager.ActiveSource;
+            if (source == null) {
                 status_label.Text = String.Empty;
                 return;
             }
 
-            status_label.Text = ServiceManager.SourceManager.ActiveSource.GetStatusText ();
+            if (source is IDiskUsageReporter) {
+                IDiskUsageReporter reporter = source as IDiskUsageReporter;
+
+                double fraction = (double)reporter.BytesUsed / (double)reporter.BytesCapacity;
+
+                view_container.DiskUsageBar.Fraction = fraction;
+                view_container.DiskUsageBar.Text = String.Format(
+                    Catalog.GetString("{0} of {1}"),
+                    new Hyena.Query.FileSizeQueryValue (reporter.BytesUsed).ToUserQuery (),
+                    new Hyena.Query.FileSizeQueryValue (reporter.BytesCapacity).ToUserQuery ()
+                );
+
+                //string tooltip = dapSource.DiskUsageString + " (" + dapSource.DiskAvailableString + ")";
+                //toolTips.SetTip (dapDiskUsageBar, tooltip, tooltip);
+            }
+
+            status_label.Text = source.GetStatusText ();
         }
 
 #endregion

@@ -440,9 +440,19 @@ namespace Banshee.Collection.Database
         }
 
         private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (
-            "SELECT COUNT(*) FROM CoreTracks WHERE PrimarySourceId IN (?) AND (Uri = ? OR Uri = ?)"
+            "SELECT TrackID FROM CoreTracks WHERE PrimarySourceId IN (?) AND (Uri = ? OR Uri = ?) LIMIT 1"
         );
+
+        public static int GetTrackIdForUri (string relative_path, int [] primary_sources)
+        {
+            return ServiceManager.DbConnection.Query<int> (check_command.ApplyValues (primary_sources, relative_path, relative_path));
+        }
         
+        public static bool ContainsUri (string relative_path, int [] primary_sources)
+        {
+            return ServiceManager.DbConnection.Query<int> (check_command.ApplyValues (primary_sources, relative_path, relative_path)) > 0;
+        }
+
         public static bool ContainsUri (SafeUri uri, string relative_path, int [] primary_sources)
         {
             return ServiceManager.DbConnection.Query<int> (check_command.ApplyValues (primary_sources, relative_path, uri.AbsoluteUri)) > 0;

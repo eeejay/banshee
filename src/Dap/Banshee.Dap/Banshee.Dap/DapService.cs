@@ -59,6 +59,7 @@ namespace Banshee.Dap
             AddinManager.AddExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
             ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
             ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
+            ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
         }
 
         private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) {
@@ -68,11 +69,8 @@ namespace Banshee.Dap
                 supported_dap_types.Add (node);
 
                 // See if any existing devices are handled by this new DAP support
-                foreach (IBlockDevice device in ServiceManager.HardwareManager.GetAllBlockDevices ()) {
+                foreach (IDevice device in ServiceManager.HardwareManager.GetAllDevices ()) {
                     MapDevice (device);
-                    foreach (IVolume volume in device.Volumes) {
-                        MapDevice (volume);
-                    }
                 }
             } else {
                 // TODO remove/dispose all loaded DAPs of this type?
@@ -85,13 +83,17 @@ namespace Banshee.Dap
             lock (this) {
                 ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
+                ServiceManager.SourceManager.SourceRemoved -= OnSourceRemoved;
                 
-                foreach (DapSource source in sources.Values) {
-                    ServiceManager.SourceManager.RemoveSource (source);
-                }
-                
-                sources.Clear ();
-                sources = null;
+                ThreadPool.QueueUserWorkItem (delegate {
+                    List<DapSource> dap_sources = new List<DapSource> (sources.Values);
+                    foreach (DapSource source in dap_sources) {
+                        UnmapDevice (source.Device.Uuid);
+                    }
+                    
+                    sources.Clear ();
+                    sources = null;
+                });
             }
         }
         
@@ -105,6 +107,9 @@ namespace Banshee.Dap
                     return;
 
                 if (device is IVolume && (device as IVolume).ShouldIgnore)
+                    return;
+
+                if (device.MediaCapabilities == null && !(device is IBlockDevice) && !(device is IVolume))
                     return;
 
                 DapSource source = FindDeviceType (device);
@@ -123,9 +128,21 @@ namespace Banshee.Dap
             lock (this) {
                 if (sources.ContainsKey (uuid)) {
                     Log.DebugFormat ("Unmapping DAP source ({0})", uuid);
+
                     DapSource source = sources[uuid];
-                    ServiceManager.SourceManager.RemoveSource (source);
+                    source.Dispose ();
                     sources.Remove (uuid);
+                    ServiceManager.SourceManager.RemoveSource (source);
+                }
+            }
+        }
+
+        private void OnSourceRemoved (SourceEventArgs args)
+        {
+            DapSource dap_source = args.Source as DapSource;
+            if (dap_source != null) {
+                lock (this) {
+                    UnmapDevice (dap_source.Device.Uuid);
                 }
             }
         }

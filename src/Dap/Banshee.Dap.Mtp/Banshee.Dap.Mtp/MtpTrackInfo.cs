@@ -1,5 +1,5 @@
 /***************************************************************************
- *  MtpDapTrackInfo.cs
+ *  MtpTrackInfo.cs
  *
  *  Copyright (C) 2006-2007 Novell and Patrick van Staveren
  *  Written by Patrick van Staveren (trick@vanstaveren.us)
@@ -30,48 +30,52 @@ using System;
 using System.IO;
 
 using Banshee.Base;
-using Banshee.Dap;
+using Banshee.Collection.Database;
 
 using Mtp;
 
 namespace Banshee.Dap.Mtp
 {
-    public sealed class MtpDapTrackInfo : DapTrackInfo
+    public class MtpTrackInfo : DatabaseTrackInfo
     {
-        private MtpDevice camera;
         private Track file;
         
-        public Track OriginalFile
-        {
+        public Track OriginalFile {
             get { return file; }
         }
-        
-        public MtpDapTrackInfo(MtpDevice camera, Track file) : base()
-		{
-            this.camera = camera;
-            this.file = file;
-			
-			Album = file.Album;
-            Artist = file.Artist;
-            Duration = TimeSpan.FromMilliseconds(file.Duration);
-            Genre = file.Genre;
-            PlayCount = file.UseCount < 0 ? (uint)0 : (uint)file.UseCount;
-            Rating = file.Rating < 0 ? (uint) 0 : (uint) (file.Rating / 20);
-            Title = file.Title;
-            TrackNumber = file.TrackNumber < 0 ? (uint)0 : file.TrackNumber;
-            Year = (file.Date != null && file.Date.Length >= 4) ? int.Parse(file.Date.Substring(0, 4)) : 0;
-            //Filesize = file.Filesize; // Unfortunately this info is currently stat'd when needed
 
-            // This can be implemented if there's enough people requesting it
-            CanPlay = false;             
-            CanSaveToDatabase = true;
-            NeedSync = false;
-
-			// Set a URI even though it's not actually accessible through normal API's.
-			uri = new SafeUri(String.Format ("mtp://{0}", file.Filename));
+        public static string GetPathFromMtpTrack (Track track)
+        {
+            return String.Format ("mtp://{0}/{1}", track.FileId, track.FileName);
         }
         
-        public override bool Equals (object o)
+        public MtpTrackInfo (Track file) : base()
+		{
+            this.file = file;
+			
+			AlbumTitle = file.Album;
+            ArtistName = file.Artist;
+            Duration = TimeSpan.FromMilliseconds (file.Duration);
+            Genre = file.Genre;
+            PlayCount = file.UseCount < 0 ? 0 : (int) file.UseCount;
+            Rating = file.Rating < 0 ? 0 : (file.Rating / 20);
+            TrackTitle = file.Title;
+            TrackNumber = file.TrackNumber < 0 ? 0 : (int)file.TrackNumber;
+            Year = (file.ReleaseDate != null && file.ReleaseDate.Length >= 4) ? Int32.Parse (file.ReleaseDate.Substring(0, 4)) : 0;
+            FileSize = (long)file.FileSize;
+
+            // This can be implemented if there's enough people requesting it
+            CanPlay = false;
+            CanSaveToDatabase = true;
+            //NeedSync = false;
+
+            // TODO detect if this is a video file and set the MediaAttributes appropriately?
+
+			// Set a URI even though it's not actually accessible through normal API's.
+			Uri = new SafeUri (GetPathFromMtpTrack (file));
+        }
+        
+        /*public override bool Equals (object o)
         {
             MtpDapTrackInfo dapInfo = o as MtpDapTrackInfo;
             return dapInfo == null ? false : Equals(dapInfo);
@@ -97,16 +101,11 @@ namespace Banshee.Dap.Mtp
             if(title != null) result ^= title.GetHashCode();
             
             return result;
-        }
+        }*/
         
-        public bool OnCamera(MtpDevice camera)
-        {
-            return this.camera == camera;
-        }
-		
-		protected override void WriteUpdate ()
+		/*protected override void WriteUpdate ()
 		{
 			OnChanged();
-		}
+		}*/
     }
 }

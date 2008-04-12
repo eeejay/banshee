@@ -66,7 +66,7 @@ run:
 
 test:
 	@pushd tests; \
-	make run-test \
+	make test \
 	popd;
 
 clean-local:

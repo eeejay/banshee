@@ -1,3 +1,76 @@
+2008-04-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit adds usable MTP device support.  Still no transcoding for any
+	DAPs, but that's next.
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs: If usb.serial
+	property exists on the device, use it for the Uuid.  Used for matching Mtp
+	devices to the libmtp device list.
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Add a disk usage
+	label/progres bar and display it when the source implements
+	IDiskUsageReporter.  Also, show the source context menu when the source's
+	title in the view container is right clicked.
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Set the default
+	MediaAttributes to Default.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Add GetTrackIdForUri method, used by Mtp support to associate existing
+	tracks when mtp device entries.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Change CorePrimarySource entries for Library/VideoLibrary to use UniqueId.
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/HardwareManager.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IHardwareManager.cs: Add
+	GetAllDevices call.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Use UniqueId
+	to identify primary sources, not TypeUniqueId.  Add user notify calls when
+	deleting items.  And every 10 items added or deleted, refresh.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Use String.Format
+	instead of concat.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Implement track
+	loading, adding, and deleting.  Implement disk usage, and eject, and
+	renaming.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Sources/IDiskUsageReporter.cs: New
+	interface for sources that want disk usage info displayed (eg DAPs).
+
+	* src/Dap/Banshee.Dap.Mtp/Makefile.am:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpDapTrackInfo.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpTrackInfo.cs: Fixes to
+	property mapping, renamed, added to build.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Listen for DapSources
+	being removed by the SourceManager and remove them from the map. Also,
+	when unmapping them, call Dispose on them.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:  Override AddChildSourc
+	with warning about how they aren't saved to the device (yet).  Add
+	internal Device property.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Implement
+	IDiskUsageReporter.
+
+	* src/Libraries/Mtp/Mtp/Track.cs: Style fixes.
+
+	* Makefile.am: 
+	* tests/Makefile.am: Change make test instead of make run-test
+
+	* tests/Banshee.Core/TaglibReadWriteTests.cs: Add unit tests to make sure
+	Banshee.IO.System and Banshee.IO.Unix read and write tags properly.
+
+	* src/Backends/Banshee.Unix/Banshee.IO.Unix/DemuxVfs.cs: Fix major bug
+	where writing metadata to file wasn't working in trunk if you were using
+	Banshee.IO.Unix (which most/all people are).
+
 2008-04-11  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Do not automatically
