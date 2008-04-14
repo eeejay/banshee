@@ -37,6 +37,7 @@ using Banshee.Collection;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.MediaProfiles;
+using Banshee.Configuration.Schema;
 
 namespace Banshee.GStreamer
 {
@@ -76,7 +77,8 @@ namespace Banshee.GStreamer
             }
             
             try {   
-                handle = new HandleRef (this, br_new (device, 0, encoder_pipeline));
+                int paranoia_mode = ImportSchema.AudioCDErrorCorrection.Get (false) ? 255 : 0;
+                handle = new HandleRef (this, br_new (device, paranoia_mode, encoder_pipeline));
                 
                 progress_handler = new RipperProgressHandler (OnNativeProgress);
                 br_set_progress_callback (handle, progress_handler);

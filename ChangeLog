@@ -1,3 +1,8 @@
+2008-04-13  Christopher James Halse Rogers  <chalserogers@gmail.com>
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
+ 	Hook up the paranoia-mode logic to the error-correction preference.
+
 2008-04-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit adds usable MTP device support.  Still no transcoding for any
