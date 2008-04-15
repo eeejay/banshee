@@ -36,11 +36,11 @@ namespace Hyena.Data.Sqlite
 {
     public abstract class SqliteModelProvider<T>
     {
-        private readonly List<DatabaseColumn> columns = new List<DatabaseColumn> ();
-        private readonly List<DatabaseColumn> select_columns = new List<DatabaseColumn> ();
-        private readonly List<VirtualDatabaseColumn> virtual_columns = new List<VirtualDatabaseColumn> ();
+        private readonly List<DatabaseColumn<T>> columns = new List<DatabaseColumn<T>> ();
+        private readonly List<DatabaseColumn<T>> select_columns = new List<DatabaseColumn<T>> ();
+        private readonly List<VirtualDatabaseColumn<T>> virtual_columns = new List<VirtualDatabaseColumn<T>> ();
         
-        private DatabaseColumn key;
+        private DatabaseColumn<T> key;
         private HyenaSqliteConnection connection;
         
         private HyenaSqliteCommand create_command;
@@ -159,7 +159,7 @@ namespace Hyena.Data.Sqlite
             //Console.WriteLine ("In {0} checking for table {1}", this, TableName);
             IDictionary<string, string> schema = connection.GetSchema (TableName);
             if (schema.Count > 0) {
-                foreach (DatabaseColumn column in columns) {
+                foreach (DatabaseColumn<T> column in columns) {
                     if (!schema.ContainsKey (column.Name)) {
                         AddColumnToTable (column.Schema);
                     }
@@ -179,11 +179,11 @@ namespace Hyena.Data.Sqlite
         {
             DatabaseColumnAttribute column = attribute as DatabaseColumnAttribute;
             if (column != null) {
-                DatabaseColumn c = member is FieldInfo
-                    ? new DatabaseColumn ((FieldInfo)member, column)
-                    : new DatabaseColumn ((PropertyInfo)member, column);
+                DatabaseColumn<T> c = member is FieldInfo
+                    ? new DatabaseColumn<T> ((FieldInfo)member, column)
+                    : new DatabaseColumn<T> ((PropertyInfo)member, column);
                 
-                foreach (DatabaseColumn col in columns) {
+                foreach (DatabaseColumn<T> col in columns) {
                     if (col.Name == c.Name) {
                         throw new Exception (String.Format (
                             "{0} has multiple columns named {1}",
@@ -216,9 +216,9 @@ namespace Hyena.Data.Sqlite
             VirtualDatabaseColumnAttribute virtual_column = attribute as VirtualDatabaseColumnAttribute;
             if (virtual_column != null) {
                 if (member is FieldInfo) {
-                    virtual_columns.Add (new VirtualDatabaseColumn ((FieldInfo) member, virtual_column));
+                    virtual_columns.Add (new VirtualDatabaseColumn<T> ((FieldInfo) member, virtual_column));
                 } else {
-                    virtual_columns.Add (new VirtualDatabaseColumn ((PropertyInfo) member, virtual_column));
+                    virtual_columns.Add (new VirtualDatabaseColumn<T> ((PropertyInfo) member, virtual_column));
                 }
             }
         }
@@ -226,7 +226,7 @@ namespace Hyena.Data.Sqlite
         protected virtual void CreateTable ()
         {
             connection.Execute (CreateCommand);
-            foreach (DatabaseColumn column in columns) {
+            foreach (DatabaseColumn<T> column in columns) {
                 if (column.Index != null) {
                     connection.Execute (String.Format (
                         "CREATE INDEX {0} ON {1}({2})",
@@ -241,7 +241,7 @@ namespace Hyena.Data.Sqlite
             if (((int)key.GetValue (target)) > 0) {
                 Update (target);
             } else {
-                key.SetValue (target, Insert (target));
+                key.SetIntValue (target, Insert (target));
             }
         }
         
@@ -297,14 +297,14 @@ namespace Hyena.Data.Sqlite
         {
             int i = 0;
             
-            AbstractDatabaseColumn bad_column = null;
+            AbstractDatabaseColumn<T> bad_column = null;
             try {
-                foreach (DatabaseColumn column in select_columns) {
+                foreach (DatabaseColumn<T> column in select_columns) {
                     bad_column = column;
                     column.SetValue (target, reader, i++);
                 }
                 
-                foreach (VirtualDatabaseColumn column in virtual_columns) {
+                foreach (VirtualDatabaseColumn<T> column in virtual_columns) {
                     bad_column = column;
                     column.SetValue (target, reader, i++);
                 }
@@ -383,7 +383,7 @@ namespace Hyena.Data.Sqlite
 
         public void Copy (T original, T copy)
         {
-            foreach (DatabaseColumn column in select_columns) {
+            foreach (DatabaseColumn<T> column in select_columns) {
                 if (column != key) {
                     column.SetValue (copy, column.GetRawValue (original));
                 }
@@ -398,7 +398,7 @@ namespace Hyena.Data.Sqlite
                     builder.Append (TableName);
                     builder.Append ('(');
                     bool first = true;
-                    foreach (DatabaseColumn column in columns) {
+                    foreach (DatabaseColumn<T> column in columns) {
                         if (first) {
                             first = false;
                         } else {
@@ -420,7 +420,7 @@ namespace Hyena.Data.Sqlite
                     StringBuilder cols = new StringBuilder ();
                     StringBuilder vals = new StringBuilder ();
                     bool first = true;
-                    foreach (DatabaseColumn column in columns) {
+                    foreach (DatabaseColumn<T> column in columns) {
                         if (column != key) {
                             if (first) {
                                 first = false;
@@ -450,7 +450,7 @@ namespace Hyena.Data.Sqlite
                     builder.Append (TableName);
                     builder.Append (" SET ");
                     bool first = true;
-                    foreach (DatabaseColumn column in columns) {
+                    foreach (DatabaseColumn<T> column in columns) {
                         if (column != key) {
                             if (first) {
                                 first = false;
@@ -558,7 +558,7 @@ namespace Hyena.Data.Sqlite
         {
             StringBuilder select_builder = new StringBuilder ();
             bool first = true;
-            foreach (DatabaseColumn column in select_columns) {
+            foreach (DatabaseColumn<T> column in select_columns) {
                 if (first) {
                     first = false;
                 } else {
@@ -573,7 +573,7 @@ namespace Hyena.Data.Sqlite
             Dictionary<string, string> tables = new Dictionary<string,string> (virtual_columns.Count + 1);
             tables.Add (TableName, null);
             bool first_virtual = true;
-            foreach (VirtualDatabaseColumn column in virtual_columns) {
+            foreach (VirtualDatabaseColumn<T> column in virtual_columns) {
                 if (first_virtual) {
                     first_virtual = false;
                 } else {

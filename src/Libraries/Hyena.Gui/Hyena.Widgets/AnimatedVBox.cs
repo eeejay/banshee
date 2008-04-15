@@ -34,56 +34,8 @@ namespace Hyena.Widgets
 {
     public class AnimatedVBox : AnimatedBox
     {
-        protected override void OnSizeRequested (ref Requisition requisition)
+        public AnimatedVBox () : base (false)
         {
-            int width = 0;
-            int height = 0;
-            int rollover_Spacing = 0;
-            
-            foreach (AnimatedWidget widget in Widgets) {
-                Requisition req = widget.SizeRequest ();
-                widget.Size = req.Height + rollover_Spacing;
-                widget.Alloc.Y = rollover_Spacing;
-                
-                if (widget.IsFirst) {
-                    if (widget.Next != null) {
-                        if (widget.AnimationState != AnimationState.Idle) {
-                            widget.Size += Spacing;
-                        } else {
-                            widget.Size += EndSpacing;
-                            rollover_Spacing = StartSpacing;
-                        }
-                    }
-                } else if (widget.Next != null && widget.Next.IsLast && 
-                    widget.Next.AnimationState != AnimationState.Idle) {
-                    rollover_Spacing = Spacing;
-                } else if (!widget.IsLast) {
-                    widget.Size += EndSpacing;
-                    rollover_Spacing = StartSpacing;
-                }
-                
-                height += widget.Value;
-                if (req.Width > width) {
-                    width = req.Width;
-                }
-            }
-            
-            requisition.Width = width;
-            requisition.Height = height;
-        }
-        
-        protected override void OnSizeAllocated (Rectangle allocation)
-        {
-            base.OnSizeAllocated (allocation);
-            foreach (AnimatedWidget widget in Widgets) {
-                allocation.Height = widget.Value;
-                if (widget.Blocking == Blocking.Downstage) {
-                    widget.Alloc.Y += widget.Value - widget.Size;
-                }
-                widget.Alloc.Width = allocation.Width;
-                widget.SizeAllocate (allocation);
-                allocation.Y += allocation.Height;
-            }
         }
     }
 }

@@ -29,28 +29,58 @@
 using System;
 using System.Data;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace Hyena.Data.Sqlite
 {
-    internal abstract class AbstractDatabaseColumn
+    internal abstract class AbstractDatabaseColumn<T>
     {
+        
+#region Dynamic Method stuff
+        
+        private delegate object GetDel (T target);
+        private delegate void SetDel (T target, IDataReader reader, int column);
+        private delegate void SetIntDel (T target, int value);
+        
+        private static readonly FieldInfo dateTimeMinValue = typeof (DateTime).GetField ("MinValue");
+        private static readonly MethodInfo dateTimeEquals = typeof (DateTime).GetMethod ("Equals", new Type[] { typeof (DateTime), typeof (DateTime) });
+        private static readonly FieldInfo timeSpanMinValue = typeof (TimeSpan).GetField ("MinValue");
+        private static readonly MethodInfo timeSpanEquals = typeof (TimeSpan).GetMethod ("Equals", new Type[] { typeof (TimeSpan), typeof (TimeSpan) });
+        private static readonly PropertyInfo timeSpanTotalMilliseconds = typeof (TimeSpan).GetProperty ("TotalMilliseconds");
+        private static readonly MethodInfo timeSpanFromMilliseconds = typeof (TimeSpan).GetMethod ("FromMilliseconds");
+        private static readonly MethodInfo fromDateTime = typeof (DateTimeUtil).GetMethod ("FromDateTime");
+        private static readonly MethodInfo toDateTime = typeof (DateTimeUtil).GetMethod ("ToDateTime");
+        private static readonly MethodInfo readerIsDbNull = typeof (IDataRecord).GetMethod ("IsDBNull");
+        private static readonly MethodInfo readerGetInt32 = typeof (IDataRecord).GetMethod ("GetInt32");
+        private static readonly MethodInfo readerGetInt64 = typeof (IDataRecord).GetMethod ("GetInt64");
+        private static readonly MethodInfo readerGetString = typeof (IDataRecord).GetMethod ("GetString");
+        
+        private GetDel get_del;
+        private GetDel get_raw_del;
+        private SetDel set_del;
+        private SetIntDel set_int_del;
+        
+#endregion
+        
         private readonly FieldInfo field_info;
         private readonly PropertyInfo property_info;
         private readonly Type type;
         private readonly string column_type;
         private readonly string name;
+        private readonly bool select;
         
         protected AbstractDatabaseColumn (FieldInfo field_info, AbstractDatabaseColumnAttribute attribute)
             : this (attribute, field_info, field_info.FieldType)
         {
             this.field_info = field_info;
+            BuildMethods ();
         }
         
         protected AbstractDatabaseColumn (PropertyInfo property_info, AbstractDatabaseColumnAttribute attribute) :
             this (attribute, property_info, property_info.PropertyType)
         {
-            if (!property_info.CanRead || (attribute.Select && !property_info.CanWrite)) {
+            if (!property_info.CanRead || (select && !property_info.CanWrite)) {
                 throw new Exception (String.Format (
                     "{0}: The property {1} must have both a get and a set " +
                     "block in order to be bound to a database column.",
@@ -59,6 +89,7 @@ namespace Hyena.Data.Sqlite
                 );
             }
             this.property_info = property_info;
+            BuildMethods ();
         }
         
         private AbstractDatabaseColumn (AbstractDatabaseColumnAttribute attribute, MemberInfo member_info, Type type)
@@ -69,31 +100,190 @@ namespace Hyena.Data.Sqlite
                 throw new Exception(string.Format(
                     "{0}.{1}: {3}", member_info.DeclaringType, member_info.Name, e.Message));
             }
-            this.name = attribute.ColumnName ?? member_info.Name;
             this.type = type;
+            this.name = attribute.ColumnName ?? member_info.Name;
+            this.select = attribute.Select;
         }
+        
+#region Dynamic Method Construction
+        
+        private void BuildMethods ()
+        {
+            BuildGetMethod ();
+            BuildGetRawMethod ();
+            if (select) {
+                BuildSetMethod ();
+                if (type == typeof (int)) {
+                    BuildSetIntMethod ();
+                }
+            }
+        }
+        
+        private void BuildGetMethod ()
+        {
+            DynamicMethod method = new DynamicMethod (String.Format ("Get_{0}", name), typeof (object), new Type [] { typeof (T) }, typeof (T));
+            ILGenerator il = method.GetILGenerator ();
+            il.Emit (OpCodes.Ldarg_0);
+            if (field_info != null) {
+                il.Emit (OpCodes.Ldfld, field_info);
+            } else {
+                il.Emit (OpCodes.Call, property_info.GetGetMethod (true));
+            }
+            if (type == typeof (DateTime)) {
+                il.Emit (OpCodes.Dup);
+                il.Emit (OpCodes.Ldsfld, dateTimeMinValue);
+                il.Emit (OpCodes.Call, dateTimeEquals);
+                Label label = il.DefineLabel ();
+                il.Emit (OpCodes.Brfalse, label);
+                il.Emit (OpCodes.Pop);
+                il.Emit (OpCodes.Ldnull);
+                il.Emit (OpCodes.Ret);
+                il.MarkLabel (label);
+                il.Emit (OpCodes.Call, fromDateTime);
+                il.Emit (OpCodes.Box, typeof (long));
+            } else if (type == typeof (TimeSpan)) {
+                il.Emit (OpCodes.Ldsfld, timeSpanMinValue);
+                il.Emit (OpCodes.Call, timeSpanEquals);
+                Label label = il.DefineLabel ();
+                il.Emit (OpCodes.Brfalse_S, label);
+                il.Emit (OpCodes.Ldnull);
+                il.Emit (OpCodes.Ret);
+                il.MarkLabel (label);
+                if (field_info != null) {
+                    il.Emit (OpCodes.Ldarg_0);
+                    il.Emit (OpCodes.Ldflda, field_info);
+                } else {
+                    il.DeclareLocal (type);
+                    il.Emit (OpCodes.Ldarg_0);
+                    il.Emit (OpCodes.Call, property_info.GetGetMethod ());
+                    il.Emit (OpCodes.Stloc_0);
+                    il.Emit (OpCodes.Ldloca, 0);
+                }
+                il.Emit (OpCodes.Call, timeSpanTotalMilliseconds.GetGetMethod ());
+                il.Emit (OpCodes.Conv_I8);
+                il.Emit (OpCodes.Box, typeof (long));
+            } else if (type.IsEnum) {
+                il.Emit (OpCodes.Box, Enum.GetUnderlyingType (type));
+            } else if (type.IsValueType) {
+                il.Emit (OpCodes.Box, type);
+            }
+            il.Emit (OpCodes.Ret);
+            get_del = (GetDel)method.CreateDelegate (typeof (GetDel));
+        }
+        
+        private void BuildGetRawMethod ()
+        {
+            DynamicMethod method = new DynamicMethod (String.Format ("GetRaw_{0}", name), typeof (object), new Type [] { typeof (T) }, typeof (T));
+            ILGenerator il = method.GetILGenerator ();
+            il.Emit (OpCodes.Ldarg_0);
+            if (field_info != null) {
+                il.Emit (OpCodes.Ldfld, field_info);
+            } else {
+                il.Emit (OpCodes.Call, property_info.GetGetMethod (true));
+            }
+            if (type.IsValueType) {
+                il.Emit (OpCodes.Box, type);
+            }
+            il.Emit (OpCodes.Ret);
+            get_raw_del = (GetDel)method.CreateDelegate (typeof (GetDel));
+        }
+        
+        private void BuildAssignmentIL (ILGenerator il)
+        {
+            if (field_info != null) {
+                il.Emit (OpCodes.Stfld, field_info);
+            } else {
+                il.Emit (OpCodes.Call, property_info.GetSetMethod (true));
+            }
+            il.Emit (OpCodes.Ret);
+        }
+        
+        private void BuildSetMethod ()
+        {
+            DynamicMethod method = new DynamicMethod (String.Format ("Set_{0}", name), null, new Type [] { typeof (T), typeof (IDataReader), typeof (int) }, typeof (T));
+            ILGenerator il = method.GetILGenerator ();
+            il.Emit (OpCodes.Ldarg_0);
+            il.Emit (OpCodes.Ldarg_1);
+            il.Emit (OpCodes.Ldarg_2);
+            il.Emit (OpCodes.Callvirt, readerIsDbNull);
+            Label label_not_null = il.DefineLabel ();
+            il.Emit (OpCodes.Brfalse, label_not_null);
+            
+            if (type == typeof (DateTime)) {
+                il.Emit (OpCodes.Ldsfld, dateTimeMinValue);
+                Label label_end = il.DefineLabel ();
+                il.Emit (OpCodes.Br, label_end);
+                il.MarkLabel (label_not_null);
+                il.Emit (OpCodes.Ldarg_1);
+                il.Emit (OpCodes.Ldarg_2);
+                il.Emit (OpCodes.Callvirt, readerGetInt64);
+                il.Emit (OpCodes.Call, toDateTime);
+                il.MarkLabel (label_end);
+                BuildAssignmentIL (il);
+            } else if (type == typeof (TimeSpan)) {
+                il.Emit (OpCodes.Ldsfld, timeSpanMinValue);
+                Label label_end = il.DefineLabel ();
+                il.Emit (OpCodes.Br, label_end);
+                il.MarkLabel (label_not_null);
+                il.Emit (OpCodes.Ldarg_1);
+                il.Emit (OpCodes.Ldarg_2);
+                il.Emit (OpCodes.Callvirt, readerGetInt64);
+                il.Emit (OpCodes.Conv_R8);
+                il.Emit (OpCodes.Call, timeSpanFromMilliseconds);
+                il.MarkLabel (label_end);
+                BuildAssignmentIL (il);
+            } else {
+                il.Emit (OpCodes.Pop);
+                il.Emit (OpCodes.Ret);
+                il.MarkLabel (label_not_null);
+                il.Emit (OpCodes.Ldarg_1);
+                il.Emit (OpCodes.Ldarg_2);
+                MethodInfo getter = null;
+                if (type.IsValueType) {
+                    Type real_type = type.IsEnum ? Enum.GetUnderlyingType (type) : type;
+                    getter = real_type == typeof (int) ? readerGetInt32 : readerGetInt64;
+                } else {
+                    getter = readerGetString;
+                }
+                il.Emit (OpCodes.Callvirt, getter);
+                BuildAssignmentIL (il);
+            }
+            set_del = (SetDel)method.CreateDelegate (typeof (SetDel));
+        }
+        
+        private void BuildSetIntMethod ()
+        {
+            DynamicMethod method = new DynamicMethod (String.Format ("SetInt_{0}", name), null, new Type [] { typeof (T), typeof (int) }, typeof (T));
+            ILGenerator il = method.GetILGenerator ();
+            il.Emit (OpCodes.Ldarg_0);
+            il.Emit (OpCodes.Ldarg_1);
+            BuildAssignmentIL (il);
+            set_int_del = (SetIntDel)method.CreateDelegate (typeof (SetIntDel));
+        }
+        
+#endregion
 
-        public object GetRawValue (object target)
+        public object GetRawValue (T target)
         {
-            return field_info != null ? field_info.GetValue (target) : property_info.GetValue (target, null);
+            return get_raw_del (target);
         }
         
-        public object GetValue (object target)
+        public object GetValue (T target)
         {
-            object result = field_info != null
-                ? field_info.GetValue (target)
-                : property_info.GetValue (target, null);
-            return SqliteUtils.ToDbFormat (type, result);
+            return get_del (target);
         }
         
-        public void SetValue (object target, IDataReader reader, int column)
+        public void SetValue (T target, IDataReader reader, int column)
         {
-            // FIXME should we insist on nullable types?
-            object value = reader.IsDBNull (column) ? null : reader.GetValue (column);
-            SetValue (target, SqliteUtils.FromDbFormat(type, value));
+            set_del (target, reader, column);
         }
         
-        public void SetValue (object target, object value)
+        public void SetIntValue (T target, int value)
+        {
+            set_int_del (target, value);
+        }
+        
+        public void SetValue (T target, object value)
         {
             if (field_info != null) {
                 field_info.SetValue (target, value);
@@ -111,7 +301,7 @@ namespace Hyena.Data.Sqlite
         }
     }
     
-    internal sealed class DatabaseColumn : AbstractDatabaseColumn
+    internal sealed class DatabaseColumn<T> : AbstractDatabaseColumn<T>
     {
         private DatabaseColumnAttribute attribute;
         
@@ -147,7 +337,7 @@ namespace Hyena.Data.Sqlite
         
         public override bool Equals (object o)
         {
-            DatabaseColumn column = o as DatabaseColumn;
+            DatabaseColumn<T> column = o as DatabaseColumn<T>;
             return o != null && column.Name.Equals (Name);
         }
         
@@ -157,7 +347,7 @@ namespace Hyena.Data.Sqlite
         }
     }
     
-    internal sealed class VirtualDatabaseColumn : AbstractDatabaseColumn
+    internal sealed class VirtualDatabaseColumn<T> : AbstractDatabaseColumn<T>
     {
         private VirtualDatabaseColumnAttribute attribute;
         

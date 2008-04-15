@@ -43,27 +43,30 @@ namespace Hyena.Widgets
         Going
     }
     
-    internal sealed class AnimatedWidget : Container
+    internal class AnimatedWidget : Container
     {
         public event EventHandler WidgetDestroyed;
         
         public Widget Widget;
-        public Rectangle Alloc;
         public Easing Easing;
         public Blocking Blocking;
         public AnimationState AnimationState;
         public uint Duration;
         public double Bias = 1.0;
+        public int Width;
+        public int Height;
+        public int StartPadding;
+        public int EndPadding;
         public LinkedListNode <AnimatedWidget> Node;
         
+        private readonly bool horizontal;
         private double percent;
-        private int size;
-        private int value;
-        private bool has_value;
+        private Rectangle widget_alloc;
         private Pixmap canvas;
         
-        public AnimatedWidget (Widget widget, uint duration, Easing easing, Blocking blocking)
+        public AnimatedWidget (Widget widget, uint duration, Easing easing, Blocking blocking, bool horizontal)
         {
+            this.horizontal = horizontal;
             Widget = widget;
             Duration = duration;
             Easing = easing;
@@ -79,15 +82,23 @@ namespace Hyena.Widgets
         {
         }
         
+        public double Percent {
+            get { return percent; }
+            set {
+                percent = value * Bias;
+                QueueResize ();
+            }
+        }
+        
         private void OnWidgetDestroyed (object sender, EventArgs args)
         {
             if (!IsRealized) {
                 return;
             }
             
-            canvas = new Pixmap (GdkWindow, Alloc.Width, Alloc.Height);
+            canvas = new Pixmap (GdkWindow, widget_alloc.Width, widget_alloc.Height);
             canvas.DrawDrawable (Style.BackgroundGC (State), GdkWindow,
-                Alloc.X, Alloc.Y, 0, 0, Alloc.Width, Alloc.Height);
+                widget_alloc.X, widget_alloc.Y, 0, 0, widget_alloc.Width, widget_alloc.Height);
             
             if (AnimationState != AnimationState.Going) {
                 WidgetDestroyed (this, args);
@@ -110,18 +121,10 @@ namespace Hyena.Widgets
             
             Gdk.WindowAttr attributes = new Gdk.WindowAttr ();
             attributes.WindowType = Gdk.WindowType.Child;
-            attributes.X = Allocation.X;
-            attributes.Y = Allocation.Y;
-            attributes.Width = Allocation.Width;
-            attributes.Height = Allocation.Height;
             attributes.Wclass = Gdk.WindowClass.InputOutput;
             attributes.EventMask = (int)Gdk.EventMask.ExposureMask;
-            
-            Gdk.WindowAttributesType attributes_mask = 
-                Gdk.WindowAttributesType.X | 
-                Gdk.WindowAttributesType.Y;
                 
-            GdkWindow = new Gdk.Window (Parent.GdkWindow, attributes, attributes_mask);
+            GdkWindow = new Gdk.Window (Parent.GdkWindow, attributes, 0);
             GdkWindow.UserData = Handle;
             GdkWindow.Background = Style.Background (State);
             Style.Attach (GdkWindow);
@@ -131,27 +134,48 @@ namespace Hyena.Widgets
         {
             if (Widget != null) {
                 Requisition req = Widget.SizeRequest ();
-                Alloc.Width = req.Width;
-                Alloc.Height = req.Height;
+                widget_alloc.Width = req.Width;
+                widget_alloc.Height = req.Height;
             }
-            requisition.Width = Alloc.Width;
-            requisition.Height = Alloc.Height;
+            
+            if (horizontal) {
+                Width = Choreographer.Compose (percent, widget_alloc.Width + StartPadding + EndPadding, Easing);
+                Height = widget_alloc.Height;
+            } else {
+                Width = widget_alloc.Width;
+                Height = Choreographer.Compose (percent, widget_alloc.Height + StartPadding + EndPadding, Easing);
+            }
+            
+            requisition.Width = Width;
+            requisition.Height = Height;
         }
         
         protected override void OnSizeAllocated (Rectangle allocation)
         {
-            if (Widget != null) {
-                Widget.SizeAllocate (Alloc);
-            }
             base.OnSizeAllocated (allocation);
+            if (Widget != null) {
+                if (horizontal) {
+                    widget_alloc.Height = allocation.Height;
+                    widget_alloc.X = StartPadding;
+                    if (Blocking == Blocking.Downstage) {
+                        widget_alloc.X += allocation.Width - widget_alloc.Width;
+                    }
+                } else {
+                    widget_alloc.Width = allocation.Width;
+                    widget_alloc.Y = StartPadding;
+                    if (Blocking == Blocking.Downstage) {
+                        widget_alloc.Y = allocation.Height - widget_alloc.Height;
+                    }
+                }
+                Widget.SizeAllocate (widget_alloc);
+            }
         }
-
         
         protected override bool OnExposeEvent (EventExpose evnt)
         {
             if (canvas != null) {
                 GdkWindow.DrawDrawable (Style.BackgroundGC (State), canvas,
-                    0, 0, Alloc.X, Alloc.Y, Alloc.Width, Alloc.Height);
+                    0, 0, widget_alloc.X, widget_alloc.Y, widget_alloc.Width, widget_alloc.Height);
                 return true;
             } else {
                 return base.OnExposeEvent (evnt);
@@ -163,47 +187,6 @@ namespace Hyena.Widgets
             if (Widget != null) {
                 callback (Widget);
             }
-        }
-        
-#endregion
-        
-#region Properties
-        
-        public int Size {
-            get { return size; }
-            set {
-                size = value;
-                has_value = false;
-            }
-        }
-        
-        public double Percent {
-            get { return percent; }
-            set {
-                percent = value * Bias;
-                has_value = false;
-            }
-        }
-        
-        public int Value {
-            get {
-                if (!has_value) {
-                    this.value = Choreographer.Compose (percent, size, Easing);
-                }
-                return this.value;
-            }
-        }
-        
-        public bool IsFirst {
-            get { return Node.Previous == null; }
-        }
-        
-        public bool IsLast {
-            get { return Node.Next == null; }
-        }
-        
-        public AnimatedWidget Next {
-            get { return Node.Next == null ? null : Node.Next.Value; }
         }
         
 #endregion

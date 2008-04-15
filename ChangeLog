@@ -1,3 +1,34 @@
+2008-04-15  Scott Peterson <lunchtimemama@gmail.com> 
+
+	This patch does two things. First, it cleans up the AnimatedBox classes
+	and improves the spacing logic. Spacing should now behave correctly
+	under all situations. Second, we use Relfection.Emit to compile IL that
+	gets and sets database-bound members to and from the database
+	formats. We were previously using regular old relfection. This puts to
+	rest any concerns about the performance of an attribute-based
+	model design.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Changed
+	to handle generic DatabaseColumn.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Made
+	DatabaseColumn classes generic. Generate IL for saving/loading data
+	to database-bound members.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs: Previously
+	there was a lot of code dup between AnimatedVBox and AnimatedHBox
+	with the only differences being the height/width properties. All
+	size negotiation is now done in the abstract AnimatedBox which has
+	a "horizontal" bool in its protected constructor.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedVBox.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedHBox.cs: Moved logic
+	into base class.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedWidget.cs:
+	AnimatedWidgets now have thier own size computation logic. They
+	also have a horizontal bool in the ctor.
+
 2008-04-13  Christopher James Halse Rogers  <chalserogers@gmail.com>
 
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:

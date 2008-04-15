@@ -39,35 +39,26 @@ namespace Hyena.Widgets
     public abstract class AnimatedBox : Container
     {
         private readonly Stage<AnimatedWidget> stage = new Stage<AnimatedWidget> ();
-        private readonly Queue<AnimatedWidget> expired = new Queue<AnimatedWidget> ();
         private readonly LinkedList<AnimatedWidget> children = new LinkedList<AnimatedWidget> ();
         private readonly object children_mutex = new object ();
-        
-        private int spacing;
-        
-        private int start_spacing;
-        protected int StartSpacing {
-            get { return start_spacing; }
-        }
-        
-        private int end_spacing;
-        protected int EndSpacing {
-            get { return end_spacing; }
-        }
+        private readonly bool horizontal;
         
         private uint duration = 500;
         private Easing easing = Easing.Linear;
         private Blocking blocking = Blocking.Upstage;
+        private int spacing;
+        private int start_spacing;
+        private int end_spacing;
         
-        protected AnimatedBox ()
+        protected AnimatedBox (bool horizontal)
         {
             WidgetFlags |= WidgetFlags.NoWindow;
-            
+            this.horizontal = horizontal;
             stage.ActorStep += OnActorStep;
             stage.Iteration += OnIteration;
         }
         
-#region Private Methods
+#region Private
         
         private bool OnActorStep (Actor<AnimatedWidget> actor)
         {
@@ -88,9 +79,9 @@ namespace Hyena.Widgets
                 case AnimationState.Going:
                     if (actor.Expired) {
                         lock (children_mutex) {
+                            actor.Target.Unparent ();
                             children.Remove (actor.Target.Node);
                         }
-                        expired.Enqueue (actor.Target);
                         return false;
                     } else {
                         actor.Target.Percent = 1.0 - actor.Percent;
@@ -104,21 +95,150 @@ namespace Hyena.Widgets
         
         private void OnIteration (object sender, EventArgs args)
         {
-            // When widgets are disposed, their hash code changes (zee uber lame).
-            // We would otherwise do this up in OnActorStep, but the has code needs
-            // to remain the same so that the actor can be removed from the stage.
-            while (expired.Count > 0) {
-                AnimatedWidget widget = expired.Dequeue ();
-                widget.Unparent ();
-                widget.Dispose ();
-            }
-            
-            QueueResizeNoRedraw ();
+            QueueResize ();
         }
         
         private void OnWidgetDestroyed (object sender, EventArgs args)
         {
             RemoveCore ((AnimatedWidget)sender);
+        }
+        
+        private void RecalculateSpacings ()
+        {
+            int skip_count = 0;
+            
+            foreach (AnimatedWidget animated_widget in Widgets) {
+                animated_widget.QueueResizeNoRedraw ();
+                if (skip_count > 1) {
+                    skip_count--;
+                    continue;
+                }
+                AnimatedWidget widget = animated_widget;
+                
+                if (skip_count == 0) {
+                    widget.StartPadding = start_spacing;
+                } else {
+                    skip_count--;
+                }
+                widget.EndPadding = end_spacing;
+                if (widget.Node.Previous == null) {
+                    while (true) {
+                        widget.StartPadding = 0;
+                        if (widget.AnimationState == AnimationState.Coming ||
+                            widget.AnimationState == AnimationState.Idle || widget.Node.Next == null) {
+                            break;
+                        }
+                        widget.EndPadding = spacing;
+                        widget = widget.Node.Next.Value;
+                        skip_count++;
+                    }
+                }
+                if (widget.Node.Next == null) {
+                    while (true) {
+                        widget.EndPadding = 0;
+                        if (widget.AnimationState == AnimationState.Coming ||
+                            widget.AnimationState == AnimationState.Idle || widget.Node.Previous == null) {
+                            break;
+                        }
+                        widget.StartPadding = spacing;
+                        widget = widget.Node.Previous.Value;
+                    }
+                }
+            }
+        }
+        
+#endregion
+        
+#region Protected Overrides
+        
+        protected override void OnAdded (Widget widget)
+        {
+            PackStart (widget, duration, easing, blocking);
+        }
+        
+        protected override void OnSizeRequested (ref Requisition requisition)
+        {
+            int width = 0;
+            int height = 0;
+            
+            foreach (AnimatedWidget widget in Widgets) {
+                Requisition req = widget.SizeRequest ();
+                if (horizontal) {
+                    width += req.Width;
+                    height = Math.Max (height, req.Height);
+                } else {
+                    width = Math.Max (width, req.Width);
+                    height += req.Height;
+                }
+            }
+            
+            requisition.Width = width;
+            requisition.Height = height;
+        }
+
+        protected override void OnSizeAllocated (Rectangle allocation)
+        {
+            base.OnSizeAllocated (allocation);
+            
+            foreach (AnimatedWidget widget in Widgets) {
+                if (horizontal) {
+                    allocation.Width = widget.Width;
+                    widget.SizeAllocate (allocation);
+                    allocation.X += allocation.Width;
+                } else {
+                    allocation.Height = widget.Height;
+                    widget.SizeAllocate (allocation);
+                    allocation.Y += allocation.Height;
+                }
+            }
+        }
+        
+        protected override void ForAll (bool include_internals, Callback callback)
+        {
+            foreach (AnimatedWidget child in Widgets) {
+                callback (child);
+            }
+        }
+        
+#endregion
+        
+#region Public
+                
+#region Properties
+        
+        public uint Duration {
+            get { return duration; }
+            set { duration = value; }
+        }
+        
+        public Easing Easing {
+            get { return easing; }
+            set { easing = value; }
+        }
+        
+        public Blocking Blocking {
+            get { return blocking; }
+            set { blocking = value; }
+        }
+        
+        public int Spacing {
+            get { return spacing; }
+            set {
+                spacing = value;
+                double half = (double)value / 2.0;
+                start_spacing = (int)Math.Ceiling (half);
+                end_spacing = (int)Math.Floor (half);
+            }
+        }
+        
+        internal IEnumerable<AnimatedWidget> Widgets {
+            get {
+                lock (children_mutex) {
+                    foreach (AnimatedWidget child in children) {
+                        yield return child;
+                    }
+                }
+            }
         }
         
 #endregion
@@ -162,10 +282,7 @@ namespace Hyena.Widgets
         
         public void PackStart (Widget widget, uint duration, Easing easing, Blocking blocking)
         {
-            AnimatedWidget animated_widget = Pack (widget, duration, easing, blocking);
-            lock (children_mutex) {
-                animated_widget.Node = children.AddFirst (animated_widget);
-            }
+            Pack (widget, duration, easing, blocking, false);
         }
         
         public void PackEnd (Widget widget)
@@ -205,23 +322,26 @@ namespace Hyena.Widgets
         
         public void PackEnd (Widget widget, uint duration, Easing easing, Blocking blocking)
         {
-            AnimatedWidget animated_widget = Pack (widget, duration, easing, blocking);
-            lock (children_mutex) {
-                animated_widget.Node = children.AddLast (animated_widget);
-            }
+            Pack (widget, duration, easing, blocking, true);
         }
         
-        private AnimatedWidget Pack (Widget widget, uint duration, Easing easing, Blocking blocking)
+        private void Pack (Widget widget, uint duration, Easing easing, Blocking blocking, bool end)
         {
             if (widget == null) {
                 throw new ArgumentNullException ("widget");
             }
             
-            AnimatedWidget animated_widget = new AnimatedWidget (widget, duration, easing, blocking);
+            AnimatedWidget animated_widget = new AnimatedWidget (widget, duration, easing, blocking, horizontal);
             animated_widget.Parent = this;
             animated_widget.WidgetDestroyed += OnWidgetDestroyed;
             stage.Add (animated_widget, duration);
-            return animated_widget;
+            lock (children_mutex) {
+                animated_widget.Node = end 
+                    ? children.AddLast (animated_widget)
+                    : children.AddFirst (animated_widget);
+            }
+            
+            RecalculateSpacings ();
         }
         
 #endregion
@@ -287,6 +407,7 @@ namespace Hyena.Widgets
             }
             
             RemoveCore (animated_widget, duration, easing, blocking, use_easing, use_blocking);
+            RecalculateSpacings ();
         }
         
         private void RemoveCore (AnimatedWidget widget)
@@ -328,10 +449,6 @@ namespace Hyena.Widgets
             }
         }
         
-#endregion
-        
-#region Other Public Methods
-        
         public void RemoveAll ()
         {
             foreach (AnimatedWidget child in Widgets) {
@@ -339,7 +456,11 @@ namespace Hyena.Widgets
                     RemoveCore (child);
                 }
             }
+            
+            RecalculateSpacings ();
         }
+        
+#endregion
         
         public bool Contains (Widget widget)
         {
@@ -348,66 +469,7 @@ namespace Hyena.Widgets
                     return true;
                 }
             }
-            
             return false;
-        }
-        
-#endregion
-        
-#region Overrides
-        
-        protected override void OnAdded (Widget widget)
-        {
-            PackStart (widget, duration, easing, blocking);
-        }
-        
-        protected override void ForAll (bool include_internals, Callback callback)
-        {
-            foreach (AnimatedWidget child in Widgets) {
-                callback (child);
-            }
-        }
-        
-#endregion
-        
-#region Properties
-        
-        public int Spacing {
-            get { return spacing; }
-            set {
-                if (value < 0) {
-                    throw new ArgumentOutOfRangeException ("value", "Spacing cannot be less than 0.");
-                }
-                spacing = value;
-                double half = (double)spacing / 2.0;
-                start_spacing = (int)Math.Floor (half);
-                end_spacing = (int)Math.Ceiling (half);
-            }
-        }
-        
-        public uint Duration {
-            get { return duration; }
-            set { duration = value; }
-        }
-        
-        public Easing Easing {
-            get { return easing; }
-            set { easing = value; }
-        }
-        
-        public Blocking Blocking {
-            get { return blocking; }
-            set { blocking = value; }
-        }
-        
-        internal IEnumerable<AnimatedWidget> Widgets {
-            get {
-                lock (children_mutex) {
-                    foreach (AnimatedWidget child in children) {
-                        yield return child;
-                    }
-                }
-            }
         }
         
 #endregion

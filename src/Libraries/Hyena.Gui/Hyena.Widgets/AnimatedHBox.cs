@@ -34,41 +34,8 @@ namespace Hyena.Widgets
 {
     public class AnimatedHBox : AnimatedBox
     {
-        protected override void OnSizeRequested (ref Requisition requisition)
+        public AnimatedHBox () : base (true)
         {
-            int width = 0;
-            int height = 0;
-            
-            foreach (AnimatedWidget widget in Widgets) {
-                Requisition req = widget.SizeRequest ();
-                widget.Size = req.Width + Spacing;
-                width += widget.Value;
-                
-                if (req.Height > height) {
-                    height = req.Height;
-                }
-            }
-            
-            requisition.Width = width;
-            requisition.Height = height;
-        }
-        
-        protected override void OnSizeAllocated (Rectangle allocation)
-        {
-            base.OnSizeAllocated (allocation);
-            
-            foreach (AnimatedWidget widget in Widgets) {
-                allocation.Width = widget.Value;
-                widget.Alloc.X = StartSpacing;
-                
-                if (widget.Blocking == Blocking.Downstage) {
-                    widget.Alloc.X += widget.Value - widget.Size;
-                }
-                
-                widget.Alloc.Height = allocation.Height;
-                widget.SizeAllocate (allocation);
-                allocation.X += allocation.Width;
-            }
         }
     }
 }
