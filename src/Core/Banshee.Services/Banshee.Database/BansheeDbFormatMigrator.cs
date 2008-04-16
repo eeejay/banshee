@@ -352,7 +352,7 @@ namespace Banshee.Database
                     StringID            TEXT UNIQUE
                 )
             ");
-            Execute ("INSERT INTO CorePrimarySources (StringID) VALUES ('Library')");
+            Execute ("INSERT INTO CorePrimarySources (StringID) VALUES ('MusicLibrarySource-Library')");
 
             // TODO add these:
             // Others to consider:

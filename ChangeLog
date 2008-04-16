@@ -1,5 +1,12 @@
 2008-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	When the CorePrimarySource table was modified a few commits back (after
+	Alpha 3, I think) I forgot to make the change for new databases as well.
+	Patch from Bertrand Lorentz, fixes BGO #528469.
+
+2008-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Fix bug
 	introduced by Alex's last commit.  Fix a couple style issues.
 
