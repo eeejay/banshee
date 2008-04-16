@@ -86,7 +86,7 @@ namespace Hyena.Widgets
             get { return percent; }
             set {
                 percent = value * Bias;
-                QueueResize ();
+                QueueResizeNoRedraw ();
             }
         }
         

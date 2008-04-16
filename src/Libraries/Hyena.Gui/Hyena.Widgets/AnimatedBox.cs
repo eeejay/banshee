@@ -40,7 +40,7 @@ namespace Hyena.Widgets
     {
         private readonly Stage<AnimatedWidget> stage = new Stage<AnimatedWidget> ();
         private readonly LinkedList<AnimatedWidget> children = new LinkedList<AnimatedWidget> ();
-        private readonly object children_mutex = new object ();
+        private readonly SingleActorStage border_stage = new Hyena.Gui.Theatrics.SingleActorStage ();
         private readonly bool horizontal;
         
         private uint duration = 500;
@@ -49,53 +49,66 @@ namespace Hyena.Widgets
         private int spacing;
         private int start_spacing;
         private int end_spacing;
+        private int active_count;
+        
+        private int border;
+        private double border_bias;
+        private Easing border_easing;
+        private AnimationState border_state;
         
         protected AnimatedBox (bool horizontal)
         {
             WidgetFlags |= WidgetFlags.NoWindow;
             this.horizontal = horizontal;
             stage.ActorStep += OnActorStep;
-            stage.Iteration += OnIteration;
+            border_stage.Iteration += OnBorderIteration;
         }
         
 #region Private
         
+        private double Percent {
+            get { return border_stage.Actor.Percent * border_bias + (1.0 - border_bias); }
+        }
+        
         private bool OnActorStep (Actor<AnimatedWidget> actor)
         {
-            lock (actor.Target) {
-                switch (actor.Target.AnimationState) {
-                case AnimationState.Coming:
-                    actor.Target.Percent = actor.Percent;
-                    if (actor.Expired) {
-                        actor.Target.AnimationState = AnimationState.Idle;
-                        return false;
-                    }
-                    break;
-                case AnimationState.IntendingToGo:
-                    actor.Target.AnimationState = AnimationState.Going;
-                    actor.Target.Bias = actor.Percent;
-                    actor.Reset ((uint)(actor.Target.Duration * actor.Percent));
-                    break;
-                case AnimationState.Going:
-                    if (actor.Expired) {
-                        lock (children_mutex) {
-                            actor.Target.Unparent ();
-                            children.Remove (actor.Target.Node);
-                        }
-                        return false;
-                    } else {
-                        actor.Target.Percent = 1.0 - actor.Percent;
-                    }
-                    break;
+            switch (actor.Target.AnimationState) {
+            case AnimationState.Coming:
+                actor.Target.Percent = actor.Percent;
+                if (actor.Expired) {
+                    actor.Target.AnimationState = AnimationState.Idle;
+                    return false;
                 }
+                break;
+            case AnimationState.IntendingToGo:
+                actor.Target.AnimationState = AnimationState.Going;
+                actor.Target.Bias = actor.Percent;
+                actor.Reset ((uint)(actor.Target.Duration * actor.Percent));
+                break;
+            case AnimationState.Going:
+                if (actor.Expired) {
+                    actor.Target.Unparent ();
+                    children.Remove (actor.Target.Node);
+                    return false;
+                } else {
+                    actor.Target.Percent = 1.0 - actor.Percent;
+                }
+                break;
             }
             
             return true;
         }
         
-        private void OnIteration (object sender, EventArgs args)
+        private void OnBorderIteration (object sender, EventArgs args)
         {
-            QueueResize ();
+            if (border_stage.Actor == null) {
+                border = border_state == AnimationState.Coming ? (int)BorderWidth : 0;
+                border_state = AnimationState.Idle;
+            } else {
+                double percent = border_state == AnimationState.Coming ? Percent : 1.0 - Percent;
+                border = Choreographer.Compose (percent, (int)BorderWidth, border_easing);
+            }
+            QueueResizeNoRedraw ();
         }
         
         private void OnWidgetDestroyed (object sender, EventArgs args)
@@ -121,6 +134,7 @@ namespace Hyena.Widgets
                     skip_count--;
                 }
                 widget.EndPadding = end_spacing;
+                
                 if (widget.Node.Previous == null) {
                     while (true) {
                         widget.StartPadding = 0;
@@ -133,6 +147,7 @@ namespace Hyena.Widgets
                         skip_count++;
                     }
                 }
+                
                 if (widget.Node.Next == null) {
                     while (true) {
                         widget.EndPadding = 0;
@@ -161,6 +176,12 @@ namespace Hyena.Widgets
             int width = 0;
             int height = 0;
             
+            if (horizontal) {
+                width = border * 2;
+            } else {
+                height = border * 2;
+            }
+            
             foreach (AnimatedWidget widget in Widgets) {
                 Requisition req = widget.SizeRequest ();
                 if (horizontal) {
@@ -179,6 +200,15 @@ namespace Hyena.Widgets
         protected override void OnSizeAllocated (Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
+            if (horizontal) {
+                allocation.X += border;
+                allocation.Y += (int)BorderWidth;
+                allocation.Height -= (int)BorderWidth * 2;
+            } else {
+                allocation.X += (int)BorderWidth;
+                allocation.Y += border;
+                allocation.Width -= (int)BorderWidth * 2;
+            }
             
             foreach (AnimatedWidget widget in Widgets) {
                 if (horizontal) {
@@ -233,10 +263,8 @@ namespace Hyena.Widgets
         
         internal IEnumerable<AnimatedWidget> Widgets {
             get {
-                lock (children_mutex) {
-                    foreach (AnimatedWidget child in children) {
-                        yield return child;
-                    }
+                foreach (AnimatedWidget child in children) {
+                    yield return child;
                 }
             }
         }
@@ -335,13 +363,22 @@ namespace Hyena.Widgets
             animated_widget.Parent = this;
             animated_widget.WidgetDestroyed += OnWidgetDestroyed;
             stage.Add (animated_widget, duration);
-            lock (children_mutex) {
-                animated_widget.Node = end 
-                    ? children.AddLast (animated_widget)
-                    : children.AddFirst (animated_widget);
-            }
+            animated_widget.Node = end 
+                ? children.AddLast (animated_widget)
+                : children.AddFirst (animated_widget);
             
             RecalculateSpacings ();
+            if (active_count == 0) {
+                if (border_state == AnimationState.Going) {
+                    border_bias = Percent;
+                } else {
+                    border_easing = easing;
+                    border_bias = 1.0;
+                }
+                border_state = AnimationState.Coming;
+                border_stage.Reset ((uint)(duration * border_bias));
+            }
+            active_count++;
         }
         
 #endregion
@@ -417,35 +454,47 @@ namespace Hyena.Widgets
         
         private void RemoveCore (AnimatedWidget widget, uint duration, Easing easing, Blocking blocking, bool use_easing, bool use_blocking)
         {
-            lock (widget) {
-                if (duration > 0) {
-                    widget.Duration = duration;
-                }
-                
-                if (use_easing) {
-                    widget.Easing = easing;
-                }
-                
-                if (use_blocking) {
-                    widget.Blocking = blocking;
-                }
+            if (duration > 0) {
+                widget.Duration = duration;
+            }
             
-                if (widget.AnimationState == AnimationState.Coming) {
-                    widget.AnimationState = AnimationState.IntendingToGo;
-                } else {
-                    if (widget.Easing == Easing.QuadraticIn) {
-                        widget.Easing = Easing.QuadraticOut;
-                    } else if (widget.Easing == Easing.QuadraticOut) {
-                        widget.Easing = Easing.QuadraticIn;
-                    } else if (widget.Easing == Easing.ExponentialIn) {
-                        widget.Easing = Easing.ExponentialOut;
-                    } else if (widget.Easing == Easing.ExponentialOut) {
-                        widget.Easing = Easing.ExponentialIn;
-                    }
-                    
-                    widget.AnimationState = AnimationState.Going;
-                    stage.Add (widget, widget.Duration);
+            if (use_easing) {
+                widget.Easing = easing;
+            }
+            
+            if (use_blocking) {
+                widget.Blocking = blocking;
+            }
+        
+            if (widget.AnimationState == AnimationState.Coming) {
+                widget.AnimationState = AnimationState.IntendingToGo;
+            } else {
+                if (widget.Easing == Easing.QuadraticIn) {
+                    widget.Easing = Easing.QuadraticOut;
+                } else if (widget.Easing == Easing.QuadraticOut) {
+                    widget.Easing = Easing.QuadraticIn;
+                } else if (widget.Easing == Easing.ExponentialIn) {
+                    widget.Easing = Easing.ExponentialOut;
+                } else if (widget.Easing == Easing.ExponentialOut) {
+                    widget.Easing = Easing.ExponentialIn;
                 }
+                widget.AnimationState = AnimationState.Going;
+                stage.Add (widget, widget.Duration);
+            }
+            
+            duration = widget.Duration;
+            easing = widget.Easing;
+            
+            active_count--;
+            if (active_count == 0) {
+                if (border_state == AnimationState.Coming) {
+                    border_bias = Percent;
+                } else {
+                    border_easing = easing;
+                    border_bias = 1.0;
+                }
+                border_state = AnimationState.Going;
+                border_stage.Reset ((uint)(duration * border_bias));
             }
         }
         
@@ -456,7 +505,6 @@ namespace Hyena.Widgets
                     RemoveCore (child);
                 }
             }
-            
             RecalculateSpacings ();
         }
         

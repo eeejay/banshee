@@ -1,3 +1,15 @@
+2008-04-16  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs: Added support
+	for BorderWidth. Sexeh!
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedWidget.cs: Use
+	QueueRedrawNoResize rather than QueueRedraw. This makes things
+	smoother with Downstage blocking.
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/SingleActorStage.cs: Add
+	an overload for Reload which takes a new duration.
+
 2008-04-15  Scott Peterson <lunchtimemama@gmail.com> 
 
 	This patch does two things. First, it cleans up the AnimatedBox classes

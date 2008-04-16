@@ -52,6 +52,11 @@ namespace Hyena.Gui.Theatrics
             AddOrReset (target);
         }
         
+        public void Reset (uint duration)
+        {
+            AddOrReset (target, duration);
+        }
+        
         public Actor<object> Actor {
             get { return this[target]; }
         }
