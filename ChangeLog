@@ -1,3 +1,9 @@
+2008-04-16  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* build/build.environment.mk
+	* src/Extensions/Banshee.Daap/Daap/ServiceLocator.cs: We don't like
+	bandaids.
+
 2008-04-16  Wouter Bolsterlee  <wbolster@svn.gnome.org>
 
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:

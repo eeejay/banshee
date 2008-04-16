@@ -17,8 +17,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#define USE_AVAHI_SHARP
-
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -26,12 +24,7 @@ using System.Text;
 using System.Collections.Generic;
 
 using Hyena;
-
-#if USE_AVAHI_SHARP
-using Avahi;
-#else
 using Mono.Zeroconf;
-#endif
 
 namespace Daap {
 
@@ -85,146 +78,6 @@ namespace Daap {
         }
     }
     
-#if USE_AVAHI_SHARP
-    public class ServiceLocator
-    {
-        private Avahi.Client client;
-        private ServiceBrowser browser;
-        private Dictionary <string, Service> services = new Dictionary <string, Service> ();
-        private List <ServiceResolver> resolvers = new List <ServiceResolver> ();
-        private bool showLocals = false;
-
-        public event ServiceHandler Found;
-        public event ServiceHandler Removed;
-
-        public bool ShowLocalServices {
-            get { return showLocals; }
-            set { showLocals = value; }
-        }
-        
-        public Service [] Services {
-            get {
-                Service [] ret = new Service [services.Count];
-                services.Values.CopyTo (ret, 0);
-                return ret;
-            }
-        }
-        
-        public ServiceLocator ()
-        {
-            Log.Debug ("ServiceLocator backend", "using Avahi.");
-        }
-
-        public void Start ()
-        {
-            if (client == null) {
-                client = new Avahi.Client ();
-                browser = new ServiceBrowser (client, "_daap._tcp");
-                browser.ServiceAdded += OnServiceAdded;
-                browser.ServiceRemoved += OnServiceRemoved;
-            }
-        }
-
-        public void Stop ()
-        {
-            if (client != null) {
-                services.Clear ();
-                browser.Dispose ();
-                client.Dispose ();
-                client = null;
-                browser = null;
-            }
-        }
-
-        private void OnServiceAdded (object o, ServiceInfoArgs args)
-        {
-            if ((args.Service.Flags & LookupResultFlags.Local) > 0 && !showLocals)
-                return;
-            
-            Log.DebugFormat ("Got {0}, trying to resolve...", args.Service.Name);
-            
-            ServiceResolver resolver = new ServiceResolver (client, args.Service);
-            resolvers.Add (resolver);
-            resolver.Found += OnServiceResolved;
-            resolver.Timeout += OnServiceTimeout;
-        }
-
-        private void OnServiceResolved (object o, ServiceInfoArgs args)
-        {
-            ServiceResolver resolver = o as ServiceResolver;
-            resolvers.Remove (resolver);
-            resolver.Dispose ();
-
-            string name = args.Service.Name;
-            
-            Log.DebugFormat ("Managed to resolve {0}.", name);
-            
-            bool pwRequired = false;
-
-            // iTunes tacks this on to indicate a passsword protected share.  Ugh.
-            if (name.EndsWith ("_PW")) {
-                name = name.Substring (0, name.Length - 3);
-                pwRequired = true;
-            }
-            
-            foreach (byte[] txt in args.Service.Text) {
-                string txtstr = Encoding.UTF8.GetString (txt);
-
-                string[] splitstr = txtstr.Split('=');
-
-                if (splitstr.Length < 2)
-                    continue;
-
-                if (splitstr[0].ToLower () == "password")
-                    pwRequired = splitstr[1].ToLower () == "true";
-                else if (splitstr[0].ToLower () == "machine name")
-                    name = splitstr[1];
-            }
-            
-            IPAddress address = args.Service.Address;
-            
-            Log.DebugFormat ("OnServiceResolved provided {0}", address);
-            
-            // XXX: Workaround a Mono bug where we can't resolve IPv6 addresses properly
-            if (services.ContainsKey (name) && address.AddressFamily == AddressFamily.InterNetworkV6) {
-                // Only skip this service if it resolves to a IPv6 address, and we *already have info
-                // for this service already*.
-                Log.Debug ("Skipping service", "already have IPv4 address.");
-                return;
-            }
-
-            Service svc = new Service (address, args.Service.Port,
-                                       name, pwRequired);
-
-            if (services.ContainsKey (name)) {
-                services[name] = svc;
-            } else {
-                services.Add (name, svc);
-            }
-
-            if (Found != null)
-                Found (this, new ServiceArgs (svc));
-        }
-
-        private void OnServiceTimeout (object o, EventArgs args)
-        {
-            Log.Warning ("Failed to resolve", false);
-        }
-
-        private void OnServiceRemoved (object o, ServiceInfoArgs args)
-        {
-            if (services.ContainsKey (args.Service.Name)) {
-                Service svc = (Service) services[args.Service.Name];
-                services.Remove (svc.Name);
-
-                if (Removed != null)
-                    Removed (this, new ServiceArgs (svc));
-            }
-        }
-    }
-
-#else
-
     public class ServiceLocator {
         
         private ServiceBrowser browser;
@@ -347,5 +200,4 @@ namespace Daap {
             }
         }
     }
-#endif
 }
