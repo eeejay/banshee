@@ -36,7 +36,7 @@ namespace Mtp
 	{
 		internal TrackStruct trackStruct;
 		private MtpDevice device;
-		
+
 		public uint FileId {
 			get { return trackStruct.item_id; }
 		}
@@ -162,40 +162,18 @@ namespace Mtp
 		
 		private static FileType DetectFileType (Track track)
 		{
-			if(track.FileName.EndsWith(".asf", System.StringComparison.OrdinalIgnoreCase))
-				return FileType.ASF;
-			
-			if(track.FileName.EndsWith(".avi", System.StringComparison.OrdinalIgnoreCase))
-				return  FileType.AVI;
-			
-			if(track.FileName.EndsWith(".BMP", System.StringComparison.OrdinalIgnoreCase))
-				return  FileType.BMP;
-			
-			if(track.FileName.EndsWith(".JPEG", System.StringComparison.OrdinalIgnoreCase)
-			   || track.FileName.EndsWith(".JPG", System.StringComparison.OrdinalIgnoreCase))
-				return FileType.JPEG;
-			
-			if(track.FileName.EndsWith(".MP3", System.StringComparison.OrdinalIgnoreCase))
-				return FileType.MP3;
-			
-			if(track.FileName.EndsWith(".MPG", System.StringComparison.OrdinalIgnoreCase)
-			   || track.FileName.EndsWith(".MPEG", System.StringComparison.OrdinalIgnoreCase))
-				return FileType.MPEG;
-			
-			if(track.FileName.EndsWith(".OGG", System.StringComparison.OrdinalIgnoreCase)
-			   || track.FileName.EndsWith(".OGM", System.StringComparison.OrdinalIgnoreCase))
-				return  FileType.OGG;
-						
-			if(track.FileName.EndsWith(".PNG", System.StringComparison.OrdinalIgnoreCase))
-				return  FileType.PNG;
-			
-			if(track.FileName.EndsWith(".WAV", System.StringComparison.OrdinalIgnoreCase))
-				return FileType.WAV;
-									
-			if(track.FileName.EndsWith(".WMA", System.StringComparison.OrdinalIgnoreCase))
-				return FileType.WMA;
+            string ext = System.IO.Path.GetExtension (track.FileName);
 
-			return  FileType.UNKNOWN;
+            // Strip leading .
+            if (ext.Length > 0)
+                ext = ext.Substring (1, ext.Length - 1);
+
+            Console.WriteLine ("DetectFileType for {0} is {1}", track.FileName, ext);
+
+            FileType type = (FileType) Enum.Parse (typeof(FileType), ext, true);
+            //if (type == null)
+            //    return FileType.UNKNOWN;
+            return type;
 		}
 
 		internal static void DestroyTrack (IntPtr track)

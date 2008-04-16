@@ -60,16 +60,21 @@ namespace Hyena.Query
             DetermineFactor ();
         }
 
+        public double FactoredValue {
+            get { return (double)value / (double)factor; }
+        }
+
         public override void ParseUserQuery (string input)
         {
             if (input.Length > 1 && (input[input.Length - 1] == 'b' || input[input.Length - 1] == 'B')) {
                 input = input.Substring (0, input.Length - 1);
             }
 
-            base.ParseUserQuery (input);
+            double double_value;
+            IsEmpty = !Double.TryParse (input, out double_value);
 
             if (IsEmpty && input.Length > 1) {
-                base.ParseUserQuery (input.Substring (0, input.Length - 1));
+                IsEmpty = !Double.TryParse (input.Substring (0, input.Length - 1), out double_value);
             }
 
             if (!IsEmpty) {
@@ -79,7 +84,7 @@ namespace Hyena.Query
                     case 'g': case 'G': factor = FileSizeFactor.GB; break;
                     default : factor = FileSizeFactor.None; break;
                 }
-                value *= (long) factor;
+                value = (long) ((double)factor * double_value);
             }
         }
 
@@ -89,9 +94,9 @@ namespace Hyena.Query
             DetermineFactor ();
         }
 
-        public void SetValue (int value, FileSizeFactor factor)
+        public void SetValue (double value, FileSizeFactor factor)
         {
-            this.value = (long) value * (long) factor;
+            this.value = (long) (value * (double)factor);
             this.factor = factor;
             IsEmpty = false;
         }
@@ -100,7 +105,7 @@ namespace Hyena.Query
         {
             if (!IsEmpty && value != 0) {
                 foreach (FileSizeFactor factor in Enum.GetValues (typeof(FileSizeFactor))) {
-                    if (value >= (long) factor) {
+                    if (value >= (double) factor) {
                         this.factor = factor;
                     }
                 }
@@ -110,8 +115,9 @@ namespace Hyena.Query
         public override string ToUserQuery ()
         {
             if (factor != FileSizeFactor.None) {
-                return String.Format ("{0} {1}",
-                    IntValue == 0 ? 0 : (IntValue / (long) factor),
+                return String.Format (
+                    "{0} {1}",
+                    IntValue == 0 ? "0" : StringUtil.FormatDouble (((double)IntValue / (double)factor)),
                     factor.ToString ()
                 );
             } else {

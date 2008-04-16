@@ -50,7 +50,7 @@ namespace Hyena.Query.Gui
         public TimeSpanQueryValueEntry () : base ()
         {
             spin_button = new SpinButton (0.0, 1.0, 1.0);
-            spin_button.Digits = 0;
+            spin_button.Digits = 1;
             spin_button.WidthChars = 4;
             spin_button.SetRange (0.0, Double.MaxValue);
             Add (spin_button);
@@ -87,7 +87,7 @@ namespace Hyena.Query.Gui
 
         protected virtual void HandleValueChanged (object o, EventArgs args)
         {
-            query_value.SetRelativeValue (spin_button.ValueAsInt, factors [combo.Active]);
+            query_value.SetRelativeValue (spin_button.Value, factors [combo.Active]);
         }
     }
 }

@@ -221,17 +221,7 @@ namespace Mtp
 		
 		public void UploadTrack (string path, Track track, Folder folder)
 		{
-			UploadTrack (path, track, folder);
-		}
-		
-		public void UploadTrack (string path, Track track)
-		{
-			this.UploadTrack(path, track, new Folder(0, 0, "", this), null);
-		}
-		
-		public void UploadTrack (string path, Track track, ProgressFunction callback)
-		{
-			this.UploadTrack(path, track, new Folder(0, 0, "", this), callback);
+			UploadTrack (path, track, folder, null);
 		}
 		
 		public void UploadTrack (string path, Track track, Folder folder, ProgressFunction callback)
@@ -240,6 +230,8 @@ namespace Mtp
 				throw new ArgumentNullException("path");
 			if (track == null)
 				throw new ArgumentNullException("track");
+
+            track.trackStruct.parent_id = folder.FolderId;
 			
 			// We send the trackstruct by ref so that when the file_id gets filled in, our copy is updated
 			Track.SendTrack (Handle, path, ref track.trackStruct, callback, IntPtr.Zero, folder.FolderId);

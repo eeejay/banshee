@@ -55,11 +55,11 @@ namespace Hyena.Query
             get { return "date"; }
         }
 
-        public override long Offset {
+        public override double Offset {
             get { return -offset; }
         }
 
-        public override void SetUserRelativeValue (long offset, TimeFactor factor)
+        public override void SetUserRelativeValue (double offset, TimeFactor factor)
         {
             SetRelativeValue (-offset, factor);
         }
@@ -75,7 +75,7 @@ namespace Hyena.Query
             return DateTimeUtil.FromDateTime (DateTime.Now + TimeSpan.FromSeconds ((double) offset)).ToString (System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        protected override string FactorString (TimeFactor factor, int count)
+        protected override string FactorString (TimeFactor factor, double count)
         {
             string translated = base.FactorString (factor, count);
             return (translated == null) ? null : String.Format (Catalog.GetString ("{0} ago"), translated);

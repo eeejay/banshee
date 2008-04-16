@@ -1,5 +1,28 @@
 2008-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Specify what
+	folder to upload the track to - Music or Video.
+
+	* src/Libraries/Mtp/Mtp/MtpDevice.cs: Set the parent_id on the track
+	before uploading it.
+
+	* src/Libraries/Mtp/Mtp/Track.cs: Improve the DetectFileType method.
+
+	* src/Libraries/Hyena/Hyena.Query/FileSizeQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/TimeSpanQueryValue.cs: Parse values as
+	doubles instead of ints, allowing queryies and smart playlists to specy
+	"size>2.2MB" for instance.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs: Add
+	a single decimal place to the spin button.
+
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: Improve FormatDouble method,
+	now returns 1 if N < 1.1, etc.
+
+2008-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
 	When the CorePrimarySource table was modified a few commits back (after
 	Alpha 3, I think) I forgot to make the change for new databases as well.

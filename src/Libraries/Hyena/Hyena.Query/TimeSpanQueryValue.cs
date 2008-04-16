@@ -57,7 +57,7 @@ namespace Hyena.Query
         public static readonly Operator LessThan           = new Operator ("lessThan", "< {0}", "<");
         public static readonly Operator GreaterThan        = new Operator ("greaterThan", "> {0}", ">");*/
 
-        protected long offset = 0;
+        protected double offset = 0;
         protected TimeFactor factor = TimeFactor.Second;
 
         public override string XmlElementName {
@@ -74,7 +74,7 @@ namespace Hyena.Query
             get { return offset; }
         }
 
-        public virtual long Offset {
+        public virtual double Offset {
             get { return offset; }
         }
 
@@ -82,19 +82,20 @@ namespace Hyena.Query
             get { return factor; }
         }
 
-        public long FactoredValue {
-            get { return Offset / (long) factor; }
+        public double FactoredValue {
+            get { return Offset / (double) factor; }
         }
 
-        private static Regex number_regex = new Regex ("\\d+", RegexOptions.Compiled);
+        // FIXME replace period in following with culture-dependent character
+        private static Regex number_regex = new Regex ("\\d+(\\.\\d+)?", RegexOptions.Compiled);
         public override void ParseUserQuery (string input)
         {
             Match match = number_regex.Match (input);
             if (match != Match.Empty && match.Groups.Count > 0) {
-                int val = Convert.ToInt32 (match.Groups[0].Captures[0].Value);
+                double val = Convert.ToDouble (match.Groups[0].Captures[0].Value);
                 foreach (TimeFactor factor in Enum.GetValues (typeof(TimeFactor))) {
                     if (input == FactorString (factor, val)) {
-                        SetUserRelativeValue ((long) val, factor);
+                        SetUserRelativeValue (val, factor);
                         return;
                     }
                 }
@@ -104,25 +105,25 @@ namespace Hyena.Query
 
         public override string ToUserQuery ()
         {
-            return FactorString (factor, (int) FactoredValue);
+            return FactorString (factor, FactoredValue);
         }
 
-        public virtual void SetUserRelativeValue (long offset, TimeFactor factor)
+        public virtual void SetUserRelativeValue (double offset, TimeFactor factor)
         {
             SetRelativeValue (offset, factor);
         }
 
-        public void SetRelativeValue (long offset, TimeFactor factor)
+        public void SetRelativeValue (double offset, TimeFactor factor)
         {
             this.factor = factor;
-            this.offset = offset * (long) factor;
+            this.offset = (long) (offset * (double)factor);
             IsEmpty = false;
         }
 
         public void LoadString (string val)
         {
             try {
-                SetRelativeValue (Convert.ToInt64 (val), TimeFactor.Second);
+                SetRelativeValue (Convert.ToDouble (val), TimeFactor.Second);
                 DetermineFactor ();
             } catch {
                 IsEmpty = true;
@@ -131,9 +132,9 @@ namespace Hyena.Query
 
         protected void DetermineFactor ()
         {
-            long val = Math.Abs (offset);
+            double val = Math.Abs (offset);
             foreach (TimeFactor factor in Enum.GetValues (typeof(TimeFactor))) {
-                if (val >= (long) factor) {
+                if (val >= (double) factor) {
                     this.factor = factor;
                 }
             }
@@ -153,21 +154,22 @@ namespace Hyena.Query
             return Convert.ToString (offset * 1000, System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        protected virtual string FactorString (TimeFactor factor, int count)
+        protected virtual string FactorString (TimeFactor factor, double count)
         {
             string translated = null;
+            int plural_count = StringUtil.DoubleToPluralInt (count);
             switch (factor) {
-                case TimeFactor.Second: translated = Catalog.GetPluralString ("{0} second", "{0} seconds", count); break;
-                case TimeFactor.Minute: translated = Catalog.GetPluralString ("{0} minute", "{0} minutes", count); break;
-                case TimeFactor.Hour:   translated = Catalog.GetPluralString ("{0} hour",   "{0} hours", count); break;
-                case TimeFactor.Day:    translated = Catalog.GetPluralString ("{0} day",    "{0} days", count); break;
-                case TimeFactor.Week:   translated = Catalog.GetPluralString ("{0} week",   "{0} weeks", count); break;
-                case TimeFactor.Month:  translated = Catalog.GetPluralString ("{0} month",  "{0} months", count); break;
-                case TimeFactor.Year:   translated = Catalog.GetPluralString ("{0} year",   "{0} years", count); break;
+                case TimeFactor.Second: translated = Catalog.GetPluralString ("{0} second", "{0} seconds", plural_count); break;
+                case TimeFactor.Minute: translated = Catalog.GetPluralString ("{0} minute", "{0} minutes", plural_count); break;
+                case TimeFactor.Hour:   translated = Catalog.GetPluralString ("{0} hour",   "{0} hours", plural_count); break;
+                case TimeFactor.Day:    translated = Catalog.GetPluralString ("{0} day",    "{0} days", plural_count); break;
+                case TimeFactor.Week:   translated = Catalog.GetPluralString ("{0} week",   "{0} weeks", plural_count); break;
+                case TimeFactor.Month:  translated = Catalog.GetPluralString ("{0} month",  "{0} months", plural_count); break;
+                case TimeFactor.Year:   translated = Catalog.GetPluralString ("{0} year",   "{0} years", plural_count); break;
                 default: return null;
             }
 
-            return String.Format (translated, count);
+            return String.Format (translated, StringUtil.FormatDouble (count));
         }
     }
 }

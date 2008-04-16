@@ -179,7 +179,7 @@ namespace Banshee.Dap.Mtp
                     writer.Write ("foo");
                 }
                 Track mtp_track = new Track (System.IO.Path.GetFileName (empty_file.LocalPath), 3);
-                mtp_device.UploadTrack (empty_file.AbsolutePath, mtp_track);
+                mtp_device.UploadTrack (empty_file.AbsolutePath, mtp_track, mtp_device.MusicFolder);
                 mtp_device.Remove (mtp_track);
             } finally {
                 Banshee.IO.File.Delete (empty_file);
@@ -192,8 +192,6 @@ namespace Banshee.Dap.Mtp
         {
             base.Rename (newName);
             mtp_device.Name = newName;
-
-            Console.WriteLine ("BytesUsed = {0}", BytesUsed);
         }
 
         public override long BytesUsed {
@@ -226,7 +224,9 @@ namespace Banshee.Dap.Mtp
                 return;
 
             Track mtp_track = TrackInfoToMtpTrack (track);
-            mtp_device.UploadTrack (track.Uri.AbsolutePath, mtp_track);
+            bool video = (track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0;
+            Console.WriteLine ("Sending track {0}, is video? {1}", track, video);
+            mtp_device.UploadTrack (track.Uri.AbsolutePath, mtp_track, video ? mtp_device.VideoFolder : mtp_device.MusicFolder);
 
             MtpTrackInfo new_track = new MtpTrackInfo (mtp_track);
             new_track.PrimarySource = this;

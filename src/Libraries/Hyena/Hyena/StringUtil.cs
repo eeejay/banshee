@@ -115,7 +115,8 @@ namespace Hyena
 
         public static string FormatDouble (double num)
         {
-            if (num == (int)num)
+            // Don't show x.0
+            if (num - (int)num < 0.1)
                 return Convert.ToString ((int)num);
             else
                 return String.Format ("{0:0.0}", num);
