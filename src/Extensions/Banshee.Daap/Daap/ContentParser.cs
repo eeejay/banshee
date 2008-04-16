@@ -22,7 +22,7 @@ using System.Text;
 using System.Net;
 using System.Collections;
 
-namespace DAAP {
+namespace Daap {
 
     public class ContentException : ApplicationException {
 
@@ -118,10 +118,11 @@ namespace DAAP {
             }
 
             int length = IPAddress.NetworkToHostOrder (BitConverter.ToInt32 (buffer, offset + 4));
-
+            
             if (code.Equals (ContentCode.Zero)) {
-                throw new ContentException (String.Format ("Failed to find content code for '{0}'.  Data length is {1}",
-                                                           ContentCodeBag.GetStringFormat (num), length));
+                string s = System.Text.ASCIIEncoding.ASCII.GetString (buffer);
+                throw new ContentException (String.Format ("Failed to find content code for '{0}'. Data length is {1}; content is {2}",
+                                                           ContentCodeBag.GetStringFormat (num), length, s));
             }
 
             node.Name = code.Name;

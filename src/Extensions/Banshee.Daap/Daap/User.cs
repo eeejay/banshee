@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 
-namespace DAAP {
+namespace Daap {
 
     public delegate void UserHandler (object o, UserArgs args);
 

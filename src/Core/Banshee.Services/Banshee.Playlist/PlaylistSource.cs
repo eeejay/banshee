@@ -51,6 +51,7 @@ namespace Banshee.Playlist
     public class PlaylistSource : AbstractPlaylistSource, IUnmapableSource
     {
         private static HyenaSqliteCommand add_track_range_command;
+        private static HyenaSqliteCommand add_track_command;
         private static HyenaSqliteCommand remove_track_range_command;
 
         private static string add_track_range_from_joined_model_sql;
@@ -76,6 +77,11 @@ namespace Banshee.Playlist
                     SELECT null, ?, ItemID, 0
                         FROM CoreCache WHERE ModelID = ?
                         LIMIT ?, ?"
+            );
+
+            add_track_command = new HyenaSqliteCommand (@"
+                INSERT INTO CorePlaylistEntries
+                    VALUES (null, ?, ?, 0)"
             );
 
             add_track_range_from_joined_model_sql = @"
@@ -108,7 +114,6 @@ namespace Banshee.Playlist
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
-            DbId = dbid;
         }
 
 #endregion
@@ -209,12 +214,18 @@ namespace Banshee.Playlist
 
 #endregion
 
-        /*public override void AddTrack (DatabaseTrackInfo track)
+        protected void AddTrack (int track)
         {
-            add_track_command.ApplyValues (DbId, track.DbId);
+            add_track_command.ApplyValues (DbId, track);
             ServiceManager.DbConnection.Execute (add_track_command);
-            Reload ();
-        }*/
+            this.OnTracksAdded ();
+            //Reload ();
+        }
+        
+        protected override void AddTrack (DatabaseTrackInfo track)
+        {
+            AddTrack (track.TrackId);
+        }
         
         public override bool AddSelectedTracks (Source source)
         {

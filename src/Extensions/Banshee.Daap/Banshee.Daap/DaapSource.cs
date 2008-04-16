@@ -29,7 +29,8 @@
 using System;
 using System.Collections.Generic;
 using Mono.Unix;
-using DAAP;
+
+using Hyena;
 
 using Banshee.Base;
 using Banshee.Collection;
@@ -38,11 +39,13 @@ using Banshee.Library;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 
+using DAAP = Daap;
+
 namespace Banshee.Daap
 {
     public class DaapSource : PrimarySource, IDurationAggregator, IUnmapableSource, IImportSource
     {
-        private Service service;
+        private DAAP.Service service;
         private DAAP.Client client;
         private DAAP.Database database;
         
@@ -50,24 +53,26 @@ namespace Banshee.Daap
             get { return database; }
         }
         
-        private Dictionary <int, DaapTrackInfo> daap_track_map;
-        public Dictionary <int, DaapTrackInfo> TrackMap {
+        private Dictionary <int, int> daap_track_map;
+        public Dictionary <int, int> TrackMap {
             get { return daap_track_map; }
         }
         
         private bool is_activating;
+        private int playlistid;
         
-        public DaapSource (Service service) : base (Catalog.GetString ("Music Share"), service.Name, 
+        public DaapSource (DAAP.Service service) : base (Catalog.GetString ("Music Share"), service.Name, 
                                                     (service.Address.ToString () + service.Port).Replace (":", "").Replace (".", ""), 300)
         {
             this.service = service;
-            daap_track_map = new Dictionary <int, DaapTrackInfo> ();
+            daap_track_map = new Dictionary <int, int> ();
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Disconnect"));
             Properties.SetString ("UnmapSourceActionIconName", "gtk-disconnect");
             
             UpdateIcon ();
             
             AfterInitialized ();
+            playlistid = this.DbId;
         }
         
         private void UpdateIcon ()
@@ -93,11 +98,11 @@ namespace Banshee.Daap
             Console.WriteLine ("Connecting to {0}:{1}", service.Address, service.Port);
             
             ThreadAssist.Spawn (delegate {
-                try {                    
+                try {
                     client = new DAAP.Client (service);
                     client.Updated += OnClientUpdated;
                     
-                    if (client.AuthenticationMethod == AuthenticationMethod.None) {
+                    if (client.AuthenticationMethod == DAAP.AuthenticationMethod.None) {
                         client.Login ();
                     } else {
                         ThreadAssist.ProxyToMain (PromptLogin);
@@ -117,7 +122,7 @@ namespace Banshee.Daap
                                                       service.Address,
                                                       service.Port, e.ToString ().Replace ("&", "&amp;")
                                                     .Replace ("<", "&lt;").Replace (">", "&gt;"));
-                    Hyena.Log.Warning ("Failed to connect", details, true);
+                    Log.Warning ("Failed to connect", details, true);
                     HideStatus ();
                 }
                
@@ -177,7 +182,7 @@ namespace Banshee.Daap
             SetStatus (String.Format (Catalog.GetString ("Logging in to {0}"), Name), false);
             
             DaapLoginDialog dialog = new DaapLoginDialog (client.Name, 
-            client.AuthenticationMethod == AuthenticationMethod.UserAndPassword);
+            client.AuthenticationMethod == DAAP.AuthenticationMethod.UserAndPassword);
             if (dialog.Run () == (int) Gtk.ResponseType.Ok) {
                 AuthenticatedLogin (dialog.Username, dialog.Password);
             } else {
@@ -192,7 +197,7 @@ namespace Banshee.Daap
             ThreadAssist.Spawn (delegate {
                 try {
                     client.Login (username, password);
-                } catch (AuthenticationException) {
+                } catch (DAAP.AuthenticationException) {
                     ThreadAssist.ProxyToMain (PromptLogin);
                 }
             });
@@ -205,11 +210,12 @@ namespace Banshee.Daap
                 database.TrackAdded += OnDatabaseTrackAdded;
                 database.TrackRemoved += OnDatabaseTrackRemoved;
                 
-                foreach (Track track in database.Tracks) {
+                foreach (DAAP.Track track in database.Tracks) {
                     DaapTrackInfo daaptrack = new DaapTrackInfo (track, this);
                     daaptrack.Save ();
+                    Log.Debug ("Track ID", daaptrack.TrackId.ToString ());
                     
-                    daap_track_map.Add (track.Id, daaptrack);
+                    daap_track_map.Add (track.Id, daaptrack.TrackId);
                 }
                 
                 AddPlaylistSources ();
@@ -230,27 +236,29 @@ namespace Banshee.Daap
         private void AddPlaylistSources ()
         {
             foreach (DAAP.Playlist pl in database.Playlists) {
-                Console.WriteLine ("Has playlist: {0}", pl.Name);
-                DaapPlaylistSource source = new DaapPlaylistSource (pl, this);
+                DaapPlaylistSource source = new DaapPlaylistSource (pl, playlistid, this);
                 AddChildSource (source);
+                playlistid ++;
             }
         }
         
-        public void OnDatabaseTrackAdded (object o, TrackArgs args)
+        public void OnDatabaseTrackAdded (object o, DAAP.TrackArgs args)
         {
             DaapTrackInfo track = new DaapTrackInfo (args.Track, this);
             track.Save ();
             
             if (!daap_track_map.ContainsKey (args.Track.Id)) {
-                daap_track_map.Add (args.Track.Id, track);
+                daap_track_map.Add (args.Track.Id, track.TrackId);
             }
         }
         
-        public void OnDatabaseTrackRemoved (object o, TrackArgs args)
+        public void OnDatabaseTrackRemoved (object o, DAAP.TrackArgs args)
         {
             if (daap_track_map.ContainsKey (args.Track.Id)) {
-                DaapTrackInfo track = daap_track_map [args.Track.Id];
-                RemoveTrack (track);
+                //DaapTrackInfo track = daap_track_map [args.Track.Id];
+                //RemoveTrack (track);
+                //RemoveTrack (
+                // TODO
             }
         }
         
@@ -289,12 +297,12 @@ namespace Banshee.Daap
         
         public void Import ()
         {
-            Console.WriteLine ("Import called.");
-            foreach (TrackInfo track in TrackModel.SelectedItems) {
-                Console.WriteLine ("Selected: {0}", track);
-            }
-            
-            Console.WriteLine ("Selection count: {0}", TrackModel.Selection.Count);
+            Log.Debug ("Starting import...");
+            DateTime start = DateTime.Now;
+            ServiceManager.SourceManager.MusicLibrary.AddAllTracks (this);
+            DateTime finish = DateTime.Now;
+            TimeSpan time = finish - start;
+            Log.DebugFormat ("Import completed. Took {0} seconds.", time.TotalSeconds);
         }
         
         public bool CanImport {

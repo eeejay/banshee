@@ -51,7 +51,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-namespace DAAP {
+namespace Daap {
 
     internal class BrokenMD5 : MD5 {
         private const int BLOCK_SIZE_BYTES =  64;

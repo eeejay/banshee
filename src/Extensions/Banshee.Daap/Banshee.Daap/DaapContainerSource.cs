@@ -40,7 +40,7 @@ namespace Banshee.Daap
     {
         public DaapContainerSource () :  base (Catalog.GetString ("Shared Music"), Catalog.GetString ("Shared Music"), 300)
         {
-            Properties.SetString ("Icon.Name", "applications-internet");
+            Properties.SetStringList ("Icon.Name", "applications-internet", "network-server");
         }
         
         public override bool? AutoExpand {

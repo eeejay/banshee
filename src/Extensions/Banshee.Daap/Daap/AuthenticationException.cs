@@ -1,7 +1,7 @@
 
 using System;
 
-namespace DAAP {
+namespace Daap {
 
     public class AuthenticationException : ApplicationException {
 

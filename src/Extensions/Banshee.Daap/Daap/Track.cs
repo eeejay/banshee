@@ -20,7 +20,7 @@
 using System;
 using System.Collections;
 
-namespace DAAP {
+namespace Daap {
 
     public class Track : ICloneable {
 

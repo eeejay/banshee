@@ -1,8 +1,67 @@
 2008-04-16  Alexander Hixon  <hixon.alexander@mediati.org>
 
+	This commit basically changes the DAAP namespace to Daap, removes the
+	server bits from daap-sharp, and puts in support for using avahi-sharp
+	instead of Mono.Zeroconf when compiling the extension (note that the
+	build stuff hasn't quite been hooked up yet). There's also a few
+	changes to using generics in daap-sharp, and DaapPlaylistSource uses
+	the database, rather than keeping stuff in memory.
+
+	* src/Extensions/Banshee.Daap/Daap/ContentFetcher.cs:
+	* src/Extensions/Banshee.Daap/Daap/Client.cs:
+	* src/Extensions/Banshee.Daap/Daap/User.cs:
+	* src/Extensions/Banshee.Daap/Daap/ServerInfo.cs:
+	* src/Extensions/Banshee.Daap/Daap/BrokenMD5.cs:
+	* src/Extensions/Banshee.Daap/Daap/ContentParser.cs:
+	* src/Extensions/Banshee.Daap/Daap/LoginException.cs:
+	* src/Extensions/Banshee.Daap/Daap/AuthenticationException.cs:
+	* src/Extensions/Banshee.Daap/Daap/Playlist.cs:
+	* src/Extensions/Banshee.Daap/Daap/Utility.cs:
+	* src/Extensions/Banshee.Daap/Daap/Track.cs:
+	* src/Extensions/Banshee.Daap/Daap/ContentWriter.cs
+	* src/Extensions/Banshee.Daap/Daap/Hasher.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapTrackInfo.cs:
+	Simple namespace change from DAAP to Daap.
+
+	* src/Extensions/Banshee.Daap/Daap/ContentCodeBag.cs:
+	* src/Extensions/Banshee.Daap/Daap/Database.cs: Use Generics instead of
+	regular Collection classes. Also update the namespaces from DAAP to Daap.
+
+	* src/Extensions/Banshee.Daap/Daap/ServiceLocator.cs: Provide support for
+	avahi-sharp as well as Mono.Zeroconf. Also use Hyena logging instead of
+	spewing via Console.WriteLine.
+
+	* src/Extensions/Banshee.Daap/Daap/sync-tree.sh: Remove this since it's
+	practically useless now.
+
+	* src/Extensions/Banshee.Daap/Daap/Server.cs: Remove this since we're
+	not serving up DAAP shares from Banshee directly anymore.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs: Track
+	the database IDs rather than the entire track information, and use the
+	new namespace.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add
+	virtual AddTrack method that should be overriden by implementing classes
+	before use.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: New
+	AddTrack methods for adding existing tracks from the database to a
+	playlist without reassigning the ParentSource property.
+
+	* build/build.environment.mk: Nasty hack to include the avahi-sharp
+	bindings at compile time. This should really be optional, but my auto*
+	foo is poor. Good thing we don't enable DAAP by default. :)
+
+2008-04-16  Alexander Hixon  <hixon.alexander@mediati.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
 	Patch by Bertrand Lorentz that fixe an NRE when the player engine would be
-	disposed before the	TrackInfoDisplay. Fixes BGO #527888.
+	disposed before the TrackInfoDisplay. Fixes BGO #527888.
 
 2008-04-16  Scott Peterson <lunchtimemama@gmail.com> 
 

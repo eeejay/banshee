@@ -28,7 +28,7 @@
 
 using System;
 using Mono.Unix;
-using DAAP;
+using Daap;
 using Gtk;
 
 using Banshee.Base;

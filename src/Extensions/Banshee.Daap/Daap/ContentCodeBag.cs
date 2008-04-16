@@ -20,11 +20,11 @@
 using System;
 using System.Reflection;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Net;
 
-namespace DAAP {
+namespace Daap {
 
     internal enum ContentType : short {
         Char = 1,
@@ -51,7 +51,7 @@ namespace DAAP {
         private const int ChunkLength = 8192;
         
         private static ContentCodeBag defaultBag;
-        private Hashtable codes = new Hashtable ();
+        private Dictionary <int, ContentCode> codes = new Dictionary <int, ContentCode> ();
 
         public static ContentCodeBag Default {
             get {
@@ -115,12 +115,12 @@ namespace DAAP {
         }
 
         internal ContentNode ToNode () {
-            ArrayList nodes = new ArrayList ();
+            List <ContentNode> nodes = new List <ContentNode> ();
             
             foreach (int number in codes.Keys) {
                 ContentCode code = (ContentCode) codes[number];
 
-                ArrayList contents = new ArrayList ();
+                List <ContentNode> contents = new List <ContentNode> ();
                 contents.Add (new ContentNode ("dmap.contentcodesnumber", code.Number));
                 contents.Add (new ContentNode ("dmap.contentcodesname", code.Name));
                 contents.Add (new ContentNode ("dmap.contentcodestype", code.Type));

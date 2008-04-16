@@ -32,7 +32,7 @@ using Mono.Unix;
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Collection.Database;
-using DAAP;
+using Daap;
 
 namespace Banshee.Daap
 {

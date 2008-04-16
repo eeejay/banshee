@@ -23,7 +23,6 @@
     <File name="Daap/Hasher.cs" subtype="Code" buildaction="Compile" />
     <File name="Daap/LoginException.cs" subtype="Code" buildaction="Compile" />
     <File name="Daap/Playlist.cs" subtype="Code" buildaction="Compile" />
-    <File name="Daap/Server.cs" subtype="Code" buildaction="Compile" />
     <File name="Daap/ServerInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Daap/ServiceLocator.cs" subtype="Code" buildaction="Compile" />
     <File name="Daap/Track.cs" subtype="Code" buildaction="Compile" />

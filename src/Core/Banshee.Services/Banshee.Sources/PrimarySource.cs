@@ -411,11 +411,6 @@ namespace Banshee.Sources
             }
         }
 
-        protected virtual void AddTrack (DatabaseTrackInfo track)
-        {
-            throw new Exception ("PrimarySource DeleteTrack method not implemented");
-        }
-
         protected override void PruneArtistsAlbums ()
         {
             ServiceManager.DbConnection.Execute (prune_artists_albums_command);

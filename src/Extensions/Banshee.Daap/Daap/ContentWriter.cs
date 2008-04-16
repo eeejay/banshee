@@ -21,7 +21,7 @@ using System.Text;
 using System.Net;
 using System.IO;
 
-namespace DAAP {
+namespace Daap {
 
     internal class ContentWriter {
 

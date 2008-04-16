@@ -29,84 +29,42 @@
 using System;
 using Mono.Unix;
 
+using Hyena;
+
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Playlist;
 using Banshee.Sources;
 
-using DAAP;
+using DAAP = Daap;
 
 namespace Banshee.Daap
 {
-    public class DaapPlaylistSource : Source, ITrackModelSource
+    public class DaapPlaylistSource : PlaylistSource
     {
         private DaapSource parent;
         public DAAP.Database Database {
             get { return parent.Database; }
         }
         
-        private MemoryTrackListModel track_model;
-        
-        public DaapPlaylistSource (DAAP.Playlist playlist, DaapSource parent) : base (Catalog.GetString ("Playlist"), playlist.Name, parent.DbId)
+        public DaapPlaylistSource (DAAP.Playlist playlist, int id, DaapSource parent) : base (playlist.Name, parent.DbId)
         {
             this.parent = parent;
+            this.Save ();
             
-            track_model = new MemoryTrackListModel ();
-            Properties.SetString ("Icon.Name", "source-playlist");
-            
-            foreach (Track track in playlist.Tracks) {
-                if (parent.TrackMap.ContainsKey (track.Id)) {
-                    track_model.Add (parent.TrackMap [track.Id]);
+            foreach (DAAP.Track track in playlist.Tracks) {
+                if (track != null && parent.TrackMap.ContainsKey (track.Id)) {
+                    Console.WriteLine ("Adding track {0} to {1}", parent.TrackMap [track.Id], DbId);
+                    AddTrack (parent.TrackMap [track.Id]);
+                } else {
+                    Log.Warning ("Can't find track: was either null or not in map.", false);
                 }
             }
+            
+            this.Reload ();
         }
         
-        public ArtistListModel ArtistModel {
-            get { return null; }
-        }
-        
-        public AlbumListModel AlbumModel {
-            get { return null; }
-        }
-        
-        public TrackListModel TrackModel {
-            get { return track_model; }
-        }
-
-        public bool CanAddTracks {
-            get { return false; }
-        }
-        
-        public bool CanRemoveTracks {
-            get { return false; }
-        }
-        
-        public bool CanDeleteTracks {
-            get { return false; }
-        }
-        
-        public void DeleteSelectedTracks ()
-        {
-        }
-        
-        public void RemoveSelectedTracks ()
-        {
-        }
-        
-        public void Reload ()
-        {
-            track_model.Reload ();
-        }
-        
-        public bool HasDependencies {
-            get { return false; }
-        }
-        
-        public bool ConfirmRemoveTracks {
-            get { return false; }
-        }
-        
-        public bool ShowBrowser {
+        public override bool ShowBrowser {
             get { return false; }
         }
         

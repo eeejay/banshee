@@ -29,7 +29,7 @@
 using System;
 using System.Collections.Generic;
 using Mono.Unix;
-using DAAP;
+using Daap;
 
 using Banshee.Base;
 using Banshee.Collection;

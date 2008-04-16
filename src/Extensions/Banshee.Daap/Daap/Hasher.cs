@@ -43,7 +43,7 @@
 using System;
 using System.Text;
 
-namespace DAAP {
+namespace Daap {
     
     internal class Hasher
     {

@@ -18,7 +18,6 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Web;
@@ -27,7 +26,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 using ICSharpCode.SharpZipLib.GZip;
 
-namespace DAAP {
+namespace Daap {
 
     internal class ContentFetcher : IDisposable {
         private IPAddress address;

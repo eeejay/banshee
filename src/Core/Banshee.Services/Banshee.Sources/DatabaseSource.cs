@@ -175,7 +175,7 @@ namespace Banshee.Sources
         public virtual bool HasDependencies {
             get { return false; }
         }
-
+        
         public void RemoveTrack (int index)
         {
             if (index != -1) {
@@ -375,6 +375,11 @@ namespace Banshee.Sources
         }
 
         protected virtual void AddTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
+        {
+            throw new NotImplementedException(); 
+        }
+        
+        protected virtual void AddTrack (DatabaseTrackInfo track)
         {
             throw new NotImplementedException(); 
         }

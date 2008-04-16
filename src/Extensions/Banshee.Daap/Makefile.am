@@ -21,7 +21,6 @@ SOURCES =  \
 	Daap/Hasher.cs \
 	Daap/LoginException.cs \
 	Daap/Playlist.cs \
-	Daap/Server.cs \
 	Daap/ServerInfo.cs \
 	Daap/ServiceLocator.cs \
 	Daap/Track.cs \

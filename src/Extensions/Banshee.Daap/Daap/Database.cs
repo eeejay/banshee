@@ -20,12 +20,11 @@
 using System;
 using System.Net;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 
-namespace DAAP {
+namespace Daap {
 
     public delegate void TrackHandler (object o, TrackArgs args);
 
@@ -182,22 +181,22 @@ namespace DAAP {
 
         internal ContentNode ToTracksNode (string[] fields, int[] deletedIds) {
 
-            ArrayList trackNodes = new ArrayList ();
+            List <ContentNode> trackNodes = new List <ContentNode> ();
             foreach (Track track in tracks) {
                 trackNodes.Add (track.ToNode (fields));
             }
 
-            ArrayList deletedNodes = null;
+            List <ContentNode> deletedNodes = null;
 
             if (deletedIds.Length > 0) {
-                deletedNodes = new ArrayList ();
+                deletedNodes = new List <ContentNode> ();
                 
                 foreach (int id in deletedIds) {
                     deletedNodes.Add (new ContentNode ("dmap.itemid", id));
                 }
             }
 
-            ArrayList children = new ArrayList ();
+            List <ContentNode> children = new List <ContentNode> ();
             children.Add (new ContentNode ("dmap.status", 200));
             children.Add (new ContentNode ("dmap.updatetype", deletedNodes == null ? (byte) 0 : (byte) 1));
             children.Add (new ContentNode ("dmap.specifiedtotalcount", tracks.Count));
@@ -212,7 +211,7 @@ namespace DAAP {
         }
 
         internal ContentNode ToPlaylistsNode () {
-            ArrayList nodes = new ArrayList ();
+            List <ContentNode> nodes = new List <ContentNode> ();
 
             nodes.Add (basePlaylist.ToNode (true));
             
@@ -276,7 +275,7 @@ namespace DAAP {
                 return;
 
             // handle playlist additions/changes
-            ArrayList plids = new ArrayList ();
+            List <int> plids = new List <int> ();
             
             foreach (ContentNode playlistNode in (ContentNode[]) playlistsNode.GetChild ("dmap.listing").Value) {
                 Playlist pl = Playlist.FromNode (playlistNode);
