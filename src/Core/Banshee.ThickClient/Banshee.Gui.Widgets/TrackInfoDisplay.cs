@@ -93,8 +93,10 @@ namespace Banshee.Gui.Widgets
                 GLib.Source.Remove (idle_timeout_id);
             }
             
-            ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
-            ServiceManager.PlayerEngine.StateChanged -= OnPlayerEngineStateChanged;
+            if (ServiceManager.PlayerEngine != null) {
+                ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
+                ServiceManager.PlayerEngine.StateChanged -= OnPlayerEngineStateChanged;
+            }
             
             stage.Iteration -= OnStageIteration;
             stage = null;
