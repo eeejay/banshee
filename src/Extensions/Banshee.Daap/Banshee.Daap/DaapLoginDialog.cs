@@ -119,7 +119,8 @@ namespace Banshee.Daap
             content_box.PackStart(table, false, false, 0);
             
             box.PackStart(content_box, true, true, 0);
-            
+
+            /* Translators: this is a verb used as a button label, not a noun */
             AddButton(Catalog.GetString("Login"), ResponseType.Ok, true);
             
             box.ShowAll();

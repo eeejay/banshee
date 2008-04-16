@@ -111,6 +111,7 @@ namespace Banshee.Podcasting
                 ),
                 new ActionEntry (
                     "PodcastUpdateFeedAction", Stock.Refresh,
+                     /* Translators: this is a verb used as a button name, not a noun*/
                      Catalog.GetString ("Update"),
                      null, String.Empty, 
                      OnPodcastUpdateAction
@@ -141,6 +142,7 @@ namespace Banshee.Podcasting
                 ),
                 new ActionEntry (
                     "PodcastItemDownloadAction", Stock.GoDown,
+                     /* Translators: this is a verb used as a button name, not a noun*/
                      Catalog.GetString ("Download"),
                      "<control><shift>D", String.Empty, 
                      OnPodcastItemDownloadAction
