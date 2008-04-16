@@ -114,6 +114,7 @@ namespace Banshee.Playlist
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
+            DbId = dbid;
         }
 
 #endregion
@@ -214,12 +215,11 @@ namespace Banshee.Playlist
 
 #endregion
 
-        protected void AddTrack (int track)
+        protected void AddTrack (int track_id)
         {
-            add_track_command.ApplyValues (DbId, track);
+            add_track_command.ApplyValues (DbId, track_id);
             ServiceManager.DbConnection.Execute (add_track_command);
-            this.OnTracksAdded ();
-            //Reload ();
+            OnTracksAdded ();
         }
         
         protected override void AddTrack (DatabaseTrackInfo track)
