@@ -1,5 +1,10 @@
 2008-04-16  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Choreographer.cs: More
+	accurate easing equations.
+
+2008-04-16  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs: Added support
 	for BorderWidth. Sexeh!
 

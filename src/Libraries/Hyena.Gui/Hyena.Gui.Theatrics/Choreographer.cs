@@ -55,27 +55,28 @@ namespace Hyena.Gui.Theatrics
     {
         public static int Compose (double percent, int size, Easing easing)
         {
+            double total = (double)size;
             switch (easing) {
                 case Easing.QuadraticIn:
-                    return (int)(percent * percent * size);
+                    return (int)Math.Round (percent * percent * total);
                 case Easing.QuadraticOut:
-                    return (int)(-size * percent * (percent - 2));
+                    return (int)Math.Round (-total * percent * (percent - 2.0));
                 case Easing.QuadraticInOut:
-                    percent *= 2;
-                    return (percent < 1)
-                        ? (int)(percent * percent * (size / 2))
-                        : (int)((-size / 2) * (--percent * (percent - 2) - 1));
+                    percent *= 2.0;
+                    return (percent < 1.0)
+                        ? (int)Math.Round (percent * percent * (total / 2.0))
+                        : (int)Math.Round ((-total / 2.0) * (--percent * (percent - 2.0) - 1.0));
                 case Easing.ExponentialIn:
-                    return (int)(size * Math.Pow (2, 10 * (percent - 1)));
+                    return (int)Math.Round (total * Math.Pow (2.0, 10.0 * (percent - 1.0)));
                 case Easing.ExponentialOut:
-                    return (int)(size * (-Math.Pow (2, -10 * percent) + 1));
+                    return (int)Math.Round (total * (-Math.Pow (2.0, -10.0 * percent) + 1.0));
                 case Easing.ExponentialInOut:
-                    percent *= 2;
-                    return (percent < 1)
-                        ? (int)(size/2 * Math.Pow (2, 10 * (percent - 1)))
-                        : (int)(size/2 * (-Math.Pow (2, -10 * --percent) + 2));
+                    percent *= 2.0;
+                    return (percent < 1.0)
+                        ? (int)Math.Round (total/2.0 * Math.Pow (2.0, 10.0 * (percent - 1.0)))
+                        : (int)Math.Round (total/2.0 * (-Math.Pow (2.0, -10.0 * --percent) + 2.0));
                 default:
-                    return (int)(percent * size);
+                    return (int)Math.Round (percent * total);
             }
         }
     }
