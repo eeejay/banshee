@@ -47,6 +47,7 @@ namespace Banshee.Gui.Widgets
             LeftPadding = 4;
             
             box = new AnimatedVBox ();
+            box.BorderWidth = 8;
             box.Spacing = 8;
 
             Add (box);

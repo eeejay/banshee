@@ -1,5 +1,11 @@
 2008-04-16  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	Use a BorderWidth of 8 for the AnimatedVBox. This adds 8 pixels on
+	all sides.
+
+2008-04-16  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Choreographer.cs: More
 	accurate easing equations.
 
