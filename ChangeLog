@@ -1,5 +1,9 @@
 2008-04-17  Scott Peterson <lunchtimemama@gmail.com> 
 
+	* tests/Hyena/SqliteModelProviderTests.cs: Added test for null strings.
+
+2008-04-17  Scott Peterson <lunchtimemama@gmail.com> 
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Look
 	for DB-bound members amoung the public fields. Don't know what we
 	didn't do that before.

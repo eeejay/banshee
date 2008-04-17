@@ -77,6 +77,24 @@ public class SqliteModelProviderTests
         Assert.AreEqual (newed_item.GetPrivateStringField (), loaded_item.GetPrivateStringField ());
         Assert.AreEqual (newed_item.GetPrivateStringProperty (), loaded_item.GetPrivateStringProperty ());
     }
+
+    [Test]
+    public void TestNullStringMembers ()
+    {
+        DbBoundType newed_item = new DbBoundType ();
+        newed_item.PublicStringField = null;
+        newed_item.PublicStringProperty = null;
+        newed_item.SetPrivateStringField (null);
+        newed_item.SetPrivateStringProperty (null);
+        
+        provider.Save (newed_item);
+        
+        DbBoundType loaded_item = provider.FetchSingle (newed_item.PrimaryKey);
+        Assert.AreEqual (newed_item.PublicStringField, loaded_item.PublicStringField);
+        Assert.AreEqual (newed_item.PublicStringProperty, loaded_item.PublicStringProperty);
+        Assert.AreEqual (newed_item.GetPrivateStringField (), loaded_item.GetPrivateStringField ());
+        Assert.AreEqual (newed_item.GetPrivateStringProperty (), loaded_item.GetPrivateStringProperty ());
+    }
     
     // Some fidelity is lost in the conversion from DT to DB time format
     private void AssertArePrettyClose (DateTime time1, DateTime time2)
