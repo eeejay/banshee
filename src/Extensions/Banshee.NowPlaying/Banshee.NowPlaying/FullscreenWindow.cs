@@ -1,7 +1,9 @@
+// 
+// FullScreenWindow.cs
 //
-// NowPlayingInterface.cs
-//
-// Author:
+// Authors:
+//   Larry Ewing <lewing@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //   Aaron Bockover <abockover@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
@@ -27,62 +29,38 @@
 //
 
 using System;
-
-using Mono.Unix;
 using Gtk;
-
-using Banshee.Sources;
-using Banshee.Gui;
-using Banshee.Sources.Gui;
+using Mono.Unix;
 
 namespace Banshee.NowPlaying
 {
-    public class NowPlayingInterface : VBox, ISourceContents
-    {   
-        private NowPlayingSource source;
-        private VideoDisplay video_display;
-        private Hyena.Widgets.RoundedFrame frame;
-
-        public VideoDisplay VideoDisplay {
-            get { return video_display; }
-        }
-        
-        public NowPlayingInterface ()
+    public class FullscreenWindow : Window
+    {
+        public FullscreenWindow (string title, Window parent) : base (title)
         {
-            video_display = new VideoDisplay ();
-            video_display.Show ();
+            Gdk.Screen screen = Screen;
+            int monitor = screen.GetMonitorAtWindow (parent.GdkWindow);
+            Gdk.Rectangle bounds = screen.GetMonitorGeometry (monitor);
+            Move (bounds.X, 0);
+            SetDefaultSize (bounds.Width, bounds.Height);
             
-            frame = new Hyena.Widgets.RoundedFrame ();
-            frame.SetFillColor (new Cairo.Color (0, 0, 0));
-            frame.DrawBorder = false;
-            frame.Add (video_display);
-            frame.Show ();
+            Decorated = false;
+        }
+        
+        protected void Close ()
+        {
+            Destroy ();
+        }
+        
+        protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+        {
+            switch (evnt.Key) {
+                case Gdk.Key.Escape: 
+                    Close ();
+                    return true;
+            }
             
-            PackStart (frame, true, true, 0);
+            return base.OnKeyPressEvent (evnt);
         }
-        
-#region ISourceContents
-        
-        public bool SetSource (ISource src)
-        {
-            this.source = source as NowPlayingSource;
-            return this.source != null;
-        }
-
-        public ISource Source {
-            get { return source; }
-        }
-
-        public void ResetSource ()
-        {
-            source = null;
-        }
-
-        public Widget Widget {
-            get { return this; }
-        }
-        
-#endregion
-
     }
 }

@@ -1,3 +1,33 @@
+2008-04-16  Aaron Bockover  <abock@gnome.org>
+
+	* Makefile.am: Add a gdb target
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Added
+	AddImportant override for ToggleActionEntry
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Moved
+	the fullscreen code
+
+	* src/Core/Banshee.hickClient/Banshee.Gui/ViewActions.cs: Implement the
+	fullscreen action and allow the fullscreen logic to be overridden
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	The window that will house the fullscreen UI for video playback
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	Add a property for getting the VideoDisplay widget
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Added a custom fullscreen handler that will fullscreen the video window
+	when fullscreen action is toggled and the now playing source is active
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	Inherit from GtkEventBox since it does what we needed and simplifies some
+	things; still has that CRITICAL warning though
+
+	* src/Extensions/Banshee.NowPlaying/Resources/ActiveSourceUI.xml: UI for
+	merging the fullscreen action into the toolbar
+
 2008-04-16  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* build/build.environment.mk

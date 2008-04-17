@@ -36,8 +36,6 @@ namespace Banshee.Gui
 {
     public abstract class BaseClientWindow : Window
     {
-        private ToggleAction fullscreen_action;
-        
         private GtkElementsService elements_service;
         protected GtkElementsService ElementsService {
             get { return elements_service; }
@@ -101,15 +99,6 @@ namespace Banshee.Gui
         
         private void InitializeWindow ()
         {
-            fullscreen_action = (ToggleAction)action_service.ViewActions["FullScreenAction"];
-            fullscreen_action.Activated += delegate {
-                if (fullscreen_action.Active) {
-                    Fullscreen ();
-                } else {
-                    Unfullscreen ();
-                }
-            };
-            
             Initialize ();
         }
         
@@ -177,6 +166,7 @@ namespace Banshee.Gui
         
         protected override bool OnWindowStateEvent (Gdk.EventWindowState evnt)
         {
+            ToggleAction fullscreen_action = (ToggleAction) ServiceManager.Get<InterfaceActionService> ().ViewActions["FullScreenAction"];
             fullscreen_action.Active = (evnt.NewWindowState & Gdk.WindowState.Fullscreen) != 0;
             
             if ((evnt.NewWindowState & Gdk.WindowState.Withdrawn) == 0) {

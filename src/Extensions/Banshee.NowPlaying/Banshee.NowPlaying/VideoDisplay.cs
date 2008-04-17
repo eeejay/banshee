@@ -37,11 +37,21 @@ using Banshee.Gui;
 
 namespace Banshee.NowPlaying
 {   
-    public class VideoDisplay : Gtk.Widget
+    public class VideoDisplay : Gtk.EventBox
     {
         private Gdk.Pixbuf idle_pixbuf;
-        private Gdk.Window video_window;
         private bool render_idle = true;
+
+        private bool fullscreen = false;
+        public bool FullScreen {
+            get { return fullscreen; }
+            set { fullscreen = value; }
+        }
+
+        private Gdk.Window video_window;
+        public Gdk.Window VideoWindow {
+            get { return video_window; }
+        }
     
         public VideoDisplay ()
         {
@@ -77,36 +87,20 @@ namespace Banshee.NowPlaying
         
         protected override void OnRealized ()
         {
-            WidgetFlags |= WidgetFlags.Realized;
-        
-            Gdk.WindowAttr attributes = new Gdk.WindowAttr ();
-            attributes.WindowType = Gdk.WindowType.Child;
-            attributes.X = Allocation.X;
-            attributes.Y = Allocation.Y;
-            attributes.Width = Allocation.Width;
-            attributes.Height = Allocation.Height;
-            attributes.Wclass = Gdk.WindowClass.InputOnly;
-            
-            Gdk.WindowAttributesType attributes_mask = 
-                Gdk.WindowAttributesType.X | 
-                Gdk.WindowAttributesType.Y;
-                
-            GdkWindow = new Gdk.Window (Parent.GdkWindow, attributes, attributes_mask);
-            GdkWindow.UserData = Handle;
-            
+            base.OnRealized ();
             video_window.Reparent (Parent.GdkWindow, Allocation.X, Allocation.Y);
         }
         
         protected override void OnUnrealized ()
         {
-            video_window.Reparent (null, 0, 0);
             base.OnUnrealized ();
+            video_window.Reparent (null, 0, 0);
         }
 
         protected override void OnMapped ()
         {
-            video_window.Show ();
             base.OnMapped ();
+            video_window.Show ();
         }
         
         protected override void OnUnmapped ()
@@ -117,19 +111,15 @@ namespace Banshee.NowPlaying
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
+            video_window.MoveResize (allocation);
             base.OnSizeAllocated (allocation);
-            
-            if (IsRealized && IsMapped) {
-                video_window.MoveResize (allocation);
-                GdkWindow.MoveResize (allocation);
-            }
             
             QueueDraw ();
         }
         
         protected override bool OnConfigureEvent (Gdk.EventConfigure evnt)
         {
-            if (IsRealized && IsMapped && ServiceManager.PlayerEngine.SupportsVideo) {
+            if (video_window != null && ServiceManager.PlayerEngine.SupportsVideo) {
                 ServiceManager.PlayerEngine.VideoExpose (video_window.Handle, true);
             }
             
@@ -138,7 +128,7 @@ namespace Banshee.NowPlaying
 
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
-            if (!Visible || !IsMapped || video_window == null) {
+            if (video_window == null || !video_window.IsVisible) {
                 return true;
             }
             
@@ -179,7 +169,7 @@ namespace Banshee.NowPlaying
         public new void QueueDraw ()
         {
             base.QueueDraw ();
-            if (IsRealized && video_window != null) {
+            if (video_window != null) {
                 video_window.InvalidateRect (new Gdk.Rectangle (0, 0, Allocation.Width, Allocation.Height), true);
             }
         }

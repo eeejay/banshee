@@ -13,6 +13,8 @@
     <File name="Banshee.NowPlaying/NowPlayingInterface.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.NowPlaying/VideoDisplay.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/idle-logo.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.NowPlaying/FullscreenWindow.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/ActiveSourceUI.xml" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />

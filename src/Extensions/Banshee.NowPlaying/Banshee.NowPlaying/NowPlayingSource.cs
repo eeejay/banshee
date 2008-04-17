@@ -35,6 +35,7 @@ using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.Collection;
 
+using Banshee.Gui;
 using Banshee.Sources.Gui;
 
 namespace Banshee.NowPlaying
@@ -52,6 +53,7 @@ namespace Banshee.NowPlaying
             Properties.SetString ("Icon.Name", "applications-multimedia");
             Properties.Set<ISourceContents> ("Nereid.SourceContents", new NowPlayingInterface ());
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
+            Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             
             ServiceManager.SourceManager.AddSource (this);
             
@@ -80,5 +82,70 @@ namespace Banshee.NowPlaying
         public void Dispose ()
         {
         }
+        
+#region Video Fullscreen Override
+
+        private Gtk.Window fullscreen_window;
+        private ViewActions.FullscreenHandler previous_fullscreen_handler;
+
+        private void DisableFullscreenAction ()
+        {
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
+            Gtk.ToggleAction action = service.ViewActions["FullScreenAction"] as Gtk.ToggleAction;
+            if (action != null) {
+                action.Active = false;
+            }
+        }
+
+        public override void Activate ()
+        {
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
+            if (service == null || service.ViewActions == null) {
+                return;
+            }
+            
+            previous_fullscreen_handler = service.ViewActions.Fullscreen;
+            service.ViewActions.Fullscreen = FullscreenHandler;
+            DisableFullscreenAction ();
+        }
+
+        public override void Deactivate ()
+        {
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
+            if (service == null || service.ViewActions == null) {
+                return;
+            }
+            
+            service.ViewActions.Fullscreen = previous_fullscreen_handler;
+        }
+        
+        private void OnFullscreenWindowDestroyed (object o, EventArgs args)
+        {
+            if (fullscreen_window != null) {
+                fullscreen_window.Destroyed -= OnFullscreenWindowDestroyed;
+                fullscreen_window = null;
+            }
+            
+            DisableFullscreenAction ();
+        }
+        
+        private void FullscreenHandler (bool fullscreen)
+        {
+            if (fullscreen) {
+                if (fullscreen_window == null) {
+                    GtkElementsService service = ServiceManager.Get<GtkElementsService> (); 
+                    fullscreen_window = new FullscreenWindow (service.PrimaryWindow.Title, service.PrimaryWindow);
+                    fullscreen_window.Destroyed += OnFullscreenWindowDestroyed;
+                }
+                
+                fullscreen_window.Show ();
+                fullscreen_window.Fullscreen ();
+            } else if (fullscreen_window != null) {
+                fullscreen_window.Destroy ();
+            }
+        }
+        
+#endregion
+
     }
 }

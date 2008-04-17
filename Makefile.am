@@ -64,6 +64,11 @@ run:
 	$(MONO) --debug $(BANSHEE_DEV_MONO_OPTIONS) Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
 	popd;
 
+gdb:
+	@pushd bin; \
+	gdb mono --eval-command="handle SIGXCPU SIG35 SIGPWR nostop noprint" --eval-command="b g_return_if_fail_warning" --eval-command="r --debug Nereid.exe --debug --uninstalled"; \
+	popd;
+
 test:
 	@pushd tests; \
 	make test \

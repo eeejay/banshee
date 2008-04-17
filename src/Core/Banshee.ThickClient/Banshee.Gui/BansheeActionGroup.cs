@@ -55,6 +55,15 @@ namespace Banshee.Gui
             }
         }
 
+        public void AddImportant (params ToggleActionEntry [] action_entries)
+        {
+            base.Add (action_entries);
+            
+            foreach (ToggleActionEntry entry in action_entries) {
+                this[entry.name].IsImportant = true;
+            }
+        }
+
         public void UpdateActions (bool visible, bool sensitive, params string [] action_names)
         {
             UpdateActions (visible, sensitive, null, action_names);
