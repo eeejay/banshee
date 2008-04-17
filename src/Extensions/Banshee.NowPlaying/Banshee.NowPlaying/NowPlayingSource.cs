@@ -43,6 +43,7 @@ namespace Banshee.NowPlaying
     public class NowPlayingSource : Source, IDisposable
     {
         private TrackInfo transitioned_track;
+        private NowPlayingInterface now_playing_interface;
 
         protected override string TypeUniqueId {
             get { return "now-playing"; }
@@ -50,8 +51,10 @@ namespace Banshee.NowPlaying
         
         public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 0)
         {
+            now_playing_interface = new NowPlayingInterface ();
+        
             Properties.SetString ("Icon.Name", "applications-multimedia");
-            Properties.Set<ISourceContents> ("Nereid.SourceContents", new NowPlayingInterface ());
+            Properties.Set<ISourceContents> ("Nereid.SourceContents", now_playing_interface);
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             
@@ -59,6 +62,14 @@ namespace Banshee.NowPlaying
             
             ServiceManager.PlaybackController.Transition += OnPlaybackControllerTransition;
             ServiceManager.PlaybackController.TrackStarted += OnPlaybackControllerTrackStarted;
+        }
+        
+        public void Dispose ()
+        {
+            if (now_playing_interface != null) {
+                now_playing_interface.Destroy ();
+                now_playing_interface = null;
+            }
         }
         
         private void OnPlaybackControllerTransition (object o, EventArgs args)
@@ -79,73 +90,18 @@ namespace Banshee.NowPlaying
             }
         }
         
-        public void Dispose ()
-        {
-        }
-        
-#region Video Fullscreen Override
-
-        private Gtk.Window fullscreen_window;
-        private ViewActions.FullscreenHandler previous_fullscreen_handler;
-
-        private void DisableFullscreenAction ()
-        {
-            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
-            Gtk.ToggleAction action = service.ViewActions["FullScreenAction"] as Gtk.ToggleAction;
-            if (action != null) {
-                action.Active = false;
-            }
-        }
-
         public override void Activate ()
         {
-            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
-            if (service == null || service.ViewActions == null) {
-                return;
+            if (now_playing_interface != null) {
+                now_playing_interface.OverrideFullscreen ();
             }
-            
-            previous_fullscreen_handler = service.ViewActions.Fullscreen;
-            service.ViewActions.Fullscreen = FullscreenHandler;
-            DisableFullscreenAction ();
         }
 
         public override void Deactivate ()
         {
-            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
-            if (service == null || service.ViewActions == null) {
-                return;
-            }
-            
-            service.ViewActions.Fullscreen = previous_fullscreen_handler;
-        }
-        
-        private void OnFullscreenWindowDestroyed (object o, EventArgs args)
-        {
-            if (fullscreen_window != null) {
-                fullscreen_window.Destroyed -= OnFullscreenWindowDestroyed;
-                fullscreen_window = null;
-            }
-            
-            DisableFullscreenAction ();
-        }
-        
-        private void FullscreenHandler (bool fullscreen)
-        {
-            if (fullscreen) {
-                if (fullscreen_window == null) {
-                    GtkElementsService service = ServiceManager.Get<GtkElementsService> (); 
-                    fullscreen_window = new FullscreenWindow (service.PrimaryWindow.Title, service.PrimaryWindow);
-                    fullscreen_window.Destroyed += OnFullscreenWindowDestroyed;
-                }
-                
-                fullscreen_window.Show ();
-                fullscreen_window.Fullscreen ();
-            } else if (fullscreen_window != null) {
-                fullscreen_window.Destroy ();
+            if (now_playing_interface != null) {
+                now_playing_interface.RelinquishFullscreen ();
             }
         }
-        
-#endregion
-
     }
 }

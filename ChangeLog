@@ -1,3 +1,12 @@
+2008-04-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Moved the fullscreen UI logic from the source to the interface
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Use Destroy explicitly
+
 2008-04-17  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* tests/Hyena/SqliteModelProviderTests.cs: Added test for null strings.

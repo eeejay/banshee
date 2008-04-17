@@ -47,16 +47,16 @@ namespace Banshee.NowPlaying
             Decorated = false;
         }
         
-        protected void Close ()
+        protected override void OnDestroyed ()
         {
-            Destroy ();
+            base.OnDestroyed ();
         }
         
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
         {
             switch (evnt.Key) {
                 case Gdk.Key.Escape: 
-                    Close ();
+                    Destroy ();
                     return true;
             }
             

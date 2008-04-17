@@ -31,6 +31,7 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Gui;
 using Banshee.Sources.Gui;
@@ -60,6 +61,70 @@ namespace Banshee.NowPlaying
             
             PackStart (frame, true, true, 0);
         }
+        
+#region Video Fullscreen Override
+
+        private Gtk.Window fullscreen_window;
+        private ViewActions.FullscreenHandler previous_fullscreen_handler;
+
+        private void DisableFullscreenAction ()
+        {
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
+            Gtk.ToggleAction action = service.ViewActions["FullScreenAction"] as Gtk.ToggleAction;
+            if (action != null) {
+                action.Active = false;
+            }
+        }
+
+        internal void OverrideFullscreen ()
+        {
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
+            if (service == null || service.ViewActions == null) {
+                return;
+            }
+            
+            previous_fullscreen_handler = service.ViewActions.Fullscreen;
+            service.ViewActions.Fullscreen = FullscreenHandler;
+            DisableFullscreenAction ();
+        }
+
+        internal void RelinquishFullscreen ()
+        {
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
+            if (service == null || service.ViewActions == null) {
+                return;
+            }
+            
+            service.ViewActions.Fullscreen = previous_fullscreen_handler;
+        }
+        
+        private void OnFullscreenWindowDestroyed (object o, EventArgs args)
+        {
+            if (fullscreen_window != null) {
+                fullscreen_window.Destroyed -= OnFullscreenWindowDestroyed;
+                fullscreen_window = null;
+            }
+            
+            DisableFullscreenAction ();
+        }
+        
+        private void FullscreenHandler (bool fullscreen)
+        {
+            if (fullscreen) {
+                if (fullscreen_window == null) {
+                    GtkElementsService service = ServiceManager.Get<GtkElementsService> (); 
+                    fullscreen_window = new FullscreenWindow (service.PrimaryWindow.Title, service.PrimaryWindow);
+                    fullscreen_window.Destroyed += OnFullscreenWindowDestroyed;
+                }
+                
+                fullscreen_window.ShowAll ();
+                fullscreen_window.Fullscreen ();
+            } else if (fullscreen_window != null) {
+                fullscreen_window.Destroy ();
+            }
+        }
+        
+#endregion
         
 #region ISourceContents
         
