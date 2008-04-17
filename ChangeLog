@@ -1,3 +1,20 @@
+2008-04-17  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Look
+	for DB-bound members amoung the public fields. Don't know what we
+	didn't do that before.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Don't
+	throw an exception if we can't retrieve a schema due to the table
+	not existing. This is important because the Provider uses
+	Scheme.Count == 0 to detect a non-existant table!
+
+	* tests/Hyena/DbBoundType.cs: A type which can be used with an
+	SqliteModelProvider for testing purposes.
+
+	* tests/Hyena/SqliteModelProviderTests.cs: Logical tests for the
+	SqliteModelProvider.
+
 2008-04-16  Aaron Bockover  <abock@gnome.org>
 
 	* Makefile.am: Add a gdb target

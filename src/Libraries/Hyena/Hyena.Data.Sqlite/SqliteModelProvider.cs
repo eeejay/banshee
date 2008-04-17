@@ -75,6 +75,11 @@ namespace Hyena.Data.Sqlite
 
         protected void Init ()
         {
+            foreach (FieldInfo field in typeof(T).GetFields (BindingFlags.Instance | BindingFlags.Public)) {
+                foreach (Attribute attribute in field.GetCustomAttributes (true)) {
+                    AddColumn (field, attribute);
+                }
+            }
             foreach (FieldInfo field in typeof(T).GetFields (BindingFlags.Instance | BindingFlags.NonPublic)) {
                 foreach (Attribute attribute in field.GetCustomAttributes (true)) {
                     AddColumn (field, attribute);

@@ -7,9 +7,11 @@ ASSEMBLY_NAME = banshee-tests
 ASSEMBLY = $(ASSEMBLY_NAME).dll
 ASSEMBLY_CSFILES =  \
 	$(srcdir)/Hyena/CryptoUtilTests.cs \
+	$(srcdir)/Hyena/DbBoundType.cs \
 	$(srcdir)/Hyena/RangeCollectionTests.cs \
 	$(srcdir)/Hyena/StringUtilTests.cs \
 	$(srcdir)/Hyena/SqliteCommandTests.cs \
+	$(srcdir)/Hyena/SqliteModelProviderTests.cs \
 	$(srcdir)/Hyena/QueryTests.cs \
 	$(srcdir)/Banshee.Core/TaglibReadWriteTests.cs
 

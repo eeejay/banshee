@@ -90,7 +90,7 @@ namespace Hyena.Data.Sqlite
         {
             lock (command) {
                 command.CommandType = HyenaCommandType.Reader;
-                QueueCommand(command);
+                QueueCommand (command);
                 return command.WaitForResult (this) as SqliteDataReader;
             }
         }
@@ -116,7 +116,7 @@ namespace Hyena.Data.Sqlite
             object result = null;
             lock (command) {
                 command.CommandType = HyenaCommandType.Scalar;
-                QueueCommand(command);
+                QueueCommand (command);
                 result = command.WaitForResult (this);
             }
 
@@ -250,8 +250,7 @@ namespace Hyena.Data.Sqlite
             string sql = Query<string> (String.Format (
                 "SELECT sql FROM sqlite_master WHERE Name='{0}'", table_name));
             if (String.IsNullOrEmpty (sql)) {
-                throw new Exception (String.Format (
-                    "Cannot get schema for {0} because it does not exist", table_name));
+                return;
             }
             sql = sql.Substring (sql.IndexOf ('(') + 1);
             foreach (string column_def in sql.Split (',')) {
