@@ -61,6 +61,8 @@ namespace Hyena.Data.Gui
         private CellContext cell_context;
         private Pango.Layout pango_layout;
         
+        private List<int> selected_rows = new List<int> ();
+        
         private Theme theme;
         protected Theme Theme {
             get { return theme; }
@@ -313,7 +315,7 @@ namespace Hyena.Data.Gui
             
             int selection_height = 0;
             int selection_y = 0;
-            List<int> selected_rows = new List<int> ();
+            selected_rows.Clear ();
 
             for (int ri = first_row; ri < last_row; ri++) {
                 if (Selection.Contains (ri)) {

@@ -1,3 +1,9 @@
+2008-04-18  Scott Peterson <lunchtimemama@gmail.com> 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	We were instantiating a List<string> on every render. Now we just
+	use one list per instance and clear it on each render.
+
 2008-04-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
