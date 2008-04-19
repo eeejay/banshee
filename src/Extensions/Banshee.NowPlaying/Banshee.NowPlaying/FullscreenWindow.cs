@@ -31,17 +31,77 @@
 using System;
 using Gtk;
 
+using Banshee.Gui;
+using Banshee.MediaEngine;
+using Banshee.ServiceStack;
+
 namespace Banshee.NowPlaying
 {
     public class FullscreenWindow : Window
     {
         private Gtk.Window parent;
         private FullscreenControls controls;
+        private InterfaceActionService action_service;
         
         public FullscreenWindow (Window parent) : base (parent.Title)
         {
             this.parent = parent;
+            this.action_service = ServiceManager.Get<InterfaceActionService> ();
             
+            AddAccelGroup (action_service.UIManager.AccelGroup);
+            
+            SetupWidget ();
+        }
+        
+        protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+        {
+            PlayerEngineService player = ServiceManager.PlayerEngine;
+            
+            bool control = (evnt.State & Gdk.ModifierType.ShiftMask) != 0;
+            bool shift = (evnt.State & Gdk.ModifierType.ControlMask) != 0;
+            bool mod = control || shift;
+            
+            uint fixed_seek = 15000; // 15 seconds
+            uint fast_seek = player.Length > 0 ? (uint)(player.Length * 0.15) : fixed_seek; // 15% or fixed
+            uint slow_seek = player.Length > 0 ? (uint)(player.Length * 0.05) : fixed_seek; // 5% or fixed
+            
+            switch (evnt.Key) {
+                case Gdk.Key.Escape:
+                    Unfullscreen ();
+                    Hide ();
+                    return true;
+                case Gdk.Key.C:
+                case Gdk.Key.c:
+                case Gdk.Key.V:
+                case Gdk.Key.v:
+                case Gdk.Key.Return:
+                case Gdk.Key.KP_Enter:
+                case Gdk.Key.Tab:
+                    if (controls == null || !controls.Visible) {
+                        ShowControls ();
+                    } else {
+                        HideControls ();
+                    }
+                    return true;
+                case Gdk.Key.Right:
+                case Gdk.Key.rightarrow:
+                    player.Position += mod ? fast_seek : slow_seek;
+                    ShowControls ();
+                    break;
+                case Gdk.Key.Left:
+                case Gdk.Key.leftarrow:
+                    player.Position -= mod ? fast_seek : slow_seek;
+                    ShowControls ();
+                    break;
+            }
+            
+            return base.OnKeyPressEvent (evnt);
+        }
+        
+#region Widgetry and show/hide logic
+        
+        private void SetupWidget ()
+        {
             Deletable = false;
             KeepAbove = true;
             Decorated = false;
@@ -107,24 +167,14 @@ namespace Banshee.NowPlaying
             }
         }
 
-        protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
-        {
-            switch (evnt.Key) {
-                case Gdk.Key.Escape: 
-                    Unfullscreen ();
-                    Hide ();
-                    return true;
-            }
-            
-            return base.OnKeyPressEvent (evnt);
-        }
-        
+#endregion
+                                
 #region Control Window
 
         private void ShowControls ()
         {
             if (controls == null) {
-                controls = new FullscreenControls (this);
+                controls = new FullscreenControls (this, action_service);
             }
             
             controls.Show ();
@@ -149,6 +199,8 @@ namespace Banshee.NowPlaying
             get {
                 if (controls == null || !controls.Visible) {
                     return false;
+                } else if (controls.IsActive) {
+                    return true;
                 }
                 
                 int cursor_x, cursor_y;

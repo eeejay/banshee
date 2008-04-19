@@ -39,10 +39,11 @@ namespace Banshee.NowPlaying
     {
         private InterfaceActionService action_service;
         
-        public FullscreenControls (Window toplevel) : base (toplevel, 0.85)
+        public FullscreenControls (Window toplevel, InterfaceActionService actionService) : base (toplevel, 1)
         {
-            action_service = ServiceManager.Get<InterfaceActionService> ();
+            action_service = actionService;
             BorderWidth = 1;
+            AddAccelGroup (action_service.UIManager.AccelGroup);
             BuildInterface ();
         }
         

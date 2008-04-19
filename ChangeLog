@@ -1,5 +1,18 @@
 2008-04-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenControls.cs:
+	Add the default accel group and make it as wide as the screen (probably 
+	lame but gabaug was complaining)
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Add the default accel group and some custom keybindings for seeking
+	and showing/hiding the control bar
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/OverlayWindow.cs:
+	Make gabaug happy and move the bar to the bottom of the screen
+
+2008-04-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
 	Added new horizontal layout mode that is nice for fullscreen
 

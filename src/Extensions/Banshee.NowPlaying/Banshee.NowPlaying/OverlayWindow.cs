@@ -37,7 +37,7 @@ namespace Banshee.NowPlaying
         private Window toplevel;
         
         private double x_align = 0.5;
-        private double y_align = 0.90;
+        private double y_align = 1;
         private double width_scale;
         
         public OverlayWindow (Window toplevel) : this (toplevel, 0.0)
