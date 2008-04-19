@@ -1,3 +1,17 @@
+2008-04-19  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Lots of window manager and parent window interaction stuff so that 
+	fullscreen behaves properly when a user does strange window management
+	like alt-tab when in fullscreen
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	Ensure that if for some reason the source is changed underneath the
+	fullscreen, it's merged back into the source UI
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Use the proper
+	drawing call for non-standard border renders
+
 2008-04-18  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/banshee-player-video.c: (bp_video_find_xoverlay): Do not

@@ -34,30 +34,76 @@ using Gtk;
 namespace Banshee.NowPlaying
 {
     public class FullscreenWindow : Window
-    {    
-        public FullscreenWindow (Window parent) : base ("Banshee")
+    {
+        private Gtk.Window parent;
+        
+        public FullscreenWindow (Window parent) : base (parent.Title)
         {
+            this.parent = parent;
+            
+            Deletable = false;
+            KeepAbove = true;
+            Decorated = false;
+            TransientFor = null;
+            
             Gdk.Screen screen = Screen;
             int monitor = screen.GetMonitorAtWindow (parent.GdkWindow);
             Gdk.Rectangle bounds = screen.GetMonitorGeometry (monitor);
             Move (bounds.X, 0);
             SetDefaultSize (bounds.Width, bounds.Height);
-            
-            Decorated = false;
         }
         
         protected override void OnRealized ()
         {
             Events |= Gdk.EventMask.PointerMotionMask | Gdk.EventMask.PointerMotionHintMask;
             base.OnRealized ();
+            
+            Screen.SizeChanged += OnScreenSizeChanged;
+        }
+        
+        protected override void OnUnrealized ()
+        {
+            base.OnUnrealized ();
+            Screen.SizeChanged -= OnScreenSizeChanged;
+        }
+        
+        protected override bool OnDeleteEvent (Gdk.Event evnt)
+        {
+            Hide ();
+            return true;
         }
         
         protected override void OnShown ()
         {
             base.OnShown ();
             OnHideCursorTimeout ();
+            parent.AddNotification ("is-active", ParentActiveNotification);
         }
         
+        protected override void OnHidden ()
+        {
+            base.OnHidden ();
+            parent.RemoveNotification ("is-active", ParentActiveNotification);
+        }
+        
+        private void OnScreenSizeChanged (object o, EventArgs args)
+        {
+        }
+        
+        private void ParentActiveNotification (object o, GLib.NotifyArgs args)
+        {
+            // If our parent window is ever somehow activated while we are
+            // visible, this will ensure we merge back into the parent
+            if (parent.IsActive) {
+                parent.GdkWindow.SkipPagerHint = false;
+                parent.GdkWindow.SkipTaskbarHint = false;
+                Hide ();
+            } else {
+                parent.GdkWindow.SkipPagerHint = true;
+                parent.GdkWindow.SkipTaskbarHint = true;
+            }
+        }
+
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
         {
             switch (evnt.Key) {
@@ -123,7 +169,7 @@ namespace Banshee.NowPlaying
         
         private void UpdateHiddenCursorPosition ()
         {
-            Screen.Display.GetPointer (out hide_cursor_x, out hide_cursor_y);
+            GetPointer (out hide_cursor_x, out hide_cursor_y);
         }
         
         private void ShowCursor ()

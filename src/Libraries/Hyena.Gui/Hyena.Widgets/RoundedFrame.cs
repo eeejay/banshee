@@ -157,9 +157,9 @@ namespace Hyena.Widgets
             theme.Context.ShowStroke = draw_border;
             
             if (fill_color_set) {
-                theme.DrawFrame (cr, rect, fill_color);
+                theme.DrawFrameBackground (cr, rect, fill_color);
             } else {
-                theme.DrawFrame (cr, rect, true);
+                theme.DrawFrameBorder (cr, rect);
             }
         }
 

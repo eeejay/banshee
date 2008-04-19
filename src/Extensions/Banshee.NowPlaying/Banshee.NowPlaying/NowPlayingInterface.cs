@@ -116,6 +116,8 @@ namespace Banshee.NowPlaying
 
         internal void OverrideFullscreen ()
         {
+            FullscreenHandler (false);
+            
             InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
             if (service == null || service.ViewActions == null) {
                 return;
@@ -128,6 +130,8 @@ namespace Banshee.NowPlaying
 
         internal void RelinquishFullscreen ()
         {
+            FullscreenHandler (false);
+            
             InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
             if (service == null || service.ViewActions == null) {
                 return;
