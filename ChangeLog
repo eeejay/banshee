@@ -1,5 +1,10 @@
 2008-04-18  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/banshee-player-video.c: (bp_video_find_xoverlay): Do not
+	let the video sink handle X events
+
+2008-04-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
 	Hide the cursor if it hasn't moved in 2.5 seconds, allow 150px of movement
 	before showing it again if it was hidden already

@@ -68,6 +68,11 @@ bp_video_find_xoverlay (BansheePlayer *player)
         G_OBJECT_GET_CLASS (player->xoverlay), "force-aspect-ratio")) {
         g_object_set (G_OBJECT (player->xoverlay), "force-aspect-ratio", TRUE, NULL);
     }
+    
+    if (player->xoverlay != NULL && g_object_class_find_property (
+        G_OBJECT_GET_CLASS (player->xoverlay), "handle-events")) {
+        g_object_set (G_OBJECT (player->xoverlay), "handle-events", FALSE, NULL);
+    }
 
     gst_object_unref (video_sink);
 
