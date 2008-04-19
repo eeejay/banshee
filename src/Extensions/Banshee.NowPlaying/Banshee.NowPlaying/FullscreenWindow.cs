@@ -36,6 +36,7 @@ namespace Banshee.NowPlaying
     public class FullscreenWindow : Window
     {
         private Gtk.Window parent;
+        private FullscreenControls controls;
         
         public FullscreenWindow (Window parent) : base (parent.Title)
         {
@@ -83,6 +84,10 @@ namespace Banshee.NowPlaying
         protected override void OnHidden ()
         {
             base.OnHidden ();
+            if (controls != null) {
+                controls.Destroy ();
+                controls = null;
+            }
             parent.RemoveNotification ("is-active", ParentActiveNotification);
         }
         
@@ -116,6 +121,26 @@ namespace Banshee.NowPlaying
             return base.OnKeyPressEvent (evnt);
         }
         
+#region Control Window
+
+        private void ShowControls ()
+        {
+            if (controls == null) {
+                controls = new FullscreenControls (this);
+            }
+            
+            controls.Show ();
+        }
+        
+        private void HideControls ()
+        {
+            if (controls != null) {
+                controls.Hide ();
+            }
+        }
+
+#endregion
+        
 #region Mouse Cursor Polish
 
         private const int CursorUpdatePositionDelay = 500;   // How long (ms) before the cursor position is updated
@@ -134,6 +159,7 @@ namespace Banshee.NowPlaying
                 if (Math.Abs (hide_cursor_x - evnt.X) > CursorShowMovementThreshold || 
                     Math.Abs (hide_cursor_y - evnt.Y) > CursorShowMovementThreshold) {
                     ShowCursor ();
+                    ShowControls ();
                 } else {
                     if (cursor_update_position_timeout_id > 0) {
                         GLib.Source.Remove (cursor_update_position_timeout_id);
@@ -142,7 +168,7 @@ namespace Banshee.NowPlaying
                     cursor_update_position_timeout_id = GLib.Timeout.Add (CursorUpdatePositionDelay, 
                         OnCursorUpdatePositionTimeout);
                 }        
-            } else {
+            } else if (controls.CanHide) {
                 if (hide_cursor_timeout_id > 0) {
                     GLib.Source.Remove (hide_cursor_timeout_id);
                 }
@@ -163,6 +189,7 @@ namespace Banshee.NowPlaying
         private bool OnHideCursorTimeout ()
         {
             HideCursor ();
+            HideControls ();
             hide_cursor_timeout_id = 0;
             return false;
         }

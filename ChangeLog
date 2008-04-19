@@ -1,5 +1,28 @@
 2008-04-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenControls.cs:
+	First pass at adding fullscreen controls - it's by no means complete, and
+	yes I know there are some bugs and missing items
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Show/hide the controls overlay window when necessary
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/OverlayWindow.cs:
+	Started porting the overlay controls window from F-Spot
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: Use F instead
+	of F11 as the fullscreen accel
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs: Moved the widget
+	construction to a protected function and added a default ctor
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/NextButton.cs: Added
+	a small wrapper for creating the next action button
+	
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Use the new NextButton
+
+2008-04-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
 	Lots of window manager and parent window interaction stuff so that 
 	fullscreen behaves properly when a user does strange window management

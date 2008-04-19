@@ -147,9 +147,7 @@ namespace Nereid
             
             primary_vbox.PackStart (toolbar_alignment, false, false, 0);
             
-            Widget button = ActionService.PlaybackActions["NextAction"].CreateToolItem ();
-            Menu menu = ActionService.PlaybackActions.ShuffleActions.CreateMenu ();
-            MenuButton next_button = new MenuButton (button, menu, true);
+            Widget next_button = new NextButton (ActionService);
             next_button.Show ();
             ActionService.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/NextArrowButton", next_button);
             

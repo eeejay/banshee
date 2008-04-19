@@ -98,6 +98,7 @@
     <File name="Banshee.Gui/PersistentPaneController.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/ColumnCellPositiveInt.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/MainMenu.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.Widgets/NextButton.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

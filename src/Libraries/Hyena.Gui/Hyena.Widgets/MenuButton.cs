@@ -41,7 +41,16 @@ namespace Hyena.Widgets
         private Menu menu;
         private Widget size_widget;
         
+        public MenuButton ()
+        {
+        }
+        
         public MenuButton (Widget buttonWidget, Menu menu, bool showArrow)
+        {
+            Construct (buttonWidget, menu, showArrow);
+        }
+        
+        protected void Construct (Widget buttonWidget, Menu menu, bool showArrow)
         {
             WidgetFlags |= WidgetFlags.NoWindow;
             
