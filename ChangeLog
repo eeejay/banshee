@@ -1,5 +1,11 @@
 2008-04-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Hide the cursor if it hasn't moved in 2.5 seconds, allow 150px of movement
+	before showing it again if it was hidden already
+
+2008-04-18  Aaron Bockover  <abock@gnome.org>
+
 	This commit adds video rendering to the fullscreen window and fixes all
 	of the GTK CRITICAL messages that could be seen when switching from the
 	now playing source to something else
