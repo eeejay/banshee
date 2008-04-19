@@ -38,10 +38,24 @@ namespace Banshee.NowPlaying
         
         private double x_align = 0.5;
         private double y_align = 0.90;
+        private double width_scale;
         
-        public OverlayWindow (Window toplevel) : base (WindowType.Popup)
+        public OverlayWindow (Window toplevel) : this (toplevel, 0.0)
         {
+        }
+        
+        public OverlayWindow (Window toplevel, double widthScale) : base (WindowType.Popup)
+        {
+            if (toplevel == null) {
+                throw new ArgumentNullException ("toplevel", "An overlay must have a parent window");
+            }
+            
+            if (width_scale < 0 || width_scale > 1) {
+                throw new ArgumentOutOfRangeException ("widthScale", "Must be between 0 and 1 inclusive");
+            }
+        
             this.toplevel = toplevel;
+            this.width_scale = widthScale;
             
             Decorated = false;
             DestroyWithParent = true;
@@ -63,10 +77,6 @@ namespace Banshee.NowPlaying
             // composited = CompositeUtils.IsComposited (Screen) && CompositeUtils.SetRgbaColormap (this);
             // AppPaintable = composited;
             
-            Events |= (Gdk.EventMask.EnterNotifyMask | 
-                Gdk.EventMask.LeaveNotifyMask |
-                Gdk.EventMask.PointerMotionMask);
-
             base.OnRealized ();
             
             // ShapeWindow ();
@@ -78,27 +88,27 @@ namespace Banshee.NowPlaying
             base.OnMapped ();
             Relocate ();
         }
-        
-        protected override bool OnEnterNotifyEvent (Gdk.EventCrossing evnt)
-        {
-            can_hide = false;
-            return base.OnEnterNotifyEvent (evnt);
-        }
 
-        protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
-        {
-            can_hide = true;
-            return base.OnLeaveNotifyEvent (evnt);
-        }
-        
         protected override bool OnConfigureEvent (Gdk.EventConfigure evnt)
         {
             return base.OnConfigureEvent (evnt);
         }
         
+        protected override void OnSizeRequested (ref Requisition requisition)
+        {
+            if (Child != null) {
+                requisition = Child.SizeRequest ();
+            }
+            
+            if (width_scale > 0 && width_scale <= 1 && TransientFor != null) {
+                requisition.Width = (int)(TransientFor.Allocation.Width * width_scale);
+            }
+        }
+        
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
+            
             Relocate ();
             // ShapeWindow ();
             QueueDraw ();
@@ -111,6 +121,7 @@ namespace Banshee.NowPlaying
         
         private void OnToplevelSizeAllocated (object o, SizeAllocatedArgs args)
         {
+            QueueResize ();
             Relocate ();
         }
         

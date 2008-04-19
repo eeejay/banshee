@@ -48,13 +48,21 @@ namespace Banshee.Widgets
             this.seekRange = seekRange;
             this.seekRange.ValueChanged += OnSliderUpdated;
             this.seekRange.DurationChanged += OnSliderUpdated;
-
+        }
+        
+        protected override void OnRealized ()
+        {
+            base.OnRealized ();
+            
             BuildLayouts ();
             UpdateLabel ();
         }
         
         private void BuildLayouts ()
         {
+            if (layout != null) {
+                layout.Dispose ();
+            }
             layout = new Pango.Layout (PangoContext);
             layout.FontDescription = PangoContext.FontDescription.Copy ();
             layout.Ellipsize = Pango.EllipsizeMode.None;
@@ -181,6 +189,7 @@ namespace Banshee.Widgets
         public string FormatString {
             set { 
                 format_string = value;
+                BuildLayouts ();
                 UpdateLabel ();
             }
         }

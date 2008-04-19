@@ -1,5 +1,26 @@
 2008-04-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	Added new horizontal layout mode that is nice for fullscreen
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs: 
+	Rebuild the layouts when the format string changes
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenControls.cs:
+	Allow the seek slider to fill any remaining space in the window and
+	make sure the window takes 85% of the screen width
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Fixed the popup auto-hide when the mouse was over the controls
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/OverlayWindow.cs:
+	Added better sizing to allow the window to adapt to the screen size
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs:
+	Implemented two empty method overrides to avoid GtkContainer's bitching
+
+2008-04-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenControls.cs:
 	First pass at adding fullscreen controls - it's by no means complete, and
 	yes I know there are some bugs and missing items

@@ -107,6 +107,14 @@ namespace Hyena.Widgets
             callback (box);
         }
         
+        protected override void OnAdded (Widget widget)
+        {
+        }
+        
+        protected override void OnRemoved (Widget widget)
+        {
+        }
+        
         protected void ShowMenu ()
         {
             menu.Popup (null, null, PositionMenu, 1, Gtk.Global.CurrentEventTime);

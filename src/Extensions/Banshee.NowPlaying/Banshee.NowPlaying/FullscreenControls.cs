@@ -39,10 +39,10 @@ namespace Banshee.NowPlaying
     {
         private InterfaceActionService action_service;
         
-        public FullscreenControls (Window toplevel) : base (toplevel)
+        public FullscreenControls (Window toplevel) : base (toplevel, 0.85)
         {
             action_service = ServiceManager.Get<InterfaceActionService> ();
-            BorderWidth = 2;
+            BorderWidth = 1;
             BuildInterface ();
         }
         
@@ -50,10 +50,10 @@ namespace Banshee.NowPlaying
         {
             HBox box = new HBox ();
             
-            box.PackStart (action_service.PlaybackActions["PreviousAction"].CreateToolItem ());
-            box.PackStart (action_service.PlaybackActions["PlayPauseAction"].CreateToolItem ());
+            box.PackStart (action_service.PlaybackActions["PreviousAction"].CreateToolItem (), false, false, 0);
+            box.PackStart (action_service.PlaybackActions["PlayPauseAction"].CreateToolItem (), false, false, 0);
             box.PackStart (new NextButton (action_service), false, false, 0);
-            box.PackStart (new ConnectedSeekSlider (), false, false, 10);
+            box.PackStart (new ConnectedSeekSlider (SeekSliderLayout.Horizontal), true, true, 0);
             box.PackStart (new ConnectedVolumeButton (), false, false, 0);
             
             Button exit = new Button (Stock.LeaveFullscreen);

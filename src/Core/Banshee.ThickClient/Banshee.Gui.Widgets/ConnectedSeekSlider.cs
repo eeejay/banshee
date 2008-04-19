@@ -35,17 +35,26 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Gui.Widgets
 {
+    public enum SeekSliderLayout {
+        Horizontal,
+        Vertical
+    }   
+
     public class ConnectedSeekSlider : Alignment
     {
         private SeekSlider seek_slider;
         private StreamPositionLabel stream_position_label;
     
-        public ConnectedSeekSlider () : base (0.0f, 0.0f, 1.0f, 1.0f)
+        public ConnectedSeekSlider () : this (SeekSliderLayout.Vertical)
+        {
+        }
+    
+        public ConnectedSeekSlider (SeekSliderLayout layout) : base (0.0f, 0.0f, 1.0f, 1.0f)
         {
             RightPadding = 10;
             LeftPadding = 10;
             
-            BuildSeekSlider ();
+            BuildSeekSlider (layout);
             
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
             ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
@@ -56,20 +65,33 @@ namespace Banshee.Gui.Widgets
             get { return stream_position_label; }
         }
         
-        private void BuildSeekSlider ()
-        {
-            VBox box = new VBox ();
-            Add (box);
-            
+        public SeekSlider SeekSlider {
+            get { return seek_slider; }
+        }
+        
+        private void BuildSeekSlider (SeekSliderLayout layout)
+        {            
             seek_slider = new SeekSlider ();
             stream_position_label = new StreamPositionLabel (seek_slider);
+         
+            Box box;
+            
+            if (layout == SeekSliderLayout.Horizontal) {
+                box = new HBox ();
+                box.Spacing = 5;
+                stream_position_label.FormatString = "<b>{0}</b>";
+            } else {
+                box = new VBox ();
+            }
             
             seek_slider.SetSizeRequest (125, -1);
-            
+                     
             box.PackStart (seek_slider, true, true, 0);
-            box.PackStart (stream_position_label, true, true, 0);
+            box.PackStart (stream_position_label, false, false, 0);
             
             box.ShowAll ();
+            
+            Add (box);
         }
         
         private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)

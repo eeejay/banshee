@@ -56,7 +56,8 @@ namespace Banshee.NowPlaying
         
         protected override void OnRealized ()
         {
-            Events |= Gdk.EventMask.PointerMotionMask | Gdk.EventMask.PointerMotionHintMask;
+            Events |= Gdk.EventMask.PointerMotionMask;
+            
             base.OnRealized ();
             
             Screen.SizeChanged += OnScreenSizeChanged;
@@ -84,10 +85,7 @@ namespace Banshee.NowPlaying
         protected override void OnHidden ()
         {
             base.OnHidden ();
-            if (controls != null) {
-                controls.Destroy ();
-                controls = null;
-            }
+            DestroyControls ();
             parent.RemoveNotification ("is-active", ParentActiveNotification);
         }
         
@@ -138,10 +136,37 @@ namespace Banshee.NowPlaying
                 controls.Hide ();
             }
         }
-
+        
+        private void DestroyControls ()
+        {
+            if (controls != null) {
+                controls.Destroy ();
+                controls = null;
+            }
+        }
+        
+        private bool ControlsActive {
+            get {
+                if (controls == null || !controls.Visible) {
+                    return false;
+                }
+                
+                int cursor_x, cursor_y;
+                int window_x, window_y;
+                
+                controls.GdkWindow.Screen.Display.GetPointer (out cursor_x, out cursor_y);
+                controls.GetPosition (out window_x, out window_y);
+                
+                Gdk.Rectangle box = new Gdk.Rectangle (window_x, window_y, 
+                    controls.Allocation.Width, controls.Allocation.Height);
+                
+                return box.Contains (cursor_x, cursor_y);
+            }
+        }
+     
 #endregion
         
-#region Mouse Cursor Polish
+#region Mouse Cursor Logic
 
         private const int CursorUpdatePositionDelay = 500;   // How long (ms) before the cursor position is updated
         private const int CursorHideDelay = 2500;            // How long (ms) to remain stationary before it hides
@@ -168,7 +193,7 @@ namespace Banshee.NowPlaying
                     cursor_update_position_timeout_id = GLib.Timeout.Add (CursorUpdatePositionDelay, 
                         OnCursorUpdatePositionTimeout);
                 }        
-            } else if (controls.CanHide) {
+            } else if (!ControlsActive) {
                 if (hide_cursor_timeout_id > 0) {
                     GLib.Source.Remove (hide_cursor_timeout_id);
                 }
@@ -188,8 +213,11 @@ namespace Banshee.NowPlaying
         
         private bool OnHideCursorTimeout ()
         {
-            HideCursor ();
-            HideControls ();
+            if (!ControlsActive) {
+                HideCursor ();
+                HideControls ();
+            }
+            
             hide_cursor_timeout_id = 0;
             return false;
         }
