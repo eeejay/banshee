@@ -43,6 +43,7 @@ namespace Banshee.NowPlaying
         private NowPlayingSource source;
         private VideoDisplay video_display;
         private Hyena.Widgets.RoundedFrame frame;
+        private Gtk.Window video_window;
 
         public VideoDisplay VideoDisplay {
             get { return video_display; }
@@ -50,21 +51,58 @@ namespace Banshee.NowPlaying
         
         public NowPlayingInterface ()
         {
-            video_display = new VideoDisplay ();
-            video_display.Show ();
+            GtkElementsService service = ServiceManager.Get<GtkElementsService> ();
+            
+            video_display = new XOverlayVideoDisplay ();
+            
+            // This is my really sweet hack - it's where the video widget
+            // is sent when the source is not active. This keeps the video
+            // widget from being completely destroyed, causing problems with
+            // its internal windowing and GstXOverlay. It's also conveniently
+            // the window that is used to do fullscreen video. Sweeeeeeeeeet. 
+            video_window = new FullscreenWindow (service.PrimaryWindow);
+            video_window.Hidden += OnFullscreenWindowHidden;
+            video_window.Realize ();
+            video_window.Add (video_display);
             
             frame = new Hyena.Widgets.RoundedFrame ();
             frame.SetFillColor (new Cairo.Color (0, 0, 0));
             frame.DrawBorder = false;
-            frame.Add (video_display);
             frame.Show ();
             
             PackStart (frame, true, true, 0);
         }
         
+        private void MoveVideoExternal (bool hidden)
+        {
+            if (video_display.Parent != video_window) {
+                video_display.Visible = !hidden;
+                video_display.Reparent (video_window);
+            }
+        }
+        
+        private void MoveVideoInternal ()
+        {
+            if (video_display.Parent != frame) {
+                video_display.Reparent (frame);
+                video_display.Show ();
+            }
+        }
+        
+        protected override void OnRealized ()
+        {
+            base.OnRealized ();
+            MoveVideoInternal ();
+        }
+        
+        protected override void OnUnrealized ()
+        {
+            MoveVideoExternal (false);
+            base.OnUnrealized ();
+        }
+
 #region Video Fullscreen Override
 
-        private Gtk.Window fullscreen_window;
         private ViewActions.FullscreenHandler previous_fullscreen_handler;
 
         private void DisableFullscreenAction ()
@@ -98,29 +136,20 @@ namespace Banshee.NowPlaying
             service.ViewActions.Fullscreen = previous_fullscreen_handler;
         }
         
-        private void OnFullscreenWindowDestroyed (object o, EventArgs args)
+        private void OnFullscreenWindowHidden (object o, EventArgs args)
         {
-            if (fullscreen_window != null) {
-                fullscreen_window.Destroyed -= OnFullscreenWindowDestroyed;
-                fullscreen_window = null;
-            }
-            
+            MoveVideoInternal ();
             DisableFullscreenAction ();
         }
-        
+
         private void FullscreenHandler (bool fullscreen)
         {
             if (fullscreen) {
-                if (fullscreen_window == null) {
-                    GtkElementsService service = ServiceManager.Get<GtkElementsService> (); 
-                    fullscreen_window = new FullscreenWindow (service.PrimaryWindow.Title, service.PrimaryWindow);
-                    fullscreen_window.Destroyed += OnFullscreenWindowDestroyed;
-                }
-                
-                fullscreen_window.ShowAll ();
-                fullscreen_window.Fullscreen ();
-            } else if (fullscreen_window != null) {
-                fullscreen_window.Destroy ();
+                MoveVideoExternal (true);
+                video_window.ShowAll ();
+                video_window.Fullscreen ();
+            } else {
+                video_window.Hide ();
             }
         }
         

@@ -30,13 +30,12 @@
 
 using System;
 using Gtk;
-using Mono.Unix;
 
 namespace Banshee.NowPlaying
 {
     public class FullscreenWindow : Window
     {
-        public FullscreenWindow (string title, Window parent) : base (title)
+        public FullscreenWindow (Window parent) : base ("Banshee")
         {
             Gdk.Screen screen = Screen;
             int monitor = screen.GetMonitorAtWindow (parent.GdkWindow);
@@ -47,16 +46,12 @@ namespace Banshee.NowPlaying
             Decorated = false;
         }
         
-        protected override void OnDestroyed ()
-        {
-            base.OnDestroyed ();
-        }
-        
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
         {
             switch (evnt.Key) {
                 case Gdk.Key.Escape: 
-                    Destroy ();
+                    Unfullscreen ();
+                    Hide ();
                     return true;
             }
             

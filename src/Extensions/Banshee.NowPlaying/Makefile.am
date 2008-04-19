@@ -7,7 +7,8 @@ SOURCES =  \
 	Banshee.NowPlaying/FullscreenWindow.cs \
 	Banshee.NowPlaying/NowPlayingInterface.cs \
 	Banshee.NowPlaying/NowPlayingSource.cs \
-	Banshee.NowPlaying/VideoDisplay.cs
+	Banshee.NowPlaying/VideoDisplay.cs \
+	Banshee.NowPlaying/XOverlayVideoDisplay.cs
 
 RESOURCES =  \
 	Banshee.NowPlaying.addin.xml \

@@ -1,3 +1,28 @@
+2008-04-18  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds video rendering to the fullscreen window and fixes all
+	of the GTK CRITICAL messages that could be seen when switching from the
+	now playing source to something else
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	Implemented a sweet widget reparenting hack to work around the windowing
+	issues with GstXOverlay; when the video wiget is not to be displayed,
+	it is reparented to the fullscreen window, which will be hidden; this
+	also implements the rest of fullscreen support as far as video rendering
+	is concerned (there are no fullscreen controls yet, but you can press
+	escape to close the window)
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Hide and unfullscreen self instead of destroying
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	Abstracted non GstXOverlay specific pieces of the video widget to make
+	the code easier to maintain
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/XOverlayVideoDisplay.cs:
+	Fixes with the internal windowing to better work with the reparenting
+	hack outlined above
+
 2008-04-18  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
