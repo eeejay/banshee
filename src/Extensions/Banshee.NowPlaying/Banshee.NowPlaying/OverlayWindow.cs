@@ -30,6 +30,8 @@
 using System;
 using Gtk;
 
+using Hyena.Gui;
+
 namespace Banshee.NowPlaying
 {
     public class OverlayWindow : Window
@@ -39,6 +41,7 @@ namespace Banshee.NowPlaying
         private double x_align = 0.5;
         private double y_align = 1;
         private double width_scale;
+        private bool composited;
         
         public OverlayWindow (Window toplevel) : this (toplevel, 0.0)
         {
@@ -74,12 +77,12 @@ namespace Banshee.NowPlaying
         
         protected override void OnRealized ()
         {
-            // composited = CompositeUtils.IsComposited (Screen) && CompositeUtils.SetRgbaColormap (this);
-            // AppPaintable = composited;
+            composited = CompositeUtils.IsComposited (Screen) && CompositeUtils.SetRgbaColormap (this);
+            AppPaintable = composited;
             
             base.OnRealized ();
             
-            // ShapeWindow ();
+            ShapeWindow ();
             Relocate ();
         }
 
@@ -110,7 +113,7 @@ namespace Banshee.NowPlaying
             base.OnSizeAllocated (allocation);
             
             Relocate ();
-            // ShapeWindow ();
+            ShapeWindow ();
             QueueDraw ();
         }
         
@@ -123,6 +126,38 @@ namespace Banshee.NowPlaying
         {
             QueueResize ();
             Relocate ();
+        }
+        
+        protected override bool OnExposeEvent (Gdk.EventExpose evnt)
+        {
+            if (!composited || evnt.Window != GdkWindow) {
+                return base.OnExposeEvent (evnt);
+            }
+            
+            Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
+            
+            Gdk.Color color = Style.Background (State);
+            
+            ShapeSurface (cr, new Cairo.Color (color.Red / (double) ushort.MaxValue,
+                color.Blue / (double) ushort.MaxValue, 
+                color.Green / (double) ushort.MaxValue,
+                0.85));
+            
+            ((IDisposable)cr).Dispose ();
+            return base.OnExposeEvent (evnt);
+        }
+        
+        protected virtual void ShapeSurface (Cairo.Context cr, Cairo.Color color)
+        {
+            cr.Operator = Cairo.Operator.Source;
+            Cairo.Pattern pattern = new Cairo.SolidPattern (color);
+            cr.Source = pattern;
+            pattern.Destroy ();
+            cr.Paint ();
+        }
+
+        private void ShapeWindow ()
+        {
         }
         
         private void Relocate ()

@@ -38,11 +38,11 @@ namespace Banshee.NowPlaying
     public class FullscreenControls : OverlayWindow
     {
         private InterfaceActionService action_service;
+        private ConnectedVolumeButton volume_button;
         
         public FullscreenControls (Window toplevel, InterfaceActionService actionService) : base (toplevel, 1)
         {
             action_service = actionService;
-            BorderWidth = 1;
             AddAccelGroup (action_service.UIManager.AccelGroup);
             BuildInterface ();
         }
@@ -51,11 +51,14 @@ namespace Banshee.NowPlaying
         {
             HBox box = new HBox ();
             
+            volume_button = new ConnectedVolumeButton (true);
+            
             box.PackStart (action_service.PlaybackActions["PreviousAction"].CreateToolItem (), false, false, 0);
             box.PackStart (action_service.PlaybackActions["PlayPauseAction"].CreateToolItem (), false, false, 0);
             box.PackStart (new NextButton (action_service), false, false, 0);
+            box.PackStart (new RepeatActionButton (true), false, false, 0);
             box.PackStart (new ConnectedSeekSlider (SeekSliderLayout.Horizontal), true, true, 0);
-            box.PackStart (new ConnectedVolumeButton (), false, false, 0);
+            box.PackStart (volume_button, false, false, 0);
             
             Button exit = new Button (Stock.LeaveFullscreen);
             exit.Relief = ReliefStyle.None;
@@ -64,6 +67,10 @@ namespace Banshee.NowPlaying
             
             Add (box);
             box.ShowAll ();
+        }
+        
+        public bool Active {
+            get { return volume_button.Active || IsActive; }
         }
     }
 }

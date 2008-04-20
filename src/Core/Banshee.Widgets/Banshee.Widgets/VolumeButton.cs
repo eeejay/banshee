@@ -68,10 +68,20 @@ namespace Bacon
         private int previous_volume;
         private uint pop_time;
         private bool timeout;
+        private bool classic;
         
         private Gdk.Pixbuf [] pixbufs;
         
         public event VolumeChangedHandler VolumeChanged;
+        
+        public bool Classic {
+            get { return classic; }
+            set { classic = value; }
+        }
+        
+        public bool Active {
+            get { return dock == null ? false : dock.Visible; }
+        }
         
         public VolumeButton() : this(0.0, 100.0, 5.0, IconSize.SmallToolbar)
         {
@@ -120,6 +130,7 @@ namespace Bacon
             dock.KeyPressEvent += OnDockKeyPressEvent;
             dock.KeyReleaseEvent += OnDockKeyReleaseEvent;
             dock.ScrollEvent += OnPlusMinusScollEvent;
+            dock.Hidden += OnDockHidden;
             
             Frame frame = new Frame();
             frame.Shadow = ShadowType.Out;
@@ -176,7 +187,7 @@ namespace Bacon
             int x, y, m, dx, dy, sx, sy, ystartoff;
             uint event_time;
             double v;
-            
+
             if(previous_volume != (int)slider.Adjustment.Lower) {
                 previous_volume = Volume;
             }
@@ -190,42 +201,55 @@ namespace Bacon
             } else {
                 throw new ApplicationException("ShowDock expects EventKey, EventButton, or EventScroll");
             }
-        
+  
+            if(classic) {
+                dock.Realize();
+            }
+            
             dock.Screen = Screen;
             
             GdkWindow.GetOrigin(out x, out y);
             x += Allocation.X;
-            y += Allocation.Y;
-            
-            dock.Move(x, y - (SCALE_SIZE / 2));
-            dock.ShowAll();
-            
-            dock.GdkWindow.GetOrigin(out dx, out dy);
-            dy += dock.Allocation.Y;
-            
-            slider.GdkWindow.GetOrigin(out sx, out sy);
-            sy += slider.Allocation.Y;
-            ystartoff = sy - dy;
-            
-            timeout = true;
             
             v = Volume / (adj.Upper - adj.Lower);
-            x += (Allocation.Width - dock.Allocation.Width) / 2;
-            y -= ystartoff;
-            y -= slider.MinSliderSize / 2;
-            m = slider.Allocation.Height - slider.MinSliderSize;
-            y -= (int)(m * (1.0 - v));
             
-            if(evnt is Gdk.EventButton) {
-                y += (int)((Gdk.EventButton)evnt).Y;
-            } else if(evnt is Gdk.EventScroll) {
-                y += (int)((Gdk.EventScroll)evnt).Y;
+            if(classic) {
+                dock.Move(x + (Allocation.Width - dock.Allocation.Width) / 2, y - dock.Allocation.Height);
+                dock.ShowAll();
+                Relief = ReliefStyle.Normal;
+                State = StateType.Active;
+            } else {
+                y += Allocation.Y;
+                
+                dock.Move(x, y - (SCALE_SIZE / 2));
+                dock.ShowAll();
+                
+                dock.GdkWindow.GetOrigin(out dx, out dy);
+                dy += dock.Allocation.Y;
+                
+                slider.GdkWindow.GetOrigin(out sx, out sy);
+                sy += slider.Allocation.Y;
+                ystartoff = sy - dy;
+                
+                timeout = true;
+                
+                x += (Allocation.Width - dock.Allocation.Width) / 2;
+                y -= ystartoff;
+                y -= slider.MinSliderSize / 2;
+                m = slider.Allocation.Height - slider.MinSliderSize;
+                y -= (int)(m * (1.0 - v));
+                
+                if(evnt is Gdk.EventButton) {
+                    y += (int)((Gdk.EventButton)evnt).Y;
+                } else if(evnt is Gdk.EventScroll) {
+                    y += (int)((Gdk.EventScroll)evnt).Y;
+                }
+                
+                dock.Move(x, y);
+                slider.GdkWindow.GetOrigin(out sx, out sy);
             }
             
-            dock.Move(x, y);
-            slider.GdkWindow.GetOrigin(out sx, out sy);
-            
-            bool base_result = evnt is Gdk.EventButton 
+            bool base_result = !classic && evnt is Gdk.EventButton 
                 ? base.OnButtonPressEvent((Gdk.EventButton)evnt) 
                 : true;
             
@@ -247,7 +271,7 @@ namespace Bacon
                 return false;
             }
             
-            if(evnt is Gdk.EventButton) {
+            if(!classic && evnt is Gdk.EventButton) {
                 dock.GrabFocus();
             
                 Gdk.EventButton evnt_copy = (Gdk.EventButton)Gdk.EventHelper.Copy(evnt);
@@ -370,6 +394,12 @@ namespace Bacon
             }
             
             args.RetVal = false;
+        }
+        
+        private void OnDockHidden(object o, EventArgs args)
+        {
+            State = StateType.Normal;
+            Relief = ReliefStyle.None;
         }
         
         private void OnDockButtonPressEvent(object o, ButtonPressEventArgs args)

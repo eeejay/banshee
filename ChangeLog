@@ -1,5 +1,33 @@
 2008-04-19  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedVolumeButton.cs:
+	Added a classic ctor override
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/RepeatActionButton.cs:
+	Allow the button to have only the icon
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:
+	Added a classic mode that just pops up the slider above the widget,
+	which is best for fullscreen
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenControls.cs:
+	Ensure the controls don't go away if the volume button is active
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Some fixes; increase the timeout to 5s
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/OverlayWindow.cs:
+	Make the background slightly transparent if compositing is supported
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CompositeUtils.cs: Utilities for
+	dealing with awesome stuff in composited environments that doesn't 
+	require the latest bleeding GTK; ported from F-Spot, thank you Larry
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Fix the 
+	frame rendering
+
+2008-04-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenControls.cs:
 	Add the default accel group and make it as wide as the screen (probably 
 	lame but gabaug was complaining)

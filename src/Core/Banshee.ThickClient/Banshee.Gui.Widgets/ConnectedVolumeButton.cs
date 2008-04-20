@@ -43,6 +43,11 @@ namespace Banshee.Gui.Widgets
             ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
         }
         
+        public ConnectedVolumeButton (bool classic) : this ()
+        {
+            Classic = classic;
+        }
+        
         private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
         {
             if (args.Event == PlayerEngineEvent.Volume) {

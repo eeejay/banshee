@@ -184,6 +184,7 @@ namespace Banshee.NowPlaying
         {
             if (controls != null) {
                 controls.Hide ();
+                QueueDraw ();
             }
         }
         
@@ -199,7 +200,7 @@ namespace Banshee.NowPlaying
             get {
                 if (controls == null || !controls.Visible) {
                     return false;
-                } else if (controls.IsActive) {
+                } else if (controls.Active) {
                     return true;
                 }
                 
@@ -221,7 +222,7 @@ namespace Banshee.NowPlaying
 #region Mouse Cursor Logic
 
         private const int CursorUpdatePositionDelay = 500;   // How long (ms) before the cursor position is updated
-        private const int CursorHideDelay = 2500;            // How long (ms) to remain stationary before it hides
+        private const int CursorHideDelay = 5000;            // How long (ms) to remain stationary before it hides
         private const int CursorShowMovementThreshold = 150; // How far (px) to move before it shows again
         
         private uint hide_cursor_timeout_id;

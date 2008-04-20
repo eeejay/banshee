@@ -44,7 +44,11 @@ namespace Banshee.Gui.Widgets
         private Image image = new Image ();
         private Label label = new Label ();
         
-        public RepeatActionButton ()
+        public RepeatActionButton () : this (false)
+        {
+        }
+        
+        public RepeatActionButton (bool iconOnly)
         {
             box.Spacing = 4;
             label.UseUnderline = true;
@@ -53,8 +57,11 @@ namespace Banshee.Gui.Widgets
             actions.Changed += delegate { OnActionChanged (); };
             OnActionChanged ();
             
-            box.PackStart (image, false, false, 0);
-            box.PackStart (label, true, true, 0);
+            box.PackStart (image, false, false, (uint)(iconOnly ? 4 : 0));
+            if (!iconOnly) {
+                box.PackStart (label, true, true, 0);
+            }
+            
             button = new MenuButton (box, actions.CreateMenu (), false);
             Add (button);
             ShowAll ();

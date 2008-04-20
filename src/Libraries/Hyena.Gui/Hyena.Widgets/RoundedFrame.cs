@@ -159,6 +159,7 @@ namespace Hyena.Widgets
             if (fill_color_set) {
                 theme.DrawFrameBackground (cr, rect, fill_color);
             } else {
+                theme.DrawFrameBackground (cr, rect, true);
                 theme.DrawFrameBorder (cr, rect);
             }
         }
