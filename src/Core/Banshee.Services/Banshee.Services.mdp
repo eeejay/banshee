@@ -148,6 +148,15 @@
     <File name="Banshee.Collection.Database/CachedList.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/BatchUserJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/IDiskUsageReporter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Preferences/Root.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Preferences/Preference.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Preferences/Section.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Preferences/PreferenceBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Preferences/Collection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Preferences/PreferenceService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Preferences/Page.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Preferences/SchemaPreference.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library/LibraryLocationPreference.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

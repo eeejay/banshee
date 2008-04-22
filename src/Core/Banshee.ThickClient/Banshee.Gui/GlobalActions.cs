@@ -239,9 +239,12 @@ namespace Banshee.Gui
 
         private void OnPreferences (object o, EventArgs args)
         {
-            Dialogs.PreferencesDialog dialog = new Dialogs.PreferencesDialog ();
-            dialog.Run ();
-            dialog.Destroy ();
+            try {
+                Banshee.Preferences.Gui.PreferenceDialog dialog = new Banshee.Preferences.Gui.PreferenceDialog ();
+                dialog.Run ();
+                dialog.Destroy ();
+            } catch (ApplicationException) {
+            }
         }
 
         private void OnExtensions (object o, EventArgs args)

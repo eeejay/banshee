@@ -24,6 +24,7 @@ SOURCES =  \
 	Banshee.Equalizer.Gui/EqualizerView.cs \
 	Banshee.Equalizer.Gui/EqualizerWindow.cs \
 	Banshee.Gui.Dialogs/AboutDialog.cs \
+	Banshee.Gui.Dialogs/BansheeDialog.cs \
 	Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs \
 	Banshee.Gui.Dialogs/ErrorListDialog.cs \
 	Banshee.Gui.Dialogs/ExtensionManagerDialog.cs \
@@ -76,6 +77,11 @@ SOURCES =  \
 	Banshee.MediaProfiles.Gui/ProfileConfigureButton.cs \
 	Banshee.MediaProfiles.Gui/TextViewLabel.cs \
 	Banshee.Playlist.Gui/PlaylistExportDialog.cs \
+	Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs \
+	Banshee.Preferences.Gui/NotebookPage.cs \
+	Banshee.Preferences.Gui/PreferenceDialog.cs \
+	Banshee.Preferences.Gui/SectionBox.cs \
+	Banshee.Preferences.Gui/WidgetFactory.cs \
 	Banshee.Query.Gui/BansheeQueryBox.cs \
 	Banshee.Query.Gui/PlaylistQueryValueEntry.cs \
 	Banshee.Query.Gui/RatingQueryValueEntry.cs \

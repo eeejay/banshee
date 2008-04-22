@@ -62,6 +62,7 @@ namespace Banshee.ServiceStack
         {
             RegisterService<DBusServiceManager> ();
             RegisterService<BansheeDbConnection> ();
+            RegisterService<Banshee.Preferences.PreferenceService> ();
             RegisterService<SourceManager> ();
             RegisterService<MediaProfileManager> ();
             RegisterService<PlayerEngineService> ();

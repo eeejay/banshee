@@ -46,6 +46,7 @@ SOURCES =  \
 	Banshee.Library/IImportSource.cs \
 	Banshee.Library/ImportSourceManager.cs \
 	Banshee.Library/LibraryImportManager.cs \
+	Banshee.Library/LibraryLocationPreference.cs \
 	Banshee.Library/LibrarySource.cs \
 	Banshee.Library/MusicLibrarySource.cs \
 	Banshee.Library/ThreadPoolImportSource.cs \
@@ -97,6 +98,14 @@ SOURCES =  \
 	Banshee.Playlists.Formats/PlaylistFormatDescription.cs \
 	Banshee.Playlists.Formats/PlaylistParser.cs \
 	Banshee.Playlists.Formats/PlsPlaylistFormat.cs \
+	Banshee.Preferences/Collection.cs \
+	Banshee.Preferences/Page.cs \
+	Banshee.Preferences/Preference.cs \
+	Banshee.Preferences/PreferenceBase.cs \
+	Banshee.Preferences/PreferenceService.cs \
+	Banshee.Preferences/Root.cs \
+	Banshee.Preferences/SchemaPreference.cs \
+	Banshee.Preferences/Section.cs \
 	Banshee.Query/AbstractPlaylistQueryValue.cs \
 	Banshee.Query/BansheeQuery.cs \
 	Banshee.Query/NaturalIntegerQueryValue.cs \
