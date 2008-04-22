@@ -39,6 +39,7 @@ SOURCES =  \
 	Hyena.Gui/GtkUtilities.cs \
 	Hyena.Gui/PangoCairoHelper.cs \
 	Hyena.Gui/ShadingTestWindow.cs \
+	Hyena.Gui/TooltipSetter.cs \
 	Hyena.Query.Gui/DateQueryValueEntry.cs \
 	Hyena.Query.Gui/FileSizeQueryValueEntry.cs \
 	Hyena.Query.Gui/IntegerQueryValueEntry.cs \

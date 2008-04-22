@@ -36,7 +36,11 @@ namespace Banshee.Preferences
     {
         private SchemaEntry<T> schema;
         
-        public SchemaPreference (SchemaEntry<T> schema, string name) : base (schema.Key, name)
+        public SchemaPreference (SchemaEntry<T> schema, string name) : this (schema, name, null)
+        {
+        }
+        
+        public SchemaPreference (SchemaEntry<T> schema, string name, string description) : base (schema.Key, name, description)
         {
             this.schema = schema;
         }

@@ -50,7 +50,6 @@ namespace Banshee.Gui.Dialogs
         [Widget] private Button library_reset;
         [Widget] private CheckButton copy_on_import;
         [Widget] private CheckButton write_metadata;
-        [Widget] private CheckButton error_correction;
         [Widget] private Table organization_table;
         
         private Tooltips tips = new Tooltips();
@@ -148,7 +147,6 @@ namespace Banshee.Gui.Dialogs
 
             copy_on_import.Active = LibrarySchema.CopyOnImport.Get();
             write_metadata.Active = LibrarySchema.WriteMetadata.Get();
-            error_correction.Active = ImportSchema.AudioCDErrorCorrection.Get();
         }
         
         private void ConnectEvents()
@@ -170,10 +168,6 @@ namespace Banshee.Gui.Dialogs
                 LibrarySchema.WriteMetadata.Set(write_metadata.Active);
             };
 
-            error_correction.Toggled += delegate {
-                ImportSchema.AudioCDErrorCorrection.Set(error_correction.Active);
-            };
-            
             folder_box.Changed += OnFolderFileChanged;
             file_box.Changed += OnFolderFileChanged;
         }

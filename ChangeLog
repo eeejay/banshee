@@ -1,5 +1,37 @@
 2008-04-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IAudioCdRipper.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
+	Added a enableErrorCorrection argument to the Begin method
+
+	* src/Core/Banshee.Core/Banshee.Configuration.Schema/ImportSchema.cs:
+	Removed the error correction schema
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Collection.cs: Added remove
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Preference.cs:
+	* src/Core/Banshee.Services/Banshee.Preferences/Root.cs:
+	* src/Core/Banshee.Services/Banshee.Preferences/SchemaPreference.cs:
+	Added Description property and ctor overrides
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:
+	Removed crap
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/SectionBox.cs:
+	Set tooltips
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	Pass the schema value ot Begin
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
+	Add the first preference for audio CD support
+	
+	* src/Libraries/Hyena.Gui/Hyena.Gui/TooltipSetter.cs: A new awesome
+	tooltip wrapper that will either use the old Gtk.Tooltips API or the new
+	Gtk.Widget.TooltipText property, depending on what is available
+
+2008-04-22  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: Set up default
 	preferences for some more things
 

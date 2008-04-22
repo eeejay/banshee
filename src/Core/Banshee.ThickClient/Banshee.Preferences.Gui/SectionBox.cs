@@ -29,12 +29,15 @@
 using System;
 using Gtk;
 
+using Hyena.Gui;
 using Banshee.Preferences;
 
 namespace Banshee.Preferences.Gui
 {
     public class SectionBox : Table
     {
+        private object tp_host;
+    
         public SectionBox (Section section) : base (1, 2, false)
         {
             ColumnSpacing = 10;
@@ -55,8 +58,10 @@ namespace Banshee.Preferences.Gui
             uint start_row = NRows;
             uint start_col = 0;
             
+            Widget label = null;
+            
             if (!(widget is CheckButton) && preference.ShowLabel) {
-                AttachLabel (preference.Name, start_row);
+                label = AttachLabel (preference.Name, start_row);
                 start_col++;
             }
             
@@ -64,12 +69,23 @@ namespace Banshee.Preferences.Gui
             Attach (widget, start_col, 2, start_row, start_row + 1, 
                 AttachOptions.Expand | AttachOptions.Fill, 
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
+                
+            if (!String.IsNullOrEmpty (preference.Description)) {
+                if (tp_host == null) {
+                     tp_host = TooltipSetter.CreateHost ();
+                }
+                
+                TooltipSetter.Set (tp_host, widget, preference.Description);
+                if (label != null) {
+                    TooltipSetter.Set (tp_host, label, preference.Description);
+                }
+            }
         }
         
-        private void AttachLabel (string text, uint start_row)
+        private Label AttachLabel (string text, uint start_row)
         {
             if (String.IsNullOrEmpty (text)) {
-                return;
+                return null;
             }
         
             Label label = new Label (String.Format ("{0}:", text));
@@ -80,6 +96,8 @@ namespace Banshee.Preferences.Gui
             Attach (label, 0, 1, start_row, start_row + 1, 
                 AttachOptions.Fill, 
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
+            
+            return label;
         }
     }
 }

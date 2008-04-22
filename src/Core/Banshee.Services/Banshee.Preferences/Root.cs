@@ -34,6 +34,7 @@ namespace Banshee.Preferences
     {    
         private string id;
         private string name;
+        private string description;
         private int order;
         private bool sensitive;
         private bool visible;
@@ -52,6 +53,11 @@ namespace Banshee.Preferences
         public string Name {
             get { return name; }
             set { name = value; }
+        }
+        
+        public string Description {
+            get { return description; }
+            set { description = value; }
         }
         
         public int Order {

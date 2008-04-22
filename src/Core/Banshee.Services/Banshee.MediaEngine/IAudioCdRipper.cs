@@ -43,7 +43,7 @@ namespace Banshee.MediaEngine
         event AudioCdRipperTrackFinishedHandler TrackFinished;
         event AudioCdRipperErrorHandler Error;
         
-        void Begin (string device);
+        void Begin (string device, bool enableErrorCorrection);
         void Finish ();
         void Cancel ();
         

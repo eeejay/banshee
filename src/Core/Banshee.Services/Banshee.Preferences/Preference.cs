@@ -34,14 +34,19 @@ namespace Banshee.Preferences
     {
         private T value;
         
-        public Preference (string id, string name) : this (id, name, default (T))
+        public Preference (string id, string name) : this (id, name, null)
         {
         }
         
-        public Preference (string id, string name, T value)
+        public Preference (string id, string name, string description) : this (id, name, description, default (T))
+        {
+        }
+        
+        public Preference (string id, string name, string description, T value)
         {
             Id = id;
             Name = name;
+            Description = description;
             this.value = value;
         }
         

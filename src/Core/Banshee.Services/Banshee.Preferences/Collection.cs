@@ -103,9 +103,11 @@ namespace Banshee.Preferences
             list.Add (item);
         }
         
-        bool ICollection<T>.Remove (T item)
+        public bool Remove (T item)
         {
-            return list.Remove (item);
+            lock (this) {
+                return list.Remove (item);
+            }
         }
         
         void ICollection<T>.Clear ()

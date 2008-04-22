@@ -128,7 +128,7 @@ namespace Banshee.AudioCd
                 }
             }
             
-            ripper.Begin (source.DiscModel.Volume.DeviceNode);
+            ripper.Begin (source.DiscModel.Volume.DeviceNode, AudioCdService.ErrorCorrection.Get ());
             
             RipNextTrack ();
         }

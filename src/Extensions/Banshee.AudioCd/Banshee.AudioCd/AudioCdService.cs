@@ -28,9 +28,13 @@
 
 using System;
 using System.Collections.Generic;
+using Mono.Unix;
 
 using Hyena;
+
 using Banshee.ServiceStack;
+using Banshee.Configuration;
+using Banshee.Preferences;
 using Banshee.Hardware;
 
 namespace Banshee.AudioCd
@@ -38,6 +42,7 @@ namespace Banshee.AudioCd
     public class AudioCdService : IExtensionService, IDisposable
     {
         private Dictionary<string, AudioCdSource> sources;
+        private Section pref_section;
         
         public AudioCdService ()
         {
@@ -46,6 +51,8 @@ namespace Banshee.AudioCd
         public void Initialize ()
         {
             lock (this) {
+                InstallPreferences ();
+            
                 sources = new Dictionary<string, AudioCdSource> ();
                 
                 foreach (ICdromDevice device in ServiceManager.HardwareManager.GetAllCdromDevices ()) {
@@ -60,6 +67,8 @@ namespace Banshee.AudioCd
         public void Dispose ()
         {
             lock (this) {
+                UninstallPreferences ();
+            
                 ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
                 
@@ -125,6 +134,38 @@ namespace Banshee.AudioCd
             }
         }
         
+        private void InstallPreferences ()
+        {
+            PreferenceService service = ServiceManager.Get<PreferenceService> ();
+            if (service == null) {
+                return;
+            }
+            
+            pref_section = service["general"].Add (new Section ("audio-cd", Catalog.GetString ("Audio CD Importing"), 20));
+            pref_section.Add (new SchemaPreference<bool> (ErrorCorrection, 
+                Catalog.GetString ("Use error correction when importing"),
+                Catalog.GetString ("Error correction tries to work around problem areas on a disc, such " +
+                    "as surface scratches, but will slow down importing substantially.")));
+        }
+        
+        private void UninstallPreferences ()
+        {
+            PreferenceService service = ServiceManager.Get<PreferenceService> ();
+            if (service == null || pref_section == null) {
+                return;
+            }
+            
+            service["general"].Remove (pref_section);
+            pref_section = null;
+        }
+        
+        public static readonly SchemaEntry<bool> ErrorCorrection = new SchemaEntry<bool> (
+            "import", "audio_cd_error_correction", 
+            false,
+            "Enable error correction",
+            "When importing an audio CD, enable error correction (paranoia mode)"
+        );
+
         string IService.ServiceName {
             get { return "AudioCdService"; }
         }

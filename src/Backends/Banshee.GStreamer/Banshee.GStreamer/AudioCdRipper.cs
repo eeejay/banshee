@@ -57,7 +57,7 @@ namespace Banshee.GStreamer
         public event AudioCdRipperTrackFinishedHandler TrackFinished;
         public event AudioCdRipperErrorHandler Error;
         
-        public void Begin (string device)
+        public void Begin (string device, bool enableErrorCorrection)
         {
             try {
                 Profile profile = ServiceManager.MediaProfileManager.GetConfiguredActiveProfile ("cd-importing");
@@ -77,7 +77,7 @@ namespace Banshee.GStreamer
             }
             
             try {   
-                int paranoia_mode = ImportSchema.AudioCDErrorCorrection.Get (false) ? 255 : 0;
+                int paranoia_mode = enableErrorCorrection ? 255 : 0;
                 handle = new HandleRef (this, br_new (device, paranoia_mode, encoder_pipeline));
                 
                 progress_handler = new RipperProgressHandler (OnNativeProgress);

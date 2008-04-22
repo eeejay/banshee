@@ -33,13 +33,6 @@ namespace Banshee.Configuration.Schema
 {
     public static class ImportSchema
     {
-        public static readonly SchemaEntry<bool> AudioCDErrorCorrection = new SchemaEntry<bool>(
-            "import", "audio_cd_error_correction", 
-            false,
-            "Enable error correction",
-            "When importing an audio CD, enable error correction (paranoia mode)"
-        );
-
         public static readonly SchemaEntry<bool> ShowInitialImportDialog = new SchemaEntry<bool>(
             "import", "show_initial_import_dialog",
             true,
