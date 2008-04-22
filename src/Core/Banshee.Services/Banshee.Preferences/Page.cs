@@ -50,10 +50,15 @@ namespace Banshee.Preferences
         internal static void SetupDefaults (PreferenceService service)
         {
             Page general = service.Add (new Page ("general", Catalog.GetString ("General"), 0));
+            
             Section music_library = general.Add (new Section ("music-library", Catalog.GetString ("Music _Library"), 0));
             music_library.Add (new LibraryLocationPreference ());
             music_library.Add (new SchemaPreference<bool> (LibrarySchema.CopyOnImport, Catalog.GetString ("Co_py files to media folders when importing")));
             music_library.Add (new SchemaPreference<bool> (LibrarySchema.WriteMetadata, Catalog.GetString ("Write _metadata to files")));
+            
+            Section file_system = general.Add (new Section ("file-system", Catalog.GetString ("File System Organization"), 10));
+            file_system.Add (new SchemaPreference<string> (LibrarySchema.FolderPattern, Catalog.GetString ("Folder hie_rarchy")));
+            file_system.Add (new SchemaPreference<string> (LibrarySchema.FilePattern, Catalog.GetString ("File _name")));
         }
     }
 }

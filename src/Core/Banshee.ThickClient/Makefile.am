@@ -75,7 +75,6 @@ SOURCES =  \
 	Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs \
 	Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs \
 	Banshee.MediaProfiles.Gui/ProfileConfigureButton.cs \
-	Banshee.MediaProfiles.Gui/TextViewLabel.cs \
 	Banshee.Playlist.Gui/PlaylistExportDialog.cs \
 	Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs \
 	Banshee.Preferences.Gui/NotebookPage.cs \

@@ -29,6 +29,8 @@
 using System;
 using Gtk;
 
+using Hyena.Widgets;
+
 namespace Banshee.MediaProfiles.Gui
 {
     public class ProfileComboBoxConfigurable : VBox

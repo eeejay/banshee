@@ -66,7 +66,7 @@ namespace Banshee.MediaProfiles.Gui
         private Profile profile;
     
         private Label header_label = new Label();
-        private TextViewLabel description_label = new TextViewLabel();
+        private Hyena.Widgets.TextViewLabel description_label = new Hyena.Widgets.TextViewLabel();
         private Table normal_controls_table = new Table(1, 1, false);
         private Table advanced_controls_table = new Table(1, 1, false);
         private Expander advanced_expander = new Expander(Catalog.GetString("Advanced"));

@@ -33,6 +33,10 @@ using Gtk;
 using Banshee.Base;
 using Banshee.Library;
 using Banshee.Preferences;
+using Banshee.Collection;
+
+using Hyena.Widgets;
+using Banshee.Widgets;
 
 namespace Banshee.Preferences.Gui
 {
@@ -42,6 +46,15 @@ namespace Banshee.Preferences.Gui
         {
             PreferenceBase library_location = service["general"]["music-library"]["library-location"];
             library_location.DisplayWidget = new LibraryLocationButton (library_location);
+            
+            PreferenceBase folder_pattern = service["general"]["file-system"]["folder_pattern"];
+            folder_pattern.DisplayWidget = new PatternComboBox (folder_pattern, FileNamePattern.SuggestedFolders);
+            
+            PreferenceBase file_pattern = service["general"]["file-system"]["file_pattern"];
+            file_pattern.DisplayWidget = new PatternComboBox (file_pattern, FileNamePattern.SuggestedFiles);
+            
+            PreferenceBase pattern_display = service["general"]["file-system"].FindOrAdd (new Preference<object> ("file_folder_pattern", null));
+            pattern_display.DisplayWidget = new PatternDisplay (folder_pattern.DisplayWidget, file_pattern.DisplayWidget);
         }
 
         private class LibraryLocationButton : HBox
@@ -53,6 +66,7 @@ namespace Banshee.Preferences.Gui
             public LibraryLocationButton (PreferenceBase pref)
             {
                 preference = (LibraryLocationPreference)pref;
+                preference.ShowLabel = false;
                 
                 Spacing = 5;
                 
@@ -84,6 +98,71 @@ namespace Banshee.Preferences.Gui
             private void OnChooserChanged (object o, EventArgs args)
             {
                 preference.Value = chooser.Filename;
+            }
+        }
+        
+        private class PatternComboBox : DictionaryComboBox<string>
+        {
+            private Preference<string> preference;
+            
+            public PatternComboBox (PreferenceBase pref, string [] patterns)
+            {
+                preference = (Preference<string>)pref;
+                
+                bool already_added = false;
+                string conf_pattern = preference.Value;
+                
+                foreach (string pattern in patterns) {
+                    if (!already_added && pattern.Equals (conf_pattern)) {
+                        already_added = true;
+                    }
+                    
+                    Add (FileNamePattern.CreatePatternDescription (pattern), pattern);
+                }
+                
+                if (!already_added) {
+                    Add (FileNamePattern.CreatePatternDescription (conf_pattern), conf_pattern);
+                }
+                
+                ActiveValue = conf_pattern;
+            }
+            
+            protected override void OnChanged ()
+            {
+                preference.Value = ActiveValue;
+                base.OnChanged ();
+            }
+        }
+        
+        private class PatternDisplay : TextViewLabel
+        {
+            private PatternComboBox folder;
+            private PatternComboBox file;
+            
+            private SampleTrackInfo track = new SampleTrackInfo ();
+            
+            public PatternDisplay (object a, object b)
+            {
+                folder= (PatternComboBox)a;
+                file = (PatternComboBox)b;
+                
+                folder.Changed += OnChanged;
+                file.Changed += OnChanged;
+                
+                Pango.FontDescription font = PangoContext.FontDescription.Copy ();
+                font.Style = Pango.Style.Italic;
+                font.Size = (int)(font.Size * Pango.Scale.Small);
+                ModifyFont (font);
+                
+                OnChanged (null, null);
+            }
+
+            private void OnChanged (object o, EventArgs args)
+            {
+                string display = FileNamePattern.CreateFromTrackInfo (FileNamePattern.CreateFolderFilePattern (
+                    folder.ActiveValue, file.ActiveValue), track);
+            
+                Text = String.IsNullOrEmpty (display) ? String.Empty : String.Format ("{0}.ogg", display);
             }
         }
     }

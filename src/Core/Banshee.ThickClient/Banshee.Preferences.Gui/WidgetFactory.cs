@@ -100,7 +100,6 @@ namespace Banshee.Preferences.Gui
                 base.OnChanged ();
                 
                 if (sync) {
-                    Console.WriteLine (Text);
                     preference.BoxedValue = Text;
                 }
             }

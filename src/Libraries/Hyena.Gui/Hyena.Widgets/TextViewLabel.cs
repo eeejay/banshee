@@ -1,10 +1,10 @@
 //
-// PreferenceBase.cs
+// TextViewLabel.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,27 +27,41 @@
 //
 
 using System;
+using Gtk;
 
-namespace Banshee.Preferences
+namespace Hyena.Widgets
 {
-    public abstract class PreferenceBase : Root
+    public class TextViewLabel : TextView
     {
-        public PreferenceBase ()
+        public TextViewLabel () : base ()
         {
+            WrapMode = WrapMode.Word;
+            Editable = false;
+            CursorVisible = false;
         }
         
-        public abstract object BoxedValue { get; set; }
+        private bool changing_style;
         
-        private bool show_label = true;
-        public virtual bool ShowLabel {
-            get { return show_label; }
-            set { show_label = value; }
+        protected override void OnStyleSet (Style previous_style)
+        {
+            if (changing_style) {
+                return;
+            }
+            
+            changing_style = true;
+            
+            base.OnStyleSet (previous_style);
+            
+            Window temp = new Window (WindowType.Toplevel);
+            temp.EnsureStyle ();
+            ModifyBase (StateType.Normal, temp.Style.Background (StateType.Normal));
+            
+            changing_style = false;
         }
         
-        private object display_widget;
-        public virtual object DisplayWidget {
-            get { return display_widget; }
-            set { display_widget = value; }
+        public string Text {
+            get { return Buffer.Text; }
+            set { Buffer.Text = value; }
         }
     }
 }

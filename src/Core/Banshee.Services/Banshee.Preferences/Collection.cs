@@ -48,6 +48,13 @@ namespace Banshee.Preferences
             }
         }
         
+        public T FindOrAdd (T item)
+        {
+            lock (this) {
+                return FindById (item.Id) ?? Add (item);
+            }
+        }
+        
         public T this[string id] {
             get { return FindById (id); }
         }

@@ -33,21 +33,53 @@ using Banshee.Preferences;
 
 namespace Banshee.Preferences.Gui
 {
-    public class SectionBox : VBox
+    public class SectionBox : Table
     {
-        public SectionBox (Section section)
+        public SectionBox (Section section) : base (1, 2, false)
         {
-            Spacing = 3;
-            
+            ColumnSpacing = 10;
+            RowSpacing = 5;
+        
             foreach (PreferenceBase preference in section) {
                 Widget widget = WidgetFactory.GetWidget (preference);
                 if (widget == null) {
                     continue;
                 }
                 
-                PackStart (widget, false, false, 0);
-                widget.Show ();
+                AddWidget (preference, widget);
             }
+        }
+        
+        private void AddWidget (PreferenceBase preference, Widget widget)
+        {
+            uint start_row = NRows;
+            uint start_col = 0;
+            
+            if (!(widget is CheckButton) && preference.ShowLabel) {
+                AttachLabel (preference.Name, start_row);
+                start_col++;
+            }
+            
+            widget.Show ();
+            Attach (widget, start_col, 2, start_row, start_row + 1, 
+                AttachOptions.Expand | AttachOptions.Fill, 
+                AttachOptions.Expand | AttachOptions.Fill, 0, 0);
+        }
+        
+        private void AttachLabel (string text, uint start_row)
+        {
+            if (String.IsNullOrEmpty (text)) {
+                return;
+            }
+        
+            Label label = new Label (String.Format ("{0}:", text));
+            label.UseUnderline = true;
+            label.Xalign = 0.0f;
+            label.Show ();
+            
+            Attach (label, 0, 1, start_row, start_row + 1, 
+                AttachOptions.Fill, 
+                AttachOptions.Expand | AttachOptions.Fill, 0, 0);
         }
     }
 }

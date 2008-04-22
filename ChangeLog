@@ -1,4 +1,32 @@
-2008-04-22  Aaron Bockover  <aaron@cantank>
+2008-04-22  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: Set up default
+	preferences for some more things
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:
+	Added widget adapters for the file/folder pattern preferences
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/SectionBox.cs:
+	Layout preference widgets properly using a table so everything lines 
+	up and looks pretty
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Collection.cs: Added
+	FindOrAdd method
+
+	* src/Core/Banshee.Services/Banshee.Preferences/PreferenceBase.cs:
+	Added a ShowLabel property
+	
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/WidgetFactory.cs:
+	Remove a console.writeline
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/TextViewLabel.cs: Moved from
+	somewhere in Banshee proper
+
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs:
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs:
+	Reflect the moving of TextViewLabel to Hyena.Widgets
+
+2008-04-22  Aaron Bockover  <abock@gnome.org>
 
 	This commit adds very initial and incomplete support for better preference
 	management that makes it easy for extensions to add new preferences
