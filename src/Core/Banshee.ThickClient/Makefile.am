@@ -33,7 +33,6 @@ SOURCES =  \
 	Banshee.Gui.Dialogs/GladeWindow.cs \
 	Banshee.Gui.Dialogs/ImageFileChooserDialog.cs \
 	Banshee.Gui.Dialogs/OpenLocationDialog.cs \
-	Banshee.Gui.Dialogs/PreferencesDialog.cs \
 	Banshee.Gui.Dialogs/SeekDialog.cs \
 	Banshee.Gui.Dialogs/TrackEditor.cs \
 	Banshee.Gui.DragDrop/DragDropList.cs \

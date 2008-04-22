@@ -1,5 +1,11 @@
 2008-04-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Nuke
+	the old crappy hardcoded preferences dialog
+
+2008-04-22  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: Cleaned up 
 	the default preferences
 
