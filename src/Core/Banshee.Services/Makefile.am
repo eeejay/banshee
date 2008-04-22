@@ -106,6 +106,7 @@ SOURCES =  \
 	Banshee.Preferences/Root.cs \
 	Banshee.Preferences/SchemaPreference.cs \
 	Banshee.Preferences/Section.cs \
+	Banshee.Preferences/VoidPreference.cs \
 	Banshee.Query/AbstractPlaylistQueryValue.cs \
 	Banshee.Query/BansheeQuery.cs \
 	Banshee.Query/NaturalIntegerQueryValue.cs \

@@ -58,7 +58,7 @@ namespace Banshee.Preferences.Gui
             uint start_row = NRows;
             uint start_col = 0;
             
-            Widget label = null;
+            Label label = null;
             
             if (!(widget is CheckButton) && preference.ShowLabel) {
                 label = AttachLabel (preference.Name, start_row);
@@ -69,6 +69,10 @@ namespace Banshee.Preferences.Gui
             Attach (widget, start_col, 2, start_row, start_row + 1, 
                 AttachOptions.Expand | AttachOptions.Fill, 
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
+                
+            if (label != null) {
+                label.MnemonicWidget = widget;
+            }
                 
             if (!String.IsNullOrEmpty (preference.Description)) {
                 if (tp_host == null) {

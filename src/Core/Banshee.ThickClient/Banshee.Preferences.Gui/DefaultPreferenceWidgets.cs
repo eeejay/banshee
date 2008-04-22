@@ -44,16 +44,18 @@ namespace Banshee.Preferences.Gui
     {
         public static void Load (PreferenceService service)
         {
-            PreferenceBase library_location = service["general"]["music-library"]["library-location"];
+            Page general = service["general"];
+        
+            PreferenceBase library_location = general["music-library"]["library-location"];
             library_location.DisplayWidget = new LibraryLocationButton (library_location);
             
-            PreferenceBase folder_pattern = service["general"]["file-system"]["folder_pattern"];
+            PreferenceBase folder_pattern = general["file-system"]["folder_pattern"];
             folder_pattern.DisplayWidget = new PatternComboBox (folder_pattern, FileNamePattern.SuggestedFolders);
             
-            PreferenceBase file_pattern = service["general"]["file-system"]["file_pattern"];
+            PreferenceBase file_pattern = general["file-system"]["file_pattern"];
             file_pattern.DisplayWidget = new PatternComboBox (file_pattern, FileNamePattern.SuggestedFiles);
             
-            PreferenceBase pattern_display = service["general"]["file-system"].FindOrAdd (new Preference<object> ("file_folder_pattern", null));
+            PreferenceBase pattern_display = general["file-system"].FindOrAdd (new VoidPreference ("file_folder_pattern"));
             pattern_display.DisplayWidget = new PatternDisplay (folder_pattern.DisplayWidget, file_pattern.DisplayWidget);
         }
 

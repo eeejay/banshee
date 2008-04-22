@@ -1,5 +1,5 @@
 //
-// PreferenceService.cs
+// VoidPreference.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -28,33 +28,16 @@
 
 using System;
 
-using Banshee.ServiceStack;
-
 namespace Banshee.Preferences
 {
-    public class PreferenceService : Collection<Page>, IRequiredService
+    public class VoidPreference : Preference<object>
     {
-        private event EventHandler install_widget_adapters;
-        public event EventHandler InstallWidgetAdapters {
-            add { install_widget_adapters += value; }
-            remove { install_widget_adapters -= value; }
-        }
-    
-        public PreferenceService ()
+        public VoidPreference (string id) : base (id, null)
         {
-            Page.SetupDefaults (this);
         }
         
-        public void RequestWidgetAdapters ()
+        public VoidPreference (string id, string name) : base (id, name)
         {
-            EventHandler handler = install_widget_adapters;
-            if (handler != null) {
-                handler (this, EventArgs.Empty);
-            }
-        }
-        
-        string IService.ServiceName {
-            get { return "PreferenceService"; }
         }
     }
 }

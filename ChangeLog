@@ -1,5 +1,30 @@
 2008-04-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: Cleaned up 
+	the default preferences
+
+	* src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs:
+	Added an InstallWidgetAdapters event and a RequestWidgetAdapters method
+
+	* src/Core/Banshee.Services/Banshee.Preferences/VoidPreference.cs:
+	A wrapper to use for fake preferences that will basically be containers
+	for advanced widgets bound to other preferences
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:
+	A little cleanup and use VoidPreference
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:
+	Call RequestWidgetAdapters to notify listeners that they need to create
+	and bind their widget adapters to preferences they own
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/SectionBox.cs:
+	Set the MnemonicWidget if the preference gets a label
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
+	Last of the preference migration - adds the import profile combo
+
+2008-04-22  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.MediaEngine/IAudioCdRipper.cs:
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
 	Added a enableErrorCorrection argument to the Begin method

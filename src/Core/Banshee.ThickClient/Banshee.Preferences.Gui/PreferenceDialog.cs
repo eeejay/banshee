@@ -59,6 +59,7 @@ namespace Banshee.Preferences.Gui
             }
             
             DefaultPreferenceWidgets.Load (service);
+            service.RequestWidgetAdapters ();
             
             BuildDialog ();
             LoadPages ();

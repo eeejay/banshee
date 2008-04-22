@@ -141,7 +141,14 @@ namespace Banshee.AudioCd
                 return;
             }
             
-            pref_section = service["general"].Add (new Section ("audio-cd", Catalog.GetString ("Audio CD Importing"), 20));
+            service.InstallWidgetAdapters += OnPreferencesServiceInstallWidgetAdapters;
+            
+            pref_section = service["general"].Add (new Section ("audio-cd", 
+                Catalog.GetString ("Audio CD Importing"), 20));
+                
+            pref_section.Add (new VoidPreference ("import-profile",  Catalog.GetString ("O_utput format")));
+            pref_section.Add (new VoidPreference ("import-profile-desc"));
+            
             pref_section.Add (new SchemaPreference<bool> (ErrorCorrection, 
                 Catalog.GetString ("Use error correction when importing"),
                 Catalog.GetString ("Error correction tries to work around problem areas on a disc, such " +
@@ -155,8 +162,25 @@ namespace Banshee.AudioCd
                 return;
             }
             
+            service.InstallWidgetAdapters -= OnPreferencesServiceInstallWidgetAdapters;
+            
             service["general"].Remove (pref_section);
             pref_section = null;
+        }
+        
+        private void OnPreferencesServiceInstallWidgetAdapters (object o, EventArgs args)
+        {
+            if (pref_section == null) {
+                return;
+            }
+            
+            Gtk.HBox description_box = new Gtk.HBox ();
+            Banshee.MediaProfiles.Gui.ProfileComboBoxConfigurable chooser 
+                = new Banshee.MediaProfiles.Gui.ProfileComboBoxConfigurable (ServiceManager.MediaProfileManager, 
+                    "cd-importing", description_box);
+            
+            pref_section["import-profile"].DisplayWidget = chooser;
+            pref_section["import-profile-desc"].DisplayWidget = description_box;
         }
         
         public static readonly SchemaEntry<bool> ErrorCorrection = new SchemaEntry<bool> (
