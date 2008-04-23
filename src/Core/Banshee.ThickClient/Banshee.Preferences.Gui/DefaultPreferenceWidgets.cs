@@ -37,6 +37,7 @@ using Banshee.Collection;
 
 using Hyena.Widgets;
 using Banshee.Widgets;
+using Banshee.Gui.Widgets;
 
 namespace Banshee.Preferences.Gui
 {
@@ -57,6 +58,17 @@ namespace Banshee.Preferences.Gui
             
             PreferenceBase pattern_display = general["file-system"].FindOrAdd (new VoidPreference ("file_folder_pattern"));
             pattern_display.DisplayWidget = new PatternDisplay (folder_pattern.DisplayWidget, file_pattern.DisplayWidget);
+            
+            // Set up the extensions tab UI
+            AddinView view = new AddinView ();
+            view.Show ();
+            
+            Gtk.ScrolledWindow scroll = new Gtk.ScrolledWindow ();
+            scroll.HscrollbarPolicy = PolicyType.Never;
+            scroll.AddWithViewport (view);
+            scroll.Show ();
+            
+            service["extensions"].DisplayWidget = scroll;
         }
 
         private class LibraryLocationButton : HBox

@@ -1,3 +1,35 @@
+2008-04-23  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds the initial work for the extension manager to allow
+	you to enable and disable extensions; it does not yet work and there 
+	are still many interaction and rendering issues; no complaining
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: Add the new
+	extensions page to the preference set
+
+	* src/Core/Banshee.Services/Banshee.Preferences/PreferenceBase.cs:
+	* src/Core/Banshee.Services/Banshee.Preferences/Root.cs: Moved
+	DisplayWidget to Root
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:
+	Adapt the new AddinView for our extensions to the extensions page
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/NotebookPage.cs:
+	Support pages with their own DisplayWidgets
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/WrapLabel.cs: Added a new label
+	that doesn't suck for proper wrapping; this label uses a width allocation
+	from its parent to compute the layout and forces a height request to
+	fit the wrapped layout; it is awesome; someone tell me if the standard
+	GtkLabel can do this - I have in many years never been able to do this
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/AddinTile.cs: Hot 
+	new tile widget that displays information about an addin/extension and
+	will allow you to enable/disable it; not completely done
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/AddinView.cs: A view
+	that lays out the AddinTiles
+
 2008-04-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit adds transcoding support to DAPs.  Transcoded files are stored

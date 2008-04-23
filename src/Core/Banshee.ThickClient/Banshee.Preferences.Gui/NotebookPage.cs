@@ -55,8 +55,14 @@ namespace Banshee.Preferences.Gui
             tab_widget = new Label (page.Name);
             tab_widget.Show ();
             
-            foreach (Section section in page) {
-                AddSection (section);
+            Widget page_widget = page.DisplayWidget as Widget;
+            if (page_widget != null) {
+                page_widget.Show ();
+                PackStart (page_widget, true, true, 0);
+            } else {
+                foreach (Section section in page) {
+                    AddSection (section);
+                }
             }
         }
         

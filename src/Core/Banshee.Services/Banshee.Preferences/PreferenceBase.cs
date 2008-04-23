@@ -43,11 +43,5 @@ namespace Banshee.Preferences
             get { return show_label; }
             set { show_label = value; }
         }
-        
-        private object display_widget;
-        public virtual object DisplayWidget {
-            get { return display_widget; }
-            set { display_widget = value; }
-        }
     }
 }

@@ -38,6 +38,7 @@ namespace Banshee.Preferences
         private int order;
         private bool sensitive;
         private bool visible;
+        private object display_widget;
                 
         public Root ()
         {
@@ -73,6 +74,11 @@ namespace Banshee.Preferences
         public bool Visible {
             get { return visible; }
             set { visible = value; }
+        }
+        
+        public virtual object DisplayWidget {
+            get { return display_widget; }
+            set { display_widget = value; }
         }
     }
 }

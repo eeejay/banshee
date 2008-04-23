@@ -38,6 +38,8 @@ SOURCES =  \
 	Banshee.Gui.DragDrop/DragDropList.cs \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
+	Banshee.Gui.Widgets/AddinTile.cs \
+	Banshee.Gui.Widgets/AddinView.cs \
 	Banshee.Gui.Widgets/ArtworkPopup.cs \
 	Banshee.Gui.Widgets/ConnectedMessageBar.cs \
 	Banshee.Gui.Widgets/ConnectedSeekSlider.cs \
