@@ -28,13 +28,13 @@
 
 namespace Migo.Syndication
 {
-    public enum FEEDS_DOWNLOAD_STATUS : int
+    public enum FeedDownloadStatus : int
     {
-        FDS_NONE = 0,
-        FDS_PENDING = 1,
-        FDS_DOWNLOADING = 2,
-        FDS_DOWNLOADED = 3,
-        FDS_DOWNLOAD_FAILED = 4,
-        FDS_PAUSED = 5
+        None = 0,
+        Pending = 1,
+        Downloading = 2,
+        Downloaded = 3,
+        DownloadFailed = 4,
+        Paused = 5
     };
 }

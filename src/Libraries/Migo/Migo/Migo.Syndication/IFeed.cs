@@ -50,7 +50,7 @@ namespace Migo.Syndication
         string Copyright { get; }
         string Description { get; }
         bool DownloadEnclosuresAutomatically { get; set; }
-        FEEDS_DOWNLOAD_STATUS DownloadStatus { get; }
+        FeedDownloadStatus DownloadStatus { get; }
         string DownloadUrl { get; }     
         string Image { get; }
 

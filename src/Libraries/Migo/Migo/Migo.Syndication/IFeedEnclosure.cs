@@ -33,7 +33,7 @@ namespace Migo.Syndication
     public interface IFeedEnclosure 
     {
         string DownloadMimeType { get; }
-        FEEDS_DOWNLOAD_STATUS DownloadStatus { get; }        
+        FeedDownloadStatus DownloadStatus { get; }        
         string DownloadUrl { get; }
         FeedDownloadError LastDownloadError { get; }
         long Length { get; }

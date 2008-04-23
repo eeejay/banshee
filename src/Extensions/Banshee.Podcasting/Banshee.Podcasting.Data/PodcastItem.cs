@@ -130,19 +130,19 @@ namespace Banshee.Podcasting.Data
                     } 
                 } else {
                     switch (item.Enclosure.DownloadStatus) {
-                    case FEEDS_DOWNLOAD_STATUS.FDS_PENDING: 
+                    case FeedDownloadStatus.Pending: 
                         ret = PodcastItemActivity.DownloadPending;
                         break;
-                    case FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADING: 
+                    case FeedDownloadStatus.Downloading: 
                         ret = PodcastItemActivity.Downloading;
                         break;
-                    case FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADED: 
+                    case FeedDownloadStatus.Downloaded: 
                         ret = PodcastItemActivity.Downloaded;
                         break;    
-                    case FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED: 
+                    case FeedDownloadStatus.DownloadFailed: 
                         ret = PodcastItemActivity.DownloadFailed;
                         break;  
-                    case FEEDS_DOWNLOAD_STATUS.FDS_PAUSED: 
+                    case FeedDownloadStatus.Paused: 
                         ret = PodcastItemActivity.DownloadPaused;
                         break;                        
                     }

@@ -40,7 +40,7 @@ namespace Migo.Syndication
         private bool stopped;
         
         private string downloadMimeType;
-        private FEEDS_DOWNLOAD_STATUS downloadStatus;        
+        private FeedDownloadStatus downloadStatus;        
         private string downloadUrl;
         private bool active;
         private FeedDownloadError lastDownloadError;
@@ -77,7 +77,7 @@ namespace Migo.Syndication
             }
         }
 
-        public FEEDS_DOWNLOAD_STATUS DownloadStatus 
+        public FeedDownloadStatus DownloadStatus 
         { 
             get { 
                 lock (sync) {
@@ -90,11 +90,11 @@ namespace Migo.Syndication
                     downloadStatus = value;
                     //Console.WriteLine ("Enclosure:  DownloadStatus:  {0}", downloadStatus);
                     switch (value) {
-                    case FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED: goto case FEEDS_DOWNLOAD_STATUS.FDS_NONE;
-                    case FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADED: 
+                    case FeedDownloadStatus.DownloadFailed: goto case FeedDownloadStatus.None;
+                    case FeedDownloadStatus.Downloaded: 
                         Commit ();
-                        goto case FEEDS_DOWNLOAD_STATUS.FDS_NONE;
-                    case FEEDS_DOWNLOAD_STATUS.FDS_NONE:
+                        goto case FeedDownloadStatus.None;
+                    case FeedDownloadStatus.None:
                         ResetDownloading ();
                         break;
                     }
@@ -184,7 +184,7 @@ namespace Migo.Syndication
             url = wrapper.Url;    
 
             if (!String.IsNullOrEmpty (localPath)) {
-                downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADED;
+                downloadStatus = FeedDownloadStatus.Downloaded;
             }            
             
             this.parent = parent;
@@ -255,7 +255,7 @@ namespace Migo.Syndication
                 }
                 
                 localPath = String.Empty;
-                downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_NONE;                                
+                downloadStatus = FeedDownloadStatus.None;                                
                 
                 Commit ();
             }
@@ -293,12 +293,12 @@ namespace Migo.Syndication
             
             lock (sync) {
                 if (!downloading && 
-                    downloadStatus != FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADED) {
+                    downloadStatus != FeedDownloadStatus.Downloaded) {
                     canceled = false;
                     stopped = false;
                     ret = downloading = true;    
                     
-                    downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_PENDING;                    
+                    downloadStatus = FeedDownloadStatus.Pending;                    
                     lastDownloadError = FeedDownloadError.None;
                 }            
             }
@@ -383,7 +383,7 @@ namespace Migo.Syndication
                     } catch {}
                 } catch { 
                     lastDownloadError = FeedDownloadError.DownloadFailed;
-                    downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED;
+                    downloadStatus = FeedDownloadStatus.DownloadFailed;
                     throw;
                 }
                 
@@ -392,7 +392,7 @@ namespace Migo.Syndication
                 this.downloadUrl = url;
                 this.downloadMimeType = mimeType;
                                 
-                downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADED;
+                downloadStatus = FeedDownloadStatus.Downloaded;
                 lastDownloadError = FeedDownloadError.None;                    
 
                 Commit ();

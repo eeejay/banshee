@@ -1,5 +1,11 @@
 2008-04-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/*:
+	* src/Libraries/Migo/*: Rename FEEDS_DOWNLOAD_STATUS enum to
+	FeedDownloadStatus.  (Props to MD for making this dead easy).
+
+2008-04-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Fix typo in
 	delete tracks user job message.
 

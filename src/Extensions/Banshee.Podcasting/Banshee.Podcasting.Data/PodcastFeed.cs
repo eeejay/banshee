@@ -84,13 +84,13 @@ namespace Banshee.Podcasting.Data
                 }
                 
                 switch (feed.DownloadStatus) {
-                case FEEDS_DOWNLOAD_STATUS.FDS_PENDING: 
+                case FeedDownloadStatus.Pending: 
                     ret = PodcastFeedActivity.UpdatePending;
                     break;
-                case FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADING: 
+                case FeedDownloadStatus.Downloading: 
                     ret = PodcastFeedActivity.Updating;
                     break;    
-                case FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED: 
+                case FeedDownloadStatus.DownloadFailed: 
                     ret = PodcastFeedActivity.UpdateFailed;
                     break;                         
                 }

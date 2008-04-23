@@ -712,7 +712,7 @@ namespace Migo.Syndication
                             downloadHandle.Reset ();
                         }                        
                                                     
-                        enc.DownloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_PENDING;                        
+                        enc.DownloadStatus = FeedDownloadStatus.Pending;                        
                         parentFeed.IncrementQueuedDownloadCount ();                    
                     }
                 }
@@ -738,7 +738,7 @@ namespace Migo.Syndication
 
             if (enc != null) {   
                 if (e.Error != null || task.Status == TaskStatus.Failed) {
-                    enc.DownloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED;
+                    enc.DownloadStatus = FeedDownloadStatus.DownloadFailed;
                 } else if (!e.Cancelled) {
                     if (task.Status == TaskStatus.Succeeded) {
                         try {                        
@@ -750,7 +750,7 @@ namespace Migo.Syndication
                             );                             
                         } catch {
                             enc.LastDownloadError = FeedDownloadError.DownloadFailed;
-                            enc.DownloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED;  
+                            enc.DownloadStatus = FeedDownloadStatus.DownloadFailed;  
                         }
                     }
                 }
@@ -840,19 +840,19 @@ namespace Migo.Syndication
             //Console.WriteLine ("OnDownloadTaskStatusChangedHandler - new state:  {0}", statusInfo.NewStatus);                    
             switch (statusInfo.NewStatus) {
             case TaskStatus.Cancelled:
-                enc.DownloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_NONE;
+                enc.DownloadStatus = FeedDownloadStatus.None;
                 break;
             case TaskStatus.Failed:
-                enc.DownloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED;
+                enc.DownloadStatus = FeedDownloadStatus.DownloadFailed;
                 break;
             case TaskStatus.Paused: 
-                enc.DownloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_PAUSED;
+                enc.DownloadStatus = FeedDownloadStatus.Paused;
                 break;
             case TaskStatus.Ready:
-                enc.DownloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_PENDING;
+                enc.DownloadStatus = FeedDownloadStatus.Pending;
                 break;
             case TaskStatus.Running:
-                enc.DownloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADING;
+                enc.DownloadStatus = FeedDownloadStatus.Downloading;
                 ((Feed)enc.Parent.Parent).IncrementActiveDownloadCount ();                    
                 break;  
             case TaskStatus.Stopped: goto case TaskStatus.Cancelled;

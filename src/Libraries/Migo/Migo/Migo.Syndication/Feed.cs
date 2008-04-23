@@ -59,7 +59,7 @@ namespace Migo.Syndication
         private string copyright;
         private string description;
         private bool downloadEnclosuresAutomatically;
-        private FEEDS_DOWNLOAD_STATUS downloadStatus;
+        private FeedDownloadStatus downloadStatus;
         private string downloadUrl;
         private string image;        
         private long interval;
@@ -123,7 +123,7 @@ namespace Migo.Syndication
             set { lock (sync) { downloadEnclosuresAutomatically = value; } }
         }
         
-        public FEEDS_DOWNLOAD_STATUS DownloadStatus 
+        public FeedDownloadStatus DownloadStatus 
         { 
             get { lock (sync) { return downloadStatus; } }
         }
@@ -369,7 +369,7 @@ namespace Migo.Syndication
             
             this.parent = parent;
 
-            downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_NONE;  
+            downloadStatus = FeedDownloadStatus.None;  
             inactiveItems = new List<FeedItem> ();
             interval = parent.DefaultInterval; 
             isList = false;            
@@ -570,7 +570,7 @@ namespace Migo.Syndication
             lock (sync) {
                 if (SetUpdating ()) {
                     update = true;
-                    downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_PENDING;
+                    downloadStatus = FeedDownloadStatus.Pending;
                 }
             }            
             
@@ -597,13 +597,13 @@ namespace Migo.Syndication
 				wc.Timeout = (30 * 1000); // 30 Seconds  
 				wc.IfModifiedSince = lastDownloadTime.ToUniversalTime ();
 				
-				downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADING;                    
+				downloadStatus = FeedDownloadStatus.Downloading;                    
 				wc.DownloadStringCompleted += OnDownloadStringCompleted;
 				wc.DownloadStringAsync (new Uri (url));
                 
 				ret = true;
 			} catch {
-                downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED;                                                            
+                downloadStatus = FeedDownloadStatus.DownloadFailed;                                                            
 
                 if (wc != null) {
                     wc.DownloadStringCompleted -= OnDownloadStringCompleted;
@@ -1154,9 +1154,9 @@ namespace Migo.Syndication
                     lastDownloadError = error;
                                     
                     if (lastDownloadError == FeedDownloadError.None) {
-                        downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADED;                         
+                        downloadStatus = FeedDownloadStatus.Downloaded;                         
                     } else {
-                        downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED;                                                    
+                        downloadStatus = FeedDownloadStatus.DownloadFailed;                                                    
                     }
                         
                     Commit ();
