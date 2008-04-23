@@ -16,13 +16,13 @@ SOURCES =  \
 	Migo/Migo.Net/EventArgs/TransferRateUpdatedEventArgs.cs \
 	Migo/Migo.Net/Exceptions/RemoteFileModifiedException.cs \
 	Migo/Migo.Net/TransferStatusManager.cs \
+	Migo/Migo.Syndication/Enumerations/FeedBackgroundSyncAction.cs \
+	Migo/Migo.Syndication/Enumerations/FeedBackgroundSyncStatus.cs \
 	Migo/Migo.Syndication/Enumerations/FeedDownloadError.cs \
 	Migo/Migo.Syndication/Enumerations/FeedDownloadStatus.cs \
-	Migo/Migo.Syndication/Enumerations/FEEDS_BACKGROUNDSYNC_ACTION.cs \
-	Migo/Migo.Syndication/Enumerations/FEEDS_BACKGROUNDSYNC_STATUS.cs \
 	Migo/Migo.Syndication/Enumerations/FEEDS_EVENTS_DOWNLOAD_COUNT_FLAGS.cs \
 	Migo/Migo.Syndication/Enumerations/FEEDS_EVENTS_ITEM_COUNT_FLAGS.cs \
-	Migo/Migo.Syndication/Enumerations/FEEDS_SYNC_SETTING.cs \
+	Migo/Migo.Syndication/Enumerations/FeedSyncSetting.cs \
 	Migo/Migo.Syndication/EventArgs/FeedDownloadCompletedEventArgs.cs \
 	Migo/Migo.Syndication/EventArgs/FeedDownloadCountChangedEventArgs.cs \
 	Migo/Migo.Syndication/EventArgs/FeedEventArgs.cs \

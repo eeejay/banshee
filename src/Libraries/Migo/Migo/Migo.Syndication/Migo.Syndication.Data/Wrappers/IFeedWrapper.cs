@@ -52,7 +52,7 @@ namespace Migo.Syndication.Data
         long MaxItemCount { get;}
         string Name { get; }
         DateTime PubDate { get; }
-        FEEDS_SYNC_SETTING SyncSetting { get; }
+        FeedSyncSetting SyncSetting { get; }
         string Title { get; }    
         long Ttl { get; }  
         string Url { get; }

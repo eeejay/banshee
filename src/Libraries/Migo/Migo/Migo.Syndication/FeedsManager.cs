@@ -94,11 +94,11 @@ namespace Migo.Syndication
         public event EventHandler<FeedItemEventArgs> FeedItemAdded;
         public event EventHandler<FeedItemEventArgs> FeedItemRemoved;           
         
-        public FEEDS_BACKGROUNDSYNC_STATUS BackgroundSyncStatus 
+        public FeedBackgroundSyncStatus BackgroundSyncStatus 
         {
             get {
                 lock (sync) {
-                    return FEEDS_BACKGROUNDSYNC_STATUS.FBSS_DISABLED;
+                    return FeedBackgroundSyncStatus.Disabled;
                 }
             }
         }        
@@ -248,7 +248,7 @@ namespace Migo.Syndication
             }
         }
         
-        public void BackgroundSync (FEEDS_BACKGROUNDSYNC_ACTION action)
+        public void BackgroundSync (FeedBackgroundSyncAction action)
         {
             throw new NotImplementedException ("BackgroundSync");
         }

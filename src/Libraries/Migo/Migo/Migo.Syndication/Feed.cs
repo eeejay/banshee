@@ -80,7 +80,7 @@ namespace Migo.Syndication
         private string name;
         private FeedsManager parent;        
         private DateTime pubDate;
-        private FEEDS_SYNC_SETTING syncSetting;
+        private FeedSyncSetting syncSetting;
         private string title;
         private long ttl;  
         private long unreadItemCount;  
@@ -278,7 +278,7 @@ namespace Migo.Syndication
             get { lock (sync) { return pubDate; } }
         }
         
-		public FEEDS_SYNC_SETTING SyncSetting 
+		public FeedSyncSetting SyncSetting 
 		{ 
             get { lock (sync) { return syncSetting; } } 
         }
@@ -378,7 +378,7 @@ namespace Migo.Syndication
             itemsByID = new Dictionary<long,FeedItem> ();
             localID = -1;   
             maxItemCount = 200; //parent.ItemCountLimit;        IGNORED FOR NOW     
-            syncSetting = FEEDS_SYNC_SETTING.FSS_DEFAULT;            
+            syncSetting = FeedSyncSetting.Default;            
             unreadItemCount = 0;       
             copyright = String.Empty;
             description = String.Empty;

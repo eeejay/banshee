@@ -133,9 +133,9 @@ namespace Migo.Syndication.Data
         
         /* IFeedWrapper interface specific properties not used during update */
 
-        public FEEDS_SYNC_SETTING SyncSetting
+        public FeedSyncSetting SyncSetting
         {
-            get { return FEEDS_SYNC_SETTING.FSS_DEFAULT; }   
+            get { return FeedSyncSetting.Default; }   
         }        
         
         public long MaxItemCount

@@ -73,7 +73,7 @@ namespace Migo.Syndication
         string Name { get; }
         IFeedsManager Parent { get; }
         DateTime PubDate { get; }
-        FEEDS_SYNC_SETTING SyncSetting { get; }
+        FeedSyncSetting SyncSetting { get; }
         string Title { get; }
         
         // TTL is an optional feed element. The property value is 0 if not specified in the source.

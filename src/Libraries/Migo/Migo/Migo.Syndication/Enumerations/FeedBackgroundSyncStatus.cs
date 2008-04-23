@@ -1,5 +1,5 @@
 /*************************************************************************** 
- *  FEEDS_SYNC_SETTING.cs
+ *  FEEDS_BACKGROUNDSYNC_STATUS.cs
  *
  *  Copyright (C) 2007 Michael C. Urbanski
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
@@ -26,12 +26,11 @@
  *  DEALINGS IN THE SOFTWARE.
  */
 
-namespace Migo.Syndication
-{
-    public enum FEEDS_SYNC_SETTING : int
+ namespace Migo.Syndication 
+ {
+    public enum FeedBackgroundSyncStatus : int 
     {
-        FSS_DEFAULT = 0,
-        FSS_INTERVAL = 1,
-        FSS_MANUAL = 2      
-    };
-}
+        Disabled = 0,
+        Enabled = 1
+    }
+ }

@@ -178,15 +178,15 @@ namespace Migo.Syndication.Data
             get { return GetDateTimeSafe ((int)FeedPropertyID.PubDate); } 
         }
         
-        public FEEDS_SYNC_SETTING SyncSetting { 
+        public FeedSyncSetting SyncSetting { 
             get {                 
                 int dbVal = GetInt32Safe ((int)FeedPropertyID.SyncSetting);
 
-                if (!Enum.IsDefined (typeof (FEEDS_SYNC_SETTING), dbVal)) {
+                if (!Enum.IsDefined (typeof (FeedSyncSetting), dbVal)) {
                     dbVal = 0;
                 }                
 
-                return (FEEDS_SYNC_SETTING) dbVal;
+                return (FeedSyncSetting) dbVal;
             } 
         }
         

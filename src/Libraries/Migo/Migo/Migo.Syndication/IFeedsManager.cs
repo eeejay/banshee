@@ -45,7 +45,7 @@ namespace Migo.Syndication
         event EventHandler<FeedItemEventArgs> FeedItemAdded;
         event EventHandler<FeedItemEventArgs> FeedItemRemoved;
         
-        FEEDS_BACKGROUNDSYNC_STATUS BackgroundSyncStatus { get; }             
+        FeedBackgroundSyncStatus BackgroundSyncStatus { get; }             
         long DefaultInterval { get; set; }
         ReadOnlyCollection<IFeed> Feeds { get; }
         long ItemCountLimit { get; }     
@@ -54,7 +54,7 @@ namespace Migo.Syndication
         
         void AsyncSyncAll ();
         
-        void BackgroundSync (FEEDS_BACKGROUNDSYNC_ACTION action);
+        void BackgroundSync (FeedBackgroundSyncAction action);
         
         IFeed CreateFeed (string feedUrl);                
         IFeed CreateFeed (string feedName, string feedUrl);        

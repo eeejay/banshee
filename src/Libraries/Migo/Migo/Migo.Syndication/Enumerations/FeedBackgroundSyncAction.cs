@@ -28,10 +28,10 @@
  
  namespace Migo.Syndication 
  {
-    public enum FEEDS_BACKGROUNDSYNC_ACTION : int
+    public enum FeedBackgroundSyncAction : int
     {
-        FBSA_DISABLE = 0,
-        FBSA_ENABLE = 1,
-        FBSA_RUNNOW = 2
+        Disable = 0,
+        Enable = 1,
+        RunNow = 2
     }
  }

@@ -22,13 +22,13 @@
     <File name="Migo/Migo.Net/AsyncWebClient.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Net/AsyncWebClientStatus.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Net/TransferStatusManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="Migo/Migo.Syndication/Enumerations/FEEDS_BACKGROUNDSYNC_ACTION.cs" subtype="Code" buildaction="Compile" />
-    <File name="Migo/Migo.Syndication/Enumerations/FEEDS_BACKGROUNDSYNC_STATUS.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/Enumerations/FeedBackgroundSyncAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/Enumerations/FeedBackgroundSyncStatus.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Enumerations/FeedDownloadError.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Enumerations/FeedDownloadStatus.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Enumerations/FEEDS_EVENTS_DOWNLOAD_COUNT_FLAGS.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Enumerations/FEEDS_EVENTS_ITEM_COUNT_FLAGS.cs" subtype="Code" buildaction="Compile" />
-    <File name="Migo/Migo.Syndication/Enumerations/FEEDS_SYNC_SETTING.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/Enumerations/FeedSyncSetting.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/EventArgs/FeedDownloadCompletedEventArgs.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/EventArgs/FeedDownloadCountChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/EventArgs/FeedEventArgs.cs" subtype="Code" buildaction="Compile" />
