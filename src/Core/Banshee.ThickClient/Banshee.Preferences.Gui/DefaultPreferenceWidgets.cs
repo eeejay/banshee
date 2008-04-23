@@ -60,7 +60,7 @@ namespace Banshee.Preferences.Gui
             pattern_display.DisplayWidget = new PatternDisplay (folder_pattern.DisplayWidget, file_pattern.DisplayWidget);
             
             // Set up the extensions tab UI
-            AddinView view = new AddinView ();
+            Banshee.Addins.Gui.AddinView view = new Banshee.Addins.Gui.AddinView ();
             view.Show ();
             
             Gtk.ScrolledWindow scroll = new Gtk.ScrolledWindow ();

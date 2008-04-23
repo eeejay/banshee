@@ -34,7 +34,7 @@ using Mono.Addins.Gui;
 
 using Hyena.Widgets;
 
-namespace Banshee.Gui.Widgets
+namespace Banshee.Addins.Gui
 {    
     public class AddinTile : Table
     {

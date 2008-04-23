@@ -37,7 +37,7 @@ using Gtk;
 using Hyena.Widgets;
 using Banshee.Gui.Dialogs;
 
-namespace Banshee.Gui.Widgets
+namespace Banshee.Addins.Gui
 {
     public class AddinDetailsDialog : BansheeDialog
     {

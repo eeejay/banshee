@@ -103,9 +103,9 @@
     <File name="Banshee.Preferences.Gui/SectionBox.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Preferences.Gui/WidgetFactory.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.Widgets/AddinView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.Widgets/AddinTile.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.Widgets/AddinDetailsDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Addins.Gui/AddinDetailsDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Addins.Gui/AddinTile.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Addins.Gui/AddinView.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

@@ -32,7 +32,7 @@ using Gtk;
 
 using Mono.Addins;
 
-namespace Banshee.Gui.Widgets
+namespace Banshee.Addins.Gui
 {
     public class AddinView : EventBox
     {

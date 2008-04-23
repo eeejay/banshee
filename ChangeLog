@@ -1,5 +1,15 @@
 2008-04-23  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinView.cs: Moved
+	these widgets into their own proper namespace
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:
+	Changed to reflect said move
+
+2008-04-23  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/BansheeDialog.cs:
 	Allow setting the parent/transient for window
 
