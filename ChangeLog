@@ -1,3 +1,47 @@
+2008-04-23  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/BansheeDialog.cs:
+	Allow setting the parent/transient for window
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/AddinDetailsDialog.cs:
+	Added a simple details dialog for an addin
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/AddinView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/AddinTile.cs:
+	Better tile UI and added enable/disable and details buttons to the tile;
+	actually enable/disable addins when the button is pressed - BE WARNED
+	this has not been tested too much yet
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/WrapLabel.cs: Added a Wrap
+	property that will allow text to be ellipsized to one line if unset
+
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs:
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:
+	Updated to use the new WrapLabel
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/TextViewLabel.cs: Removed now
+	that we have a proper WrapLabel
+	
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.addin.xml:
+	* src/Backends/Banshee.Gnome/Banshee.Gnome.addin.xml:
+	* src/Backends/Banshee.Hal/Banshee.Hal.addin.xml:
+	* src/Backends/Banshee.Unix/Banshee.Unix.addin.xml:
+	* src/Core/Banshee.Core/Banshee.Core.addin.xml:
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.addin.xml:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp.addin.xml:
+	* src/Dap/Banshee.Dap/Banshee.Dap.addin.xml:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd.addin.xml:
+	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks.addin.xml:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.addin.xml:
+	* src/Extensions/Banshee.MultimediaKeys/Resources/Banshee.MultimediaKeys.addin.xml:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying.addin.xml:
+	* src/Extensions/Banshee.PlayQueue/Resources/Banshee.PlayQueue.addin.xml:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.addin.xml:
+	Updated addin metadata
+
 2008-04-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Migo/*: Rename a few more enums.

@@ -49,10 +49,19 @@ namespace Banshee.Gui.Widgets
             box.Show ();
             Add (box);
             
+            LoadAddins ();
+        }
+        
+        private void LoadAddins ()
+        {
             foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
                 if (addin.Name != addin.Id) {
                     AppendAddin (addin);
                 }
+            }
+            
+            if (tiles.Count > 0) {
+                tiles[tiles.Count - 1].Last = true;
             }
         }
         
@@ -73,10 +82,48 @@ namespace Banshee.Gui.Widgets
         private void AppendAddin (Addin addin)
         {
             AddinTile tile = new AddinTile (addin);
+            tile.ActiveChanged += OnAddinActiveChanged;
+            tile.SizeAllocated += OnAddinSizeAllocated;
             tile.Show ();
             tiles.Add (tile);
             
             box.PackStart (tile, false, false, 0);
+        }
+        
+        private void OnAddinActiveChanged (object o, EventArgs args)
+        {
+            foreach (AddinTile tile in tiles) {
+                tile.UpdateState ();
+            }
+        }
+        
+        private void OnAddinSizeAllocated (object o, SizeAllocatedArgs args)
+        {
+            ScrolledWindow scroll;
+            
+            if (Parent == null || (scroll = Parent.Parent as ScrolledWindow) == null) {
+                return;
+            }
+            
+            AddinTile tile = (AddinTile)o;
+            
+            if (tiles.IndexOf (tile) != selected_index) {
+                return;
+            }
+            
+            Gdk.Rectangle ta = ((AddinTile)o).Allocation;
+            Gdk.Rectangle va = new Gdk.Rectangle (0, (int)scroll.Vadjustment.Value, 
+                Allocation.Width, Parent.Allocation.Height);
+            
+            if (!va.Contains (ta)) {
+                double y_pos = scroll.Vadjustment.Value + (ta.Top > va.Top ? ta.Height : -ta.Height);
+                /*if (y_pos > Parent.Allocation.Height) {
+                    y_pos = scroll.Vadjustment.Upper;
+                } else if (y_pos < scroll.Vadjustment.Lower) {
+                    y_pos = scroll.Vadjustment.Lower;
+                }*/
+                scroll.Vadjustment.Value = y_pos;
+            }
         }
         
         protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
@@ -132,17 +179,15 @@ namespace Banshee.Gui.Widgets
             if (index >= 0 && index < tiles.Count) {
                 selected_index = index;
                 tiles[index].Select (true);
-                
-                // FIXME: This is not right at all
-                if (!tiles[index].Allocation.IntersectsWith (Parent.Allocation)) {
-                    ScrolledWindow w = Parent.Parent as ScrolledWindow;
-                    if (w != null) {
-                        w.Vadjustment.Value = tiles[index].Allocation.Y;
-                    }
-                }
             } else {
                 ClearSelection ();
             }
+            
+            if (Parent != null && Parent.IsRealized) {
+                Parent.GdkWindow.InvalidateRect (Parent.Allocation, true);
+            }
+            
+            QueueResize ();
         }
         
         private void ClearSelection ()

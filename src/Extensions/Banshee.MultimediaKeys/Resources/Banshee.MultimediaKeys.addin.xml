@@ -1,8 +1,15 @@
-<Addin  id="Banshee.MultimediaKeys"
-        name="Multimedia Keys"
-        description="Provides support for handling playback through the use of keyboard controls."
-        url="http://www.banshee-project.org/"
-        version="1.0">
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.MultimediaKeys"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
+    name="Multimedia Keys"
+    category="User Interface"
+    description="Provides support for handling playback through the use of keyboard controls."
+    author="Aaron Bockover"
+    url="http://banshee-project.org/"
+    defaultEnabled="true">
 
   <Dependencies>
     <Addin id="Banshee.Services" version="1.0"/>

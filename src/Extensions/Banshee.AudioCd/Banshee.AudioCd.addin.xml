@@ -6,7 +6,7 @@
     copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
     name="Audio CD Support"
     category="Hardware"
-    description="Provides support for listening to and ripping Audio CDs"
+    description="Provides support for listening to and ripping Audio CDs."
     author="Aaron Bockover"
     url="http://banshee-project.org/"
     defaultEnabled="true">

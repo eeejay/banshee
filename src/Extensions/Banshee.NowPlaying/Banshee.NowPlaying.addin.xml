@@ -5,8 +5,8 @@
     compatVersion="1.0"
     copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
     name="Now Playing"
-    category="Sources"
-    description="Adds a source that displays video and visualizations, along with other aggregated data about the currently playing track."
+    category="User Interface"
+    description="Provides a source that displays embedded video and provides fullscreen video playback and controls."
     author="Aaron Bockover"
     url="http://banshee-project.org/"
     defaultEnabled="true">

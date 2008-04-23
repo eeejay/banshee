@@ -4,9 +4,9 @@
     version="1.0"
     compatVersion="1.0"
     copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
-    name="Mass Storage Digital Audio Player Support"
+    name="Mass Storage Media Player Support"
     category="Hardware"
-    description="Provides support for Digital Audio Players that use USB Mass Storage."
+    description="Provides support for media players that use USB Mass Storage without keeping an internal database."
     author="Gabriel Burt"
     url="http://banshee-project.org/"
     defaultEnabled="true">

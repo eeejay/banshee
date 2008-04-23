@@ -1,5 +1,13 @@
-<Addin id="Banshee.GStreamer">
-
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.GStreamer"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
+    category="required:Backends"
+    description="GStreamer multimedia services including playback, CD ripping, and transcoding."
+    defaultEnabled="true">
+ 
   <Dependencies>
     <Addin id="Banshee.Services" version="1.0" />
   </Dependencies>

@@ -35,6 +35,7 @@ namespace Hyena.Widgets
     {
         private string text;
         private bool use_markup = false;
+        private bool wrap = true;
         private Pango.Layout layout;
         
         public WrapLabel ()
@@ -56,6 +57,8 @@ namespace Hyena.Widgets
             if (layout == null) {
                 CreateLayout ();
             }
+            
+            layout.Ellipsize = wrap ? Pango.EllipsizeMode.None : Pango.EllipsizeMode.End;
             
             if (use_markup) {
                 layout.SetMarkup (text);
@@ -108,6 +111,30 @@ namespace Hyena.Widgets
                 this, null, Allocation.X, Allocation.Y, layout);
             
             return true;
+        }
+        
+        public void MarkupFormat (string format, params object [] args)
+        {
+            if (args == null || args.Length == 0) {
+                Markup = format;
+                return;
+            }
+            
+            for (int i = 0; i < args.Length; i++) {
+                if (args[i] is string) {
+                    args[i] = GLib.Markup.EscapeText ((string)args[i]);
+                }
+            }
+            
+            Markup = String.Format (format, args);
+        }
+        
+        public bool Wrap {
+            get { return wrap; }
+            set {
+                wrap = value;
+                UpdateLayout ();
+            }
         }
         
         public string Markup {

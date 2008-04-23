@@ -1,4 +1,14 @@
-<Addin id="Banshee.Core" version="1.0" isroot="true">
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.Core"
+    isroot="true"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
+    category="required:Core"
+    description="Provides low level non-GUI utilities."
+    url="http://banshee-project.org/"
+    defaultEnabled="true">
 
   <ExtensionPoint path="/Banshee/Platform/IOProvider">
     <ExtensionNode name="IOProvider"/>

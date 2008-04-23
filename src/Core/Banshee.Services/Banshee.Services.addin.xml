@@ -1,5 +1,14 @@
-<Addin id="Banshee.Services" version="1.0" isroot="true">
-
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.Services"
+    isroot="true"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
+    category="required:Core"
+    description="Provides non-GUI utilities and services."
+    defaultEnabled="true">
+    
   <ExtensionPoint path="/Banshee/ServiceManager/Service">
     <ExtensionNode name="Service"/>
   </ExtensionPoint>

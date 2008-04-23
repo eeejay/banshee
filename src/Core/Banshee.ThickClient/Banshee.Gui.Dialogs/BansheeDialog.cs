@@ -41,16 +41,24 @@ namespace Banshee.Gui.Dialogs
             get { return accel_group; }
         }
         
-        public BansheeDialog (string title) : base ()
+        public BansheeDialog (string title) : this (title, null)
+        {
+        }
+        
+        public BansheeDialog (string title, Window parent) : base ()
         {
             Title = title;
             BorderWidth = 5;
             Visible = false;
             HasSeparator = false;
             
-            GtkElementsService service = ServiceManager.Get<GtkElementsService> ();
-            if (service != null) {
-                TransientFor = service.PrimaryWindow;
+            if (parent == null) {
+                GtkElementsService service = ServiceManager.Get<GtkElementsService> ();
+                if (service != null) {
+                    TransientFor = service.PrimaryWindow;
+                }
+            } else {
+                TransientFor = parent;
             }
             
             WindowPosition = WindowPosition.CenterOnParent;

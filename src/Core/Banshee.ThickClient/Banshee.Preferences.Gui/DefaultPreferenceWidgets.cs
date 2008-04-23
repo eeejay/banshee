@@ -148,7 +148,7 @@ namespace Banshee.Preferences.Gui
             }
         }
         
-        private class PatternDisplay : TextViewLabel
+        private class PatternDisplay : WrapLabel
         {
             private PatternComboBox folder;
             private PatternComboBox file;
@@ -163,11 +163,6 @@ namespace Banshee.Preferences.Gui
                 folder.Changed += OnChanged;
                 file.Changed += OnChanged;
                 
-                Pango.FontDescription font = PangoContext.FontDescription.Copy ();
-                font.Style = Pango.Style.Italic;
-                font.Size = (int)(font.Size * Pango.Scale.Small);
-                ModifyFont (font);
-                
                 OnChanged (null, null);
             }
 
@@ -176,7 +171,8 @@ namespace Banshee.Preferences.Gui
                 string display = FileNamePattern.CreateFromTrackInfo (FileNamePattern.CreateFolderFilePattern (
                     folder.ActiveValue, file.ActiveValue), track);
             
-                Text = String.IsNullOrEmpty (display) ? String.Empty : String.Format ("{0}.ogg", display);
+                Markup = String.IsNullOrEmpty (display) ? String.Empty : String.Format ("<small>{0}.ogg</small>", 
+                    GLib.Markup.EscapeText (display));
             }
         }
     }

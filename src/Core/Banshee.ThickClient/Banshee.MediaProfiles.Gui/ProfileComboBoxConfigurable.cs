@@ -37,7 +37,7 @@ namespace Banshee.MediaProfiles.Gui
     {
         private ProfileComboBox combo;
         private ProfileConfigureButton button;
-        private TextViewLabel description;
+        private WrapLabel description;
         private string configuration_id;
         
         public ProfileComboBoxConfigurable(MediaProfileManager manager, string configurationId) 
@@ -62,13 +62,8 @@ namespace Banshee.MediaProfiles.Gui
             editor.PackStart(button, false, false, 0);
             editor.Show();
             
-            description = new TextViewLabel();
+            description = new WrapLabel();
             description.Show();
-            
-            TextTag tag = new TextTag("small");
-            tag.Scale = Pango.Scale.Small;
-            tag.Style = Pango.Style.Italic;
-            description.Buffer.TagTable.Add(tag);
             
             ProfileConfiguration config = manager.GetActiveProfileConfiguration (configurationId);
             
@@ -98,8 +93,8 @@ namespace Banshee.MediaProfiles.Gui
         
         private void SetDescription()
         {
-            description.Text = Combo.ActiveProfile.Description;
-            description.Buffer.ApplyTag("small", description.Buffer.StartIter, description.Buffer.EndIter);
+            description.Markup = String.Format ("<small><i>{0}</i></small>", 
+                GLib.Markup.EscapeText (Combo.ActiveProfile.Description));
         }
         
         public ProfileComboBox Combo {
