@@ -24,7 +24,7 @@
     <File name="Migo/Migo.Net/TransferStatusManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Enumerations/FEEDS_BACKGROUNDSYNC_ACTION.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Enumerations/FEEDS_BACKGROUNDSYNC_STATUS.cs" subtype="Code" buildaction="Compile" />
-    <File name="Migo/Migo.Syndication/Enumerations/FEEDS_DOWNLOAD_ERROR.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/Enumerations/FeedDownloadError.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Enumerations/FEEDS_DOWNLOAD_STATUS.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Enumerations/FEEDS_EVENTS_DOWNLOAD_COUNT_FLAGS.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Enumerations/FEEDS_EVENTS_ITEM_COUNT_FLAGS.cs" subtype="Code" buildaction="Compile" />
@@ -94,6 +94,7 @@
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="Hyena" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">

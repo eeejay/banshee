@@ -52,8 +52,8 @@ namespace Migo.Syndication.Data
             get { return String.Empty; } 
         }              
   
-        public FEEDS_DOWNLOAD_ERROR LastDownloadError { 
-            get { return FEEDS_DOWNLOAD_ERROR.FDE_NONE; }
+        public FeedDownloadError LastDownloadError { 
+            get { return FeedDownloadError.None; }
         }            
         
         public long Length 

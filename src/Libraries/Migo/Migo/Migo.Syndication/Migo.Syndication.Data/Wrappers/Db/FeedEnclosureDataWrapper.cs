@@ -76,9 +76,9 @@ namespace Migo.Syndication.Data
             } 
         }        
 
-        public FEEDS_DOWNLOAD_ERROR LastDownloadError { 
+        public FeedDownloadError LastDownloadError { 
             get { 
-                return (FEEDS_DOWNLOAD_ERROR) GetInt64Safe (
+                return (FeedDownloadError) GetInt64Safe (
                     (int) FeedEnclosurePropertyID.LastDownloadError
                 );            
             }

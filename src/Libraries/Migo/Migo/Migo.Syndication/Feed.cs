@@ -70,7 +70,7 @@ namespace Migo.Syndication
         private Dictionary<long,FeedItem> itemsByID;        
         private string language;
         private DateTime lastBuildDate;
-        private FEEDS_DOWNLOAD_ERROR lastDownloadError;
+        private FeedDownloadError lastDownloadError;
         private DateTime lastDownloadTime;      
         private DateTime lastWriteTime;
         private string link;
@@ -197,7 +197,7 @@ namespace Migo.Syndication
             get { lock (sync) { return lastBuildDate; } }
         }
         
-        public FEEDS_DOWNLOAD_ERROR LastDownloadError 
+        public FeedDownloadError LastDownloadError 
         { 
             get { lock (sync) { return lastDownloadError; } }
         }
@@ -613,7 +613,7 @@ namespace Migo.Syndication
                 lock (sync) {
                     ResetUpdating ();
                     OnFeedDownloadCompleted (
-                        FEEDS_DOWNLOAD_ERROR.FDE_DOWNLOAD_FAILED
+                        FeedDownloadError.DownloadFailed
                     );                     
                 }  
 			}
@@ -633,7 +633,7 @@ namespace Migo.Syndication
                     } else {
                         ret = true;
                         ResetUpdating ();                    
-                        OnFeedDownloadCompleted (FEEDS_DOWNLOAD_ERROR.FDE_CANCELED);                                            
+                        OnFeedDownloadCompleted (FeedDownloadError.Canceled);                                            
                     }
                 }
             }
@@ -1096,13 +1096,13 @@ namespace Migo.Syndication
         private void OnDownloadStringCompleted (object sender, 
                                                 Migo.Net.DownloadStringCompletedEventArgs e) 
         {
-            FEEDS_DOWNLOAD_ERROR error = FEEDS_DOWNLOAD_ERROR.FDE_NONE;            
+            FeedDownloadError error = FeedDownloadError.None;            
 
             try {
                 lock (sync) {                              
                     try { 
                         if (e.Error != null) {
-                            error = FEEDS_DOWNLOAD_ERROR.FDE_DOWNLOAD_FAILED;                                                        
+                            error = FeedDownloadError.DownloadFailed;                                                        
                             
                             WebException we = e.Error as WebException;   
 
@@ -1113,29 +1113,29 @@ namespace Migo.Syndication
                                     switch (resp.StatusCode) {
                                         case HttpStatusCode.NotFound:
                                         case HttpStatusCode.Gone:
-                                            error = FEEDS_DOWNLOAD_ERROR.FDE_NOT_EXIST;
+                                            error = FeedDownloadError.DoesNotExist;
                                             break;                                
                                         case HttpStatusCode.NotModified:
-                                            error = FEEDS_DOWNLOAD_ERROR.FDE_NONE;                                                        
+                                            error = FeedDownloadError.None;                                                        
                                             break;
                                         case HttpStatusCode.Unauthorized:
-                                            error = FEEDS_DOWNLOAD_ERROR.FDE_UNSUPPORTED_AUTH;
+                                            error = FeedDownloadError.UnsupportedAuth;
                                             break;                                
                                         default:
-                                            error = FEEDS_DOWNLOAD_ERROR.FDE_DOWNLOAD_FAILED;
+                                            error = FeedDownloadError.DownloadFailed;
                                             break;
                                     }
                                 }
                             }
                         } else if (canceled | deleted) {
-                            error = FEEDS_DOWNLOAD_ERROR.FDE_CANCELED;                        
+                            error = FeedDownloadError.Canceled;                        
                         } else {
                             try {
                                 IFeedWrapper wrapper = new RssFeedWrapper (Url, e.Result);                             
                                 Update (wrapper, false);
                             } catch (FormatException) {
                                 //Console.WriteLine ("FormatException:  {0}", fe.Message);
-                                error = FEEDS_DOWNLOAD_ERROR.FDE_INVALID_FEED_FORMAT;
+                                error = FeedDownloadError.InvalidFeedFormat;
                             }                          
                         }                        
                     } catch (Exception e2) {
@@ -1153,7 +1153,7 @@ namespace Migo.Syndication
                 try {
                     lastDownloadError = error;
                                     
-                    if (lastDownloadError == FEEDS_DOWNLOAD_ERROR.FDE_NONE) {
+                    if (lastDownloadError == FeedDownloadError.None) {
                         downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADED;                         
                     } else {
                         downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED;                                                    
@@ -1266,7 +1266,7 @@ namespace Migo.Syndication
             }));
         }        
         
-        private void OnFeedDownloadCompleted (FEEDS_DOWNLOAD_ERROR error)
+        private void OnFeedDownloadCompleted (FeedDownloadError error)
         {
             parent.RegisterCommand (new CommandWrapper (delegate { 
                 EventHandler<FeedDownloadCompletedEventArgs> handler = FeedDownloadCompleted;                

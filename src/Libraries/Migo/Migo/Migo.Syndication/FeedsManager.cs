@@ -749,7 +749,7 @@ namespace Migo.Syndication
                                 Path.GetFileName (task.LocalPath)
                             );                             
                         } catch {
-                            enc.LastDownloadError = FEEDS_DOWNLOAD_ERROR.FDE_DOWNLOAD_FAILED;
+                            enc.LastDownloadError = FeedDownloadError.DownloadFailed;
                             enc.DownloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED;  
                         }
                     }
@@ -932,7 +932,7 @@ namespace Migo.Syndication
             }
         }
         
-        internal void OnFeedDownloadCompleted (Feed feed, FEEDS_DOWNLOAD_ERROR error)
+        internal void OnFeedDownloadCompleted (Feed feed, FeedDownloadError error)
         {
             if (feed == null) {
                 throw new ArgumentNullException ("feed");	

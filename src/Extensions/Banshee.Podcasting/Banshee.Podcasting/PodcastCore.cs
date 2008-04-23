@@ -391,7 +391,7 @@ namespace Banshee.Podcasting
             lock (sync) {
                 PodcastFeed f = feedDict[e.Feed.LocalID]; 
                 
-                if (e.Error == FEEDS_DOWNLOAD_ERROR.FDE_NONE) {
+                if (e.Error == FeedDownloadError.None) {
                     if (String.IsNullOrEmpty(e.Feed.LocalEnclosurePath)) {
                         e.Feed.LocalEnclosurePath = Path.Combine (
                             tmpEnclosurePath, SanitizeName (e.Feed.Name)

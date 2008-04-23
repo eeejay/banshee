@@ -63,7 +63,7 @@ namespace Migo.Syndication
         ReadOnlyCollection<IFeedItem> Items { get; }
         string Language { get; }
         DateTime LastBuildDate { get; }
-        FEEDS_DOWNLOAD_ERROR LastDownloadError { get; }
+        FeedDownloadError LastDownloadError { get; }
         DateTime LastDownloadTime { get; }      
         DateTime LastWriteTime { get; }
         string Link { get; }

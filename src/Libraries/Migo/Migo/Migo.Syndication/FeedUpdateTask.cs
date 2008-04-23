@@ -76,7 +76,7 @@ namespace Migo.Syndication
             lock (SyncRoot) {	
                 if (!feed.CancelAsyncDownload () && !IsCompleted) {
                 	//Console.WriteLine ("CancelAsync - FeedUpdateTask - 001");
-                    EmitCompletionEvents (FEEDS_DOWNLOAD_ERROR.FDE_CANCELED);                
+                    EmitCompletionEvents (FeedDownloadError.Canceled);                
                 }
             }
 	        //Console.WriteLine ("CancelAsync - FeedUpdateTask - 002");            
@@ -117,15 +117,15 @@ namespace Migo.Syndication
 	        }            
         }
         
-        private void EmitCompletionEvents (FEEDS_DOWNLOAD_ERROR err)
+        private void EmitCompletionEvents (FeedDownloadError err)
         {
             feed.FeedDownloadCompleted -= OnFeedDownloadCompletedHandler;
 
             switch (err) {                        
-                case FEEDS_DOWNLOAD_ERROR.FDE_NONE:
+                case FeedDownloadError.None:
                     SetStatus (TaskStatus.Succeeded);
                     break;
-                case FEEDS_DOWNLOAD_ERROR.FDE_CANCELED:
+                case FeedDownloadError.Canceled:
                     SetStatus (TaskStatus.Cancelled);
                     break;
                 default:

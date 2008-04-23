@@ -1,3 +1,12 @@
+2008-04-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Fix typo in
+	delete tracks user job message.
+
+	* src/Extensions/Banshee.Podcasting/*:
+	* src/Libraries/Migo/*: Fix assembly references in .mdp, and rename one
+	enum and its values to FDG standards.
+
 2008-04-23  Aaron Bockover  <abock@gnome.org>
 
 	This commit adds the initial work for the extension manager to allow

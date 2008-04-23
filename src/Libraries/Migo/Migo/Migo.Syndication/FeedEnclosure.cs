@@ -43,7 +43,7 @@ namespace Migo.Syndication
         private FEEDS_DOWNLOAD_STATUS downloadStatus;        
         private string downloadUrl;
         private bool active;
-        private FEEDS_DOWNLOAD_ERROR lastDownloadError;
+        private FeedDownloadError lastDownloadError;
         private long length;
         private long localID;
         private string localPath;
@@ -107,7 +107,7 @@ namespace Migo.Syndication
             get { lock (sync) { return downloadUrl; } } 
         }
 
-        public FEEDS_DOWNLOAD_ERROR LastDownloadError
+        public FeedDownloadError LastDownloadError
         {
             get { 
                 lock (sync) {
@@ -280,7 +280,7 @@ namespace Migo.Syndication
                 //Console.WriteLine ("Status - SetCanceled:  canceled:  {0} - downloading:  {1}", canceled, downloading);
                 if (!canceled && !stopped && downloading) {
                     ret = canceled = true;
-                    lastDownloadError = FEEDS_DOWNLOAD_ERROR.FDE_CANCELED;
+                    lastDownloadError = FeedDownloadError.Canceled;
                 }   
             }
                 //Console.WriteLine ("Status - SetCanceled:  ret:  {0}", ret);
@@ -299,7 +299,7 @@ namespace Migo.Syndication
                     ret = downloading = true;    
                     
                     downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_PENDING;                    
-                    lastDownloadError = FEEDS_DOWNLOAD_ERROR.FDE_NONE;
+                    lastDownloadError = FeedDownloadError.None;
                 }            
             }
             
@@ -313,7 +313,7 @@ namespace Migo.Syndication
             lock (sync) {
                 if (!canceled && !stopped && downloading) {
                     ret = stopped = true;
-                    lastDownloadError = FEEDS_DOWNLOAD_ERROR.FDE_CANCELED;
+                    lastDownloadError = FeedDownloadError.Canceled;
                 }            
             }
             
@@ -382,7 +382,7 @@ namespace Migo.Syndication
                         Directory.Delete (path);
                     } catch {}
                 } catch { 
-                    lastDownloadError = FEEDS_DOWNLOAD_ERROR.FDE_DOWNLOAD_FAILED;
+                    lastDownloadError = FeedDownloadError.DownloadFailed;
                     downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOAD_FAILED;
                     throw;
                 }
@@ -393,7 +393,7 @@ namespace Migo.Syndication
                 this.downloadMimeType = mimeType;
                                 
                 downloadStatus = FEEDS_DOWNLOAD_STATUS.FDS_DOWNLOADED;
-                lastDownloadError = FEEDS_DOWNLOAD_ERROR.FDE_NONE;                    
+                lastDownloadError = FeedDownloadError.None;                    
 
                 Commit ();
             }

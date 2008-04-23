@@ -451,7 +451,7 @@ namespace Banshee.Sources
             get {
                 lock (this) {
                     if (delete_track_job == null) {
-                        delete_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Deleting {0} of {1} From {0}"), "{0}", "{1}", Name),
+                        delete_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Deleting {0} of {1} From {2}"), "{0}", "{1}", Name),
                                 Properties.GetStringList ("Icon.Name"));
                         //delete_track_job.DelayShow = true;
                         delete_track_job.Register ();

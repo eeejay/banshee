@@ -32,18 +32,18 @@ namespace Migo.Syndication
 {    
     public class FeedDownloadCompletedEventArgs : FeedEventArgs
     {
-        private readonly FEEDS_DOWNLOAD_ERROR error;
+        private readonly FeedDownloadError error;
         
-        public FEEDS_DOWNLOAD_ERROR Error
+        public FeedDownloadError Error
         {
             get { return error; }   
         }
         
         public FeedDownloadCompletedEventArgs (IFeed feed, 
-                                               FEEDS_DOWNLOAD_ERROR error) : base (feed) 
+                                               FeedDownloadError error) : base (feed) 
         {
-            if (error < FEEDS_DOWNLOAD_ERROR.FDE_NONE ||
-                error > FEEDS_DOWNLOAD_ERROR.FDE_DOWNLOAD_SIZE_LIMIT_EXCEEDED) {
+            if (error < FeedDownloadError.None ||
+                error > FeedDownloadError.DownloadSizeLimitExceeded) {
             	throw new ArgumentException ("error:  Value out of range");            	
             }
             

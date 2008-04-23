@@ -28,20 +28,20 @@
  
  namespace Migo.Syndication 
  {
-    public enum FEEDS_DOWNLOAD_ERROR : int
+    public enum FeedDownloadError : int
     {
-        FDE_NONE = 0,
-        FDE_DOWNLOAD_FAILED = 1,
-        FDE_INVALID_FEED_FORMAT = 2,
-        FDE_NORMALIZATION_FAILED = 3,
-        FDE_PERSISTENCE_FAILED = 4,
-        FDE_DOWNLOAD_BLOCKED = 5,
-        FDE_CANCELED = 6,
-        FDE_UNSUPPORTED_AUTH = 7,
-        FDE_BACKGROUND_DOWNLOAD_DISABLED = 8,
-        FDE_NOT_EXIST = 9,
-        FDE_UNSUPPORTED_MSXML = 10,
-        FDE_UNSUPPORTED_DTD = 11,
-        FDE_DOWNLOAD_SIZE_LIMIT_EXCEEDED = 12
+        None = 0,
+        DownloadFailed = 1,
+        InvalidFeedFormat = 2,
+        NormalizationFailed = 3,
+        PersistenceFailed = 4,
+        DownloadBlocked = 5,
+        Canceled = 6,
+        UnsupportedAuth = 7,
+        BackgroundDownloadDisabled = 8,
+        DoesNotExist = 9,
+        UnsupportedMsXml = 10,
+        UnsupportedDtd = 11,
+        DownloadSizeLimitExceeded = 12
     }
  }

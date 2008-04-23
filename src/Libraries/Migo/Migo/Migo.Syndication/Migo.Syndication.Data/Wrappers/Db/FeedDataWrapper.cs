@@ -116,16 +116,16 @@ namespace Migo.Syndication.Data
             get { return GetDateTimeSafe ((int)FeedPropertyID.LastBuildDate); } 
         }
         
-        public FEEDS_DOWNLOAD_ERROR LastDownloadError 
+        public FeedDownloadError LastDownloadError 
         { 
             get { 
                 int dbVal = GetInt32Safe ((int)FeedPropertyID.LastDownloadError);
 
-                if (!Enum.IsDefined (typeof (FEEDS_DOWNLOAD_ERROR), dbVal)) {
+                if (!Enum.IsDefined (typeof (FeedDownloadError), dbVal)) {
                     dbVal = 0;
                 }                 
                 
-                return (FEEDS_DOWNLOAD_ERROR) dbVal;
+                return (FeedDownloadError) dbVal;
             } 
         }
         

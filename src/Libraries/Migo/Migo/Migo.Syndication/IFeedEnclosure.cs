@@ -35,7 +35,7 @@ namespace Migo.Syndication
         string DownloadMimeType { get; }
         FEEDS_DOWNLOAD_STATUS DownloadStatus { get; }        
         string DownloadUrl { get; }
-        FEEDS_DOWNLOAD_ERROR LastDownloadError { get; }
+        FeedDownloadError LastDownloadError { get; }
         long Length { get; }
         long LocalID { get; }        
         string LocalPath { get; }

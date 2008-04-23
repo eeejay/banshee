@@ -44,6 +44,9 @@
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Services" />
     <ProjectReference type="Project" localcopy="True" refto="Banshee.ThickClient" />
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Project" localcopy="True" refto="Migo" />
+    <ProjectReference type="Project" localcopy="True" refto="Hyena" />
+    <ProjectReference type="Project" localcopy="True" refto="Hyena.Gui" />
   </References>
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />

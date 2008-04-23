@@ -163,9 +163,9 @@ namespace Migo.Syndication.Data
             get { return DateTime.Now.ToUniversalTime (); }     
         }           
         
-        public FEEDS_DOWNLOAD_ERROR LastDownloadError
+        public FeedDownloadError LastDownloadError
         {
-            get { return FEEDS_DOWNLOAD_ERROR.FDE_NONE; }     
+            get { return FeedDownloadError.None; }     
         }             
         
         public bool DownloadEnclosuresAutomatically 
