@@ -1,4 +1,4 @@
-<Project name="Banshee.Services" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Banshee.Services" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assembly="Banshee.Services" />
@@ -148,6 +148,8 @@
     <File name="Banshee.Collection.Database/CachedList.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.ServiceStack/BatchUserJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/IDiskUsageReporter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/ITranscoder.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/TranscoderService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Preferences/Root.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Preferences/Preference.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Preferences/Section.cs" subtype="Code" buildaction="Compile" />

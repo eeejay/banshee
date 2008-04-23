@@ -119,8 +119,8 @@ namespace Banshee.MediaProfiles
             foreach(XmlNode variable_node in node.SelectNodes("variable")) {
                 try {
                     PipelineVariable variable = new PipelineVariable(variable_node);
-                    if(!preset_variables.ContainsKey(variable.ID)) {
-                        preset_variables.Add(variable.ID, variable);
+                    if(!preset_variables.ContainsKey(variable.Id)) {
+                        preset_variables.Add(variable.Id, variable);
                     }
                 } catch {
                 }
@@ -135,15 +135,19 @@ namespace Banshee.MediaProfiles
 
             foreach(XmlNode profile_node in node.SelectNodes("profile")) {
                 try {
-                    profiles.Add(new Profile(this, profile_node));
+                    Add (new Profile(this, profile_node));
                 } catch(Exception e) {
                     Console.WriteLine(e);
                 }
             }
         }
 
+        private Dictionary<string, string> mimetype_extensions = new Dictionary<string, string> ();
         public void Add(Profile profile)
         {
+            foreach (string mimetype in profile.MimeTypes) {
+                mimetype_extensions[mimetype] = profile.OutputFileExtension;
+            }
             profiles.Add(profile);
         }
 
@@ -186,22 +190,23 @@ namespace Banshee.MediaProfiles
             }
         }
         
-        public Profile GetConfiguredActiveProfile(string id)
+        public ProfileConfiguration GetActiveProfileConfiguration (string id)
         {
-            return ProfileConfiguration.LoadActiveProfile(this, id);
+            return ProfileConfiguration.LoadActive (this, id);
         }
         
-        public Profile GetConfiguredActiveProfile(string id, string [] mimetypes)
+        public ProfileConfiguration GetActiveProfileConfiguration(string id, string [] mimetypes)
         {
-            Profile profile = GetConfiguredActiveProfile(id);
-            if(profile != null) {
-                return profile;
+            ProfileConfiguration config = GetActiveProfileConfiguration (id);
+            if(config != null) {
+                return config;
             }
             
             foreach(string mimetype in mimetypes) {
-                profile = GetProfileForMimeType(mimetype);
+                Profile profile = GetProfileForMimeType(mimetype);
                 if(profile != null) {
-                    return profile;
+                    profile.LoadConfiguration (id);
+                    return profile.Configuration;
                 }
             }
             
@@ -223,6 +228,13 @@ namespace Banshee.MediaProfiles
                 }
             }
             
+            return null;
+        }
+
+        public string GetExtensionForMimeType (string mimetype)
+        {
+            if (mimetype_extensions.ContainsKey (mimetype))
+                return mimetype_extensions[mimetype];
             return null;
         }
 

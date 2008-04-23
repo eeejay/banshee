@@ -57,17 +57,17 @@ namespace Banshee.GnomeBackend
                 return disable_gconf;
             }
         }
-        
+
         private string CreateKey (string @namespace, string part)
         {
             string hash_key = String.Format ("{0}{1}", @namespace, part);
             lock (((ICollection)key_table).SyncRoot) {
                 if (!key_table.ContainsKey (hash_key)) {
                     if (@namespace == null) {
-                        key_table.Add (hash_key, String.Format ("{0}{1}", base_key, StringUtil.CamelCaseToUnderCase (part)));
+                        key_table.Add (hash_key, String.Format ("{0}{1}", base_key, StringUtil.CamelCaseToUnderCase (part.Replace ('/', '_'))));
                     } else {
                         key_table.Add (hash_key, String.Format ("{0}{1}",
-                            base_key, StringUtil.CamelCaseToUnderCase (String.Format ("{0}/{1}", @namespace.Replace (".", "/"), part))
+                            base_key, StringUtil.CamelCaseToUnderCase (String.Format ("{0}/{1}", @namespace.Replace (".", "/"), part.Replace ('/', '_')))
                         ));
                     }
                 }

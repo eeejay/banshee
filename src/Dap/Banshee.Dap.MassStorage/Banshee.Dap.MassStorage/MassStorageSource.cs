@@ -112,7 +112,7 @@ namespace Banshee.Dap.MassStorage
         }
 
         private bool had_write_error = false;
-        protected override bool IsReadOnly {
+        public override bool IsReadOnly {
             get { return volume.IsReadOnly || had_write_error; }
         }
 
@@ -133,28 +133,24 @@ namespace Banshee.Dap.MassStorage
             set { write_path = value; }
         }
 
-        protected override void AddTrack (DatabaseTrackInfo track)
+        protected override void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
         {
             if (track.PrimarySourceId == DbId)
                 return;
 
-            SafeUri new_uri = new SafeUri (GetTrackPath (track));
-            try {
-                // If it already is on the device but it's out of date, remove it
-                //if (File.Exists(new_uri) && File.GetLastWriteTime(track.Uri.LocalPath) > File.GetLastWriteTime(new_uri))
-                    //RemoveTrack(new MassStorageTrackInfo(new SafeUri(new_uri)));
-                if (!File.Exists (new_uri)) {
-                    Directory.Create (System.IO.Path.GetDirectoryName (new_uri.LocalPath));
-                    File.Copy (track.Uri, new_uri, false);
+            SafeUri new_uri = new SafeUri (GetTrackPath (track, System.IO.Path.GetExtension (fromUri.LocalPath)));
+            // If it already is on the device but it's out of date, remove it
+            //if (File.Exists(new_uri) && File.GetLastWriteTime(track.Uri.LocalPath) > File.GetLastWriteTime(new_uri))
+                //RemoveTrack(new MassStorageTrackInfo(new SafeUri(new_uri)));
 
-                    DatabaseTrackInfo copied_track = new DatabaseTrackInfo (track);
-                    copied_track.PrimarySource = this;
-                    copied_track.Uri = new_uri;
-                    copied_track.Save (false);
-                }
-            } catch (System.IO.FileNotFoundException) {
-                had_write_error = true;
-                throw;
+            if (!File.Exists (new_uri)) {
+                Directory.Create (System.IO.Path.GetDirectoryName (new_uri.LocalPath));
+                File.Copy (fromUri, new_uri, false);
+
+                DatabaseTrackInfo copied_track = new DatabaseTrackInfo (track);
+                copied_track.PrimarySource = this;
+                copied_track.Uri = new_uri;
+                copied_track.Save (false);
             }
         }
 
@@ -182,7 +178,7 @@ namespace Banshee.Dap.MassStorage
             get { return MediaCapabilities == null ? -1 : MediaCapabilities.FolderDepth; }
         }
 
-        private string GetTrackPath (TrackInfo track)
+        private string GetTrackPath (TrackInfo track, string ext)
         {
             string file_path = WritePath;
 
@@ -224,7 +220,7 @@ namespace Banshee.Dap.MassStorage
             */
 
             file_path = System.IO.Path.Combine (file_path, FileNamePattern.CreateFromTrackInfo (track));
-            file_path += System.IO.Path.GetExtension (track.Uri.LocalPath);
+            file_path += ext;
 
             return file_path;
         }

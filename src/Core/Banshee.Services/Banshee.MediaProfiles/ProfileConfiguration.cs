@@ -49,7 +49,7 @@ namespace Banshee.MediaProfiles
             return configuration;
         }
 
-        public static Profile LoadActiveProfile(MediaProfileManager manager, string id)
+        public static ProfileConfiguration LoadActive (MediaProfileManager manager, string id)
         {
             string profile_id = ConfigurationClient.Get<string>(MakeConfNamespace(id), "active_profile", string.Empty);
 
@@ -58,8 +58,9 @@ namespace Banshee.MediaProfiles
             }
 
             foreach(Profile profile in manager.GetAvailableProfiles()) {
-                if(profile.ID == profile_id) {
-                    return profile;
+                if(profile.Id == profile_id) {
+                    profile.LoadConfiguration (id);
+                    return profile.Configuration;
                 }
             }
 
@@ -68,7 +69,7 @@ namespace Banshee.MediaProfiles
         
         public static void SaveActiveProfile(Profile profile, string id)
         {
-            ConfigurationClient.Set<string>(MakeConfNamespace(id), "active_profile", profile.ID);
+            ConfigurationClient.Set<string>(MakeConfNamespace(id), "active_profile", profile.Id);
         }
         
         public ProfileConfiguration(Profile profile, string id)
@@ -124,7 +125,7 @@ namespace Banshee.MediaProfiles
             get { return variable_values[variable]; }
         }
         
-        public string ID {
+        public string Id {
             get { return id; }
         }
 
@@ -133,7 +134,11 @@ namespace Banshee.MediaProfiles
         }
         
         public Profile Profile {
-            get { return profile; }
+            get {
+                if (profile.Configuration != this)
+                    profile.SetConfiguration (this);
+                return profile;
+            }
         }
 
         protected string ConfNamespace {

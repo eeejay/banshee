@@ -16,4 +16,8 @@
     <AudioCdRipper class="Banshee.GStreamer.AudioCdRipper"/>
   </Extension>
 
+  <Extension path="/Banshee/MediaEngine/Transcoder">
+    <Transcoder class="Banshee.GStreamer.Transcoder"/>
+  </Extension>
+
 </Addin>

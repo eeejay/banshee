@@ -256,7 +256,7 @@ namespace Banshee.MediaProfiles
             }
         }
 
-        public string ID {
+        public string Id {
             get { return id; }
             set { id = value; }
         }
@@ -372,7 +372,7 @@ namespace Banshee.MediaProfiles
         {
             StringBuilder builder = new StringBuilder();
 
-            builder.Append(String.Format("\tID            = {0}\n", ID));
+            builder.Append(String.Format("\tID            = {0}\n", Id));
             builder.Append(String.Format("\tName          = {0}\n", Name));
             builder.Append(String.Format("\tControl Type  = {0}\n", ControlType));
             builder.Append(String.Format("\tAdvanced      = {0}\n", Advanced));

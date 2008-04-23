@@ -322,6 +322,7 @@ namespace Banshee.Sources
                 }
 
                 try {
+                    DeleteTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
                     DeleteTrack (track);
                 } catch (Exception e) {
                     Log.Exception (e);
@@ -364,9 +365,6 @@ namespace Banshee.Sources
 
             CachedList<DatabaseTrackInfo> cached_list = CachedList<DatabaseTrackInfo>.CreateFromModelSelection (model);
             AddTrackList (cached_list);
-
-            OnTracksAdded ();
-            OnUserNotifyUpdated ();
             return true;
         }
 
@@ -380,50 +378,69 @@ namespace Banshee.Sources
             get { return is_deleting; }
         }
 
+        protected virtual void AddTrackAndIncrementCount (DatabaseTrackInfo track)
+        {
+            AddTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
+            AddTrack (track);
+            IncrementAddedTracks ();
+        }
+
         protected virtual void AddTrackList (CachedList<DatabaseTrackInfo> list)
         {
             is_adding = true;
-            AddTrackJob.Total += (int)list.Count;
+            AddTrackJob.Total += (int) list.Count;
 
             foreach (DatabaseTrackInfo track in list) {
                 if (track == null) {
-                    AddTrackJob.Completed++;
+                    IncrementAddedTracks ();
                     continue;
                 }
 
                 try {
-                    AddTrack (track);
+                    AddTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
+                    AddTrackAndIncrementCount (track);
                 } catch (Exception e) {
+                    IncrementAddedTracks ();
                     Log.Exception (e);
                     ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
                 }
-
-                AddTrackJob.Completed++;
-                if (AddTrackJob.Completed % 10 == 0 && !AddTrackJob.IsFinished) {
-                    OnTracksAdded ();
-                }
             }
             is_adding = false;
-
-            if (AddTrackJob.Total == AddTrackJob.Completed) {
-                add_track_job.Finish ();
-                add_track_job = null;
-            }
         }
 
-        protected override void PruneArtistsAlbums ()
+        protected void IncrementAddedTracks ()
         {
-            ServiceManager.DbConnection.Execute (prune_artists_albums_command);
-            base.PruneArtistsAlbums ();
+            bool finished = false, notify = false;
+
+            lock (this) {
+                add_track_job.Completed++;
+
+                if (add_track_job.IsFinished) {
+                    finished = true;
+                    add_track_job = null;
+                } else {
+                    add_track_job.Status = String.Empty;
+                    if (add_track_job.Completed % 10 == 0)
+                        notify = true;
+                }
+            }
+
+            if (notify || finished)
+                OnTracksAdded ();
+
+            if (finished)
+                OnUserNotifyUpdated ();
         }
 
         private BatchUserJob add_track_job;
         protected BatchUserJob AddTrackJob {
             get {
-                if (add_track_job == null) {
-                    add_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Adding Items to {0}"), Name), Catalog.GetString ("Adding {0} of {1}"), Properties.GetStringList ("Icon.Name"));
-                    add_track_job.DelayShow = true;
-                    add_track_job.Register ();
+                lock (this) {
+                    if (add_track_job == null) {
+                        add_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Adding {0} of {1} to {2}"), "{0}", "{1}", Name), Properties.GetStringList ("Icon.Name"));
+                        //add_track_job.DelayShow = true;
+                        add_track_job.Register ();
+                    }
                 }
                 return add_track_job;
             }
@@ -432,13 +449,24 @@ namespace Banshee.Sources
         private BatchUserJob delete_track_job;
         protected BatchUserJob DeleteTrackJob {
             get {
-                if (delete_track_job == null) {
-                    delete_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Deleting Items From {0}"), Name), Catalog.GetString ("Deleting {0} of {1}"), Properties.GetStringList ("Icon.Name"));
-                    delete_track_job.DelayShow = true;
-                    delete_track_job.Register ();
+                lock (this) {
+                    if (delete_track_job == null) {
+                        delete_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Deleting {0} of {1} From {0}"), "{0}", "{1}", Name),
+                                Properties.GetStringList ("Icon.Name"));
+                        //delete_track_job.DelayShow = true;
+                        delete_track_job.Register ();
+                    }
                 }
                 return delete_track_job;
             }
         }
+
+
+        protected override void PruneArtistsAlbums ()
+        {
+            ServiceManager.DbConnection.Execute (prune_artists_albums_command);
+            base.PruneArtistsAlbums ();
+        }
+
     }
 }

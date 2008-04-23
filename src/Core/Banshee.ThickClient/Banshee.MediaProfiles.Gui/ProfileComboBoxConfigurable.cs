@@ -70,10 +70,10 @@ namespace Banshee.MediaProfiles.Gui
             tag.Style = Pango.Style.Italic;
             description.Buffer.TagTable.Add(tag);
             
-            Profile profile = manager.GetConfiguredActiveProfile(configurationId);
+            ProfileConfiguration config = manager.GetActiveProfileConfiguration (configurationId);
             
-            if(profile != null) {
-                Combo.SetActiveProfile(profile);
+            if(config != null) {
+                Combo.SetActiveProfile(config.Profile);
                 SetDescription();
             }
             

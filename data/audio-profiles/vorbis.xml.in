@@ -7,6 +7,7 @@
       <output-file-extension>ogg</output-file-extension>
       <mimetype>audio/x-ogg</mimetype>
       <mimetype>audio/ogg</mimetype>
+      <mimetype>taglib/ogg</mimetype>
       <mimetype>audio/x-vorbis+ogg</mimetype>
       <mimetype>audio/x-vorbis</mimetype>
       <mimetype>audio/vorbis</mimetype>

@@ -8,6 +8,7 @@
       <mimetype>application/x-flac</mimetype>
       <mimetype>audio/flac</mimetype>
       <mimetype>audio/x-flac</mimetype>
+      <mimetype>taglib/flac</mimetype>
       <pipeline>
         <process id="gstreamer">
         <![CDATA[

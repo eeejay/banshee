@@ -1,3 +1,96 @@
+2008-04-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit adds transcoding support to DAPs.  Transcoded files are stored
+	in ~/.config/banshee-1/transcoder/, and that folder is deleted every
+	Banshee session.  One improvement over stable's transcoding is file
+	transfers can happen at the same time as transcoding.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Make IsReadOnly public.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Enable property dialogs
+	for DapSources.  Also, override AddTrack methods to first transcode if
+	necessary.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Reflect updates in two parent classes.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:  Lock use of the
+	mtp device so only one operation happens at a time.  Make adding track
+	work with new transcoding support.  Add fine-grained progress when adding
+	tracks.
+
+	* src/Dap/Banshee.Dap/Makefile.am:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs: Ported from
+	stable.  Advanced properties and owner entry commented out.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: If the Source
+	has a property named 'SourceProperties.GuiHandler' that is a
+	OpenPropertiesDelegate, invoke it OnSourcePropertiesAction.
+
+	* src/Core/Banshee.ThickClient/ThemeIcons/22x22/actions:
+	* src/Core/Banshee.ThickClient/ThemeIcons/22x22/actions/encode.png: Copy
+	icon from stable.
+
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs:
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/MediaProfileManager.cs:
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/PipelineVariable.cs:
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/Profile.cs:
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/Pipeline.cs:
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/ProfileConfiguration.cs:
+	Renamed *ID properties to *Id.  Also, use the ProfileConfiguration in
+	several places we used to return just the Profile, since multiple
+	ProfileConfigurations can share a Profile, we need to make sure this
+	configurations variables are loaded when we use it.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Define
+	OpenPropertiesDelegate.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Handle
+	AddTracks not being synchronous (since there may be transcoding).
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/BatchUserJob.cs: Add
+	DetailedProgress that is the percent complete of the current sub-job.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Load
+	the TranscoderService.
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml: Define
+	/Banshee/MediaEngine/Transcoder extension node.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/ITranscoder.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs: New
+	files that give us transcoding.  Largely ported code from stable.
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GConfConfigurationClient.cs:
+	Remove / characters from key names.
+
+	* src/Backends/Banshee.GStreamer/Makefile.am:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.addin.xml:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs: Add
+	GStreamer implementation of MediaEngine.ITranscoder, mostly ported from
+	stable.
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs: Tweak
+	way Profiles are loaded to ensure they're configured.
+
+	* src/Libraries/Mtp/Mtp/Track.cs: Remove WriteLine.
+
+	* libbanshee/banshee-transcoder.c: Fix broken progress updates, and Gtk
+	criticals.
+
+	* build/build.environment.mk: Require Banshee.ThickClient in Banshee.Dap
+	now b/c of properties dialog.
+
+	* data/audio-profiles/*.xml.in: Add taglib/* mimetypes.
+
+	* data/banshee-1.desktop.in.in:
+	* data/mimetypes.txt: Update list of mimetypes with some ones from TagLib#
+	we didn't have.
+
 2008-04-22  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs:

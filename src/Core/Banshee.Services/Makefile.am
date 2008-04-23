@@ -54,11 +54,13 @@ SOURCES =  \
 	Banshee.MediaEngine/IAudioCdRipper.cs \
 	Banshee.MediaEngine/IEqualizer.cs \
 	Banshee.MediaEngine/IPlayerEngineService.cs \
+	Banshee.MediaEngine/ITranscoder.cs \
 	Banshee.MediaEngine/NullPlayerEngine.cs \
 	Banshee.MediaEngine/PlayerEngine.cs \
 	Banshee.MediaEngine/PlayerEngineEvent.cs \
 	Banshee.MediaEngine/PlayerEngineService.cs \
 	Banshee.MediaEngine/PlayerEngineState.cs \
+	Banshee.MediaEngine/TranscoderService.cs \
 	Banshee.MediaProfiles/MediaProfileManager.cs \
 	Banshee.MediaProfiles/Pipeline.cs \
 	Banshee.MediaProfiles/PipelineVariable.cs \

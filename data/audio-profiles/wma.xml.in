@@ -6,6 +6,7 @@
       <_description>A proprietary lossy audio format with high quality output at a lower file size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3.</_description>
       <output-file-extension>wma</output-file-extension>
       <mimetype>audio/x-ms-wma</mimetype>
+      <mimetype>taglib/wma</mimetype>
       <pipeline>
         <process id="gstreamer">
         <![CDATA[

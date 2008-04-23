@@ -305,6 +305,11 @@ namespace Banshee.Gui
 
         private void OnSourceProperties (object o, EventArgs args)
         {
+            if (ActionSource.Properties.Contains ("SourceProperties.GuiHandler")) {
+                ActionSource.Properties.Get<Source.OpenPropertiesDelegate> ("SourceProperties.GuiHandler") ();
+                return;
+            }
+
             SmartPlaylistSource source = ActionSource as SmartPlaylistSource;
             if (source != null) {
                 Editor ed = new Editor (source);

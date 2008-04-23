@@ -4,6 +4,7 @@ LINK = $(REF_DAP)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
+	Banshee.Dap.Gui/DapPropertiesDialog.cs \
 	Banshee.Dap/DapService.cs \
 	Banshee.Dap/DapSource.cs \
 	Banshee.Dap/RemovableSource.cs

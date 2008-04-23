@@ -168,8 +168,6 @@ namespace Mtp
             if (ext.Length > 0)
                 ext = ext.Substring (1, ext.Length - 1);
 
-            Console.WriteLine ("DetectFileType for {0} is {1}", track.FileName, ext);
-
             FileType type = (FileType) Enum.Parse (typeof(FileType), ext, true);
             //if (type == null)
             //    return FileType.UNKNOWN;

@@ -7,6 +7,8 @@
       <output-file-extension>wv</output-file-extension>
       <mimetype>audio/x-wavpack</mimetype>
       <mimetype>application/x-apetag</mimetype>
+      <mimetype>taglib/ape</mimetype>
+      <mimetype>audio/x-ape</mimetype>
       <pipeline>
         <process id="gstreamer">
         <![CDATA[

@@ -6,9 +6,11 @@
       <_description>A proprietary and older, but also popular, lossy audio format that produces larger files at lower bitrates.</_description>
       <output-file-extension>mp3</output-file-extension>
       <mimetype>audio/mp3</mimetype>
+      <mimetype>taglib/mp3</mimetype>
       <mimetype>audio/mpeg3</mimetype>
       <mimetype>audio/x-mpeg-3</mimetype>
       <mimetype>audio/x-mpeg</mimetype>
+      <mimetype>audio/mpeg</mimetype>
       <mimetype>application/x-id3</mimetype>
       <mimetype>audio/x-mp3</mimetype>
       <pipeline>

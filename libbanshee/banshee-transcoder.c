@@ -71,12 +71,12 @@ gst_transcoder_iterate_timeout(GstTranscoder *transcoder)
     gint64 duration;
 
     g_return_val_if_fail(transcoder != NULL, FALSE);
-    
+
     if(!gst_element_query_duration(transcoder->pipeline, &format, &duration) ||
-        !gst_element_query_position(transcoder->conv_elem, &format, &position)) {
+        !gst_element_query_position(transcoder->sink_bin, &format, &position)) {
         return TRUE;
     }
-    
+
     if(transcoder->progress_cb != NULL) {
         transcoder->progress_cb(transcoder, (double)position / (double)duration);
     }
@@ -137,6 +137,7 @@ gst_transcoder_bus_callback(GstBus *bus, GstMessage *message, gpointer data)
         case GST_MESSAGE_EOS:
             gst_element_set_state(GST_ELEMENT(transcoder->pipeline), GST_STATE_NULL);
             g_object_unref(G_OBJECT(transcoder->pipeline));
+            transcoder->pipeline = NULL;
             
             transcoder->is_transcoding = FALSE;
             gst_transcoder_stop_iterate_timeout(transcoder);
@@ -314,10 +315,13 @@ void
 gst_transcoder_free(GstTranscoder *transcoder)
 {
     g_return_if_fail(transcoder != NULL);
-    
-    g_object_unref(G_OBJECT(transcoder->pipeline));
     gst_transcoder_stop_iterate_timeout(transcoder);
     
+    if(GST_IS_ELEMENT(transcoder->pipeline)) {
+        gst_element_set_state(GST_ELEMENT(transcoder->pipeline), GST_STATE_NULL);
+        gst_object_unref(GST_OBJECT(transcoder->pipeline));
+    }
+
     if(transcoder->output_uri != NULL) {
         g_free(transcoder->output_uri);
         transcoder->output_uri = NULL;

@@ -20,6 +20,10 @@
     <ExtensionNode name="AudioCdRipper"/>
   </ExtensionPoint>
 
+  <ExtensionPoint path="/Banshee/MediaEngine/Transcoder">
+    <ExtensionNode name="Transcoder"/>
+  </ExtensionPoint>
+
   <ExtensionPoint path="/Banshee/Platform/HardwareManager">
     <ExtensionNode name="HardwareManager"/>
   </ExtensionPoint>

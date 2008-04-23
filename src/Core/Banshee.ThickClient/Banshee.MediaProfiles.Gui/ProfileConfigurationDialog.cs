@@ -210,10 +210,10 @@ namespace Banshee.MediaProfiles.Gui
                         throw new ApplicationException("Control could not be created");
                     }
                     
-                    variable_widgets.Add(variable.ID, control);
+                    variable_widgets.Add(variable.Id, control);
                     
                     if(variable.ControlType != PipelineVariableControlType.Check) {
-                        variable_widgets.Add(".label." + variable.ID, label);
+                        variable_widgets.Add(".label." + variable.Id, label);
                     }
 
                     control.Show();

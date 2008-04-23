@@ -38,12 +38,15 @@ using Banshee.Sources;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Hardware;
+using Banshee.MediaEngine;
+using Banshee.MediaProfiles;
 
 namespace Banshee.Dap
 {
     public abstract class DapSource : RemovableSource
     {
         protected IDevice device;
+        protected string [] acceptable_mimetypes;
 
         internal IDevice Device {
             get { return device; }
@@ -64,8 +67,14 @@ namespace Banshee.Dap
                 Properties.SetStringList ("Icon.Name", FallbackIcon);
             }
 
-            if (String.IsNullOrEmpty (Name)) Name = device.Name;
+            Properties.Set<string> ("SourcePropertiesActionLabel", Catalog.GetString ("Device Properties"));
+            Properties.Set<OpenPropertiesDelegate> ("SourceProperties.GuiHandler", delegate { new DapPropertiesDialog (this).RunDialog (); });
+
             GenericName = IsMediaDevice ? Catalog.GetString ("Audio Player") : Catalog.GetString ("Media Device");
+            if (String.IsNullOrEmpty (Name))
+                Name = device.Name;
+
+            acceptable_mimetypes = (MediaCapabilities != null) ? MediaCapabilities.PlaybackMimeTypes : new string [] {"taglib/mp3"};
         }
 
         bool initialized = false;
@@ -81,6 +90,47 @@ namespace Banshee.Dap
 
         protected abstract bool Initialize (IDevice device);
 
+        protected bool TrackNeedsTranscoding (TrackInfo track)
+        {
+            foreach (string mimetype in AcceptableMimeTypes) {
+                if (ServiceManager.MediaProfileManager.GetExtensionForMimeType (track.MimeType) == ServiceManager.MediaProfileManager.GetExtensionForMimeType (mimetype)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private ProfileConfiguration preferred_config;
+        private ProfileConfiguration PreferredConfiguration {
+            get {
+                if (preferred_config == null) {
+                    preferred_config = ServiceManager.MediaProfileManager.GetActiveProfileConfiguration (UniqueId, acceptable_mimetypes);
+                }
+                return preferred_config;
+            }
+        }
+
+        protected override void AddTrackAndIncrementCount (DatabaseTrackInfo track)
+        {
+            if (TrackNeedsTranscoding (track)) {
+                ServiceManager.Get <TranscoderService> ().Enqueue (track, PreferredConfiguration, delegate (TrackInfo ti, SafeUri outUri) {
+                    AddTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
+                    try {
+                        AddTrackToDevice (track, outUri);
+                    } catch (Exception e) {
+                        Log.Exception (e);
+                    }
+                    IncrementAddedTracks ();
+                }, delegate { IncrementAddedTracks (); });
+            } else {
+                AddTrackToDevice (track, track.Uri);
+                IncrementAddedTracks ();
+            }
+        }
+
+        protected abstract void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri);
+
         protected virtual bool IsMediaDevice {
             get { return device.MediaCapabilities != null; }
         }
@@ -91,6 +141,14 @@ namespace Banshee.Dap
 
         protected IDeviceMediaCapabilities MediaCapabilities {
             get { return device.MediaCapabilities; }
+        }
+
+        public string [] AcceptableMimeTypes {
+            get { return acceptable_mimetypes; }
+        }
+
+        public override bool HasProperties {
+            get { return true; }
         }
 
         public override void AddChildSource (Source child)

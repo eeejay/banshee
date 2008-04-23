@@ -34,18 +34,19 @@ namespace Banshee.ServiceStack
 {
     public class BatchUserJob : UserJob
     {
-        protected string status_format;
+        protected string title_format;
         protected int completed;
         protected int total;
 
-        public BatchUserJob (string title, string statusFormat, params string [] iconNames) : base (title, null, iconNames)
+        public BatchUserJob (string titleFormat, params string [] iconNames) : base (null, null, iconNames)
         {
-            status_format = statusFormat;
+            title_format = titleFormat;
         }
 
         public int Completed {
             get { return completed; }
             set {
+                detailed_progress = 0;
                 completed = value;
                 UpdateProgress ();
                 if (total > 0 && completed == total)
@@ -61,12 +62,23 @@ namespace Banshee.ServiceStack
             }
         }
 
+        private double detailed_progress = 0;
+        public double DetailedProgress {
+            get { return detailed_progress; }
+            set {
+                if (value < 1.0) {
+                    detailed_progress = value;
+                    UpdateProgress ();
+                }
+            }
+        }
+
         protected void UpdateProgress ()
         {
             if (Total > 0) {
                 FreezeUpdate ();
-                Status = String.Format (status_format, completed, total);
-                Progress = (double)Completed / (double)Total;
+                Title = String.Format (title_format, completed == total ? completed : completed + 1, total);
+                Progress = Math.Max (0.00001, ((double)Completed / (double)Total) + (DetailedProgress / (double) Total));
                 ThawUpdate (true);
             }
         }

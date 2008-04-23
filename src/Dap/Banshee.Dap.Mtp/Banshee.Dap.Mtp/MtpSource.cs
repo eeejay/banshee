@@ -179,8 +179,10 @@ namespace Banshee.Dap.Mtp
                     writer.Write ("foo");
                 }
                 Track mtp_track = new Track (System.IO.Path.GetFileName (empty_file.LocalPath), 3);
-                mtp_device.UploadTrack (empty_file.AbsolutePath, mtp_track, mtp_device.MusicFolder);
-                mtp_device.Remove (mtp_track);
+                lock (mtp_device) {
+                    mtp_device.UploadTrack (empty_file.AbsolutePath, mtp_track, mtp_device.MusicFolder);
+                    mtp_device.Remove (mtp_track);
+                }
             } finally {
                 Banshee.IO.File.Delete (empty_file);
             }
@@ -191,14 +193,18 @@ namespace Banshee.Dap.Mtp
         public override void Rename (string newName)
         {
             base.Rename (newName);
-            mtp_device.Name = newName;
+            lock (mtp_device) {
+                mtp_device.Name = newName;
+            }
         }
 
         public override long BytesUsed {
             get {
 				long count = 0;
-				foreach (DeviceStorage s in mtp_device.GetStorage ()) {
-					count += (long) s.MaxCapacity - (long) s.FreeSpaceInBytes;
+                lock (mtp_device) {
+                    foreach (DeviceStorage s in mtp_device.GetStorage ()) {
+                        count += (long) s.MaxCapacity - (long) s.FreeSpaceInBytes;
+                    }
                 }
 				return count;
             }
@@ -207,26 +213,31 @@ namespace Banshee.Dap.Mtp
         public override long BytesCapacity {
             get {
 				long count = 0;
-				foreach (DeviceStorage s in mtp_device.GetStorage ()) {
-					count += (long) s.MaxCapacity;
+                lock (mtp_device) {
+                    foreach (DeviceStorage s in mtp_device.GetStorage ()) {
+                        count += (long) s.MaxCapacity;
+                    }
                 }
 				return count;
             }
         }
 
-        protected override bool IsReadOnly {
+        public override bool IsReadOnly {
             get { return false; }
         }
 
-        protected override void AddTrack (DatabaseTrackInfo track)
+        protected override void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
         {
             if (track.PrimarySourceId == DbId)
                 return;
 
-            Track mtp_track = TrackInfoToMtpTrack (track);
+            Track mtp_track = TrackInfoToMtpTrack (track, fromUri);
             bool video = (track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0;
-            Console.WriteLine ("Sending track {0}, is video? {1}", track, video);
-            mtp_device.UploadTrack (track.Uri.AbsolutePath, mtp_track, video ? mtp_device.VideoFolder : mtp_device.MusicFolder);
+            Console.WriteLine ("Sending file {0}, is video? {1}", fromUri.LocalPath, video);
+            // TODO send callback for smoother progress bar
+            lock (mtp_device) {
+                mtp_device.UploadTrack (fromUri.LocalPath, mtp_track, video ? mtp_device.VideoFolder : mtp_device.MusicFolder, OnUploadProgress);
+            }
 
             MtpTrackInfo new_track = new MtpTrackInfo (mtp_track);
             new_track.PrimarySource = this;
@@ -234,15 +245,23 @@ namespace Banshee.Dap.Mtp
             track_map[new_track.TrackId] = mtp_track;
         }
 
-        protected override void DeleteTrack (DatabaseTrackInfo track)
+        private int OnUploadProgress (ulong sent, ulong total, IntPtr data)
         {
-            mtp_device.Remove (track_map [track.TrackId]);
-            track_map.Remove (track.TrackId);
+            AddTrackJob.DetailedProgress = (double) sent / (double) total;
+            return 0;
         }
 
-        public Track TrackInfoToMtpTrack (TrackInfo track)
+        protected override void DeleteTrack (DatabaseTrackInfo track)
         {
-			Track f = new Track (System.IO.Path.GetFileName (track.Uri.LocalPath), (ulong) track.FileSize);
+            lock (mtp_device) {
+                mtp_device.Remove (track_map [track.TrackId]);
+                track_map.Remove (track.TrackId);
+            }
+        }
+
+        public Track TrackInfoToMtpTrack (TrackInfo track, SafeUri fromUri)
+        {
+			Track f = new Track (System.IO.Path.GetFileName (fromUri.LocalPath), (ulong) Banshee.IO.File.GetSize (fromUri));
 			f.Album = track.AlbumTitle;
 			f.Artist = track.ArtistName;
 			f.Duration = (uint)track.Duration.TotalMilliseconds;
@@ -258,7 +277,10 @@ namespace Banshee.Dap.Mtp
         public override void Dispose ()
         {
 			base.Dispose ();
-			mtp_device.Dispose ();
+            lock (mtp_device) {
+                mtp_device.Dispose ();
+            }
+            mtp_device = null;
             mtp_source = null;
         }
 

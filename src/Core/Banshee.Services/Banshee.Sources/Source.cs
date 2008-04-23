@@ -60,6 +60,8 @@ namespace Banshee.Sources
         public event EventHandler MessageNotify;
         public event SourceEventHandler ChildSourceAdded;
         public event SourceEventHandler ChildSourceRemoved;
+
+        public delegate void OpenPropertiesDelegate ();
         
         protected Source (string generic_name, string name, int order)
         {

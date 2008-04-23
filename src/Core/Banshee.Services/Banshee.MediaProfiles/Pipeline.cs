@@ -138,12 +138,12 @@ namespace Banshee.MediaProfiles
                 double ?numeric = variable.CurrentValueNumeric;
                 if(numeric != null) {
                     if(variable.CurrentValue.Contains(".")) {
-                        eval.RegisterVariable(variable.ID, numeric.Value);
+                        eval.RegisterVariable(variable.Id, numeric.Value);
                     } else {
-                        eval.RegisterVariable(variable.ID, (int)numeric.Value);
+                        eval.RegisterVariable(variable.Id, (int)numeric.Value);
                     }
                 } else {
-                    eval.RegisterVariable(variable.ID, variable.CurrentValue);
+                    eval.RegisterVariable(variable.Id, variable.CurrentValue);
                 }
             }
             
@@ -231,7 +231,7 @@ namespace Banshee.MediaProfiles
         public void AddVariable(PipelineVariable variable)
         {
             if(variables.Contains(variable)) {
-                throw new ApplicationException(String.Format("A variable with ID '{0}' already exists in this profile", variable.ID));
+                throw new ApplicationException(String.Format("A variable with ID '{0}' already exists in this profile", variable.Id));
             }
             
             variables.Add(variable);
@@ -271,7 +271,7 @@ namespace Banshee.MediaProfiles
         public IEnumerable<KeyValuePair<string, string>> Configuration {
             get {
                 foreach(PipelineVariable variable in Variables) {
-                    yield return new KeyValuePair<string, string>(variable.ID, variable.CurrentValue);
+                    yield return new KeyValuePair<string, string>(variable.Id, variable.CurrentValue);
                 }
             }
         }
@@ -279,7 +279,7 @@ namespace Banshee.MediaProfiles
         public string this[string variableName] {
             set { 
                 foreach(PipelineVariable variable in this) {
-                    if(variable.ID == variableName) {
+                    if(variable.Id == variableName) {
                         variable.CurrentValue = value;
                         break;
                     }

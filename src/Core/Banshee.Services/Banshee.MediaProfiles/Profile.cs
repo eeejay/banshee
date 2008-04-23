@@ -61,7 +61,12 @@ namespace Banshee.MediaProfiles
         
         public void LoadConfiguration(string configurationId)
         {
-            configuration = ProfileConfiguration.Load(this, configurationId);
+            SetConfiguration (ProfileConfiguration.Load(this, configurationId));
+        }
+        
+        public void SetConfiguration(ProfileConfiguration configuration)
+        {
+            this.configuration = configuration;
             foreach(KeyValuePair<string, string> variable in configuration) {
                 pipeline[variable.Key] = variable.Value;
             }
@@ -69,7 +74,7 @@ namespace Banshee.MediaProfiles
         
         public void SaveConfiguration()
         {
-            SaveConfiguration(configuration.ID);
+            SaveConfiguration(configuration.Id);
         }
         
         public void SaveConfiguration(string configurationId)
@@ -79,7 +84,7 @@ namespace Banshee.MediaProfiles
             }
             
             foreach(PipelineVariable variable in pipeline) {
-                configuration.Add(variable.ID, variable.CurrentValue);
+                configuration.Add(variable.Id, variable.CurrentValue);
             }
             
             configuration.Save();
@@ -90,7 +95,7 @@ namespace Banshee.MediaProfiles
             return mimetypes.Contains(mimetype);
         }
         
-        public string ID {
+        public string Id {
             get { return id; }
             set { id = value; }
         }
@@ -119,10 +124,9 @@ namespace Banshee.MediaProfiles
             get { return pipeline; }
             set { pipeline = value; }
         }
-
+        
         public ProfileConfiguration Configuration {
             get { return configuration; }
-            set { configuration = value; }
         }
         
         public IList<string> MimeTypes {
@@ -133,7 +137,7 @@ namespace Banshee.MediaProfiles
         {
             StringBuilder builder = new StringBuilder();
 
-            builder.Append(String.Format("ID          = {0}\n", ID));
+            builder.Append(String.Format("ID          = {0}\n", Id));
             builder.Append(String.Format("Name        = {0}\n", Name));
             builder.Append(String.Format("Description = {0}\n", Description));
             builder.Append(String.Format("Extension   = {0}\n", OutputFileExtension));

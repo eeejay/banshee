@@ -129,7 +129,7 @@ namespace Banshee.Dap
         {
         }
 
-        protected abstract bool IsReadOnly { get; }
+        public abstract bool IsReadOnly { get; }
         
         public abstract long BytesUsed { get; }
         public abstract long BytesCapacity { get; }
