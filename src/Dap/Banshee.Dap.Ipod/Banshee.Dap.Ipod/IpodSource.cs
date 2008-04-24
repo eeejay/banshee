@@ -53,7 +53,7 @@ namespace Banshee.Dap.Ipod
             get { return database_supported; }
         }
         
-#region Device Initialization
+#region Device Setup/Dispose
         
         public IpodSource (IDevice device) : base (device)
         {
@@ -68,7 +68,21 @@ namespace Banshee.Dap.Ipod
             
             Initialize ();
         }
+                
+        public override void Dispose ()
+        {
+            base.Dispose ();
+        }
+
+        protected override void Eject ()
+        {
+            Dispose ();
+        }
         
+#endregion
+
+#region Database Loading
+
         private bool LoadIpod ()
         {
             try {
@@ -112,6 +126,84 @@ namespace Banshee.Dap.Ipod
         }
         
 #endregion
+
+#region Source Cosmetics
+
+        protected override string [] GetIconNames ()
+        {
+            string [] names = new string[4];
+            string prefix = "multimedia-player-";
+            string shell_color = ipod_device.ModelInfo.ShellColor;
+            
+            names[0] = ipod_device.ModelInfo.IconName;
+            names[2] = "ipod-standard-color";
+            names[3] = "multimedia-player";
+            
+            switch (ipod_device.ModelInfo.DeviceClass) {
+                case "grayscale": 
+                    names[1] = "ipod-standard-monochrome";
+                    break;
+                case "color": 
+                    names[1] = "ipod-standard-color"; 
+                    break;
+                case "mini": 
+                    names[1] = String.Format ("ipod-mini-{0}", shell_color);
+                    names[2] = "ipod-mini-silver";
+                    break;
+                case "shuffle": 
+                    names[1] = String.Format ("ipod-shuffle-{0}", shell_color);
+                    names[2] = "ipod-shuffle";
+                    break;
+                case "nano":
+                case "nano3":
+                    names[1] = String.Format ("ipod-nano-{0}", shell_color);
+                    names[2] = "ipod-nano-white";
+                    break;
+                case "video":
+                    names[1] = String.Format ("ipod-video-{0}", shell_color);
+                    names[2] = "ipod-video-white";
+                    break;
+                case "classic":
+                case "touch":
+                case "phone":
+                default:
+                    break;
+            }
+            
+            names[1] = names[1] ?? names[2];
+            names[1] = prefix + names[1];
+            names[2] = prefix + names[2];
+            
+            foreach (string name in names) {
+                Console.WriteLine (name);
+            }
+            
+            return names;
+        }
+        
+        public override void Rename (string name)
+        {
+            if (!CanRename) {
+                return;
+            }
+        
+            try {
+                if (name_path != null) {
+                    Directory.CreateDirectory (Path.GetDirectoryName (name_path));
+                
+                    using (StreamWriter writer = new StreamWriter (File.Open (name_path, FileMode.Create), 
+                        System.Text.Encoding.Unicode)) {
+                        writer.Write (name);
+                    }
+                }
+            } catch (Exception e) {
+                Log.Exception (e);
+            }
+            
+            this.name = null;
+            ipod_device.Name = name;
+            base.Rename (name);
+        }
         
         private string name;
         public override string Name {
@@ -144,44 +236,10 @@ namespace Banshee.Dap.Ipod
             }
         }
         
-        public override void Import ()
-        {
-            Log.Information ("Import to Library is not implemented for iPods yet", true);
-        }
-
         public override bool CanRename {
             get { return !(IsAdding || IsDeleting || IsReadOnly); }
         }
-
-        protected override void OnTracksDeleted ()
-        {
-            base.OnTracksDeleted ();
-        }
-
-        public override void Rename (string name)
-        {
-            if (!CanRename) {
-                return;
-            }
         
-            try {
-                if (name_path != null) {
-                    Directory.CreateDirectory (Path.GetDirectoryName (name_path));
-                
-                    using (StreamWriter writer = new StreamWriter (File.Open (name_path, FileMode.Create), 
-                        System.Text.Encoding.Unicode)) {
-                        writer.Write (name);
-                    }
-                }
-            } catch (Exception e) {
-                Log.Exception (e);
-            }
-            
-            this.name = null;
-            ipod_device.Name = name;
-            base.Rename (name);
-        }
-
         public override long BytesUsed {
             get { return (long)ipod_device.VolumeInfo.SpaceUsed; }
         }
@@ -189,9 +247,27 @@ namespace Banshee.Dap.Ipod
         public override long BytesCapacity {
             get { return (long)ipod_device.VolumeInfo.Size; }
         }
+        
+#endregion
 
+#region Syncing
+        
         public override bool IsReadOnly {
             get { return ipod_device.IsReadOnly; }
+        }
+        
+        public override void Import ()
+        {
+            Log.Information ("Import to Library is not implemented for iPods yet", true);
+        }
+
+        protected override void DeleteTrack (DatabaseTrackInfo track)
+        {
+        }
+        
+        protected override void OnTracksDeleted ()
+        {
+            base.OnTracksDeleted ();
         }
 
         protected override void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
@@ -207,18 +283,7 @@ namespace Banshee.Dap.Ipod
             return 0;
         }*/
 
-        protected override void DeleteTrack (DatabaseTrackInfo track)
-        {
-        }
-
-        public override void Dispose ()
-        {
-            base.Dispose ();
-        }
-
-        protected override void Eject ()
-        {
-            Dispose ();
-        }
+#endregion
+        
     }
 }

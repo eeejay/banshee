@@ -3,6 +3,7 @@
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
+//   Aaron Bockover <abockover@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -46,7 +47,6 @@ namespace Banshee.Dap
     public abstract class DapSource : RemovableSource
     {
         private IDevice device;
-        
         internal IDevice Device {
             get { return device; }
         }

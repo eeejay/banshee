@@ -1,5 +1,12 @@
 2008-04-24  Aaron Bockover  <abock@gnome.org>
 
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Some more 
+	cleanup, organizing, and implemeneted icon name support
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Whitespace
+
+2008-04-24  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
 	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
@@ -32,7 +39,7 @@
 	with seek and jump-to-playing not being sensitive when they should be.
 	Fixes BGO #528198.
 
-2008-04-24  Aaron Bockover  <aaron@cantank>
+2008-04-24  Aaron Bockover  <abock@gnome.org>
 
 	* build/build.environment.mk:
 	* build/build.rules.mk:
