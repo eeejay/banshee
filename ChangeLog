@@ -1,5 +1,10 @@
 2008-04-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.Ipod/Makefile.am: Disable ipod build unless
+	ENABLE_IPOD set.
+
+2008-04-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Fix bug
 	with seek and jump-to-playing not being sensitive when they should be.
 	Fixes BGO #528198.

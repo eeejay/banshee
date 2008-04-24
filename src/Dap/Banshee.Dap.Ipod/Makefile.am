@@ -11,5 +11,9 @@ RESOURCES = Banshee.Dap.Ipod.addin.xml
 
 EXTRA_BUNDLE = $(IPODSHARP_ASSEMBLIES)
 
+if ENABLE_IPOD
 include $(top_srcdir)/build/build.mk
+else
+EXTRA_DIST = $(SOURCES) $(RESOURCES) $(IPODSHARP_ASSEMBLIES)
+endif
 
