@@ -36,6 +36,7 @@ using Hyena.Collections;
 using Mtp;
 
 using Banshee.Base;
+using Banshee.Dap;
 using Banshee.ServiceStack;
 using Banshee.Library;
 using Banshee.Sources;
@@ -54,14 +55,10 @@ namespace Banshee.Dap.Mtp
         //private bool supports_jpegs = false;
         private Dictionary<int, Track> track_map;
 
-        public MtpSource () : base ()
-        {
-        }
-
-        protected override bool Initialize (IDevice device)
+        public MtpSource (IDevice device) : base (device)
         {
             if (MediaCapabilities == null || !MediaCapabilities.IsType ("mtp")) {
-                return false;
+                throw new InvalidDeviceException ();
             }
 
             // libmtp only allows us to have one MTP device active
@@ -71,7 +68,7 @@ namespace Banshee.Dap.Mtp
                     Catalog.GetString ("Banshee's MTP audio player support can only handle one device at a time."),
                     true
                 );
-				return false;
+                throw new InvalidDeviceException ();
             }
 
 			List<MtpDevice> devices = null;
@@ -83,12 +80,11 @@ namespace Banshee.Dap.Mtp
                     Catalog.GetString ("Error Initializing MTP Device Support"),
                     Catalog.GetString ("There was an error intializing MTP device support.  See http://www.banshee-project.org/Guide/DAPs/MTP for more information.")
                 );
-				return false;
+                throw new InvalidDeviceException ();
 			} catch (Exception e) {
                 Log.Exception (e);
-                Log.Debug (e.ToString ());
 				//ShowGeneralExceptionDialog (e);
-				return false;
+                throw new InvalidDeviceException ();
 			}
 
             if (devices == null || devices.Count == 0) {
@@ -115,7 +111,7 @@ namespace Banshee.Dap.Mtp
             }
 
             if (mtp_device == null) {
-                return false;
+                throw new InvalidDeviceException ();
             }
 
             Name = mtp_device.Name;
@@ -155,8 +151,6 @@ namespace Banshee.Dap.Mtp
                 OnTracksAdded ();
                 HideStatus ();
             });
-
-            return true;
         }
 
         public override void Import ()

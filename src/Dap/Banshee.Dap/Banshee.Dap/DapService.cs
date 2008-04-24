@@ -47,7 +47,7 @@ namespace Banshee.Dap
     public class DapService : IExtensionService, IDisposable
     {
         private Dictionary<string, DapSource> sources;
-        private List<TypeExtensionNode> supported_dap_types = new List<TypeExtensionNode>();
+        private List<TypeExtensionNode> supported_dap_types = new List<TypeExtensionNode> ();
         
         public DapService ()
         {
@@ -98,28 +98,47 @@ namespace Banshee.Dap
             }
         }
         
+        private DapSource FindDeviceSource (IDevice device)
+        {
+            foreach (TypeExtensionNode node in supported_dap_types) {
+                try {
+                    return (DapSource)Activator.CreateInstance (node.Type, new object [] { device });
+                } catch (System.Reflection.TargetInvocationException e) {
+                    if (!(e.InnerException is InvalidDeviceException)) {
+                        Log.Exception (e);
+                    }
+                } catch (InvalidCastException e) {
+                    Log.Exception ("Extension is not a DapSource as required", e);
+                }
+            }
+            
+            return null;
+        }
+        
         private void MapDevice (IDevice device)
         {
             lock (this) {
-                if (sources.ContainsKey (device.Uuid))
+                if (sources.ContainsKey (device.Uuid)) {
                     return;
-
-                if (device is ICdromDevice || device is IDiscVolume)
+                }
+                
+                if (device is ICdromDevice || device is IDiscVolume) {
                     return;
-
-                if (device is IVolume && (device as IVolume).ShouldIgnore)
+                }
+                
+                if (device is IVolume && (device as IVolume).ShouldIgnore) {
                     return;
-
-                if (device.MediaCapabilities == null && !(device is IBlockDevice) && !(device is IVolume))
+                }
+                
+                if (device.MediaCapabilities == null && !(device is IBlockDevice) && !(device is IVolume)) {
                     return;
-
-                DapSource source = FindDeviceType (device);
+                }
+                
+                DapSource source = FindDeviceSource (device);
                 if (source != null) {
-                    Log.DebugFormat ("Found DAP support for device {0}", source.Name);
+                    Log.DebugFormat ("Found DAP support ({0}) for device {1}", source.GetType ().FullName, source.Name);
                     sources.Add (device.Uuid, source);
                     ServiceManager.SourceManager.AddSource (source);
-                } else {
-                    //Log.DebugFormat ("Did not find DAP support for device {0}", device.Uuid);
                 }
             }
         }
@@ -129,7 +148,6 @@ namespace Banshee.Dap
             lock (this) {
                 if (sources.ContainsKey (uuid)) {
                     Log.DebugFormat ("Unmapping DAP source ({0})", uuid);
-
                     DapSource source = sources[uuid];
                     source.Dispose ();
                     sources.Remove (uuid);
@@ -160,21 +178,6 @@ namespace Banshee.Dap
             lock (this) {
                 UnmapDevice (args.DeviceUuid);
             }
-        }
-
-        private DapSource FindDeviceType (IDevice device)
-        {
-            foreach (TypeExtensionNode node in supported_dap_types) {
-                try {
-                    DapSource src = (DapSource) node.CreateInstance ();
-                    if (src.Resolve (device)) {
-                        return src;
-                    }
-                } catch (Exception e) {
-                    Log.Exception (e);
-                }
-            }
-            return null;
         }
         
         string IService.ServiceName {

@@ -7,6 +7,7 @@ SOURCES =  \
 	Banshee.Dap.Gui/DapPropertiesDialog.cs \
 	Banshee.Dap/DapService.cs \
 	Banshee.Dap/DapSource.cs \
+	Banshee.Dap/InvalidDeviceException.cs \
 	Banshee.Dap/RemovableSource.cs
 
 RESOURCES = Banshee.Dap.addin.xml

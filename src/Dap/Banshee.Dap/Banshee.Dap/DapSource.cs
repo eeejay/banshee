@@ -45,55 +45,69 @@ namespace Banshee.Dap
 {
     public abstract class DapSource : RemovableSource
     {
-        protected IDevice device;
-        protected string [] acceptable_mimetypes;
-
+        private IDevice device;
+        
         internal IDevice Device {
             get { return device; }
         }
 
-        protected DapSource () : base ()
+        protected DapSource (IDevice device)
         {
+            this.device = device;
+            type_unique_id = device.Uuid;
         }
+
+#region Source
 
         protected override void Initialize ()
         {
             base.Initialize ();
-
-            if (!String.IsNullOrEmpty (device.Vendor) && !String.IsNullOrEmpty (device.Product)) {
-                string device_icon_name = (device.Vendor.Trim () + "-" + device.Product.Trim ()).Replace (' ', '-').ToLower ();
-                Properties.SetStringList ("Icon.Name", device_icon_name, FallbackIcon);
-            } else {
-                Properties.SetStringList ("Icon.Name", FallbackIcon);
-            }
-
+            
+            Properties.SetStringList ("Icon.Name", GetIconNames ());
             Properties.Set<string> ("SourcePropertiesActionLabel", Catalog.GetString ("Device Properties"));
-            Properties.Set<OpenPropertiesDelegate> ("SourceProperties.GuiHandler", delegate { new DapPropertiesDialog (this).RunDialog (); });
+            Properties.Set<OpenPropertiesDelegate> ("SourceProperties.GuiHandler", delegate { 
+                new DapPropertiesDialog (this).RunDialog (); 
+            });
 
-            GenericName = IsMediaDevice ? Catalog.GetString ("Audio Player") : Catalog.GetString ("Media Device");
-            if (String.IsNullOrEmpty (Name))
+            if (String.IsNullOrEmpty (GenericName)) {
+                GenericName = HasMediaCapabilities 
+                    ? Catalog.GetString ("Media Player") 
+                    : Catalog.GetString ("Storage Device");
+            }
+            
+            if (String.IsNullOrEmpty (Name)) {
                 Name = device.Name;
-
-            acceptable_mimetypes = (MediaCapabilities != null) ? MediaCapabilities.PlaybackMimeTypes : new string [] {"taglib/mp3"};
+            }
+            
+            acceptable_mimetypes = MediaCapabilities != null 
+                ? MediaCapabilities.PlaybackMimeTypes 
+                : new string [] { "taglib/mp3" };
         }
-
-        bool initialized = false;
-
-        public bool Resolve (IDevice device)
+        
+        public override void AddChildSource (Source child)
         {
-            this.device = device;
-            type_unique_id = device.Uuid;
-            bool ret = Initialize (device);
-            initialized = true;
-            return ret;
+            if (child is Banshee.Playlist.AbstractPlaylistSource) {
+                Log.Information ("Note: playlists added to digital audio players within Banshee are not yet saved to the device.", true);
+            }
+            
+            base.AddChildSource (child);
         }
+        
+        public override bool HasProperties {
+            get { return true; }
+        }
+        
+#endregion
+        
+#region Track Management/Syncing       
 
-        protected abstract bool Initialize (IDevice device);
+        protected abstract void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri);  
 
         protected bool TrackNeedsTranscoding (TrackInfo track)
         {
             foreach (string mimetype in AcceptableMimeTypes) {
-                if (ServiceManager.MediaProfileManager.GetExtensionForMimeType (track.MimeType) == ServiceManager.MediaProfileManager.GetExtensionForMimeType (mimetype)) {
+                if (ServiceManager.MediaProfileManager.GetExtensionForMimeType (track.MimeType) == 
+                    ServiceManager.MediaProfileManager.GetExtensionForMimeType (mimetype)) {
                     return false;
                 }
             }
@@ -101,66 +115,106 @@ namespace Banshee.Dap
             return true;
         }
 
-        private ProfileConfiguration preferred_config;
-        private ProfileConfiguration PreferredConfiguration {
-            get {
-                if (preferred_config == null) {
-                    preferred_config = ServiceManager.MediaProfileManager.GetActiveProfileConfiguration (UniqueId, acceptable_mimetypes);
-                }
-                return preferred_config;
-            }
-        }
-
         protected override void AddTrackAndIncrementCount (DatabaseTrackInfo track)
         {
-            if (TrackNeedsTranscoding (track)) {
-                if (PreferredConfiguration == null) {
-                    throw new Exception (Catalog.GetString ("Format not supported by device, and no converter found"));
-                }
-
-                ServiceManager.Get <TranscoderService> ().Enqueue (track, PreferredConfiguration, delegate (TrackInfo ti, SafeUri outUri) {
-                    AddTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
-                    try {
-                        AddTrackToDevice (track, outUri);
-                    } catch (Exception e) {
-                        Log.Exception (e);
-                    }
-                    IncrementAddedTracks ();
-                }, delegate { IncrementAddedTracks (); });
-            } else {
+            if (!TrackNeedsTranscoding (track)) {
                 AddTrackToDevice (track, track.Uri);
                 IncrementAddedTracks ();
+                return;
+            }
+            
+            if (PreferredConfiguration == null) {
+                string format = System.IO.Path.GetExtension (track.Uri.LocalPath);
+                format = String.IsNullOrEmpty (format) ? Catalog.GetString ("Unknown") : format.Substring (1);
+                throw new ApplicationException (String.Format (Catalog.GetString (
+                    "The {0} format is not supported by the device, and no converter was found to convert it."), format));
+            }
+
+            TranscoderService transcoder = ServiceManager.Get<TranscoderService> ();
+            if (transcoder == null) {
+                throw new ApplicationException (Catalog.GetString (
+                    "File format conversion is not supported for this device."));
+            }
+            
+            transcoder.Enqueue (track, PreferredConfiguration, OnTrackTranscoded, OnTrackTranscodeCancelled);
+        }
+        
+        private void OnTrackTranscoded (TrackInfo track, SafeUri outputUri)
+        {
+            AddTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
+            
+            try {
+                AddTrackToDevice ((DatabaseTrackInfo)track, outputUri);
+            } catch (Exception e) {
+                Log.Exception (e);
+            }
+            
+            IncrementAddedTracks ();
+        }
+        
+        private void OnTrackTranscodeCancelled ()
+        {
+            IncrementAddedTracks (); 
+        }
+        
+#endregion
+
+#region Device Properties
+
+        protected virtual string [] GetIconNames ()
+        {
+            string vendor = device.Vendor;
+            string product = device.Product;
+            
+            vendor = vendor != null ? vendor.Trim () : null;
+            product = product != null ? product.Trim () : null;
+
+            if (!String.IsNullOrEmpty (vendor) && !String.IsNullOrEmpty (product)) {
+                return new string [] { 
+                    String.Format ("{0}-{1}", vendor, product).Replace (' ', '-').ToLower (), 
+                    FallbackIcon
+                };
+            } else {
+                return new string [] { FallbackIcon };
             }
         }
-
-        protected abstract void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri);
-
-        protected virtual bool IsMediaDevice {
-            get { return device.MediaCapabilities != null; }
+        
+        private string FallbackIcon {
+            get { return HasMediaCapabilities ? "multimedia-player" : "harddrive"; }
         }
 
-        protected virtual string FallbackIcon {
-            get { return IsMediaDevice ? "multimedia-player" : "harddrive"; }
+        protected virtual bool HasMediaCapabilities {
+            get { return device.MediaCapabilities != null; }
         }
 
         protected IDeviceMediaCapabilities MediaCapabilities {
             get { return device.MediaCapabilities; }
         }
+        
+        private ProfileConfiguration preferred_config;
+        private ProfileConfiguration PreferredConfiguration {
+            get {
+                if (preferred_config != null) {
+                    return preferred_config;
+                }
+            
+                MediaProfileManager manager = ServiceManager.MediaProfileManager;
+                if (manager == null) {
+                    return null;
+                }
+        
+                preferred_config = manager.GetActiveProfileConfiguration (UniqueId, acceptable_mimetypes);
+                return preferred_config;
+            }
+        }
 
+        private string [] acceptable_mimetypes;
         public string [] AcceptableMimeTypes {
             get { return acceptable_mimetypes; }
+            protected set { acceptable_mimetypes = value; }
         }
-
-        public override bool HasProperties {
-            get { return true; }
-        }
-
-        public override void AddChildSource (Source child)
-        {
-            if (initialized && child is Banshee.Playlist.AbstractPlaylistSource) {
-                Log.Information ("Note: playlists added to digital audio players within Banshee are not yet saved to the device.", true);
-            }
-            base.AddChildSource (child);
-        }
+        
+#endregion
+        
     }
 }

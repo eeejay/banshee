@@ -361,8 +361,13 @@ namespace Hyena
         
         public static void Exception (Exception e)
         {
+            Exception (null, e);
+        }
+        
+        public static void Exception (string message, Exception e)
+        {
             // FIXME: We should save these to an actual log file
-            Console.WriteLine (e);
+            Log.Warning (message ?? "Caught an exception", e.ToString (), false);
         }
         
         #endregion

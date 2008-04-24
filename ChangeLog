@@ -1,3 +1,26 @@
+2008-04-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Updated to the new DapSource API
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Uses the new enforced
+	IDevice ctor that DapSources must have to create the device, if 
+	InvalidDeviceException is thrown, the source is discarded
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Lots of refactoring and
+	cleaning; get rid of Resovle and Initialize (IDevice) and rolled all
+	that into the ctor; better error messages, more result checking, easier
+	to read code
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/InvalidDeviceException.cs: New exception
+	that DapSource implementors must throw in the ctor if they can't support
+	the device being passed to them
+
+	* src/Libraries/Hyena/Hyena/Log.cs: Log exceptions through Log.Warning
+	and added an override to provide a message with the exception
+
 2008-04-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.Ipod/Makefile.am: Disable ipod build unless

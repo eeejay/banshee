@@ -53,21 +53,20 @@ namespace Banshee.Dap.Ipod
             get { return database_supported; }
         }
         
-#region Device Initialization        
+#region Device Initialization
         
-        protected override bool Initialize (IDevice device)
+        public IpodSource (IDevice device) : base (device)
         {
             ipod_device = device as PodSleuthDevice;
             if (ipod_device == null) {
-                return false;
+                throw new InvalidDeviceException ();
             }
         
             if (!LoadIpod ()) {
-                return false;
+                throw new InvalidDeviceException ();
             }
             
             Initialize ();
-            return true;
         }
         
         private bool LoadIpod ()

@@ -34,6 +34,7 @@ using Hyena;
 using Hyena.Collections;
 
 using Banshee.IO;
+using Banshee.Dap;
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Library;
@@ -48,21 +49,17 @@ namespace Banshee.Dap.MassStorage
     {
         protected IVolume volume;
 
-        public MassStorageSource () : base ()
-        {
-        }
-
-        protected override bool Initialize (IDevice device)
+        public MassStorageSource (IDevice device) : base (device)
         {
             this.volume = device as IVolume;
             if (volume == null)
-                return false;
+                throw new InvalidDeviceException ();
 
             // TODO set up a ui for selecting volumes we want mounted/shown within Banshee
             // (so people don't have to touch .is_audio_player, and so we can give them a harddrive icon
             // instead of pretending they are DAPs).
-            if (!IsMediaDevice)
-                return false;
+            if (!HasMediaCapabilities)
+                throw new InvalidDeviceException ();
 
             Name = volume.Name;
             mount_point = volume.MountPoint;
@@ -77,8 +74,6 @@ namespace Banshee.Dap.MassStorage
             importer.KeepUserJobHidden = true;
             importer.ImportFinished += delegate  { HideStatus (); };
             importer.QueueSource (BaseDirectory);
-
-            return true;
         }
 
         public override void Import ()
@@ -95,8 +90,8 @@ namespace Banshee.Dap.MassStorage
             get { return mount_point; }
         }
 
-        protected override bool IsMediaDevice {
-            get { return base.IsMediaDevice || File.Exists (new SafeUri (IsAudioPlayerPath)); }
+        protected override bool HasMediaCapabilities {
+            get { return base.HasMediaCapabilities || File.Exists (new SafeUri (IsAudioPlayerPath)); }
         }
 
         protected string IsAudioPlayerPath {
