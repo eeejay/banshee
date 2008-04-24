@@ -108,6 +108,9 @@ namespace Lastfm.Gui
                 button.Activated += delegate {
                     login_form.Save ();
                 };
+                button.Clicked += delegate {
+                    login_form.Save ();
+                };
                 AddActionWidget (button, ResponseType.Ok);
             }
         }

@@ -1,3 +1,9 @@
+2008-04-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs: Fix bug with
+	not saving the account info when the user clicked (vs pressing space or
+	enter) the save button.
+
 2008-04-23  Scott Peterson <lunchtimemama@gmail.com> 
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
