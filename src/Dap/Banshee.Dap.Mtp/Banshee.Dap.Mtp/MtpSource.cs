@@ -277,10 +277,14 @@ namespace Banshee.Dap.Mtp
         public override void Dispose ()
         {
 			base.Dispose ();
-            lock (mtp_device) {
-                mtp_device.Dispose ();
+
+            if (mtp_device != null) {
+                lock (mtp_device) {
+                    mtp_device.Dispose ();
+                }
             }
             mtp_device = null;
+
             mtp_source = null;
         }
 
