@@ -134,30 +134,31 @@ namespace Banshee.Gui
                 default:
                     break;
             }
+
+            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack; 
+            if (track != null) {
+                this["SeekToAction"].Sensitive = !track.IsLive;
+                this["RestartSongAction"].Sensitive = !track.IsLive;
+                this["RestartSongAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
+                    ? Catalog.GetString ("_Restart Song")
+                    : Catalog.GetString ("_Restart Video");
+
+                this["JumpToPlayingTrackAction"].Sensitive = true;
+                this["JumpToPlayingTrackAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
+                    ? Catalog.GetString ("_Jump to Playing Song")
+                    : Catalog.GetString ("_Jump to Playing Video");
+            } else {
+                this["JumpToPlayingTrackAction"].Sensitive = false;
+                this["RestartSongAction"].Sensitive = false;
+                this["SeekToAction"].Sensitive = false;
+            }
         }
             
         private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
         {
             switch (args.Event) {
-                case PlayerEngineEvent.StartOfStream:
-                    TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack; 
-                    this["SeekToAction"].Sensitive = !track.IsLive;
-                    this["RestartSongAction"].Sensitive = !track.IsLive;
-                    this["RestartSongAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
-                        ? Catalog.GetString ("_Restart Song")
-                        : Catalog.GetString ("_Restart Video");
-
-                    this["JumpToPlayingTrackAction"].Sensitive = true;
-                    this["JumpToPlayingTrackAction"].Label = (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0
-                        ? Catalog.GetString ("_Jump to Playing Song")
-                        : Catalog.GetString ("_Jump to Playing Video");
-                    break;
-
                 case PlayerEngineEvent.Error:
                 case PlayerEngineEvent.EndOfStream:
-                    this["JumpToPlayingTrackAction"].Sensitive = false;
-                    this["RestartSongAction"].Sensitive = false;
-                    this["SeekToAction"].Sensitive = false;
 
                     ToggleAction stop_action = (ToggleAction) this["StopWhenFinishedAction"];
                     // Kinda lame, but we don't want to actually reset StopWhenFinished inside the controller
