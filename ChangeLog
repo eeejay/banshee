@@ -1,3 +1,9 @@
+2008-04-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Handle the situation of
+	the user not having any encoders and trying to transfer an unsupported
+	file type.
+
 2008-04-23  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:

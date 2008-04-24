@@ -114,6 +114,10 @@ namespace Banshee.Dap
         protected override void AddTrackAndIncrementCount (DatabaseTrackInfo track)
         {
             if (TrackNeedsTranscoding (track)) {
+                if (PreferredConfiguration == null) {
+                    throw new Exception (Catalog.GetString ("Format not supported by device, and no converter found"));
+                }
+
                 ServiceManager.Get <TranscoderService> ().Enqueue (track, PreferredConfiguration, delegate (TrackInfo ti, SafeUri outUri) {
                     AddTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
                     try {
