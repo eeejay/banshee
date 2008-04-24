@@ -39,6 +39,7 @@ namespace Banshee.Hardware
     public sealed class HardwareManager : IService, IHardwareManager
     {
         private IHardwareManager manager;
+        private List<ICustomDeviceProvider> custom_device_providers = new List<ICustomDeviceProvider> ();
         
         public event DeviceAddedHandler DeviceAdded {
             add { manager.DeviceAdded += value; }
@@ -69,6 +70,29 @@ namespace Banshee.Hardware
             if (manager == null) {
                 throw new Exception ("No HardwareManager extensions could be loaded. Hardware support will be disabled.");
             }
+            
+            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/Platform/HardwareDeviceProvider")) {
+                custom_device_providers.Add ((ICustomDeviceProvider)node.CreateInstance (typeof (ICustomDeviceProvider)));
+            }
+        }
+        
+        private T CastToCustomDevice<T> (T device) where T : class, IDevice
+        {
+            foreach (ICustomDeviceProvider provider in custom_device_providers) {
+                T new_device = provider.GetCustomDevice (device);
+                if (new_device != device && new_device is T) {
+                    return new_device;
+                }
+            }
+            
+            return device;
+        }
+        
+        private IEnumerable<T> CastToCustomDevice<T> (IEnumerable<T> devices) where T : class, IDevice
+        {
+            foreach (T device in devices) {
+                yield return CastToCustomDevice<T> (device);
+            }
         }
         
         public void Dispose ()
@@ -78,22 +102,22 @@ namespace Banshee.Hardware
 
         public IEnumerable<IDevice> GetAllDevices ()
         {
-            return manager.GetAllDevices ();
+            return CastToCustomDevice<IDevice> (manager.GetAllDevices ());
         }
         
         public IEnumerable<IBlockDevice> GetAllBlockDevices ()
         {
-            return manager.GetAllBlockDevices ();
+            return CastToCustomDevice<IBlockDevice> (manager.GetAllBlockDevices ());
         }
         
         public IEnumerable<ICdromDevice> GetAllCdromDevices ()
         {
-            return manager.GetAllCdromDevices ();
+            return CastToCustomDevice<ICdromDevice> (manager.GetAllCdromDevices ());
         }
         
         public IEnumerable<IDiskDevice> GetAllDiskDevices ()
         {
-            return manager.GetAllDiskDevices ();
+            return CastToCustomDevice<IDiskDevice> (manager.GetAllDiskDevices ());
         }
         
         public void Test ()

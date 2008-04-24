@@ -79,9 +79,7 @@ AM_GCONF_SOURCE_2
 
 dnl DAP support (each module is optional)
 BANSHEE_CHECK_DAP_MTP
-#BANSHEE_CHECK_DAP_IPOD
-#BANSHEE_CHECK_DAP_NJB
-#BANSHEE_CHECK_DAP_KARMA
+BANSHEE_CHECK_DAP_IPOD
 
 dnl DAAP support (optional)
 BANSHEE_CHECK_DAAP
@@ -150,6 +148,7 @@ src/Libraries/MusicBrainz/Makefile
 
 src/Dap/Makefile
 src/Dap/Banshee.Dap/Makefile
+src/Dap/Banshee.Dap.Ipod/Makefile
 src/Dap/Banshee.Dap.MassStorage/Makefile
 src/Dap/Banshee.Dap.Mtp/Makefile
 
@@ -180,6 +179,7 @@ ${PACKAGE}-${VERSION}
     Digital Audio Player (DAP) Support:
       Mass Storage:    yes	(unstable)
       MTP:             ${enable_mtp_dap}	(unstable)
+      iPod:            ${enable_ipodsharp}	(unstable)
 
     DAAP Support:      ${enable_daap}	(unstable)
     Podcast Support:   ${enable_podcast}	(unstable)

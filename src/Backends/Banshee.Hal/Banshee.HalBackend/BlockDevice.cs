@@ -38,8 +38,7 @@ namespace Banshee.HalBackend
     {
         public static BlockDevice Resolve<T> (Hal.Manager manager, Hal.Device device) where T : IBlockDevice
         {
-            if (device["info.category"] == "storage" && device.QueryCapability ("block") && 
-                device.PropertyExists ("block.device")) {
+            if (device.QueryCapability ("block") && device.PropertyExists ("block.device")) {
                 if (typeof (T) == typeof (ICdromDevice)) {
                     return CdromDevice.Resolve (manager, device);
                 } else if (typeof (T) == typeof (IDiskDevice)) {

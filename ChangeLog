@@ -1,3 +1,48 @@
+2008-04-24  Aaron Bockover  <aaron@cantank>
+
+	* build/build.environment.mk:
+	* build/build.rules.mk:
+	* build/m4/banshee/dap-ipod.m4:
+	* configure.ac: Build foo for iPod support
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/BlockDevice.cs: Do not
+	check if info.category is storage since the capability query for block
+	will validate the device, and info.category may not be storage for all
+	storage devices (it could be portable_audio_player)
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IDevice.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs: Added HAL 
+	method wrappers for properties that should only be used with extreme care;
+	probably need to enforce how these are used. They're really just for
+	proxying custom properties from custom IDevices; I'm not totally happy
+	with this
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/HardwareManager.cs: Some
+	cleanups, notes
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml:
+	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs:
+	Implemented the ICustomDeviceProvider extension, pass all IDevice queries
+	through the custom device providers to allow them to transform/replace
+	a device with some custom device
+
+	* src/Core/Banshee.Services/Banshee.Hardware/ICustomDeviceProvider.cs:
+	The new interface for custom device providers
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod.addin.xml: iPod extension def
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: The beginning
+	of the iPod DAP support; doesn't do anything yet
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/PodSleuthDevice.cs: A device
+	that translates PodSleuth properties to the iPod device from ipod-sharp
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/PodSleuthDeviceProvider.cs:
+	Custom device provider for taking an iPod storage device and transforming
+	its iPod volume into a PodSleuthDevice
+
 2008-04-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs: Fix bug with

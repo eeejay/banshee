@@ -50,6 +50,9 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	@if [ -e $(notdir $@.config) ]; then \
 		cp $(notdir $@.config) $(top_builddir)/bin; \
 	fi;
+	@if [ ! -z "$(EXTRA_BUNDLE)" ]; then \
+		cp $(EXTRA_BUNDLE) $(top_builddir)/bin; \
+	fi;
 
 theme-icons: $(THEME_ICONS_SOURCE)
 	@$(INSTALL_ICONS) -il "$(BUILD_DATA_DIR)" "$(srcdir)" $(THEME_ICONS_RELATIVE)

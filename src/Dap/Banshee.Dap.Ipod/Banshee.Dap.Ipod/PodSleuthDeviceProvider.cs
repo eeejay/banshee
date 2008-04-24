@@ -1,5 +1,5 @@
 //
-// IDevice.cs
+// PodSleuthDeviceProvider.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -28,25 +28,32 @@
 
 using System;
 
-namespace Banshee.Hardware
+using Banshee.Hardware;
+
+namespace Banshee.Dap.Ipod
 {
-    public interface IDevice
+    public class PodSleuthDeviceProvider : ICustomDeviceProvider
     {
-        string Uuid { get; }
-        string Name { get; }
-
-        string Product { get; }
-        string Vendor { get; }
-
-        IDeviceMediaCapabilities MediaCapabilities { get; }
-        
-        bool PropertyExists (string key);
-        
-        string GetPropertyString (string key);
-        double GetPropertyDouble (string key);
-        bool GetPropertyBoolean (string key);
-        int GetPropertyInteger (string key);
-        ulong GetPropertyUInt64 (string key);
-        string [] GetPropertyStringList (string key);
+        public T GetCustomDevice<T> (T device) where T : class, IDevice
+        {
+            IDiskDevice disk_device = device as IDiskDevice;
+            
+            if (disk_device == null || device.MediaCapabilities == null || !device.MediaCapabilities.IsType ("ipod")) {
+                return device;
+            }
+            
+            foreach (IVolume volume in disk_device.Volumes) {
+                if (volume.PropertyExists ("org.podsleuth.version")) {
+                    try {
+                        return (T)((IDevice)(new PodSleuthDevice (volume)));
+                    } catch (Exception e) {
+                        Hyena.Log.Exception (e);
+                        return device;
+                    }
+                }
+            }
+            
+            return device;
+        }
     }
 }

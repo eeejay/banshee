@@ -105,6 +105,8 @@ namespace Banshee.HalBackend
                     return -1;
                 }
                 
+                // FIXME: maybe we should use UnixDriveInfo? Advantages?
+                
                 try {
                     Mono.Unix.Native.Statvfs statvfs_info;
                     if (Mono.Unix.Native.Syscall.statvfs (MountPoint, out statvfs_info) != -1) {

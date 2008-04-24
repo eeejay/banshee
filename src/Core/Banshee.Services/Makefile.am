@@ -36,6 +36,7 @@ SOURCES =  \
 	Banshee.Hardware/HardwareManager.cs \
 	Banshee.Hardware/IBlockDevice.cs \
 	Banshee.Hardware/ICdromDevice.cs \
+	Banshee.Hardware/ICustomDeviceProvider.cs \
 	Banshee.Hardware/IDevice.cs \
 	Banshee.Hardware/IDeviceMediaCapabilities.cs \
 	Banshee.Hardware/IDiscVolume.cs \

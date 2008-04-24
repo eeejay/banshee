@@ -36,5 +36,9 @@
   <ExtensionPoint path="/Banshee/Platform/HardwareManager">
     <ExtensionNode name="HardwareManager"/>
   </ExtensionPoint>
+  
+  <ExtensionPoint path="/Banshee/Platform/HardwareDeviceProvider">
+    <ExtensionNode name="HardwareDeviceProvider"/>
+  </ExtensionPoint>
 
 </Addin>

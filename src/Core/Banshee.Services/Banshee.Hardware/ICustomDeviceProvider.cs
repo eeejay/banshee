@@ -1,5 +1,5 @@
 //
-// IDevice.cs
+// ICustomDeviceProvider.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -30,23 +30,8 @@ using System;
 
 namespace Banshee.Hardware
 {
-    public interface IDevice
+    public interface ICustomDeviceProvider
     {
-        string Uuid { get; }
-        string Name { get; }
-
-        string Product { get; }
-        string Vendor { get; }
-
-        IDeviceMediaCapabilities MediaCapabilities { get; }
-        
-        bool PropertyExists (string key);
-        
-        string GetPropertyString (string key);
-        double GetPropertyDouble (string key);
-        bool GetPropertyBoolean (string key);
-        int GetPropertyInteger (string key);
-        ulong GetPropertyUInt64 (string key);
-        string [] GetPropertyStringList (string key);
+        T GetCustomDevice<T> (T device) where T : class, IDevice;
     }
 }

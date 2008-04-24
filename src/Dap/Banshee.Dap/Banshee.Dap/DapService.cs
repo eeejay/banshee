@@ -62,7 +62,8 @@ namespace Banshee.Dap
             ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
         }
 
-        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) {
+        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
+        {
             TypeExtensionNode node = (TypeExtensionNode) args.ExtensionNode;
             if (args.Change == ExtensionChange.Add) {
                 Log.DebugFormat ("Dap support extension loaded: {0}", node.Addin.Id);

@@ -97,15 +97,18 @@ namespace Banshee.HalBackend
 
         private IDevice Resolve (Hal.Device hal_device)
         {
-            if (!hal_device.QueryCapability ("block") && !hal_device.QueryCapability ("portable_audio_player"))
+            if (!hal_device.QueryCapability ("block") && !hal_device.QueryCapability ("portable_audio_player")) {
                 return null;
-
+            }
+            
             IDevice device = BlockDevice.Resolve<IBlockDevice> (manager, hal_device);
-            if (device == null)
+            if (device == null) {
                 device = Volume.Resolve (null, manager, hal_device);
-                if (device == null)
+                if (device == null) {
                     device = new Device (manager, hal_device);
-
+                }
+            }
+            
             return device;
         }
 

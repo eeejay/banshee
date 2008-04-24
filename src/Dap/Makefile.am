@@ -1,5 +1,6 @@
 SUBDIRS = \
 	Banshee.Dap \
+	Banshee.Dap.Ipod \
 	Banshee.Dap.MassStorage \
 	Banshee.Dap.Mtp
 

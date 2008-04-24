@@ -160,6 +160,7 @@
     <File name="Banshee.Preferences/SchemaPreference.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Library/LibraryLocationPreference.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Preferences/VoidPreference.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Hardware/ICustomDeviceProvider.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
