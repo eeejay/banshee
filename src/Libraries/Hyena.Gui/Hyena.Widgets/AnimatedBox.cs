@@ -46,12 +46,15 @@ namespace Hyena.Widgets
         private uint duration = 500;
         private Easing easing = Easing.Linear;
         private Blocking blocking = Blocking.Upstage;
+        private int start_padding;
+        private int end_padding;
         private int spacing;
         private int start_spacing;
         private int end_spacing;
         private int active_count;
         
-        private int border;
+        private int start_border;
+        private int end_border;
         private double border_bias;
         private Easing border_easing;
         private AnimationState border_state;
@@ -102,11 +105,17 @@ namespace Hyena.Widgets
         private void OnBorderIteration (object sender, EventArgs args)
         {
             if (border_stage.Actor == null) {
-                border = border_state == AnimationState.Coming ? (int)BorderWidth : 0;
+                if (border_state == AnimationState.Coming) {
+                    start_border = start_padding;
+                    end_border = end_padding;
+                } else {
+                    start_border = end_border = 0;
+                }
                 border_state = AnimationState.Idle;
             } else {
                 double percent = border_state == AnimationState.Coming ? Percent : 1.0 - Percent;
-                border = Choreographer.Compose (percent, (int)BorderWidth, border_easing);
+                start_border = Choreographer.Compose (percent, start_padding, border_easing);
+                end_border = Choreographer.Compose (percent, end_padding, border_easing);
             }
             QueueResizeNoRedraw ();
         }
@@ -177,9 +186,9 @@ namespace Hyena.Widgets
             int height = 0;
             
             if (horizontal) {
-                width = border * 2;
+                width = start_border + end_border;
             } else {
-                height = border * 2;
+                height = start_border + end_border;
             }
             
             foreach (AnimatedWidget widget in Widgets) {
@@ -201,12 +210,12 @@ namespace Hyena.Widgets
         {
             base.OnSizeAllocated (allocation);
             if (horizontal) {
-                allocation.X += border;
+                allocation.X += start_border;
                 allocation.Y += (int)BorderWidth;
                 allocation.Height -= (int)BorderWidth * 2;
             } else {
                 allocation.X += (int)BorderWidth;
-                allocation.Y += border;
+                allocation.Y += start_border;
                 allocation.Width -= (int)BorderWidth * 2;
             }
             
@@ -259,6 +268,16 @@ namespace Hyena.Widgets
                 start_spacing = (int)Math.Ceiling (half);
                 end_spacing = (int)Math.Floor (half);
             }
+        }
+        
+        public int StartPadding {
+            get { return start_padding - (int)BorderWidth; }
+            set { start_padding = value + (int)BorderWidth; }
+        }
+        
+        public int EndPadding {
+            get { return end_padding - (int)BorderWidth; }
+            set { end_padding = value + (int)BorderWidth; }
         }
         
         internal IEnumerable<AnimatedWidget> Widgets {
