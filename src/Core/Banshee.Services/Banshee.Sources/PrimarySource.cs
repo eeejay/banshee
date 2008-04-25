@@ -88,6 +88,10 @@ namespace Banshee.Sources
             DELETE FROM CoreArtists WHERE ArtistID NOT IN (SELECT ArtistID FROM CoreTracks);
             DELETE FROM CoreAlbums WHERE AlbumID NOT IN (SELECT AlbumID FROM CoreTracks)
         ");
+        
+        protected HyenaSqliteCommand purge_tracks_command = new HyenaSqliteCommand (@"
+            DELETE FROM CoreTracks WHERE PrimarySourceId = ?
+        ");
 
         protected int dbid;
         public int DbId {
@@ -273,6 +277,11 @@ namespace Banshee.Sources
         {
             OnTracksDeleted ();
         }
+        
+        protected virtual void PurgeTracks ()
+        {
+            ServiceManager.DbConnection.Execute (purge_tracks_command, DbId);
+        }
 
         protected override void RemoveTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
@@ -437,7 +446,9 @@ namespace Banshee.Sources
             get {
                 lock (this) {
                     if (add_track_job == null) {
-                        add_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Adding {0} of {1} to {2}"), "{0}", "{1}", Name), Properties.GetStringList ("Icon.Name"));
+                        add_track_job = new BatchUserJob (String.Format (Catalog.GetString (
+                            "Adding {0} of {1} to {2}"), "{0}", "{1}", Name), 
+                            Properties.GetStringList ("Icon.Name"));
                         //add_track_job.DelayShow = true;
                         add_track_job.Register ();
                     }
@@ -451,8 +462,9 @@ namespace Banshee.Sources
             get {
                 lock (this) {
                     if (delete_track_job == null) {
-                        delete_track_job = new BatchUserJob (String.Format (Catalog.GetString ("Deleting {0} of {1} From {2}"), "{0}", "{1}", Name),
-                                Properties.GetStringList ("Icon.Name"));
+                        delete_track_job = new BatchUserJob (String.Format (Catalog.GetString (
+                            "Deleting {0} of {1} From {2}"), "{0}", "{1}", Name),
+                            Properties.GetStringList ("Icon.Name"));
                         //delete_track_job.DelayShow = true;
                         delete_track_job.Register ();
                     }
@@ -461,12 +473,10 @@ namespace Banshee.Sources
             }
         }
 
-
         protected override void PruneArtistsAlbums ()
         {
             ServiceManager.DbConnection.Execute (prune_artists_albums_command);
             base.PruneArtistsAlbums ();
         }
-
     }
 }

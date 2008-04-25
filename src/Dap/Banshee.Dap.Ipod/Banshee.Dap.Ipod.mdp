@@ -12,6 +12,7 @@
     <File name="Banshee.Dap.Ipod/IpodSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Dap.Ipod/PodSleuthDeviceProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Dap.Ipod/PodSleuthDevice.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Dap.Ipod/IpodTrackInfo.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />

@@ -98,7 +98,8 @@ namespace Banshee.Dap.Ipod
                     }
                 }
                 database_supported = true;
-            } catch (DatabaseReadException) {
+            } catch (DatabaseReadException e) {
+                Log.Exception ("Could not read iPod database", e);
                 ipod_device.LoadTrackDatabase (true);
                 database_supported = false;
             } catch (Exception e) {
@@ -115,7 +116,7 @@ namespace Banshee.Dap.Ipod
                 int file_count = 0;
                 
                 DirectoryInfo m_dir = new DirectoryInfo (Path.Combine (ipod_device.ControlPath, "Music"));
-                foreach (DirectoryInfo f_dir in m_dir.GetDirectories()) {
+                foreach (DirectoryInfo f_dir in m_dir.GetDirectories ()) {
                     file_count += f_dir.GetFiles().Length;
                 }
                 
@@ -123,6 +124,40 @@ namespace Banshee.Dap.Ipod
             } catch {
                 return 0;
             }
+        }
+        
+        // WARNING: This will be called from a thread!
+        protected override void LoadFromDevice ()
+        {
+            LoadFromDevice (false);
+        }
+        
+        private void LoadFromDevice (bool refresh)
+        {
+            // bool previous_database_supported = database_supported;
+            
+            if (refresh) {
+                ipod_device.TrackDatabase.Reload ();
+            }
+             
+            if (database_supported || (ipod_device.HasTrackDatabase && 
+                ipod_device.ModelInfo.DeviceClass == "shuffle")) {
+                foreach (Track ipod_track in ipod_device.TrackDatabase.Tracks) {
+                    IpodTrackInfo track = new IpodTrackInfo (ipod_track);
+                    track.PrimarySource = this;
+                    track.Save (false);
+                }
+            } 
+            
+            /*else {
+                BuildDatabaseUnsupportedWidget ();
+            }*/
+            
+            /*if(previous_database_supported != database_supported) {
+                OnPropertiesChanged();
+            }*/
+            
+            OnTracksAdded ();
         }
         
 #endregion

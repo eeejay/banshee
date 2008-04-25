@@ -102,7 +102,9 @@ namespace Banshee.Dap
         {
             foreach (TypeExtensionNode node in supported_dap_types) {
                 try {
-                    return (DapSource)Activator.CreateInstance (node.Type, new object [] { device });
+                    DapSource source = (DapSource)Activator.CreateInstance (node.Type, new object [] { device });
+                    source.LoadDeviceContents ();
+                    return source;
                 } catch (System.Reflection.TargetInvocationException e) {
                     if (!(e.InnerException is InvalidDeviceException)) {
                         Log.Exception (e);

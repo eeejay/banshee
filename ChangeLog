@@ -1,5 +1,24 @@
 2008-04-24  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Added
+	a PurgeTracks method that will nuke all entries in CoreTracks with
+	a matching primary source ID
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Read the
+	track database from the iPod
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs: Map the
+	iPod tracks to Banshee database tracks
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Call LoadDeviceContents
+	after creating a DapSource
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Added LoadDeviceContents
+	and a virtual LoadFromDevice method; LoadFromDevice should be implemented
+	by DapSources and will run async - currently only used by IpodSource
+
+2008-04-24  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Some more 
 	cleanup, organizing, and implemeneted icon name support
 

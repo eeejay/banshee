@@ -44,7 +44,7 @@ using Banshee.MediaProfiles;
 
 namespace Banshee.Dap
 {
-    public abstract class DapSource : RemovableSource
+    public abstract class DapSource : RemovableSource, IDisposable
     {
         private IDevice device;
         internal IDevice Device {
@@ -55,6 +55,11 @@ namespace Banshee.Dap
         {
             this.device = device;
             type_unique_id = device.Uuid;
+        }
+
+        public override void Dispose ()
+        {
+            PurgeTracks ();
         }
 
 #region Source
@@ -99,8 +104,26 @@ namespace Banshee.Dap
         
 #endregion
         
-#region Track Management/Syncing       
+#region Track Management/Syncing   
 
+        internal void LoadDeviceContents ()
+        {
+            ThreadPool.QueueUserWorkItem (ThreadedLoadDeviceContents);
+        }
+        
+        private void ThreadedLoadDeviceContents (object state)
+        {
+            PurgeTracks ();
+            SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
+            LoadFromDevice ();
+            OnTracksAdded ();
+            HideStatus ();
+        }
+
+        protected virtual void LoadFromDevice ()
+        {
+        }
+        
         protected abstract void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri);  
 
         protected bool TrackNeedsTranscoding (TrackInfo track)

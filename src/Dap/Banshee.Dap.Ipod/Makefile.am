@@ -4,6 +4,7 @@ LINK = $(REF_DAP_IPOD)
 
 SOURCES =  \
 	Banshee.Dap.Ipod/IpodSource.cs \
+	Banshee.Dap.Ipod/IpodTrackInfo.cs \
 	Banshee.Dap.Ipod/PodSleuthDevice.cs \
 	Banshee.Dap.Ipod/PodSleuthDeviceProvider.cs
 
