@@ -55,16 +55,16 @@ namespace Banshee.Dap.Ipod
         
 #region Device Setup/Dispose
         
-        public IpodSource (IDevice device) : base (device)
+        public override void DeviceInitialize (IDevice device)
         {
+            base.DeviceInitialize (device);
+            
             ipod_device = device as PodSleuthDevice;
             if (ipod_device == null) {
                 throw new InvalidDeviceException ();
             }
-        
-            if (!LoadIpod ()) {
-                throw new InvalidDeviceException ();
-            }
+            
+            name_path = Path.Combine (Path.GetDirectoryName (ipod_device.TrackDatabasePath), "BansheeIPodName");
             
             Initialize ();
         }
@@ -74,8 +74,17 @@ namespace Banshee.Dap.Ipod
             base.Dispose ();
         }
 
+        // WARNING: This will be called from a thread!
         protected override void Eject ()
-        {
+        {   
+            if (ipod_device.CanUnmount) {
+                ipod_device.Unmount ();
+            }
+
+            if (ipod_device.CanEject) {
+                ipod_device.Eject ();
+            }
+            
             Dispose ();
         }
         
@@ -83,11 +92,16 @@ namespace Banshee.Dap.Ipod
 
 #region Database Loading
 
+        // WARNING: This will be called from a thread!
+        protected override void LoadFromDevice ()
+        {
+            LoadIpod ();
+            LoadFromDevice (false);
+        }
+
         private bool LoadIpod ()
         {
             try {
-                name_path = Path.Combine (Path.GetDirectoryName (ipod_device.TrackDatabasePath), "BansheeIPodName");
-                
                 if (File.Exists (ipod_device.TrackDatabasePath)) { 
                     ipod_device.LoadTrackDatabase ();
                 } else {
@@ -124,12 +138,6 @@ namespace Banshee.Dap.Ipod
             } catch {
                 return 0;
             }
-        }
-        
-        // WARNING: This will be called from a thread!
-        protected override void LoadFromDevice ()
-        {
-            LoadFromDevice (false);
         }
         
         private void LoadFromDevice (bool refresh)
@@ -208,10 +216,6 @@ namespace Banshee.Dap.Ipod
             names[1] = names[1] ?? names[2];
             names[1] = prefix + names[1];
             names[2] = prefix + names[2];
-            
-            foreach (string name in names) {
-                Console.WriteLine (name);
-            }
             
             return names;
         }

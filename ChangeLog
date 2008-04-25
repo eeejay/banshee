@@ -1,3 +1,51 @@
+2008-04-25  Aaron Bockover  <abock@gnome.org>
+
+	This commit hopefully addresses remaining hardware and threading issues
+	with DAP support and fixes the Mono.Addins dependency issue that people
+	have been complaining about for the last couple of days
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs: Cache the uuid
+	of the volume once it's been resolved so the device doesn't have to
+	be queried for it again, which is problematic if the device is removed
+	forcefully
+
+	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs:
+	Listen directly on the inner manager for device added/removed and 
+	raise those events from within the service scope, performing the 
+	cast to custom device in the device added event
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Defer the
+	loading of the database to the LoadFromDevice threaded call so startup
+	is faster; implement eject
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/PodSleuthDeviceProvider.cs:
+	Allow the provider to adapt the PodSleuthDevice to either the top level
+	iPod storage device or the actual iPod data volume so iPod support works
+	when an iPod is plugged in while Banshee was already running
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Reworked the DapSource
+	instantiation to deal with older Mono.Addins; fully dispose and unmap
+	any devices bound to a DAP provider extension if that extension is
+	removed at runtime; fully tear down the top level DAP service if it
+	is disposed, so DAP support can be fully disabled at runtime as well
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Replaced the IDevice
+	ctor with a virtual DeviceInitialized method to cope with older
+	Mono.Addins - this should fix the problem people have been complaining
+	about for 2 days; store the addin ID on the source as well for 
+	unmapping in the service
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Removed bad
+	threading decisions, race issues, and excessive dispose calls; it is
+	up to the device implementation to call dispose as needed inside eject
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Updated to reflect
+	minor DapSource API changes due to Mono.Addins
+
+	* src/Libraries/Hyena/Hyena/Log.cs: Walk the exception chain to generate
+	a full stack trace printout 
+
 2008-04-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Added

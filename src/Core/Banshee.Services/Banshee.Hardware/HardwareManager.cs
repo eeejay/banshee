@@ -36,20 +36,13 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Hardware
 {
-    public sealed class HardwareManager : IService, IHardwareManager
+    public sealed class HardwareManager : IService, IHardwareManager, IDisposable
     {
         private IHardwareManager manager;
         private List<ICustomDeviceProvider> custom_device_providers = new List<ICustomDeviceProvider> ();
         
-        public event DeviceAddedHandler DeviceAdded {
-            add { manager.DeviceAdded += value; }
-            remove { manager.DeviceAdded -= value; }
-        }
-        
-        public event DeviceRemovedHandler DeviceRemoved {
-            add { manager.DeviceRemoved += value; }
-            remove { manager.DeviceRemoved -= value; }
-        }
+        public event DeviceAddedHandler DeviceAdded;
+        public event DeviceRemovedHandler DeviceRemoved;
         
         public HardwareManager ()
         {
@@ -71,8 +64,62 @@ namespace Banshee.Hardware
                 throw new Exception ("No HardwareManager extensions could be loaded. Hardware support will be disabled.");
             }
             
+            manager.DeviceAdded += OnDeviceAdded;
+            manager.DeviceRemoved += OnDeviceRemoved;
+            
             foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/Platform/HardwareDeviceProvider")) {
                 custom_device_providers.Add ((ICustomDeviceProvider)node.CreateInstance (typeof (ICustomDeviceProvider)));
+            }
+        }
+        
+        public void Dispose ()
+        {
+            lock (this) {
+                if (manager != null) {
+                    manager.DeviceAdded -= OnDeviceAdded;
+                    manager.DeviceRemoved -= OnDeviceRemoved;
+                    manager.Dispose ();
+                    manager = null;
+                }
+                
+                if (custom_device_providers != null) {
+                    foreach (ICustomDeviceProvider provider in custom_device_providers) {
+                        IDisposable disposable = provider as IDisposable;
+                        if (disposable != null) {
+                            disposable.Dispose ();
+                        }
+                    }
+                    
+                    custom_device_providers.Clear ();
+                    custom_device_providers = null;
+                }
+            }
+        }
+        
+        private void OnDeviceAdded (object o, DeviceAddedArgs args)
+        {
+            lock (this) {
+                DeviceAddedHandler handler = DeviceAdded;
+                if (handler != null) {
+                    DeviceAddedArgs raise_args = args;
+                    IDevice cast_device = CastToCustomDevice<IDevice> (args.Device);
+                    
+                    if (cast_device != args.Device) {
+                        raise_args = new DeviceAddedArgs (cast_device);
+                    }
+                    
+                    handler (this, raise_args);
+                }
+            }
+        }
+        
+        private void OnDeviceRemoved (object o, DeviceRemovedArgs args)
+        {
+            lock (this) {
+                DeviceRemovedHandler handler = DeviceRemoved;
+                if (handler != null) {
+                    handler (this, args);
+                }
             }
         }
         
@@ -93,11 +140,6 @@ namespace Banshee.Hardware
             foreach (T device in devices) {
                 yield return CastToCustomDevice<T> (device);
             }
-        }
-        
-        public void Dispose ()
-        {
-            manager.Dispose ();
         }
 
         public IEnumerable<IDevice> GetAllDevices ()

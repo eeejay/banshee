@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Text;
 using System.Collections.Generic;
 
 namespace Hyena
@@ -366,8 +367,25 @@ namespace Hyena
         
         public static void Exception (string message, Exception e)
         {
+            Stack<Exception> exception_chain = new Stack<Exception> ();
+            StringBuilder builder = new StringBuilder ();
+            
+            while (e != null) {
+                exception_chain.Push (e);
+                e = e.InnerException;
+            }
+            
+            while (exception_chain.Count > 0) {
+                e = exception_chain.Pop ();
+                builder.AppendFormat ("{0} (in `{1}')", e.Message, e.Source).AppendLine ();
+                builder.Append (e.StackTrace);
+                if (exception_chain.Count > 0) {
+                    builder.AppendLine ();
+                }
+            }
+        
             // FIXME: We should save these to an actual log file
-            Log.Warning (message ?? "Caught an exception", e.ToString (), false);
+            Log.Warning (message ?? "Caught an exception", builder.ToString (), false);
         }
         
         #endregion

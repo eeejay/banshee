@@ -55,8 +55,10 @@ namespace Banshee.Dap.Mtp
         //private bool supports_jpegs = false;
         private Dictionary<int, Track> track_map;
 
-        public MtpSource (IDevice device) : base (device)
+        public override void DeviceInitialize (IDevice device)
         {
+            base.DeviceInitialize (device);
+            
             if (MediaCapabilities == null || !MediaCapabilities.IsType ("mtp")) {
                 throw new InvalidDeviceException ();
             }

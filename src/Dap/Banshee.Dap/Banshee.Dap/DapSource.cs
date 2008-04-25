@@ -50,8 +50,18 @@ namespace Banshee.Dap
         internal IDevice Device {
             get { return device; }
         }
+        
+        private string addin_id;
+        internal string AddinId {
+            get { return addin_id; }
+            set { addin_id = value; }
+        }
+        
+        protected DapSource ()
+        {
+        }
 
-        protected DapSource (IDevice device)
+        public virtual void DeviceInitialize (IDevice device)
         {
             this.device = device;
             type_unique_id = device.Uuid;

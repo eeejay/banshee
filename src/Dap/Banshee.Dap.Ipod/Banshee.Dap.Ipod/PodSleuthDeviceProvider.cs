@@ -37,23 +37,41 @@ namespace Banshee.Dap.Ipod
         public T GetCustomDevice<T> (T device) where T : class, IDevice
         {
             IDiskDevice disk_device = device as IDiskDevice;
+            IVolume volume = device as IVolume;
             
-            if (disk_device == null || device.MediaCapabilities == null || !device.MediaCapabilities.IsType ("ipod")) {
+            if (volume != null && CheckStorageCaps (volume.Parent) && CheckVolume (volume)) {
+                return AsPodSleuthDevice<T> (volume, device);
+            } else if (disk_device == null || !CheckStorageCaps (device)) {
                 return device;
             }
             
-            foreach (IVolume volume in disk_device.Volumes) {
-                if (volume.PropertyExists ("org.podsleuth.version")) {
-                    try {
-                        return (T)((IDevice)(new PodSleuthDevice (volume)));
-                    } catch (Exception e) {
-                        Hyena.Log.Exception (e);
-                        return device;
-                    }
+            foreach (IVolume child_volume in disk_device.Volumes) {
+                if (CheckVolume (child_volume)) {
+                    return AsPodSleuthDevice<T> (child_volume, device);
                 }
             }
             
             return device;
+        }
+        
+        private T AsPodSleuthDevice<T> (IVolume volume, T original)
+        {
+            try {
+                return (T)((IDevice)(new PodSleuthDevice (volume)));
+            } catch (Exception e) {
+                Hyena.Log.Exception (e);
+                return original;
+            }
+        }
+        
+        private bool CheckStorageCaps (IDevice device)
+        {
+            return device != null && device.MediaCapabilities != null && device.MediaCapabilities.IsType ("ipod");
+        }
+        
+        private bool CheckVolume (IVolume volume)
+        {
+            return volume.PropertyExists ("org.podsleuth.version");
         }
     }
 }

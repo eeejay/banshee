@@ -49,8 +49,10 @@ namespace Banshee.Dap.MassStorage
     {
         protected IVolume volume;
 
-        public MassStorageSource (IDevice device) : base (device)
+        public override void DeviceInitialize (IDevice device)
         {
+            base.DeviceInitialize (device);
+            
             this.volume = device as IVolume;
             if (volume == null)
                 throw new InvalidDeviceException ();

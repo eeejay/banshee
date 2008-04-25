@@ -33,6 +33,7 @@ using Mono.Unix;
 
 using Hyena;
 using Banshee.Base;
+using Banshee.Library;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
@@ -41,7 +42,7 @@ using Banshee.Hardware;
 
 namespace Banshee.Dap
 {
-    public abstract class RemovableSource : PrimarySource, IUnmapableSource, Banshee.Library.IImportSource, IDiskUsageReporter
+    public abstract class RemovableSource : PrimarySource, IUnmapableSource, IImportSource, IDiskUsageReporter
     {
         protected RemovableSource () : base ()
         {
@@ -96,13 +97,10 @@ namespace Banshee.Dap
             ThreadPool.QueueUserWorkItem (delegate {
                 try {
                     Eject ();
-
-                    ThreadAssist.ProxyToMain (delegate {
-                        Dispose ();
-                    });
                 } catch (Exception e) {
                     ThreadAssist.ProxyToMain (delegate {
-                        SetStatus (String.Format (Catalog.GetString ("Could not eject {0}: {1}"), GenericName, e.Message), true);
+                        SetStatus (String.Format (Catalog.GetString ("Could not eject {0}: {1}"),
+                            GenericName, e.Message), true);
                     });
                     
                     Log.Exception (e);
@@ -136,7 +134,7 @@ namespace Banshee.Dap
 
         public abstract void Import ();
 
-        public virtual string [] IconNames {
+        string [] IImportSource.IconNames {
             get { return Properties.GetStringList ("Icon.Name"); }
         }
 

@@ -79,8 +79,17 @@ namespace Banshee.HalBackend
             get { return HalDevice["volume.fstype"]; }
         }
 
+        private string uuid;
         public override string Uuid {
-            get { return String.IsNullOrEmpty (HalDevice["volume.uuid"]) ? base.Uuid : HalDevice["volume.uuid"]; }
+            get { 
+                if (uuid == null) {
+                    uuid = String.IsNullOrEmpty (HalDevice["volume.uuid"]) 
+                        ? base.Uuid 
+                        : HalDevice["volume.uuid"];
+                }
+                
+                return uuid;
+            }
         }
 
         public bool IsMounted {

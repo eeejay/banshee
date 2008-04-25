@@ -30,7 +30,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Mono.Unix;
 using Mono.Addins;
 
@@ -48,53 +47,66 @@ namespace Banshee.Dap
     {
         private Dictionary<string, DapSource> sources;
         private List<TypeExtensionNode> supported_dap_types = new List<TypeExtensionNode> ();
-        
-        public DapService ()
-        {
-        }
-        
+
         public void Initialize ()
         {
-            sources = new Dictionary<string, DapSource> ();
-            AddinManager.AddExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
-            ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
-            ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
-            ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
+            lock (this) {
+                sources = new Dictionary<string, DapSource> ();
+                
+                AddinManager.AddExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
+                
+                ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
+                ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
+                ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
+            }
         }
 
         private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
         {
-            TypeExtensionNode node = (TypeExtensionNode) args.ExtensionNode;
-            if (args.Change == ExtensionChange.Add) {
-                Log.DebugFormat ("Dap support extension loaded: {0}", node.Addin.Id);
-                supported_dap_types.Add (node);
-
-                // See if any existing devices are handled by this new DAP support
-                foreach (IDevice device in ServiceManager.HardwareManager.GetAllDevices ()) {
-                    MapDevice (device);
+            lock (this) {
+                TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
+                
+                if (args.Change == ExtensionChange.Add) {
+                    Log.DebugFormat ("Dap support extension loaded: {0}", node.Addin.Id);
+                    supported_dap_types.Add (node);
+    
+                    // See if any existing devices are handled by this new DAP support
+                    foreach (IDevice device in ServiceManager.HardwareManager.GetAllDevices ()) {
+                        MapDevice (device);
+                    }
+                } else if (args.Change == ExtensionChange.Remove) {
+                    supported_dap_types.Remove (node);
+                    
+                    Queue<DapSource> to_remove = new Queue<DapSource> ();
+                    foreach (DapSource source in sources.Values) {
+                        if (source.AddinId == node.Addin.Id) {
+                            to_remove.Enqueue (source);
+                        }
+                    }
+                    
+                    while (to_remove.Count > 0) {
+                        UnmapDevice (to_remove.Dequeue ().Device.Uuid);
+                    }
                 }
-            } else {
-                // TODO remove/dispose all loaded DAPs of this type?
-                supported_dap_types.Remove (node);
             }
         }
 
         public void Dispose ()
         {
             lock (this) {
+                AddinManager.RemoveExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
+                
                 ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
                 ServiceManager.SourceManager.SourceRemoved -= OnSourceRemoved;
                 
-                ThreadPool.QueueUserWorkItem (delegate {
-                    List<DapSource> dap_sources = new List<DapSource> (sources.Values);
-                    foreach (DapSource source in dap_sources) {
-                        UnmapDevice (source.Device.Uuid);
-                    }
-                    
-                    sources.Clear ();
-                    sources = null;
-                });
+                List<DapSource> dap_sources = new List<DapSource> (sources.Values);
+                foreach (DapSource source in dap_sources) {
+                    UnmapDevice (source.Device.Uuid);
+                }
+                
+                sources.Clear ();
+                sources = null;
             }
         }
         
@@ -102,15 +114,16 @@ namespace Banshee.Dap
         {
             foreach (TypeExtensionNode node in supported_dap_types) {
                 try {
-                    DapSource source = (DapSource)Activator.CreateInstance (node.Type, new object [] { device });
+                    DapSource source = (DapSource)node.CreateInstance ();
+                    source.DeviceInitialize (device);
                     source.LoadDeviceContents ();
+                    source.AddinId = node.Addin.Id;
                     return source;
-                } catch (System.Reflection.TargetInvocationException e) {
-                    if (!(e.InnerException is InvalidDeviceException)) {
-                        Log.Exception (e);
-                    }
+                } catch (InvalidDeviceException) {
                 } catch (InvalidCastException e) {
                     Log.Exception ("Extension is not a DapSource as required", e);
+                } catch (Exception e) {
+                    Log.Exception (e);
                 }
             }
             
