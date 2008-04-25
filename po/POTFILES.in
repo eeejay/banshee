@@ -35,6 +35,7 @@ src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/PlsPlaylistFormat.cs
+src/Core/Banshee.Services/Banshee.Preferences/Page.cs
 src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs
 src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs
 src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs
@@ -43,12 +44,13 @@ src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs
 src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs
 src/Core/Banshee.Services/Banshee.Sources/Source.cs
 src/Core/Banshee.Services/Banshee.Web/Browser.cs
+src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs
+src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs 
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs
-src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/PreferencesDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs
@@ -65,6 +67,8 @@ src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs
 src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs
+src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs
+src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs 
 src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs
@@ -76,10 +80,13 @@ src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs
 src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs
 src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs
+src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs
 src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs
+src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpDap.cs
 src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs
 src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs
 src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs
+src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs
 src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs
 src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs
 src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs
