@@ -46,7 +46,7 @@ using Banshee.Widgets;
 
 namespace Banshee.NotificationArea 
 {
-    public class NotificationAreaService : IExtensionService, IDisposable
+    public class NotificationAreaService : IExtensionService
     {
         private INotificationAreaBox notif_area;
         private GtkElementsService elements_service;
@@ -181,9 +181,15 @@ namespace Banshee.NotificationArea
             
             elements_service.PrimaryWindowClose = null;
             
-            interface_action_service.UIManager.RemoveUi (ui_manager_id);
-            interface_action_service.UIManager.RemoveActionGroup (actions);
+            Gtk.Action close_action = interface_action_service.GlobalActions["CloseAction"];
+            if (close_action != null) {
+                interface_action_service.GlobalActions.Remove (close_action);
+            }
             
+            interface_action_service.RemoveActionGroup ("NotificationArea");
+            interface_action_service.UIManager.RemoveUi (ui_manager_id);
+            
+            actions = null;
             elements_service = null;
             interface_action_service = null;
             
@@ -220,6 +226,15 @@ namespace Banshee.NotificationArea
             return true;
         }
         
+        private void DisposeNotificationArea ()
+        {
+            if (notif_area != null) {
+                notif_area.Disconnected -= OnNotificationAreaDisconnected;
+                notif_area.Activated -= OnNotificationAreaActivated;
+                notif_area.PopupMenuEvent -= OnNotificationAreaPopupMenuEvent;
+            }
+        }
+        
         private void RegisterCloseHandler ()
         {
             if (elements_service.PrimaryWindowClose == null) {
@@ -243,12 +258,7 @@ namespace Banshee.NotificationArea
         private void OnNotificationAreaDisconnected (object o, EventArgs args)
         {
             // Ensure we don't keep the destroyed reference around
-            if (notif_area != null) {
-                notif_area.Disconnected -= OnNotificationAreaDisconnected;
-                notif_area.Activated -= OnNotificationAreaActivated;
-                notif_area.PopupMenuEvent -= OnNotificationAreaPopupMenuEvent;
-            }
-            
+            DisposeNotificationArea ();
             BuildNotificationArea ();
         }
         

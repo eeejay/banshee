@@ -36,6 +36,7 @@ using Banshee.ServiceStack;
 using Banshee.Configuration;
 using Banshee.Preferences;
 using Banshee.Hardware;
+using Banshee.Gui;
 
 namespace Banshee.AudioCd
 {
@@ -43,6 +44,7 @@ namespace Banshee.AudioCd
     {
         private Dictionary<string, AudioCdSource> sources;
         private Section pref_section;
+        private uint global_interface_id;
         
         public AudioCdService ()
         {
@@ -61,6 +63,8 @@ namespace Banshee.AudioCd
                 
                 ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
+                
+                SetupActions ();
             }
         }
         
@@ -73,11 +77,14 @@ namespace Banshee.AudioCd
                 ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
                 
                 foreach (AudioCdSource source in sources.Values) {
+                    source.Dispose ();
                     ServiceManager.SourceManager.RemoveSource (source);
                 }
                 
                 sources.Clear ();
                 sources = null;
+                
+                DisposeActions ();
             }    
         }
         
@@ -134,6 +141,8 @@ namespace Banshee.AudioCd
             }
         }
         
+#region Preferences        
+        
         private void InstallPreferences ()
         {
             PreferenceService service = ServiceManager.Get<PreferenceService> ();
@@ -189,6 +198,75 @@ namespace Banshee.AudioCd
             "Enable error correction",
             "When importing an audio CD, enable error correction (paranoia mode)"
         );
+
+#endregion
+
+#region UI Actions
+
+        private void SetupActions ()
+        {
+            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
+            if (uia_service == null) {
+                return;
+            }
+            
+            uia_service.GlobalActions.AddImportant (new Gtk.ActionEntry [] {
+                new Gtk.ActionEntry ("RipDiscAction", null,
+                    Catalog.GetString ("Import CD"), null,
+                    Catalog.GetString ("Import this audio CD to the library"),
+                    OnImportDisc)
+            });
+            
+            uia_service.GlobalActions.AddImportant (
+                new Gtk.ActionEntry ("DuplicateDiscAction", null,
+                    Catalog.GetString ("Duplicate CD"), null,
+                    Catalog.GetString ("Duplicate this audio CD"),
+                    OnDuplicateDisc)
+            );
+            
+            global_interface_id = uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
+        }
+        
+        private void DisposeActions ()
+        {
+            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
+            if (uia_service == null) {
+                return;
+            }
+            
+            uia_service.GlobalActions.Remove ("RipDiscAction");
+            uia_service.GlobalActions.Remove ("DuplicateDiscAction");
+            uia_service.UIManager.RemoveUi (global_interface_id);
+        }
+        
+        private void OnImportDisc (object o, EventArgs args)
+        {
+            ImportOrDuplicateDisc (true);
+        }
+        
+        private void OnDuplicateDisc (object o, EventArgs args)
+        {
+            ImportOrDuplicateDisc (false);
+        }
+        
+        private void ImportOrDuplicateDisc (bool import)
+        {
+            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
+            if (uia_service == null) {
+                return;
+            }
+            
+            AudioCdSource source = uia_service.SourceActions.ActionSource as AudioCdSource;
+            if (source != null) {
+                if (import) {
+                    source.ImportDisc ();
+                } else {
+                    source.DuplicateDisc ();
+                }
+            }
+        }
+
+#endregion
 
         string IService.ServiceName {
             get { return "AudioCdService"; }

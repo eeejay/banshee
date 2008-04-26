@@ -63,6 +63,14 @@ namespace Banshee.Gui
                 this[entry.name].IsImportant = true;
             }
         }
+        
+        public void Remove (string actionName)
+        {
+            Gtk.Action action = this[actionName];
+            if (action != null) {
+                Remove (action);
+            }
+        }
 
         public void UpdateActions (bool visible, bool sensitive, params string [] action_names)
         {

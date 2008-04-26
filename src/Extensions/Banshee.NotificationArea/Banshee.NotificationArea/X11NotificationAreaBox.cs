@@ -68,6 +68,18 @@ namespace Banshee.NotificationArea
             ShowAll ();
         }
         
+        public override void Dispose ()
+        {
+            HidePopup ();
+        
+            event_box.ButtonPressEvent -= OnButtonPressEvent;
+            event_box.EnterNotifyEvent -= OnEnterNotifyEvent;
+            event_box.LeaveNotifyEvent -= OnLeaveNotifyEvent;
+            event_box.ScrollEvent -= OnMouseScroll;
+        
+            Destroy ();
+        }
+        
         public void PositionMenu (Menu menu, out int x, out int y, out bool push_in) 
         {
             PositionWidget (menu, out x, out y, 0);
@@ -200,7 +212,7 @@ namespace Banshee.NotificationArea
             }
         }
         
-        private void OnEnterNotifyEvent(object o, EnterNotifyEventArgs args) 
+        private void OnEnterNotifyEvent (object o, EnterNotifyEventArgs args) 
         {
             cursor_over_trayicon = true;
             if (can_show_popup) {
@@ -215,7 +227,7 @@ namespace Banshee.NotificationArea
             }
         }
         
-        private void OnLeaveNotifyEvent(object o, LeaveNotifyEventArgs args) 
+        private void OnLeaveNotifyEvent (object o, LeaveNotifyEventArgs args) 
         {
             cursor_over_trayicon = false;
             HidePopup ();

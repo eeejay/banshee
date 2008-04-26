@@ -47,6 +47,7 @@ namespace Banshee.ServiceStack
     public static class ServiceManager
     {
         private static Dictionary<string, IService> services = new Dictionary<string, IService> ();
+        private static Dictionary<string, IExtensionService> extension_services = new Dictionary<string, IExtensionService> ();
         private static Stack<IService> dispose_services = new Stack<IService> ();
         private static List<Type> service_types = new List<Type> ();
         private static ExtensionNodeList extension_nodes;
@@ -129,35 +130,76 @@ namespace Banshee.ServiceStack
                 }
                 
                 foreach (TypeExtensionNode node in extension_nodes) {
-                    IExtensionService service = null;
-                    
-                    try {
-                        uint timer_id = Log.DebugTimerStart ();
-                        
-                        service = (IExtensionService)node.CreateInstance (typeof (IExtensionService));
-                        service.Initialize ();
-                        RegisterService (service);
-                    
-                        Log.DebugTimerPrint (timer_id, String.Format (
-                            "Extension service started ({0}, {{0}})", service.ServiceName));
-                    
-                        OnServiceStarted (service);
-                    
-                        if (service is IDisposable) {
-                            dispose_services.Push (service);
-                        }
-                    } catch (Exception e) {
-                        Log.Exception (e.InnerException ?? e);
-                        Log.Warning (String.Format ("Extension `{0}' not started: {1}", 
-                            service == null ? node.Path : service.GetType ().FullName, e.Message));
-                    }
+                    StartExtension (node);
                 }
+                
+                AddinManager.AddExtensionNodeHandler ("/Banshee/ServiceManager/Service", OnExtensionChanged);
                 
                 is_initialized = true;
                 
                 Log.InformationTimerPrint (cumulative_timer_id, "All services are started {0}");
                 
                 OnStartupFinished ();
+            }
+        }
+        
+        private static void StartExtension (TypeExtensionNode node)
+        {
+            if (extension_services.ContainsKey (node.Path)) {
+                return;
+            }
+        
+            IExtensionService service = null;
+                    
+            try {
+                uint timer_id = Log.DebugTimerStart ();
+                
+                service = (IExtensionService)node.CreateInstance (typeof (IExtensionService));
+                service.Initialize ();
+                RegisterService (service);
+            
+                Log.DebugTimerPrint (timer_id, String.Format (
+                    "Extension service started ({0}, {{0}})", service.ServiceName));
+            
+                OnServiceStarted (service);
+                
+                extension_services.Add (node.Path, service);
+            
+                if (service is IDisposable) {
+                    dispose_services.Push (service);
+                }
+            } catch (Exception e) {
+                Log.Exception (e.InnerException ?? e);
+                Log.Warning (String.Format ("Extension `{0}' not started: {1}", 
+                    service == null ? node.Path : service.GetType ().FullName, e.Message));
+            }
+        }
+        
+        private static void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
+        {
+            lock (self_mutex) {
+                TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
+                
+                if (args.Change == ExtensionChange.Add) {
+                    StartExtension (node);
+                } else if (args.Change == ExtensionChange.Remove && extension_services.ContainsKey (node.Path)) {
+                    IExtensionService service = extension_services[node.Path];
+                    extension_services.Remove (node.Path);
+                    services.Remove (service.ServiceName);
+                    ((IDisposable)service).Dispose ();
+                    
+                    Log.DebugFormat ("Extension service disposed ({0})", service.ServiceName);
+                    
+                    // Rebuild the dispose stack excluding the extension service
+                    IService [] tmp_services = new IService[dispose_services.Count - 1];
+                    int count = tmp_services.Length;
+                    foreach (IService tmp_service in dispose_services) {
+                        if (tmp_service != service) {
+                            tmp_services[--count] = tmp_service;
+                        }
+                    }
+                    dispose_services = new Stack<IService> (tmp_services);
+                }
             }
         }
         

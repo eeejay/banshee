@@ -30,7 +30,7 @@ using System;
 
 namespace Banshee.ServiceStack
 {
-    public interface IExtensionService : IService
+    public interface IExtensionService : IService, IDisposable
     {
         void Initialize ();
     }

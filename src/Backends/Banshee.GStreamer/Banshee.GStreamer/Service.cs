@@ -72,6 +72,10 @@ namespace Banshee.GStreamer
             }
         }
         
+        void IDisposable.Dispose ()
+        {
+        }
+        
         private void NativeLogHandler (LogEntryType type, IntPtr componentPtr, IntPtr messagePtr)
         {
             string component = componentPtr == IntPtr.Zero ? null : GLib.Marshaller.Utf8PtrToString (componentPtr);

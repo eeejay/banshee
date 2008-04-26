@@ -1,5 +1,31 @@
 2008-04-25  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IExtensionService.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/Service.cs: Require
+	all extension services to implement IDisposable
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Listen to the addin manager for when service extensions are enabled or
+	disabled and enable/disable accordingly; this allows all service extensions
+	to now be enabled or disabled at runtime
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:
+	Added an override for removing an action by name
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
+	Moved the UI actions from the source to the service since all of the
+	UI here is global; fixes issue where there were UI conflicts with multiple
+	CDs and also helps with the runtime enable/disable of the service
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: 
+	Reflect said changes above
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Many fixes for runtime enable/disable
+
+2008-04-25  Aaron Bockover  <abock@gnome.org>
+
 	This commit hopefully addresses remaining hardware and threading issues
 	with DAP support and fixes the Mono.Addins dependency issue that people
 	have been complaining about for the last couple of days

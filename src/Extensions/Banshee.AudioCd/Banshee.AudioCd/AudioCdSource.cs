@@ -142,7 +142,7 @@ namespace Banshee.AudioCd
             }
         }
 
-        private void OnImportDisc (object o, EventArgs args)
+        internal void ImportDisc ()
         {
             AudioCdRipper ripper = null;
             
@@ -161,7 +161,7 @@ namespace Banshee.AudioCd
             }
         }
 
-        private void OnDuplicateDisc (object o, EventArgs args)
+        internal void DuplicateDisc ()
         {
             Hyena.Log.Information ("This feature is not implemented yet.", true);
         }
@@ -326,24 +326,6 @@ namespace Banshee.AudioCd
             Properties.SetStringList ("Icon.Name", "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Eject Disc"));
             Properties.SetString ("UnmapSourceActionIconName", "media-eject");
-            
-            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
-            uia_service.GlobalActions.AddImportant (new ActionEntry [] {
-                new ActionEntry ("RipDiscAction", null,
-                    Catalog.GetString ("Import CD"), null,
-                    Catalog.GetString ("Import this audio CD to the library"),
-                    OnImportDisc)
-            });
-            
-            uia_service.GlobalActions.AddImportant (
-                new ActionEntry ("DuplicateDiscAction", null,
-                    Catalog.GetString ("Duplicate CD"), null,
-                    Catalog.GetString ("Duplicate this audio CD"),
-                    OnDuplicateDisc)
-            );
-            
-            uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
-            
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/AudioCdContextMenu");
             
