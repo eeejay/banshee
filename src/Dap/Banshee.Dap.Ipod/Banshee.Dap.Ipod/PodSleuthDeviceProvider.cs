@@ -54,6 +54,10 @@ namespace Banshee.Dap.Ipod
             return device;
         }
         
+        public void Dispose ()
+        {
+        }
+        
         private T AsPodSleuthDevice<T> (IVolume volume, T original)
         {
             try {

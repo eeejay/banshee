@@ -30,7 +30,7 @@ using System;
 
 namespace Banshee.Hardware
 {
-    public interface ICustomDeviceProvider
+    public interface ICustomDeviceProvider : IDisposable
     {
         T GetCustomDevice<T> (T device) where T : class, IDevice;
     }

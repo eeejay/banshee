@@ -52,6 +52,8 @@ namespace Banshee.Sources
     public class SourceManager : ISourceManager, IRequiredService, IDisposable
     {
         private List<Source> sources = new List<Source>();
+        private Dictionary<string, Source> extension_sources = new Dictionary<string, Source> ();
+        
         private Source active_source;
         private Source default_source;
         private MusicLibrarySource music_library;
@@ -64,16 +66,50 @@ namespace Banshee.Sources
         
         internal void LoadExtensionSources ()
         {
-            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/SourceManager/Source")) {
-                node.CreateInstance (typeof (ISource));
+            lock (this) {
+                AddinManager.AddExtensionNodeHandler ("/Banshee/SourceManager/Source", OnExtensionChanged);
             }
         }
         
         public void Dispose ()
         {
-            foreach (Source source in sources) {
-                if (source is IDisposable) {
-                    ((IDisposable)source).Dispose ();
+            lock (this) {
+                while (sources.Count > 0) {
+                    Source source = sources[0];
+                    IDisposable disposable = source as IDisposable;
+                    
+                    RemoveSource (source);
+                    
+                    if (disposable != null) {
+                        disposable.Dispose ();
+                    }
+                }
+                
+                sources.Clear ();
+                extension_sources.Clear ();
+                
+                AddinManager.RemoveExtensionNodeHandler ("/Banshee/SourceManager/Source", OnExtensionChanged);
+            }
+        }
+        
+        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
+        {
+            lock (this) {
+                TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
+                
+                if (args.Change == ExtensionChange.Add && !extension_sources.ContainsKey (node.Id)) {
+                    Source source = (Source)node.CreateInstance ();
+                    extension_sources.Add (node.Id, source);
+                    AddSource (source);
+                } else if (args.Change == ExtensionChange.Remove && extension_sources.ContainsKey (node.Id)) {
+                    Source source = extension_sources[node.Id];
+                    extension_sources.Remove (node.Id);
+                    RemoveSource (source);
+                    
+                    IDisposable disposable = source as IDisposable;
+                    if (disposable != null) {
+                        disposable.Dispose ();
+                    }
                 }
             }
         }

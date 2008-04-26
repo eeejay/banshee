@@ -39,7 +39,7 @@ namespace Banshee.Hardware
     public sealed class HardwareManager : IService, IHardwareManager, IDisposable
     {
         private IHardwareManager manager;
-        private List<ICustomDeviceProvider> custom_device_providers = new List<ICustomDeviceProvider> ();
+        private Dictionary<string, ICustomDeviceProvider> custom_device_providers = new Dictionary<string, ICustomDeviceProvider> ();
         
         public event DeviceAddedHandler DeviceAdded;
         public event DeviceRemovedHandler DeviceRemoved;
@@ -67,9 +67,7 @@ namespace Banshee.Hardware
             manager.DeviceAdded += OnDeviceAdded;
             manager.DeviceRemoved += OnDeviceRemoved;
             
-            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/Platform/HardwareDeviceProvider")) {
-                custom_device_providers.Add ((ICustomDeviceProvider)node.CreateInstance (typeof (ICustomDeviceProvider)));
-            }
+            AddinManager.AddExtensionNodeHandler ("/Banshee/Platform/HardwareDeviceProvider", OnExtensionChanged);
         }
         
         public void Dispose ()
@@ -83,15 +81,29 @@ namespace Banshee.Hardware
                 }
                 
                 if (custom_device_providers != null) {
-                    foreach (ICustomDeviceProvider provider in custom_device_providers) {
-                        IDisposable disposable = provider as IDisposable;
-                        if (disposable != null) {
-                            disposable.Dispose ();
-                        }
+                    foreach (ICustomDeviceProvider provider in custom_device_providers.Values) {
+                        provider.Dispose ();
                     }
                     
                     custom_device_providers.Clear ();
                     custom_device_providers = null;
+                }
+                
+                AddinManager.RemoveExtensionNodeHandler ("/Banshee/Platform/HardwareDeviceProvider", OnExtensionChanged);
+            }
+        }
+        
+        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
+        {
+            lock (this) {
+                TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
+                
+                if (args.Change == ExtensionChange.Add && !custom_device_providers.ContainsKey (node.Id)) {
+                    custom_device_providers.Add (node.Id, (ICustomDeviceProvider)node.CreateInstance ());
+                } else if (args.Change == ExtensionChange.Remove && custom_device_providers.ContainsKey (node.Id)) {
+                    ICustomDeviceProvider provider = custom_device_providers[node.Id];
+                    provider.Dispose ();
+                    custom_device_providers.Remove (node.Id);
                 }
             }
         }
@@ -125,7 +137,7 @@ namespace Banshee.Hardware
         
         private T CastToCustomDevice<T> (T device) where T : class, IDevice
         {
-            foreach (ICustomDeviceProvider provider in custom_device_providers) {
+            foreach (ICustomDeviceProvider provider in custom_device_providers.Values) {
                 T new_device = provider.GetCustomDevice (device);
                 if (new_device != device && new_device is T) {
                     return new_device;

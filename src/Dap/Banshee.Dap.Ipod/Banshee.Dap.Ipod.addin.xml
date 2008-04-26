@@ -16,12 +16,12 @@
     <Addin id="Banshee.Dap" version="1.0"/>
   </Dependencies>
 
-  <Extension path="/Banshee/Dap/DeviceClass">
-    <DeviceClass class="Banshee.Dap.Ipod.IpodSource"/>
-  </Extension>
-  
   <Extension path="/Banshee/Platform/HardwareDeviceProvider">
     <HardwareDeviceProvider class="Banshee.Dap.Ipod.PodSleuthDeviceProvider"/>
+  </Extension>
+  
+  <Extension path="/Banshee/Dap/DeviceClass">
+    <DeviceClass class="Banshee.Dap.Ipod.IpodSource"/>
   </Extension>
 
 </Addin>

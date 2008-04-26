@@ -1,3 +1,18 @@
+2008-04-26  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs:
+	Support runtime loading/unloading of hardware provider extensions
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/PodSleuthDeviceProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/ICustomDeviceProvider.cs:
+	Implement IDisposable
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
+	Support runtime loading/unloading of extension sources
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod.addin.xml: Order the 
+	hardware provider for podsleuth first in the extension list just in case
+
 2008-04-25  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/IExtensionService.cs:
