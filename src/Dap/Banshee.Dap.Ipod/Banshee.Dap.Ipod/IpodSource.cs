@@ -42,6 +42,7 @@ namespace Banshee.Dap.Ipod
     public class IpodSource : DapSource
     {
         private PodSleuthDevice ipod_device;
+        private bool database_loaded;
         
         private string name_path;
         internal string NamePath {
@@ -99,8 +100,10 @@ namespace Banshee.Dap.Ipod
             LoadFromDevice (false);
         }
 
-        private bool LoadIpod ()
+        private void LoadIpod ()
         {
+            database_supported = false;
+            
             try {
                 if (File.Exists (ipod_device.TrackDatabasePath)) { 
                     ipod_device.LoadTrackDatabase ();
@@ -115,13 +118,11 @@ namespace Banshee.Dap.Ipod
             } catch (DatabaseReadException e) {
                 Log.Exception ("Could not read iPod database", e);
                 ipod_device.LoadTrackDatabase (true);
-                database_supported = false;
             } catch (Exception e) {
                 Log.Exception (e);
-                return false;
             }
             
-            return true;
+            database_loaded = true;
         }
         
         private int CountMusicFiles ()
@@ -257,7 +258,7 @@ namespace Banshee.Dap.Ipod
                     }
                 }
                 
-                if (String.IsNullOrEmpty (name)) {
+                if (String.IsNullOrEmpty (name) && database_loaded && database_supported) {
                     name = ipod_device.Name;
                 }
                     
@@ -271,7 +272,13 @@ namespace Banshee.Dap.Ipod
                     name = ((IDevice)ipod_device).Name ?? "iPod";
                 }
                 
-                return name;
+                try {
+                    return name;
+                } finally {
+                    if (!database_loaded) {
+                        name = null;
+                    }
+                }
             }
         }
         

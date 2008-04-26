@@ -1,5 +1,11 @@
 2008-04-26  Aaron Bockover  <abock@gnome.org>
 
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Do not try
+	to read the name from the iTunesDB until after we have finished loading
+	that database
+
+2008-04-26  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs:
 	Support runtime loading/unloading of hardware provider extensions
 
