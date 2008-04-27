@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-27 12:35+0000\n"
-"PO-Revision-Date: 2008-04-27 16:02+0200\n"
+"POT-Creation-Date: 2008-04-27 14:04+0000\n"
+"PO-Revision-Date: 2008-04-27 16:14+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@fsf.hu>\n"
 "MIME-Version: 1.0\n"
@@ -193,7 +193,7 @@ msgstr "Az adatcsatorna nem hozható létre"
 
 #: ../libbanshee/banshee-ripper.c:207
 msgid "Could not initialize element from cdda URI"
-msgstr "Az elem nem inicializálható a cdda URI címből"
+msgstr "Az elem nem készíthető elő a cdda URI címből"
 
 #: ../libbanshee/banshee-ripper.c:221
 msgid "Could not create encoder pipeline"
@@ -253,7 +253,7 @@ msgstr "A CD-beolvasó meghajtó nem hozható létre"
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:92
 msgid "Could not initialize GStreamer library"
-msgstr "A GStreamer könyvtár inicializálása nem sikerült"
+msgstr "A GStreamer könyvtár előkészítése nem sikerült"
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:192
 msgid "Unknown Error"
@@ -468,9 +468,8 @@ msgid "Converting {0} of {1}"
 msgstr "{1}/{0}. átalakítása"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:128
-#, fuzzy
 msgid "Initializing"
-msgstr "Inicializálás..."
+msgstr "Előkészítés"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:129
 msgid ""
@@ -2163,7 +2162,9 @@ msgstr "{0} betöltése"
 msgid ""
 "The {0} format is not supported by the device, and no converter was found to "
 "convert it."
-msgstr "Az eszköz nem támogatja a(z) {0} formátumot és nem található átalakító az átalakításához."
+msgstr ""
+"Az eszköz nem támogatja a(z) {0} formátumot és nem található átalakító az "
+"átalakításához."
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:169
 msgid "File format conversion is not supported for this device."
@@ -2225,7 +2226,7 @@ msgstr "A Banshee MTP zenelejátszója egyszerre csak egy eszközt képes kezeln
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpDap.cs:117
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:82
 msgid "Error Initializing MTP Device Support"
-msgstr "Hiba az MTP eszköztámogatás inicializálásakor"
+msgstr "Hiba az MTP eszköztámogatás előkészítésekor"
 
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpDap.cs:118
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:83
@@ -2233,7 +2234,7 @@ msgid ""
 "There was an error intializing MTP device support.  See http://www.banshee-"
 "project.org/Guide/DAPs/MTP for more information."
 msgstr ""
-"Hiba történt az MTP eszköztámogatás inicializálásakor. További "
+"Hiba történt az MTP eszköztámogatás előkészítésekor. További "
 "információkért lásd az http://www.banshee-project.org/Guide/DAPs/MTP oldalt."
 
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpDap.cs:130
@@ -2328,7 +2329,7 @@ msgstr "Hang CD importálása"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:116
 msgid "Initializing Drive"
-msgstr "Meghajtó inicializálása"
+msgstr "Meghajtó előkészítése"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:118
 #, csharp-format
@@ -2911,7 +2912,7 @@ msgstr "Letöltés"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:51
 msgid "Initializing..."
-msgstr "Inicializálás..."
+msgstr "Előkészítés..."
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:52
 msgid "Are you sure that you'd like to cancel all downloads?"
