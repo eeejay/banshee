@@ -14,6 +14,7 @@ libbanshee/banshee-ripper.c
 libbanshee/banshee-transcoder.c
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs
+src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs
 src/Clients/Nereid/Nereid/PlayerInterface.cs
 src/Clients/Nereid/Nereid/ViewContainer.cs
 src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs
@@ -29,6 +30,7 @@ src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs
 src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs
 src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs
 src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs
+src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs
 src/Core/Banshee.Services/Banshee.Networking/NetworkDetect.cs
 src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs
 src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs
@@ -45,7 +47,7 @@ src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs
 src/Core/Banshee.Services/Banshee.Sources/Source.cs
 src/Core/Banshee.Services/Banshee.Web/Browser.cs
 src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs
-src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs 
+src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs
@@ -68,7 +70,7 @@ src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs
 src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs
-src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs 
+src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs
 src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs
