@@ -110,6 +110,11 @@ namespace Banshee.Gui
                 }
             }
         }
+
+        public void RemoveActionGroup (ActionGroup group)
+        {
+            RemoveActionGroup (group.Name);
+        }
         
         public ActionGroup FindActionGroup (string actionGroupId)
         {

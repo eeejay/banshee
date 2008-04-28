@@ -1,5 +1,15 @@
 2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs: Add
+	RemoveActionGroup convenience override.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Make
+	sure to dispose actions when the extension is disposed, fixing crasher
+	when you tried to disable/reenable the extension.
+
+2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:
 	* src/Extensions/Banshee.Lastfm/Resources/lastfm.glade: Remove name entry
 	from Last.fm dialog.

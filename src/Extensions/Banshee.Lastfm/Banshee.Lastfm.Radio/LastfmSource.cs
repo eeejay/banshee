@@ -116,10 +116,11 @@ namespace Banshee.Lastfm.Radio
         public void Dispose ()
         {
             Connection.StateChanged -= HandleConnectionStateChanged;
-            //ClearChildSources ();
+            actions.Dispose ();
+            ClearChildSources ();
         }
 
-        /*public override void ClearChildSources ()
+        public override void ClearChildSources ()
         {
             lock (Children) {
                 foreach (StationSource child in Children) {
@@ -130,7 +131,7 @@ namespace Banshee.Lastfm.Radio
             }
 
             base.ClearChildSources ();
-        }*/
+        }
 
         /*public override void AddChildSource (ChildSource source)
         {

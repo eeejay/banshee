@@ -56,7 +56,6 @@ namespace Banshee.Lastfm.Radio
 
         private InterfaceActionService action_service;
         private uint actions_id;
-        private ActionGroup actions;
 
         public LastfmActions (LastfmSource lastfm) : base ("Lastfm")
         {
@@ -205,10 +204,8 @@ namespace Banshee.Lastfm.Radio
 
         public override void Dispose ()
         {
-            if (actions != null) {
-                action_service.UIManager.RemoveUi (actions_id);
-                actions = null;
-            }
+            action_service.UIManager.RemoveUi (actions_id);
+            action_service.RemoveActionGroup (this);
             base.Dispose ();
         }
 
