@@ -334,7 +334,8 @@ namespace Banshee.MediaEngine
         {
             if (!incremented_last_played && active_engine.CurrentTrack != null) {
                 // If we're at least 50% done playing a song, mark it as played, otherwise as skipped
-                if (active_engine.Length > 0 && active_engine.Position >= active_engine.Length / 2) {
+                // If the Length <= 0, assume the song was finished and increment its play count
+                if (active_engine.Length <= 0 || active_engine.Position >= active_engine.Length / 2) {
                     active_engine.CurrentTrack.IncrementPlayCount ();
                 } else {
                     active_engine.CurrentTrack.IncrementSkipCount ();

@@ -1,5 +1,12 @@
 2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Fix bug with incrementing skip count instead of play count when a song
+	ended and the next one began (behavior was correct if the song hadn't
+	ended and the user manually pressed next.)  Fixes BGO #527879.
+
+2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	WARNING: This commit is a first pass at reworking some of the Podcast/Migo
 	internals to use Hyena and be more consistent with Banshee's style.  It
 	severely breaks the podcast extension for the time being, so unless you
