@@ -148,14 +148,12 @@ namespace Banshee.SmartPlaylist
             set { limit = value; }
         }
 
-        protected string OrderAndLimit {
-            get {
-                if (IsLimited) {
-                    return String.Format ("{0} {1}", QueryOrder.ToSql (), Limit.ToSql (LimitValue));
-                } else {
-                    return null;
-                }
-            }
+        protected string OrderSql {
+            get { return QueryOrder == null ? null : QueryOrder.ToSql (); }
+        }
+
+        protected string LimitSql {
+            get { return IsLimited ? Limit.ToSql (LimitValue) : null; }
         }
 
         public bool IsLimited {
@@ -321,15 +319,50 @@ namespace Banshee.SmartPlaylist
         public void Refresh ()
         {
             // Wipe the member list clean and repopulate it 
-            ServiceManager.DbConnection.Execute (String.Format (
+            string reload_str = String.Format (
                 @"DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {0};
                   INSERT INTO CoreSmartPlaylistEntries 
                     SELECT NULL, {0} as SmartPlaylistID, TrackId
                         FROM CoreTracks, CoreArtists, CoreAlbums
-                        WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID AND CoreTracks.PrimarySourceID = {3}
-                        {1} {2}",
-                DbId, PrependCondition("AND"), OrderAndLimit, PrimarySourceId
-            ));
+                        WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID AND CoreTracks.PrimarySourceID = {1}
+                        {2} {3} {4}",
+                DbId, PrimarySourceId, PrependCondition("AND"), OrderSql, LimitSql
+            );
+            ServiceManager.DbConnection.Execute (reload_str);
+
+            // If the smart playlist is limited by file size or media duration, limit it here
+            if (IsLimited && !Limit.RowBased) {
+                // Identify where the cut off mark is
+                HyenaSqliteCommand limit_command = new HyenaSqliteCommand (String.Format (
+                    @"SELECT EntryID, {0} 
+                      FROM CoreTracks, CoreSmartPlaylistEntries
+                      WHERE SmartPlaylistID = {1} AND CoreSmartPlaylistEntries.TrackID = CoreTracks.TrackID
+                      ORDER BY EntryID",
+                    Limit.Column, DbId
+                ));
+
+                long limit = LimitValue.IntValue *  Limit.Factor;
+                long sum = 0;
+                long? cut_off_id = null;
+                using (IDataReader reader = ServiceManager.DbConnection.Query (limit_command)) {
+                    while (reader.Read ()) {
+                        sum += Convert.ToInt64 (reader[1]);
+                        if (sum > limit) {
+                            cut_off_id = Convert.ToInt64 (reader[0]);
+                            break;
+                        }
+                    }
+                }
+
+                // Remove the playlist entries after the cut off
+                if (cut_off_id != null) {
+                    ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (
+                        "DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = ? AND EntryID >= ?",
+                        DbId, cut_off_id
+                    ));
+                }
+            }
+
             refreshed = true;
         }
 

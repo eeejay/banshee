@@ -62,26 +62,5 @@ namespace Hyena.Query
         {
             return String.Format ("ORDER BY {0}", order_sql);
         }
-
-        public string PruneSql (QueryLimit limit, IntegerQueryValue limit_value)
-        {
-            /*"SELECT {0}, {1} FROM {2}", "OrderID", limit.Column, "CoreCache";
-
-            long limit = limit_value.IntValue *  limit.Factor;
-            long sum = 0;
-            int? limit_id = null;
-            foreach (result) {
-                sum += result[1];
-                if (sum >= limit) {
-                    limit_id = result[0];
-                    break;
-                }
-            }
-
-            if (limit_id != null) {
-                "DELETE FROM {0} WHERE {1} > {2}", "CoreCache", "OrderID", limit_id
-            }*/
-            return null;
-        }
     }
 }

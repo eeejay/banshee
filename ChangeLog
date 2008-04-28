@@ -1,5 +1,12 @@
 2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Libraries/Hyena/Hyena.Query/QueryOrder.cs: Implement smart
+	playlists limited by file size and duration.  Fixes BGO #522889.
+
+2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
 	Fix bug with incrementing skip count instead of play count when a song
 	ended and the next one began (behavior was correct if the song hadn't
