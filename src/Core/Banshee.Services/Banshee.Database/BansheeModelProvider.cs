@@ -38,25 +38,9 @@ namespace Banshee.Database
 {
     public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : new ()
     {
-        private string table_name;
-
         public BansheeModelProvider (BansheeDbConnection connection, string table_name)
-            : base (connection)
+            : base (connection, table_name)
         {
-            this.table_name = table_name;
-            Init ();
-        }
-        
-        public override sealed string TableName {
-            get { return table_name; }
-        }
-        
-        protected override int ModelVersion {
-            get { return 1; }
-        }
-        
-        protected override sealed int DatabaseVersion {
-            get { return 1; }
         }
         
         protected override sealed void CheckVersion ()
@@ -78,19 +62,6 @@ namespace Banshee.Database
                 DatabaseConfigurationClient.Client.Set <int> (
                     namespce, key, new_version);
             }
-        }
-
-        protected override sealed void MigrateDatabase (int old_version)
-        {
-        }
-        
-        protected override void MigrateTable (int old_version)
-        {
-        }
-        
-        protected override T MakeNewObject (int index)
-        {
-            return new T ();
         }
     }
 }

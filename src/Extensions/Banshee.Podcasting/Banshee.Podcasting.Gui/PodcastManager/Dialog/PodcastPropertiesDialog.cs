@@ -50,7 +50,7 @@ namespace Banshee.Podcasting.Gui
             
             this.pi = pi;            
             
-            Title = pi.Title;
+            Title = pi.TrackTitle;
             BuildWindow ();
             //IconThemeUtils.SetWindowIcon (this);
         }
@@ -90,7 +90,7 @@ namespace Banshee.Podcasting.Gui
             Label feed_title_text = new Label (pi.Feed.Title);
             labels.Add (feed_title_text);
 
-            Label pubdate_text = new Label (pi.PubDate.ToString ("f"));
+            Label pubdate_text = new Label (pi.Item.PubDate.ToString ("f"));
             labels.Add (pubdate_text);
 
             Label url_text = new Label (pi.Item.Link);

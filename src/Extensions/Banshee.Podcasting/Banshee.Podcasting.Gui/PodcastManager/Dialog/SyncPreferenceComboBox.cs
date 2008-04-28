@@ -30,6 +30,7 @@ using Gtk;
 using System;
 using Mono.Unix;
 
+using Migo.Syndication;
 using Banshee.Podcasting.Data;
 
 namespace Banshee.Podcasting.Gui
@@ -42,21 +43,23 @@ namespace Banshee.Podcasting.Gui
             Catalog.GetString ("Let me decide which episodes to download")
         };
 
-        public SyncPreference ActiveSyncPreference 
+        public FeedAutoDownload ActiveSyncPreference 
         {
-            get { return (SyncPreference) Active; }
+            get { return (FeedAutoDownload) Active; }
         }
 
-        public SyncPreferenceComboBox (SyncPreference syncPref) : base (combo_text_entries)
+        public SyncPreferenceComboBox (FeedAutoDownload syncPref) : base (combo_text_entries)
         {
-            if ((int) syncPref >= (int) SyncPreference.All &&
-                (int) syncPref <= (int) SyncPreference.None) {
+            if ((int) syncPref >= (int) FeedAutoDownload.All &&
+                (int) syncPref <= (int) FeedAutoDownload.None) {
                 Active = (int) syncPref;
             } else {
-                Active = (int) SyncPreference.One;
+                Active = (int) FeedAutoDownload.One;
             }
         }
 
-        public SyncPreferenceComboBox (): this (SyncPreference.One) {} 
+        public SyncPreferenceComboBox (): this (FeedAutoDownload.One)
+        {
+        }
     }
 }

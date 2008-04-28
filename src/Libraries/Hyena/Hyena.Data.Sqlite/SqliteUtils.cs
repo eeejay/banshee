@@ -38,7 +38,7 @@ namespace Hyena.Data.Sqlite
         {
             if (type == typeof (string)) {
                 return "TEXT";
-            } else if (type == typeof (int) || type == typeof (long)
+            } else if (type == typeof (int) || type == typeof (long) || type == typeof (bool)
                 || type == typeof (DateTime) || type == typeof (TimeSpan) || type.IsEnum) {
                 return "INTEGER";
             } else {
@@ -59,6 +59,8 @@ namespace Hyena.Data.Sqlite
                     : ((TimeSpan)value).TotalMilliseconds;
             } else if (type.IsEnum) {
                 return Convert.ChangeType (value, Enum.GetUnderlyingType (type));
+            } else if (type == typeof (bool)) {
+                return ((bool)value) ? 1 : 0;
             }
             
             return value;
@@ -82,6 +84,8 @@ namespace Hyena.Data.Sqlite
                 }
             } else if (type.IsEnum) {
                 return Enum.ToObject (type, value);
+            } else if (type == typeof (bool)) {
+                return ((int)value == 1);
             } else {
                 return Convert.ChangeType (value, type);
             }

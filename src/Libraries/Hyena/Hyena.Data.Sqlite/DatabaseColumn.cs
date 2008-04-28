@@ -67,7 +67,7 @@ namespace Hyena.Data.Sqlite
                 column_type = SqliteUtils.GetType (type);
             } catch (Exception e) {
                 throw new Exception(string.Format(
-                    "{0}.{1}: {3}", member_info.DeclaringType, member_info.Name, e.Message));
+                    "{0}.{1}: {2}", member_info.DeclaringType, member_info.Name, e.Message));
             }
             this.name = attribute.ColumnName ?? member_info.Name;
             this.type = type;

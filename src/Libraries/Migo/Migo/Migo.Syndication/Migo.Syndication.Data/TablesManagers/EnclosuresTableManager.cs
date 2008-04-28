@@ -33,7 +33,7 @@ using System.Collections.Generic;
 
 namespace Migo.Syndication.Data
 {    
-    static class EnclosuresTableManager
+    /*static class EnclosuresTableManager
     {        
         private const string initQuery = @"
             CREATE TABLE IF NOT EXISTS enclosures (
@@ -130,7 +130,7 @@ namespace Migo.Syndication.Data
                 DatabaseManager.Enqueue (enclosureCommandPairs.Keys);
                 
                 foreach (KeyValuePair<QueuedDbCommand,FeedEnclosure> kvp in enclosureCommandPairs) {
-                    kvp.Value.LocalID = Convert.ToInt64 (kvp.Key.ScalarResult);
+                    kvp.Value.DbId = Convert.ToInt64 (kvp.Key.ScalarResult);
                 }  
             } catch {}
         
@@ -155,7 +155,7 @@ namespace Migo.Syndication.Data
                 DbDefines.EnclosuresTableColumns.Active,
                 (enclosure.Active) ? "1" : "0",                                               
                 DbDefines.EnclosuresTableColumns.DownloadMimeType, 
-                enclosure.DownloadMimeType,
+                enclosure.MimeType,
                 DbDefines.EnclosuresTableColumns.DownloadUrl, 
                 enclosure.DownloadUrl,
                 DbDefines.EnclosuresTableColumns.LastDownloadError,
@@ -220,13 +220,13 @@ namespace Migo.Syndication.Data
             DatabaseManager.ExecuteNonQuery (
                 updateEnclosuresQuery, 
                 DbDefines.EnclosuresTableColumns.LocalID, 
-                enclosure.LocalID.ToString (),
+                enclosure.DbId.ToString (),
                 DbDefines.EnclosuresTableColumns.ParentID, 
                 (enclosure.Parent != null) ? enclosure.Parent.LocalID.ToString () : "-1",
                 DbDefines.EnclosuresTableColumns.Active,
                 (enclosure.Active) ? "1" : "0",                                                                                            
                 DbDefines.EnclosuresTableColumns.DownloadMimeType, 
-                enclosure.DownloadMimeType,
+                enclosure.MimeType,
                 DbDefines.EnclosuresTableColumns.DownloadUrl, 
                 enclosure.DownloadUrl,
                 DbDefines.EnclosuresTableColumns.LastDownloadError,
@@ -260,5 +260,5 @@ namespace Migo.Syndication.Data
             
             return ret;
         }           
-    }
+    }*/
 }

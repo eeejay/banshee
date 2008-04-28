@@ -33,7 +33,7 @@ using System.Collections.Generic;
 
 namespace Migo.Syndication.Data
 {    
-    static class ItemsTableManager
+    /*static class ItemsTableManager
     {        
         public static readonly string initQuery = @" 
             CREATE TABLE IF NOT EXISTS items (
@@ -334,5 +334,5 @@ namespace Migo.Syndication.Data
             
             return ret;
         }        
-    }
+    }*/
 }

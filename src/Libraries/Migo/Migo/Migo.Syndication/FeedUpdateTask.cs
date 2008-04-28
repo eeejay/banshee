@@ -41,13 +41,11 @@ namespace Migo.Syndication
 	    private bool disposed;	 
 	    private ManualResetEvent mre;
 
-        public Feed Feed 
-        {
+        public Feed Feed {
             get { return feed; }
         }
 
-	    public override WaitHandle WaitHandle 
-	    {
+	    public override WaitHandle WaitHandle {
 	        get {
 	            lock (SyncRoot) {
 	                if (mre == null) {

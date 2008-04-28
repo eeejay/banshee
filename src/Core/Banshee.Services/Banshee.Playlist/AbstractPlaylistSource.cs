@@ -79,28 +79,10 @@ namespace Banshee.Playlist
         public int? DbId {
             get { return dbid; }
             protected set {
-                if (value == null) {
-                    return;
+                if (value != null && value != dbid) {
+                    dbid = value;
+                    AfterInitialized ();
                 }
-                dbid = value;
-                track_model.JoinTable = TrackJoinTable;
-                track_model.JoinPrimaryKey = JoinPrimaryKey;
-                track_model.JoinColumn = "TrackID";
-                track_model.CachesJoinTableEntries = CachesJoinTableEntries;
-                track_model.Condition = String.Format (TrackCondition, dbid);
-                AfterInitialized ();
-
-                count_updated_command = new HyenaSqliteCommand (String.Format (
-                    @"SELECT COUNT(*) FROM {0} WHERE {1} = {2} AND TrackID IN (
-                        SELECT TrackID FROM CoreTracks WHERE DateUpdatedStamp > ?)",
-                    TrackJoinTable, SourcePrimaryKey, dbid
-                ));
-
-                count_removed_command = new HyenaSqliteCommand (String.Format (
-                    @"SELECT COUNT(*) FROM {0} WHERE {1} = {2} AND TrackID IN (
-                        SELECT TrackID FROM CoreRemovedTracks WHERE DateRemovedStamp > ?)",
-                    TrackJoinTable, SourcePrimaryKey, dbid
-                ));
             }
         }
 
@@ -114,8 +96,29 @@ namespace Banshee.Playlist
             set { primary_source_id = value.DbId; }
         }
 
-        protected HyenaSqliteCommand count_updated_command;
-        protected HyenaSqliteCommand count_removed_command;
+        private HyenaSqliteCommand count_updated_command;
+        protected HyenaSqliteCommand CountUpdatedCommand {
+            get {
+                return count_updated_command ??
+                    count_updated_command = new HyenaSqliteCommand (String.Format (
+                        @"SELECT COUNT(*) FROM {0} WHERE {1} = {2} AND TrackID IN (
+                            SELECT TrackID FROM CoreTracks WHERE DateUpdatedStamp > ?)",
+                        TrackJoinTable, SourcePrimaryKey, dbid
+                    ));
+            }
+        }
+
+        private HyenaSqliteCommand count_removed_command;
+        protected HyenaSqliteCommand CountRemovedCommand {
+            get {
+                return count_removed_command ??
+                    count_removed_command = new HyenaSqliteCommand (String.Format (
+                        @"SELECT COUNT(*) FROM {0} WHERE {1} = {2} AND TrackID IN (
+                            SELECT TrackID FROM CoreRemovedTracks WHERE DateRemovedStamp > ?)",
+                        TrackJoinTable, SourcePrimaryKey, dbid
+                    ));
+            }
+        }
 
         public AbstractPlaylistSource (string generic_name, string name, int primarySourceId)
             : this (generic_name, name, null, -1, 0, primarySourceId)
@@ -126,6 +129,17 @@ namespace Banshee.Playlist
             : base (generic_name, name, Convert.ToString (dbid), 500)
         {
             this.primary_source_id = primarySourceId;
+        }
+
+        protected override void AfterInitialized ()
+        {
+            DatabaseTrackModel.JoinTable = TrackJoinTable;
+            DatabaseTrackModel.JoinPrimaryKey = JoinPrimaryKey;
+            DatabaseTrackModel.JoinColumn = "TrackID";
+            DatabaseTrackModel.CachesJoinTableEntries = CachesJoinTableEntries;
+            DatabaseTrackModel.Condition = String.Format (TrackCondition, dbid);
+
+            base.AfterInitialized ();
         }
 
         public override void Rename (string newName)

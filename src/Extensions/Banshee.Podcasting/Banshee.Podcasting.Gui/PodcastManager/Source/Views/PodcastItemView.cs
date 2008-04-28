@@ -37,7 +37,9 @@ using Hyena.Data.Gui;
 
 using Banshee.Gui;
 using Banshee.ServiceStack;
+using Banshee.Collection;
 using Banshee.Collection.Gui;
+using Banshee.Collection.Database;
 
 using Migo.Syndication;
 
@@ -45,7 +47,7 @@ using Banshee.Podcasting.Data;
 
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastItemView : ListView<PodcastItem>
+    public class PodcastItemView : ListView<TrackInfo>
     {
         private PersistentColumnController columnController;
         
@@ -60,10 +62,11 @@ namespace Banshee.Podcasting.Gui
             );
             
             columnController.AddRange (
-                new Column (null, Catalog.GetString ("Activity"), new PodcastItemActivityColumn ("Activity"), 0.00, true, 26, 26),            
+                new Column ("test", new ColumnCellText ("TrackTitle", true), 0.45, true)
+                /*new Column (null, Catalog.GetString ("Activity"), new PodcastItemActivityColumn ("Activity"), 0.00, true, 26, 26),            
                 new SortableColumn (Catalog.GetString ("Title"), new ColumnCellText ("Title", true), 0.30, PodcastItemSortKeys.Title, true),
                 podcastTitleSortColumn,
-                new SortableColumn (Catalog.GetString ("Date"), new ColumnCellDateTime ("PubDate", false), 0.5, PodcastItemSortKeys.PubDate, true)                
+                new SortableColumn (Catalog.GetString ("Date"), new ColumnCellDateTime ("PubDate", false), 0.5, PodcastItemSortKeys.PubDate, true) */
             );
             
             podcastTitleSortColumn.SortType = Hyena.Data.SortType.Descending;
@@ -101,8 +104,7 @@ namespace Banshee.Podcasting.Gui
                 markOldItem = uiManager.GetWidget ("/PodcastItemViewPopup/PodcastItemMarkOld") as MenuItem;              
             }
             
-            PodcastItemModel model = Model as PodcastItemModel;
-            ReadOnlyCollection<PodcastItem> items = model.CopySelectedItems (); 
+            DatabaseTrackListModel model = Model as DatabaseTrackListModel;
             
             bool showCancel = false;            
             bool showDownload = false;
@@ -110,9 +112,10 @@ namespace Banshee.Podcasting.Gui
             bool showMarkNew = false;
             bool showMarkOld = false;
             
+            ModelSelection<Banshee.Collection.TrackInfo> items = model.SelectedItems;
+            
             foreach (PodcastItem i in items) {
-                if (showCancel && showDownload && 
-                    showMarkNew && showMarkOld) {
+                if (showCancel && showDownload && showMarkNew && showMarkOld) {
                     break;
                 } else if (!showDownload &&
                     i.Activity == PodcastItemActivity.None ||
@@ -125,15 +128,13 @@ namespace Banshee.Podcasting.Gui
                     i.Activity == PodcastItemActivity.DownloadPaused                     
                 ) {
                     showCancel = true;
-                } else if (i.Track != null &&
-                           (!showMarkNew ||
-                           !showMarkOld)) {
+                }/* else if ((!showMarkNew || !showMarkOld)) {
                     if (i.New) {
                         showMarkOld = true;
                     } else { 
                         showMarkNew = true;
                     }
-                } 
+                }*/
             }
             
             if (items.Count > 1) {

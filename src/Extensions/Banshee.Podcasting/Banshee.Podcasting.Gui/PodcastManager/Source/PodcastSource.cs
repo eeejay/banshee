@@ -36,9 +36,11 @@ using Mono.Unix;
 
 using Hyena.Data;
 using Hyena.Data.Gui;
+using Hyena.Data.Sqlite;
 
 using Banshee.Gui;
 using Banshee.Base;
+using Banshee.Database;
 using Banshee.Collection;
 using Banshee.ServiceStack;
 using Banshee.Collection.Database;
@@ -52,123 +54,98 @@ using Migo.Syndication;
 
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastSource : PrimarySource
-    {        
-        private int count;
-
-        private string baseDirectory;
-
- 	    private PodcastFeedView feedView;
- 	    private PodcastItemView itemView;     
- 	    
-        private PodcastFeedModel feedModel;
-        private PodcastItemModel itemModel;           
-        
-        private string tuid = "podcasting";
-        
-        private readonly object sync = new object (); 
-
-        public override string BaseDirectory {
-            get { return baseDirectory; }
+    public class PodcastListModel : DatabaseTrackListModel, IListModel<PodcastItem>
+    {
+        public PodcastListModel (BansheeDbConnection conn, IDatabaseTrackModelProvider provider) : base (conn, provider)
+        {
         }
         
-        internal string BaseDirectorySet {
-            set { baseDirectory = value; }        
+        public new PodcastItem this[int index] {
+            get {
+                lock (this) {
+                    return cache.GetValue (index) as PodcastItem;
+                }
+            }
+        }
+    }
+    
+    public class PodcastSource : PrimarySource
+    {
+        private PodcastFeedModel feed_model;
+        
+        private PodcastFeedView feed_view;
+        public PodcastFeedView FeedView {
+            get { return feed_view; }
+        }
+        
+        private PodcastItemView item_view;
+        public PodcastItemView ItemView {
+            get { return item_view; }
+        }
+        
+        private string baseDirectory;
+        public override string BaseDirectory {
+            get { return baseDirectory; }
         }
 
         public override bool CanRename {
             get { return false; }
         }
-               
-        public override int Count {
-            get { lock (sync) { return count; } }
-        }
-        
-        public int CountSet {
-            set { 
-                lock (sync) {
-                    if (count != value) {
-                        count = value;
-                        OnUpdated ();
-                    }
-                } 
-            }        
-        }
-       
-        public PodcastFeedModel FeedModel {
-            get { return feedModel; }
-        }
-        
-        public PodcastItemModel ItemModel {
-            get { return itemModel; }
-        }        
 
-        public PodcastFeedView FeedView {
-            get { return feedView; }
-        }
-        
-        public PodcastItemView ItemView {
-            get { return itemView; }
-        }        
-
-        protected override string TypeUniqueId {
-            get { return tuid; }
-        }
-
-        public override bool CanSearch {
-            get { return false; }
-        }
-        
         public override bool CanAddTracks {
             get { return false; }
         }
+        
+        public PodcastFeedModel FeedModel {
+            get { return feed_model; }
+        }
 
-        public PodcastSource (PodcastFeedModel feedModel,
-                              PodcastItemModel itemModel) : 
-                              this (null, feedModel, itemModel)
+        public PodcastSource () : this (null)
         {
         }
 
-        public PodcastSource (string baseDirectory,
-                              PodcastFeedModel feedModel,
-                              PodcastItemModel itemModel) : base (
-                              "PodcastLibrary",
-                              Catalog.GetString ("Podcasts"), 
-                              "PodcastLibrary", 100)
+        public PodcastSource (string baseDirectory) : base ("PodcastLibrary", Catalog.GetString ("Podcasts"), "PodcastLibrary", 100)
         {
-            if (feedModel == null) {
-                throw new ArgumentNullException ("feedModel");
-            } else if (itemModel == null) {
-                throw new ArgumentNullException ("itemModel");
-            }
-            
             this.baseDirectory = baseDirectory;
-            // track_model
-            album_model = null;
-            artist_model = null;
-            
-            this.feedModel = feedModel;
-            this.itemModel = itemModel;
-
-            feedView = new PodcastFeedView ();
-            itemView = new PodcastItemView ();
 
             Properties.SetString ("Icon.Name", "podcast-icon-22");
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/PodcastSourcePopup");
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
 
+            feed_view = new PodcastFeedView ();
+            item_view = new PodcastItemView ();
             Properties.Set<ISourceContents> (
                 "Nereid.SourceContents", 
-                new PodcastSourceContents (feedView, itemView)
+                new PodcastSourceContents (feed_view, item_view)
             );
+        }
+        
+        protected override bool HasArtistAlbum {
+            get { return false; }
+        }
+        
+        protected override void InitializeTrackModel ()
+        {
+            DatabaseTrackModelProvider<PodcastItem> track_provider =
+                new DatabaseTrackModelProvider<PodcastItem> (ServiceManager.DbConnection);
+
+            DatabaseTrackModel = new PodcastListModel (ServiceManager.DbConnection, track_provider);
+
+            TrackCache = new DatabaseTrackModelCache<PodcastItem> (ServiceManager.DbConnection,
+                    UniqueId, track_model, track_provider);
+                    
+            feed_model = new PodcastFeedModel ();
+            
+            AfterInitialized ();
         }
 
         public override void Reload ()
         {
-            itemModel.Reload ();
-            feedModel.Reload ();
-        }        
+            feed_model.Reload ();
+            TrackModel.Reload ();
+        }
+
 /*
         public new TrackListModel TrackModel {
             get { return null; }

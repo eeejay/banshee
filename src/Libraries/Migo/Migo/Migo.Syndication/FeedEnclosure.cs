@@ -1,98 +1,92 @@
-/*************************************************************************** 
- *  FeedEnclosure.cs
- *
- *  Copyright (C) 2007 Michael C. Urbanski
- *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
- ****************************************************************************/
- 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// FeedEnclosure.cs
+//
+// Authors:
+//   Mike Urbanski  <michael.c.urbanski@gmail.com>
+//   Gabriel Burt  <gburt@novell.com>
+//
+// Copyright (C) 2007 Michael C. Urbanski
+// Copyright (C) 2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
 using System.IO;
+
+using Hyena;
+using Hyena.Data.Sqlite;
 
 using Migo.Syndication.Data;
 
 namespace Migo.Syndication
 {
-    public class FeedEnclosure : IFeedEnclosure 
+    public class FeedEnclosure
     {
+        private static SqliteModelProvider<FeedEnclosure> provider;
+        public static SqliteModelProvider<FeedEnclosure> Provider {
+            get { return provider; }
+            set { provider = value; }
+        }
+        
         private bool canceled;
         private bool downloading;
         private bool stopped;
         
-        private string downloadMimeType;
-        private FeedDownloadStatus downloadStatus;        
-        private string downloadUrl;
+        private string mimetype;
+        private FeedDownloadStatus download_status;        
         private bool active;
-        private FeedDownloadError lastDownloadError;
+        private FeedDownloadError last_download_error;
         private long length;
-        private long localID;
-        private string localPath;
-        private FeedItem parent;
-        private string type;
+        
+        private string local_path;
+        private FeedItem item;
         private string url;     
         
         private readonly object sync = new object ();
         
-        internal bool Active 
-        {
-            get { 
-                lock (sync) {                
-                    return active; 
-                }
-            }
-            
-            set {
-                lock (sync) {
-                    active = value;
-                }
-            }
-        }
-       
-        public string DownloadMimeType 
-        { 
-            get {
-                lock (sync) { 
-                    return downloadMimeType; 
-                }
-            }
-        }
+#region Constructors
 
-        public FeedDownloadStatus DownloadStatus 
-        { 
+        public FeedEnclosure ()
+        {
+        }
+        
+#endregion
+
+#region Public Properties
+
+        public FeedDownloadStatus DownloadStatus { 
             get { 
                 lock (sync) {
-                    return downloadStatus;
+                    return download_status;
                 }
             }
             
             internal set { 
                 lock (sync) {
-                    downloadStatus = value;
+                    download_status = value;
                     //Console.WriteLine ("Enclosure:  DownloadStatus:  {0}", downloadStatus);
                     switch (value) {
                     case FeedDownloadStatus.DownloadFailed: goto case FeedDownloadStatus.None;
                     case FeedDownloadStatus.Downloaded: 
-                        Commit ();
+                        Save ();
                         goto case FeedDownloadStatus.None;
                     case FeedDownloadStatus.None:
                         ResetDownloading ();
@@ -100,100 +94,38 @@ namespace Migo.Syndication
                     }
                 }
             }             
-        }        
-        
-        public string DownloadUrl 
-        { 
-            get { lock (sync) { return downloadUrl; } } 
         }
 
-        public FeedDownloadError LastDownloadError
-        {
-            get { 
-                lock (sync) {
-                    return lastDownloadError; 
-                }
-            }
-            
-            internal set {
-                lock (sync) {
-                    lastDownloadError = value;                
-                }
-            }
-        }
-        
-        public long Length 
-        { 
-            get { lock (sync) { return length; } } 
-        }
-        
-        public long LocalID 
-        { 
-            get { return localID; }
-            internal set { localID = value; }
-        }
-        
-        public string LocalPath 
-        { 
-            get { lock (sync) { return localPath; } } 
-        }
-        
-        public IFeedItem Parent 
-        { 
-            get { return parent; } 
+        public FeedItem Item { 
+            get { return item; } 
             internal set {          
                 if (value == null) {
                 	throw new ArgumentNullException ("Parent");
                 }
 
-                parent = value as FeedItem;
+                item = value as FeedItem;
                 
-                if (parent == null) {
+                if (item == null) {
                     throw new ArgumentException (
                         "Parent must be of type FeedItem"
                     );
                 }
             }
         }
+
+#endregion
+
+#region Public Methods
         
-        public string Type 
-        { 
-            get { lock (sync) { return type; } } 
-        }
-        
-        public string Url 
-        { 
-            get { lock (sync) { return url; } } 
-        }
- 
-        internal FeedEnclosure (IFeedEnclosureWrapper wrapper) : this (null, wrapper) {}
-        internal FeedEnclosure (FeedItem parent, IFeedEnclosureWrapper wrapper)
+        public void Save ()
         {
-            if (wrapper == null) {
-                throw new ArgumentNullException ("wrapper");            	
-            }
-            
-            active = wrapper.Active;
-            localID = wrapper.LocalID;
-            downloadMimeType = wrapper.DownloadMimeType;
-            downloadUrl = wrapper.DownloadUrl;
-            length = wrapper.Length;
-            lastDownloadError = wrapper.LastDownloadError;
-            localPath = wrapper.LocalPath;
-            type = wrapper.Type;
-            url = wrapper.Url;    
-
-            if (!String.IsNullOrEmpty (localPath)) {
-                downloadStatus = FeedDownloadStatus.Downloaded;
-            }            
-            
-            this.parent = parent;
-        }        
-
+            Provider.Save (this);
+        }
+        
         public void AsyncDownload ()
         {            
             if (SetDownloading ()) {
-                if (!parent.QueueDownload (this)) {
+                if (!item.QueueDownload (this)) {
                     ResetDownloading ();
                 }
             }
@@ -206,31 +138,10 @@ namespace Migo.Syndication
             }
         }
 
-        private void CancelAsyncDownloadImpl ()      
-        {
-            parent.CancelDownload (this);            
-        }
-
         public void StopAsyncDownload ()
         {
             if (SetStopped ()) {
-                parent.StopDownload (this);
-            }
-        }
-        
-        private void CheckActive ()
-        {
-            if (!active) {
-                throw new InvalidOperationException ("Enclosure previously deleted");                    
-            }
-        }
-        
-        internal void Commit ()
-        {
-            if (localID < 0) {
-                localID = EnclosuresTableManager.Insert (this);
-            } else {
-                EnclosuresTableManager.Update (this);
+                item.StopDownload (this);
             }
         }
         
@@ -241,23 +152,90 @@ namespace Migo.Syndication
             lock (sync) {                
                 CheckActive ();            
                 
-                if (!String.IsNullOrEmpty (localPath) && File.Exists (localPath)) {
+                if (!String.IsNullOrEmpty (local_path) && File.Exists (local_path)) {
                 	try {
                         FileAttributes attributes = 
-                                File.GetAttributes (localPath) | FileAttributes.ReadOnly;
+                                File.GetAttributes (local_path) | FileAttributes.ReadOnly;
 
                         if (attributes == FileAttributes.ReadOnly) {
-                            File.Delete (localPath);	
+                            File.Delete (local_path);	
                         }
                         
-                        Directory.Delete (Path.GetDirectoryName (localPath));
+                        Directory.Delete (Path.GetDirectoryName (local_path));
                 	} catch {}
                 }
                 
-                localPath = String.Empty;
-                downloadStatus = FeedDownloadStatus.None;                                
+                local_path = String.Empty;
+                download_status = FeedDownloadStatus.None;                                
                 
-                Commit ();
+                Save ();
+            }
+        }
+        
+#endregion
+
+#region Database Columns
+
+        [DatabaseColumn]
+        public long Length { 
+            get { lock (sync) { return length; } } 
+            set { length = value; }
+        }
+        
+        [DatabaseColumn ("EnclosureID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
+        private long dbid;
+        public long DbId { 
+            get { return dbid; }
+            internal set { dbid = value; }
+        }
+        
+        [DatabaseColumn ("ParentID")]
+        private long parent_id;
+        public long ParentId {
+            get { return parent_id; }
+        }
+        
+        [DatabaseColumn]
+        public string LocalPath { 
+            get { lock (sync) { return local_path; } }
+            set { local_path = value; }
+        }
+        
+        [DatabaseColumn]
+        public string Url { 
+            get { lock (sync) { return url; } } 
+            set { url = value; }
+        }
+        
+        [DatabaseColumn]
+        public string MimeType {
+            get { return mimetype; }
+            set {
+                mimetype = value;
+                if (String.IsNullOrEmpty (mimetype)) {
+                    mimetype = "application/octet-stream";
+                }
+            }
+        }
+        
+        [DatabaseColumn]
+        public FeedDownloadError LastDownloadError {
+            get { lock (sync) { return last_download_error;  } }
+            internal set { lock (sync) { last_download_error = value; } }
+        }
+        
+        [DatabaseColumn]
+        internal bool Active {
+            get { lock (sync) { return active; } }
+            set { lock (sync) { active = value; } }
+        }
+
+#endregion
+
+        private void CheckActive ()
+        {
+            if (!active) {
+                throw new InvalidOperationException ("Enclosure previously deleted");                    
             }
         }
 
@@ -280,7 +258,7 @@ namespace Migo.Syndication
                 //Console.WriteLine ("Status - SetCanceled:  canceled:  {0} - downloading:  {1}", canceled, downloading);
                 if (!canceled && !stopped && downloading) {
                     ret = canceled = true;
-                    lastDownloadError = FeedDownloadError.Canceled;
+                    last_download_error = FeedDownloadError.Canceled;
                 }   
             }
                 //Console.WriteLine ("Status - SetCanceled:  ret:  {0}", ret);
@@ -293,13 +271,13 @@ namespace Migo.Syndication
             
             lock (sync) {
                 if (!downloading && 
-                    downloadStatus != FeedDownloadStatus.Downloaded) {
+                    download_status != FeedDownloadStatus.Downloaded) {
                     canceled = false;
                     stopped = false;
                     ret = downloading = true;    
                     
-                    downloadStatus = FeedDownloadStatus.Pending;                    
-                    lastDownloadError = FeedDownloadError.None;
+                    download_status = FeedDownloadStatus.Pending;                    
+                    last_download_error = FeedDownloadError.None;
                 }            
             }
             
@@ -313,23 +291,23 @@ namespace Migo.Syndication
             lock (sync) {
                 if (!canceled && !stopped && downloading) {
                     ret = stopped = true;
-                    lastDownloadError = FeedDownloadError.Canceled;
+                    last_download_error = FeedDownloadError.Canceled;
                 }            
             }
             
             return ret;            
         }
-
-        public void SetFile (string url, string path, string mimeType, string filename)
-        {
-            
-        }
         
+        private void CancelAsyncDownloadImpl ()      
+        {
+            item.CancelDownload (this);            
+        }
+
         internal void SetFileImpl (string url, string path, string mimeType, string filename)
         {      
             string tmpLocalPath;
             string fullPath = path;
-            string localEnclosurePath = parent.Parent.LocalEnclosurePath;
+            string localEnclosurePath = item.Feed.LocalEnclosurePath;
             
             lock (sync) {   
                 CheckActive ();                
@@ -382,20 +360,20 @@ namespace Migo.Syndication
                         Directory.Delete (path);
                     } catch {}
                 } catch { 
-                    lastDownloadError = FeedDownloadError.DownloadFailed;
-                    downloadStatus = FeedDownloadStatus.DownloadFailed;
+                    last_download_error = FeedDownloadError.DownloadFailed;
+                    download_status = FeedDownloadStatus.DownloadFailed;
                     throw;
                 }
                 
-                localPath = tmpLocalPath;
+                local_path = tmpLocalPath;
                 
-                this.downloadUrl = url;
-                this.downloadMimeType = mimeType;
+                this.url = url;
+                this.mimetype = mimeType;
                                 
-                downloadStatus = FeedDownloadStatus.Downloaded;
-                lastDownloadError = FeedDownloadError.None;                    
+                download_status = FeedDownloadStatus.Downloaded;
+                last_download_error = FeedDownloadError.None;                    
 
-                Commit ();
+                Save ();
             }
         }
     }

@@ -35,15 +35,46 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
+using Hyena;
+using Hyena.Data.Sqlite;
+
 using Migo.Net;
 using Migo.TaskCore;
 using Migo.DownloadCore;
 using Migo.Syndication.Data;
 
 namespace Migo.Syndication
-{    
-    public class Feed : IFeed
+{
+    public enum FeedAutoDownload : int 
+    {
+        All = 0,
+        One = 1,
+        None = 2
+    }
+
+    // TODO remove this, way too redundant with DownloadStatus
+    public enum PodcastFeedActivity : int {
+        Updating = 0,
+        UpdatePending = 1,        
+        UpdateFailed = 2,
+        ItemsDownloading = 4,        
+        ItemsQueued = 5,        
+        None = 6        
+    }
+
+    public class Feed
     {        
+        private static SqliteModelProvider<Feed> provider;
+        public static SqliteModelProvider<Feed> Provider {
+            get { return provider; }
+            set { provider = value; }
+        }
+
+        private static Feed all = new Feed ();
+        public static Feed All {
+            get { return all; }
+        }
+
         private bool canceled;
         private bool deleted; 
         private bool updating;
@@ -56,6 +87,10 @@ namespace Migo.Syndication
         private long queuedDownloadCount;
         private long activeDownloadCount;        
         
+        private List<FeedItem> items;
+        private List<FeedItem> inactive_items;
+        
+        private FeedAutoDownload auto_download;
         private string copyright;
         private string description;
         private bool downloadEnclosuresAutomatically;
@@ -63,11 +98,7 @@ namespace Migo.Syndication
         private string downloadUrl;
         private string image;        
         private long interval;
-        private List<FeedItem> inactiveItems;
         private bool isList;
-        private long itemCount;
-        private List<FeedItem> items;
-        private Dictionary<long,FeedItem> itemsByID;        
         private string language;
         private DateTime lastBuildDate;
         private FeedDownloadError lastDownloadError;
@@ -75,8 +106,8 @@ namespace Migo.Syndication
         private DateTime lastWriteTime;
         private string link;
         private string localEnclosurePath;
-        private long localID;
-        private long maxItemCount;
+        private long localID = -1;
+        private long maxItemCount = 200;
         private string name;
         private FeedsManager parent;        
         private DateTime pubDate;
@@ -95,156 +126,111 @@ namespace Migo.Syndication
         public event EventHandler<FeedEventArgs> FeedUrlChanged;
         
         public event EventHandler<FeedItemEventArgs> FeedItemAdded;
-        public event EventHandler<FeedItemEventArgs> FeedItemRemoved;        
+        public event EventHandler<FeedItemEventArgs> FeedItemRemoved;
         
-        public long ActiveDownloadCount 
-        { 
-            get { lock (sync) { return activeDownloadCount; } }
-        }
+#region Database-bound Properties
         
-        public long QueuedDownloadCount 
-        { 
-            get { lock (sync) { return queuedDownloadCount; } }             
-        }         
-        
-        public string Copyright 
-        { 
+        [DatabaseColumn]
+        public string Copyright { 
             get { lock (sync) { return copyright; } } 
+            set { copyright = value; }
         }
         
-        public string Description 
-        { 
+        [DatabaseColumn]
+        public string Description { 
             get { lock (sync) { return description; } } 
+            set { description = value; }
         }
         
-        public bool DownloadEnclosuresAutomatically 
-        { 
+        [DatabaseColumn]
+        public bool DownloadEnclosuresAutomatically { 
             get { lock (sync) { return downloadEnclosuresAutomatically; } }  
             set { lock (sync) { downloadEnclosuresAutomatically = value; } }
         }
         
-        public FeedDownloadStatus DownloadStatus 
-        { 
-            get { lock (sync) { return downloadStatus; } }
-        }
-        
-        public string DownloadUrl 
-        { 
+        [DatabaseColumn]
+        public string DownloadUrl {
             get { lock (sync) { return downloadUrl; } }
+            set { downloadUrl = value; }
         }     
         
-        public string Image 
-        { 
+        [DatabaseColumn]
+        public string Image {
             get { lock (sync) { return image; } }
+            set { image = value; }
         }
 
-        public long Interval        
-        { 
+        [DatabaseColumn]
+        public long Interval { 
             get { lock (sync) { return interval; } }
             set { 
                 lock (sync) { interval = (value < 15) ? 1440 : value; }
             } 
         }
         
-        public bool IsList 
-        { 
-            get { lock (sync) { return isList; } }
-        }
-        
-        public long ItemCount 
-        { 
-            get { lock (sync) { return itemCount; } }
-
-            internal set { 
-                lock (sync) {
-                    if (value < 0 /*|| value > maxItemCount*/) { // implement later
-                       	throw new ArgumentOutOfRangeException ("ItemCount:  Must be >= 0 and < MaxItemCount.");
-                    }   
-                }
-                
-                itemCount = value;
-            }             
-        }
-        
-        // I want LINQ -_-
-        public ReadOnlyCollection<IFeedItem> Items { 
-            get { 
-                lock (sync) {  
-                    List<IFeedItem> tmpItems = items.ConvertAll ( 
-                        new Converter<FeedItem,IFeedItem> (
-                            delegate (FeedItem fi) { return fi as IFeedItem; }
-                        )
-                    );
-                    
-                    tmpItems.Sort (
-                        delegate (IFeedItem lhs, IFeedItem rhs) {
-                            return DateTime.Compare (rhs.PubDate, lhs.PubDate);
-                        }
-                    );
-                    
-                    return tmpItems.AsReadOnly ();                                     
-                }
-            } 
-        }
-        
-        public string Language 
-        { 
+        [DatabaseColumn]
+        public string Language { 
             get { lock (sync) { return language; } }
+            set { language = value; }
         }
         
-        public DateTime LastBuildDate 
-        { 
+        [DatabaseColumn]
+        public DateTime LastBuildDate { 
             get { lock (sync) { return lastBuildDate; } }
+            set { lastBuildDate = value; }
         }
         
-        public FeedDownloadError LastDownloadError 
-        { 
+        [DatabaseColumn]
+        public FeedDownloadError LastDownloadError { 
             get { lock (sync) { return lastDownloadError; } }
+            set { lastDownloadError = value; }
         }
         
-        public DateTime LastDownloadTime 
-        { 
+        [DatabaseColumn]
+        public DateTime LastDownloadTime { 
             get { lock (sync) { return lastDownloadTime; } }
+            set { lastDownloadTime = value; }
         }
         
-        public DateTime LastWriteTime 
-        { 
+        [DatabaseColumn]
+        public DateTime LastWriteTime { 
             get { lock (sync) { return lastWriteTime; } }
+            set { lastWriteTime = value; }
         }
         
-        public string Link 
-        { 
+        [DatabaseColumn]
+        public string Link { 
             get { lock (sync) { return link; } }
+            set { link = value; }
         }
         
-        public string LocalEnclosurePath 
-        { 
+        [DatabaseColumn]
+        public string LocalEnclosurePath { 
             get { lock (sync) { return localEnclosurePath; } }
-            
             set { 
                 lock (sync) {
                     if (localEnclosurePath != value) {
                         localEnclosurePath = value;
-                        Commit ();                    	
+                        Save ();                    	
                     }
                 }
             }
         }
         
-        public long LocalID 
-        { 
+        [DatabaseColumn ("FeedID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
+        public long DbId { 
             get { lock (sync) { return localID; } }
-            internal set { lock (sync) { localID = value; } }
+            set { lock (sync) { localID = value; } }
         }
 
-        public long MaxItemCount
-        { 
+        [DatabaseColumn]
+        public long MaxItemCount {
             get { lock (sync) { return maxItemCount; } }
             set { lock (sync) { maxItemCount = value; } }
         }
             
-        public string Name 
-        { 
+        [DatabaseColumn]
+        public string Name {
             get { lock (sync) { return name; } }
             
             private set {
@@ -258,7 +244,7 @@ namespace Migo.Syndication
                     if (value != name) {
                     	name = value;
                         renamed = true;
-                        Commit ();
+                        Save ();
                     }
                 }
                 
@@ -267,59 +253,44 @@ namespace Migo.Syndication
                 }
             }            
         }
-
-        public IFeedsManager Parent
-        {
-            get { lock (sync) { return parent; } }
-        }
         
-        public DateTime PubDate 
-        { 
+        [DatabaseColumn]
+        public DateTime PubDate {
             get { lock (sync) { return pubDate; } }
+            set { pubDate = value; }
         }
         
-		public FeedSyncSetting SyncSetting 
-		{ 
+        [DatabaseColumn]
+		public FeedSyncSetting SyncSetting {
             get { lock (sync) { return syncSetting; } } 
+            set { syncSetting = value; }
+        }
+
+        [DatabaseColumn]
+        public FeedAutoDownload AutoDownload {
+            get { return auto_download; }
+            set { auto_download = value; }
         }
         
-        public string Title 
-        { 
-            get { 
+        [DatabaseColumn]
+        public string Title {
+            get {
                 lock (sync) { 
-                    return String.IsNullOrEmpty (title) ?
-                        url : title; 
-                } 
+                    return String.IsNullOrEmpty (title) ? url : title; 
+                }
             }
+            set { title = value; }
         }
               
-        public long Ttl 
-        { 
+        [DatabaseColumn]
+        public long Ttl {
             get { lock (sync) { return ttl; } }
-        }  
+            set { ttl = value; }
+        }
         
-        public long UnreadItemCount 
-        { 
-            get { lock (sync) { return unreadItemCount; } } 
-            
-            internal set {
-                if (value < 0 /*|| value > maxItemCount*/ || value > itemCount) {  
-                    // max item count not yet implemented
-                   	throw new ArgumentOutOfRangeException (
-                        "UnreadItemCount:  Must be >= 0 and < MaxItemCount and <= ItemCount."
-                    );
-                }   
-                
-                if (value != unreadItemCount) {
-                	unreadItemCount = value;
-                }  
-            }
-        }  
-        
-        public string Url 
-        { 
+        [DatabaseColumn]
+        public string Url {
             get { lock (sync) { return url; } }
-            
             set {
                 if (String.IsNullOrEmpty (value)) {
                    	throw new ArgumentNullException ("Url");
@@ -334,7 +305,7 @@ namespace Migo.Syndication
                     	oldUrl = url;
                     	url = value;
                         updated = true;
-                        Commit ();
+                        Save ();
                     }
                 }
                 
@@ -345,7 +316,102 @@ namespace Migo.Syndication
             }
         }
         
-        internal Feed (FeedsManager parent, string url) : this (parent)
+#endregion
+
+#region Other Properties
+
+        public long ActiveDownloadCount { 
+            get { lock (sync) { return activeDownloadCount; } }
+        }
+        
+        public long QueuedDownloadCount { 
+            get { lock (sync) { return queuedDownloadCount; } }             
+        }         
+
+        // TODO remove this, way too redundant with DownloadStatus
+        public PodcastFeedActivity Activity {
+            get {
+                PodcastFeedActivity ret = PodcastFeedActivity.None;
+                
+                if (this == All) {
+                    return ret;
+                }
+                
+                switch (DownloadStatus) {
+                case FeedDownloadStatus.Pending: 
+                    ret = PodcastFeedActivity.UpdatePending;
+                    break;
+                case FeedDownloadStatus.Downloading: 
+                    ret = PodcastFeedActivity.Updating;
+                    break;    
+                case FeedDownloadStatus.DownloadFailed: 
+                    ret = PodcastFeedActivity.UpdateFailed;
+                    break;                         
+                }
+                
+                if (ret != PodcastFeedActivity.Updating) {
+                    if (ActiveDownloadCount > 0) {
+                        ret = PodcastFeedActivity.ItemsDownloading;
+                    } else if (QueuedDownloadCount > 0) {
+                        ret = PodcastFeedActivity.ItemsQueued;
+                    }
+                }
+
+                return ret;
+            }
+        }
+
+        public FeedsManager Parent {
+            get { lock (sync) { return parent; } }
+        }
+        
+        public FeedDownloadStatus DownloadStatus { 
+            get { lock (sync) { return downloadStatus; } }
+        }
+        
+        public bool IsList {
+            get { lock (sync) { return isList; } }
+        }
+        
+        public long ItemCount {
+            get { lock (sync) { return Items.Count; } }         
+        }
+        
+        private bool items_loaded = false;
+        
+        private ReadOnlyCollection<FeedItem> ro_items;
+        public ReadOnlyCollection<FeedItem> Items {
+            get {
+                lock (sync) {
+                    if (!items_loaded) {
+                        LoadItems ();
+                    }
+                    return ro_items ?? ro_items = new System.Collections.ObjectModel.ReadOnlyCollection<FeedItem> (items);                                
+                }
+            }
+        }
+        
+        public long UnreadItemCount {
+            get { lock (sync) { return unreadItemCount; } } 
+            internal set {
+                if (value < 0 /*|| value > maxItemCount*/ || value > ItemCount) {  
+                    // max item count not yet implemented
+                   	throw new ArgumentOutOfRangeException (
+                        "UnreadItemCount:  Must be >= 0 and < MaxItemCount and <= ItemCount."
+                    );
+                }   
+                
+                if (value != unreadItemCount) {
+                	unreadItemCount = value;
+                }
+            }
+        }
+        
+#endregion
+
+#region Constructors
+
+        public Feed (string url) : this ()
         {
             Uri uri;
             if (String.IsNullOrEmpty (url)) {
@@ -358,49 +424,21 @@ namespace Migo.Syndication
                 throw new ArgumentException ("url:  Scheme must be either http or https.");                
             }
 
-            this.url = url;  
+            this.url = url;
+        }
+
+        public Feed ()
+        {
+            parent = FeedsManager.Instance;
+            downloadStatus = FeedDownloadStatus.None;
+            inactive_items = new List<FeedItem> ();
+            interval = parent.DefaultInterval;
+            items = new List<FeedItem> ();
         }
         
-        internal Feed (FeedsManager parent)
-        {
-            if (parent == null) {
-                throw new ArgumentNullException ("parent");
-            }
-            
-            this.parent = parent;
+#endregion
 
-            downloadStatus = FeedDownloadStatus.None;  
-            inactiveItems = new List<FeedItem> ();
-            interval = parent.DefaultInterval; 
-            isList = false;            
-            itemCount = 0;            
-            items = new List<FeedItem> ();
-            itemsByID = new Dictionary<long,FeedItem> ();
-            localID = -1;   
-            maxItemCount = 200; //parent.ItemCountLimit;        IGNORED FOR NOW     
-            syncSetting = FeedSyncSetting.Default;            
-            unreadItemCount = 0;       
-            copyright = String.Empty;
-            description = String.Empty;
-            downloadUrl = String.Empty;
-            image = String.Empty;      
-            language = String.Empty;
-            link = String.Empty;
-            localEnclosurePath = String.Empty;
-            name = String.Empty;
-            title = String.Empty;
-            url = String.Empty;
-        }
-
-        internal Feed (FeedsManager parent, IFeedWrapper wrapper) : this (parent)
-        {
-            if (wrapper == null) {
-                throw new ArgumentNullException ("wrapper");
-            }
-            
-            url = wrapper.Url;                
-            Update (wrapper, true);  
-        }
+#region Internal Methods
 
         internal long DecrementActiveDownloadCount ()
         {
@@ -484,99 +522,6 @@ namespace Migo.Syndication
                 
                 return queuedDownloadCount;                  
             }            
-        }   
-/*        
-        private void Add (FeedItem item)
-        {
-            Add (item, false);
-        }
-
-        private void Add (FeedItem item, bool commit)
-        {
-            if (item == null) {
-                throw new ArgumentNullException ("item");
-            }
-            
-            item.Parent = this;            
-            
-            if (commit) {
-                item.Commit ();
-            }
-                        
-            if (item.LocalID == -1) {
-                return;
-            } else if (item.Active) {                                             
-                items.Add (item);
-                itemsByID.Add (item.LocalID, item);
-                
-                OnFeedItemAdded (item);
-                UpdateItemCountsImpl (1, (!item.IsRead) ? 1 : 0);
-            } else {
-                inactiveItems.Add (item);                   
-            }
-        }
-*/        
-        private void Add (IEnumerable<FeedItem> itms)
-        {
-            Add (itms, false);
-        }
-        
-        private void Add (IEnumerable<FeedItem> itms, bool commit)
-        {
-            if (items == null) {
-                throw new ArgumentNullException ("itms");
-            }      
-            
-            long totalCountDelta = 0;
-            long unreadCountDelta = 0;
-            
-            List<IFeedItem> newItems = new List<IFeedItem> ();
-            
-            if (commit) {
-                ItemsTableManager.Commit (itms);
-            }
-            
-            foreach (FeedItem i in itms) {
-                i.Parent = this;                
-
-                if (i.LocalID == -1) {
-                    continue;
-                } else if (i.Active) {
-                    itemsByID.Add (i.LocalID, i);                        
-                    ++totalCountDelta;
-                            
-                    if (!i.IsRead) {
-                        ++unreadCountDelta;
-                    }
-                    
-                    items.Add (i); 
-                    newItems.Add (i);
-                } else {
-                    inactiveItems.Add (i);   
-                }
-            }
-
-            if (newItems.Count > 0) {
-                OnFeedItemsAdded (newItems);
-            }
-            
-            UpdateItemCountsImpl (totalCountDelta, unreadCountDelta);
-        }         
-        
-        public void AsyncDownload ()
-        {
-            bool update = false;
-            
-            lock (sync) {
-                if (SetUpdating ()) {
-                    update = true;
-                    downloadStatus = FeedDownloadStatus.Pending;
-                }
-            }            
-            
-            if (update) {
-                parent.QueueUpdate (this);                
-            }
         }
         
         // Should ***ONLY*** be called by 'FeedUpdateTask'
@@ -621,175 +566,6 @@ namespace Migo.Syndication
             return ret;
         }
         
-        public bool CancelAsyncDownload ()
-        {
-            bool ret = false;            
-            
-            lock (sync) {
-                if (SetCanceled ()) {                    
-                    if (updating && wc != null) {
-                        ret = true;                         
-                        wc.CancelAsync ();
-                    } else {
-                        ret = true;
-                        ResetUpdating ();                    
-                        OnFeedDownloadCompleted (FeedDownloadError.Canceled);                                            
-                    }
-                }
-            }
-            
-            return ret;
-        }
-        
-        private void ClearItemsImpl ()
-        {
-            items.Clear ();                
-            itemsByID.Clear ();
-                
-            ItemCount = 0;
-            UnreadItemCount = 0;            
-        }
-        
-        public int CompareTo (IFeed right)
-        {
-            return title.CompareTo (right.Title);
-        }        
-        
-        public void Delete ()
-        {
-            Delete (true);                    
-        }
-            
-        public void Delete (bool deleteEnclosures)
-        {
-            bool del = false;            
-            
-            lock (sync) {
-                if (SetDeleted ()) {                
-                    if (updating) {
-                        CancelAsyncDownload ();                      
-                    }
-
-                    FeedItem[] itms = items.ToArray ();
-                    
-                    foreach (FeedItem i in itms) {
-                        i.DeleteImpl (false, deleteEnclosures);
-                    }
-
-                    Remove (itms);                    
-                  
-                    FeedsTableManager.Delete (this);   
-                    del = true;
-                }
-            }
-            
-            if (del) {
-                updatingHandle.WaitOne ();
-                
-                if (deleteEnclosures) {
-                	try {
-                        FileAttributes attributes;
-                        string[] files = Directory.GetFileSystemEntries (localEnclosurePath);
-                        
-                        foreach (string file in files) {
-                            try {                            
-                                attributes = File.GetAttributes (file) | FileAttributes.ReadOnly;
-                                
-                                if (attributes == FileAttributes.ReadOnly) {
-                                    File.Delete (file);                                
-                                }
-                            } catch { continue; }
-                        }
-
-                        Directory.Delete (localEnclosurePath, false);
-                    } catch {}
-                }
-                
-                OnFeedDeleted ();            
-            }
-        }
-        
-        public void Delete (IFeedItem item)
-        {
-            Delete (item, true);
-        }
-        
-        public void Delete (IFeedItem item, bool deleteEncFile)
-        {
-            if (item == null) {
-                throw new ArgumentNullException ("item");     
-            }    
-            
-            FeedItem feedItem = item as FeedItem;
-            
-            if (feedItem != null && feedItem.Parent == this) {
-                feedItem.Delete (deleteEncFile);
-            }
-        }        
-        
-        public void Delete (IEnumerable<IFeedItem> items)
-        {
-            Delete (items, true);
-        }
-        
-        public void Delete (IEnumerable<IFeedItem> items, bool deleteEncFiles)
-        {
-            if (items == null) {
-                throw new ArgumentNullException ("items");     
-            }            
-            
-            FeedItem tmpItem;            
-            List<FeedItem> deletedItems = new List<FeedItem> ();
-            
-            lock (sync) {
-                foreach (IFeedItem item in items) {
-                    tmpItem = item as FeedItem;
-
-                    if (tmpItem != null && tmpItem.Parent == this) {
-                        tmpItem.DeleteImpl (false, deleteEncFiles);
-                        deletedItems.Add (tmpItem);
-                    }
-                }
-                
-                ItemsTableManager.Deactivate (deletedItems);            
-                
-                if (deletedItems.Count > 0) {
-                    Remove (deletedItems);
-                }
-            }
-        }        
-        
-        public void Download ()
-        {
-            throw new NotImplementedException ("Download");
-        }
-
-        public IFeedItem GetItem (long itemID)
-        {
-            lock (sync) { 
-                FeedItem item;
-                itemsByID.TryGetValue (itemID, out item);
-                return item as IFeedItem;
-            }
-        }
-
-        public void MarkAllItemsRead ()
-        {
-            lock (sync) {
-                foreach (IFeedItem i in items) {
-                    i.IsRead = true;
-                }
-            }
-        }
-
-        public override string ToString ()
-        {
-            return String.Format (
-                "Title:  {0} - Url:  {1}",
-                Title, Url                                  
-            );   
-        }   
-        
         internal void SetItems (IEnumerable<FeedItem> itms)
         {
             if (itms == null) {
@@ -801,77 +577,226 @@ namespace Migo.Syndication
                 Add (itms);
             }
         }
-
-        private void Update (IFeedWrapper wrapper, bool init)
+        
+        
+        internal void CancelDownload (FeedEnclosure enc) 
         {
-            if (wrapper == null) {
-                throw new ArgumentNullException ("wrapper");
+            parent.CancelDownload (enc);
+        }        
+
+        internal HttpFileDownloadTask QueueDownload (FeedEnclosure enc) 
+        {
+            return parent.QueueDownload (enc);
+        }
+
+        internal void StopDownload (FeedEnclosure enc)
+        {
+            parent.StopDownload (enc);
+        }
+        
+        internal void Remove (FeedItem item)
+        {
+            if (item == null) {
+                throw new ArgumentNullException ("item");
             }
             
-            copyright = wrapper.Copyright;
-            description = wrapper.Description;
-            downloadUrl = wrapper.DownloadUrl;
-            image = wrapper.Image;
-            Interval = wrapper.Interval;
-            isList = wrapper.IsList;
-            language = wrapper.Language;
-            lastBuildDate = wrapper.LastBuildDate;
-            lastDownloadTime = wrapper.LastDownloadTime;                      
-            lastWriteTime = lastBuildDate;  // This is not correct!!!!!
-            link = wrapper.Link;
-            localEnclosurePath = wrapper.LocalEnclosurePath;            
-            pubDate = wrapper.PubDate;
-            title = wrapper.Title;
-            ttl = wrapper.Ttl;
-            
-            List<FeedItem> itms = new List<FeedItem> ();
-            
-            if (wrapper.Items != null) {            
-                FeedItem tmpItem = null;
-
-                foreach (IFeedItemWrapper i in wrapper.Items) {
-                    try {
-                        tmpItem = CreateFeedItem (i);                    
-                        
-                        if (tmpItem != null) {
-                            itms.Add (tmpItem);
-                        }
-                    } catch {}
-                }                            
-            }            
-            
-            if (init) {
-                SetItems (itms);
-                localID = wrapper.LocalID;
-                name = wrapper.Name;
-            } else {
-                Name = wrapper.Name;
-                UpdateItems (itms);         
+            lock (sync) {
+                if (items.Remove (item)) {
+                    inactive_items.Add (item);
+                    OnFeedItemRemoved (item);
+                    UpdateItemCountsImpl (-1, (!item.IsRead) ? -1 : 0);
+                }
             }
         }
         
-        private void UpdateItems (ICollection<FeedItem> remoteItems)
-        {            
-            ICollection<FeedItem> tmpNew = null;         
-            List<FeedItem> zombies = new List<FeedItem> ();         
-         
-            if (items.Count == 0 && inactiveItems.Count == 0) {
-                tmpNew = remoteItems;            
+        internal void Remove (IEnumerable<FeedItem> itms)
+        {
+            if (items == null) {
+                throw new ArgumentNullException ("items");
+            }
+            
+            long totalDelta = 0;            
+            long unreadDelta = 0;
+            
+            List<FeedItem> removedItems = new List<FeedItem> ();                    
+                    
+            lock (sync) {            
+                foreach (FeedItem i in itms) {
+                    if (i != null) {
+                        if (items.Remove (i)) {
+                            --totalDelta;
+                            
+                            if (!i.IsRead) {
+                                --unreadDelta;
+                            }                  
+                            
+                            removedItems.Add (i);
+                            inactive_items.Add (i);
+                        }   
+                    }
+                }
+                
+                if (removedItems.Count > 0) {
+                    OnFeedItemsRemoved (removedItems);
+                }                
+                
+                if (totalDelta != 0) {
+                    UpdateItemCountsImpl (totalDelta, unreadDelta);
+                }                
+            }
+        }
+        
+        internal void UpdateItemCounts (long totalDelta, long unreadDelta)
+        {
+            lock (sync) {
+                UpdateItemCountsImpl (totalDelta, unreadDelta);                    
+            }
+        }
+        
+#endregion
+        
+        // TODO remove, unused?
+/*        
+        private void Add (FeedItem item)
+        {
+            Add (item, false);
+        }
+
+        private void Add (FeedItem item, bool commit)
+        {
+            if (item == null) {
+                throw new ArgumentNullException ("item");
+            }
+            
+            item.Parent = this;            
+            
+            if (commit) {
+                item.Save ();
+            }
+                        
+            if (item.LocalID == -1) {
+                return;
+            } else if (item.Active) {                                             
+                items.Add (item);
+                itemsByID.Add (item.LocalID, item);
+                
+                OnFeedItemAdded (item);
+                UpdateItemCountsImpl (1, (!item.IsRead) ? 1 : 0);
             } else {
-                tmpNew = Diff (items, remoteItems);
-                tmpNew = Diff (inactiveItems, tmpNew);
+                inactiveItems.Add (item);                   
+            }
+        }
+*/        
+
+#region Private Methods
+
+        private void LoadItems ()
+        {
+            if (DbId > 0 && !items_loaded) {
+                Console.WriteLine ("Loading items");
+                IEnumerable<FeedItem> items = FeedItem.Provider.FetchAllMatching (String.Format (
+                    "{0}.FeedID = {1}", FeedItem.Provider.TableName, DbId
+                ));
                 
+                foreach (FeedItem item in items) {
+                    item.Feed = this;
+                    item.LoadEnclosure ();
+                }
+                
+                this.items.AddRange (items);
+                Console.WriteLine ("Done loading items");
+                items_loaded = true;
+            }
+        }
+
+        private void Add (IEnumerable<FeedItem> itms)
+        {
+            Add (itms, false);
+        }
+        
+        private void Add (IEnumerable<FeedItem> itms, bool commit)
+        {
+            if (items == null) {
+                throw new ArgumentNullException ("itms");
+            }      
+            
+            long totalCountDelta = 0;
+            long unreadCountDelta = 0;
+            
+            List<FeedItem> newItems = new List<FeedItem> ();
+            
+            if (commit) {
+                foreach (FeedItem item in itms)
+                    item.Save ();
+            }
+            
+            foreach (FeedItem i in itms) {
+                i.Feed = this;             
+
+                if (i.DbId == -1) {
+                    continue;
+                } else if (i.Active) {
+                    ++totalCountDelta;
+                            
+                    if (!i.IsRead) {
+                        ++unreadCountDelta;
+                    }
+                    
+                    items.Add (i); 
+                    newItems.Add (i);
+                } else {
+                    inactive_items.Add (i);   
+                }
+            }
+
+            if (newItems.Count > 0) {
+                OnFeedItemsAdded (newItems);
+            }
+            
+            UpdateItemCountsImpl (totalCountDelta, unreadCountDelta);
+        }
+        
+        private void ClearItemsImpl ()
+        {
+            items.Clear ();
+            UnreadItemCount = 0;            
+        }
+        
+        private void Update (IEnumerable<FeedItem> new_items, bool init)
+        {
+            if (init) {
+                SetItems (new_items);
+            } else {
+                UpdateItems (new_items);         
+            }
+        }
+        
+        private void UpdateItems (IEnumerable<FeedItem> new_items)
+        {
+            ICollection<FeedItem> tmpNew = null;         
+            List<FeedItem> zombies = new List<FeedItem> ();
+         
+            if (items.Count == 0 && inactive_items.Count == 0) {
+                tmpNew = new List<FeedItem> (new_items);
+            } else {
+                // Get remote items that aren't in the items list
+                tmpNew = Diff (items, new_items);
+                
+                // Of those, remove the ones that are in our inactive list
+                tmpNew = Diff (inactive_items, tmpNew);
+                
+                // Get a list of inactive items that aren't in the remote list any longer
                 ICollection<FeedItem> doubleKilledZombies = Diff (
-                    remoteItems, inactiveItems
-                );                 
-                
+                    new_items, inactive_items
+                );
+
                 foreach (FeedItem zombie in doubleKilledZombies) {
-                    inactiveItems.Remove (zombie);
+                    inactive_items.Remove (zombie);
                 }
                 
                 zombies.AddRange (doubleKilledZombies);                    
                 
-                foreach (FeedItem fi in Diff (remoteItems, items)) {
+                foreach (FeedItem fi in Diff (new_items, items)) {
                     if (fi.Enclosure != null &&
                         !String.IsNullOrEmpty (fi.Enclosure.LocalPath)) {
                         // A hack for the podcast plugin, keeps downloaded items 
@@ -894,10 +819,10 @@ namespace Migo.Syndication
                     } 
                 }
                 
-                // ZombieRifle.Polish ();
-                ItemsTableManager.Delete (zombies);
+                // TODO merge
+                //ItemsTableManager.Delete (zombies);
             }
-        }        
+        }    
 
         // Written before LINQ, will update.
         private ICollection<FeedItem> Diff (IEnumerable<FeedItem> baseSet, 
@@ -922,113 +847,26 @@ namespace Migo.Syndication
             }
 
             return diff;
-        }        
-
-        internal void Commit ()
-        {
-            if (localID <= 0) {
-                localID = FeedsTableManager.Insert (this);
-            } else {
-                try {
-                    FeedsTableManager.Update (this);
-                } catch {
-                    //Console.WriteLine (e.StackTrace);
-                    throw;
-                }
-            }
-        }   
-        
-        private FeedItem CreateFeedItem (IFeedItemWrapper wrapper)
-        {
-            FeedItem ret = null;
-            
-            try {
-                ret = new FeedItem (this, wrapper);
-            } catch {}
-            
-            return ret; 
-        }
-
-        internal void CancelDownload (FeedEnclosure enc) 
-        {
-            parent.CancelDownload (enc);
-        }        
-
-        internal HttpFileDownloadTask QueueDownload (FeedEnclosure enc) 
-        {
-            return parent.QueueDownload (enc);
-        }
-
-        internal void StopDownload (FeedEnclosure enc)
-        {
-            parent.StopDownload (enc);
         }
         
-        internal void Remove (FeedItem item)
+        private void UpdateItemCountsImpl (long totalDelta, long unreadDelta)
         {
-            if (item == null) {
-                throw new ArgumentNullException ("item");
-            }
+            //ItemCount += totalDelta;                
+            UnreadItemCount += unreadDelta;
+            FEEDS_EVENTS_ITEM_COUNT_FLAGS flags = 0;
             
-            lock (sync) {
-                if (items.Remove (item)) {
-                    inactiveItems.Add (item);                    
-                    itemsByID.Remove (item.LocalID);
+            if (totalDelta != 0) {   
+                flags |= FEEDS_EVENTS_ITEM_COUNT_FLAGS.FEICF_TOTAL_ITEM_COUNT_CHANGED;                  
+            }             
+
+            if (unreadDelta != 0) {
+                flags |= FEEDS_EVENTS_ITEM_COUNT_FLAGS.FEICF_UNREAD_ITEM_COUNT_CHANGED;
+            }
                     
-                    OnFeedItemRemoved (item);
-                    UpdateItemCountsImpl (-1, (!item.IsRead) ? -1 : 0);
-                }
-            }
+            if (flags != 0) {
+                OnFeedItemCountChanged (flags);  
+            }             
         }
-        
-        internal void Remove (IEnumerable<FeedItem> itms)
-        {
-            if (items == null) {
-                throw new ArgumentNullException ("items");
-            }
-            
-            long totalDelta = 0;            
-            long unreadDelta = 0;
-            
-            List<IFeedItem> removedItems = new List<IFeedItem> ();                    
-                    
-            lock (sync) {            
-                foreach (FeedItem i in itms) {
-                    if (i != null) {
-                        if (items.Remove (i)) {
-                            --totalDelta;
-                            
-                            if (!i.IsRead) {
-                                --unreadDelta;
-                            }                  
-                            
-                            removedItems.Add (i);
-                            inactiveItems.Add (i);                            
-                            itemsByID.Remove (i.LocalID);
-                        }   
-                    }
-                }
-                
-                if (removedItems.Count > 0) {
-                    OnFeedItemsRemoved (removedItems);
-                }                
-                
-                if (totalDelta != 0) {
-                    UpdateItemCountsImpl (totalDelta, unreadDelta);
-                }                
-            }
-        }
-        
-        private bool SetCanceled ()
-        {
-            bool ret = false;
-            
-            if (!canceled && updating) {
-                ret = canceled = true;
-            }
-            
-            return ret;
-        }        
         
         private bool SetDeleted ()
         {
@@ -1066,45 +904,221 @@ namespace Migo.Syndication
             return ret;    
         }
         
-        internal void UpdateItemCounts (long totalDelta, long unreadDelta)
+#endregion
+
+#region Public Methods
+        
+        public void AsyncDownload ()
         {
+            bool update = false;
+            
             lock (sync) {
-                UpdateItemCountsImpl (totalDelta, unreadDelta);                    
+                if (SetUpdating ()) {
+                    update = true;
+                    downloadStatus = FeedDownloadStatus.Pending;
+                }
+            }            
+            
+            if (update) {
+                parent.QueueUpdate (this);                
             }
         }
         
-        private void UpdateItemCountsImpl (long totalDelta, long unreadDelta)
+        public bool CancelAsyncDownload ()
         {
-            ItemCount += totalDelta;                
-            UnreadItemCount += unreadDelta;
-            FEEDS_EVENTS_ITEM_COUNT_FLAGS flags = 0;
+            bool ret = false;            
             
-            if (totalDelta != 0) {   
-                flags |= FEEDS_EVENTS_ITEM_COUNT_FLAGS.FEICF_TOTAL_ITEM_COUNT_CHANGED;                  
-            }             
-
-            if (unreadDelta != 0) {
-                flags |= FEEDS_EVENTS_ITEM_COUNT_FLAGS.FEICF_UNREAD_ITEM_COUNT_CHANGED;
+            lock (sync) {
+                if (SetCanceled ()) {                    
+                    if (updating && wc != null) {
+                        ret = true;                         
+                        wc.CancelAsync ();
+                    } else {
+                        ret = true;
+                        ResetUpdating ();                    
+                        OnFeedDownloadCompleted (FeedDownloadError.Canceled);                                            
+                    }
+                }
             }
-                    
-            if (flags != 0) {
-                OnFeedItemCountChanged (flags);  
-            }             
+            
+            return ret;
+        }
+        
+        public int CompareTo (Feed right)
+        {
+            return title.CompareTo (right.Title);
         }        
+        
+        public void Delete ()
+        {
+            Delete (true);                    
+        }
+            
+        public void Delete (bool deleteEnclosures)
+        {
+            bool del = false;            
+            
+            lock (sync) {
+                if (SetDeleted ()) {                
+                    if (updating) {
+                        CancelAsyncDownload ();                      
+                    }
+
+                    FeedItem[] itms = items.ToArray ();
+                    
+                    foreach (FeedItem i in itms) {
+                        i.DeleteImpl (false, deleteEnclosures);
+                    }
+
+                    Remove (itms);                    
+                  
+                    Provider.Delete (this);   
+                    del = true;
+                }
+            }
+            
+            if (del) {
+                updatingHandle.WaitOne ();
+                
+                if (deleteEnclosures) {
+                	try {
+                        FileAttributes attributes;
+                        string[] files = Directory.GetFileSystemEntries (localEnclosurePath);
+                        
+                        foreach (string file in files) {
+                            try {                            
+                                attributes = File.GetAttributes (file) | FileAttributes.ReadOnly;
+                                
+                                if (attributes == FileAttributes.ReadOnly) {
+                                    File.Delete (file);                                
+                                }
+                            } catch { continue; }
+                        }
+
+                        Directory.Delete (localEnclosurePath, false);
+                    } catch {}
+                }
+                
+                OnFeedDeleted ();            
+            }
+        }
+        
+        public void Delete (FeedItem item)
+        {
+            Delete (item, true);
+        }
+        
+        public void Delete (FeedItem item, bool deleteEncFile)
+        {
+            if (item == null) {
+                throw new ArgumentNullException ("item");     
+            }    
+            
+            FeedItem feedItem = item as FeedItem;
+            
+            if (feedItem != null && feedItem.Feed == this) {
+                feedItem.Delete (deleteEncFile);
+            }
+        }        
+        
+        public void Delete (IEnumerable<FeedItem> items)
+        {
+            Delete (items, true);
+        }
+        
+        public void Delete (IEnumerable<FeedItem> items, bool deleteEncFiles)
+        {
+            if (items == null) {
+                throw new ArgumentNullException ("items");     
+            }            
+            
+            FeedItem tmpItem;            
+            List<FeedItem> deletedItems = new List<FeedItem> ();
+            
+            lock (sync) {
+                foreach (FeedItem item in items) {
+                    tmpItem = item as FeedItem;
+
+                    if (tmpItem != null && tmpItem.Feed == this) {
+                        tmpItem.DeleteImpl (false, deleteEncFiles);
+                        deletedItems.Add (tmpItem);
+
+                        tmpItem.Active = false;
+                        tmpItem.Save ();
+                    }
+                }
+                
+                if (deletedItems.Count > 0) {
+                    Remove (deletedItems);
+                }
+            }
+        }        
+        
+        public void Download ()
+        {
+            throw new NotImplementedException ("Download");
+        }
+
+        // TODO remove, unused
+        /*public FeedItem GetItem (long itemID)
+        {
+            lock (sync) { 
+                FeedItem item;
+                item_id_map.TryGetValue (itemID, out item);
+                return item as FeedItem;
+            }
+        }*/
+
+        public void MarkAllItemsRead ()
+        {
+            lock (sync) {
+                foreach (FeedItem i in items) {
+                    i.IsRead = true;
+                }
+            }
+        }
+
+        public override string ToString ()
+        {
+            return String.Format (
+                "Title:  {0} - Url:  {1}",
+                Title, Url                                  
+            );   
+        }
+
+        public void Save ()
+        {
+            Provider.Save (this);
+        }   
+
+        private bool SetCanceled ()
+        {
+            bool ret = false;
+            
+            if (!canceled && updating) {
+                ret = canceled = true;
+            }
+            
+            return ret;
+        }
+        
+#endregion
+
+#region Private Event Handlers
         
         // Wow, this sucks, see the header FeedsManager Header. 
         private void OnDownloadStringCompleted (object sender, 
-                                                Migo.Net.DownloadStringCompletedEventArgs e) 
+                                                Migo.Net.DownloadStringCompletedEventArgs args) 
         {
             FeedDownloadError error = FeedDownloadError.None;            
 
             try {
                 lock (sync) {                              
                     try { 
-                        if (e.Error != null) {
+                        if (args.Error != null) {
                             error = FeedDownloadError.DownloadFailed;                                                        
                             
-                            WebException we = e.Error as WebException;   
+                            WebException we = args.Error as WebException;   
 
                             if (we != null) {
                                 HttpWebResponse resp = we.Response as HttpWebResponse;
@@ -1131,17 +1145,18 @@ namespace Migo.Syndication
                             error = FeedDownloadError.Canceled;                        
                         } else {
                             try {
-                                IFeedWrapper wrapper = new RssFeedWrapper (Url, e.Result);                             
-                                Update (wrapper, false);
-                            } catch (FormatException) {
-                                //Console.WriteLine ("FormatException:  {0}", fe.Message);
+                                RssParser parser = new RssParser (Url, args.Result);
+                                parser.UpdateFeed (this);
+                                Update (parser.GetFeedItems (), false);
+                            } catch (FormatException e) {
+                                Log.Exception (e);
                                 error = FeedDownloadError.InvalidFeedFormat;
                             }                          
                         }                        
-                    } catch (Exception e2) {
+                    } catch (Exception e) {
                         //Console.WriteLine ("Update error");
-                        Console.WriteLine (e2.Message);
-                        Console.WriteLine (e2.StackTrace);                        
+                        Console.WriteLine (e.Message);
+                        Console.WriteLine (e.StackTrace);                        
                         throw;
                     } finally {  
                         canceled = updating = false;
@@ -1159,7 +1174,7 @@ namespace Migo.Syndication
                         downloadStatus = FeedDownloadStatus.DownloadFailed;                                                    
                     }
                         
-                    Commit ();
+                    Save ();
                     
                     OnFeedDownloadCompleted (error);
                 } finally {                
@@ -1169,7 +1184,7 @@ namespace Migo.Syndication
         }
 
 /*      May add support for individual add in the future, but right now IEnumerables work           
-        private void OnFeedItemAdded (IFeedItem item)
+        private void OnFeedItemAdded (FeedItem item)
         {
             if (item == null) {
                 throw new ArgumentNullException ("item");
@@ -1186,7 +1201,8 @@ namespace Migo.Syndication
             }));  
         }
 */        
-        private void OnFeedItemsAdded (IEnumerable<IFeedItem> items)
+
+        private void OnFeedItemsAdded (IEnumerable<FeedItem> items)
         {
             if (items == null) {
                 throw new ArgumentNullException ("items");
@@ -1203,7 +1219,7 @@ namespace Migo.Syndication
             }));               
         }    
         
-        private void OnFeedItemRemoved (IFeedItem item)
+        private void OnFeedItemRemoved (FeedItem item)
         {
             if (item == null) {
                 throw new ArgumentNullException ("item");
@@ -1220,7 +1236,7 @@ namespace Migo.Syndication
             }));                        
         }
         
-        private void OnFeedItemsRemoved (IEnumerable<IFeedItem> items)
+        private void OnFeedItemsRemoved (IEnumerable<FeedItem> items)
         {
             if (items == null) {
                 throw new ArgumentNullException ("items");
@@ -1324,6 +1340,9 @@ namespace Migo.Syndication
             if (handlerCpy != null) {
                 handlerCpy (this, new FeedEventArgs (this));
             }
-        } 
+        }
+
+#endregion        
+
     }
 }    

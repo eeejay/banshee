@@ -32,7 +32,9 @@ using System.Data;
 
 namespace Hyena.Data.Sqlite
 {
-    public class SqliteModelCache<T> : DictionaryModelCache<T> where T : ICacheableItem
+    //public delegate void AggregatesUpdatedEventHandler (IDataReader reader);
+
+    public class SqliteModelCache<T> : DictionaryModelCache<T> where T : ICacheableItem, new ()
     {
         private HyenaSqliteConnection connection;
         private ICacheableDatabaseModel model;
@@ -53,8 +55,7 @@ namespace Hyena.Data.Sqlite
         // private bool warm;
         private long first_order_id;
 
-        public delegate void AggregatesUpdatedEventHandler (IDataReader reader);
-        public event AggregatesUpdatedEventHandler AggregatesUpdated;
+        public event Action<IDataReader> AggregatesUpdated;
 
         public SqliteModelCache (HyenaSqliteConnection connection,
                            string uuid,
@@ -254,7 +255,7 @@ namespace Hyena.Data.Sqlite
 
             using (IDataReader reader = connection.Query (get_single_command, args)) {
                 if (reader.Read ()) {
-                    T item = provider.Load (reader, 0);
+                    T item = provider.Load (reader);
                     item.CacheEntryId = Convert.ToInt64 (reader[reader.FieldCount - 1]);
                     item.CacheModelId = uid;
                     return item;
@@ -350,7 +351,7 @@ namespace Hyena.Data.Sqlite
                     T item;
                     while (reader.Read ()) {
                         if (!ContainsKey (offset)) {
-                            item = provider.Load (reader, (int) offset);
+                            item = provider.Load (reader);
                             item.CacheEntryId = Convert.ToInt64 (reader[reader.FieldCount - 1]);
                             item.CacheModelId = uid;
                             Add (offset, item);
@@ -367,7 +368,7 @@ namespace Hyena.Data.Sqlite
                 if (reader.Read ()) {
                     rows = Convert.ToInt64 (reader[0]);
 
-                    AggregatesUpdatedEventHandler handler = AggregatesUpdated;
+                    Action<IDataReader> handler = AggregatesUpdated;
                     if (handler != null) {
                         handler (reader);
                     }

@@ -83,7 +83,7 @@ namespace Banshee.Collection.Database
 
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, album.Title)) {
                 if (reader.Read ()) {
-                    last_album = provider.Load (reader, 0);
+                    last_album = provider.Load (reader);
                     last_album.ArtistId = artist.DbId;
                     last_album.ArtistName = artist.Name;
                 } else {

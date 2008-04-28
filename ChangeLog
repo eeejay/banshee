@@ -1,3 +1,155 @@
+2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	WARNING: This commit is a first pass at reworking some of the Podcast/Migo
+	internals to use Hyena and be more consistent with Banshee's style.  It
+	severely breaks the podcast extension for the time being, so unless you
+	are working with Mike and me to fix it, you should not build or run it.
+
+	* build/build.environment.mk: Link Migo against Hyena.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Update to new Load method (w/o superflous int arg).
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Fix DatabaseColumn attributes to be on properties, not private members.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Use new IDatabaseTrackModel[Provider|Cache] interfaces to allow this class
+	to handle DatabaseTrackInfo subclasses (eg to handle PodcastInfo objects).
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Override AfterInitialized method, moving quite a bit of track model
+	property setting there.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Change static LoadAll method to take a primary source id, so that as
+	primary sources are loaded, they fetch/load only their playlists.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add virtual
+	HasArtistAlbum property so sources can avoid instantiating the
+	Artist/Album models at all if they don't use them.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Check the
+	artist/album models aren't null before using them.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackModelCache.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackModelProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseTrackModelCache.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseTrackModelProvider.cs:
+	New interfaces/classes to enable DatabaseTrackInfo subclasses to be
+	used/loaded by DatabaseTrackListModel and therefore any DatabaseSource
+	subclass.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Override HasArtistAlbum to false.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastItem.cs:
+	Migo's FeedItem class is backed by a database table (PodcastItems), so
+	the idea is intead of having another table for Banshee specific podcast item
+	information, push as much as possible into Migo, and have PodcastItem
+	actually subclass from DatabaseTrackInfo, and pull in information from the
+	Migo tables as necessary (using VirtualDatabaseColumn attributes).
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeed.cs:
+	Deleted, since we just use the Migo table/Feed class now.
+	
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/FeedActivityColumnCell.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastFeedModel.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastFeedView.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastItemView.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastCore.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastCore_Interface.cs:
+	Many HACKING fixes, quite a lot of work to do still.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastItemModel.cs:
+	Remove the custom model since we use a DatabaseTrackListModel now.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs:
+	Change to subclass from PrimarySource.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Fix bug in
+	exception logging.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Use
+	Action<IDataReader> instead of custom delegate type for AggregatesUpdated
+	event.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Make not
+	abstract, taking default properties and empty virtual methods from
+	BansheeModelProvider.  Remove unused int arg in Load method.  Add
+	FetchAllMatching, FetchFirstMatching, FetchSingle (id), and Delete
+	methods.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: Handle bools.
+
+	* src/Libraries/Migo/Makefile.am:
+	* src/Libraries/Migo/Migo.mdp: Several files removed, a few added.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/EventArgs/FeedDownloadCompletedEventArgs.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/EventArgs/FeedDownloadCountChangedEventArgs.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/EventArgs/FeedEventArgs.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/EventArgs/FeedItemCountChangedEventArgs.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/EventArgs/FeedItemEventArgs.cs:
+	Renamed to follow HACKING.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/Feed.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedEnclosure.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedItem.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedUpdateTask.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedsManager.cs: Many updates,
+	including HACKING fixes, trying to get rid of unnecessary dictionaries
+	etc.  There are some commented out pieces of code in this commit that have
+	broken podcasts temporarily until they are 'ported'.  For the
+	database-backed classes (Feed, FeedItem, and FeedEnclosure) use
+	Hyena.Data.Sqlite [DatabaseColumn] attributes to flag db-backed
+	properties.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/IFeed.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/IFeedEnclosure.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/IFeedItem.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/IFeedsManager.cs: Deleted.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/TablesManagers/EnclosuresTableManager.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/TablesManagers/FeedsTableManager.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/TablesManagers/ItemsTableManager.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/DataUtility.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/DatabaseManager.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/DbDefines.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/QueuedDbCommand.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/SQLiteUtility.cs:
+	Deleted; Migo uses Hyena.Data.Sqlite now for db related functionality.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Db/DataWrapper.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Db/FeedDataWrapper.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Db/FeedEnclosureDataWrapper.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Db/FeedItemDataWrapper.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/IFeedEnclosureWrapper.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/IFeedItemWrapper.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/IFeedWrapper.cs: 
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Rss/RssFeedEnclosureWrapper.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Rss/RssFeedItemWrapper.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Rss/RssFeedWrapper.cs:
+	Deleted; Wrapper concept had a lot of redundancy in property definitions
+	etc.  The Db wrappers are unnecessary since Hyena.Data.Sqlite uses
+	reflection to instantiate objects/set properties.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/Migo.Syndication.Data/RssParser.cs:
+	New class largley taken from the Rss*Wrapper classes.
+
+	* tests/Hyena/SqliteCommandTests.cs: Test SQLification of bools.
+
 2008-04-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:

@@ -35,7 +35,7 @@ using System.Collections.ObjectModel;
 
 namespace Migo.Syndication.Data
 {    
-    class FeedsTableManager
+    /*class FeedsTableManager
     {     
         public static readonly string initQuery = @" 
             CREATE TABLE IF NOT EXISTS feeds (
@@ -428,5 +428,5 @@ namespace Migo.Syndication.Data
             
             return ret;
         }    
-    }
+    }*/
 }

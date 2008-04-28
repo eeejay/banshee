@@ -34,7 +34,7 @@ using System.Text;
 
 namespace Hyena.Data.Sqlite
 {
-    public abstract class SqliteModelProvider<T>
+    public class SqliteModelProvider<T> where T : new ()
     {
         private readonly List<DatabaseColumn> columns = new List<DatabaseColumn> ();
         private readonly List<DatabaseColumn> select_columns = new List<DatabaseColumn> ();
@@ -46,10 +46,12 @@ namespace Hyena.Data.Sqlite
         private HyenaSqliteCommand create_command;
         private HyenaSqliteCommand insert_command;
         private HyenaSqliteCommand update_command;
+        private HyenaSqliteCommand delete_command;
         private HyenaSqliteCommand select_command;
         private HyenaSqliteCommand select_range_command;
         private HyenaSqliteCommand select_single_command;
         
+        private string table_name;
         private string primary_key;
         private string select;
         private string from;
@@ -57,12 +59,24 @@ namespace Hyena.Data.Sqlite
         
         private const string HYENA_DATABASE_NAME = "hyena_database_master";
 
-        public abstract string TableName { get; }
-        protected abstract int ModelVersion { get; }
-        protected abstract int DatabaseVersion { get; }
-        protected abstract void MigrateTable (int old_version);
-        protected abstract void MigrateDatabase (int old_version);
-        protected abstract T MakeNewObject (int offset);
+        public virtual string TableName { get { return table_name; } }
+
+        protected virtual int ModelVersion { get { return 1; } }
+
+        protected virtual int DatabaseVersion { get { return 1; } }
+
+        protected virtual void MigrateTable (int old_version)
+        {
+        }
+
+        protected virtual void MigrateDatabase (int old_version)
+        {
+        }
+
+        protected virtual T MakeNewObject ()
+        {
+            return new T ();
+        }
         
         protected virtual string HyenaTableName {
             get { return "HyenaModelVersions"; }
@@ -71,6 +85,12 @@ namespace Hyena.Data.Sqlite
         protected SqliteModelProvider (HyenaSqliteConnection connection)
         {
             this.connection = connection;
+        }
+        
+        public SqliteModelProvider (HyenaSqliteConnection connection, string table_name) : this (connection)
+        {
+            this.table_name = table_name;
+            Init ();
         }
 
         protected void Init ()
@@ -95,7 +115,6 @@ namespace Hyena.Data.Sqlite
                     AddColumn (property, attribute);
                 }
             }
-            
             if (key == null) {
                 throw new Exception (String.Format ("The {0} table does not have a primary key", TableName));
             }
@@ -291,9 +310,9 @@ namespace Hyena.Data.Sqlite
             connection.Execute (UpdateCommand);
         }
         
-        public T Load (IDataReader reader, int index)
+        public T Load (IDataReader reader)
         {
-            T item = MakeNewObject (index);
+            T item = MakeNewObject ();
             Load (reader, item);
             return item;
         }
@@ -328,10 +347,32 @@ namespace Hyena.Data.Sqlite
         public IEnumerable<T> FetchAll ()
         {
             PrepareSelectCommand ();
-            int i = 1;
             using (IDataReader reader = connection.Query (SelectCommand)) {
                 while (reader.Read ()) {
-                    yield return Load (reader, i++);
+                    yield return Load (reader);
+                }
+            }
+        }
+
+        public T FetchFirstMatching (string condition)
+        {
+            PrepareSelectCommand ();
+            HyenaSqliteCommand fetch_matching_command = new HyenaSqliteCommand (String.Format ("{0} AND {1}", SelectCommand.Text, condition));
+            using (IDataReader reader = connection.Query (fetch_matching_command)) {
+                if (reader.Read ()) {
+                    return Load (reader);
+                }
+            }
+            return default(T);
+        }
+        
+        public IEnumerable<T> FetchAllMatching (string condition)
+        {
+            PrepareSelectCommand ();
+            HyenaSqliteCommand fetch_matching_command = new HyenaSqliteCommand (String.Format ("{0} AND {1}", SelectCommand.Text, condition));
+            using (IDataReader reader = connection.Query (fetch_matching_command)) {
+                while (reader.Read ()) {
+                    yield return Load (reader);
                 }
             }
         }
@@ -346,7 +387,7 @@ namespace Hyena.Data.Sqlite
             PrepareSelectRangeCommand (offset, limit);
             using (IDataReader reader = connection.Query (SelectRangeCommand)) {
                 while (reader.Read ()) {
-                    yield return Load (reader, offset++);
+                    yield return Load (reader);
                 }
             }
         }
@@ -358,13 +399,47 @@ namespace Hyena.Data.Sqlite
         
         public T FetchSingle (int id)
         {
+            return FetchSingle ((long) id);
+        }
+        
+        public T FetchSingle (long id)
+        {
             PrepareSelectSingleCommand (id);
             using (IDataReader reader = connection.Query (SelectSingleCommand)) {
                 if (reader.Read ()) {
-                    return Load (reader, id);
+                    return Load (reader);
                 }
             }
             return default(T);
+        }
+        
+        protected long PrimaryKeyFor (T item)
+        {
+            return (long) key.GetValue (item);
+        }
+        
+        public void Delete (long id)
+        {
+            connection.Execute (delete_command.ApplyValues (id));
+        }
+        
+        public void Delete (T item)
+        {
+            Delete (PrimaryKeyFor (item));
+        }
+        
+        public void Delete (IEnumerable<T> items)
+        {
+            List<long> ids = new List<long> ();
+            long id;
+            foreach (T item in items) {
+                id = PrimaryKeyFor (item);
+                if (id > 0)
+                    ids.Add (id);
+            }
+            
+            if (ids.Count > 0)
+                connection.Execute (delete_command.ApplyValues (ids.ToArray ()));
         }
 
         public bool Refresh (T item)
@@ -379,7 +454,7 @@ namespace Hyena.Data.Sqlite
             PrepareSelectSingleCommand (id);
             using (IDataReader reader = connection.Query (SelectSingleCommand)) {
                 if (reader.Read ()) {
-                    Load (reader, item);
+                    Load (reader);
                     return true;
                 }
             }
@@ -480,10 +555,8 @@ namespace Hyena.Data.Sqlite
                 if (select_command == null) {
                     select_command = new HyenaSqliteCommand (
                         String.Format (
-                            "SELECT {0} FROM {1}{2}{3}",
-                            Select, From,
-                            (String.IsNullOrEmpty (Where) ? String.Empty : " WHERE "),
-                            Where
+                            "SELECT {0} FROM {1} WHERE {2}",
+                            Select, From, String.IsNullOrEmpty (Where) ? "1=1" : Where
                         )
                     );
                 }
@@ -520,6 +593,17 @@ namespace Hyena.Data.Sqlite
                     );
                 }
                 return select_single_command;
+            }
+        }
+        
+        protected virtual HyenaSqliteCommand DeleteCommand {
+            get {
+                if (delete_command == null) {
+                    delete_command = new HyenaSqliteCommand (String.Format (
+                        "DELETE FROM {0} WHERE {1} IN (?)", TableName, PrimaryKey
+                    ));
+                }
+                return delete_command;
             }
         }
         

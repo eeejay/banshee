@@ -57,61 +57,64 @@ namespace Banshee.Podcasting.Data
         Paused = 9
     }
 
-    public class PodcastItem
+    public class PodcastItem : DatabaseTrackInfo
     {
-        [DatabaseColumn ("New", Constraints = DatabaseColumnConstraints.NotNull)]    
-        private int _new;
-        private int position;
-             
-        private IFeedItem item;
-        private long feedItemID;      
-        
-        private PodcastFeed feed;
-      
-        private int trackID;
-        private DatabaseTrackInfo track;
-        
-        private static BansheeModelProvider<PodcastItem> provider;
-        
-        public static BansheeModelProvider<PodcastItem> Provider {
+        private static BansheeModelProvider<PodcastItem> provider = new DatabaseTrackModelProvider<PodcastItem> (ServiceManager.DbConnection);
+        public static new BansheeModelProvider<PodcastItem> Provider {
             get { return provider; }
         }
+        
+        private bool @new;
+        private int position;
+        private long item_id;
 
-        public PodcastFeed Feed {
-            get { return feed; }
-            internal set { feed = value; }
+        /*private static BansheeModelProvider<PodcastItem> provider;
+        public new static BansheeModelProvider<PodcastItem> Provider {
+            get { return provider; }
+        }*/
+
+#region Properties
+
+        public Feed Feed {
+            get { return item.Feed; }
         }
         
-        public IFeedItem Item {
-            get { return item; }
-            internal set {
-                if (value != null) {
-                    item = value;
-                    feedItemID = item.LocalID;                    
-                } else {
-                    item = null;
-                    feedItemID = 0;
+        private FeedItem item;
+        public FeedItem Item {
+            get {
+                if (item == null && item_id > 0) {
+                    item = FeedItem.Provider.FetchSingle (item_id);
                 }
+                return item;
             }
+            set { item = value; item_id = value.DbId; }
         }
         
-        public IFeedEnclosure Enclosure {
-            get { 
-                IFeedEnclosure ret = null;
-            
-                if (item != null) {
-                    ret = item.Enclosure;
-                }
-                
-                return ret;
-            }
+        public bool New {
+            get { return @new; }
+            set { @new = value; }
+        }
+        
+        public int Position {
+            get { return position; }
+            set { position = value; }
+         }
+        
+        [DatabaseColumn ("ExternalID")]
+        public long ItemID {
+            get { return item_id; }
+            set { item_id = value; }
+        }
+        
+        public FeedEnclosure Enclosure {
+            get { return (item == null) ? null : item.Enclosure; }
         }
 
         public PodcastItemActivity Activity {
             get {
                 PodcastItemActivity ret = PodcastItemActivity.None;
             
-                if (Track != null) {
+                /*if (Track != null) {
                     if (ServiceManager.PlayerEngine.CurrentTrack == Track) {
                         if (ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Playing) {
                             ret = PodcastItemActivity.Playing;
@@ -146,40 +149,71 @@ namespace Banshee.Podcasting.Data
                         ret = PodcastItemActivity.DownloadPaused;
                         break;                        
                     }
-                }
+                }*/
                 
                 return ret;
             }
         }
+
+#endregion
+
+#region Constructors
+    
+        public PodcastItem () : base ()
+        {
+        }
         
-        public string Title {
+        public PodcastItem (FeedItem feed_item) : base ()
+        {
+            Item = feed_item;
+        }
+
+#endregion
+
+        public void Delete ()
+        {
+            Provider.Delete (this);
+            //feed.Delete ();
+        }
+
+        public static void DeleteWithFeedId (long feed_id)
+        {
+            /*PodcastItem item = Provider.FetchFirstMatching (String.Format (
+                "primarysourceid = {0} and externalid = {1}", primary_id, feed_id
+            ));
+
+            if (item != null) {
+                item.Delete ();
+            }*/
+        }
+
+        /*public string Title {
             get { return item.Title; }
         }
         
         public string PodcastTitle {
-            get { return item.Parent.Title; }
+            get { return item.Feed.Title; }
         }
         
+        [VirtualDatabaseColumn ("PubDate", "PodcastItems", "TrackID", "TrackID")]
         public DateTime PubDate {
-            get { return item.PubDate.ToLocalTime (); }
+            get { return item.PubDate; }
+            set { item.PubDate = value; }
         }
-
-        // drr...  I know.  FeedItemID should be the primary key, but, it's a 
-        // long and sqlite is throwing a hissy fit, I'll look into it 
-        // again later when time isn't short.
-        private int id = 0;
-        [DatabaseColumn ("ID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
-        private int ID {
-            get { return id; }
-            set { id = value; }
+        
+        [DatabaseColumn]
+        public string Author {
+            get { return item.Author; }
+            set { item.Author = value; }
         }
-
+        
         [DatabaseColumn ("FeedItemID", Constraints = DatabaseColumnConstraints.NotNull)]
         public long FeedItemID {
             get { return feedItemID; }
             private set { feedItemID = value; }
         }
 
+        [DatabaseColumn ("New", Constraints = DatabaseColumnConstraints.NotNull)]   
         public bool New {
             get { return (_new != 0) ? true : false; }
             set { _new = (value) ? 1 : 0; }
@@ -191,120 +225,6 @@ namespace Banshee.Podcasting.Data
             private set { 
                 position = (value < 0) ? 0 : value;
             }
-        }        
-
-        [DatabaseColumn ("TrackID", Constraints = DatabaseColumnConstraints.NotNull)]
-        public int TrackID {
-            get { return trackID; }
-            private set { trackID = value; }
-        }
-        
-        public DatabaseTrackInfo Track {
-            get {  
-                if (track == null && trackID != 0) {
-                    Console.WriteLine ("Fetching Track:  {0}", trackID);
-                    track = DatabaseTrackInfo.Provider.FetchSingle (trackID);
-                }             
-                
-                return track;
-            }
-            
-            set {
-                if (value != null) {
-                    track = value;
-                    trackID = track.TrackId;                    
-                } else {
-                    track = null;
-                    trackID = 0;
-                }
-            }
-        }
-
-        static PodcastItem ()
-        {
-            try {
-                if (!ServiceManager.DbConnection.TableExists ("PodcastItems")) {
-                    ServiceManager.DbConnection.Execute (@"
-                        CREATE TABLE PodcastItems (
-                            ID         INTEGER PRIMARY KEY,
-                            FeedItemID INTEGER NOT NULL DEFAULT 0,
-                            TrackID    INTEGER NOT NULL DEFAULT 0,
-                            New        INTEGER NOT NULL DEFAULT 0,
-                            Position   INTEGER NOT NULL DEFAULT 0
-                        );
-                        
-                        CREATE INDEX podcast_item_id_index ON PodcastItems(ID);                    
-                        CREATE INDEX feed_item_id_index ON PodcastItems(FeedItemID);
-                        CREATE INDEX track_id_index ON PodcastItems(TrackID);
-                    ");
-                }
-                
-                provider = new BansheeModelProvider<PodcastItem> (
-                    ServiceManager.DbConnection, "PodcastItems"
-                );   
-            } catch (Exception e) { Console.WriteLine (e.Message); throw; }
-        }   
-
-        public PodcastItem ()
-        {
-        }
-
-        public PodcastItem (IFeedItem item)
-        {
-            if (item == null) {
-                throw new ArgumentNullException ("item");                
-            }
-
-            Item = item;
-        }
-        
-        public void Save ()
-        {
-            provider.Save (this);
-        }  
-        
-        public void Delete () 
-        {
-            PodcastItem.Delete (this);
-        }
-        
-        private static string deleteBaseQuery = "DELETE FROM PodcastItems WHERE ID ";
-        
-        public static void Delete (PodcastItem pi)
-        {
-            if (pi.ID != 0) {
-                ServiceManager.DbConnection.Execute (
-                    new HyenaSqliteCommand (
-                        deleteBaseQuery + "= ?", pi.ID
-                    )
-                );
-            }  
-        }        
-        
-        public static void Delete (IEnumerable<PodcastItem> pis)
-        {
-            List<int> piids = new List<int> ();
-        
-            foreach (PodcastItem pi in pis) {                    
-                if (pi.ID != 0) {
-                    piids.Add (pi.ID);
-                }
-            }
-            
-            StringBuilder builder = new StringBuilder (deleteBaseQuery + "IN (");
-            
-            if (piids.Count > 0) {
-                foreach (int id in piids) {
-                    builder.AppendFormat ("{0},", id);
-                }
-                
-                builder.Remove (builder.Length-1, 1);
-                builder.Append (");");
-                
-                ServiceManager.DbConnection.Execute (
-                    new HyenaSqliteCommand (builder.ToString ())
-                );                
-            }
-        }
+        }        */
     }
 }

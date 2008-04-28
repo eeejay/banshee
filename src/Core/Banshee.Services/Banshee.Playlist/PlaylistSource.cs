@@ -290,10 +290,11 @@ namespace Banshee.Playlist
             }
         }
 
-        public static IEnumerable<PlaylistSource> LoadAll ()
+        public static IEnumerable<PlaylistSource> LoadAll (int primary_id)
         {
             using (IDataReader reader = ServiceManager.DbConnection.Query (
-                "SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID FROM CorePlaylists WHERE Special = 0")) {
+                @"SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID FROM CorePlaylists 
+                    WHERE Special = 0 AND PrimarySourceID = ?", primary_id)) {
                 while (reader.Read ()) {
                     yield return new PlaylistSource (
                         reader[1] as string, Convert.ToInt32 (reader[0]),

@@ -78,36 +78,74 @@ namespace Banshee.Sources
             DatabaseSourceInitialize ();
         }
 
+        protected virtual bool HasArtistAlbum {
+            get { return true; }
+        }
+
+        protected DatabaseTrackListModel DatabaseTrackModel {
+            get {
+                return track_model ?? track_model = new DatabaseTrackListModel (ServiceManager.DbConnection, TrackProvider);
+            }
+            set { track_model = value; }
+        }
+
+        private IDatabaseTrackModelCache track_cache;
+        protected IDatabaseTrackModelCache TrackCache {
+            get {
+                return track_cache ?? track_cache = new DatabaseTrackModelCache<DatabaseTrackInfo> (
+                    ServiceManager.DbConnection, UniqueId, DatabaseTrackModel, TrackProvider);
+            }
+            set { track_cache = value; }
+        }
+
+
+        private DatabaseTrackModelProvider<DatabaseTrackInfo> track_provider;
+        protected DatabaseTrackModelProvider<DatabaseTrackInfo> TrackProvider {
+            get {
+                return track_provider ?? track_provider = new DatabaseTrackModelProvider<DatabaseTrackInfo> (
+                    ServiceManager.DbConnection
+                );
+            }
+        }
+
         private void DatabaseSourceInitialize ()
         {
-            track_model = new DatabaseTrackListModel (ServiceManager.DbConnection, UniqueId);
-            artist_model = new DatabaseArtistListModel (track_model, ServiceManager.DbConnection, UniqueId);
-            album_model = new DatabaseAlbumListModel (track_model, artist_model, ServiceManager.DbConnection, UniqueId);
+            InitializeTrackModel ();
+
+            if (HasArtistAlbum) {
+                artist_model = new DatabaseArtistListModel (DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
+                album_model = new DatabaseAlbumListModel (DatabaseTrackModel, artist_model, ServiceManager.DbConnection, UniqueId);
+            }
+
             reload_limiter = new RateLimiter (RateLimitedReload);
+        }
+
+        protected virtual void InitializeTrackModel ()
+        {
         }
 
 #region Public Properties
 
         public override int Count {
-            get { return track_model.UnfilteredCount; }
+            get { return DatabaseTrackModel.UnfilteredCount; }
         }
 
         public override int FilteredCount {
-            get { return track_model.Count; }
+            get { return DatabaseTrackModel.Count; }
         }
 
         public TimeSpan Duration {
-            get { return track_model.Duration; }
+            get { return DatabaseTrackModel.Duration; }
         }
 
         public long FileSize {
-            get { return track_model.FileSize; }
+            get { return DatabaseTrackModel.FileSize; }
         }
 
         public override string FilterQuery {
             set {
                 base.FilterQuery = value;
-                track_model.Filter = FilterQuery;
+                DatabaseTrackModel.Filter = FilterQuery;
                 ThreadAssist.SpawnFromMain (delegate {
                     Reload ();
                 });
@@ -131,11 +169,11 @@ namespace Banshee.Sources
         }
 
         public override string TrackModelPath {
-            get { return DBusServiceManager.MakeObjectPath (track_model); }
+            get { return DBusServiceManager.MakeObjectPath (DatabaseTrackModel); }
         }
 
         public TrackListModel TrackModel {
-            get { return track_model; }
+            get { return DatabaseTrackModel; }
         }
         
         public AlbumListModel AlbumModel {
@@ -167,7 +205,7 @@ namespace Banshee.Sources
         protected void RateLimitedReload ()
         {
             lock (track_model) {
-                track_model.Reload ();
+                DatabaseTrackModel.Reload ();
                 OnUpdated ();
             }
         }
@@ -353,11 +391,12 @@ namespace Banshee.Sources
             }
         }
 
-        protected void AfterInitialized ()
+        protected virtual void AfterInitialized ()
         {
-            track_model.Initialize (artist_model, album_model);
+            DatabaseTrackModel.Initialize (TrackCache, artist_model, album_model);
 
             ThreadAssist.SpawnFromMain (delegate {
+                // TODO delay or get rid of this reload altogether
                 Reload ();
                 OnSetupComplete ();
             });

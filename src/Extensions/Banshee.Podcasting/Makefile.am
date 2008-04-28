@@ -4,7 +4,6 @@ LINK = $(REF_EXTENSION_PODCASTING)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
-	Banshee.Podcasting.Data/PodcastFeed.cs \
 	Banshee.Podcasting.Data/PodcastItem.cs \
 	Banshee.Podcasting.Gui/DownloadManager/DownloadManagerInterface.cs \
 	Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs \

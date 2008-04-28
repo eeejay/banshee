@@ -34,6 +34,8 @@ using Mono.Unix;
 using Banshee.Gui;
 using Banshee.Base;
 
+using Migo.Syndication;
+
 using Banshee.Podcasting;
 using Banshee.Podcasting.Data;
 
@@ -45,13 +47,12 @@ namespace Banshee.Podcasting.Gui
         private Gtk.AccelGroup accelGroup;
         private SyncPreferenceComboBox syncCombo;        
 
-
         public string Url {
             get { return url_entry.Text; }
             set { url_entry.Text = value; }
         }
 
-        public SyncPreference SyncPreference
+        public FeedAutoDownload SyncPreference
         {
             get { return syncCombo.ActiveSyncPreference; }
         }

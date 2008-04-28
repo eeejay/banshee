@@ -33,36 +33,34 @@ namespace Migo.Syndication
 {    
     public class FeedItemEventArgs : FeedEventArgs
     {
-        private readonly IFeedItem item;
-        private readonly IEnumerable<IFeedItem> items;
+        private readonly FeedItem item;
+        private readonly IEnumerable<FeedItem> items;
         
-        public IFeedItem Item
-        {
+        public FeedItem Item {
             get { return item; }
         }
         
-        public IEnumerable<IFeedItem> Items
-        {
+        public IEnumerable<FeedItem> Items {
             get { return items; }   
         }
         
-        public FeedItemEventArgs (IFeed feed, IFeedItem item) : this (feed, item, null) 
+        public FeedItemEventArgs (Feed feed, FeedItem item) : this (feed, item, null) 
         {
             if (item == null) {
             	throw new ArgumentNullException ("item");
             }        
         }
         
-        public FeedItemEventArgs (IFeed feed, IEnumerable<IFeedItem> items) : this (feed, null, items) 
+        public FeedItemEventArgs (Feed feed, IEnumerable<FeedItem> items) : this (feed, null, items) 
         {
             if (items == null) {
             	throw new ArgumentNullException ("items");
             }        
         }
         
-        private FeedItemEventArgs (IFeed feed, 
-                                   IFeedItem item, 
-                                   IEnumerable<IFeedItem> items) : base (feed)
+        private FeedItemEventArgs (Feed feed, 
+                                   FeedItem item, 
+                                   IEnumerable<FeedItem> items) : base (feed)
         {
             this.item = item;
             this.items = items;

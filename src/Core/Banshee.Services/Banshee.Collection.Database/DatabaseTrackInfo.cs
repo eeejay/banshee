@@ -37,7 +37,6 @@ using Banshee.Base;
 using Banshee.Configuration.Schema;
 using Banshee.Database;
 using Banshee.Sources;
-using Banshee.IO;
 using Banshee.ServiceStack;
 
 // Disabling "is never used" warnings here because there are a lot
@@ -146,10 +145,11 @@ namespace Banshee.Collection.Database
             }
         }
         
-        [DatabaseColumn ("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
         private int track_id;
+        [DatabaseColumn ("TrackID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
         public int TrackId {
             get { return track_id; }
+            protected set { track_id = value; }
         }
 
         private int primary_source_id;
@@ -228,7 +228,7 @@ namespace Banshee.Collection.Database
         
         private string uri_field;
         [DatabaseColumn ("Uri")]
-        private string UriField {
+        protected string UriField {
             get {
                 if (uri_fields_dirty) {
                     PrimarySource.UriToFields (Uri, out uri_type, out uri_field);
@@ -245,7 +245,7 @@ namespace Banshee.Collection.Database
         private bool uri_type_set;
         private TrackUriType uri_type;
         [DatabaseColumn ("UriType")]
-        private TrackUriType UriType {
+        protected TrackUriType UriType {
             get {
                 if (uri_fields_dirty) {
                     PrimarySource.UriToFields (Uri, out uri_type, out uri_field);

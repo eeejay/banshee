@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 
 using Hyena.Data;
+using Migo.Syndication;
 using Banshee.Podcasting.Data;
 
 namespace Banshee.Podcasting.Gui
@@ -39,109 +40,5 @@ namespace Banshee.Podcasting.Gui
         public const string PodcastTitle = "PodcastTitle";
         public const string PubDate = "PubDate";
         public const string Title = "Title";        
-    }
-
-    public class PodcastItemModel : FilterableListModel<PodcastItem>
-    {      
-        public PodcastItemModel ()
-        {
-        }
-        
-        public void FilterOnFeed (PodcastFeed feed)
-        {
-            if (feed == null || feed == PodcastFeed.All) {
-                Filter = null;
-            } else {
-                Filter = delegate (PodcastItem item) {
-                    return (item.Feed.FeedID == feed.FeedID);
-                };            
-            }
-        }
-        
-        public void FilterOnFeeds (ICollection<PodcastFeed> feeds)
-        {
-            if (feeds != null) {
-                Filter = delegate (PodcastItem item) {
-                    return (feeds.Contains (item.Feed));
-                };                           
-            } else {
-                Filter = null;
-            }
-        }       
-        
-        public override void Sort ()
-        {
-            lock (SyncRoot) {
-                if (SortColumn == null) {
-                    return;
-                }
-                
-                switch (SortColumn.SortKey) {
-                case PodcastItemSortKeys.PodcastTitle:
-                    List.Sort (new PodcastTitleComparer (SortColumn.SortType));
-                    break;
-                case PodcastItemSortKeys.PubDate:
-                    List.Sort (new PubDateComparer (SortColumn.SortType));
-                    break;
-                case PodcastItemSortKeys.Title:
-                    List.Sort (new TitleComparer (SortColumn.SortType));
-                    break;                    
-                }  
-            }
-        }
-        
-        private class PodcastTitleComparer : SortTypeComparer<PodcastItem>
-        {
-            public PodcastTitleComparer (SortType type) : base (type)
-            {
-            }
-            
-            public override int Compare (PodcastItem lhs, PodcastItem rhs)
-            {
-                int ret = String.Compare (lhs.PodcastTitle, rhs.PodcastTitle);
-                
-                // Just incase two podcasts have the same title...
-                // found this when I tinyurl'd a feed.
-                if (ret == 0) {
-                    ret = String.Compare (
-                        lhs.Item.Parent.Url, rhs.Item.Parent.Url
-                    );
-                }
-
-                if (ret == 0) {
-                    ret = DateTime.Compare (rhs.PubDate, lhs.PubDate);
-                } else if (SortType == SortType.Ascending) {
-                    ret *= (-1);
-                }
-                
-                return ret;
-            }
-        }
-        
-        private class PubDateComparer : SortTypeComparer<PodcastItem>
-        {
-            public PubDateComparer (SortType type) : base (type)
-            {
-            }
-            
-            public override int Compare (PodcastItem lhs, PodcastItem rhs)
-            {
-                int ret = DateTime.Compare (lhs.PubDate, rhs.PubDate);
-                return (SortType == SortType.Ascending) ? ret * (-1) : ret;
-            }
-        }        
-        
-        private class TitleComparer : SortTypeComparer<PodcastItem>
-        {
-            public TitleComparer (SortType type) : base (type)
-            {
-            }
-            
-            public override int Compare (PodcastItem lhs, PodcastItem rhs)
-            {
-                int ret = String.Compare (lhs.Title, rhs.Title);
-                return (SortType == SortType.Ascending) ? ret * (-1) : ret;
-            }
-        }        
     }
 }

@@ -41,6 +41,7 @@ using Banshee.Sources.Gui;
 using Banshee.ServiceStack;
 
 using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.Collection.Gui;
 
 using Banshee.Podcasting.Data;
@@ -83,10 +84,6 @@ namespace Banshee.Podcasting.Gui
  	
         public bool SetSource (ISource source)
         {
-            bool ret = false;
-            
-            Console.WriteLine ("SetSource Called");
-            
             PodcastSource ps = source as PodcastSource;
             
             if (ps != null) {
@@ -99,18 +96,16 @@ namespace Banshee.Podcasting.Gui
                 itemView.HeaderVisible = true;
                 
                 feedView.SetModel (ps.FeedModel);
-                itemView.SetModel (ps.ItemModel);
+                itemView.SetModel (ps.TrackModel as PodcastListModel);
                 
-                ret = true;
+                return true;
             }
             
-            return ret;             
+            return false;
         }
         
         public void ResetSource ()
         {
-            Console.WriteLine ("ResetSource Called");
-
             SaveState ();           
 
             feedView.SetModel (null);
@@ -125,8 +120,6 @@ namespace Banshee.Podcasting.Gui
 
         private void InitializeWidget ()
         {
-            Console.WriteLine ("InitializeWidget Called");
-            
             itemViewColumnController = 
                 itemView.ColumnController as PersistentColumnController;
             
@@ -174,50 +167,6 @@ namespace Banshee.Podcasting.Gui
             itemCC.Save ();
         }
 
-
-        // Was going to add bookmarking but looking at the actual bookmark code
-        // it appears that the PlayerEngine needs to be worked on before a
-        // non-fucked implementation can be implemented.
-        
-        // <abortion>
-        
-        // See bookmark extension.        
-    /*        
-        private uint position;
-        private TrackInfo currentTrack;
-        
-        private TrackInfo previousPlayerEngineTrack;        
-        private void HandleEventChanged (object sender, PlayerEngineEventArgs e)
-        {
-
-        }
-        
-        private void HandleStateChanged (object sender, PlayerEngineStateArgs args)
-        {
-            if (args.State == PlayerEngineState.Playing) {
-                if (currentTrack == ServiceManager.PlayerEngine.CurrentTrack) {                
-                    if (!ServiceManager.PlayerEngine.CurrentTrack.IsLive) {
-                        // Sleep in 5ms increments for at most 250ms waiting for CanSeek to be true
-                        int count = 0;
-                        while (count < 100 && !ServiceManager.PlayerEngine.CanSeek) {
-                            System.Threading.Thread.Sleep (5);
-                            count++;
-                        }
-                    }
-                    
-                    if (ServiceManager.PlayerEngine.CanSeek) {
-                        Console.WriteLine (position);
-                        ServiceManager.PlayerEngine.Position = position;
-                    }
-                } else if (currentTrack == previousPlayerEngineTrack) {
-                    
-                }
-                
-                previousPlayerEngineTrack = ServiceManager.PlayerEngine.CurrentTrack;                 
-            }
-        }        
-        // </abortion>
-    */
         public static readonly SchemaEntry<int> VPanedPositionSchema = new SchemaEntry<int> (
             "plugins.podcasting", "vpaned_position", 120, "VPaned Position", ""
         );     

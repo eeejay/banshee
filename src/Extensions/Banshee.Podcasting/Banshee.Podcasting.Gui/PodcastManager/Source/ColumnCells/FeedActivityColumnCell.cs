@@ -34,6 +34,7 @@ using Gtk;
 using Cairo;
 
 using Hyena.Data.Gui;
+using Migo.Syndication;
 
 using Banshee.Gui;
 using Banshee.Podcasting.Data;
@@ -42,8 +43,7 @@ namespace Banshee.Podcasting.Gui
 {
     public class FeedActivityColumnCell : PixbufColumnCell
     {
-        Dictionary<PodcastFeedActivity,Pixbuf> pixbufs = 
-            new Dictionary<PodcastFeedActivity,Pixbuf> ();
+        Dictionary<PodcastFeedActivity, Pixbuf> pixbufs = new Dictionary<PodcastFeedActivity, Pixbuf> ();
     
         public FeedActivityColumnCell (string property) : base (property)
         {
@@ -67,29 +67,20 @@ namespace Banshee.Podcasting.Gui
             
             Gtk.Image pp = new Gtk.Image ();
 
-            pixbufs[PodcastFeedActivity.Updating] = 
-                pp.RenderIcon (Stock.Refresh, IconSize.Menu, "");
-            
-            pixbufs[PodcastFeedActivity.UpdateFailed] =
-                pp.RenderIcon (Stock.DialogError, IconSize.Menu, "");
-            
-            pixbufs[PodcastFeedActivity.ItemsDownloading] =
-                pp.RenderIcon (Stock.GoForward, IconSize.Menu, "");
+            pixbufs[PodcastFeedActivity.Updating] = pp.RenderIcon (Stock.Refresh, IconSize.Menu, String.Empty);
+            pixbufs[PodcastFeedActivity.UpdateFailed] = pp.RenderIcon (Stock.DialogError, IconSize.Menu, String.Empty);
+            pixbufs[PodcastFeedActivity.ItemsDownloading] = pp.RenderIcon (Stock.GoForward, IconSize.Menu, String.Empty);
             
             pp.Sensitive = false;
-            pixbufs[PodcastFeedActivity.ItemsQueued] = 
-                pp.RenderIcon (Stock.GoForward, IconSize.Menu, "");
+            pixbufs[PodcastFeedActivity.ItemsQueued] = pp.RenderIcon (Stock.GoForward, IconSize.Menu, String.Empty);
         }
         
-        public override void Render (CellContext context, 
-                                     StateType state, 
-                                     double cellWidth, 
-                                     double cellHeight)
+        public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
             PodcastFeedActivity bound = (PodcastFeedActivity)BoundObject;
             Pixbuf = (pixbufs.ContainsKey (bound)) ? pixbufs[bound] : null;
             
             base.Render (context, state, cellWidth, cellHeight);
         }
-    }   
+    }
 }

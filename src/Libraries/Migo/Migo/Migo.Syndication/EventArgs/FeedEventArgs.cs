@@ -32,14 +32,12 @@ namespace Migo.Syndication
 {    
     public class FeedEventArgs : EventArgs
     {
-        private readonly IFeed feed;
-        
-        public IFeed Feed
-        {
+        private readonly Feed feed;
+        public Feed Feed {
             get { return feed; }   
         }
         
-        public FeedEventArgs (IFeed feed) 
+        public FeedEventArgs (Feed feed) 
         {
             if (feed == null) {
             	throw new ArgumentNullException ("feed");

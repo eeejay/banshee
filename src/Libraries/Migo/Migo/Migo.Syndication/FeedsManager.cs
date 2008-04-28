@@ -42,41 +42,41 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-using Migo.DownloadCore;
+using Hyena;
+using Hyena.Data.Sqlite;
 
+using Migo.DownloadCore;
 using Migo.TaskCore;
 using Migo.TaskCore.Collections;
-
 using Migo.Syndication.Data;
 
 namespace Migo.Syndication
 {
-    public class FeedsManager : IFeedsManager, IDisposable
+    public class FeedsManager : IDisposable
     {        
         private bool disposed;        
         
-        private bool ticDirty;
+        private bool ticDirty = true;
         private long totalItemCount;
         
-        private bool tuicDirty;
+        private bool tuicDirty = true;
         private long totalUnreadItemCount;
         
         private List<Feed> feeds;
-        private List<Feed> queuedFeeds;
+        private List<Feed> queued_feeds;
 
-        private IDbConnection conn;
-        private AsyncCommandQueue<ICommand> commandQueue;
+        private AsyncCommandQueue<ICommand> command_queue;
         
-        private Dictionary<long,Feed> idFeedDict;
-        private Dictionary<string,Feed> urlFeedDict;
+        private Dictionary<long, Feed> id_feed_map;
+        private Dictionary<string, Feed> url_feed_map;
         
-        private Dictionary<FeedEnclosure,HttpFileDownloadTask> queuedDownloads;
+        private Dictionary<FeedEnclosure, HttpFileDownloadTask> queued_downloads;
         
-        private ManualResetEvent downloadHandle;
-        private DownloadManager downloadManager;
+        private ManualResetEvent download_handle;
+        private DownloadManager download_manager;
         
-        private TaskList<FeedUpdateTask> updateList;
-        private TaskGroup<FeedUpdateTask> updateGroup;
+        private TaskList<FeedUpdateTask> update_list;
+        private TaskGroup<FeedUpdateTask> update_group;
         
         private readonly object sync = new object (); 
         
@@ -92,10 +92,17 @@ namespace Migo.Syndication
         public event EventHandler<FeedEventArgs> FeedUrlChanged;        
         
         public event EventHandler<FeedItemEventArgs> FeedItemAdded;
-        public event EventHandler<FeedItemEventArgs> FeedItemRemoved;           
+        public event EventHandler<FeedItemEventArgs> FeedItemRemoved;
         
-        public FeedBackgroundSyncStatus BackgroundSyncStatus 
-        {
+        internal static FeedsManager Instance;
+        
+        internal AsyncCommandQueue<ICommand> CommandQueue {
+            get { return command_queue; }
+        }
+        
+#region Public Properties
+
+        public FeedBackgroundSyncStatus BackgroundSyncStatus {
             get {
                 lock (sync) {
                     return FeedBackgroundSyncStatus.Disabled;
@@ -103,44 +110,36 @@ namespace Migo.Syndication
             }
         }        
         
-        public long DefaultInterval 
-        {
+        // TODO interval for what, and in what unit?
+        public long DefaultInterval {
             get { lock (sync) { return 15; } }
             set { throw new NotImplementedException ("DefaultInterval"); }
         }
 
-        public DownloadManager DownloadManager
-        {
-            get { return downloadManager; }
+        public DownloadManager DownloadManager {
+            get { return download_manager; }
         }
         
-        public ReadOnlyCollection<IFeed> Feeds 
-        {             
+        private ReadOnlyCollection<Feed> ro_feeds;
+        public ReadOnlyCollection<Feed> Feeds {             
             get { 
                 lock (sync) {
-                    // My god, would you look at that abortion.  No wonder 
-                    // they wrapped LINQ around it.
-                    // UPDATE to use LINQ ASAP.
-                    return feeds.ConvertAll (
-                        new Converter<Feed,IFeed> (delegate (Feed f) { return f as IFeed; })
-                    ).AsReadOnly ();
+                    return ro_feeds ?? ro_feeds = new ReadOnlyCollection<Feed> (feeds);
                 }
-            } 
+            }
         }
 
-        public long ItemCountLimit 
-        {
+        public long ItemCountLimit {
             get { lock (sync) { return -1; } }
         }        
         
-        public long TotalItemCount
-        { 
+        public long TotalItemCount { 
             get {
                 lock (sync) {
                     if (ticDirty) {
                     	totalItemCount = 0;
                         
-                        foreach (IFeed f in feeds) {
+                        foreach (Feed f in feeds) {
                             totalItemCount += f.ItemCount;
                     	}
                         
@@ -152,14 +151,13 @@ namespace Migo.Syndication
             }
         }
                 
-        public long TotalUnreadItemCount 
-        { 
+        public long TotalUnreadItemCount {
             get {        
                 lock (sync) {
                     if (tuicDirty) {
                     	totalUnreadItemCount = 0;
                         
-                        foreach (IFeed f in feeds) {
+                        foreach (Feed f in feeds) {
                             totalUnreadItemCount += f.UnreadItemCount;
                     	}
                         
@@ -171,98 +169,67 @@ namespace Migo.Syndication
             }
         }
         
-        internal AsyncCommandQueue<ICommand> CommandQueue {
-            get { return commandQueue; }
-        }
+#endregion
+
+#region Constructor
         
-        public FeedsManager (string dbPath, DownloadManager manager)
+        public FeedsManager (HyenaSqliteConnection connection, DownloadManager manager)
         {
-            if (String.IsNullOrEmpty (dbPath)) {
-                throw new ArgumentException ("dbPath is null or empty.");
+            if (connection == null) {
+                throw new ArgumentException ("connection is null");
             } else if (manager == null) {
                 throw new ArgumentNullException ("manager");
             }
-                        
-            try {
-                conn = SQLiteUtility.GetNewConnection (dbPath);
-                conn.Open ();
-                
-                DatabaseManager.Init (conn);
-                
-                EnclosuresTableManager.Init ();
-                ItemsTableManager.Init ();
-                FeedsTableManager.Init ();                
-
-                feeds = new List<Feed> ();
-                queuedFeeds = new List<Feed> ();
-                
-                idFeedDict = new Dictionary<long,Feed> ();
-                urlFeedDict = new Dictionary<string,Feed> ();
-                
-                ticDirty = tuicDirty = true;  
-
-                downloadHandle = new ManualResetEvent (true);
-                
-                downloadManager = manager;
-
-                downloadManager.Tasks.TaskAdded += OnDownloadTaskAdded;
-                downloadManager.Tasks.TaskRemoved += OnDownloadTaskRemoved;
-                
-                downloadManager.Group.TaskStatusChanged += OnDownloadTaskStatusChangedHandler;
-
-                queuedDownloads = new Dictionary<FeedEnclosure,HttpFileDownloadTask> ();
-                
-                updateList = new TaskList<FeedUpdateTask> ();
-                updateGroup = new TaskGroup<FeedUpdateTask> (4, updateList);
-                
-                updateGroup.TaskStopped += TaskStoppedHandler;
-                updateGroup.TaskAssociated += TaskAssociatedHandler;
-                
-                foreach (Feed f in FeedsTableManager.GetAllFeeds (this)) {
-                    Associate (f);
-                }
-                
-                commandQueue = new AsyncCommandQueue<ICommand> ();
-            } catch (Exception e) {
-                Console.WriteLine (e.Message);
-                Console.WriteLine (e.StackTrace);
-                throw new ApplicationException ("Unable to initialize FeedsManager");   
-            } 
-            Console.WriteLine ("FM - CON - END");
-        }
-        
-        public void AsyncSyncAll ()
-        {
-            List<Feed> allFeeds = null;
             
-            lock (sync) {
-                if (feeds.Count > 0) {
-                    allFeeds = new List<Feed> (this.feeds);
-                }
-            }
+            // Hack to work around Feeds being needy and having to call all our internal methods, instead
+            // of us just listening for their events.
+            Instance = this;
+            
+            download_manager = manager;
 
-            if (allFeeds != null) {
-                foreach (IFeed f in allFeeds) {
-                    f.AsyncDownload ();
-                }
-            }
+            FeedEnclosure.Provider = new SqliteModelProvider<FeedEnclosure> (connection, "PodcastEnclosures");
+            FeedItem.Provider = new SqliteModelProvider<FeedItem> (connection, "PodcastItems");
+            Migo.Syndication.Feed.Provider = new SqliteModelProvider<Migo.Syndication.Feed> (connection, "PodcastSyndications");
+            
+            feeds = new List<Feed> ();
+            queued_feeds = new List<Feed> ();
+            id_feed_map = new Dictionary<long, Feed> ();
+            url_feed_map = new Dictionary<string, Feed> ();
+
+            download_handle = new ManualResetEvent (true);
+
+            download_manager.Tasks.TaskAdded += OnDownloadTaskAdded;
+            download_manager.Tasks.TaskRemoved += OnDownloadTaskRemoved;            
+            download_manager.Group.TaskStatusChanged += OnDownloadTaskStatusChangedHandler;
+
+            queued_downloads = new Dictionary<FeedEnclosure, HttpFileDownloadTask> ();
+            update_list = new TaskList<FeedUpdateTask> ();
+            update_group = new TaskGroup<FeedUpdateTask> (4, update_list);
+            update_group.TaskStopped += TaskStoppedHandler;
+            update_group.TaskAssociated += TaskAssociatedHandler;
+            
+            /*foreach (Feed feed in Feed.Provider.FetchAll ()) {
+                Console.WriteLine ("Adding feed {0}", feed.Url);
+                AddFeed (feed);
+            }*/
+            
+            command_queue = new AsyncCommandQueue<ICommand> ();
         }
         
-        public void BackgroundSync (FeedBackgroundSyncAction action)
-        {
-            throw new NotImplementedException ("BackgroundSync");
-        }
-                
-        public IFeed CreateFeed (string url)
+#endregion
+
+#region Public Methods
+
+        public Feed CreateFeed (string url)
         {
             Feed feed = null;
-            string url_ = url.Trim ().TrimEnd ('/');
+            url = url.Trim ().TrimEnd ('/');
 
             lock (sync) {   
-                if (!urlFeedDict.ContainsKey (url_)) {
-                    feed = new Feed (this, url_);
-                    feed.Commit ();
-                    Associate (feed);
+                if (!url_feed_map.ContainsKey (url)) {
+                    feed = new Feed (url);
+                    feed.Save ();
+                    AddFeed (feed);
                     OnFeedAdded (feed);
                 }
             }
@@ -270,288 +237,15 @@ namespace Migo.Syndication
             return feed;
         }
         
-        public IFeed CreateFeed (string feedName, string feedUrl)
+        public HttpFileDownloadTask QueueDownload (FeedEnclosure enclosure) 
         {
-            return null;   
-        }
-
-        public void DeleteFeed (long feedID)
-        {
-            Feed feed = null;
-            
-            lock (sync) {
-                idFeedDict.TryGetValue(feedID, out feed);
-            }
-            
-            if (feed != null) {
-                DeleteFeed (idFeedDict[feedID]);
-            }                
-        }   
-          
-        public void DeleteFeed (IFeed feed)
-        {
-            if (feed == null) {
-                throw new ArgumentNullException ("feed");      	
-            } else if (!IsCuckoosEgg (feed)) {
-                feed.Delete ();
-            }
-        }
-/*        
-        public void DequeueDownloads (IEnumerable<IFeedEnclosure> enclosures) 
-        {
-            if (enclosures == null) {
-                throw new ArgumentNullException ("enclosures");
-            }
-            
-            IEnumerable<HttpFileDownloadTask> tasks =   
-                FindDownloadTasks (enclosures);
-                
-            downloadManager.RemoveDownload (tasks);
-        }
-*/
-        public void Dispose () 
-        {
-            if (SetDisposed ()) {               
-                AutoResetEvent disposeHandle = new AutoResetEvent (false);
-                Console.WriteLine ("FM - Dispose - 000");
-    
-                List<HttpFileDownloadTask> tasks = null;
-    
-                lock (sync) {
-                    if (queuedDownloads.Count > 0) {
-                        tasks = new List<HttpFileDownloadTask> (queuedDownloads.Values);
-                    }
-                }
-
-                if (tasks != null) {
-                    foreach (HttpFileDownloadTask t in tasks) {
-                        t.Stop ();
-                    }
-                    
-                    Console.WriteLine ("downloadHandle - WaitOne ()");
-                    downloadHandle.WaitOne ();
-                }
-
-                if (updateGroup != null) {
-                    updateGroup.CancelAsync ();                
-                    
-                    Console.WriteLine ("FM - Dispose - 000.5");
-                    
-                    updateGroup.Handle.WaitOne ();
-                    
-                    Console.WriteLine ("FM - Dispose - 001");
-                    
-                    updateGroup.Dispose (disposeHandle);
-                    
-                    Console.WriteLine ("FM - Dispose - 002");
-                    
-                    disposeHandle.WaitOne ();
-                    
-                    updateGroup.TaskStopped -= TaskStoppedHandler;
-                    updateGroup.TaskAssociated -= TaskAssociatedHandler;
-                    
-                    updateGroup = null;
-                    
-                    Console.WriteLine ("FM - Dispose - 003");
-                }
-               
-                updateList = null;
-                
-                Console.WriteLine ("FM - Dispose - 008");    
-                                 
-                if (downloadHandle != null) {
-                    downloadHandle.Close ();
-                    downloadHandle = null;
-                }                
-                
-                Console.WriteLine ("FM - Dispose - 007");                    
-                
-                if (downloadManager != null) {
-                    downloadManager.Tasks.TaskAdded -= OnDownloadTaskAdded;
-                    downloadManager.Tasks.TaskRemoved -= OnDownloadTaskRemoved; 
-                    downloadManager = null;
-                }                          
-
-                Console.WriteLine ("FM - Dispose - 004");                  
-
-                if (commandQueue != null) {
-                    commandQueue.Dispose ();
-                    commandQueue = null;
-                }
-                
-                Console.WriteLine ("FM - Dispose - 005");
-                
-                DatabaseManager.Dispose ();
-                
-                if (conn != null) {
-                    conn.Close ();
-                    conn = null;
-                }              
-                
-                Console.WriteLine ("FM - Dispose - 006");                    
-                
-                disposeHandle.Close ();
-            }
-        }
-
-        public bool ExistsFeed (string url)
-        {
-            lock (sync) {
-                return urlFeedDict.ContainsKey (url);
-            }
-        }
-        
-        public bool ExistsFeed (long feedID)
-        {
-            lock (sync) {
-                return idFeedDict.ContainsKey (feedID);
-            }
-        }
-        
-        public IFeed GetFeed (long feedID)
-        {
-            Feed ret = null;
-            
-            lock (sync) {
-                idFeedDict.TryGetValue (feedID, out ret);
-            }
-            
-            return ret;
-        }
-            
-        public IFeed GetFeedByUrl (string url)
-        {
-            Feed ret = null;
-            
-            lock (sync) {
-                urlFeedDict.TryGetValue (url, out ret);
-            }
-            
-            return ret;
-        }
-        
-        public bool IsSubscribed (string url)
-        {
-            lock (sync) {
-                return urlFeedDict.ContainsKey (url); 
-            }
-        }
-
-        private void Associate (Feed feed)
-        {
-            if (feed != null && !idFeedDict.ContainsKey (feed.LocalID)) {
-                idFeedDict.Add (feed.LocalID, feed);
-                urlFeedDict.Add (feed.Url, feed);
-                feeds.Add (feed);                
-            }                 
-        }
-
-        private void Disassociate (Feed feed)
-        {
-            if (feed != null &&
-                feeds.Remove (feed)) {				
-                urlFeedDict.Remove (feed.Url);            
-                idFeedDict.Remove (feed.LocalID);                
-            }
-        }           
-        
-        private bool IsCuckoosEgg (IFeed feed)
-        {
-            bool ret = true;
-            Feed f = feed as Feed;
-            
-            if (f != null && f.Parent == this) {
-                ret = false;
-            }
-            
-            return ret;
-        }
-        
-        internal void CancelDownload (IFeedEnclosure enc)
-        {
-            lock (sync) {
-                HttpFileDownloadTask task = FindDownloadTask (enc);            
-                        
-                if (task != null) {
-                    // Look into multi-cancel later      
-                    task.CancelAsync ();
-                }            
-            }
-        }
-        
-        internal void StopDownload (IFeedEnclosure enc)
-        {   
-            lock (sync) {
-                HttpFileDownloadTask task = FindDownloadTask (enc);            
-                        
-                if (task != null) {
-                    task.Stop ();
-                }   
-            }
-        }        
-        
-        private HttpFileDownloadTask FindDownloadTask (IFeedEnclosure enc)
-        {
-            if (enc == null) {
-                throw new ArgumentNullException ("enc");
-            }
-            
-            return FindDownloadTaskImpl ((FeedEnclosure)enc);
-        }
-        
-        private HttpFileDownloadTask FindDownloadTaskImpl (FeedEnclosure enc) 
-        {
-            HttpFileDownloadTask task = null;
-            Feed parentFeed = enc.Parent.Parent as Feed;                               
-            
-            if (parentFeed != null && 
-                !IsCuckoosEgg (parentFeed) && 
-                queuedDownloads.ContainsKey (enc)) {
-                task = queuedDownloads[enc];
-            }
-            
-            return task;
-        }        
-/*        
-        private IEnumerable<HttpFileDownloadTask> FindDownloadTasks (IEnumerable<IFeedEnclosure> enclosures)
-        {            
-            ICollection<HttpFileDownloadTask> encsCol = 
-                enclosures as ICollection<HttpFileDownloadTask>;
-            
-            List<HttpFileDownloadTask> ret = (encsCol == null) ?
-                new List<HttpFileDownloadTask> () : 
-                new List<HttpFileDownloadTask> (encsCol.Count);
-            
-            HttpFileDownloadTask tmpTask = null;
-            
-            lock (sync) {
-                foreach (IFeedEnclosure enc in enclosures) {
-                    tmpTask = FindDownloadTaskImpl ((FeedEnclosure)enc);
-                    
-                    if (tmpTask != null) {
-                        ret.Add (tmpTask);
-                    }
-                }
-            }
-            
-            return ret;
-        }
-*/
-        public HttpFileDownloadTask QueueDownload (IFeedEnclosure enc) 
-        {
-            return QueueDownload (enc, true);         
+            return QueueDownload (enclosure, true);         
         }
            
-        public HttpFileDownloadTask QueueDownload (IFeedEnclosure enc, bool queue)
+        public HttpFileDownloadTask QueueDownload (FeedEnclosure enclosure, bool queue)
         {
-            if (enc == null) {
+            if (enclosure == null) {
                 throw new ArgumentNullException ("enc");
-            }
-         
-            FeedEnclosure fenc = enc as FeedEnclosure;
-            
-            if (fenc == null) {
-                throw new ArgumentException ("Must be derived from FeedEnclosure", "enc");
             }
             
             HttpFileDownloadTask task = null;       
@@ -561,15 +255,13 @@ namespace Migo.Syndication
                     return null;
                 }
                 
-                if (!queuedDownloads.ContainsKey (fenc)) {                    
-                    Feed parentFeed = enc.Parent.Parent as Feed;                    
+                if (!queued_downloads.ContainsKey (enclosure)) {                    
+                    Feed parentFeed = enclosure.Item.Feed;                    
                     
-                    if (parentFeed != null && !IsCuckoosEgg (parentFeed)) {                        
-                        task = downloadManager.CreateDownloadTask (fenc.Url, fenc);
+                    if (parentFeed != null && !IsFeedOurs (parentFeed)) {                        
+                        task = download_manager.CreateDownloadTask (enclosure.Url, enclosure);
                         //Console.WriteLine ("Task DL path:  {0}", task.LocalPath);
-                        task.Name = String.Format (
-                            "{0} - {1}", parentFeed.Title, fenc.Parent.Title
-                        );
+                        task.Name = String.Format ("{0} - {1}", parentFeed.Title, enclosure.Item.Title);
                         
                         task.Completed += OnDownloadTaskCompletedHandler;                    
                         
@@ -580,19 +272,19 @@ namespace Migo.Syndication
                         // Add a pre-association dict and move tasks to the 
                         // queued dict once they've been offically added.
                         
-                        queuedDownloads.Add (fenc, task);
+                        queued_downloads.Add (enclosure, task);
                     }                    
                 }
 
                 if (task != null && queue) {
-                    downloadManager.QueueDownload (task);                                                                    	
+                    download_manager.QueueDownload (task);                                                                    	
                 }      
             }
                        
             return task;        
         }
         
-        public IEnumerable<HttpFileDownloadTask> QueueDownloads (IEnumerable<IFeedEnclosure> encs)
+        public IEnumerable<HttpFileDownloadTask> QueueDownloads (IEnumerable<FeedEnclosure> encs)
         {
             if (encs == null) {
                 throw new ArgumentNullException ("encs");
@@ -625,65 +317,240 @@ namespace Migo.Syndication
                 }
                 
                 if (tasks.Count > 0) {
-                    downloadManager.QueueDownload (tasks);
+                    download_manager.QueueDownload (tasks);
                 }
             }
             
             return tasks;
         }
-        
-        internal void QueueUpdate (Feed feed)
+
+        // TODO remove these? not used
+        /*public void AsyncSyncAll ()
         {
-            if (feed == null) {
-                throw new ArgumentNullException ("feed");
+            List<Feed> allFeeds = null;
+            
+            lock (sync) {
+                if (feeds.Count > 0) {
+                    allFeeds = new List<Feed> (feeds);
+                }
             }
 
-            lock (sync) {
-                if (disposed) {
-                    return;
+            if (allFeeds != null) {
+                foreach (Feed f in allFeeds) {
+                    f.AsyncDownload ();
                 }
-                
-                if (!queuedFeeds.Contains (feed)) {
-                    queuedFeeds.Add (feed);
-                    lock (updateList.SyncRoot) { 
-                        updateList.Add (new FeedUpdateTask (feed));
-                    }
-                }            
-            }             
+            }
         }
         
-        internal void QueueUpdate (ICollection<Feed> feeds)
+        public void DeleteFeed (long feedID)
         {
-            if (feeds == null) {
-                throw new ArgumentNullException ("feeds");
+            Feed feed = null;
+            
+            lock (sync) {
+                idFeedDict.TryGetValue(feedID, out feed);
             }
             
-            lock (sync) {      
-                if (disposed) {
-                    return;
-                }
+            if (feed != null) {
+                DeleteFeed (idFeedDict[feedID]);
+            }                
+        }   
+          
+        public void DeleteFeed (Feed feed)
+        {
+            if (feed == null) {
+                throw new ArgumentNullException ("feed");      	
+            } else if (!IsFeedOurs (feed)) {
+                feed.Delete ();
+            }
+        }
+      
+        public void DequeueDownloads (IEnumerable<FeedEnclosure> enclosures) 
+        {
+            if (enclosures == null) {
+                throw new ArgumentNullException ("enclosures");
+            }
+            
+            IEnumerable<HttpFileDownloadTask> tasks =   
+                FindDownloadTasks (enclosures);
                 
-                List<FeedUpdateTask> tasks = null;
-                
-                if (feeds.Count > 0) {
-                    tasks = new List<FeedUpdateTask> (feeds.Count);
-                        
-                    foreach (Feed f in feeds) {
-                        if (!queuedFeeds.Contains (f)) {
-                            queuedFeeds.Add (f);
-                            tasks.Add (new FeedUpdateTask (f));
-                        }
+            downloadManager.RemoveDownload (tasks);
+        }
+        
+        public bool ExistsFeed (string url)
+        {
+            lock (sync) {
+                return urlFeedDict.ContainsKey (url);
+            }
+        }
+        
+        public bool ExistsFeed (long feedID)
+        {
+            lock (sync) {
+                return idFeedDict.ContainsKey (feedID);
+            }
+        }
+        
+        public Feed GetFeed (long feedID)
+        {
+            Feed ret = null;
+            
+            lock (sync) {
+                idFeedDict.TryGetValue (feedID, out ret);
+            }
+            
+            return ret;
+        }
+            
+        public Feed GetFeedByUrl (string url)
+        {
+            Feed ret = null;
+            
+            lock (sync) {
+                urlFeedDict.TryGetValue (url, out ret);
+            }
+            
+            return ret;
+        }
+        
+        public bool IsSubscribed (string url)
+        {
+            lock (sync) {
+                return urlFeedDict.ContainsKey (url); 
+            }
+        }*/
+
+        public void Dispose () 
+        {
+            if (SetDisposed ()) {               
+                AutoResetEvent disposeHandle = new AutoResetEvent (false);
+                Console.WriteLine ("FM - Dispose - 000");
+    
+                List<HttpFileDownloadTask> tasks = null;
+    
+                lock (sync) {
+                    if (queued_downloads.Count > 0) {
+                        tasks = new List<HttpFileDownloadTask> (queued_downloads.Values);
                     }
                 }
-                
-                if (tasks != null && tasks.Count > 0) {
-                    lock (updateList.SyncRoot) {
-                        updateList.AddRange (tasks);                  
-                    }   
+
+                if (tasks != null) {
+                    foreach (HttpFileDownloadTask t in tasks) {
+                        t.Stop ();
+                    }
+                    
+                    Console.WriteLine ("downloadHandle - WaitOne ()");
+                    download_handle.WaitOne ();
                 }
+
+                if (update_group != null) {
+                    update_group.CancelAsync ();                
+                    
+                    Console.WriteLine ("FM - Dispose - 000.5");
+                    
+                    update_group.Handle.WaitOne ();
+                    
+                    Console.WriteLine ("FM - Dispose - 001");
+                    
+                    update_group.Dispose (disposeHandle);
+                    
+                    Console.WriteLine ("FM - Dispose - 002");
+                    
+                    disposeHandle.WaitOne ();
+                    
+                    update_group.TaskStopped -= TaskStoppedHandler;
+                    update_group.TaskAssociated -= TaskAssociatedHandler;
+                    
+                    update_group = null;
+                    
+                    Console.WriteLine ("FM - Dispose - 003");
+                }
+               
+                update_list = null;
+                
+                Console.WriteLine ("FM - Dispose - 008");    
+                                 
+                if (download_handle != null) {
+                    download_handle.Close ();
+                    download_handle = null;
+                }                
+                
+                Console.WriteLine ("FM - Dispose - 007");                    
+                
+                if (download_manager != null) {
+                    download_manager.Tasks.TaskAdded -= OnDownloadTaskAdded;
+                    download_manager.Tasks.TaskRemoved -= OnDownloadTaskRemoved; 
+                    download_manager = null;
+                }                          
+
+                Console.WriteLine ("FM - Dispose - 004");                  
+
+                if (command_queue != null) {
+                    command_queue.Dispose ();
+                    command_queue = null;
+                }
+                
+                disposeHandle.Close ();
             }
-        }        
+        }
+
+#endregion
+
+#region Private Methods
+
+        private void AddFeed (Feed feed)
+        {
+            if (feed != null && !id_feed_map.ContainsKey (feed.DbId)) {
+                id_feed_map[feed.DbId] = feed;
+                url_feed_map[feed.Url] = feed;
+                feeds.Add (feed);
+            }                 
+        }
+
+        private void RemoveFeed (Feed feed)
+        {
+            if (feed != null && feeds.Remove (feed)) {
+                url_feed_map.Remove (feed.Url);            
+                id_feed_map.Remove (feed.DbId);                
+            }
+        }           
         
+        private bool IsFeedOurs (Feed feed)
+        {
+            bool ret = true;
+            Feed f = feed as Feed;
+            
+            if (f != null && f.Parent == this) {
+                ret = false;
+            }
+            
+            return ret;
+        }
+
+       
+        private HttpFileDownloadTask FindDownloadTask (FeedEnclosure enc)
+        {
+            if (enc == null) {
+                throw new ArgumentNullException ("enc");
+            }
+            
+            return FindDownloadTaskImpl ((FeedEnclosure)enc);
+        }
+        
+        private HttpFileDownloadTask FindDownloadTaskImpl (FeedEnclosure enc) 
+        {
+            HttpFileDownloadTask task = null;
+            Feed parentFeed = enc.Item.Feed as Feed;                               
+            
+            if (parentFeed != null && 
+                !IsFeedOurs (parentFeed) && 
+                queued_downloads.ContainsKey (enc)) {
+                task = queued_downloads[enc];
+            }
+            
+            return task;
+        }        
+
+
         private bool SetDisposed ()
         {
             bool ret = false;
@@ -704,12 +571,12 @@ namespace Migo.Syndication
                     
             if (enc != null) {
                 lock (sync) { 
-                    parentFeed = enc.Parent.Parent as Feed;                  
+                    parentFeed = enc.Item.Feed;                  
                     
-                    if (parentFeed != null && !IsCuckoosEgg (parentFeed) &&
-                        queuedDownloads.ContainsKey (enc)) {
-                        if (queuedDownloads.Count == 0) {
-                            downloadHandle.Reset ();
+                    if (parentFeed != null && !IsFeedOurs (parentFeed) &&
+                        queued_downloads.ContainsKey (enc)) {
+                        if (queued_downloads.Count == 0) {
+                            download_handle.Reset ();
                         }                        
                                                     
                         enc.DownloadStatus = FeedDownloadStatus.Pending;                        
@@ -763,17 +630,17 @@ namespace Migo.Syndication
                                           HttpFileDownloadTask task,
                                           bool decQueuedCount)
         {
-            if (queuedDownloads.ContainsKey (enc)) {
-                queuedDownloads.Remove (enc);    
+            if (queued_downloads.ContainsKey (enc)) {
+                queued_downloads.Remove (enc);    
                 task.Completed -= OnDownloadTaskCompletedHandler;                                            
                 
                 if (decQueuedCount) {
-                    ((Feed)enc.Parent.Parent).DecrementQueuedDownloadCount ();
+                    enc.Item.Feed.DecrementQueuedDownloadCount ();
                 }
                 
-                if (queuedDownloads.Count == 0) {
-                	if (downloadHandle != null) {
-                	    downloadHandle.Set ();                	    
+                if (queued_downloads.Count == 0) {
+                	if (download_handle != null) {
+                	    download_handle.Set ();
                 	}
                 }
             }
@@ -803,7 +670,7 @@ namespace Migo.Syndication
                         tmpEnclosure = t.UserState as FeedEnclosure;
                         
                         if (tmpEnclosure != null) {
-                            tmpParent = ((Feed)tmpEnclosure.Parent.Parent);
+                            tmpParent = tmpEnclosure.Item.Feed;
                             
                             if (!feedDict.TryGetValue (tmpParent, out tmpList)) {
                                 tmpList = new List<FeedEnclosure> ();
@@ -853,13 +720,13 @@ namespace Migo.Syndication
                 break;
             case TaskStatus.Running:
                 enc.DownloadStatus = FeedDownloadStatus.Downloading;
-                ((Feed)enc.Parent.Parent).IncrementActiveDownloadCount ();                    
+                enc.Item.Feed.IncrementActiveDownloadCount ();                    
                 break;  
             case TaskStatus.Stopped: goto case TaskStatus.Cancelled;
             }
 
             if (statusInfo.OldStatus == TaskStatus.Running) {
-                ((Feed)enc.Parent.Parent).DecrementActiveDownloadCount ();                    
+                enc.Item.Feed.DecrementActiveDownloadCount ();                    
             }
         }
 
@@ -882,8 +749,8 @@ namespace Migo.Syndication
         private void TaskAssociatedHandler (object sender, 
                                             TaskEventArgs<FeedUpdateTask> e)
         {   
-            lock (updateGroup.SyncRoot) {
-                updateGroup.Execute ();
+            lock (update_group.SyncRoot) {
+                update_group.Execute ();
             }
         }        
         
@@ -892,18 +759,170 @@ namespace Migo.Syndication
         {
             lock (sync) {
                 FeedUpdateTask fut = e.Task as FeedUpdateTask;
-                queuedFeeds.Remove (fut.Feed);
+                queued_feeds.Remove (fut.Feed);
                 
-                lock (updateList.SyncRoot) {
-                    updateList.Remove (e.Task);
+                lock (update_list.SyncRoot) {
+                    update_list.Remove (e.Task);
                 }
             }
         }
         
+        private void OnFeedItemEvent (EventHandler<FeedItemEventArgs> handler, 
+                                      FeedItemEventArgs e)
+        {
+            if (handler == null) {
+                return;
+            } else if (e == null) {
+                throw new ArgumentNullException ("e");
+            }
+            
+            command_queue.Register (
+                new EventWrapper<FeedItemEventArgs> (handler, this, e)
+            );            
+            
+            //handler (this, e);           
+        }        
+        
+        private void OnFeedEventRaised (Feed feed, EventHandler<FeedEventArgs> handler)
+        {
+            if (feed == null) {
+                throw new ArgumentNullException ("feed");	
+            }
+            
+            EventHandler<FeedEventArgs> handlerCpy = handler;
+            
+            if (handlerCpy != null) {
+                command_queue.Register (
+                    new EventWrapper<FeedEventArgs> (
+                        handler, this, new FeedEventArgs (feed)
+                    )
+                );              	
+            	//handler (this, new FeedEventArgs (feed));
+            }
+        }  
+        
+        private void OnEnclosureDownloadCompleted (HttpFileDownloadTask task)
+        {
+            EventHandler<TaskEventArgs<HttpFileDownloadTask>> handler = EnclosureDownloadCompleted;
+        
+            if (handler != null) {
+                AsyncCommandQueue<ICommand> cmdQCpy = command_queue;
+                
+                if (cmdQCpy != null) {
+                    cmdQCpy.Register (new EventWrapper<TaskEventArgs<HttpFileDownloadTask>> (
+                	    handler, this, new TaskEventArgs<HttpFileDownloadTask> (task))
+                	);
+                }        
+            }                         
+        }  
+
+        /*private IEnumerable<HttpFileDownloadTask> FindDownloadTasks (IEnumerable<FeedEnclosure> enclosures)
+        {            
+            ICollection<HttpFileDownloadTask> encsCol = 
+                enclosures as ICollection<HttpFileDownloadTask>;
+            
+            List<HttpFileDownloadTask> ret = (encsCol == null) ?
+                new List<HttpFileDownloadTask> () : 
+                new List<HttpFileDownloadTask> (encsCol.Count);
+            
+            HttpFileDownloadTask tmpTask = null;
+            
+            lock (sync) {
+                foreach (FeedEnclosure enc in enclosures) {
+                    tmpTask = FindDownloadTaskImpl ((FeedEnclosure)enc);
+                    
+                    if (tmpTask != null) {
+                        ret.Add (tmpTask);
+                    }
+                }
+            }
+            
+            return ret;
+        }*/
+
+#endregion
+
+#region Internal Methods
+        
+        internal void CancelDownload (FeedEnclosure enc)
+        {
+            lock (sync) {
+                HttpFileDownloadTask task = FindDownloadTask (enc);            
+                        
+                if (task != null) {
+                    // Look into multi-cancel later      
+                    task.CancelAsync ();
+                }            
+            }
+        }
+        
+        internal void StopDownload (FeedEnclosure enc)
+        {   
+            lock (sync) {
+                HttpFileDownloadTask task = FindDownloadTask (enc);            
+                        
+                if (task != null) {
+                    task.Stop ();
+                }   
+            }
+        }     
+        
+        internal void QueueUpdate (Feed feed)
+        {
+            if (feed == null) {
+                throw new ArgumentNullException ("feed");
+            }
+
+            lock (sync) {
+                if (disposed) {
+                    return;
+                }
+                
+                if (!queued_feeds.Contains (feed)) {
+                    queued_feeds.Add (feed);
+                    lock (update_list.SyncRoot) { 
+                        update_list.Add (new FeedUpdateTask (feed));
+                    }
+                }            
+            }             
+        }
+        
+        internal void QueueUpdate (ICollection<Feed> feeds)
+        {
+            if (feeds == null) {
+                throw new ArgumentNullException ("feeds");
+            }
+            
+            lock (sync) {      
+                if (disposed) {
+                    return;
+                }
+                
+                List<FeedUpdateTask> tasks = null;
+                
+                if (feeds.Count > 0) {
+                    tasks = new List<FeedUpdateTask> (feeds.Count);
+                        
+                    foreach (Feed f in feeds) {
+                        if (!queued_feeds.Contains (f)) {
+                            queued_feeds.Add (f);
+                            tasks.Add (new FeedUpdateTask (f));
+                        }
+                    }
+                }
+                
+                if (tasks != null && tasks.Count > 0) {
+                    lock (update_list.SyncRoot) {
+                        update_list.AddRange (tasks);                  
+                    }   
+                }
+            }
+        }        
+        
         // Should only be called by 'Feed'
         internal void RegisterCommand (ICommand command)
         {
-             AsyncCommandQueue<ICommand> cmdQCpy = commandQueue;
+             AsyncCommandQueue<ICommand> cmdQCpy = command_queue;
             
             if (cmdQCpy != null && command != null) {
             	cmdQCpy.Register (command);
@@ -912,7 +931,7 @@ namespace Migo.Syndication
         
         private void OnFeedAdded (Feed feed)
         {
-            AsyncCommandQueue<ICommand> cmdQCpy = commandQueue;
+            AsyncCommandQueue<ICommand> cmdQCpy = command_queue;
             
             if (cmdQCpy != null) {            
                 cmdQCpy.Register (new CommandWrapper (delegate {
@@ -925,7 +944,7 @@ namespace Migo.Syndication
         {      
             try {
                 lock (sync) {                        
-                    Disassociate (feed);
+                    RemoveFeed (feed);
                 }
             } finally {
                 OnFeedEventRaised (feed, FeedDeleted);                
@@ -941,7 +960,7 @@ namespace Migo.Syndication
             EventHandler<FeedDownloadCompletedEventArgs> handler = FeedDownloadCompleted;
                 
             if (handler != null) {
-                commandQueue.Register (
+                command_queue.Register (
                     new EventWrapper<FeedDownloadCompletedEventArgs> (
                         handler, this, 
                         new FeedDownloadCompletedEventArgs (feed, error)
@@ -955,7 +974,7 @@ namespace Migo.Syndication
             EventHandler<FeedDownloadCountChangedEventArgs> handler = FeedDownloadCountChanged;
                      
             if (handler != null) {             
-                commandQueue.Register (
+                command_queue.Register (
                     new EventWrapper<FeedDownloadCountChangedEventArgs> (
                         handler, this, 
                         new FeedDownloadCountChangedEventArgs (feed, flags)
@@ -969,7 +988,7 @@ namespace Migo.Syndication
             OnFeedEventRaised (feed, FeedDownloading);
         }
         
-        internal void OnFeedItemAdded (IFeed feed, IFeedItem item)
+        internal void OnFeedItemAdded (Feed feed, FeedItem item)
         {
             if (feed == null) {
                 throw new ArgumentNullException ("feed");
@@ -984,7 +1003,7 @@ namespace Migo.Syndication
             }                           
         }
         
-        internal void OnFeedItemsAdded (IFeed feed, IEnumerable<IFeedItem> items)
+        internal void OnFeedItemsAdded (Feed feed, IEnumerable<FeedItem> items)
         {
             if (feed == null) {
                 throw new ArgumentNullException ("feed");
@@ -999,7 +1018,7 @@ namespace Migo.Syndication
             }               
         }        
 
-        internal void OnFeedItemRemoved (IFeed feed, IFeedItem item)
+        internal void OnFeedItemRemoved (Feed feed, FeedItem item)
         {
             if (feed == null) {
                 throw new ArgumentNullException ("feed");
@@ -1013,7 +1032,7 @@ namespace Migo.Syndication
                 lock (sync) {
                     HttpFileDownloadTask task;                
                          
-                    if (queuedDownloads.TryGetValue ((FeedEnclosure)item.Enclosure, out task)) {
+                    if (queued_downloads.TryGetValue ((FeedEnclosure)item.Enclosure, out task)) {
                         task.CancelAsync ();
                     }
                 }
@@ -1024,7 +1043,7 @@ namespace Migo.Syndication
             }                 
         }
         
-        internal void OnFeedItemsRemoved (IFeed feed, IEnumerable<IFeedItem> items)
+        internal void OnFeedItemsRemoved (Feed feed, IEnumerable<FeedItem> items)
         {
             if (feed == null) {
                 throw new ArgumentNullException ("feed");
@@ -1039,7 +1058,7 @@ namespace Migo.Syndication
                 
                 foreach (FeedItem item in items) {                
                     if (item.Enclosure != null) {                    
-                        if (queuedDownloads.TryGetValue ((FeedEnclosure)item.Enclosure, out task)) {
+                        if (queued_downloads.TryGetValue ((FeedEnclosure)item.Enclosure, out task)) {
                             task.CancelAsync ();
                         }
                     }
@@ -1050,22 +1069,6 @@ namespace Migo.Syndication
                 OnFeedItemEvent (handler, new FeedItemEventArgs (feed, items));
             }               
         }              
-        
-        private void OnFeedItemEvent (EventHandler<FeedItemEventArgs> handler, 
-                                      FeedItemEventArgs e)
-        {
-            if (handler == null) {
-                return;
-            } else if (e == null) {
-                throw new ArgumentNullException ("e");
-            }
-            
-            commandQueue.Register (
-                new EventWrapper<FeedItemEventArgs> (handler, this, e)
-            );            
-            
-            //handler (this, e);           
-        }        
         
         internal void OnFeedItemCountChanged (Feed feed, FEEDS_EVENTS_ITEM_COUNT_FLAGS flags)
         {
@@ -1085,7 +1088,7 @@ namespace Migo.Syndication
                 EventHandler<FeedItemCountChangedEventArgs> handler = FeedItemCountChanged;                
                 
                 if (handler != null) {
-                    commandQueue.Register (
+                    command_queue.Register (
                         new EventWrapper<FeedItemCountChangedEventArgs> (
                             handler, this, 
                             new FeedItemCountChangedEventArgs (feed, flags)
@@ -1103,8 +1106,8 @@ namespace Migo.Syndication
         internal void UpdateFeedUrl (string oldUrl, Feed feed)
         {
             lock (sync) {
-                urlFeedDict.Remove (oldUrl);
-                urlFeedDict.Add (feed.Url, feed);
+                url_feed_map.Remove (oldUrl);
+                url_feed_map.Add (feed.Url, feed);
             }        
         }
         
@@ -1112,38 +1115,7 @@ namespace Migo.Syndication
         {
             OnFeedEventRaised (feed, FeedUrlChanged);
         }
-
-        private void OnFeedEventRaised (Feed feed, EventHandler<FeedEventArgs> handler)
-        {
-            if (feed == null) {
-                throw new ArgumentNullException ("feed");	
-            }
-            
-            EventHandler<FeedEventArgs> handlerCpy = handler;
-            
-            if (handlerCpy != null) {
-                commandQueue.Register (
-                    new EventWrapper<FeedEventArgs> (
-                        handler, this, new FeedEventArgs (feed)
-                    )
-                );              	
-            	//handler (this, new FeedEventArgs (feed));
-            }
-        }  
         
-        private void OnEnclosureDownloadCompleted (HttpFileDownloadTask task)
-        {
-            EventHandler<TaskEventArgs<HttpFileDownloadTask>> handler = EnclosureDownloadCompleted;
-        
-            if (handler != null) {
-                AsyncCommandQueue<ICommand> cmdQCpy = commandQueue;
-                
-                if (cmdQCpy != null) {
-                    cmdQCpy.Register (new EventWrapper<TaskEventArgs<HttpFileDownloadTask>> (
-                	    handler, this, new TaskEventArgs<HttpFileDownloadTask> (task))
-                	);
-                }        
-            }                         
-        }        
+#endregion 
     }   
 }    

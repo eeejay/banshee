@@ -55,8 +55,9 @@ namespace Banshee.Collection.Database
         ICacheableDatabaseModel, IFilterable, ISortable, ICareAboutView
     {
         private readonly BansheeDbConnection connection;
-        private readonly BansheeModelProvider<DatabaseTrackInfo> provider;
-        private BansheeModelCache<DatabaseTrackInfo> cache;
+        private IDatabaseTrackModelProvider provider;
+        protected IDatabaseTrackModelCache cache;
+        
         private long count;
 
         private long filtered_count;
@@ -78,24 +79,21 @@ namespace Banshee.Collection.Database
         private DatabaseArtistListModel artist_model;
         private DatabaseAlbumListModel album_model;
 
-        private string uuid;
-        
         private int rows_in_view;
         
-        public DatabaseTrackListModel (BansheeDbConnection connection, string uuid)
+        public DatabaseTrackListModel (BansheeDbConnection connection, IDatabaseTrackModelProvider provider)
         {
             this.connection = connection;
-            this.uuid = uuid;
-            provider = DatabaseTrackInfo.Provider;
+            this.provider = provider;
         }
 
         private bool initialized = false;
-        public void Initialize ()
+        public void Initialize (IDatabaseTrackModelCache cache)
         {
-            Initialize (null, null);
+            Initialize (cache, null, null);
         }
 
-        public void Initialize (DatabaseArtistListModel artist_model, DatabaseAlbumListModel album_model)
+        public void Initialize (IDatabaseTrackModelCache cache, DatabaseArtistListModel artist_model, DatabaseAlbumListModel album_model)
         {
             if (initialized)
                 return;
@@ -104,7 +102,7 @@ namespace Banshee.Collection.Database
             this.album_model = album_model;
 
             initialized = true;
-            cache = new BansheeModelCache <DatabaseTrackInfo> (connection, uuid, this, provider);
+            this.cache = cache;
             cache.AggregatesUpdated += HandleCacheAggregatesUpdated;
 
             GenerateSortQueryPart ();

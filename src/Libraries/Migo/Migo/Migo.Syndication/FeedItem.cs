@@ -1,39 +1,51 @@
-/*************************************************************************** 
- *  FeedItem.cs
- *
- *  Copyright (C) 2007 Michael C. Urbanski
- *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
- ****************************************************************************/
- 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// FeedItem.cs
+//
+// Authors:
+//   Mike Urbanski  <michael.c.urbanski@gmail.com>
+//   Gabriel Burt  <gburt@novell.com>
+//
+// Copyright (C) 2007 Michael C. Urbanski
+// Copyright (C) 2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
+using System.Collections.Generic;
+
+using Hyena;
+using Hyena.Data.Sqlite;
 
 using Migo.Syndication.Data;
 
 namespace Migo.Syndication
 {
-    public class FeedItem : IFeedItem
+    public class FeedItem
     {
+        private static SqliteModelProvider<FeedItem> provider;
+        public static SqliteModelProvider<FeedItem> Provider {
+            get { return provider; }
+            set { provider = value; }
+        }
+
         private bool active;
         private string author;
         private string comments;
@@ -43,27 +55,23 @@ namespace Migo.Syndication
         private bool isRead;
         private DateTime lastDownloadTime;  
         private string link;
-        private long localID;
+        private long dbid;
         private DateTime modified;     
-        private Feed parent;
+        private Feed feed;
         private DateTime pubDate;       
         private string title;        
         
         public readonly object sync = new object ();
+
+#region Database-backed Properties
                 
-        internal bool Active 
-        {
-            get { 
-                lock (sync) {
-                    return active; 
-                }
-            }
-            
+        [DatabaseColumn]
+        internal bool Active {
+            get { lock (sync) { return active; } }
             set { 
                 lock (sync) {                
                     if (value != active) {
                         active = value;
-                    
                         if (enclosure != null) {
                             enclosure.Active = value;
                         }
@@ -72,41 +80,132 @@ namespace Migo.Syndication
             }
         }
         
-        public string Author 
-        { 
-            get { 
-                lock (sync) {
-                    return author; 
-                } 
+        [DatabaseColumn]
+        public string Author {
+            get { lock (sync) { return author; } }
+            set { author = value; }
+        }
+        
+        [DatabaseColumn]
+        public string Comments {
+            get { lock (sync) { return comments; } } 
+            set { comments = value; }
+        }
+        
+        [DatabaseColumn]
+        public string Description {
+            get { lock (sync) { return description; }} 
+            set { description = value; }
+        }
+        
+        [DatabaseColumn]
+        public string Guid {
+            get { lock (sync) { return guid; } }
+            set { guid = value; }
+        }
+
+        [DatabaseColumn]
+        public bool IsRead {
+            get { lock (sync) { return isRead; } }
+            set { 
+                int delta = 0;                
+                
+                lock (sync) {                    
+                    if (isRead != value) {
+                        isRead = value;
+                        delta = value ? -1 : 1;    
+                        
+                        if (feed == null) {
+                            return;
+                        }
+                                
+                        Save ();
+                    }
+                }
+                
+                if (delta != 0) {
+                    feed.UpdateItemCounts (0, delta);                            
+                }                                            
             }
         }
         
-        public string Comments 
-        { 
-            get { 
-                lock (sync) {
-                    return comments; 
-                }
-            } 
+        [DatabaseColumn]
+        public DateTime LastDownloadTime {
+            get { lock (sync) { return lastDownloadTime; } } 
+            set { lastDownloadTime = value; }
+        }  
+        
+        [DatabaseColumn]
+        public string Link {
+            get { lock (sync) { return link; } }
+            set { link = value; }
         }
         
-        public string Description 
-        { 
-            get { 
-                lock (sync) {
-                    return description; 
-                }
-            } 
-        }
-        
-        public IFeedEnclosure Enclosure 
-        { 
-            get { 
-                lock (sync) {
-                    return enclosure;
+        [DatabaseColumn ("ItemID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
+        public long DbId {
+            get { lock (sync) { return dbid; } }
+            internal set { 
+                lock (sync) { 
+                    dbid = value; 
                 }
             }
+        }
+        
+        [DatabaseColumn]
+        public DateTime Modified { 
+            get { lock (sync) { return modified; } } 
+            set { modified = value; }
+        }      
+        
+        [DatabaseColumn]
+        public DateTime PubDate {
+            get { lock (sync) { return pubDate; } } 
+            set { pubDate = value; }
+        }       
+        
+        [DatabaseColumn]
+        public string Title {
+            get { lock (sync) { return title; } } 
+            set { title = value; }
+        }
+
+#endregion
+
+        public Feed Feed {
+            get { lock (sync) { return feed; } }
             
+            internal set {
+                if (value == null) {
+                    throw new ArgumentNullException ("Feed");
+                }
+                
+                lock (sync) {  
+                    feed = value;
+                }
+            }
+        }
+        
+        private bool enclosure_loaded;
+        public void LoadEnclosure ()
+        {
+            if (!enclosure_loaded && DbId > 0) {
+                Console.WriteLine ("Loading item enclosures");
+                IEnumerable<FeedEnclosure> enclosures = FeedEnclosure.Provider.FetchAllMatching (String.Format (
+                    "{0}.ItemID = {1}", FeedEnclosure.Provider.TableName, DbId
+                ));
+                
+                foreach (FeedEnclosure enclosure in enclosures) {
+                    enclosure.Item = this;
+                    this.enclosure = enclosure;
+                    break; // should only have one
+                }
+                Console.WriteLine ("Done loading item enclosures");
+                enclosure_loaded = true;
+            }
+        }
+
+        public FeedEnclosure Enclosure {
+            get { lock (sync) { return enclosure; } }
             internal set {
                 lock (sync) {
                     if (value == null) {
@@ -122,179 +221,21 @@ namespace Migo.Syndication
                     }
                         
                     enclosure = tmp;
-                    enclosure.Parent = this;
+                    enclosure.Item = this;
                 }
             }            
         }
-
-        public string Guid 
-        { 
-            get { 
-                lock (sync) {
-                    return guid; 
-                } 
-            }
-        }
-        
-        public bool IsRead 
-        { 
-            get { 
-                lock (sync) {
-                    return isRead;
-                }
-            } 
-            
-            set { 
-                int delta = 0;                
-                
-                lock (sync) {                    
-                    if (isRead != value) {
-                        isRead = value;
-                        delta = value ? -1 : 1;    
-                        
-                        if (parent == null) {
-                            return;
-                        }
-                                
-                        CommitImpl ();
-                    }
-                }
-                
-                if (delta != 0) {
-                    parent.UpdateItemCounts (0, delta);                            
-                }                                            
-            }
-        }
-        
-        public DateTime LastDownloadTime 
-        { 
-            get { 
-                lock (sync) {
-                    return lastDownloadTime;
-                }
-            } 
-        }  
-        
-        public string Link 
-        { 
-            get { 
-                lock (sync) {
-                    return link; 
-                } 
-            }
-        }
-        
-        public long LocalID 
-        { 
-            get { 
-                lock (sync) {   
-                    return localID; 
-                }
-            }
-            
-            internal set { 
-                lock (sync) { 
-                    localID = value; 
-                }
-            }
-        }
-        
-        public DateTime Modified 
-        { 
-            get { 
-                lock (sync) {
-                    return modified;
-                }
-            } 
-        }      
-        
-        public IFeed Parent 
-        { 
-            get { lock (sync) { return parent; } }
-            
-            internal set {
-                if (value == null) {
-                	throw new ArgumentNullException ("Parent");              	
-                }
-                
-                lock (sync) {  
-                    Feed feed = value as Feed;
-                    
-                    if (feed == null) {
-                        throw new ArgumentException ("Parent must be of type 'Feed'");
-                    }
-                    
-                    parent = feed;
-                }
-            }
-        }
-        
-        public DateTime PubDate 
-        { 
-            get { lock (sync) { return pubDate; } } 
-        }       
-        
-        public string Title 
-        { 
-            get { lock (sync) { return title; } } 
-        }      
-
-        internal FeedItem (IFeedItemWrapper wrapper) : this (null, wrapper) {}
-        internal FeedItem (Feed parent, IFeedItemWrapper wrapper)
+ 
+        public FeedItem ()
         {
-            if (wrapper == null) {
-                throw new ArgumentNullException ("wrapper");            	
-            }    
+        }
 
-            this.parent = parent; 
-            
-            active = wrapper.Active;
-            author = wrapper.Author;
-            comments = wrapper.Comments;
-            description = wrapper.Description;
-            guid = wrapper.Guid;
-            isRead = wrapper.IsRead;
-            lastDownloadTime = wrapper.LastDownloadTime;  
-            link = wrapper.Link;
-            localID = wrapper.LocalID;
-            modified = wrapper.Modified;
-            pubDate = wrapper.PubDate;       
-            title = wrapper.Title;
-            
-            if (wrapper.Enclosure != null) {
-                CreateEnclosure (wrapper.Enclosure);  
-            }            
-        }        
-
-        internal void Commit ()
+        public void Save ()
         {
-            lock (sync) {
-                CommitImpl ();
-            }
+            Provider.Save (this);
+            if (enclosure != null)
+                enclosure.Save ();
         }
-        
-        private void CommitImpl ()
-        {
-            if (localID < 0) {
-                localID = ItemsTableManager.Insert (this);
-            } else {
-                ItemsTableManager.Update (this);   
-            }
-                        
-            if (enclosure != null) {
-                enclosure.Commit ();
-            }            
-        }
-        
-        private void CreateEnclosure (IFeedEnclosureWrapper wrapper)
-        {   
-            enclosure = new FeedEnclosure (this, wrapper);
-        }
-        
-        internal void DBDelete ()
-        {
-            ItemsTableManager.Delete (this);   
-        }        
       
         public void Delete ()
         {
@@ -315,26 +256,27 @@ namespace Migo.Syndication
                 
                 if (delEncFile) {
                     if (enclosure != null && delEncFile) {
-                        enclosure.RemoveFile ();                	
+                        enclosure.RemoveFile ();
                     }                
                 }                   
                 
                 Active = false;
                 
                 if (removeFromParent) {
-                    CommitImpl ();    
+                    // TODO should this be Provider.Delete ?
+                    //CommitImpl ();    
                 }                
             }
 
             if (removeFromParent) {
-                parent.Remove (this);       
+                feed.Remove (this);       
             }            
         }
         
         internal void CancelDownload (FeedEnclosure enc)
         {
-            if (parent != null) {
-                parent.CancelDownload (enc);
+            if (feed != null) {
+                feed.CancelDownload (enc);
             }
         }
         
@@ -342,8 +284,8 @@ namespace Migo.Syndication
         {
             bool queued = false;
         
-            if (parent != null) {
-                queued = parent.QueueDownload (enc) != null;	
+            if (feed != null) {
+                queued = feed.QueueDownload (enc) != null;	
             }
         
             return queued;
@@ -351,8 +293,8 @@ namespace Migo.Syndication
 
         internal void StopDownload (FeedEnclosure enc)
         {
-            if (parent != null) {
-                parent.StopDownload (enc);
+            if (feed != null) {
+                feed.StopDownload (enc);
             }
         }
     }

@@ -51,6 +51,8 @@ public class SqliteCommandTests
         Assert.AreEqual ("select foo from bar where baz = 555.55", GetGeneratedSql (cmd.ApplyValues (555.55f)));
         Assert.AreEqual ("select foo from bar where baz = 555.55", GetGeneratedSql (cmd.ApplyValues (555.55)));
         Assert.AreEqual ("select foo from bar where baz = 555", GetGeneratedSql (cmd.ApplyValues (555)));
+        Assert.AreEqual ("select foo from bar where baz = 1", GetGeneratedSql (cmd.ApplyValues (true)));
+        Assert.AreEqual ("select foo from bar where baz = 0", GetGeneratedSql (cmd.ApplyValues (false)));
 
         HyenaSqliteCommand cmd2 = new HyenaSqliteCommand ("select foo from bar where baz = ?, bar = ?, boo = ?");
         Assert.AreEqual ("select foo from bar where baz = NULL, bar = NULL, boo = 22", GetGeneratedSql (cmd2.ApplyValues (null, null, 22)));

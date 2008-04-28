@@ -107,11 +107,15 @@ namespace Banshee.Sources
                 tm_source.TrackModel.Parent = this;
                 ServiceManager.DBusServiceManager.RegisterObject (tm_source.TrackModel);
                 
-                tm_source.ArtistModel.Parent = this;
-                ServiceManager.DBusServiceManager.RegisterObject (tm_source.ArtistModel);
+                if (tm_source.ArtistModel != null) {
+                    tm_source.ArtistModel.Parent = this;
+                    ServiceManager.DBusServiceManager.RegisterObject (tm_source.ArtistModel);
+                }
                 
-                tm_source.AlbumModel.Parent = this;
-                ServiceManager.DBusServiceManager.RegisterObject (tm_source.AlbumModel);
+                if (tm_source.AlbumModel != null) {
+                    tm_source.AlbumModel.Parent = this;
+                    ServiceManager.DBusServiceManager.RegisterObject (tm_source.AlbumModel);
+                }
             }
         }
 

@@ -39,7 +39,7 @@ namespace Migo.Syndication
             get { return error; }   
         }
         
-        public FeedDownloadCompletedEventArgs (IFeed feed, 
+        public FeedDownloadCompletedEventArgs (Feed feed, 
                                                FeedDownloadError error) : base (feed) 
         {
             if (error < FeedDownloadError.None ||

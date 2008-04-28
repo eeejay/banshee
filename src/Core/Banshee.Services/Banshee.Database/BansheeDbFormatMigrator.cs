@@ -639,7 +639,7 @@ namespace Banshee.Database
                 while (reader.Read ()) {
                     DatabaseTrackInfo track = null;
                     try {
-                        track = DatabaseTrackInfo.Provider.Load (reader, 0);
+                        track = DatabaseTrackInfo.Provider.Load (reader);
                         
                         try {
                             TagLib.File file = StreamTagger.ProcessUri (track.Uri);

@@ -418,10 +418,11 @@ namespace Banshee.SmartPlaylist
             return String.IsNullOrEmpty (ConditionSql) ? " " : String.Format ("{0} ({1})", with, ConditionSql);
         }
 
-        public static IEnumerable<SmartPlaylistSource> LoadAll ()
+        public static IEnumerable<SmartPlaylistSource> LoadAll (int primary_id)
         {
             using (IDataReader reader = ServiceManager.DbConnection.Query (
-                "SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion, PrimarySourceID FROM CoreSmartPlaylists")) {
+                @"SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion, PrimarySourceID 
+                    FROM CoreSmartPlaylists WHERE PrimarySourceID = ?", primary_id)) {
                 while (reader.Read ()) {
                     SmartPlaylistSource playlist = null;
                     try {

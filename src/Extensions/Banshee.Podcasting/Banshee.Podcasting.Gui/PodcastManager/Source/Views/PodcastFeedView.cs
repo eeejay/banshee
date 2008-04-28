@@ -47,7 +47,7 @@ using Migo.Syndication;
 
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastFeedView : ListView<PodcastFeed>
+    public class PodcastFeedView : ListView<Feed>
     {
         private ColumnController columnController;
         
@@ -94,7 +94,7 @@ namespace Banshee.Podcasting.Gui
             Menu popup;
             PodcastFeedModel model = Model as PodcastFeedModel;
             
-            ReadOnlyCollection<PodcastFeed> feeds = model.CopySelectedItems ();
+            ReadOnlyCollection<Feed> feeds = model.CopySelectedItems ();
             
             if (feeds.Count == 0) {
                 popup = allPopup;         

@@ -39,7 +39,7 @@ namespace Migo.Syndication
             get { return flags; }   
         }
         
-        public FeedItemCountChangedEventArgs (IFeed feed, 
+        public FeedItemCountChangedEventArgs (Feed feed, 
                                               FEEDS_EVENTS_ITEM_COUNT_FLAGS flags) : base (feed) 
         {
             this.flags = flags;

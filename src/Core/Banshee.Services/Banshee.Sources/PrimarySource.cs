@@ -183,11 +183,11 @@ namespace Banshee.Sources
 
             primary_sources[dbid] = this;
             
-            foreach (PlaylistSource pl in PlaylistSource.LoadAll ())
+            foreach (PlaylistSource pl in PlaylistSource.LoadAll (DbId))
                 if (pl.PrimarySourceId == dbid)
                     AddChildSource (pl);
 
-            foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll ())
+            foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll (DbId))
                 if (pl.PrimarySourceId == dbid)
                     AddChildSource (pl);
         }

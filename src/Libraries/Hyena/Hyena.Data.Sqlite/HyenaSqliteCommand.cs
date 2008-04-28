@@ -170,6 +170,8 @@ namespace Hyena.Data.Sqlite
                 return String.Format ("'{0}'", (o as string).Replace ("'", "''"));
             } else if (o is DateTime) {
                 return DateTimeUtil.FromDateTime ((DateTime) o);
+            } else if (o is bool) {
+                return ((bool)o) ? "1" : "0";
             } else if (o == null) {
                 return "NULL";
             } else if (o is Array) {

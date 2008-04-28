@@ -53,6 +53,10 @@ namespace Banshee.PlayQueue
 
         private DatabaseTrackInfo playing_track;
         private bool actions_loaded = false;
+
+        protected override bool HasArtistAlbum {
+            get { return false; }
+        }
         
         public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null, 0)
         {

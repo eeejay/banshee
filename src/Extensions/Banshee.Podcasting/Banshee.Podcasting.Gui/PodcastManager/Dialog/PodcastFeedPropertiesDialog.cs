@@ -32,6 +32,7 @@ using Mono.Unix;
 using Gtk;
 using Pango;
 
+using Migo.Syndication;
 using Banshee.Base;
 using Banshee.Podcasting.Data;
 
@@ -39,10 +40,10 @@ namespace Banshee.Podcasting.Gui
 {
     internal class PodcastFeedPropertiesDialog : Dialog
     {
-        private PodcastFeed feed;
+        private Feed feed;
         private SyncPreferenceComboBox new_episode_option_combo;
 
-        public PodcastFeedPropertiesDialog (PodcastFeed feed)
+        public PodcastFeedPropertiesDialog (Feed feed)
         {
             this.feed = feed;
 
@@ -91,20 +92,20 @@ namespace Banshee.Podcasting.Gui
             new_episode_option_label.SetAlignment (0f, 0.5f);
             new_episode_option_label.Justify = Justification.Left;
 
-            Label last_updated_text = new Label (feed.Feed.LastDownloadTime.ToString ("f"));
+            Label last_updated_text = new Label (feed.LastDownloadTime.ToString ("f"));
             last_updated_text.Justify = Justification.Left;
             last_updated_text.SetAlignment (0f, 0f);
 
-            Label feed_url_text = new Label (feed.Feed.Url.ToString ());
+            Label feed_url_text = new Label (feed.Url.ToString ());
             feed_url_text.Wrap = false;
             feed_url_text.Selectable = true;
             feed_url_text.SetAlignment (0f, 0f);
             feed_url_text.Justify = Justification.Left;
             feed_url_text.Ellipsize = Pango.EllipsizeMode.End;
 
-            string description_string = (String.IsNullOrEmpty (feed.Feed.Description)) ?
+            string description_string = (String.IsNullOrEmpty (feed.Description)) ?
                                         Catalog.GetString ("No description available") :
-                                        feed.Feed.Description;
+                                        feed.Description;
 
             if (!description_string.StartsWith ("\""))
             {
@@ -133,7 +134,7 @@ namespace Banshee.Podcasting.Gui
             description_viewport.Add (descrition_text);
             description_scroller.Add (description_viewport);
 
-            new_episode_option_combo = new SyncPreferenceComboBox (feed.SyncPreference);
+            new_episode_option_combo = new SyncPreferenceComboBox (feed.AutoDownload);
 
             table.Attach (
                 feed_url_label, 0, 1, 0, 1,
@@ -204,11 +205,10 @@ namespace Banshee.Podcasting.Gui
 
             if (args.ResponseId == Gtk.ResponseType.Ok)
             {
-                SyncPreference new_sync_pref = new_episode_option_combo.ActiveSyncPreference;
+                FeedAutoDownload new_sync_pref = new_episode_option_combo.ActiveSyncPreference;
 
-                if (feed.SyncPreference != new_sync_pref)
-                {
-                    feed.SyncPreference = new_sync_pref;
+                if (feed.AutoDownload != new_sync_pref) {
+                    feed.AutoDownload = new_sync_pref;
                     feed.Save ();
                 }
             }

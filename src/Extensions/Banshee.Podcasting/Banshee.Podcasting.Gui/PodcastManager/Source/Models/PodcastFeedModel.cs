@@ -42,7 +42,7 @@ namespace Banshee.Podcasting.Gui
         public const string Title = "Title";        
     }
 
-    public class PodcastFeedModel : ListModel<PodcastFeed>
+    public class PodcastFeedModel : ListModel<Feed>
     {
         public override int Count { 
             get { 
@@ -56,11 +56,11 @@ namespace Banshee.Podcasting.Gui
         {
         }
 
-        public override PodcastFeed this[int index] {
+        public override Feed this[int index] {
             get { 
                 lock (SyncRoot) {
                     if (index == 0) {
-                        return PodcastFeed.All;
+                        return Feed.All;
                     }
 
                     return (index <= List.Count) ? List[index-1] : null;                    
@@ -68,18 +68,18 @@ namespace Banshee.Podcasting.Gui
             }
         }    
 
-        public override ReadOnlyCollection<PodcastFeed> CopySelectedItems () 
+        public override ReadOnlyCollection<Feed> CopySelectedItems () 
         {
-            List<PodcastFeed> feeds = null;
+            List<Feed> feeds = null;
             
             lock (SyncRoot) {
-                ModelSelection<PodcastFeed> selected = SelectedItems;
+                ModelSelection<Feed> selected = SelectedItems;
                 
                 if (selected.Count > 0) {
-                    feeds = new List<PodcastFeed> (selected.Count);
+                    feeds = new List<Feed> (selected.Count);
                     
-                    foreach (PodcastFeed feed in selected) {
-                        if (feed != PodcastFeed.All) {
+                    foreach (Feed feed in selected) {
+                        if (feed != Feed.All) {
                             feeds.Add (feed);                            
                         }
                     }
@@ -87,7 +87,7 @@ namespace Banshee.Podcasting.Gui
             }
 
             return (feeds != null) ? 
-                new ReadOnlyCollection<PodcastFeed> (feeds) : null;
+                new ReadOnlyCollection<Feed> (feeds) : null;
         }    
     
         public override void Sort ()
@@ -105,13 +105,13 @@ namespace Banshee.Podcasting.Gui
             }
         }
         
-        private class TitleComparer : SortTypeComparer<PodcastFeed>
+        private class TitleComparer : SortTypeComparer<Feed>
         {
             public TitleComparer (SortType type) : base (type)
             {
             }
             
-            public override int Compare (PodcastFeed lhs, PodcastFeed rhs)
+            public override int Compare (Feed lhs, Feed rhs)
             {
                 int ret = String.Compare (lhs.Title, rhs.Title);   
                 return (SortType == SortType.Ascending) ? ret * -1 : ret;

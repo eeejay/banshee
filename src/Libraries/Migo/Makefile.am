@@ -33,30 +33,9 @@ SOURCES =  \
 	Migo/Migo.Syndication/FeedItem.cs \
 	Migo/Migo.Syndication/FeedsManager.cs \
 	Migo/Migo.Syndication/FeedUpdateTask.cs \
-	Migo/Migo.Syndication/IFeed.cs \
-	Migo/Migo.Syndication/IFeedEnclosure.cs \
-	Migo/Migo.Syndication/IFeedItem.cs \
-	Migo/Migo.Syndication/IFeedsManager.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/TablesManagers/EnclosuresTableManager.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/TablesManagers/FeedsTableManager.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/TablesManagers/ItemsTableManager.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/DatabaseManager.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/DataUtility.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/DbDefines.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/QueuedDbCommand.cs \
+	Migo/Migo.Syndication/Migo.Syndication.Data/RssParser.cs \
 	Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/Rfc822DateTime.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/SQLiteUtility.cs \
 	Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/XmlUtils.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Db/DataWrapper.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Db/FeedDataWrapper.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Db/FeedEnclosureDataWrapper.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Db/FeedItemDataWrapper.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/IFeedEnclosureWrapper.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/IFeedItemWrapper.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/IFeedWrapper.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Rss/RssFeedEnclosureWrapper.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Rss/RssFeedItemWrapper.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Wrappers/Rss/RssFeedWrapper.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/AsyncCommandQueue.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/CommandDelegate.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/CommandWrapper.cs \

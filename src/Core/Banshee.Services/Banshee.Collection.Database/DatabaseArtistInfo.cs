@@ -81,7 +81,7 @@ namespace Banshee.Collection.Database
 
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.Name)) {
                 if (reader.Read ()) {
-                    last_artist = provider.Load (reader, 0);
+                    last_artist = provider.Load (reader);
                 } else {
                     last_artist = artist;
                     last_artist.Save ();
