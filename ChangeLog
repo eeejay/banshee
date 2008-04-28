@@ -1,3 +1,31 @@
+2008-04-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Make ConditionSql virtual and add a protected setter; make CanUnmap virtual
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Add Music and Video 
+	group sources; delete all smart playlists and entires associated with
+	the primary source when starting and disposing
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs: Base source for
+	media groups, extends SmartPlaylistSource
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/MusicGroupSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/VideoGroupSource.cs: A source to show
+	all music on the device and one for all video
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Do not implement
+	IDiskUsageReporter - MediaGroupSource does this now
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/TestModuleAttribute.cs: Attribute
+	for flagging UI test modules
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/TestModuleRunner.cs: Show a list
+	of UI test modules and run them when activated
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryDebugger.cs: A UI test 
+	module for playing with the query parser
+
 2008-04-26  Aaron Bockover  <abock@gnome.org>
 
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Do not try

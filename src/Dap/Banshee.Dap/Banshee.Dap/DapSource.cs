@@ -33,6 +33,7 @@ using System.Threading;
 using Mono.Unix;
 
 using Hyena;
+using Hyena.Data.Sqlite;
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Sources;
@@ -71,6 +72,20 @@ namespace Banshee.Dap
         {
             PurgeTracks ();
         }
+        
+        protected override void PurgeTracks ()
+        {
+            base.PurgeTracks ();
+            
+            ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
+                BEGIN TRANSACTION;
+                    DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID IN
+                        (SELECT SmartPlaylistID FROM CoreSmartPlaylists WHERE PrimarySourceID = ?);
+                    DELETE FROM CoreSmartPlaylists WHERE PrimarySourceID = ?;   
+                COMMIT TRANSACTION",
+                DbId, DbId
+            ));
+        }
 
 #region Source
 
@@ -101,7 +116,7 @@ namespace Banshee.Dap
         
         public override void AddChildSource (Source child)
         {
-            if (child is Banshee.Playlist.AbstractPlaylistSource) {
+            if (child is Banshee.Playlist.AbstractPlaylistSource && !(child is MediaGroupSource)) {
                 Log.Information ("Note: playlists added to digital audio players within Banshee are not yet saved to the device.", true);
             }
             
@@ -112,6 +127,10 @@ namespace Banshee.Dap
             get { return true; }
         }
         
+        public override bool CanActivate {
+            get { return false; }
+        }
+
 #endregion
         
 #region Track Management/Syncing   
@@ -128,6 +147,12 @@ namespace Banshee.Dap
             LoadFromDevice ();
             OnTracksAdded ();
             HideStatus ();
+            
+            ThreadAssist.ProxyToMain (delegate {
+                AddChildSource (new MusicGroupSource (this));
+                AddChildSource (new VideoGroupSource (this));
+                Expanded = true;
+            });
         }
 
         protected virtual void LoadFromDevice ()

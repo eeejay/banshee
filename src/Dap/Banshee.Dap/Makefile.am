@@ -8,7 +8,10 @@ SOURCES =  \
 	Banshee.Dap/DapService.cs \
 	Banshee.Dap/DapSource.cs \
 	Banshee.Dap/InvalidDeviceException.cs \
-	Banshee.Dap/RemovableSource.cs
+	Banshee.Dap/MediaGroupSource.cs \
+	Banshee.Dap/MusicGroupSource.cs \
+	Banshee.Dap/RemovableSource.cs \
+	Banshee.Dap/VideoGroupSource.cs
 
 RESOURCES = Banshee.Dap.addin.xml
 

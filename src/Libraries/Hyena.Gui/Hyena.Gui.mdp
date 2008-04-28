@@ -69,6 +69,9 @@
     <File name="Hyena.Gui/CompositeUtils.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui/TooltipSetter.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Widgets/WrapLabel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query.Gui/QueryDebugger.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui/TestModuleAttribute.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui/TestModuleRunner.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -78,6 +81,7 @@
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">

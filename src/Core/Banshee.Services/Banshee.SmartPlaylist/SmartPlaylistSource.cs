@@ -119,8 +119,9 @@ namespace Banshee.SmartPlaylist
         }
 
         private string condition_sql;
-        public string ConditionSql {
+        public virtual string ConditionSql {
             get { return condition_sql; }
+            protected set { condition_sql = value; }
         }
 
         private string condition_xml;
@@ -352,7 +353,7 @@ namespace Banshee.SmartPlaylist
             return true;
         }
 
-        public bool CanUnmap {
+        public virtual bool CanUnmap {
             get { return true; }
         }
 

@@ -42,7 +42,7 @@ using Banshee.Hardware;
 
 namespace Banshee.Dap
 {
-    public abstract class RemovableSource : PrimarySource, IUnmapableSource, IImportSource, IDiskUsageReporter
+    public abstract class RemovableSource : PrimarySource, IUnmapableSource, IImportSource
     {
         protected RemovableSource () : base ()
         {

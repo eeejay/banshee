@@ -39,12 +39,15 @@ SOURCES =  \
 	Hyena.Gui/GtkUtilities.cs \
 	Hyena.Gui/PangoCairoHelper.cs \
 	Hyena.Gui/ShadingTestWindow.cs \
+	Hyena.Gui/TestModuleAttribute.cs \
+	Hyena.Gui/TestModuleRunner.cs \
 	Hyena.Gui/TooltipSetter.cs \
 	Hyena.Query.Gui/DateQueryValueEntry.cs \
 	Hyena.Query.Gui/FileSizeQueryValueEntry.cs \
 	Hyena.Query.Gui/IntegerQueryValueEntry.cs \
 	Hyena.Query.Gui/NullQueryValueEntry.cs \
 	Hyena.Query.Gui/QueryBox.cs \
+	Hyena.Query.Gui/QueryDebugger.cs \
 	Hyena.Query.Gui/QueryLimitBox.cs \
 	Hyena.Query.Gui/QueryTermBox.cs \
 	Hyena.Query.Gui/QueryTermsBox.cs \
