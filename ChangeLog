@@ -1,5 +1,11 @@
 2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:
+	* src/Extensions/Banshee.Lastfm/Resources/lastfm.glade: Remove name entry
+	from Last.fm dialog.
+
+2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
 	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
 	* src/Libraries/Hyena/Hyena.Query/QueryOrder.cs: Implement smart

@@ -49,7 +49,6 @@ namespace Banshee.Lastfm.Radio
         private LastfmSource lastfm;
         private StationSource source;
 
-        [Widget] private Gtk.Entry name_entry;
         [Widget] private Gtk.ComboBox type_combo;
         [Widget] private Gtk.Entry arg_entry;
         [Widget] private Gtk.Label arg_label;
@@ -60,7 +59,6 @@ namespace Banshee.Lastfm.Radio
         {
             this.lastfm = lastfm;
             this.source = source;
-            SourceName = source.Name;
             Arg = source.Arg;
             Initialize ();
             Dialog.Title = Catalog.GetString ("Edit Station");
@@ -102,9 +100,8 @@ namespace Banshee.Lastfm.Radio
 
             type_combo.Changed += HandleTypeChanged;
             type_combo.Active = active_type;
-            arg_entry.Changed += HandleArgChanged;
             ok_button.Sensitive = true;
-            name_entry.GrabFocus ();
+            type_combo.GrabFocus ();
         }
 
         public void RunDialog ()
@@ -152,18 +149,8 @@ namespace Banshee.Lastfm.Radio
                 arg_label.Text = type.ArgLabel;
         }
 
-        private string last_arg = String.Empty;
-        private void HandleArgChanged (object sender, EventArgs args)
-        {
-            if (name_entry.Text == last_arg) {
-                name_entry.Text = arg_entry.Text;
-                last_arg = arg_entry.Text;
-            }
-        }
-
         private string SourceName {
-            get { return name_entry.Text; }
-            set { name_entry.Text = value; }
+            get { return source != null ? source.Name : arg_entry.Text; }
         }
 
         private StationType Type {
