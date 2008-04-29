@@ -48,6 +48,7 @@ namespace Banshee.ServiceStack
 
         protected void OnStarted ()
         {
+            Hyena.Log.Information (String.Format ("{0} Client Started", ClientId));
             EventHandler handler = Started;
             if (handler != null) {
                 handler (this, EventArgs.Empty);

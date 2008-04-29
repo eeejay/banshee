@@ -175,7 +175,7 @@ namespace Banshee.SmartPlaylist
 
 #region Constructors
 
-        public SmartPlaylistSource (string name, int primarySourceId) : this (null, name, String.Empty, String.Empty, String.Empty, String.Empty, primarySourceId)
+        public SmartPlaylistSource (string name, int primarySourceId) : this (null, name, String.Empty, String.Empty, String.Empty, String.Empty, primarySourceId, 0)
         {
         }
 
@@ -192,7 +192,7 @@ namespace Banshee.SmartPlaylist
         }
 
         // For existing smart playlists that we're loading from the database
-        public SmartPlaylistSource (int? dbid, string name, string condition_xml, string order_by, string limit_number, string limit_criterion, int primarySourceId) :
+        protected SmartPlaylistSource (int? dbid, string name, string condition_xml, string order_by, string limit_number, string limit_criterion, int primarySourceId, int count) :
             base (generic_name, name, dbid, -1, 0, primarySourceId)
         {
             ConditionXml = condition_xml;
@@ -204,6 +204,7 @@ namespace Banshee.SmartPlaylist
             LimitValue.ParseUserQuery (limit_number);
 
             DbId = dbid;
+            SavedCount = count;
 
             InstallProperties ();
 
@@ -286,13 +287,14 @@ namespace Banshee.SmartPlaylist
                         Condition = ?,
                         OrderBy = ?,
                         LimitNumber = ?,
-                        LimitCriterion = ?
+                        LimitCriterion = ?,
+                        CachedCount = ?
                     WHERE SmartPlaylistID = ?",
                 Name, ConditionXml,
                 IsLimited ? QueryOrder.Name : null,
                 IsLimited ? LimitValue.ToSql () : null,
                 IsLimited ? Limit.Name : null,
-                DbId
+                Count, DbId
             ));
             UpdateDependencies ();
         }
@@ -454,7 +456,7 @@ namespace Banshee.SmartPlaylist
         public static IEnumerable<SmartPlaylistSource> LoadAll (int primary_id)
         {
             using (IDataReader reader = ServiceManager.DbConnection.Query (
-                @"SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion, PrimarySourceID 
+                @"SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion, PrimarySourceID, CachedCount
                     FROM CoreSmartPlaylists WHERE PrimarySourceID = ?", primary_id)) {
                 while (reader.Read ()) {
                     SmartPlaylistSource playlist = null;
@@ -462,7 +464,8 @@ namespace Banshee.SmartPlaylist
                         playlist = new SmartPlaylistSource (
                             Convert.ToInt32 (reader[0]), reader[1] as string,
                             reader[2] as string, reader[3] as string,
-                            reader[4] as string, reader[5] as string, Convert.ToInt32 (reader[6])
+                            reader[4] as string, reader[5] as string,
+                            Convert.ToInt32 (reader[6]), Convert.ToInt32 (reader[7])
                         );
                     } catch (Exception e) {
                         Log.Warning ("Ignoring Smart Playlist", String.Format ("Caught error: {0}", e), false);

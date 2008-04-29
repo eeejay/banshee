@@ -121,8 +121,10 @@ namespace Banshee.PlayQueue
             }
         }
 
-        public void Dispose ()
+        public override void Dispose ()
         {
+            base.Dispose ();
+
             if (ClearOnQuitSchema.Get ()) {
                 OnClearPlayQueue (this, EventArgs.Empty);
             }

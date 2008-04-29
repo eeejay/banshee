@@ -402,8 +402,8 @@ namespace Banshee.Sources
                 handler (this, EventArgs.Empty);
             }
         }
-        
-        protected virtual void OnUserNotifyUpdated ()
+
+        public virtual void OnUserNotifyUpdated ()
         {
             if (this != ServiceManager.SourceManager.ActiveSource) {
                 EventHandler handler = UserNotifyUpdated;

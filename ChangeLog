@@ -1,3 +1,51 @@
+2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Prior to this commit, all sources (playlists, etc) were reloaded on
+	startup, meaning startup got slower and slower the more playlists you had.
+	This is no longer the case, playlists are reloaded the first time you
+	activate (select) them.
+
+	* src/Clients/Nereid/Nereid/Client.cs: Add information line at start of
+	Main, useful to get more accurate startup timing.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add columns for SavedCount to CorePrimarySources etc.  Trigger all the
+	sources to reload when the client is started up, just one more time, to
+	bootstrap the SavedCount.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Client.cs: Log when the
+	client has fully started up.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Save is now an override, and got rid of NotifyUpdated since not needed now
+	that Source.OnUserNotifyUpdated is public.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Load and save SavedCount.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add a
+	SavedCount protected property, used to be able to show a count in the
+	source list on startup without having to query every soure. Implement
+	IDisposable, and Save the source when disposed.  Also, implement default
+	Activate method that checks if the source has been reloaded this session,
+	and reloads it if not.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Make sure
+	all sources are Disposed (if : IDisposable) when removed, including child
+	sources.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Make
+	OnUserNotifyUpdated method public, and use it in SourceActions.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Call OnUserNotifyUpdated
+	on new DapSources so they pulse in the source list.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Chain Dispose calls.
+
 2008-04-29  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedImage.cs: Do not chain

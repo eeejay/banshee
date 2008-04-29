@@ -26,6 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
 using System.IO;
 
 namespace Nereid
@@ -34,13 +35,14 @@ namespace Nereid
     {
         public static void Main ()
         {
+            Hyena.Log.Information (String.Format ("Running Banshee {0}", Banshee.ServiceStack.Application.Version));
             // This could go into GtkBaseClient, but it's probably something we
             // should really only support at each client level
             string user_gtkrc = Path.Combine (Banshee.Base.Paths.ApplicationData, "gtkrc"); 
             if (File.Exists (user_gtkrc) && !Banshee.Base.ApplicationContext.CommandLine.Contains ("no-gtkrc")) {
                 Gtk.Rc.AddDefaultFile (user_gtkrc);
             } 
-            
+
             // Boot the client
             Banshee.Gui.GtkBaseClient.Entry<Client> ();
         }

@@ -152,8 +152,10 @@ namespace Banshee.Sources
         {
         }
 
-        public virtual void Dispose ()
+        public override void Dispose ()
         {
+            base.Dispose ();
+
             if (Application.ShuttingDown)
                 return;
 
@@ -177,8 +179,11 @@ namespace Banshee.Sources
             dbid = ServiceManager.DbConnection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = ?", UniqueId);
             if (dbid == 0) {
                 dbid = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", UniqueId);
+            } else {
+                SavedCount = ServiceManager.DbConnection.Query<int> ("SELECT CachedCount FROM CorePrimarySources WHERE PrimarySourceID = ?", dbid);
             }
 
+            // Scope the tracks to this primary source
             track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", dbid);
 
             primary_sources[dbid] = this;
@@ -190,6 +195,14 @@ namespace Banshee.Sources
             foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll (DbId))
                 if (pl.PrimarySourceId == dbid)
                     AddChildSource (pl);
+        }
+
+        public override void Save ()
+        {
+            ServiceManager.DbConnection.Execute (
+                "UPDATE CorePrimarySources SET CachedCount = ? WHERE PrimarySourceID = ?",
+                Count, DbId
+            );
         }
 
         internal void NotifyTracksAdded ()

@@ -61,7 +61,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 7;
+        protected const int CURRENT_VERSION = 8;
         protected const int CURRENT_METADATA_VERSION = 1;
         
         protected class DatabaseVersionAttribute : Attribute 
@@ -320,6 +320,31 @@ namespace Banshee.Database
             return true;
         }
 
+        [DatabaseVersion (8)]
+        private bool Migrate_8 ()
+        {
+            Execute ("ALTER TABLE CorePrimarySources ADD COLUMN CachedCount INTEGER");
+            Execute ("ALTER TABLE CorePlaylists ADD COLUMN CachedCount INTEGER");
+            Execute ("ALTER TABLE CoreSmartPlaylists ADD COLUMN CachedCount INTEGER");
+
+            // This once, we need to reload all the sources at start up. Then never again, woo!
+            bool refreshed = false;
+            Application.ActiveClient.Started += delegate {
+                if (!refreshed) {
+                    refreshed = true;
+                    ThreadPool.QueueUserWorkItem (delegate {
+                        foreach (Source source in ServiceManager.SourceManager.Sources) {
+                            if (source is ITrackModelSource) {
+                                ((ITrackModelSource)source).Reload ();
+                            }
+                        }
+                    });
+                }
+            };
+
+            return true;
+        }
+
 #pragma warning restore 0169
         
         private void InitializeFreshDatabase()
@@ -349,7 +374,8 @@ namespace Banshee.Database
             Execute(@"
                 CREATE TABLE CorePrimarySources (
                     PrimarySourceID     INTEGER PRIMARY KEY,
-                    StringID            TEXT UNIQUE
+                    StringID            TEXT UNIQUE,
+                    CachedCount         INTEGER
                 )
             ");
             Execute ("INSERT INTO CorePrimarySources (StringID) VALUES ('MusicLibrarySource-Library')");
@@ -437,7 +463,8 @@ namespace Banshee.Database
                     Name                TEXT,
                     SortColumn          INTEGER NOT NULL DEFAULT -1,
                     SortType            INTEGER NOT NULL DEFAULT 0,
-                    Special             INTEGER NOT NULL DEFAULT 0
+                    Special             INTEGER NOT NULL DEFAULT 0,
+                    CachedCount         INTEGER
                 )
             ");
             
@@ -459,7 +486,8 @@ namespace Banshee.Database
                     Condition           TEXT,
                     OrderBy             TEXT,
                     LimitNumber         TEXT,
-                    LimitCriterion      TEXT
+                    LimitCriterion      TEXT,
+                    CachedCount         INTEGER
                 )
             ");
                 

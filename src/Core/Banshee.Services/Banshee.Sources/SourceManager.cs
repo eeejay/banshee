@@ -63,7 +63,7 @@ namespace Banshee.Sources
         public event SourceAddedHandler SourceAdded;
         public event SourceEventHandler SourceRemoved;
         public event SourceEventHandler ActiveSourceChanged;
-        
+
         internal void LoadExtensionSources ()
         {
             lock (this) {
@@ -76,13 +76,7 @@ namespace Banshee.Sources
             lock (this) {
                 while (sources.Count > 0) {
                     Source source = sources[0];
-                    IDisposable disposable = source as IDisposable;
-                    
                     RemoveSource (source);
-                    
-                    if (disposable != null) {
-                        disposable.Dispose ();
-                    }
                 }
                 
                 sources.Clear ();
@@ -105,11 +99,6 @@ namespace Banshee.Sources
                     Source source = extension_sources[node.Id];
                     extension_sources.Remove (node.Id);
                     RemoveSource (source);
-                    
-                    IDisposable disposable = source as IDisposable;
-                    if (disposable != null) {
-                        disposable.Dispose ();
-                    }
                 }
             }
         }
@@ -179,6 +168,11 @@ namespace Banshee.Sources
 
             foreach(Source child_source in source.Children) {
                 RemoveSource(child_source);
+            }
+
+            IDisposable disposable = source as IDisposable;
+            if (disposable != null) {
+                disposable.Dispose ();
             }
 
             if(source == active_source) {

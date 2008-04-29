@@ -47,7 +47,7 @@ using Banshee.Query;
 
 namespace Banshee.Sources
 {
-    public abstract class DatabaseSource : Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator
+    public abstract class DatabaseSource : Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator, IDisposable
     {
         protected delegate void TrackRangeHandler (DatabaseTrackListModel model, RangeCollection.Range range);
 
@@ -70,6 +70,13 @@ namespace Banshee.Sources
 
         protected DatabaseSource () : base ()
         {
+        }
+
+        public abstract void Save ();
+
+        public virtual void Dispose ()
+        {
+            Save ();
         }
 
         protected override void Initialize ()
@@ -127,7 +134,7 @@ namespace Banshee.Sources
 #region Public Properties
 
         public override int Count {
-            get { return DatabaseTrackModel.UnfilteredCount; }
+            get { return ever_reloaded ? DatabaseTrackModel.UnfilteredCount : SavedCount; }
         }
 
         public override int FilteredCount {
@@ -188,6 +195,12 @@ namespace Banshee.Sources
             get { return true; }
         }
 
+        private int saved_count;
+        protected int SavedCount {
+            get { return saved_count; }
+            set { saved_count = value; }
+        }
+
         public override bool AcceptsInputFromSource (Source source)
         {
             return CanAddTracks && source != this;
@@ -199,6 +212,7 @@ namespace Banshee.Sources
 
         public virtual void Reload ()
         {
+            ever_reloaded = true;
             reload_limiter.Execute ();
         }
 
@@ -394,12 +408,14 @@ namespace Banshee.Sources
         protected virtual void AfterInitialized ()
         {
             DatabaseTrackModel.Initialize (TrackCache, artist_model, album_model);
+            OnSetupComplete ();
+        }
 
-            ThreadAssist.SpawnFromMain (delegate {
-                // TODO delay or get rid of this reload altogether
+        private bool ever_reloaded = false;
+        public override void Activate ()
+        {
+            if (!ever_reloaded)
                 Reload ();
-                OnSetupComplete ();
-            });
         }
 
         protected virtual void RemoveTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)

@@ -156,7 +156,7 @@ namespace Banshee.Playlist
             get { return true; }
         }
 
-        public virtual void Save ()
+        public override void Save ()
         {
             if (dbid == null || dbid <= 0)
                 Create ();
@@ -166,11 +166,6 @@ namespace Banshee.Playlist
 
         public override bool ShowBrowser {
             get { return (Parent is DatabaseSource) ? (Parent as DatabaseSource).ShowBrowser : base.ShowBrowser; }
-        }
-
-        public void NotifyUpdated ()
-        {
-            OnUserNotifyUpdated ();
         }
 
         protected abstract void Create ();

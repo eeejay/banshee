@@ -104,17 +104,18 @@ namespace Banshee.Playlist
         {
         }
 
-        public PlaylistSource (string name, int? dbid, int primarySourceId) : this (name, dbid, -1, 0, primarySourceId)
+        protected PlaylistSource (string name, int? dbid, int primarySourceId) : this (name, dbid, -1, 0, primarySourceId, 0)
         {
         }
 
-        public PlaylistSource (string name, int? dbid, int sortColumn, int sortType, int primarySourceId)
+        protected PlaylistSource (string name, int? dbid, int sortColumn, int sortType, int primarySourceId, int count)
             : base (generic_name, name, dbid, sortColumn, sortType, primarySourceId)
         {
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
             DbId = dbid;
+            SavedCount = count;
         }
 
 #endregion
@@ -141,10 +142,11 @@ namespace Banshee.Playlist
                     @"UPDATE {0}
                         SET Name = ?,
                             SortColumn = ?,
-                            SortType = ?
+                            SortType = ?,
+                            CachedCount = ?
                         WHERE PlaylistID = ?",
                     SourceTable
-                ), Name, -1, 0, dbid
+                ), Name, -1, 0, Count, dbid
             ));
         }
 
@@ -293,12 +295,13 @@ namespace Banshee.Playlist
         public static IEnumerable<PlaylistSource> LoadAll (int primary_id)
         {
             using (IDataReader reader = ServiceManager.DbConnection.Query (
-                @"SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID FROM CorePlaylists 
+                @"SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID, CachedCount FROM CorePlaylists 
                     WHERE Special = 0 AND PrimarySourceID = ?", primary_id)) {
                 while (reader.Read ()) {
                     yield return new PlaylistSource (
                         reader[1] as string, Convert.ToInt32 (reader[0]),
-                        Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3]), Convert.ToInt32 (reader[4])
+                        Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3]), Convert.ToInt32 (reader[4]),
+                        Convert.ToInt32 (reader[5])
                     );
                 }
             }
