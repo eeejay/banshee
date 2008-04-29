@@ -69,6 +69,9 @@ namespace Banshee.Gui.Widgets
         
         private void ConnectSource (Source source)
         {
+            if (source == this.source)
+                return;
+
             this.source = source;
             
             if (this.source != null) {
@@ -85,6 +88,9 @@ namespace Banshee.Gui.Widgets
         private void InnerUpdate (object o, EventArgs args)
         {
             if (source == null || source.CurrentMessage == null || source.CurrentMessage.IsHidden) {
+                // Fix bug where the AnimatedImage's stage kept playing, triggering tons of ExpoeEvents
+                // that caused the ListView to be re Exposed.
+                Spinning = false;
                 Hide ();
                 return;
             }

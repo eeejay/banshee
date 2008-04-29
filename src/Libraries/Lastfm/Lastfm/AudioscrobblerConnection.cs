@@ -43,7 +43,7 @@ namespace Lastfm
 {
     public class AudioscrobblerConnection
     {
-        enum State {
+        private enum State {
             Idle,
             NeedHandshake,
             NeedTransmit,
@@ -52,44 +52,44 @@ namespace Lastfm
             WaitingForResponse
         };
 
-        const int TICK_INTERVAL = 2000; /* 2 seconds */
-        const int FAILURE_LOG_MINUTES = 5; /* 5 minute delay on logging failure to upload information */
-        const int RETRY_SECONDS = 60; /* 60 second delay for transmission retries */
-        const int MAX_RETRY_SECONDS = 7200; /* 2 hours, as defined in the last.fm protocol */
-        const int TIME_OUT = 5000; /* 5 seconds timeout for webrequests */
-        const string CLIENT_ID = "bsh";
-        const string CLIENT_VERSION = "0.1";
-        const string SCROBBLER_URL = "http://post.audioscrobbler.com/";
-        const string SCROBBLER_VERSION = "1.2";
+        private const int TICK_INTERVAL = 2000; /* 2 seconds */
+        private const int FAILURE_LOG_MINUTES = 5; /* 5 minute delay on logging failure to upload information */
+        private const int RETRY_SECONDS = 60; /* 60 second delay for transmission retries */
+        private const int MAX_RETRY_SECONDS = 7200; /* 2 hours, as defined in the last.fm protocol */
+        private const int TIME_OUT = 5000; /* 5 seconds timeout for webrequests */
+        private const string CLIENT_ID = "bsh";
+        private const string CLIENT_VERSION = "0.1";
+        private const string SCROBBLER_URL = "http://post.audioscrobbler.com/";
+        private const string SCROBBLER_VERSION = "1.2";
 
-        string post_url;
-        string session_id = null;
-        string now_playing_url;
+        private string post_url;
+        private string session_id = null;
+        private string now_playing_url;
         
-        bool connected = false; /* if we're connected to network or not */
+        private bool connected = false; /* if we're connected to network or not */
         public bool Connected {
             get { return connected; }
         }
         
-        bool started = false; /* engine has started and was/is connected to AS */
+        private bool started = false; /* engine has started and was/is connected to AS */
         public bool Started {
             get { return started; }
         }
 
-        System.Timers.Timer timer;
-        DateTime next_interval;
-        DateTime last_upload_failed_logged;
+        private System.Timers.Timer timer;
+        private DateTime next_interval;
+        private DateTime last_upload_failed_logged;
 
-        IQueue queue;
+        private IQueue queue;
         
-        int hard_failures = 0;
-        int hard_failure_retry_sec = 60;
+        private int hard_failures = 0;
+        private int hard_failure_retry_sec = 60;
         
-        HttpWebRequest now_playing_post;
-        string current_now_playing_uri;
-        HttpWebRequest current_web_req;
-        IAsyncResult current_async_result;
-        State state;
+        private HttpWebRequest now_playing_post;
+        private string current_now_playing_uri;
+        private HttpWebRequest current_web_req;
+        private IAsyncResult current_async_result;
+        private State state;
         
         internal AudioscrobblerConnection (IQueue queue)
         {

@@ -243,28 +243,32 @@ namespace Banshee.Sources
 
         protected virtual void SetStatus (string message, bool can_close, bool is_spinning, string icon_name)
         {
-            if (status_message == null) {
-                status_message = new SourceMessage (this);
-                PushMessage (status_message);
+            lock (this) {
+                if (status_message == null) {
+                    status_message = new SourceMessage (this);
+                    PushMessage (status_message);
+                }
+            
+                string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
+                
+                status_message.FreezeNotify ();
+                status_message.Text = String.Format (GLib.Markup.EscapeText (message), status_name);
+                status_message.CanClose = can_close;
+                status_message.IsSpinning = is_spinning;
+                status_message.SetIconName (icon_name);
+                status_message.ClearActions ();
             }
-            
-            string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
-            
-            status_message.FreezeNotify ();
-            status_message.Text = String.Format (GLib.Markup.EscapeText (message), status_name);
-            status_message.CanClose = can_close;
-            status_message.IsSpinning = is_spinning;
-            status_message.SetIconName (icon_name);
-            status_message.ClearActions ();
-            
+                
             status_message.ThawNotify ();
         }
 
         protected virtual void HideStatus ()
         {
-            if (status_message != null) {
-                RemoveMessage (status_message);
-                status_message = null;
+            lock (this) {
+                if (status_message != null) {
+                    RemoveMessage (status_message);
+                    status_message = null;
+                }
             }
         }
 
@@ -301,6 +305,9 @@ namespace Banshee.Sources
         {
             lock (this) {
                 if (messages.Count > 0) {
+                    foreach (SourceMessage message in messages) {
+                        message.Updated -= HandleMessageUpdated;
+                    }
                     messages.Clear ();
                     OnMessageNotify ();
                 }
@@ -349,6 +356,7 @@ namespace Banshee.Sources
         {
             lock (this) {
                 if (messages.Remove (message)) {
+                    message.Updated -= HandleMessageUpdated;
                     OnMessageNotify ();
                 }
             }   

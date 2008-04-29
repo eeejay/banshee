@@ -1,5 +1,20 @@
 2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Be more careful
+	with unregistering handlers to status message events.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:
+	Fix memory leak/cpu usage seen after selecting a Last.fm source, caused by
+	AnimatedImage's stage continuing to play after the status message should
+	have been hidden/removed.  Its still strange that while the AnimatedImage
+	is shown/animating it triggers so many ExposeEvents on the ListView, but
+	at least they stop once the status message goes away.  Fixes BGO #523646.
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Explicitly mark
+	private members as private.
+
+2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* tests/Hyena/DbBoundType.cs: Fix build.
 
 2008-04-28  Gabriel Burt  <gabriel.burt@gmail.com>
