@@ -96,6 +96,10 @@ namespace Banshee.Dap.MassStorage
             get { return base.HasMediaCapabilities || File.Exists (new SafeUri (IsAudioPlayerPath)); }
         }
 
+        protected override IDeviceMediaCapabilities MediaCapabilities {
+            get { return volume.Parent.MediaCapabilities ?? base.MediaCapabilities; }
+        }
+
         protected string IsAudioPlayerPath {
             get { return System.IO.Path.Combine (volume.MountPoint, ".is_audio_player"); }
         }

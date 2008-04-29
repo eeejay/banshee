@@ -1,5 +1,11 @@
 2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Get media capabilities from the volume's parent (the block device).
+
+2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Add
 	ClientAdded event.
 

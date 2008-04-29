@@ -245,7 +245,7 @@ namespace Banshee.Dap
             get { return device.MediaCapabilities != null; }
         }
 
-        protected IDeviceMediaCapabilities MediaCapabilities {
+        protected virtual IDeviceMediaCapabilities MediaCapabilities {
             get { return device.MediaCapabilities; }
         }
         
