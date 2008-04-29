@@ -42,6 +42,7 @@ namespace Hyena.Widgets
         private int frame_width;
         private int frame_height;
         private int max_frames;
+        private bool active_frozen;
         
         private SingleActorStage stage = new SingleActorStage ();
         
@@ -52,6 +53,25 @@ namespace Hyena.Widgets
             stage.Actor.CanExpire = false;
         }
         
+        protected override void OnShown ()
+        {
+            base.OnShown ();
+            
+            if (active_frozen && !stage.Playing) {
+                stage.Play ();
+            }
+        }
+        
+        protected override void OnHidden ()
+        {
+            base.OnHidden ();
+            
+            active_frozen = Active;
+            if (stage.Playing) {
+                stage.Pause ();
+            }
+        }
+        
         public void Load ()
         {
             ExtractFrames ();
@@ -60,6 +80,10 @@ namespace Hyena.Widgets
         
         private void OnIteration (object o, EventArgs args)
         {
+            if (!Visible) {
+                return;
+            }
+            
             if (frames == null || frames.Length == 0) {
                 return;
             } else if (frames.Length == 1) {
@@ -101,12 +125,19 @@ namespace Hyena.Widgets
         }
         
         public bool Active {
-            get { return stage.Playing; }
+            get { return !Visible ? active_frozen : stage.Playing; }
             set { 
                 if (value) {
-                    stage.Play ();
+                    active_frozen = true;
+                    if (Visible) {
+                        stage.Play ();
+                    }
                 } else {
-                    stage.Pause ();
+                    active_frozen = false;
+                    if (stage.Playing) {
+                        stage.Pause ();
+                    }
+                    
                     if (inactive_pixbuf != null) {
                         base.Pixbuf = inactive_pixbuf;
                     } else if (frames != null && frames.Length > 1) {

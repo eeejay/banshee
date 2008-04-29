@@ -64,7 +64,6 @@ namespace Hyena.Widgets
                 image.FrameWidth = 22;
                 Spinning = false;
                 image.Load ();
-                image.Show ();
             } catch {
             }
             
@@ -95,6 +94,18 @@ namespace Hyena.Widgets
             EnsureStyle ();
             
             BorderWidth = 3;
+        }
+        
+        protected override void OnShown ()
+        {
+            base.OnShown ();
+            image.Show ();
+        }
+        
+        protected override void OnHidden ()
+        {
+            base.OnHidden ();
+            image.Hide ();
         }
         
         protected override void OnRealized ()

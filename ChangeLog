@@ -1,3 +1,13 @@
+2008-04-29  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedImage.cs: When hidden,
+	preserve the active state and pause the stage to prevent iterations and
+	restore the active state/resume the stage (if active); the more correct
+	fix for the cause of BGO #523646.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MessageBar.cs: Explicitly show/hide
+	the animated image when the bar show/hides
+
 2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Be more careful
