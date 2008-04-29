@@ -72,6 +72,13 @@ namespace Hyena.Widgets
             }
         }
         
+        protected override void OnSizeAllocated (Gdk.Rectangle allocation)
+        {
+            if (allocation != Allocation) {
+                base.OnSizeAllocated (allocation);
+            }
+        }
+        
         public void Load ()
         {
             ExtractFrames ();

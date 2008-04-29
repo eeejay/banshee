@@ -1,3 +1,10 @@
+2008-04-29  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedImage.cs: Do not chain
+	SizeAllocated if the allocation doesn't actuall change - not sure why
+	GtkImage raises this when the image changes even if the dimensions are 
+	the same. Lame.
+
 2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:
