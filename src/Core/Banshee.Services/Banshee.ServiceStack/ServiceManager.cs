@@ -54,7 +54,7 @@ namespace Banshee.ServiceStack
         
         private static bool is_initialized = false;
         private static readonly object self_mutex = new object ();
-        
+
         public static event EventHandler StartupBegin;
         public static event EventHandler StartupFinished;
         public static event ServiceStartedHandler ServiceStarted;
@@ -89,6 +89,12 @@ namespace Banshee.ServiceStack
             
             Banshee.Configuration.ConfigurationClient.Initialize ();
             extension_nodes = AddinManager.GetExtensionNodes ("/Banshee/ServiceManager/Service");
+
+            Application.ClientAdded += delegate (Client client) {
+                client.Started += delegate {
+                    DelayedInitialize ();
+                };
+            };
         }
         
         public static void Run()
@@ -157,6 +163,8 @@ namespace Banshee.ServiceStack
                 service = (IExtensionService)node.CreateInstance (typeof (IExtensionService));
                 service.Initialize ();
                 RegisterService (service);
+
+                DelayedInitialize (service);
             
                 Log.DebugTimerPrint (timer_id, String.Format (
                     "Extension service started ({0}, {{0}})", service.ServiceName));
@@ -200,6 +208,27 @@ namespace Banshee.ServiceStack
                     }
                     dispose_services = new Stack<IService> (tmp_services);
                 }
+            }
+        }
+
+        private static bool delayed_initialized, have_client;
+        private static void DelayedInitialize ()
+        {
+            lock (self_mutex) {
+                if (!delayed_initialized) {
+                    have_client = true;
+                    foreach (IService service in services.Values) {
+                        DelayedInitialize (service);
+                    }
+                    delayed_initialized = true;
+                }
+            }
+        }
+        
+        private static void DelayedInitialize (IService service)
+        {
+            if (have_client && !delayed_initialized && service is IDelayedInitializeService) {
+                ((IDelayedInitializeService)service).DelayedInitialize ();
             }
         }
         

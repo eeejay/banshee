@@ -126,6 +126,7 @@ SOURCES =  \
 	Banshee.ServiceStack/Client.cs \
 	Banshee.ServiceStack/DBusServiceManager.cs \
 	Banshee.ServiceStack/IDBusExportable.cs \
+	Banshee.ServiceStack/IDelayedInitializeService.cs \
 	Banshee.ServiceStack/IExtensionService.cs \
 	Banshee.ServiceStack/IInitializeService.cs \
 	Banshee.ServiceStack/InterfaceAction.cs \

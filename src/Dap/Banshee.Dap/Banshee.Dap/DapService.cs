@@ -43,12 +43,17 @@ using Banshee.Hardware;
 
 namespace Banshee.Dap
 {
-    public class DapService : IExtensionService, IDisposable
+    public class DapService : IExtensionService, IDelayedInitializeService, IDisposable
     {
         private Dictionary<string, DapSource> sources;
         private List<TypeExtensionNode> supported_dap_types = new List<TypeExtensionNode> ();
+        private bool initialized;
 
         public void Initialize ()
+        {
+        }
+
+        public void DelayedInitialize ()
         {
             lock (this) {
                 sources = new Dictionary<string, DapSource> ();
@@ -58,6 +63,7 @@ namespace Banshee.Dap
                 ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
                 ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
+                initialized = true;
             }
         }
 
@@ -94,6 +100,9 @@ namespace Banshee.Dap
         public void Dispose ()
         {
             lock (this) {
+                if (!initialized)
+                    return;
+
                 AddinManager.RemoveExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
                 
                 ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;

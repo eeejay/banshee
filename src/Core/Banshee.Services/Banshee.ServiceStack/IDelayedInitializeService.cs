@@ -1,8 +1,8 @@
 //
-// Client.cs
+// IDelayedInitializeService.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -30,28 +30,8 @@ using System;
 
 namespace Banshee.ServiceStack
 {
-    public abstract class Client : IDisposable
+    public interface IDelayedInitializeService : IService
     {
-        public event EventHandler Started;
-
-        public Client ()
-        {
-        }
-        
-        public virtual void Dispose ()
-        {
-        }
-        
-        public abstract string ClientId {
-            get; 
-        }
-
-        protected void OnStarted ()
-        {
-            EventHandler handler = Started;
-            if (handler != null) {
-                handler (this, EventArgs.Empty);
-            }
-        }
+        void DelayedInitialize ();
     }
 }

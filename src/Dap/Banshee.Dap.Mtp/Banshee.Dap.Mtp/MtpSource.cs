@@ -279,8 +279,10 @@ namespace Banshee.Dap.Mtp
                     mtp_device.Dispose ();
                 }
             }
-            mtp_device = null;
 
+            ServiceManager.SourceManager.RemoveSource (this);
+
+            mtp_device = null;
             mtp_source = null;
         }
 

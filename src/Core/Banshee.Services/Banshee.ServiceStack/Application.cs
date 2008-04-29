@@ -51,6 +51,7 @@ namespace Banshee.ServiceStack
     public static class Application
     {   
         public static event ShutdownRequestHandler ShutdownRequested;
+        public static event Action<Client> ClientAdded;
 
         private static Stack<Client> running_clients = new Stack<Client> ();
         private static bool shutting_down;
@@ -98,6 +99,11 @@ namespace Banshee.ServiceStack
         {
             lock (running_clients) {
                 running_clients.Push (client);
+            }
+
+            Action<Client> handler = ClientAdded;
+            if (handler != null) {
+                handler (client);
             }
         }
         

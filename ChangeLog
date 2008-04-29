@@ -1,3 +1,33 @@
+2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Add
+	ClientAdded event.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IDelayedInitializeService.cs:
+	New interface for services that shouldn't be started until there is at
+	least one Client that has started.  In practice, means DapService doesn't
+	scan and load DAPs until after the GTK client is fully loaded.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: When
+	at least one client is started, call DelayedInitialize on
+	IDelayedInitializeServices.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Client.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Add Started
+	event and call it when appropriate.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Implement
+	IDelayedInitializeService.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:
+	Remove bandaid fix for AnimatedImage since abock has committed the real
+	fix.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Remove self from
+	SourceManager within Dispose, so MTP source actually disappears when
+	ejected.
+
 2008-04-29  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedImage.cs: When hidden,

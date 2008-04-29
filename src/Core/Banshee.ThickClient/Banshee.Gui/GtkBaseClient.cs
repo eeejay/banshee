@@ -39,7 +39,7 @@ namespace Banshee.Gui
     public abstract class GtkBaseClient : Client
     {
         private static Type client_type; 
-        
+
         public static void Entry<T> () where T : GtkBaseClient
         {
             if (client_type != null) {
@@ -110,6 +110,7 @@ namespace Banshee.Gui
         
         public virtual void Run ()
         {
+            RunIdle (delegate { OnStarted (); return false; });
             Gtk.Application.Run ();
         }
         
