@@ -40,7 +40,7 @@ public class ModelProvider : SqliteModelProvider<DbBoundType>
     protected override void MigrateDatabase (int old_version)
     {
     }
-    protected override DbBoundType MakeNewObject (int offset)
+    protected override DbBoundType MakeNewObject ()
     {
         return new DbBoundType ();
     }
