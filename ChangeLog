@@ -1,5 +1,11 @@
 2008-04-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Reload the music and video
+	child sources after creating them, since Reloads don't happen
+	automatically any more.
+
+2008-04-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
 	Don't begin/commit a transaction or run InnerMigrate if the version is
 	current.  Use Hyena.Log instead of WriteLines.

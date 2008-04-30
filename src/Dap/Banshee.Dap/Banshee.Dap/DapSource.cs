@@ -93,6 +93,7 @@ namespace Banshee.Dap
         {
             base.Initialize ();
             
+            Expanded = true;
             Properties.SetStringList ("Icon.Name", GetIconNames ());
             Properties.Set<string> ("SourcePropertiesActionLabel", Catalog.GetString ("Device Properties"));
             Properties.Set<OpenPropertiesDelegate> ("SourceProperties.GuiHandler", delegate { 
@@ -149,9 +150,11 @@ namespace Banshee.Dap
             HideStatus ();
             
             ThreadAssist.ProxyToMain (delegate {
-                AddChildSource (new MusicGroupSource (this));
-                AddChildSource (new VideoGroupSource (this));
-                Expanded = true;
+                DatabaseSource src;
+                AddChildSource (src = new MusicGroupSource (this));
+                src.Reload ();
+                AddChildSource (src = new VideoGroupSource (this));
+                src.Reload ();
             });
         }
 
