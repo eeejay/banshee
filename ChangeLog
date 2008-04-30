@@ -1,3 +1,17 @@
+2008-04-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Add a
+	ClientStarted event, which is raised for clients that are already started
+	and for new ones.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Client.cs: Add a
+	IsStarted property, and change the Started event to use a Action<> handler.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Use
+	new Application.ClientStarted event, and handle in method, not anonymous
+	delegate.
+
 2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Backends/Banshee.Unix/Banshee.IO.Unix/Directory.cs: Comment style.

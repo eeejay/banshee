@@ -32,7 +32,7 @@ namespace Banshee.ServiceStack
 {
     public abstract class Client : IDisposable
     {
-        public event EventHandler Started;
+        public event Action<Client> Started;
 
         public Client ()
         {
@@ -46,12 +46,18 @@ namespace Banshee.ServiceStack
             get; 
         }
 
+        private bool is_started;
+        public bool IsStarted {
+            get { return is_started; }
+        }
+
         protected void OnStarted ()
         {
+            is_started = true;
             Hyena.Log.InformationFormat ("{0} Client Started", ClientId);
-            EventHandler handler = Started;
+            Action<Client> handler = Started;
             if (handler != null) {
-                handler (this, EventArgs.Empty);
+                handler (this);
             }
         }
     }

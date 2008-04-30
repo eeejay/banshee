@@ -53,6 +53,21 @@ namespace Banshee.ServiceStack
         public static event ShutdownRequestHandler ShutdownRequested;
         public static event Action<Client> ClientAdded;
 
+        private static event Action<Client> client_started;
+        public static event Action<Client> ClientStarted {
+            add {
+                lock (running_clients) {
+                    foreach (Client client in running_clients) {
+                        if (client.IsStarted) {
+                            OnClientStarted (client);
+                        }
+                    }
+                }
+                client_started += value;
+            }
+            remove { client_started -= value; }
+        }
+
         private static Stack<Client> running_clients = new Stack<Client> ();
         private static bool shutting_down;
 
@@ -99,6 +114,7 @@ namespace Banshee.ServiceStack
         {
             lock (running_clients) {
                 running_clients.Push (client);
+                client.Started += OnClientStarted;
             }
 
             Action<Client> handler = ClientAdded;
@@ -116,6 +132,15 @@ namespace Banshee.ServiceStack
         
         public static Client ActiveClient {
             get { lock (running_clients) { return running_clients.Peek (); } } 
+        }
+
+        private static void OnClientStarted (Client client)
+        {
+            client.Started -= OnClientStarted;
+            Action<Client> handler = client_started;
+            if (handler != null) {
+                handler (client);
+            }
         }
         
         private static bool OnShutdownRequested ()

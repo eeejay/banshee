@@ -90,11 +90,12 @@ namespace Banshee.ServiceStack
             Banshee.Configuration.ConfigurationClient.Initialize ();
             extension_nodes = AddinManager.GetExtensionNodes ("/Banshee/ServiceManager/Service");
 
-            Application.ClientAdded += delegate (Client client) {
-                client.Started += delegate {
-                    DelayedInitialize ();
-                };
-            };
+            Application.ClientStarted += OnClientStarted;
+        }
+
+        private static void OnClientStarted (Client client)
+        {
+            DelayedInitialize ();
         }
         
         public static void Run()
