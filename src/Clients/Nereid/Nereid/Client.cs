@@ -35,7 +35,7 @@ namespace Nereid
     {
         public static void Main ()
         {
-            Hyena.Log.Information (String.Format ("Running Banshee {0}", Banshee.ServiceStack.Application.Version));
+            Hyena.Log.InformationFormat ("Running Banshee {0}", Banshee.ServiceStack.Application.Version);
             // This could go into GtkBaseClient, but it's probably something we
             // should really only support at each client level
             string user_gtkrc = Path.Combine (Banshee.Base.Paths.ApplicationData, "gtkrc"); 

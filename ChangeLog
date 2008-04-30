@@ -1,5 +1,25 @@
 2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Backends/Banshee.Unix/Banshee.IO.Unix/Directory.cs: Comment style.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Client.cs:
+	* src/Clients/Nereid/Nereid/Client.cs: Use Log.InformationFormat instead of
+	Log.Information (String.Format
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Add a
+	log statement.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Get rid of unnecessary thread, and move reload all from anonymous delegate
+	to private method.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Make OnUserNotifyUpdated
+	protected and add public NotifyUser method.
+
+2008-04-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Prior to this commit, all sources (playlists, etc) were reloaded on
 	startup, meaning startup got slower and slower the more playlists you had.
 	This is no longer the case, playlists are reloaded the first time you

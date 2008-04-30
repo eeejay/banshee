@@ -165,7 +165,7 @@ namespace Banshee.Gui
             PlaylistSource playlist = new PlaylistSource ("New Playlist", ActivePrimarySource.DbId);
             playlist.Save ();
             playlist.PrimarySource.AddChildSource (playlist);
-            playlist.OnUserNotifyUpdated ();
+            playlist.NotifyUser ();
             //SourceView.BeginRenameSource (playlist);
         }
 

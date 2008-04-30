@@ -328,22 +328,10 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CoreSmartPlaylists ADD COLUMN CachedCount INTEGER");
 
             // This once, we need to reload all the sources at start up. Then never again, woo!
-            bool refreshed = false;
-            Application.ActiveClient.Started += delegate {
-                if (!refreshed) {
-                    refreshed = true;
-                    ThreadPool.QueueUserWorkItem (delegate {
-                        foreach (Source source in ServiceManager.SourceManager.Sources) {
-                            if (source is ITrackModelSource) {
-                                ((ITrackModelSource)source).Reload ();
-                            }
-                        }
-                    });
-                }
-            };
-
+            Application.ActiveClient.Started += ReloadAllSources;
             return true;
         }
+
 
 #pragma warning restore 0169
         
@@ -698,6 +686,19 @@ namespace Banshee.Database
 
             job.Finish ();
             ServiceManager.SourceManager.MusicLibrary.NotifyTracksChanged ();
+        }
+
+        private static bool refreshed = false;
+        private void ReloadAllSources (object o, EventArgs args)
+        {
+            if (!refreshed) {
+                refreshed = true;
+                foreach (Source source in ServiceManager.SourceManager.Sources) {
+                    if (source is ITrackModelSource) {
+                        ((ITrackModelSource)source).Reload ();
+                    }
+                }
+            }
         }
         
 #endregion

@@ -163,7 +163,7 @@ namespace Banshee.Dap
                     Log.DebugFormat ("Found DAP support ({0}) for device {1}", source.GetType ().FullName, source.Name);
                     sources.Add (device.Uuid, source);
                     ServiceManager.SourceManager.AddSource (source);
-                    source.OnUserNotifyUpdated ();
+                    source.NotifyUser ();
                 }
             }
         }

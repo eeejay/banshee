@@ -56,6 +56,8 @@ namespace Banshee.Database
             // don't want this on because it breaks searching/smart playlists.  See BGO #526371
             //Execute ("PRAGMA case_sensitive_like=ON");
 
+            Log.DebugFormat ("Opened SQLite connection to {0}", DatabaseFile);
+
             migrator = new BansheeDbFormatMigrator (this);
             
             if (Banshee.Base.ApplicationContext.CommandLine.Contains ("debug-sql")) {
