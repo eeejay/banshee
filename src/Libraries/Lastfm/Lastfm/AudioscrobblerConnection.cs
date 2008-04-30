@@ -454,9 +454,7 @@ namespace Lastfm
             } else if (line.StartsWith ("OK")) {
                 success = true;
             } else {
-                Hyena.Log.Error ("Audioscrobbler sign-on failed", 
-                                                  String.Format ("Unknown error: {0}",
-                                                                  line.Trim()), false);
+                Log.Error ("Audioscrobbler sign-on failed", String.Format ("Unknown error: {0}", line.Trim()));
                 hard_failure = true;
             }
             

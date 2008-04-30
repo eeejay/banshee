@@ -319,7 +319,7 @@ namespace Hyena
         
         public static void Warning (string message, string details)
         {
-            Warning (message, details, true);
+            Warning (message, details, false);
         }
         
         public static void Warning (string message, string details, bool showUser)
@@ -343,7 +343,7 @@ namespace Hyena
         
         public static void Error (string message, string details)
         {
-            Error (message, details, true);
+            Error (message, details, false);
         }
         
         public static void Error (string message, string details, bool showUser)
@@ -354,6 +354,11 @@ namespace Hyena
         public static void Error (string message, bool showUser)
         {
             Error (message, null, showUser);
+        }
+
+        public static void ErrorFormat (string format, params object [] args)
+        {
+            Error (String.Format (format, args));
         }
         
         #endregion

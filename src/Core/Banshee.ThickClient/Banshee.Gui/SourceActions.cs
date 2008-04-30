@@ -283,7 +283,7 @@ namespace Banshee.Gui
                 playlist.Save (Banshee.IO.File.OpenWrite (new SafeUri (uri), true), source);
             } catch (Exception e) {
                 Console.WriteLine (e);
-                Log.Error (Catalog.GetString ("Could not export playlist"), e.Message);
+                Log.Error (Catalog.GetString ("Could not export playlist"), e.Message, true);
             }
         }
 

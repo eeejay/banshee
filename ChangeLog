@@ -1,5 +1,38 @@
 2008-04-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Don't begin/commit a transaction or run InnerMigrate if the version is
+	current.  Use Hyena.Log instead of WriteLines.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Got rid
+	of unnecessary if.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Add
+	better logging for when a required service fails to start.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Dispose all
+	non-extension sources and their children, but don't dispose extension
+	sources.
+
+	* src/Extensions/Banshee.PlayQueue/Makefile.am:
+	* src/Extensions/Banshee.PlayQueue/Resources/Banshee.PlayQueue.addin.xml:
+	Move addin.xml file up from Resources
+
+	* src/Libraries/Hyena/Hyena/Log.cs: Make showUser default to false
+	everywhere.
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Explicitly set showUser = true.
+
+2008-04-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Add a
 	ClientStarted event, which is raised for clients that are already started
 	and for new ones.

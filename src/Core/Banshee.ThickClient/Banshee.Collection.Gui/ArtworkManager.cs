@@ -48,7 +48,7 @@ namespace Banshee.Collection.Gui
             try {
                 MigrateLegacyAlbumArt ();
             } catch (Exception e) {
-                Log.Error ("Could not migrate old album artwork to new location.", e.Message);
+                Log.Error ("Could not migrate old album artwork to new location.", e.Message, true);
             }
         }
         

@@ -79,12 +79,10 @@ namespace Banshee.ServiceStack
                 Banshee.Base.Paths.InstalledApplicationDataRoot, "locale"));
 
             ServiceManager.Run ();
-            
-            if (ServiceManager.SourceManager != null) {
-                ServiceManager.SourceManager.AddSource (new MusicLibrarySource (), true);
-                ServiceManager.SourceManager.AddSource (new VideoLibrarySource (), false);
-                ServiceManager.SourceManager.LoadExtensionSources ();
-            }
+
+            ServiceManager.SourceManager.AddSource (new MusicLibrarySource (), true);
+            ServiceManager.SourceManager.AddSource (new VideoLibrarySource (), false);
+            ServiceManager.SourceManager.LoadExtensionSources ();
             
             Banshee.Base.PlatformHacks.RestoreMonoJitSegv ();
         }

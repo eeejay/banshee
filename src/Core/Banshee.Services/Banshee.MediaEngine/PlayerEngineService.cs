@@ -290,7 +290,7 @@ namespace Banshee.MediaEngine
                 OpenCheck (track);
                 active_engine.Play ();
             } catch (Exception e) {
-                Log.Error (Catalog.GetString ("Problem with Player Engine"), e.Message);
+                Log.Error (Catalog.GetString ("Problem with Player Engine"), e.Message, true);
                 Close ();
                 ActiveEngine = default_engine;
             }

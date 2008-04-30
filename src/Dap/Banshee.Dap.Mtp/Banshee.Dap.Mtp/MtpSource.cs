@@ -80,7 +80,7 @@ namespace Banshee.Dap.Mtp
                 Log.Exception (e);
 				Log.Error (
                     Catalog.GetString ("Error Initializing MTP Device Support"),
-                    Catalog.GetString ("There was an error intializing MTP device support.  See http://www.banshee-project.org/Guide/DAPs/MTP for more information.")
+                    Catalog.GetString ("There was an error intializing MTP device support.  See http://www.banshee-project.org/Guide/DAPs/MTP for more information."), true
                 );
                 throw new InvalidDeviceException ();
 			} catch (Exception e) {
@@ -92,7 +92,7 @@ namespace Banshee.Dap.Mtp
             if (devices == null || devices.Count == 0) {
 				Log.Error (
                     Catalog.GetString ("Error Finding MTP Device Support"),
-                    Catalog.GetString ("An MTP device was detected, but Banshee was unable to load support for it.")
+                    Catalog.GetString ("An MTP device was detected, but Banshee was unable to load support for it."), true
                 );
             } else {
                 string mtp_serial = devices[0].SerialNumber;

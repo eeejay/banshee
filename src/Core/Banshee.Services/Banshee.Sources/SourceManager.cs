@@ -49,7 +49,7 @@ namespace Banshee.Sources
         public int Position;
     }
     
-    public class SourceManager : ISourceManager, IRequiredService, IDisposable
+    public class SourceManager : ISourceManager, IInitializeService, IRequiredService, IDisposable
     {
         private List<Source> sources = new List<Source>();
         private Dictionary<string, Source> extension_sources = new Dictionary<string, Source> ();
@@ -64,6 +64,14 @@ namespace Banshee.Sources
         public event SourceEventHandler SourceRemoved;
         public event SourceEventHandler ActiveSourceChanged;
 
+        public void Initialize ()
+        {
+            // TODO should add library sources here, but requires changing quite a few
+            // things that depend on being loaded before the music library is added.
+            //AddSource (music_library = new MusicLibrarySource (), true);
+            //AddSource (video_library = new VideoLibrarySource (), false);
+        }
+
         internal void LoadExtensionSources ()
         {
             lock (this) {
@@ -74,13 +82,21 @@ namespace Banshee.Sources
         public void Dispose ()
         {
             lock (this) {
+                // Do not dispose extension sources
+                foreach (Source source in extension_sources.Values) {
+                    RemoveSource (source, false);
+                }
+
+                // But do dispose non-extension sources
                 while (sources.Count > 0) {
-                    Source source = sources[0];
-                    RemoveSource (source);
+                    RemoveSource (sources[0], true);
                 }
                 
                 sources.Clear ();
                 extension_sources.Clear ();
+                active_source =  default_source = null;
+                music_library = null;
+                video_library = null;
                 
                 AddinManager.RemoveExtensionNodeHandler ("/Banshee/SourceManager/Source", OnExtensionChanged);
             }
@@ -138,7 +154,7 @@ namespace Banshee.Sources
             } else if (source is VideoLibrarySource) {
                 video_library = source as VideoLibrarySource;
             }
-            
+
             ServiceManager.DBusServiceManager.RegisterObject(source);
             
             foreach(Source child_source in source.Children) {
@@ -150,7 +166,12 @@ namespace Banshee.Sources
             }
         }
         
-        public void RemoveSource(Source source)
+        public void RemoveSource (Source source)
+        {
+            RemoveSource (source, false);
+        }
+
+        public void RemoveSource (Source source, bool dispose)
         {
             if(source == null || !ContainsSource (source)) {
                 return;
@@ -167,12 +188,14 @@ namespace Banshee.Sources
             sources.Remove(source);
 
             foreach(Source child_source in source.Children) {
-                RemoveSource(child_source);
+                RemoveSource (child_source, dispose);
             }
 
-            IDisposable disposable = source as IDisposable;
-            if (disposable != null) {
-                disposable.Dispose ();
+            if (dispose) {
+                IDisposable disposable = source as IDisposable;
+                if (disposable != null) {
+                    disposable.Dispose ();
+                }
             }
 
             if(source == active_source) {

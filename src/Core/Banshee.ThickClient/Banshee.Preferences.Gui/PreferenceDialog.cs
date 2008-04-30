@@ -53,7 +53,7 @@ namespace Banshee.Preferences.Gui
             
             if (service == null) {
                 Log.Error (Catalog.GetString ("Could not show preferences"), 
-                Catalog.GetString ("The preferences service could not be found."), true);
+                    Catalog.GetString ("The preferences service could not be found."), true);
                 
                 throw new ApplicationException ();
             }

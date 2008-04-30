@@ -128,19 +128,21 @@ namespace Banshee.Database
         public void Migrate ()
         {
             try {
-                Execute ("BEGIN");
-                InnerMigrate ();
-                Execute ("COMMIT");
+                if (DatabaseVersion < CURRENT_VERSION) {
+                    Execute ("BEGIN");
+                    InnerMigrate ();
+                    Execute ("COMMIT");
+                }
 
                 // Trigger metadata refreshes if necessary
                 int metadata_version = connection.Query<int> ("SELECT Value FROM CoreConfiguration WHERE Key = 'MetadataVersion'");
                 if (DatabaseVersion == CURRENT_VERSION && metadata_version < CURRENT_METADATA_VERSION) {
                     ServiceManager.ServiceStarted += OnServiceStarted;
                 }
-            } catch (Exception e) {
-                Console.WriteLine ("Rolling back transaction");
-                Console.WriteLine (e);
+            } catch (Exception) {
+                Log.Warning ("Rolling back migration");
                 Execute ("ROLLBACK");
+                throw;
             }
 
             OnFinished ();
@@ -152,6 +154,7 @@ namespace Banshee.Database
             bool terminate = false;
             bool ran_migration_step = false;
             
+            Log.DebugFormat ("Migrating from database version {0} to {1}", DatabaseVersion, CURRENT_VERSION);
             for (int i = DatabaseVersion + 1; i <= CURRENT_VERSION; i++) {
                 foreach (MethodInfo method in methods) {
                     foreach (DatabaseVersionAttribute attr in method.GetCustomAttributes (

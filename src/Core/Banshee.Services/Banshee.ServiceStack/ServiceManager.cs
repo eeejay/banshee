@@ -127,12 +127,14 @@ namespace Banshee.ServiceStack
                         }
                     } catch (Exception e) {
                         if (service is IRequiredService) {
+                            Log.ErrorFormat ("Error initializing required service {0}",
+                                    service == null ? type.ToString () : service.ServiceName, false);
                             throw;
                         }
                         
-                        Log.Exception (e.InnerException ?? e);
                         Log.Warning (String.Format ("Service `{0}' not started: {1}", type.FullName, 
                             e.InnerException != null ? e.InnerException.Message : e.Message));
+                        Log.Exception (e.InnerException ?? e);
                     }
                 }
                 
