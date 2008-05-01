@@ -521,9 +521,22 @@ namespace Banshee.Sources
         }
 
         public virtual int FilteredCount { get { return Count; } }
+                
+        public virtual string TrackModelPath {
+            get { return null; }
+        }
+        
+#endregion
+
+#region Status Message Stuff        
+        
+        private static DurationStatusFormatters duration_status_formatters = new DurationStatusFormatters ();
+        public static DurationStatusFormatters DurationStatusFormatters {
+            get { return duration_status_formatters; }
+        }
         
         protected virtual int StatusFormatsCount {
-            get { return 3; }
+            get { return duration_status_formatters.Count; }
         }
         
         protected virtual int CurrentStatusFormat {
@@ -553,49 +566,9 @@ namespace Banshee.Sources
             
             builder.AppendFormat (Catalog.GetPluralString ("{0} item", "{0} items", count), count);
             
-            if (this is IDurationAggregator) {
+            if (this is IDurationAggregator && StatusFormatsCount > 0) {
                 builder.Append (", ");
-
-                TimeSpan span = (this as IDurationAggregator).Duration;
-                int format = CurrentStatusFormat;
-                
-                if (format == 0) {
-                    if (span.Days > 0) {
-                        double days = span.Days + (span.Hours / 24.0);
-                        builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", 
-                            StringUtil.DoubleToPluralInt (days)), StringUtil.FormatDouble (days));
-                    } else if (span.Hours > 0) {
-                        double hours = span.Hours + (span.Minutes / 60.0);
-                        builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", 
-                            StringUtil.DoubleToPluralInt (hours)), StringUtil.FormatDouble (hours));
-                    } else {
-                        double minutes = span.Minutes + (span.Seconds / 60.0);
-                        builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", 
-                            StringUtil.DoubleToPluralInt (minutes)), StringUtil.FormatDouble (minutes));
-                    }
-                } else if (format == 1) {
-                    if (span.Days > 0) {
-                        builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", span.Days), span.Days);
-                        builder.Append (", ");
-                    }
-                    
-                    if (span.Hours > 0) {
-                        builder.AppendFormat(Catalog.GetPluralString ("{0} hour", "{0} hours", span.Hours), span.Hours);
-                        builder.Append (", ");
-                    }
-
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", span.Minutes), span.Minutes);
-                    builder.Append (", ");
-                    builder.AppendFormat (Catalog.GetPluralString ("{0} second", "{0} seconds", span.Seconds), span.Seconds);
-                } else if (format == 2) {
-                    if (span.Days > 0) {
-                        builder.AppendFormat ("{0}:{1:00}:", span.Days, span.Hours);
-                    } else if (span.Hours > 0) {
-                        builder.AppendFormat ("{0}:", span.Hours);
-                    }
-                    
-                    builder.AppendFormat ("{0:00}:{1:00}", span.Minutes, span.Seconds);
-                }
+                duration_status_formatters[CurrentStatusFormat] (builder, ((IDurationAggregator)this).Duration);
             }
 
             if (this is IFileSizeAggregator) {
@@ -608,6 +581,8 @@ namespace Banshee.Sources
             
             return builder.ToString ();
         }
+        
+#endregion
         
         string IService.ServiceName {
             get { return String.Format ("{0}{1}", DBusServiceManager.MakeDBusSafeString (Name), "Source"); }
@@ -622,12 +597,5 @@ namespace Banshee.Sources
                 }
             }
         }
-        
-        public virtual string TrackModelPath {
-            get { return null; }
-        }
-        
-#endregion
-        
     }
 }

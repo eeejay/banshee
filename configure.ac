@@ -58,6 +58,9 @@ BANSHEE_CHECK_MONO_ADDINS
 dnl notify-sharp library
 BANSHEE_CHECK_NOTIFY_SHARP
 
+dnl Boo
+BANSHEE_CHECK_BOO
+
 dnl Monodoc (optional through --disable-docs)
 SHAMROCK_CHECK_MONODOC
 
@@ -155,6 +158,7 @@ src/Dap/Banshee.Dap.Mtp/Makefile
 src/Extensions/Makefile
 src/Extensions/Banshee.AudioCd/Makefile
 src/Extensions/Banshee.Bookmarks/Makefile
+src/Extensions/Banshee.BooScript/Makefile
 src/Extensions/Banshee.Daap/Makefile
 src/Extensions/Banshee.Lastfm/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
@@ -183,6 +187,7 @@ ${PACKAGE}-${VERSION}
 
     DAAP Support:      ${enable_daap}	(unstable)
     Podcast Support:   ${enable_podcast}	(unstable)
+    Boo Scripting:     ${enable_boo}
 "
 if test -d ${expanded_libdir}/${PACKAGE}; then
 	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/${PACKAGE}"

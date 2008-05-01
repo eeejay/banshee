@@ -1,3 +1,38 @@
+2008-04-30  Aaron Bockover  <abock@gnome.org>
+
+	* build/build.environment.mk:
+	* build/m4/banshee/boo.m4:
+	* configure.ac: Build stuff for the BooScript extension
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Added GetTempFileName
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:
+	Use the new Paths.GetTempFileName
+
+	* src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:
+	Created a new collection that holds formatter handlers and add our 
+	default formatters; this allows scripts and extensions can add their own
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Move the default
+	duration formatters into DurationStatusFormatters and create a static
+	instance of that collection to use for sources
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Small progress
+	on syncing, not much
+
+	* src/Libraries/Hyena/Hyena.CommandLine/CommandLineParser.cs: Require
+	arguments taking value to have the --arg=value form on the command line
+	and treat all non -- starting arguments as 'files'
+
+	* src/Extensions/Banshee.BooScript/Banshee.BooScript.addin.xml:
+	* src/Extensions/Banshee.BooScript/Banshee.BooScript/BooScriptService.cs:
+	Ported the Boo scripting support from old Banshee
+
+	* src/Extensions/Banshee.BooScript/Resources/duration-status-formats.boo:
+	* src/Extensions/Banshee.BooScript/Resources/filename-transform.boo:
+	The first two Boo scripts that work on the new Banshee
+
 2008-04-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Reload the music and video

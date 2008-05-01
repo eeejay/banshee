@@ -35,7 +35,34 @@ using Banshee.Configuration.Schema;
 namespace Banshee.Base
 {
     public class Paths
-    {        
+    {
+        public static string GetTempFileName (string dir)
+        {
+            return GetTempFileName (dir, null);
+        }
+        
+        public static string GetTempFileName (string dir, string extension)
+        {
+            return GetTempFileName (new DirectoryInfo (dir), extension);
+        }
+        
+        public static string GetTempFileName (DirectoryInfo dir, string extension)
+        {
+            string path = null;
+            
+            if (dir == null || !dir.Exists) {
+                throw new DirectoryNotFoundException ();
+            }
+
+            do {
+                string guid = Guid.NewGuid ().ToString ();
+                string file = extension == null ? guid : String.Format ("{0}.{1}", guid, extension);
+                path = Path.Combine (dir.FullName, file);
+            } while (File.Exists (path));
+        
+            return path;
+        }
+        
         public static string Combine (string first, params string [] components)
         {
             if (String.IsNullOrEmpty (first)) {

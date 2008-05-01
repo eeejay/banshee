@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.BooScript"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
+    name="Boo Scripting"
+    category="Developers"
+    description="The Boo Scripting plugin allows users to quickly customize and extend Banshee through the Boo programming language."
+    author="Aaron Bockover"
+    url="http://banshee-project.org/"
+    defaultEnabled="false">
+
+  <Dependencies>
+    <Addin id="Banshee.Services" version="1.0"/>
+  </Dependencies>
+
+  <Extension path="/Banshee/ServiceManager/Service">
+    <Service class="Banshee.BooScript.BooScriptService"/>
+  </Extension>
+
+</Addin>

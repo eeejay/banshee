@@ -28,6 +28,7 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 using IPod;
 
@@ -297,6 +298,9 @@ namespace Banshee.Dap.Ipod
 #endregion
 
 #region Syncing
+
+        private Queue<IpodTrackInfo> tracks_to_add = new Queue<IpodTrackInfo> ();
+        // private Queue<IpodTrackInfo> track_to_remove = new Queue<IpodTrackInfo> ();
         
         public override bool IsReadOnly {
             get { return ipod_device.IsReadOnly; }
@@ -318,8 +322,17 @@ namespace Banshee.Dap.Ipod
 
         protected override void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
         {
-            if (track.PrimarySourceId == DbId) {
-                return;
+            lock (this) {
+                if (track.PrimarySourceId == DbId) {
+                    return;
+                }
+                
+                IpodTrackInfo ipod_track = new IpodTrackInfo (track);
+                ipod_track.Uri = fromUri;
+                ipod_track.PrimarySource = this;
+                ipod_track.Save (false);
+            
+                tracks_to_add.Enqueue (ipod_track);
             }
         }
 

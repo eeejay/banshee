@@ -53,7 +53,7 @@ namespace Banshee.Dap.Ipod
             CanSaveToDatabase = true;
         }
         
-        public IpodTrackInfo (TrackInfo track, IPod.TrackDatabase database)
+        public IpodTrackInfo (TrackInfo track)
         {
             if (track is IpodTrackInfo) {
                 this.track = ((IpodTrackInfo)track).IpodTrack;

@@ -79,11 +79,8 @@ namespace Hyena.CommandLine
                 if (eq_offset > 1) {
                     value = name.Substring (eq_offset + 1);
                     name = name.Substring (0, eq_offset);
-                } else if (i < arguments.Length - 1 && !IsOption (arguments[i + 1])) {
-                    value = arguments[i + 1];
-                    i++;
                 }
-                  
+                 
                 if (parsed_arguments.ContainsKey (name)) {
                     parsed_arguments[name] = value;
                 } else {

@@ -53,7 +53,8 @@ namespace Banshee.MediaEngine
             public TrackTranscodedHandler Handler;
             public TranscodeCancelledHandler CancelledHandler;
 
-            public TranscodeContext (TrackInfo track, SafeUri out_uri, ProfileConfiguration config, TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler)
+            public TranscodeContext (TrackInfo track, SafeUri out_uri, ProfileConfiguration config, 
+                TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler)
             {
                 Track = track;
                 OutUri = out_uri;
@@ -100,10 +101,10 @@ namespace Banshee.MediaEngine
         }
 
         private static string cache_dir = Paths.Combine (Paths.ApplicationCache, "transcoder");
-        private static uint count = 0;
+        
         public static SafeUri GetTempUriFor (string extension)
         {
-            return new SafeUri (Paths.Combine (cache_dir, String.Format ("{0}.{1}", count++, extension)));
+            return new SafeUri (Paths.GetTempFileName (cache_dir, extension));
         }
 
         private ITranscoder Transcoder {
@@ -126,7 +127,7 @@ namespace Banshee.MediaEngine
             get {
                 if (user_job == null) {
                     user_job = new BatchUserJob (Catalog.GetString("Converting {0} of {1}"), Catalog.GetString("Initializing"), "encode");
-                    user_job.CancelMessage = Catalog.GetString("Files are currently being converted to another format. Would you like to stop this?");
+                    user_job.CancelMessage = Catalog.GetString ("Files are currently being converted to another format. Would you like to stop this?");
                     user_job.CanCancel = true;
                     user_job.DelayShow = true;
                     user_job.CancelRequested += OnCancelRequested;
@@ -148,7 +149,6 @@ namespace Banshee.MediaEngine
                 }
                 
                 if (transcoder != null) {
-                    Console.WriteLine ("transcoder.Finish");
                     transcoder.Finish ();
                     transcoder = null;
                 }
@@ -166,12 +166,14 @@ namespace Banshee.MediaEngine
             }
         }
 
-        public void Enqueue (TrackInfo track, ProfileConfiguration config, TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler)
+        public void Enqueue (TrackInfo track, ProfileConfiguration config, 
+            TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler)
         {
             Enqueue (track, GetTempUriFor (config.Profile.OutputFileExtension), config, handler, cancelledHandler);
         }
 
-        public void Enqueue (TrackInfo track, SafeUri out_uri, ProfileConfiguration config, TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler)
+        public void Enqueue (TrackInfo track, SafeUri out_uri, ProfileConfiguration config, 
+            TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler)
         {
             bool start = false;
             lock (queue) {

@@ -161,6 +161,12 @@
     <File name="Banshee.Library/LibraryLocationPreference.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Preferences/VoidPreference.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Hardware/ICustomDeviceProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/DatabaseTrackModelCache.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/DatabaseTrackModelProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/IDatabaseTrackModelCache.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/IDatabaseTrackModelProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/IDelayedInitializeService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/DurationStatusFormatters.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

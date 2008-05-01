@@ -15,7 +15,6 @@
     <File name="Banshee.Podcasting/PodcastCore_Interface.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting/PodcastImportManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting/PodcastService.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Data/PodcastFeed.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Data/PodcastItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/DownloadManager/DownloadManagerInterface.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs" subtype="Code" buildaction="Compile" />
