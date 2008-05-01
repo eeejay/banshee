@@ -1,5 +1,10 @@
 2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* build/m4/banshee/dap-mtp.m4:
+	* configure.ac: Enable MTP support by default (if libmtp is available).
+
+2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* build/build.environment.mk:
 	* configure.ac:
 	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode.addin.xml:

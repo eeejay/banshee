@@ -182,8 +182,8 @@ ${PACKAGE}-${VERSION}
     Mono Runtime:      ${MONO}
 
     Digital Audio Player (DAP) Support:
-      Mass Storage:    yes	(unstable)
-      MTP:             ${enable_mtp_dap}	(unstable)
+      Mass Storage:    yes
+      MTP:             ${enable_mtp_dap}
       iPod:            ${enable_ipodsharp}	(unstable)
 
     DAAP Support:      ${enable_daap}	(unstable)
