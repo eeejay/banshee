@@ -1,3 +1,20 @@
+2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* build/build.environment.mk:
+	* configure.ac:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode.addin.xml:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode.mdp:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeService.cs:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/SourceComboBox.cs:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/SourceModel.cs:
+	* src/Extensions/Banshee.MiniMode/Makefile.am:
+	* src/Extensions/Banshee.MiniMode/Resources/minimode.glade:
+	* src/Extensions/Extensions.mds:
+	* src/Extensions/Makefile.am: Patch from Bertrand Lorentz porting mini
+	mode from stable, fixes BGO #527412.  The extension is built by default,
+	but must be enabled in the Preferences dialog.
+
 2008-04-30  Aaron Bockover  <abock@gnome.org>
 
 	* build/m4/banshee/boo.m4: Require Boo 0.8.1

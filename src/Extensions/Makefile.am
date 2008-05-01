@@ -4,6 +4,7 @@ SUBDIRS = \
 	Banshee.BooScript \
 	Banshee.Daap \
 	Banshee.Lastfm \
+	Banshee.MiniMode \
 	Banshee.MultimediaKeys \
 	Banshee.NotificationArea \
 	Banshee.NowPlaying \
