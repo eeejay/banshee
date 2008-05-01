@@ -34,8 +34,6 @@
     <File name="Migo/Migo.Syndication/EventArgs/FeedEventArgs.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/EventArgs/FeedItemCountChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/EventArgs/FeedItemEventArgs.cs" subtype="Code" buildaction="Compile" />
-    <File name="Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/Rfc822DateTime.cs" subtype="Code" buildaction="Compile" />
-    <File name="Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/XmlUtils.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Feed.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/FeedEnclosure.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/FeedItem.cs" subtype="Code" buildaction="Compile" />
@@ -68,7 +66,9 @@
     <File name="Migo/Migo.TaskCore/GroupStatusManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.TaskCore/Task.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.TaskCore/TaskGroup.cs" subtype="Code" buildaction="Compile" />
-    <File name="Migo/Migo.Syndication/Migo.Syndication.Data/RssParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/RssParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/Rfc822DateTime.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/XmlUtils.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

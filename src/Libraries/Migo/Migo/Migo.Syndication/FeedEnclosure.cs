@@ -34,8 +34,6 @@ using System.IO;
 using Hyena;
 using Hyena.Data.Sqlite;
 
-using Migo.Syndication.Data;
-
 namespace Migo.Syndication
 {
     public class FeedEnclosure

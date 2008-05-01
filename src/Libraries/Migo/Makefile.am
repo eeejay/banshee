@@ -33,9 +33,9 @@ SOURCES =  \
 	Migo/Migo.Syndication/FeedItem.cs \
 	Migo/Migo.Syndication/FeedsManager.cs \
 	Migo/Migo.Syndication/FeedUpdateTask.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/RssParser.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/Rfc822DateTime.cs \
-	Migo/Migo.Syndication/Migo.Syndication.Data/Utilities/XmlUtils.cs \
+	Migo/Migo.Syndication/Rfc822DateTime.cs \
+	Migo/Migo.Syndication/RssParser.cs \
+	Migo/Migo.Syndication/XmlUtils.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/AsyncCommandQueue.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/CommandDelegate.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/CommandWrapper.cs \

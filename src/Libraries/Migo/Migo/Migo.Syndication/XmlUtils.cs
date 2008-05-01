@@ -29,7 +29,7 @@
 using System;
 using System.Xml;
 
-namespace Migo.Syndication.Data
+namespace Migo.Syndication
 {        
     static class XmlUtils
     {

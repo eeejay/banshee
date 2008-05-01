@@ -1,5 +1,9 @@
 2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Migo/*: Move some files up into their namespace folder.
+
+2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
 	Fancy rounding commented out since it's not consistent with what is done
 	in libbanshee.  Fixes BGO #520648.

@@ -29,7 +29,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace Migo.Syndication.Data
+namespace Migo.Syndication
 {
     public static class Rfc822DateTime
     {

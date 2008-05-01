@@ -41,7 +41,6 @@ using Hyena.Data.Sqlite;
 using Migo.Net;
 using Migo.TaskCore;
 using Migo.DownloadCore;
-using Migo.Syndication.Data;
 
 namespace Migo.Syndication
 {

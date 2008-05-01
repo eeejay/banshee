@@ -34,7 +34,7 @@ using System.Collections.Generic;
 
 using Migo.Syndication;
 
-namespace Migo.Syndication.Data
+namespace Migo.Syndication
 {
     public class RssParser
     {
