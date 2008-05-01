@@ -44,7 +44,10 @@ namespace Banshee.Collection.Gui
                     return base.Text;
                 }
                 
-                int seconds = (int)Math.Round(((TimeSpan)BoundObject).TotalSeconds);
+                // Fancy rounding commented out since it's not consistent with what is
+                // done in libbanshee.  See http://bugzilla.gnome.org/show_bug.cgi?id=520648
+                //int seconds = (int)Math.Round(((TimeSpan)BoundObject).TotalSeconds);
+                int seconds = (int) ((TimeSpan)BoundObject).TotalSeconds;
                 
                 return seconds >= 3600 ? 
                     String.Format ("{0}:{1:00}:{2:00}", seconds / 3600, (seconds / 60) % 60, seconds % 60) :

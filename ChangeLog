@@ -1,5 +1,11 @@
 2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
+	Fancy rounding commented out since it's not consistent with what is done
+	in libbanshee.  Fixes BGO #520648.
+
+2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* build/m4/banshee/dap-mtp.m4:
 	* configure.ac: Enable MTP support by default (if libmtp is available).
 
