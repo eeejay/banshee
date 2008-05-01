@@ -1,5 +1,15 @@
 2008-04-30  Aaron Bockover  <abock@gnome.org>
 
+	* build/m4/banshee/boo.m4: Require Boo 0.8.1
+
+	* src/Extensions/Banshee.BooScript/Makefile.am: Do not try to build if
+	we don't actually have the Boo requirement met
+
+	* src/Extensions/Banshee.BooScript/Resources/duration-status-formats.boo:
+	Fixed header
+
+2008-04-30  Aaron Bockover  <abock@gnome.org>
+
 	* build/build.environment.mk:
 	* build/m4/banshee/boo.m4:
 	* configure.ac: Build stuff for the BooScript extension

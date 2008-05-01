@@ -9,5 +9,9 @@ RESOURCES =  \
 	Resources/duration-status-formats.boo \
 	Resources/filename-transform.boo
 
+if HAVE_BOO
 include $(top_srcdir)/build/build.mk
+else
+EXTRA_DIST = $(SOURCES) $(RESOURCES)
+endif
 

@@ -1,4 +1,4 @@
-# © 2006-2008 Novell Inc. Licensed under the MIT X11 license.
+# © 2008 Novell Inc. Licensed under the MIT X11 license.
 # Written by Aaron Bockover <abockover@novell.com>
 #
 # This script demonstrates how to override the default formatting
