@@ -80,7 +80,7 @@ namespace Banshee.MiniMode
                     if(new_source != null && ServiceManager.SourceManager.ActiveSource != new_source) {
                         ServiceManager.SourceManager.SetActiveSource(new_source);
                         if(new_source is ITrackModelSource) {
-                            ServiceManager.PlaybackController.Source = (ITrackModelSource)new_source;
+                            ServiceManager.PlaybackController.NextSource = (ITrackModelSource)new_source;
                         }
                     }
                 }

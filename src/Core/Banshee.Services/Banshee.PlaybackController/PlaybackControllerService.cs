@@ -63,6 +63,7 @@ namespace Banshee.PlaybackController
         
         private PlayerEngineService player_engine;
         private ITrackModelSource source;
+        private ITrackModelSource next_source;
         
         private event PlaybackControllerStoppedHandler dbus_stopped;
         event PlaybackControllerStoppedHandler IPlaybackController.Stopped {
@@ -72,6 +73,7 @@ namespace Banshee.PlaybackController
         
         public event EventHandler Stopped;
         public event EventHandler SourceChanged;
+        public event EventHandler NextSourceChanged;
         public event EventHandler TrackStarted;
         public event EventHandler Transition;
         
@@ -131,6 +133,7 @@ namespace Banshee.PlaybackController
         
         public void First ()
         {
+            Source = NextSource;
             // This and OnTransition() below commented out b/c of BGO #524556
             //raise_started_after_transition = true;
             
@@ -150,6 +153,7 @@ namespace Banshee.PlaybackController
         
         public void Next (bool restart)
         {
+            Source = NextSource;
             raise_started_after_transition = true;
 
             player_engine.IncrementLastPlayed ();
@@ -170,6 +174,7 @@ namespace Banshee.PlaybackController
         
         public void Previous (bool restart)
         {
+            Source = NextSource;
             raise_started_after_transition = true;
 
             player_engine.IncrementLastPlayed ();
@@ -313,6 +318,14 @@ namespace Banshee.PlaybackController
             }
         }
         
+        protected void OnNextSourceChanged ()
+        {
+            EventHandler handler = NextSourceChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+        
         protected virtual void OnTrackStarted ()
         {
             EventHandler handler = TrackStarted;
@@ -337,9 +350,24 @@ namespace Banshee.PlaybackController
             
             set {
                 if (source != value) {
+                    NextSource = value;
                     source = value;
                     source_set_at = DateTime.Now;
                     OnSourceChanged ();
+                }
+            }
+        }
+        
+        public ITrackModelSource NextSource {
+            get { return next_source ?? Source; }
+            set {
+                if (next_source != value) {
+                    next_source = value;
+                    OnNextSourceChanged ();
+                    
+                    if (!player_engine.IsPlaying ()) {
+                        Source = next_source;
+                    }
                 }
             }
         }

@@ -250,14 +250,23 @@ namespace Nereid
             };
             
             composite_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
-                SetPlaybackControllerSource (ServiceManager.SourceManager.ActiveSource);
-                ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
+                Source source = ServiceManager.SourceManager.ActiveSource;
+                if (source is ITrackModelSource) {
+                    ServiceManager.PlaybackController.Source = (ITrackModelSource)source;
+                    ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
+                }
             };
 
             source_view.RowActivated += delegate {
-                SetPlaybackControllerSource (ServiceManager.SourceManager.ActiveSource);
-                if (GtkUtilities.NoImportantModifiersAreSet (Gdk.ModifierType.ControlMask)) {
-                    ServiceManager.PlaybackController.Next ();
+                Source source = ServiceManager.SourceManager.ActiveSource;
+                if (source is ITrackModelSource) {
+                    ServiceManager.PlaybackController.NextSource = (ITrackModelSource)source;
+                    // Allow changing the play source without stopping the current song by
+                    // holding ctrl when activating a source. After the song is done, playback will
+                    // continue from the new source.
+                    if (GtkUtilities.NoImportantModifiersAreSet (Gdk.ModifierType.ControlMask)) {
+                        ServiceManager.PlaybackController.Next ();
+                    }
                 }
             };
             
@@ -480,17 +489,6 @@ namespace Nereid
         private void HandleTrackModelReloaded (object sender, EventArgs args)
         {
             UpdateSourceInformation ();
-        }
-
-        private void SetPlaybackControllerSource (Source source)
-        {
-            // Set the source from which to play to the current source since
-            // the user manually began playback from this source
-            if (!(source is ITrackModelSource)) {
-                source = ServiceManager.SourceManager.DefaultSource;
-            }
-            
-            ServiceManager.PlaybackController.Source = (ITrackModelSource)source;    
         }
 
         private void UpdateSourceInformation ()

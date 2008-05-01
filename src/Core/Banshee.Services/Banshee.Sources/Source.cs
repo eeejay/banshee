@@ -583,6 +583,11 @@ namespace Banshee.Sources
         }
         
 #endregion
+
+        public override string ToString ()
+        {
+            return Name;
+        }
         
         string IService.ServiceName {
             get { return String.Format ("{0}{1}", DBusServiceManager.MakeDBusSafeString (Name), "Source"); }

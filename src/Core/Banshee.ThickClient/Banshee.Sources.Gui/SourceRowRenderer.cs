@@ -116,7 +116,7 @@ namespace Banshee.Sources.Gui
             Pixbuf icon = SourceIconResolver.ResolveIcon (source);
             
             FontDescription fd = widget.PangoContext.FontDescription.Copy ();
-            fd.Weight = (ISource)ServiceManager.PlaybackController.Source == (ISource)source 
+            fd.Weight = (ISource)ServiceManager.PlaybackController.NextSource == (ISource)source 
                 ? Pango.Weight.Bold 
                 : Pango.Weight.Normal;
 

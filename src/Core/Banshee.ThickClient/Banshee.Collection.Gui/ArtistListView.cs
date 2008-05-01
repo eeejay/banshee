@@ -48,7 +48,7 @@ namespace Banshee.Collection.Gui
             ColumnController = column_controller;
             
             RowActivated += delegate {
-                ServiceManager.PlaybackController.Source = (ServiceManager.SourceManager.ActiveSource as Banshee.Sources.ITrackModelSource);
+                ServiceManager.PlaybackController.NextSource = (ServiceManager.SourceManager.ActiveSource as Banshee.Sources.ITrackModelSource);
                 ServiceManager.PlaybackController.Next ();
             };
         }

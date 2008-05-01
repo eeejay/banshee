@@ -1,5 +1,32 @@
 2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/SourceComboBox.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	Use NextSource instead of Source.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue.mdp: Updated.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Change to the play queue on the next transition after adding items to it.
+	Fixes BGO #524637.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Clean up method.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Override ToString = Name
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Add NextSource property, which you can set to change the source on the
+	next transition.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Add IsPlaying () convenience method.
+
+2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Migo/*: Move some files up into their namespace folder.
 
 2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>

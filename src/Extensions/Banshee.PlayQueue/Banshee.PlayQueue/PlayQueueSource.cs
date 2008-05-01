@@ -73,6 +73,8 @@ namespace Banshee.PlayQueue
 
             ServiceManager.SourceManager.AddSource (this);
             
+            // TODO change this Gtk.Action code so that the actions can be removed.  And so this
+            // class doesn't depend on Gtk/ThickClient.
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             uia_service.TrackActions.Add (new ActionEntry [] {
                 new ActionEntry ("AddToPlayQueueAction", Stock.Add,
@@ -110,14 +112,22 @@ namespace Banshee.PlayQueue
             ServiceManager.SourceManager.MusicLibrary.TracksDeleted += HandleTracksDeleted;
             ServiceManager.SourceManager.VideoLibrary.TracksChanged += HandleTracksChanged;
             ServiceManager.SourceManager.VideoLibrary.TracksDeleted += HandleTracksDeleted;
+            
+            TrackModel.Reloaded += delegate {
+                if (Count == 0) {
+                    ServiceManager.PlaybackController.Source = (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
+                }
+            };
+            
+            Reload ();
 
-            SetAsPlayingSource ();
+            SetAsPlaybackSourceUnlessPlaying ();
         }
         
-        private void SetAsPlayingSource ()
+        private void SetAsPlaybackSourceUnlessPlaying ()
         {
-            if (Count > 0 && ServiceManager.PlayerEngine.CurrentState != PlayerEngineState.Playing) {
-                ServiceManager.PlaybackController.Source = this;
+            if (Count > 0) {
+                ServiceManager.PlaybackController.NextSource = this;
             }
         }
 
@@ -149,7 +159,7 @@ namespace Banshee.PlayQueue
         protected override void OnTracksAdded ()
         {
             base.OnTracksAdded ();
-            SetAsPlayingSource ();
+            SetAsPlaybackSourceUnlessPlaying ();
         }
         
         protected override void OnUpdated ()
@@ -173,7 +183,11 @@ namespace Banshee.PlayQueue
             if (args.Event == PlayerEngineEvent.EndOfStream) {
                 RemovePlayingTrack ();
             } else if (args.Event == PlayerEngineEvent.StartOfStream) {
-                playing_track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo; 
+                if (this == ServiceManager.PlaybackController.Source) {
+                    playing_track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo; 
+                } else {
+                    playing_track = null;
+                }
             }
         }
         
@@ -184,6 +198,7 @@ namespace Banshee.PlayQueue
         
         private void OnClearPlayQueue (object o, EventArgs args)
         {
+            playing_track = null;
             RemoveTrackRange ((DatabaseTrackListModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
             Reload ();
         }
@@ -222,10 +237,8 @@ namespace Banshee.PlayQueue
         {
             RemovePlayingTrack ();
             
-            if (Count <= 0) {
-                playing_track = null;
-                ServiceManager.PlaybackController.Source = (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
-                ServiceManager.PlaybackController.Next ();
+            if (Count == 0) {
+                ServiceManager.PlaybackController.Next (restart);
                 return;
             }
             

@@ -53,7 +53,7 @@ namespace Banshee.Collection.Gui
             RowHeightProvider = renderer.ComputeRowHeight;
             
             RowActivated += delegate {
-                ServiceManager.PlaybackController.Source = (ServiceManager.SourceManager.ActiveSource 
+                ServiceManager.PlaybackController.NextSource = (ServiceManager.SourceManager.ActiveSource 
                     as Banshee.Sources.ITrackModelSource);
                 ServiceManager.PlaybackController.Next ();
             };

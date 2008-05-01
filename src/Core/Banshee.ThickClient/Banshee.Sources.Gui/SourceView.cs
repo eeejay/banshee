@@ -126,7 +126,7 @@ namespace Banshee.Sources.Gui
                 });
             };
             
-            ServiceManager.PlaybackController.SourceChanged += delegate {
+            ServiceManager.PlaybackController.NextSourceChanged += delegate {
                 QueueDraw ();
             };
             
