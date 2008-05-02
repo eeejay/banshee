@@ -1,5 +1,10 @@
 2008-05-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* tests/Hyena/SqliteCommandTests.cs: Update to not use ApplyValues; fix
+	the build.
+
+2008-05-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Set
 	SourceManager.Dispose property to true so that the SourceManager knows to
 	Dispose us, even though we're an extension source.
