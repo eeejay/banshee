@@ -63,7 +63,7 @@ namespace Banshee.Collection.Gui
                 new SortableColumn (Catalog.GetString ("Composer"), new ColumnCellText ("Composer", true), 0.25, "Composer", false),
                 new SortableColumn (Catalog.GetString ("Duration"), new ColumnCellDuration ("Duration", true), 0.15, "Duration", true),
                 
-                new SortableColumn (Catalog.GetString ("Year"), new ColumnCellText ("Year", true), 0.15, "Year", false),
+                new SortableColumn (Catalog.GetString ("Year"), new ColumnCellPositiveInt ("Year", true), 0.15, "Year", false),
                 new SortableColumn (Catalog.GetString ("Genre"), new ColumnCellText ("Genre", true), 0.25, "Genre", false),
                 new SortableColumn (Catalog.GetString ("Play Count"), new ColumnCellText ("PlayCount", true), 0.15, "PlayCount", false),
                 new SortableColumn (Catalog.GetString ("Skip Count"), new ColumnCellText ("SkipCount", true), 0.15, "SkipCount", false),
