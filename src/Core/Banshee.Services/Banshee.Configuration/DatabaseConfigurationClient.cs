@@ -95,8 +95,7 @@ namespace Banshee.Configuration
         
         private IDataReader Get (string namespce, string key)
         {
-            return connection.Query (
-                select_value_command.ApplyValues (MakeKey (namespce, key)));
+            return connection.Query (select_value_command, MakeKey (namespce, key));
         }
 
         public void Set <T> (SchemaEntry<T> entry, T value)
@@ -111,14 +110,10 @@ namespace Banshee.Configuration
 
         public void Set <T> (string namespce, string key, T value)
         {
-            if (connection.Query<int> (select_id_command.ApplyValues (MakeKey (namespce, key))) > 0) {
-                connection.Execute (
-                    update_command.ApplyValues (value.ToString (), MakeKey (namespce, key))
-                );
+            if (connection.Query<int> (select_id_command, MakeKey (namespce, key)) > 0) {
+                connection.Execute (update_command, value.ToString (), MakeKey (namespce, key));
             } else {
-                connection.Execute (
-                    insert_command.ApplyValues (MakeKey (namespce, key), value.ToString ())
-                );
+                connection.Execute (insert_command, MakeKey (namespce, key), value.ToString ());
             }
         }
         

@@ -169,7 +169,7 @@ namespace Hyena.Query
                 default: return null;
             }
 
-            return String.Format (translated, StringUtil.FormatDouble (count));
+            return String.Format (translated, StringUtil.DoubleToTenthsPrecision (count));
         }
     }
 }

@@ -281,10 +281,8 @@ namespace Lastfm
 
             try {
                 stream = current_web_req.EndGetRequestStream (ar);
-            }
-            catch (Exception e) {
-                Hyena.Log.Warning ("Failed to get the request stream", e.ToString (), false);
-
+            } catch (Exception e) {
+                Log.Exception ("Failed to get the request stream", e);
                 state = State.Idle;
                 next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
                 return;

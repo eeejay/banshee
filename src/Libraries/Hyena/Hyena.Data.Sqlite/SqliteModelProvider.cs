@@ -269,9 +269,9 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual void PrepareInsertCommand (T target)
+        protected virtual object [] GetInsertParams (T target)
         {
-            // TODO create an instance variable object array and reuse it?
+            // TODO create an instance variable object array and reuse it? beware threading issues
             object [] values = new object [columns.Count - 1];
             int j = 0;
             for (int i = 0; i < columns.Count; i++) {
@@ -280,18 +280,17 @@ namespace Hyena.Data.Sqlite
                     j++;
                 }
             }
-            InsertCommand.ApplyValues (values);
+            return values;
         }
         
         protected int Insert (T target)
         {
-            PrepareInsertCommand (target);
-            return connection.Execute (InsertCommand);
+            return connection.Execute (InsertCommand, GetInsertParams (target));
         }
 
-        protected virtual void PrepareUpdateCommand (T target)
+        protected object [] GetUpdateParams (T target)
         {
-            // TODO create an instance variable object array and reuse it?
+            // TODO create an instance variable object array and reuse it? beware threading issues
             object [] values = new object [columns.Count];
             int j = 0;
             for (int i = 0; i < columns.Count; i++) {
@@ -301,13 +300,12 @@ namespace Hyena.Data.Sqlite
                 }
             }
             values[j] = key.GetValue (target);
-            UpdateCommand.ApplyValues (values);
+            return values;
         }
         
         protected void Update (T target)
         {
-            PrepareUpdateCommand (target);
-            connection.Execute (UpdateCommand);
+            connection.Execute (UpdateCommand, GetUpdateParams (target));
         }
         
         public T Load (IDataReader reader)
@@ -340,13 +338,8 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual void PrepareSelectCommand ()
-        {
-        }
-        
         public IEnumerable<T> FetchAll ()
         {
-            PrepareSelectCommand ();
             using (IDataReader reader = connection.Query (SelectCommand)) {
                 while (reader.Read ()) {
                     yield return Load (reader);
@@ -356,7 +349,6 @@ namespace Hyena.Data.Sqlite
 
         public T FetchFirstMatching (string condition)
         {
-            PrepareSelectCommand ();
             HyenaSqliteCommand fetch_matching_command = new HyenaSqliteCommand (String.Format ("{0} AND {1}", SelectCommand.Text, condition));
             using (IDataReader reader = connection.Query (fetch_matching_command)) {
                 if (reader.Read ()) {
@@ -368,7 +360,6 @@ namespace Hyena.Data.Sqlite
         
         public IEnumerable<T> FetchAllMatching (string condition)
         {
-            PrepareSelectCommand ();
             HyenaSqliteCommand fetch_matching_command = new HyenaSqliteCommand (String.Format ("{0} AND {1}", SelectCommand.Text, condition));
             using (IDataReader reader = connection.Query (fetch_matching_command)) {
                 while (reader.Read ()) {
@@ -377,24 +368,13 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        protected virtual void PrepareSelectRangeCommand (int offset, int limit)
-        {
-            SelectRangeCommand.ApplyValues (offset, limit);
-        }
-        
         public IEnumerable<T> FetchRange (int offset, int limit)
         {
-            PrepareSelectRangeCommand (offset, limit);
-            using (IDataReader reader = connection.Query (SelectRangeCommand)) {
+            using (IDataReader reader = connection.Query (SelectRangeCommand, offset, limit)) {
                 while (reader.Read ()) {
                     yield return Load (reader);
                 }
             }
-        }
-        
-        protected virtual void PrepareSelectSingleCommand (object id)
-        {
-            SelectSingleCommand.ApplyValues (id);
         }
         
         public T FetchSingle (int id)
@@ -404,8 +384,7 @@ namespace Hyena.Data.Sqlite
         
         public T FetchSingle (long id)
         {
-            PrepareSelectSingleCommand (id);
-            using (IDataReader reader = connection.Query (SelectSingleCommand)) {
+            using (IDataReader reader = connection.Query (SelectSingleCommand, id)) {
                 if (reader.Read ()) {
                     return Load (reader);
                 }
@@ -420,7 +399,7 @@ namespace Hyena.Data.Sqlite
         
         public void Delete (long id)
         {
-            connection.Execute (delete_command.ApplyValues (id));
+            connection.Execute (delete_command, id);
         }
         
         public void Delete (T item)
@@ -439,7 +418,7 @@ namespace Hyena.Data.Sqlite
             }
             
             if (ids.Count > 0)
-                connection.Execute (delete_command.ApplyValues (ids.ToArray ()));
+                connection.Execute (delete_command, ids.ToArray ());
         }
 
         public bool Refresh (T item)
@@ -451,8 +430,7 @@ namespace Hyena.Data.Sqlite
             if (id < 1)
                 return false;
 
-            PrepareSelectSingleCommand (id);
-            using (IDataReader reader = connection.Query (SelectSingleCommand)) {
+            using (IDataReader reader = connection.Query (SelectSingleCommand, id)) {
                 if (reader.Read ()) {
                     Load (reader);
                     return true;

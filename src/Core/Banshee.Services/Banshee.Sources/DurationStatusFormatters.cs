@@ -51,15 +51,15 @@ namespace Banshee.Sources
             if (span.Days > 0) {
                 double days = span.Days + (span.Hours / 24.0);
                 builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", 
-                    StringUtil.DoubleToPluralInt (days)), StringUtil.FormatDouble (days));
+                    StringUtil.DoubleToPluralInt (days)), StringUtil.DoubleToTenthsPrecision (days));
             } else if (span.Hours > 0) {
                 double hours = span.Hours + (span.Minutes / 60.0);
                 builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", 
-                    StringUtil.DoubleToPluralInt (hours)), StringUtil.FormatDouble (hours));
+                    StringUtil.DoubleToPluralInt (hours)), StringUtil.DoubleToTenthsPrecision (hours));
             } else {
                 double minutes = span.Minutes + (span.Seconds / 60.0);
                 builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", 
-                    StringUtil.DoubleToPluralInt (minutes)), StringUtil.FormatDouble (minutes));
+                    StringUtil.DoubleToPluralInt (minutes)), StringUtil.DoubleToTenthsPrecision (minutes));
             }
         }
         

@@ -45,6 +45,7 @@ using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Gui;
 using Banshee.Collection;
+using Banshee.PlaybackController;
 
 using Browser = Banshee.Web.Browser;
 
@@ -62,10 +63,6 @@ namespace Banshee.Lastfm.Radio
             action_service = ServiceManager.Get<InterfaceActionService> ();
             this.lastfm = lastfm;
             
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
-                PlayerEvent.StartOfStream | 
-                PlayerEvent.EndOfStream);
-
             AddImportant (
                 new ActionEntry (
                     "LastfmAddAction", Stock.Add,
@@ -189,25 +186,22 @@ namespace Banshee.Lastfm.Radio
             );
 
             actions_id = action_service.UIManager.AddUiFromResource ("GlobalUI.xml");
+            action_service.AddActionGroup (this);
 
             lastfm.Connection.StateChanged += HandleConnectionStateChanged;
-            
-            this["LastfmLoveAction"].Visible = false;
-            this["LastfmHateAction"].Visible = false;
-            this["LastfmLoveAction"].IsImportant = true;
-            this["LastfmHateAction"].IsImportant = true;
-
-            UpdateActions ();
-
             action_service.SourceActions ["SourcePropertiesAction"].Activated += OnSourceProperties;
-
-            action_service.AddActionGroup (this);
+            ServiceManager.PlaybackController.SourceChanged += OnPlaybackSourceChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.StartOfStream | 
+                PlayerEvent.EndOfStream);
+            UpdateActions ();
         }
 
         public override void Dispose ()
         {
             action_service.UIManager.RemoveUi (actions_id);
             action_service.RemoveActionGroup (this);
+            RestoreShuffleRepeat ();
             base.Dispose ();
         }
 
@@ -399,12 +393,7 @@ namespace Banshee.Lastfm.Radio
 
         private void OnPlayerEvent (PlayerEventArgs args)
         { 
-            if (args.Event == PlayerEvent.EndOfStream || args.Event == PlayerEvent.StartOfStream) {
-                TrackInfo current_track = ServiceManager.PlayerEngine.CurrentTrack;
-                this["LastfmLoveAction"].Visible = current_track is LastfmTrackInfo;
-                this["LastfmHateAction"].Visible = current_track is LastfmTrackInfo;
-                this["LastfmAddAction"].IsImportant = !(current_track is LastfmTrackInfo);
-            }
+            UpdateActions ();
         }
 
         private void HandleConnectionStateChanged (object sender, ConnectionStateChangedArgs args)
@@ -422,11 +411,58 @@ namespace Banshee.Lastfm.Radio
             }
 
             bool have_user = (lastfm.Account.UserName != null);
+            this["LastfmAddAction"].IsImportant = ServiceManager.PlaybackController.Source is LastfmSource;
             this["LastfmAddAction"].Sensitive = have_user;
             this["LastfmSortAction"].Sensitive = have_user;
             this["LastfmConnectAction"].Visible = lastfm.Connection.State == ConnectionState.Disconnected;
 
+            TrackInfo current_track = ServiceManager.PlayerEngine.CurrentTrack;
+            this["LastfmLoveAction"].Visible = current_track is LastfmTrackInfo;
+            this["LastfmHateAction"].Visible = current_track is LastfmTrackInfo;
+
             updating = false;
+        }
+
+        private RadioAction old_shuffle;
+        private RadioAction old_repeat;
+        private bool was_lastfm = false;
+        private void OnPlaybackSourceChanged (object o, EventArgs args)
+        {
+            if (action_service == null || action_service.PlaybackActions == null || ServiceManager.PlaybackController == null)
+                return;
+
+            UpdateActions ();
+
+            bool is_lastfm = ServiceManager.PlaybackController.Source is StationSource;
+            action_service.PlaybackActions["PreviousAction"].Sensitive = !is_lastfm;
+            PlaybackRepeatActions repeat_actions = action_service.PlaybackActions.RepeatActions;
+            PlaybackShuffleActions shuffle_actions = action_service.PlaybackActions.ShuffleActions;
+
+            // Save/clear or restore shuffle/repeat values when we first switch to a Last.fm station
+            if (is_lastfm && !was_lastfm) {
+                old_repeat = repeat_actions.Active;
+                repeat_actions.Active = repeat_actions["RepeatNoneAction"] as RadioAction;
+                
+                old_shuffle = shuffle_actions.Active;
+                shuffle_actions.Active = shuffle_actions["ShuffleOffAction"] as RadioAction;
+            } else {
+                RestoreShuffleRepeat ();
+            }
+            
+            // Set sensitivity
+            shuffle_actions.Sensitive = !is_lastfm;
+            repeat_actions.Sensitive = !is_lastfm;
+
+            was_lastfm = is_lastfm;
+        }
+
+        private void RestoreShuffleRepeat ()
+        {
+            if (action_service != null && action_service.PlaybackActions != null && old_repeat != null) {
+                action_service.PlaybackActions.RepeatActions.Active = old_repeat;
+                action_service.PlaybackActions.ShuffleActions.Active = old_shuffle;
+            }
+            old_repeat = old_shuffle = null;
         }
     }
 }

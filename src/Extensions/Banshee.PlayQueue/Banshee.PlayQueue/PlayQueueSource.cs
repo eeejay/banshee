@@ -114,7 +114,7 @@ namespace Banshee.PlayQueue
             ServiceManager.SourceManager.VideoLibrary.TracksDeleted += HandleTracksDeleted;
             
             TrackModel.Reloaded += delegate {
-                if (Count == 0) {
+                if (this == ServiceManager.PlaybackController.Source && Count == 0) {
                     ServiceManager.PlaybackController.Source = (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
                 }
             };

@@ -1,3 +1,87 @@
+2008-05-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Set
+	SourceManager.Dispose property to true so that the SourceManager knows to
+	Dispose us, even though we're an extension source.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Listen to the PlaybackController.SourceChanged event, and disable
+	shuffle/repeat when switching to a StationSource, and restore when
+	switching away and Disposing (so that the original state is not
+	overwritten in gconf).  Fixes BGO #526033.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Fix silly bug that caused the playback source to switch to the Music
+	Library erroneously.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Load the tracks in the LoadFromDevice method, and turn threading off on
+	the importer since LoadFromDevice is already called from a thread.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Comment out
+	ImportPlaylist stuff that's not done.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs: Add
+	Sensitive override that triggers the Changed event.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/RepeatActionButton.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/NextButton.cs:
+	Set the sensitivity of the button to the ActionGroup's sensitivity.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fix bug
+	where we had a SqliteModelProvider created for every DatabaseSource
+	instead of sharing one.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Dispose
+	extension sources that have the property SourceManager.Dispose == true.
+
+	* tests/Hyena/QueryTests.cs: 
+	* src/Libraries/Hyena/Hyena.Query/FileSizeQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/TimeSpanQueryValue.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:
+	* src/Libraries/Hyena/Hyena/StringUtil.cs:
+	Renamed FormatDouble to DoubleToTenthsPrecision.  Also changed it to use
+	Math.Round and fixed bug where 14.96 would show up as 15.0 instead of 15.
+	Also changed it to use the N string formatter, which causes separators to
+	be shown, eg 1,000
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Remove
+	superflous assignment. 
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Add a
+	Threaded bool property, and if false don't use the ThreadPool.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Configuration/DatabaseConfigurationClient.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	Do not explicitly call ApplyValues, but pass the values in the Query or
+	Execute method calls.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Comment out use of transactions for now; were causing deadlock;
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs: Comment
+	out unfinished playlist import code.
+
+	* tests/Hyena/StringUtilTests.cs: Add tests for DoubleToTenthsPrecision
+	and DoubleToPluralInt methods.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Make
+	ApplyValues an internal method, accessibly implicitly by passing params to
+	the Query or Execute methods.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Lock the
+	command before calling ApplyValues.  Comment out the transaction methods,
+	since they can cause deadlock.
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Better logging.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs: Rename member,
+	add protected Arrow and ToggleButton properties so that their sensitivity
+	can be changed, etc.
+
 2008-05-02  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
@@ -33,37 +117,6 @@
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
 	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
 	Updated to use the new player events API
-
-2008-05-01  Aaron Bockover  <abock@gnome.org>
-
-	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/GtkNotificationAreaBox.cs:
-	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
-	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/INotificationAreaBox.cs:
-	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
-	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
-	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
-	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
-	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
-	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:
-	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
-	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedVolumeButton.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
-	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
-	* src/Core/Banshee.Services/Banshee.Services.mdp:
-	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlayerEngineService.cs:
-	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
-	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineState.cs:
-	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
-	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineEvent.cs:
-	* src/Core/Banshee.Services/Makefile.am:
-	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
 
 2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
 

@@ -30,7 +30,7 @@ public class QueryTests
 
         qv = new FileSizeQueryValue (); qv.ParseUserQuery ("2048 KB");
         Assert.AreEqual (2097152, qv.Value);
-        Assert.AreEqual ("2048 KB", qv.ToUserQuery ());
+        Assert.AreEqual ("2.048 KB", qv.ToUserQuery ());
         Assert.AreEqual ("2097152", qv.ToSql ());
 
         // TODO this will break once an it_IT translation for "days ago" etc is committed

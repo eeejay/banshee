@@ -58,4 +58,32 @@ public class StringUtilTests
             Assert.AreEqual (map.Under, StringUtil.CamelCaseToUnderCase (map.Camel));
         }
     }
+
+    [Test]
+    public void TestDoubleToTenthsPrecision ()
+    {
+        // Note we are testing with locale = it_IT, hence the commas
+        Assert.AreEqual ("15",      StringUtil.DoubleToTenthsPrecision (15.0));
+        Assert.AreEqual ("15",      StringUtil.DoubleToTenthsPrecision (15.0334));
+        Assert.AreEqual ("15,1",    StringUtil.DoubleToTenthsPrecision (15.052));
+        Assert.AreEqual ("15,5",    StringUtil.DoubleToTenthsPrecision (15.5234));
+        Assert.AreEqual ("15",      StringUtil.DoubleToTenthsPrecision (14.9734));
+        Assert.AreEqual ("14,9",    StringUtil.DoubleToTenthsPrecision (14.92));
+        Assert.AreEqual ("0,4",     StringUtil.DoubleToTenthsPrecision (0.421));
+        Assert.AreEqual ("0",       StringUtil.DoubleToTenthsPrecision (0.01));
+        Assert.AreEqual ("1.000,3", StringUtil.DoubleToTenthsPrecision (1000.32));
+        Assert.AreEqual ("9.233",   StringUtil.DoubleToTenthsPrecision (9233));
+    }
+
+    [Test]
+    public void TestDoubleToPluralInt ()
+    {
+        // This method helps us pluralize doubles. Probably a horrible i18n idea.
+        Assert.AreEqual (0,     StringUtil.DoubleToPluralInt (0));
+        Assert.AreEqual (1,     StringUtil.DoubleToPluralInt (1));
+        Assert.AreEqual (2,     StringUtil.DoubleToPluralInt (2));
+        Assert.AreEqual (1,     StringUtil.DoubleToPluralInt (0.5));
+        Assert.AreEqual (2,     StringUtil.DoubleToPluralInt (1.8));
+        Assert.AreEqual (22,    StringUtil.DoubleToPluralInt (21.3));
+    }
 }

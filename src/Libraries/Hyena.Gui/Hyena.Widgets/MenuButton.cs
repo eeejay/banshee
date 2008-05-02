@@ -33,7 +33,7 @@ namespace Hyena.Widgets
 {
     public class MenuButton : Container
     {
-        private ToggleButton button = new ToggleButton ();
+        private ToggleButton toggle_button = new ToggleButton ();
         private HBox box = new HBox ();
         private Alignment alignment;
         private Arrow arrow;
@@ -56,13 +56,13 @@ namespace Hyena.Widgets
             
             button_widget = buttonWidget;
             this.menu = menu;
-            menu.Deactivated += delegate { button.Active = false; };
+            menu.Deactivated += delegate { toggle_button.Active = false; };
             
-            button.Parent = this;
-            button.FocusOnClick = false;
-            button.Relief = ReliefStyle.None;
-            button.Pressed += delegate { button.Active = true; ShowMenu (); };
-            button.Activated += delegate { ShowMenu (); };
+            toggle_button.Parent = this;
+            toggle_button.FocusOnClick = false;
+            toggle_button.Relief = ReliefStyle.None;
+            toggle_button.Pressed += delegate { toggle_button.Active = true; ShowMenu (); };
+            toggle_button.Activated += delegate { ShowMenu (); };
             
             box.Parent = this;
             
@@ -74,8 +74,8 @@ namespace Hyena.Widgets
                 box.PackStart (alignment, false, false, 5);
                 size_widget = box;
             } else {
-                button.Add (button_widget);
-                size_widget = button;
+                toggle_button.Add (button_widget);
+                size_widget = toggle_button;
             }
             
             ShowAll ();
@@ -89,6 +89,14 @@ namespace Hyena.Widgets
             get { return menu; }
         }
         
+        protected ToggleButton ToggleButton {
+            get { return toggle_button; }
+        }
+        
+        protected Arrow Arrow {
+            get { return arrow; }
+        }
+        
         protected override void OnSizeRequested (ref Requisition requisition)
         {
             requisition = size_widget.SizeRequest ();
@@ -97,13 +105,13 @@ namespace Hyena.Widgets
         protected override void OnSizeAllocated (Rectangle allocation)
         {
             box.SizeAllocate (allocation);
-            button.SizeAllocate (allocation);
+            toggle_button.SizeAllocate (allocation);
             base.OnSizeAllocated (allocation);
         }
         
         protected override void ForAll (bool include_internals, Callback callback)
         {
-            callback (button);
+            callback (toggle_button);
             callback (box);
         }
         

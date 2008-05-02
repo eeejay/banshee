@@ -105,14 +105,8 @@ namespace Banshee.Sources
             set { track_cache = value; }
         }
 
-
-        private DatabaseTrackModelProvider<DatabaseTrackInfo> track_provider;
         protected DatabaseTrackModelProvider<DatabaseTrackInfo> TrackProvider {
-            get {
-                return track_provider ?? track_provider = new DatabaseTrackModelProvider<DatabaseTrackInfo> (
-                    ServiceManager.DbConnection
-                );
-            }
+            get { return DatabaseTrackInfo.Provider; }
         }
 
         private void DatabaseSourceInitialize ()
@@ -441,8 +435,8 @@ namespace Banshee.Sources
 
         protected virtual void RateTrackRange (DatabaseTrackListModel model, RangeCollection.Range range, int rating)
         {
-            RateTrackRangeCommand.ApplyValues (rating, DateTime.Now, range.Start, range.End - range.Start + 1);
-            ServiceManager.DbConnection.Execute (RateTrackRangeCommand);
+            ServiceManager.DbConnection.Execute (RateTrackRangeCommand,
+                rating, DateTime.Now, range.Start, range.End - range.Start + 1);
         }
 
         protected void WithTrackSelection (DatabaseTrackListModel model, TrackRangeHandler handler)

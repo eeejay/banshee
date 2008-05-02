@@ -161,7 +161,9 @@ namespace Banshee.Collection.Database
                 return null;
             }
 
-            ServiceManager.DbConnection.BeginTransaction ();
+            // TODO note, there is deadlock potential here b/c of locking of shared commands and blocking
+            // because of transactions.  Needs to be fixed in HyenaDatabaseConnection.
+            //ServiceManager.DbConnection.BeginTransaction ();
             try {
                 TagLib.File file = StreamTagger.ProcessUri (uri);
                 track = new DatabaseTrackInfo ();
@@ -175,16 +177,16 @@ namespace Banshee.Collection.Database
                 }
 
                 track.Save (false);
-                counts[track.PrimarySourceId] = counts.ContainsKey (track.PrimarySourceId) ? counts[track.PrimarySourceId] + 1 : 1;
 
-                ServiceManager.DbConnection.CommitTransaction ();
-
-                if (counts[track.PrimarySourceId] % 250 == 0) {
-                    track.PrimarySource.NotifyTracksAdded ();
-                }
+                //ServiceManager.DbConnection.CommitTransaction ();
             } catch (Exception) {
-                ServiceManager.DbConnection.RollbackTransaction ();
+                //ServiceManager.DbConnection.RollbackTransaction ();
                 throw;
+            }
+
+            counts[track.PrimarySourceId] = counts.ContainsKey (track.PrimarySourceId) ? counts[track.PrimarySourceId] + 1 : 1;
+            if (counts[track.PrimarySourceId] % 250 == 0) {
+                track.PrimarySource.NotifyTracksAdded ();
             }
 
             return track;

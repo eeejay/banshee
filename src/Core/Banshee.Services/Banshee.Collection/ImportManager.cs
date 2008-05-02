@@ -158,7 +158,12 @@ namespace Banshee.Collection
         public void QueueSource (UriList uris)
         {
             CreateUserJob ();
-            ThreadPool.QueueUserWorkItem (ThreadedQueueSource, uris);
+
+            if (Threaded) {
+                ThreadPool.QueueUserWorkItem (ThreadedQueueSource, uris);
+            } else {
+                ThreadedQueueSource (uris);
+            }
         }
         
         public void QueueSource (string source)
@@ -299,6 +304,12 @@ namespace Banshee.Collection
         public string ProgressMessage {
             get { return progress_message; }
             set { progress_message = value; }
+        }
+
+        private bool threaded = true;
+        public bool Threaded {
+            get { return threaded; }
+            set { threaded = value; }
         }
     }
 }

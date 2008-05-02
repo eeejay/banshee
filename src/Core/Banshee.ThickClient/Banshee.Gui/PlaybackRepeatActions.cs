@@ -51,10 +51,19 @@ namespace Banshee.Gui
                 active_action = value;
                 RepeatMode.Set (active_action == null ? String.Empty : ActionNameToConfigId (active_action.Name));
                 ServiceManager.PlaybackController.RepeatMode = (PlaybackRepeatMode)active_action.Value;
+                OnChanged ();
+            }
+        }
+        
+        public new bool Sensitive {
+            get { return base.Sensitive; }
+            set {
+                base.Sensitive = value;
+                OnChanged ();
             }
         }
 
-        public event ChangedHandler Changed;
+        public event EventHandler Changed;
         
         public PlaybackRepeatActions (InterfaceActionService actionService) : base ("PlaybackRepeat")
         {
@@ -82,7 +91,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Repeat Singl_e"), null,
                     Catalog.GetString ("Repeat the current playing song"),
                     (int)PlaybackRepeatMode.RepeatSingle)
-            }, 0, OnChanged);
+            }, 0, OnActionChanged);
 
             this["RepeatNoneAction"].IconName = "media-repeat-none";
             this["RepeatAllAction"].IconName = "media-repeat-all";
@@ -98,13 +107,16 @@ namespace Banshee.Gui
             Active.Activate ();
         }
 
-        private void OnChanged (object o, ChangedArgs args)
+        private void OnActionChanged (object o, ChangedArgs args)
         {
             Active = args.Current;
-            
-            ChangedHandler handler = Changed;
+        }
+        
+        private void OnChanged ()
+        {
+            EventHandler handler = Changed;
             if (handler != null) {
-                handler (o, args);
+                handler (this, EventArgs.Empty);
             }
         }
         

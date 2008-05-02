@@ -99,6 +99,8 @@ namespace Banshee.Lastfm.Radio
             Connection.StateChanged += HandleConnectionStateChanged;
             UpdateUI ();
 
+            Properties.Set<bool> ("SourceManager.Dispose", true);
+
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/LastfmSourcePopup");
             Properties.SetString ("Icon.Name", "lastfm-audioscrobbler");

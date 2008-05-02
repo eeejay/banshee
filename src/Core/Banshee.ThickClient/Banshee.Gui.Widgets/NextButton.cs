@@ -36,11 +36,28 @@ namespace Banshee.Gui.Widgets
 {
     public class NextButton : MenuButton
     {
+        PlaybackShuffleActions shuffle_actions;
+        Menu menu;
+        Widget button;
+
         public NextButton (InterfaceActionService actionService)
         {
-            Widget button = actionService.PlaybackActions["NextAction"].CreateToolItem ();
-            Menu menu = actionService.PlaybackActions.ShuffleActions.CreateMenu ();
+            shuffle_actions = actionService.PlaybackActions.ShuffleActions;
+
+            button = actionService.PlaybackActions["NextAction"].CreateToolItem ();
+            menu = shuffle_actions.CreateMenu ();
             Construct (button, menu, true);
+
+            shuffle_actions.Changed += OnActionsChanged;
+        }
+
+        private void OnActionsChanged (object o, EventArgs args)
+        {
+            menu.Sensitive = shuffle_actions.Sensitive;
+            ToggleButton.Sensitive = shuffle_actions.Sensitive;
+            if (Arrow != null) {
+                Arrow.Sensitive = shuffle_actions.Sensitive;
+            }
         }
     }
 }

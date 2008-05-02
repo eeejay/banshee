@@ -52,10 +52,19 @@ namespace Banshee.Gui
                 active_action = value;
                 ShuffleMode.Set (active_action == null ? String.Empty : ActionNameToConfigId (active_action.Name));
                 ServiceManager.PlaybackController.ShuffleMode = (PlaybackShuffleMode)active_action.Value;
+                OnChanged ();
             }
         }
 
-        public event ChangedHandler Changed;
+        public new bool Sensitive {
+            get { return base.Sensitive; }
+            set {
+                base.Sensitive = value;
+                OnChanged ();
+            }
+        }
+
+        public event EventHandler Changed;
         
         public PlaybackShuffleActions (InterfaceActionService actionService, PlaybackActions playbackActions)
             : base ("PlaybackShuffle")
@@ -90,7 +99,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Shuffle by A_lbum"), null,
                     Catalog.GetString ("Play all songs from an album, then randomly choose another album"),
                     (int)PlaybackShuffleMode.Album)
-            }, 0, OnChanged);
+            }, 0, OnActionChanged);
                 
             this["ShuffleOffAction"].IconName = "media-skip-forward";
             this["ShuffleSongAction"].IconName = "media-playlist-shuffle";
@@ -109,15 +118,17 @@ namespace Banshee.Gui
             Active.Activate ();
         }
 
-        private void OnChanged (object o, ChangedArgs args)
+        private void OnActionChanged (object o, ChangedArgs args)
         {
             Active = args.Current;
-            
+        }
+
+        private void OnChanged ()
+        {
             playback_actions["NextAction"].IconName = Active.IconName;
-            
-            ChangedHandler handler = Changed;
+            EventHandler handler = Changed;
             if (handler != null) {
-                handler (o, args);
+                handler (this, EventArgs.Empty);
             }
         }
         

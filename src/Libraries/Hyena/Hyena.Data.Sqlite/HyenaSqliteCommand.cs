@@ -135,7 +135,7 @@ namespace Hyena.Data.Sqlite
             return ret;
         }
 
-        public HyenaSqliteCommand ApplyValues (params object [] param_values)
+        internal HyenaSqliteCommand ApplyValues (params object [] param_values)
         {
             if (command_format == null) {
                 CreateParameters ();

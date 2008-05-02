@@ -56,11 +56,11 @@ namespace Banshee.Collection.Database
 
     public class DatabaseTrackInfo : TrackInfo, ICacheableItem
     {
-        private static BansheeModelProvider<DatabaseTrackInfo> provider = new BansheeModelProvider<DatabaseTrackInfo> (
-            ServiceManager.DbConnection, "CoreTracks"
+        private static DatabaseTrackModelProvider<DatabaseTrackInfo> provider = new DatabaseTrackModelProvider<DatabaseTrackInfo> (
+            ServiceManager.DbConnection
         );
 
-        public static BansheeModelProvider<DatabaseTrackInfo> Provider {
+        public static DatabaseTrackModelProvider<DatabaseTrackInfo> Provider {
             get { return provider; }
         }
 
@@ -445,17 +445,20 @@ namespace Banshee.Collection.Database
 
         public static int GetTrackIdForUri (string relative_path, int [] primary_sources)
         {
-            return ServiceManager.DbConnection.Query<int> (check_command.ApplyValues (primary_sources, relative_path, relative_path));
+            return ServiceManager.DbConnection.Query<int> (check_command,
+                primary_sources, relative_path, relative_path);
         }
         
         public static bool ContainsUri (string relative_path, int [] primary_sources)
         {
-            return ServiceManager.DbConnection.Query<int> (check_command.ApplyValues (primary_sources, relative_path, relative_path)) > 0;
+            return ServiceManager.DbConnection.Query<int> (check_command,
+                primary_sources, relative_path, relative_path) > 0;
         }
 
         public static bool ContainsUri (SafeUri uri, string relative_path, int [] primary_sources)
         {
-            return ServiceManager.DbConnection.Query<int> (check_command.ApplyValues (primary_sources, relative_path, uri.AbsoluteUri)) > 0;
+            return ServiceManager.DbConnection.Query<int> (check_command,
+                primary_sources, relative_path, uri.AbsoluteUri) > 0;
         }
     }
 }

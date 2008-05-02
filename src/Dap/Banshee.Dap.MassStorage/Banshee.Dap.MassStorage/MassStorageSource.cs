@@ -70,11 +70,14 @@ namespace Banshee.Dap.MassStorage
 
             // TODO differentiate between Audio Players and normal Disks, and include the size, eg "2GB Audio Player"?
             //GenericName = Catalog.GetString ("Audio Player");
+        }
 
-            SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
+        // WARNING: This will be called from a thread!
+        protected override void LoadFromDevice ()
+        {
             DatabaseImportManager importer = new DatabaseImportManager (this);
             importer.KeepUserJobHidden = true;
-            importer.ImportFinished += delegate  { HideStatus (); };
+            importer.Threaded = false; // We're already threaded
             importer.QueueSource (BaseDirectory);
         }
 

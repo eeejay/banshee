@@ -84,7 +84,9 @@ namespace Banshee.Sources
             lock (this) {
                 // Do not dispose extension sources
                 foreach (Source source in extension_sources.Values) {
-                    RemoveSource (source, false);
+                    // Only dispose extension sources that explicitly tell us to, otherwise
+                    // assume their Service or somesuch will Dispose them.
+                    RemoveSource (source, source.Properties.Get<bool> ("SourceManager.Dispose"));
                 }
 
                 // But do dispose non-extension sources

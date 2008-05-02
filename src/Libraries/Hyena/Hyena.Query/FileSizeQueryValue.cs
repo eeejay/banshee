@@ -117,7 +117,7 @@ namespace Hyena.Query
             if (factor != FileSizeFactor.None) {
                 return String.Format (
                     "{0} {1}",
-                    IntValue == 0 ? "0" : StringUtil.FormatDouble (((double)IntValue / (double)factor)),
+                    IntValue == 0 ? "0" : StringUtil.DoubleToTenthsPrecision (((double)IntValue / (double)factor)),
                     factor.ToString ()
                 );
             } else {

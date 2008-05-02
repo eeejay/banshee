@@ -54,9 +54,6 @@ namespace Banshee.Gui.Widgets
             label.UseUnderline = true;
             image.IconSize = (int)IconSize.Menu;
             
-            actions.Changed += delegate { OnActionChanged (); };
-            OnActionChanged ();
-            
             box.PackStart (image, false, false, (uint)(iconOnly ? 4 : 0));
             if (!iconOnly) {
                 box.PackStart (label, true, true, 0);
@@ -64,11 +61,16 @@ namespace Banshee.Gui.Widgets
             
             button = new MenuButton (box, actions.CreateMenu (), false);
             Add (button);
+
+            actions.Changed += OnActionChanged;
+            OnActionChanged (null, null);
+
             ShowAll ();
         }
         
-        private void OnActionChanged ()
+        private void OnActionChanged (object o, EventArgs args)
         {
+            button.Sensitive = image.Sensitive = label.Sensitive = actions.Sensitive;
             image.IconName = actions.Active.IconName;
             label.TextWithMnemonic = actions.Active.Label;
         }

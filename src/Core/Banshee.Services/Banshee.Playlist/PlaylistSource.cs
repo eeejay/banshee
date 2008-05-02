@@ -219,8 +219,7 @@ namespace Banshee.Playlist
 
         protected void AddTrack (int track_id)
         {
-            add_track_command.ApplyValues (DbId, track_id);
-            ServiceManager.DbConnection.Execute (add_track_command);
+            ServiceManager.DbConnection.Execute (add_track_command, DbId, track_id);
             OnTracksAdded ();
         }
         
@@ -253,16 +252,15 @@ namespace Banshee.Playlist
                     ? last_add_range_command
                     : new HyenaSqliteCommand (String.Format (add_track_range_from_joined_model_sql, from.JoinTable, from.JoinPrimaryKey));
 
-            last_add_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.Count);
-            ServiceManager.DbConnection.Execute (last_add_range_command);
+            ServiceManager.DbConnection.Execute (last_add_range_command, DbId, from.CacheId, range.Start, range.Count);
 
             last_add_range_from_model = from;
         }
 
         protected override void RemoveTrackRange (DatabaseTrackListModel from, RangeCollection.Range range)
         {
-            remove_track_range_command.ApplyValues (DbId, from.CacheId, range.Start, range.Count);
-            ServiceManager.DbConnection.Execute (remove_track_range_command);
+            ServiceManager.DbConnection.Execute (remove_track_range_command,
+                DbId, from.CacheId, range.Start, range.Count);
         }
 
         protected override void HandleTracksChanged (Source sender, TrackEventArgs args)

@@ -113,15 +113,15 @@ namespace Hyena
             return builder.ToString ();
         }
 
-        public static string FormatDouble (double num)
+        public static string DoubleToTenthsPrecision (double num)
         {
-            // Don't show x.0
-            if (num - (int)num < 0.1)
-                return Convert.ToString ((int)num);
-            else
-                return String.Format ("{0:0.0}", num);
+            num = Math.Round (num, 1, MidpointRounding.ToEven);
+            return String.Format (
+                num == (int)num ? "{0:N0}" : "{0:N1}", num
+            );
         }
         
+        // This method helps us pluralize doubles. Probably a horrible i18n idea.
         public static int DoubleToPluralInt (double num)
         {
             if (num == (int)num)

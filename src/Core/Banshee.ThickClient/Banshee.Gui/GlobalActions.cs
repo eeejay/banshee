@@ -53,9 +53,9 @@ namespace Banshee.Gui
                     Catalog.GetString ("Import _Media..."), "<control>I",
                     Catalog.GetString ("Import media from a variety of sources"), OnImport),
 
-                new ActionEntry ("ImportPlaylistAction", null,
+                /*new ActionEntry ("ImportPlaylistAction", null,
                     Catalog.GetString ("Import Playlist..."), null,
-                    Catalog.GetString ("Import a playlist"), OnImportPlaylist),
+                    Catalog.GetString ("Import a playlist"), OnImportPlaylist),*/
 
                 new ActionEntry ("OpenLocationAction", null, 
                     Catalog.GetString ("Open _Location..."), "<control>L",
@@ -165,7 +165,7 @@ namespace Banshee.Gui
             }
         }
 
-        private void OnImportPlaylist (object o, EventArgs args)
+        /*private void OnImportPlaylist (object o, EventArgs args)
         {
             // Prompt user for location of the playlist.
             Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog(
@@ -226,7 +226,7 @@ namespace Banshee.Gui
                 md.Destroy();
                 return;
             }
-        }
+        }*/
         
         private void OnQuit (object o, EventArgs args)
         {

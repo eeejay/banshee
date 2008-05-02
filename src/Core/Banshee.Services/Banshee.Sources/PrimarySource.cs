@@ -144,7 +144,6 @@ namespace Banshee.Sources
 
         protected PrimarySource (string generic_name, string name, string id, int order) : base (generic_name, name, id, order)
         {
-            type_unique_id = id;
             PrimarySourceInitialize ();
         }
 

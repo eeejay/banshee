@@ -97,7 +97,9 @@ namespace Hyena.Data.Sqlite
 
         public IDataReader Query (HyenaSqliteCommand command, params object [] param_values)
         {
-            return Query (command.ApplyValues (param_values));
+            lock (command) {
+                return Query (command.ApplyValues (param_values));
+            }
         }
 
         public IDataReader Query (string command_str, params object [] param_values)
@@ -125,7 +127,9 @@ namespace Hyena.Data.Sqlite
 
         public T Query<T> (HyenaSqliteCommand command, params object [] param_values)
         {
-            return Query<T> (command.ApplyValues (param_values));
+            lock (command) {
+                return Query<T> (command.ApplyValues (param_values));
+            }
         }
 
         public T Query<T> (string command_str, params object [] param_values)
@@ -150,7 +154,9 @@ namespace Hyena.Data.Sqlite
 
         public int Execute (HyenaSqliteCommand command, params object [] param_values)
         {
-            return Execute (command.ApplyValues (param_values));
+            lock (command) {
+                return Execute (command.ApplyValues (param_values));
+            }
         }
 
         public int Execute (string command_str, params object [] param_values)
@@ -167,7 +173,11 @@ namespace Hyena.Data.Sqlite
 
 #region Public Utility Methods
         
-        public void BeginTransaction ()
+        // FIXME these are commented out because they can cause deadlock if one thread
+        // starts a transaction, then another one tries to execute command A (which locks A) but
+        // waits for the transaction to finish while holding the lock on A.  If the transaction thread
+        // then tries to execute/lock A, it can't.
+        /*public void BeginTransaction ()
         {
             if (transaction_thread == Thread.CurrentThread) {
                 throw new Exception ("Can't start a recursive transaction");
@@ -219,7 +229,7 @@ namespace Hyena.Data.Sqlite
                 // Let any other threads continue
                 transaction_signal.Set (); 
             }
-        }
+        }*/
 
         public bool TableExists (string tableName)
         {

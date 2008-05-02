@@ -146,7 +146,7 @@ namespace Banshee.Playlist
         }
     }
     
-    public class ImportPlaylistWorker
+    /*public class ImportPlaylistWorker
     {
         private string [] uris;
         private string name;
@@ -172,17 +172,24 @@ namespace Banshee.Playlist
         
         private void CreatePlaylist ()
         {
-            PlaylistSource playlist = new PlaylistSource (name, ServiceManager.SourceManager.MusicLibrary.DbId);
-            playlist.Save ();
+            try {
+                PlaylistSource playlist = new PlaylistSource (name, ServiceManager.SourceManager.MusicLibrary.DbId);
+                playlist.Save ();
 
-            HyenaSqliteCommand command = new HyenaSqliteCommand (
-                @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
-                    VALUES (?, (SELECT TrackID FROM CoreTracks WHERE Uri = ?))"
-            );
+                HyenaSqliteCommand command = new HyenaSqliteCommand (
+                    @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
+                        VALUES (?, (SELECT TrackID FROM CoreTracks WHERE Uri = ?))"
+                );
 
-            foreach (string uri in uris) {
-                command.ApplyValues (playlist.DbId, uri);
+                ServiceManager.DbConnection.BeginTransaction ();
+                foreach (string uri in uris) {
+                    ServiceManager.DbConnection.Execute (command, playlist.DbId, uri);
+                }
+                ServiceManager.DbConnection.CommitTransaction ();
+            } catch (Exception e) {
+                Log.Exception (e);
+                ServiceManager.DbConnection.RollbackTransaction ();
             }
         }
-    }
+    }*/
 }
