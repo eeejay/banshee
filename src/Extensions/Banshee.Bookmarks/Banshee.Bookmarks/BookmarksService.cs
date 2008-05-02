@@ -255,13 +255,13 @@ namespace Banshee.Bookmarks
             DatabaseTrackInfo current_track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo;
             if (track != null) {
                 if (current_track == null || current_track.TrackId != track.TrackId) {
-                    ServiceManager.PlayerEngine.StateChanged += HandleStateChanged;
+                    ServiceManager.PlayerEngine.ConnectEvent (HandleStateChanged, PlayerEvent.StateChange);
                     ServiceManager.PlayerEngine.OpenPlay (track);
                 } else {
                     if (ServiceManager.PlayerEngine.CanSeek) {
                         ServiceManager.PlayerEngine.Position = position;
                     } else {
-                        ServiceManager.PlayerEngine.StateChanged += HandleStateChanged;
+                        ServiceManager.PlayerEngine.ConnectEvent (HandleStateChanged, PlayerEvent.StateChange);
                         ServiceManager.PlayerEngine.Play ();
                     }
                 }
@@ -270,10 +270,10 @@ namespace Banshee.Bookmarks
             }
         }
         
-        private void HandleStateChanged (object sender, PlayerEngineStateArgs args)
+        private void HandleStateChanged (PlayerEventArgs args)
         {
-            if (args.State == PlayerEngineState.Playing) {
-                ServiceManager.PlayerEngine.StateChanged -= HandleStateChanged;
+            if (((PlayerEventStateChangeArgs)args).Current == PlayerState.Playing) {
+                ServiceManager.PlayerEngine.DisconnectEvent (HandleStateChanged);
                 
                 if (!ServiceManager.PlayerEngine.CurrentTrack.IsLive) {
                     // Sleep in 5ms increments for at most 250ms waiting for CanSeek to be true

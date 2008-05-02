@@ -110,7 +110,7 @@ namespace Banshee.GStreamer
             bp_set_buffering_callback (handle, buffering_callback);
             bp_set_tag_found_callback (handle, tag_found_callback);
             
-            OnStateChanged (PlayerEngineState.Ready);
+            OnStateChanged (PlayerState.Ready);
             
             if (pending_volume >= 0) {
                 Volume = (ushort)pending_volume;
@@ -148,13 +148,13 @@ namespace Banshee.GStreamer
         public override void Play ()
         {
             bp_play (handle);
-            OnStateChanged (PlayerEngineState.Playing);
+            OnStateChanged (PlayerState.Playing);
         }
         
         public override void Pause ()
         {
             bp_pause (handle);
-            OnStateChanged (PlayerEngineState.Paused);
+            OnStateChanged (PlayerState.Paused);
         }
         
         public override void VideoExpose (IntPtr window, bool direct)
@@ -176,12 +176,12 @@ namespace Banshee.GStreamer
         private void OnEos (IntPtr player)
         {
             Close (false);
-            OnEventChanged (PlayerEngineEvent.EndOfStream);
+            OnEventChanged (PlayerEvent.EndOfStream);
         }
         
         private void OnIterate (IntPtr player)
         {
-            OnEventChanged (PlayerEngineEvent.Iterate);
+            OnEventChanged (PlayerEvent.Iterate);
         }
         
         private void OnError (IntPtr player, uint domain, int code, IntPtr error, IntPtr debug)
@@ -237,7 +237,7 @@ namespace Banshee.GStreamer
                 Log.Error (String.Format("GStreamer library error: {0}", (GstLibraryError) code), false);
             }
             
-            OnEventChanged (PlayerEngineEvent.Error, error_message);
+            OnEventChanged (new PlayerEventErrorArgs (error_message));
         }
         
         private void OnBuffering (IntPtr player, int progress)
@@ -247,7 +247,7 @@ namespace Banshee.GStreamer
             }
             
             buffering_finished = progress >= 100;
-            OnEventChanged (PlayerEngineEvent.Buffering, Catalog.GetString ("Buffering"), (double) progress / 100.0);
+            OnEventChanged (new PlayerEventBufferingArgs ((double) progress / 100.0));
         }
         
         private void OnTagFound (IntPtr player, string tagName, ref GLib.Value value)
@@ -289,7 +289,7 @@ namespace Banshee.GStreamer
                 }
                 
                 bp_set_volume (handle, (int)value);
-                OnEventChanged (PlayerEngineEvent.Volume);
+                OnEventChanged (PlayerEvent.Volume);
             }
         }
         
@@ -297,7 +297,7 @@ namespace Banshee.GStreamer
             get { return (uint)bp_get_position(handle); }
             set { 
                 bp_set_position(handle, (ulong)value);
-                OnEventChanged (PlayerEngineEvent.Seek);
+                OnEventChanged (PlayerEvent.Seek);
             }
         }
         

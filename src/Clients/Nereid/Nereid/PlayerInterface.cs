@@ -238,7 +238,10 @@ namespace Nereid
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             ServiceManager.SourceManager.SourceUpdated += OnSourceUpdated;
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.StartOfStream |
+                PlayerEvent.TrackInfoUpdated |
+                PlayerEvent.EndOfStream);
             
             ActionService.TrackActions ["SearchForSameArtistAction"].Activated += OnProgrammaticSearch;
             ActionService.TrackActions ["SearchForSameAlbumAction"].Activated += OnProgrammaticSearch;
@@ -364,15 +367,9 @@ namespace Nereid
             }
         }
         
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args) 
+        private void OnPlayerEvent (PlayerEventArgs args) 
         {
-            switch (args.Event) {
-                case PlayerEngineEvent.StartOfStream:
-                case PlayerEngineEvent.TrackInfoUpdated:
-                case PlayerEngineEvent.EndOfStream:
-                    UpdateTitle ();
-                    break;
-            }
+            UpdateTitle ();
         }
         
 #endregion

@@ -56,19 +56,17 @@ namespace Banshee.MediaEngine
 
         private string preferred_engine_id = null;
 
-        public event PlayerEngineEventHandler EventChanged;
-        public event PlayerEngineStateHandler StateChanged;
         public event EventHandler PlayWhenIdleRequest;
         public event TrackInterceptHandler TrackIntercept;
         
-        private event DBusPlayerEngineEventHandler dbus_event_changed;
-        event DBusPlayerEngineEventHandler IPlayerEngineService.EventChanged {
+        private event DBusPlayerEventHandler dbus_event_changed;
+        event DBusPlayerEventHandler IPlayerEngineService.EventChanged {
             add { dbus_event_changed += value; }
             remove { dbus_event_changed -= value; }
         }
 
-        private event DBusPlayerEngineStateHandler dbus_state_changed;
-        event DBusPlayerEngineStateHandler IPlayerEngineService.StateChanged {
+        private event DBusPlayerStateHandler dbus_state_changed;
+        event DBusPlayerStateHandler IPlayerEngineService.StateChanged {
             add { dbus_state_changed += value; }
             remove { dbus_state_changed -= value; }
         }
@@ -116,10 +114,9 @@ namespace Banshee.MediaEngine
         
         private void LoadEngine (PlayerEngine engine)
         {
-            engine.StateChanged += OnEngineStateChanged;
             engine.EventChanged += OnEngineEventChanged;
 
-            if(engine.Id == preferred_engine_id) {
+            if (engine.Id == preferred_engine_id) {
                 DefaultEngine = engine;
             } else {
                 if (active_engine == null) {
@@ -150,25 +147,19 @@ namespace Banshee.MediaEngine
         {
             if (CurrentTrack != null && args.Track == CurrentTrack) {
                 foreach (StreamTag tag in args.ResultTags) {
-                    StreamTagger.TrackInfoMerge(CurrentTrack, tag);
+                    StreamTagger.TrackInfoMerge (CurrentTrack, tag);
                 }
                 
-                PlayerEngineEventArgs eventargs = new PlayerEngineEventArgs ();
-                eventargs.Event = PlayerEngineEvent.TrackInfoUpdated;
-                OnEngineEventChanged (active_engine, eventargs);
+                OnEngineEventChanged (new PlayerEventArgs (PlayerEvent.TrackInfoUpdated));
             }
         }
         
-        private void OnEngineStateChanged (object o, PlayerEngineStateArgs args)
+        private void HandleStateChange (PlayerEventStateChangeArgs args)
         {
-            if (o != active_engine) {
-                return;
-            }
-            
-            if (args.State == PlayerEngineState.Loaded && CurrentTrack != null) {
+            if (args.Current == PlayerState.Loaded && CurrentTrack != null) {
                 active_engine.Volume = (ushort) VolumeSchema.Get ();
                 MetadataService.Instance.Lookup (CurrentTrack);
-            } else if (args.State == PlayerEngineState.Ready) {
+            } else if (args.Current == PlayerState.Ready) {
                 // Enable our preferred equalizer if it exists and was enabled last time.
                 if (SupportsEqualizer && EqualizerSetting.EnabledSchema.Get ()) {
                     string name = EqualizerSetting.PresetSchema.Get();
@@ -192,48 +183,39 @@ namespace Banshee.MediaEngine
                 }
             }
             
-            PlayerEngineStateHandler handler = StateChanged;
-            if (handler != null) {
-                handler (o, args);
-            }
-            
-            DBusPlayerEngineStateHandler dbus_handler = dbus_state_changed;
+            DBusPlayerStateHandler dbus_handler = dbus_state_changed;
             if (dbus_handler != null) {
-                dbus_handler (args.State.ToString ().ToLower ());
+                dbus_handler (args.Current.ToString ().ToLower ());
             }
         }
 
-        private void OnEngineEventChanged (object o, PlayerEngineEventArgs args)
+        private void OnEngineEventChanged (PlayerEventArgs args)
         {
-            if (o != active_engine) {
-                return;
-            }
-            
             if (CurrentTrack != null) {
-                if (args.Event == PlayerEngineEvent.Error 
+                if (args.Event == PlayerEvent.Error 
                     && CurrentTrack.PlaybackError == StreamPlaybackError.None) {
                     CurrentTrack.PlaybackError = StreamPlaybackError.Unknown;
-                } else if (args.Event == PlayerEngineEvent.Iterate 
+                } else if (args.Event == PlayerEvent.Iterate 
                     && CurrentTrack.PlaybackError != StreamPlaybackError.None) {
                     CurrentTrack.PlaybackError = StreamPlaybackError.None;
                 }
             }
             
-            PlayerEngineEventHandler handler = EventChanged;
-            if (handler != null) {
-                handler(o, args);
-            }
+            RaiseEvent (args);
             
             // Do not raise iterate across DBus to avoid so many calls;
             // DBus clients should do their own iterating and 
             // event/state checking locally
-            if (args.Event == PlayerEngineEvent.Iterate) {
+            if (args.Event == PlayerEvent.Iterate) {
                 return;
             }
             
-            DBusPlayerEngineEventHandler dbus_handler = dbus_event_changed;
+            DBusPlayerEventHandler dbus_handler = dbus_event_changed;
             if (dbus_handler != null) {
-                dbus_handler (args.Event.ToString ().ToLower (), args.Message ?? String.Empty, args.BufferingPercent);
+                dbus_handler (args.Event.ToString ().ToLower (), 
+                    args is PlayerEventErrorArgs ? ((PlayerEventErrorArgs)args).Message : String.Empty, 
+                    args is PlayerEventBufferingArgs ? ((PlayerEventBufferingArgs)args).Progress : 0
+                );
             }
         }
         
@@ -298,7 +280,7 @@ namespace Banshee.MediaEngine
         
         private void OpenCheck (object o)
         {
-            if (CurrentState == PlayerEngineState.NotReady) {
+            if (CurrentState == PlayerState.NotReady) {
                 throw new InvalidOperationException (String.Format ("Player engine {0} is in the NotReady state", 
                     active_engine.GetType ().FullName));
             }
@@ -403,10 +385,10 @@ namespace Banshee.MediaEngine
         public void TogglePlaying ()
         {
             switch (CurrentState) {
-                case PlayerEngineState.Idle:
+                case PlayerState.Idle:
                     OnPlayWhenIdleRequest ();
                     break;
-                case PlayerEngineState.Playing:
+                case PlayerState.Playing:
                     Pause ();
                     break;
                 default:
@@ -436,13 +418,13 @@ namespace Banshee.MediaEngine
         
         public bool IsPlaying ()
         {
-            return CurrentState != PlayerEngineState.Idle && CurrentState != PlayerEngineState.NotReady;
+            return CurrentState != PlayerState.Idle && CurrentState != PlayerState.NotReady;
         }
 
         private void CheckPending ()
         {
             if(pending_engine != null && pending_engine != active_engine) {
-                if(active_engine.CurrentState == PlayerEngineState.Idle) {
+                if(active_engine.CurrentState == PlayerState.Idle) {
                     Close ();
                 }
                 
@@ -467,7 +449,7 @@ namespace Banshee.MediaEngine
             get { return CurrentSafeUri == null ? String.Empty : CurrentSafeUri.AbsoluteUri; }
         }
         
-        public PlayerEngineState CurrentState {
+        public PlayerState CurrentState {
             get { return active_engine.CurrentState; }
         }
         
@@ -475,7 +457,7 @@ namespace Banshee.MediaEngine
             get { return CurrentState.ToString ().ToLower (); }
         }
         
-        public PlayerEngineState LastState {
+        public PlayerState LastState {
             get { return active_engine.LastState; }
         }
         
@@ -548,6 +530,128 @@ namespace Banshee.MediaEngine
         public IEnumerable<PlayerEngine> Engines {
             get { return engines; }
         }
+        
+#region Player Event System
+
+        private LinkedList<PlayerEventHandlerSlot> event_handlers = new LinkedList<PlayerEventHandlerSlot> ();
+        
+        private struct PlayerEventHandlerSlot
+        {
+            public PlayerEvent EventMask;
+            public PlayerEventHandler Handler;
+            
+            public PlayerEventHandlerSlot (PlayerEvent mask, PlayerEventHandler handler)
+            {
+                EventMask = mask;
+                Handler = handler;
+            }
+        }
+        
+        private const PlayerEvent event_all_mask = PlayerEvent.Iterate
+            | PlayerEvent.StateChange
+            | PlayerEvent.StartOfStream
+            | PlayerEvent.EndOfStream
+            | PlayerEvent.Buffering
+            | PlayerEvent.Seek
+            | PlayerEvent.Error
+            | PlayerEvent.Volume
+            | PlayerEvent.Metadata
+            | PlayerEvent.TrackInfoUpdated;
+        
+        private const PlayerEvent event_default_mask = event_all_mask & ~PlayerEvent.Iterate;
+        
+        private static void VerifyEventMask (PlayerEvent eventMask)
+        {
+            if (eventMask <= PlayerEvent.None || eventMask > event_all_mask) {
+                throw new ArgumentOutOfRangeException ("eventMask", "A valid event mask must be provided");
+            }
+        }
+        
+        public void ConnectEvent (PlayerEventHandler handler)
+        {
+            ConnectEvent (handler, event_default_mask, false);
+        }
+        
+        public void ConnectEvent (PlayerEventHandler handler, PlayerEvent eventMask)
+        {
+            ConnectEvent (handler, eventMask, false);
+        }
+        
+        public void ConnectEvent (PlayerEventHandler handler, bool connectAfter)
+        {
+            ConnectEvent (handler, event_default_mask, connectAfter);
+        }
+        
+        public void ConnectEvent (PlayerEventHandler handler, PlayerEvent eventMask, bool connectAfter)
+        {
+            lock (event_handlers) {
+                VerifyEventMask (eventMask);
+            
+                PlayerEventHandlerSlot slot = new PlayerEventHandlerSlot (eventMask, handler);
+                
+                if (connectAfter) {
+                    event_handlers.AddLast (slot);
+                } else {
+                    event_handlers.AddFirst (slot);
+                }
+            }
+        }
+        
+        private LinkedListNode<PlayerEventHandlerSlot> FindEventNode (PlayerEventHandler handler)
+        {
+            LinkedListNode<PlayerEventHandlerSlot> node = event_handlers.First;
+            while (node != null) {
+                if (node.Value.Handler == handler) {
+                    return node;
+                }
+                node = node.Next;
+            }
+            
+            return null;
+        }
+        
+        public void DisconnectEvent (PlayerEventHandler handler)
+        {
+            lock (event_handlers) {
+                LinkedListNode<PlayerEventHandlerSlot> node = FindEventNode (handler);
+                if (node != null) {
+                    event_handlers.Remove (node);
+                }
+            }
+        }
+        
+        public void ModifyEvent (PlayerEvent eventMask, PlayerEventHandler handler)
+        {
+            lock (event_handlers) {
+                VerifyEventMask (eventMask);
+                
+                LinkedListNode<PlayerEventHandlerSlot> node = FindEventNode (handler);
+                if (node != null) {
+                    PlayerEventHandlerSlot slot = node.Value;
+                    slot.EventMask = eventMask;
+                    node.Value = slot;
+                }
+            }
+        }
+        
+        private void RaiseEvent (PlayerEventArgs args)
+        {
+            lock (event_handlers) {
+                if (args.Event == PlayerEvent.StateChange && args is PlayerEventStateChangeArgs) {
+                    HandleStateChange ((PlayerEventStateChangeArgs)args);
+                }
+            
+                LinkedListNode<PlayerEventHandlerSlot> node = event_handlers.First;
+                while (node != null) {
+                    if ((node.Value.EventMask & args.Event) == args.Event) {
+                        node.Value.Handler (args);
+                    }
+                    node = node.Next;
+                }
+            }
+        }
+
+#endregion
         
         string IService.ServiceName {
             get { return "PlayerEngine"; }

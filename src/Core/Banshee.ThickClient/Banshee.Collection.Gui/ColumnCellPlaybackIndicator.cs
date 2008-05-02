@@ -79,7 +79,7 @@ namespace Banshee.Collection.Gui
             }
             
             Gdk.Pixbuf render_pixbuf = pixbuf;
-            if (ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Paused) {
+            if (ServiceManager.PlayerEngine.CurrentState == PlayerState.Paused) {
                 render_pixbuf = pixbuf_paused;
             }
             

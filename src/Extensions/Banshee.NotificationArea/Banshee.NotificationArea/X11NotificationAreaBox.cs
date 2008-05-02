@@ -233,10 +233,10 @@ namespace Banshee.NotificationArea
             HidePopup ();
         }
         
-        public void PlayerEngineEventChanged (PlayerEngineEventArgs args) 
+        public void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
-                case PlayerEngineEvent.Iterate:
+                case PlayerEvent.Iterate:
                     if (popup != null) {
                         if (ServiceManager.PlayerEngine.CurrentTrack != null) {
                             popup.Duration = (uint)ServiceManager.PlayerEngine.CurrentTrack.Duration.TotalSeconds;
@@ -248,14 +248,14 @@ namespace Banshee.NotificationArea
                     }
                     
                     break;
-                case PlayerEngineEvent.StartOfStream:
+                case PlayerEvent.StartOfStream:
                     can_show_popup = true;
                     break;
                     
-                case PlayerEngineEvent.EndOfStream:
+                case PlayerEvent.EndOfStream:
                     // only hide the popup when we don't play again after 250ms
                     GLib.Timeout.Add (250, delegate {
-                        if (ServiceManager.PlayerEngine.CurrentState != PlayerEngineState.Playing) {
+                        if (ServiceManager.PlayerEngine.CurrentState != PlayerState.Playing) {
                             can_show_popup = false;
                             HidePopup ();
                          }

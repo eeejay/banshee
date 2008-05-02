@@ -80,15 +80,16 @@ namespace Banshee.Gui
                     Catalog.GetString ("Toggle display of album cover art"), null, false),
             });
             
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
             action_service = actionService;
 
             OnFullScreen (null, EventArgs.Empty);
         }
         
-        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
-        {            
-            if (args.State == PlayerEngineState.Ready && !ServiceManager.PlayerEngine.SupportsEqualizer) {
+        private void OnPlayerEvent (PlayerEventArgs args)
+        {
+            if (((PlayerEventStateChangeArgs)args).Current == PlayerState.Ready && 
+                !ServiceManager.PlayerEngine.SupportsEqualizer) {
                 action_service["View.ShowEqualizerAction"].Sensitive = false;
             }
         }

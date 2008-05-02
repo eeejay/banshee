@@ -101,10 +101,15 @@ namespace Banshee.Lastfm.Audioscrobbler
             
             // Update the Visit action menu item if we update our account info
             LastfmCore.Account.Updated += delegate (object o, EventArgs args) {
-                actions["AudioscrobblerVisitAction"].Sensitive = LastfmCore.Account.UserName != null && LastfmCore.Account.CryptedPassword != null;
+                actions["AudioscrobblerVisitAction"].Sensitive = LastfmCore.Account.UserName != null 
+                    && LastfmCore.Account.CryptedPassword != null;
             };
             
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.StartOfStream |
+                PlayerEvent.EndOfStream |
+                PlayerEvent.Seek |
+                PlayerEvent.Iterate);
             
             action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
             InterfaceInitialize ();
@@ -149,7 +154,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                 Queue (ServiceManager.PlayerEngine.CurrentTrack);
             }
             
-            ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
             
             // When we stop the connection, queue ends up getting saved too, so the
             // track we queued earlier should stay until next session.
@@ -227,10 +232,10 @@ namespace Banshee.Lastfm.Audioscrobbler
             }
         }
         
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
-                case PlayerEngineEvent.StartOfStream:
+                case PlayerEvent.StartOfStream:
                     // Queue the previous track in case of a skip
                     Queue (last_track);
                 
@@ -243,11 +248,11 @@ namespace Banshee.Lastfm.Audioscrobbler
                     
                     break;
                 
-                case PlayerEngineEvent.Seek:
+                case PlayerEvent.Seek:
                     st.SkipPosition ();
                     break;
                 
-                case PlayerEngineEvent.Iterate:
+                case PlayerEvent.Iterate:
                     // Queue as now playing
                     if (!now_playing_sent && iterate_countdown == 0) {
                         if (last_track != null && last_track.Duration.TotalSeconds > 30 &&
@@ -266,7 +271,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                     st.IncreasePosition ();
                     break;
                 
-                case PlayerEngineEvent.EndOfStream:
+                case PlayerEvent.EndOfStream:
                     Queue (ServiceManager.PlayerEngine.CurrentTrack);
                     iterate_countdown = 4 * 4; 
                     break;

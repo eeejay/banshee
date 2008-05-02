@@ -125,7 +125,7 @@ namespace Banshee.Lastfm.Radio
         {
             track_model = new MemoryTrackListModel ();
 
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerStateChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
             lastfm.Connection.StateChanged += HandleConnectionStateChanged;
 
             Properties.SetString ("GtkActionPath", "/LastfmStationSourcePopup");
@@ -137,7 +137,7 @@ namespace Banshee.Lastfm.Radio
 
         public void Dispose ()
         {
-            ServiceManager.PlayerEngine.StateChanged -= OnPlayerStateChanged;
+            ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
             lastfm.Connection.StateChanged -= HandleConnectionStateChanged;
         }
 
@@ -339,9 +339,10 @@ namespace Banshee.Lastfm.Radio
             });
         }
 
-        private void OnPlayerStateChanged (object o, PlayerEngineStateArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
-            if (args.State == PlayerEngineState.Loaded && track_model.Contains (ServiceManager.PlayerEngine.CurrentTrack)) {
+            if (((PlayerEventStateChangeArgs)args).Current == PlayerState.Loaded && 
+                track_model.Contains (ServiceManager.PlayerEngine.CurrentTrack)) {
                 CurrentTrack = ServiceManager.PlayerEngine.CurrentTrack;
 
                 lock (track_model) {

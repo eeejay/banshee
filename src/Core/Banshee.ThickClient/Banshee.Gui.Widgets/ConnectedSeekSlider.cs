@@ -56,8 +56,12 @@ namespace Banshee.Gui.Widgets
             
             BuildSeekSlider (layout);
             
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.Iterate | 
+                PlayerEvent.Buffering |
+                PlayerEvent.StartOfStream |
+                PlayerEvent.StateChange);
+            
             seek_slider.SeekRequested += OnSeekRequested;
         }
 
@@ -94,42 +98,41 @@ namespace Banshee.Gui.Widgets
             Add (box);
         }
         
-        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
-        {
-            switch (args.State) {
-                case PlayerEngineState.Contacting:
-                    stream_position_label.IsContacting = true;
-                    seek_slider.SetIdle ();
-                    break;
-                case PlayerEngineState.Loaded:
-                    seek_slider.Duration = ServiceManager.PlayerEngine.CurrentTrack.Duration.TotalSeconds;
-                    break;
-                case PlayerEngineState.Idle:
-                    seek_slider.SetIdle ();
-                    stream_position_label.IsContacting = false;
-                    break;
-            }
-        }
-        
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
-                case PlayerEngineEvent.Iterate:
+                case PlayerEvent.Iterate:
                     OnPlayerEngineTick ();
                     break;
-                case PlayerEngineEvent.StartOfStream:
+                case PlayerEvent.StartOfStream:
                     stream_position_label.IsBuffering = false;
                     seek_slider.CanSeek = true;
                     break;
-                case PlayerEngineEvent.Buffering:
-                    if (args.BufferingPercent >= 1.0) {
+                case PlayerEvent.Buffering:
+                    PlayerEventBufferingArgs buffering = (PlayerEventBufferingArgs)args;
+                    if (buffering.Progress >= 1.0) {
                         stream_position_label.IsBuffering = false;
                         break;
                     }
                     
                     stream_position_label.IsBuffering = true;
-                    stream_position_label.BufferingProgress = args.BufferingPercent;
+                    stream_position_label.BufferingProgress = buffering.Progress;
                     seek_slider.SetIdle ();
+                    break;
+                case PlayerEvent.StateChange:
+                    switch (((PlayerEventStateChangeArgs)args).Current) {
+                        case PlayerState.Contacting:
+                            stream_position_label.IsContacting = true;
+                            seek_slider.SetIdle ();
+                            break;
+                        case PlayerState.Loaded:
+                            seek_slider.Duration = ServiceManager.PlayerEngine.CurrentTrack.Duration.TotalSeconds;
+                            break;
+                        case PlayerState.Idle:
+                            seek_slider.SetIdle ();
+                            stream_position_label.IsContacting = false;
+                            break;
+                    }
                     break;
             }
         }

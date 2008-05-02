@@ -37,8 +37,8 @@ namespace Banshee.MediaEngine
     [Interface("org.bansheeproject.Banshee.PlayerEngine")]
     public interface IPlayerEngineService : IDBusExportable
     {
-        event DBusPlayerEngineEventHandler EventChanged;
-        event DBusPlayerEngineStateHandler StateChanged;
+        event DBusPlayerEventHandler EventChanged;
+        event DBusPlayerStateHandler StateChanged;
     
         void Open (string uri);
         

@@ -62,9 +62,8 @@ SOURCES =  \
 	Banshee.MediaEngine/ITranscoder.cs \
 	Banshee.MediaEngine/NullPlayerEngine.cs \
 	Banshee.MediaEngine/PlayerEngine.cs \
-	Banshee.MediaEngine/PlayerEngineEvent.cs \
+	Banshee.MediaEngine/PlayerEvent.cs \
 	Banshee.MediaEngine/PlayerEngineService.cs \
-	Banshee.MediaEngine/PlayerEngineState.cs \
 	Banshee.MediaEngine/TranscoderService.cs \
 	Banshee.MediaProfiles/MediaProfileManager.cs \
 	Banshee.MediaProfiles/Pipeline.cs \

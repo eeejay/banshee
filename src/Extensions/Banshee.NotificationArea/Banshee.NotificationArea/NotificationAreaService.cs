@@ -156,7 +156,12 @@ namespace Banshee.NotificationArea
                 }
             }
 
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+               PlayerEvent.Iterate |
+               PlayerEvent.StartOfStream |
+               PlayerEvent.EndOfStream |
+               PlayerEvent.TrackInfoUpdated |
+               PlayerEvent.StateChange);
             
             // Forcefully load this
             show_notifications = ShowNotifications;
@@ -177,7 +182,7 @@ namespace Banshee.NotificationArea
                 notif_area = null;
             }
             
-            ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
             
             elements_service.PrimaryWindowClose = null;
             
@@ -303,27 +308,27 @@ namespace Banshee.NotificationArea
             ShowNotifications = ((ToggleAction)actions["ToggleNotificationsAction"]).Active;
         }
         
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args) 
+        private void OnPlayerEvent (PlayerEventArgs args) 
         {
             switch (args.Event) {
-                case PlayerEngineEvent.Iterate:
+                case PlayerEvent.Iterate:
                     if (current_track != ServiceManager.PlayerEngine.CurrentTrack) {
                         current_track = ServiceManager.PlayerEngine.CurrentTrack;
                         ShowTrackNotification ();
                     }
                     break;
-                case PlayerEngineEvent.StartOfStream:
-                case PlayerEngineEvent.TrackInfoUpdated:
+                case PlayerEvent.StartOfStream:
+                case PlayerEvent.TrackInfoUpdated:
                     ToggleRatingMenuSensitive ();
                     ShowTrackNotification ();
                     break;
-                case PlayerEngineEvent.EndOfStream:
+                case PlayerEvent.EndOfStream:
                     current_track = null;
                     ToggleRatingMenuSensitive ();
                     break;
             }
             
-            notif_area.PlayerEngineEventChanged (args);
+            notif_area.OnPlayerEvent (args);
         }
         
         private void OnItemRatingActivated (object o, EventArgs args)

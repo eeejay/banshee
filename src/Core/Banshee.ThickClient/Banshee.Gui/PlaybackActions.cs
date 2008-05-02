@@ -107,28 +107,49 @@ namespace Banshee.Gui
             this["PreviousAction"].IconName = "media-skip-backward";
             
             action_service = actionService;
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.Error | 
+                PlayerEvent.EndOfStream | 
+                PlayerEvent.StateChange);
             
             repeat_actions = new PlaybackRepeatActions (actionService);
             shuffle_actions = new PlaybackShuffleActions (actionService, this);
         }
         
-        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
+        {
+            switch (args.Event) {
+                case PlayerEvent.Error:
+                case PlayerEvent.EndOfStream:
+                    ToggleAction stop_action = (ToggleAction) this["StopWhenFinishedAction"];
+                    // Kinda lame, but we don't want to actually reset StopWhenFinished inside the controller
+                    // since it is also listening to EOS and needs to actually stop playback; we listen here
+                    // just to keep the UI in sync.
+                    stop_action.Activated -= OnStopWhenFinishedAction;
+                    stop_action.Active = false;
+                    stop_action.Activated += OnStopWhenFinishedAction;
+                    break;
+                case PlayerEvent.StateChange:
+                    OnPlayerStateChange ((PlayerEventStateChangeArgs)args);
+                    break;
+            }
+        }
+        
+        private void OnPlayerStateChange (PlayerEventStateChangeArgs args)
         {
             if (play_pause_action == null) {
                 play_pause_action = action_service["Playback.PlayPauseAction"];
             }
             
-            switch (args.State) {
-                case PlayerEngineState.Contacting:
-                case PlayerEngineState.Playing:
+            switch (args.Current) {
+                case PlayerState.Contacting:
+                case PlayerState.Playing:
                     ShowPlayAction ();
                     break;
-                case PlayerEngineState.Paused:
+                case PlayerState.Paused:
                     ShowPlay ();
                     break;
-                case PlayerEngineState.Idle:
+                case PlayerState.Idle:
                     ShowPlay ();
                     break;
                 default:
@@ -151,23 +172,6 @@ namespace Banshee.Gui
                 this["JumpToPlayingTrackAction"].Sensitive = false;
                 this["RestartSongAction"].Sensitive = false;
                 this["SeekToAction"].Sensitive = false;
-            }
-        }
-            
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
-        {
-            switch (args.Event) {
-                case PlayerEngineEvent.Error:
-                case PlayerEngineEvent.EndOfStream:
-
-                    ToggleAction stop_action = (ToggleAction) this["StopWhenFinishedAction"];
-                    // Kinda lame, but we don't want to actually reset StopWhenFinished inside the controller
-                    // since it is also listening to EOS and needs to actually stop playback; we listen here
-                    // just to keep the UI in sync.
-                    stop_action.Activated -= OnStopWhenFinishedAction;
-                    stop_action.Active = false;
-                    stop_action.Activated += OnStopWhenFinishedAction;
-                    break;
             }
         }
         

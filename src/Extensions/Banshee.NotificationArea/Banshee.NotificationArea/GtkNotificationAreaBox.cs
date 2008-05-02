@@ -69,7 +69,7 @@ namespace Banshee.NotificationArea
             StatusIcon.PositionMenu (menu, out x, out y, out push_in, Handle);
         }
         
-        public void PlayerEngineEventChanged (PlayerEngineEventArgs args)
+        public void OnPlayerEvent (PlayerEventArgs args)
         {
         }
     }

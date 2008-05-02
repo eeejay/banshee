@@ -62,7 +62,9 @@ namespace Banshee.Lastfm.Radio
             action_service = ServiceManager.Get<InterfaceActionService> ();
             this.lastfm = lastfm;
             
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.StartOfStream | 
+                PlayerEvent.EndOfStream);
 
             AddImportant (
                 new ActionEntry (
@@ -395,9 +397,9 @@ namespace Banshee.Lastfm.Radio
             dialog.Destroy ();
         }
 
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         { 
-            if (args.Event == PlayerEngineEvent.EndOfStream || args.Event == PlayerEngineEvent.StartOfStream) {
+            if (args.Event == PlayerEvent.EndOfStream || args.Event == PlayerEvent.StartOfStream) {
                 TrackInfo current_track = ServiceManager.PlayerEngine.CurrentTrack;
                 this["LastfmLoveAction"].Visible = current_track is LastfmTrackInfo;
                 this["LastfmHateAction"].Visible = current_track is LastfmTrackInfo;

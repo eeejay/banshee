@@ -83,7 +83,7 @@ namespace Banshee.Collection.Gui
             RulesHint = true;
             RowSensitivePropertyName = "CanPlay";
             
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
             
             if (ServiceManager.Contains<GtkElementsService> ()) {
                 ServiceManager.Get<GtkElementsService> ().ThemeChanged += delegate {
@@ -111,7 +111,7 @@ namespace Banshee.Collection.Gui
             return true;
         }
         
-        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
             QueueDraw ();
         }

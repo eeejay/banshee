@@ -58,7 +58,7 @@ namespace Banshee.Collection.Gui
                 ServiceManager.PlaybackController.Next ();
             };
             
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.TrackInfoUpdated);
         }
 
         protected override bool OnFocusInEvent(Gdk.EventFocus evnt)
@@ -73,13 +73,11 @@ namespace Banshee.Collection.Gui
             return base.OnFocusOutEvent(evnt);
         }
         
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
-            if (args.Event == PlayerEngineEvent.TrackInfoUpdated) {
-                // TODO: a) Figure out if the track that changed is actually in view
-                //       b) xfade the artwork if it is, that'd be slick
-                QueueDraw ();
-            }
+            // TODO: a) Figure out if the track that changed is actually in view
+            //       b) xfade the artwork if it is, that'd be slick
+            QueueDraw ();
         }
     }
 }

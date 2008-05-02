@@ -42,7 +42,9 @@ namespace Banshee.NowPlaying
 
         public VideoDisplay ()
         {
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent,
+                PlayerEvent.StartOfStream |
+                PlayerEvent.EndOfStream);
             ToggleIdleVisibility ();
         }
 
@@ -53,7 +55,7 @@ namespace Banshee.NowPlaying
         protected override void OnDestroyed ()
         {
             base.OnDestroyed ();
-            ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
         }
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
@@ -82,14 +84,9 @@ namespace Banshee.NowPlaying
             return true;
         }
         
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
-            switch (args.Event) {
-                case PlayerEngineEvent.StartOfStream:
-                case PlayerEngineEvent.EndOfStream:
-                    ToggleIdleVisibility ();
-                    break;
-            }
+            ToggleIdleVisibility ();
         }
         
         private void ToggleIdleVisibility ()

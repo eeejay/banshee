@@ -29,6 +29,8 @@
 using System;
 using System.Collections;
 
+using Hyena;
+
 using Banshee.Base;
 using Banshee.Streaming;
 using Banshee.Collection;
@@ -41,14 +43,13 @@ namespace Banshee.MediaEngine
         public const int VolumeDelta = 10;
         public const int SkipDelta = 10;
     
-        public event PlayerEngineStateHandler StateChanged;
-        public event PlayerEngineEventHandler EventChanged;
+        public event PlayerEventHandler EventChanged;
         
         private TrackInfo current_track;
         private SafeUri current_uri;
-        private PlayerEngineState current_state = PlayerEngineState.NotReady;
-        private PlayerEngineState last_state = PlayerEngineState.NotReady;
-        private PlayerEngineState idle_state = PlayerEngineState.NotReady;
+        private PlayerState current_state = PlayerState.NotReady;
+        private PlayerState last_state = PlayerState.NotReady;
+        private PlayerState idle_state = PlayerState.NotReady;
         
         protected abstract void OpenUri (SafeUri uri);
         
@@ -87,28 +88,28 @@ namespace Banshee.MediaEngine
 
         private void HandleOpen (SafeUri uri)
         {
-            if (current_state != PlayerEngineState.Idle && current_state != PlayerEngineState.NotReady) {
+            if (current_state != PlayerState.Idle && current_state != PlayerState.NotReady) {
                 Close (false);
             }
         
             try {
                 OpenUri (uri);
-                OnEventChanged (PlayerEngineEvent.StartOfStream);
-                OnStateChanged (PlayerEngineState.Loaded);
+                OnEventChanged (PlayerEvent.StartOfStream);
+                OnStateChanged (PlayerState.Loaded);
             } catch (Exception e) {
-                Console.WriteLine (e);
-                OnEventChanged (PlayerEngineEvent.Error, e.Message);
+                Log.Exception (e);
+                OnEventChanged (new PlayerEventErrorArgs (e.Message));
             }
         }
         
         public virtual void Play ()
         {
-            OnStateChanged (PlayerEngineState.Playing);
+            OnStateChanged (PlayerState.Playing);
         }
 
         public virtual void Pause ()
         {
-            OnStateChanged (PlayerEngineState.Paused);
+            OnStateChanged (PlayerState.Paused);
         }
         
         public virtual void VideoExpose (IntPtr window, bool direct)
@@ -121,79 +122,54 @@ namespace Banshee.MediaEngine
             return null;
         }
         
-        protected virtual void OnStateChanged (PlayerEngineState state)
+        protected virtual void OnStateChanged (PlayerState state)
         {
             if (current_state == state) {
                 return;
             }
             
-            if (idle_state == PlayerEngineState.NotReady && state != PlayerEngineState.Ready) {
+            if (idle_state == PlayerState.NotReady && state != PlayerState.Ready) {
                 Hyena.Log.Warning ("Engine must transition to the ready state before other states can be entered", false);
                 return;
-            } else if (idle_state == PlayerEngineState.NotReady && state == PlayerEngineState.Ready) {
-                idle_state = PlayerEngineState.Idle;
+            } else if (idle_state == PlayerState.NotReady && state == PlayerState.Ready) {
+                idle_state = PlayerState.Idle;
             }
-        
-            if (ThreadAssist.InMainThread) {
-                RaiseStateChanged (state);
-            } else {
-                ThreadAssist.ProxyToMain (delegate {
-                    RaiseStateChanged (state);
-                });
-            }
+            
+            last_state = current_state;
+            current_state = state;
+            
+            OnEventChanged (new PlayerEventStateChangeArgs (last_state, current_state));
             
             // Going to the Ready state automatically transitions to the Idle state
             // The Ready state is advertised so one-time startup processes can easily
             // happen outside of the engine itself
             
-            if (state == PlayerEngineState.Ready) {
-                OnStateChanged (PlayerEngineState.Idle);
+            if (state == PlayerState.Ready) {
+                OnStateChanged (PlayerState.Idle);
             }
         }
         
-        private void RaiseStateChanged (PlayerEngineState state)
+        protected void OnEventChanged (PlayerEvent evnt)
         {
-            last_state = current_state;
-            current_state = state;
-            
-            PlayerEngineStateHandler handler = StateChanged;
-            if (handler != null) {
-                PlayerEngineStateArgs args = new PlayerEngineStateArgs ();
-                args.State = state;
-                handler (this, args);
-            }
+            OnEventChanged (new PlayerEventArgs (evnt));
         }
         
-        protected void OnEventChanged (PlayerEngineEvent evnt)
-        {
-            OnEventChanged (evnt, null, 0.0);
-        }
-        
-        protected void OnEventChanged (PlayerEngineEvent evnt, string message)
-        {
-            OnEventChanged (evnt, message, 0.0);
-        }
-        
-        protected virtual void OnEventChanged (PlayerEngineEvent evnt, string message, double bufferingPercent)
+        protected virtual void OnEventChanged (PlayerEventArgs args)
         {
             if (ThreadAssist.InMainThread) {
-                RaiseEventChanged (evnt, message, bufferingPercent);
+                RaiseEventChanged (args);
             } else {
                 ThreadAssist.ProxyToMain (delegate {
-                    RaiseEventChanged (evnt, message, bufferingPercent);
+                    RaiseEventChanged (args);
                 });
             }
         }
         
-        private void RaiseEventChanged (PlayerEngineEvent evnt, string message, double bufferingPercent)
+        private void RaiseEventChanged (PlayerEventArgs args)
         {
-            PlayerEngineEventHandler handler = EventChanged;
+            PlayerEventHandler handler = EventChanged;
             if (handler != null) {
-                PlayerEngineEventArgs args = new PlayerEngineEventArgs ();
-                args.Event = evnt;
-                args.Message = message;
-                args.BufferingPercent = bufferingPercent;
-                handler (this, args);
+                handler (args);
             }
         }
         
@@ -222,7 +198,7 @@ namespace Banshee.MediaEngine
         
         public void TrackInfoUpdated ()
         {
-            OnEventChanged (PlayerEngineEvent.TrackInfoUpdated);
+            OnEventChanged (PlayerEvent.TrackInfoUpdated);
         }
         
         public TrackInfo CurrentTrack {
@@ -233,11 +209,11 @@ namespace Banshee.MediaEngine
             get { return current_uri; }
         }
         
-        public PlayerEngineState CurrentState {
+        public PlayerState CurrentState {
             get { return current_state; }
         }
         
-        public PlayerEngineState LastState {
+        public PlayerState LastState {
             get { return last_state; }
         }
         

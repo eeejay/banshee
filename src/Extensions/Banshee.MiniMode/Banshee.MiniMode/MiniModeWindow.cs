@@ -66,7 +66,7 @@ namespace Banshee.MiniMode
         private InterfaceActionService interface_action_service;
         private GtkElementsService elements_service;
         private BaseClientWindow default_main_window;
-		
+
         private Glade.XML glade;
 
         public MiniMode() : base(Catalog.GetString("Banshee Music Player"))
@@ -136,15 +136,17 @@ namespace Banshee.MiniMode
             SetTip(repeat_toggle_button, Catalog.GetString("Change repeat playback mode"));
             
             // Hook up everything
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.Error |
+                PlayerEvent.StateChange |
+                PlayerEvent.TrackInfoUpdated);
             
             SetHeightLimit();
         }
 
         private void SetTip(Widget widget, string tip)
         {
-	        TooltipSetter.Set (tooltip_host, widget, tip);
+            TooltipSetter.Set (tooltip_host, widget, tip);
         }
 
         private void SetHeightLimit()
@@ -182,27 +184,23 @@ namespace Banshee.MiniMode
 
         // ---- Player Event Handlers ----
         
-        private void OnPlayerEngineStateChanged(object o, Banshee.MediaEngine.PlayerEngineStateArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
-            switch(args.State) {
-                case PlayerEngineState.Loaded:
-                    UpdateMetaDisplay();
+            switch (args.Event) {
+                case PlayerEvent.Error:
+                case PlayerEvent.TrackInfoUpdated:
+                    UpdateMetaDisplay ();
                     break;
-                case PlayerEngineState.Idle:
-                    InfoBox.Visible = false;
-                    UpdateMetaDisplay();
-                    break;
-            }
-        }
-        
-        private void OnPlayerEngineEventChanged(object o, PlayerEngineEventArgs args)
-        {
-            switch(args.Event) {
-                case PlayerEngineEvent.Error:
-                    UpdateMetaDisplay();
-                    break;
-                case PlayerEngineEvent.TrackInfoUpdated:
-                    UpdateMetaDisplay();
+                case PlayerEvent.StateChange:
+                    switch (((PlayerEventStateChangeArgs)args).Current) {
+                        case PlayerState.Loaded:
+                            UpdateMetaDisplay ();
+                            break;
+                        case PlayerState.Idle:
+                            InfoBox.Visible = false;
+                            UpdateMetaDisplay ();
+                            break;
+                    }
                     break;
             }
         }

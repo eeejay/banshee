@@ -83,7 +83,7 @@ namespace Banshee.PlaybackController
             
             player_engine = ServiceManager.PlayerEngine;
             player_engine.PlayWhenIdleRequest += OnPlayerEnginePlayWhenIdleRequest;
-            player_engine.EventChanged += OnPlayerEngineEventChanged;
+            player_engine.ConnectEvent (OnPlayerEvent, PlayerEvent.EndOfStream | PlayerEvent.StartOfStream, true);
         }
         
         protected virtual void InstantiateStacks ()
@@ -97,10 +97,10 @@ namespace Banshee.PlaybackController
             Next ();
         }
         
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
-                case PlayerEngineEvent.EndOfStream:
+                case PlayerEvent.EndOfStream:
                     if (!StopWhenFinished) {
                         if (RepeatMode == PlaybackRepeatMode.RepeatSingle) {
                             QueuePlayTrack ();
@@ -113,7 +113,7 @@ namespace Banshee.PlaybackController
                     
                     StopWhenFinished = false;
                     break;
-                case PlayerEngineEvent.StartOfStream:
+                case PlayerEvent.StartOfStream:
                     TrackInfo track = player_engine.CurrentTrack;
                     if (changing_to_track != track && track != null) {
                         CurrentTrack = track;

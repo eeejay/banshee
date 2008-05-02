@@ -68,7 +68,7 @@ namespace Banshee.PlayQueue
             
             ((DatabaseTrackListModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID ASC";
             
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent);
             ServiceManager.PlaybackController.Transition += OnCanonicalPlaybackControllerTransition;
 
             ServiceManager.SourceManager.AddSource (this);
@@ -135,6 +135,8 @@ namespace Banshee.PlayQueue
         {
             base.Dispose ();
 
+            ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
+
             if (ClearOnQuitSchema.Get ()) {
                 OnClearPlayQueue (this, EventArgs.Empty);
             }
@@ -178,11 +180,11 @@ namespace Banshee.PlayQueue
             }
         }
         
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
-        { 
-            if (args.Event == PlayerEngineEvent.EndOfStream) {
+        private void OnPlayerEvent (PlayerEventArgs args)
+        {
+            if (args.Event == PlayerEvent.EndOfStream) {
                 RemovePlayingTrack ();
-            } else if (args.Event == PlayerEngineEvent.StartOfStream) {
+            } else if (args.Event == PlayerEvent.StartOfStream) {
                 if (this == ServiceManager.PlaybackController.Source) {
                     playing_track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo; 
                 } else {

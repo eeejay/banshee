@@ -83,8 +83,10 @@ namespace Banshee.Gui.Widgets
                 artwork_manager = ServiceManager.Get<ArtworkManager> ("ArtworkManager");
             }
             
-            ServiceManager.PlayerEngine.EventChanged += OnPlayerEngineEventChanged;
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChanged;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.StartOfStream | 
+                PlayerEvent.TrackInfoUpdated | 
+                PlayerEvent.StateChange);
         }
         
         public override void Dispose ()
@@ -94,8 +96,7 @@ namespace Banshee.Gui.Widgets
             }
             
             if (ServiceManager.PlayerEngine != null) {
-                ServiceManager.PlayerEngine.EventChanged -= OnPlayerEngineEventChanged;
-                ServiceManager.PlayerEngine.StateChanged -= OnPlayerEngineStateChanged;
+                ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
             }
             
             stage.Iteration -= OnStageIteration;
@@ -412,20 +413,18 @@ namespace Banshee.Gui.Widgets
             second_line_layout.Dispose ();
         }
         
-        private void OnPlayerEngineEventChanged (object o, PlayerEngineEventArgs args)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
-            if (args.Event == PlayerEngineEvent.StartOfStream || args.Event == PlayerEngineEvent.TrackInfoUpdated) {
+            if (args.Event == PlayerEvent.StartOfStream || args.Event == PlayerEvent.TrackInfoUpdated) {
                 LoadCurrentTrack ();
-            }
-        }
-        
-        private void OnPlayerEngineStateChanged (object o, PlayerEngineStateArgs args)
-        {
-            if (args.State == PlayerEngineState.Idle && (incoming_track != null || incoming_pixbuf != null)) {
-                if (idle_timeout_id > 0) {
-                    GLib.Source.Remove (idle_timeout_id);
-                } else {
-                    GLib.Timeout.Add (100, IdleTimeout);
+            } else if (args.Event == PlayerEvent.StateChange) {
+                if ((incoming_track != null || incoming_pixbuf != null) || 
+                    ((PlayerEventStateChangeArgs)args).Current == PlayerState.Idle) {
+                    if (idle_timeout_id > 0) {
+                        GLib.Source.Remove (idle_timeout_id);
+                    } else {
+                        GLib.Timeout.Add (100, IdleTimeout);
+                    }
                 }
             }
         }
@@ -433,7 +432,7 @@ namespace Banshee.Gui.Widgets
         private bool IdleTimeout ()
         {
             if (ServiceManager.PlayerEngine.CurrentTrack == null || 
-                ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Idle) {
+                ServiceManager.PlayerEngine.CurrentState == PlayerState.Idle) {
                 incoming_track = null;
                 incoming_pixbuf = null;
                 

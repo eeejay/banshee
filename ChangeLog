@@ -1,3 +1,70 @@
+2008-05-02  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	New event system for raising handlers based on a desired event mask; 
+	handler masks can be modified, handlers can be removed, and handlers
+	can be prepended or appended to the event handler list
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEvent.cs: New
+	player event definitions and argument classes
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlayerEngineService.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/GtkNotificationAreaBox.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/INotificationAreaBox.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedVolumeButton.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Updated to use the new player events API
+
+2008-05-01  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/GtkNotificationAreaBox.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/INotificationAreaBox.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedVolumeButton.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IPlayerEngineService.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineState.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineEvent.cs:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+
 2008-05-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
