@@ -1,3 +1,10 @@
+2008-05-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Fix bug with queries on
+	fields that have a custom 'column' (eg maybe they search two different
+	columns at once, like MimeTypeField does) not having necessary parenthesis
+	around them.
+
 2008-05-02  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Explicitly 

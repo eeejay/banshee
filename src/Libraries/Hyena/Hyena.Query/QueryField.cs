@@ -106,6 +106,11 @@ namespace Hyena.Query
             this.no_custom_format = (Column.IndexOf ("{0}") == -1 && Column.IndexOf ("{1}") == -1);
             this.column_lowered = (Column.IndexOf ("Lowered") != -1);
 
+            if (!no_custom_format) {
+                // Ensure we have parens around any custom 'columns' that may be an OR of two columns
+                this.column = String.Format ("({0})", this.column);
+            }
+
             foreach (Type value_type in valueTypes) {
                 QueryValue.AddValueType (value_type);
             }
