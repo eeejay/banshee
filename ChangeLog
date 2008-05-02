@@ -1,3 +1,8 @@
+2008-05-02  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	Do all layout rendering directly to Cairo, not through GTK
+
 2008-05-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* tests/Hyena/SqliteCommandTests.cs: Update to not use ApplyValues; fix

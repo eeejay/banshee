@@ -30,7 +30,10 @@ using System;
 using Gtk;
 using Cairo;
 
+using Hyena.Gui;
+using Hyena.Gui.Theming;
 using Hyena.Data.Gui;
+
 using Banshee.Gui;
 using Banshee.ServiceStack;
 
@@ -79,54 +82,51 @@ namespace Banshee.Collection.Gui
                 pixbuf_render_size, pixbuf_render_size, !is_default, context.Theme.Context.Radius);
                 
             int fl_width = 0, fl_height = 0, sl_width = 0, sl_height = 0;
+            Cairo.Color text_color = context.Theme.Colors.GetWidgetColor (GtkColorClass.Text, state);
+            text_color.A = 0.75;
             
-            Pango.Layout first_line_layout = context.Layout;
+            Pango.Layout layout = context.Layout;
+            layout.Width = (int)((cellWidth - cellHeight - x - 10) * Pango.Scale.PangoScale);
+            layout.Ellipsize = Pango.EllipsizeMode.End;
+            layout.FontDescription.Weight = Pango.Weight.Bold;
             
-            first_line_layout.Width = (int)((cellWidth - cellHeight - x - 10) * Pango.Scale.PangoScale);
-            first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
-            first_line_layout.FontDescription = context.Widget.PangoContext.FontDescription.Copy ();
+            // Compute the layout sizes for both lines for centering on the cell
+            int old_size = layout.FontDescription.Size;
             
-            Pango.Layout second_line_layout = first_line_layout.Copy ();
+            layout.SetText (album.Title);
+            layout.GetPixelSize (out fl_width, out fl_height);
             
-            first_line_layout.FontDescription.Weight = Pango.Weight.Bold;
-            second_line_layout.FontDescription.Size = (int)(second_line_layout.FontDescription.Size * Pango.Scale.Small);
-            second_line_layout.FontDescription.Style = Pango.Style.Italic;
-            
-            first_line_layout.SetText (album.Title);
-            first_line_layout.GetPixelSize (out fl_width, out fl_height);
-            
-            if (album.ArtistName != null) {
-                second_line_layout.SetText (album.ArtistName);
-                second_line_layout.GetPixelSize (out sl_width, out sl_height);
+            if (!String.IsNullOrEmpty (album.ArtistName)) {
+                layout.FontDescription.Weight = Pango.Weight.Normal;
+                layout.FontDescription.Size = (int)(old_size * Pango.Scale.Small);
+                layout.FontDescription.Style = Pango.Style.Italic;
+                layout.SetText (album.ArtistName);
+                layout.GetPixelSize (out sl_width, out sl_height);
             }
             
+            // Calculate the layout positioning
             x = ((int)cellHeight - x) + 10;
             y = (int)((cellHeight - (fl_height + sl_height)) / 2);
             
-            Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
-                context.Clip, context.Widget, "text",
-                context.Area.X + x, context.Area.Y + y, first_line_layout);
-            
-            if (album.ArtistName == null) {
-                return;
+            // Render the second line first since we have that state already
+            if (!String.IsNullOrEmpty (album.ArtistName)) {
+                context.Context.MoveTo (x, y + fl_height);
+                context.Context.Color = text_color;
+                PangoCairoHelper.ShowLayout (context.Context, layout);
             }
             
-            Gdk.GC gc = context.Widget.Style.TextGC (state);
-                
-            if (!state.Equals (StateType.Selected)) {
-                gc = new Gdk.GC (context.Drawable);
-                gc.Copy (context.Widget.Style.TextGC (state));
-                Gdk.Color fgcolor = context.Widget.Style.Foreground (state);
-                Gdk.Color bgcolor = context.Widget.Style.Background (state);
-                gc.RgbFgColor = Hyena.Gui.GtkUtilities.ColorBlend (fgcolor, bgcolor);
-                gc.RgbBgColor = fgcolor;
-            }
+            // Render the first line, resetting the state
+            layout.SetText (album.Title);
+            layout.FontDescription.Weight = Pango.Weight.Bold;
+            layout.FontDescription.Size = old_size;
+            layout.FontDescription.Style = Pango.Style.Normal;
             
-            // We need to clip
-            //context.Drawable.DrawLayout (gc, context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
+            layout.SetText (album.Title);
             
-            Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, context.Clip, context.Widget, "text",
-               context.Area.X + x, context.Area.Y + y + fl_height, second_line_layout);
+            context.Context.MoveTo (x, y);
+            text_color.A = 1;
+            context.Context.Color = text_color;
+            PangoCairoHelper.ShowLayout (context.Context, layout);
         }
         
         public int ComputeRowHeight (Widget widget)
