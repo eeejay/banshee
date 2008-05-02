@@ -1,5 +1,10 @@
 2008-05-02  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Explicitly 
+	destroy gradient patterns and tweak the selection gradient a bit
+
+2008-05-02  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
 	Use ColumnCellPositiveInt to show the year so 0 will show as empty
 
