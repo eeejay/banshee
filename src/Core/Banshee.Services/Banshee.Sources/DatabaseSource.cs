@@ -76,7 +76,7 @@ namespace Banshee.Sources
 
         public virtual void Dispose ()
         {
-            Save ();
+            //Save ();
         }
 
         protected override void Initialize ()
@@ -215,6 +215,7 @@ namespace Banshee.Sources
             lock (track_model) {
                 DatabaseTrackModel.Reload ();
                 OnUpdated ();
+                Save ();
             }
         }
 
