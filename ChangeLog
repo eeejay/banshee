@@ -1,3 +1,15 @@
+2008-05-02  Aaron Bockover  <abock@gnome.org>
+	
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Set the sensitive property on the cell context 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Render 
+	insensitive rows by changing the normal text color's alpha
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/CellContext.cs: Added a 
+	Sensitive property since Gtk.StateType sucks and we care to preserve
+	the selection state for insensitive rows
+
 2008-05-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs: Set

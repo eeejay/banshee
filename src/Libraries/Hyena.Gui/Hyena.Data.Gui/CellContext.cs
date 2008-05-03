@@ -42,6 +42,7 @@ namespace Hyena.Data.Gui
         private Gdk.Rectangle area;
         private Gdk.Rectangle clip;
         private bool text_as_foreground = false;
+        private bool sensitive = true;
         
         public Cairo.Context Context {
             get { return context; }
@@ -81,6 +82,11 @@ namespace Hyena.Data.Gui
         public bool TextAsForeground {
             get { return text_as_foreground; }
             set { text_as_foreground = value; }
+        }
+        
+        public bool Sensitive {
+            get { return sensitive; }
+            set { sensitive = value; }
         }
     }
 }

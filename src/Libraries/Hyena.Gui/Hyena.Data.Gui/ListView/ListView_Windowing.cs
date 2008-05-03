@@ -84,7 +84,7 @@ namespace Hyena.Data.Gui
         
         protected override void OnUnrealized ()
         {
-            WidgetFlags ^= WidgetFlags.Realized;
+            WidgetFlags &= ~WidgetFlags.Realized;
             
             event_window.UserData = IntPtr.Zero;
             event_window.Destroy ();
@@ -103,7 +103,7 @@ namespace Hyena.Data.Gui
         
         protected override void OnUnmapped ()
         {
-            WidgetFlags ^= WidgetFlags.Mapped;
+            WidgetFlags &= ~WidgetFlags.Mapped;
             event_window.Hide ();
         }
         

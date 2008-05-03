@@ -37,14 +37,6 @@ namespace Hyena.Data.Gui
 {
     public class ColumnCellText : ColumnCell
     {
-        private static bool use_cairo_pango;
-        
-        static ColumnCellText ()
-        {
-            use_cairo_pango = String.IsNullOrEmpty (Environment.GetEnvironmentVariable ("USE_GTK_PANGO"));
-            Log.DebugFormat ("Text renderer: {0}", use_cairo_pango ? "Cairo" : "GTK");
-        }
-        
         public delegate string DataHandler ();
     
         private Pango.Weight font_weight = Pango.Weight.Normal;
@@ -65,16 +57,14 @@ namespace Hyena.Data.Gui
             context.Layout.SetText (Text);
             context.Layout.GetPixelSize (out text_width, out text_height);
             
-            if (use_cairo_pango) {
-                context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
-                context.Context.Color = context.Theme.Colors.GetWidgetColor (
-                    context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
-                PangoCairoHelper.ShowLayout (context.Context, context.Layout);
-            } else {
-                Style.PaintLayout (context.Widget.Style, context.Drawable, state, !context.TextAsForeground, 
-                    context.Clip, context.Widget, "text", context.Area.X + 4, 
-                    context.Area.Y + (((int)cellHeight - text_height) / 2), context.Layout);
+            context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
+            Cairo.Color color = context.Theme.Colors.GetWidgetColor (
+                context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
+            if (!context.Sensitive) {
+                color.A = 0.3;
             }
+            context.Context.Color = color;
+            PangoCairoHelper.ShowLayout (context.Context, context.Layout);
         }
         
         protected virtual string Text {
