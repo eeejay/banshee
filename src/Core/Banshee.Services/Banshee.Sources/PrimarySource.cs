@@ -235,6 +235,24 @@ namespace Banshee.Sources
             }
         }
 
+        public virtual IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {
+            get { yield break; }
+        }
+
+        public virtual IEnumerable<SmartPlaylistDefinition> NonDefaultSmartPlaylists {
+            get { yield break; }
+        }
+
+        public IEnumerable<SmartPlaylistDefinition> PredefinedSmartPlaylists {
+            get {
+                foreach (SmartPlaylistDefinition def in DefaultSmartPlaylists)
+                    yield return def;
+
+                foreach (SmartPlaylistDefinition def in NonDefaultSmartPlaylists)
+                    yield return def;
+            }
+        }
+
         public override bool CanSearch {
             get { return true; }
         }

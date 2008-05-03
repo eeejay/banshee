@@ -87,7 +87,6 @@ namespace Banshee.ServiceStack
                 AddinManager.Registry.Update (monitor);
             }
             
-            Banshee.Configuration.ConfigurationClient.Initialize ();
             extension_nodes = AddinManager.GetExtensionNodes ("/Banshee/ServiceManager/Service");
 
             Application.ClientStarted += OnClientStarted;

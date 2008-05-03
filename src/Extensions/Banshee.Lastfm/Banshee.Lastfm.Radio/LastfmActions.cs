@@ -185,6 +185,9 @@ namespace Banshee.Lastfm.Radio
                 }
             );
 
+            this["LastfmLoveAction"].IsImportant = true;
+            this["LastfmHateAction"].IsImportant = true;
+
             actions_id = action_service.UIManager.AddUiFromResource ("GlobalUI.xml");
             action_service.AddActionGroup (this);
 

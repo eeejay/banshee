@@ -36,6 +36,7 @@ namespace Banshee.SmartPlaylist
         [Widget] private Gtk.TreeView adv_tree_view;
         [Widget] private Gtk.Button adv_use_button;
         [Widget] private Gtk.Button adv_add_button;
+        [Widget] private Gtk.Expander advanced_expander;
 
         public Editor (SmartPlaylistSource playlist) : base ("SmartPlaylistEditorDialog")
         {
@@ -51,11 +52,20 @@ namespace Banshee.SmartPlaylist
 
             name_entry.Text = playlist.Name;
 
+            UpdateForPlaylist ();
+        }
+
+        private void UpdateForPlaylist ()
+        {
+            currently_editing = playlist;
+            this.primary_source = playlist.PrimarySource;
+
+            PlaylistName = playlist.Name;
             Condition = playlist.ConditionTree;
-            Limit = playlist.Limit;
-            LimitValue = playlist.LimitValue;
-            Order = playlist.QueryOrder;
             LimitEnabled = playlist.IsLimited;
+            LimitValue = playlist.LimitValue;
+            Limit = playlist.Limit;
+            Order = playlist.QueryOrder;
         }
     
         public Editor (PrimarySource primary_source) : base ("SmartPlaylistEditorDialog")
@@ -77,62 +87,31 @@ namespace Banshee.SmartPlaylist
 
             name_entry.Changed += HandleNameChanged;
 
-            // Model is Name, Condition, OrderBy, LimitNumber, LimitCriterion
-            ListStore list_model = new ListStore (typeof(string), typeof(string), typeof(string), typeof(string), typeof(string));
+            // Model is Name, SmartPlaylistDefinition
+            ListStore list_model = new ListStore (typeof(string), typeof(SmartPlaylistDefinition));
 
-            // FIXME this is broken
-            /*list_model.AppendValues (
-                Catalog.GetString ("Neglected Favorites"),
-                "Rating>3 played<=\"2 weeks ago\"",
-                null, "0", null);*/
-
-            // TODO this one is broken, not supported by the condition GUI
-            /*list_model.AppendValues (
-                Catalog.GetString ("Unrated"),
-                " (Rating = NULL) ",
-                null, "0", 0);*/
-
-            list_model.AppendValues (
-                Catalog.GetString ("700 MB of Favorites"),
-                "rating>3",
-                "PlayCount-DESC",
-                "700",
-                "MB"
-            );
-
-            list_model.AppendValues (
-                Catalog.GetString ("80 Minutes of Favorites"),
-                "rating>3",
-                "PlayCount-DESC",
-                "80",
-                "minutes"
-            );
-
-            list_model.AppendValues (
-                Catalog.GetString ("Unheard"),
-                "playcount=0",
-                null,
-                "0",
-                null
-            );
-
-            list_model.AppendValues (
-                Catalog.GetString ("Unheard Podcasts"),
-                "playcount=0 location:podcast",
-                null,
-                "0",
-                null
-            );
+            bool have_any_predefined = false;
+            foreach (SmartPlaylistDefinition def in primary_source.PredefinedSmartPlaylists) {
+                list_model.AppendValues (
+                    String.Format ("<b>{0}</b>\n<i>{1}</i>", def.Name, def.Description), def
+                );
+                have_any_predefined = true;
+            }
 
             adv_tree_view.Selection.Mode = SelectionMode.Multiple;
             adv_tree_view.Model = list_model;
-            adv_tree_view.AppendColumn ("title", new CellRendererText (), "text", 0);
+            adv_tree_view.AppendColumn ("title", new CellRendererText (), "markup", 0);
             adv_tree_view.Selection.Changed += HandleAdvSelectionChanged;
 
             UpdateAdvButtons (0);
 
             adv_add_button.Clicked += HandleAdvAdd;
             adv_use_button.Clicked += HandleAdvUse;
+
+            if (!have_any_predefined) {
+                advanced_expander.NoShowAll = true;
+                advanced_expander.Hide ();
+            }
 
             Update ();
             
@@ -284,15 +263,8 @@ namespace Banshee.SmartPlaylist
             foreach (TreePath path in paths) {
                 TreeIter iter;
                 if (adv_tree_view.Model.GetIter (out iter, path)) {
-                    string name            = adv_tree_view.Model.GetValue (iter, 0) as string;
-                    UserQueryParser parser = new UserQueryParser (adv_tree_view.Model.GetValue (iter, 1) as string);
-                    QueryNode condition    = parser.BuildTree (BansheeQuery.FieldSet);
-                    QueryOrder order       = BansheeQuery.FindOrder (adv_tree_view.Model.GetValue (iter, 2) as string);
-                    IntegerQueryValue val  = new IntegerQueryValue ();
-                    val.ParseUserQuery (adv_tree_view.Model.GetValue (iter, 3) as string);
-                    QueryLimit limit       = BansheeQuery.FindLimit (adv_tree_view.Model.GetValue (iter, 4) as string);
-
-                    SmartPlaylistSource pl = new SmartPlaylistSource (name, condition, order, limit, val, primary_source.DbId);
+                    SmartPlaylistDefinition def = ((SmartPlaylistDefinition)adv_tree_view.Model.GetValue (iter, 1));
+                    SmartPlaylistSource pl = def.ToSmartPlaylistSource (primary_source);
                     pl.Save ();
                     pl.PrimarySource.AddChildSource (pl);
                     pl.RefreshAndReload ();
@@ -312,19 +284,10 @@ namespace Banshee.SmartPlaylist
                 return;
 
             TreeIter iter;
-            
             if (adv_tree_view.Model.GetIter (out iter, paths[0])) {
-                PlaylistName     = adv_tree_view.Model.GetValue (iter, 0) as string;
-                UserQueryParser parser = new UserQueryParser (adv_tree_view.Model.GetValue (iter, 1) as string);
-                Condition        = parser.BuildTree (BansheeQuery.FieldSet);
-                Order            = BansheeQuery.FindOrder (adv_tree_view.Model.GetValue (iter, 2) as string);
-                QueryLimit limit = BansheeQuery.FindLimit (adv_tree_view.Model.GetValue (iter, 4) as string);
-                Limit            = limit;
-                LimitEnabled     = limit != null;
-
-                IntegerQueryValue val = new IntegerQueryValue ();
-                val.ParseUserQuery (adv_tree_view.Model.GetValue (iter, 3) as string);
-                LimitValue = val;
+                SmartPlaylistDefinition def = ((SmartPlaylistDefinition)adv_tree_view.Model.GetValue (iter, 1));
+                this.playlist = def.ToSmartPlaylistSource (primary_source);
+                UpdateForPlaylist ();
             }
         }
 

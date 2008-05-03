@@ -1,5 +1,73 @@
 2008-05-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs: Set
+	Love/Hate as Important so text shows up; accidentally removed.
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs: Get
+	the list of predefined smart playlists from the PrimarySource.  Show the
+	SmartPlaylistDescription to make a prettier, more informative TreeView of
+	predefined options.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add
+	Default/NonDefault/PredefinedSmartPlaylist properties.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Remove
+	unnecessary ConfigurationClient.Initialize ().
+
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:
+	Override the SmartPlaylist properties.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistDefinition.cs:
+	New struct that holds the definition of a smart playlist (and a
+	description), and that has a method for producing a SmartPlaylistSource
+	from itself.
+
+	* src/Core/Banshee.Core/Banshee.Configuration/ConfigurationClient.cs: Do
+	not require Initialization call, instead do it implicitly/lazily.
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Use GetExecutingAsembly
+	intead of GetEntryAssembly in attempt to get Nereid-within-unit-test
+	working.
+
+	* src/Libraries/Hyena/Hyena.CommandLine/CommandLineParser.cs: Allow
+	programatically setting a command line option's value.
+
+	* build/build.environment.mk: Add LINK/DEPS vars for Nereid so unit tests
+	can link against it.
+
+	* tests/Hyena/RangeCollectionTests.cs:
+	* tests/Hyena/DbBoundType.cs:
+	* tests/Hyena/SqliteModelProviderTests.cs:
+	* tests/Hyena/CryptoUtilTests.cs:
+	* tests/Hyena/SqliteCommandTests.cs:
+	* tests/Hyena/StringUtilTests.cs:
+	* tests/Banshee.Services/PlaylistFormatTests.cs:
+	* tests/Banshee.Core/FileNamePatternTests.cs:
+	* tests/Banshee.Core/KernelTests.cs:
+	* tests/Hyena/SelectionTests.cs: Add copyright information.
+
+	* tests/Hyena/QueryTests.cs: Subclass from BansheeTests, and move the
+	AssertForEach to it.
+
+	* tests/Hyena/BansheeTests.cs: New abstract class that provides
+	AssertForEach method, and some new methods for progamatically starting
+	Banshee (currently unused, not working).
+
+	* tests/Banshee.ThickClient/GuiTests.cs: New class for testing starting
+	banshee from unit test.  Currently commented out.
+
+	* tests/Banshee.Services/SmartPlaylistTests.cs: New tests to ensure all
+	predefined smart playlists can be created successfully.  Currently
+	commented out.
+
+	* tests/Makefile.am: Add new test classes.
+
+	* tests/Banshee.Core/TaglibReadWriteTests.cs: Subclass from BansheeTests
+	and move some static initialization there.
+
+2008-05-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Fix bug with queries on
 	fields that have a custom 'column' (eg maybe they search two different
 	columns at once, like MimeTypeField does) not having necessary parenthesis

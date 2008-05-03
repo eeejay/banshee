@@ -1,8 +1,8 @@
 //
-// FileNamePatternTests.cs
+// SmartPlaylistTests.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -28,40 +28,26 @@
 
 using System;
 using NUnit.Framework;
+using Hyena;
 
-using Banshee.Base;
-using Banshee.Collection;
+using Banshee.Sources;
+using Banshee.Library;
+using Banshee.SmartPlaylist;
 
 [TestFixture]
-public class FileNamePatternTest
+public class SmartPlaylistTests : BansheeTests
 {
-    private static string ZeroPad(int num)
+    /*[Test]
+    public void TestCanCreateAllPredefinedSmartPlaylists ()
     {
-        string str = Convert.ToString(num);
-        return num < 10 ? "0" + str : str;
-    }
+        PrimarySource [] primaries = new PrimarySource [] {
+            new MusicLibrarySource (), new VideoLibrarySource ()//, new DapSource (), new PodcastSource ()
+        };
 
-    [Test]
-    public void CreateFromTrackInfo()
-    {
-        SampleTrackInfo track = new SampleTrackInfo();
-        string built = FileNamePattern.CreateFromTrackInfo(
-            "%artist%:%album%:%title%:%track_number%:" + 
-            "%track_count%:%track_number_nz%:%track_count_nz%",
-            track);
-
-        Assert.AreEqual(String.Format("{0}:{1}:{2}:{3}:{4}:{5}:{6}",
-            track.ArtistName, track.AlbumTitle, track.TrackTitle, 
-            ZeroPad(track.TrackNumber), ZeroPad(track.TrackCount),
-            track.TrackNumber, track.TrackCount),
-            built);
-    }
-
-    [Test]
-    public void Escape()
-    {
-        Assert.AreEqual("_ _ _ _ _ _ _", 
-            FileNamePattern.Escape("/ \\ $ % ? * :"));
-    }
+        foreach (PrimarySource source in primaries) {
+            AssertForEach<SmartPlaylistDefinition> (source.PredefinedSmartPlaylists, delegate (SmartPlaylistDefinition def) {
+                def.ToSmartPlaylistSource (source);
+            });
+        }
+    }*/
 }
-

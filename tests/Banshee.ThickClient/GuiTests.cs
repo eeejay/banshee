@@ -1,8 +1,8 @@
 //
-// FileNamePatternTests.cs
+// GuiTests.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -27,41 +27,25 @@
 //
 
 using System;
+using System.Reflection;
 using NUnit.Framework;
 
-using Banshee.Base;
-using Banshee.Collection;
+using Hyena;
+using Banshee.Query;
 
 [TestFixture]
-public class FileNamePatternTest
+public class GuiTests : BansheeTests
 {
-    private static string ZeroPad(int num)
+    /*[Test]
+    public void TestCanStartBanshee ()
     {
-        string str = Convert.ToString(num);
-        return num < 10 ? "0" + str : str;
-    }
+        Log.InformationFormat ("About to start Banshee from unit test, this thread = {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
+        StartBanshee ();
+        Log.Information ("Started Banshee from unit test, sleeping 5 seconds");
 
-    [Test]
-    public void CreateFromTrackInfo()
-    {
-        SampleTrackInfo track = new SampleTrackInfo();
-        string built = FileNamePattern.CreateFromTrackInfo(
-            "%artist%:%album%:%title%:%track_number%:" + 
-            "%track_count%:%track_number_nz%:%track_count_nz%",
-            track);
+        System.Threading.Thread.Sleep (5000);
 
-        Assert.AreEqual(String.Format("{0}:{1}:{2}:{3}:{4}:{5}:{6}",
-            track.ArtistName, track.AlbumTitle, track.TrackTitle, 
-            ZeroPad(track.TrackNumber), ZeroPad(track.TrackCount),
-            track.TrackNumber, track.TrackCount),
-            built);
-    }
-
-    [Test]
-    public void Escape()
-    {
-        Assert.AreEqual("_ _ _ _ _ _ _", 
-            FileNamePattern.Escape("/ \\ $ % ? * :"));
-    }
+        Log.Information ("Shutting down Banshee");
+        StopBanshee ();
+    }*/
 }
-

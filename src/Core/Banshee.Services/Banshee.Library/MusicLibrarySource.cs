@@ -28,7 +28,11 @@
 //
 
 using System;
+using System.Collections.Generic;
+
 using Mono.Unix;
+
+using Banshee.SmartPlaylist;
 
 namespace Banshee.Library
 {
@@ -38,5 +42,59 @@ namespace Banshee.Library
         {
             Properties.SetStringList ("Icon.Name", "audio-x-generic", "source-library");
         }
+
+        public override IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {
+            get { return default_smart_playlists; }
+        }
+
+        public override IEnumerable<SmartPlaylistDefinition> NonDefaultSmartPlaylists {
+            get { return non_default_smart_playlists; }
+        }
+
+        private static SmartPlaylistDefinition [] default_smart_playlists = new SmartPlaylistDefinition [] {
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Favorites"),
+                Catalog.GetString ("Songs rated four and five stars"),
+                "rating>=4"),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Recent Favorites"),
+                Catalog.GetString ("Songs listened to often in the past week"),
+                "played<\"1 week ago\" playcount>3"),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Unrated"),
+                Catalog.GetString ("Songs that haven't been rated"),
+                "rating=0"),
+        };
+
+        private static SmartPlaylistDefinition [] non_default_smart_playlists = new SmartPlaylistDefinition [] {
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Neglected Favorites"),
+                Catalog.GetString ("Favorites not played in over two weeks"),
+                "rating>3 played>=\"2 weeks ago\""),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Least Favorite"),
+                Catalog.GetString ("Songs rated one or two stars or that you have frequently skipped"),
+                "rating<3 or skips>4"),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("700 MB of Favorites"),
+                Catalog.GetString ("A data CD worth of favorite songs"),
+                "rating>=4",
+                700, "MB", "PlayCount-DESC"),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("80 Minutes of Favorites"),
+                Catalog.GetString ("An audio CD worth of favorite songs"),
+                "rating>=4",
+                80, "minutes", "PlayCount-DESC"),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Unheard"),
+                Catalog.GetString ("Songs that have not been played"),
+                "playcount=0"),
+        };
     }
 }

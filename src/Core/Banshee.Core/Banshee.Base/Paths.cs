@@ -170,7 +170,7 @@ namespace Banshee.Base
             get {
                 if (installed_application_prefix == null) {
                     installed_application_prefix = Path.GetDirectoryName (
-                        System.Reflection.Assembly.GetEntryAssembly ().Location);
+                        System.Reflection.Assembly.GetExecutingAssembly ().Location);
                     
                     if (Directory.Exists (Paths.Combine (installed_application_prefix, "share", "banshee-1"))) {
                         return installed_application_prefix;

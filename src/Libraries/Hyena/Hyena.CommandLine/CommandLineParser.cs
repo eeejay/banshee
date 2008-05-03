@@ -106,8 +106,9 @@ namespace Hyena.CommandLine
         
         public string this[string name] {
             get { return Contains (name) ? parsed_arguments[name] : String.Empty; }
+            set { parsed_arguments[name] = value; }
         }
-        
+
         public ReadOnlyCollection<string> Files {
             get { return new ReadOnlyCollection<string> (file_list); }
         }
