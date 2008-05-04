@@ -71,7 +71,10 @@ bp_missing_elements_handle_install_failed (BansheePlayer *player)
     
     bp_slist_destroy (player->missing_element_details);
     player->missing_element_details = NULL;
-    gst_element_set_state (player->playbin, GST_STATE_READY);
+    
+    if (GST_IS_ELEMENT (player->playbin)) {
+        gst_element_set_state (player->playbin, GST_STATE_READY);
+    }
     
     if (player->error_cb != NULL) {
         player->error_cb (player, GST_CORE_ERROR, GST_CORE_ERROR_MISSING_PLUGIN, NULL, NULL);
@@ -137,19 +140,11 @@ _bp_missing_elements_handle_state_changed (BansheePlayer *player, GstState old, 
     GstInstallPluginsReturn install_return;
     gchar **details;
     
-    if (old != GST_STATE_READY || new != GST_STATE_PAUSED) {
-        return;
-    }
-    
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
     
-    if (player->missing_element_details == NULL) {
+    if (old != GST_STATE_READY || new != GST_STATE_PAUSED || player->install_plugins_context != NULL) {
         return;
-    }
-    
-    g_return_if_fail (player->install_plugins_context != NULL);
-    
-    if (player->install_plugins_noprompt) {
+    } else if (player->install_plugins_noprompt) {
         bp_missing_elements_handle_install_failed (player);
         return;
     }
@@ -159,7 +154,8 @@ _bp_missing_elements_handle_state_changed (BansheePlayer *player, GstState old, 
     
     #ifdef GDK_WINDOWING_X11
     if (player->window != NULL) {
-        gst_install_plugins_context_set_xid (player->install_plugins_context, GDK_WINDOW_XWINDOW (player->window));
+        gst_install_plugins_context_set_xid (player->install_plugins_context, 
+            GDK_WINDOW_XWINDOW (player->window));
     }
     #endif
     

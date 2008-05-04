@@ -54,8 +54,8 @@ namespace Banshee.PlaybackController
         private TrackInfo changing_to_track;
         private bool raise_started_after_transition = false;
         private bool transition_track_started = false;
-        
-        //private Random random = new Random ();
+        private int consecutive_errors;
+        private uint error_transition_id;
     
         private PlaybackShuffleMode shuffle_mode;
         private PlaybackRepeatMode repeat_mode;
@@ -83,7 +83,12 @@ namespace Banshee.PlaybackController
             
             player_engine = ServiceManager.PlayerEngine;
             player_engine.PlayWhenIdleRequest += OnPlayerEnginePlayWhenIdleRequest;
-            player_engine.ConnectEvent (OnPlayerEvent, PlayerEvent.EndOfStream | PlayerEvent.StartOfStream, true);
+            player_engine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.EndOfStream | 
+                PlayerEvent.StartOfStream |
+                PlayerEvent.StateChange |
+                PlayerEvent.Error, 
+                true);
         }
         
         protected virtual void InstantiateStacks ()
@@ -100,20 +105,28 @@ namespace Banshee.PlaybackController
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
+                case PlayerEvent.StartOfStream:
+                    consecutive_errors = 0;
+                    break;
                 case PlayerEvent.EndOfStream:
-                    if (!StopWhenFinished) {
-                        if (RepeatMode == PlaybackRepeatMode.RepeatSingle) {
-                            QueuePlayTrack ();
-                        } else {
-                            Next ();
-                        }
-                    } else {
+                    EosTransition ();
+                       break;
+                case PlayerEvent.Error:
+                    if (++consecutive_errors >= 20) {
+                        consecutive_errors = 0;
+                        player_engine.Close (false);
                         OnStopped ();
+                        break;
                     }
                     
-                    StopWhenFinished = false;
+                    CancelErrorTransition ();
+                    Application.RunTimeout (500, EosTransition);
                     break;
-                case PlayerEvent.StartOfStream:
+                case PlayerEvent.StateChange:
+                    if (((PlayerEventStateChangeArgs)args).Current != PlayerState.Loading) {
+                        break;
+                    }
+                       
                     TrackInfo track = player_engine.CurrentTrack;
                     if (changing_to_track != track && track != null) {
                         CurrentTrack = track;
@@ -131,9 +144,36 @@ namespace Banshee.PlaybackController
             }       
         }
         
+        private void CancelErrorTransition ()
+        {
+            if (error_transition_id > 0) {
+                Application.IdleTimeoutRemove (error_transition_id);
+                error_transition_id = 0;
+            }
+        }
+        
+        private bool EosTransition ()
+        {
+            if (!StopWhenFinished) {
+                if (RepeatMode == PlaybackRepeatMode.RepeatSingle) {
+                    QueuePlayTrack ();
+                } else {
+                    Next ();
+                }
+            } else {
+                OnStopped ();
+            }
+            
+            StopWhenFinished = false;
+            return false;
+        }
+        
         public void First ()
         {
+            CancelErrorTransition ();
+            
             Source = NextSource;
+            
             // This and OnTransition() below commented out b/c of BGO #524556
             //raise_started_after_transition = true;
             
@@ -153,6 +193,8 @@ namespace Banshee.PlaybackController
         
         public void Next (bool restart)
         {
+            CancelErrorTransition ();
+            
             Source = NextSource;
             raise_started_after_transition = true;
 
@@ -174,6 +216,8 @@ namespace Banshee.PlaybackController
         
         public void Previous (bool restart)
         {
+            CancelErrorTransition ();
+            
             Source = NextSource;
             raise_started_after_transition = true;
 

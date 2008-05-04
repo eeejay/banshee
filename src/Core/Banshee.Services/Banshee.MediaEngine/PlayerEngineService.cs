@@ -272,6 +272,7 @@ namespace Banshee.MediaEngine
                 OpenCheck (track);
                 active_engine.Play ();
             } catch (Exception e) {
+                Log.Exception (e);
                 Log.Error (Catalog.GetString ("Problem with Player Engine"), e.Message, true);
                 Close ();
                 ActiveEngine = default_engine;
@@ -418,7 +419,9 @@ namespace Banshee.MediaEngine
         
         public bool IsPlaying ()
         {
-            return CurrentState != PlayerState.Idle && CurrentState != PlayerState.NotReady;
+            return CurrentState == PlayerState.Playing || 
+                CurrentState == PlayerState.Paused || 
+                CurrentState == PlayerState.Loaded;
         }
 
         private void CheckPending ()

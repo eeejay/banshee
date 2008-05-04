@@ -39,6 +39,16 @@ namespace Banshee.MediaEngine
         {
         }
         
+        public override void Play ()
+        {
+            OnStateChanged (PlayerState.Playing);
+        }
+
+        public override void Pause ()
+        {
+            OnStateChanged (PlayerState.Paused);
+        }
+        
         private ushort volume;
         public override ushort Volume {
             get { return volume; }

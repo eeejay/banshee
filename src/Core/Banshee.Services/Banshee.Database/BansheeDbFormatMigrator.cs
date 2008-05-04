@@ -42,10 +42,18 @@ using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Streaming;
 
+// MIGRATION NOTE: Return true if the step should allow the driver to continue
+//                 Return false if the step should terminate driver
+
 namespace Banshee.Database
 {
     public class BansheeDbFormatMigrator
     {
+        // NOTE: Whenever there is a change in ANY of the database schema,
+        //       this version MUST be incremented and a migration method
+        //       MUST be supplied to match the new version number
+        protected const int CURRENT_VERSION = 9;
+        protected const int CURRENT_METADATA_VERSION = 1;
         
 #region Migration Driver
         
@@ -57,13 +65,7 @@ namespace Banshee.Database
 
         public event EventHandler Started;
         public event EventHandler Finished;
-        
-        // NOTE: Whenever there is a change in ANY of the database schema,
-        //       this version MUST be incremented and a migration method
-        //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 8;
-        protected const int CURRENT_METADATA_VERSION = 1;
-        
+                
         protected class DatabaseVersionAttribute : Attribute 
         {
             private int version;
@@ -128,19 +130,22 @@ namespace Banshee.Database
         public void Migrate ()
         {
             try {
+                
                 if (DatabaseVersion < CURRENT_VERSION) {
                     Execute ("BEGIN");
                     InnerMigrate ();
                     Execute ("COMMIT");
+                } else {
+                    Log.DebugFormat ("Database version {0} is up to date", DatabaseVersion);
                 }
-
+                
                 // Trigger metadata refreshes if necessary
                 int metadata_version = connection.Query<int> ("SELECT Value FROM CoreConfiguration WHERE Key = 'MetadataVersion'");
                 if (DatabaseVersion == CURRENT_VERSION && metadata_version < CURRENT_METADATA_VERSION) {
                     ServiceManager.ServiceStarted += OnServiceStarted;
                 }
             } catch (Exception) {
-                Log.Warning ("Rolling back migration");
+                Log.Warning ("Rolling back database migration");
                 Execute ("ROLLBACK");
                 throw;
             }
@@ -206,11 +211,10 @@ namespace Banshee.Database
         
 #endregion
         
-#region Migration Step Implementations
 #pragma warning disable 0169
-        // NOTE: Return true if the step should allow the driver to continue
-        //       Return false if the step should terminate driver
-        
+
+#region Version 1
+                                
         [DatabaseVersion (1)]
         private bool Migrate_1 ()
         {
@@ -241,6 +245,10 @@ namespace Banshee.Database
             }
         }
         
+#endregion
+
+#region Version 2
+        
         [DatabaseVersion (2)]
         private bool Migrate_2 ()
         {
@@ -248,6 +256,10 @@ namespace Banshee.Database
                 (int)TrackMediaAttributes.Default));
             return true;
         }
+
+#endregion
+
+#region Version 3
 
         [DatabaseVersion (3)]
         private bool Migrate_3 ()
@@ -260,12 +272,20 @@ namespace Banshee.Database
             return true;
         }
 
+#endregion
+
+#region Version 4
+
         [DatabaseVersion (4)]
         private bool Migrate_4 ()
         {
             Execute ("ALTER TABLE CoreTracks ADD COLUMN LastSkippedStamp INTEGER");
             return true;
         }
+
+#endregion
+
+#region Version 5
         
         [DatabaseVersion (5)]
         private bool Migrate_5 ()
@@ -306,12 +326,20 @@ namespace Banshee.Database
             return true;
         }
 
+#endregion
+
+#region Version 6
+
         [DatabaseVersion (6)]
         private bool Migrate_6 ()
         {
             Execute ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', 0)");
             return true;
         }
+        
+#endregion
+
+#region Version 7
 
         [DatabaseVersion (7)]
         private bool Migrate_7 ()
@@ -322,6 +350,10 @@ namespace Banshee.Database
             Execute ("DELETE FROM CoreCache; DELETE FROM CoreCacheModels");
             return true;
         }
+        
+#endregion
+
+#region Version 8
 
         [DatabaseVersion (8)]
         private bool Migrate_8 ()
@@ -334,11 +366,26 @@ namespace Banshee.Database
             Application.ClientStarted += ReloadAllSources;
             return true;
         }
+        
+#endregion
 
+#region Version 9
+
+        [DatabaseVersion (9)]
+        private bool Migrate_9 ()
+        {
+            Execute (String.Format ("ALTER TABLE CoreTracks ADD COLUMN LastStreamError INTEGER DEFAULT {0}",
+                (int)StreamPlaybackError.None));
+            return true;
+        }
+
+#endregion
 
 #pragma warning restore 0169
         
-        private void InitializeFreshDatabase()
+#region Fresh database setup
+        
+        private void InitializeFreshDatabase ()
         {
             Execute("DROP TABLE IF EXISTS CoreConfiguration");
             Execute("DROP TABLE IF EXISTS CoreTracks");
@@ -389,6 +436,7 @@ namespace Banshee.Database
                     MimeType            TEXT,
                     FileSize            INTEGER,
                     Attributes          INTEGER DEFAULT {0},
+                    LastStreamError     INTEGER DEFAULT {1},
                     
                     Title               TEXT,
                     TitleLowered        TEXT,
@@ -411,7 +459,7 @@ namespace Banshee.Database
                     DateAddedStamp      INTEGER,
                     DateUpdatedStamp    INTEGER
                 )
-            ", (int)TrackMediaAttributes.Default));
+            ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
             Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri)");
             Execute("CREATE INDEX CoreTracksAggregatesIndex ON CoreTracks(FileSize, Duration)");
             
@@ -519,9 +567,12 @@ namespace Banshee.Database
             //Execute("CREATE INDEX CoreCacheModelId      ON CoreCache(ModelID)");
         }
         
+#endregion
+
+#region Legacy database migration
+        
         private void MigrateFromLegacyBanshee()
         {
-            Thread.Sleep (3000);
             Execute(@"
                 INSERT INTO CoreArtists 
                     SELECT DISTINCT null, 0, null, Artist, NULL, 0 
@@ -561,6 +612,7 @@ namespace Banshee.Database
                         MimeType,
                         0,
                         {0},
+                        {1},
                         Title, NULL,
                         TrackNumber,
                         TrackCount,
@@ -577,7 +629,7 @@ namespace Banshee.Database
                         DateAddedStamp,
                         DateAddedStamp
                         FROM Tracks
-            ", (int)TrackMediaAttributes.Default));
+            ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
 
             Execute ("update coretracks set lastplayedstamp = NULL where lastplayedstamp = -62135575200");
 
@@ -600,6 +652,10 @@ namespace Banshee.Database
             Execute ("UPDATE CorePlaylists SET PrimarySourceID = 1");
         }
 
+#endregion
+
+#region Utilities / Source / Service Stuff
+
         private void OnServiceStarted (ServiceStartedArgs args)
         {
             if (args.Service is UserJobManager) {
@@ -619,6 +675,20 @@ namespace Banshee.Database
                 RefreshMetadataDelayed ();
             }
         }
+        
+        private void ReloadAllSources (Client client)
+        {
+            Application.ClientStarted -= ReloadAllSources;
+            foreach (Source source in ServiceManager.SourceManager.Sources) {
+                if (source is ITrackModelSource) {
+                    ((ITrackModelSource)source).Reload ();
+                }
+            }
+        }
+        
+#endregion
+        
+#region Metadata Refresh Driver
 
         private void RefreshMetadataDelayed ()
         {
@@ -689,16 +759,6 @@ namespace Banshee.Database
 
             job.Finish ();
             ServiceManager.SourceManager.MusicLibrary.NotifyTracksChanged ();
-        }
-
-        private void ReloadAllSources (Client client)
-        {
-            Application.ClientStarted -= ReloadAllSources;
-            foreach (Source source in ServiceManager.SourceManager.Sources) {
-                if (source is ITrackModelSource) {
-                    ((ITrackModelSource)source).Reload ();
-                }
-            }
         }
         
 #endregion

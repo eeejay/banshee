@@ -117,6 +117,7 @@ namespace Banshee.MediaEngine
         Ready,
         Idle,
         Contacting,
+        Loading,
         Loaded,
         Playing,
         Paused

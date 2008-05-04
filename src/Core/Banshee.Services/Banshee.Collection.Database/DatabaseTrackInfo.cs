@@ -38,7 +38,9 @@ using Banshee.Configuration.Schema;
 using Banshee.Database;
 using Banshee.Sources;
 using Banshee.ServiceStack;
+using Banshee.Streaming;
 
+        using System.Diagnostics;
 // Disabling "is never used" warnings here because there are a lot
 // of properties/fields that are set via reflection at the database
 // layer - that is, they really are used, but the compiler doesn't
@@ -390,6 +392,20 @@ namespace Banshee.Collection.Database
         public DateTime DateUpdated {
             get { return date_updated; }
             set { date_updated = value; }
+        }
+        
+        [DatabaseColumn ("LastStreamError")]
+        private StreamPlaybackError playback_error;
+        public override StreamPlaybackError PlaybackError {
+            get { return playback_error; }
+            set {
+                if (playback_error == value) {
+                    return;
+                }
+                
+                playback_error = value; 
+                Save ();
+            }
         }
 
         private long cache_entry_id;

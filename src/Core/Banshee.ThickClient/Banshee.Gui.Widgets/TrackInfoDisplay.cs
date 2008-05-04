@@ -417,9 +417,9 @@ namespace Banshee.Gui.Widgets
         {
             if (args.Event == PlayerEvent.StartOfStream || args.Event == PlayerEvent.TrackInfoUpdated) {
                 LoadCurrentTrack ();
-            } else if (args.Event == PlayerEvent.StateChange) {
-                if ((incoming_track != null || incoming_pixbuf != null) || 
-                    ((PlayerEventStateChangeArgs)args).Current == PlayerState.Idle) {
+            } else if (args.Event == PlayerEvent.StateChange && (incoming_track != null || incoming_pixbuf != null)) {
+                PlayerEventStateChangeArgs state = (PlayerEventStateChangeArgs)args;
+                if (state.Current == PlayerState.Idle) {
                     if (idle_timeout_id > 0) {
                         GLib.Source.Remove (idle_timeout_id);
                     } else {

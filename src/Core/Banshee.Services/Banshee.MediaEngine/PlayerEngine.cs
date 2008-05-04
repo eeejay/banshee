@@ -49,7 +49,9 @@ namespace Banshee.MediaEngine
         private SafeUri current_uri;
         private PlayerState current_state = PlayerState.NotReady;
         private PlayerState last_state = PlayerState.NotReady;
-        private PlayerState idle_state = PlayerState.NotReady;
+        
+        // will be changed to PlayerState.Idle after going to PlayerState.Ready
+        private PlayerState idle_state = PlayerState.NotReady; 
         
         protected abstract void OpenUri (SafeUri uri);
         
@@ -93,24 +95,17 @@ namespace Banshee.MediaEngine
             }
         
             try {
+                OnStateChanged (PlayerState.Loading);
                 OpenUri (uri);
-                OnEventChanged (PlayerEvent.StartOfStream);
-                OnStateChanged (PlayerState.Loaded);
             } catch (Exception e) {
-                Log.Exception (e);
+                Close (true);
                 OnEventChanged (new PlayerEventErrorArgs (e.Message));
             }
         }
         
-        public virtual void Play ()
-        {
-            OnStateChanged (PlayerState.Playing);
-        }
+        public abstract void Play ();
 
-        public virtual void Pause ()
-        {
-            OnStateChanged (PlayerState.Paused);
-        }
+        public abstract void Pause ();
         
         public virtual void VideoExpose (IntPtr window, bool direct)
         {
@@ -137,6 +132,8 @@ namespace Banshee.MediaEngine
             
             last_state = current_state;
             current_state = state;
+            
+            Log.DebugFormat ("Player state change: {0} -> {1}", last_state, current_state);
             
             OnEventChanged (new PlayerEventStateChangeArgs (last_state, current_state));
             

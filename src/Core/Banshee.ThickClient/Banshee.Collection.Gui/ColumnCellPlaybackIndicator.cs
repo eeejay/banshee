@@ -33,6 +33,7 @@ using Cairo;
 using Hyena.Data.Gui;
 using Banshee.Gui;
 
+using Banshee.Streaming;
 using Banshee.MediaEngine;
 using Banshee.ServiceStack;
 
@@ -40,50 +41,65 @@ namespace Banshee.Collection.Gui
 {
     public class ColumnCellPlaybackIndicator : ColumnCell
     {
-        private const int pixbuf_size = 16;
-        private const int pixbuf_spacing = 4;
+        private enum Icon : int {
+            Playing,
+            Paused,
+            Error,
+            Protected
+        }
         
-        private Gdk.Pixbuf pixbuf;
-        private Gdk.Pixbuf pixbuf_paused;
+        private const int pixbuf_size = 16;
+        private const int pixbuf_spacing = 4;        
+        private Gdk.Pixbuf [] pixbufs = new Gdk.Pixbuf[4];
         
         public ColumnCellPlaybackIndicator (string property) : base (property, true)
         {
-            LoadPixbuf ();
+            LoadPixbufs ();
         }
         
-        private void LoadPixbuf ()
+        private void LoadPixbufs ()
         {
-            if (pixbuf != null) {
-                pixbuf.Dispose ();
-                pixbuf = null;
+            for (int i = 0; i < pixbufs.Length; i++) {
+                if (pixbufs[i] != null) {
+                    pixbufs[i].Dispose ();
+                    pixbufs[i] = null;
+                }
             }
             
-            if (pixbuf_paused != null) {
-                pixbuf_paused.Dispose ();
-                pixbuf_paused = null;
-            }
-            
-            pixbuf = IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-start");
-            pixbuf_paused = IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-pause");
+            pixbufs[(int)Icon.Playing] = IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-start");
+            pixbufs[(int)Icon.Paused] = IconThemeUtils.LoadIcon (pixbuf_size, "media-playback-pause");
+            pixbufs[(int)Icon.Error] = IconThemeUtils.LoadIcon (pixbuf_size, "emblem-unreadable", "dialog-error");
+            pixbufs[(int)Icon.Protected] = IconThemeUtils.LoadIcon (pixbuf_size, "emblem-readonly", "dialog-error");
         }
         
         public override void NotifyThemeChange ()
         {
-            LoadPixbuf ();
+            LoadPixbufs ();
         }
 
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
-            if (!ServiceManager.PlayerEngine.IsPlaying ((TrackInfo)BoundObject)) {
+            TrackInfo track = (TrackInfo)BoundObject;
+        
+            if (track.PlaybackError == StreamPlaybackError.None && !ServiceManager.PlayerEngine.IsPlaying (track)) {
                 return;
             }
             
-            Gdk.Pixbuf render_pixbuf = pixbuf;
-            if (ServiceManager.PlayerEngine.CurrentState == PlayerState.Paused) {
-                render_pixbuf = pixbuf_paused;
-            }
+            Icon icon;
+            
+            if (track.PlaybackError == StreamPlaybackError.None) {
+                icon = ServiceManager.PlayerEngine.CurrentState == PlayerState.Paused
+                    ? Icon.Paused
+                    : Icon.Playing;
+            } else if (track.PlaybackError == StreamPlaybackError.Drm) {
+                icon = Icon.Protected;
+            } else {
+                icon = Icon.Error;
+            } 
             
             context.Context.Translate (0, 0.5);
+            
+            Gdk.Pixbuf render_pixbuf = pixbufs[(int)icon];
             
             Cairo.Rectangle pixbuf_area = new Cairo.Rectangle (pixbuf_spacing, 
                 (cellHeight - render_pixbuf.Height) / 2, render_pixbuf.Width, render_pixbuf.Height);

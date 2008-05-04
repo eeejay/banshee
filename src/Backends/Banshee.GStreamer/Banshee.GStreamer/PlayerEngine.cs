@@ -40,9 +40,18 @@ using Banshee.ServiceStack;
 
 namespace Banshee.GStreamer
 {
+    internal enum GstState
+    {
+        VoidPending = 0,
+        Null = 1,
+        Ready = 2,
+        Paused = 3,
+        Playing = 4
+    }
+
     internal delegate void BansheePlayerEosCallback (IntPtr player);
     internal delegate void BansheePlayerErrorCallback (IntPtr player, uint domain, int code, IntPtr error, IntPtr debug);
-    internal delegate void BansheePlayerStateChangedCallback (IntPtr player, int old_state, int new_state, int pending_state);
+    internal delegate void BansheePlayerStateChangedCallback (IntPtr player, GstState old_state, GstState new_state, GstState pending_state);
     internal delegate void BansheePlayerIterateCallback (IntPtr player);
     internal delegate void BansheePlayerBufferingCallback (IntPtr player, int buffering_progress);
 
@@ -66,6 +75,7 @@ namespace Banshee.GStreamer
         
         private bool buffering_finished;
         private short pending_volume = -1;
+        private bool xid_is_set = false;
         
         public PlayerEngine ()
         {
@@ -99,6 +109,7 @@ namespace Banshee.GStreamer
             
             eos_callback = new BansheePlayerEosCallback (OnEos);
             error_callback = new BansheePlayerErrorCallback (OnError);
+            state_changed_callback = new BansheePlayerStateChangedCallback (OnStateChange);
             iterate_callback = new BansheePlayerIterateCallback (OnIterate);
             buffering_callback = new BansheePlayerBufferingCallback (OnBuffering);
             tag_found_callback = new GstTaggerTagFoundCallback (OnTagFound);
@@ -134,27 +145,32 @@ namespace Banshee.GStreamer
             // The GStreamer engine can use the XID of the main window if it ever
             // needs to bring up the plugin installer so it can be transient to
             // the main window.
-
-            IPropertyStoreExpose service = ServiceManager.Get<IService> ("GtkElementsService") as IPropertyStoreExpose;
-            if (service != null) {
-                bp_set_application_gdk_window (handle, service.PropertyStore.Get<IntPtr> ("PrimaryWindow.RawHandle"));
+            if (!xid_is_set) {
+                IPropertyStoreExpose service = ServiceManager.Get<IService> ("GtkElementsService") as IPropertyStoreExpose;
+                if (service != null) {
+                    bp_set_application_gdk_window (handle, service.PropertyStore.Get<IntPtr> ("PrimaryWindow.RawHandle"));
+                }
+                xid_is_set = true;
             }
                 
             IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup (uri.AbsoluteUri);
-            bp_open (handle, uri_ptr);
-            GLib.Marshaller.Free (uri_ptr);
+            try {
+                if (!bp_open (handle, uri_ptr)) {
+                    throw new ApplicationException ("Could not open resource");
+                }
+            } finally {
+                GLib.Marshaller.Free (uri_ptr);
+            }
         }
         
         public override void Play ()
         {
             bp_play (handle);
-            OnStateChanged (PlayerState.Playing);
         }
         
         public override void Pause ()
         {
             bp_pause (handle);
-            OnStateChanged (PlayerState.Paused);
         }
         
         public override void VideoExpose (IntPtr window, bool direct)
@@ -182,6 +198,23 @@ namespace Banshee.GStreamer
         private void OnIterate (IntPtr player)
         {
             OnEventChanged (PlayerEvent.Iterate);
+        }
+        
+        private void OnStateChange (IntPtr player, GstState old_state, GstState new_state, GstState pending_state)
+        {
+            if (old_state == GstState.Ready && new_state == GstState.Paused && pending_state == GstState.Playing) {
+                OnStateChanged (PlayerState.Loaded);
+                return;
+            } else if (old_state == GstState.Paused && new_state == GstState.Playing && pending_state == GstState.VoidPending) {
+                if (CurrentState == PlayerState.Loaded) {
+                    OnEventChanged (PlayerEvent.StartOfStream);
+                }
+                OnStateChanged (PlayerState.Playing);
+                return;
+            } else if (CurrentState == PlayerState.Playing && old_state == GstState.Playing && new_state == GstState.Paused) {
+                OnStateChanged (PlayerState.Paused);
+                return;
+            }
         }
         
         private void OnError (IntPtr player, uint domain, int code, IntPtr error, IntPtr debug)

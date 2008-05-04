@@ -147,6 +147,8 @@ bp_open (BansheePlayer *player, const gchar *uri)
     // in case it is able to perform a fast seek to a track
     if (_bp_cdda_handle_uri (player, uri)) {
         return TRUE;
+    } else if (player->playbin == NULL) {
+        return FALSE;
     }
     
     // Set the pipeline to the proper state
@@ -197,8 +199,10 @@ bp_set_position (BansheePlayer *player, guint64 time_ms)
 {
     g_return_val_if_fail (IS_BANSHEE_PLAYER (player), FALSE);
     
-    if (!gst_element_seek (player->playbin, 1.0, GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH,
-        GST_SEEK_TYPE_SET, time_ms * GST_MSECOND, GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE)) {
+    if (player->playbin == NULL || !gst_element_seek (player->playbin, 1.0, 
+        GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH,
+        GST_SEEK_TYPE_SET, time_ms * GST_MSECOND, 
+        GST_SEEK_TYPE_NONE, GST_CLOCK_TIME_NONE)) {
         g_warning ("Could not seek in stream");
         return FALSE;
     }
@@ -214,7 +218,7 @@ bp_get_position (BansheePlayer *player)
 
     g_return_val_if_fail (IS_BANSHEE_PLAYER (player), 0);
 
-    if (gst_element_query_position (player->playbin, &format, &position)) {
+    if (player->playbin != NULL && gst_element_query_position (player->playbin, &format, &position)) {
         return position / GST_MSECOND;
     }
     
@@ -229,7 +233,7 @@ bp_get_duration (BansheePlayer *player)
 
     g_return_val_if_fail (IS_BANSHEE_PLAYER (player), 0);
 
-    if (gst_element_query_duration (player->playbin, &format, &duration)) {
+    if (player->playbin != NULL && gst_element_query_duration (player->playbin, &format, &duration)) {
         return duration / GST_MSECOND;
     }
     
@@ -243,7 +247,10 @@ bp_can_seek (BansheePlayer *player)
     gboolean can_seek = TRUE;
     
     g_return_val_if_fail (IS_BANSHEE_PLAYER (player), FALSE);
-    g_return_val_if_fail (player->playbin != NULL, FALSE);
+    
+    if (player->playbin == NULL) {
+        return FALSE;
+    }
     
     query = gst_query_new_seeking (GST_FORMAT_TIME);
     if (!gst_element_query (player->playbin, query)) {

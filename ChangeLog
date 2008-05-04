@@ -1,3 +1,50 @@
+2008-05-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Added error handling so that no more than 20 attempts will be made to 
+	play from the active source if those attempts result in an error
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Bind to the PlaybackError property to the LastStreamError column so any
+	errors (missing codec, resource not found, etc.) are persisted in the 
+	database
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Added a migration for adding the new LastStreamError column on CoreTracks
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/NullPlayerEngine.cs:
+	Updated to reflect API changes in the base class
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEvent.cs: Added
+	the loading state
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	Make Play/Pause abstract instead of virtual; do not set any event or
+	state in Open and make the underlying engine responsible for these
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Changed the definition of IsPlaying to mean the engine is in one of
+	playing, paused, or loaded states
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: made CanPlay
+	return the set value and whether or not there is a playback error set
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	Set the engine states based on state transitions from GStreamer proper
+	instead of synthesizing so many based on API
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	Indicate an error if one is set on the track
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Updated to act on proper engine state
+
+	* libbanshee/banshee-player.c:
+	* libbanshee/banshee-player-pipeline.c:
+	* libbanshee/banshee-player-missing-elements.c: Add some playbin checks
+	to prevent warning messages from being spewed when playbin is torn down
+	in some cases, particularly when there is a pipeline error
+
 2008-05-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Save the
