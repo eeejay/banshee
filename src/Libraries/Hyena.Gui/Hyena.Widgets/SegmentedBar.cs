@@ -68,7 +68,7 @@ namespace Hyena.Widgets
         }
         
         private List<Segment> segments = new List<Segment> ();
-        private int bar_height = 12;
+        private int bar_height = 25;
         
         private Color remainder_color = CairoExtensions.RgbToColor (0xeeeeee);
     
@@ -110,6 +110,16 @@ namespace Hyena.Widgets
             lock (segments) {
                 segments.Add (new Segment (title, percent, color));
                 QueueDraw ();
+            }
+        }
+        
+        public int BarHeight {
+            get { return bar_height; }
+            set {
+                if (bar_height != value) {
+                    bar_height = value;
+                    QueueResize ();
+                }
             }
         }
 
@@ -268,18 +278,34 @@ namespace Hyena.Widgets
     internal class SegmentedBarTestModule : Window
     {
         private SegmentedBar bar;
-        
+        private VBox box;
         public SegmentedBarTestModule () : base ("Segmented Bar")
         {
-            bar = new SegmentedBar ();
-            Add (bar);
-            bar.Show ();
             BorderWidth = 30;
             SetDefaultSize (500, -1);
             
+            box = new VBox ();
+            box.Spacing = 10;
+            Add (box);
+            
+            bar = new SegmentedBar ();
             bar.AddSegmentRgb ("Audio", 0.20, 0x3465a4);
             bar.AddSegmentRgb ("Video", 0.55, 0x73d216);
             bar.AddSegmentRgb ("Other", 0.10, 0xf57900);
+            box.PackStart (bar, false, false, 0);
+            box.PackStart (new HSeparator (), false, false, 0);
+            
+            HBox controls = new HBox ();
+            controls.Spacing = 5;
+            box.PackStart (controls, false, false, 0);
+            
+            Label label = new Label ("Height:");
+            controls.PackStart (label, false, false, 0);
+            SpinButton height = new SpinButton (new Adjustment (bar.BarHeight, 5, 100, 1, 1, 1), 1, 0);
+            height.Changed += delegate { bar.BarHeight = height.ValueAsInt; };
+            controls.PackStart (height, false, false, 0);
+            
+            box.ShowAll ();
         }
     }
 }

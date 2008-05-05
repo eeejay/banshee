@@ -1,5 +1,11 @@
 2008-05-04  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SegmentedBar.cs: Added a spin
+	entry to change the height for testing; queue a resize when the bar
+	height changes
+
+2008-05-04  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs: Only
 	update the progress if it hasn't changed and if we're already pulsing
 	and at 0
