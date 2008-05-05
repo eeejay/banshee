@@ -91,7 +91,7 @@ namespace Hyena.Widgets
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
-            HeightRequest = bar_height * 2;
+            HeightRequest = (int)Math.Ceiling (bar_height * 1.75);
             base.OnSizeAllocated (allocation);
         }
         
@@ -158,8 +158,7 @@ namespace Hyena.Widgets
             
             LinearGradient mask = new LinearGradient (0, 0, 0, bar_height);
             
-            mask.AddColorStop (0, new Color (0, 0, 0, 0));
-            mask.AddColorStop (0.25, new Color (0, 0, 0, 0.01));
+            mask.AddColorStop (0.25, new Color (0, 0, 0, 0));
             mask.AddColorStop (0.5, new Color (0, 0, 0, 0.125));
             mask.AddColorStop (0.75, new Color (0, 0, 0, 0.4));
             mask.AddColorStop (1.0, new Color (0, 0, 0, 0.7));
@@ -241,7 +240,7 @@ namespace Hyena.Widgets
             double seg_w = 20;
             double x = seg_w > r ? seg_w : r;
             
-            while (x < w - r) {
+            while (x <= w - r) {
                 cr.MoveTo (x - 0.5, 1);
                 cr.LineTo (x - 0.5, h - 1);
                 cr.Pattern = seg_sep_light;
@@ -281,7 +280,7 @@ namespace Hyena.Widgets
         private VBox box;
         public SegmentedBarTestModule () : base ("Segmented Bar")
         {
-            BorderWidth = 30;
+            BorderWidth = 10;
             SetDefaultSize (500, -1);
             
             box = new VBox ();
@@ -292,12 +291,9 @@ namespace Hyena.Widgets
             bar.AddSegmentRgb ("Audio", 0.20, 0x3465a4);
             bar.AddSegmentRgb ("Video", 0.55, 0x73d216);
             bar.AddSegmentRgb ("Other", 0.10, 0xf57900);
-            box.PackStart (bar, false, false, 0);
-            box.PackStart (new HSeparator (), false, false, 0);
             
             HBox controls = new HBox ();
             controls.Spacing = 5;
-            box.PackStart (controls, false, false, 0);
             
             Label label = new Label ("Height:");
             controls.PackStart (label, false, false, 0);
@@ -305,6 +301,9 @@ namespace Hyena.Widgets
             height.Changed += delegate { bar.BarHeight = height.ValueAsInt; };
             controls.PackStart (height, false, false, 0);
             
+            box.PackStart (controls, false, false, 0);
+            box.PackStart (new HSeparator (), false, false, 0);
+            box.PackStart (bar, false, false, 0);
             box.ShowAll ();
         }
     }
