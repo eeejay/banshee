@@ -47,7 +47,7 @@ using Banshee.Query;
 
 namespace Banshee.Sources
 {
-    public abstract class DatabaseSource : Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator, IDisposable
+    public abstract class DatabaseSource : Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator
     {
         protected delegate void TrackRangeHandler (DatabaseTrackListModel model, RangeCollection.Range range);
 
@@ -73,11 +73,6 @@ namespace Banshee.Sources
         }
 
         public abstract void Save ();
-
-        public virtual void Dispose ()
-        {
-            //Save ();
-        }
 
         protected override void Initialize ()
         {

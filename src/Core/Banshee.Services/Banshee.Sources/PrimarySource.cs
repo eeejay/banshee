@@ -151,10 +151,8 @@ namespace Banshee.Sources
         {
         }
 
-        public override void Dispose ()
+        public virtual void Dispose ()
         {
-            base.Dispose ();
-
             if (Application.ShuttingDown)
                 return;
 

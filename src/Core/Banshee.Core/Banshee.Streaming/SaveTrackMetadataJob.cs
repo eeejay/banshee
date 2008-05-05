@@ -49,17 +49,14 @@ namespace Banshee.Streaming
     
         public void Run ()
         {
-            Console.WriteLine ("in metadata write");
             if (!LibrarySchema.WriteMetadata.Get ()) {
                 Console.WriteLine ("Skipping scheduled metadata write, preference disabled after scheduling");
                 return;
             }
-            Console.WriteLine ("doing metadata write, artist = {0}", track.ArtistName);
         
             // Note: this should be kept in sync with the metadata read in StreamTagger.cs
             TagLib.File file = StreamTagger.ProcessUri (track.Uri);
             file.Tag.Performers = new string [] { track.ArtistName };
-            Console.WriteLine ("Performers is set to {0}", file.Tag.Performers[0]);
             file.Tag.Album = track.AlbumTitle;
             file.Tag.Genres = new string [] { track.Genre };
             file.Tag.Title = track.TrackTitle;

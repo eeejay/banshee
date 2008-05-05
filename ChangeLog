@@ -1,3 +1,38 @@
+2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Fix
+	up disposing.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: 
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Get rid of
+	IDisposable in DatabaseSource, reflect changes in subclasses.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: When the
+	SourceManager is being disposed, recursively dispose any extension
+	sources.  Also dispose them when their extension goes away.  Do not
+	dispose other sources; leave that to whoever created them.
+
+	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs: Remove
+	WriteLines.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Add public
+	static LogAll property that can be enabled/disabled at run time to turn on
+	logging/timing for every single SQL command.
+
+	* tests/ConsoleUi.cs: Modified to not use a separate test AppDomain,
+	allowing us to fully load Banshee from within a unit test.
+
+	* tests/Banshee.ThickClient/GuiTests.cs: Still commented out, some tweaks
+	though.
+
+	* tests/Makefile.am: Put the assemblies into DIR_BIN, and run from there;
+	simplifies the MONO_PATH and mono.addins business when running tests.
+
+	* tests/Banshee.Core/TaglibReadWriteTests.cs: Update paths.
+
+	* tests/BansheeTests.cs: Tweaks to the StartBanshee stuff, not used yet.
+
 2008-05-05  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/SegmentedBar.cs: Added a 

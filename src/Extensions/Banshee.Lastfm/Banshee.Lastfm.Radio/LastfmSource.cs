@@ -99,8 +99,6 @@ namespace Banshee.Lastfm.Radio
             Connection.StateChanged += HandleConnectionStateChanged;
             UpdateUI ();
 
-            Properties.Set<bool> ("SourceManager.Dispose", true);
-
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/LastfmSourcePopup");
             Properties.SetString ("Icon.Name", "lastfm-audioscrobbler");
@@ -118,21 +116,12 @@ namespace Banshee.Lastfm.Radio
         public void Dispose ()
         {
             Connection.StateChanged -= HandleConnectionStateChanged;
+            Connection.Dispose ();
             actions.Dispose ();
-            ClearChildSources ();
-        }
-
-        public override void ClearChildSources ()
-        {
-            lock (Children) {
-                foreach (StationSource child in Children) {
-                    //if (SourceManager.ContainsSource (child))
-                    //    SourceManager.RemoveSource (child);
-                    child.Dispose ();
-                }
-            }
-
-            base.ClearChildSources ();
+            
+            actions = null;
+            connection = null;
+            account = null;
         }
 
         /*public override void AddChildSource (ChildSource source)

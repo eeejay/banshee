@@ -51,8 +51,15 @@ namespace Hyena.Data.Sqlite
         private string command_formatted = null;
         private int parameter_count = 0;
         private object [] current_values;
+        private int ticks;
 
 #region Properties
+
+        private static bool log_all = false;
+        public static bool LogAll {
+            get { return log_all; }
+            set { log_all = value; }
+        }
 
         public string Text {
             get { return command; }
@@ -88,10 +95,13 @@ namespace Hyena.Data.Sqlite
 
             SqliteCommand sql_command = new SqliteCommand (CurrentSqlText);
             sql_command.Connection = connection;
-            //Log.DebugFormat ("Executing {0}", sql_command.CommandText);
+
             hconnection.OnExecuting (sql_command);
 
             try {
+                if (log_all)
+                    ticks = System.Environment.TickCount;
+
                 switch (command_type) {
                     case HyenaCommandType.Reader:
                         result = sql_command.ExecuteReader ();
@@ -107,6 +117,9 @@ namespace Hyena.Data.Sqlite
                         result = sql_command.LastInsertRowID ();
                         break;
                 }
+
+                if (log_all)
+                    Log.DebugFormat ("Executed SQL in {0} ms: {1}", System.Environment.TickCount - ticks, sql_command.CommandText);
             } catch (Exception e) {
                 Log.DebugFormat (String.Format ("Exception executing command: {0}", sql_command.CommandText), e.ToString ()); 
                 execution_exception = e;

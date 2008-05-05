@@ -25,6 +25,14 @@
 ' 3. This notice may not be removed or altered from any source distribution.
 '
 '***********************************************************************************/
+
+/* NOTE: This is an altered copy of the original file from the NUnit team.  It
+ * has been modified to not use a separate test AppDomain.  It was altered by
+ * Gabriel Burt.  See Banshee's svn history for the exact changes.  These changes
+ * will probably not be needed if/when we use NUnit 2.4 and after, since they have
+ * a command line option to not use the separate AppDomain.
+ */
+
 #endregion
 
 namespace NUnit.Console
@@ -160,7 +168,7 @@ namespace NUnit.Console
 			Console.WriteLine();
 		}
 
-		private static Test MakeTestFromCommandLine(TestDomain testDomain, ConsoleOptions parser)
+		private static Test MakeTestFromCommandLine(TestRunner runner, ConsoleOptions parser)
 		{
 			NUnitProject project;
 
@@ -174,7 +182,9 @@ namespace NUnit.Console
 			else
 				project = NUnitProject.FromAssemblies( (string[])parser.Parameters.ToArray( typeof( string ) ) );
 
-			return testDomain.Load( project, parser.fixture );
+			//return testDomain.Load( project, parser.fixture );
+            //return runner.Load (project.ActiveConfig.Assemblies[0].FullPath, parser.fixture);
+            return runner.Load (project.ProjectPath, project.ActiveConfig.TestAssemblies);//, parser.fixture);
 		}
 
 		public ConsoleUi()
@@ -194,10 +204,17 @@ namespace NUnit.Console
 				? new ConsoleWriter( new StreamWriter( options.err ) )
 				: new ConsoleWriter(Console.Error);
 
-			TestDomain testDomain = new TestDomain(outStream, errorStream);
-			if ( options.noshadow  ) testDomain.ShadowCopyFiles = false;
+            // Mostly copied from TestDomain.cs
+            object obj = System.AppDomain.CurrentDomain.CreateInstanceAndUnwrap(
+                typeof(RemoteTestRunner).Assembly.FullName,
+                typeof(RemoteTestRunner).FullName,
+                false, BindingFlags.Default,null,null,null,null,null);
 
-			Test test = MakeTestFromCommandLine(testDomain, options);
+            RemoteTestRunner runner = (RemoteTestRunner) obj;
+            runner.Out = outStream;
+            runner.Error = errorStream;
+
+			Test test = MakeTestFromCommandLine(runner, options);
 
 			if(test == null)
 			{
@@ -211,7 +228,7 @@ namespace NUnit.Console
 
 			string savedDirectory = Environment.CurrentDirectory;
 
-			if (options.HasInclude)
+			/*if (options.HasInclude)
 			{
 				Console.WriteLine( "Included categories: " + options.include );
 				testDomain.SetFilter( new CategoryFilter( options.IncludedCategories ) );
@@ -220,19 +237,23 @@ namespace NUnit.Console
 			{
 				Console.WriteLine( "Excluded categories: " + options.exclude );
 				testDomain.SetFilter( new CategoryFilter( options.ExcludedCategories, true ) );
-			}
+			}*/
 
 			TestResult result = null;
-			if ( options.thread )
+			/*if ( options.thread )
 			{
 				testDomain.RunTest( collector );
 				testDomain.Wait();
 				result = testDomain.Result;
 			}
 			else
-			{
-				result = testDomain.Run( collector );
-			}
+			{*/
+            using( new TestExceptionHandler(delegate(object o, UnhandledExceptionEventArgs e) {
+                collector.UnhandledException( (Exception)e.ExceptionObject );
+            }) ) {
+                result = runner.Run( collector );
+            }
+			//}
 
 			Directory.SetCurrentDirectory( savedDirectory );
 			
@@ -257,9 +278,6 @@ namespace NUnit.Console
 			}
 			outStream.Flush();
 			errorStream.Flush();
-
-			if ( testDomain != null )
-				testDomain.Unload();
 
 			return result.IsFailure ? 1 : 0;
 		}

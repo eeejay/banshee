@@ -131,10 +131,8 @@ namespace Banshee.PlayQueue
             }
         }
 
-        public override void Dispose ()
+        public void Dispose ()
         {
-            base.Dispose ();
-
             ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
 
             if (ClearOnQuitSchema.Get ()) {

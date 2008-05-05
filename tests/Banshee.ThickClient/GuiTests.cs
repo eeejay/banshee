@@ -41,11 +41,9 @@ public class GuiTests : BansheeTests
     {
         Log.InformationFormat ("About to start Banshee from unit test, this thread = {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
         StartBanshee ();
-        Log.Information ("Started Banshee from unit test, sleeping 5 seconds");
+        Log.Information ("Started Banshee from unit test");
 
-        System.Threading.Thread.Sleep (5000);
-
-        Log.Information ("Shutting down Banshee");
-        StopBanshee ();
+        //Log.Information ("Shutting down Banshee");
+        //StopBanshee ();
     }*/
 }

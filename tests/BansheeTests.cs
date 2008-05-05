@@ -28,7 +28,12 @@
 
 using System;
 using System.Reflection;
+using System.Threading;
+
 using NUnit.Framework;
+
+using Hyena;
+using Mono.Addins;
 
 public abstract class BansheeTests
 {
@@ -36,7 +41,7 @@ public abstract class BansheeTests
     static BansheeTests () {
         Hyena.Log.Debugging = true;
         Pwd = Mono.Unix.UnixDirectoryInfo.GetCurrentDirectory ();
-        //AddinManager.Initialize (Pwd + "/../bin/");
+        AddinManager.Initialize (Pwd + "/../bin/");
     }
 
     public delegate void TestRunner<T> (T item);
@@ -53,20 +58,36 @@ public abstract class BansheeTests
             Assert.Fail ("\n" + sb.ToString ());
     }
 
+    private static Thread main_loop;
     public static void StartBanshee ()
     {
+        if (main_loop != null) {
+            Hyena.Log.Debug ("Main loop not null, not starting");
+            return;
+        }
+
         System.IO.Directory.CreateDirectory (Pwd + "/tmp");
         Banshee.Base.ApplicationContext.CommandLine["db"] = Pwd + "/tmp/banshee.db";
         Banshee.Base.ApplicationContext.CommandLine["uninstalled"] = String.Empty;
 
-        System.Threading.ThreadPool.QueueUserWorkItem (delegate {
-            Banshee.Gui.GtkBaseClient.Entry<Nereid.Client> ();
-        });
+        main_loop = new Thread (StartNereid);
+        main_loop.IsBackground = false;
+        main_loop.Start ();
+    }
+
+    private static void StartNereid ()
+    {
+        Banshee.Gui.GtkBaseClient.Entry<Nereid.Client> ();
     }
 
     public static void StopBanshee ()
     {
-        Banshee.ServiceStack.Application.Shutdown ();
-        Banshee.IO.Directory.Delete (Pwd + "/tmp", true);
+        Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+            Banshee.ServiceStack.Application.Shutdown ();
+            Banshee.IO.Directory.Delete (Pwd + "/tmp", true);
+        });
+
+        main_loop.Join ();
+        main_loop = null;
     }
 }

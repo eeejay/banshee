@@ -29,7 +29,6 @@
 using System;
 using NUnit.Framework;
 
-using Mono.Addins;
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Streaming;
@@ -41,9 +40,8 @@ public class TaglibReadWriteTests : BansheeTests
     static string [] files;
 
     static TaglibReadWriteTests () {
-        AddinManager.Initialize (Pwd + "/../bin/");
         files = new string [] {
-            Pwd + "/data/test.mp3",
+            Pwd + "/../tests/data/test.mp3",
         };
     }
 
@@ -69,7 +67,7 @@ public class TaglibReadWriteTests : BansheeTests
         try {
             AssertForEach<string> (files, delegate (string uri) {
                 string extension = System.IO.Path.GetExtension (uri);
-                newuri = new SafeUri (Pwd + "/data/test_write." + extension);
+                newuri = new SafeUri (Pwd + "/../tests/data/test_write." + extension);
 
                 Banshee.IO.File.Copy (new SafeUri (uri), newuri, true);
 

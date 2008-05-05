@@ -82,25 +82,27 @@ namespace Banshee.Sources
         public void Dispose ()
         {
             lock (this) {
-                // Do not dispose extension sources
+                try {
+                    AddinManager.RemoveExtensionNodeHandler ("/Banshee/SourceManager/Source", OnExtensionChanged);
+                } catch {}
+
+                active_source = null;
+                default_source = null;
+                music_library = null;
+                video_library = null;
+
+                // Do dispose extension sources
                 foreach (Source source in extension_sources.Values) {
-                    // Only dispose extension sources that explicitly tell us to, otherwise
-                    // assume their Service or somesuch will Dispose them.
-                    RemoveSource (source, source.Properties.Get<bool> ("SourceManager.Dispose"));
+                    RemoveSource (source, true);
                 }
 
-                // But do dispose non-extension sources
+                // But do not dispose non-extension sources
                 while (sources.Count > 0) {
-                    RemoveSource (sources[0], true);
+                    RemoveSource (sources[0], false);
                 }
                 
                 sources.Clear ();
                 extension_sources.Clear ();
-                active_source =  default_source = null;
-                music_library = null;
-                video_library = null;
-                
-                AddinManager.RemoveExtensionNodeHandler ("/Banshee/SourceManager/Source", OnExtensionChanged);
             }
         }
         
@@ -116,7 +118,7 @@ namespace Banshee.Sources
                 } else if (args.Change == ExtensionChange.Remove && extension_sources.ContainsKey (node.Id)) {
                     Source source = extension_sources[node.Id];
                     extension_sources.Remove (node.Id);
-                    RemoveSource (source);
+                    RemoveSource (source, true);
                 }
             }
         }
@@ -173,7 +175,7 @@ namespace Banshee.Sources
             RemoveSource (source, false);
         }
 
-        public void RemoveSource (Source source, bool dispose)
+        public void RemoveSource (Source source, bool recursivelyDispose)
         {
             if(source == null || !ContainsSource (source)) {
                 return;
@@ -190,10 +192,10 @@ namespace Banshee.Sources
             sources.Remove(source);
 
             foreach(Source child_source in source.Children) {
-                RemoveSource (child_source, dispose);
+                RemoveSource (child_source, recursivelyDispose);
             }
 
-            if (dispose) {
+            if (recursivelyDispose) {
                 IDisposable disposable = source as IDisposable;
                 if (disposable != null) {
                     disposable.Dispose ();
