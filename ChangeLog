@@ -1,5 +1,21 @@
 2008-05-04  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs: Only
+	update the progress if it hasn't changed and if we're already pulsing
+	and at 0
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Show
+	the number of files walked while building the total count so it doesn't
+	look like we might have frozen while walking a huge directory tree
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Added some
+	Rgb uint->cairo color utility functions, make ColorShade preserve alpha
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SegmentedBar.cs: Started working
+	on a hot disk usage bar for DAP; very incomplete - run 'make hg' to see
+
+2008-05-04  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
 	Added error handling so that no more than 20 attempts will be made to 
 	play from the active source if those attempts result in an error

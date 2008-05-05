@@ -78,6 +78,20 @@ namespace Hyena.Gui
                 alpha);
         }
         
+        public static Cairo.Color RgbToColor (uint rgbColor)
+        {
+            return RgbaToColor ((rgbColor << 8) | 0x000000ff);
+        }
+        
+        public static Cairo.Color RgbaToColor (uint rgbaColor)
+        {
+            return new Cairo.Color (
+                (byte)(rgbaColor >> 24) / 255.0, 
+                (byte)(rgbaColor >> 16) / 255.0, 
+                (byte)(rgbaColor >> 8) / 255.0, 
+                (byte)(rgbaColor & 0x000000ff) / 255.0);
+        }
+        
         public static bool ColorIsDark (Cairo.Color color)
         {
             double h, s, b;
@@ -181,16 +195,18 @@ namespace Hyena.Gui
             return new Cairo.Color(color_shift[0], color_shift[1], color_shift[2]);
         }
         
-        public static Cairo.Color ColorShade(Cairo.Color @base, double ratio)
+        public static Cairo.Color ColorShade (Cairo.Color @base, double ratio)
         {
             double h, s, b;
             
-            HsbFromColor(@base, out h, out s, out b);
+            HsbFromColor (@base, out h, out s, out b);
             
-            b = Math.Max(Math.Min(b * ratio, 1), 0);
-            s = Math.Max(Math.Min(s * ratio, 1), 0);
+            b = Math.Max (Math.Min (b * ratio, 1), 0);
+            s = Math.Max (Math.Min (s * ratio, 1), 0);
             
-            return ColorFromHsb(h, s, b);
+            Cairo.Color color = ColorFromHsb (h, s, b);
+            color.A = @base.A;
+            return color;
         }
         
         public static Cairo.Color ColorAdjustBrightness(Cairo.Color @base, double br)

@@ -194,6 +194,11 @@ namespace Banshee.Gui.Widgets
             }
             
             cancel_button.Sensitive = job.CanCancel;
+            
+            if (job.Progress == 0 && progress_bounce_id > 0) {
+                return;
+            }
+            
             progress_bar.Fraction = job.Progress;
             
             if (job.Progress == 0.0 && progress_bounce_id == 0) {

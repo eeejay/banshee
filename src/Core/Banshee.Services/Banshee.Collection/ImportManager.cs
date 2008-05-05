@@ -143,6 +143,9 @@ namespace Banshee.Collection
             OnImportFinished ();
         }
         
+        private DateTime last_enqueue_display = DateTime.Now;
+        private static System.Globalization.NumberFormatInfo nfi = new System.Globalization.NumberFormatInfo ();
+        
         private void Enqueue (string path)
         {
             if (path_queue.Contains (path)) {
@@ -150,6 +153,16 @@ namespace Banshee.Collection
             }
             
             total_count++;
+            
+            if (DateTime.Now - last_enqueue_display > TimeSpan.FromMilliseconds (400)) {
+                lock (nfi) {
+                    nfi.NumberDecimalDigits = 0;
+                    user_job.Status = String.Format (Catalog.GetString ("Scanning ({0} files)..."), 
+                        total_count.ToString ("N", nfi));
+                    last_enqueue_display = DateTime.Now;
+                }
+            }
+            
             lock (path_queue) {
                 path_queue.Enqueue (path);
             }

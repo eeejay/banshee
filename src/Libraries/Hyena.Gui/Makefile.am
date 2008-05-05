@@ -64,6 +64,7 @@ SOURCES =  \
 	Hyena.Widgets/MessageBar.cs \
 	Hyena.Widgets/RoundedFrame.cs \
 	Hyena.Widgets/ScrolledWindow.cs \
+	Hyena.Widgets/SegmentedBar.cs \
 	Hyena.Widgets/SmoothScrolledWindow.cs \
 	Hyena.Widgets/WrapLabel.cs
 

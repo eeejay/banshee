@@ -121,13 +121,13 @@ namespace Banshee.Library
         
 #region IImportSource
         
-    	public abstract string Name { get; }
+        public abstract string Name { get; }
 
-    	public abstract string[] IconNames { get; }
+        public abstract string[] IconNames { get; }
 
-    	public virtual bool CanImport {
-    	    get { return true; }
-    	}
+        public virtual bool CanImport {
+            get { return true; }
+        }
 
         public void Import ()
         {
