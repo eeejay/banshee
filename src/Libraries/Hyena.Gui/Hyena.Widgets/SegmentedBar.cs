@@ -69,6 +69,7 @@ namespace Hyena.Widgets
         
         private List<Segment> segments = new List<Segment> ();
         private int bar_height = 25;
+        private bool reflect = true;
         
         private Color remainder_color = CairoExtensions.RgbToColor (0xeeeeee);
     
@@ -91,7 +92,7 @@ namespace Hyena.Widgets
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
-            HeightRequest = (int)Math.Ceiling (bar_height * 1.75);
+            HeightRequest = reflect ? (int)Math.Ceiling (bar_height * 1.75) : bar_height;
             base.OnSizeAllocated (allocation);
         }
         
@@ -122,6 +123,16 @@ namespace Hyena.Widgets
                 }
             }
         }
+        
+        public bool ShowReflection {
+            get { return reflect; }
+            set {
+                if (reflect != value) {
+                    reflect = value;
+                    QueueResize ();
+                }
+            }
+        }
 
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
@@ -130,7 +141,10 @@ namespace Hyena.Widgets
             }
             
             Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
-            cr.PushGroup ();
+            
+            if (reflect) {
+                CairoExtensions.PushGroup (cr);
+            }
             
             cr.Operator = Operator.Over;
             cr.Translate (Allocation.X, Allocation.Y);
@@ -143,33 +157,35 @@ namespace Hyena.Widgets
             cr.Source = bar;
             cr.Paint ();
             cr.Restore ();
-
-            cr.Save ();
-
-            cr.Rectangle (0, bar_height, Allocation.Width, bar_height);
-            cr.Clip ();
             
-            Matrix matrix = new Matrix ();
-            matrix.InitScale (1, -1);
-            matrix.Translate (0, -(2 * bar_height) + 1);
-            cr.Transform (matrix);
-            
-            cr.Pattern = bar;
-            
-            LinearGradient mask = new LinearGradient (0, 0, 0, bar_height);
-            
-            mask.AddColorStop (0.25, new Color (0, 0, 0, 0));
-            mask.AddColorStop (0.5, new Color (0, 0, 0, 0.125));
-            mask.AddColorStop (0.75, new Color (0, 0, 0, 0.4));
-            mask.AddColorStop (1.0, new Color (0, 0, 0, 0.7));
-            
-            cr.Mask (mask);
-            mask.Destroy ();
-            
-            cr.Restore ();
-            
-            cr.PopGroupToSource ();
-            cr.Paint ();
+            if (reflect) {
+                cr.Save ();
+    
+                cr.Rectangle (0, bar_height, Allocation.Width, bar_height);
+                cr.Clip ();
+                
+                Matrix matrix = new Matrix ();
+                matrix.InitScale (1, -1);
+                matrix.Translate (0, -(2 * bar_height) + 1);
+                cr.Transform (matrix);
+                
+                cr.Pattern = bar;
+                
+                LinearGradient mask = new LinearGradient (0, 0, 0, bar_height);
+                
+                mask.AddColorStop (0.25, new Color (0, 0, 0, 0));
+                mask.AddColorStop (0.5, new Color (0, 0, 0, 0.125));
+                mask.AddColorStop (0.75, new Color (0, 0, 0, 0.4));
+                mask.AddColorStop (1.0, new Color (0, 0, 0, 0.7));
+                
+                cr.Mask (mask);
+                mask.Destroy ();
+                
+                cr.Restore ();
+                
+                CairoExtensions.PopGroupToSource (cr);
+                cr.Paint ();
+            }
             
             bar.Destroy ();
             ((IDisposable)cr.Target).Dispose ();
@@ -281,7 +297,6 @@ namespace Hyena.Widgets
         public SegmentedBarTestModule () : base ("Segmented Bar")
         {
             BorderWidth = 10;
-            SetDefaultSize (500, -1);
             
             box = new VBox ();
             box.Spacing = 10;
@@ -297,14 +312,30 @@ namespace Hyena.Widgets
             
             Label label = new Label ("Height:");
             controls.PackStart (label, false, false, 0);
+            
             SpinButton height = new SpinButton (new Adjustment (bar.BarHeight, 5, 100, 1, 1, 1), 1, 0);
+            height.Activated += delegate { bar.BarHeight = height.ValueAsInt; };
             height.Changed += delegate { bar.BarHeight = height.ValueAsInt; };
             controls.PackStart (height, false, false, 0);
+            
+            CheckButton reflect = new CheckButton ("Reflection");
+            reflect.Active = bar.ShowReflection;
+            reflect.Toggled += delegate { bar.ShowReflection = reflect.Active; };
+            controls.PackStart (reflect, false, false, 0);
             
             box.PackStart (controls, false, false, 0);
             box.PackStart (new HSeparator (), false, false, 0);
             box.PackStart (bar, false, false, 0);
             box.ShowAll ();
+            
+            SetSizeRequest (350, -1);
+            
+            Gdk.Geometry limits = new Gdk.Geometry ();
+            limits.MinWidth = SizeRequest ().Width;
+            limits.MaxWidth = Gdk.Screen.Default.Width;
+            limits.MinHeight = -1;
+            limits.MaxHeight = -1;
+            SetGeometryHints (this, limits, Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
         }
     }
 }

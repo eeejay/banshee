@@ -1,5 +1,10 @@
 2008-05-05  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SegmentedBar.cs: Added a 
+	ShowReflection property to enable/disable the reflection
+
+2008-05-05  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/SegmentedBar.cs: Minor fixes
 
 2008-05-04  Aaron Bockover  <abock@gnome.org>
