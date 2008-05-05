@@ -70,13 +70,12 @@ namespace Banshee.Dap
 
         public override void Dispose ()
         {
+            PurgeBuiltinSmartPlaylists ();
             PurgeTracks ();
         }
         
-        protected override void PurgeTracks ()
+        private void PurgeBuiltinSmartPlaylists ()
         {
-            base.PurgeTracks ();
-            
             ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
                 BEGIN TRANSACTION;
                     DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID IN
@@ -91,6 +90,8 @@ namespace Banshee.Dap
 
         protected override void Initialize ()
         {
+            PurgeBuiltinSmartPlaylists ();
+            
             base.Initialize ();
             
             Expanded = true;

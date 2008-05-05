@@ -95,7 +95,24 @@ namespace Banshee.Sources
 
         protected int dbid;
         public int DbId {
-            get { return dbid; }
+            get {
+                if (dbid > 0) {
+                    return dbid;
+                }
+                
+                dbid = ServiceManager.DbConnection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = ?", UniqueId);
+                if (dbid == 0) {
+                    dbid = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", UniqueId);
+                } else {
+                    SavedCount = ServiceManager.DbConnection.Query<int> ("SELECT CachedCount FROM CorePrimarySources WHERE PrimarySourceID = ?", dbid);
+                }
+                
+                if (dbid == 0) {
+                    throw new ApplicationException ("dbid could not be resolved, this should never happen");
+                }
+                
+                return dbid;
+            }
         }
 
         public ErrorSource ErrorSource {
@@ -173,13 +190,6 @@ namespace Banshee.Sources
 
         private void PrimarySourceInitialize ()
         {
-            dbid = ServiceManager.DbConnection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = ?", UniqueId);
-            if (dbid == 0) {
-                dbid = ServiceManager.DbConnection.Execute ("INSERT INTO CorePrimarySources (StringID) VALUES (?)", UniqueId);
-            } else {
-                SavedCount = ServiceManager.DbConnection.Query<int> ("SELECT CachedCount FROM CorePrimarySources WHERE PrimarySourceID = ?", dbid);
-            }
-
             // Scope the tracks to this primary source
             track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", dbid);
 

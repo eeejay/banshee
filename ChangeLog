@@ -1,3 +1,11 @@
+2008-05-05  Aaron Bockover  <abock@gnome.org>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Moved the smart playlist
+	purging to a separate method
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Load
+	the DbId when it is first requested
+
 2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Fix
