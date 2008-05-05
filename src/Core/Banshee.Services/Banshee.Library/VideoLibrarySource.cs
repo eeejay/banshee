@@ -55,7 +55,7 @@ namespace Banshee.Library
             new SmartPlaylistDefinition (
                 Catalog.GetString ("Unwatched"),
                 Catalog.GetString ("Videos that haven't been played yet"),
-                "plays=4"),
+                "plays=0"),
 
             new SmartPlaylistDefinition (
                 Catalog.GetString ("Favorites"),

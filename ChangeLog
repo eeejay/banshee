@@ -1,5 +1,10 @@
 2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs: Heh,
+	whoops, unwatched should be plays=0 not plays=4.
+
+2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/PlaylistQueryValueEntry.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs:
 	Better handle there not being any playlists or smart playlists.
