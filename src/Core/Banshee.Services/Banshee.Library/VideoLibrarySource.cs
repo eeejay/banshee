@@ -28,7 +28,11 @@
 //
 
 using System;
+using System.Collections.Generic;
+
 using Mono.Unix;
+
+using Banshee.SmartPlaylist;
 
 namespace Banshee.Library
 {
@@ -42,5 +46,21 @@ namespace Banshee.Library
         public override bool ShowBrowser {
             get { return false; }
         }
+
+        public override IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {
+            get { return default_smart_playlists; }
+        }
+
+        private static SmartPlaylistDefinition [] default_smart_playlists = new SmartPlaylistDefinition [] {
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Unwatched"),
+                Catalog.GetString ("Videos that haven't been played yet"),
+                "plays=4"),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Favorites"),
+                Catalog.GetString ("Videos rated four and five stars"),
+                "rating>=4"),
+        };
     }
 }

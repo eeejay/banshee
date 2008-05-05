@@ -228,21 +228,24 @@ namespace Hyena.Query.Gui
             }
 
             set {
-                if (value == null) {
+                QueryTermNode node = value;
+                if (node == null) {
                     return;
                 }
 
-                field_chooser.Active = Array.IndexOf (sorted_fields, value.Field);
+                field_chooser.Active = Array.IndexOf (sorted_fields, node.Field);
 
-                foreach (QueryValueEntry entry in value_entries) {
-                    if (QueryValueEntry.GetValueType (entry) == value.Value.GetType ()) {
-                        entry.QueryValue = value.Value;
+                current_value_entry.QueryValue = node.Value;
+                /*foreach (QueryValueEntry entry in value_entries) {
+                    if (QueryValueEntry.GetValueType (entry) == node.Value.GetType ()) {
+                        Console.WriteLine ("In QueryTermBox, setting QueryNode, got matching value types, value is {0}, empty? {1}", node.Value.ToString (), node.Value.IsEmpty);
+                        entry.QueryValue = node.Value;
                         SetValueEntry (entry);
                         break;
                     }
-                }
+                }*/
 
-                op_chooser.Active = operators.IndexOf (value.Operator);
+                op_chooser.Active = operators.IndexOf (node.Operator);
             }
         }
     }

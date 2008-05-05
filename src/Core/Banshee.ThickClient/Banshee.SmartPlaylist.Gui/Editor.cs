@@ -52,20 +52,23 @@ namespace Banshee.SmartPlaylist
 
             name_entry.Text = playlist.Name;
 
-            UpdateForPlaylist ();
+            UpdateForPlaylist (playlist);
         }
 
-        private void UpdateForPlaylist ()
+        private void UpdateForPlaylist (SmartPlaylistSource playlist)
         {
-            currently_editing = playlist;
-            this.primary_source = playlist.PrimarySource;
-
             PlaylistName = playlist.Name;
             Condition = playlist.ConditionTree;
             LimitEnabled = playlist.IsLimited;
             LimitValue = playlist.LimitValue;
             Limit = playlist.Limit;
             Order = playlist.QueryOrder;
+
+            if (playlist.DbId > 0) {
+                this.playlist = playlist;
+                this.primary_source = playlist.PrimarySource;
+                currently_editing = playlist;
+            }
         }
     
         public Editor (PrimarySource primary_source) : base ("SmartPlaylistEditorDialog")
@@ -216,7 +219,7 @@ namespace Banshee.SmartPlaylist
                         playlist.LimitValue = limit_value;
 
                         playlist.Save ();
-                        playlist.PrimarySource.AddChildSource (playlist);
+                        primary_source.AddChildSource (playlist);
                         playlist.RefreshAndReload ();
                         //SmartPlaylistCore.Instance.StartTimer (playlist);
                     } else {
@@ -225,7 +228,7 @@ namespace Banshee.SmartPlaylist
                         playlist.LimitValue = limit_value;
                         playlist.Limit = limit;
 
-                        playlist.Rename (name);
+                        playlist.Name = name;
                         playlist.Save ();
                         playlist.RefreshAndReload ();
 
@@ -286,8 +289,7 @@ namespace Banshee.SmartPlaylist
             TreeIter iter;
             if (adv_tree_view.Model.GetIter (out iter, paths[0])) {
                 SmartPlaylistDefinition def = ((SmartPlaylistDefinition)adv_tree_view.Model.GetValue (iter, 1));
-                this.playlist = def.ToSmartPlaylistSource (primary_source);
-                UpdateForPlaylist ();
+                UpdateForPlaylist (def.ToSmartPlaylistSource (primary_source));
             }
         }
 

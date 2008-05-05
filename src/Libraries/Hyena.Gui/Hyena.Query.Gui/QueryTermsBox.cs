@@ -83,17 +83,19 @@ namespace Hyena.Query.Gui
                 return nodes;
             }
             set {
+                ClearRows ();
+                first_add_node = true;
                 foreach (QueryNode child in value) {
                     AddNode (child);
                 }
             }
         }
 
-        private bool first_add_node = true;
+        private bool first_add_node;
         protected void AddNode (QueryNode node)
         {
             if (node is QueryTermNode) {
-                QueryTermBox box = first_add_node ? FirstRow : CreateRow (false);
+                QueryTermBox box = first_add_node ? FirstRow : CreateRow (true);
                 box.QueryNode = node as QueryTermNode;
                 first_add_node = false;
             } else {
@@ -141,8 +143,18 @@ namespace Hyena.Query.Gui
         
         protected void OnRowRemoveRequest (object o, EventArgs args)
         {
-            QueryTermBox row = o as QueryTermBox;
+            RemoveRow (o as QueryTermBox);
+        }
 
+        private void ClearRows ()
+        {
+            while (terms.Count > 1) {
+                RemoveRow (terms[1]);
+            }
+        }
+
+        private void RemoveRow (QueryTermBox row)
+        {
             field_box.Remove (row.FieldChooser);
             op_box.Remove (row.OpChooser);
             entry_box.Remove (row.ValueEntry);
@@ -154,7 +166,9 @@ namespace Hyena.Query.Gui
         
         protected void UpdateCanDelete ()
         {
-            FirstRow.CanDelete = terms.Count > 1;
+            if (FirstRow != null) {
+                FirstRow.CanDelete = terms.Count > 1;
+            }
         }
     }
 }

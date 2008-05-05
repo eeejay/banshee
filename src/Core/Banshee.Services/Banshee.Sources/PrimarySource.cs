@@ -38,6 +38,7 @@ using Hyena.Collections;
 
 using Banshee.Base;
 using Banshee.ServiceStack;
+using Banshee.Configuration;
 using Banshee.Sources;
 using Banshee.Playlist;
 using Banshee.SmartPlaylist;
@@ -93,7 +94,7 @@ namespace Banshee.Sources
             DELETE FROM CoreTracks WHERE PrimarySourceId = ?
         ");
 
-        protected int dbid;
+        private int dbid;
         public int DbId {
             get {
                 if (dbid > 0) {
@@ -191,17 +192,44 @@ namespace Banshee.Sources
         private void PrimarySourceInitialize ()
         {
             // Scope the tracks to this primary source
-            track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", dbid);
+            track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", DbId);
 
-            primary_sources[dbid] = this;
+            primary_sources[DbId] = this;
             
-            foreach (PlaylistSource pl in PlaylistSource.LoadAll (DbId))
-                if (pl.PrimarySourceId == dbid)
-                    AddChildSource (pl);
+            // Load our playlists and smart playlists
+            foreach (PlaylistSource pl in PlaylistSource.LoadAll (DbId)) {
+                AddChildSource (pl);
+            }
 
-            foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll (DbId))
-                if (pl.PrimarySourceId == dbid)
-                    AddChildSource (pl);
+            int sp_count = 0;
+            foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll (DbId)) {
+                AddChildSource (pl);
+                sp_count++;
+            }
+
+            // Create default smart playlists if we haven't done it ever before, and if the
+            // user has zero smart playlists.
+            if (!HaveCreatedSmartPlaylists) {
+                if (sp_count == 0) {
+                    foreach (SmartPlaylistDefinition def in DefaultSmartPlaylists) {
+                        SmartPlaylistSource pl = def.ToSmartPlaylistSource (this);
+                        pl.Save ();
+                        AddChildSource (pl);
+                        pl.RefreshAndReload ();
+                        sp_count++;
+                    }
+                }
+
+                // Only save it if we already had some smart playlists, or we actually created some (eg not
+                // if we didn't have any and the list of default ones is empty atm).
+                if (sp_count > 0)
+                    HaveCreatedSmartPlaylists = true;
+            }
+        }
+
+        private bool HaveCreatedSmartPlaylists {
+            get { return DatabaseConfigurationClient.Client.Get<bool> ("HaveCreatedSmartPlaylists", UniqueId, false); }
+            set { DatabaseConfigurationClient.Client.Set<bool> ("HaveCreatedSmartPlaylists", UniqueId, value); }
         }
 
         public override void Save ()

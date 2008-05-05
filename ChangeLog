@@ -1,3 +1,30 @@
+2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/PlaylistQueryValueEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs:
+	Better handle there not being any playlists or smart playlists.
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs: Fix
+	loading a predefined playlist into the editor.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: If the user
+	has no smart playlists and we've never done this before, create the
+	default smart playlists for a primary source.
+
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs: Define
+	some default smart playlists.
+
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs: Tweak a
+	default smart playlist.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs: Fix bug with
+	not setting the value of the editor entry to the value of the saved smart
+	playlist.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryTermsBox.cs: When setting
+	the QueryNode condition tree, clear out any old conditions that may be
+	in the editor already.
+
 2008-05-05  Aaron Bockover  <abock@gnome.org>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Moved the smart playlist
@@ -5,6 +32,10 @@
 
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Load
 	the DbId when it is first requested
+
+2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
 
 2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
 

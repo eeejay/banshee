@@ -72,7 +72,7 @@ namespace Banshee.Library
             new SmartPlaylistDefinition (
                 Catalog.GetString ("Neglected Favorites"),
                 Catalog.GetString ("Favorites not played in over two weeks"),
-                "rating>3 played>=\"2 weeks ago\""),
+                "rating>=4 played>=\"2 weeks ago\""),
 
             new SmartPlaylistDefinition (
                 Catalog.GetString ("Least Favorite"),
