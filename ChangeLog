@@ -1,5 +1,10 @@
 2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	Be more defensive with checking for null/cast errors.
+
+2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs: Heh,
 	whoops, unwatched should be plays=0 not plays=4.
 

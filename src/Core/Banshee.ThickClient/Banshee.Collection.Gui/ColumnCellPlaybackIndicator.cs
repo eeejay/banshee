@@ -79,7 +79,10 @@ namespace Banshee.Collection.Gui
 
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
-            TrackInfo track = (TrackInfo)BoundObject;
+            TrackInfo track = BoundObject as TrackInfo;
+
+            if (track == null)
+                return;
         
             if (track.PlaybackError == StreamPlaybackError.None && !ServiceManager.PlayerEngine.IsPlaying (track)) {
                 return;
