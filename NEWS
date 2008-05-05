@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.0 ALPHA 3! (0.98.3)
+WELCOME TO BANSHEE 1.0 BETA 1! (0.99.1)
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,20 +10,20 @@ WELCOME TO BANSHEE 1.0 ALPHA 3! (0.98.3)
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/Releases/0.98.3
+  * Learn More: http://banshee-project.org/Releases/0.99.1
 
 
 ===============================================================================
-ALPHA RELEASE DISCLAIMER
+BETA RELEASE DISCLAIMER
 ===============================================================================
 
-    This is the third release in the Banshee 1.0 series. This Alpha 3 release 
+    This is the fourth release in the Banshee 1.0 series. This Beta 1 release 
     does not have feature parity with previous Banshee releases (the last 
-    being Banshee 0.13.2). This means there are a number of features in this 
+    being Banshee 0.13.2). This means there are some features in this 
     release that users may have come to know and love in Banshee that are 
     missing for the time being. 
 
-    However, although this is an Alpha release, it is quite stable and has 
+    However, although this is an Beta release, it is quite stable and has 
     many great new features and performance improvements which will be detailed
     later. It has also been designed to be both installed and run in parallel 
     with previous Banshee releases, so you can test the release out without 
@@ -33,20 +33,19 @@ ALPHA RELEASE DISCLAIMER
 
       * Some hardware support 
         - CD Burning
-        - iPod, MTP, and other Digital Audio Player support
 
       * Some plugins have not yet been ported to the new 1.0 architecture:
         - Podcasting, DAAP/iTunes Music Sharing, Internet Radio
-        - Recommendations, Mini Mode, Batch Cover Art Fetching
+        - Recommendations, Batch Cover Art Fetching
 
     Do not despair, these features will be added back before the final 1.0 
-    release. Many more hardware related features are projected to land in the 
-    Beta 1 release of Banshee 1.0. We expect releases in quick 
-    succession leading up to the final 1.0 release. 
+    release. Many more features are projected to land in the Beta 2 release of
+    Banshee 1.0. We expect releases in quick succession leading up to the
+    final 1.0 release. 
 
     Please read the full release notes on the Banshee Wiki for more details:
 
-      * http://banshee-project.org/Releases/0.98.3
+      * http://banshee-project.org/Releases/0.99.1
 
 
 ===============================================================================
@@ -72,9 +71,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 0.98.3 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-0.98.3.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-0.98.3.tar.gz
+    * Banshee 0.99.1 Tarballs:
+      http://banshee-project.org/files/banshee/banshee-1-0.99.1.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-0.99.1.tar.gz
 
 Packages
 --------
@@ -90,7 +89,7 @@ Packages
 ChangeLogs
 ----------
 
-    * http://banshee-project.org/files/banshee/banshee-1-0.98.3.changes
+    * http://banshee-project.org/files/banshee/banshee-1-0.99.1.changes
 
 
 ===============================================================================
@@ -125,7 +124,7 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.0 Alpha 3 represents the third release since we began rewriting
+    Banshee 1.0 Beta 1 represents the fourth release since we began rewriting
     much of the core of Banshee. The primary reason for rewriting this core
     was to deliver much needed performance improvements.
 
@@ -144,26 +143,22 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     Other features, bug fixes, and errata:
 
-    * Over 40 bugs were fixed since Alpha 2
-    * The main view now respects your system DPI settings and 
-	  has seen massive performance improvements.
-	* Jump to playing song is now implemented (Ctrl-J) 
-	* The Last.fm data screen has some visual improvements.
-	* The repeat drop down button now works. 
+    * Over 30 bugs were fixed since Alpha 3
+	* 
 
 
 ===============================================================================
 REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
 ===============================================================================
 
-    While this is an Alpha Release, we have known it to be quite stable. There
-    are a number of missing features though that will be added back as we
+    While this is an Beta Release, we have known it to be quite stable. There
+    are some missing features though that will be added back as we
     progress towards the final 1.0 release of Banshee.
 
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.98.3
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.99.1
 
 
 ===============================================================================
@@ -176,23 +171,23 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
       
-      Aaron Bockover, Alex Kloss, Alexander Hixon, Bertrand Lorentz,
-      Gabriel Burt, Michael Monreal, Mike Urbanski, Scott Peterson,
-      Sebastian Dröge
+      Aaron Bockover, Alexander Hixon, Bertrand Lorentz, Christopher Rogers,
+      Gabriel Burt, Scott Peterson, Sebastian Dröge, Wouter Bolsterlee
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
 
-      Artur Flinta (pl), Daniel Nylander (sv), Wouter Bolsterlee (nl)
+      Daniel Nylander (sv), Gabor Kelemen (hu), Jordi Mas (ca),
+      Wouter Bolsterlee (nl)
 
     The release notes and screenshots for this release were crafted by:
 
-      Aaron Bockover, Gabriel Burt, Jorge Castro
+      Gabriel Burt, Jorge Castro
 
 Contributors In Past Releases
 -----------------------------
 
-    Alan McGovern, Alexander Hixon, Alexandros Frantzis, Alp Toker,
+    Alan McGovern, Alex Kloss, Alexander Hixon, Alexandros Frantzis, Alp Toker,
     Aydemir Ulaş Şahin, Ben Maurer, Bertrand Lorentz, Bill Dawson, 
     Bob Copeland, Bojan Rajkovic, Brian Nickel, Chris Lahey, Chris Toshok,
     Chris Turchin, Christian Krause, Christopher James Halse Rogers, 

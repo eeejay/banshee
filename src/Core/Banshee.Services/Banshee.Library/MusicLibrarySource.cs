@@ -63,16 +63,21 @@ namespace Banshee.Library
                 "played<\"1 week ago\" playcount>3"),
 
             new SmartPlaylistDefinition (
-                Catalog.GetString ("Unrated"),
-                Catalog.GetString ("Songs that haven't been rated"),
-                "rating=0"),
+                Catalog.GetString ("Recently Added"),
+                Catalog.GetString ("Songs imported within the last week"),
+                "added<\"1 week ago\""),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Unheard"),
+                Catalog.GetString ("Songs that have not been played or skipped"),
+                "playcount:0 skips:0"),
         };
 
         private static SmartPlaylistDefinition [] non_default_smart_playlists = new SmartPlaylistDefinition [] {
             new SmartPlaylistDefinition (
                 Catalog.GetString ("Neglected Favorites"),
                 Catalog.GetString ("Favorites not played in over two weeks"),
-                "rating>=4 played>=\"2 weeks ago\""),
+                "rating>=4 played>=\"2 months ago\""),
 
             new SmartPlaylistDefinition (
                 Catalog.GetString ("Least Favorite"),
@@ -92,9 +97,9 @@ namespace Banshee.Library
                 80, "minutes", "PlayCount-DESC"),
 
             new SmartPlaylistDefinition (
-                Catalog.GetString ("Unheard"),
-                Catalog.GetString ("Songs that have not been played"),
-                "playcount=0"),
+                Catalog.GetString ("Unrated"),
+                Catalog.GetString ("Songs that haven't been rated"),
+                "rating=0"),
         };
     }
 }

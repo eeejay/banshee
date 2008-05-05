@@ -1,5 +1,15 @@
 2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs: Move
+	favorites before unwatched.
+
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs: Moved
+	Unhear to defaults, and Unrated to predefined.  Added Recently Added.
+
+	* NEWS: Some updates for the upcoming release.
+
+2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
 	Be more defensive with checking for null/cast errors.
 
@@ -1849,7 +1859,7 @@
 2008-04-13  Christopher James Halse Rogers  <chalserogers@gmail.com>
 
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
- 	Hook up the paranoia-mode logic to the error-correction preference.
+	Hook up the paranoia-mode logic to the error-correction preference.
 
 2008-04-12  Gabriel Burt  <gabriel.burt@gmail.com>
 

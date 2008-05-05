@@ -53,14 +53,14 @@ namespace Banshee.Library
 
         private static SmartPlaylistDefinition [] default_smart_playlists = new SmartPlaylistDefinition [] {
             new SmartPlaylistDefinition (
-                Catalog.GetString ("Unwatched"),
-                Catalog.GetString ("Videos that haven't been played yet"),
-                "plays=0"),
-
-            new SmartPlaylistDefinition (
                 Catalog.GetString ("Favorites"),
                 Catalog.GetString ("Videos rated four and five stars"),
                 "rating>=4"),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Unwatched"),
+                Catalog.GetString ("Videos that haven't been played yet"),
+                "plays=0"),
         };
     }
 }
