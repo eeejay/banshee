@@ -40,6 +40,7 @@ using Banshee.Dap;
 using Banshee.ServiceStack;
 using Banshee.Library;
 using Banshee.Sources;
+using Banshee.Configuration;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Hardware;
@@ -54,6 +55,12 @@ namespace Banshee.Dap.Mtp
 		private MtpDevice mtp_device;
         //private bool supports_jpegs = false;
         private Dictionary<int, Track> track_map;
+
+        private Dictionary<string, Album> album_cache = new Dictionary<string, Album> ();
+
+        private bool supports_jpegs = false;
+        private bool can_sync = NeverSyncAlbumArtSchema.Get () == false;
+        private int thumb_width = AlbumArtWidthSchema.Get ();
 
         public override void DeviceInitialize (IDevice device)
         {
@@ -119,7 +126,18 @@ namespace Banshee.Dap.Mtp
             Name = mtp_device.Name;
             Initialize ();
 
-            //ServiceManager.DbConnection.Execute ("
+            List<string> mimetypes = new List<string> ();
+            foreach (FileType format in mtp_device.GetFileTypes ()) {
+                if (format == FileType.JPEG) {
+                    supports_jpegs = true;
+                } else {
+                    string mimetype = MtpDevice.GetMimeTypeFor (format);
+                    if (mimetype != null) {
+                        mimetypes.Add (mimetype);
+                    }
+                }
+            }
+            AcceptableMimeTypes = mimetypes.ToArray ();
 
             ThreadPool.QueueUserWorkItem (delegate {
                 track_map = new Dictionary<int, Track> ();
@@ -230,9 +248,35 @@ namespace Banshee.Dap.Mtp
             Track mtp_track = TrackInfoToMtpTrack (track, fromUri);
             bool video = (track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0;
             Console.WriteLine ("Sending file {0}, is video? {1}", fromUri.LocalPath, video);
-            // TODO send callback for smoother progress bar
             lock (mtp_device) {
                 mtp_device.UploadTrack (fromUri.LocalPath, mtp_track, video ? mtp_device.VideoFolder : mtp_device.MusicFolder, OnUploadProgress);
+            }
+
+            // Add/update album art
+            if (!video) {
+                string key = MakeAlbumKey (track.ArtistName, track.AlbumTitle);
+                if (!album_cache.ContainsKey (key)) {
+                    Album album = new Album (mtp_device, track.AlbumTitle, track.ArtistName, track.Genre);
+                    album.AddTrack (mtp_track);
+
+                    if (supports_jpegs && can_sync) {
+                        try {
+                            Gdk.Pixbuf pic = ServiceManager.Get<Banshee.Collection.Gui.ArtworkManager> ().LookupScale (
+                                CoverArtSpec.CreateArtistAlbumId (track.ArtistName, track.AlbumTitle), thumb_width
+                            );
+                            if (pic != null) {
+                                byte [] bytes = pic.SaveToBuffer ("jpeg");
+                                album.Save (bytes, (uint)pic.Width, (uint)pic.Height);
+                                pic.Dispose ();
+                            }
+                            album_cache[key] = album;
+                        } catch {}
+                    }
+                } else {
+                    Album album = album_cache[key];
+                    album.AddTrack (mtp_track);
+                    album.Save ();
+                }
             }
 
             MtpTrackInfo new_track = new MtpTrackInfo (mtp_track);
@@ -240,6 +284,7 @@ namespace Banshee.Dap.Mtp
             new_track.Save (false);
             track_map[new_track.TrackId] = mtp_track;
         }
+
 
         private int OnUploadProgress (ulong sent, ulong total, IntPtr data)
         {
@@ -250,8 +295,22 @@ namespace Banshee.Dap.Mtp
         protected override void DeleteTrack (DatabaseTrackInfo track)
         {
             lock (mtp_device) {
-                mtp_device.Remove (track_map [track.TrackId]);
+                Track mtp_track = track_map [track.TrackId];
                 track_map.Remove (track.TrackId);
+
+                // Remove from device
+                mtp_device.Remove (mtp_track);
+
+                // Remove track from album, and remove album from device if it no longer has tracks
+                string key = MakeAlbumKey (track.ArtistName, track.AlbumTitle);
+                if (album_cache.ContainsKey (key)) {
+                    Album album = album_cache[key];
+                    album.RemoveTrack (track_map[track.TrackId]);
+                    if (album.TrackCount == 0) {
+                        album.Remove ();
+                        album_cache.Remove (key);
+                    }
+                }
             }
         }
 
@@ -290,5 +349,24 @@ namespace Banshee.Dap.Mtp
         {
             Dispose ();
         }
+
+        private static string MakeAlbumKey (string artist, string album)
+        {
+            return String.Format ("{0}_{1}", artist, album);
+        }
+
+        public static readonly SchemaEntry<bool> NeverSyncAlbumArtSchema = new SchemaEntry<bool>(
+            "plugins.mtp", "never_sync_albumart",
+            false,
+            "Album art disabled",
+            "Regardless of device's capabilities, do not sync album art"
+        );
+
+        public static readonly SchemaEntry<int> AlbumArtWidthSchema = new SchemaEntry<int>(
+            "plugins.mtp", "albumart_max_width",
+            170,
+            "Album art max width",
+            "The maximum width to allow for album art."
+        );
     }
 }

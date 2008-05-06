@@ -1,3 +1,20 @@
+2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/AlbumSet.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpDap.cs: Removed old files.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Add and remove
+	album art as needed when adding/removing files.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	Move DeleteSelectedTracks handler to Abstract class so is inherited by
+	SmartPlaylistSource too.
+
+	* src/Libraries/Mtp/Mtp/Album.cs: Add public GetById method.
+
+	* src/Libraries/Mtp/Mtp/MtpDevice.cs: Add FileType to mimetype method.
+
 2008-05-05  Aaron Bockover  <abock@gnome.org>
 
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:

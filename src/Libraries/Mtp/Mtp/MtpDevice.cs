@@ -445,6 +445,24 @@ namespace Mtp
 				int 	LIBMTP_Get_Device_Certificate (LIBMTP_mtpdevice_t *, char **const)
 		 */
 		
+        public static string GetMimeTypeFor (FileType type)
+        {
+            switch (type) {
+                case FileType.MP3:      return "audio/mpeg";
+                case FileType.OGG:      return "audio/ogg";
+                case FileType.WMA:      return "audio/x-ms-wma";
+                case FileType.WMV:      return "video/x-ms-wmv";
+                case FileType.ASF:      return "video/x-ms-asf";
+                case FileType.AAC:      return "audio/x-aac";
+                case FileType.MP4:      return "video/mp4";
+                case FileType.AVI:      return "video/avi";
+                case FileType.WAV:      return "audio/x-wav";
+                case FileType.MPEG:     return "video/mpeg";
+                case FileType.FLAC:     return "audio/flac";
+                case FileType.QT:       return "video/quicktime";
+            }
+            return null;
+        }
 	}
 
 	[StructLayout(LayoutKind.Sequential)]

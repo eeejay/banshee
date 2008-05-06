@@ -185,6 +185,16 @@ namespace Mtp
             return String.Format ("Album < Id: {4}, '{0}' by '{1}', genre '{2}', tracks {3} >", Name, Artist, Genre, TrackCount, AlbumId);
         }
 
+        public static Album GetById (MtpDevice device, uint id)
+        {
+            IntPtr ptr = Album.LIBMTP_Get_Album (device.Handle, id);
+            if (ptr == IntPtr.Zero) {
+                return null;
+            } else {
+                return new Album (device, (AlbumStruct) Marshal.PtrToStructure(ptr, typeof (AlbumStruct)));
+            }
+        }
+
 		[DllImport("libmtp.dll")]
 		internal static extern IntPtr LIBMTP_new_album_t (); // LIBMTP_album_t*
 

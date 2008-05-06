@@ -164,6 +164,14 @@ namespace Banshee.Playlist
                 Update ();
         }
 
+        // Have our parent handle deleting tracks
+        public override void DeleteSelectedTracks ()
+        {
+            if (Parent is PrimarySource) {
+                (Parent as PrimarySource).DeleteSelectedTracksFromChild (this);
+            }
+        }
+
         public override bool ShowBrowser {
             get { return (Parent is DatabaseSource) ? (Parent as DatabaseSource).ShowBrowser : base.ShowBrowser; }
         }

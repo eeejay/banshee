@@ -179,14 +179,6 @@ namespace Banshee.Playlist
             }
         }
 
-        // Have our parent handle deleting tracks
-        public override void DeleteSelectedTracks ()
-        {
-            if (Parent is PrimarySource) {
-                (Parent as PrimarySource).DeleteSelectedTracksFromChild (this);
-            }
-        }
-
 #endregion
 
 #region IUnmapableSource Implementation
