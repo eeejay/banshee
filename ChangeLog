@@ -1,3 +1,10 @@
+2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Mtp/Mtp/Album.cs: Be more careful with native code.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Avoid NRE.
+
 2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/AlbumSet.cs:

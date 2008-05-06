@@ -84,6 +84,7 @@ namespace Mtp
         {
             this.device = device;
             this.album = new AlbumStruct ();
+            this.album.tracks = IntPtr.Zero;
             Name = name;
             Artist = artist;
             Genre = genre;
@@ -117,6 +118,7 @@ namespace Mtp
 
             if (album.tracks != IntPtr.Zero) {
                 Marshal.FreeHGlobal (album.tracks);
+                album.tracks = IntPtr.Zero;
             }
 
             if (TrackCount == 0) {
@@ -127,13 +129,14 @@ namespace Mtp
             }
 
             if (saved) {
-                saved = LIBMTP_Update_Album (device.Handle, album) == 0;
+                saved = LIBMTP_Update_Album (device.Handle, ref album) == 0;
             } else {
                 saved = LIBMTP_Create_New_Album (device.Handle, ref album, 0) == 0;
             }
 
             if (album.tracks != IntPtr.Zero) {
                 Marshal.FreeHGlobal (album.tracks);
+                album.tracks = IntPtr.Zero;
             }
 
             if (!saved)
@@ -211,7 +214,7 @@ namespace Mtp
 		internal static extern int LIBMTP_Create_New_Album (MtpDeviceHandle handle, ref AlbumStruct album, uint parentId);
 
 		[DllImport("libmtp.dll")]
-		internal static extern int LIBMTP_Update_Album (MtpDeviceHandle handle, AlbumStruct album);
+		internal static extern int LIBMTP_Update_Album (MtpDeviceHandle handle, ref AlbumStruct album);
 	}
 
     [StructLayout(LayoutKind.Sequential)]
