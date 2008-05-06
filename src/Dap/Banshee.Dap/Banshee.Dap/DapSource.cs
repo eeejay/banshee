@@ -262,7 +262,7 @@ namespace Banshee.Dap
         }
 
         protected virtual bool HasMediaCapabilities {
-            get { return device.MediaCapabilities != null; }
+            get { return MediaCapabilities != null; }
         }
 
         protected virtual IDeviceMediaCapabilities MediaCapabilities {

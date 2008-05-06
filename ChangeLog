@@ -1,5 +1,13 @@
 2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Style.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Fix bug that caused mass
+	storage DAPs to be ignored.
+
+2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs: Catch exceptions
 	while trying to identify a HAL device as a volume.  Should fix BGO
 	#528481.

@@ -100,7 +100,11 @@ namespace Banshee.Dap.MassStorage
         }
 
         protected override IDeviceMediaCapabilities MediaCapabilities {
-            get { return (volume.Parent == null) ? base.MediaCapabilities : volume.Parent.MediaCapabilities ?? base.MediaCapabilities; }
+            get {
+                return (volume.Parent == null)
+                    ? base.MediaCapabilities
+                    : volume.Parent.MediaCapabilities ?? base.MediaCapabilities;
+            }
         }
 
         protected string IsAudioPlayerPath {
