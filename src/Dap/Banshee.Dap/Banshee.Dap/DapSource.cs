@@ -133,6 +133,22 @@ namespace Banshee.Dap
             get { return false; }
         }
 
+        public override void SetStatus (string message, bool can_close, bool is_spinning, string icon_name)
+        {
+            base.SetStatus (message, can_close, is_spinning, icon_name);
+            foreach (Source child in Children) {
+                child.SetStatus (message, can_close, is_spinning, icon_name);
+            }
+        }
+
+        public override void HideStatus ()
+        {
+            base.HideStatus ();
+            foreach (Source child in Children) {
+                child.HideStatus ();
+            }
+        }
+
 #endregion
         
 #region Track Management/Syncing   

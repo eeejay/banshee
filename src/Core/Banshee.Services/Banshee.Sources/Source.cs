@@ -236,12 +236,12 @@ namespace Banshee.Sources
         
 #region Protected Methods
         
-        protected virtual void SetStatus (string message, bool error)
+        public virtual void SetStatus (string message, bool error)
         {
             SetStatus (message, !error, !error, error ? "dialog-error" : null);
         }
 
-        protected virtual void SetStatus (string message, bool can_close, bool is_spinning, string icon_name)
+        public virtual void SetStatus (string message, bool can_close, bool is_spinning, string icon_name)
         {
             lock (this) {
                 if (status_message == null) {
@@ -262,7 +262,7 @@ namespace Banshee.Sources
             status_message.ThawNotify ();
         }
 
-        protected virtual void HideStatus ()
+        public virtual void HideStatus ()
         {
             lock (this) {
                 if (status_message != null) {

@@ -232,13 +232,13 @@ namespace Banshee.Lastfm.Radio
             }
         }
 
-        protected override void SetStatus (string message, bool error)
+        public override void SetStatus (string message, bool error)
         {
             base.SetStatus (message, error);
             LastfmSource.SetStatus (status_message, lastfm, error, ConnectionState.Connected);
         }
 
-        private void SetStatus (string message, bool error, ConnectionState state)
+        public void SetStatus (string message, bool error, ConnectionState state)
         {
             base.SetStatus (message, error);
             LastfmSource.SetStatus (status_message, lastfm, error, state);

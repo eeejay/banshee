@@ -288,13 +288,13 @@ namespace Banshee.Lastfm.Radio
             OnUpdated ();
         }
 
-        protected override void SetStatus (string message, bool error)
+        public override void SetStatus (string message, bool error)
         {
             base.SetStatus (message, error);
             SetStatus (status_message, this, error, ConnectionState.Connected);
         }
 
-        private void SetStatus (string message, bool error, ConnectionState state)
+        public void SetStatus (string message, bool error, ConnectionState state)
         {
             base.SetStatus (message, error);
             SetStatus (status_message, this, error, state);

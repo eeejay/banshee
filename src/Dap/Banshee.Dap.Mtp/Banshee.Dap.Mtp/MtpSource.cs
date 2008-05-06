@@ -138,39 +138,37 @@ namespace Banshee.Dap.Mtp
                 }
             }
             AcceptableMimeTypes = mimetypes.ToArray ();
+        }
 
-            ThreadPool.QueueUserWorkItem (delegate {
-                track_map = new Dictionary<int, Track> ();
-                SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
-                try {
-                    List<Track> files = mtp_device.GetAllTracks (delegate (ulong current, ulong total, IntPtr data) {
-                        //user_event.Progress = (double)current / total;
-                        SetStatus (String.Format (Catalog.GetString ("Loading {0} - {1} of {2}"), Name, current, total), false);
-                        return 0;
-                    });
-                    
-                    /*if (user_event.IsCancelRequested) {
-                        return;
-                    }*/
-                    
-                    int [] source_ids = new int [] { DbId };
-                    foreach (Track mtp_track in files) {
-                        int track_id;
-                        if ((track_id = DatabaseTrackInfo.GetTrackIdForUri (MtpTrackInfo.GetPathFromMtpTrack (mtp_track), source_ids)) > 0) {
-                            track_map[track_id] = mtp_track;
-                        } else {
-                            MtpTrackInfo track = new MtpTrackInfo (mtp_track);
-                            track.PrimarySource = this;
-                            track.Save (false);
-                            track_map[track.TrackId] = mtp_track;
-                        }
+        protected override void LoadFromDevice ()
+        {
+            track_map = new Dictionary<int, Track> ();
+            try {
+                List<Track> files = mtp_device.GetAllTracks (delegate (ulong current, ulong total, IntPtr data) {
+                    //user_event.Progress = (double)current / total;
+                    SetStatus (String.Format (Catalog.GetString ("Loading {0} - {1} of {2}"), Name, current, total), false);
+                    return 0;
+                });
+                
+                /*if (user_event.IsCancelRequested) {
+                    return;
+                }*/
+                
+                int [] source_ids = new int [] { DbId };
+                foreach (Track mtp_track in files) {
+                    int track_id;
+                    if ((track_id = DatabaseTrackInfo.GetTrackIdForUri (MtpTrackInfo.GetPathFromMtpTrack (mtp_track), source_ids)) > 0) {
+                        track_map[track_id] = mtp_track;
+                    } else {
+                        MtpTrackInfo track = new MtpTrackInfo (mtp_track);
+                        track.PrimarySource = this;
+                        track.Save (false);
+                        track_map[track.TrackId] = mtp_track;
                     }
-                } catch (Exception e) {
-                    Log.Exception (e);
                 }
-                OnTracksAdded ();
-                HideStatus ();
-            });
+            } catch (Exception e) {
+                Log.Exception (e);
+            }
         }
 
         public override void Import ()

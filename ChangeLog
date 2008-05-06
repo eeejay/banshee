@@ -1,5 +1,18 @@
 2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Make SetStatus and
+	HideStatus methods public.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Move loading of
+	tracks into LoadFromDevice method.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Override SetStatus and
+	HideStatus methods to set it on the parent source and all of our children.
+
+2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Don't delay add and
 	delete user jobs, since removable devices are slow and we might as well
 	show the progress bars asap.
