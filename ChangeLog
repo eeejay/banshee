@@ -1,6 +1,14 @@
 2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Fix bug just introduced with mass storage support via .is_a_p files.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Get rid of silly non-DAP
+	fallbacks for generic name and icons.
+
+2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
 	Ignore iPods unless they have a .is_audio_player file.
 
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Remove

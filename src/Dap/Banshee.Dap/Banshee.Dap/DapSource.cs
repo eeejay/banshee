@@ -102,9 +102,7 @@ namespace Banshee.Dap
             });
 
             if (String.IsNullOrEmpty (GenericName)) {
-                GenericName = HasMediaCapabilities 
-                    ? Catalog.GetString ("Media Player") 
-                    : Catalog.GetString ("Storage Device");
+                GenericName = Catalog.GetString ("Media Player");
             }
             
             if (String.IsNullOrEmpty (Name)) {
@@ -258,7 +256,7 @@ namespace Banshee.Dap
         }
         
         private string FallbackIcon {
-            get { return HasMediaCapabilities ? "multimedia-player" : "harddrive"; }
+            get { return "multimedia-player"; }
         }
 
         protected virtual bool HasMediaCapabilities {

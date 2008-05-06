@@ -60,11 +60,11 @@ namespace Banshee.Dap.MassStorage
             // TODO set up a ui for selecting volumes we want mounted/shown within Banshee
             // (so people don't have to touch .is_audio_player, and so we can give them a harddrive icon
             // instead of pretending they are DAPs).
-            if (!HasMediaCapabilities)
+            if (!HasMediaCapabilities && !HasIsAudioPlayerFile)
                 throw new InvalidDeviceException ();
 
             // Ignore iPods, except ones with .is_audio_player files
-            if (MediaCapabilities.IsType ("ipod")) {
+            if (MediaCapabilities != null && MediaCapabilities.IsType ("ipod")) {
                 if (HasIsAudioPlayerFile) {
                     Log.Information (
                         "Mass Storage Support Loading iPod",
@@ -106,10 +106,6 @@ namespace Banshee.Dap.MassStorage
         private string mount_point;
         public override string BaseDirectory {
             get { return mount_point; }
-        }
-
-        protected override bool HasMediaCapabilities {
-            get { return base.HasMediaCapabilities || HasIsAudioPlayerFile; }
         }
 
         private bool HasIsAudioPlayerFile {
