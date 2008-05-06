@@ -63,8 +63,8 @@
       <menuitem name="PlayPause" action="PlayPauseAction"/>
       <menuitem name="StopWhenFinished" action="StopWhenFinishedAction"/>
       <separator/>
-      <menuitem name="Previous" action="PreviousAction"/>
       <menuitem name="Next" action="NextAction"/>
+      <menuitem name="Previous" action="PreviousAction"/>
       <separator/>
       <!--
       <menuitem name="SeekBackward" action="SeekBackwardAction"/>

@@ -130,7 +130,7 @@ namespace Banshee.NotificationArea
             menu.Show ();
             
             for (int i = 0; i < menu.Children.Length; i++) {
-                if (menu.Children[i].Name == "Next") {
+                if (menu.Children[i].Name == "Previous") {
                     int j = i;
                     PlaybackRepeatActions repeat_group = interface_action_service.FindActionGroup ("PlaybackRepeat")
                          as PlaybackRepeatActions;
