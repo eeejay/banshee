@@ -28,12 +28,15 @@
 
 using System;
 using System.IO;
+using System.Threading;
 using System.Collections.Generic;
+using Mono.Unix;
 
 using IPod;
 
 using Hyena;
 using Banshee.Base;
+using Banshee.ServiceStack;
 using Banshee.Dap;
 using Banshee.Hardware;
 using Banshee.Collection.Database;
@@ -73,6 +76,7 @@ namespace Banshee.Dap.Ipod
                 
         public override void Dispose ()
         {
+            CancelSyncThread ();
             base.Dispose ();
         }
 
@@ -88,6 +92,10 @@ namespace Banshee.Dap.Ipod
             }
             
             Dispose ();
+        }
+        
+        protected override IDeviceMediaCapabilities MediaCapabilities {
+            get { return ipod_device.Parent.MediaCapabilities ?? base.MediaCapabilities; }
         }
         
 #endregion
@@ -263,7 +271,7 @@ namespace Banshee.Dap.Ipod
                     name = ipod_device.Name;
                 }
                     
-                if (!String.IsNullOrEmpty (name)) {
+                /*if (!String.IsNullOrEmpty (name)) {
                     return name;
                 } else if (ipod_device.PropertyExists ("volume.label")) {
                     name = ipod_device.GetPropertyString ("volume.label");
@@ -271,7 +279,9 @@ namespace Banshee.Dap.Ipod
                     name = ipod_device.GetPropertyString ("info.product");
                 } else {
                     name = ((IDevice)ipod_device).Name ?? "iPod";
-                }
+                }*/
+                
+                name = "WTF";
                 
                 try {
                     return name;
@@ -300,7 +310,14 @@ namespace Banshee.Dap.Ipod
 #region Syncing
 
         private Queue<IpodTrackInfo> tracks_to_add = new Queue<IpodTrackInfo> ();
-        // private Queue<IpodTrackInfo> track_to_remove = new Queue<IpodTrackInfo> ();
+        private Queue<IpodTrackInfo> tracks_to_remove = new Queue<IpodTrackInfo> ();
+        
+        private uint sync_timeout_id = 0;
+        private object sync_timeout_mutex = new object ();
+        private object sync_mutex = new object ();
+        private Thread sync_thread;
+        private AutoResetEvent sync_thread_wait;
+        private bool sync_thread_dispose = false;
         
         public override bool IsReadOnly {
             get { return ipod_device.IsReadOnly; }
@@ -313,6 +330,14 @@ namespace Banshee.Dap.Ipod
 
         protected override void DeleteTrack (DatabaseTrackInfo track)
         {
+            lock (sync_mutex) {
+                IpodTrackInfo ipod_track = track as IpodTrackInfo;
+                if (ipod_track != null) {
+                    tracks_to_remove.Enqueue (ipod_track);
+                    
+                    QueueSync ();
+                }
+            }
         }
         
         protected override void OnTracksDeleted ()
@@ -322,7 +347,7 @@ namespace Banshee.Dap.Ipod
 
         protected override void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
         {
-            lock (this) {
+            lock (sync_mutex) {
                 if (track.PrimarySourceId == DbId) {
                     return;
                 }
@@ -333,14 +358,133 @@ namespace Banshee.Dap.Ipod
                 ipod_track.Save (false);
             
                 tracks_to_add.Enqueue (ipod_track);
+                
+                QueueSync ();
             }
         }
 
-        /*private int OnUploadProgress (ulong sent, ulong total, IntPtr data)
+        private void QueueSync ()
         {
-            AddTrackJob.DetailedProgress = (double) sent / (double) total;
-            return 0;
-        }*/
+            lock (sync_timeout_mutex) {
+                if (sync_timeout_id > 0) {
+                    Application.IdleTimeoutRemove (sync_timeout_id);
+                }
+                
+                sync_timeout_id = Application.RunTimeout (5000, PerformSync);
+            }
+        }
+        
+        private void CancelSyncThread ()
+        {
+            lock (sync_mutex) {
+                if (sync_thread != null && sync_thread_wait != null) {
+                    sync_thread_dispose = true;
+                    sync_thread_wait.Set ();
+                }
+            }
+        }
+        
+        private bool PerformSync ()
+        {
+            lock (sync_mutex) {
+                if (sync_thread == null) {
+                    sync_thread_wait = new AutoResetEvent (true);
+                
+                    sync_thread = new Thread (new ThreadStart (PerformSyncThread));
+                    sync_thread.IsBackground = false;
+                    sync_thread.Priority = ThreadPriority.Lowest;
+                    sync_thread.Start ();
+                }
+                
+                sync_thread_wait.Set ();
+                
+                lock (sync_timeout_mutex) {
+                    sync_timeout_id = 0;
+                }
+                
+                return false;
+            }
+        }
+        
+        private void PerformSyncThread ()
+        {
+            while (true) {
+                sync_thread_wait.WaitOne ();
+                if (sync_thread_dispose) {
+                    break;
+                }
+                
+                PerformSyncThreadCycle ();
+            }
+            
+            lock (sync_mutex) {
+                sync_thread_dispose = false;
+                sync_thread_wait.Close ();
+                sync_thread_wait = null;
+                sync_thread = null;
+            }
+        }
+        
+        private void PerformSyncThreadCycle ()
+        {
+            while (tracks_to_add.Count > 0) {
+                IpodTrackInfo track = null;
+                lock (sync_mutex) {
+                    track = tracks_to_add.Dequeue ();
+                }
+                
+                try {
+                    track.CommitToIpod (ipod_device);
+                } catch (Exception e) {
+                    Log.Exception ("Cannot save track to iPod", e);
+                }
+            }
+            
+            while (tracks_to_remove.Count > 0) {
+                IpodTrackInfo track = null;
+                lock (sync_mutex) {
+                    track = tracks_to_remove.Dequeue ();
+                }
+                
+                try {
+                    if (track.IpodTrack != null) {
+                        ipod_device.TrackDatabase.RemoveTrack (track.IpodTrack);
+                    }
+                } catch (Exception e) {
+                    Log.Exception ("Cannot remove track from iPod", e);
+                }
+            } 
+            
+            try {
+                ipod_device.TrackDatabase.SaveProgressChanged += OnIpodDatabaseSaveProgressChanged;
+                ipod_device.Save ();
+            } catch (Exception e) {
+                Log.Exception ("Failed to save iPod database", e);
+            } finally {
+                ipod_device.TrackDatabase.SaveProgressChanged -= OnIpodDatabaseSaveProgressChanged;
+            }
+        }
+        
+        private void OnIpodDatabaseSaveProgressChanged (object o, IPod.TrackSaveProgressArgs args)
+        {
+            double progress = args.CurrentTrack == null ? 0.0 : args.TotalProgress;
+            string message = args.CurrentTrack == null 
+                    ? Catalog.GetString("Waiting for Media")
+                    : String.Format ("{0} - {1}", args.CurrentTrack.Artist, args.CurrentTrack.Title);
+             
+             Console.WriteLine ("Progress: {0}", progress);
+             AddTrackJob.Title = Catalog.GetString ("Syncing iPod");
+             AddTrackJob.Status = message;
+             AddTrackJob.Progress = progress;
+        }
+        
+        public bool SyncNeeded {
+            get {
+                lock (sync_mutex) {
+                    return tracks_to_add.Count > 0 || tracks_to_remove.Count > 0;
+                }
+            }
+        }
 
 #endregion
         

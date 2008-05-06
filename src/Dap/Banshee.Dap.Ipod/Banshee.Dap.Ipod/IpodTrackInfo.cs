@@ -29,8 +29,11 @@
 using System;
 
 using Banshee.Base;
+using Banshee.Streaming;
 using Banshee.Collection;
 using Banshee.Collection.Database;
+
+using Hyena;
 
 namespace Banshee.Dap.Ipod
 {   
@@ -72,6 +75,7 @@ namespace Banshee.Dap.Ipod
                 TrackCount = track.TrackCount;
                 TrackNumber = track.TrackNumber;
                 Year = track.Year;
+                MediaAttributes = track.MediaAttributes;
             }
             
             CanSaveToDatabase = true;
@@ -86,9 +90,15 @@ namespace Banshee.Dap.Ipod
             }
 
             ipod_id = (int)track.Id;
+            
             Duration = track.Duration;
             PlayCount = track.PlayCount;
-
+            LastPlayed = track.LastPlayed;
+            DateAdded = track.DateAdded;
+            TrackCount = track.TotalTracks;
+            TrackNumber = track.TrackNumber;
+            Year = track.Year;
+            
             AlbumTitle = String.IsNullOrEmpty (track.Album) ? null : track.Album;
             ArtistName = String.IsNullOrEmpty (track.Artist) ? null : track.Artist;
             TrackTitle = String.IsNullOrEmpty (track.Title) ? null : track.Title;
@@ -104,15 +114,137 @@ namespace Banshee.Dap.Ipod
                 default:                     Rating = 0; break;
             }
             
-            LastPlayed = track.LastPlayed;
-            DateAdded = track.DateAdded;
-            TrackCount = track.TotalTracks;
-            TrackNumber = track.TrackNumber;
-            Year = track.Year;
-
             if (track.IsProtected) {
-                CanPlay = false;
-                // FIXME: indicate the song is DRMed
+                PlaybackError = StreamPlaybackError.Drm;
+            }
+            
+            MediaAttributes = TrackMediaAttributes.AudioStream;
+            
+            switch (track.Type) {
+                case IPod.MediaType.Audio:
+                    MediaAttributes |= TrackMediaAttributes.Music;
+                    break;
+                case IPod.MediaType.AudioVideo:
+                case IPod.MediaType.Video:
+                    MediaAttributes |= TrackMediaAttributes.VideoStream;
+                    break;
+                case IPod.MediaType.MusicVideo:
+                    MediaAttributes |= TrackMediaAttributes.Music | TrackMediaAttributes.VideoStream;
+                    break;
+                case IPod.MediaType.Movie:
+                    MediaAttributes |= TrackMediaAttributes.VideoStream | TrackMediaAttributes.Movie;
+                    break;
+                case IPod.MediaType.TVShow:
+                    MediaAttributes |= TrackMediaAttributes.VideoStream | TrackMediaAttributes.TvShow;
+                    break;
+                case IPod.MediaType.VideoPodcast:
+                    MediaAttributes |= TrackMediaAttributes.VideoStream | TrackMediaAttributes.Podcast;
+                    break;
+                case IPod.MediaType.Podcast:
+                    MediaAttributes |= TrackMediaAttributes.Podcast;
+                    // FIXME: persist URL on the track (track.PodcastUrl)
+                    break;
+                case IPod.MediaType.Audiobook:
+                    MediaAttributes |= TrackMediaAttributes.AudioBook;
+                    break;
+            }
+        }
+        
+        public void CommitToIpod (IPod.Device device)
+        {
+            IPod.Track track = device.TrackDatabase.CreateTrack ();
+
+            try {
+                track.Uri = new Uri (Uri.AbsoluteUri);
+            } catch (Exception e) {
+                Log.Exception ("Failed to create System.Uri for iPod track", e);
+                device.TrackDatabase.RemoveTrack (track);
+            }
+            
+            track.Duration = Duration;
+            track.PlayCount = PlayCount;
+            track.LastPlayed = LastPlayed;
+            track.DateAdded = DateAdded;
+            track.TotalTracks = TrackCount;
+            track.TrackNumber = TrackNumber;
+            track.Year = Year;
+            
+            if (!String.IsNullOrEmpty (AlbumTitle)) {
+                track.Album = AlbumTitle;
+            }
+            
+            if (!String.IsNullOrEmpty (ArtistName)) {
+                track.Artist = ArtistName;
+            }
+            
+            if (!String.IsNullOrEmpty (TrackTitle)) {
+                track.Title = TrackTitle;
+            }
+            
+            if (!String.IsNullOrEmpty (Genre)) {
+                track.Genre = Genre;
+            }
+            
+            switch (Rating) {
+                case 1: track.Rating = IPod.TrackRating.Zero; break;
+                case 2: track.Rating = IPod.TrackRating.Two; break;
+                case 3: track.Rating = IPod.TrackRating.Three; break;
+                case 4: track.Rating = IPod.TrackRating.Four; break;
+                case 5: track.Rating = IPod.TrackRating.Five; break;
+                default: track.Rating = IPod.TrackRating.Zero; break;
+            }
+            
+            if ((MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
+                if ((MediaAttributes & TrackMediaAttributes.Music) != 0) {
+                    track.Type = IPod.MediaType.MusicVideo;
+                } else if ((MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
+                    track.Type = IPod.MediaType.VideoPodcast;
+                } else if ((MediaAttributes & TrackMediaAttributes.Movie) != 0) {
+                    track.Type = IPod.MediaType.Movie;
+                } else if ((MediaAttributes & TrackMediaAttributes.TvShow) != 0) {
+                    track.Type = IPod.MediaType.TVShow;
+                } else {
+                    track.Type = IPod.MediaType.Video;
+                }
+            } else {
+                if ((MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
+                    track.Type = IPod.MediaType.Podcast;
+                } else if ((MediaAttributes & TrackMediaAttributes.AudioBook) != 0) {
+                    track.Type = IPod.MediaType.Audiobook;
+                } else if ((MediaAttributes & TrackMediaAttributes.Music) != 0) {
+                    track.Type = IPod.MediaType.Audio;
+                } else {
+                    track.Type = IPod.MediaType.Audio;
+                }
+            }
+            
+            if (CoverArtSpec.CoverExists (ArtistAlbumId)) {
+                SetIpodCoverArt (device, track, CoverArtSpec.GetPath (ArtistAlbumId));
+            }
+        }
+        
+        // FIXME: No reason for this to use GdkPixbuf - the file is on disk already in 
+        // the artwork cache as a JPEG, so just shove the bytes from disk into the track
+        
+        private void SetIpodCoverArt (IPod.Device device, IPod.Track track, string path)
+        {
+            try {
+                Gdk.Pixbuf pixbuf = new Gdk.Pixbuf (path);
+                if (pixbuf != null) {
+                    SetIpodCoverArt (device, track, IPod.ArtworkUsage.Cover, pixbuf);
+                    pixbuf.Dispose ();
+                }
+            } catch (Exception e) {
+                Log.Exception (String.Format ("Failed to set cover art on iPod from {0}", path), e);
+            }
+        }
+
+        private void SetIpodCoverArt (IPod.Device device, IPod.Track track, IPod.ArtworkUsage usage, Gdk.Pixbuf pixbuf)
+        {
+            foreach (IPod.ArtworkFormat format in device.LookupArtworkFormats (usage)) {
+                if (!track.HasCoverArt (format)) {
+                    track.SetCoverArt (format, IPod.ArtworkHelpers.ToBytes (format, pixbuf));
+                }
             }
         }
     }

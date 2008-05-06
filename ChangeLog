@@ -1,3 +1,20 @@
+2008-05-05  Aaron Bockover  <abock@gnome.org>
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	Implement the new iPod syncing model - it's mostly done, but still some
+	glitches that need to be addressed
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs: Implemented
+	full two way copy of database tracks to iPod tracks and back again - 
+	track media attributes are preserved in both directions, so this allows
+	for video syncing - yes, I said video syncing. You can now use Banshee
+	to manage videos on your iPod. Epic. Stop using iPods though, they suck.
+	Buy an MTP device, save a seal, vote Obama.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Removed the thread stuff which needs to be moved to DapSource (not done,
+	so don't tell Gabe)
+
 2008-05-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs: Move
