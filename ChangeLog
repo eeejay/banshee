@@ -1,3 +1,11 @@
+2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Ignore iPods unless they have a .is_audio_player file.
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Remove
+	unnecessary override and OnTracksAdded call.
+
 2008-05-06  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Revert CanPlay

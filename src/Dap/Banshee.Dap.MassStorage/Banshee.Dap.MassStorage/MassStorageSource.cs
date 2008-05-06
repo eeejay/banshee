@@ -63,6 +63,19 @@ namespace Banshee.Dap.MassStorage
             if (!HasMediaCapabilities)
                 throw new InvalidDeviceException ();
 
+            // Ignore iPods, except ones with .is_audio_player files
+            if (MediaCapabilities.IsType ("ipod")) {
+                if (HasIsAudioPlayerFile) {
+                    Log.Information (
+                        "Mass Storage Support Loading iPod",
+                        "The USB mass storage audio player support is loading an iPod because it has an .is_audio_player file. " +
+                        "If you aren't running Rockbox or don't know what you're doing, things might not behave as expected."
+                    );
+                } else {
+                    throw new InvalidDeviceException ();
+                }
+            }
+
             Name = volume.Name;
             mount_point = volume.MountPoint;
 
@@ -96,7 +109,11 @@ namespace Banshee.Dap.MassStorage
         }
 
         protected override bool HasMediaCapabilities {
-            get { return base.HasMediaCapabilities || File.Exists (new SafeUri (IsAudioPlayerPath)); }
+            get { return base.HasMediaCapabilities || HasIsAudioPlayerFile; }
+        }
+
+        private bool HasIsAudioPlayerFile {
+            get { return File.Exists (new SafeUri (IsAudioPlayerPath)); }
         }
 
         protected override IDeviceMediaCapabilities MediaCapabilities {
@@ -232,5 +249,51 @@ namespace Banshee.Dap.MassStorage
 
             return file_path;
         }
+
+        /*private void ParseIsAudioPlayerFile ()
+        {
+            // Allow the HAL values to be overridden by corresponding key=value pairs in .is_audio_player
+            if(File.Exists(IsAudioPlayerPath)) {
+                StreamReader reader = null;
+                try {
+                    reader = new StreamReader(IsAudioPlayerPath);
+
+                    string line;
+                    while((line = reader.ReadLine()) != null) {
+                        string [] pieces = line.Split('=');
+                        if(line.StartsWith("#") || pieces == null || pieces.Length != 2)
+                            continue;
+
+                        string key = pieces[0], val = pieces[1];
+
+                        switch(key) {
+                        case "audio_folders":
+                            AudioFolders = val.Split(',');
+                            break;
+
+                        case "output_formats":
+                            PlaybackFormats = val.Split(',');
+                            break;
+
+                        case "folder_depth":
+                            FolderDepth = Int32.Parse(val);
+                            break;
+
+                        case "input_formats":
+                        case "playlist_format":
+                        case "playlist_path":
+                        default:
+                            Console.WriteLine("Unsupported key: {0}", key);
+                            break;
+                        }
+                    }
+                } catch(Exception e) {
+                    LogCore.Instance.PushWarning("Error parsing .is_audio_player file", e.ToString(), false);
+                } finally {
+                    if(reader != null)
+                        reader.Close();
+                }
+            }
+        }*/
     }
 }

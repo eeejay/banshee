@@ -178,8 +178,6 @@ namespace Banshee.Dap.Ipod
             /*if(previous_database_supported != database_supported) {
                 OnPropertiesChanged();
             }*/
-            
-            OnTracksAdded ();
         }
         
 #endregion
@@ -345,11 +343,6 @@ namespace Banshee.Dap.Ipod
             }
         }
         
-        protected override void OnTracksDeleted ()
-        {
-            base.OnTracksDeleted ();
-        }
-
         protected override void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
         {
             lock (sync_mutex) {
