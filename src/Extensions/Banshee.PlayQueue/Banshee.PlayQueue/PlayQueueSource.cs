@@ -49,7 +49,7 @@ namespace Banshee.PlayQueue
 {
     public class PlayQueueSource : PlaylistSource, IBasicPlaybackController, IDisposable
     {
-        private static string special_playlist_name = typeof (PlayQueueSource).ToString ();
+        private static string special_playlist_name = "Play Queue";//typeof (PlayQueueSource).ToString ();
 
         private DatabaseTrackInfo playing_track;
         private bool actions_loaded = false;
