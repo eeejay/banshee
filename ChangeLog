@@ -1,3 +1,8 @@
+2008-05-06  Aaron Bockover  <abock@gnome.org>
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Make the
+	progress notification for iPod syncing much better
+
 2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:

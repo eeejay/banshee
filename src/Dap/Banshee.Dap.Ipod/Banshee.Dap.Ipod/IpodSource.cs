@@ -368,7 +368,7 @@ namespace Banshee.Dap.Ipod
                     Application.IdleTimeoutRemove (sync_timeout_id);
                 }
                 
-                sync_timeout_id = Application.RunTimeout (5000, PerformSync);
+                sync_timeout_id = Application.RunTimeout (1000, PerformSync);
             }
         }
         
@@ -458,12 +458,40 @@ namespace Banshee.Dap.Ipod
             } 
             
             try {
+                ipod_device.TrackDatabase.SaveStarted += OnIpodDatabaseSaveStarted;
+                ipod_device.TrackDatabase.SaveEnded += OnIpodDatabaseSaveEnded;
                 ipod_device.TrackDatabase.SaveProgressChanged += OnIpodDatabaseSaveProgressChanged;
                 ipod_device.Save ();
             } catch (Exception e) {
                 Log.Exception ("Failed to save iPod database", e);
             } finally {
+                ipod_device.TrackDatabase.SaveStarted -= OnIpodDatabaseSaveStarted;
+                ipod_device.TrackDatabase.SaveEnded -= OnIpodDatabaseSaveEnded;
                 ipod_device.TrackDatabase.SaveProgressChanged -= OnIpodDatabaseSaveProgressChanged;
+            }
+        }
+        
+        private UserJob sync_user_job;
+        
+        private void OnIpodDatabaseSaveStarted (object o, EventArgs args)
+        {
+            DisposeSyncUserJob ();
+            
+            sync_user_job = new UserJob (Catalog.GetString ("Syncing iPod"), 
+                Catalog.GetString ("Preparing to synchronize..."), GetIconNames ());
+            sync_user_job.Register ();
+        }
+        
+        private void OnIpodDatabaseSaveEnded (object o, EventArgs args)
+        {
+            DisposeSyncUserJob ();
+        }
+        
+        private void DisposeSyncUserJob ()
+        {
+            if (sync_user_job != null) {
+                sync_user_job.Finish ();
+                sync_user_job = null;
             }
         }
         
@@ -471,12 +499,16 @@ namespace Banshee.Dap.Ipod
         {
             double progress = args.CurrentTrack == null ? 0.0 : args.TotalProgress;
             string message = args.CurrentTrack == null 
-                    ? Catalog.GetString ("Waiting for Media")
+                    ? Catalog.GetString ("Updating...")
                     : String.Format ("{0} - {1}", args.CurrentTrack.Artist, args.CurrentTrack.Title);
              
-             AddTrackJob.Title = Catalog.GetString ("Syncing iPod");
-             AddTrackJob.Status = message;
-             AddTrackJob.Progress = progress;
+             if (progress >= 0.99) {
+                 sync_user_job.Status = Catalog.GetString ("Flushing to disk...");
+                 sync_user_job.Progress = 0;
+             } else {
+                 sync_user_job.Status = message;
+                 sync_user_job.Progress = progress;
+             }
         }
         
         public bool SyncNeeded {
