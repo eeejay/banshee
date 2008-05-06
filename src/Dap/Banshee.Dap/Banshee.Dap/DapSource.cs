@@ -198,8 +198,10 @@ namespace Banshee.Dap
                 IncrementAddedTracks ();
                 return;
             }
-            
-            if (PreferredConfiguration == null) {
+
+            // If it's a video and needs transcoding, we don't support that yet
+            // TODO have preferred profiles for Audio and Video separately
+            if (PreferredConfiguration == null || (track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
                 string format = System.IO.Path.GetExtension (track.Uri.LocalPath);
                 format = String.IsNullOrEmpty (format) ? Catalog.GetString ("Unknown") : format.Substring (1);
                 throw new ApplicationException (String.Format (Catalog.GetString (
