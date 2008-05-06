@@ -440,8 +440,7 @@ namespace Banshee.Sources
 
             // Store a snapshot of the current selection
             CachedList<DatabaseTrackInfo> cached_list = CachedList<DatabaseTrackInfo>.CreateFromModelSelection (model);
-
-            System.Threading.ThreadPool.QueueUserWorkItem (AddTrackList, cached_list);
+            AddTrackList (cached_list);
 
             return true;
         }
@@ -463,9 +462,8 @@ namespace Banshee.Sources
             IncrementAddedTracks ();
         }
 
-        protected virtual void AddTrackList (object cached_list)
+        protected virtual void AddTrackList (CachedList<DatabaseTrackInfo> list)
         {
-            CachedList<DatabaseTrackInfo> list = cached_list as CachedList<DatabaseTrackInfo>;
             is_adding = true;
             AddTrackJob.Total += (int) list.Count;
 

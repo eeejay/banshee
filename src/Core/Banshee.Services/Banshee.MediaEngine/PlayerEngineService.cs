@@ -245,11 +245,7 @@ namespace Banshee.MediaEngine
         
         public void Open (TrackInfo track)
         {
-            if (!track.CanPlay || OnTrackIntercept (track)) {
-                return;
-            }
-               
-            OpenCheck (track);
+            OpenPlay (track, false);
         }
         
         public void Open (SafeUri uri)
@@ -263,6 +259,11 @@ namespace Banshee.MediaEngine
         }
         
         public void OpenPlay (TrackInfo track)
+        {
+            OpenPlay (track, true);
+        }
+        
+        private void OpenPlay (TrackInfo track, bool play)
         {
             if (!track.CanPlay || OnTrackIntercept (track)) {
                 return;

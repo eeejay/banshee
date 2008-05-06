@@ -46,6 +46,7 @@ namespace Banshee.Dap.Ipod
     public class IpodSource : DapSource
     {
         private PodSleuthDevice ipod_device;
+        private Dictionary<int, IpodTrackInfo> tracks_map = new Dictionary<int, IpodTrackInfo> (); // FIXME: EPIC FAIL
         private bool database_loaded;
         
         private string name_path;
@@ -157,6 +158,8 @@ namespace Banshee.Dap.Ipod
             if (refresh) {
                 ipod_device.TrackDatabase.Reload ();
             }
+            
+            tracks_map.Clear ();
              
             if (database_supported || (ipod_device.HasTrackDatabase && 
                 ipod_device.ModelInfo.DeviceClass == "shuffle")) {
@@ -164,6 +167,7 @@ namespace Banshee.Dap.Ipod
                     IpodTrackInfo track = new IpodTrackInfo (ipod_track);
                     track.PrimarySource = this;
                     track.Save (false);
+                    tracks_map.Add (track.TrackId, track);
                 }
             } 
             
@@ -271,7 +275,7 @@ namespace Banshee.Dap.Ipod
                     name = ipod_device.Name;
                 }
                     
-                /*if (!String.IsNullOrEmpty (name)) {
+                if (!String.IsNullOrEmpty (name)) {
                     return name;
                 } else if (ipod_device.PropertyExists ("volume.label")) {
                     name = ipod_device.GetPropertyString ("volume.label");
@@ -279,9 +283,7 @@ namespace Banshee.Dap.Ipod
                     name = ipod_device.GetPropertyString ("info.product");
                 } else {
                     name = ((IDevice)ipod_device).Name ?? "iPod";
-                }*/
-                
-                name = "WTF";
+                }
                 
                 try {
                     return name;
@@ -331,10 +333,13 @@ namespace Banshee.Dap.Ipod
         protected override void DeleteTrack (DatabaseTrackInfo track)
         {
             lock (sync_mutex) {
-                IpodTrackInfo ipod_track = track as IpodTrackInfo;
+                if (!tracks_map.ContainsKey (track.TrackId)) {
+                    return;
+                }
+                
+                IpodTrackInfo ipod_track = tracks_map[track.TrackId];
                 if (ipod_track != null) {
                     tracks_to_remove.Enqueue (ipod_track);
-                    
                     QueueSync ();
                 }
             }
@@ -446,6 +451,10 @@ namespace Banshee.Dap.Ipod
                     track = tracks_to_remove.Dequeue ();
                 }
                 
+                if (tracks_map.ContainsKey (track.TrackId)) {
+                    tracks_map.Remove (track.TrackId);
+                }
+                
                 try {
                     if (track.IpodTrack != null) {
                         ipod_device.TrackDatabase.RemoveTrack (track.IpodTrack);
@@ -469,10 +478,9 @@ namespace Banshee.Dap.Ipod
         {
             double progress = args.CurrentTrack == null ? 0.0 : args.TotalProgress;
             string message = args.CurrentTrack == null 
-                    ? Catalog.GetString("Waiting for Media")
+                    ? Catalog.GetString ("Waiting for Media")
                     : String.Format ("{0} - {1}", args.CurrentTrack.Artist, args.CurrentTrack.Title);
              
-             Console.WriteLine ("Progress: {0}", progress);
              AddTrackJob.Title = Catalog.GetString ("Syncing iPod");
              AddTrackJob.Status = message;
              AddTrackJob.Progress = progress;

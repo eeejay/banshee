@@ -299,7 +299,7 @@ namespace Banshee.Collection
 
         private bool can_play = true;
         public bool CanPlay {
-            get { return can_play && PlaybackError == StreamPlaybackError.None; }
+            get { return can_play; }
             set { can_play = value; }
         }
 

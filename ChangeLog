@@ -1,3 +1,16 @@
+2008-05-06  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Revert CanPlay
+	to not be smart with playback errors; it's probably best if the engine
+	just be allowed to try whenever a track is requested to play
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Consolidated Open and OpenPlay logic into a single method to eliminate
+	duplication
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Implemented
+	track remove support
+
 2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
