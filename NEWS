@@ -138,14 +138,22 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     New features in this release include:
 
-    * Audio CD playback and ripping
-    * Mass Storage Digital Audio Player support
+    * MTP and iPod Player Support
+    * Default Smart Playlists
+    * Extension Manager
+    * Minimode extension
 
     Other features, bug fixes, and errata:
 
+    * Fullscreen video is now supported (press f or go to Now Playing)
+    * Banshee can be scripted using Boo
+    * Improved gstreamer error handling (for missing files, codecs, etc)
+    * A bug with play counts introduced in Alpha 3 has been fixed
+    * Writing metadata to file is working properly now
+    * Issues with the play queue should all be resolved
+    * Limiting smart playlists by file size or duration works
+    * Shuffle and repeat are automatically disabled while playing Last.fm
     * Over 30 bugs were fixed since Alpha 3
-	* 
-
 
 ===============================================================================
 REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
