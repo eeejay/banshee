@@ -56,6 +56,11 @@ namespace Banshee.Dap
             Properties.SetString ("UnmapSourceActionIconName", "media-eject");
             Properties.SetString ("GtkActionPath", "/RemovableSourceContextMenu");
             AfterInitialized ();
+
+            // Things are usually slower on removable disks, so don't bother trying to
+            // delay the add/remove jobs from showing.
+            DelayAddJob = false;
+            DelayDeleteJob = false;
         }
 
         public override string GenericName {

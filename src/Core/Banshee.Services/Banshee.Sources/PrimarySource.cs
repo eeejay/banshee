@@ -438,8 +438,11 @@ namespace Banshee.Sources
 
             DatabaseTrackListModel model = (source as ITrackModelSource).TrackModel as DatabaseTrackListModel;
 
+            // Store a snapshot of the current selection
             CachedList<DatabaseTrackInfo> cached_list = CachedList<DatabaseTrackInfo>.CreateFromModelSelection (model);
-            AddTrackList (cached_list);
+
+            System.Threading.ThreadPool.QueueUserWorkItem (AddTrackList, cached_list);
+
             return true;
         }
 
@@ -460,8 +463,9 @@ namespace Banshee.Sources
             IncrementAddedTracks ();
         }
 
-        protected virtual void AddTrackList (CachedList<DatabaseTrackInfo> list)
+        protected virtual void AddTrackList (object cached_list)
         {
+            CachedList<DatabaseTrackInfo> list = cached_list as CachedList<DatabaseTrackInfo>;
             is_adding = true;
             AddTrackJob.Total += (int) list.Count;
 
@@ -507,6 +511,18 @@ namespace Banshee.Sources
                 OnUserNotifyUpdated ();
         }
 
+        private bool delay_add_job = true;
+        protected bool DelayAddJob {
+            get { return delay_add_job; }
+            set { delay_add_job = value; }
+        }
+
+        private bool delay_delete_jbo = true;
+        protected bool DelayDeleteJob {
+            get { return delay_delete_jbo; }
+            set { delay_delete_jbo = value; }
+        }
+
         private BatchUserJob add_track_job;
         protected BatchUserJob AddTrackJob {
             get {
@@ -515,7 +531,7 @@ namespace Banshee.Sources
                         add_track_job = new BatchUserJob (String.Format (Catalog.GetString (
                             "Adding {0} of {1} to {2}"), "{0}", "{1}", Name), 
                             Properties.GetStringList ("Icon.Name"));
-                        //add_track_job.DelayShow = true;
+                        add_track_job.DelayShow = DelayAddJob;
                         add_track_job.Register ();
                     }
                 }
@@ -531,7 +547,7 @@ namespace Banshee.Sources
                         delete_track_job = new BatchUserJob (String.Format (Catalog.GetString (
                             "Deleting {0} of {1} From {2}"), "{0}", "{1}", Name),
                             Properties.GetStringList ("Icon.Name"));
-                        //delete_track_job.DelayShow = true;
+                        delete_track_job.DelayShow = DelayDeleteJob;
                         delete_track_job.Register ();
                     }
                 }

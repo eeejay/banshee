@@ -1,5 +1,20 @@
 2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Don't delay add and
+	delete user jobs, since removable devices are slow and we might as well
+	show the progress bars asap.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Make sure the device
+	mapping doesn't happen on the main thread.  Aaron will love this.  MTP's
+	DeviceInitialize method can be very slow (10+ seconds) and we definitely
+	shouldn't block the ui for it.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Make sure
+	adding files to a primary source happens not on the main thread.  Add
+	protected properties for deciding whether to delay the add/delete jobs.
+
+2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Mtp/Mtp/Album.cs: Be more careful with native code.
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
