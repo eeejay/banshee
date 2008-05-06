@@ -203,7 +203,12 @@ namespace Banshee.HalBackend
             lock (mounted_volumes) {
                 if (mounted_volumes.ContainsKey (device)) {
                     Volume volume = mounted_volumes[device];
-                    if (!volume.IsMounted) {
+                    bool mounted = false;
+                    try {
+                        mounted = volume.IsMounted;
+                    } catch (Exception) {}
+
+                    if (!mounted) {
                         mounted_volumes.Remove (device);
                         unmounted_volumes[device] = volume;
                         HardwareManager.OnDeviceRemoved (volume.Uuid);

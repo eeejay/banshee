@@ -63,6 +63,9 @@ namespace Banshee.Dap.MassStorage
             if (!HasMediaCapabilities && !HasIsAudioPlayerFile)
                 throw new InvalidDeviceException ();
 
+            if (HasIsAudioPlayerFile)
+                ParseIsAudioPlayerFile ();
+
             // Ignore iPods, except ones with .is_audio_player files
             if (MediaCapabilities != null && MediaCapabilities.IsType ("ipod")) {
                 if (HasIsAudioPlayerFile) {
@@ -81,8 +84,31 @@ namespace Banshee.Dap.MassStorage
 
             Initialize ();
 
+            AddDapProperties ();
+
             // TODO differentiate between Audio Players and normal Disks, and include the size, eg "2GB Audio Player"?
             //GenericName = Catalog.GetString ("Audio Player");
+        }
+
+        private void AddDapProperties ()
+        {
+            if (AudioFolders.Length > 0 && !String.IsNullOrEmpty (AudioFolders[0])) {
+                AddDapProperty (String.Format (
+                    Catalog.GetPluralString ("Audio Folder", "Audio Folders", AudioFolders.Length), AudioFolders.Length),
+                    System.String.Join ("\n", AudioFolders)
+                );
+            }
+
+            if (FolderDepth != -1) {
+                AddDapProperty (Catalog.GetString ("Required Folder Depth"), FolderDepth.ToString ());
+            }
+
+            /*if (AcceptableMimeTypes.Length > 0) {
+                AddDapProperty (String.Format (
+                    Catalog.GetPluralString ("Audio Format", "Audio Formats", PlaybackFormats.Length), PlaybackFormats.Length),
+                    System.String.Join (", ", PlaybackFormats)
+                );
+            }*/
         }
 
         // WARNING: This will be called from a thread!
@@ -108,8 +134,13 @@ namespace Banshee.Dap.MassStorage
             get { return mount_point; }
         }
 
+        private bool? has_is_audio_player_file = null;
         private bool HasIsAudioPlayerFile {
-            get { return File.Exists (new SafeUri (IsAudioPlayerPath)); }
+            get {
+                if (has_is_audio_player_file == null)
+                    has_is_audio_player_file = File.Exists (new SafeUri (IsAudioPlayerPath));
+                return has_is_audio_player_file.Value;
+            }
         }
 
         protected override IDeviceMediaCapabilities MediaCapabilities {
@@ -144,14 +175,36 @@ namespace Banshee.Dap.MassStorage
                     write_path = BaseDirectory;
                     // According to the HAL spec, the first folder listed in the audio_folders property
                     // is the folder to write files to.
-                    if (MediaCapabilities != null && MediaCapabilities.AudioFolders.Length > 0) {
-                        write_path = System.IO.Path.Combine (write_path, MediaCapabilities.AudioFolders[0]);
+                    if (AudioFolders.Length > 0) {
+                        write_path = System.IO.Path.Combine (write_path, AudioFolders[0]);
                     }
                 }
                 return write_path;
             }
 
             set { write_path = value; }
+        }
+
+        private string [] audio_folders;
+        protected string [] AudioFolders {
+            get {
+                if (audio_folders == null) {
+                    audio_folders = HasMediaCapabilities ? MediaCapabilities.AudioFolders : new string [] {};
+                }
+                return audio_folders;
+            }
+            set { audio_folders = value; }
+        }
+
+        private int folder_depth = -1;
+        protected int FolderDepth {
+            get {
+                if (folder_depth == -1) {
+                    folder_depth = HasMediaCapabilities ? MediaCapabilities.FolderDepth : 0;
+                }
+                return folder_depth;
+            }
+            set { folder_depth = value; }
         }
 
         protected override void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
@@ -193,10 +246,6 @@ namespace Banshee.Dap.MassStorage
             if (volume.CanEject) {
                 volume.Eject ();
             }
-        }
-
-        protected int FolderDepth {
-            get { return MediaCapabilities == null ? -1 : MediaCapabilities.FolderDepth; }
         }
 
         private string GetTrackPath (TrackInfo track, string ext)
@@ -246,50 +295,49 @@ namespace Banshee.Dap.MassStorage
             return file_path;
         }
 
-        /*private void ParseIsAudioPlayerFile ()
+        private void ParseIsAudioPlayerFile ()
         {
             // Allow the HAL values to be overridden by corresponding key=value pairs in .is_audio_player
-            if(File.Exists(IsAudioPlayerPath)) {
-                StreamReader reader = null;
-                try {
-                    reader = new StreamReader(IsAudioPlayerPath);
+            System.IO.StreamReader reader = null;
+            try {
+                reader = new System.IO.StreamReader (IsAudioPlayerPath);
 
-                    string line;
-                    while((line = reader.ReadLine()) != null) {
-                        string [] pieces = line.Split('=');
-                        if(line.StartsWith("#") || pieces == null || pieces.Length != 2)
-                            continue;
+                string line;
+                while ((line = reader.ReadLine ()) != null) {
+                    string [] pieces = line.Split ('=');
+                    if (line.StartsWith ("#") || pieces == null || pieces.Length != 2)
+                        continue;
 
-                        string key = pieces[0], val = pieces[1];
+                    string key = pieces[0];
+                    string val = pieces[1];
 
-                        switch(key) {
-                        case "audio_folders":
-                            AudioFolders = val.Split(',');
-                            break;
+                    switch (key) {
+                    case "audio_folders":
+                        AudioFolders = val.Split (',');
+                        break;
 
-                        case "output_formats":
-                            PlaybackFormats = val.Split(',');
-                            break;
+                    case "output_formats":
+                        //PlaybackFormats = val.Split (',');
+                        break;
 
-                        case "folder_depth":
-                            FolderDepth = Int32.Parse(val);
-                            break;
+                    case "folder_depth":
+                        FolderDepth = Int32.Parse (val);
+                        break;
 
-                        case "input_formats":
-                        case "playlist_format":
-                        case "playlist_path":
-                        default:
-                            Console.WriteLine("Unsupported key: {0}", key);
-                            break;
-                        }
+                    case "input_formats":
+                    case "playlist_format":
+                    case "playlist_path":
+                    default:
+                        Log.DebugFormat ("Unsupported .is_audio_player key: {0}", key);
+                        break;
                     }
-                } catch(Exception e) {
-                    LogCore.Instance.PushWarning("Error parsing .is_audio_player file", e.ToString(), false);
-                } finally {
-                    if(reader != null)
-                        reader.Close();
                 }
+            } catch (Exception e) {
+                Log.Exception ("Error parsing .is_audio_player file", e);
+            } finally {
+                if (reader != null)
+                    reader.Close ();
             }
-        }*/
+        }
     }
 }

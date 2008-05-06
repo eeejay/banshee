@@ -114,13 +114,13 @@ namespace Banshee.Dap
             extTable.ColumnSpacing = 10;
             extTable.RowSpacing = 5;
             
-            /*foreach(DapDevice.Property property in device.Properties) {
+            foreach(DapSource.DapProperty property in source.DapProperties) {
                 extTable.AddLabel(property.Name, property.Value);
             }
             
             Expander expander = new Expander(Catalog.GetString("Advanced details"));
             expander.Add(extTable);
-            box.PackStart(expander, false, false, 0); */
+            box.PackStart(expander, false, false, 0);
             
             BorderWidth = 10;
             Resizable = false;

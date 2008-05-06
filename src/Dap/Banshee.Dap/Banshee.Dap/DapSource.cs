@@ -108,6 +108,9 @@ namespace Banshee.Dap
             if (String.IsNullOrEmpty (Name)) {
                 Name = device.Name;
             }
+
+            AddDapProperty (Catalog.GetString ("Product"), device.Product);
+            AddDapProperty (Catalog.GetString ("Vendor"), device.Vendor);
             
             acceptable_mimetypes = MediaCapabilities != null 
                 ? MediaCapabilities.PlaybackMimeTypes 
@@ -189,6 +192,22 @@ namespace Banshee.Dap
             }
 
             return true;
+        }
+
+        public struct DapProperty {
+            public string Name;
+            public string Value;
+            public DapProperty (string k, string v) { Name = k; Value = v; }
+        }
+
+        private List<DapProperty> dap_properties = new List<DapProperty> ();
+        protected void AddDapProperty (string key, string val)
+        {
+            dap_properties.Add (new DapProperty (key, val));
+        }
+
+        public IEnumerable<DapProperty> DapProperties {
+            get { return dap_properties; }
         }
 
         protected override void AddTrackAndIncrementCount (DatabaseTrackInfo track)

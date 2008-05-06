@@ -1,5 +1,22 @@
 2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Parse the .is_audio_player file, except not setting the output formats
+	yet.  Install some dap properties.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Add DapProperties property
+	that the Dap dialog shows.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs: Show the
+	DapProperties.
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs: Cache the uuid.
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs: Catch property
+	exception for volume that was suddenly removed.
+
+2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Fix a bug where we
 	attempted to transcode video files.  We don't support that yet.
 

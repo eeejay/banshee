@@ -51,8 +51,9 @@ namespace Banshee.HalBackend
             this.device = device;
         }
         
+        private string uuid;
         public virtual string Uuid {
-            get { return String.IsNullOrEmpty (HalDevice["usb.serial"]) ? device.Udi : HalDevice["usb.serial"]; }
+            get { return uuid ?? uuid = String.IsNullOrEmpty (HalDevice["usb.serial"]) ? device.Udi : HalDevice["usb.serial"]; }
         }
 
         private string name;
