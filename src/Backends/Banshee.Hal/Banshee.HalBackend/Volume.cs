@@ -48,11 +48,17 @@ namespace Banshee.HalBackend
                 return null;
             }
             
-            Volume volume = (parent is ICdromDevice || (parent == null && device.QueryCapability ("volume.disc")))
-                ? DiscVolume.Resolve (parent, manager, device)
-                : new Volume (parent, manager, device);
+            try {
+                Volume volume = (parent is ICdromDevice || (parent == null && device.QueryCapability ("volume.disc")))
+                    ? DiscVolume.Resolve (parent, manager, device)
+                    : new Volume (parent, manager, device);
 
-            return CheckVolumeMounted (volume) ? volume : null;
+                return CheckVolumeMounted (volume) ? volume : null;
+            } catch (Exception e) {
+                Hyena.Log.Exception (e);
+            }
+
+            return null;
         }
         
         private BlockDevice parent;

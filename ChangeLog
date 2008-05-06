@@ -1,5 +1,11 @@
 2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs: Catch exceptions
+	while trying to identify a HAL device as a volume.  Should fix BGO
+	#528481.
+
+2008-05-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Make SetStatus and
