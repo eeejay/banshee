@@ -102,6 +102,7 @@ RESOURCES =  \
 	Banshee.ThickClient.addin.xml \
 	Resources/banshee-dialogs.glade \
 	Resources/banshee-logo.png \
+	Resources/jcastro.png \
 	Resources/browser-album-cover.png \
 	Resources/core-ui-actions-layout.xml
 

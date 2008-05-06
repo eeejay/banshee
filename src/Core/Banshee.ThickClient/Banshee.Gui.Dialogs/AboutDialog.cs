@@ -82,7 +82,7 @@ namespace Banshee.Gui.Dialogs
             // than plain Name, since it's been depreciated. We can't do that
             // yet though since it breaks stuff for other people. 
             Name = "Banshee";
-            Logo = Gdk.Pixbuf.LoadFromResource ("banshee-logo.png");
+            Logo = Gdk.Pixbuf.LoadFromResource (ApplicationContext.Debugging ? "jcastro.png" : "banshee-logo.png");
             Version = String.Format ("{0} ({1})", 
                 Banshee.ServiceStack.Application.DisplayVersion, 
                 Banshee.ServiceStack.Application.Version);
