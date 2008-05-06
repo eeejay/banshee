@@ -102,9 +102,9 @@ RESOURCES =  \
 	Banshee.ThickClient.addin.xml \
 	Resources/banshee-dialogs.glade \
 	Resources/banshee-logo.png \
-	Resources/jcastro.png \
 	Resources/browser-album-cover.png \
-	Resources/core-ui-actions-layout.xml
+	Resources/core-ui-actions-layout.xml \
+	Resources/jcastro.png
 
 include $(top_srcdir)/build/build.mk
 

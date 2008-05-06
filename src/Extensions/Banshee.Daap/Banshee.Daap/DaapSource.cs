@@ -134,7 +134,7 @@ namespace Banshee.Daap
         {
             // Stop currently playing track if its from us.
             try {
-                if (ServiceManager.PlayerEngine.CurrentState == Banshee.MediaEngine.PlayerEngineState.Playing) {
+                if (ServiceManager.PlayerEngine.CurrentState == Banshee.MediaEngine.PlayerState.Playing) {
                     DatabaseTrackInfo track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo;
                     if (track != null && track.PrimarySource == this) {
                         ServiceManager.PlayerEngine.Close ();

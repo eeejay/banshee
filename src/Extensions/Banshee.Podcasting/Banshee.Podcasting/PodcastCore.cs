@@ -42,6 +42,7 @@ using Migo.TaskCore;
 using Migo.Syndication;
 using Migo.DownloadCore;
 
+using Banshee.MediaEngine;
 using Banshee.Podcasting.Gui;
 using Banshee.Podcasting.Data;
 using Banshee.Collection.Database;
@@ -98,7 +99,7 @@ namespace Banshee.Podcasting
             feeds_manager.FeedDownloadCountChanged += OnFeedDownloadCountChangedHandler;
             feeds_manager.EnclosureDownloadCompleted += OnTaskStoppedHandler;
               
-            ServiceManager.PlayerEngine.StateChanged += OnPlayerEngineStateChangedHandler;
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
 
             InitializeInterface ();
 
@@ -117,7 +118,7 @@ namespace Banshee.Podcasting
                 }
             }
             
-            ServiceManager.PlayerEngine.StateChanged -= OnPlayerEngineStateChangedHandler;
+            ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
 
             Log.Debug ("Disposing dmInterface");    
             if (download_manager_iface != null) {
@@ -335,7 +336,7 @@ namespace Banshee.Podcasting
             }*/
         }        
 
-        private void OnPlayerEngineStateChangedHandler (object sender, EventArgs e)
+        private void OnPlayerEvent (PlayerEventArgs args)
         {
             lock (sync) {
                 //source.Reload ();
