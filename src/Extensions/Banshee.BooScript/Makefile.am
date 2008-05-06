@@ -1,6 +1,7 @@
 ASSEMBLY = Banshee.BooScript
 TARGET = library
 LINK = $(REF_EXTENSION_BOOSCRIPT)
+INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES = Banshee.BooScript/BooScriptService.cs
 

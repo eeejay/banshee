@@ -184,7 +184,7 @@ ${PACKAGE}-${VERSION}
     Digital Audio Player (DAP) Support:
       Mass Storage:    yes
       MTP:             ${enable_mtp_dap}
-      iPod:            ${enable_ipodsharp}	(unstable)
+      iPod:            ${enable_ipodsharp}
 
     DAAP Support:      ${enable_daap}	(unstable)
     Podcast Support:   ${enable_podcast}	(unstable)
