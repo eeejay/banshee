@@ -303,7 +303,7 @@ namespace Banshee.Dap.Mtp
                 string key = MakeAlbumKey (track.ArtistName, track.AlbumTitle);
                 if (album_cache.ContainsKey (key)) {
                     Album album = album_cache[key];
-                    album.RemoveTrack (track_map[track.TrackId]);
+                    album.RemoveTrack (mtp_track);
                     if (album.TrackCount == 0) {
                         album.Remove ();
                         album_cache.Remove (key);

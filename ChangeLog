@@ -1,5 +1,10 @@
 2008-05-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Fix bug with
+	updating/removing the album when removing a track.
+
+2008-05-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Mtp/Mtp/MtpDevice.cs: Add mimetype for .m4a files.
 
 2008-05-08  Sebastian Dröge  <slomo@circular-chaos.org>
