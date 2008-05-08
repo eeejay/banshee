@@ -460,6 +460,7 @@ namespace Mtp
                 case FileType.MPEG:     return "video/mpeg";
                 case FileType.FLAC:     return "audio/flac";
                 case FileType.QT:       return "video/quicktime";
+                case FileType.M4A:      return "audio/mp4";
             }
             return null;
         }
