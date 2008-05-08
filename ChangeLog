@@ -1,3 +1,8 @@
+2008-05-08  Sebastian Dröge  <slomo@circular-chaos.org>
+
+	* src/Libraries/Hyena.Gui/Makefile.am: Dist and install
+	Hyena.Gui.dll.config.
+
 2008-05-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs: Add

@@ -70,3 +70,6 @@ SOURCES =  \
 
 include $(top_srcdir)/build/build.mk
 
+EXTRA_DIST += Hyena.Gui.dll.config
+module_SCRIPTS += Hyena.Gui.dll.config
+
