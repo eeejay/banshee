@@ -1,5 +1,11 @@
 2008-05-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SmoothScrolledWindow.cs: Increase
+	both accel and decel, and fix bug where things would bounce back and
+	forth, overshooting the target.
+
+2008-05-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Fix
 	issue with parent source not getting expanded when it should.  MTP and
 	iPod sources should autoexpand properly now.
