@@ -410,12 +410,14 @@ namespace Banshee.Sources.Gui
             source.ChildSourceRemoved += OnSourceChildSourceRemoved;
             source.UserNotifyUpdated += OnSourceUserNotifyUpdated;
            
+            if (source.Parent != null && source.Parent.AutoExpand == true) {
+                Expand (parent);
+            }
+
             if (source.Expanded || source.AutoExpand == true) {
                 Expand (iter);
-            } else if (source.Parent != null && source.Parent.AutoExpand == true) {
-                Expand (FindSource (source.Parent));
             }
-            
+
             UpdateView ();
         }
 
