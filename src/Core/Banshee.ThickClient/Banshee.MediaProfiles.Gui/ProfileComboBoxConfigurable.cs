@@ -67,10 +67,11 @@ namespace Banshee.MediaProfiles.Gui
             
             ProfileConfiguration config = manager.GetActiveProfileConfiguration (configurationId);
             
-            if(config != null) {
+            if (config != null) {
                 Combo.SetActiveProfile(config.Profile);
-                SetDescription();
             }
+
+            SetDescription();
             
             Combo.Changed += delegate {
                 if(Combo.ActiveProfile != null) {

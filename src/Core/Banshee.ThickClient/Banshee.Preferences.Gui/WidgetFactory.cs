@@ -57,6 +57,15 @@ namespace Banshee.Preferences.Gui
             
             return null;
         }
+
+        public static Widget GetMnemonicWidget (PreferenceBase preference)
+        {
+            if (preference == null) {
+                return null;
+            }
+            
+            return preference.MnemonicWidget as Widget;
+        }
         
         private class PreferenceCheckButton : CheckButton
         {

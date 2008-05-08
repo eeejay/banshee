@@ -49,11 +49,11 @@ namespace Banshee.Preferences.Gui
                     continue;
                 }
                 
-                AddWidget (preference, widget);
+                AddWidget (preference, widget, WidgetFactory.GetMnemonicWidget (preference));
             }
         }
         
-        private void AddWidget (PreferenceBase preference, Widget widget)
+        private void AddWidget (PreferenceBase preference, Widget widget, Widget mnemonic_widget)
         {
             uint start_row = NRows;
             uint start_col = 0;
@@ -71,7 +71,7 @@ namespace Banshee.Preferences.Gui
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
                 
             if (label != null) {
-                label.MnemonicWidget = widget;
+                label.MnemonicWidget = mnemonic_widget ?? widget;
             }
                 
             if (!String.IsNullOrEmpty (preference.Description)) {

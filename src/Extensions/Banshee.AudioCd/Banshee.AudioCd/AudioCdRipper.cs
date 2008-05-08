@@ -62,6 +62,8 @@ namespace Banshee.AudioCd
                 return ripper_extension_node != null;
             }
         }
+
+        public event EventHandler Finished;
         
         // State that does real work
         private IAudioCdRipper ripper;
@@ -167,6 +169,7 @@ namespace Banshee.AudioCd
         private void RipNextTrack ()
         {
             if (queue.Count == 0) {
+                OnFinished ();
                 Dispose ();
                 return;
             }
@@ -246,6 +249,14 @@ namespace Banshee.AudioCd
         }
 
 #endregion
+
+        private void OnFinished ()
+        {
+            EventHandler handler = Finished;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
                                 
 #region User Job Event Handlers        
         

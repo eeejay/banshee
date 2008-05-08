@@ -154,9 +154,18 @@ namespace Banshee.AudioCd
             
             pref_section = service["general"].Add (new Section ("audio-cd", 
                 Catalog.GetString ("Audio CD Importing"), 20));
-                
-            pref_section.Add (new VoidPreference ("import-profile",  Catalog.GetString ("O_utput format")));
+
+            pref_section.Add (new VoidPreference ("import-profile",  Catalog.GetString ("_Import format")));
             pref_section.Add (new VoidPreference ("import-profile-desc"));
+
+            pref_section.Add (new SchemaPreference<bool> (AutoRip, 
+                Catalog.GetString ("_Automatically import audio CDs when inserted"),
+                Catalog.GetString ("When an audio CD is inserted, automatically begin importing it " +
+                    "if metadata can be found and it is not already in the library.")));
+
+            pref_section.Add (new SchemaPreference<bool> (EjectAfterRipped, 
+                Catalog.GetString ("_Eject after importing"),
+                Catalog.GetString ("When an audio CD has been imported, automatically eject it.")));
             
             pref_section.Add (new SchemaPreference<bool> (ErrorCorrection, 
                 Catalog.GetString ("Use error correction when importing"),
@@ -189,6 +198,7 @@ namespace Banshee.AudioCd
                     "cd-importing", description_box);
             
             pref_section["import-profile"].DisplayWidget = chooser;
+            pref_section["import-profile"].MnemonicWidget = chooser.Combo;
             pref_section["import-profile-desc"].DisplayWidget = description_box;
         }
         
@@ -197,6 +207,20 @@ namespace Banshee.AudioCd
             false,
             "Enable error correction",
             "When importing an audio CD, enable error correction (paranoia mode)"
+        );
+
+        public static readonly SchemaEntry<bool> AutoRip = new SchemaEntry<bool> (
+            "import", "auto_rip_cds", 
+            false,
+            "Enable audio CD auto ripping",
+            "When an audio CD is inserted, automatically begin ripping it."
+        );
+
+        public static readonly SchemaEntry<bool> EjectAfterRipped = new SchemaEntry<bool> (
+            "import", "eject_after_ripped", 
+            false,
+            "Eject audio CD after ripped",
+            "After an audio CD has been ripped, automatically eject it."
         );
 
 #endregion

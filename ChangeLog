@@ -1,3 +1,34 @@
+2008-05-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs: Add
+	AutoRip and EjectAfterRipped schemas and preferences.  Fix the mnemonic
+	for the profile chooser.
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: If
+	AutoRip is true, start ripping when the CD is loaded (assuming it's not
+	already in the library).  When a CD is done importing, eject if if
+	EjectAfterRipped is true.
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Add a
+	Finished event.
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/WidgetFactory.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/SectionBox.cs:
+	* src/Core/Banshee.Services/Banshee.Preferences/Root.cs: Add a
+	optional MnemonicWidget property.  If not set, returns the DisplayWidget,
+	otherwise can be used to override the mnemonic widget.
+
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs:
+	Always SetDescription, so even if a user doesn't yet have a preference,
+	the description shows the currently selected option.
+
+	* build/m4/banshee/dap-mtp.m4:
+	* build/m4/banshee/dap-ipod.m4:
+	* configure.ac: Make iPod and MTP support the default, such that if you
+	don't have ipod-sharp or libmtp, you will get a configure error unless you
+	pass --disable-ipod/mtp.  Should help clarify what we view a default
+	Banshee install to include.
+
 2008-05-06  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.0 Beta 1 (0.99.1) Released

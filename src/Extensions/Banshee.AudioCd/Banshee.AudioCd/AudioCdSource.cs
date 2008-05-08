@@ -114,15 +114,20 @@ namespace Banshee.AudioCd
                 OnUpdated ();
             }
         
-            if (query_message == null) {
-                return;
-            }
-            
             if (disc_model.MetadataQuerySuccess) {
                 DestroyQueryMessage ();
                 if (DiscIsPlaying) {
                     ServiceManager.PlayerEngine.TrackInfoUpdated ();
                 }
+
+                if (AudioCdService.AutoRip.Get ()) {
+                    BeginAutoRip ();
+                }
+
+                return;
+            }
+
+            if (query_message == null) {
                 return;
             }
             
@@ -142,6 +147,29 @@ namespace Banshee.AudioCd
             }
         }
 
+        private void BeginAutoRip ()
+        {
+            // Make sure the album isn't already in the Library
+            TrackInfo track = disc_model[0];
+            int count = ServiceManager.DbConnection.Query<int> (
+                @"SELECT Count(*) FROM CoreTracks, CoreArtists, CoreAlbums WHERE 
+                    CoreTracks.PrimarySourceID = ? AND
+                    CoreTracks.ArtistID = CoreArtists.ArtistID AND 
+                    CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
+                    CoreArtists.Name = ? AND CoreAlbums.Title = ? AND (CoreTracks.Disc = ? OR CoreTracks.Disc = 0)",
+                    ServiceManager.SourceManager.MusicLibrary.DbId,
+                    track.ArtistName, track.AlbumTitle, track.Disc
+            );
+
+            if (count > 0) {
+                SetStatus (Catalog.GetString ("Auto rip off because this album is already in the Music Library."), true, false, null);
+                return;
+            }
+
+            Log.DebugFormat ("Beginning auto rip of {0}", Name);
+            ImportDisc ();
+        }
+
         internal void ImportDisc ()
         {
             AudioCdRipper ripper = null;
@@ -149,6 +177,7 @@ namespace Banshee.AudioCd
             try {
                 if (AudioCdRipper.Supported) {
                     ripper = new AudioCdRipper (this);
+                    ripper.Finished += OnRipperFinished;
                     ripper.Start ();
                 }
             } catch (Exception e) {
@@ -158,6 +187,13 @@ namespace Banshee.AudioCd
                 
                 Log.Error (Catalog.GetString ("Could not import CD"), e.Message, true);
                 Log.Exception (e);
+            }
+        }
+
+        private void OnRipperFinished (object o, EventArgs args)
+        {
+            if (AudioCdService.EjectAfterRipped.Get ()) {
+                Unmap ();
             }
         }
 

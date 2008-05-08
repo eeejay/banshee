@@ -39,6 +39,7 @@ namespace Banshee.Preferences
         private bool sensitive;
         private bool visible;
         private object display_widget;
+        private object mnemonic_widget;
                 
         public Root ()
         {
@@ -79,6 +80,11 @@ namespace Banshee.Preferences
         public virtual object DisplayWidget {
             get { return display_widget; }
             set { display_widget = value; }
+        }
+
+        public virtual object MnemonicWidget {
+            get { return mnemonic_widget ?? DisplayWidget; }
+            set { mnemonic_widget = value; }
         }
     }
 }
