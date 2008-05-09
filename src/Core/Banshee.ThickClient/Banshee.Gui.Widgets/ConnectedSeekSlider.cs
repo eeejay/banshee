@@ -61,6 +61,8 @@ namespace Banshee.Gui.Widgets
                 PlayerEvent.Buffering |
                 PlayerEvent.StartOfStream |
                 PlayerEvent.StateChange);
+                
+            ServiceManager.PlayerEngine.TrackIntercept += OnTrackIntercept;
             
             seek_slider.SeekRequested += OnSeekRequested;
         }
@@ -98,6 +100,13 @@ namespace Banshee.Gui.Widgets
             Add (box);
         }
         
+        private bool transitioning = false;
+        private bool OnTrackIntercept (Banshee.Collection.TrackInfo track)
+        {
+            transitioning = true;
+            return false;
+        }
+        
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
@@ -125,12 +134,14 @@ namespace Banshee.Gui.Widgets
                             stream_position_label.IsContacting = true;
                             seek_slider.SetIdle ();
                             break;
-                        case PlayerState.Loaded:
-                            seek_slider.Duration = ServiceManager.PlayerEngine.CurrentTrack.Duration.TotalSeconds;
-                            break;
                         case PlayerState.Idle:
-                            seek_slider.SetIdle ();
-                            stream_position_label.IsContacting = false;
+                            if (!transitioning) {
+                                seek_slider.SetIdle ();
+                                stream_position_label.IsContacting = false;
+                            }
+                            break;
+                        default:
+                            transitioning = false;
                             break;
                     }
                     break;
@@ -145,7 +156,6 @@ namespace Banshee.Gui.Widgets
             
             uint stream_length = ServiceManager.PlayerEngine.Length;
             uint stream_position = ServiceManager.PlayerEngine.Position;
-            
             stream_position_label.IsContacting = false;
             seek_slider.CanSeek = ServiceManager.PlayerEngine.CanSeek;
             seek_slider.Duration = stream_length;

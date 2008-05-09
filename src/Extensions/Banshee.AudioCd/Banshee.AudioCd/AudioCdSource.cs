@@ -162,7 +162,7 @@ namespace Banshee.AudioCd
             );
 
             if (count > 0) {
-                SetStatus (Catalog.GetString ("Auto rip off because this album is already in the Music Library."), true, false, null);
+                SetStatus (Catalog.GetString ("Automatic import off since this album is already in the Music Library."), true, false, null);
                 return;
             }
 

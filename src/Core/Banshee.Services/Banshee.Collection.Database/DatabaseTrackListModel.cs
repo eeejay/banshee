@@ -116,16 +116,23 @@ namespace Banshee.Collection.Database
 
             if (String.IsNullOrEmpty (Filter)) {
                 query_fragment = null;
+                query_tree = null;
             } else {
-                QueryNode query_tree = UserQueryParser.Parse (Filter, BansheeQuery.FieldSet);
+                query_tree = UserQueryParser.Parse (Filter, BansheeQuery.FieldSet);
                 query_fragment = (query_tree == null) ? null : query_tree.ToSql (BansheeQuery.FieldSet);
 
                 if (query_fragment != null && query_fragment.Length == 0) {
                     query_fragment = null;
+                    query_tree = null;
                 }
             }
 
             have_new_filter = false;
+        }
+
+        private QueryNode query_tree;
+        public QueryNode Query {
+            get { return query_tree; }
         }
 
         private void GenerateSortQueryPart ()
@@ -167,6 +174,12 @@ namespace Banshee.Collection.Database
             count = 0;
             filtered_count = 0;
             OnCleared ();
+        }
+
+        public void InvalidateCache ()
+        {
+            cache.ClearManagedCache ();
+            OnReloaded ();
         }
 
         private string unfiltered_query;

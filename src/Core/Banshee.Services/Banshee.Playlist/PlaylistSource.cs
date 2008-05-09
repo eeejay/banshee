@@ -259,12 +259,15 @@ namespace Banshee.Playlist
         {
             if (args.When > last_updated) {
                 last_updated = args.When;
-                // Optimization: playlists only need to reload for updates if they are sorted by the column updated
-                //if (args.ChangedField == null || args.ChangedChanged == [current sort field]) {
+                // Playlists do not need to reload if only certain columns are changed
+                if (NeedsReloadWhenFieldsChanged (args.ChangedFields)) {
+                    // TODO Optimization: playlists only need to reload if one of their tracks was updated
                     //if (ServiceManager.DbConnection.Query<int> (count_updated_command, last_updated) > 0) {
                         Reload ();
                     //}
-                //}
+                } else {
+                    InvalidateCaches ();
+                }
             }
         }
 

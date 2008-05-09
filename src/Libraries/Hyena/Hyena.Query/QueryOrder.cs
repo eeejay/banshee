@@ -51,7 +51,12 @@ namespace Hyena.Query
             get { return order_sql; }
         }
 
-        public QueryOrder (string name, string label, string order_sql)
+        private QueryField field;
+        public QueryField Field {
+            get { return field; }
+        }
+
+        public QueryOrder (string name, string label, string order_sql, QueryField field)
         {
             this.name = name;
             this.label = label;

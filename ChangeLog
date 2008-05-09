@@ -1,3 +1,64 @@
+2008-05-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit greatly improves performance when editing/saving track
+	information and on each track transition by avoiding many unnecessary
+	source reloads.
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: Improve
+	auto-rip label.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	Avoid changing to 'Idle' when transitioning between songs, and avoid
+	jumpiness by not setting the duration until the first Iteration event.
+	Makes things much smoother.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs: Fix the
+	horrible save performance by avoiding reloading until after having saved
+	all the tracks, instead of after each one.  Fix whitespace.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Change
+	OnTracksChanged to take an array of QueryFields that were modified.  Add
+	protected InvalidateCaches method used to clear the managed cache for the
+	track/artist/album model, but not reload it (eg the display data has
+	changed, but sort order/contents have not).
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Change
+	TracksChanged to QueryField array.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	Remove ClearCache method, and add InvalidateCache method.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Specify which fields are updated in the IncrementPlay/SkipCount methods to
+	allow sources to optimize whether they need to reload b/c of the change.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Add InvalidateCache method, and expose the currently parsed QueryNode, if
+	any.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseTrackModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	Add ClearManagedCache method.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	In TrackChanged handler, only Reload if we are actually affected by the
+	change - so if the change was play count, and we're not sorted by it,
+	querying on it, or if we're a smart playlist, defined by it, then just
+	InvalidateCaches.
+
+	* src/Libraries/Hyena/Hyena.Query/QueryOrder.cs:
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Associate a
+	QueryField with QueryOrders.
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs: Avoid
+	updating twice as often as needed.  Use String.Format instead of +.
+
+	* src/Libraries/Hyena/Hyena.Query/QueryNode.cs: Add GetTerms and GetFields
+	convenience methods.
+
 2008-05-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/SmoothScrolledWindow.cs: Increase
@@ -32,7 +93,7 @@
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: If
 	AutoRip is true, start ripping when the CD is loaded (assuming it's not
-	already in the library).  When a CD is done importing, eject if if
+	already in the library).  When a CD is done importing, eject if 
 	EjectAfterRipped is true.
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Add a

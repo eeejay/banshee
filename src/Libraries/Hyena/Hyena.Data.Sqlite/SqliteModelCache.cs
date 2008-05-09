@@ -290,6 +290,11 @@ namespace Hyena.Data.Sqlite
             }
         }
 
+        public void ClearManagedCache ()
+        {
+            base.Clear ();
+        }
+
         private bool saved_selection = false;
         public void SaveSelection ()
         {

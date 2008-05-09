@@ -32,10 +32,12 @@ using System.IO;
 
 using Hyena;
 using Hyena.Data.Sqlite;
+using Hyena.Query;
 
 using Banshee.Base;
 using Banshee.Configuration.Schema;
 using Banshee.Database;
+using Banshee.Query;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.Streaming;
@@ -82,7 +84,7 @@ namespace Banshee.Collection.Database
         {
             if (Provider.Refresh (this)) {
                 base.IncrementPlayCount ();
-                Save ();
+                Save (true, BansheeQuery.PlayCountField, BansheeQuery.LastPlayedField);
             }
         }
 
@@ -90,7 +92,7 @@ namespace Banshee.Collection.Database
         {
             if (Provider.Refresh (this)) {
                 base.IncrementSkipCount ();
-                Save ();
+                Save (true, BansheeQuery.SkipCountField, BansheeQuery.LastSkippedField);
             }
         }
 
@@ -105,11 +107,6 @@ namespace Banshee.Collection.Database
                 db_track.CacheEntryId == CacheEntryId;
         }
         
-        public override void Save ()
-        {
-            Save (true);
-        }
-        
         public DatabaseArtistInfo Artist {
             get { return DatabaseArtistInfo.FindOrCreate (ArtistName); }
         }
@@ -118,7 +115,18 @@ namespace Banshee.Collection.Database
             get { return DatabaseAlbumInfo.FindOrCreate (Artist, AlbumTitle); }
         }
 
-        public void Save (bool notify)
+        private static bool notify_saved = true;
+        public static bool NotifySaved {
+            get { return notify_saved; }
+            set { notify_saved = value; }
+        }
+
+        public override void Save ()
+        {
+            Save (NotifySaved);
+        }
+
+        public void Save (bool notify, params QueryField [] fields_changed)
         {
             // If either the artist or album changed, 
             if (ArtistId == 0 || AlbumId == 0 || artist_changed == true || album_changed == true) {
@@ -142,7 +150,7 @@ namespace Banshee.Collection.Database
                 if (is_new) {
                     PrimarySource.NotifyTracksAdded ();
                 } else {
-                    PrimarySource.NotifyTracksChanged ();
+                    PrimarySource.NotifyTracksChanged (fields_changed);
                 }
             }
         }

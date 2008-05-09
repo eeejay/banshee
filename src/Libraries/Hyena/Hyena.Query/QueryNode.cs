@@ -173,6 +173,32 @@ namespace Hyena.Query
             } while (queue.Count > 0);
         }
 
+        public IEnumerable<QueryField> GetFields ()
+        {
+            foreach (QueryTermNode term in GetTerms ())
+                yield return term.Field;
+        }
+
+        public IEnumerable<QueryTermNode> GetTerms ()
+        {
+            Queue<QueryNode> queue = new Queue<QueryNode> ();
+            queue.Enqueue (this);
+            do {
+                QueryNode node = queue.Dequeue ();
+                QueryListNode list = node as QueryListNode;
+                if (list != null) {
+                    foreach (QueryNode child in list.Children) {
+                        queue.Enqueue (child);
+                    }
+                } else {
+                    QueryTermNode term = node as QueryTermNode;
+                    if (term != null) {
+                        yield return term;
+                    }
+                }
+            } while (queue.Count > 0);
+        }
+
         public override string ToString ()
         {
             return ToUserQuery ();

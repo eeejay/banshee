@@ -209,9 +209,9 @@ namespace Banshee.Sources
         {
             lock (track_model) {
                 DatabaseTrackModel.Reload ();
-                OnUpdated ();
-                Save ();
             }
+            OnUpdated ();
+            Save ();
         }
 
         public virtual bool HasDependencies {
@@ -328,11 +328,11 @@ namespace Banshee.Sources
             OnTracksChanged (null);
         }
 
-        protected virtual void OnTracksChanged (QueryField field)
+        protected virtual void OnTracksChanged (params QueryField [] fields)
         {
-            HandleTracksChanged (this, new TrackEventArgs (field));
+            HandleTracksChanged (this, new TrackEventArgs (fields));
             foreach (PrimarySource psource in PrimarySources) {
-                psource.NotifyTracksChanged (field);
+                psource.NotifyTracksChanged (fields);
             }
         }
 
@@ -460,6 +460,17 @@ namespace Banshee.Sources
                     album_model.CacheId, album_model.CacheId, 0, album_model.Count
                 );
             }
+        }
+
+        protected void InvalidateCaches ()
+        {
+            track_model.InvalidateCache ();
+
+            if (artist_model != null)
+                artist_model.InvalidateCache ();
+
+            if (album_model != null)
+                album_model.InvalidateCache ();
         }
 
         protected virtual void PruneArtistsAlbums ()

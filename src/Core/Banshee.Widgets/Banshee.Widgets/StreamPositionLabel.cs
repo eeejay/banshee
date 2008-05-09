@@ -47,7 +47,6 @@ namespace Banshee.Widgets
             
             this.seekRange = seekRange;
             this.seekRange.ValueChanged += OnSliderUpdated;
-            this.seekRange.DurationChanged += OnSliderUpdated;
         }
         
         protected override void OnRealized ()
@@ -119,15 +118,18 @@ namespace Banshee.Widgets
             return true;
         }
         
+        private static string idle = Catalog.GetString ("Idle");
+        private static string contacting = Catalog.GetString ("Contacting...");
+
         private void UpdateLabel ()
         {
             if (is_buffering) {
                 double progress = buffering_progress * 100.0;
-                UpdateLabel (Catalog.GetString("Buffering") + ": " + progress.ToString ("0.0") + "%");
+                UpdateLabel (String.Format ("{0}: {1}%", Catalog.GetString("Buffering"), progress.ToString ("0.0")));
             } else if (is_contacting) {
-                UpdateLabel (Catalog.GetString ("Contacting..."));
+                UpdateLabel (contacting);
             } else if (seekRange.Value == 0 && seekRange.Duration == 0) {
-                UpdateLabel (Catalog.GetString ("Idle"));
+                UpdateLabel (idle);
             } else if (seekRange.Value == seekRange.Duration) {
                 UpdateLabel (FormatDuration ((long)seekRange.Value));
             } else {

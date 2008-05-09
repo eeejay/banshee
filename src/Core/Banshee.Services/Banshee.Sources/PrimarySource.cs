@@ -55,9 +55,9 @@ namespace Banshee.Sources
             get { return when; }
         }
 
-        private QueryField changed_field;
-        public QueryField ChangedField {
-            get { return changed_field; }
+        private QueryField [] changed_fields;
+        public QueryField [] ChangedFields {
+            get { return changed_fields; }
         }
 
         public TrackEventArgs ()
@@ -65,9 +65,9 @@ namespace Banshee.Sources
             when = DateTime.Now;
         }
 
-        public TrackEventArgs (QueryField field) : this ()
+        public TrackEventArgs (params QueryField [] fields) : this ()
         {
-            this.changed_field = field;
+            changed_fields = fields;
         }
     }
 
@@ -245,12 +245,13 @@ namespace Banshee.Sources
             OnTracksAdded ();
         }
 
-        internal void NotifyTracksChanged (QueryField field)
+        internal void NotifyTracksChanged (params QueryField [] fields)
         {
-            OnTracksChanged (field);
+            OnTracksChanged (fields);
         }
 
-        internal void NotifyTracksChanged ()
+        // TODO replace this public method with a 'transaction'-like system
+        public void NotifyTracksChanged ()
         {
             OnTracksChanged ();
         }
@@ -314,14 +315,14 @@ namespace Banshee.Sources
             });
         }
 
-        protected override void OnTracksChanged (QueryField field)
+        protected override void OnTracksChanged (params QueryField [] fields)
         {
             ThreadAssist.SpawnFromMain (delegate {
                 Reload ();
 
                 TrackEventHandler handler = TracksChanged;
                 if (handler != null) {
-                    handler (this, new TrackEventArgs (field));
+                    handler (this, new TrackEventArgs (fields));
                 }
             });
         }

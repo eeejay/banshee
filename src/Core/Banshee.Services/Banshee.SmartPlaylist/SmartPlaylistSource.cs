@@ -106,14 +106,21 @@ namespace Banshee.SmartPlaylist
         }
 
         // Custom properties
+        private List<QueryField> relevant_fields = new List<QueryField> ();
         private QueryNode condition;
         public QueryNode ConditionTree {
             get { return condition; }
             set {
                 condition = value;
+                relevant_fields.Clear ();
                 if (condition != null) {
                     condition_sql = condition.ToSql (BansheeQuery.FieldSet);
                     condition_xml = condition.ToXml (BansheeQuery.FieldSet);
+                    
+                    foreach (QueryTermNode term in condition.GetTerms ()) {
+                        if (!relevant_fields.Contains (term.Field))
+                            relevant_fields.Add (term.Field);
+                    }
                 }
             }
         }
@@ -299,6 +306,20 @@ namespace Banshee.SmartPlaylist
             UpdateDependencies ();
         }
 
+        protected override bool NeedsReloadWhenFieldChanged (Hyena.Query.QueryField field)
+        {
+            if (base.NeedsReloadWhenFieldChanged (field))
+                return true;
+
+            if (QueryOrder != null && QueryOrder.Field == field)
+                return true;
+
+            if (relevant_fields.Contains (field))
+                return true;
+
+            return false;
+        }
+
 #endregion
 
 #region DatabaseSource overrides
@@ -411,8 +432,12 @@ namespace Banshee.SmartPlaylist
         protected override void HandleTracksChanged (Source sender, TrackEventArgs args)
         {
             if (args.When > last_updated) {
-                last_updated = args.When;
-                RefreshAndReload ();
+                if (NeedsReloadWhenFieldsChanged (args.ChangedFields)) {
+                    last_updated = args.When;
+                    RefreshAndReload ();
+                } else {
+                    InvalidateCaches ();
+                }
             }
         }
 
@@ -421,7 +446,6 @@ namespace Banshee.SmartPlaylist
             if (args.When > last_removed) {
                 last_removed = args.When;
                 RefreshAndReload ();
-                Reload ();
                 /*if (ServiceManager.DbConnection.Query<int> (count_removed_command, last_removed) > 0) {
                     if (Limit == null) {
                         //track_model.UpdateAggregates ();

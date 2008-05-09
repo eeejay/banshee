@@ -165,9 +165,10 @@ namespace Banshee.Collection.Database
             get { return (int) cache.CacheId; }
         }
 
-        public void ClearCache ()
+        public void InvalidateCache ()
         {
-            cache.Clear ();
+            cache.ClearManagedCache ();
+            OnReloaded ();
         }
 
         public string JoinTable { get { return null; } }

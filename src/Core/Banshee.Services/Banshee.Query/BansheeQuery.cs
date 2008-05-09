@@ -43,26 +43,26 @@ namespace Banshee.Query
         private static bool asc = true;
         private static bool desc = false;
 
-        public static QueryOrder RandomOrder = CreateQueryOrder ("Random",     asc,  Catalog.GetString ("Random"));
+        public static QueryOrder RandomOrder = CreateQueryOrder ("Random",     asc,  Catalog.GetString ("Random"), null);
 
         public static QueryOrder [] Orders = new QueryOrder [] {
             RandomOrder,
-            CreateQueryOrder ("Album",      asc,  Catalog.GetString ("Album")),
-            CreateQueryOrder ("Artist",     asc,  Catalog.GetString ("Artist")),
-            CreateQueryOrder ("Title",      asc,  Catalog.GetString ("Title")),
-            CreateQueryOrder ("Genre",      asc,  Catalog.GetString ("Genre")),
+            CreateQueryOrder ("Album",      asc,  Catalog.GetString ("Album"), AlbumField),
+            CreateQueryOrder ("Artist",     asc,  Catalog.GetString ("Artist"), ArtistField),
+            CreateQueryOrder ("Title",      asc,  Catalog.GetString ("Title"), TitleField),
+            CreateQueryOrder ("Genre",      asc,  Catalog.GetString ("Genre"), GenreField),
             null,
-            CreateQueryOrder ("Rating",     desc, Catalog.GetString ("Highest Rating")),
-            CreateQueryOrder ("Rating",     asc,  Catalog.GetString ("Lowest Rating")),
+            CreateQueryOrder ("Rating",     desc, Catalog.GetString ("Highest Rating"), RatingField),
+            CreateQueryOrder ("Rating",     asc,  Catalog.GetString ("Lowest Rating"), RatingField),
             null,
-            CreateQueryOrder ("PlayCount",  desc, Catalog.GetString ("Most Often Played")),
-            CreateQueryOrder ("PlayCount",  asc,  Catalog.GetString ("Least Often Played")),
+            CreateQueryOrder ("PlayCount",  desc, Catalog.GetString ("Most Often Played"), PlayCountField),
+            CreateQueryOrder ("PlayCount",  asc,  Catalog.GetString ("Least Often Played"), PlayCountField),
             null,
-            CreateQueryOrder ("LastPlayedStamp", desc, Catalog.GetString ("Most Recently Played")),
-            CreateQueryOrder ("LastPlayedStamp", asc,  Catalog.GetString ("Least Recently Played")),
+            CreateQueryOrder ("LastPlayedStamp", desc, Catalog.GetString ("Most Recently Played"), LastPlayedField),
+            CreateQueryOrder ("LastPlayedStamp", asc,  Catalog.GetString ("Least Recently Played"), LastPlayedField),
             null,
-            CreateQueryOrder ("DateAddedStamp",  desc, Catalog.GetString ("Most Recently Added")),
-            CreateQueryOrder ("DateAddedStamp",  asc,  Catalog.GetString ("Least Recently Added"))
+            CreateQueryOrder ("DateAddedStamp",  desc, Catalog.GetString ("Most Recently Added"), DateAddedField),
+            CreateQueryOrder ("DateAddedStamp",  asc,  Catalog.GetString ("Least Recently Added"), DateAddedField)
         };
 
         public static QueryLimit [] Limits = new QueryLimit [] {
@@ -276,9 +276,9 @@ namespace Banshee.Query
             return sort_query;
         }
 
-        private static QueryOrder CreateQueryOrder (string name, bool asc, string label)
+        private static QueryOrder CreateQueryOrder (string name, bool asc, string label, QueryField field)
         {
-            return new QueryOrder (CreateOrderName (name, asc), label, GetSort (name, asc));
+            return new QueryOrder (CreateOrderName (name, asc), label, GetSort (name, asc), field);
         }
 
         public static QueryLimit FindLimit (string name)
