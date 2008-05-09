@@ -41,6 +41,7 @@ namespace Banshee.Sources.Gui
         public SourceComboBox ()
         {
             SourceRowRenderer renderer = new SourceRowRenderer ();
+            renderer.ParentWidget = this;
             PackStart (renderer, true);
             SetCellDataFunc (renderer, new CellLayoutDataFunc (SourceCellDataFunc));
             

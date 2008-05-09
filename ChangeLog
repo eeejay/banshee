@@ -1,6 +1,15 @@
 2008-05-09  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceComboBox.cs:
+	Set ParentWidget on the renderer to self
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Fixed small selection rendering regression and fix the state calculation
+	for when the widget is a combo box and is prelit but not showing the menu
+
+2008-05-09  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceComboBox.cs:
 	Moved from MiniMode; use the new SourceModel and use the SourceRowRenderer
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceModel.cs: Pulled

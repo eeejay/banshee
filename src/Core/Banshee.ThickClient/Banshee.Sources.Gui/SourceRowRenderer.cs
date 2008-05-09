@@ -67,9 +67,11 @@ namespace Banshee.Sources.Gui
         }
         
         private SourceView view;
-        public SourceView View {
-            get { return view; }
-            set { view = value; }
+        
+        private Widget parent_widget;
+        public Widget ParentWidget {
+            get { return parent_widget; }
+            set { parent_widget = value; }
         }
         
         private TreePath path;
@@ -95,7 +97,8 @@ namespace Banshee.Sources.Gui
             } else if ((flags & CellRendererState.Selected) == CellRendererState.Selected) {
                 return widget.HasFocus ? StateType.Selected : StateType.Active;
             } else if ((flags & CellRendererState.Prelit) == CellRendererState.Prelit) {
-                return StateType.Prelight;
+                ComboBox box = parent_widget as ComboBox;
+                return box == null || box.PopupShown ? StateType.Prelight : StateType.Normal;
             } else if (widget.State == StateType.Insensitive) {
                 return StateType.Insensitive;
             } else {
@@ -129,10 +132,11 @@ namespace Banshee.Sources.Gui
                 return;
             }
             
+            view = widget as SourceView;
             bool path_selected = view != null && view.Selection.PathIsSelected (path);            
             StateType state = RendererStateToWidgetState (widget, flags);
             
-            RenderSelection (widget, drawable, background_area, path_selected, state);
+            RenderSelection (drawable, background_area, path_selected, state);
             
             int title_layout_width = 0, title_layout_height = 0;
             int count_layout_width = 0, count_layout_height = 0;
@@ -188,7 +192,7 @@ namespace Banshee.Sources.Gui
             }
                 
             Gdk.GC mod_gc = widget.Style.TextGC (state);
-            if (!state.Equals (StateType.Selected)) {
+            if (state == StateType.Normal || (view != null && state == StateType.Prelight)) {
                 Gdk.Color fgcolor = widget.Style.Base (state);
                 Gdk.Color bgcolor = widget.Style.Text (state);
                 
@@ -204,7 +208,7 @@ namespace Banshee.Sources.Gui
                 count_layout);
         }
         
-        private void RenderSelection (Gtk.Widget widget, Gdk.Drawable drawable, Gdk.Rectangle background_area, 
+        private void RenderSelection (Gdk.Drawable drawable, Gdk.Rectangle background_area, 
             bool path_selected, StateType state)
         {
             if (view == null) {
@@ -217,7 +221,7 @@ namespace Banshee.Sources.Gui
                 rect.Width += 4;
                 
                 // clear the standard GTK selection and focus
-                drawable.DrawRectangle (widget.Style.BaseGC (StateType.Normal), true, rect);
+                drawable.DrawRectangle (view.Style.BaseGC (StateType.Normal), true, rect);
                 
                 // draw the hot cairo selection
                 if (!view.EditingRow) { 
@@ -245,7 +249,7 @@ namespace Banshee.Sources.Gui
             return area.Y + (int)Math.Round ((double)(area.Height - height) / 2.0) + 1;
         }
         
-        public override CellEditable StartEditing (Gdk.Event evnt , Widget widget, string path, 
+        public override CellEditable StartEditing (Gdk.Event evnt, Widget widget, string path, 
             Gdk.Rectangle background_area, Gdk.Rectangle cell_area, CellRendererState flags)
         {
             CellEditEntry text = new CellEditEntry ();
