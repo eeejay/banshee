@@ -6,7 +6,6 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 SOURCES =  \
 	Banshee.MiniMode/MiniModeService.cs \
 	Banshee.MiniMode/MiniModeWindow.cs \
-	Banshee.MiniMode/SourceComboBox.cs \
 	Banshee.MiniMode/SourceModel.cs
 
 RESOURCES =  \

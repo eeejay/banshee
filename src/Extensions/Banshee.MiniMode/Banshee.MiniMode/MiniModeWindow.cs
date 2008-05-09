@@ -39,6 +39,7 @@ using Banshee.Collection;
 using Banshee.Collection.Gui;
 using Banshee.Gui;
 using Banshee.Gui.Widgets;
+using Banshee.Sources.Gui;
 using Banshee.MediaEngine;
 using Banshee.ServiceStack;
 using Banshee.Widgets;
@@ -72,7 +73,7 @@ namespace Banshee.MiniMode
         public MiniMode() : base(Catalog.GetString("Banshee Music Player"))
         {
             elements_service = ServiceManager.Get<GtkElementsService>();
-            interface_action_service = ServiceManager.Get<InterfaceActionService>("InterfaceActionService");
+            interface_action_service = ServiceManager.Get<InterfaceActionService>();
             
             default_main_window = elements_service.PrimaryWindow;
             
@@ -117,7 +118,7 @@ namespace Banshee.MiniMode
             // Source combobox
             source_combo_box = new SourceComboBox();
             SourceBox.PackStart(source_combo_box, true, true, 0);
-            source_combo_box.ShowAll();
+            source_combo_box.Show();
             
             // Track info
             track_info_display = new TrackInfoDisplay ();

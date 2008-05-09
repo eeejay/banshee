@@ -1,5 +1,5 @@
 <Project name="libbanshee" fileversion="2.0" language="C" ctype="CProject">
-  <Configurations>
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="CProjectConfiguration">
       <Output directory="../bin" output="libbanshee" />
       <Build debugmode="True" target="SharedLibrary" />

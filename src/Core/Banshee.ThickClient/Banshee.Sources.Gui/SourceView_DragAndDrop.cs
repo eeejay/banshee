@@ -81,7 +81,7 @@ namespace Banshee.Sources.Gui
                 return false;
             }
             
-            Source drop_source = GetSource (path);
+            Source drop_source = store.GetSource (path);
             Source parent_source = drop_source as LibrarySource ?? drop_source.Parent as LibrarySource;
 
             // Scroll if within 20 pixels of the top or bottom
@@ -120,7 +120,7 @@ namespace Banshee.Sources.Gui
                     HideNewPlaylistRow ();
             }
 
-            TreeIter parent_iter = FindSource (parent);
+            TreeIter parent_iter = store.FindSource (parent);
             new_playlist_iter = store.AppendNode (parent_iter);
             
             store.SetValue (new_playlist_iter, 0, NewPlaylistSource);
@@ -143,7 +143,7 @@ namespace Banshee.Sources.Gui
             }
             
             if (!parent_was_expanded) {
-                TreeIter iter = FindSource (new_playlist_parent);
+                TreeIter iter = store.FindSource (new_playlist_parent);
                 TreePath path = store.GetPath (iter);
                 CollapseRow (path);
             }
@@ -164,7 +164,7 @@ namespace Banshee.Sources.Gui
                 path = store.GetPath (new_playlist_iter);
             }
             
-            final_drag_source = GetSource (path);
+            final_drag_source = store.GetSource (path);
             final_drag_start_time = context.StartTime;
         
             HideNewPlaylistRow ();
@@ -189,7 +189,8 @@ namespace Banshee.Sources.Gui
                 Source drop_source = final_drag_source;    
                 
                 if (final_drag_source == NewPlaylistSource) {
-                    PlaylistSource playlist = new PlaylistSource ("New Playlist", (new_playlist_parent as PrimarySource).DbId);
+                    PlaylistSource playlist = new PlaylistSource ("New Playlist", 
+                        (new_playlist_parent as PrimarySource).DbId);
                     playlist.Save ();
                     playlist.PrimarySource.AddChildSource (playlist);
                     drop_source = playlist;
@@ -201,7 +202,8 @@ namespace Banshee.Sources.Gui
                         drop_source.MergeSourceInput (sources[0], SourceMergeType.Source);
                     }
                 } else {
-                    drop_source.MergeSourceInput (ServiceManager.SourceManager.ActiveSource, SourceMergeType.ModelSelection);
+                    drop_source.MergeSourceInput (ServiceManager.SourceManager.ActiveSource, 
+                        SourceMergeType.ModelSelection);
                 }
                 
                 Gtk.Drag.Finish (context, true, false, time);

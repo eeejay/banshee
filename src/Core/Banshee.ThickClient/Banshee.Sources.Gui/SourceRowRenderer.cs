@@ -39,21 +39,68 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Sources.Gui
 {
-    internal class SourceRowRenderer : CellRendererText
+    public class SourceRowRenderer : CellRendererText
     {
-        public Source source;
-        public SourceView view;
-        public TreePath path;
+        public static void CellDataHandler (CellRenderer cell, TreeModel model, TreeIter iter)
+        {
+            SourceRowRenderer renderer = cell as SourceRowRenderer;
+            Source source = model.GetValue (iter, 0) as Source;
+            
+            if (renderer == null) {
+                return;
+            }
+            
+            renderer.Source = source;
+            renderer.Path = model.GetPath (iter);
+            
+            if (source == null) {
+                return;
+            }
+            
+            renderer.Sensitive = source.CanActivate;
+        }
+        
+        private Source source;
+        public Source Source {
+            get { return source; }
+            set { source = value; }
+        }
+        
+        private SourceView view;
+        public SourceView View {
+            get { return view; }
+            set { view = value; }
+        }
+        
+        private TreePath path;
+        public TreePath Path {
+            get { return path; }
+            set { path = value; }
+        }
+        
+        private int padding;
+        public int Padding {
+            get { return padding; }
+            set { padding = value; }
+        }
 
         public SourceRowRenderer ()
         {
         }
         
-        private StateType RendererStateToWidgetState (CellRendererState flags)
+        private StateType RendererStateToWidgetState (Widget widget, CellRendererState flags)
         {
-            return (CellRendererState.Selected & flags).Equals (CellRendererState.Selected)
-                ? StateType.Selected
-                : StateType.Normal;
+            if (!Sensitive) {
+                return StateType.Insensitive;
+            } else if ((flags & CellRendererState.Selected) == CellRendererState.Selected) {
+                return widget.HasFocus ? StateType.Selected : StateType.Active;
+            } else if ((flags & CellRendererState.Prelit) == CellRendererState.Prelit) {
+                return StateType.Prelight;
+            } else if (widget.State == StateType.Insensitive) {
+                return StateType.Insensitive;
+            } else {
+                return StateType.Normal;
+            }
         }
         
         public override void GetSize (Widget widget, ref Gdk.Rectangle cell_area,
@@ -65,8 +112,14 @@ namespace Banshee.Sources.Gui
                 
             x_offset = 0;
             y_offset = 0;
-            width = text_w;
-            height = (int)Math.Max (22, text_h) + 5;
+            
+            if (!(widget is TreeView)) {
+                width = 200;
+            } else {
+                width = 0;
+            }
+            
+            height = (int)Math.Max (22, text_h) + Padding;
         }
         
         protected override void Render (Gdk.Drawable drawable, Widget widget, Gdk.Rectangle background_area, 
@@ -76,36 +129,10 @@ namespace Banshee.Sources.Gui
                 return;
             }
             
-            bool path_selected = view.Selection.PathIsSelected (path);            
-            StateType state = RendererStateToWidgetState (flags);
+            bool path_selected = view != null && view.Selection.PathIsSelected (path);            
+            StateType state = RendererStateToWidgetState (widget, flags);
             
-            if (path_selected && view.Cr != null) {
-                Gdk.Rectangle rect = background_area;
-                rect.X -= 2;
-                rect.Width += 4;
-                
-                // clear the standard GTK selection and focus
-                drawable.DrawRectangle (widget.Style.BaseGC (StateType.Normal), true, rect);
-                
-                // draw the hot cairo selection
-                if (!view.EditingRow) { 
-                    view.Theme.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
-                        background_area.Width - 2, background_area.Height - 2);
-                }
-            } else if (path != null && path.Equals (view.HighlightedPath) && view.Cr != null) {
-                view.Theme.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
-                    background_area.Width - 2, background_area.Height - 2, false);
-            } else if (view.NotifyStage.ActorCount > 0 && view.Cr != null) {
-                TreeIter iter;
-                if (view.Model.GetIter (out iter, path) && view.NotifyStage.Contains (iter)) {
-                    Actor<TreeIter> actor = view.NotifyStage[iter];
-                    Cairo.Color color = view.Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Active);
-                    color.A = Math.Sin (actor.Percent * Math.PI);
-                        
-                    view.Theme.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
-                        background_area.Width - 2, background_area.Height - 2, true, true, color);
-                }
-            }
+            RenderSelection (widget, drawable, background_area, path_selected, state);
             
             int title_layout_width = 0, title_layout_height = 0;
             int count_layout_width = 0, count_layout_height = 0;
@@ -120,7 +147,7 @@ namespace Banshee.Sources.Gui
                 ? Pango.Weight.Bold 
                 : Pango.Weight.Normal;
 
-            if (source == view.NewPlaylistSource) {
+            if (view != null && source == view.NewPlaylistSource) {
                 fd.Style = Pango.Style.Italic;
                 hide_counts = true;
             }
@@ -175,6 +202,42 @@ namespace Banshee.Sources.Gui
                 cell_area.X + cell_area.Width - count_layout_width - 2,
                 Middle (cell_area, count_layout_height),
                 count_layout);
+        }
+        
+        private void RenderSelection (Gtk.Widget widget, Gdk.Drawable drawable, Gdk.Rectangle background_area, 
+            bool path_selected, StateType state)
+        {
+            if (view == null) {
+                return;
+            }
+            
+            if (path_selected && view.Cr != null) {
+                Gdk.Rectangle rect = background_area;
+                rect.X -= 2;
+                rect.Width += 4;
+                
+                // clear the standard GTK selection and focus
+                drawable.DrawRectangle (widget.Style.BaseGC (StateType.Normal), true, rect);
+                
+                // draw the hot cairo selection
+                if (!view.EditingRow) { 
+                    view.Theme.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
+                        background_area.Width - 2, background_area.Height - 2);
+                }
+            } else if (path != null && path.Equals (view.HighlightedPath) && view.Cr != null) {
+                view.Theme.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
+                    background_area.Width - 2, background_area.Height - 2, false);
+            } else if (view.NotifyStage.ActorCount > 0 && view.Cr != null) {
+                TreeIter iter;
+                if (view.Model.GetIter (out iter, path) && view.NotifyStage.Contains (iter)) {
+                    Actor<TreeIter> actor = view.NotifyStage[iter];
+                    Cairo.Color color = view.Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Active);
+                    color.A = Math.Sin (actor.Percent * Math.PI);
+                        
+                    view.Theme.DrawRowSelection (view.Cr, background_area.X + 1, background_area.Y + 1, 
+                        background_area.Width - 2, background_area.Height - 2, true, true, color);
+                }
+            }
         }
         
         private int Middle (Gdk.Rectangle area, int height)

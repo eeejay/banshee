@@ -1,3 +1,24 @@
+2008-05-09  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceComboBox.cs:
+	Moved from MiniMode; use the new SourceModel and use the SourceRowRenderer
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceModel.cs: Pulled
+	out model specific code from SourceView into a new TreeModel subclass
+	that SourceView and SourceComboBox can use
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Implemented proper CellRendererState -> StateType mapping so the renderer
+	works properly inside other widgets (i.e. GtkComboBox); add some default
+	sizing for non TreeView widgets
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Fixed up to use the new SourceModel
+
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:
+	Fixed up to use the new SourceComboBox
+
 2008-05-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit greatly improves performance when editing/saving track

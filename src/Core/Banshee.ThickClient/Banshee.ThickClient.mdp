@@ -106,6 +106,9 @@
     <File name="Banshee.Addins.Gui/AddinDetailsDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Addins.Gui/AddinTile.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Addins.Gui/AddinView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/jcastro.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Sources.Gui/SourceModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/SourceComboBox.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

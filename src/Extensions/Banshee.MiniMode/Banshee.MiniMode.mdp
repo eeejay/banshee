@@ -11,7 +11,6 @@
     <File name="Banshee.MiniMode.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.MiniMode/MiniModeService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MiniMode/MiniModeWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.MiniMode/SourceComboBox.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MiniMode/SourceModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/minimode.glade" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>

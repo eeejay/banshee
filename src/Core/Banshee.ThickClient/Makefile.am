@@ -93,7 +93,9 @@ SOURCES =  \
 	Banshee.Sources.Gui/ISourceContents.cs \
 	Banshee.Sources.Gui/ITrackModelSourceContents.cs \
 	Banshee.Sources.Gui/ObjectListSourceContents.cs \
+	Banshee.Sources.Gui/SourceComboBox.cs \
 	Banshee.Sources.Gui/SourceIconResolver.cs \
+	Banshee.Sources.Gui/SourceModel.cs \
 	Banshee.Sources.Gui/SourceRowRenderer.cs \
 	Banshee.Sources.Gui/SourceView.cs \
 	Banshee.Sources.Gui/SourceView_DragAndDrop.cs
