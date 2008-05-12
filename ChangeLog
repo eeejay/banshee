@@ -1,3 +1,11 @@
+2008-05-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs: Patch
+	from Nicholas Parker working around bug in TagLib# where setting the genre
+	to string [] {null} would crash.
+
+	* tests/Banshee.Core/TaglibReadWriteTests.cs: Unit test for above fix.
+
 2008-05-09  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceComboBox.cs:

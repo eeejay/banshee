@@ -49,17 +49,28 @@ public class TaglibReadWriteTests : BansheeTests
     public void TestSystemIO ()
     {
         Banshee.IO.Provider.SetProvider (new Banshee.IO.SystemIO.Provider ());
-        WriteMetadata (files);
+        WriteMetadata (files, "My Genre");
     }
 
     [Test]
     public void TestUnixIO ()
     {
         Banshee.IO.Provider.SetProvider (new Banshee.IO.Unix.Provider ());
-        WriteMetadata (files);
+        WriteMetadata (files, "My Genre");
     }
 
-    private static void WriteMetadata (string [] files)
+    [Test]
+    public void TestNullGenreBug ()
+    {
+        // Bug in taglib-sharp-2.0.3.0: Crash if you send it a genre of "{ null }" on
+        // a song with both ID3v1 and ID3v2 metadata. It's happy with "{}", though.
+        // (see http://forum.taglib-sharp.com/viewtopic.php?f=5&t=239 )
+        // This tests our workaround.
+        Banshee.IO.Provider.SetProvider (new Banshee.IO.Unix.Provider ());
+        WriteMetadata (files, null);
+    }
+
+    private static void WriteMetadata (string [] files, string genre)
     {
         SafeUri newuri = null;
         bool write_metadata = LibrarySchema.WriteMetadata.Get();
@@ -71,7 +82,7 @@ public class TaglibReadWriteTests : BansheeTests
 
                 Banshee.IO.File.Copy (new SafeUri (uri), newuri, true);
 
-                ChangeAndVerify (newuri);
+                ChangeAndVerify (newuri, genre);
             });
         } finally {
             LibrarySchema.WriteMetadata.Set (write_metadata);
@@ -82,7 +93,7 @@ public class TaglibReadWriteTests : BansheeTests
 
 #region Utility methods
 
-    private static void ChangeAndVerify (SafeUri uri)
+    private static void ChangeAndVerify (SafeUri uri, string genre)
     {
         TagLib.File file = StreamTagger.ProcessUri (uri);
         TrackInfo track = new TrackInfo ();
@@ -92,7 +103,7 @@ public class TaglibReadWriteTests : BansheeTests
         track.TrackTitle = "My Title";
         track.ArtistName = "My Artist";
         track.AlbumTitle = "My Album";
-        track.Genre = "My Genre";
+        track.Genre = genre;
         track.TrackNumber = 4;
         track.Disc = 4;
         track.Year = 1999;
@@ -109,7 +120,7 @@ public class TaglibReadWriteTests : BansheeTests
         Assert.AreEqual ("My Title", track.TrackTitle);
         Assert.AreEqual ("My Artist", track.ArtistName);
         Assert.AreEqual ("My Album", track.AlbumTitle);
-        Assert.AreEqual ("My Genre", track.Genre);
+        Assert.AreEqual (genre, track.Genre);
         Assert.AreEqual (4, track.TrackNumber);
         Assert.AreEqual (4, track.Disc);
         Assert.AreEqual (1999, track.Year);
