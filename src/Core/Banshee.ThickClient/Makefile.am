@@ -18,6 +18,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/ColumnCellPositiveInt.cs \
 	Banshee.Collection.Gui/ColumnCellTrack.cs \
 	Banshee.Collection.Gui/ColumnCellTrackNumber.cs \
+	Banshee.Collection.Gui/DefaultColumnController.cs \
 	Banshee.Collection.Gui/PersistentColumnController.cs \
 	Banshee.Collection.Gui/TerseTrackListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \

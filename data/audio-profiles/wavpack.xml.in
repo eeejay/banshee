@@ -17,8 +17,7 @@
                 (gst-construct-element "wavpackenc"
                     "mode" mode
                     (if (cast-bool lossy_mode)
-                        ("bitrate" (* bitrate 1000))
-                        ("" ""))
+                        ("bitrate" (* bitrate 1000)))
                     "md5" (cast-bool md5_sum)
                     "extra-processing" extra_processing)
                 (if (gst-element-is-available "apev2mux")

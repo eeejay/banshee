@@ -7,6 +7,7 @@ SOURCES =  \
 	Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs \
 	Banshee.Lastfm.Audioscrobbler/Queue.cs \
 	Banshee.Lastfm.Radio/LastfmActions.cs \
+	Banshee.Lastfm.Radio/LastfmColumnController.cs \
 	Banshee.Lastfm.Radio/LastfmSource.cs \
 	Banshee.Lastfm.Radio/LastfmSourceContents.cs \
 	Banshee.Lastfm.Radio/LastfmTrackInfo.cs \

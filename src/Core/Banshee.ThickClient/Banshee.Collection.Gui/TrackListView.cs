@@ -28,81 +28,49 @@
 
 using System;
 using Mono.Unix;
-using Cairo;
 using Gtk;
 
-using Hyena.Gui;
-using Hyena.Gui.Theming;
-using Hyena.Gui.Theatrics;
+using Hyena.Data;
 using Hyena.Data.Gui;
 
-using Banshee.Gui;
+using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
-using Banshee.Collection;
+
+using Banshee.Gui;
 
 namespace Banshee.Collection.Gui
 {
     public class TrackListView : ListView<TrackInfo>
     {
-        private PersistentColumnController column_controller;
-
+        private ColumnController default_column_controller;
+        
         public TrackListView () : base ()
         {
-            column_controller = new PersistentColumnController (String.Format ("{0}.{1}", 
-                Banshee.ServiceStack.Application.ActiveClient.ClientId, "track_view_columns"));
-
-            SortableColumn artist_column = new SortableColumn (Catalog.GetString ("Artist"), new ColumnCellText ("ArtistName", true), 0.225, "Artist", true);
-
-            column_controller.AddRange (
-                new Column (null, "indicator", new ColumnCellPlaybackIndicator (null), 0.05, true, 30, 30),
-                new SortableColumn (Catalog.GetString ("Track"), new ColumnCellTrackNumber ("TrackNumber", true), 0.10, "Track", true),
-                new SortableColumn (Catalog.GetString ("Title"), new ColumnCellText ("TrackTitle", true), 0.25, "Title", true),
-                artist_column,
-                new SortableColumn (Catalog.GetString ("Album"), new ColumnCellText ("AlbumTitle", true), 0.225, "Album", true),
-                new SortableColumn (Catalog.GetString ("Composer"), new ColumnCellText ("Composer", true), 0.25, "Composer", false),
-                new SortableColumn (Catalog.GetString ("Duration"), new ColumnCellDuration ("Duration", true), 0.15, "Duration", true),
-                
-                new SortableColumn (Catalog.GetString ("Year"), new ColumnCellPositiveInt ("Year", true), 0.15, "Year", false),
-                new SortableColumn (Catalog.GetString ("Genre"), new ColumnCellText ("Genre", true), 0.25, "Genre", false),
-                new SortableColumn (Catalog.GetString ("Play Count"), new ColumnCellText ("PlayCount", true), 0.15, "PlayCount", false),
-                new SortableColumn (Catalog.GetString ("Skip Count"), new ColumnCellText ("SkipCount", true), 0.15, "SkipCount", false),
-                new SortableColumn (Catalog.GetString ("Disc"), new ColumnCellPositiveInt ("Disc", true), 0.10, "Disc", false),
-                //new SortableColumn ("Rating", new RatingColumnCell (null, true), 0.15, "Rating"),
-                new SortableColumn (Catalog.GetString ("Last Played"), new ColumnCellDateTime ("LastPlayed", true), 0.15, "LastPlayedStamp", false),
-                new SortableColumn (Catalog.GetString ("Last Skipped"), new ColumnCellDateTime ("LastSkipped", true), 0.15, "LastSkippedStamp", false),
-                new SortableColumn (Catalog.GetString ("Date Added"), new ColumnCellDateTime ("DateAdded", true), 0.15, "DateAddedStamp", false),
-                new SortableColumn (Catalog.GetString ("Location"), new ColumnCellText ("Uri", true), 0.15, "Uri", false)
-            );
-            
-            column_controller.Load ();
-            
-            ColumnController = DefaultColumnController;
-            ColumnController.DefaultSortColumn = artist_column;
+            default_column_controller = new DefaultColumnController ();
 
             RulesHint = true;
             RowSensitivePropertyName = "CanPlay";
             
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
             
-            if (ServiceManager.Contains<GtkElementsService> ()) {
-                ServiceManager.Get<GtkElementsService> ().ThemeChanged += delegate {
-                    foreach (Column column in column_controller) {
-                        if (column.HeaderCell != null) {
-                            column.HeaderCell.NotifyThemeChange ();
-                        }
-                        
-                        foreach (ColumnCell cell in column) {
-                            cell.NotifyThemeChange ();
-                        }
-                    }
-                    
-                    QueueDraw ();
-                };
-            }
-            
             ForceDragSourceSet = true;
             Reorderable = true;
+        }
+        
+        public override void SetModel (IListModel<TrackInfo> value, double vpos)
+        {
+            base.SetModel (value, vpos);
+            
+            Source source = ServiceManager.SourceManager.ActiveSource;
+            ColumnController controller = null;
+            
+            while (source != null && controller == null) {
+                controller = source.Properties.Get<ColumnController> ("TrackView.ColumnController");
+                source = source.Parent;
+            }
+            
+            ColumnController = controller ?? default_column_controller;
         }
 
         protected override bool OnPopupMenu ()
@@ -132,9 +100,6 @@ namespace Banshee.Collection.Gui
         }
 
 #endregion
-        
-        public ColumnController DefaultColumnController {
-            get { return column_controller; }
-        }
+
     }
 }

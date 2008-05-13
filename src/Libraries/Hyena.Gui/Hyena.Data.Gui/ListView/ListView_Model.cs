@@ -40,7 +40,7 @@ namespace Hyena.Data.Gui
             SetModel (model, 0.0);
         }
 
-        public void SetModel (IListModel<T> value, double vpos)
+        public virtual void SetModel (IListModel<T> value, double vpos)
         {
             if (model == value) {
                 return;

@@ -1,3 +1,27 @@
+2008-05-13  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Implemented a proper default column controller with the columns as static
+	properties so derived implementations don't have to redefine common columns
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Use the new DefaultColumnController; check the active source (walking
+	up to the root parent) for a column controller to use instead of the
+	default; if none found, use the default
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmColumnController.cs:
+	Implement a custom column controller for Last.fm derived
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	Set LastfmColumnController on the source
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	Make SetModel virtual
+
+	* data/audio-profiles/wavpack.xml.in: Small fix to the pipeline
+
+	* src/Core/Banshee.Core/Resources/contributors.xml: Added the Andy
+
 2008-05-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs: Patch
