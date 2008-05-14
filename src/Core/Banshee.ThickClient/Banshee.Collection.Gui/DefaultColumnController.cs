@@ -80,107 +80,107 @@ namespace Banshee.Collection.Gui
             );
         }
         
-        private static Column indicator_column 
+        private Column indicator_column 
             = new Column (null, "indicator", new ColumnCellPlaybackIndicator (null), 0.05, true, 30, 30);
-        public static Column IndicatorColumn {
+        public Column IndicatorColumn {
             get { return indicator_column; }
         }
         
-        private static SortableColumn track_column = new SortableColumn (Catalog.GetString ("Track"), 
+        private SortableColumn track_column = new SortableColumn (Catalog.GetString ("Track"), 
             new ColumnCellTrackNumber ("TrackNumber", true), 0.10, "Track", true);
-        public static SortableColumn TrackColumn {
+        public SortableColumn TrackColumn {
             get { return track_column; }
         }
         
-        private static SortableColumn title_column = new SortableColumn (Catalog.GetString ("Title"), 
+        private SortableColumn title_column = new SortableColumn (Catalog.GetString ("Title"), 
             new ColumnCellText ("TrackTitle", true), 0.25, "Title", true);
-        public static SortableColumn TitleColumn {
+        public SortableColumn TitleColumn {
             get { return title_column; }
         }
         
-        private static SortableColumn artist_column = new SortableColumn (Catalog.GetString ("Artist"), 
+        private SortableColumn artist_column = new SortableColumn (Catalog.GetString ("Artist"), 
             new ColumnCellText ("ArtistName", true), 0.225, "Artist", true);
-        public static SortableColumn ArtistColumn {
+        public SortableColumn ArtistColumn {
             get { return artist_column; }
         }
         
-        private static SortableColumn album_column = new SortableColumn (Catalog.GetString ("Album"), 
+        private SortableColumn album_column = new SortableColumn (Catalog.GetString ("Album"), 
             new ColumnCellText ("AlbumTitle", true), 0.225, "Album", true);
-        public static SortableColumn AlbumColumn {
+        public SortableColumn AlbumColumn {
             get { return album_column; }
         }
         
-        private static SortableColumn duration_column = new SortableColumn (Catalog.GetString ("Duration"),
+        private SortableColumn duration_column = new SortableColumn (Catalog.GetString ("Duration"),
             new ColumnCellDuration ("Duration", true), 0.15, "Duration", true);
-        public static SortableColumn DurationColumn {
+        public SortableColumn DurationColumn {
             get { return duration_column; }
         }
         
-        private static SortableColumn genre_column = new SortableColumn (Catalog.GetString ("Genre"), 
+        private SortableColumn genre_column = new SortableColumn (Catalog.GetString ("Genre"), 
             new ColumnCellText ("Genre", true), 0.25, "Genre", false);
-        public static SortableColumn GenreColumn {
+        public SortableColumn GenreColumn {
             get { return genre_column; }
         }
         
-        private static SortableColumn year_column = new SortableColumn (Catalog.GetString ("Year"), 
+        private SortableColumn year_column = new SortableColumn (Catalog.GetString ("Year"), 
             new ColumnCellPositiveInt ("Year", true), 0.15, "Year", false);
-        public static SortableColumn YearColumn {
+        public SortableColumn YearColumn {
             get { return year_column; }
         }
         
-        private static SortableColumn composer_column = new SortableColumn (Catalog.GetString ("Composer"), 
+        private SortableColumn composer_column = new SortableColumn (Catalog.GetString ("Composer"), 
             new ColumnCellText ("Composer", true), 0.25, "Composer", false);
-        public static SortableColumn ComposerColumn {
+        public SortableColumn ComposerColumn {
             get { return composer_column; }
         }
         
-        private static SortableColumn play_count_column = new SortableColumn (Catalog.GetString ("Play Count"), 
+        private SortableColumn play_count_column = new SortableColumn (Catalog.GetString ("Play Count"), 
             new ColumnCellText ("PlayCount", true), 0.15, "PlayCount", false);
-        public static SortableColumn PlayCountColumn {
+        public SortableColumn PlayCountColumn {
             get { return play_count_column; }
         }
         
-        private static SortableColumn skip_count_column = new SortableColumn (Catalog.GetString ("Skip Count"), 
+        private SortableColumn skip_count_column = new SortableColumn (Catalog.GetString ("Skip Count"), 
             new ColumnCellText ("SkipCount", true), 0.15, "SkipCount", false);
-        public static SortableColumn SkipCountColumn {
+        public SortableColumn SkipCountColumn {
             get { return skip_count_column; }
         }
         
-        private static SortableColumn disc_column = new SortableColumn (Catalog.GetString ("Disc"), 
+        private SortableColumn disc_column = new SortableColumn (Catalog.GetString ("Disc"), 
             new ColumnCellPositiveInt ("Disc", true), 0.10, "Disc", false);
-        public static SortableColumn DiscColumn {
+        public SortableColumn DiscColumn {
             get { return disc_column; }
         }
         
         //new SortableColumn ("Rating", new RatingColumnCell (null, true), 0.15, "Rating"),
         
-        private static SortableColumn last_played_column = new SortableColumn (Catalog.GetString ("Last Played"), 
+        private SortableColumn last_played_column = new SortableColumn (Catalog.GetString ("Last Played"), 
             new ColumnCellDateTime ("LastPlayed", true), 0.15, "LastPlayedStamp", false);
-        public static SortableColumn LastPlayedColumn {
+        public SortableColumn LastPlayedColumn {
             get { return last_played_column; }
         }
         
-        private static SortableColumn last_skipped_column = new SortableColumn (Catalog.GetString ("Last Skipped"), 
+        private SortableColumn last_skipped_column = new SortableColumn (Catalog.GetString ("Last Skipped"), 
             new ColumnCellDateTime ("LastSkipped", true), 0.15, "LastSkippedStamp", false);
-        public static SortableColumn LastSkippedColumn {
+        public SortableColumn LastSkippedColumn {
             get { return last_skipped_column; }
         }
         
-        private static SortableColumn date_added_column = new SortableColumn (Catalog.GetString ("Date Added"), 
+        private SortableColumn date_added_column = new SortableColumn (Catalog.GetString ("Date Added"), 
             new ColumnCellDateTime ("DateAdded", true), 0.15, "DateAddedStamp", false);
-        public static SortableColumn DateAddedColumn {
+        public SortableColumn DateAddedColumn {
             get { return date_added_column; }
         }
         
-        private static SortableColumn uri_column = new SortableColumn (Catalog.GetString ("Location"), 
+        private SortableColumn uri_column = new SortableColumn (Catalog.GetString ("Location"), 
             new ColumnCellText ("Uri", true), 0.15, "Uri", false);
-        public static SortableColumn UriColumn {
+        public SortableColumn UriColumn {
             get { return uri_column; }
         }
         
-        private static SortableColumn mime_type_column = new SortableColumn (Catalog.GetString ("Mime Type"), 
+        private SortableColumn mime_type_column = new SortableColumn (Catalog.GetString ("Mime Type"), 
             new ColumnCellText ("MimeType", true), 0.15, "MimeType", false);
-        public static SortableColumn MimeTypeColumn {
+        public SortableColumn MimeTypeColumn {
             get { return mime_type_column; }
         }
     }

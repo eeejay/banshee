@@ -52,6 +52,7 @@ namespace Hyena.Data.Gui
         
         public string SortKey {
             get { return sort_key; }
+            set { sort_key = value; }
         }
         
         public SortType SortType {

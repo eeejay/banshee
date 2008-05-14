@@ -93,7 +93,7 @@ namespace Banshee.Sources.Gui
             renderer = new SourceRowRenderer ();
             renderer.Padding = 5;
             focus_column.PackStart (renderer, true);
-            focus_column.SetCellDataFunc (renderer, new TreeCellDataFunc (SourceCellDataFunc));
+            focus_column.SetCellDataFunc (renderer, new CellLayoutDataFunc (SourceRowRenderer.CellDataHandler));
             AppendColumn (focus_column);
             
             HeadersVisible = false;
@@ -369,12 +369,6 @@ namespace Banshee.Sources.Gui
             renderer.Editable = true;
             SetCursor (store.GetPath (iter), focus_column, true);
             renderer.Editable = false;
-        }
-        
-        private void SourceCellDataFunc (TreeViewColumn tree_column, CellRenderer cell,  
-            TreeModel tree_model, TreeIter iter)
-        {
-            SourceRowRenderer.CellDataHandler (cell, tree_model, iter);
         }
         
         private void ResetSelection ()

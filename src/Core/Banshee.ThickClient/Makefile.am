@@ -22,6 +22,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/PersistentColumnController.cs \
 	Banshee.Collection.Gui/TerseTrackListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \
+	Banshee.Collection.Gui/XmlColumnController.cs \
 	Banshee.Equalizer.Gui/EqualizerBandScale.cs \
 	Banshee.Equalizer.Gui/EqualizerLevelsBox.cs \
 	Banshee.Equalizer.Gui/EqualizerPresetComboBox.cs \

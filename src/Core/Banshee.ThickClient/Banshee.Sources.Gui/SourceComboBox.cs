@@ -43,7 +43,7 @@ namespace Banshee.Sources.Gui
             SourceRowRenderer renderer = new SourceRowRenderer ();
             renderer.ParentWidget = this;
             PackStart (renderer, true);
-            SetCellDataFunc (renderer, new CellLayoutDataFunc (SourceCellDataFunc));
+            SetCellDataFunc (renderer, new CellLayoutDataFunc (SourceRowRenderer.CellDataHandler));
             
             store = new SourceModel ();
             Model = store;
@@ -57,11 +57,6 @@ namespace Banshee.Sources.Gui
             };
             
             store.Refresh ();
-        }
-        
-        private void SourceCellDataFunc (CellLayout layout, CellRenderer cell, TreeModel tree_model, TreeIter iter)
-        {
-            SourceRowRenderer.CellDataHandler (cell, tree_model, iter);
         }
         
         public void UpdateActiveSource ()

@@ -41,6 +41,17 @@ namespace Banshee.Library
         public VideoLibrarySource () : base (Catalog.GetString ("Video Library"), "VideoLibrary", 30)
         {
             Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
+            Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
+                <column-controller>
+                  <add-all-defaults />
+                  <remove-default column=""DiscColumn"" />
+                  <remove-default column=""AlbumColumn"" />
+                  <remove-default column=""ComposerColumn"" />
+                  <column modify-default=""ArtistColumn"">
+                    <title>{0}</title>
+                  </column>
+                </column-controller>
+            ", Catalog.GetString ("Produced By")));
         }
 
         public override bool ShowBrowser {

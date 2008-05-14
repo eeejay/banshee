@@ -52,7 +52,11 @@ namespace Banshee.Collection.Gui
         private const int pixbuf_spacing = 4;        
         private Gdk.Pixbuf [] pixbufs = new Gdk.Pixbuf[4];
         
-        public ColumnCellPlaybackIndicator (string property) : base (property, true)
+        public ColumnCellPlaybackIndicator (string property) : this (property, true)
+        {
+        }
+        
+        public ColumnCellPlaybackIndicator (string property, bool expand) : base (property, expand)
         {
             LoadPixbufs ();
         }

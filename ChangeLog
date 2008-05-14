@@ -1,3 +1,31 @@
+2008-05-14  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs: Defined
+	a column controller for video sources
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs:
+	Added the proper ctor
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Made the default column properties instance properties since they can
+	now be modified and should not be global
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	If a source has an XML column controller definition but not a column
+	controller object, load the object from the XML and persist/use it
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/XmlColumnController.cs:
+	A new column controller that extends the default controller and allows
+	new columns to be fully defined, existing ones to be modified or removed
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/SortableColumn.cs: Allow SortKey
+	to be set
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceComboBox.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	Use a common cell layout data handler delegate
+
 2008-05-13  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
