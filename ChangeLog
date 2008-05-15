@@ -1,5 +1,10 @@
 2008-05-14  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs: Added %year% 
+	from stable 
+
+2008-05-14  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs: Defined
 	a column controller for video sources
 
