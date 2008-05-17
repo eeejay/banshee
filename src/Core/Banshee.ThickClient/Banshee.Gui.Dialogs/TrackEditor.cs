@@ -29,9 +29,10 @@
 #pragma warning disable 0612
 
 using System;
+using System.Data;
+using System.Collections.Generic;
 using Gtk;
 using Glade;
-using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.Base;
@@ -209,10 +210,14 @@ namespace Banshee.Gui.Dialogs
             Genre.Model = genre_model;
             Genre.TextColumn = 0;
             
-            // FIXME merge
-            /*foreach (string genre in Globals.Library.GetGenreList ()) {
-                genre_model.AppendValues (genre);            
-            }*/
+            IDataReader reader = ServiceManager.DbConnection.Query (
+                "SELECT DISTINCT Genre FROM CoreTracks ORDER BY Genre");
+            while (reader != null && reader.Read ()) {
+                string genre = reader[0] as string;
+                if (!String.IsNullOrEmpty (genre)) {
+                    genre_model.AppendValues (genre);
+                }
+            }
             
             Next.Visible = TrackSet.Count > 1;
             Previous.Visible = TrackSet.Count > 1;
