@@ -358,6 +358,7 @@ namespace Hyena.Data.Gui
                     return column.Column;
                 }
             }
+            
             return null;
         }
         

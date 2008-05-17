@@ -42,7 +42,8 @@ using Banshee.Configuration;
 using Banshee.Gui;
 using Banshee.Collection.Gui;
 using Banshee.MediaEngine;
-using Banshee.Widgets;
+
+using Hyena.Widgets;
 
 namespace Banshee.NotificationArea 
 {

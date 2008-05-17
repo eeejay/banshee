@@ -1,8 +1,8 @@
 //
-// RatingQueryValueEntry.cs
+// IInteractiveCell.cs
 //
-// Authors:
-//   Gabriel Burt <gburt@novell.com>
+// Author:
+//   Aaron Bockover <abockover@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -27,44 +27,13 @@
 //
 
 using System;
-using Gtk;
+using Gdk;
 
-using Hyena.Query;
-using Hyena.Query.Gui;
-using Hyena.Widgets;
-
-using Banshee.Widgets;
-using Banshee.Query;
-
-namespace Banshee.Query.Gui
+namespace Hyena.Data.Gui
 {
-    public class RatingQueryValueEntry : QueryValueEntry
+    public interface IInteractiveCell
     {
-        protected RatingEntry entry;
-        protected RatingQueryValue query_value;
-
-        public RatingQueryValueEntry () : base ()
-        {
-            entry = new RatingEntry ();
-            entry.Changed += HandleValueChanged;
-
-            Add (entry);
-        }
-
-        public override QueryValue QueryValue {
-            get { return query_value; }
-            set { 
-                entry.Changed -= HandleValueChanged;
-                query_value = value as RatingQueryValue;
-                entry.Value = (int) (query_value.IsEmpty ? query_value.DefaultValue : query_value.IntValue);
-                query_value.SetValue (entry.Value);
-                entry.Changed += HandleValueChanged;
-            }
-        }
-
-        protected void HandleValueChanged (object o, EventArgs args)
-        {
-            query_value.SetValue (entry.Value);
-        }
+        bool ButtonEvent (int x, int y, bool pressed, Gdk.EventButton evnt);
+        bool MotionEvent (int x, int y, Gdk.EventMotion evnt);
     }
 }

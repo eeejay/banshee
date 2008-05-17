@@ -31,6 +31,8 @@ using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
 
+using Hyena.Widgets;
+
 namespace Banshee.Widgets
 {
     public class RatingActionProxy : CustomActionProxy

@@ -8,9 +8,6 @@
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="Resources/rating-rated.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/rating-unrated.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Banshee.Widgets/ComplexMenuItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/DateButton.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/DictionaryComboBox.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/DiscUsageDisplay.cs" subtype="Code" buildaction="Compile" />
@@ -20,8 +17,6 @@
     <File name="Banshee.Widgets/LinkLabel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/MessagePane.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/PropertyTable.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/RatingEntry.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Widgets/RatingMenuItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/SearchEntry.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/SeekSlider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/StreamPositionLabel.cs" subtype="Code" buildaction="Compile" />
@@ -32,6 +27,7 @@
     <File name="Banshee.Widgets/CustomActionProxy.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/RatingActionProxy.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Widgets/MenuTile.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources" subtype="Directory" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

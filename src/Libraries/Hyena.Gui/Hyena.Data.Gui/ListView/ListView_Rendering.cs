@@ -200,10 +200,6 @@ namespace Hyena.Data.Gui
 
         private void PaintList ()
         {
-            if (model == null) {
-                return;
-            }
-            
             // Render the sort effect to the GdkWindow.
             if (sort_column_index != -1 && (!pressed_column_is_dragging || pressed_column_index != sort_column_index)) {
                 CachedColumn col = column_cache[sort_column_index];
@@ -265,7 +261,7 @@ namespace Hyena.Data.Gui
                 // If the bottom of the stuff we're shifting up is part of a selection
                 // that continues down into the new stuff, be sure that we render the
                 // whole selection block so the gradient looks nice.
-                while (Selection.Contains (canvas_last_row) && canvas_last_row > first_row) {
+                while (Selection != null && Selection.Contains (canvas_last_row) && canvas_last_row > first_row) {
                     canvas_last_row--;
                 }
                 
@@ -281,14 +277,16 @@ namespace Hyena.Data.Gui
                 // If the top of the stuff we're shifting down is part of a selection
                 // that continues up into the new stuff, be sure that we render the
                 // whole selection block so the gradient looks nice.
-                while (Selection.Contains (canvas_first_row) && canvas_first_row < last_row) {
+                while (Selection != null && Selection.Contains (canvas_first_row) && canvas_first_row < last_row) {
                     canvas_first_row++;
                 }
                 
                 last_row = canvas_first_row;
             }
             
-            PaintRows (first_row, Math.Min (model.Count, last_row), first_row_y);
+            if (model != null) {
+                PaintRows (first_row, Math.Min (model.Count, last_row), first_row_y);
+            }
             
             // Destroy the cairo context.
             ((IDisposable)cairo_context.Target).Dispose ();
@@ -319,7 +317,7 @@ namespace Hyena.Data.Gui
             selected_rows.Clear ();
 
             for (int ri = first_row; ri < last_row; ri++) {
-                if (Selection.Contains (ri)) {
+                if (Selection != null && Selection.Contains (ri)) {
                     if (selection_height == 0) {
                         selection_y = single_list_alloc.Y;
                     }
@@ -347,7 +345,7 @@ namespace Hyena.Data.Gui
                         cairo_context.Restore ();
                     }
                     
-                    if (focused_row_index == ri && !Selection.Contains (ri) && HasFocus) {
+                    if (Selection != null && focused_row_index == ri && !Selection.Contains (ri) && HasFocus) {
                         CairoCorners corners = CairoCorners.All;
                         
                         if (Selection.Contains (ri - 1)) {
@@ -379,7 +377,8 @@ namespace Hyena.Data.Gui
                     canvas_alloc.Width, selection_height);
             }
             
-            if (Selection.Count > 1 && !selected_focus_alloc.Equals (Rectangle.Zero) && HasFocus) {
+            if (Selection != null && Selection.Count > 1 && 
+                !selected_focus_alloc.Equals (Rectangle.Zero) && HasFocus) {
                 Theme.DrawRowSelection (cairo_context, selected_focus_alloc.X, selected_focus_alloc.Y, 
                     selected_focus_alloc.Width, selected_focus_alloc.Height, false, true, 
                     Theme.Colors.GetWidgetColor (GtkColorClass.Dark, StateType.Selected));

@@ -1,5 +1,62 @@
 2008-05-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: FIxed improper ctor
+	chain; set Min/MaxWidth if a cell is ISizeRequestCell when packing
+	by calling GetSize on the cell
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCell.cs: Allow setting
+	BoundObject on a cell, added a BoundObjectParent that can be used
+	to track which data item (instead of which data property on an item)
+	is being bound
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellCheckBox.cs: Implemented
+	a check box interactive cell renderer that binds to boolean properties
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellRating.cs: Implemented
+	a rating cell renderer based on the new rating renderer
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/IInteractiveCell.cs: Interface
+	for cells that would like to have keyboard/mouse events proxied to them
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ISizeRequestCell.cs: Interface
+	for cells that actually care about their size and refuse to adapt to
+	what the view can provide
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Implemented first pass at cell level interaction - namely through 
+	ProxyEventToCell which currently supports transforming and proxying
+	Gdk.EventButton and Gdk.EventMotion events from the view to a cell; also
+	fix a bunch of potential NRE when the model selection is null
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Fix a bunch of potential NRE when the model selection is null
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListViewTestModule.cs: Started
+	a test module for stressing functionality of the ListView
+	
+	* src/Libraries/Hyena.Gui/Hyena.Gui/RatingRenderer.cs: A new renderer to
+	do all drawing/logic for things that want to embed a rating
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ComplexMenuItem.cs: Moved to
+	Hyena.Widgets
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingEntry.cs: Moved to 
+	Hyena.Widgets and largely rewritten to use the new RatingRenderer
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:  Moved to
+	Hyena.Widgets and do not call into the EventBox rendering hack since the
+	RatingEntry no longer derives from EventBox
+	
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/RatingQueryValueEntry.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/CustomActionProxy.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingActionProxy.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Updated to reflect the move of Rating stuff to Hyena.Gui
+
+2008-05-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena/Hyena.Collections/RangeCollection.cs: Made the
 	indexer code more sexy so it doesn't look like I wrote it at 4:30 in
 	the morning, ensure that negative indexes throw IOORE

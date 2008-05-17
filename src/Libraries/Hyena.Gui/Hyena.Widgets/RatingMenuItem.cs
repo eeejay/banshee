@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -30,32 +30,34 @@ using System;
 using Gtk;
 using Mono.Unix;
 
-namespace Banshee.Widgets
+namespace Hyena.Widgets
 {
     public class RatingMenuItem : ComplexMenuItem
     {
         private RatingEntry entry;
         private bool pressing;
         private bool can_activate = true;
+        private Box box;
 
         public RatingMenuItem () : base ()
         {
-            HBox box = new HBox ();
+            box = new HBox ();
             box.Spacing = 5;
             
             Label label = new Label ();
             label.Markup = String.Format ("<i>{0}</i>", 
                 GLib.Markup.EscapeText (Catalog.GetString ("Rating:")));
             box.PackStart (label, false, false, 0);
+            label.Show ();
             
-            entry = new RatingEntry (0, true);
+            entry = new RatingEntry ();
+            entry.HasFrame = false;
+            entry.PreviewOnHover = false;
             entry.Changed += OnEntryChanged;
             box.PackStart (entry, false, false, 0);
             
             box.ShowAll ();
             Add (box);
-            
-            ConnectChildExpose (entry);
         }
 
         private int TransformX (double inx)

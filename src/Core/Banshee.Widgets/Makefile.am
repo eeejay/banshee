@@ -3,7 +3,6 @@ TARGET = library
 ASSEMBLY_BUILD_FLAGS = -unsafe
 LINK = $(REF_BANSHEE_WIDGETS)
 SOURCES =  \
-	Banshee.Widgets/ComplexMenuItem.cs \
 	Banshee.Widgets/CustomActionProxy.cs \
 	Banshee.Widgets/DateButton.cs \
 	Banshee.Widgets/DictionaryComboBox.cs \
@@ -17,8 +16,6 @@ SOURCES =  \
 	Banshee.Widgets/MessagePane.cs \
 	Banshee.Widgets/PropertyTable.cs \
 	Banshee.Widgets/RatingActionProxy.cs \
-	Banshee.Widgets/RatingEntry.cs \
-	Banshee.Widgets/RatingMenuItem.cs \
 	Banshee.Widgets/SearchEntry.cs \
 	Banshee.Widgets/SeekSlider.cs \
 	Banshee.Widgets/StreamPositionLabel.cs \
@@ -26,9 +23,7 @@ SOURCES =  \
 	Banshee.Widgets/TileView.cs \
 	Banshee.Widgets/VolumeButton.cs  
 
-RESOURCES =  \
-	Resources/rating-rated.png \
-	Resources/rating-unrated.png
+RESOURCES =
 
 include $(top_srcdir)/build/build.mk
 

@@ -5,11 +5,15 @@ SOURCES =  \
 	Hyena.Data.Gui/CellContext.cs \
 	Hyena.Data.Gui/Column.cs \
 	Hyena.Data.Gui/ColumnCell.cs \
+	Hyena.Data.Gui/ColumnCellCheckBox.cs \
+	Hyena.Data.Gui/ColumnCellRating.cs \
 	Hyena.Data.Gui/ColumnCellText.cs \
 	Hyena.Data.Gui/ColumnController.cs \
 	Hyena.Data.Gui/ColumnHeaderCellText.cs \
 	Hyena.Data.Gui/IHeaderCell.cs \
+	Hyena.Data.Gui/IInteractiveCell.cs \
 	Hyena.Data.Gui/IListView.cs \
+	Hyena.Data.Gui/ISizeRequestCell.cs \
 	Hyena.Data.Gui/ListView/ListView.cs \
 	Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs \
 	Hyena.Data.Gui/ListView/ListView_Header.cs \
@@ -17,6 +21,7 @@ SOURCES =  \
 	Hyena.Data.Gui/ListView/ListView_Model.cs \
 	Hyena.Data.Gui/ListView/ListView_Rendering.cs \
 	Hyena.Data.Gui/ListView/ListView_Windowing.cs \
+	Hyena.Data.Gui/ListViewTestModule.cs \
 	Hyena.Data.Gui/ObjectListView.cs \
 	Hyena.Data.Gui/RowActivatedHandler.cs \
 	Hyena.Data.Gui/SortableColumn.cs \
@@ -38,6 +43,7 @@ SOURCES =  \
 	Hyena.Gui/EntryUndoAdapter.cs \
 	Hyena.Gui/GtkUtilities.cs \
 	Hyena.Gui/PangoCairoHelper.cs \
+	Hyena.Gui/RatingRenderer.cs \
 	Hyena.Gui/ShadingTestWindow.cs \
 	Hyena.Gui/TestModuleAttribute.cs \
 	Hyena.Gui/TestModuleRunner.cs \
@@ -60,13 +66,18 @@ SOURCES =  \
 	Hyena.Widgets/AnimatedImage.cs \
 	Hyena.Widgets/AnimatedVBox.cs \
 	Hyena.Widgets/AnimatedWidget.cs \
+	Hyena.Widgets/ComplexMenuItem.cs \
 	Hyena.Widgets/MenuButton.cs \
 	Hyena.Widgets/MessageBar.cs \
+	Hyena.Widgets/RatingEntry.cs \
+	Hyena.Widgets/RatingMenuItem.cs \
 	Hyena.Widgets/RoundedFrame.cs \
 	Hyena.Widgets/ScrolledWindow.cs \
 	Hyena.Widgets/SegmentedBar.cs \
 	Hyena.Widgets/SmoothScrolledWindow.cs \
 	Hyena.Widgets/WrapLabel.cs
+
+RESOURCES =
 
 include $(top_srcdir)/build/build.mk
 

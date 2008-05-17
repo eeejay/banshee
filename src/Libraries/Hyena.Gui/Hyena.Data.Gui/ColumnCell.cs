@@ -39,6 +39,7 @@ namespace Hyena.Data.Gui
         private string property;
         private PropertyInfo property_info;
         private object bound_object;
+        private object bound_object_parent;
             
         public ColumnCell (string property, bool expand)
         {
@@ -48,17 +49,24 @@ namespace Hyena.Data.Gui
 
         public void BindListItem (object item)
         {
-            if (item == null)
+            if (item == null) {
                 return;
-
+            }
+            
+            bound_object_parent = item;
+            
             if (property != null) {
-                if (property_info == null || property_info.ReflectedType != item.GetType ()) {
-                    property_info = item.GetType ().GetProperty (property);
-                }
-
-                bound_object = property_info.GetValue (item, null);
+                EnsurePropertyInfo ();
+                bound_object = property_info.GetValue (bound_object_parent, null);
             } else {
-                bound_object = item;
+                bound_object = bound_object_parent;
+            }
+        }
+        
+        private void EnsurePropertyInfo ()
+        {
+            if (property_info == null || property_info.ReflectedType != bound_object_parent.GetType ()) {
+                property_info = bound_object_parent.GetType ().GetProperty (property);
             }
         }
         
@@ -72,6 +80,16 @@ namespace Hyena.Data.Gui
         
         protected object BoundObject {
             get { return bound_object; }
+            set {
+                if (property != null) {
+                    EnsurePropertyInfo ();
+                    property_info.SetValue (bound_object_parent, value, null);
+                }
+            }
+        }
+        
+        protected object BoundObjectParent {
+            get { return bound_object_parent; }
         }
         
         public abstract void Render (CellContext context, StateType state, double cellWidth, double cellHeight);

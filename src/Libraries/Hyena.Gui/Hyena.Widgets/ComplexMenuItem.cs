@@ -5,7 +5,7 @@
 //   Aaron Bockover <abockover@novell.com>
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -30,7 +30,7 @@
 using System;
 using Gtk;
 
-namespace Banshee.Widgets
+namespace Hyena.Widgets
 {
     public class ComplexMenuItem : MenuItem
     {

@@ -94,7 +94,7 @@ namespace Hyena.Data.Gui
                 }
             }
             
-            if (Model != null) {
+            if (Model != null && Selection != null) {
                 Selection.MaxIndex = Model.Count - 1;
             }
             

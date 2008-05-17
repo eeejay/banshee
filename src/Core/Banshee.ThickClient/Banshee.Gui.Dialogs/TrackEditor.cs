@@ -44,6 +44,7 @@ using Banshee.Sources;
 using Banshee.Collection.Database;
 
 using Hyena.Gui;
+using Hyena.Widgets;
 
 namespace Banshee.Gui.Dialogs
 {

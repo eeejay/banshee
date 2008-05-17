@@ -56,15 +56,15 @@ namespace Hyena.Data.Gui
         {
         }
         
-        public Column (string title, ColumnCell cell, double width) 
-            : this (null, title, cell, width, true)
+        public Column (string title, ColumnCell cell, double width)
+            : this (title, cell, width, true)
         {
         }
         
         public Column (string title, ColumnCell cell, double width, bool visible) 
             : this (null, title, cell, width, visible)
         {
-            this.header_cell = new ColumnHeaderCellText(HeaderCellDataHandler);
+            this.header_cell = new ColumnHeaderCellText (HeaderCellDataHandler);
         }
         
         public Column (ColumnCell header_cell, string title, ColumnCell cell, double width)
@@ -93,6 +93,14 @@ namespace Hyena.Data.Gui
         
         public void PackStart (ColumnCell cell)
         {
+            ISizeRequestCell sr_cell = cell as ISizeRequestCell;
+            if (sr_cell != null && sr_cell.RestrictSize) {
+                int w, h;
+                sr_cell.GetSize (out w, out h);
+                MinWidth = w;
+                MaxWidth = w;
+            }
+            
             cells.Insert (0, cell);
         }
         
