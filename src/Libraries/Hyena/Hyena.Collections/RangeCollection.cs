@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -86,6 +86,11 @@ namespace Hyena.Collections
                         : -1)     // Below Range
                     : (Start + (End - Start)).CompareTo (
                         x.Start + (x.End - x.Start));
+            }
+            
+            public override string ToString ()
+            {
+                return String.Format ("{0}-{1} ({2})", Start, End, Count);
             }
 
             public int Count {
@@ -300,19 +305,20 @@ namespace Hyena.Collections
             
             return -1;
         }
-        
+
         public int this[int index] {
             get {
-                int offset = 0;
-                foreach (Range range in ranges) {
-                    if (index >= range.Start && index <= range.End) {
-                        return offset + (range.End - index);
+                int cuml_count = 0;
+                for (int r_i = 0; r_i < range_count; r_i++) {
+                    cuml_count += ranges[r_i].Count;
+                    if (index >= cuml_count) {
+                        continue;
                     }
                     
-                    offset += range.End - range.Start;
+                    return ranges[r_i].End - (cuml_count - index) + 1;
                 }
                 
-                return -1;
+                throw new IndexOutOfRangeException (index.ToString ());
             }
         }
 

@@ -1,5 +1,14 @@
 2008-05-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena/Hyena.Collections/RangeCollection.cs: Fixed the 
+	horribly broken indexer that looked like a late night copy and paste of
+	the IndexOf logic but never worked - we don't use it, so it's never been
+	a problem, but the unit test had always complained - yay tests
+
+	* tests/Hyena/RangeCollectionTests.cs: Improved test for the indexer
+
+2008-05-17  Aaron Bockover  <abock@gnome.org>
+
 	Patch from Bertrand Lorentz (BGO #533099)
 
 	* src/Libraries/Hyena/Hyena.Collections/RangeCollection.cs: Fix a 

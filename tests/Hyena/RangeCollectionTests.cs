@@ -330,26 +330,39 @@ public class RangeCollectionTests
     {
         RangeCollection range = new RangeCollection ();
         
+        /*
+        Range  Idx  Value
+        0-2    0 -> 0
+               1 -> 1
+               2 -> 2
+        
+        7-9    3 -> 7
+               4 -> 8
+               5 -> 9
+        
+        11-13  6 -> 11
+               7 -> 12
+               8 -> 13
+        */
+        
         range.Add (0);
+        range.Add (1);
         range.Add (2);
-        range.Add (3);
-        range.Add (5);
-        range.Add (6);
         range.Add (7);
         range.Add (8);
+        range.Add (9);
         range.Add (11);
         range.Add (12);
         range.Add (13);
         
         Assert.AreEqual (0, range[0]);
-        Assert.AreEqual (2, range[1]);
-        Assert.AreEqual (3, range[2]);
-        Assert.AreEqual (5, range[3]);
-        Assert.AreEqual (6, range[4]);
-        Assert.AreEqual (7, range[5]);
-        Assert.AreEqual (8, range[6]);
-        Assert.AreEqual (11, range[7]);
-        Assert.AreEqual (12, range[8]);
-        Assert.AreEqual (13, range[9]);
+        Assert.AreEqual (1, range[1]);
+        Assert.AreEqual (2, range[2]);
+        Assert.AreEqual (7, range[3]);
+        Assert.AreEqual (8, range[4]);
+        Assert.AreEqual (9, range[5]);
+        Assert.AreEqual (11, range[6]);
+        Assert.AreEqual (12, range[7]);
+        Assert.AreEqual (13, range[8]);
     }
 }
