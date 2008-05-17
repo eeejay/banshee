@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Hyena.Collections;
 
@@ -326,7 +327,7 @@ public class RangeCollectionTests
     }
     
     [Test]
-    public void TestIndexer ()
+    public void TestIndexerForGoodIndexes ()
     {
         RangeCollection range = new RangeCollection ();
         
@@ -364,5 +365,64 @@ public class RangeCollectionTests
         Assert.AreEqual (11, range[6]);
         Assert.AreEqual (12, range[7]);
         Assert.AreEqual (13, range[8]);
+    }
+    
+    [Test]
+    public void TestStressForGoodIndexes ()
+    {
+        Random random = new Random (0xbeef);
+        RangeCollection ranges = new RangeCollection ();
+        List<int> indexes = new List<int> ();
+        
+        for (int i = 0, n = 250000; i < n; i++) {
+            int value = random.Next (n);
+            if (ranges.Add (value)) {
+                indexes.Add (value);
+            }
+        }
+        
+        indexes.Sort ();
+        
+        Assert.AreEqual (indexes.Count, ranges.Count);
+        for (int i = 0; i < indexes.Count; i++) {
+            Assert.AreEqual (indexes[i], ranges[i]);
+        }
+    }
+    
+    [Test]
+    [ExpectedException (typeof (IndexOutOfRangeException))]
+    public void TestIndexerForNegativeBadIndex ()
+    {
+        RangeCollection range = new RangeCollection ();
+        Assert.AreEqual (0, range[1]);
+    }
+    
+    [Test]
+    [ExpectedException (typeof (IndexOutOfRangeException))]
+    public void TestIndexerForZeroBadIndex ()
+    {
+        RangeCollection range = new RangeCollection ();
+        Assert.AreEqual (0, range[0]);
+    }
+    
+    [Test]
+    [ExpectedException (typeof (IndexOutOfRangeException))]
+    public void TestIndexerForPositiveBadIndex ()
+    {
+        RangeCollection range = new RangeCollection ();
+        range.Add (1);
+        Assert.AreEqual (0, range[1]);
+    }
+    
+    [Test]
+    public void TestExplicitInterface ()
+    {
+        ICollection<int> range = new RangeCollection ();
+        range.Add (1);
+        range.Add (2);
+        range.Add (5);
+        range.Add (6);
+        
+        Assert.AreEqual (4, range.Count);
     }
 }

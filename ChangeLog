@@ -1,5 +1,15 @@
 2008-05-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena/Hyena.Collections/RangeCollection.cs: Made the
+	indexer code more sexy so it doesn't look like I wrote it at 4:30 in
+	the morning, ensure that negative indexes throw IOORE
+
+	* tests/Hyena/RangeCollectionTests.cs: Added an indexer stress test and
+	some extra specific tests for ensuring IndexOutOfRange is thrown when
+	it should be
+
+2008-05-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena/Hyena.Collections/RangeCollection.cs: Fixed the 
 	horribly broken indexer that looked like a late night copy and paste of
 	the IndexOf logic but never worked - we don't use it, so it's never been

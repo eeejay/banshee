@@ -33,7 +33,11 @@ using System.Collections;
 using System.Collections.Generic;
 #endif
 
+#if NET_1_1
+namespace System.Collections
+#else
 namespace Hyena.Collections
+#endif
 {
 #if NET_1_1
     internal
@@ -248,7 +252,7 @@ namespace Hyena.Collections
             return min;
         }
         
-        private int FindRangeIndexForValue (int value)
+        public int FindRangeIndexForValue (int value)
         {
             return Array.BinarySearch (ranges, 0, range_count, new Range (value, -1));
         }
@@ -308,14 +312,10 @@ namespace Hyena.Collections
 
         public int this[int index] {
             get {
-                int cuml_count = 0;
-                for (int r_i = 0; r_i < range_count; r_i++) {
-                    cuml_count += ranges[r_i].Count;
-                    if (index >= cuml_count) {
-                        continue;
+                for (int i = 0, cuml_count = 0; i < range_count && index >= 0; i++) {
+                    if (index < (cuml_count += ranges[i].Count)) {
+                        return ranges[i].End - (cuml_count - index) + 1;
                     }
-                    
-                    return ranges[r_i].End - (cuml_count - index) + 1;
                 }
                 
                 throw new IndexOutOfRangeException (index.ToString ());
@@ -326,13 +326,27 @@ namespace Hyena.Collections
 
 #region ICollection Implementation
 
-        public void Add (int value)
+        public bool Add (int value)
         {
             if (!Contains (value)) {
                 generation++;
                 InsertRange (new Range (value, value));
                 index_count++;
+                return true;
             }
+            
+            return false;
+        }
+        
+        void
+#if NET_2_0
+        ICollection<int>.
+#else
+        ICollection.
+#endif
+        Add (int value)
+        {
+            Add (value);
         }
                 
         public bool Remove (int value)
@@ -420,4 +434,3 @@ namespace Hyena.Collections
 
     }
 }
-
