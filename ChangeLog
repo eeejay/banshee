@@ -1,5 +1,13 @@
 2008-05-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Bind to a private rating field and call Save in the property setter
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Add the rating column with the new hot rating cell
+
+2008-05-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: FIxed improper ctor
 	chain; set Min/MaxWidth if a cell is ISizeRequestCell when packing
 	by calling GetSize on the cell

@@ -65,6 +65,7 @@ namespace Banshee.Collection.Gui
                 TitleColumn,
                 ArtistColumn,
                 AlbumColumn,
+                RatingColumn,
                 DurationColumn,
                 GenreColumn,
                 YearColumn,
@@ -152,7 +153,11 @@ namespace Banshee.Collection.Gui
             get { return disc_column; }
         }
         
-        //new SortableColumn ("Rating", new RatingColumnCell (null, true), 0.15, "Rating"),
+        private SortableColumn rating_column = new SortableColumn (Catalog.GetString ("Rating"),
+            new ColumnCellRating ("Rating", true), 0.15, "Rating", false);
+        public SortableColumn RatingColumn {
+            get { return rating_column; }
+        }
         
         private SortableColumn last_played_column = new SortableColumn (Catalog.GetString ("Last Played"), 
             new ColumnCellDateTime ("LastPlayed", true), 0.15, "LastPlayedStamp", false);

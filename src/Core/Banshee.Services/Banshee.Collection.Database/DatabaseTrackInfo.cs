@@ -359,10 +359,16 @@ namespace Banshee.Collection.Database
             set { base.Comment = value; }
         }
         
-        [DatabaseColumn]
+        [DatabaseColumn ("Rating")]
+        private int rating;
         public override int Rating {
-            get { return base.Rating; }
-            set { base.Rating = value; }
+            get { return rating; }
+            set {
+                if (rating != value) {
+                    rating = value;
+                    Save (true, BansheeQuery.RatingField);
+                }
+            }
         }
         
         [DatabaseColumn]
