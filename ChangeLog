@@ -1,3 +1,16 @@
+2008-05-17  Aaron Bockover  <abock@gnome.org>
+
+	Patch from Bertrand Lorentz (BGO #533099)
+
+	* src/Libraries/Hyena/Hyena.Collections/RangeCollection.cs: Fix a 
+	dyslexia bug in the NET_1_1 version of the array resize code
+
+	* build/build.rules.mk: Define NET_2_0 on the build so we end up
+	using the better version of RangeCollection - whoops
+
+	* tests/Hyena/RangeCollectionTests.cs: Added test to check for the
+	NET_1_1 array resize bug fixed above
+
 2008-05-14  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs: Added %year% 

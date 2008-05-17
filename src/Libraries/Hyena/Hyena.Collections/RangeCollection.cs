@@ -135,7 +135,7 @@ namespace Hyena.Collections
 #else
             Range [] new_ranges = new Range[new_capacity];
             Array.Copy (ranges, 0, new_ranges, 0, ranges.Length);
-            new_ranges = ranges;
+            ranges = new_ranges;
 #endif
         }
         

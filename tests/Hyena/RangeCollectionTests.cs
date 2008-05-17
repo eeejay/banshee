@@ -90,7 +90,28 @@ public class RangeCollectionTests
         
         Assert.AreEqual (n, i);
     }
-   
+
+    [Test]
+    public void TestLargeNonAdjacent ()
+    { 
+        RangeCollection range = new RangeCollection ();
+        int i, n = 1000000;
+        
+        for (i = 0; i < n; i += 2) {
+            range.Add (i);
+        }
+        
+        Assert.AreEqual (n / 2, range.Count);
+        
+        i = 0;
+        foreach (int j in range) {
+            Assert.AreEqual (i, j);
+            i += 2;
+        }
+        
+        Assert.AreEqual (n, i);
+    }
+
     private static void _TestRanges (RangeCollection range, int [] indexes)
     {
         foreach (int index in indexes) {
