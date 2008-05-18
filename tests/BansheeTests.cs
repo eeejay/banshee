@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 
@@ -34,6 +35,34 @@ using NUnit.Framework;
 
 using Hyena;
 using Mono.Addins;
+
+public struct TransformPair<F, T>
+{
+    public F From;
+    public T To;
+
+    public TransformPair (F from, T to)
+    {
+        From = from;
+        To = to;
+    }
+
+    public static TransformPair<F, T> [] GetFrom (params object [] objects)
+    {
+        TransformPair<F, T> [] pairs = new TransformPair<F, T> [objects.Length / 2];
+        for (int i = 0; i < objects.Length; i += 2) {
+            pairs[i/2] = new TransformPair<F, T> ((F)objects[i], (T)objects[i+1]);
+        }
+        return pairs;
+    }
+
+    public override string ToString ()
+    {
+        return From.ToString ();
+    }
+}
+
+public delegate To Transform<F, To> (F from);
 
 public abstract class BansheeTests
 {
@@ -44,19 +73,26 @@ public abstract class BansheeTests
         AddinManager.Initialize (Pwd + "/../bin/");
     }
 
-    public delegate void TestRunner<T> (T item);
-    public static void AssertForEach<T> (System.Collections.Generic.IEnumerable<T> objects, TestRunner<T> runner)
+    public static void AssertForEach<T> (IEnumerable<T> objects, Action<T> runner)
     {
         System.Text.StringBuilder sb = new System.Text.StringBuilder ();
         foreach (T o in objects) {
             try { runner (o); }
-            catch (AssertionException e) { sb.AppendFormat ("Failed processing {0}: {1}\n", o, e.Message); }
-            catch (Exception e) { sb.AppendFormat ("Failed processing {0}: {1}\n", o, e.ToString ()); }
+            catch (AssertionException e) { sb.AppendFormat ("Failed assertion on {0}: {1}\n", o, e.Message); }
+            catch (Exception e) { sb.AppendFormat ("\nCaught exception on {0}: {1}\n", o, e.ToString ()); }
         }
 
         if (sb.Length > 0)
             Assert.Fail ("\n" + sb.ToString ());
     }
+
+    // Fails to compile, causes SIGABRT in gmcs; boo
+    /*public static void AssertTransformsEach<A, B> (IEnumerable<TransformPair<A, B>> pairs, Transform<A, B> transform)
+    {
+        AssertForEach (pairs, delegate (TransformPair<A, B> pair) {
+            Assert.AreEqual (pair.To, transform (pair.From));
+        });
+    }*/
 
     private static Thread main_loop;
     public static void StartBanshee ()

@@ -58,7 +58,7 @@ namespace Migo.Net
         private DownloadType type;
         
         private IWebProxy proxy;
-        private string userAgent;
+        private string user_agent;
         private Encoding encoding;                        
         private ICredentials credentials;
 
@@ -186,12 +186,8 @@ namespace Migo.Net
             }
         }
         
-        public int Timeout
-		{
-            get {
-                return timeout;
-            }
-            
+        public int Timeout {
+            get { return timeout; }
             set {
                 if (value < -1) {
                     throw new ArgumentOutOfRangeException (
@@ -201,16 +197,20 @@ namespace Migo.Net
                 
                 timeout = value;
             }
-        }        
+        }
         
-        public string UserAgent 
-		{
-            get { return userAgent; }
-            set { userAgent = value; }
+        private static string default_user_agent;
+        public static string DefaultUserAgent {
+            get { return default_user_agent; }
+            set { default_user_agent = value; }
+        }            
+        
+        public string UserAgent {
+            get { return user_agent ?? DefaultUserAgent; }
+            set { user_agent = value; }
         }
                 
-        private bool Cancelled 
-		{
+        private bool Cancelled {
             get {
                 lock (cancelBusySync) {
                     return cancelled; 
@@ -473,10 +473,8 @@ namespace Migo.Net
                     request, timeout, true
                 );            
             } catch (Exception e) {
-                Console.WriteLine (e.Message);            
-                Console.WriteLine (e.StackTrace);
                 Completed (e);
-            }  
+            }
         }    
             
         private HttpWebRequest PrepRequest (Uri address)
@@ -554,8 +552,8 @@ namespace Migo.Net
                     }
                 }
 			} else {
-                if (!String.IsNullOrEmpty (this.userAgent)) {
-                    req.UserAgent = this.userAgent;
+                if (!String.IsNullOrEmpty (UserAgent)) {
+                    req.UserAgent = UserAgent;
                 }
 
                 if (this.range > 0) {
@@ -595,7 +593,6 @@ namespace Migo.Net
                     //Console.WriteLine ("am I here?");
                     //Console.WriteLine ("Why {1}:  {0}", we.Status, this.fileName);
                     //Console.WriteLine ("Cancelled:  {0}", this.Cancelled);
-                    Console.WriteLine (we.Message);
                     err = we;
                 }
             } catch (Exception e) {
@@ -641,7 +638,6 @@ namespace Migo.Net
             
             switch (type) {
                 case DownloadType.String:
-                    goto case DownloadType.Data;
                 case DownloadType.Data:
                     dataDownload = true;                    
                     
@@ -807,9 +803,7 @@ namespace Migo.Net
             EventHandler<EventArgs> handler = ResponseReceived;
             
             if (handler != null) {
-                try {
-                    handler (this, new EventArgs ());
-                } catch {}
+                handler (this, new EventArgs ());
             }
         }
        
@@ -831,12 +825,9 @@ namespace Migo.Net
             EventHandler <DownloadProgressChangedEventArgs> 
                 handler = DownloadProgressChanged;
         
-            try 
-            {
-                if (handler != null) {
-                    handler (this, args);
-                }
-            } catch {}
+            if (handler != null) {
+                handler (this, args);
+            }
         }
 
         private void OnDownloadProgressChangedHandler (object sender, 
@@ -866,13 +857,10 @@ namespace Migo.Net
         {
             EventHandler <DownloadDataCompletedEventArgs> 
                 handler = DownloadDataCompleted;
-                
-            try
-            {            
-                if (handler != null) {
-                    handler (this, args);
-                }
-            } catch {}
+
+            if (handler != null) {
+                handler (this, args);
+            }
         }        
         
         private void OnDownloadFileCompleted (Exception error,
@@ -889,13 +877,10 @@ namespace Migo.Net
         {
             EventHandler <AsyncCompletedEventArgs> 
                 handler = DownloadFileCompleted;
-
-            try
-            {            
-                if (handler != null) {
-                    handler (this, args);
-                }
-            } catch {}
+        
+            if (handler != null) {
+                handler (this, args);
+            }
         }
         
         private void OnDownloadStringCompleted (string resultStr,
@@ -914,13 +899,10 @@ namespace Migo.Net
         {
             EventHandler <DownloadStringCompletedEventArgs> 
                 handler = DownloadStringCompleted;
-                
-            try
-            {            
-                if (handler != null) {
-                    handler (this, args);
-                }
-            } catch {}
+                         
+            if (handler != null) {
+                handler (this, args);
+            }
         }
     }
 }

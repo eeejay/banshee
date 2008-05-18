@@ -52,7 +52,7 @@ namespace Banshee.Metadata.Embedded
         
         public override void Run()
         {
-            if(track == null || CoverArtSpec.CoverExists (track.ArtistAlbumId)) {
+            if(track == null || CoverArtSpec.CoverExists (track.ArtworkId)) {
                 return;
             }
           
@@ -61,7 +61,7 @@ namespace Banshee.Metadata.Embedded
         
         protected void Fetch()
         {
-            string artist_album_id = track.ArtistAlbumId;
+            string artist_album_id = track.ArtworkId;
 
             if(artist_album_id == null) {
                 return;

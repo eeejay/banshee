@@ -97,8 +97,8 @@ namespace Banshee.Dap
             Expanded = true;
             Properties.SetStringList ("Icon.Name", GetIconNames ());
             Properties.Set<string> ("SourcePropertiesActionLabel", Catalog.GetString ("Device Properties"));
-            Properties.Set<OpenPropertiesDelegate> ("SourceProperties.GuiHandler", delegate { 
-                new DapPropertiesDialog (this).RunDialog (); 
+            Properties.Set<OpenPropertiesDelegate> ("SourceProperties.GuiHandler", delegate {
+                new DapPropertiesDialog (this).RunDialog ();
             });
 
             if (String.IsNullOrEmpty (GenericName)) {
@@ -115,6 +115,9 @@ namespace Banshee.Dap
             acceptable_mimetypes = MediaCapabilities != null 
                 ? MediaCapabilities.PlaybackMimeTypes 
                 : new string [] { "taglib/mp3" };
+
+            AddChildSource (new MusicGroupSource (this));
+            AddChildSource (new VideoGroupSource (this));
         }
         
         public override void AddChildSource (Source child)
@@ -166,14 +169,6 @@ namespace Banshee.Dap
             LoadFromDevice ();
             OnTracksAdded ();
             HideStatus ();
-            
-            ThreadAssist.ProxyToMain (delegate {
-                DatabaseSource src;
-                AddChildSource (src = new MusicGroupSource (this));
-                src.Reload ();
-                AddChildSource (src = new VideoGroupSource (this));
-                src.Reload ();
-            });
         }
 
         protected virtual void LoadFromDevice ()

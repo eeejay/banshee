@@ -1,3 +1,339 @@
+2008-05-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Massive commit that brings Podcasting back to the land of the living.  Our
+	internal classes for doing track filtering and showing the browsers have
+	been made generic, so that Podcasting can use all of them to show its
+	Browser (with a single Podcast filter).  I still do NOT recommend users use
+	this; it needs more work to migrate 0.13.2 podcasting data, and probably
+	has bugs that will eat your children.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Update to use new BansheeActionGroup ctor and properties.
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	Implement empty FilterModels property.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService_Interface.cs:
+	Listen to the events offered up in Migo, grab podcast artwork, and move
+	most of the action-related code into PodcastActions.cs.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastImageFetchJob.cs:
+	New MetadataServiceJob subclass for fetching podcast artwork.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastCore_Interface.cs:
+	Renamed to PodcastService.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:
+	Hot new renderer for podcasts, showing artwork, name, and when last
+	updated.  Duplicates a ton of code with ColumnCellAlbum, should be
+	refactored.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPublished.cs:
+	Override for ColumnCellDateTime to just print the short date.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	New class, a BansheeActionGroup subclass, for registering and handling
+	podcast actions.  Quite a few actions aren't implemented yet (like mark
+	new/old and delete podcast).
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:
+	Get rid of bold titles, make casing consistent, don't put ""s around the
+	description.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:
+	Casing, grammer, get rid of expander.
+
+	* src/Extensions/Banshee.Podcasting/Makefile.am:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastItem.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:
+	PodcastItem renamed to PodcastTrackInfo, pulls more data from FeedItem and
+	the enclosure/file.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/PixbufColumnCell.cs:
+	Add new ctor required by new ColumnController business.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/ItemActivityColumnCell.cs:
+	Add new ctor, get rid of Video and New Item icons; just show download status
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs:
+	Change to be a ListBrowserSourceContents subclass, which is what
+	CompositeTrackListView inherit from too.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs:
+	Change to inherit from LibrarySource, add a XML column controller property
+	to add Published and Download Status columns.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastFeedModel.cs:
+	Change to inherit from DatabaseBrowsableListModel, which goes against the
+	db and knows how to filter the track model.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastFeedView.cs:
+	Change to inherit from TrackFilterListView and to use the new Podcast
+	renderer.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastItemView.cs:
+	Fix up columns, names.
+
+	* src/Extensions/Banshee.Podcasting/Resources/ActiveSourceUI.xml: Use the
+	normal TrackContextMenu for podcast items, but add some things to it when
+	podcast source is active.
+
+	* src/Extensions/Banshee.Podcasting/Resources/GlobalUI.xml: Get rid of
+	PodcastItemViewPopup, add several normal Library-source context menu
+	items, remove some items from PodcastFeedPopup that didn't make sense.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.addin.xml: Update
+	copyright info.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.mdp: Lots of new
+	files, ref TagLib, System.Xml, gdk.
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Fix assumptions regarding
+	composite_view, and get rid of IHasTrackSelection crap.
+
+	* src/Core/Banshee.Services/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Rename TrackInfo.ArtistAlbumId to ArtworkId.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs: Fix delete from
+	drive action label, reload after intialized.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Add the two media sources
+	before loading, avoiding ThreadAssist nastiness.
+
+	* src/nuke-gconf-keys: New scriptlet for clearing your banshee-1 gconf
+	keys, for testing from a clean slate.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/XmlColumnController.cs:
+	Add ability to set a default <sort-column>column-id</sort-column>.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/AlbumListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	Inherit from TrackFilterListView, getting rid of a lot of dupe code.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellFileSize.cs:
+	New column cell renderer for file sizes.  Should be changed to always spit
+	out one decimal point and to right align, for scanability.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Move RowActivated handler here from Nereid.PlayerInterface, so that any
+	TrackListView instance/subclass will start playing when you double click
+	on a row.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackFilterListView.cs:
+	New class, refactored Album and Artist code here.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
+	Don't display anything if duration is zero.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Add FileSize column, make duration column a bit smaller by default.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDateTime.cs:
+	Add DateTimeFormat to control what format of date/time string is used.
+
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.mdp: Add new files.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Add
+	ShowContextMenu method, take the interface_action_service in the ctor and
+	expose through Actions property.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Get rid of
+	awful TrackSelector crap.
+
+	* src/Core/Banshee.ThickClient/Makefile.am: Updates.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ListBrowserSourceContents.cs:
+	Refactored out of CompositeTrackSourceContents, made generic so can be
+	used with any ITrackModelSource with its arbitrary FilterModels.  Means we
+	can have different types of browsers for different sources (Music Library
+	vs Podcasts, for instance) and they share a lot of code, and the top/left
+	preference.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Inherit from ListBrowserSourceContents.
+
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs: Fix
+	bug where files were used before they were fully downloaded by saving to a
+	temp file and moving once finished writing.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/ITrackModelSource.cs: Get rid
+	of AlbumModel and ArtistModel, replaced by generic FilterModels.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add the
+	conditions intead of setting them, meaning we can play nicely with
+	other conditions instead of racing.
+
+	* src/Core/Banshee.Services/Banshee.Collection/BrowsableListModel.cs: New
+	abstract subclass of BansheeListModel, that defines the Selection as a
+	SelectAllSelection.
+
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs: Add
+	FocusedItem getter, and make RaiseReloaded public.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	Inherit from DatabaseBrowsableListModel
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseBrowsableListModel.cs:
+	New abstract class for filter models.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Sort of lame, but put the actual Provider.Save/Refresh calls inside
+	virtual methods so that PodcastTrackInfo can use its own provider.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Get rid of ReloadTrigger enum, replaced by just passing in the actual
+	IFilterModel that triggered the reload (if any).  Reload algorithm made
+	generic, uses the ITrackModelSource's list of FilterModels, so will work
+	with 0 - N filter models (used by PodcastSource to filter just on Podcast,
+	atm).  Get rid of built-in album/artist assumptions.
+
+	* src/Core/Banshee.Services/Banshee.Services.mdp: New files.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	New migration, drop any podcast tables created using the 1.0 series
+	- 0.13.2 data shouldn't be affected - so we can start over.  Add an
+	ExternalId column to CoreTracks.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelCache.cs: Don't
+	require BansheeModelProvider since SqliteModelProvider suffices fine.
+
+	* src/Core/Banshee.Services/Makefile.am: New files.
+
+	* src/Core/Banshee.Core/Resources/translators.xml: Updated.
+
+	* src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs: Make the actual
+	escaping code public (so we can use it to make podcast artwork ids).  Log
+	a message stating where the album art directory is.
+
+	* src/Libraries/Hyena/Hyena.Collections/Selection.cs: Add a FocusedIndex
+	property, factored out of ListView, so that we can get to it so long as we
+	can get to the Selection, instead of having to get to the ListView.
+
+	* src/Libraries/Hyena/Hyena/Log.cs: Add WarningFormat.
+
+	* src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs: Added
+	convenience factory method RelativeToNow.
+
+	* src/Libraries/Hyena/Hyena.Query/TimeSpanQueryValue.cs: Determine the
+	best factor after having our value set.
+
+	* src/Libraries/Hyena/Hyena.Data/IFilterable.cs: Rename Filter to
+	UserQuery.
+
+	* src/Libraries/Hyena/Hyena.Data/IListModel.cs: Add non-generic IListModel
+	interface.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Make Save,
+	Load, and Delete methods virtual, change FetchFirstMatching to not
+	duplicate FetchAllMatching code, change both to accept params, fix bug
+	with Refresh, and add protected PrimaryKeyFor method.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/IListView.cs: Add non-generic
+	interface.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCell.cs: Add useful
+	debugging logging if a specified property doesn't exist.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Change to use Selection.FocusedIndex.
+
+	* src/Libraries/Migo/Migo.mdp:
+	* src/Libraries/Migo/Makefile.am: New files, only build if
+	--enable-podcast set.
+
+	* src/Libraries/Migo/Migo/Migo.Net/AsyncWebClient.cs: Add a public static
+	UsreAgent property so we can set it to Banshee.Web.Browser.UserAgent.  Get
+	rid of many try {} catch {} statements to avoid swallowing exceptions.
+
+	* src/Libraries/Migo/Migo/Migo.TaskCore/AsyncCommandQueue/AsyncCommandQueue.cs:
+	* src/Libraries/Migo/Migo/Migo.DownloadCore/DownloadManager.cs:
+	* src/Libraries/Migo/Migo/Migo.TaskCore/TaskGroup.cs: Fix formatting,
+	logging.
+
+	* src/Libraries/Migo/Migo/Migo.DownloadCore/HttpFileDownloadTask.cs: Don't
+	set the UserAgent here.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedsManager.cs: Separated most
+	of this code out into FeedManager and EnclosureManager.  This class was
+	trying to be too many things to too many users.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/XmlUtils.cs: Add
+	GetNamespaceManager method, and GetITunesDuration method.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedItem.cs: Default active to
+	true, change provider to be a MigoModelProvider, add static Exists (guid)
+	method, many of fixes.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedEnclosure.cs: Change
+	provider and inherit from MigoItem, fix up SetFileImpl method, database
+	properties, etc.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/Feed.cs: Inherit from MigoItem,
+	uset MigoModelProvider, fix up db properties, add method that starts
+	automatically downloading any new items when appropriate.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/Rfc822DateTime.cs: Fix so
+	parses some dates it wasn't parsing before.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/OpmlParser.cs: New class, not
+	at all finished, for parsing OPML files.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/RssParser.cs: Get the image url
+	from itunes:image first, since it's probably higher quality.  Get the
+	keywords and category properties too.  Get the duration for enclosures, if
+	set.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/MigoModelProvider.cs: A
+	subclass of SqliteModelProvider with an interesting twist: every item that
+	is retrieved is cached in a Dictionary indexed by DbId, which allows us to
+	combine the power of Migo's downloading ability (which wouldn't work if
+	there were multiple instances of a FeedItem, for example, that all
+	represented the same actual item/db row, with the power of
+	SqliteModelProvider for finding items.  So you can do
+	Feed.Provider.FetchAllMatch ("LastDownloadedAt < ?', some datetime) and
+	be returned the already-instantiated objects.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedUpdateTask.cs: Fixed up.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/EventArgs/FeedItemEventArgs.cs:
+	Chagned, but I don't think this is used anymore.  Should be culled.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedManager.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/EnclosureManager.cs: New
+	classes taking over for things FeedsManager did before (namely, managing
+	downloads and firing off events).
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/MigoItem.cs: Simple abstract
+	class that implements ICacheableItem and has an abstract DbId property.
+
+	* build/build.environment.mk: Tidy up MIGO deps.
+
+	* tests/Makefile.am: Add Migo/XmlTests.
+
+	* tests/Migo/XmlTests.cs: Add tests for itunes:duration parsing and
+	Rfc822DateTime parsing.
+
+	* tests/BansheeTests.cs: add TransformPair struct.
+
 2008-05-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs: Added

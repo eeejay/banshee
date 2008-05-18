@@ -36,22 +36,27 @@ using Hyena.Data.Sqlite;
 
 namespace Migo.Syndication
 {
-    public class FeedItem
+    public class FeedItem : MigoItem<FeedItem>
     {
         private static SqliteModelProvider<FeedItem> provider;
         public static SqliteModelProvider<FeedItem> Provider {
-            get { return provider; }
-            set { provider = value; }
+            get { return provider ?? provider = new MigoModelProvider<FeedItem> (FeedsManager.Instance.Connection, "PodcastItems"); }
         }
+        
+        public static bool Exists (string guid)
+        {
+            return Provider.Connection.Query<int> (String.Format ("select count(*) from {0} where Guid = ?", Provider.TableName), guid) != 0;
+        }
+        
+        public static void Init () {}
 
-        private bool active;
+        private bool active = true;
         private string author;
         private string comments;
         private string description;
         private FeedEnclosure enclosure;
         private string guid;
         private bool isRead;
-        private DateTime lastDownloadTime;  
         private string link;
         private long dbid;
         private DateTime modified;     
@@ -59,135 +64,162 @@ namespace Migo.Syndication
         private DateTime pubDate;       
         private string title;        
         
-        public readonly object sync = new object ();
+        public event Action<FeedItem> ItemAdded;
+        public event Action<FeedItem> ItemChanged;
+        public event Action<FeedItem> ItemRemoved;
 
 #region Database-backed Properties
-                
+
+        [DatabaseColumn ("ItemID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
+        public override long DbId {
+            get { return dbid; }
+            protected set { dbid = value; }
+        }
+
+        [DatabaseColumn("FeedID")]
+        protected long feed_id;
+        public long FeedId {
+            get { return feed_id; }
+        }
+
         [DatabaseColumn]
         internal bool Active {
-            get { lock (sync) { return active; } }
-            set { 
-                lock (sync) {                
-                    if (value != active) {
-                        active = value;
-                        if (enclosure != null) {
-                            enclosure.Active = value;
-                        }
-                    }
+            get { return active;}
+            set {          
+                if (value != active) {
+                    active = value;
                 }
             }
         }
         
         [DatabaseColumn]
         public string Author {
-            get { lock (sync) { return author; } }
+            get { return author; }
             set { author = value; }
         }
         
         [DatabaseColumn]
         public string Comments {
-            get { lock (sync) { return comments; } } 
+            get { return comments; } 
             set { comments = value; }
         }
         
         [DatabaseColumn]
         public string Description {
-            get { lock (sync) { return description; }} 
+            get { return description; }
             set { description = value; }
         }
         
         [DatabaseColumn]
         public string Guid {
-            get { lock (sync) { return guid; } }
+            get { return guid; }
             set { guid = value; }
         }
 
         [DatabaseColumn]
         public bool IsRead {
-            get { lock (sync) { return isRead; } }
-            set { 
-                int delta = 0;                
-                
-                lock (sync) {                    
-                    if (isRead != value) {
-                        isRead = value;
-                        delta = value ? -1 : 1;    
-                        
-                        if (feed == null) {
-                            return;
-                        }
-                                
-                        Save ();
-                    }
-                }
-                
-                if (delta != 0) {
-                    feed.UpdateItemCounts (0, delta);                            
-                }                                            
+            get { return isRead; }
+            set {          
+                if (isRead != value) {
+                    isRead = value;
+                    Save ();
+                }                                         
             }
         }
-        
-        [DatabaseColumn]
-        public DateTime LastDownloadTime {
-            get { lock (sync) { return lastDownloadTime; } } 
-            set { lastDownloadTime = value; }
-        }  
         
         [DatabaseColumn]
         public string Link {
-            get { lock (sync) { return link; } }
+            get { return link; }
             set { link = value; }
-        }
-        
-        [DatabaseColumn ("ItemID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
-        public long DbId {
-            get { lock (sync) { return dbid; } }
-            internal set { 
-                lock (sync) { 
-                    dbid = value; 
-                }
-            }
         }
         
         [DatabaseColumn]
         public DateTime Modified { 
-            get { lock (sync) { return modified; } } 
+            get { return modified; } 
             set { modified = value; }
         }      
         
         [DatabaseColumn]
         public DateTime PubDate {
-            get { lock (sync) { return pubDate; } } 
+            get { return pubDate; } 
             set { pubDate = value; }
         }       
         
         [DatabaseColumn]
         public string Title {
-            get { lock (sync) { return title; } } 
+            get { return title; } 
             set { title = value; }
         }
 
 #endregion
 
+#region Properties
+
         public Feed Feed {
-            get { lock (sync) { return feed; } }
-            
+            get {
+                if (feed == null && feed_id > 0) {
+                    feed = Feed.Provider.FetchSingle (feed_id);
+                }
+                return feed;
+            }
+            internal set { feed = value; feed_id = value.DbId; }
+        }
+
+        public FeedEnclosure Enclosure {
+            get { LoadEnclosure (); return enclosure; }
             internal set {
-                if (value == null) {
-                    throw new ArgumentNullException ("Feed");
-                }
-                
-                lock (sync) {  
-                    feed = value;
-                }
+                enclosure = value;
+                enclosure.Item = this;
             }
         }
         
+#endregion
+
+#region Constructor
+ 
+        public FeedItem ()
+        {
+        }
+        
+#endregion
+
+        private static FeedManager Manager {
+            get { return FeedsManager.Instance.FeedManager; }
+        }
+
+#region Public Methods
+
+        public void Save ()
+        {
+            bool is_new = DbId < 1;
+            Provider.Save (this);
+            if (enclosure != null) {
+                enclosure.Item = this;
+                enclosure.Save (false);
+            }
+
+            if (is_new)
+                Manager.OnItemAdded (this);
+            else
+                Manager.OnItemChanged (this);
+        }
+        
+        public void Delete (bool delete_file)
+        {
+            if (enclosure != null) {
+                enclosure.Delete (delete_file);
+            }
+            
+            Provider.Delete (this);
+            Manager.OnItemRemoved (this);
+        }
+        
+#endregion
+
         private bool enclosure_loaded;
-        public void LoadEnclosure ()
+        private void LoadEnclosure ()
         {
             if (!enclosure_loaded && DbId > 0) {
-                Console.WriteLine ("Loading item enclosures");
                 IEnumerable<FeedEnclosure> enclosures = FeedEnclosure.Provider.FetchAllMatching (String.Format (
                     "{0}.ItemID = {1}", FeedEnclosure.Provider.TableName, DbId
                 ));
@@ -197,103 +229,9 @@ namespace Migo.Syndication
                     this.enclosure = enclosure;
                     break; // should only have one
                 }
-                Console.WriteLine ("Done loading item enclosures");
                 enclosure_loaded = true;
             }
         }
 
-        public FeedEnclosure Enclosure {
-            get { lock (sync) { return enclosure; } }
-            internal set {
-                lock (sync) {
-                    if (value == null) {
-                        throw new ArgumentNullException ("Enclosure");
-                    }
-                        
-                    FeedEnclosure tmp = value as FeedEnclosure;
-            
-                    if (tmp == null) {
-                        throw new ArgumentException (
-                            "Enclosure must be derived from 'FeedEnclosure'"
-                        );
-                    }
-                        
-                    enclosure = tmp;
-                    enclosure.Item = this;
-                }
-            }            
-        }
- 
-        public FeedItem ()
-        {
-        }
-
-        public void Save ()
-        {
-            Provider.Save (this);
-            if (enclosure != null)
-                enclosure.Save ();
-        }
-      
-        public void Delete ()
-        {
-            DeleteImpl (true, true);
-        }
-        
-        public void Delete (bool delEncFile)
-        {
-            DeleteImpl (true, delEncFile);
-        }        
-        
-        internal void DeleteImpl (bool removeFromParent, bool delEncFile)
-        {
-            lock (sync) {
-                if (!active) {
-                    return;
-                }
-                
-                if (delEncFile) {
-                    if (enclosure != null && delEncFile) {
-                        enclosure.RemoveFile ();
-                    }                
-                }                   
-                
-                Active = false;
-                
-                if (removeFromParent) {
-                    // TODO should this be Provider.Delete ?
-                    //CommitImpl ();    
-                }                
-            }
-
-            if (removeFromParent) {
-                feed.Remove (this);       
-            }            
-        }
-        
-        internal void CancelDownload (FeedEnclosure enc)
-        {
-            if (feed != null) {
-                feed.CancelDownload (enc);
-            }
-        }
-        
-        internal bool QueueDownload (FeedEnclosure enc) 
-        {
-            bool queued = false;
-        
-            if (feed != null) {
-                queued = feed.QueueDownload (enc) != null;	
-            }
-        
-            return queued;
-        }
-
-        internal void StopDownload (FeedEnclosure enc)
-        {
-            if (feed != null) {
-                feed.StopDownload (enc);
-            }
-        }
     }
 }

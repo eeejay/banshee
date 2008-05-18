@@ -54,7 +54,11 @@ namespace Banshee.Podcasting.Gui
             set { spacing = value; }
         }
         
-        public PixbufColumnCell (string property) : base (property, true)
+        public PixbufColumnCell (string property) : this (property, true)
+        {
+        }
+        
+        public PixbufColumnCell (string property, bool expand) : base (property, expand)
         {
             LoadPixbufs ();
         }

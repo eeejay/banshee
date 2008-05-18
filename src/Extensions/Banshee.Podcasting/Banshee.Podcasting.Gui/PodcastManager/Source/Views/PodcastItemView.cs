@@ -47,7 +47,13 @@ using Banshee.Podcasting.Data;
 
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastItemView : ListView<TrackInfo>
+    public class PodcastItemView : TrackListView
+    {
+        public PodcastItemView () : base ()
+        {
+        }
+    }
+    /*public class PodcastItemView : ListView<TrackInfo>
     {
         private PersistentColumnController columnController;
         
@@ -57,16 +63,15 @@ namespace Banshee.Podcasting.Gui
             
             SortableColumn podcastTitleSortColumn = new SortableColumn (
                 Catalog.GetString ("Podcast"), 
-                new ColumnCellText ("PodcastTitle", true), 0.35, 
+                new ColumnCellText ("AlbumTitle", true), 0.35, 
                 PodcastItemSortKeys.PodcastTitle, true
             );
             
             columnController.AddRange (
-                new Column ("test", new ColumnCellText ("TrackTitle", true), 0.45, true)
-                /*new Column (null, Catalog.GetString ("Activity"), new PodcastItemActivityColumn ("Activity"), 0.00, true, 26, 26),            
-                new SortableColumn (Catalog.GetString ("Title"), new ColumnCellText ("Title", true), 0.30, PodcastItemSortKeys.Title, true),
+                new Column (null, Catalog.GetString ("Activity"), new PodcastItemActivityColumn ("Activity"), 0.00, true, 26, 26),            
+                new SortableColumn (Catalog.GetString ("Title"), new ColumnCellText ("TrackTitle", true), 0.30, PodcastItemSortKeys.Title, true),
                 podcastTitleSortColumn,
-                new SortableColumn (Catalog.GetString ("Date"), new ColumnCellDateTime ("PubDate", false), 0.5, PodcastItemSortKeys.PubDate, true) */
+                new SortableColumn (Catalog.GetString ("Date"), new ColumnCellDateTime ("ReleaseDate", false), 0.5, PodcastItemSortKeys.PubDate, true)
             );
             
             podcastTitleSortColumn.SortType = Hyena.Data.SortType.Descending;
@@ -114,7 +119,7 @@ namespace Banshee.Podcasting.Gui
             
             ModelSelection<Banshee.Collection.TrackInfo> items = model.SelectedItems;
             
-            foreach (PodcastItem i in items) {
+            foreach (PodcastTrackInfo i in items) {
                 if (showCancel && showDownload && showMarkNew && showMarkOld) {
                     break;
                 } else if (!showDownload &&
@@ -135,7 +140,7 @@ namespace Banshee.Podcasting.Gui
                         showMarkNew = true;
                     }
                 }*/
-            }
+            /*}
             
             if (items.Count > 1) {
                 linkItem.Hide ();
@@ -173,5 +178,5 @@ namespace Banshee.Podcasting.Gui
             
             return true;
         }
-    }
+    }*/
 }

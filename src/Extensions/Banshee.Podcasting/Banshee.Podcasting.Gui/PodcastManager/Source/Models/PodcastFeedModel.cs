@@ -31,91 +31,41 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using Hyena.Data;
+
+using Banshee.Database;
+using Banshee.Collection.Database;
 using Banshee.Podcasting.Data;
 
 using Migo.Syndication;
 
 namespace Banshee.Podcasting.Gui
 {
-    public static class PodcastSortKeys
+    public class PodcastFeedModel : DatabaseBrowsableListModel<Feed, Feed>
     {
-        public const string Title = "Title";        
-    }
-
-    public class PodcastFeedModel : ListModel<Feed>
-    {
-        public override int Count { 
-            get { 
-                lock (SyncRoot) { 
-                    return List.Count + 1; 
-                }
-            }
-        }
-
-        public PodcastFeedModel () 
+        public PodcastFeedModel (DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
+            : base (trackModel, connection, Feed.Provider, new Feed (null, FeedAutoDownload.None), uuid)
         {
-        }
-
-        public override Feed this[int index] {
-            get { 
-                lock (SyncRoot) {
-                    if (index == 0) {
-                        return Feed.All;
-                    }
-
-                    return (index <= List.Count) ? List[index-1] : null;                    
-                }
-            }
-        }    
-
-        public override ReadOnlyCollection<Feed> CopySelectedItems () 
-        {
-            List<Feed> feeds = null;
-            
-            lock (SyncRoot) {
-                ModelSelection<Feed> selected = SelectedItems;
-                
-                if (selected.Count > 0) {
-                    feeds = new List<Feed> (selected.Count);
-                    
-                    foreach (Feed feed in selected) {
-                        if (feed != Feed.All) {
-                            feeds.Add (feed);                            
-                        }
-                    }
-                }
-            }
-
-            return (feeds != null) ? 
-                new ReadOnlyCollection<Feed> (feeds) : null;
-        }    
-    
-        public override void Sort ()
-        {
-            lock (SyncRoot) {
-                if (SortColumn == null) {
-                    return;
-                }
-                
-                switch (SortColumn.SortKey) {
-                case PodcastItemSortKeys.Title:
-                    List.Sort (new TitleComparer (SortColumn.SortType));
-                    break;                    
-                }  
-            }
+            ReloadFragmentFormat = @"
+                FROM PodcastSyndications WHERE FeedID IN
+                    (SELECT FeedID FROM PodcastItems
+                        WHERE ItemID IN
+                            (SELECT CoreTracks.ExternalID FROM CoreTracks, CoreCache{0}
+                                WHERE CoreCache.ModelID = {1} AND CoreCache.ItemId = {2}))
+                    ORDER BY Title";
         }
         
-        private class TitleComparer : SortTypeComparer<Feed>
+        public override string FilterColumn {
+            get { return Feed.Provider.PrimaryKey; }
+        }
+        
+        public override string ItemToFilterValue (object item)
         {
-            public TitleComparer (SortType type) : base (type)
-            {
-            }
-            
-            public override int Compare (Feed lhs, Feed rhs)
-            {
-                int ret = String.Compare (lhs.Title, rhs.Title);   
-                return (SortType == SortType.Ascending) ? ret * -1 : ret;
-            }
-        } 
+            return (item != select_all_item && item is Feed) ? (item as Feed).DbId.ToString () : null;
+        }
+        
+        public override void UpdateSelectAllItem (long count)
+        {
+            select_all_item.Title = String.Format ("All Podcasts ({0})", count);
+        }
     }
 }

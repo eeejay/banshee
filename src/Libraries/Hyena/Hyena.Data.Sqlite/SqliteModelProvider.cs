@@ -41,6 +41,7 @@ namespace Hyena.Data.Sqlite
         private readonly List<VirtualDatabaseColumn> virtual_columns = new List<VirtualDatabaseColumn> ();
         
         private DatabaseColumn key;
+        private int key_select_column_index;
         private HyenaSqliteConnection connection;
         
         private HyenaSqliteCommand create_command;
@@ -82,6 +83,10 @@ namespace Hyena.Data.Sqlite
             get { return "HyenaModelVersions"; }
         }
         
+        public HyenaSqliteConnection Connection {
+            get { return connection; }
+        }
+        
         protected SqliteModelProvider (HyenaSqliteConnection connection)
         {
             this.connection = connection;
@@ -118,6 +123,8 @@ namespace Hyena.Data.Sqlite
             if (key == null) {
                 throw new Exception (String.Format ("The {0} table does not have a primary key", TableName));
             }
+            
+            key_select_column_index = select_columns.IndexOf (key);
             
             CheckVersion ();
             CheckTable ();
@@ -260,12 +267,18 @@ namespace Hyena.Data.Sqlite
             }
         }
         
-        public void Save (T target)
+        public virtual void Save (T target)
         {
-            if (((int)key.GetValue (target)) > 0) {
-                Update (target);
-            } else {
-                key.SetValue (target, Insert (target));
+            try {
+                if (Convert.ToInt32 (key.GetRawValue (target)) > 0) {
+                    Update (target);
+                } else {
+                    key.SetValue (target, Insert (target));
+                }
+            } catch (Exception e) {
+                Hyena.Log.Exception (e); 
+                Hyena.Log.DebugFormat ("type of key value: {0}", key.GetRawValue (target).GetType ());
+                throw;
             }
         }
         
@@ -308,7 +321,7 @@ namespace Hyena.Data.Sqlite
             connection.Execute (UpdateCommand, GetUpdateParams (target));
         }
         
-        public T Load (IDataReader reader)
+        public virtual T Load (IDataReader reader)
         {
             T item = MakeNewObject ();
             Load (reader, item);
@@ -347,21 +360,19 @@ namespace Hyena.Data.Sqlite
             }
         }
 
-        public T FetchFirstMatching (string condition)
+        public T FetchFirstMatching (string condition, params object [] vals)
         {
-            HyenaSqliteCommand fetch_matching_command = new HyenaSqliteCommand (String.Format ("{0} AND {1}", SelectCommand.Text, condition));
-            using (IDataReader reader = connection.Query (fetch_matching_command)) {
-                if (reader.Read ()) {
-                    return Load (reader);
-                }
+            foreach (T item in FetchAllMatching (condition, vals)) {
+                // Just return the first result, if there is one
+                return item;
             }
             return default(T);
         }
         
-        public IEnumerable<T> FetchAllMatching (string condition)
+        public IEnumerable<T> FetchAllMatching (string condition, params object [] vals)
         {
             HyenaSqliteCommand fetch_matching_command = new HyenaSqliteCommand (String.Format ("{0} AND {1}", SelectCommand.Text, condition));
-            using (IDataReader reader = connection.Query (fetch_matching_command)) {
+            using (IDataReader reader = connection.Query (fetch_matching_command, vals)) {
                 while (reader.Read ()) {
                     yield return Load (reader);
                 }
@@ -395,6 +406,11 @@ namespace Hyena.Data.Sqlite
         protected long PrimaryKeyFor (T item)
         {
             return (long) key.GetValue (item);
+        }
+        
+        protected long PrimaryKeyFor (IDataReader reader)
+        {
+            return Convert.ToInt64 (reader[key_select_column_index]);
         }
         
         public void Delete (long id)
@@ -432,7 +448,7 @@ namespace Hyena.Data.Sqlite
 
             using (IDataReader reader = connection.Query (SelectSingleCommand, id)) {
                 if (reader.Read ()) {
-                    Load (reader);
+                    Load (reader, item);
                     return true;
                 }
             }

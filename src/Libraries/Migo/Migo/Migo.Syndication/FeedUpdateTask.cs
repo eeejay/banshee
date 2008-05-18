@@ -29,56 +29,70 @@
 using System;
 using System.Threading;
 using System.ComponentModel;
+using System.Net;
+
+using Hyena;
 
 using Migo.Net;
 using Migo.TaskCore;
 
 namespace Migo.Syndication
 {
-	public class FeedUpdateTask : Task, IDisposable
-	{
+    public class FeedUpdateTask : Task, IDisposable
+    {
         private Feed feed;
-	    private bool disposed;	 
-	    private ManualResetEvent mre;
+        private bool disposed, cancelled, completed;
+        private ManualResetEvent mre;
+        private AsyncWebClient wc = null;
 
         public Feed Feed {
             get { return feed; }
         }
 
-	    public override WaitHandle WaitHandle {
-	        get {
-	            lock (SyncRoot) {
-	                if (mre == null) {
+        public override WaitHandle WaitHandle {
+            get {
+                lock (SyncRoot) {
+                    if (mre == null) {
                         mre = new ManualResetEvent (true);
-	                }
-	                
-	                return mre;
-	            }
-	        }
-	    }
-	    
-	    public FeedUpdateTask (Feed feed)
-	    {
+                    }
+                   
+                    return mre;
+            }
+            }
+        }
+
+#region Constructor
+
+        public FeedUpdateTask (Feed feed)
+        {
             if (feed == null) {
                 throw new ArgumentNullException ("feed");
             }
 
             this.feed = feed;
             this.Name = feed.Link;
-            feed.FeedDownloadCompleted += OnFeedDownloadCompletedHandler;
-	    }
+            
+            feed.DownloadStatus = FeedDownloadStatus.Pending;
+        }
+
+#endregion
+
+#region Public Methods
 
         public override void CancelAsync ()
-	    { 
-	        //Console.WriteLine ("CancelAsync - {0} - FeedUpdateTask - 000", IsCompleted);
-            lock (SyncRoot) {	
-                if (!feed.CancelAsyncDownload () && !IsCompleted) {
-                	//Console.WriteLine ("CancelAsync - FeedUpdateTask - 001");
-                    EmitCompletionEvents (FeedDownloadError.Canceled);                
+        { 
+            lock (SyncRoot) {
+                if (!completed) {
+                    cancelled = true;
+    
+                    if (wc != null) {
+                        wc.CancelAsync ();
+                    }
+
+                    EmitCompletionEvents (FeedDownloadError.Canceled);
                 }
             }
-	        //Console.WriteLine ("CancelAsync - FeedUpdateTask - 002");            
-	    }
+        }
     
         public void Dispose ()
         {
@@ -94,43 +108,109 @@ namespace Migo.Syndication
             }
         }
 
-	    public override void ExecuteAsync ()
-	    {
-	        lock (SyncRoot) {
-	            SetStatus (TaskStatus.Running);
+        public override void ExecuteAsync ()
+        {
+            lock (SyncRoot) {
+                SetStatus (TaskStatus.Running);
                 
                 if (mre != null) {
                     mre.Reset ();                    
-                }	            
+                }          
             }
-
-            feed.AsyncDownloadImpl ();
-	    }
+            
+            try {                                                                       
+                wc = new AsyncWebClient ();                  
+                wc.Timeout = (30 * 1000); // 30 Seconds  
+                wc.IfModifiedSince = feed.LastDownloadTime.ToUniversalTime ();
+                wc.DownloadStringCompleted += OnDownloadDataReceived;
+                
+                feed.DownloadStatus = FeedDownloadStatus.Downloading;
+                wc.DownloadStringAsync (new Uri (feed.Url));
+            } catch (Exception e) {
+                if (wc != null) {
+                    wc.DownloadStringCompleted -= OnDownloadDataReceived;
+                }
+                
+                EmitCompletionEvents (FeedDownloadError.DownloadFailed);
+                Log.Exception (e);
+            }
+        }
         
-        private void OnFeedDownloadCompletedHandler (object sender, 
-                                                     FeedDownloadCompletedEventArgs e)
+#endregion
+
+        private void OnDownloadDataReceived (object sender, Migo.Net.DownloadStringCompletedEventArgs args) 
         {
             lock (SyncRoot) {
-                EmitCompletionEvents (e.Error);
-	        }            
+                if (cancelled)
+                    return;
+
+                wc.DownloadStringCompleted -= OnDownloadDataReceived;
+                FeedDownloadError error;
+                
+                if (args.Error == null) {
+                     try {
+                        RssParser parser = new RssParser (feed.Url, args.Result);
+                        parser.UpdateFeed (feed);
+                        feed.SetItems (parser.GetFeedItems (feed));
+                        error = FeedDownloadError.None;
+                    } catch (FormatException e) {
+                        Log.Exception (e);
+                        error = FeedDownloadError.InvalidFeedFormat;
+                    }
+                } else {
+                    error = FeedDownloadError.DownloadFailed;
+                    WebException we = args.Error as WebException;
+                    if (we != null) {
+                        HttpWebResponse resp = we.Response as HttpWebResponse;
+                        if (resp != null) {
+                            switch (resp.StatusCode) {
+                            case HttpStatusCode.NotFound:
+                            case HttpStatusCode.Gone:
+                                error = FeedDownloadError.DoesNotExist;
+                                break;                                
+                            case HttpStatusCode.NotModified:
+                                error = FeedDownloadError.None;
+                                break;
+                            case HttpStatusCode.Unauthorized:
+                                error = FeedDownloadError.UnsupportedAuth;
+                                break;                                
+                            default:
+                                error = FeedDownloadError.DownloadFailed;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                feed.LastDownloadError = error;
+                if (error == FeedDownloadError.None) {
+                    feed.LastDownloadTime = DateTime.Now;
+                }
+                    
+                feed.Save ();
+                
+                EmitCompletionEvents (error);
+                completed = true;
+            }
         }
         
         private void EmitCompletionEvents (FeedDownloadError err)
         {
-            feed.FeedDownloadCompleted -= OnFeedDownloadCompletedHandler;
-
-            switch (err) {                        
+            switch (err) {                
                 case FeedDownloadError.None:
                     SetStatus (TaskStatus.Succeeded);
+                    feed.DownloadStatus = FeedDownloadStatus.Downloaded;
                     break;
                 case FeedDownloadError.Canceled:
                     SetStatus (TaskStatus.Cancelled);
+                    feed.DownloadStatus = FeedDownloadStatus.None;
                     break;
                 default:
                     SetStatus (TaskStatus.Failed);
+                    feed.DownloadStatus = FeedDownloadStatus.DownloadFailed;
                     break;
             }
-            
+
             OnTaskCompleted (null, (Status == TaskStatus.Cancelled));
 
             if (mre != null) {

@@ -49,34 +49,32 @@ namespace Banshee.Podcasting.Data
         DownloadPending = 1,        
         DownloadFailed = 2,
         DownloadPaused = 3,        
-        NewPodcastItem = 4,
-        Video = 5,
+        //NewPodcastItem = 4,
+        //Video = 5,
         Downloaded = 6,
-        None = 7,
-        Playing = 8,
-        Paused = 9
+        None = 7
     }
 
-    public class PodcastItem : DatabaseTrackInfo
+    public class PodcastTrackInfo : DatabaseTrackInfo
     {
-        private static BansheeModelProvider<PodcastItem> provider = new DatabaseTrackModelProvider<PodcastItem> (ServiceManager.DbConnection);
-        public static new BansheeModelProvider<PodcastItem> Provider {
+        private static BansheeModelProvider<PodcastTrackInfo> provider = new DatabaseTrackModelProvider<PodcastTrackInfo> (ServiceManager.DbConnection);
+        public static new BansheeModelProvider<PodcastTrackInfo> Provider {
             get { return provider; }
+        }
+        
+        public static PodcastTrackInfo GetByItemId (long item_id)
+        {
+            return Provider.FetchFirstMatching ("ExternalID = ?", item_id);
         }
         
         private bool @new;
         private int position;
         private long item_id;
 
-        /*private static BansheeModelProvider<PodcastItem> provider;
-        public new static BansheeModelProvider<PodcastItem> Provider {
-            get { return provider; }
-        }*/
-
 #region Properties
 
         public Feed Feed {
-            get { return item.Feed; }
+            get { return Item.Feed; }
         }
         
         private FeedItem item;
@@ -90,6 +88,10 @@ namespace Banshee.Podcasting.Data
             set { item = value; item_id = value.DbId; }
         }
         
+        public DateTime PublishedDate {
+            get { return Item.PubDate; }
+        }
+        
         public bool New {
             get { return @new; }
             set { @new = value; }
@@ -98,21 +100,39 @@ namespace Banshee.Podcasting.Data
         public int Position {
             get { return position; }
             set { position = value; }
-         }
+        }
         
         [DatabaseColumn ("ExternalID")]
-        public long ItemID {
+        public long ItemId {
             get { return item_id; }
-            set { item_id = value; }
+            private set { item_id = value; }
         }
         
         public FeedEnclosure Enclosure {
-            get { return (item == null) ? null : item.Enclosure; }
+            get { return (Item == null) ? null : Item.Enclosure; }
         }
 
         public PodcastItemActivity Activity {
             get {
-                PodcastItemActivity ret = PodcastItemActivity.None;
+                switch (Item.Enclosure.DownloadStatus) {
+                case FeedDownloadStatus.Downloaded:
+                    return PodcastItemActivity.Downloaded;
+               
+                case FeedDownloadStatus.DownloadFailed:
+                    return PodcastItemActivity.Downloaded;
+                    
+                case FeedDownloadStatus.Downloading:
+                    return PodcastItemActivity.Downloading;
+                    
+                case FeedDownloadStatus.Pending:
+                    return PodcastItemActivity.DownloadPending;
+                    
+                case FeedDownloadStatus.Paused:
+                    return PodcastItemActivity.DownloadPaused;
+
+                default:
+                    return PodcastItemActivity.None;   
+                }
             
                 /*if (Track != null) {
                     if (ServiceManager.PlayerEngine.CurrentTrack == Track) {
@@ -131,8 +151,8 @@ namespace Banshee.Podcasting.Data
                             ret = PodcastItemActivity.Downloaded;
                          }
                     } 
-                } else {
-                    switch (item.Enclosure.DownloadStatus) {
+                } else {*/
+                    /*switch (Item.Enclosure.DownloadStatus) {
                     case FeedDownloadStatus.Pending: 
                         ret = PodcastItemActivity.DownloadPending;
                         break;
@@ -148,24 +168,27 @@ namespace Banshee.Podcasting.Data
                     case FeedDownloadStatus.Paused: 
                         ret = PodcastItemActivity.DownloadPaused;
                         break;                        
-                    }
-                }*/
-                
-                return ret;
+                    }*/
+                //}
             }
+        }
+        
+        public override string ArtworkId {
+            get { return PodcastService.ArtworkIdFor (Feed); }
         }
 
 #endregion
 
 #region Constructors
     
-        public PodcastItem () : base ()
+        public PodcastTrackInfo () : base ()
         {
         }
         
-        public PodcastItem (FeedItem feed_item) : base ()
+        public PodcastTrackInfo (FeedItem feed_item) : base ()
         {
             Item = feed_item;
+            SyncWithFeedItem ();
         }
 
 #endregion
@@ -174,6 +197,36 @@ namespace Banshee.Podcasting.Data
         {
             Provider.Delete (this);
             //feed.Delete ();
+        }
+        
+        public void SyncWithFeedItem ()
+        {
+            ArtistName = Item.Author;
+            AlbumTitle = Item.Feed.Title;
+            TrackTitle = Item.Title;
+            Year = Item.PubDate.Year;
+            CanPlay = true;
+            Genre = Genre ?? "Podcast";
+            ReleaseDate = Item.PubDate;
+            MimeType = Item.Enclosure.MimeType;
+            Duration = Item.Enclosure.Duration;
+            FileSize = item.Enclosure.FileSize;
+            Uri = new Banshee.Base.SafeUri (Item.Enclosure.LocalPath ?? item.Enclosure.Url);
+            
+            if (!String.IsNullOrEmpty (item.Enclosure.LocalPath)) {
+                TagLib.File file = Banshee.Streaming.StreamTagger.ProcessUri (Uri);
+                Banshee.Streaming.StreamTagger.TrackInfoMerge (this, file, true);
+            }
+        }
+        
+        protected override void ProviderSave ()
+        {
+            Provider.Save (this);
+        }
+        
+        protected override bool ProviderRefresh ()
+        {
+            return Provider.Refresh (this);
         }
 
         public static void DeleteWithFeedId (long feed_id)

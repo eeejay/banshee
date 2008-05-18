@@ -69,7 +69,11 @@ namespace Banshee.AudioCd
                 AudioCdTrackInfo playing_track = ServiceManager.PlayerEngine.CurrentTrack as AudioCdTrackInfo;
                 return playing_track != null && playing_track.Model == disc_model;
             }
-        }            
+        }
+        
+        public System.Collections.Generic.IEnumerable<Banshee.Collection.Database.IFilterListModel> FilterModels {
+            get { yield break; }
+        }
         
         public void StopPlayingDisc ()
         {

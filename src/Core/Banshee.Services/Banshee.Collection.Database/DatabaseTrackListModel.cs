@@ -44,19 +44,14 @@ using Banshee.Query;
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
-{
-    public enum ReloadTrigger {
-        Query,
-        ArtistFilter,
-        AlbumFilter
-    };
-        
+{       
     public class DatabaseTrackListModel : TrackListModel, IExportableModel, 
         ICacheableDatabaseModel, IFilterable, ISortable, ICareAboutView
     {
         private readonly BansheeDbConnection connection;
         private IDatabaseTrackModelProvider provider;
         protected IDatabaseTrackModelCache cache;
+        private Banshee.Sources.DatabaseSource source;
         
         private long count;
 
@@ -72,53 +67,40 @@ namespace Banshee.Collection.Database
         private string join_table, join_fragment, join_primary_key, join_column, condition;
 
         private string query_fragment;
-        private string filter;
-        private string artist_id_filter_query;
-        private string album_id_filter_query;
-
-        private DatabaseArtistListModel artist_model;
-        private DatabaseAlbumListModel album_model;
+        private string user_query;
 
         private int rows_in_view;
         
-        public DatabaseTrackListModel (BansheeDbConnection connection, IDatabaseTrackModelProvider provider)
+        public DatabaseTrackListModel (BansheeDbConnection connection, IDatabaseTrackModelProvider provider, Banshee.Sources.DatabaseSource source)
         {
             this.connection = connection;
             this.provider = provider;
+            this.source = source;
         }
 
         private bool initialized = false;
         public void Initialize (IDatabaseTrackModelCache cache)
         {
-            Initialize (cache, null, null);
-        }
-
-        public void Initialize (IDatabaseTrackModelCache cache, DatabaseArtistListModel artist_model, DatabaseAlbumListModel album_model)
-        {
             if (initialized)
                 return;
-
-            this.artist_model = artist_model;
-            this.album_model = album_model;
 
             initialized = true;
             this.cache = cache;
             cache.AggregatesUpdated += HandleCacheAggregatesUpdated;
-
             GenerateSortQueryPart ();
         }
         
-        private bool have_new_filter = true;
-        private void GenerateFilterQueryPart ()
+        private bool have_new_user_query = true;
+        private void GenerateUserQueryFragment ()
         {
-            if (!have_new_filter)
+            if (!have_new_user_query)
                 return;
 
-            if (String.IsNullOrEmpty (Filter)) {
+            if (String.IsNullOrEmpty (UserQuery)) {
                 query_fragment = null;
                 query_tree = null;
             } else {
-                query_tree = UserQueryParser.Parse (Filter, BansheeQuery.FieldSet);
+                query_tree = UserQueryParser.Parse (UserQuery, BansheeQuery.FieldSet);
                 query_fragment = (query_tree == null) ? null : query_tree.ToSql (BansheeQuery.FieldSet);
 
                 if (query_fragment != null && query_fragment.Length == 0) {
@@ -127,7 +109,7 @@ namespace Banshee.Collection.Database
                 }
             }
 
-            have_new_filter = false;
+            have_new_user_query = false;
         }
 
         private QueryNode query_tree;
@@ -214,37 +196,45 @@ namespace Banshee.Collection.Database
         
         public override void Reload ()
         {
-            Reload (ReloadTrigger.Query);
+            Reload (null);
         }
 
-        public void Reload (ReloadTrigger trigger)
+        public void Reload (IListModel reloadTrigger)
         {
             lock (this) {
-                bool artist_reloaded = false, album_reloaded = false;
-                GenerateFilterQueryPart ();
+                GenerateUserQueryFragment ();
 
                 UpdateUnfilteredAggregates ();
                 cache.SaveSelection ();
 
-                if (trigger == ReloadTrigger.AlbumFilter) {
-                    ReloadWithFilters ();
+                List<IFilterListModel> reload_models = new List<IFilterListModel> ();
+                bool found = (reloadTrigger == null);
+                foreach (IFilterListModel model in source.FilterModels) {
+                    if (found) {
+                        reload_models.Add (model);
+                    } else if (model == reloadTrigger) {
+                        found = true;
+                    }
+                }
+
+                if (reload_models.Count == 0) {
+                    ReloadWithFilters (true);
                 } else {
-                    ReloadWithoutArtistAlbumFilters ();
+                    ReloadWithoutFilters ();
 
-                    if (artist_model != null && album_model != null) {
-                        if (trigger == ReloadTrigger.Query) {
-                            artist_reloaded = true;
-                            artist_model.Reload (false);
-                        }
-
-                        album_reloaded = true;
-                        album_model.Reload (false);
-
-                        // Unless both artist/album selections are "all" (eg unfiltered), reload
-                        // the track model again with the artist/album filters now in place.
-                        if (!artist_model.Selection.AllSelected || !album_model.Selection.AllSelected) {
-                            ReloadWithFilters ();
-                        }
+                    foreach (IFilterListModel model in reload_models) {
+                        model.Reload (false);
+                    }
+                    
+                    bool have_filters = false;
+                    foreach (IFilterListModel model in source.FilterModels) {
+                        have_filters |= !model.Selection.AllSelected;
+                    }
+                    
+                    // Unless both artist/album selections are "all" (eg unfiltered), reload
+                    // the track model again with the artist/album filters now in place.
+                    if (have_filters) {
+                        ReloadWithFilters (true);
                     }
                 }
 
@@ -256,50 +246,30 @@ namespace Banshee.Collection.Database
                 OnReloaded ();
 
                 // Trigger these after the track list, b/c visually it's more important for it to update first
-                if (artist_reloaded)
-                    artist_model.RaiseReloaded ();
-
-                if (album_reloaded)
-                    album_model.RaiseReloaded ();
+                foreach (IFilterListModel model in reload_models) {
+                    model.RaiseReloaded ();
+                }
             }
         }
 
-        private void ReloadWithoutArtistAlbumFilters ()
+        private void ReloadWithoutFilters ()
+        {
+            ReloadWithFilters (false);
+        }
+
+        private void ReloadWithFilters (bool with_filters)
         {
             StringBuilder qb = new StringBuilder ();
             qb.Append (UnfilteredQuery);
-
-            if (query_fragment != null) {
-                qb.Append ("AND ");
-                qb.Append (query_fragment);
-            }
             
-            if (sort_query != null) {
-                qb.Append (" ORDER BY ");
-                qb.Append (sort_query);
-            }
-                
-            reload_fragment = qb.ToString ();
-
-            cache.Reload ();
-        }
-
-        private void ReloadWithFilters ()
-        {
-            StringBuilder qb = new StringBuilder ();
-            qb.Append (UnfilteredQuery);
-
-            ArtistInfoFilter = artist_model.SelectedItems;
-            AlbumInfoFilter = album_model.SelectedItems;
-
-            if (artist_id_filter_query != null) {
-                qb.Append ("AND ");
-                qb.Append (artist_id_filter_query);
-            }
-                    
-            if (album_id_filter_query != null) {
-                qb.Append ("AND ");
-                qb.Append (album_id_filter_query);
+            if (with_filters) {
+                foreach (IFilterListModel model in source.FilterModels) {
+                    string filter = GetFilterFromModel (model);
+                    if (filter != null) {
+                        qb.Append ("AND");
+                        qb.Append (filter);
+                    }
+                }
             }
             
             if (query_fragment != null) {
@@ -311,9 +281,8 @@ namespace Banshee.Collection.Database
                 qb.Append (" ORDER BY ");
                 qb.Append (sort_query);
             }
-                
+            
             reload_fragment = qb.ToString ();
-
             cache.Reload ();
         }
 
@@ -371,12 +340,12 @@ namespace Banshee.Collection.Database
             get { return (int) count; }
         }
 
-        public string Filter {
-            get { return filter; }
+        public string UserQuery {
+            get { return user_query; }
             set { 
                 lock (this) {
-                    filter = value; 
-                    have_new_filter = true;
+                    user_query = value; 
+                    have_new_user_query = true;
                 }
             }
         }
@@ -411,10 +380,14 @@ namespace Banshee.Collection.Database
             get { return join_column; }
             set { join_column = value; }
         }
+        
+        public void AddCondition (string part)
+        {
+            condition = condition == null ? part : String.Format ("{0} AND {1}", condition, part);
+        }
 
         public string Condition {
             get { return condition; }
-            set { condition = value; }
         }
 
         public string ConditionFragment {
@@ -429,8 +402,20 @@ namespace Banshee.Collection.Database
             else
                 return String.Format (" {0} {1} ", prefix, condition);
         }
+        
+        private string GetFilterFromModel (IFilterListModel model)
+        {
+            string filter = null;
+            
+            ModelHelper.BuildIdFilter<object> (model.GetSelectedObjects (), model.FilterColumn, null,
+                delegate (object item) { return model.ItemToFilterValue (item); },
+                delegate (string new_filter) { filter = new_filter; }
+            );
+            
+            return filter;
+        }
 
-        public override IEnumerable<ArtistInfo> ArtistInfoFilter {
+        /*public override IEnumerable<ArtistInfo> ArtistInfoFilter {
             set {
                 ModelHelper.BuildIdFilter<ArtistInfo> (value, "CoreTracks.ArtistID", artist_id_filter_query,
                     delegate (ArtistInfo artist) {
@@ -443,6 +428,7 @@ namespace Banshee.Collection.Database
                 
                     delegate (string new_filter) {
                         artist_id_filter_query = new_filter;
+                        Console.WriteLine ("artist filter now set to {0}", artist_id_filter_query);
                     }
                 );
             }
@@ -461,15 +447,14 @@ namespace Banshee.Collection.Database
                 
                     delegate (string new_filter) {
                         album_id_filter_query = new_filter;
+                        Console.WriteLine ("album filter now set to {0}", album_id_filter_query);
                     }
                 );
             }
-        }
+        }*/
 
         public override void ClearArtistAlbumFilters ()
         {
-            artist_id_filter_query = null;
-            album_id_filter_query = null;
             Reload ();
         }
 

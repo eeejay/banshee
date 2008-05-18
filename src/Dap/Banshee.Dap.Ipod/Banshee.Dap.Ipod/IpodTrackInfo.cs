@@ -218,8 +218,8 @@ namespace Banshee.Dap.Ipod
                 }
             }
             
-            if (CoverArtSpec.CoverExists (ArtistAlbumId)) {
-                SetIpodCoverArt (device, track, CoverArtSpec.GetPath (ArtistAlbumId));
+            if (CoverArtSpec.CoverExists (ArtworkId)) {
+                SetIpodCoverArt (device, track, CoverArtSpec.GetPath (ArtworkId));
             }
         }
         

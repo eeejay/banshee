@@ -54,13 +54,10 @@ namespace Banshee.Lastfm.Radio
     public class LastfmActions : BansheeActionGroup
     {
         private LastfmSource lastfm;
-
-        private InterfaceActionService action_service;
         private uint actions_id;
 
-        public LastfmActions (LastfmSource lastfm) : base ("Lastfm")
+        public LastfmActions (LastfmSource lastfm) : base (ServiceManager.Get<InterfaceActionService> (), "Lastfm")
         {
-            action_service = ServiceManager.Get<InterfaceActionService> ();
             this.lastfm = lastfm;
             
             AddImportant (
@@ -188,11 +185,11 @@ namespace Banshee.Lastfm.Radio
             this["LastfmLoveAction"].IsImportant = true;
             this["LastfmHateAction"].IsImportant = true;
 
-            actions_id = action_service.UIManager.AddUiFromResource ("GlobalUI.xml");
-            action_service.AddActionGroup (this);
+            actions_id = Actions.UIManager.AddUiFromResource ("GlobalUI.xml");
+            Actions.AddActionGroup (this);
 
             lastfm.Connection.StateChanged += HandleConnectionStateChanged;
-            action_service.SourceActions ["SourcePropertiesAction"].Activated += OnSourceProperties;
+            Actions.SourceActions ["SourcePropertiesAction"].Activated += OnSourceProperties;
             ServiceManager.PlaybackController.SourceChanged += OnPlaybackSourceChanged;
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
                 PlayerEvent.StartOfStream | 
@@ -202,8 +199,8 @@ namespace Banshee.Lastfm.Radio
 
         public override void Dispose ()
         {
-            action_service.UIManager.RemoveUi (actions_id);
-            action_service.RemoveActionGroup (this);
+            Actions.UIManager.RemoveUi (actions_id);
+            Actions.RemoveActionGroup (this);
             RestoreShuffleRepeat ();
             base.Dispose ();
         }
@@ -224,7 +221,7 @@ namespace Banshee.Lastfm.Radio
 
         private void OnSourceProperties (object o, EventArgs args)
         {
-            Source source = action_service.SourceActions.ActionSource;
+            Source source = Actions.SourceActions.ActionSource;
             if (source is LastfmSource) {
                 ShowLoginDialog ();
             } else if (source is StationSource) {
@@ -431,15 +428,15 @@ namespace Banshee.Lastfm.Radio
         private bool was_lastfm = false;
         private void OnPlaybackSourceChanged (object o, EventArgs args)
         {
-            if (action_service == null || action_service.PlaybackActions == null || ServiceManager.PlaybackController == null)
+            if (Actions == null || Actions.PlaybackActions == null || ServiceManager.PlaybackController == null)
                 return;
 
             UpdateActions ();
 
             bool is_lastfm = ServiceManager.PlaybackController.Source is StationSource;
-            action_service.PlaybackActions["PreviousAction"].Sensitive = !is_lastfm;
-            PlaybackRepeatActions repeat_actions = action_service.PlaybackActions.RepeatActions;
-            PlaybackShuffleActions shuffle_actions = action_service.PlaybackActions.ShuffleActions;
+            Actions.PlaybackActions["PreviousAction"].Sensitive = !is_lastfm;
+            PlaybackRepeatActions repeat_actions = Actions.PlaybackActions.RepeatActions;
+            PlaybackShuffleActions shuffle_actions = Actions.PlaybackActions.ShuffleActions;
 
             // Save/clear or restore shuffle/repeat values when we first switch to a Last.fm station
             if (is_lastfm && !was_lastfm) {
@@ -461,9 +458,9 @@ namespace Banshee.Lastfm.Radio
 
         private void RestoreShuffleRepeat ()
         {
-            if (action_service != null && action_service.PlaybackActions != null && old_repeat != null) {
-                action_service.PlaybackActions.RepeatActions.Active = old_repeat;
-                action_service.PlaybackActions.ShuffleActions.Active = old_shuffle;
+            if (Actions != null && Actions.PlaybackActions != null && old_repeat != null) {
+                Actions.PlaybackActions.RepeatActions.Active = old_repeat;
+                Actions.PlaybackActions.ShuffleActions.Active = old_shuffle;
             }
             old_repeat = old_shuffle = null;
         }

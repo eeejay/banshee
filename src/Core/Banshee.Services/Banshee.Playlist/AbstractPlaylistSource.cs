@@ -139,7 +139,7 @@ namespace Banshee.Playlist
             DatabaseTrackModel.JoinPrimaryKey = JoinPrimaryKey;
             DatabaseTrackModel.JoinColumn = "TrackID";
             DatabaseTrackModel.CachesJoinTableEntries = CachesJoinTableEntries;
-            DatabaseTrackModel.Condition = String.Format (TrackCondition, dbid);
+            DatabaseTrackModel.AddCondition (String.Format (TrackCondition, dbid));
 
             base.AfterInitialized ();
         }

@@ -16,6 +16,7 @@ SOURCES =  \
 	Migo/Migo.Net/EventArgs/TransferRateUpdatedEventArgs.cs \
 	Migo/Migo.Net/Exceptions/RemoteFileModifiedException.cs \
 	Migo/Migo.Net/TransferStatusManager.cs \
+	Migo/Migo.Syndication/EnclosureManager.cs \
 	Migo/Migo.Syndication/Enumerations/FeedBackgroundSyncAction.cs \
 	Migo/Migo.Syndication/Enumerations/FeedBackgroundSyncStatus.cs \
 	Migo/Migo.Syndication/Enumerations/FeedDownloadError.cs \
@@ -31,8 +32,12 @@ SOURCES =  \
 	Migo/Migo.Syndication/Feed.cs \
 	Migo/Migo.Syndication/FeedEnclosure.cs \
 	Migo/Migo.Syndication/FeedItem.cs \
+	Migo/Migo.Syndication/FeedManager.cs \
 	Migo/Migo.Syndication/FeedsManager.cs \
 	Migo/Migo.Syndication/FeedUpdateTask.cs \
+	Migo/Migo.Syndication/MigoItem.cs \
+	Migo/Migo.Syndication/MigoModelProvider.cs \
+	Migo/Migo.Syndication/OpmlParser.cs \
 	Migo/Migo.Syndication/Rfc822DateTime.cs \
 	Migo/Migo.Syndication/RssParser.cs \
 	Migo/Migo.Syndication/XmlUtils.cs \
@@ -64,5 +69,9 @@ SOURCES =  \
 	Migo/Migo.TaskCore/Task.cs \
 	Migo/Migo.TaskCore/TaskGroup.cs
 
+if ENABLE_PODCAST
 include $(top_srcdir)/build/build.mk
+else
+EXTRA_DIST = $(SOURCES) $(RESOURCES)
+endif
 

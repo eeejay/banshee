@@ -54,35 +54,29 @@ using Migo.Syndication;
 
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastListModel : DatabaseTrackListModel, IListModel<PodcastItem>
+    public class PodcastListModel : DatabaseTrackListModel, IListModel<PodcastTrackInfo>
     {
-        public PodcastListModel (BansheeDbConnection conn, IDatabaseTrackModelProvider provider) : base (conn, provider)
+        public PodcastListModel (BansheeDbConnection conn, IDatabaseTrackModelProvider provider, DatabaseSource source) : base (conn, provider, source)
         {
+            JoinTable = String.Format ("{0}, {1}", Feed.Provider.TableName, FeedItem.Provider.TableName);
+            JoinPrimaryKey = FeedItem.Provider.PrimaryKey;
+            JoinColumn = "ExternalID";
+            AddCondition (String.Format ("{0}.FeedID = {1}.FeedID AND CoreTracks.ExternalID = {1}.ItemID", Feed.Provider.TableName, FeedItem.Provider.TableName));
         }
         
-        public new PodcastItem this[int index] {
+        public new PodcastTrackInfo this[int index] {
             get {
                 lock (this) {
-                    return cache.GetValue (index) as PodcastItem;
+                    return cache.GetValue (index) as PodcastTrackInfo;
                 }
             }
         }
     }
     
-    public class PodcastSource : PrimarySource
+    public class PodcastSource : Banshee.Library.LibrarySource
     {
         private PodcastFeedModel feed_model;
-        
-        private PodcastFeedView feed_view;
-        public PodcastFeedView FeedView {
-            get { return feed_view; }
-        }
-        
-        private PodcastItemView item_view;
-        public PodcastItemView ItemView {
-            get { return item_view; }
-        }
-        
+
         private string baseDirectory;
         public override string BaseDirectory {
             get { return baseDirectory; }
@@ -91,35 +85,76 @@ namespace Banshee.Podcasting.Gui
         public override bool CanRename {
             get { return false; }
         }
-
+        
+        // FIXME all three of these should be true, eventually
         public override bool CanAddTracks {
+            get { return false; }
+        }
+
+        public override bool CanRemoveTracks {
+            get { return false; }
+        }
+
+        public override bool CanDeleteTracks {
             get { return false; }
         }
         
         public PodcastFeedModel FeedModel {
             get { return feed_model; }
         }
+        
+
+#region Constructors
 
         public PodcastSource () : this (null)
         {
         }
 
-        public PodcastSource (string baseDirectory) : base ("PodcastLibrary", Catalog.GetString ("Podcasts"), "PodcastLibrary", 100)
+        public PodcastSource (string baseDirectory) : base (Catalog.GetString ("Podcasts"), "PodcastLibrary", 100)
         {
             this.baseDirectory = baseDirectory;
 
             Properties.SetString ("Icon.Name", "podcast-icon-22");
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/PodcastSourcePopup");
-            Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
-
-            feed_view = new PodcastFeedView ();
-            item_view = new PodcastItemView ();
-            Properties.Set<ISourceContents> (
-                "Nereid.SourceContents", 
-                new PodcastSourceContents (feed_view, item_view)
-            );
+            Properties.Set<ISourceContents> ("Nereid.SourceContents", new PodcastSourceContents ());
+            
+            Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
+                    <column-controller>
+                      <column>
+                          <title>Activity</title>
+                          <visible>true</visible>
+                          <renderer type=""Banshee.Podcasting.Gui.PodcastItemActivityColumn"" property=""Activity"" />
+                          <sort-key>DownloadStatus</sort-key>
+                          <width>.05</width>
+                          <max-width>30</max-width>
+                          <min-width>30</min-width>
+                      </column>
+                      <add-all-defaults />
+                      <remove-default column=""TrackColumn"" />
+                      <remove-default column=""DiscColumn"" />
+                      <remove-default column=""ComposerColumn"" />
+                      <remove-default column=""ArtistColumn"" />
+                      <column modify-default=""AlbumColumn"">
+                        <title>{0}</title>
+                      </column>
+                      <column modify-default=""FileSizeColumn"">
+                          <visible>true</visible>
+                      </column>
+                      <column>
+                          <visible>true</visible>
+                          <title>Published</title>
+                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellPublished"" property=""PublishedDate"" />
+                          <sort-key>PublishedDate</sort-key>
+                      </column>
+                      <sort-column>published_date</sort-column>
+                    </column-controller>
+                ",
+                Catalog.GetString ("Podcast")
+            ));
         }
+        
+#endregion
         
         protected override bool HasArtistAlbum {
             get { return false; }
@@ -127,24 +162,66 @@ namespace Banshee.Podcasting.Gui
         
         protected override void InitializeTrackModel ()
         {
-            DatabaseTrackModelProvider<PodcastItem> track_provider =
-                new DatabaseTrackModelProvider<PodcastItem> (ServiceManager.DbConnection);
+            DatabaseTrackModelProvider<PodcastTrackInfo> track_provider =
+                new DatabaseTrackModelProvider<PodcastTrackInfo> (ServiceManager.DbConnection);
 
-            DatabaseTrackModel = new PodcastListModel (ServiceManager.DbConnection, track_provider);
+            DatabaseTrackModel = new PodcastListModel (ServiceManager.DbConnection, track_provider, this);
 
-            TrackCache = new DatabaseTrackModelCache<PodcastItem> (ServiceManager.DbConnection,
+            TrackCache = new DatabaseTrackModelCache<PodcastTrackInfo> (ServiceManager.DbConnection,
                     UniqueId, track_model, track_provider);
                     
-            feed_model = new PodcastFeedModel ();
+            feed_model = new PodcastFeedModel (DatabaseTrackModel, ServiceManager.DbConnection, "PodcastFeeds");
             
             AfterInitialized ();
         }
-
-        public override void Reload ()
+        
+        // Probably don't want this -- do we want to allow actually removing the item?  It will be
+        // repopulated the next time we update the podcast feed...
+        /*protected override void DeleteTrack (DatabaseTrackInfo track)
         {
-            feed_model.Reload ();
-            TrackModel.Reload ();
+            PodcastTrackInfo episode = track as PodcastTrackInfo;
+            if (episode != null) {
+                if (episode.Uri.IsFile)
+                    base.DeleteTrack (track);
+                
+                episode.Delete ();
+                episode.Item.Delete (false);
+            }
+        }*/
+        
+        /*protected override void AddTrack (DatabaseTrackInfo track)
+        {
+            // TODO
+            // Need to create a Feed, FeedItem, and FeedEnclosure for this track for it to be
+            // considered a Podcast item
+            base.AddTrack (track);
+        }*/
+        
+        public override System.Collections.Generic.IEnumerable<Banshee.Collection.Database.IFilterListModel> FilterModels {
+            get {
+                yield return feed_model;
+            }
         }
+        
+        public override bool ShowBrowser {
+            get { return true; }
+        }
+        
+        /*public override IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {
+            get { return default_smart_playlists; }
+        }
+
+        private static SmartPlaylistDefinition [] default_smart_playlists = new SmartPlaylistDefinition [] {
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Favorites"),
+                Catalog.GetString ("Videos rated four and five stars"),
+                "rating>=4"),
+
+            new SmartPlaylistDefinition (
+                Catalog.GetString ("Unwatched"),
+                Catalog.GetString ("Videos that haven't been played yet"),
+                "plays=0"),
+        };/*
 
 /*
         public new TrackListModel TrackModel {

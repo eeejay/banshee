@@ -3,11 +3,11 @@
     id="Banshee.Podcasting"
     version="1.0"
     compatVersion="1.0"
-    copyright="© 2008 Mike Urbanski.  Licensed under the MIT X11 license."
+    copyright="© 2008 Mike Urbanski and Novell, Inc.  Licensed under the MIT X11 license."
     name="Podcasts"
     category="User Interface"
     description="Allows subscribing to and managing of Podcasts."
-    author="Michael C. Urbanski"
+    author="Michael C. Urbanski, Gabriel Burt"
     url="http://banshee-project.org/"
     defaultEnabled="true">
 

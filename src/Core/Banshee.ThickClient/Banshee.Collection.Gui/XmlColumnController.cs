@@ -54,9 +54,12 @@ namespace Banshee.Collection.Gui
         
         private void ReadColumnController (XmlTextReader reader, int depth)
         {
+            string sort_column = null;
+            
             while (reader.Read ()) {
                 if (reader.NodeType == XmlNodeType.Element) {
                     switch (reader.Name) {
+                        case "sort-column": sort_column = reader.ReadString (); break;
                         case "column": ReadColumn (reader, reader.Depth); break;
                         case "add-all-defaults": AddDefaultColumns (); break;
                         case "add-default":
@@ -77,7 +80,20 @@ namespace Banshee.Collection.Gui
                             break;
                     }
                 } else if (reader.NodeType == XmlNodeType.EndElement && reader.Depth == depth) {
-                    return;
+                    break;
+                }
+            }
+            
+            if (sort_column != null) {
+                foreach (Column col in Columns) {
+                    if (col.Id == sort_column) {
+                        if (col is SortableColumn) {
+                            DefaultSortColumn = col as SortableColumn;
+                        } else {
+                            Hyena.Log.WarningFormat ("Defined default sort column {0} is not a SortableColumn", sort_column);
+                        }
+                        break;
+                    }
                 }
             }
         }

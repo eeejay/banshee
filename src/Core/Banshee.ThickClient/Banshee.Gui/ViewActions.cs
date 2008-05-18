@@ -40,8 +40,6 @@ namespace Banshee.Gui
     public class ViewActions : BansheeActionGroup
     {
         public delegate void FullscreenHandler (bool fullscreen);
-        
-        private InterfaceActionService action_service;
         private FullscreenHandler fullscreen_handler;
         
         public FullscreenHandler Fullscreen {
@@ -57,7 +55,7 @@ namespace Banshee.Gui
             }
         }
     
-        public ViewActions (InterfaceActionService actionService) : base ("View")
+        public ViewActions (InterfaceActionService actionService) : base (actionService, "View")
         {
             Add (new ActionEntry [] {
                 new ActionEntry ("ViewMenuAction", null,
@@ -81,8 +79,6 @@ namespace Banshee.Gui
             });
             
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
-            action_service = actionService;
-
             OnFullScreen (null, EventArgs.Empty);
         }
         
@@ -90,7 +86,7 @@ namespace Banshee.Gui
         {
             if (((PlayerEventStateChangeArgs)args).Current == PlayerState.Ready && 
                 !ServiceManager.PlayerEngine.SupportsEqualizer) {
-                action_service["View.ShowEqualizerAction"].Sensitive = false;
+                Actions["View.ShowEqualizerAction"].Sensitive = false;
             }
         }
                 

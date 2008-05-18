@@ -42,21 +42,22 @@ namespace Banshee.Podcasting.Gui
 {
     public class PodcastItemActivityColumn : PixbufColumnCell
     {
-        Dictionary<PodcastItemActivity,Pixbuf> pixbufs = 
-            new Dictionary<PodcastItemActivity,Pixbuf> ();
+        Dictionary<PodcastItemActivity, Pixbuf> pixbufs = new Dictionary<PodcastItemActivity, Pixbuf> ();
     
-        public PodcastItemActivityColumn (string property) : base (property)
+        public PodcastItemActivityColumn (string property) : this (property, true)
+        {
+        }
+        
+        public PodcastItemActivityColumn (string property, bool expand) : base (property, expand)
         {
         }
         
         protected override void LoadPixbufs ()
         {
             if (pixbufs.Count == 0) {
-                pixbufs.Add (PodcastItemActivity.NewPodcastItem, null);
                 pixbufs.Add (PodcastItemActivity.DownloadPending, null);
                 pixbufs.Add (PodcastItemActivity.Downloading, null);
-                pixbufs.Add (PodcastItemActivity.DownloadFailed, null);
-                pixbufs.Add (PodcastItemActivity.Video, null);                                
+                pixbufs.Add (PodcastItemActivity.DownloadFailed, null);                            
             } else {
                 foreach (KeyValuePair<PodcastItemActivity,Pixbuf> kvp in pixbufs) {
                     if (kvp.Value != null) {
@@ -68,30 +69,18 @@ namespace Banshee.Podcasting.Gui
             
             Gtk.Image i = new Gtk.Image ();
             
-            pixbufs[PodcastItemActivity.NewPodcastItem] = 
-                IconThemeUtils.LoadIcon ("podcast-new", 16);
-            
             pixbufs[PodcastItemActivity.DownloadFailed] =
-                i.RenderIcon (Stock.DialogError, IconSize.Menu, "");
+                i.RenderIcon (Stock.DialogError, IconSize.Menu, String.Empty);
             
             pixbufs[PodcastItemActivity.Downloading] =
-                i.RenderIcon (Stock.GoForward, IconSize.Menu, "");
-            
-            pixbufs[PodcastItemActivity.Playing] =
-                i.RenderIcon (Stock.MediaPlay, IconSize.Menu, "");            
-            
-            pixbufs[PodcastItemActivity.Paused] =
-                i.RenderIcon (Stock.MediaPause, IconSize.Menu, "");             
-            
-            pixbufs[PodcastItemActivity.Video] = 
-                IconThemeUtils.LoadIcon ("video-x-generic", 16);
+                i.RenderIcon (Stock.GoForward, IconSize.Menu, String.Empty);
+                
+            pixbufs[PodcastItemActivity.Downloaded] =
+                i.RenderIcon (Stock.Harddisk, IconSize.Menu, String.Empty);
             
             i.Sensitive = false;
             pixbufs[PodcastItemActivity.DownloadPending] = 
-                i.RenderIcon (Stock.GoForward, IconSize.Menu, "");
-                
-            pixbufs[PodcastItemActivity.NewPodcastItem] = 
-                Gdk.Pixbuf.LoadFromResource ("podcast-new-16.png");
+                i.RenderIcon (Stock.GoForward, IconSize.Menu, String.Empty);
         }
         
         public override void Render (CellContext context, 

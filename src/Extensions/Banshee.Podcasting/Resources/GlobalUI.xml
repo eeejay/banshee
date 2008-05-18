@@ -1,30 +1,24 @@
 <ui>
     <popup name="PodcastSourcePopup" action="PodcastSourcePopupAction">
-        <menuitem name="PodcastUpdateAll" action="PodcastUpdateAllAction"/>                        
         <menuitem name="PodcastAdd" action="PodcastAddAction" />
-    </popup>  
+        <menuitem name="PodcastUpdateAll" action="PodcastUpdateAllAction"/>
+        <separator/>
+        <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
+        <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
+        <separator/>
+        <menu name="SortChildren" action="SortChildrenAction">
+          <menuitem name="SortChildrenNameAsc" action="SortChildrenNameAscAction"/>
+          <menuitem name="SortChildrenNameDesc" action="SortChildrenNameDescAction"/>
+          <menuitem name="SortChildrenSizeAsc" action="SortChildrenSizeAscAction"/>
+          <menuitem name="SortChildrenSizeDesc" action="SortChildrenSizeDescAction"/>
+        </menu>
+    </popup>
     
-    <popup name="PodcastFeedViewPopup" action="PodcastFeedViewPopupAction">
-        <menuitem name="PodcastUpdateAll" action="PodcastUpdateAllAction" />                   
+    <popup name="PodcastFeedPopup" action="PodcastFeedPopupAction">
         <menuitem name="PodcastUpdateFeed" action="PodcastUpdateFeedAction" />
-        <menuitem name="PodcastAdd" action="PodcastAddAction" />          
-        <separator />
+        <menuitem name="PodcastHomepage" action="PodcastHomepageAction" />
         <menuitem name="PodcastDelete" action="PodcastDeleteAction" />
-        <menuitem name="PodcastHomepage" action="PodcastHomepageAction" />        
         <separator />
-        <menuitem name="PodcastProperties" action="PodcastPropertiesAction" />        
-    </popup>    
-    
-    <popup name="PodcastItemViewPopup" action="PodcastItemViewPopupAction">
-        <menuitem name="PodcastItemLink" action="PodcastItemLinkAction" /> 
-        <menuitem name="PodcastItemDelete" action="PodcastItemDeleteAction" />         
-        <separator />                
-        <menuitem name="PodcastItemMarkNew" action="PodcastItemMarkNewAction" /> 
-        <menuitem name="PodcastItemMarkOld" action="PodcastItemMarkOldAction" /> 
-        <separator />                        
-        <menuitem name="PodcastItemDownload" action="PodcastItemDownloadAction" /> 
-        <menuitem name="PodcastItemCancel" action="PodcastItemCancelAction" />          
-        <separator />  
-        <menuitem name="PodcastItemProperties" action="PodcastItemPropertiesAction" />                
+        <menuitem name="PodcastProperties" action="PodcastPropertiesAction" />
     </popup>
 </ui>

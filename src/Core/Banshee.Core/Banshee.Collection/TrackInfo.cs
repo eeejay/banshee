@@ -109,7 +109,7 @@ namespace Banshee.Collection
                 return false;
             }
             
-            return ArtistAlbumId == track.ArtistAlbumId;
+            return ArtworkId == track.ArtworkId;
         }
 
         public virtual void Save ()
@@ -196,7 +196,7 @@ namespace Banshee.Collection
             } 
         }     
         
-        public string ArtistAlbumId { 
+        public virtual string ArtworkId { 
             get { return CoverArtSpec.CreateArtistAlbumId (ArtistName, AlbumTitle); }
         }
 

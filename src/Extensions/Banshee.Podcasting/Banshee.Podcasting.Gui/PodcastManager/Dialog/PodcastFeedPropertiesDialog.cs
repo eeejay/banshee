@@ -71,24 +71,19 @@ namespace Banshee.Podcasting.Gui
             table.RowSpacing = 6;
             table.ColumnSpacing = 12;
 
-            Label description_label = new Label ();
-            description_label.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(Catalog.GetString ("Description:")));
+            Label description_label = new Label (Catalog.GetString ("Description:"));
             description_label.SetAlignment (0f, 0f);
             description_label.Justify = Justification.Left;
 
-            Label last_updated_label = new Label ();
-            last_updated_label.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(Catalog.GetString ("Last Updated:")));
+            Label last_updated_label = new Label (Catalog.GetString ("Last updated:"));
             last_updated_label.SetAlignment (0f, 0f);
             last_updated_label.Justify = Justification.Left;
 
-            Label feed_url_label = new Label ();
-            feed_url_label.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(Catalog.GetString ("URL:")));
+            Label feed_url_label = new Label (Catalog.GetString ("URL:"));
             feed_url_label.SetAlignment (0f, 0f);
             feed_url_label.Justify = Justification.Left;
 
-            Label new_episode_option_label = new Label ();
-            new_episode_option_label.Markup = String.Format("<b>{0}</b>", GLib.Markup.EscapeText(Catalog.GetString (
-                                                  "When feed is updated:")));
+            Label new_episode_option_label = new Label (Catalog.GetString ("When feed is updated:"));
             new_episode_option_label.SetAlignment (0f, 0.5f);
             new_episode_option_label.Justify = Justification.Left;
 
@@ -103,19 +98,9 @@ namespace Banshee.Podcasting.Gui
             feed_url_text.Justify = Justification.Left;
             feed_url_text.Ellipsize = Pango.EllipsizeMode.End;
 
-            string description_string = (String.IsNullOrEmpty (feed.Description)) ?
+            string description_string = String.IsNullOrEmpty (feed.Description) ?
                                         Catalog.GetString ("No description available") :
                                         feed.Description;
-
-            if (!description_string.StartsWith ("\""))
-            {
-                description_string =  "\""+description_string;
-            }
-
-            if (!description_string.EndsWith ("\""))
-            {
-                description_string = description_string+"\"";
-            }
 
             Label descrition_text = new Label (description_string);
             descrition_text.Justify = Justification.Left;

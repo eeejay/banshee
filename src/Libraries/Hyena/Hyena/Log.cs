@@ -332,6 +332,11 @@ namespace Hyena
             Warning (message, null, showUser);
         }
         
+        public static void WarningFormat (string format, params object [] args)
+        {
+            Warning (String.Format (format, args));
+        }
+        
         #endregion
         
         #region Public Error Methods

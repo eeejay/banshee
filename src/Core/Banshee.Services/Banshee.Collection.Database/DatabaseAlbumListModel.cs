@@ -39,142 +39,32 @@ using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class DatabaseAlbumListModel : AlbumListModel, ICacheableDatabaseModel
+    public class DatabaseAlbumListModel : DatabaseBrowsableListModel<DatabaseAlbumInfo, AlbumInfo>
     {
-        private readonly BansheeModelProvider<DatabaseAlbumInfo> provider;
-        private readonly BansheeModelCache<DatabaseAlbumInfo> cache;
-        private readonly DatabaseTrackListModel track_model;
-        private readonly DatabaseArtistListModel artist_model;
-        private long count;
-        private string artist_id_filter_query;
-        private string reload_fragment;
-        
-        private readonly AlbumInfo select_all_album = new AlbumInfo (null);
-        
-        public DatabaseAlbumListModel (BansheeDbConnection connection, string uuid)
+        public DatabaseAlbumListModel (DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
+            : base (trackModel, connection, DatabaseAlbumInfo.Provider, new AlbumInfo (null), uuid)
         {
-            provider = DatabaseAlbumInfo.Provider;
-            cache = new BansheeModelCache <DatabaseAlbumInfo> (connection, uuid, this, provider);
-            cache.HasSelectAllItem = true;
-
-            Selection.Changed += HandleSelectionChanged;
-        }
-
-        public DatabaseAlbumListModel (DatabaseTrackListModel trackModel, DatabaseArtistListModel artistModel,
-                BansheeDbConnection connection, string uuid) : this (connection, uuid)
-        {
-            this.track_model = trackModel;
-            this.artist_model = artistModel;
-        }
-
-        private void HandleSelectionChanged (object sender, EventArgs args)
-        {
-            track_model.Reload (ReloadTrigger.AlbumFilter);
-        }
-
-        public override void Reload ()
-        {
-            Reload (false);
-        }
-
-        internal void Reload (bool notify)
-        {
-            ArtistInfoFilter = artist_model == null ? null : artist_model.SelectedItems;
-
-            bool either = (artist_id_filter_query != null) || (track_model != null);
-            bool both = (artist_id_filter_query != null) && (track_model != null);
-
-            reload_fragment = String.Format (@"
+            ReloadFragmentFormat = @"
                 FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID
-                    {0} {1} {2} {3} ORDER BY CoreAlbums.TitleLowered, CoreArtists.NameLowered",
-                either ? "WHERE" : null,
-                track_model == null ? null :
-                    String.Format (@"
-                        CoreAlbums.AlbumID IN
-                            (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreCache{1}
-                                WHERE CoreCache.ModelID = {0} AND
-                                      CoreCache.ItemId = {2})",
-                        track_model.CacheId,
-                        track_model.CachesJoinTableEntries ? track_model.JoinFragment : null,
-                        (!track_model.CachesJoinTableEntries)
-                            ? "CoreTracks.TrackID"
-                            : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
-                        ),
-                both ? "AND" : null,
-                artist_id_filter_query
-            );
-            //Console.WriteLine ("reload fragment for albums is {0}", reload_fragment);
-
-            cache.SaveSelection ();
-            cache.Reload ();
-            cache.UpdateAggregates ();
-            cache.RestoreSelection ();
-
-            count = cache.Count + 1;
-            select_all_album.Title = String.Format ("All Albums ({0})", count - 1);
-
-            if (notify)
-                OnReloaded ();
+                    WHERE CoreAlbums.AlbumID IN
+                        (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreCache{0}
+                            WHERE CoreCache.ModelID = {1} AND
+                                  CoreCache.ItemId = {2})
+                    ORDER BY CoreAlbums.TitleLowered, CoreArtists.NameLowered";
         }
         
-        public override AlbumInfo this[int index] {
-            get {
-                if (index == 0)
-                    return select_all_album;
-
-                return cache.GetValue (index - 1);
-            }
+        public override string FilterColumn {
+            get { return "CoreTracks.AlbumID"; }
         }
         
-        public override IEnumerable<ArtistInfo> ArtistInfoFilter {
-            set {
-                ModelHelper.BuildIdFilter<ArtistInfo> (value, "CoreAlbums.ArtistID", artist_id_filter_query,
-                    delegate (ArtistInfo artist) {
-                        if (!(artist is DatabaseArtistInfo)) {
-                            return null;
-                        }
-                        
-                        return ((DatabaseArtistInfo)artist).DbId.ToString ();
-                    },
-                
-                    delegate (string new_filter) {
-                        artist_id_filter_query = new_filter;
-                    }
-                );
-            }
-        }
-
-        public override int Count { 
-            get { return (int) count; }
-        }
-
-        // Implement ICacheableModel
-        public int FetchCount {
-            get { return 20; }
-        }
-
-        public string SelectAggregates { get { return null; } }
-
-        //private const string primary_key = "CoreAlbums.AlbumID";
-
-        public string ReloadFragment {
-            get { return reload_fragment; }
-        }
-
-        public int CacheId {
-            get { return (int) cache.CacheId; }
-        }
-
-        public void InvalidateCache ()
+        public override string ItemToFilterValue (object item)
         {
-            cache.ClearManagedCache ();
-            OnReloaded ();
+            return (item is DatabaseAlbumInfo) ? (item as DatabaseAlbumInfo).DbId.ToString () : null;
         }
-
-        public string JoinTable { get { return null; } }
-        public string JoinFragment { get { return null; } }
-        public string JoinPrimaryKey { get { return null; } }
-        public string JoinColumn { get { return null; } }
-        public bool CachesJoinTableEntries { get { return false; } }
+        
+        public override void UpdateSelectAllItem (long count)
+        {
+            select_all_item.Title = String.Format ("All Albums ({0})", count);
+        }
     }
 }

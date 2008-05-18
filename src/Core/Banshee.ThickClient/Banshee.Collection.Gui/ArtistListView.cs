@@ -37,20 +37,12 @@ using Banshee.Gui;
 
 namespace Banshee.Collection.Gui
 {
-    public class ArtistListView : ListView<ArtistInfo>
+    public class ArtistListView : TrackFilterListView<ArtistInfo>
     {
-        private ColumnController column_controller;
-        
-        public ArtistListView() : base()
+        public ArtistListView () : base ()
         {
-            column_controller = new ColumnController();
-            column_controller.Add(new Column("Artist", new ColumnCellText("Name", true), 1.0));
+            column_controller.Add (new Column ("Artist", new ColumnCellText ("Name", true), 1.0));
             ColumnController = column_controller;
-            
-            RowActivated += delegate {
-                ServiceManager.PlaybackController.NextSource = (ServiceManager.SourceManager.ActiveSource as Banshee.Sources.ITrackModelSource);
-                ServiceManager.PlaybackController.Next ();
-            };
         }
 
         // TODO add context menu for artists/albums...probably need a Banshee.Gui/ArtistActions.cs file.  Should
@@ -61,17 +53,5 @@ namespace Banshee.Collection.Gui
             ServiceManager.Get<InterfaceActionService> ().TrackActions["TrackContextMenuAction"].Activate ();
             return true;
         }*/
-
-        protected override bool OnFocusInEvent(Gdk.EventFocus evnt)
-        {
-            ServiceManager.Get<InterfaceActionService> ().TrackActions.SuppressSelectActions ();
-            return base.OnFocusInEvent(evnt);
-        }
-        
-        protected override bool OnFocusOutEvent(Gdk.EventFocus evnt)
-        {
-            ServiceManager.Get<InterfaceActionService> ().TrackActions.UnsuppressSelectActions ();
-            return base.OnFocusOutEvent(evnt);
-        }
     }
 }

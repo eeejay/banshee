@@ -32,10 +32,25 @@ using Hyena.Data.Gui;
 
 namespace Banshee.Collection.Gui
 {
+    public enum DateTimeFormat 
+    {
+        Long,
+        ShortDate,
+        LongDate,
+        ShortTime,
+        LongTime
+    }
+        
     public class ColumnCellDateTime : ColumnCellText
     {
         public ColumnCellDateTime (string property, bool expand) : base (property, expand)
         {
+        }
+        
+        private DateTimeFormat format = DateTimeFormat.Long;
+        public DateTimeFormat Format {
+            get { return format; }
+            set { format = value; }
         }
         
         protected override string Text {
@@ -48,7 +63,16 @@ namespace Banshee.Collection.Gui
                 if (dt == DateTime.MinValue)
                     return String.Empty;
 
-                return dt.ToString ();
+                switch (Format)
+                {
+                case DateTimeFormat.Long:         return dt.ToString ();
+                case DateTimeFormat.ShortDate:    return dt.ToShortDateString ();
+                case DateTimeFormat.LongDate:     return dt.ToLongDateString ();
+                case DateTimeFormat.ShortTime:    return dt.ToShortTimeString ();
+                case DateTimeFormat.LongTime:     return dt.ToLongTimeString ();
+                }
+                
+                return String.Empty;
             }
         }
     }

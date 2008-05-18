@@ -42,7 +42,6 @@ namespace Banshee.Gui
 {
     public class PlaybackRepeatActions : BansheeActionGroup, IEnumerable<RadioAction>
     {
-        private InterfaceActionService action_service;
         private RadioAction active_action;
         
         public RadioAction Active {
@@ -65,9 +64,8 @@ namespace Banshee.Gui
 
         public event EventHandler Changed;
         
-        public PlaybackRepeatActions (InterfaceActionService actionService) : base ("PlaybackRepeat")
+        public PlaybackRepeatActions (InterfaceActionService actionService) : base (actionService, "PlaybackRepeat")
         {
-            action_service = actionService;
             actionService.AddActionGroup (this);
             
             Add (new ActionEntry [] {
@@ -122,7 +120,7 @@ namespace Banshee.Gui
         
         public void AttachSubmenu (string menuItemPath)
         {
-            MenuItem parent = action_service.UIManager.GetWidget (menuItemPath) as MenuItem;
+            MenuItem parent = Actions.UIManager.GetWidget (menuItemPath) as MenuItem;
             parent.Submenu = CreateMenu ();
         }
         

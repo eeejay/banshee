@@ -52,8 +52,7 @@ namespace Migo.TaskCore
         public EventHandler<EventArgs> QueueProcessed;        
         public EventHandler<EventArgs> QueueProcessing; 
         
-        private bool IsProcessed
-        {
+        private bool IsProcessed {
             get {
                 bool ret = false;
 
@@ -67,12 +66,14 @@ namespace Migo.TaskCore
             }
         }        
         
-        public virtual WaitHandle WaitHandle
-        {
+        public virtual WaitHandle WaitHandle {
             get { return executingHandle; }
         }
 
-        public AsyncCommandQueue () : this (null) {}
+        public AsyncCommandQueue () : this (null)
+        {
+        }
+        
         public AsyncCommandQueue (object sync)
         {
             userSync = sync;
@@ -119,8 +120,6 @@ namespace Migo.TaskCore
                 
                 eventQueue = null;
             }
-            
-            Console.WriteLine ("async - Disposed");
         }
     
         public virtual bool Register (T command)
@@ -213,8 +212,7 @@ namespace Migo.TaskCore
                         try {
                             execCommand (e);
                         } catch (Exception ex) {
-                            Console.WriteLine ("{0}:  {1}", GetType ().Name, ex.Message);
-                            Console.WriteLine ("{0}:  {1}", GetType ().Name, ex.StackTrace);                        
+                            Hyena.Log.Exception (ex);
                         }
                     } 
                                        
@@ -246,8 +244,7 @@ namespace Migo.TaskCore
                 try {
                     handler (this, new EventArgs ());
                 } catch (Exception ex) {
-                    Console.WriteLine ("{0}: {1}", GetType ().Name, ex.Message);
-                    Console.WriteLine ("{0}: {1}", GetType ().Name, ex.StackTrace);    
+                    Hyena.Log.Exception (ex);
                 }                
             }            
         }

@@ -31,38 +31,16 @@ using System.Collections.Generic;
 
 namespace Migo.Syndication
 {    
-    public class FeedItemEventArgs : FeedEventArgs
+    public class FeedItemEventArgs
     {
-        private readonly FeedItem item;
         private readonly IEnumerable<FeedItem> items;
-        
-        public FeedItem Item {
-            get { return item; }
-        }
-        
+
         public IEnumerable<FeedItem> Items {
             get { return items; }   
         }
         
-        public FeedItemEventArgs (Feed feed, FeedItem item) : this (feed, item, null) 
+        public FeedItemEventArgs (Feed feed, IEnumerable<FeedItem> items)
         {
-            if (item == null) {
-            	throw new ArgumentNullException ("item");
-            }        
-        }
-        
-        public FeedItemEventArgs (Feed feed, IEnumerable<FeedItem> items) : this (feed, null, items) 
-        {
-            if (items == null) {
-            	throw new ArgumentNullException ("items");
-            }        
-        }
-        
-        private FeedItemEventArgs (Feed feed, 
-                                   FeedItem item, 
-                                   IEnumerable<FeedItem> items) : base (feed)
-        {
-            this.item = item;
             this.items = items;
         }
     }

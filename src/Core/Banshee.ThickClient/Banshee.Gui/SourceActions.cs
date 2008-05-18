@@ -50,8 +50,6 @@ namespace Banshee.Gui
 {
     public class SourceActions : BansheeActionGroup
     {
-        private InterfaceActionService action_service;
-
         private IHasSourceView source_view;
         public IHasSourceView SourceView {
             get { return source_view; }
@@ -66,10 +64,8 @@ namespace Banshee.Gui
             get { return (SourceView.HighlightedSource as PrimarySource) ?? base.ActivePrimarySource; }
         }
 
-        public SourceActions (InterfaceActionService actionService) : base ("Source")
+        public SourceActions (InterfaceActionService actionService) : base (actionService, "Source")
         {
-            action_service = actionService;
-
             Add (new ActionEntry [] {
                 new ActionEntry ("NewPlaylistAction", null,
                     Catalog.GetString ("_New Playlist"), "<control>N",
@@ -141,7 +137,7 @@ namespace Banshee.Gui
             //ServiceManager.SourceManager.SourceAdded += OnPlayerEngineStateChanged;
             //ServiceManager.SourceManager.SourceRemoved += OnPlayerEngineStateChanged;
             ServiceManager.SourceManager.ActiveSourceChanged += HandleActiveSourceChanged;
-            action_service.GlobalActions["EditMenuAction"].Activated += HandleEditMenuActivated;
+            Actions.GlobalActions["EditMenuAction"].Activated += HandleEditMenuActivated;
         }
             
 #region State Event Handlers
@@ -213,7 +209,7 @@ namespace Banshee.Gui
             UpdateActions ();
 
             string path = ActionSource.Properties.GetString ("GtkActionPath") ?? "/SourceContextMenu";
-            Gtk.Menu menu = action_service.UIManager.GetWidget (path) as Menu;
+            Gtk.Menu menu = Actions.UIManager.GetWidget (path) as Menu;
             if (menu == null || menu.Children.Length == 0) {
                 SourceView.ResetHighlight ();
                 UpdateActions ();

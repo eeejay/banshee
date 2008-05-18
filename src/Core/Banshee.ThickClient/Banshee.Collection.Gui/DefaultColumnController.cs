@@ -69,6 +69,7 @@ namespace Banshee.Collection.Gui
                 DurationColumn,
                 GenreColumn,
                 YearColumn,
+                FileSizeColumn,
                 ComposerColumn,
                 PlayCountColumn,
                 SkipCountColumn,
@@ -112,7 +113,7 @@ namespace Banshee.Collection.Gui
         }
         
         private SortableColumn duration_column = new SortableColumn (Catalog.GetString ("Duration"),
-            new ColumnCellDuration ("Duration", true), 0.15, "Duration", true);
+            new ColumnCellDuration ("Duration", true), 0.10, "Duration", true);
         public SortableColumn DurationColumn {
             get { return duration_column; }
         }
@@ -127,6 +128,12 @@ namespace Banshee.Collection.Gui
             new ColumnCellPositiveInt ("Year", true), 0.15, "Year", false);
         public SortableColumn YearColumn {
             get { return year_column; }
+        }
+
+        private SortableColumn file_size_column = new SortableColumn (Catalog.GetString ("File Size"), 
+            new ColumnCellFileSize ("FileSize", true), 0.15, "FileSize", false);
+        public SortableColumn FileSizeColumn {
+            get { return file_size_column; }
         }
         
         private SortableColumn composer_column = new SortableColumn (Catalog.GetString ("Composer"), 

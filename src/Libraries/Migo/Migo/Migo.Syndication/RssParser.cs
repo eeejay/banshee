@@ -32,13 +32,12 @@ using System;
 using System.Xml;
 using System.Collections.Generic;
 
-using Migo.Syndication;
-
 namespace Migo.Syndication
 {
     public class RssParser
     {
         private XmlDocument doc;
+        private XmlNamespaceManager ns_mgr;
         
         public RssParser (string url, string xml)
         {
@@ -46,7 +45,7 @@ namespace Migo.Syndication
             try {
                 doc.LoadXml (xml);
             } catch (XmlException) {
-                throw new FormatException ("Invalid xml document.");                                  
+                throw new FormatException ("Invalid XML document.");                                  
             }
             CheckRss ();
         }
@@ -65,19 +64,22 @@ namespace Migo.Syndication
         public Feed UpdateFeed (Feed feed)
         {
             try {
-                feed.Copyright        = XmlUtils.GetXmlNodeText (doc, "/rss/channel/copyright");
-                feed.Image            = XmlUtils.GetXmlNodeText (doc, "/rss/channel/image/url");
+                feed.Title            = XmlUtils.GetXmlNodeText (doc, "/rss/channel/title");
                 feed.Description      = XmlUtils.GetXmlNodeText (doc, "/rss/channel/description");
+                feed.Copyright        = XmlUtils.GetXmlNodeText (doc, "/rss/channel/copyright");
+                feed.ImageUrl         = XmlUtils.GetXmlNodeText (doc, "/rss/channel/itunes:image/@href", ns_mgr);
+                if (String.IsNullOrEmpty (feed.ImageUrl)) {
+                    feed.ImageUrl = XmlUtils.GetXmlNodeText (doc, "/rss/channel/image/url");
+                }
                 feed.Interval         = XmlUtils.GetInt64 (doc, "/rss/channel/interval"); 
                 feed.Language         = XmlUtils.GetXmlNodeText (doc, "/rss/channel/language");
                 feed.LastBuildDate    = XmlUtils.GetRfc822DateTime (doc, "/rss/channel/lastBuildDate");
                 feed.Link             = XmlUtils.GetXmlNodeText (doc, "/rss/channel/link"); 
                 feed.PubDate          = XmlUtils.GetRfc822DateTime (doc, "/rss/channel/pubDate");
-                feed.Title            = XmlUtils.GetXmlNodeText (doc, "/rss/channel/title");
                 feed.Ttl              = XmlUtils.GetInt64 (doc, "/rss/channel/ttl");
-                feed.LastWriteTime    = DateTime.MinValue;
-                feed.LastDownloadTime = DateTime.Now;
-
+                feed.Keywords         = XmlUtils.GetXmlNodeText (doc, "/rss/channel/itunes:keywords", ns_mgr);
+                feed.Category         = XmlUtils.GetXmlNodeText (doc, "/rss/channel/itunes:category/@text", ns_mgr);
+                
                 return feed;
             } catch (Exception e) {
                  Hyena.Log.Exception (e);
@@ -86,7 +88,7 @@ namespace Migo.Syndication
             return null;
         }
         
-        public IEnumerable<FeedItem> GetFeedItems ()
+        public IEnumerable<FeedItem> GetFeedItems (Feed feed)
         {
             XmlNodeList nodes = null;
             try {
@@ -106,13 +108,14 @@ namespace Migo.Syndication
                     }
                     
                     if (item != null) {
+                        item.Feed = feed;
                         yield return item;
                     }
                 }
             }
         }
         
-        public static FeedItem ParseItem (XmlNode node)
+        public FeedItem ParseItem (XmlNode node)
         {
             try {
                 FeedItem item = new FeedItem ();
@@ -129,7 +132,6 @@ namespace Migo.Syndication
                 item.Link              = XmlUtils.GetXmlNodeText (node, "link");
                 item.Modified          = XmlUtils.GetRfc822DateTime (node, "dcterms:modified");
                 item.PubDate           = XmlUtils.GetRfc822DateTime (node, "pubDate");
-                item.LastDownloadTime  = DateTime.Now;
                 
                 item.Enclosure = ParseEnclosure (node);
                 
@@ -141,13 +143,15 @@ namespace Migo.Syndication
              return null;
         }
         
-        public static FeedEnclosure ParseEnclosure (XmlNode node)
+        public FeedEnclosure ParseEnclosure (XmlNode node)
         {
             try {
                 FeedEnclosure enclosure = new FeedEnclosure ();
                 enclosure.Url = XmlUtils.GetXmlNodeText (node, "enclosure/@url");
-                enclosure.Length = Math.Max (0, XmlUtils.GetInt64 (node, "enclosure/@length"));
+                enclosure.FileSize = Math.Max (0, XmlUtils.GetInt64 (node, "enclosure/@length"));
                 enclosure.MimeType = XmlUtils.GetXmlNodeText (node, "enclosure/@type");
+                enclosure.Duration = XmlUtils.GetITunesDuration (node, ns_mgr);
+                enclosure.Keywords = XmlUtils.GetXmlNodeText (node, "itunes:keywords", ns_mgr);
                 return enclosure;
              } catch (Exception e) {
                  Hyena.Log.Exception (e);
@@ -167,6 +171,9 @@ namespace Migo.Syndication
                     "node: 'title', 'description', and 'link' nodes must exist."
                 );                
             }
+            
+            ns_mgr = XmlUtils.GetNamespaceManager (doc);
+            ns_mgr.AddNamespace ("itunes", "http://www.itunes.com/dtds/podcast-1.0.dtd");
         }
     }
 }

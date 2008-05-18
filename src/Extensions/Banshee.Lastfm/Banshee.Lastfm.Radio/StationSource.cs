@@ -96,6 +96,10 @@ namespace Banshee.Lastfm.Radio
             get { return Convert.ToString (dbid); }
         }
         
+        public System.Collections.Generic.IEnumerable<Banshee.Collection.Database.IFilterListModel> FilterModels {
+            get { yield break; }
+        }
+        
         // For StationSources that already exist in the db
         protected StationSource (LastfmSource lastfm, int dbId, string name, string type, string arg, int playCount) : base (generic_name, name, 150)
         {

@@ -68,15 +68,15 @@ namespace Banshee.Base
         
         public static string CreateArtistAlbumId (string artist, string album, bool asUriPart)
         {
-            string sm_artist = CreateArtistAlbumIdPart (artist);
-            string sm_album = CreateArtistAlbumIdPart (album);
+            string sm_artist = EscapePart (artist);
+            string sm_album = EscapePart (album);
             
             return sm_artist == null || sm_album == null 
                 ? null 
                 : String.Format ("{0}{1}{2}", sm_artist, asUriPart ? "/" : "-", sm_album); 
         }
         
-        private static string CreateArtistAlbumIdPart (string part)
+        public static string EscapePart (string part)
         {
             if (String.IsNullOrEmpty (part)) {
                 return null;
@@ -92,6 +92,10 @@ namespace Banshee.Base
         
         private static string root_path = Path.Combine (XdgBaseDirectorySpec.GetUserDirectory (
             "XDG_CACHE_HOME", ".cache"),  "album-art");
+            
+        static CoverArtSpec () {
+            Hyena.Log.DebugFormat ("Album artwork path set to {0}", root_path);
+        }
             
         public static string RootPath {
             get { return root_path; }

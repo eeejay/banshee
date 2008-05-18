@@ -38,107 +38,32 @@ using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class DatabaseArtistListModel : ArtistListModel, ICacheableDatabaseModel
+    public class DatabaseArtistListModel : DatabaseBrowsableListModel<DatabaseArtistInfo, ArtistInfo>
     {
-        private readonly BansheeModelProvider<DatabaseArtistInfo> provider;
-        private readonly BansheeModelCache<DatabaseArtistInfo> cache;
-        private readonly DatabaseTrackListModel track_model;
-        private string reload_fragment;
-        private long count;
-        
-        private readonly ArtistInfo select_all_artist = new ArtistInfo(null);
-        
-        public DatabaseArtistListModel (BansheeDbConnection connection, string uuid)
+        public DatabaseArtistListModel (DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
+            : base (trackModel, connection, DatabaseArtistInfo.Provider, new ArtistInfo (null), uuid)
         {
-            provider = DatabaseArtistInfo.Provider;
-            cache = new BansheeModelCache <DatabaseArtistInfo> (connection, uuid, this, provider);
-            cache.HasSelectAllItem = true;
-
-            Selection.Changed += HandleSelectionChanged;
-        }
-
-        public DatabaseArtistListModel(DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) : this (connection, uuid)
-        {
-            this.track_model = trackModel;
-        }
-
-        private void HandleSelectionChanged (object sender, EventArgs args)
-        {
-            track_model.Reload (ReloadTrigger.ArtistFilter);
-        }
-
-        public override void Reload ()
-        {
-            Reload (true);
-        }
-    
-        internal void Reload (bool notify)
-        {
-            reload_fragment = String.Format (
-                "FROM CoreArtists {0} ORDER BY NameLowered",
-                track_model == null ? null : String.Format (@"
+            ReloadFragmentFormat = @"
+                FROM CoreArtists 
                     WHERE CoreArtists.ArtistID IN
-                        (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreCache{1}
-                            WHERE CoreCache.ModelID = {0} AND
-                                  CoreCache.ItemID = {2})",
-                    track_model.CacheId,
-                    track_model.CachesJoinTableEntries ? track_model.JoinFragment : null,
-                    (!track_model.CachesJoinTableEntries)
-                        ? "CoreTracks.TrackID"
-                        : String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", track_model.JoinTable, track_model.JoinPrimaryKey, track_model.JoinColumn)
-                )
-            );
-
-            cache.SaveSelection ();
-            cache.Reload ();
-            cache.UpdateAggregates ();
-            cache.RestoreSelection ();
-
-            count = cache.Count + 1;
-            select_all_artist.Name = String.Format("All Artists ({0})", count - 1);
-
-            if (notify)
-                OnReloaded();
+                        (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreCache{0}
+                            WHERE CoreCache.ModelID = {1} AND
+                                  CoreCache.ItemID = {2})
+                    ORDER BY NameLowered";
         }
-
-        public override ArtistInfo this[int index] {
-            get {
-                if (index == 0)
-                    return select_all_artist;
-
-                return cache.GetValue (index - 1);
-            }
-        }
-
-        public override int Count { 
-            get { return (int) count; }
-        }
-
-        public int CacheId {
-            get { return (int) cache.CacheId; }
-        }
-
-        public void InvalidateCache ()
-        {
-            cache.ClearManagedCache ();
-            OnReloaded ();
-        }
-
-        // Implement ICacheableModel
-        public int FetchCount {
-            get { return 20; }
-        }
-
-        public string SelectAggregates { get { return null; } }
         
-        public string ReloadFragment {
-            get { return reload_fragment; }
+        public override string FilterColumn {
+            get { return "CoreTracks.ArtistID"; }
         }
-
-        public string JoinTable { get { return null; } }
-        public string JoinFragment { get { return null; } }
-        public string JoinPrimaryKey { get { return null; } }
-        public string JoinColumn { get { return null; } }
-        public bool CachesJoinTableEntries { get { return false; } }
+        
+        public override string ItemToFilterValue (object item)
+        {
+            return (item is DatabaseArtistInfo) ? (item as DatabaseArtistInfo).DbId.ToString () : null;
+        }
+        
+        public override void UpdateSelectAllItem (long count)
+        {
+            select_all_item.Name = String.Format ("All Artists ({0})", count);
+        }
     }
 }

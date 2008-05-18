@@ -54,7 +54,7 @@ using Banshee.Sources.Gui;
 
 namespace Nereid
 {
-    public class PlayerInterface : BaseClientWindow, IService, IDisposable, IHasTrackSelection, IHasSourceView
+    public class PlayerInterface : BaseClientWindow, IService, IDisposable, IHasSourceView
     {
         // Major Layout Components
         private VBox primary_vbox;
@@ -77,8 +77,7 @@ namespace Nereid
         {
             BuildPrimaryLayout ();
             ConnectEvents ();
-            
-            ActionService.TrackActions.TrackSelector = this;
+
             ActionService.SourceActions.SourceView = this;
             
             composite_view.TrackView.HasFocus = true;
@@ -252,14 +251,6 @@ namespace Nereid
                 SourceViewWidth.Set (views_pane.Position);
             };
             
-            composite_view.TrackView.RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
-                Source source = ServiceManager.SourceManager.ActiveSource;
-                if (source is ITrackModelSource) {
-                    ServiceManager.PlaybackController.Source = (ITrackModelSource)source;
-                    ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
-                }
-            };
-
             source_view.RowActivated += delegate {
                 Source source = ServiceManager.SourceManager.ActiveSource;
                 if (source is ITrackModelSource) {
@@ -289,6 +280,7 @@ namespace Nereid
             view_container.SearchEntry.Ready = true;
         }
         
+        private TrackListModel previous_track_model = null;
         private void OnActiveSourceChanged (SourceEventArgs args)
         {
             Source source = ServiceManager.SourceManager.ActiveSource;
@@ -312,19 +304,24 @@ namespace Nereid
                 view_container.Content.ResetSource ();
             }
 
+            if (previous_track_model != null) {
+                previous_track_model.Reloaded -= HandleTrackModelReloaded;
+                previous_track_model = null;
+            }
+
+            if (source is ITrackModelSource) {
+                previous_track_model = (source as ITrackModelSource).TrackModel;
+                previous_track_model.Reloaded += HandleTrackModelReloaded;
+            }
+
             // Connect the source models to the views if possible
             if (source.Properties.Contains ("Nereid.SourceContents")) {
                 view_container.Content = source.Properties.Get<ISourceContents> ("Nereid.SourceContents");
                 view_container.Content.SetSource (source);
                 view_container.Show ();
             } else if (source is ITrackModelSource) {
-                if (composite_view.TrackModel != null) {
-                    composite_view.TrackModel.Reloaded -= HandleTrackModelReloaded;
-                }
                 composite_view.SetSource (source);
-                composite_view.TrackModel.Reloaded += HandleTrackModelReloaded;
-                PersistentColumnController column_controller = 
-                    composite_view.TrackView.ColumnController as PersistentColumnController;
+                PersistentColumnController column_controller = composite_view.TrackView.ColumnController as PersistentColumnController;
                 if (column_controller != null) {
                     column_controller.Source = source;
                 }
@@ -407,7 +404,7 @@ namespace Nereid
 #region Implement Interfaces
 
         // IHasTrackSelection
-        public IEnumerable<TrackInfo> GetSelectedTracks ()
+        /*public IEnumerable<TrackInfo> GetSelectedTracks ()
         {
             return new ModelSelection<TrackInfo> (composite_view.TrackModel, composite_view.TrackView.Selection);
         }
@@ -418,7 +415,7 @@ namespace Nereid
 
         public DatabaseTrackListModel TrackModel {
             get { return composite_view.TrackModel as DatabaseTrackListModel; }
-        }
+        }*/
 
         // IHasSourceView
         public Source HighlightedSource {

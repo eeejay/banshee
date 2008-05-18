@@ -28,13 +28,18 @@
 
 namespace Hyena.Data.Gui
 {
-    public interface IListView<T>
+    public interface IListView
     {
-        void SetModel (IListModel<T> model);
-        IListModel<T> Model { get; }
-
+        Hyena.Collections.Selection Selection { get; }
+        
         void ScrollTo (int index);
         void CenterOn (int index);
         ColumnController ColumnController { get; set; }
+    }
+    
+    public interface IListView<T> : IListView
+    {
+        void SetModel (IListModel<T> model);
+        IListModel<T> Model { get; }
     }
 }

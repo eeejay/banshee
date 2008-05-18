@@ -139,14 +139,19 @@ namespace Banshee.Metadata
                 return false;
             }
             
-            Banshee.IO.StreamAssist.Save (from_stream, new FileStream (path, 
+            // Save the file to a temporary path while downloading, so that nobody sees it
+            // and thinks it's ready for use before it is
+            string tmp_path = String.Format ("{0}.part", path);
+            Banshee.IO.StreamAssist.Save (from_stream, new FileStream (tmp_path, 
                 FileMode.Create, FileAccess.ReadWrite));
+                
+            Banshee.IO.File.Move (new SafeUri (tmp_path), new SafeUri (path));
                 
             return true;
         }
         
         protected bool SaveHttpStreamCover (Uri uri, string albumArtistId, string [] ignoreMimeTypes)
-        { 
+        {
             return SaveHttpStream (uri, CoverArtSpec.GetPath (albumArtistId), ignoreMimeTypes);
         }
     }

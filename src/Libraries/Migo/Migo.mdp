@@ -69,11 +69,17 @@
     <File name="Migo/Migo.Syndication/RssParser.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Rfc822DateTime.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/XmlUtils.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/FeedManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/EnclosureManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/MigoItem.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/MigoModelProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/OpmlParser.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Project" localcopy="True" refto="Hyena" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">

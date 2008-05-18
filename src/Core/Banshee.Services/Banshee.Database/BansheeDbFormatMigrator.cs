@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 9;
+        protected const int CURRENT_VERSION = 10;
         protected const int CURRENT_METADATA_VERSION = 1;
         
 #region Migration Driver
@@ -381,6 +381,17 @@ namespace Banshee.Database
 
 #endregion
 
+        [DatabaseVersion (10)]
+        private bool Migrate_10 ()
+        {
+            // Clear these out for people who ran the pre-alpha podcast plugin
+            Execute ("DROP TABLE IF EXISTS PodcastEnclosures");
+            Execute ("DROP TABLE IF EXISTS PodcastItems");
+            Execute ("DROP TABLE IF EXISTS PodcastSyndications");
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN ExternalID INTEGER");
+            return true;
+        }
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -428,6 +439,7 @@ namespace Banshee.Database
                     ArtistID            INTEGER,
                     AlbumID             INTEGER,
                     TagSetID            INTEGER,
+                    ExternalID          INTEGER,
                     
                     MusicBrainzID       TEXT,
 
@@ -605,6 +617,7 @@ namespace Banshee.Database
                             WHERE a.Title = AlbumTitle 
                                 AND a.ArtistID = b.ArtistID
                                 AND b.Name = Artist),
+                        0,
                         0,
                         0,
                         Uri,

@@ -39,9 +39,9 @@ namespace Banshee.Podcasting.Gui
 {
     internal class PodcastPropertiesDialog : Dialog
     {
-        private PodcastItem pi;
+        private PodcastTrackInfo pi;
 
-        public PodcastPropertiesDialog (PodcastItem pi)
+        public PodcastPropertiesDialog (PodcastTrackInfo pi)
         {
             if (pi == null)
             {

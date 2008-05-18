@@ -72,7 +72,7 @@ namespace Banshee.Metadata.MusicBrainz
                 return false;
             }
             
-            string album_artist_id = track.ArtistAlbumId;
+            string album_artist_id = track.ArtworkId;
             
             if(album_artist_id == null) {
                 return false;

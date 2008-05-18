@@ -1,122 +1,102 @@
-/*************************************************************************** 
- *  PodcastCoreInterface.cs
- *
- *  Copyright (C) 2008 Michael C. Urbanski
- *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
- ****************************************************************************/
-
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
- *  Software is furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in 
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
- *  DEALINGS IN THE SOFTWARE.
- */
+//
+// PodcastActions.cs
+//
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
+//
+// Copyright (C) 2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 
 using System;
-using System.Threading;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
-using Gtk;
 using Mono.Unix;
-
-using Hyena.Data;
-using Hyena.Data.Gui;
+using Gtk;
 
 using Migo.Syndication;
 
-using Banshee.Web;
 using Banshee.Base;
+using Banshee.Query;
 using Banshee.Sources;
-using Banshee.Streaming;
-using Banshee.ServiceStack;
-using Banshee.Gui;
-using Banshee.Widgets;
+using Banshee.Library;
+using Banshee.Playlist;
 using Banshee.Collection;
 using Banshee.Collection.Database;
-using Banshee.Podcasting.Gui;
+using Banshee.ServiceStack;
+
+using Banshee.Widgets;
+using Banshee.Gui.Dialogs;
+using Banshee.Gui.Widgets;
+using Banshee.Gui;
+
+using Banshee.Podcasting;
 using Banshee.Podcasting.Data;
 
-namespace Banshee.Podcasting
+namespace Banshee.Podcasting.Gui
 {
-    public partial class PodcastCore
-    {                  
-        private void InitializeInterface ()
+    public class PodcastActions : BansheeActionGroup
+    {
+        private uint actions_id;
+        private PodcastSource source;
+        
+        public PodcastActions (PodcastSource source) : base (ServiceManager.Get<InterfaceActionService> (), "Podcast")
         {
-            BuildActions ();
+            this.source = source;
 
-            source = new PodcastSource (tmp_enclosure_path);
-            
-            //source.FeedView.SelectionProxy.Changed += OnFeedSelectionChangedHandler;
-            //source.ItemView.RowActivated += OnPodcastItemRowActivatedHandler;            
-            
-            ServiceManager.SourceManager.AddSource (source);
-        }         
-        
-        private void DisposeInterface ()
-        {
-            if (source != null) {
-                //source.FeedView.SelectionProxy.Changed -= OnFeedSelectionChangedHandler;
-                //source.ItemView.RowActivated -= OnPodcastItemRowActivatedHandler;              
-                
-                ServiceManager.SourceManager.RemoveSource (source);
-                source = null;
-            }
-        }     
-        
-        private void BuildActions ()
-        {
-            InterfaceActionService interfaceActions = 
-                ServiceManager.Get<InterfaceActionService> ();
-            
-            BansheeActionGroup bag = new BansheeActionGroup ("Podcast");
-            
-            bag.AddImportant (new ActionEntry[] {
+            AddImportant (new ActionEntry[] {
                 new ActionEntry (
                     "PodcastUpdateAllAction", Stock.Refresh,
                      Catalog.GetString ("Update Podcasts"), null,//"<control><shift>U",
-                     Catalog.GetString ("Update All Podcasts"), 
+                     Catalog.GetString ("Refresh All Podcasts"), 
                      OnPodcastUpdateAll
                 ),
                 new ActionEntry (
                     "PodcastAddAction", Stock.New,
                      Catalog.GetString ("Subscribe to Podcast"),"<control><shift>F", 
-                     Catalog.GetString ("Subscribe to a new podcast feed"),
+                     Catalog.GetString ("Subscribe to a new podcast"),
                      OnPodcastAdd
                 )         
             });
             
-            bag.Add (new ActionEntry [] {
+            Add (new ActionEntry [] {
+                new ActionEntry("PodcastFeedPopupAction", null, 
+                    String.Empty, null, null, OnFeedPopup),
+                    
                 new ActionEntry (
                     "PodcastDeleteAction", Stock.Delete,
-                     Catalog.GetString ("Delete"),
+                     Catalog.GetString ("Unsubscribe and Delete"),
                      null, String.Empty, 
                      OnPodcastDelete
                 ),
                 new ActionEntry (
                     "PodcastUpdateFeedAction", Stock.Refresh,
                      /* Translators: this is a verb used as a button name, not a noun*/
-                     Catalog.GetString ("Update"),
+                     Catalog.GetString ("Check for New Episodes"),
                      null, String.Empty, 
                      OnPodcastUpdate
                 ),
                 new ActionEntry (
                     "PodcastHomepageAction", Stock.JumpTo,
-                     Catalog.GetString ("Homepage"),
+                     Catalog.GetString ("Visit Podcast Homepage"),
                      null, String.Empty, 
                      OnPodcastHomepage
                 ),
@@ -139,27 +119,27 @@ namespace Banshee.Podcasting
                      OnPodcastItemMarkOld
                 ),
                 new ActionEntry (
-                    "PodcastItemDownloadAction", Stock.GoDown,
+                    "PodcastItemDownloadAction", Stock.Save,
                      /* Translators: this is a verb used as a button name, not a noun*/
-                     Catalog.GetString ("Download"),
+                     Catalog.GetString ("Download Podcast(s)"),
                      "<control><shift>D", String.Empty, 
                      OnPodcastItemDownload
                 ),
                 new ActionEntry (
-                    "PodcastItemCancelAction", Stock.Stop,
-                     Catalog.GetString ("Cancel"),
+                    "PodcastItemCancelAction", Stock.Cancel,
+                     Catalog.GetString ("Cancel Download"),
                      "<control><shift>C", String.Empty, 
                      OnPodcastItemCancel
                 ),
                 new ActionEntry (
-                    "PodcastItemDeleteAction", Stock.Remove,
-                     Catalog.GetString ("Remove from Library"),
+                    "PodcastItemDeleteFileAction", Stock.Remove,
+                     Catalog.GetString ("Remove Downloaded File(s)"),
                      null, String.Empty, 
-                     OnPodcastItemRemoveAction
+                     OnPodcastItemDeleteFile
                 ),
                 new ActionEntry (
                     "PodcastItemLinkAction", Stock.JumpTo,
-                     Catalog.GetString ("Link"),
+                     Catalog.GetString ("Visit Website"),
                      null, String.Empty, 
                      OnPodcastItemLink
                 ),
@@ -169,12 +149,66 @@ namespace Banshee.Podcasting
                      null, String.Empty, 
                      OnPodcastItemProperties
                 )
-            });            
+            });
+            
+            // TODO deleting podcasts is not implemented
+            this ["PodcastDeleteAction"].Sensitive = false;
+            
+            actions_id = Actions.UIManager.AddUiFromResource ("GlobalUI.xml");
+            Actions.AddActionGroup (this);
 
-            interfaceActions.UIManager.AddUiFromResource ("GlobalUI.xml");
-            interfaceActions.AddActionGroup (bag);      
+            ServiceManager.SourceManager.ActiveSourceChanged += HandleActiveSourceChanged;
+            
+            source.TrackModel.Selection.Changed += delegate { UpdateActions (); };
+        }
+
+        public override void Dispose ()
+        {
+            Actions.UIManager.RemoveUi (actions_id);
+            Actions.RemoveActionGroup (this);
+            base.Dispose ();
+        }
+
+#region State Event Handlers
+
+        private void HandleActiveSourceChanged (SourceEventArgs args)
+        {
+            UpdateActions ();
+        }
+
+#endregion
+
+#region Utility Methods
+
+        private void UpdateActions ()
+        {
+            if (ServiceManager.SourceManager.ActiveSource == source) {
+                bool has_single_selection = source.TrackModel.Selection.Count == 1;
+                UpdateActions (true, has_single_selection,
+                   "PodcastItemLinkAction"
+                );
+            }
         }
         
+        private void SubscribeToPodcast (Uri uri, FeedAutoDownload syncPreference)
+        {
+            FeedsManager.Instance.FeedManager.CreateFeed (uri.ToString (), syncPreference);
+        }
+
+        private IEnumerable<TrackInfo> GetSelectedItems ()
+        {
+            return new List<TrackInfo> (source.TrackModel.SelectedItems);
+        }
+
+#endregion
+            
+#region Action Handlers
+
+        private void OnFeedPopup (object o, EventArgs args)
+        {
+            ShowContextMenu ("/PodcastFeedPopup");
+        }
+
         private void RunSubscribeDialog ()
         {        
             Uri feedUri = null;
@@ -201,7 +235,7 @@ namespace Banshee.Podcasting
                         MessageType.Warning,
                         ButtonsType.Ok,
                         Catalog.GetString ("Invalid URL"),
-                        Catalog.GetString ("Podcast feed URL is invalid.")
+                        Catalog.GetString ("Podcast URL is invalid.")
                     );
 				} else {
 				    SubscribeToPodcast (feedUri, syncPreference); 
@@ -209,7 +243,7 @@ namespace Banshee.Podcasting
             }        
         }
         
-        private void RunConfirmDeleteDialog (bool feed, 
+        /*private void RunConfirmDeleteDialog (bool feed, 
                                              int selCount, 
                                              out bool delete, 
                                              out bool deleteFiles)
@@ -258,7 +292,7 @@ namespace Banshee.Podcasting
             } finally {
                 md.Destroy ();
             }       
-        }
+        }*/
         
 		private bool TryParseUrl (string url, out Uri uri)
 		{
@@ -311,47 +345,29 @@ namespace Banshee.Podcasting
 
         private void OnPodcastAdd (object sender, EventArgs e)
         {
-            lock (sync) {
-                if (!disposed || disposing) {         
-                    RunSubscribeDialog ();
-                }
-            }
+            RunSubscribeDialog ();
         }
         
         private void OnPodcastUpdate (object sender, EventArgs e)
         {
-            lock (sync) {
-                if (!disposed || disposing) {          
-                    ReadOnlyCollection<Feed> feeds = source.FeedModel.CopySelectedItems ();
-                    
-                    if (feeds != null) {
-                        foreach (Feed f in feeds) {
-                            if (f != Feed.All) {
-                                f.AsyncDownload ();                                
-                            }
-                        }            	
-                    }
-                }
+            foreach (Feed feed in source.FeedModel.SelectedItems) {
+                feed.Update ();
             }
         }        
         
         private void OnPodcastUpdateAll (object sender, EventArgs e)
         {
-            lock (sync) {
-                if (!disposed || disposing) {
-                    foreach (Feed podcast in source.FeedModel.Copy ()) {
-                        podcast.AsyncDownload ();
-                    }
-                }
+            foreach (Feed feed in Feed.Provider.FetchAll ()) {
+                feed.Update ();
             }
         }      
         
         private void OnPodcastDelete (object sender, EventArgs e)
         {
-            lock (sync) {
+            /*lock (sync) {
                 if (!disposed || disposing) {
                     bool deleteFeed;
-                    bool deleteFiles;                    
+                    bool deleteFiles;
                     ReadOnlyCollection<Feed> feeds = source.FeedModel.CopySelectedItems ();
                     
                     if (feeds != null) {                    
@@ -370,77 +386,40 @@ namespace Banshee.Podcasting
                         }                   
                     }                    
                 }
-            }
+            }*/
         }        
 
-        private void OnPodcastItemRemoveAction (object sender, EventArgs e)
+        private void OnPodcastItemDeleteFile (object sender, EventArgs e)
         {
-            /*lock (sync) {
-                if (!disposed || disposing) {
-                    bool deleteItems;
-                    bool deleteFiles;                    
-                    ReadOnlyCollection<PodcastItem> items = itemModel.CopySelectedItems ();        
-                    
-                    if (items != null) {                             
-                        RunConfirmDeleteDialog (
-                            false, items.Count, 
-                            out deleteItems, out deleteFiles
-                        );
-                        
-                        if (deleteItems) {
-                            itemModel.Selection.Clear ();
-                            itemModel.Remove (items);
-                            
-                            foreach (PodcastItem i in items) {
-                                i.Item.Delete (deleteFiles);
-                            }
-                        }    
-                    }   
-                }
-            }*/
+            foreach (PodcastTrackInfo pi in GetSelectedItems ()) {
+                if (pi.Enclosure.LocalPath != null)
+                    pi.Enclosure.DeleteFile ();
+            }
         }  
 
         private void OnPodcastHomepage (object sender, EventArgs e)
         {
-            lock (sync) {
-                if (!disposed || disposing) {
-                    ReadOnlyCollection<Feed> feeds = source.FeedModel.CopySelectedItems ();
-                    
-                    if (feeds != null && feeds.Count == 1) {
-           	            string link = feeds[0].Link;
-           	            
-           	            if (!String.IsNullOrEmpty (link)) {
-                            Banshee.Web.Browser.Open (link);           	                
-           	            }
-                    }                 
-                }
-            }       
+            Feed feed = source.FeedModel.FocusedItem;
+            if (feed != null && !String.IsNullOrEmpty (feed.Link)) {
+                Banshee.Web.Browser.Open (feed.Link);
+            }   
         }   
 
         private void OnPodcastProperties (object sender, EventArgs e)
         {
-            lock (sync) {
-                if (!disposed || disposing) {
-                    ReadOnlyCollection<Feed> feeds = source.FeedModel.CopySelectedItems ();
-                    
-                    if (feeds != null && feeds.Count == 1) {
-                        new PodcastFeedPropertiesDialog (feeds[0]).Run ();
-                    }                 
-                }
-            }  
+            Feed feed = source.FeedModel.FocusedItem;
+            if (feed != null) {
+                new PodcastFeedPropertiesDialog (feed).Run ();
+            }
         }  
 
         private void OnPodcastItemProperties (object sender, EventArgs e)
         {
-            lock (sync) {
-                if (!disposed || disposing) {
-                    /*ReadOnlyCollection<PodcastItem> items = itemModel.CopySelectedItems ();
-                    
-                    if (items != null && items.Count == 1) {
-                        new PodcastPropertiesDialog (items[0]).Run ();
-                    } */                
-                }
-            }  
+                /*ReadOnlyCollection<PodcastItem> items = itemModel.CopySelectedItems ();
+                
+                if (items != null && items.Count == 1) {
+                    new PodcastPropertiesDialog (items[0]).Run ();
+                } */                
         } 
 
         private void OnPodcastItemMarkNew (object sender, EventArgs e)
@@ -455,8 +434,6 @@ namespace Banshee.Podcasting
         
         private void MarkPodcastItemSelection (bool markNew) 
         {
-            lock (sync) {
-                if (!disposed || disposing) {                    
                     /*ReadOnlyCollection<PodcastItem> items = itemModel.CopySelectedItems ();
 
                     if (items != null) {
@@ -477,13 +454,11 @@ namespace Banshee.Podcasting
                         
                         itemModel.Reload ();                        
                     }*/
-                }
-            }
         }
         
         private void OnPodcastItemCancel (object sender, EventArgs e)
         {
-            lock (sync) {/*
+            /*
                 if (!disposed || disposing) {                    
                     ReadOnlyCollection<PodcastItem> items = itemModel.CopySelectedItems ();
 
@@ -493,39 +468,25 @@ namespace Banshee.Podcasting
                         }
                     }                
                 }*/
-            }
         }        
         
         private void OnPodcastItemDownload (object sender, EventArgs e)
         {
-            lock (sync) {/*
-                if (!disposed || disposing) {
-                    ReadOnlyCollection<PodcastItem> items = itemModel.CopySelectedItems ();
-
-                    if (items != null) {
-                        foreach (PodcastItem pi in items) {
-                            pi.Enclosure.AsyncDownload ();
-                        }            	
-                    }                 
-                }*/
-            }       
+            foreach (PodcastTrackInfo pi in GetSelectedItems ()) {
+                if (pi.Enclosure.DownloadStatus != FeedDownloadStatus.Downloaded)
+                    pi.Enclosure.AsyncDownload ();
+            }
         }
         
         private void OnPodcastItemLink (object sender, EventArgs e)
         {
-            lock (sync) {/*
-                if (!disposed || disposing) {
-                    ReadOnlyCollection<PodcastItem> items = itemModel.CopySelectedItems ();
-
-                    if (items != null && items.Count == 1) {
-           	            string link = items[0].Item.Link;
-           	            
-           	            if (!String.IsNullOrEmpty (link)) {
-                            Banshee.Web.Browser.Open (link);           	                
-           	            }
-                    }                 
-                }*/
+            PodcastTrackInfo track = source.TrackModel.FocusedItem as PodcastTrackInfo;
+            if (track != null && !String.IsNullOrEmpty (track.Item.Link)) {
+                Banshee.Web.Browser.Open (track.Item.Link);
             }
-        }   
+        }
+
+#endregion
+
     }
 }

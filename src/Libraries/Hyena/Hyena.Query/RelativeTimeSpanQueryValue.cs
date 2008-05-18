@@ -50,6 +50,13 @@ namespace Hyena.Query
         public override AliasedObjectSet<Operator> OperatorSet {
             get { return operators; }
         }
+        
+        public static RelativeTimeSpanQueryValue RelativeToNow (DateTime since)
+        {
+            RelativeTimeSpanQueryValue qv = new RelativeTimeSpanQueryValue ();
+            qv.SetRelativeValue ((since - DateTime.Now).TotalSeconds, TimeFactor.Second);
+            return qv;
+        }
 
         public override string XmlElementName {
             get { return "date"; }

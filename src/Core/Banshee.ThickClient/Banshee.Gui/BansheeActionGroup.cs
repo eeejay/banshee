@@ -39,11 +39,13 @@ namespace Banshee.Gui
 {
     public class BansheeActionGroup : ActionGroup
     {
+        private InterfaceActionService action_service;
         protected Dictionary<string, string> labels = new Dictionary<string, string> ();
         protected Dictionary<string, string> icons = new Dictionary<string, string> ();
 
-        public BansheeActionGroup (string name) : base (name)
+        public BansheeActionGroup (InterfaceActionService action_service, string name) : base (name)
         {
+            this.action_service = action_service;
         }
         
         public void AddImportant (params ActionEntry [] action_entries)
@@ -116,6 +118,30 @@ namespace Banshee.Gui
                     action.IconName = icon;
                 }
             }
+        }
+        
+        protected void ShowContextMenu (string menu_name)
+        {
+            Gtk.Menu menu = Actions.UIManager.GetWidget (menu_name) as Menu;
+            if (menu == null || menu.Children.Length == 0) {
+                return;
+            }
+
+            int visible_children = 0;
+            foreach (Widget child in menu)
+                if (child.Visible)
+                    visible_children++;
+
+            if (visible_children == 0) {
+                return;
+            }
+
+            menu.Show (); 
+            menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
+        }
+        
+        public InterfaceActionService Actions {
+            get { return action_service; }
         }
 
         public Source ActiveSource {

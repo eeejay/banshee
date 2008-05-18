@@ -70,7 +70,7 @@ namespace Banshee.Collection
             });
         }
 
-        internal void RaiseReloaded ()
+        public void RaiseReloaded ()
         {
             OnReloaded ();
         }
@@ -102,6 +102,10 @@ namespace Banshee.Collection
             get {
                 return model_selection ?? model_selection = new ModelSelection<T> (this, Selection);
             }
+        }
+        
+        public T FocusedItem {
+            get { return Selection.FocusedIndex == -1 ? default(T) : this[Selection.FocusedIndex]; }
         }
     }
 }

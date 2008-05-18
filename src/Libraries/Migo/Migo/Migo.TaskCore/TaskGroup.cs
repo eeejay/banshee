@@ -210,19 +210,18 @@ namespace Migo.TaskCore
             }
         }
         
-        public TaskGroup (int maxRunningTasks, 
-                          TaskCollection<T> tasks)
-            : this (maxRunningTasks, tasks, null, null) {}
+        public TaskGroup (int maxRunningTasks, TaskCollection<T> tasks)
+            : this (maxRunningTasks, tasks, null, null)
+        {
+        }
 
-        public TaskGroup (int maxRunningTasks, 
-                          TaskCollection<T> tasks, 
-                          GroupStatusManager<T> statusManager) 
-            : this (maxRunningTasks, tasks, statusManager, null) {}
+        public TaskGroup (int maxRunningTasks, TaskCollection<T> tasks, GroupStatusManager<T> statusManager) 
+            : this (maxRunningTasks, tasks, statusManager, null)
+        {
+        }
         
-        protected TaskGroup (int maxRunningTasks, 
-                             TaskCollection<T> tasks, 
-                             GroupStatusManager<T> statusManager,
-                             GroupProgressManager<T> progressManager) 
+        protected TaskGroup (int maxRunningTasks, TaskCollection<T> tasks,
+                                GroupStatusManager<T> statusManager, GroupProgressManager<T> progressManager) 
         {
             if (maxRunningTasks < 0) {
                 throw new ArgumentException ("maxRunningTasks must be >= 0");
@@ -345,7 +344,8 @@ namespace Migo.TaskCore
                 try {
                     OnStarted ();
                     SpawnExecutionThread ();
-                } catch {
+                } catch (Exception e) {
+                    Hyena.Log.Exception (e);
                     OnStopped ();
                     Reset ();                                                            
                     SetExecuting (false);
@@ -355,42 +355,39 @@ namespace Migo.TaskCore
 
         protected virtual bool SetCancelled ()
         {
-            bool ret = false;
-            
             lock (sync) {
                 CheckDisposed ();
                 
                 if (executing && !cancelRequested) {
-                    ret = cancelRequested = true;
+                    cancelRequested = true;
+                    return true;
                 }
             }
             
-            return ret;
+            return false;
         }
         
         private bool SetDisposed ()
         {
-            bool ret = false;
-                
             lock (sync) {
                 if (!disposed) {
-                    ret = disposed = true;   
+                    disposed = true;
+                    return true; 
                 }
             }
-                
-            return ret;
+
+            return false;
         }
         
         protected virtual bool SetExecuting (bool exec)
         {
-            bool ret = false;
-            
             lock (sync) {
                 CheckDisposed ();
                 
                 if (exec) {
                     if (!executing && !cancelRequested) {
-                        ret = executing = true;
+                        executing = true;
+                        return true;
                     }
                 } else {
                     executing = false;
@@ -398,7 +395,7 @@ namespace Migo.TaskCore
                 }
             }
             
-            return ret;
+            return false;
         }
 
 /*  May implement at some point        
@@ -840,8 +837,7 @@ namespace Migo.TaskCore
                                 task.ExecuteAsync ();
                             }
                         } catch (Exception e) {        
-                            Console.WriteLine ("PumpQueue Exception:  {0}", e.Message);
-                            Console.WriteLine (e.StackTrace);
+                            Hyena.Log.Exception (e);
                             
                             try {
                                 gsm.SuspendUpdate = true;

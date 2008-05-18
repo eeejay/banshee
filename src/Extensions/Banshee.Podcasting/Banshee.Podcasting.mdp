@@ -11,11 +11,10 @@
     <File name="Banshee.Podcasting.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/ActiveSourceUI.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/GlobalUI.xml" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Banshee.Podcasting/PodcastCore.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting/PodcastCore_Interface.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting/PodcastImportManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting/PodcastService.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Data/PodcastItem.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting/PodcastService_Interface.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting/PodcastImportManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Data/PodcastTrackInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/DownloadManager/DownloadManagerInterface.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/Models/FilterableListModel.cs" subtype="Code" buildaction="Compile" />
@@ -37,6 +36,10 @@
     <File name="Resources/Images/podcast-icon-22.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/Images/podcast-icon-48.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/Images/podcast-new-16.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Podcasting.Gui/ColumnCellPodcast.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting/PodcastImageFetchJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Gui/PodcastActions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Gui/ColumnCellPublished.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />
@@ -46,6 +49,9 @@
     <ProjectReference type="Project" localcopy="True" refto="Migo" />
     <ProjectReference type="Project" localcopy="True" refto="Hyena" />
     <ProjectReference type="Project" localcopy="True" refto="Hyena.Gui" />
+    <ProjectReference type="Gac" localcopy="True" refto="taglib-sharp, Version=2.0.3.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />

@@ -67,6 +67,12 @@ namespace Hyena.Data.Gui
         {
             if (property_info == null || property_info.ReflectedType != bound_object_parent.GetType ()) {
                 property_info = bound_object_parent.GetType ().GetProperty (property);
+                if (property_info == null) {
+                    throw new Exception (String.Format (
+                        "In {0}, type {1} does not have property {2}",
+                        this, bound_object_parent.GetType (), property
+                    ));
+                }
             }
         }
         

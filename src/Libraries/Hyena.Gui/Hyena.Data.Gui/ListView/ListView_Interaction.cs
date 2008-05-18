@@ -37,8 +37,6 @@ namespace Hyena.Data.Gui
 {
     public partial class ListView<T> : Widget
     {
-        private int focused_row_index = -1;
-
         private Adjustment vadjustment;
         public Adjustment Vadjustment {
             get { return vadjustment; }
@@ -66,7 +64,7 @@ namespace Hyena.Data.Gui
         {
             int row_limit;
             if (relative_row < 0) {
-                if (focused_row_index == -1) {
+                if (Selection.FocusedIndex == -1) {
                     return false;
                 }
                 
@@ -75,11 +73,11 @@ namespace Hyena.Data.Gui
                 row_limit = Model.Count - 1;
             }
 
-            if (focused_row_index == row_limit) {
+            if (Selection.FocusedIndex == row_limit) {
                 return true;
             }
             
-            int row_index = Math.Min (Model.Count - 1, Math.Max (0, focused_row_index + relative_row));
+            int row_index = Math.Min (Model.Count - 1, Math.Max (0, Selection.FocusedIndex + relative_row));
 
             if (Selection != null) {
                 if ((modifier & Gdk.ModifierType.ControlMask) != 0) {
@@ -90,10 +88,10 @@ namespace Hyena.Data.Gui
                     // Otherwise, select the new row and scroll etc as necessary.
                     if (relative_row * relative_row != 1) {
                         Selection.SelectFromFirst (row_index, true);
-                    } else if (Selection.Contains (focused_row_index)) {
+                    } else if (Selection.Contains (Selection.FocusedIndex)) {
                         Selection.SelectFromFirst (row_index, true);
                     } else {
-                        Selection.Select (focused_row_index);
+                        Selection.Select (Selection.FocusedIndex);
                         return true;
                     }
                 } else {
@@ -111,10 +109,10 @@ namespace Hyena.Data.Gui
                     ScrollTo (y_at_row + RowHeight - (vadjustment.PageSize));
                 }
             } else {
-                ScrollTo (vadjustment.Value + ((row_index - focused_row_index) * RowHeight));
+                ScrollTo (vadjustment.Value + ((row_index - Selection.FocusedIndex) * RowHeight));
             }
 
-            focused_row_index = row_index;
+            Selection.FocusedIndex = row_index;
             InvalidateList ();
             return true;
         }
@@ -176,17 +174,17 @@ namespace Hyena.Data.Gui
 
                 case Gdk.Key.Return:
                 case Gdk.Key.KP_Enter:
-                    if (Selection != null && focused_row_index != -1) {
+                    if (Selection != null && Selection.FocusedIndex != -1) {
                         Selection.Clear (false);
-                        Selection.Select (focused_row_index);
+                        Selection.Select (Selection.FocusedIndex);
                         OnRowActivated ();
                         handled = true;
                     }
                     break;
                 
                 case Gdk.Key.space:
-                    if (Selection != null && focused_row_index != 1) {
-                        Selection.ToggleSelect (focused_row_index);
+                    if (Selection != null && Selection.FocusedIndex != 1) {
+                        Selection.ToggleSelect (Selection.FocusedIndex);
                         handled = true;
                     }
                     break;
@@ -557,10 +555,10 @@ namespace Hyena.Data.Gui
         
         protected virtual void OnRowActivated ()
         {
-            if (focused_row_index != -1) {
+            if (Selection.FocusedIndex != -1) {
                 RowActivatedHandler<T> handler = RowActivated;
                 if (handler != null) {
-                    handler (this, new RowActivatedArgs<T> (focused_row_index, model[focused_row_index]));
+                    handler (this, new RowActivatedArgs<T> (Selection.FocusedIndex, model[Selection.FocusedIndex]));
                 }
             }
         }
@@ -582,7 +580,7 @@ namespace Hyena.Data.Gui
           
         private void FocusRow (int index)
         {
-            focused_row_index = index;
+            Selection.FocusedIndex = index;
         }
 
 #endregion

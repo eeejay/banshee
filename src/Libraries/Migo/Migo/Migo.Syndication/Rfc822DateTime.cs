@@ -47,7 +47,7 @@ namespace Migo.Syndication
             @"(?<day>\d\d?) " +
             @"(?<month>" + monthsStr + ") " +
             @"(?<year>\d\d(\d\d)?) " +
-            @"(?<hours>[0-2]\d):(?<minutes>[0-5]\d)(:(?<seconds>[0-5]\d))?" +
+            @"(?<hours>[0-2]?\d):(?<minutes>[0-5]\d)(:(?<seconds>[0-5]\d))?" +
             @"( (?<timezone>[A-I]|[K-Z]|GMT|UT|EST|EDT|CST|CDT|MST|MDT|PST|PDT|([+-]\d\d\d\d))$)?";
 
         private static readonly string[] months;

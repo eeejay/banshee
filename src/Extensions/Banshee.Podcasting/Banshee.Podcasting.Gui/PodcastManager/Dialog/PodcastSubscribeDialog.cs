@@ -57,11 +57,7 @@ namespace Banshee.Podcasting.Gui
             get { return syncCombo.ActiveSyncPreference; }
         }
 
-        public PodcastSubscribeDialog () :  base (
-                Catalog.GetString("Subscribe"),
-                null,
-                DialogFlags.Modal | DialogFlags.NoSeparator
-            )
+        public PodcastSubscribeDialog () : base (Catalog.GetString("Subscribe"), null, DialogFlags.Modal | DialogFlags.NoSeparator)
         {
             accelGroup = new Gtk.AccelGroup();
             AddAccelGroup (accelGroup);
@@ -93,24 +89,24 @@ namespace Banshee.Podcasting.Gui
 
             Label header = new Label();
             header.Markup = "<big><b>" + GLib.Markup.EscapeText (
-                Catalog.GetString ("Subscribe to new Podcast")
+                Catalog.GetString ("Subscribe to New Podcast")
             ) + "</b></big>";
             
             header.Justify = Justification.Left;
             header.SetAlignment (0.0f, 0.0f);
 
             Label message = new Label (Catalog.GetString (
-                "Please enter the URL of the podcast you would like to subscribe to."
+                "Please enter the URL of the podcast to which you would like to subscribe."
             ));
             
             message.Wrap = true;
             message.Justify = Justification.Left;
             message.SetAlignment (0.0f, 0.0f);
 
-            Expander advancedExpander = new Expander ("Advanced");
+            VBox sync_vbox = new VBox ();
 
             VBox expander_children = new VBox();
-            expander_children.BorderWidth = 6;
+            //expander_children.BorderWidth = 6;
             expander_children.Spacing = 6;
 
             Label sync_text = new Label (
@@ -125,7 +121,7 @@ namespace Banshee.Podcasting.Gui
             expander_children.PackStart (sync_text);
             expander_children.PackStart (syncCombo);
 
-            advancedExpander.Add (expander_children);
+            sync_vbox.Add (expander_children);
 
             url_entry = new Entry ();
             url_entry.ActivatesDefault = true;
@@ -146,7 +142,7 @@ namespace Banshee.Podcasting.Gui
             );
 
             table.Attach (
-                advancedExpander, 0, 2, 1, 2,
+                sync_vbox, 0, 2, 1, 2,
                 AttachOptions.Expand | AttachOptions.Fill,
                 AttachOptions.Shrink, 0, 0
             );

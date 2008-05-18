@@ -38,39 +38,17 @@ using Banshee.Gui;
 
 namespace Banshee.Collection.Gui
 {
-    public class AlbumListView : ListView<AlbumInfo>
+    public class AlbumListView : TrackFilterListView<AlbumInfo>
     {
-        private ColumnController column_controller;
-        
         public AlbumListView () : base ()
         {
             ColumnCellAlbum renderer = new ColumnCellAlbum ();
-            
-            column_controller = new ColumnController ();
             column_controller.Add (new Column ("Album", renderer, 1.0));
             ColumnController = column_controller;
             
             RowHeightProvider = renderer.ComputeRowHeight;
-            
-            RowActivated += delegate {
-                ServiceManager.PlaybackController.NextSource = (ServiceManager.SourceManager.ActiveSource 
-                    as Banshee.Sources.ITrackModelSource);
-                ServiceManager.PlaybackController.Next ();
-            };
-            
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.TrackInfoUpdated);
-        }
 
-        protected override bool OnFocusInEvent(Gdk.EventFocus evnt)
-        {
-            ServiceManager.Get<InterfaceActionService> ().TrackActions.SuppressSelectActions ();
-            return base.OnFocusInEvent(evnt);
-        }
-        
-        protected override bool OnFocusOutEvent(Gdk.EventFocus evnt)
-        {
-            ServiceManager.Get<InterfaceActionService> ().TrackActions.UnsuppressSelectActions ();
-            return base.OnFocusOutEvent(evnt);
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.TrackInfoUpdated);
         }
         
         private void OnPlayerEvent (PlayerEventArgs args)

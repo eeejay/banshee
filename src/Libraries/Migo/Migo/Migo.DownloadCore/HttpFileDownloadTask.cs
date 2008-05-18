@@ -345,8 +345,6 @@ namespace Migo.DownloadCore
             }
             
 	        wc.Timeout = (60 * 1000);
-	        wc.UserAgent = "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.2) Gecko/2007022617 Firefox/2.0.0.2 (Ubuntu-feisty)";
-
 	        wc.DownloadFileCompleted += OnDownloadFileCompletedHandler;
 	        wc.DownloadProgressChanged += OnDownloadProgressChangedHandler;
 	        wc.ResponseReceived += OnResponseReceivedHandler;	        

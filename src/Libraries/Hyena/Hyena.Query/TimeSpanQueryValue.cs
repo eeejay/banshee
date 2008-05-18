@@ -117,6 +117,7 @@ namespace Hyena.Query
         {
             this.factor = factor;
             this.offset = (long) (offset * (double)factor);
+            DetermineFactor ();
             IsEmpty = false;
         }
 

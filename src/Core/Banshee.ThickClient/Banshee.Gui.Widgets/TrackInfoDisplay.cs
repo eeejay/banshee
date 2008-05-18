@@ -459,7 +459,7 @@ namespace Banshee.Gui.Widgets
 
             incoming_track = track;
 
-            Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtistAlbumId, Allocation.Height);
+            Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtworkId, Allocation.Height);
             
             if (pixbuf == null) {
                 if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
@@ -552,7 +552,7 @@ namespace Banshee.Gui.Widgets
                 return false;
             }
             
-            Gdk.Pixbuf pixbuf = artwork_manager.Lookup (current_track.ArtistAlbumId);
+            Gdk.Pixbuf pixbuf = artwork_manager.Lookup (current_track.ArtworkId);
          
             if (pixbuf == null) {
                 HidePopup ();

@@ -45,7 +45,6 @@ namespace Banshee.Gui
 {
     public class PlaybackActions : BansheeActionGroup
     {
-        private InterfaceActionService action_service;
         private Gtk.Action play_pause_action;
         private PlaybackRepeatActions repeat_actions;
         private PlaybackShuffleActions shuffle_actions;
@@ -58,7 +57,7 @@ namespace Banshee.Gui
             get { return shuffle_actions; }
         }
         
-        public PlaybackActions (InterfaceActionService actionService) : base ("Playback")
+        public PlaybackActions (InterfaceActionService actionService) : base (actionService, "Playback")
         {
             Add (new ActionEntry [] {
                 new ActionEntry ("PlayPauseAction", null,
@@ -106,7 +105,6 @@ namespace Banshee.Gui
             this["NextAction"].IconName = "media-skip-forward";
             this["PreviousAction"].IconName = "media-skip-backward";
             
-            action_service = actionService;
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
                 PlayerEvent.Error | 
                 PlayerEvent.EndOfStream | 
@@ -138,7 +136,7 @@ namespace Banshee.Gui
         private void OnPlayerStateChange (PlayerEventStateChangeArgs args)
         {
             if (play_pause_action == null) {
-                play_pause_action = action_service["Playback.PlayPauseAction"];
+                play_pause_action = Actions["Playback.PlayPauseAction"];
             }
             
             switch (args.Current) {

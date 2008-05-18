@@ -86,7 +86,7 @@ namespace Banshee.Sources
 
         protected DatabaseTrackListModel DatabaseTrackModel {
             get {
-                return track_model ?? track_model = new DatabaseTrackListModel (ServiceManager.DbConnection, TrackProvider);
+                return track_model ?? track_model = new DatabaseTrackListModel (ServiceManager.DbConnection, TrackProvider, this);
             }
             set { track_model = value; }
         }
@@ -110,7 +110,7 @@ namespace Banshee.Sources
 
             if (HasArtistAlbum) {
                 artist_model = new DatabaseArtistListModel (DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
-                album_model = new DatabaseAlbumListModel (DatabaseTrackModel, artist_model, ServiceManager.DbConnection, UniqueId);
+                album_model = new DatabaseAlbumListModel (DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
             }
 
             reload_limiter = new RateLimiter (RateLimitedReload);
@@ -141,7 +141,7 @@ namespace Banshee.Sources
         public override string FilterQuery {
             set {
                 base.FilterQuery = value;
-                DatabaseTrackModel.Filter = FilterQuery;
+                DatabaseTrackModel.UserQuery = FilterQuery;
                 ThreadAssist.SpawnFromMain (delegate {
                     Reload ();
                 });
@@ -172,12 +172,14 @@ namespace Banshee.Sources
             get { return DatabaseTrackModel; }
         }
         
-        public AlbumListModel AlbumModel {
-            get { return album_model; }
-        }
-        
-        public ArtistListModel ArtistModel {
-            get { return artist_model; }
+        public virtual IEnumerable<IFilterListModel> FilterModels {
+            get {
+                if (artist_model != null)
+                    yield return artist_model;
+                    
+                if (album_model != null)
+                    yield return album_model;
+            }
         }
         
         public virtual bool ShowBrowser { 
@@ -397,7 +399,7 @@ namespace Banshee.Sources
 
         protected virtual void AfterInitialized ()
         {
-            DatabaseTrackModel.Initialize (TrackCache, artist_model, album_model);
+            DatabaseTrackModel.Initialize (TrackCache);
             OnSetupComplete ();
         }
 
@@ -465,7 +467,8 @@ namespace Banshee.Sources
         protected void InvalidateCaches ()
         {
             track_model.InvalidateCache ();
-
+            
+            // TODO invalidate cache on all FilterModels
             if (artist_model != null)
                 artist_model.InvalidateCache ();
 

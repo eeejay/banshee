@@ -192,7 +192,7 @@ namespace Banshee.Sources
         private void PrimarySourceInitialize ()
         {
             // Scope the tracks to this primary source
-            track_model.Condition = String.Format ("CoreTracks.PrimarySourceID = {0}", DbId);
+            track_model.AddCondition (String.Format ("CoreTracks.PrimarySourceID = {0}", DbId));
 
             primary_sources[DbId] = this;
             

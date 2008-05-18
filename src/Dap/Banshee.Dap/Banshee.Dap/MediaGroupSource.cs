@@ -28,6 +28,8 @@
 
 using System;
 
+using Mono.Unix;
+
 using Hyena.Query;
 using Banshee.Query;
 using Banshee.Sources;
@@ -43,6 +45,13 @@ namespace Banshee.Dap
         public MediaGroupSource (DapSource parent, string name) : base (name, parent.DbId)
         {
             this.parent = parent;
+            Properties.Set<string> ("DeleteTracksFromDriveActionLabel", String.Format (Catalog.GetString ("Delete From {0}"), parent.Name));
+        }
+
+        protected override void AfterInitialized ()
+        {
+            base.AfterInitialized ();
+            Reload ();
         }
         
         public override string ConditionSql {

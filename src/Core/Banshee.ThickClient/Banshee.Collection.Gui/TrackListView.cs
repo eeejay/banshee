@@ -56,12 +56,18 @@ namespace Banshee.Collection.Gui
             
             ForceDragSourceSet = true;
             Reorderable = true;
+            
+            RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
+                ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
+                if (source != null && source.TrackModel == Model) {
+                    ServiceManager.PlaybackController.Source = source;
+                    ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
+                }
+            };
         }
         
         public override void SetModel (IListModel<TrackInfo> value, double vpos)
         {
-            base.SetModel (value, vpos);
-            
             Source source = ServiceManager.SourceManager.ActiveSource;
             ColumnController controller = null;
             
@@ -80,6 +86,8 @@ namespace Banshee.Collection.Gui
             }
             
             ColumnController = controller ?? default_column_controller;
+            
+            base.SetModel (value, vpos);
         }
 
         protected override bool OnPopupMenu ()

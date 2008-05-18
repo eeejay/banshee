@@ -44,7 +44,6 @@ namespace Banshee.Gui
     {
         private RadioAction active_action;
         private PlaybackActions playback_actions;
-        private InterfaceActionService action_service;
 
         public RadioAction Active {
             get { return active_action; }
@@ -67,11 +66,10 @@ namespace Banshee.Gui
         public event EventHandler Changed;
         
         public PlaybackShuffleActions (InterfaceActionService actionService, PlaybackActions playbackActions)
-            : base ("PlaybackShuffle")
+            : base (actionService, "PlaybackShuffle")
         {
             playback_actions = playbackActions;
-            action_service = actionService;
-            actionService.AddActionGroup (this);
+            Actions.AddActionGroup (this);
             
             Add (new ActionEntry [] {
                 new ActionEntry ("ShuffleMenuAction", null,
@@ -134,7 +132,7 @@ namespace Banshee.Gui
         
         public void AttachSubmenu (string menuItemPath)
         {
-            MenuItem parent = action_service.UIManager.GetWidget (menuItemPath) as MenuItem;
+            MenuItem parent = Actions.UIManager.GetWidget (menuItemPath) as MenuItem;
             parent.Submenu = CreateMenu ();
         }
         

@@ -47,7 +47,6 @@ namespace Banshee.Gui
 {
     public class TrackActions : BansheeActionGroup
     {
-        private InterfaceActionService action_service;
         private RatingActionProxy rating_proxy;
 
         private static readonly string [] require_selection_actions = new string [] {
@@ -55,30 +54,9 @@ namespace Banshee.Gui
             "RemoveTracksAction", "RemoveTracksFromLibraryAction", "DeleteTracksFromDriveAction",
             "RateTracksAction", "SelectNoneAction"
         };
-        
-        private IHasTrackSelection track_selector;
-        public IHasTrackSelection TrackSelector {
-            get { return track_selector; }
-            set {
-                if (track_selector != null && track_selector != value) {
-                    track_selector.TrackSelectionProxy.Changed -= HandleSelectionChanged;
-                    track_selector.TrackSelectionProxy.SelectionChanged -= HandleSelectionChanged;
-                }
 
-                track_selector = value;
-
-                if (track_selector != null) {
-                    track_selector.TrackSelectionProxy.Changed += HandleSelectionChanged;
-                    track_selector.TrackSelectionProxy.SelectionChanged += HandleSelectionChanged;
-                    UpdateActions ();
-                }
-            }
-        }
-
-        public TrackActions (InterfaceActionService actionService) : base ("Track")
+        public TrackActions (InterfaceActionService actionService) : base (actionService, "Track")
         {
-            action_service = actionService;
-
             Add (new ActionEntry [] {
                 new ActionEntry("TrackContextMenuAction", null, 
                     String.Empty, null, null, OnTrackContextMenu),
@@ -137,9 +115,9 @@ namespace Banshee.Gui
                 //    null, OnJumpToPlayingTrack),
             });
 
-            action_service.UIManager.ActionsChanged += HandleActionsChanged;
+            Actions.UIManager.ActionsChanged += HandleActionsChanged;
 
-            action_service.GlobalActions["EditMenuAction"].Activated += HandleEditMenuActivated;
+            Actions.GlobalActions["EditMenuAction"].Activated += HandleEditMenuActivated;
             ServiceManager.SourceManager.ActiveSourceChanged += HandleActiveSourceChanged;
 
             this["AddToPlaylistAction"].HideIfEmpty = false;
@@ -147,18 +125,30 @@ namespace Banshee.Gui
 
 #region State Event Handlers
 
+        private ITrackModelSource current_source;
         private void HandleActiveSourceChanged (SourceEventArgs args)
         {
+            if (current_source != null) {
+                current_source.TrackModel.Selection.Changed -= HandleSelectionChanged;
+                current_source = null;
+            }
+            
+            ITrackModelSource new_source = ActiveSource as ITrackModelSource;
+            if (new_source != null) {
+                new_source.TrackModel.Selection.Changed += HandleSelectionChanged;
+                current_source = new_source;
+            }
+            
             UpdateActions ();
         }
 
         private void HandleActionsChanged (object sender, EventArgs args)
         {
-            if (action_service.UIManager.GetAction ("/MainMenu/EditMenu") != null) {
-                rating_proxy = new RatingActionProxy (action_service.UIManager, this["RateTracksAction"]);
+            if (Actions.UIManager.GetAction ("/MainMenu/EditMenu") != null) {
+                rating_proxy = new RatingActionProxy (Actions.UIManager, this["RateTracksAction"]);
                 rating_proxy.AddPath ("/MainMenu/EditMenu", "AddToPlaylist");
                 rating_proxy.AddPath ("/TrackContextMenu", "AddToPlaylist");
-                action_service.UIManager.ActionsChanged -= HandleActionsChanged;
+                Actions.UIManager.ActionsChanged -= HandleActionsChanged;
             }
         }
 
@@ -197,13 +187,10 @@ namespace Banshee.Gui
 
         private void UpdateActions ()
         {
-            if (TrackSelector == null || TrackSelector.TrackSelectionProxy == null) {
-                return;
-            }
-            
-            Hyena.Collections.Selection selection = TrackSelector.TrackSelectionProxy.Selection;
             Source source = ServiceManager.SourceManager.ActiveSource;
             bool in_database = source is DatabaseSource;
+            
+            Hyena.Collections.Selection selection = (source is ITrackModelSource) ? (source as ITrackModelSource).TrackModel.Selection : null;
 
             if (selection != null) {
                 bool has_selection = selection.Count > 0;
@@ -235,15 +222,17 @@ namespace Banshee.Gui
 
         private void ResetRating ()
         {
-            int rating = 0;
-
-            // If there is only one track, get the preset rating
-            if (TrackSelector.TrackSelectionProxy.Selection.Count == 1) {
-                foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
-                    rating = track.Rating;
+            if (current_source != null) {
+                int rating = 0;
+    
+                // If there is only one track, get the preset rating
+                if (current_source.TrackModel.Selection.Count == 1) {
+                    foreach (TrackInfo track in current_source.TrackModel.SelectedItems) {
+                        rating = track.Rating;
+                    }
                 }
+                rating_proxy.Reset (rating);
             }
-            rating_proxy.Reset (rating);
         }
 
 #endregion
@@ -252,42 +241,30 @@ namespace Banshee.Gui
 
         private void OnSelectAll (object o, EventArgs args)
         {
-            TrackSelector.TrackSelectionProxy.Selection.SelectAll ();
+            if (current_source != null)
+                current_source.TrackModel.Selection.SelectAll ();
         }
 
         private void OnSelectNone (object o, EventArgs args)
         {
-            TrackSelector.TrackSelectionProxy.Selection.Clear ();
+            if (current_source != null)
+                current_source.TrackModel.Selection.Clear ();
         }
 
         private void OnTrackContextMenu (object o, EventArgs args)
         {
             ResetRating ();
-
-            Gtk.Menu menu = action_service.UIManager.GetWidget ("/TrackContextMenu") as Menu;
-            if (menu == null || menu.Children.Length == 0) {
-                return;
-            }
-
-            int visible_children = 0;
-            foreach (Widget child in menu)
-                if (child.Visible)
-                    visible_children++;
-
-            if (visible_children == 0) {
-                return;
-            }
-
-            menu.Show (); 
-            menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
+            ShowContextMenu ("/TrackContextMenu");
         }
 
         private void OnTrackProperties (object o, EventArgs args)
         {
-            TrackEditor propEdit = new TrackEditor (TrackSelector.GetSelectedTracks ());
-            propEdit.Saved += delegate {
-                //ui.playlistView.QueueDraw();
-            };
+            if (current_source != null) {
+                TrackEditor propEdit = new TrackEditor (current_source.TrackModel.SelectedItems);
+                propEdit.Saved += delegate {
+                    //ui.playlistView.QueueDraw();
+                };
+            }
         }
 
         // Called when the Add to Playlist action is highlighted.
@@ -407,19 +384,21 @@ namespace Banshee.Gui
 
         private void OnSearchForSameArtist (object o, EventArgs args)
         {
-            Source source = ActiveSource;
-            foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
-                source.FilterQuery = BansheeQuery.ArtistField.ToTermString (":", track.ArtistName);
-                break;
+            if (current_source != null) {
+                foreach (TrackInfo track in current_source.TrackModel.SelectedItems) {
+                    ActiveSource.FilterQuery = BansheeQuery.ArtistField.ToTermString (":", track.ArtistName);
+                    break;
+                }
             }
         }
 
         private void OnSearchForSameAlbum (object o, EventArgs args)
         {
-            Source source = ActiveSource;
-            foreach (TrackInfo track in TrackSelector.GetSelectedTracks ()) {
-                source.FilterQuery = BansheeQuery.AlbumField.ToTermString (":", track.AlbumTitle);
-                break;
+            if (current_source != null) {
+                foreach (TrackInfo track in current_source.TrackModel.SelectedItems) {
+                    ActiveSource.FilterQuery = BansheeQuery.AlbumField.ToTermString (":", track.AlbumTitle);
+                    break;
+                }
             }
         }
 

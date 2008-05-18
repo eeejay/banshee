@@ -32,7 +32,7 @@ using Hyena.Collections;
 
 namespace Hyena.Data
 {
-    public interface IListModel<T> : ISelectable
+    public interface IListModel : ISelectable
     {
         event EventHandler Cleared;
         event EventHandler Reloaded;
@@ -40,8 +40,12 @@ namespace Hyena.Data
         void Clear ();
         void Reload ();
         
-        T this[int index] { get; }
         int Count { get; }
+    }
+    
+    public interface IListModel<T> : IListModel
+    {
+        T this[int index] { get; }
     }
     
     public interface IObjectListModel : IListModel<object>

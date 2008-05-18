@@ -47,7 +47,26 @@ using Migo.Syndication;
 
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastFeedView : ListView<Feed>
+    public class PodcastFeedView : TrackFilterListView<Feed>
+    {
+        public PodcastFeedView () : base ()
+        {
+            ColumnCellPodcast renderer = new ColumnCellPodcast ();
+            column_controller.Add (new Column ("Podcast", renderer, 1.0));
+            //column_controller.Add (new Column (null, "Activity", new FeedActivityColumnCell ("Activity"), 0.00, true, 26, 26));
+            
+            ColumnController = column_controller;
+            RowHeightProvider = renderer.ComputeRowHeight;
+        }
+        
+        protected override bool OnPopupMenu ()
+        {
+            ServiceManager.Get<InterfaceActionService> ().FindAction ("Podcast.PodcastFeedPopupAction").Activate ();
+            return true;
+        }
+    }
+
+    /*public class PodcastFeedView : ListView<Feed>
     {
         private ColumnController columnController;
         
@@ -115,5 +134,5 @@ namespace Banshee.Podcasting.Gui
             popup.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
             return true;
         } 
-    }
+    }*/
 }

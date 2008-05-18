@@ -39,7 +39,7 @@ namespace Banshee.Database
         public BansheeModelCache (HyenaSqliteConnection connection,
                                   string uuid,
                                   ICacheableDatabaseModel model,
-                                  BansheeModelProvider <T> provider)
+                                  SqliteModelProvider <T> provider)
             : base (connection, uuid, model, provider)
         {
         }

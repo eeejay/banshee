@@ -14,6 +14,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/ColumnCellAlbum.cs \
 	Banshee.Collection.Gui/ColumnCellDateTime.cs \
 	Banshee.Collection.Gui/ColumnCellDuration.cs \
+	Banshee.Collection.Gui/ColumnCellFileSize.cs \
 	Banshee.Collection.Gui/ColumnCellPlaybackIndicator.cs \
 	Banshee.Collection.Gui/ColumnCellPositiveInt.cs \
 	Banshee.Collection.Gui/ColumnCellTrack.cs \
@@ -21,6 +22,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/DefaultColumnController.cs \
 	Banshee.Collection.Gui/PersistentColumnController.cs \
 	Banshee.Collection.Gui/TerseTrackListView.cs \
+	Banshee.Collection.Gui/TrackFilterListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \
 	Banshee.Collection.Gui/XmlColumnController.cs \
 	Banshee.Equalizer.Gui/EqualizerBandScale.cs \
@@ -94,6 +96,7 @@ SOURCES =  \
 	Banshee.Sources.Gui/CompositeTrackSourceContents.cs \
 	Banshee.Sources.Gui/ISourceContents.cs \
 	Banshee.Sources.Gui/ITrackModelSourceContents.cs \
+	Banshee.Sources.Gui/ListBrowserSourceContents.cs \
 	Banshee.Sources.Gui/ObjectListSourceContents.cs \
 	Banshee.Sources.Gui/SourceComboBox.cs \
 	Banshee.Sources.Gui/SourceIconResolver.cs \

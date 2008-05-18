@@ -33,6 +33,8 @@ using Gtk;
 using Hyena.Data; 
 using Hyena.Data.Gui;
 
+using Migo.Syndication;
+
 using Banshee.Base;
 using Banshee.Configuration;
 
@@ -46,126 +48,72 @@ using Banshee.Collection.Gui;
 
 using Banshee.Podcasting.Data;
 
+
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastSourceContents : VBox, ISourceContents
+    public class PodcastSourceContents : ListBrowserSourceContents
     {
- 	    private PodcastSource source;
- 	    
- 	    private VPaned vpaned;
-
- 	    private PodcastFeedView feedView;
- 	    private PodcastItemView itemView;
- 	    
- 	    PersistentColumnController itemViewColumnController;
+        private PodcastItemView track_view;
+        private PodcastFeedView feed_view;
         
-        public ISource Source {
-            get { return source; } 
-        }
-        
-        public Widget Widget {
-            get { return this; } 
-        }
- 	
- 	    public PodcastSourceContents (PodcastFeedView feedView, 
- 	                                  PodcastItemView itemView)
- 	    {
- 	        if (feedView == null) {
- 	            throw new ArgumentNullException ("feedView");   
- 	        } else if (itemView == null) {
- 	            throw new ArgumentNullException ("itemView");
- 	        }
- 	    
- 	        this.feedView = feedView;
- 	        this.itemView = itemView;
- 	    
- 	        InitializeWidget ();
- 	    }
- 	
-        public bool SetSource (ISource source)
+        public PodcastSourceContents () : base ()
         {
-            PodcastSource ps = source as PodcastSource;
-            
-            if (ps != null) {
-                this.source = ps;
-                
-                itemViewColumnController.Source = ps;
-                itemViewColumnController.Load ();
+        }
 
-                feedView.HeaderVisible = true;
-                itemView.HeaderVisible = true;
+        protected override void InitializeViews ()
+        {
+            SetupMainView (track_view = new PodcastItemView ());
+            SetupFilterView (feed_view = new PodcastFeedView ());
+        }
+        
+        protected override void ClearFilterSelections ()
+        {
+            feed_view.Selection.Clear ();
+        }
+
+        protected override bool ActiveSourceCanHasBrowser {
+            get {
+                if (!(ServiceManager.SourceManager.ActiveSource is PodcastSource)) {
+                    return false;
+                }
                 
-                feedView.SetModel (ps.FeedModel);
-                itemView.SetModel (ps.TrackModel as PodcastListModel);
-                
-                return true;
+                return ((PodcastSource)ServiceManager.SourceManager.ActiveSource).ShowBrowser;
+            }
+        }
+
+#region Implement ISourceContents
+
+        public override bool SetSource (ISource source)
+        {
+            PodcastSource track_source = source as PodcastSource;
+            if (track_source == null) {
+                return false;
             }
             
-            return false;
+            this.source = source;
+            
+            SetModel (track_view, track_source.TrackModel);
+            
+            foreach (IListModel model in track_source.FilterModels) {
+                if (model is IListModel<Feed>)
+                    SetModel (feed_view, (model as IListModel<Feed>));
+                else
+                    Hyena.Log.DebugFormat ("PodcastContents got non-feed filter model: {0}", model);
+            }
+            
+            track_view.HeaderVisible = true;
+            return true;
         }
-        
-        public void ResetSource ()
-        {
-            SaveState ();           
 
-            feedView.SetModel (null);
-            itemView.SetModel (null);
-            
-            feedView.HeaderVisible = false;            
-            itemView.HeaderVisible = false;
-            
-            itemViewColumnController.Source = null;
+        public override void ResetSource ()
+        {
             source = null;
+            track_view.SetModel (null);
+            feed_view.SetModel (null);
+            track_view.HeaderVisible = false;
         }
 
-        private void InitializeWidget ()
-        {
-            itemViewColumnController = 
-                itemView.ColumnController as PersistentColumnController;
-            
-            ScrolledWindow podcastFeedScroller = new ScrolledWindow ();
-            podcastFeedScroller.ShadowType = ShadowType.None;            
-            podcastFeedScroller.HscrollbarPolicy = PolicyType.Automatic;
-            podcastFeedScroller.VscrollbarPolicy = PolicyType.Automatic;
-                        
-            ScrolledWindow podcastItemScroller = new ScrolledWindow ();
-            podcastItemScroller.ShadowType = ShadowType.None;            
-            podcastItemScroller.HscrollbarPolicy = PolicyType.Automatic;
-            podcastItemScroller.VscrollbarPolicy = PolicyType.Automatic;            
-            
-            podcastFeedScroller.Add (feedView);
-            podcastItemScroller.Add (itemView);
-
-            vpaned = new VPaned ();
-            
-            vpaned.Add1 (podcastFeedScroller);
-            vpaned.Add2 (podcastItemScroller);            
-            
-            LoadState ();
-            
-            feedView.Show ();
-            podcastFeedScroller.Show ();  
-
-            itemView.Show ();
-            podcastItemScroller.Show ();
-
-            vpaned.Show ();
-            
-            PackStart (vpaned, true, true, 0);
-        }
-        
-        private void LoadState ()
-        {
-            vpaned.Position = VPanedPositionSchema.Get ();        
-        }
-
-        private void SaveState ()
-        {
-            VPanedPositionSchema.Set (vpaned.Position);  
-            PersistentColumnController itemCC = 
-                itemView.ColumnController as PersistentColumnController;
-            itemCC.Save ();
-        }
+#endregion        
 
         public static readonly SchemaEntry<int> VPanedPositionSchema = new SchemaEntry<int> (
             "plugins.podcasting", "vpaned_position", 120, "VPaned Position", ""

@@ -82,7 +82,7 @@ namespace Banshee.Collection.Database
 
         public override void IncrementPlayCount ()
         {
-            if (Provider.Refresh (this)) {
+            if (ProviderRefresh ()) {
                 base.IncrementPlayCount ();
                 Save (true, BansheeQuery.PlayCountField, BansheeQuery.LastPlayedField);
             }
@@ -90,7 +90,7 @@ namespace Banshee.Collection.Database
 
         public override void IncrementSkipCount ()
         {
-            if (Provider.Refresh (this)) {
+            if (ProviderRefresh ()) {
                 base.IncrementSkipCount ();
                 Save (true, BansheeQuery.SkipCountField, BansheeQuery.LastSkippedField);
             }
@@ -144,7 +144,7 @@ namespace Banshee.Collection.Database
             bool is_new = (TrackId == 0);
             if (is_new) DateAdded = DateUpdated;
 
-            Provider.Save (this);
+            ProviderSave ();
 
             if (notify) {
                 if (is_new) {
@@ -153,6 +153,16 @@ namespace Banshee.Collection.Database
                     PrimarySource.NotifyTracksChanged (fields_changed);
                 }
             }
+        }
+        
+        protected virtual void ProviderSave ()
+        {
+            Provider.Save (this);
+        }
+        
+        protected virtual bool ProviderRefresh ()
+        {
+            return Provider.Refresh (this);
         }
         
         private int track_id;
@@ -177,15 +187,15 @@ namespace Banshee.Collection.Database
             set { PrimarySourceId = value.DbId; }
         }
 
-        [DatabaseColumn ("ArtistID")]
         private int artist_id;
+        [DatabaseColumn ("ArtistID")]
         public int ArtistId {
             get { return artist_id; }
             set { artist_id = value; }
         }
-
-        [DatabaseColumn ("AlbumID")]
+        
         private int album_id;
+        [DatabaseColumn ("AlbumID")]
         public int AlbumId {
             get { return album_id; }
             set { album_id = value; }
@@ -422,6 +432,8 @@ namespace Banshee.Collection.Database
             }
         }
 
+#region Implement ICacheableItem
+
         private long cache_entry_id;
         public long CacheEntryId {
             get { return cache_entry_id; }
@@ -433,6 +445,8 @@ namespace Banshee.Collection.Database
             get { return cache_model_id; }
             set { cache_model_id = value; }
         }
+
+#endregion
 
         private void UpdateUri ()
         {

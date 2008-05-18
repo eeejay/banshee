@@ -117,7 +117,7 @@ namespace Banshee.NotificationArea
                     Catalog.GetString ("Close"), CloseWindow)
             });
             
-            actions = new BansheeActionGroup ("NotificationArea");
+            actions = new BansheeActionGroup (interface_action_service, "NotificationArea");
             actions.Add (new ToggleActionEntry [] {
                 new ToggleActionEntry ("ToggleNotificationsAction", null,
                     Catalog.GetString ("_Show Notifications"), null,
@@ -377,7 +377,7 @@ namespace Banshee.NotificationArea
             Gdk.Pixbuf image = null;
             
             if (artwork_manager_service != null) {
-                image = artwork_manager_service.LookupScale (current_track.ArtistAlbumId, 42);
+                image = artwork_manager_service.LookupScale (current_track.ArtworkId, 42);
             }
             
             if (image == null) {

@@ -109,6 +109,9 @@
     <File name="Resources/jcastro.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Sources.Gui/SourceModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources.Gui/SourceComboBox.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/TrackFilterListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/ColumnCellFileSize.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources.Gui/ListBrowserSourceContents.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/DefaultColumnController.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/XmlColumnController.cs" subtype="Code" buildaction="Compile" />
   </Contents>

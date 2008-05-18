@@ -52,11 +52,17 @@ namespace Hyena.Collections
         RangeCollection ranges = new RangeCollection ();
         private int max_index;
         private int first_selected_index;
+        private int focused_index = -1;
         
         public event EventHandler Changed;
         
         public Selection ()
         {
+        }
+        
+        public int FocusedIndex {
+            get { return focused_index; }
+            set { focused_index = value; }
         }
 
         protected virtual void OnChanged ()
@@ -148,6 +154,8 @@ namespace Hyena.Collections
         
         public void Clear (bool raise)
         {
+            focused_index = -1;
+            
             if (ranges.Count <= 0) {
                 return;
             }

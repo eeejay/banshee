@@ -38,8 +38,11 @@ namespace Banshee.Sources
     public interface ITrackModelSource : ISource
     {
         TrackListModel TrackModel { get; }
-        AlbumListModel AlbumModel { get; }
-        ArtistListModel ArtistModel { get; }
+        
+        IEnumerable<Banshee.Collection.Database.IFilterListModel> FilterModels { get; }
+        
+        //AlbumListModel AlbumModel { get; }
+        //ArtistListModel ArtistModel { get; }
 
         void Reload ();
         bool HasDependencies { get; }

@@ -167,6 +167,8 @@
     <File name="Banshee.ServiceStack/IDelayedInitializeService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/DurationStatusFormatters.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.SmartPlaylist/SmartPlaylistDefinition.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/DatabaseBrowsableListModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/BrowsableListModel.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

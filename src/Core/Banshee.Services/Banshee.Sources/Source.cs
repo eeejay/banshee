@@ -107,14 +107,13 @@ namespace Banshee.Sources
                 tm_source.TrackModel.Parent = this;
                 ServiceManager.DBusServiceManager.RegisterObject (tm_source.TrackModel);
                 
-                if (tm_source.ArtistModel != null) {
-                    tm_source.ArtistModel.Parent = this;
-                    ServiceManager.DBusServiceManager.RegisterObject (tm_source.ArtistModel);
-                }
-                
-                if (tm_source.AlbumModel != null) {
-                    tm_source.AlbumModel.Parent = this;
-                    ServiceManager.DBusServiceManager.RegisterObject (tm_source.AlbumModel);
+                // TODO if/when browsable models can be added/removed on the fly, this would need to change to reflect that
+                foreach (IListModel model in tm_source.FilterModels) {
+                    Banshee.Collection.ExportableModel exportable = model as Banshee.Collection.ExportableModel;
+                    if (exportable != null) {
+                        exportable.Parent = this;
+                        ServiceManager.DBusServiceManager.RegisterObject (exportable);
+                    }
                 }
             }
         }

@@ -31,11 +31,23 @@ using System.Xml;
 
 namespace Migo.Syndication
 {        
-    static class XmlUtils
+    public static class XmlUtils
     {
+        public static XmlNamespaceManager GetNamespaceManager (XmlDocument doc)
+        {
+            XmlNamespaceManager mgr = new XmlNamespaceManager (doc.NameTable);
+            return mgr;
+        }
+    
         public static string GetXmlNodeText (XmlNode node, string tag)
         {
             XmlNode n = node.SelectSingleNode (tag);
+            return (n == null) ? String.Empty : n.InnerText.Trim ();
+        }
+        
+        public static string GetXmlNodeText (XmlNode node, string tag, XmlNamespaceManager mgr)
+        {
+            XmlNode n = node.SelectSingleNode (tag, mgr);
             return (n == null) ? String.Empty : n.InnerText.Trim ();
         }
         
@@ -61,6 +73,33 @@ namespace Migo.Syndication
             }
                     
             return ret;              
-        }        
+        }
+        
+        
+        public static TimeSpan GetITunesDuration (XmlNode node, XmlNamespaceManager mgr)
+        {
+            return GetITunesDuration (GetXmlNodeText (node, "itunes:duration", mgr));
+        }
+        
+        public static TimeSpan GetITunesDuration (string duration)
+        {
+            if (String.IsNullOrEmpty (duration)) {
+                return TimeSpan.Zero;
+            }
+
+            int hours = 0, minutes = 0, seconds = 0;
+            string [] parts = duration.Split (':');
+            
+            if (parts.Length > 0)
+                seconds = Int32.Parse (parts[parts.Length - 1]);
+                
+            if (parts.Length > 1)
+                minutes = Int32.Parse (parts[parts.Length - 2]);
+                
+            if (parts.Length > 2)
+                hours = Int32.Parse (parts[parts.Length - 3]);
+            
+            return TimeSpan.FromSeconds (hours * 3600 + minutes * 60 + seconds);
+        }
     }
 }

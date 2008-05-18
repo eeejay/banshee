@@ -16,7 +16,8 @@ ASSEMBLY_CSFILES =  \
 	$(srcdir)/Hyena/QueryTests.cs \
 	$(srcdir)/Banshee.Services/SmartPlaylistTests.cs \
 	$(srcdir)/Banshee.ThickClient/GuiTests.cs \
-	$(srcdir)/Banshee.Core/TaglibReadWriteTests.cs
+	$(srcdir)/Banshee.Core/TaglibReadWriteTests.cs \
+	$(srcdir)/Migo/XmlTests.cs
 
 #	Banshee.Core/KernelTests.cs
 #	Banshee.Core/FileNamePatternTests.cs
@@ -29,7 +30,7 @@ NUNIT_TESTER_CSFILES =  \
 	AssemblyInfo.cs \
 	ConsoleUi.cs
 
-REF_BANSHEE_NUNIT = $(LINK_HYENA_DEPS) $(LINK_BANSHEE_CORE_DEPS) $(LINK_BANSHEE_THICKCLIENT_DEPS) $(LINK_NEREID_DEPS) $(ASSEMBLY_CSFILES) $(REF_BACKEND_UNIX)
+REF_BANSHEE_NUNIT = $(LINK_HYENA_DEPS) $(LINK_BANSHEE_CORE_DEPS) $(LINK_BANSHEE_THICKCLIENT_DEPS) $(LINK_NEREID_DEPS) $(ASSEMBLY_CSFILES) $(REF_BACKEND_UNIX) $(LINK_MIGO_DEPS)
 
 $(ASSEMBLY): $(ASSEMBLY_CSFILES)
 	$(MCS) $(MCS_FLAGS) $(NUNIT_FLAGS) -out:$@ -target:library -r:System.Xml $(REF_BANSHEE_NUNIT) -r:$(DIR_BIN)/Banshee.Unix.dll

@@ -133,9 +133,7 @@ namespace Migo.DownloadCore
             if (SetDisposed ()) {
                 if (dg != null) {                
                     dg.StopAsync ();
-                    Console.WriteLine ("dg - Waiting");
                     dg.Handle.WaitOne ();
-                    Console.WriteLine ("dg - Canceled");
 
                     dg.TaskStopped -= TaskStoppedHandler;       
                     dg.Dispose ();
