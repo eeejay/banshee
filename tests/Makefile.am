@@ -43,7 +43,7 @@ all: $(ASSEMBLY)
 
 test: $(NUNIT_TESTER) $(ASSEMBLY)
 	@pushd $(top_builddir)/bin; \
-		LANG=it_IT MONO_PATH="$(DIR_BIN)" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
+		TZ=America/Chicago LC_ALL=it_IT LANG=it_IT MONO_PATH="$(DIR_BIN)" mono --debug $(NUNIT_TESTER) $(ASSEMBLY)
 	popd;
 endif
 

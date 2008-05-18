@@ -1,3 +1,8 @@
+2008-05-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* tests/Makefile.am: Patch from Bertrand Lorentz that forces tests to be
+	run in Italian with timezone = Chicago, apparently fixing failures for him.
+
 2008-05-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Massive commit that brings Podcasting back to the land of the living.  Our
