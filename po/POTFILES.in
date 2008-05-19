@@ -48,6 +48,7 @@ src/Core/Banshee.Services/Banshee.Sources/Source.cs
 src/Core/Banshee.Services/Banshee.Web/Browser.cs
 src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs
+src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs
@@ -73,15 +74,16 @@ src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs
 src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs
 src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs
+src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ListBrowserSourceContents.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs
 src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade
 src/Core/Banshee.Widgets/Banshee.Widgets/DiscUsageDisplay.cs
-src/Core/Banshee.Widgets/Banshee.Widgets/RatingMenuItem.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs
 src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs
 src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs
+src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs
 src/Dap/Banshee.Dap/Banshee.Dap/MusicGroupSource.cs
 src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs
 src/Dap/Banshee.Dap/Banshee.Dap/VideoGroupSource.cs
@@ -112,6 +114,8 @@ src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAre
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs
 src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs
+src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs
+src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs
@@ -120,7 +124,6 @@ src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/S
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastFeedView.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastItemView.cs
-src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastCore_Interface.cs
 src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs
 src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs
@@ -131,9 +134,11 @@ src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs
 src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs
 src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs
 src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs
+src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs
 src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs
 src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs
 src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs
 src/Libraries/Lastfm/Lastfm/RadioConnection.cs
+src/Libraries/Migo/Migo/Migo.Syndication/Feed.cs
