@@ -49,7 +49,7 @@ namespace Banshee.Collection.Gui
             double x, double y, double width, double height, bool drawBorder, double radius, 
             bool fill, Color fillColor)
         {
-            if (pixbuf == null) {
+            if (pixbuf == null || pixbuf.Handle == IntPtr.Zero) {
                 return;
             }
             
@@ -94,7 +94,7 @@ namespace Banshee.Collection.Gui
         
         public static void DisposePixbuf (Gdk.Pixbuf pixbuf)
         {
-            if (pixbuf != null) {
+            if (pixbuf != null && pixbuf.Handle != IntPtr.Zero) {
                 pixbuf.Dispose ();
                 pixbuf = null;
                 GC.Collect ();

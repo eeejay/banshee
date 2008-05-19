@@ -1,3 +1,12 @@
+2008-05-19  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkRenderer.cs:
+	Added native handle NULL checks when checking for null against a Gdk.Pixbuf;
+	for some reason we sometimes get a managed GdkPixbuf object that wraps
+	a NULL native GdkPixbuf pointer - possibly a bug in Gdk# - though it only
+	seems to happen when image data comes from the Net, so it could just be
+	a case of bad things happening with bad image data
+
 2008-05-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* tests/Makefile.am: Patch from Bertrand Lorentz that forces tests to be
