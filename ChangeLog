@@ -1,5 +1,11 @@
 2008-05-19  Aaron Bockover  <abock@gnome.org>
 
+	* tests/Hyena/RangeCollectionTests.cs: Use a SortedInsert method instead
+	of Add*N + Sort for the reference collection so it's a little faster;
+	reduce the iterations to 75k to appease Gabe
+
+2008-05-19  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkRenderer.cs:
 	Added native handle NULL checks when checking for null against a Gdk.Pixbuf;
 	for some reason we sometimes get a managed GdkPixbuf object that wraps
