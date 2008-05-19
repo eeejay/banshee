@@ -87,11 +87,21 @@
     <File name="Hyena.Query/NullQueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Query/RelativeTimeSpanQueryValue.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Query/TimeSpanQueryValue.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Collections/Tests/IntervalHeapTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Collections/Tests/RangeCollectionTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/Tests/DbBoundType.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/Tests/SqliteCommandTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Data.Sqlite/Tests/SqliteModelProviderTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Query/Tests/QueryTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena/Tests/CryptoUtilTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena/Tests/StringUtilTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena/Tests/TestBase.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Data.Sqlite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">

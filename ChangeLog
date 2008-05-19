@@ -1,5 +1,15 @@
 2008-05-19  Aaron Bockover  <abock@gnome.org>
 
+	* build/build.rules.mk: Set ENABLE_TESTS as a define variable; this will
+	allow unit tests to be compiled in only if Nunit is available and we are
+	not building a release
+
+	* Tons of files: Surgery to move unit tests into the proper assemblies
+	instead of one big test assembly hack job thing; some stuff is still 
+	broken and incomplete
+
+2008-05-19  Aaron Bockover  <abock@gnome.org>
+
 	* tests/Hyena/RangeCollectionTests.cs: Use a SortedInsert method instead
 	of Add*N + Sort for the reference collection so it's a little faster;
 	reduce the iterations to 75k to appease Gabe

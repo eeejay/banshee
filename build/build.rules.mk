@@ -17,6 +17,11 @@ ASSEMBLY_FILE = $(top_builddir)/bin/$(ASSEMBLY).$(ASSEMBLY_EXTENSION)
 
 INSTALL_DIR_RESOLVED = $(firstword $(subst , $(DEFAULT_INSTALL_DIR), $(INSTALL_DIR)))
 
+if ENABLE_TESTS
+    LINK += " $(MONO_NUNIT_LIBS)"
+    ENABLE_TESTS_FLAG = "-define:ENABLE_TESTS"
+endif
+
 FILTERED_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE))
 DEP_LINK = $(shell echo "$(LINK)" | $(UNIQUE_FILTER_PIPE) | sed s,-r:,,g | grep '$(top_builddir)/bin/')
 
@@ -46,7 +51,7 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	test "x$$colors" = "xyes" && \
 		echo -e "\033[1mCompiling $(notdir $@)...\033[0m" || \
 		echo "Compiling $(notdir $@)...";
-	@test "x$(DEVEL_BUILD)" = "xyes" && warn="-warnaserror"; $(BUILD) -target:$(TARGET) -out:$@ $$warn -define:HAVE_GTK_2_10 -define:NET_2_0 $(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD) 
+	@test "x$(DEVEL_BUILD)" = "xyes" && warn="-warnaserror"; $(BUILD) -target:$(TARGET) -out:$@ $$warn -define:HAVE_GTK_2_10 -define:NET_2_0 $(ENABLE_TESTS_FLAG) $(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD) 
 	@if [ -e $(notdir $@.config) ]; then \
 		cp $(notdir $@.config) $(top_builddir)/bin; \
 	fi;

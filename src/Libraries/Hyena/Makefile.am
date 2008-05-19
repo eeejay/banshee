@@ -7,6 +7,8 @@ SOURCES =  \
 	Hyena.Collections/RangeCollection.cs \
 	Hyena.Collections/Selection.cs \
 	Hyena.Collections/SelectionProxy.cs \
+	Hyena.Collections/Tests/IntervalHeapTests.cs \
+	Hyena.Collections/Tests/RangeCollectionTests.cs \
 	Hyena.CommandLine/CommandLineParser.cs \
 	Hyena.CommandLine/Layout.cs \
 	Hyena.CommandLine/LayoutGroup.cs \
@@ -20,6 +22,9 @@ SOURCES =  \
 	Hyena.Data.Sqlite/SqliteModelCache.cs \
 	Hyena.Data.Sqlite/SqliteModelProvider.cs \
 	Hyena.Data.Sqlite/SqliteUtils.cs \
+	Hyena.Data.Sqlite/Tests/DbBoundType.cs \
+	Hyena.Data.Sqlite/Tests/SqliteCommandTests.cs \
+	Hyena.Data.Sqlite/Tests/SqliteModelProviderTests.cs \
 	Hyena.Data/ArrayModelCache.cs \
 	Hyena.Data/ColumnDescription.cs \
 	Hyena.Data/DictionaryModelCache.cs \
@@ -54,6 +59,7 @@ SOURCES =  \
 	Hyena.Query/QueryValue.cs \
 	Hyena.Query/RelativeTimeSpanQueryValue.cs \
 	Hyena.Query/StringQueryValue.cs \
+	Hyena.Query/Tests/QueryTests.cs \
 	Hyena.Query/TimeSpanQueryValue.cs \
 	Hyena.Query/UserQueryParser.cs \
 	Hyena.Query/XmlQueryParser.cs \
@@ -79,6 +85,9 @@ SOURCES =  \
 	Hyena/IUndoAction.cs \
 	Hyena/Log.cs \
 	Hyena/StringUtil.cs \
+	Hyena/Tests/CryptoUtilTests.cs \
+	Hyena/Tests/StringUtilTests.cs \
+	Hyena/Tests/TestBase.cs \
 	Hyena/Timer.cs \
 	Hyena/UndoManager.cs
 

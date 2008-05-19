@@ -74,6 +74,8 @@
     <File name="Migo/Migo.Syndication/MigoItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/MigoModelProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/OpmlParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/Tests" subtype="Directory" buildaction="Compile" />
+    <File name="Migo/Migo.Syndication/Tests/XmlTests.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

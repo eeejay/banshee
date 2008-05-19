@@ -67,6 +67,9 @@
     <File name="Banshee.Core.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Collection/TrackMediaAttributes.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/XdgBaseDirectorySpec.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/Tests" subtype="Directory" buildaction="Compile" />
+    <File name="Banshee.Base/Tests/FileNamePatternTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Base/Tests/TaglibReadWriteTests.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />

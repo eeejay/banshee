@@ -1,5 +1,5 @@
 //
-// CryptoUtilTests.cs
+// FileNamePatternTests.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -26,26 +26,48 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#if ENABLE_TESTS
+
 using System;
 using NUnit.Framework;
-using Hyena;
 
-[TestFixture]
-public class CryptoUtilTests
+using Banshee.Base;
+using Banshee.Collection;
+
+namespace Banshee.Base.Tests
 {
-    [Test]
-    public void Md5Encode ()
+    [TestFixture]
+    public class FileNamePatternTest
     {
-        Assert.AreEqual ("ae2b1fca515949e5d54fb22b8ed95575", CryptoUtil.Md5Encode ("testing"));
-    }
-
-    [Test]
-    public void IsMd5Encoded ()
-    {
-        Assert.IsTrue (CryptoUtil.IsMd5Encoded ("ae2b1fca515949e5d54fb22b8ed95575"));
-        Assert.IsFalse (CryptoUtil.IsMd5Encoded ("abc233"));
-        Assert.IsFalse (CryptoUtil.IsMd5Encoded ("lebowski"));
-        Assert.IsFalse (CryptoUtil.IsMd5Encoded ("ae2b1fca515949e5g54fb22b8ed95575"));
+        private static string ZeroPad(int num)
+        {
+            string str = Convert.ToString(num);
+            return num < 10 ? "0" + str : str;
+        }
+    
+        [Test]
+        public void CreateFromTrackInfo()
+        {
+            SampleTrackInfo track = new SampleTrackInfo();
+            string built = FileNamePattern.CreateFromTrackInfo(
+                "%artist%:%album%:%title%:%track_number%:" + 
+                "%track_count%:%track_number_nz%:%track_count_nz%",
+                track);
+    
+            Assert.AreEqual(String.Format("{0}:{1}:{2}:{3}:{4}:{5}:{6}",
+                track.ArtistName, track.AlbumTitle, track.TrackTitle, 
+                ZeroPad(track.TrackNumber), ZeroPad(track.TrackCount),
+                track.TrackNumber, track.TrackCount),
+                built);
+        }
+    
+        [Test]
+        public void Escape()
+        {
+            Assert.AreEqual("_ _ _ _ _ _ _", 
+                FileNamePattern.Escape("/ \\ $ % ? * :"));
+        }
     }
 }
 
+#endif
