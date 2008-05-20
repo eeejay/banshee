@@ -69,14 +69,12 @@ namespace Migo.Syndication
 #region Public Properties
 
         public FeedItem Item { 
-            get { return item; } 
-            internal set {          
-                if (value == null) {
-                	throw new ArgumentNullException ("Parent");
-                }
-
+            get { return item ?? item = FeedItem.Provider.FetchSingle (item_id); } 
+            internal set {
                 item = value;
-                item_id = value.DbId;
+                if (item != null && item.DbId > 0) {
+                    item_id = item.DbId;
+                }
             }
         }
 
@@ -97,8 +95,9 @@ namespace Migo.Syndication
         {
             Provider.Save (this);
             
-            if (save_item)
+            if (save_item) {
                 Item.Save ();
+            }
         }
         
         public void Save ()
@@ -232,7 +231,7 @@ namespace Migo.Syndication
         [DatabaseColumn ("ItemID")]
         protected long item_id;
         public long ItemId {
-            get { return item_id; }
+            get { return Item.DbId; }
         }
         
         [DatabaseColumn]
@@ -300,5 +299,9 @@ namespace Migo.Syndication
 
 #endregion
 
+        public override string ToString ()
+        {
+            return String.Format ("FeedEnclosure<DbId: {0}, Url: {1}>", DbId, Url);
+        }
     }
 }

@@ -83,7 +83,6 @@ SOURCES =  \
 	Banshee.Metadata/IMetadataProvider.cs \
 	Banshee.Metadata/MetadataService.cs \
 	Banshee.Metadata/MetadataServiceJob.cs \
-	Banshee.Metadata/MetadataSettings.cs \
 	Banshee.Networking/NetworkDetect.cs \
 	Banshee.Networking/NetworkManager.cs \
 	Banshee.PlaybackController/IBasicPlaybackController.cs \

@@ -41,6 +41,7 @@ namespace Hyena.Data.Gui
     
         private Pango.Weight font_weight = Pango.Weight.Normal;
         private Pango.EllipsizeMode ellipsize_mode = Pango.EllipsizeMode.End;
+        private Pango.Alignment alignment = Pango.Alignment.Left;
         private int text_width;
         private int text_height;
         
@@ -53,6 +54,7 @@ namespace Hyena.Data.Gui
             context.Layout.Width = (int)((cellWidth - 8) * Pango.Scale.PangoScale);
             context.Layout.FontDescription.Weight = font_weight;
             context.Layout.Ellipsize = EllipsizeMode;
+            context.Layout.Alignment = alignment;
             
             context.Layout.SetText (Text);
             context.Layout.GetPixelSize (out text_width, out text_height);
@@ -77,6 +79,11 @@ namespace Hyena.Data.Gui
         
         protected int TextHeight {
             get { return text_height; }
+        }
+        
+        protected Pango.Alignment Alignment {
+            get { return alignment; }
+            set { alignment = value; }
         }
         
         public virtual Pango.Weight FontWeight {

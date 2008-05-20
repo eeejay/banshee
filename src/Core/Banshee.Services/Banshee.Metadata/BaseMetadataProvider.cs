@@ -38,19 +38,17 @@ namespace Banshee.Metadata
 {
     public abstract class BaseMetadataProvider : IMetadataProvider
     {
-        private MetadataSettings settings;
-        
         public event MetadataLookupResultHandler HaveResult;
         
         protected BaseMetadataProvider()
         {
         }
         
-        public abstract IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings);
+        public abstract IMetadataLookupJob CreateJob(IBasicTrackInfo track);
         
         public virtual void Lookup(IBasicTrackInfo track)
         {
-            IMetadataLookupJob job = CreateJob(track, settings);
+            IMetadataLookupJob job = CreateJob(track);
             job.Run();
         }
         
@@ -73,11 +71,6 @@ namespace Banshee.Metadata
                 handler(this, new MetadataLookupResultArgs(track, 
                     new ReadOnlyCollection<StreamTag>(tags)));
             }
-        }
-        
-        public virtual MetadataSettings Settings {
-            get { return settings; }
-            set { settings = value; }
         }
     }
 }

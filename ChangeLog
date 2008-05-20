@@ -1,3 +1,107 @@
+2008-05-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit fixes a major (though one-line) bug with threading that should
+	fix "xcb" related crashes.  It improves podcast support, including
+	automatically switching to Now Playing for videos and supporting Media RSS
+	feeds.
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Also switch to Now Playing if the trackinfo is updated and it is a video.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Delay refreshing the feeds, and don't try to download artwork if feed not
+	fetched.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	Implement deleting a podcast feed, feed context menu.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs:
+	Show a message if the user creates a playlist under the Podcast source.
+	Should be allowed, but doesn't work properly yet, so we don't allow it.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	Set the LicenseUri and MediaAttributes.
+
+	* src/Extensions/Banshee.Podcasting/Resources/GlobalUI.xml: Add a context
+	menu just for the All Podcasts item.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellFileSize.cs:
+	Right align and always show one decimal point.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastImageFetchJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/IMetadataLookupJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataService.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataSettings.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/IMetadataProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/BaseMetadataProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.Embedded/EmbeddedMetadataProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	Get rid of MetadataSettings and use NetworkDetect.  Don't lookup if
+	podcast MediaAttribute set.  Fix bug with calling GTK+ things from the
+	metadata update thread; probably the cause of the xcb crashes.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Trim artist and album names when set.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs: Don't
+	ignore media engine tags if the current track is not a local file.  This
+	lets GStreamer tell us the streaming file is a video so Now Playing can
+	switch to itself.
+
+	* src/Core/Banshee.Core/Banshee.Collection/IBasicTrackInfo.cs: Add
+	ArtworkId and MediaAttributes properties.
+
+	* src/Core/Banshee.Core/Banshee.Collection/LicenseInfo.cs: New file, not
+	in build.  Idea is to parse and represent Creative Commons license info.
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Handle the
+	VideoCodec tag, setting the VideoStream attribute.
+
+	* src/Libraries/Hyena/Hyena/StringUtil.cs:
+	* src/Libraries/Hyena/Hyena.Query/FileSizeQueryValue.cs: Allow specifying
+	that one decimal point should always been shown.  By default, we hide the
+	decimal point and tenths place if the number is within 0.05 of an int.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Make
+	Delete methods virtual, add LIMIT 1 to FetchFirstMatching, and use
+	DeleteCommand property instead of field.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Add a
+	protected Pango.Alignment property.
+
+	* src/Libraries/Migo/Makefile.am:
+	* src/Libraries/Migo/Migo.mdp:
+	* src/Libraries/Migo/Migo/Migo.Syndication/XmlUtils.cs: Removed, code
+	moved into RssParser.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedItem.cs: Add LicenseUri
+	property, and fix loading of the enclosure.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedEnclosure.cs: Tweaks.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/RssParser.cs: Merge the code
+	from XmlUtils into here, add more namespaces so can pull out Creative
+	Commons LicenseUri and can pull the highest bitrate <media:content> if
+	there is no <enclosure> tag - eg for The Onion News Network.  Should
+	probably allow setting global or per-podcast preference for preferred
+	quality if there are ever options.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/MigoModelProvider.cs: Make
+	Delete methods override; as 'new' they weren't working.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/Feed.cs: Get rid of TTL and
+	Interval properties, replace with UpdatePeriodMinutes property.  Fix
+	Delete method.
+
+	* configure.ac: Enable the podcast extension by default.
+
 2008-05-19  Aaron Bockover  <abock@gnome.org>
 
 	* build/build.rules.mk: Set ENABLE_TESTS as a define variable; this will

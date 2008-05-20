@@ -192,6 +192,11 @@ namespace Banshee.Streaming
                     case CommonTags.StreamType:
                         track.MimeType = (string)tag.Value;
                         break;
+                    case CommonTags.VideoCodec:
+                        if (tag.Value != null) {
+                            track.MediaAttributes |= TrackMediaAttributes.VideoStream;
+                        }
+                        break;
                     /*case CommonTags.AlbumCoverId:
                         foreach(string ext in TrackInfo.CoverExtensions) {
                             string path = Paths.GetCoverArtPath((string) tag.Value, "." + ext);

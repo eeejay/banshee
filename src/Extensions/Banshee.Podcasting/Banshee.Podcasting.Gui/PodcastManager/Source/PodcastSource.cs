@@ -175,6 +175,14 @@ namespace Banshee.Podcasting.Gui
             AfterInitialized ();
         }
         
+        public override void AddChildSource (Source child)
+        {
+            Hyena.Log.Information ("Playlists and smart playlists are not supported by the Podcast Library, yet", "", true);
+            if (child is IUnmapableSource) {
+                (child as IUnmapableSource).Unmap ();
+            }
+        }
+        
         // Probably don't want this -- do we want to allow actually removing the item?  It will be
         // repopulated the next time we update the podcast feed...
         /*protected override void DeleteTrack (DatabaseTrackInfo track)

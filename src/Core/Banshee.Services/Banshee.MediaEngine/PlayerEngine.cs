@@ -174,15 +174,14 @@ namespace Banshee.MediaEngine
         
         protected void OnTagFound (StreamTag tag)
         {
-            if (tag.Equals (StreamTag.Zero) || current_track == null || 
-                !current_track.IsLive) {
-                    return;
+            if (tag.Equals (StreamTag.Zero) || current_track == null || current_track.Uri.IsFile) {
+                return;
             }
-                        
+
             StreamTagger.TrackInfoMerge (current_track, tag);
             
             if (track_info_updated_timeout <= 0) {
-                track_info_updated_timeout = Application.RunTimeout (500, OnTrackInfoUpdated);
+                track_info_updated_timeout = Application.RunTimeout (250, OnTrackInfoUpdated);
             }
         }
         

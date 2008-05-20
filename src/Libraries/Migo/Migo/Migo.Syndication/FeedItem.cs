@@ -119,11 +119,12 @@ namespace Migo.Syndication
         [DatabaseColumn]
         public bool IsRead {
             get { return isRead; }
-            set {          
-                if (isRead != value) {
+            set {
+                isRead = value;
+                /*if (isRead != value) {
                     isRead = value;
                     Save ();
-                }                                         
+                }*/                                        
             }
         }
         
@@ -150,6 +151,13 @@ namespace Migo.Syndication
             get { return title; } 
             set { title = value; }
         }
+        
+        [DatabaseColumn("LicenseUri")]
+        protected string license_uri;
+        public string LicenseUri {
+            get { return license_uri; }
+            set { license_uri = value; }
+        }
 
 #endregion
 
@@ -166,10 +174,17 @@ namespace Migo.Syndication
         }
 
         public FeedEnclosure Enclosure {
-            get { LoadEnclosure (); return enclosure; }
+            get {
+                if (enclosure == null) {
+                    LoadEnclosure ();
+                }
+                return enclosure;
+            }
             internal set {
                 enclosure = value;
-                enclosure.Item = this;
+                enclosure_loaded = true;
+                if (enclosure != null)
+                    enclosure.Item = this;
             }
         }
         
@@ -209,7 +224,7 @@ namespace Migo.Syndication
             if (enclosure != null) {
                 enclosure.Delete (delete_file);
             }
-            
+
             Provider.Delete (this);
             Manager.OnItemRemoved (this);
         }
@@ -220,18 +235,16 @@ namespace Migo.Syndication
         private void LoadEnclosure ()
         {
             if (!enclosure_loaded && DbId > 0) {
-                IEnumerable<FeedEnclosure> enclosures = FeedEnclosure.Provider.FetchAllMatching (String.Format (
+                FeedEnclosure enclosure = FeedEnclosure.Provider.FetchFirstMatching (String.Format (
                     "{0}.ItemID = {1}", FeedEnclosure.Provider.TableName, DbId
                 ));
                 
-                foreach (FeedEnclosure enclosure in enclosures) {
+                if (enclosure != null) {
                     enclosure.Item = this;
                     this.enclosure = enclosure;
-                    break; // should only have one
                 }
-                enclosure_loaded = true;
+                enclosure_loaded = true; 
             }
         }
-
     }
 }

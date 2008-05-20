@@ -205,7 +205,8 @@ namespace Banshee.Collection.Database
         public override string ArtistName {
             get { return base.ArtistName; }
             set {
-                if (value == ArtistName)
+                value = CleanseString (value, ArtistName);
+                if (value == null)
                     return;
 
                 base.ArtistName = value;
@@ -217,12 +218,30 @@ namespace Banshee.Collection.Database
         public override string AlbumTitle {
             get { return base.AlbumTitle; }
             set {
-                if (value == AlbumTitle)
+                value = CleanseString (value, AlbumTitle);
+                if (value == null)
                     return;
 
                 base.AlbumTitle = value;
                 album_changed = album_changed != null;
             }
+        }
+        
+        private static string CleanseString (string input, string old_val)
+        {
+            if (input == old_val)
+                return null;
+                    
+            if (input != null)
+                input = input.Trim ();
+                
+            if (input == String.Empty)
+                return null;
+                
+            if (input == old_val)
+                return null;
+            
+            return input;
         }
         
         private int tag_set_id;

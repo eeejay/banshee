@@ -53,7 +53,6 @@ namespace Banshee.Metadata
         private Dictionary<IBasicTrackInfo, IMetadataLookupJob> queries 
             = new Dictionary<IBasicTrackInfo, IMetadataLookupJob>();
         private List<IMetadataProvider> providers = new List<IMetadataProvider>();
-        private MetadataSettings settings;
 
         public MetadataService()
         {
@@ -63,13 +62,11 @@ namespace Banshee.Metadata
             
             Scheduler.JobFinished += OnSchedulerJobFinished;
             Scheduler.JobUnscheduled += OnSchedulerJobUnscheduled;
-            
-            Settings = new MetadataSettings();
         }
 
-        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings)
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
         {
-            return new MetadataServiceJob(this, track, settings);
+            return new MetadataServiceJob(this, track);
         }
         
         public override void Lookup(IBasicTrackInfo track)
@@ -85,7 +82,7 @@ namespace Banshee.Metadata
             
             lock(((ICollection)queries).SyncRoot) {
                 if(!queries.ContainsKey(track)) {
-                    IMetadataLookupJob job = CreateJob(track, Settings);
+                    IMetadataLookupJob job = CreateJob(track);
                     if(job == null) {
                         return;
                     }
@@ -143,7 +140,7 @@ namespace Banshee.Metadata
             
             IMetadataLookupJob lookup_job = (IMetadataLookupJob)job;
             if(RemoveJob(lookup_job)) {
-                Settings.ProxyToMain(delegate { 
+                Banshee.Base.ThreadAssist.ProxyToMain(delegate { 
                     OnHaveResult(lookup_job.Track, lookup_job.ResultTags); 
                 });
             }
@@ -158,16 +155,6 @@ namespace Banshee.Metadata
             get {
                 lock(providers) {
                     return new ReadOnlyCollection<IMetadataProvider>(providers);
-                }
-            }
-        }
-        
-        public override MetadataSettings Settings {
-            get { return settings; }
-            set { 
-                settings = value;
-                foreach(IMetadataProvider provider in providers) {
-                    provider.Settings = value;
                 }
             }
         }

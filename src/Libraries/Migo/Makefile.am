@@ -40,8 +40,6 @@ SOURCES =  \
 	Migo/Migo.Syndication/OpmlParser.cs \
 	Migo/Migo.Syndication/Rfc822DateTime.cs \
 	Migo/Migo.Syndication/RssParser.cs \
-	Migo/Migo.Syndication/Tests/XmlTests.cs \
-	Migo/Migo.Syndication/XmlUtils.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/AsyncCommandQueue.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/CommandDelegate.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/CommandWrapper.cs \

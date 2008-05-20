@@ -68,7 +68,6 @@
     <File name="Migo/Migo.TaskCore/TaskGroup.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/RssParser.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/Rfc822DateTime.cs" subtype="Code" buildaction="Compile" />
-    <File name="Migo/Migo.Syndication/XmlUtils.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/FeedManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/EnclosureManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Migo/Migo.Syndication/MigoItem.cs" subtype="Code" buildaction="Compile" />

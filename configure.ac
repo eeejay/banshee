@@ -90,8 +90,7 @@ BANSHEE_CHECK_DAAP
 dnl i18n
 SHAMROCK_CONFIGURE_I18N($PACKAGE)
 
-AC_ARG_ENABLE(podcast, AC_HELP_STRING([--enable-podcast], 
-	[Enable Podcast extension]), , enable_podcast="no")
+AC_ARG_ENABLE(podcast, AC_HELP_STRING([--disable-podcast], [Disable Podcasting support]), , enable_podcast="yes")
 AM_CONDITIONAL(ENABLE_PODCAST, test "x$enable_podcast" = "xyes")
 
 dnl generated files
@@ -187,7 +186,7 @@ ${PACKAGE}-${VERSION}
       iPod:            ${enable_ipodsharp}
 
     DAAP Support:      ${enable_daap}	(unstable)
-    Podcast Support:   ${enable_podcast}	(unstable)
+    Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
 "
 if test -d ${expanded_libdir}/${PACKAGE}; then

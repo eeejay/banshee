@@ -43,6 +43,7 @@ using Banshee.ServiceStack;
 using Banshee.Kernel;
 using Banshee.Collection;
 using Banshee.Streaming;
+using Banshee.Networking;
 
 using Banshee.Podcasting.Gui;
 
@@ -50,12 +51,10 @@ namespace Banshee.Podcasting
 {
     public class PodcastImageFetchJob : MetadataServiceJob
     {
-        private static MetadataSettings settings = new MetadataSettings ();
         private Feed feed;
         
         public PodcastImageFetchJob (Feed feed) : base ()
         {
-            this.Settings = settings;
             this.feed = feed;
         }
         
@@ -76,7 +75,7 @@ namespace Banshee.Podcasting
                 return;
             } else if (CoverArtSpec.CoverExists (cover_art_id)) {
                 return;
-            } else if (!Settings.NetworkConnected) {
+            } else if (!NetworkDetect.Instance.Connected) {
                 return;
             }
             

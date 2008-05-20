@@ -133,43 +133,6 @@ namespace Banshee.Podcasting.Data
                 default:
                     return PodcastItemActivity.None;   
                 }
-            
-                /*if (Track != null) {
-                    if (ServiceManager.PlayerEngine.CurrentTrack == Track) {
-                        if (ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Playing) {
-                            ret = PodcastItemActivity.Playing;
-                        } else if (ServiceManager.PlayerEngine.CurrentState == PlayerEngineState.Paused) {
-                            ret = PodcastItemActivity.Paused;
-                        }
-                    } else {                             
-                        if (New) {
-                            ret = PodcastItemActivity.NewPodcastItem;
-                        } else if ((Track.MediaAttributes & TrackMediaAttributes.VideoStream) != 
-                                    TrackMediaAttributes.None) {
-                            ret = PodcastItemActivity.Video;
-                         } else {
-                            ret = PodcastItemActivity.Downloaded;
-                         }
-                    } 
-                } else {*/
-                    /*switch (Item.Enclosure.DownloadStatus) {
-                    case FeedDownloadStatus.Pending: 
-                        ret = PodcastItemActivity.DownloadPending;
-                        break;
-                    case FeedDownloadStatus.Downloading: 
-                        ret = PodcastItemActivity.Downloading;
-                        break;
-                    case FeedDownloadStatus.Downloaded: 
-                        ret = PodcastItemActivity.Downloaded;
-                        break;    
-                    case FeedDownloadStatus.DownloadFailed: 
-                        ret = PodcastItemActivity.DownloadFailed;
-                        break;  
-                    case FeedDownloadStatus.Paused: 
-                        ret = PodcastItemActivity.DownloadPaused;
-                        break;                        
-                    }*/
-                //}
             }
         }
         
@@ -196,24 +159,26 @@ namespace Banshee.Podcasting.Data
         public void Delete ()
         {
             Provider.Delete (this);
-            //feed.Delete ();
         }
         
         public void SyncWithFeedItem ()
         {
+            //Console.WriteLine ("Syncing item, enclosure == null? {0}", Item.Enclosure == null);
             ArtistName = Item.Author;
             AlbumTitle = Item.Feed.Title;
             TrackTitle = Item.Title;
             Year = Item.PubDate.Year;
             CanPlay = true;
             Genre = Genre ?? "Podcast";
+            MediaAttributes |= TrackMediaAttributes.Podcast;
             ReleaseDate = Item.PubDate;
             MimeType = Item.Enclosure.MimeType;
             Duration = Item.Enclosure.Duration;
-            FileSize = item.Enclosure.FileSize;
-            Uri = new Banshee.Base.SafeUri (Item.Enclosure.LocalPath ?? item.Enclosure.Url);
+            FileSize = Item.Enclosure.FileSize;
+            LicenseUri = Item.LicenseUri;
+            Uri = new Banshee.Base.SafeUri (Item.Enclosure.LocalPath ?? Item.Enclosure.Url);
             
-            if (!String.IsNullOrEmpty (item.Enclosure.LocalPath)) {
+            if (!String.IsNullOrEmpty (Item.Enclosure.LocalPath)) {
                 TagLib.File file = Banshee.Streaming.StreamTagger.ProcessUri (Uri);
                 Banshee.Streaming.StreamTagger.TrackInfoMerge (this, file, true);
             }

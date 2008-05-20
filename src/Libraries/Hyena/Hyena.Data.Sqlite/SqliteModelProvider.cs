@@ -362,8 +362,7 @@ namespace Hyena.Data.Sqlite
 
         public T FetchFirstMatching (string condition, params object [] vals)
         {
-            foreach (T item in FetchAllMatching (condition, vals)) {
-                // Just return the first result, if there is one
+            foreach (T item in FetchAllMatching (String.Format ("{0} LIMIT 1", condition), vals)) {
                 return item;
             }
             return default(T);
@@ -405,7 +404,7 @@ namespace Hyena.Data.Sqlite
         
         protected long PrimaryKeyFor (T item)
         {
-            return (long) key.GetValue (item);
+            return Convert.ToInt64 (key.GetValue (item));
         }
         
         protected long PrimaryKeyFor (IDataReader reader)
@@ -413,9 +412,10 @@ namespace Hyena.Data.Sqlite
             return Convert.ToInt64 (reader[key_select_column_index]);
         }
         
-        public void Delete (long id)
+        public virtual void Delete (long id)
         {
-            connection.Execute (delete_command, id);
+            if (id > 0)
+                connection.Execute (DeleteCommand, id);
         }
         
         public void Delete (T item)
@@ -423,7 +423,7 @@ namespace Hyena.Data.Sqlite
             Delete (PrimaryKeyFor (item));
         }
         
-        public void Delete (IEnumerable<T> items)
+        public virtual void Delete (IEnumerable<T> items)
         {
             List<long> ids = new List<long> ();
             long id;
@@ -434,7 +434,7 @@ namespace Hyena.Data.Sqlite
             }
             
             if (ids.Count > 0)
-                connection.Execute (delete_command, ids.ToArray ());
+                connection.Execute (DeleteCommand, ids.ToArray ());
         }
 
         public bool Refresh (T item)

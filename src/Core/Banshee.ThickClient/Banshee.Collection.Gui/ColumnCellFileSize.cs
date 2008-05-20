@@ -37,11 +37,12 @@ namespace Banshee.Collection.Gui
     {
         public ColumnCellFileSize (string property, bool expand) : base (property, expand)
         {
+            Alignment = Pango.Alignment.Right;
         }
         
         protected override string Text {
             get {
-                return new FileSizeQueryValue ((long) BoundObject).ToUserQuery ();
+                return new FileSizeQueryValue ((long) BoundObject).ToUserQuery (true);
             }
         }
     }

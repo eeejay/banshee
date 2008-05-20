@@ -39,6 +39,7 @@ using Banshee.Metadata;
 using Banshee.Kernel;
 using Banshee.Collection;
 using Banshee.Streaming;
+using Banshee.Networking;
 
 namespace Banshee.Metadata.MusicBrainz
 {
@@ -46,17 +47,14 @@ namespace Banshee.Metadata.MusicBrainz
     {
         private static string AmazonUriFormat = "http://images.amazon.com/images/P/{0}.01._SCLZZZZZZZ_.jpg";
     
-        private TrackInfo track;
         private string asin;
         
-        public MusicBrainzQueryJob(IBasicTrackInfo track, MetadataSettings settings)
+        public MusicBrainzQueryJob(IBasicTrackInfo track)
         {
             Track = track;
-            this.track = track as TrackInfo; 
-            Settings = settings;
         }
         
-        public MusicBrainzQueryJob(IBasicTrackInfo track, MetadataSettings settings, string asin) : this(track, settings)
+        public MusicBrainzQueryJob(IBasicTrackInfo track, string asin) : this(track)
         {
             this.asin = asin;
         }
@@ -68,17 +66,17 @@ namespace Banshee.Metadata.MusicBrainz
         
         public bool Lookup()
         {
-            if(track == null) {
+            if (Track == null || (Track.MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
                 return false;
             }
             
-            string album_artist_id = track.ArtworkId;
+            string artwork_id = Track.ArtworkId;
             
-            if(album_artist_id == null) {
+            if(artwork_id == null) {
                 return false;
-            } else if(CoverArtSpec.CoverExists(album_artist_id)) {
+            } else if(CoverArtSpec.CoverExists(artwork_id)) {
                 return false;
-            } else if(!Settings.NetworkConnected) {
+            } else if(!NetworkDetect.Instance.Connected) {
                 return false;
             }
             
@@ -89,12 +87,12 @@ namespace Banshee.Metadata.MusicBrainz
                 }
             }
             
-            if(SaveHttpStreamCover(new Uri(String.Format(AmazonUriFormat, asin)), album_artist_id, 
+            if(SaveHttpStreamCover(new Uri(String.Format(AmazonUriFormat, asin)), artwork_id, 
                 new string [] { "image/gif" })) {
-                Log.Debug ("Downloaded cover art from Amazon", album_artist_id);
+                Log.Debug ("Downloaded cover art from Amazon", artwork_id);
                 StreamTag tag = new StreamTag();
                 tag.Name = CommonTags.AlbumCoverId;
-                tag.Value = album_artist_id;
+                tag.Value = artwork_id;
 
                 AddTag(tag);
                 
@@ -111,7 +109,7 @@ namespace Banshee.Metadata.MusicBrainz
         private string FindAsin()
         {
             Uri uri = new Uri(String.Format("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
-                track.ArtistName, track.AlbumTitle));
+                Track.ArtistName, Track.AlbumTitle));
 
             XmlTextReader reader = new XmlTextReader(GetHttpStream(uri));
 

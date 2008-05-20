@@ -62,14 +62,29 @@ namespace Banshee.NowPlaying
             
             ServiceManager.PlaybackController.Transition += OnPlaybackControllerTransition;
             ServiceManager.PlaybackController.TrackStarted += OnPlaybackControllerTrackStarted;
+            ServiceManager.PlayerEngine.ConnectEvent (OnTrackInfoUpdated, PlayerEvent.TrackInfoUpdated);
         }
         
         public void Dispose ()
         {
+            ServiceManager.PlaybackController.Transition -= OnPlaybackControllerTransition;
+            ServiceManager.PlaybackController.TrackStarted -= OnPlaybackControllerTrackStarted;
+            ServiceManager.PlayerEngine.DisconnectEvent (OnTrackInfoUpdated);
+
             if (now_playing_interface != null) {
                 now_playing_interface.Destroy ();
                 now_playing_interface = null;
             }
+        }
+        
+        private void OnTrackInfoUpdated (PlayerEventArgs args)
+        {
+            CheckForSwitch ();
+        }
+        
+        private void OnPlaybackControllerTrackStarted (object o, EventArgs args)
+        {
+            CheckForSwitch ();
         }
         
         private void OnPlaybackControllerTransition (object o, EventArgs args)
@@ -77,7 +92,7 @@ namespace Banshee.NowPlaying
             transitioned_track = ServiceManager.PlaybackController.CurrentTrack;
         }
         
-        private void OnPlaybackControllerTrackStarted (object o, EventArgs args)
+        private void CheckForSwitch ()
         {
             TrackInfo current_track = ServiceManager.PlaybackController.CurrentTrack;
             if (current_track != null && transitioned_track != current_track && 

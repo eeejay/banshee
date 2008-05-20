@@ -49,7 +49,7 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Podcasting
 {
-    public partial class PodcastService : IExtensionService, IDisposable
+    public partial class PodcastService : IExtensionService, IDisposable, IDelayedInitializeService
     {  
         private readonly string tmp_download_path;
         private string tmp_enclosure_path; 
@@ -88,16 +88,18 @@ namespace Banshee.Podcasting
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
 
             InitializeInterface ();
-            
-            foreach (Feed feed in Feed.Provider.FetchAll ()) {
-                RefreshArtworkFor (feed);
-            }
-
-            //import_manager = new PodcastImportManager (source);
         }
         
         public void Initialize ()
         {
+        }
+        
+        public void DelayedInitialize ()
+        {
+            foreach (Feed feed in Feed.Provider.FetchAll ()) {
+                feed.Update ();
+                RefreshArtworkFor (feed);
+            }
         }
         
         bool disposing;
@@ -138,16 +140,21 @@ namespace Banshee.Podcasting
         
         private void RefreshArtworkFor (Feed feed)
         {
-            Banshee.Kernel.Scheduler.Schedule (new PodcastImageFetchJob (feed), Banshee.Kernel.JobPriority.Highest);
+            if (feed.LastDownloadTime != DateTime.MinValue)
+                Banshee.Kernel.Scheduler.Schedule (new PodcastImageFetchJob (feed), Banshee.Kernel.JobPriority.Highest);
         }
         
         private void OnItemAdded (FeedItem item)
         {
-            PodcastTrackInfo track = new PodcastTrackInfo (item);
-            track.PrimarySource = source;
-            track.Save (true);
-            
-            RefreshArtworkFor (item.Feed);
+            if (item.Enclosure != null) {
+                PodcastTrackInfo track = new PodcastTrackInfo (item);
+                track.PrimarySource = source;
+                track.Save (true);
+                RefreshArtworkFor (item.Feed);
+            } else {
+                // We're only interested in items that have enclosures
+                item.Delete (false);
+            }
         }
         
         private void OnItemRemoved (FeedItem item)

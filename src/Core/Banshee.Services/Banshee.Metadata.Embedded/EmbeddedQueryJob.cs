@@ -43,11 +43,10 @@ namespace Banshee.Metadata.Embedded
     {
         private TrackInfo track;
         
-        public EmbeddedQueryJob(IBasicTrackInfo track, MetadataSettings settings)
+        public EmbeddedQueryJob(IBasicTrackInfo track)
         {
             Track = track;
             this.track = track as TrackInfo;
-            Settings = settings;
         }
         
         public override void Run()
@@ -61,6 +60,9 @@ namespace Banshee.Metadata.Embedded
         
         protected void Fetch()
         {
+            if (!track.Uri.IsFile)
+                return;
+
             string artist_album_id = track.ArtworkId;
 
             if(artist_album_id == null) {

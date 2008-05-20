@@ -41,9 +41,9 @@ namespace Banshee.Metadata.Rhapsody
         {
         }
         
-        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track, MetadataSettings settings)
+        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
         {
-            return new RhapsodyQueryJob(track, settings);
+            return new RhapsodyQueryJob(track);
         }
     }
 }

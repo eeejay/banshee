@@ -115,9 +115,16 @@ namespace Hyena
 
         public static string DoubleToTenthsPrecision (double num)
         {
+            return DoubleToTenthsPrecision (num, false);
+        }
+        
+        public static string DoubleToTenthsPrecision (double num, bool always_decimal)
+        {
             num = Math.Round (num, 1, MidpointRounding.ToEven);
             return String.Format (
-                num == (int)num ? "{0:N0}" : "{0:N1}", num
+                !always_decimal && num == (int)num 
+                    ? "{0:N0}" : "{0:N1}",
+                num
             );
         }
         

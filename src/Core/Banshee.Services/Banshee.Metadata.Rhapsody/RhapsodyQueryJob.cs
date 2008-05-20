@@ -40,6 +40,7 @@ using Banshee.Collection;
 using Banshee.Metadata;
 using Banshee.Kernel;
 using Banshee.Streaming;
+using Banshee.Networking;
 
 namespace Banshee.Metadata.Rhapsody
 {
@@ -47,25 +48,24 @@ namespace Banshee.Metadata.Rhapsody
     {
         private static Uri base_uri = new Uri("http://www.rhapsody.com/");
         
-        public RhapsodyQueryJob(IBasicTrackInfo track, MetadataSettings settings)
+        public RhapsodyQueryJob(IBasicTrackInfo track)
         {
             Track = track;
-            Settings = settings;
         }
         
         public override void Run()
         {
-            if(Track == null) {
+            if (Track == null || (Track.MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
                 return;
             }
         
-            string album_artist_id = CoverArtSpec.CreateArtistAlbumId(Track.ArtistName, Track.AlbumTitle, false);
+            string artwork_id = Track.ArtworkId;
             
-            if(album_artist_id == null || CoverArtSpec.CoverExists(album_artist_id) || !Settings.NetworkConnected) {
+            if(artwork_id == null || CoverArtSpec.CoverExists(artwork_id) || !NetworkDetect.Instance.Connected) {
                 return;
             }
             
-            Uri data_uri = new Uri(base_uri, String.Format("/{0}/data.xml", album_artist_id.Replace('-', '/')));
+            Uri data_uri = new Uri(base_uri, String.Format("/{0}/data.xml", artwork_id.Replace('-', '/')));
         
             XmlDocument doc = new XmlDocument();
             Stream stream = GetHttpStream(data_uri);
@@ -83,12 +83,12 @@ namespace Banshee.Metadata.Rhapsody
                 string second_attempt = art_node.Attributes["src"].Value;
                 string first_attempt = second_attempt.Replace("170x170", "500x500");
 
-                if(SaveHttpStreamCover(new Uri(first_attempt), album_artist_id, null) || 
-                    SaveHttpStreamCover(new Uri(second_attempt), album_artist_id, null)) {
-                    Log.Debug ("Downloaded cover art from Rhapsody", album_artist_id);
+                if(SaveHttpStreamCover(new Uri(first_attempt), artwork_id, null) || 
+                    SaveHttpStreamCover(new Uri(second_attempt), artwork_id, null)) {
+                    Log.Debug ("Downloaded cover art from Rhapsody", artwork_id);
                     StreamTag tag = new StreamTag();
                     tag.Name = CommonTags.AlbumCoverId;
-                    tag.Value = album_artist_id;
+                    tag.Value = artwork_id;
                 
                     AddTag(tag);
                 }

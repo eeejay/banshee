@@ -33,5 +33,7 @@ namespace Banshee.Collection
         string ArtistName { get; }
         string AlbumTitle { get; }
         string TrackTitle { get; }
+        string ArtworkId { get; }
+        TrackMediaAttributes MediaAttributes { get; }
     }
 }

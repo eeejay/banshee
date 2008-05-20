@@ -65,22 +65,17 @@ namespace Migo.Syndication
             }
         }
         
-        public new void Delete (long id)
+        public override void Delete (long id)
         {
             full_cache.Remove (id);
             base.Delete (id);
         }
         
-        public new void Delete (T item)
-        {
-            full_cache.Remove (PrimaryKeyFor (item));
-            base.Delete (item);
-        }
-        
-        public new void Delete (IEnumerable<T> items)
+        public override void Delete (IEnumerable<T> items)
         {
             foreach (T item in items) {
-                full_cache.Remove (PrimaryKeyFor (item));
+                if (item != null)
+                    full_cache.Remove (PrimaryKeyFor (item));
             }
                 
             base.Delete (items);

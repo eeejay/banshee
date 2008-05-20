@@ -111,13 +111,18 @@ namespace Hyena.Query
                 }
             }
         }
-
+        
         public override string ToUserQuery ()
+        {
+            return ToUserQuery (false);
+        }
+
+        public string ToUserQuery (bool always_decimal)
         {
             if (factor != FileSizeFactor.None) {
                 return String.Format (
                     "{0} {1}",
-                    IntValue == 0 ? "0" : StringUtil.DoubleToTenthsPrecision (((double)IntValue / (double)factor)),
+                    IntValue == 0 ? "0" : StringUtil.DoubleToTenthsPrecision (((double)IntValue / (double)factor), always_decimal),
                     factor.ToString ()
                 );
             } else {

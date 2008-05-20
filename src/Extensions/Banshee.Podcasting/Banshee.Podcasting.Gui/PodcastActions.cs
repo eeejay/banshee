@@ -151,15 +151,16 @@ namespace Banshee.Podcasting.Gui
                 )
             });
             
-            // TODO deleting podcasts is not implemented
-            this ["PodcastDeleteAction"].Sensitive = false;
-            
             actions_id = Actions.UIManager.AddUiFromResource ("GlobalUI.xml");
             Actions.AddActionGroup (this);
 
             ServiceManager.SourceManager.ActiveSourceChanged += HandleActiveSourceChanged;
             
-            source.TrackModel.Selection.Changed += delegate { UpdateActions (); };
+            source.TrackModel.Selection.Changed += delegate { UpdateItemActions (); };
+            source.FeedModel.Selection.Changed += delegate { UpdateFeedActions (); };
+            
+            UpdateFeedActions ();
+            UpdateItemActions ();
         }
 
         public override void Dispose ()
@@ -173,19 +174,33 @@ namespace Banshee.Podcasting.Gui
 
         private void HandleActiveSourceChanged (SourceEventArgs args)
         {
-            UpdateActions ();
+            UpdateFeedActions ();
+            UpdateItemActions ();
         }
 
 #endregion
 
 #region Utility Methods
 
-        private void UpdateActions ()
+        private void UpdateItemActions ()
         {
             if (ServiceManager.SourceManager.ActiveSource == source) {
                 bool has_single_selection = source.TrackModel.Selection.Count == 1;
                 UpdateActions (true, has_single_selection,
                    "PodcastItemLinkAction"
+                );
+            }
+        }
+        
+        private void UpdateFeedActions ()
+        {
+            if (ServiceManager.SourceManager.ActiveSource == source) {
+                bool has_single_selection = source.FeedModel.Selection.Count == 1;
+                bool all_selected = source.FeedModel.Selection.AllSelected;
+
+                UpdateActions (true, has_single_selection && !all_selected,
+                    "PodcastDeleteAction", "PodcastUpdateFeedAction", "PodcastHomepageAction",
+                    "PodcastPropertiesAction"
                 );
             }
         }
@@ -206,7 +221,10 @@ namespace Banshee.Podcasting.Gui
 
         private void OnFeedPopup (object o, EventArgs args)
         {
-            ShowContextMenu ("/PodcastFeedPopup");
+            if (source.FeedModel.Selection.AllSelected)
+                ShowContextMenu ("/PodcastAllFeedsContextMenu");
+            else
+                ShowContextMenu ("/PodcastFeedPopup");
         }
 
         private void RunSubscribeDialog ()
@@ -364,29 +382,10 @@ namespace Banshee.Podcasting.Gui
         
         private void OnPodcastDelete (object sender, EventArgs e)
         {
-            /*lock (sync) {
-                if (!disposed || disposing) {
-                    bool deleteFeed;
-                    bool deleteFiles;
-                    ReadOnlyCollection<Feed> feeds = source.FeedModel.CopySelectedItems ();
-                    
-                    if (feeds != null) {                    
-                        RunConfirmDeleteDialog (
-                            true, feeds.Count, out deleteFeed, out deleteFiles
-                        );
-                        
-                        
-                        if (deleteFeed) {
-                            source.FeedModel.Selection.Clear ();
-                            source.TrackModel.Selection.Clear ();
-                            
-                            foreach (Feed f in feeds) {
-                                f.Delete (deleteFiles);   
-                            }                                 
-                        }                   
-                    }                    
-                }
-            }*/
+            Feed feed = source.FeedModel.FocusedItem;
+            if (feed != null) {
+                feed.Delete (true);
+            }
         }        
 
         private void OnPodcastItemDeleteFile (object sender, EventArgs e)

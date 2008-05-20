@@ -83,15 +83,12 @@ namespace Migo.Syndication
         
         //private ManualResetEvent updatingHandle = new ManualResetEvent (true);
         
-        private readonly object sync = new object ();     
-        
-        private List<FeedItem> items;
+        private readonly object sync = new object ();
         
         private string copyright;
         private string description;
-        private bool downloadEnclosuresAutomatically;
-        private string image;        
-        private long interval;
+        private string image_url;
+        private int update_period_minutes = 24 * 60;
         private string language;
         private DateTime last_build_date = DateTime.MinValue;
         private FeedDownloadError lastDownloadError;
@@ -103,7 +100,6 @@ namespace Migo.Syndication
         private DateTime pubDate;
         private FeedSyncSetting syncSetting;
         private string title;
-        private long ttl;
         private string url;
         private string keywords, category;
         
@@ -152,23 +148,15 @@ namespace Migo.Syndication
         }
         
         [DatabaseColumn]
-        public bool DownloadEnclosuresAutomatically { 
-            get { return downloadEnclosuresAutomatically; }
-            set { downloadEnclosuresAutomatically = value; }
-        } 
-        
-        [DatabaseColumn]
         public string ImageUrl {
-            get { return image; }
-            set { image = value; }
+            get { return image_url; }
+            set { image_url = value; }
         }
 
         [DatabaseColumn]
-        public long Interval { 
-            get { return interval; }
-            set { 
-                interval = (value < 15) ? 1440 : value;
-            } 
+        public int UpdatePeriodMinutes { 
+            get { return update_period_minutes; }
+            set { update_period_minutes = value; } 
         }
         
         [DatabaseColumn]
@@ -251,12 +239,6 @@ namespace Migo.Syndication
                 CheckForItemsToDownload ();
             }
         }
-              
-        [DatabaseColumn]
-        public long Ttl {
-            get { return ttl; }
-            set { ttl = value; }
-        }
         
         [DatabaseColumn("DownloadStatus")]
         private FeedDownloadStatus download_status;
@@ -331,7 +313,6 @@ namespace Migo.Syndication
 
         public Feed ()
         {
-            items = new List<FeedItem> ();
         }
         
 #endregion
@@ -379,10 +360,14 @@ namespace Migo.Syndication
         
         private bool AddItem (FeedItem item)
         {
+            try {
             if (!FeedItem.Exists (item.Guid)) {
                 item.Feed = this;
                 item.Save ();
                 return true;
+            }
+            } catch (Exception e) {
+                Hyena.Log.Exception (e);
             }
             return false;
         }
@@ -470,6 +455,7 @@ namespace Migo.Syndication
 
 #region Public Methods
 
+
         public void Update ()
         {
             Manager.QueueUpdate (this);
@@ -491,11 +477,10 @@ namespace Migo.Syndication
                     Manager.CancelUpdate (this);                 
                 }
 
-                foreach (FeedItem item in items) {
+                foreach (FeedItem item in Items) {
                     item.Delete (deleteEnclosures);
                 }
-                
-                //items_dirty = true;
+
                 Provider.Delete (this);
             }
             
@@ -506,7 +491,7 @@ namespace Migo.Syndication
         public void MarkAllItemsRead ()
         {
             lock (sync) {
-                foreach (FeedItem i in items) {
+                foreach (FeedItem i in Items) {
                     i.IsRead = true;
                 }
             }
@@ -537,7 +522,9 @@ namespace Migo.Syndication
             
             bool any = false;
             foreach (FeedItem item in Items) {
-                if (item.Active && item.Enclosure.DownloadStatus != FeedDownloadStatus.Downloaded && item.PubDate > LastAutoDownload) {
+                if (item.Enclosure != null && item.Active && 
+                    item.Enclosure.DownloadStatus != FeedDownloadStatus.Downloaded && item.PubDate > LastAutoDownload)
+                {
                     item.Enclosure.AsyncDownload ();
                     any = true;
                     if (only_first)
