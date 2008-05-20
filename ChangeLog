@@ -1,3 +1,9 @@
+2008-05-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs: Disable
+	writing metadata to file for video files for now, since TagLib# seems to run
+	at 100% and consume lots of memory when we try.
+
 2008-05-20  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellRating.cs: Tell the

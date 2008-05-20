@@ -53,14 +53,21 @@ namespace Banshee.Streaming
                 Console.WriteLine ("Skipping scheduled metadata write, preference disabled after scheduling");
                 return;
             }
+            
+            // FIXME taglib# does not seem to handle writing metadata to video files well at all atm
+            // so not allowing
+            if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
+                Hyena.Log.DebugFormat ("Avoiding 100% cpu bug with taglib# by not writing metadata to video file {0}", track);
+                return;
+            }
         
             // Note: this should be kept in sync with the metadata read in StreamTagger.cs
             TagLib.File file = StreamTagger.ProcessUri (track.Uri);
             file.Tag.Performers = new string [] { track.ArtistName };
             file.Tag.Album = track.AlbumTitle;
-            /* Bug in taglib-sharp-2.0.3.0: Crash if you send it a genre of "{ null }"
-             * on a song with both ID3v1 and ID3v2 metadata. It's happy with "{}", though.
-             * (see http://forum.taglib-sharp.com/viewtopic.php?f=5&t=239 ) */
+            // Bug in taglib-sharp-2.0.3.0: Crash if you send it a genre of "{ null }"
+            // on a song with both ID3v1 and ID3v2 metadata. It's happy with "{}", though.
+            // (see http://forum.taglib-sharp.com/viewtopic.php?f=5&t=239 )
             file.Tag.Genres = (track.Genre == null) ? new string[] {} : new string [] { track.Genre };
             file.Tag.Title = track.TrackTitle;
             file.Tag.Track = (uint)track.TrackNumber;
