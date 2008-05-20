@@ -118,9 +118,9 @@ namespace Hyena.Widgets
             // TODO: See what's really better - hiding the menu when the
             // value is set, or keeping it up; I like it staying up --Aaron
             //
-            // if (can_activate) {
+            if (can_activate) {
             //    Activate ();
-            // }
+            }
         }
         
         public void Reset (int value)
