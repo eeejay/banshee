@@ -52,7 +52,8 @@ namespace Hyena.Widgets
             
             entry = new RatingEntry ();
             entry.HasFrame = false;
-            entry.PreviewOnHover = false;
+            entry.PreviewOnHover = true;
+            entry.AlwaysShowEmptyStars = true;
             entry.Changed += OnEntryChanged;
             box.PackStart (entry, false, false, 0);
             
@@ -89,7 +90,7 @@ namespace Hyena.Widgets
         protected override bool OnMotionNotifyEvent (Gdk.EventMotion evnt)
         {
             if (!pressing) {
-                return false;
+                return entry.HandleMotionNotify (evnt.State, TransformX (evnt.X));
             }
 
             entry.SetValueFromPosition (TransformX (evnt.X));
@@ -114,9 +115,12 @@ namespace Hyena.Widgets
         
         private void OnEntryChanged (object o, EventArgs args)
         {
-            if (can_activate) {
-                Activate ();
-            }
+            // TODO: See what's really better - hiding the menu when the
+            // value is set, or keeping it up; I like it staying up --Aaron
+            //
+            // if (can_activate) {
+            //    Activate ();
+            // }
         }
         
         public void Reset (int value)

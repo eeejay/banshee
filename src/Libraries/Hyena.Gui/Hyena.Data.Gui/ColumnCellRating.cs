@@ -54,7 +54,7 @@ namespace Hyena.Data.Gui
             
             renderer.Value = Value;
             renderer.Render (context.Context, area, context.Theme.Colors.GetWidgetColor (GtkColorClass.Text, state), 
-                hover_bound == BoundObjectParent && hover_bound != null, hover_value);
+                hover_bound == BoundObjectParent && hover_bound != null, hover_value, 0.8, 0.45, 0.35);
             
             // FIXME: Something is hosed in the view when computing cell dimensions
             // The cell width request is always smaller than the actual cell, so

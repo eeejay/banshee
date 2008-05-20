@@ -85,6 +85,12 @@ namespace Hyena.Widgets
         
 #region Public Properties
 
+        private bool always_show_empty_stars = false;
+        public bool AlwaysShowEmptyStars {
+            get { return always_show_empty_stars; }
+            set { always_show_empty_stars = value; }
+        }
+
         private bool preview_on_hover = true;
         public bool PreviewOnHover {
             get { return preview_on_hover; }
@@ -247,8 +253,11 @@ namespace Hyena.Widgets
             }
             
             Cairo.Context cr = Gdk.CairoHelper.Create (GdkWindow);
-            renderer.Render (cr, Allocation, CairoExtensions.GdkColorToCairoColor (
-                Style.Foreground (State)), PreviewOnHover && hover_value >= renderer.MinRating, hover_value);
+            renderer.Render (cr, Allocation, CairoExtensions.GdkColorToCairoColor (Style.Foreground (State)), 
+                AlwaysShowEmptyStars || (PreviewOnHover && hover_value >= renderer.MinRating), hover_value,
+                State == StateType.Insensitive ? 1 : 0.90, 
+                State == StateType.Insensitive ? 1 : 0.65, 
+                State == StateType.Insensitive ? 1 : 0.45);
             ((IDisposable)cr.Target).Dispose ();
             ((IDisposable)cr).Dispose ();
 
@@ -283,13 +292,7 @@ namespace Hyena.Widgets
         
         protected override bool OnMotionNotifyEvent (Gdk.EventMotion motion)
         {
-            hover_value = renderer.RatingFromPosition (event_alloc, motion.X);
-            if ((motion.State & Gdk.ModifierType.Button1Mask) != 0) {
-                Value = hover_value;
-            }
-            
-            QueueDraw ();
-            return true;
+            return HandleMotionNotify (motion.State, motion.X);
         }
         
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
@@ -346,6 +349,17 @@ namespace Hyena.Widgets
             }
             
             return false;
+        }
+        
+        internal bool HandleMotionNotify (Gdk.ModifierType state, double x)
+        {
+            hover_value = renderer.RatingFromPosition (event_alloc, x);
+            if ((state & Gdk.ModifierType.Button1Mask) != 0) {
+                Value = hover_value;
+            }
+            
+            QueueDraw ();
+            return true;
         }
         
 #endregion

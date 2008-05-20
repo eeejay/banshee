@@ -1,3 +1,20 @@
+2008-05-20  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellRating.cs: Tell the
+	renderer what opacities we like
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/RatingRenderer.cs: Take the color
+	opacities from the argument stack instead of hard coding
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingEntry.cs: Set desired
+	opacities and added an AlwaysShowEmptyStars property; moved the motion
+	event handler to an internal HandleMotionNotify method
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs: Proxy the
+	menu's motion notify event to the entry so we get the sweet preview;
+	do not activate the menu when we set the rating so the menu stays visible
+	and we can see the rating actually changed
+
 2008-05-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit fixes a major (though one-line) bug with threading that should

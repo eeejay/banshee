@@ -52,18 +52,19 @@ namespace Hyena.Gui
         {
         }
         
-        public virtual void Render (Context cr, Gdk.Rectangle area, Color color, bool isHovering, int hoverValue)
+        public virtual void Render (Context cr, Gdk.Rectangle area, Color color, bool isHovering, int hoverValue, 
+            double fillOpacity, double hoverFillOpacity, double strokeOpacity)
         {
             if (!(Value > MinRating || (Value == MinRating && isHovering))) {
                 return;
             }
             
             Cairo.Color fill_color = color;
-            fill_color.A = 0.8;
+            fill_color.A = fillOpacity;
             Cairo.Color stroke_color = fill_color;
-            stroke_color.A = 0.35;
+            stroke_color.A = strokeOpacity;
             Cairo.Color hover_fill_color = fill_color;
-            hover_fill_color.A = 0.45;
+            hover_fill_color.A = hoverFillOpacity;
                 
             double x, y;
             ComputePosition (area, out x, out y);
