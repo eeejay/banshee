@@ -47,10 +47,11 @@ using Banshee.Metadata;
 using Banshee.MediaEngine;
 using Banshee.Collection;
 using Banshee.ServiceStack;
+using Banshee.PlaybackController;
  
 namespace Banshee.Lastfm.Radio
 {
-    public class StationSource : Source, ITrackModelSource, IUnmapableSource, IDisposable
+    public class StationSource : Source, ITrackModelSource, IUnmapableSource, IDisposable, IBasicPlaybackController
     {
         private static string generic_name = Catalog.GetString ("Last.fm Station");
         
@@ -274,6 +275,30 @@ namespace Banshee.Lastfm.Radio
                     current_track = i;
             }
         }
+        
+#region IBasicPlaybackController
+
+        void IBasicPlaybackController.First ()
+        {
+            ((IBasicPlaybackController)this).Next (false);
+        }
+        
+        private bool playback_requested;    
+        void IBasicPlaybackController.Next (bool restart)
+        {
+            TrackInfo next = NextTrack;
+            if (next != null) {
+                ServiceManager.PlayerEngine.OpenPlay (next);
+            }  else {
+                playback_requested = true;
+            }
+        }
+        
+        void IBasicPlaybackController.Previous (bool restart)
+        {
+        }
+        
+#endregion
 
         public TrackInfo NextTrack {
             get { return GetTrack (current_track + 1); }
@@ -329,10 +354,12 @@ namespace Banshee.Lastfm.Radio
                             track_model.Reload ();
                             OnUpdated ();
 
-                            /*if (playback_requested) {
-                                StartPlayback ();
+                            if (playback_requested) {
+                                if (this == ServiceManager.PlaybackController.Source ) {
+                                    ((IBasicPlaybackController)this).Next (false);
+                                }
                                 playback_requested = false;
-                            }*/
+                            }
                         });
                     }
                 } else {

@@ -84,7 +84,9 @@ namespace Hyena.Data.Sqlite
         }
 
 #region Public Query Methods
-        
+
+        // TODO special case for single object param to avoid object []
+                
         // SELECT multiple column queries
         public IDataReader Query (HyenaSqliteCommand command)
         {

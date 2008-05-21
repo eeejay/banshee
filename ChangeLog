@@ -1,5 +1,29 @@
 2008-05-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NotificationArea/Resources/NotificationAreaMenu.xml:
+	Add placeholder.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	Implement IBasicPlaybackController, so that if we are selected as the new
+	playback source and asked to play First or Next, we will as soon as we've
+	loaded some songs (and we're still the playback source).
+
+	* src/Extensions/Banshee.Lastfm/Makefile.am:
+	* src/Extensions/Banshee.Lastfm/Resources/LastfmTrackActions.xml:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Load some TrackActions when we're the playback source (specifically, put
+	Love/Hate in the notification menu).
+
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Collection/IHasTrackSelection.cs:
+	Removed.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: TODO
+	note.
+
+2008-05-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs: Disable
 	writing metadata to file for video files for now, since TagLib# seems to run
 	at 100% and consume lots of memory when we try.

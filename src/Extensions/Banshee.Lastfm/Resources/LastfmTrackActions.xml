@@ -1,0 +1,8 @@
+<ui>
+  <popup name="NotificationAreaIconMenu" action="NotificationAreaIconMenuAction">
+    <placeholder name="NotificationPlaceholder">
+      <menuitem name="LastfmLove" action="LastfmLoveAction"/>
+      <menuitem name="LastfmHate" action="LastfmHateAction"/>
+    </placeholder>
+  </popup>
+</ui>

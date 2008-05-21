@@ -5,6 +5,8 @@
     <menuitem name="Next" action="NextAction"/>
     <menuitem name="Previous" action="PreviousAction"/>
     <separator/>
+    <placeholder name="NotificationPlaceholder" />
+    <separator/>
     <menuitem name="ToggleNotifications" action="ToggleNotificationsAction"/>
     <separator/>
     <menuitem name="Quit" action="QuitAction"/>

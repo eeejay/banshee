@@ -423,6 +423,7 @@ namespace Banshee.Lastfm.Radio
             updating = false;
         }
 
+        private uint track_actions_id;
         private RadioAction old_shuffle;
         private RadioAction old_repeat;
         private bool was_lastfm = false;
@@ -452,6 +453,11 @@ namespace Banshee.Lastfm.Radio
             // Set sensitivity
             shuffle_actions.Sensitive = !is_lastfm;
             repeat_actions.Sensitive = !is_lastfm;
+            
+            if (is_lastfm && !was_lastfm)
+                track_actions_id = Actions.UIManager.AddUiFromResource ("LastfmTrackActions.xml");
+            else if (!is_lastfm && was_lastfm)
+                Actions.UIManager.RemoveUi (track_actions_id);
 
             was_lastfm = is_lastfm;
         }
