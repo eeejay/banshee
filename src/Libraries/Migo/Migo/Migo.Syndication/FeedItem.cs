@@ -40,7 +40,7 @@ namespace Migo.Syndication
     {
         private static SqliteModelProvider<FeedItem> provider;
         public static SqliteModelProvider<FeedItem> Provider {
-            get { return provider ?? provider = new MigoModelProvider<FeedItem> (FeedsManager.Instance.Connection, "PodcastItems"); }
+            get { return provider; }
         }
         
         public static bool Exists (string guid)
@@ -48,7 +48,9 @@ namespace Migo.Syndication
             return Provider.Connection.Query<int> (String.Format ("select count(*) from {0} where Guid = ?", Provider.TableName), guid) != 0;
         }
         
-        public static void Init () {}
+        public static void Init () {
+            provider = new MigoModelProvider<FeedItem> (FeedsManager.Instance.Connection, "PodcastItems");
+        }
 
         private bool active = true;
         private string author;

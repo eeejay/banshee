@@ -262,6 +262,7 @@ namespace Banshee.Query
                 case "Rating":
                 case "PlayCount":
                 case "SkipCount":
+                case "FileSize":
                 case "LastPlayedStamp":
                 case "LastSkippedStamp":
                 case "DateAddedStamp":

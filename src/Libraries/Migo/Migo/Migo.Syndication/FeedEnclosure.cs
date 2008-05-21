@@ -40,10 +40,12 @@ namespace Migo.Syndication
     {
         private static SqliteModelProvider<FeedEnclosure> provider;
         public static SqliteModelProvider<FeedEnclosure> Provider {
-            get { return provider ?? provider = new MigoModelProvider<FeedEnclosure> (FeedsManager.Instance.Connection, "PodcastEnclosures"); }
+            get { return provider; }
         }
         
-        public static void Init () {}
+        public static void Init () {
+            provider = new MigoModelProvider<FeedEnclosure> (FeedsManager.Instance.Connection, "PodcastEnclosures");
+        }
         
         private string mimetype;
         private FeedDownloadStatus download_status;        

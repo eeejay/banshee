@@ -113,8 +113,35 @@ namespace Hyena.Data.Sqlite
         {
             return Query (new HyenaSqliteCommand (command.ToString ()));
         }
+
+        // SELECT single column, multiple rows queries
+        public IEnumerable<T> QueryEnumerable<T> (HyenaSqliteCommand command)
+        {
+            using (IDataReader reader = Query (command)) {
+                while (reader.Read ()) {
+                    yield return (T)SqliteUtils.FromDbFormat (typeof (T), reader[0]);
+                }
+            }
+        }
+
+        public IEnumerable<T> QueryEnumerable<T> (HyenaSqliteCommand command, params object [] param_values)
+        {
+            lock (command) {
+                return QueryEnumerable<T> (command.ApplyValues (param_values));
+            }
+        }
+
+        public IEnumerable<T> QueryEnumerable<T> (string command_str, params object [] param_values)
+        {
+            return QueryEnumerable<T> (new HyenaSqliteCommand (command_str, param_values));
+        }
         
-        // SELECT single column queries
+        public IEnumerable<T> QueryEnumerable<T> (object command)
+        {
+            return QueryEnumerable<T> (new HyenaSqliteCommand (command.ToString ()));
+        }
+
+        // SELECT single column, single row queries
         public T Query<T> (HyenaSqliteCommand command)
         {
             object result = null;

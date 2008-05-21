@@ -67,10 +67,12 @@ namespace Migo.Syndication
     {
         private static SqliteModelProvider<Feed> provider;
         public static SqliteModelProvider<Feed> Provider {
-            get { return provider ?? provider = new MigoModelProvider<Feed> (FeedsManager.Instance.Connection, "PodcastSyndications"); }
+            get { return provider; }
         }
         
-        public static void Init () {}
+        public static void Init () {
+            provider = new MigoModelProvider<Feed> (FeedsManager.Instance.Connection, "PodcastSyndications");
+        }
 
         public static bool Exists (string url)
         {

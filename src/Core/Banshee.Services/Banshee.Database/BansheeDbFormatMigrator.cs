@@ -742,6 +742,9 @@ namespace Banshee.Database
                     DatabaseTrackInfo track = null;
                     try {
                         track = DatabaseTrackInfo.Provider.Load (reader);
+
+                        if (!track.Uri.IsFile)
+                            continue;
                         
                         try {
                             TagLib.File file = StreamTagger.ProcessUri (track.Uri);

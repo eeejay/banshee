@@ -1,3 +1,36 @@
+2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Migrate podcast feeds and items from 0.13.2 podcast plugin.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs:
+	Allow sorting on download status and published date, make the default
+	PubDate descending.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/XmlColumnController.cs:
+	Allow defining the sort direction in addition to the default sort column.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Add an override for GetTrackForUri method.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Expose SortQuery via protected property, and make GenerateSortQueryPart
+	virtual.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Skip items with non-local URIs.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Add FileSize
+	sorting.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add
+	QueryEnumerable<T> methods.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedItem.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedEnclosure.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Feed.cs: Create the model
+	within the Init function.
+
 2008-05-21  Scott Peterson  <lunchtimemama@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Fixed rendering

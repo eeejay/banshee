@@ -506,6 +506,12 @@ namespace Banshee.Collection.Database
             "SELECT TrackID FROM CoreTracks WHERE PrimarySourceId IN (?) AND (Uri = ? OR Uri = ?) LIMIT 1"
         );
 
+        public static int GetTrackIdForUri (SafeUri uri, string relative_path, int [] primary_sources)
+        {
+            return ServiceManager.DbConnection.Query<int> (check_command,
+                primary_sources, relative_path, uri.AbsoluteUri);
+        }
+
         public static int GetTrackIdForUri (string relative_path, int [] primary_sources)
         {
             return ServiceManager.DbConnection.Query<int> (check_command,

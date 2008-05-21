@@ -58,10 +58,39 @@ namespace Banshee.Podcasting.Gui
     {
         public PodcastListModel (BansheeDbConnection conn, IDatabaseTrackModelProvider provider, DatabaseSource source) : base (conn, provider, source)
         {
-            JoinTable = String.Format ("{0}, {1}", Feed.Provider.TableName, FeedItem.Provider.TableName);
+            JoinTable = String.Format ("{0}, {1}, {2}", Feed.Provider.TableName, FeedItem.Provider.TableName, FeedEnclosure.Provider.TableName);
             JoinPrimaryKey = FeedItem.Provider.PrimaryKey;
             JoinColumn = "ExternalID";
-            AddCondition (String.Format ("{0}.FeedID = {1}.FeedID AND CoreTracks.ExternalID = {1}.ItemID", Feed.Provider.TableName, FeedItem.Provider.TableName));
+            AddCondition (String.Format (
+                "{0}.FeedID = {1}.FeedID AND CoreTracks.ExternalID = {1}.ItemID AND {1}.ItemID = {2}.ItemID",
+                Feed.Provider.TableName, FeedItem.Provider.TableName, FeedEnclosure.Provider.TableName
+            ));
+        }
+
+        protected override void GenerateSortQueryPart ()
+        {
+            SortQuery = (SortColumn == null)
+                ? GetSort ("Published", false)
+                : GetSort (SortColumn.SortKey, SortColumn.SortType == Hyena.Data.SortType.Ascending);
+        }
+
+        public static string GetSort (string key, bool asc)
+        {
+            string ascDesc = asc ? "ASC" : "DESC";
+            string sort_query = null;
+            switch(key) {
+                case "PublishedDate":
+                    sort_query = String.Format (@"
+                        PodcastItems.PubDate {0}", ascDesc);
+                    break;
+
+                case "DownloadStatus":
+                    sort_query = String.Format (@"
+                        PodcastEnclosures.DownloadStatus {0}", ascDesc);
+                    break;
+            }
+
+            return sort_query ?? Banshee.Query.BansheeQuery.GetSort (key, asc);
         }
         
         public new PodcastTrackInfo this[int index] {
@@ -122,11 +151,10 @@ namespace Banshee.Podcasting.Gui
             Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
                     <column-controller>
                       <column>
-                          <title>Activity</title>
                           <visible>true</visible>
                           <renderer type=""Banshee.Podcasting.Gui.PodcastItemActivityColumn"" property=""Activity"" />
                           <sort-key>DownloadStatus</sort-key>
-                          <width>.05</width>
+                          <width>.025</width>
                           <max-width>30</max-width>
                           <min-width>30</min-width>
                       </column>
@@ -147,7 +175,7 @@ namespace Banshee.Podcasting.Gui
                           <renderer type=""Banshee.Podcasting.Gui.ColumnCellPublished"" property=""PublishedDate"" />
                           <sort-key>PublishedDate</sort-key>
                       </column>
-                      <sort-column>published_date</sort-column>
+                      <sort-column direction=""desc"">published_date</sort-column>
                     </column-controller>
                 ",
                 Catalog.GetString ("Podcast")

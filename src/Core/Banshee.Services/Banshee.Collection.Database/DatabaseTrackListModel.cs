@@ -117,11 +117,16 @@ namespace Banshee.Collection.Database
             get { return query_tree; }
         }
 
-        private void GenerateSortQueryPart ()
+        protected string SortQuery {
+            get { return sort_query; }
+            set { sort_query = value; }
+        }
+
+        protected virtual void GenerateSortQueryPart ()
         {
-            sort_query = (sort_column == null)
+            SortQuery = (SortColumn == null)
                 ? BansheeQuery.GetSort ("Artist", true)
-                : BansheeQuery.GetSort (sort_column.SortKey, sort_column.SortType == SortType.Ascending);
+                : BansheeQuery.GetSort (SortColumn.SortKey, SortColumn.SortType == SortType.Ascending);
         }
 
         public void Sort (ISortableColumn column)

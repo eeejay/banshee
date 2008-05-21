@@ -46,6 +46,7 @@ using Banshee.MediaEngine;
 using Banshee.Podcasting.Gui;
 using Banshee.Podcasting.Data;
 using Banshee.Collection.Database;
+using Banshee.Configuration;
 
 namespace Banshee.Podcasting
 {
@@ -82,12 +83,92 @@ namespace Banshee.Podcasting
             feeds_manager.FeedManager.ItemAdded += OnItemAdded;
             feeds_manager.FeedManager.ItemChanged += OnItemChanged;
             feeds_manager.FeedManager.ItemRemoved += OnItemRemoved;
-            
             feeds_manager.FeedManager.FeedsChanged += OnFeedsChanged;
-              
+
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
 
             InitializeInterface ();
+        }
+
+        private void MigrateIfPossible ()
+        {
+            if (DatabaseConfigurationClient.Client.Get<int> ("Podcast", "Version", 0) == 0) {
+                if (ServiceManager.DbConnection.TableExists ("Podcasts") &&
+                        ServiceManager.DbConnection.Query<int> ("select count(*) from podcastsyndications") == 0) {
+                    Hyena.Log.Information ("Migrating Podcast Feeds and Items");
+                    ServiceManager.DbConnection.Execute(@"
+                        INSERT INTO PodcastSyndications (FeedID, Title, Url, Link,
+                            Description, ImageUrl, LastBuildDate, SyncSetting)
+                            SELECT 
+                                PodcastFeedID,
+                                Title,
+                                FeedUrl,
+                                Link,
+                                Description,
+                                Image,
+                                strftime(""%s"", LastUpdated),
+                                SyncPreference
+                            FROM PodcastFeeds
+                    ");
+
+                    ServiceManager.DbConnection.Execute(@"
+                        INSERT INTO PodcastItems (ItemID, FeedID, Title, Link, PubDate,
+                            Description, Author, Active, Guid)
+                            SELECT 
+                                PodcastID,
+                                PodcastFeedID,
+                                Title,
+                                Link,
+                                strftime(""%s"", PubDate),
+                                Description,
+                                Author,
+                                Active,
+                                Url
+                            FROM Podcasts
+                    ");
+
+                    // Note: downloaded*3 is because the value was 0 or 1, but is now 0 or 3 (FeedDownloadStatus.None/Downloaded)
+                    ServiceManager.DbConnection.Execute(@"
+                        INSERT INTO PodcastEnclosures (ItemID, LocalPath, Url, MimeType, FileSize, DownloadStatus)
+                            SELECT 
+                                PodcastID,
+                                LocalPath,
+                                Url,
+                                MimeType,
+                                Length,
+                                Downloaded*3
+                            FROM Podcasts
+                    ");
+
+                    // Finally, move podcast items from the Music Library to the Podcast source
+                    int [] primary_source_ids = new int [] { ServiceManager.SourceManager.MusicLibrary.DbId };
+                    int moved = 0;
+                    foreach (FeedEnclosure enclosure in FeedEnclosure.Provider.FetchAllMatching ("LocalPath IS NOT NULL AND LocalPath != ''")) {
+                        SafeUri uri = new SafeUri (enclosure.LocalPath);
+                        int track_id = DatabaseTrackInfo.GetTrackIdForUri (
+                            uri, Paths.MakePathRelative (uri.LocalPath, tmp_enclosure_path),
+                            primary_source_ids
+                        );
+
+                        if (track_id > 0) {
+                            PodcastTrackInfo track = PodcastTrackInfo.Provider.FetchSingle (track_id);
+                            track.Item = enclosure.Item;
+                            track.PrimarySourceId = source.DbId;
+                            track.Save (false);
+                            moved++;
+                        }
+                    }
+
+                    if (moved > 0) {
+                        ServiceManager.SourceManager.MusicLibrary.Reload ();
+                        source.Reload ();
+                    }
+
+                    Hyena.Log.Information ("Done Migrating Podcast Feeds and Items");
+                }
+                DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 1);
+            }
+
         }
         
         public void Initialize ()
@@ -96,6 +177,9 @@ namespace Banshee.Podcasting
         
         public void DelayedInitialize ()
         {
+            // Migrate data from 0.13.2 podcast tables, if they exist
+            MigrateIfPossible ();
+              
             foreach (Feed feed in Feed.Provider.FetchAll ()) {
                 feed.Update ();
                 RefreshArtworkFor (feed);
