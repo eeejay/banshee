@@ -170,9 +170,8 @@ namespace Hyena.Data.Gui
                 if (header_cell != null) {
                     min_width = header_cell.MinWidth;
                 }
-                column_cache[i].MinWidth = min_width;
-                column_cache[i].MaxWidth = column_cache[i].Column.MaxWidth;
                 min_header_width += column_cache[i].MinWidth = Math.Max (min_width, column_cache[i].Column.MinWidth);
+                column_cache[i].MaxWidth = Math.Max (column_cache[i].Column.MaxWidth, column_cache[i].MinWidth);
             }
             
             if (min_header_width >= header_interaction_alloc.Width) {
@@ -236,8 +235,7 @@ namespace Hyena.Data.Gui
                 column_cache[i].ElasticWidth += delta;
             }
             
-            remaining_width = Math.Round (remaining_width);
-            return remaining_width;
+            return Math.Round (remaining_width);
         }
         
         protected virtual void OnColumnControllerUpdated ()
@@ -303,7 +301,7 @@ namespace Hyena.Data.Gui
             for (int i = resizing_column_index + 1; i < column_cache.Length; i++) {
                 total_elastic_width += column_cache[i].ElasticWidth = sign == 1
                     ? column_cache[i].Width - column_cache[i].MinWidth
-                    : column_cache[i].Column.MaxWidth - column_cache[i].Width;
+                    : column_cache[i].MaxWidth - column_cache[i].Width;
             }
             
             if (total_elastic_width == 0) {

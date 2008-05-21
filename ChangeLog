@@ -1,3 +1,9 @@
+2008-05-21  Scott Peterson  <lunchtimemama@gmail.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Headers.cs:
+	Make sure that a columns max height is not less that its min height. This
+	fixes some aweful bugs.
+
 2008-05-21  Mike Urbanski  <michael.c.urbanski@gmail.com>
     
 	* src/Libraries/Migo/Makefile.am: 
