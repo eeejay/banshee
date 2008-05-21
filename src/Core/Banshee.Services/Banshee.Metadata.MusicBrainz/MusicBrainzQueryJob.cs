@@ -111,27 +111,34 @@ namespace Banshee.Metadata.MusicBrainz
             Uri uri = new Uri(String.Format("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
                 Track.ArtistName, Track.AlbumTitle));
 
-            XmlTextReader reader = new XmlTextReader(GetHttpStream(uri));
-
-            bool haveMatch = false;
+            HttpWebResponse response = GetHttpStream(uri);
+            if (response == null) {
+                return null;
+            }
             
-            while(reader.Read()) {
-                if(reader.NodeType == XmlNodeType.Element) {
-                    switch (reader.LocalName) {
-                        case "release":
-                            haveMatch = reader["ext:score"] == "100";
+            using (Stream stream = response.GetResponseStream ()) {
+                XmlTextReader reader = new XmlTextReader(stream);
+    
+                bool haveMatch = false;
+                
+                while(reader.Read()) {
+                    if(reader.NodeType == XmlNodeType.Element) {
+                        switch (reader.LocalName) {
+                            case "release":
+                                haveMatch = reader["ext:score"] == "100";
+                                break;
+                            case "asin":
+                                if(haveMatch) {
+                                    return reader.ReadString();
+                                }
                             break;
-                        case "asin":
-                            if(haveMatch) {
-                                return reader.ReadString();
-                            }
-                        break;
-                    default:
-                        break;
+                        default:
+                            break;
+                        }
                     }
                 }
             }
-
+            
             return null;
         }
     }

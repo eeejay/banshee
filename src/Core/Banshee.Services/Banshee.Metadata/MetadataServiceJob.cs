@@ -85,12 +85,12 @@ namespace Banshee.Metadata
             tags.Add(tag);
         }
         
-        protected Stream GetHttpStream(Uri uri)
+        protected HttpWebResponse GetHttpStream(Uri uri)
         {
             return GetHttpStream(uri, null);
         }
 
-        protected Stream GetHttpStream(Uri uri, string [] ignoreMimeTypes)
+        protected HttpWebResponse GetHttpStream(Uri uri, string [] ignoreMimeTypes)
         {
             if(!NetworkDetect.Instance.Connected) {
                 throw new NetworkUnavailableException();
@@ -117,7 +117,7 @@ namespace Banshee.Metadata
                 }
             }
             
-            return response.GetResponseStream();
+            return response;
         }
         
         protected bool SaveHttpStream(Uri uri, string path)
@@ -127,8 +127,12 @@ namespace Banshee.Metadata
         
         protected bool SaveHttpStream(Uri uri, string path, string [] ignoreMimeTypes)
         {
-            Stream from_stream = GetHttpStream(uri, ignoreMimeTypes);
+            HttpWebResponse response = GetHttpStream(uri, ignoreMimeTypes);
+            Stream from_stream = response == null ? null : response.GetResponseStream ();
             if(from_stream == null) {
+                if (response != null) {
+                    response.Close ();
+                }
                 return false;
             }
             
@@ -139,6 +143,8 @@ namespace Banshee.Metadata
                 FileMode.Create, FileAccess.ReadWrite));
                 
             Banshee.IO.File.Move (new SafeUri (tmp_path), new SafeUri (path));
+            
+            from_stream.Close ();
                 
             return true;
         }

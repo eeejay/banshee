@@ -1,3 +1,17 @@
+2008-05-21  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs:
+	Return the full HttpWebResponse instead of the response stream
+
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	Updated to reflect API change above
+
+	* src/Core/Banshee.Services/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:
+	Updated to reflect API change above and to check the content type on
+	the response to ensure it's text/xml - Rhapsody now redirects to the
+	best-match HTML page if there is no exact match - before they just gave
+	a 404 response
+
 2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Makefile.am: Reorder.

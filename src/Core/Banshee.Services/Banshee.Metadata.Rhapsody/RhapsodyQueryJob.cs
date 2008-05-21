@@ -68,13 +68,18 @@ namespace Banshee.Metadata.Rhapsody
             Uri data_uri = new Uri(base_uri, String.Format("/{0}/data.xml", artwork_id.Replace('-', '/')));
         
             XmlDocument doc = new XmlDocument();
-            Stream stream = GetHttpStream(data_uri);
-            if(stream == null) {
+            HttpWebResponse response = GetHttpStream (data_uri);
+            if (response == null) {
                 return;
             }
-
-            using(stream) {
-                doc.Load(stream);
+            
+            string [] content_types = response.Headers.GetValues ("Content-Type");
+            if (content_types.Length == 0 || content_types[0] != "text/xml") {
+                return;
+            }
+            
+            using (Stream stream = response.GetResponseStream ()) {
+                doc.Load (stream);
             }
 
             XmlNode art_node = doc.DocumentElement.SelectSingleNode("/album/art/album-art[@size='large']/img");
