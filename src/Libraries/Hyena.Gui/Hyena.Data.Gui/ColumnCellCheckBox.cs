@@ -71,6 +71,11 @@ namespace Hyena.Data.Gui
             return false;
         }
         
+        public bool PointerLeaveEvent ()
+        {
+            return false;
+        }
+        
         public void GetSize (out int width, out int height)
         {
             width = 2 * Xpad + Size;

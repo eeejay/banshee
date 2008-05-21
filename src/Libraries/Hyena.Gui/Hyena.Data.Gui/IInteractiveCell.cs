@@ -35,5 +35,6 @@ namespace Hyena.Data.Gui
     {
         bool ButtonEvent (int x, int y, bool pressed, Gdk.EventButton evnt);
         bool MotionEvent (int x, int y, Gdk.EventMotion evnt);
+        bool PointerLeaveEvent ();
     }
 }

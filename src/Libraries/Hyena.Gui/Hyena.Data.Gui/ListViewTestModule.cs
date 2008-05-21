@@ -194,6 +194,12 @@ namespace Hyena.Data.Gui
                 return false;
             }
             
+            public bool PointerLeaveEvent ()
+            {
+                last_pressed_bound = null;
+                return true;
+            }
+            
             private List<Gdk.Point> Points {
                 get { return (List<Gdk.Point>)BoundObject; }
             }

@@ -91,6 +91,13 @@ namespace Hyena.Data.Gui
             return true;
         }
         
+        public bool PointerLeaveEvent ()
+        {
+            hover_bound = null;
+            hover_value = MinRating - 1;
+            return true;
+        }
+        
         public void GetSize (out int width, out int height)
         {
             width = renderer.Width;
