@@ -100,7 +100,14 @@ namespace Banshee.AudioCd
         private bool rip_enabled = true;
         public bool RipEnabled {
             get { return rip_enabled; }
-            set { rip_enabled = value; }
+            set { 
+                if (rip_enabled == value) {
+                    return;
+                }
+                
+                rip_enabled = value;
+                model.EnabledCount += rip_enabled ? 1 : -1;
+            }
         }
     }
 }

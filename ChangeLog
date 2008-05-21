@@ -1,5 +1,23 @@
 2008-05-21  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Added an EnabledCount property
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Added a check box column to control the RipEnabled property on each CD 
+	track; when the EnabledCount on the model is zero, disable the rip action
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
+	When RipEnabled is set or unset, increment or decrement the EnabledCount
+	on the model if the value actually changes
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: NRE protection
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Do not layout
+	text if it's null or empty
+
+2008-05-21  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/IInteractiveCell.cs:
 	Added a PointerLeaveEvent method
 

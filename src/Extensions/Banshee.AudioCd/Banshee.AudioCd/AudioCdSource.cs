@@ -53,8 +53,18 @@ namespace Banshee.AudioCd
             this.service = service;
             this.disc_model = discModel;
             
+            Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
+                <column-controller>
+                  <column>
+                    <renderer type=""Hyena.Data.Gui.ColumnCellCheckBox"" property=""RipEnabled""/>
+                  </column>
+                  <add-all-defaults />
+                </column-controller>
+            "));
+            
             disc_model.MetadataQueryStarted += OnMetadataQueryStarted;
             disc_model.MetadataQueryFinished += OnMetadataQueryFinished;
+            disc_model.EnabledCountChanged += OnEnabledCountChanged;
             disc_model.LoadModelFromDisc ();
             
             SetupGui ();
@@ -87,12 +97,18 @@ namespace Banshee.AudioCd
             ClearMessages ();
             disc_model.MetadataQueryStarted -= OnMetadataQueryStarted;
             disc_model.MetadataQueryFinished -= OnMetadataQueryFinished;
+            disc_model.EnabledCountChanged -= OnEnabledCountChanged;
             service = null;
             disc_model = null;
         }
         
         public AudioCdDiscModel DiscModel {
             get { return disc_model; }
+        }
+        
+        private void OnEnabledCountChanged (object o, EventArgs args)
+        {
+            UpdateActions ();
         }
         
         private void OnMetadataQueryStarted (object o, EventArgs args)
@@ -391,7 +407,7 @@ namespace Banshee.AudioCd
                 rip_action.Label = String.Format (Catalog.GetString ("Import \u201f{0}\u201d"), title);
                 rip_action.ShortLabel = Catalog.GetString ("Import CD");
                 rip_action.IconName = "media-import-audio-cd";
-                rip_action.Sensitive = AudioCdRipper.Supported;
+                rip_action.Sensitive = AudioCdRipper.Supported && disc_model.EnabledCount > 0;
             }
             
             Gtk.Action duplicate_action = uia_service.GlobalActions["DuplicateDiscAction"];

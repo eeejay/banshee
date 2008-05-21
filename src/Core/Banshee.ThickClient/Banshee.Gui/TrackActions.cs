@@ -128,7 +128,7 @@ namespace Banshee.Gui
         private ITrackModelSource current_source;
         private void HandleActiveSourceChanged (SourceEventArgs args)
         {
-            if (current_source != null) {
+            if (current_source != null && current_source.TrackModel != null) {
                 current_source.TrackModel.Selection.Changed -= HandleSelectionChanged;
                 current_source = null;
             }

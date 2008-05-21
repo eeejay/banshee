@@ -48,6 +48,7 @@ namespace Banshee.AudioCd
         
         public event EventHandler MetadataQueryStarted;
         public event EventHandler MetadataQueryFinished;
+        public event EventHandler EnabledCountChanged;
         
         private bool metadata_query_success;
         private DateTime metadata_query_start_time;
@@ -89,6 +90,8 @@ namespace Banshee.AudioCd
                 
                 duration += track.Duration;
             }
+            
+            EnabledCount = Count;
             
             Reload ();
             
@@ -201,6 +204,14 @@ namespace Banshee.AudioCd
             });
         }
         
+        private void OnEnabledCountChanged ()
+        {
+            EventHandler handler = EnabledCountChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+        
         private ICdromDevice Drive {
             get { return Volume == null ? null : (Volume.Parent as ICdromDevice); }
         }
@@ -233,8 +244,13 @@ namespace Banshee.AudioCd
             get { return disc_title; }
         }
         
-        public int TrackCount {
-            get { return 0; }
+        private int enabled_count;
+        public int EnabledCount {
+            get { return enabled_count; }
+            internal set { 
+                enabled_count = value; 
+                OnEnabledCountChanged (); 
+            }
         }
     }
 }
