@@ -1,5 +1,8 @@
 2008-05-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	With the amazing help of Scott Peterson, we have knocked out two subtle,
+	but annoying Last.fm bugs.
+
 	* src/Extensions/Banshee.NotificationArea/Resources/NotificationAreaMenu.xml:
 	Add placeholder.
 
