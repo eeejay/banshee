@@ -1,5 +1,10 @@
 2008-05-21  Scott Peterson  <lunchtimemama@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Fixed rendering
+	problem with sort arrow if the first column was sorted.
+
+2008-05-21  Scott Peterson  <lunchtimemama@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
 	Fixed first column being unsortable.
 

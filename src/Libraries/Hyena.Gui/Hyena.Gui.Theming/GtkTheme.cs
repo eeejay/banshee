@@ -103,6 +103,7 @@ namespace Hyena.Gui.Theming
         
         public override void DrawArrow (Context cr, Gdk.Rectangle alloc, Hyena.Data.SortType type)
         {
+            cr.LineWidth = 1;
             cr.Translate (0.5, 0.5);
             double x1 = alloc.X;
             double x3 = alloc.X + alloc.Width / 2.0;
