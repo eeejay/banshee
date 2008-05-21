@@ -95,6 +95,12 @@ namespace Banshee.Podcasting.Gui
                      OnPodcastUpdate
                 ),
                 new ActionEntry (
+                    "PodcastDownloadAllAction", Stock.Save,
+                     Catalog.GetString ("Download All Episodes"),
+                     null, String.Empty, 
+                     OnPodcastDownloadAllEpisodes
+                ),
+                new ActionEntry (
                     "PodcastHomepageAction", Stock.JumpTo,
                      Catalog.GetString ("Visit Podcast Homepage"),
                      null, String.Empty, 
@@ -386,7 +392,17 @@ namespace Banshee.Podcasting.Gui
             if (feed != null) {
                 feed.Delete (true);
             }
-        }        
+        }
+        
+        private void OnPodcastDownloadAllEpisodes (object sender, EventArgs e)
+        {
+            Feed feed = source.FeedModel.FocusedItem;
+            if (feed != null) {
+                foreach (FeedItem item in feed.Items) {
+                    item.Enclosure.AsyncDownload ();
+                }
+            }
+        }   
 
         private void OnPodcastItemDeleteFile (object sender, EventArgs e)
         {

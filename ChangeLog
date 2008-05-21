@@ -1,3 +1,14 @@
+2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Makefile.am: Reorder.
+
+	* src/Extensions/Banshee.Podcasting/Resources/GlobalUI.xml:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	Add Download All action to podcast context menu.
+
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedEnclosure.cs: Avoid
+	queueing the download if we're already download.
+
 2008-05-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	With the amazing help of Scott Peterson, we have knocked out two subtle,

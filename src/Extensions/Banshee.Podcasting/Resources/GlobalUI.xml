@@ -21,6 +21,7 @@
     
     <popup name="PodcastFeedPopup" action="PodcastFeedPopupAction">
         <menuitem name="PodcastUpdateFeed" action="PodcastUpdateFeedAction" />
+        <menuitem name="PodcastDownloadAll" action="PodcastDownloadAllAction"/>
         <menuitem name="PodcastHomepage" action="PodcastHomepageAction" />
         <menuitem name="PodcastDelete" action="PodcastDeleteAction" />
         <separator />
