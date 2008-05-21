@@ -39,15 +39,11 @@ namespace Migo.TaskCore
 
         private int totalTicks;
         private int currentTicks;
+       
+        private Dictionary<T,int> progDict;
         
-        private TaskGroup<T> group;        
-        internal Dictionary<T,int> progDict;
-
-        public virtual TaskGroup<T> Group {
-            get { return group; }
-            set { group = value; }
-        }
-
+        public event EventHandler<ProgressChangedEventArgs> ProgressChanged;
+        
         public GroupProgressManager ()
         {
             progDict = new Dictionary<T,int> ();
@@ -173,13 +169,14 @@ namespace Migo.TaskCore
             
             if (progress != oldProgress) {
                 oldProgress = progress;
-                TaskGroup<T> grp = group;
                 
-                if (grp != null) {
-                    grp.OnProgressChanged (
-                        new ProgressChangedEventArgs (progress, null)
+                EventHandler<ProgressChangedEventArgs> handler = ProgressChanged;                
+                
+                if (handler != null) {
+                    handler (
+                        this, new ProgressChangedEventArgs (progress, null) 
                     );
-                }                
+                }
             }
         }
     }

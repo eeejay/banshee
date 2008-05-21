@@ -35,7 +35,7 @@ using Migo.TaskCore.Collections;
 
 namespace Migo.TaskCore
 {        
-    public class TaskGroup<T> : TaskEventPipeline where T : Task
+    public class TaskGroup<T> where T : Task
     {         
         private bool disposed;
         private bool executing;
@@ -44,12 +44,12 @@ namespace Migo.TaskCore
         private readonly Guid id;                      
         private readonly object sync;        
         
-        private AsyncCommandQueue<ICommand> commandQueue;        
+        private AsyncCommandQueue commandQueue;        
         
         private List<T> currentTasks;        
         private TaskCollection<T> tasks;            
            
-        private GroupStatusManager<T> gsm;
+        private GroupStatusManager gsm;
         private GroupProgressManager<T> gpm;
         
         // Used to notify user after stopped event has fired
@@ -151,11 +151,11 @@ namespace Migo.TaskCore
             }
         }
 
-        protected GroupStatusManager<T> StatusManager 
+        protected GroupStatusManager StatusManager 
         {
             get { 
                 if (gsm == null) {
-                    SetStatusManager (new GroupStatusManager<T> ());
+                    SetStatusManager (new GroupStatusManager ());
                 }
                 
                 return gsm;
@@ -210,36 +210,48 @@ namespace Migo.TaskCore
             }
         }
         
+        private bool IsDone
+        {
+            get {
+                return (Disposed || gsm.RemainingTasks == 0);
+            }
+        }        
+        
         public TaskGroup (int maxRunningTasks, TaskCollection<T> tasks)
             : this (maxRunningTasks, tasks, null, null)
         {
         }
 
-        public TaskGroup (int maxRunningTasks, TaskCollection<T> tasks, GroupStatusManager<T> statusManager) 
+        public TaskGroup (int maxRunningTasks, 
+                          TaskCollection<T> tasks, 
+                          GroupStatusManager statusManager)
             : this (maxRunningTasks, tasks, statusManager, null)
         {
         }
         
-        protected TaskGroup (int maxRunningTasks, TaskCollection<T> tasks,
-                                GroupStatusManager<T> statusManager, GroupProgressManager<T> progressManager) 
+        protected TaskGroup (int maxRunningTasks, 
+                             TaskCollection<T> tasks,
+                             GroupStatusManager statusManager, 
+                             GroupProgressManager<T> progressManager)
         {
             if (maxRunningTasks < 0) {
                 throw new ArgumentException ("maxRunningTasks must be >= 0");
             } else if (tasks == null) {
                 throw new ArgumentNullException ("tasks");
             }
-
-            id = Guid.NewGuid ();
+            
             sync = tasks.SyncRoot;
-            commandQueue = new AsyncCommandQueue<ICommand> ();
             currentTasks = new List<T> (maxRunningTasks);
+
+            commandQueue = new AsyncCommandQueue ();
+            id = CommandQueueManager.Register (commandQueue);
                      
             SetProgressManager (
                 progressManager ?? new GroupProgressManager<T> ()
             );            
                         
             SetStatusManager (
-                statusManager ?? new GroupStatusManager<T> ()
+                statusManager ?? new GroupStatusManager ()
             );  
                         
             try {
@@ -306,15 +318,10 @@ namespace Migo.TaskCore
                         }                          
                     }    
                     
-                    if (gpm != null) {
-                        gpm.Group = null;
-                    }
-                    
-                    if (gsm != null) {                    
-                        gsm.Group = null;
-                    }                    
-                    
+                    gsm.StatusChanged -= OnStatusChangedHandler;
                     gsm.Dispose ();
+                    
+                    gpm.ProgressChanged -= OnProgressChangedHandler;
                     gpm.Reset ();
                 } finally {
                     gpm = null;
@@ -346,9 +353,9 @@ namespace Migo.TaskCore
                     SpawnExecutionThread ();
                 } catch (Exception e) {
                     Hyena.Log.Exception (e);
+                    SetExecuting (false);                
+                    Reset ();                                                                        
                     OnStopped ();
-                    Reset ();                                                            
-                    SetExecuting (false);
                 }
             }
         }
@@ -398,29 +405,6 @@ namespace Migo.TaskCore
             return false;
         }
 
-/*  May implement at some point        
-        protected virtual void HoldStatusUpdates ()
-        {
-            lock (sync) {
-                queueStatusUpdates = true;
-            }
-        }
-        
-        protected virtual void ProcessStatusUpdates ()
-        {
-            lock (sync) {
-                queueStatusUpdates = false;
-                
-                TaskStatusChangedInfo[] changeInfo = queuedStatusUpdates.ToArray ();
-                queuedStatusUpdates.Clear ();
-                
-                OnTaskStatusChanged (
-                    new TaskStatusChangedEventArgs (changeInfo)
-                );
-            }
-        }        
-*/        
-
         protected virtual void SetProgressManager (GroupProgressManager<T> progressManager) 
         {
             CheckDisposed ();        
@@ -432,10 +416,10 @@ namespace Migo.TaskCore
             }
                                 
             gpm = progressManager;
-            gpm.Group = this;
+            gpm.ProgressChanged += OnProgressChangedHandler;
         }
         
-        protected virtual void SetStatusManager (GroupStatusManager<T> statusManager) 
+        protected virtual void SetStatusManager (GroupStatusManager statusManager) 
         {
             CheckDisposed ();
             
@@ -446,7 +430,7 @@ namespace Migo.TaskCore
             }
             
             gsm = statusManager;
-            gsm.Group = this;
+            gsm.StatusChanged += OnStatusChangedHandler;
         }
         
         protected virtual void SetTaskCollection (TaskCollection<T> collection)
@@ -495,14 +479,17 @@ namespace Migo.TaskCore
         {            
             CheckDisposed ();            
 
-            if (task.GroupID.CompareTo (Guid.Empty) != 0) {
+            if (task.GroupID != Guid.Empty) {
                 throw new ApplicationException (
                     "Task already associated with a group"
                 );
             }             
             
             task.GroupID = id;
-            task.EventPipeline = this;
+            
+            task.Completed += OnTaskCompletedHandler;
+            task.ProgressChanged += OnTaskProgressChangedHandler;
+            task.StatusChanged += OnTaskStatusChangedHandler;
 
             if (addToProgressGroup) {
                 gpm.Add (task);
@@ -511,7 +498,7 @@ namespace Migo.TaskCore
 
         protected virtual bool CheckID (T task)
         {
-            return (task.GroupID.CompareTo (id) == 0); 
+            return (task.GroupID == id); 
         }
 
         protected virtual void Disassociate (IEnumerable<T> tasks)
@@ -533,19 +520,17 @@ namespace Migo.TaskCore
         protected virtual void Disassociate (T task, bool removeFromProgressGroup)
         {
             if (CheckID (task)) {
-                if (removeFromProgressGroup && gpm != null) {       
-                    gpm.Remove (task);
-                }
-                
                 task.GroupID = Guid.Empty;
-                task.EventPipeline = null;
+                
+                task.Completed -= OnTaskCompletedHandler;
+                task.ProgressChanged -= OnTaskProgressChangedHandler;
+                task.StatusChanged -= OnTaskStatusChangedHandler;  
+                
+                if (removeFromProgressGroup && gpm != null) {
+                    gpm.Remove (task);
+                }              
             }
         }    
-
-        private bool Done ()
-        {
-            return (Disposed || gsm.RemainingTasks == 0) ? true : false;
-        }
 
         protected virtual void Reset ()
         {
@@ -589,8 +574,8 @@ namespace Migo.TaskCore
                 OnTaskEvent (task, TaskStopped);
             }
         }
-        
-        protected internal virtual void OnStatusChanged (GroupStatusChangedEventArgs e)        
+
+        protected virtual void OnStatusChangedHandler (object sender, GroupStatusChangedEventArgs e)
         {
             lock (sync) {
                 if (!cancelRequested) {
@@ -607,23 +592,7 @@ namespace Migo.TaskCore
             }
         }
 
-        protected internal virtual void OnStatusChanged (object sender, 
-                                                         GroupStatusChangedEventArgs e)
-        {
-            OnStatusChanged (e);
-        }
-
-        protected internal override void RegisterCommand (ICommand command)
-        {
-            AsyncCommandQueue<ICommand> cmdQCpy = commandQueue;
-            
-            if (cmdQCpy != null && command != null) {
-            	cmdQCpy.Register (command);
-            }
-        }
-
-        protected internal override void OnTaskCompleted (object sender, 
-                                                          TaskCompletedEventArgs e)
+        protected virtual void OnTaskCompletedHandler (object sender, TaskCompletedEventArgs e)
         {   
             lock (sync) {
                 T t = sender as T;
@@ -652,8 +621,7 @@ namespace Migo.TaskCore
             }
         }       
         
-        protected internal override void OnTaskProgressChanged (object sender, 
-                                                                ProgressChangedEventArgs e)
+        protected virtual void OnTaskProgressChangedHandler (object sender, ProgressChangedEventArgs e)
         {     
             EventHandler<ProgressChangedEventArgs> handler = TaskProgressChanged;                
                 
@@ -668,7 +636,7 @@ namespace Migo.TaskCore
             }                           
         }        
         
-        protected internal override void OnTaskStatusChanged (TaskStatusChangedEventArgs e)
+        protected virtual void OnTaskStatusChangedHandler (object sender, TaskStatusChangedEventArgs e)
         {         
             EventHandler<TaskStatusChangedEventArgs> handler = TaskStatusChanged;                
                 
@@ -679,8 +647,7 @@ namespace Migo.TaskCore
             gsm.Evaluate ();       
         } 
         
-        protected virtual void OnTaskAddedHandler (object sender, 
-                                                   TaskAddedEventArgs<T> e)
+        protected virtual void OnTaskAddedHandler (object sender, TaskAddedEventArgs<T> e)
         {        
             lock (sync) {
                 if (e.Task != null) {
@@ -695,8 +662,7 @@ namespace Migo.TaskCore
             }
         }        
         
-        protected virtual void OnTaskRemovedHandler (object sender, 
-                                                     TaskRemovedEventArgs<T> e)
+        protected virtual void OnTaskRemovedHandler (object sender, TaskRemovedEventArgs<T> e)
         {
             lock (sync) {
                 if (e.Index != -1 && e.Task != null) {
@@ -732,12 +698,18 @@ namespace Migo.TaskCore
             }
         }
 
-        protected internal virtual void OnProgressChanged (ProgressChangedEventArgs e)
+        protected virtual void OnProgressChangedHandler (object sender, ProgressChangedEventArgs e)
         {
-            EventHandler<ProgressChangedEventArgs> handler = ProgressChanged;
-            
-            if (handler != null) {
-                handler (this, e);   
+            lock (sync) {
+                if (!cancelRequested) {        
+                    EventHandler<ProgressChangedEventArgs> handler = ProgressChanged;
+                    
+                    if (handler != null) {
+                    	commandQueue.Register (
+                    	    new EventWrapper<ProgressChangedEventArgs> (handler, this, e)
+                    	);            
+                    }
+                }
             }
         }
 
@@ -773,8 +745,7 @@ namespace Migo.TaskCore
             }                         
         }
 
-        private void OnTaskEvent (IEnumerable<T> tasks, 
-                                  EventHandler<TaskEventArgs<T>> eventHandler)
+        private void OnTaskEvent (IEnumerable<T> tasks, EventHandler<TaskEventArgs<T>> eventHandler)
         {
             EventHandler<TaskEventArgs<T>> handler = eventHandler;
         
@@ -810,7 +781,7 @@ namespace Migo.TaskCore
                 lock (sync) {
                     gsm.ResetWait ();     
                     
-                    if (Done ()) {
+                    if (IsDone) {
                         executingHandle.Set ();                                                
                         return;
                     } else if (cancelRequested) {
@@ -862,24 +833,4 @@ namespace Migo.TaskCore
             t.Start ();       
         }        
     }
-    
-    // This is retarded, I know.  But there is no fucking way to do 
-    // a clean implementation because of generic inheritance.  
-    // I.E.  There is no way for a task to hold a reference to its group
-    // w\o this.  If you know of a way, please tell me.
-    public abstract class TaskEventPipeline
-    {
-        protected internal abstract void RegisterCommand (ICommand command);
-    
-        protected internal abstract void OnTaskCompleted (
-            object sender, TaskCompletedEventArgs e
-        );    
-        
-        protected internal abstract void OnTaskProgressChanged (
-            object sender, ProgressChangedEventArgs e
-        );
-        
-        protected internal abstract void OnTaskStatusChanged (TaskStatusChangedEventArgs e);        
-    }
-    
 }

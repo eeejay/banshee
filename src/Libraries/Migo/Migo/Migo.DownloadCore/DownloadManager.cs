@@ -96,6 +96,11 @@ namespace Migo.DownloadCore
             dg.TaskAssociated += TaskAssociatedHandler;
         }
         
+        public HttpFileDownloadTask CreateDownloadTask (string url) 
+        {
+            return CreateDownloadTask (url, null);
+        }
+        
         public HttpFileDownloadTask CreateDownloadTask (string url, object userState)
         {
             Uri uri;

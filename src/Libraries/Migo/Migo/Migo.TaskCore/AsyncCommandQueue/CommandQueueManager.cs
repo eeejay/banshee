@@ -1,7 +1,7 @@
-/***************************************************************************
- *  DownloadGroupStatusManager.cs
+/*************************************************************************** 
+ *  CommandQueueManager.cs
  *
- *  Copyright (C) 2007 Michael C. Urbanski
+ *  Copyright (C) 2008 Michael C. Urbanski
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
  ****************************************************************************/
 
@@ -27,45 +27,46 @@
  */
 
 using System;
-using System.Timers;
+using System.Collections;
 using System.Collections.Generic;
 
-using Migo.TaskCore; 
-
-namespace Migo.DownloadCore
+namespace Migo.TaskCore 
 {
-    public class DownloadGroupStatusManager : GroupStatusManager
+    public static class CommandQueueManager
     {
-        private long bytesPerSecond;    
-                
-        public DownloadGroupStatusManager () 
-            : this (0,0) {}    
+        private static readonly object sync;    
+        private static Dictionary<Guid,AsyncCommandQueue> queues;
         
-        public DownloadGroupStatusManager (int totalDownloads, int maxRunningDownloads)
-            : base (totalDownloads, maxRunningDownloads) {}
-        
-        public override void Reset ()
+        static CommandQueueManager ()
         {
-            bytesPerSecond = 0;
-            base.Reset ();
+            queues = new Dictionary<Guid,AsyncCommandQueue> ();
+            sync = ((ICollection)queues).SyncRoot;
         }
         
-        public virtual void SetTransferRate (long bytesPerSecond)
+        public static AsyncCommandQueue GetCommandQueue (Guid guid)
         {
-            if (this.bytesPerSecond != bytesPerSecond) {
-                this.bytesPerSecond = bytesPerSecond;   
-                OnStatusChanged ();
+            lock (sync) {
+                if (queues.ContainsKey (guid)) {
+                    return queues[guid];
+                }
             }
+            
+            return null;
         }
         
-        protected override void OnStatusChanged ()
+        public static Guid Register (AsyncCommandQueue queue)
         {
-            base.OnStatusChanged (
-                new DownloadGroupStatusChangedEventArgs (
-                    RemainingTasks, RunningTasks, 
-                    CompletedTasks, bytesPerSecond
-                ) as GroupStatusChangedEventArgs
-            );        
-        }            
+            if (queue == null) {
+                throw new ArgumentNullException ("queue");
+            }
+            
+            Guid guid = Guid.NewGuid ();
+            
+            lock (sync) {
+                queues.Add (guid, queue);        
+            }
+            
+            return guid;
+        }
     }
 }

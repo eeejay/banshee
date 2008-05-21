@@ -1,3 +1,23 @@
+2008-05-21  Mike Urbanski  <michael.c.urbanski@gmail.com>
+    
+	* src/Libraries/Migo/Makefile.am: 
+	* src/Libraries/Migo/Migo.mdp: 
+	* src/Libraries/Migo/Migo/Migo.TaskCore/AsyncCommandQueue/CommandQueueManager.cs: 
+	Added CommandQueueManager.
+    
+	* src/Libraries/Migo/Migo/Migo.TaskCore/GroupStatusManager.cs:
+	* src/Libraries/Migo/Migo/Migo.TaskCore/GroupProgressManager.cs: 
+	* src/Libraries/Migo/Migo/Migo.TaskCore/AsyncCommandQueue/AsyncCommandQueue.cs:
+	* src/Libraries/Migo/Migo/Migo.TaskCore/Migo.TaskCore.Collections/TaskCollection.cs:
+	* src/Libraries/Migo/Migo/Migo.TaskCore/TaskGroup.cs:
+	* src/Libraries/Migo/Migo/Migo.TaskCore/Task.cs:
+	* src/Libraries/Migo/Migo/Migo.DownloadCore/DownloadManager.cs:
+	* src/Libraries/Migo/Migo/Migo.DownloadCore/DownloadGroupStatusManager.cs:
+	* src/Libraries/Migo/Migo/Migo.DownloadCore/HttpFileDownloadTask.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedsManager.cs:
+	Transparent architectural changes to promote looser coupling between 
+	TaskCore components (i.e.  removing hacketry.)
+
 2008-05-21  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs:

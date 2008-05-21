@@ -38,7 +38,7 @@ namespace Migo.TaskCore
         private int progress;        
         
         private Guid groupID;
-        private TaskEventPipeline pipeline;
+        private AsyncCommandQueue commandQueue;
         
         private TaskStatus status;
         
@@ -72,13 +72,7 @@ namespace Migo.TaskCore
             get { return name; }
             set { name = value; }
         }
-        
-        public TaskEventPipeline EventPipeline
-        {
-            get { return pipeline; }
-            set { pipeline = value; }
-        }
-        
+
         public int Progress 
         {
             get { return progress; }
@@ -108,23 +102,29 @@ namespace Migo.TaskCore
      
         internal Guid GroupID {
             get { return groupID; }
-            set { groupID = value; }
+            set { 
+                lock (syncRoot) {
+                    groupID = value;
+                    commandQueue = CommandQueueManager.GetCommandQueue (groupID);
+                }
+            }
         }
 
-        protected Task () : this (String.Empty, null, null) {}
-        protected Task (string name, TaskEventPipeline pipeline, object userState)
+        protected Task () : this (String.Empty, null) {}
+        protected Task (string name, object userState)
         {
-            this.pipeline = pipeline; 
-        
-            groupID = Guid.Empty;                                    
+            GroupID = Guid.Empty;                                    
+
             this.name = name;
-            progress = 0;
-            status = TaskStatus.Ready;
             this.userState = userState;
+            
+            progress = 0;
+            status = TaskStatus.Ready;            
         }     
         
         public abstract void CancelAsync ();
-        
+        public abstract void ExecuteAsync ();
+
         public virtual void Pause ()
         {
             throw new NotImplementedException ("Pause");
@@ -139,9 +139,6 @@ namespace Migo.TaskCore
         {
             throw new NotImplementedException ("Stop");            
         }
-        
-        public abstract void ExecuteAsync ();
-
 
         public override string ToString ()
         {
@@ -185,19 +182,19 @@ namespace Migo.TaskCore
 
         protected virtual void OnProgressChanged (ProgressChangedEventArgs e)
         {
-            TaskEventPipeline pipelineCpy = pipeline;
+            AsyncCommandQueue queue = commandQueue;
             EventHandler<ProgressChangedEventArgs> handler = ProgressChanged;
             
-            if (pipelineCpy != null) {
-                pipelineCpy.RegisterCommand (new CommandWrapper (delegate {     
-                    pipelineCpy.OnTaskProgressChanged (this, e);
-                    
+            if (queue != null) {
+                queue.Register (new CommandWrapper (delegate {     
                     if (handler != null) {
                         handler (this, e);                
                     }
                 }));                    
             } else if (handler != null) {
-                handler (this, e);
+                ThreadPool.QueueUserWorkItem (delegate {                            
+                    handler (this, e);
+                });
             }
         }
 
@@ -211,22 +208,20 @@ namespace Migo.TaskCore
 
         protected virtual void OnStatusChanged (TaskStatusChangedInfo tsci)
         {
-            TaskEventPipeline pipelineCpy = pipeline;
+            AsyncCommandQueue queue = commandQueue;
             EventHandler<TaskStatusChangedEventArgs> handler = StatusChanged;
 
-            if (pipelineCpy != null) {
-                pipelineCpy.RegisterCommand (new CommandWrapper (delegate {            
-                    TaskStatusChangedEventArgs e = 
-                        new TaskStatusChangedEventArgs (tsci);
-                        
-                    pipelineCpy.OnTaskStatusChanged (e);
-                    
+            if (queue != null) {
+                queue.Register (new CommandWrapper (delegate {            
+                    TaskStatusChangedEventArgs e = new TaskStatusChangedEventArgs (tsci);                      
                     if (handler != null) {
                         handler (this, e);               
                     }
                 }));
             } else if (handler != null) {
-                handler (this, new TaskStatusChangedEventArgs (tsci));
+                ThreadPool.QueueUserWorkItem (delegate {            
+                    handler (this, new TaskStatusChangedEventArgs (tsci));
+                });
             }
         }
   
@@ -239,19 +234,19 @@ namespace Migo.TaskCore
         
         protected virtual void OnTaskCompleted (TaskCompletedEventArgs e) 
         {
-            TaskEventPipeline pipelineCpy = pipeline;
+            AsyncCommandQueue queue = commandQueue;
             EventHandler<TaskCompletedEventArgs> handler = Completed;
 
-            if (pipelineCpy != null) {
-                pipelineCpy.RegisterCommand (new CommandWrapper (delegate {
-                    pipelineCpy.OnTaskCompleted (this, e);
-                    
+            if (queue != null) {
+                queue.Register (new CommandWrapper (delegate {
                     if (handler != null) {
                         handler (this, e);
                     }
                 }));
             } else if (handler != null) {
-                handler (this, e);
+                ThreadPool.QueueUserWorkItem (delegate {
+                    handler (this, e);
+                });
             }
         }  
     }

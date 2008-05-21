@@ -42,6 +42,7 @@ SOURCES =  \
 	Migo/Migo.Syndication/RssParser.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/AsyncCommandQueue.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/CommandDelegate.cs \
+	Migo/Migo.TaskCore/AsyncCommandQueue/CommandQueueManager.cs \	
 	Migo/Migo.TaskCore/AsyncCommandQueue/CommandWrapper.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/EventWrapper.cs \
 	Migo/Migo.TaskCore/AsyncCommandQueue/ICommand.cs \

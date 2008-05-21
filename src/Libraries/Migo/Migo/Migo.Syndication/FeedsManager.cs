@@ -55,7 +55,7 @@ namespace Migo.Syndication
     {        
         private bool disposed;
 
-        private AsyncCommandQueue<ICommand> command_queue;
+        private AsyncCommandQueue command_queue;
         
         private FeedManager feed_manager;
         private EnclosureManager enclosure_manager;
@@ -73,7 +73,7 @@ namespace Migo.Syndication
         
         public static FeedsManager Instance;
         
-        internal AsyncCommandQueue<ICommand> CommandQueue {
+        internal AsyncCommandQueue CommandQueue {
             get { return command_queue; }
         }
         
@@ -138,7 +138,7 @@ namespace Migo.Syndication
             FeedItem.Init ();
             FeedEnclosure.Init ();
             
-            command_queue = new AsyncCommandQueue<ICommand> ();
+            command_queue = new AsyncCommandQueue ();
         }
         
 #endregion

@@ -119,7 +119,7 @@ namespace Migo.DownloadCore
 	    }
 	    
 	    public HttpFileDownloadTask (string remoteUri, string localPath, object userState) 
-            : base (String.Empty, null, userState)
+            : base (String.Empty, userState)
 	    {
 	        this.remoteUri = new Uri (remoteUri);
 	        this.localPath = localPath;	   

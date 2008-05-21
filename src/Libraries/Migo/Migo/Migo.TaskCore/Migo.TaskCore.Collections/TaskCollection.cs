@@ -37,7 +37,7 @@ namespace Migo.TaskCore.Collections
     public abstract class TaskCollection<T> : ICollection<T>
         where T : Task
     {
-        private AsyncCommandQueue<ICommand> commandQueue;        
+        private AsyncCommandQueue commandQueue;        
         
         public EventHandler<ReorderedEventArgs> Reordered;
     
@@ -49,7 +49,7 @@ namespace Migo.TaskCore.Collections
             get; // is Move implemented
         }
     
-        public virtual AsyncCommandQueue<ICommand> CommandQueue
+        public virtual AsyncCommandQueue CommandQueue
         {
             get { return commandQueue; }
             set { commandQueue = value; } 

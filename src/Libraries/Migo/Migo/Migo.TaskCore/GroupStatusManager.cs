@@ -31,7 +31,7 @@
  
 namespace Migo.TaskCore
  {
-    public class GroupStatusManager<T> : IDisposable where T : Task
+    public class GroupStatusManager : IDisposable
     {            
         private bool disposed;        
         private bool suspendUpdate;
@@ -41,13 +41,9 @@ namespace Migo.TaskCore
         private int remainingTasks;
         private int maxRunningTasks = 0;
 
-        private ManualResetEvent mre;   
-        private TaskGroup<T> group;        
+        private ManualResetEvent mre;     
 
-        public virtual TaskGroup<T> Group {
-            get { return group; }
-            set { group = value; }
-        }
+        public event EventHandler<GroupStatusChangedEventArgs> StatusChanged;
 
         public virtual int CompletedTasks
         {
@@ -261,7 +257,6 @@ namespace Migo.TaskCore
         public virtual void Wait ()
         {           
             CheckDisposed ();                
-            
             mre.WaitOne ();
         }
 
@@ -305,11 +300,11 @@ namespace Migo.TaskCore
             if (suspendUpdate) {
                 return;
             }
+
+            EventHandler<GroupStatusChangedEventArgs> handler = StatusChanged;
             
-            TaskGroup<T> grp = group;            
-            
-            if (grp != null) {
-                grp.OnStatusChanged (e);
+            if (handler != null) {
+                handler (this, e);
             }
         }
 

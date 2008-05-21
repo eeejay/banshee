@@ -34,12 +34,12 @@ namespace Migo.TaskCore
 {        
     delegate void ExecuteCommand (ICommand command);
 
-    public class AsyncCommandQueue<T> : IDisposable where T : ICommand
+    public class AsyncCommandQueue : IDisposable
     {
         private bool disposed;
         private bool executing;
 
-        private Queue<T> eventQueue;
+        private Queue<ICommand> eventQueue;
         private RegisteredWaitHandle registeredHandle;
         private AutoResetEvent are = new AutoResetEvent (false);
         private ManualResetEvent executingHandle = new ManualResetEvent (true);
@@ -90,7 +90,7 @@ namespace Migo.TaskCore
                 };                    
             }
             
-            eventQueue = new Queue<T> ();
+            eventQueue = new Queue<ICommand> ();
 
             registeredHandle = ThreadPool.RegisterWaitForSingleObject (
                 are, ProcessEventQueue, null, -1, false
@@ -122,7 +122,7 @@ namespace Migo.TaskCore
             }
         }
     
-        public virtual bool Register (T command)
+        public virtual bool Register (ICommand command)
         {
             lock (sync) {   
                 if (disposed) {
@@ -133,7 +133,7 @@ namespace Migo.TaskCore
             }
         }
         
-        protected virtual bool Register (T command, bool pumpQueue)
+        protected virtual bool Register (ICommand command, bool pumpQueue)
         {
             if (command == null) {
                 throw new ArgumentNullException ("command");
@@ -148,7 +148,7 @@ namespace Migo.TaskCore
             return true;
         }
 
-        public virtual bool Register (IEnumerable<T> commands)
+        public virtual bool Register (IEnumerable<ICommand> commands)
         {
             if (commands == null) {
                 throw new ArgumentNullException ("commands");
@@ -159,7 +159,7 @@ namespace Migo.TaskCore
                     return false;
                 }
                 
-                foreach (T c in commands) {
+                foreach (ICommand c in commands) {
                     Register (c, false);
                 }
                 
@@ -197,7 +197,7 @@ namespace Migo.TaskCore
         
         protected virtual void ProcessEventQueue (object state, bool timedOut)
         {     
-            T e;
+            ICommand e;
             bool done = false;
            
             while (!done) {
