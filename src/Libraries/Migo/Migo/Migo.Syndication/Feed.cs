@@ -62,16 +62,36 @@ namespace Migo.Syndication
         ItemsQueued = 5,        
         None = 6        
     }
+    
+    public class FeedProvider : MigoModelProvider<Feed>
+    {
+        public FeedProvider (HyenaSqliteConnection connection) : base (connection, "PodcastSyndications")
+        {
+        }
+        
+        protected override int ModelVersion {
+            get { return 2; }
+        }
+
+        protected override void MigrateTable (int old_version)
+        {
+            Log.Debug("WE DID IT!");
+            if (old_version < 2) {
+                CheckTable ();
+                Connection.Execute (String.Format ("UPDATE {0} SET IsSubscribed=1", TableName));
+            } else  Log.Debug ("Um... no we didn't");
+        }
+    }
 
     public class Feed : MigoItem<Feed>
     {
-        private static SqliteModelProvider<Feed> provider;
-        public static SqliteModelProvider<Feed> Provider {
+        private static FeedProvider provider;
+        public static FeedProvider Provider {
             get { return provider; }
         }
         
         public static void Init () {
-            provider = new MigoModelProvider<Feed> (FeedsManager.Instance.Connection, "PodcastSyndications");
+            provider = new FeedProvider (FeedsManager.Instance.Connection);
         }
 
         public static bool Exists (string url)
@@ -247,6 +267,13 @@ namespace Migo.Syndication
         public FeedDownloadStatus DownloadStatus { 
             get { return download_status; }
             set { download_status = value; Manager.OnFeedsChanged (); }
+        }
+        
+        [DatabaseColumn("IsSubscribed")]
+        private bool is_subscribed;
+        public bool IsSubscribed {
+            get { return is_subscribed; }
+            set { is_subscribed = value; }
         }
         
 #endregion

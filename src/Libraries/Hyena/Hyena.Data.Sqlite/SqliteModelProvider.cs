@@ -185,7 +185,7 @@ namespace Hyena.Data.Sqlite
                 HyenaTableName, name, version));
         }
         
-        private void CheckTable ()
+        protected void CheckTable ()
         {
             //Console.WriteLine ("In {0} checking for table {1}", this, TableName);
             IDictionary<string, string> schema = connection.GetSchema (TableName);

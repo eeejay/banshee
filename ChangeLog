@@ -1,5 +1,14 @@
 2008-05-21  Scott Peterson  <lunchtimemama@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/FeedManager.cs:
+	* src/Libraries/Migo/Migo/Migo.Syndication/Feed.cs:
+	Add IsSubscribed to Feed and modified migration code to use true as the
+	default.
+
+2008-05-21  Scott Peterson  <lunchtimemama@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
 	Add null checks to avoid NRE.
