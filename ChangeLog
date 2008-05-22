@@ -1,5 +1,14 @@
 2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:
+	Replace the disc image for 'All Podcasts' with the podcast icon.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:
+	If the user has some text on the clipboard that starts with http,
+	automatically put that in the url entry.  Make the dialog a big wider.
+
+2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	When migrating old podcast data, call SyncWithFeedItem to get a bunch of
 	good settings (Genre, MediaAttributes, etc).

@@ -49,7 +49,8 @@ namespace Banshee.Podcasting.Gui
         private static int pixbuf_spacing = 4;
         private static int pixbuf_size = 48;
         
-        private static Gdk.Pixbuf default_cover_pixbuf = IconThemeUtils.LoadIcon (pixbuf_size, "media-optical");
+        // TODO replace this w/ new icon installation etc
+        private static Gdk.Pixbuf default_cover_pixbuf = Gdk.Pixbuf.LoadFromResource ("podcast-icon-48.png");
         
         private ArtworkManager artwork_manager;
 

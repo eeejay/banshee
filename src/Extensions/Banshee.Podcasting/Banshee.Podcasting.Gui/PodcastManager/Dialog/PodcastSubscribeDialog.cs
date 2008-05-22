@@ -31,11 +31,12 @@ using System;
 using Gtk;
 using Mono.Unix;
 
-using Banshee.Gui;
-using Banshee.Base;
+using Hyena.Widgets;
 
 using Migo.Syndication;
 
+using Banshee.Gui;
+using Banshee.Base;
 using Banshee.Podcasting;
 using Banshee.Podcasting.Data;
 
@@ -66,7 +67,7 @@ namespace Banshee.Podcasting.Gui
 
         private void BuildWindow ()
         {
-            this.Resizable = false;
+            DefaultWidth = 475;
 
             BorderWidth = 6;
             VBox.Spacing = 12;
@@ -88,20 +89,20 @@ namespace Banshee.Podcasting.Gui
             contentBox.Spacing = 12;
 
             Label header = new Label();
-            header.Markup = "<big><b>" + GLib.Markup.EscapeText (
-                Catalog.GetString ("Subscribe to New Podcast")
-            ) + "</b></big>";
+            header.Markup = String.Format (
+                "<big><b>{0}</b></big>",
+                GLib.Markup.EscapeText (Catalog.GetString ("Subscribe to New Podcast"))
+            );
             
             header.Justify = Justification.Left;
             header.SetAlignment (0.0f, 0.0f);
 
-            Label message = new Label (Catalog.GetString (
+            WrapLabel message = new WrapLabel ();
+            message.Markup = Catalog.GetString (
                 "Please enter the URL of the podcast to which you would like to subscribe."
-            ));
+            );
             
             message.Wrap = true;
-            message.Justify = Justification.Left;
-            message.SetAlignment (0.0f, 0.0f);
 
             VBox sync_vbox = new VBox ();
 
@@ -126,6 +127,19 @@ namespace Banshee.Podcasting.Gui
             url_entry = new Entry ();
             url_entry.ActivatesDefault = true;
 
+            // If the user has copied some text to the clipboard that starts with http, set
+            // our url entry to it and select it
+            Clipboard clipboard = Clipboard.Get (Gdk.Atom.Intern ("CLIPBOARD", false));
+            if (clipboard != null) {
+                string pasted = clipboard.WaitForText ();
+                if (!String.IsNullOrEmpty (pasted)) {
+                    if (pasted.StartsWith ("http")) {
+                        url_entry.Text = pasted;
+                        url_entry.SelectRegion (0, pasted.Length);
+                    }
+                }
+            }
+
             Table table = new Table (1, 2, false);
             table.RowSpacing = 6;
             table.ColumnSpacing = 12;
@@ -147,12 +161,12 @@ namespace Banshee.Podcasting.Gui
                 AttachOptions.Shrink, 0, 0
             );
 
-            contentBox.PackStart (header, false, true, 0);
-            contentBox.PackStart (message, false, true, 0);
+            contentBox.PackStart (header, true, true, 0);
+            contentBox.PackStart (message, true, true, 0);
 
-            contentBox.PackStart (table, false, true, 0);
+            contentBox.PackStart (table, true, true, 0);
 
-            box.PackStart (contentBox, false, true, 0);
+            box.PackStart (contentBox, true, true, 0);
 
             AddButton (Gtk.Stock.Cancel, Gtk.ResponseType.Cancel, true);
             AddButton (Catalog.GetString ("Subscribe"), ResponseType.Ok, true);
