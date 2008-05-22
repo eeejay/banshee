@@ -1,29 +1,30 @@
 include $(top_srcdir)/build/build.environment.mk
 
-MCS_FLAGS = -debug
-NUNIT_FLAGS = @MONO_NUNIT_LIBS@
-
-NUNIT_TESTER_NAME = ConsoleUi
-NUNIT_TESTER = $(DIR_BIN)/$(NUNIT_TESTER_NAME).exe
-NUNIT_TESTER_CSFILES =  \
-	AssemblyInfo.cs \
-	ConsoleUi.cs
-
-REF_BANSHEE_NUNIT = $(LINK_HYENA_DEPS) $(LINK_BANSHEE_CORE_DEPS) $(LINK_BANSHEE_THICKCLIENT_DEPS) $(LINK_NEREID_DEPS) $(ASSEMBLY_CSFILES) $(REF_BACKEND_UNIX) $(LINK_MIGO_DEPS)
-
-$(NUNIT_TESTER): $(NUNIT_TESTER_CSFILES)
-	$(MCS) $(MCS_FLAGS) -out:$@ $(NUNIT_FLAGS) $(NUNIT_TESTER_CSFILES)
-
 if ENABLE_TESTS
-test: $(NUNIT_TESTER)
-	@pushd $(top_builddir)/bin; \
-		TZ=America/Chicago LC_ALL=it_IT LANG=it_IT MONO_PATH="$(DIR_BIN)" mono --debug $(NUNIT_TESTER) $(top_builddir)/bin/*.dll
-	popd;
+
+TEST_ASSEMBLIES = \
+	Hyena.dll \
+	Migo.dll \
+	Banshee.Core.dll \
+	Banshee.Services.dll
+
+
+RUNNER = for asm in $${TEST_ASSEMBLIES}; do echo -e "\033[1mRunning tests on $${asm}...\033[0m"; TZ=America/Chicago LC_ALL=it_IT LANG=it_IT nunit-console2 /nologo $$asm; done
+
+test:
+	@pushd $(DIR_BIN) &>/dev/null; \
+	export TEST_ASSEMBLIES="$(TEST_ASSEMBLIES)"; $(RUNNER); \
+	popd &>/dev/null;
+
+%:
+	@pushd $(DIR_BIN) &>/dev/null; \
+	for i in *.dll; do \
+		if [[ $$(echo "$$i" | tr "[:upper:]" "[:lower:]") = "$$(echo "$@" | tr "[:upper:]" "[:lower:]").dll" ]]; then \
+			export TEST_ASSEMBLIES="$$i"; $(RUNNER); \
+		fi; \
+	done;
+
 endif
 
-EXTRA_DIST = $(ASSEMBLY_CSFILES)
-
-CLEANFILES = $(ASSEMBLY) $(NUNIT_TESTER) $(DIR_BIN)/TestResult.xml
-DISTCLEANFILES = *.mdb *.dll *.exe
 MAINTAINERCLEANFILES = Makefile.in
 
