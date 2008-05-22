@@ -74,7 +74,7 @@ src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs
 src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs
 src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs
-src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ListBrowserSourceContents.cs
+src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs
 src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade
@@ -115,8 +115,8 @@ src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11Notification
 src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs
-src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs
+src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs
@@ -141,4 +141,4 @@ src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs
 src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs
 src/Libraries/Lastfm/Lastfm/RadioConnection.cs
-src/Libraries/Migo/Migo/Migo.Syndication/Feed.cs
+src/Libraries/Migo/Migo.Syndication/Feed.cs
