@@ -154,6 +154,7 @@ namespace Banshee.Podcasting
                             PodcastTrackInfo track = PodcastTrackInfo.Provider.FetchSingle (track_id);
                             track.Item = enclosure.Item;
                             track.PrimarySourceId = source.DbId;
+                            track.SyncWithFeedItem ();
                             track.Save (false);
                             moved++;
                         }

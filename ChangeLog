@@ -1,5 +1,11 @@
 2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	When migrating old podcast data, call SyncWithFeedItem to get a bunch of
+	good settings (Genre, MediaAttributes, etc).
+
+2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs:
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastFeedModel.cs:
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
