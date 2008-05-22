@@ -79,7 +79,7 @@ namespace Migo.Syndication.Tests
             );
     
             AssertForEach (pairs, delegate (TransformPair<string, TimeSpan> pair) {
-                Assert.AreEqual (pair.To, XmlUtils.GetITunesDuration (pair.From));
+                Assert.AreEqual (pair.To, RssParser.GetITunesDuration (pair.From));
             });
         }
     }
