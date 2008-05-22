@@ -36,6 +36,7 @@ namespace Banshee.Collection.Gui
     {
         public ColumnCellDuration (string property, bool expand) : base (property, expand)
         {
+            Alignment = Pango.Alignment.Right;
         }
         
         protected override string Text {

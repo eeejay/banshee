@@ -50,7 +50,7 @@ using ScrolledWindow=Gtk.ScrolledWindow;
 
 namespace Banshee.Sources.Gui
 {
-    public abstract class ListBrowserSourceContents : VBox, ISourceContents
+    public abstract class FilteredListSourceContents : VBox, ISourceContents
     {
         private object main_view;
         private Gtk.ScrolledWindow main_scrolled_window;
@@ -81,7 +81,7 @@ namespace Banshee.Sources.Gui
             </ui>
         ";
 
-        public ListBrowserSourceContents ()
+        public FilteredListSourceContents ()
         {
             InitializeViews ();
         

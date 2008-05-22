@@ -47,7 +47,7 @@ using Banshee.Collection.Gui;
 
 namespace Banshee.Sources.Gui
 {
-    public class CompositeTrackSourceContents : ListBrowserSourceContents, ITrackModelSourceContents
+    public class CompositeTrackSourceContents : FilteredListSourceContents, ITrackModelSourceContents
     {
         private ArtistListView artist_view;
         private AlbumListView album_view;

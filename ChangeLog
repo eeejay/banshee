@@ -1,3 +1,20 @@
+2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.mdp:
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/ListBrowserSourceContents.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs:
+	Rename ListBrowserSourceContents to FilteredListSourceContents.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
+	Right align durations.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Avoid passing null string to gtk.
+
 2008-05-22  James Willcox  <snorp@novell.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTiles.cs:

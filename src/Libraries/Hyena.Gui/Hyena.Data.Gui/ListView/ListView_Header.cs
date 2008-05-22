@@ -431,7 +431,7 @@ namespace Hyena.Data.Gui
             private Column column;
             private bool ready = false;
             
-            public ColumnToggleMenuItem (Column column) : base (column.Title)
+            public ColumnToggleMenuItem (Column column) : base (column.Title ?? String.Empty)
             {
                 this.column = column;
                 Active = column.Visible; 

@@ -51,7 +51,7 @@ using Banshee.Podcasting.Data;
 
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastSourceContents : ListBrowserSourceContents
+    public class PodcastSourceContents : FilteredListSourceContents
     {
         private PodcastItemView track_view;
         private PodcastFeedView feed_view;

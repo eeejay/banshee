@@ -94,9 +94,9 @@ SOURCES =  \
 	Banshee.SmartPlaylist.Gui/Editor.cs \
 	Banshee.Sources.Gui/CellEditEntry.cs \
 	Banshee.Sources.Gui/CompositeTrackSourceContents.cs \
+	Banshee.Sources.Gui/FilteredListSourceContents.cs \
 	Banshee.Sources.Gui/ISourceContents.cs \
 	Banshee.Sources.Gui/ITrackModelSourceContents.cs \
-	Banshee.Sources.Gui/ListBrowserSourceContents.cs \
 	Banshee.Sources.Gui/ObjectListSourceContents.cs \
 	Banshee.Sources.Gui/SourceComboBox.cs \
 	Banshee.Sources.Gui/SourceIconResolver.cs \
