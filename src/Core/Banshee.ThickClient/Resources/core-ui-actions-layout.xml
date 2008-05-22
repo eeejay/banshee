@@ -15,7 +15,7 @@
     <placeholder name="RepeatButton"/>
   </toolbar>
 
-  <menubar name="MainMenu">
+  <menubar name="MainMenu" action="MainMenuAction">
     <menu name="MediaMenu" action="MediaMenuAction">
       <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
       <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
@@ -30,7 +30,9 @@
     </menu>
 
     <menu name="EditMenu" action="EditMenuAction">
+      <placeholder name="AboveAddToPlaylist"/>
       <menu name="AddToPlaylist" action="AddToPlaylistAction"></menu>
+      <placeholder name="BelowAddToPlaylist"/>
       <menuitem name="TrackProperties" action="TrackPropertiesAction"/>
       <separator/>
       <menuitem name="SelectAll" action="SelectAllAction"/>

@@ -35,12 +35,21 @@ namespace Banshee.GnomeBackend
 {
     public class GnomeService : IExtensionService, IDisposable 
     {
+        private Brasero brasero;
+        
         public GnomeService ()
         {
         }
         
         public void Initialize ()
         {
+            try {
+                brasero = new Brasero ();
+                brasero.Initialize ();
+            } catch {
+                brasero = null;
+            }
+        
             if (Browser.OpenHandler == null) {
                 Browser.OpenHandler = OpenUrl;
             }
@@ -48,6 +57,11 @@ namespace Banshee.GnomeBackend
         
         public void Dispose ()
         {
+            if (brasero != null) {
+                brasero.Dispose ();
+                brasero = null;
+            }
+        
             if (Browser.OpenHandler == (Banshee.Web.Browser.OpenUrlHandler) OpenUrl) {
                 Browser.OpenHandler = null;
             }

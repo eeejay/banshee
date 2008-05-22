@@ -1,5 +1,21 @@
 2008-05-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Added a
+	SelectionChanged event
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Allow the placeholders in the edit menu above the add to playlist entry
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Added FindProgramInPath
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs: A quick 
+	hack to allow launching selected tracks in Brasero as an audio CD project
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeService.cs: Load
+	Brasero support if it's found on the system
+
+2008-05-22  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
 	Offset the cell damage areas by the view adjustment values
 

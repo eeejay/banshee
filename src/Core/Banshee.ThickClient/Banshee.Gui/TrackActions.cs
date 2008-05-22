@@ -54,6 +54,8 @@ namespace Banshee.Gui
             "RemoveTracksAction", "RemoveTracksFromLibraryAction", "DeleteTracksFromDriveAction",
             "RateTracksAction", "SelectNoneAction"
         };
+        
+        public event EventHandler SelectionChanged;
 
         public TrackActions (InterfaceActionService actionService) : base (actionService, "Track")
         {
@@ -154,12 +156,21 @@ namespace Banshee.Gui
 
         private void HandleSelectionChanged (object sender, EventArgs args)
         {
+            OnSelectionChanged ();
             UpdateActions ();
         }
 
         private void HandleEditMenuActivated (object sender, EventArgs args)
         {
             ResetRating ();
+        }
+        
+        private void OnSelectionChanged ()
+        {
+            EventHandler handler = SelectionChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
         }
 
 #endregion

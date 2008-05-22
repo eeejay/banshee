@@ -79,6 +79,34 @@ namespace Banshee.Base
             
             return result;
         }
+
+        public static string FindProgramInPath (string command)
+        {
+            foreach (string path in GetExecPaths ()) {
+                string full_path = Path.Combine (path, command);
+                try {
+                    FileInfo info = new FileInfo (full_path);
+                    // FIXME: System.IO is super lame, should check for 0755
+                    if (info.Exists) {
+                        return full_path;
+                    }
+                } catch {
+                }
+            }
+
+            return null;
+        }
+
+        private static string [] GetExecPaths ()
+        {
+            string path = Environment.GetEnvironmentVariable ("PATH");
+            if (String.IsNullOrEmpty (path)) {
+                return new string [] { "/bin", "/usr/bin", "/usr/local/bin" };
+            }
+
+            // this is super lame, should handle quoting/escaping
+            return path.Split (':');
+        }
         
         public static string MakePathRelative (string path, string to)
         {
