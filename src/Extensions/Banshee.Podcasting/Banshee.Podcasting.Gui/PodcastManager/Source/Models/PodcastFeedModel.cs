@@ -42,8 +42,8 @@ namespace Banshee.Podcasting.Gui
 {
     public class PodcastFeedModel : DatabaseBrowsableListModel<Feed, Feed>
     {
-        public PodcastFeedModel (DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
-            : base (trackModel, connection, Feed.Provider, new Feed (null, FeedAutoDownload.None), uuid)
+        public PodcastFeedModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
+            : base (source, trackModel, connection, Feed.Provider, new Feed (null, FeedAutoDownload.None), uuid)
         {
             ReloadFragmentFormat = @"
                 FROM PodcastSyndications WHERE FeedID IN

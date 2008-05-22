@@ -55,6 +55,7 @@ namespace Banshee.Collection.Database
     {
         private readonly BansheeModelCache<T> cache;
         private readonly DatabaseTrackListModel browsing_model;
+        private readonly Banshee.Sources.DatabaseSource source;
         
         private long count;
         private string reload_fragment;
@@ -67,9 +68,10 @@ namespace Banshee.Collection.Database
         
         protected readonly U select_all_item;
 
-        public DatabaseBrowsableListModel (DatabaseTrackListModel trackModel, BansheeDbConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid)
+        public DatabaseBrowsableListModel ( Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid)
             : base ()
         {
+            this.source = source;
             browsing_model = trackModel;
             select_all_item = selectAllItem;
             
@@ -110,9 +112,50 @@ namespace Banshee.Collection.Database
                 browsing_model.CachesJoinTableEntries ? browsing_model.JoinFragment : null,
                 browsing_model.CacheId,
                 browsing_model.CachesJoinTableEntries
-                    ? String.Format ("{0}.{1} AND CoreTracks.TrackID = {0}.{2}", browsing_model.JoinTable, browsing_model.JoinPrimaryKey, browsing_model.JoinColumn)
-                    : "CoreTracks.TrackID"
+                    ? String.Format (
+                        "{0}.{1} AND CoreTracks.TrackID = {0}.{2}",
+                        browsing_model.JoinTable, browsing_model.JoinPrimaryKey, browsing_model.JoinColumn
+                    ) : "CoreTracks.TrackID",
+                GetFilterFragment ()
             );
+        }
+
+        private string GetFilterFragment ()
+        {
+            StringBuilder qb = new StringBuilder ();
+            foreach (IFilterListModel model in UpstreamFilters) {
+                string filter = GetFilterFromModel (model);
+                if (filter != null) {
+                    qb.Append ("AND");
+                    qb.Append (filter);
+                }
+            }
+            return qb.ToString ();
+        }
+
+        private IEnumerable<IFilterListModel> UpstreamFilters {
+            get {
+                foreach (IFilterListModel model in source.FilterModels) {
+                    if (this == model) {
+                        break;
+                    } else {
+                        yield return model;
+                    }
+                }
+            }
+        }
+
+        // Ick, duplicated from DatabaseTrackListModel
+        private string GetFilterFromModel (IFilterListModel model)
+        {
+            string filter = null;
+            
+            ModelHelper.BuildIdFilter<object> (model.GetSelectedObjects (), model.FilterColumn, null,
+                delegate (object item) { return model.ItemToFilterValue (item); },
+                delegate (string new_filter) { filter = new_filter; }
+            );
+            
+            return filter;
         }
         
         public abstract void UpdateSelectAllItem (long count);

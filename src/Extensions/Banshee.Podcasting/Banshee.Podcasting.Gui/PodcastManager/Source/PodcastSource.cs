@@ -198,7 +198,7 @@ namespace Banshee.Podcasting.Gui
             TrackCache = new DatabaseTrackModelCache<PodcastTrackInfo> (ServiceManager.DbConnection,
                     UniqueId, track_model, track_provider);
                     
-            feed_model = new PodcastFeedModel (DatabaseTrackModel, ServiceManager.DbConnection, "PodcastFeeds");
+            feed_model = new PodcastFeedModel (this, DatabaseTrackModel, ServiceManager.DbConnection, "PodcastFeeds");
             
             AfterInitialized ();
         }

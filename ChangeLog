@@ -1,5 +1,17 @@
 2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastFeedModel.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseBrowsableListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	Change BrowsableListModels to automatically filter on any 'upstream'
+	filters (ones defined before them), so upshot is albums filters on artists
+	again.
+
+2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	Migrate podcast feeds and items from 0.13.2 podcast plugin.
 

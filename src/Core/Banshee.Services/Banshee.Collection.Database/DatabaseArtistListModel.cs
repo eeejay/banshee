@@ -40,8 +40,8 @@ namespace Banshee.Collection.Database
 {
     public class DatabaseArtistListModel : DatabaseBrowsableListModel<DatabaseArtistInfo, ArtistInfo>
     {
-        public DatabaseArtistListModel (DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
-            : base (trackModel, connection, DatabaseArtistInfo.Provider, new ArtistInfo (null), uuid)
+        public DatabaseArtistListModel ( Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
+            : base (source, trackModel, connection, DatabaseArtistInfo.Provider, new ArtistInfo (null), uuid)
         {
             ReloadFragmentFormat = @"
                 FROM CoreArtists 
@@ -53,7 +53,7 @@ namespace Banshee.Collection.Database
         }
         
         public override string FilterColumn {
-            get { return "CoreTracks.ArtistID"; }
+            get { return "CoreArtists.ArtistID"; }
         }
         
         public override string ItemToFilterValue (object item)

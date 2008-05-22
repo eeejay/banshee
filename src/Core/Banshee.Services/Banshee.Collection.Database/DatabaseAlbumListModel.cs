@@ -41,8 +41,8 @@ namespace Banshee.Collection.Database
 {
     public class DatabaseAlbumListModel : DatabaseBrowsableListModel<DatabaseAlbumInfo, AlbumInfo>
     {
-        public DatabaseAlbumListModel (DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
-            : base (trackModel, connection, DatabaseAlbumInfo.Provider, new AlbumInfo (null), uuid)
+        public DatabaseAlbumListModel ( Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
+            : base (source, trackModel, connection, DatabaseAlbumInfo.Provider, new AlbumInfo (null), uuid)
         {
             ReloadFragmentFormat = @"
                 FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID
@@ -50,6 +50,7 @@ namespace Banshee.Collection.Database
                         (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreCache{0}
                             WHERE CoreCache.ModelID = {1} AND
                                   CoreCache.ItemId = {2})
+                    {3}
                     ORDER BY CoreAlbums.TitleLowered, CoreArtists.NameLowered";
         }
         

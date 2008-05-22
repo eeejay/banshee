@@ -109,8 +109,8 @@ namespace Banshee.Sources
             InitializeTrackModel ();
 
             if (HasArtistAlbum) {
-                artist_model = new DatabaseArtistListModel (DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
-                album_model = new DatabaseAlbumListModel (DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
+                artist_model = new DatabaseArtistListModel (this, DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
+                album_model = new DatabaseAlbumListModel (this, DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
             }
 
             reload_limiter = new RateLimiter (RateLimitedReload);
