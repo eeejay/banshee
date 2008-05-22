@@ -1,3 +1,19 @@
+2008-05-21  Scott Peterson  <lunchtimemama@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Add null checks to avoid NRE.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Removed rendering canvases.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Removed rendering canvases and fixed some bugaboos with cell event
+	proxying.
+
 2008-05-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:

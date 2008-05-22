@@ -52,6 +52,7 @@ namespace Hyena.Data.Gui
             WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
             
             GdkWindow = Parent.GdkWindow;
+            cell_context.Drawable = GdkWindow;
             
             WindowAttr attributes = new WindowAttr ();
             attributes.WindowType = Gdk.WindowType.Child;
@@ -77,7 +78,6 @@ namespace Hyena.Data.Gui
             
             OnDragSourceSet ();
             MoveResize (Allocation);
-            RegenerateCanvases ();
             
             base.OnRealized ();
         }
@@ -89,8 +89,6 @@ namespace Hyena.Data.Gui
             event_window.UserData = IntPtr.Zero;
             event_window.Destroy ();
             event_window = null;
-            
-            DisposeCanvases ();
             
             base.OnUnrealized ();
         }
@@ -134,30 +132,6 @@ namespace Hyena.Data.Gui
             header_width = header_interaction_alloc.Width;
         }
         
-        private void RegenerateCanvases ()
-        {
-            int canvas_width = Math.Max (1, header_width);
-            int canvas_height = Math.Max (1, RowsInView * RowHeight);
-            
-            if (canvas_alloc.Width != canvas_width || canvas_alloc.Height != canvas_height) {
-                DisposeCanvases ();
-                canvas_alloc.Width = canvas_width;
-                canvas_alloc.Height = canvas_height;
-            }
-        }
-        
-        private void DisposeCanvases ()
-        {
-            if (canvas1 != null) {
-                canvas1.Dispose ();
-                canvas1 = null;
-            }
-            if (canvas2 != null) {
-                canvas2.Dispose ();
-                canvas2 = null;
-            }
-        }
-        
         protected override void OnSizeRequested (ref Requisition requisition)
         {
             // TODO give the minimum height of the header
@@ -179,7 +153,6 @@ namespace Hyena.Data.Gui
             MoveResize (allocation);
             RecalculateColumnSizes ();
             RegenerateColumnCache ();
-            RegenerateCanvases ();
            
             if (vadjustment != null) {
                 hadjustment.PageSize = header_interaction_alloc.Width;
@@ -194,7 +167,7 @@ namespace Hyena.Data.Gui
                 model.RowsInView = RowsInView;
             }
             
-            InvalidateList (false);
+            InvalidateList ();
         }
         
         private int RowsInView {

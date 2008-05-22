@@ -242,7 +242,6 @@ namespace Hyena.Data.Gui
         {
             InvalidateColumnCache ();
             RegenerateColumnCache ();
-            RegenerateCanvases ();
             UpdateAdjustments ();
             QueueDraw ();
         }
@@ -420,7 +419,6 @@ namespace Hyena.Data.Gui
             set { 
                 header_visible = value;
                 MoveResize (Allocation);
-                RegenerateCanvases ();
             }
         }
         

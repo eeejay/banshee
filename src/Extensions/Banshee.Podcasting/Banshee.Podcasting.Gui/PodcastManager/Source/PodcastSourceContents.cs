@@ -68,7 +68,9 @@ namespace Banshee.Podcasting.Gui
         
         protected override void ClearFilterSelections ()
         {
-            feed_view.Selection.Clear ();
+            if (feed_view.Model != null) {
+                feed_view.Selection.Clear ();
+            }
         }
 
         protected override bool ActiveSourceCanHasBrowser {

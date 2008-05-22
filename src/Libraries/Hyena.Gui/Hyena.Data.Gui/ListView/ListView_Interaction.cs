@@ -200,52 +200,37 @@ namespace Hyena.Data.Gui
 #region Cell Event Proxy        
         
         private IInteractiveCell last_icell;
-        private Gdk.Rectangle last_icell_area;
+        private Gdk.Rectangle last_icell_area = Gdk.Rectangle.Zero;
         
         private void ProxyEventToCell (Gdk.Event evnt, bool press)
         {
             IInteractiveCell icell;
-            Gdk.Rectangle [] damage = new Gdk.Rectangle[2];
-            damage[0] = ProxyEventToCellNoDraw (evnt, press, out icell);
+            Gdk.Rectangle icell_area;
+            bool redraw = ProxyEventToCell (evnt, press, out icell, out icell_area);
             
-            if (last_icell != null && last_icell != icell) {
-                if (last_icell.PointerLeaveEvent ()) {
-                    damage[1] = last_icell_area;
+            if (last_icell_area != icell_area) {
+                if (last_icell != null && last_icell.PointerLeaveEvent ()) {
+                    QueueDrawArea (last_icell_area.X, last_icell_area.Y, last_icell_area.Width, last_icell_area.Height);
                 }
-                
-                last_icell = null;
-                last_icell_area = Gdk.Rectangle.Zero;
+                last_icell = icell;
+                last_icell_area = icell_area;
             }
             
-            if (damage[0].Equals (damage[1])) {
-                if (damage[0].Equals (Gdk.Rectangle.Zero)) {
-                    return;
-                }
-                
-                // FIXME: Should be QueueDrawArea (damage[0]...)
-                QueueDraw ();
-            } else {
-                // FIXME: When QueueDrawArea works, use this
-                // foreach (Gdk.Rectangle area in damage) {
-                //     if (!area.Equals (Gdk.Rectangle.Zero)) {
-                //         QueueDrawArea (area.X, area.Y, area.Width, area.Height);
-                //     }
-                // }
-                
-                QueueDraw (); 
+            if (redraw) {
+                QueueDrawArea (icell_area.X, icell_area.Y, icell_area.Width, icell_area.Height);
             }
         }
         
-        private Gdk.Rectangle ProxyEventToCellNoDraw (Gdk.Event evnt, bool press, out IInteractiveCell icell)
+        private bool ProxyEventToCell (Gdk.Event evnt, bool press, out IInteractiveCell icell, out Gdk.Rectangle icell_area)
         {
-            int evnt_x, evnt_y;
-            Gdk.Rectangle damage = Gdk.Rectangle.Zero;
+            icell = null;
+            icell_area = Gdk.Rectangle.Zero;
+            
+            int evnt_x;
+            int evnt_y;
             
             Gdk.EventButton evnt_button = evnt as Gdk.EventButton;
             Gdk.EventMotion evnt_motion = evnt as Gdk.EventMotion;
-            
-            bool redraw = false;
-            icell = null;
             
             if (evnt_motion != null) {
                 evnt_x = (int)evnt_motion.X;
@@ -255,7 +240,8 @@ namespace Hyena.Data.Gui
                 evnt_y = (int)evnt_button.Y;
             } else {
                 // Possibly EventCrossing, for the leave event
-                return damage;
+                icell = last_icell;
+                return false;
             }
             
             int y = evnt_y - list_interaction_alloc.Y;
@@ -263,23 +249,22 @@ namespace Hyena.Data.Gui
             
             int row_index = GetRowAtY (y);
             if (row_index < 0 || row_index >= Model.Count) {
-                return damage;
+                return false;
             }
             
             Column column = GetColumnAt (x);
             if (column == null) {
-                return damage;
+                return false;
             }
             
             CachedColumn cached_column = GetCachedColumnForColumn (column);
             
             ColumnCell cell = column.GetCell (0);
             icell = cell as IInteractiveCell;
-            if (icell == null) {
-                return damage;
-            }
             
-            last_icell = icell;
+            if (icell == null) {
+                return false;
+            }
             
             // Turn the view-absolute coordinates into cell-relative coordinates
             x -= cached_column.X1;
@@ -289,26 +274,15 @@ namespace Hyena.Data.Gui
             // Bind the row to the cell and then send it a synthesized input event
             cell.BindListItem (model[row_index]);
             
-            if (evnt_motion != null) {
-                redraw |= icell.MotionEvent (x, y, evnt_motion);
-            } else if (evnt_button != null) {
-                redraw |= icell.ButtonEvent (x, y, press, evnt_button);
-            }
+            bool redraw = (evnt_motion != null)
+                ? icell.MotionEvent (x, y, evnt_motion) : icell.ButtonEvent (x, y, press, evnt_button);
             
-            // FIXME: This rectangle might not be correct, but I don't
-            // think QueueDrawArea works at all... maybe Scott has
-            // some insight? I smell issues with the blit canvases
-            // --Aaron
-            if (redraw) {
-                damage.X = cached_column.X1;
-                damage.Y = (int)GetYAtRow (row_index);
-                damage.Width = cached_column.Width;
-                damage.Height = RowHeight;
-                
-                last_icell_area = damage;
-            }
+            icell_area.X = cached_column.X1 + Allocation.X;
+            icell_area.Y = (int)GetYAtRow (row_index) + list_interaction_alloc.Y + Allocation.Y;
+            icell_area.Width = cached_column.Width;
+            icell_area.Height = RowHeight;
             
-            return damage;
+            return redraw;
         }   
         
 #endregion
@@ -440,8 +414,7 @@ namespace Hyena.Data.Gui
                 pressed_column_is_dragging = false;
                 pressed_column_index = -1;
                 GdkWindow.Cursor = null;
-                InvalidateHeader ();
-                InvalidateList ();
+                QueueDraw ();
                 return true;
             }
             
@@ -681,12 +654,12 @@ namespace Hyena.Data.Gui
         private void OnHadjustmentChanged (object o, EventArgs args)
         {
             InvalidateHeader ();
-            InvalidateList (false);
+            InvalidateList ();
         }
         
         private void OnVadjustmentChanged (object o, EventArgs args)
         {
-            InvalidateList (false);
+            InvalidateList ();
         }
         
         public void ScrollTo (double val)

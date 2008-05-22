@@ -66,8 +66,12 @@ namespace Banshee.Sources.Gui
         
         protected override void ClearFilterSelections ()
         {
-            artist_view.Selection.Clear ();
-            album_view.Selection.Clear ();
+            if (artist_view.Model != null) {
+                artist_view.Selection.Clear ();
+            }
+            if (album_view.Model != null) {
+                album_view.Selection.Clear ();
+            }
         }
 
         public void SetModels (TrackListModel track, IListModel<ArtistInfo> artist, IListModel<AlbumInfo> album)
