@@ -65,7 +65,7 @@ dnl Monodoc (optional through --disable-docs)
 SHAMROCK_CHECK_MONODOC
 
 dnl NUnit (optional)
-SHAMROCK_CHECK_MONO_NUNIT
+SHAMROCK_CHECK_NUNIT
 
 dnl External TagLib# libraries (optional)
 BANSHEE_CHECK_TAGLIB_SHARP
