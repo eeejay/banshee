@@ -32,6 +32,7 @@ using Gtk;
 
 using Banshee.Base;
 using Banshee.ServiceStack;
+using Hyena.Gui;
 
 namespace Banshee.Gui.Widgets
 {
@@ -51,6 +52,7 @@ namespace Banshee.Gui.Widgets
         private Button cancel_button;
         private uint update_delay_id;
         private uint progress_bounce_id;
+        private object tooltips;
         
         Banshee.Widgets.HigMessageDialog cancel_dialog;
         
@@ -70,6 +72,7 @@ namespace Banshee.Gui.Widgets
             
             icon = new Image ();
             
+            tooltips = TooltipSetter.CreateHost ();
             title_label = new Label ();
             title_label.Xalign = 0.0f;
             title_label.Ellipsize = Pango.EllipsizeMode.End;
@@ -177,6 +180,7 @@ namespace Banshee.Gui.Widgets
                     status_label.Hide ();
                 } else {
                     status_label.Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (job.Status));
+                    TooltipSetter.Set (tooltips, status_label, job.Status);
                     status_label.Show ();
                 }
                 status = job.Status;
