@@ -208,16 +208,21 @@ namespace Hyena.Data.Gui
             Gdk.Rectangle icell_area;
             bool redraw = ProxyEventToCell (evnt, press, out icell, out icell_area);
             
+            int xoffset = (int)hadjustment.Value;
+            int yoffset = (int)vadjustment.Value;
+            
             if (last_icell_area != icell_area) {
                 if (last_icell != null && last_icell.PointerLeaveEvent ()) {
-                    QueueDrawArea (last_icell_area.X, last_icell_area.Y, last_icell_area.Width, last_icell_area.Height);
+                    QueueDrawArea (last_icell_area.X - xoffset, last_icell_area.Y - yoffset, 
+                        last_icell_area.Width, last_icell_area.Height);
                 }
                 last_icell = icell;
                 last_icell_area = icell_area;
             }
             
             if (redraw) {
-                QueueDrawArea (icell_area.X, icell_area.Y, icell_area.Width, icell_area.Height);
+                QueueDrawArea (icell_area.X - xoffset, icell_area.Y - yoffset, 
+                    icell_area.Width, icell_area.Height);
             }
         }
         

@@ -1,3 +1,8 @@
+2008-05-22  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Offset the cell damage areas by the view adjustment values
+
 2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	There were some pretty big performance issues with podcasting if you had
