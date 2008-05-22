@@ -44,12 +44,17 @@ namespace Hyena.Data.Gui
             int x = context.Area.X + xpad + ((cell_width - Size) / 2);
             int y = context.Area.Y + ypad + ((cell_height - Size) / 2);
             
+            if (state == StateType.Normal && last_hover_bound == BoundObjectParent) {
+                state = StateType.Prelight;
+            }
+            
             Style.PaintCheck (context.Widget.Style, context.Drawable, state, 
                 Value ? ShadowType.In : ShadowType.Out, 
                 context.Clip, context.Widget, "cellcheck", x, y, Size, Size);
         }
         
         private object last_pressed_bound;
+        private object last_hover_bound;
         
         public bool ButtonEvent (int x, int y, bool pressed, Gdk.EventButton evnt)
         {
@@ -68,12 +73,18 @@ namespace Hyena.Data.Gui
         
         public bool MotionEvent (int x, int y, Gdk.EventMotion evnt)
         {
-            return false;
+            if (last_hover_bound == BoundObjectParent) {
+                return false;
+            }
+            
+            last_hover_bound = BoundObjectParent;
+            return true;
         }
         
         public bool PointerLeaveEvent ()
         {
-            return false;
+            last_hover_bound = null;
+            return true;
         }
         
         public void GetSize (out int width, out int height)

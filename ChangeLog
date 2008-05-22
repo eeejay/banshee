@@ -1,3 +1,9 @@
+2008-05-22  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellCheckBox.cs: Save and
+	reset the bound object on motion/pointer leave to a hover object variable
+	and draw the checkbox as prelit if that's set
+
 2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs:

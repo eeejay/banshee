@@ -3,17 +3,14 @@
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Banshee" configuration="Debug" />
       <Entry build="True" name="libbanshee" configuration="Debug" />
-      <Entry build="True" name="tests" configuration="Default" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee" single="True">
     <Execute type="None" entry="Banshee" />
     <Execute type="None" entry="libbanshee" />
-    <Execute type="None" entry="tests" />
   </StartMode>
   <Entries>
     <Entry filename="src/Banshee.mds" />
     <Entry filename="libbanshee/libbanshee.mdp" />
-    <Entry filename="tests/tests.md-nunit" />
   </Entries>
 </Combine>
