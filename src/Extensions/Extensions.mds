@@ -1,14 +1,14 @@
 <Combine name="Extensions" fileversion="2.0">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
-      <Entry build="True" name="Banshee.Bookmarks" configuration="Debug" />
-      <Entry build="True" name="Banshee.Lastfm" configuration="Debug" />
-      <Entry build="True" name="Banshee.MultimediaKeys" configuration="Debug" />
-      <Entry build="True" name="Banshee.NotificationArea" configuration="Debug" />
-      <Entry build="True" name="Banshee.NowPlaying" configuration="Debug" />
-      <Entry build="True" name="Banshee.PlayQueue" configuration="Debug" />
-      <Entry build="True" name="Banshee.AudioCd" configuration="Debug" />
       <Entry build="True" name="Banshee.Daap" configuration="Debug" />
+      <Entry build="True" name="Banshee.NotificationArea" configuration="Debug" />
+      <Entry build="True" name="Banshee.MultimediaKeys" configuration="Debug" />
+      <Entry build="True" name="Banshee.PlayQueue" configuration="Debug" />
+      <Entry build="False" name="Banshee.Plugins.Lastfm" configuration="Debug" />
+      <Entry build="True" name="Banshee.NowPlaying" configuration="Debug" />
+      <Entry build="True" name="Banshee.Bookmarks" configuration="Debug" />
+      <Entry build="True" name="Banshee.AudioCd" configuration="Debug" />
       <Entry build="True" name="Banshee.MiniMode" configuration="Debug" />
       <Entry build="True" name="Banshee.Podcasting" configuration="Debug" />
       <Entry build="True" name="Banshee.Sample" configuration="Debug" />
