@@ -231,7 +231,7 @@ namespace Migo.Syndication
             protected set { dbid = value; }
         }
         
-        [DatabaseColumn ("ItemID")]
+        [DatabaseColumn ("ItemID", Index = "PodcastEnclosuresItemIDIndex")]
         protected long item_id;
         public long ItemId {
             get { return Item.DbId; }

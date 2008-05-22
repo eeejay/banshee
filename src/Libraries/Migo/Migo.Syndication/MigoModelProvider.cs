@@ -36,33 +36,32 @@ namespace Migo.Syndication
 {
     // Caches all results retrieved from the database, such that any subsequent retrieval will
     // return the same instance.
-    public class MigoModelProvider<T> : SqliteModelProvider<T> where T : ICacheableItem, new()
+    public class MigoModelProvider<T> : SqliteModelProvider<T> where T : ICacheableItem, MigoItem<T>, new()
     {
         private Dictionary<long, T> full_cache = new Dictionary<long, T> ();
         
         public MigoModelProvider (HyenaSqliteConnection connection, string table_name) : base (connection, table_name)
         {
         }
+
+#region Overrides
+                
+        public override T FetchSingle (long id)
+        {
+            return GetCached (id) ?? CacheResult (base.FetchSingle (id));
+        }
         
         public override void Save (T target)
         {
             base.Save (target);
-            long dbid = PrimaryKeyFor (target);
-            if (!full_cache.ContainsKey (dbid)) {
-                full_cache[dbid] = target;
+            if (!full_cache.ContainsKey (target.DbId)) {
+                full_cache[target.DbId] = target;
             }
         }
 
         public override T Load (System.Data.IDataReader reader)
         {
-            long dbid = PrimaryKeyFor (reader);
-            if (full_cache.ContainsKey (dbid)) {
-                return full_cache[dbid];
-            } else {
-                T item = base.Load (reader);
-                full_cache[dbid] = item;
-                return item;
-            }
+            return GetCached (PrimaryKeyFor (reader)) ?? CacheResult (base.Load (reader));
         }
         
         public override void Delete (long id)
@@ -80,5 +79,27 @@ namespace Migo.Syndication
                 
             base.Delete (items);
         }
+        
+#endregion
+
+#region Utility Methods
+
+        private T GetCached (long id)
+        {
+            if (full_cache.ContainsKey (id)) {
+                return full_cache[id];
+            } else {
+                return null;
+            }
+        }
+        
+        private T CacheResult (T item)
+        {
+            full_cache[item.DbId] = item;
+            return item;
+        }
+
+#endregion
+        
     }
 }

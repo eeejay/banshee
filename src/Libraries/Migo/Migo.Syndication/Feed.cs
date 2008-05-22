@@ -69,17 +69,28 @@ namespace Migo.Syndication
         {
         }
         
+        protected override void CreateTable ()
+        {
+            base.CreateTable ();
+            
+            CreateIndex ("PodcastSyndicationsIndex", "IsSubscribed, Title");
+        }
+        
         protected override int ModelVersion {
-            get { return 2; }
+            get { return 3; }
         }
 
         protected override void MigrateTable (int old_version)
         {
-            Log.Debug("WE DID IT!");
+            CheckTable ();
+
             if (old_version < 2) {
-                CheckTable ();
                 Connection.Execute (String.Format ("UPDATE {0} SET IsSubscribed=1", TableName));
-            } else  Log.Debug ("Um... no we didn't");
+            }
+            
+            if (old_version < 3) {
+                CreateIndex ("PodcastSyndicationsIndex", "IsSubscribed, Title");
+            }
         }
     }
 

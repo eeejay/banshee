@@ -267,6 +267,14 @@ namespace Hyena.Data.Sqlite
             }
         }
         
+        protected void CreateIndex (string name, string columns)
+        {
+            Connection.Execute (String.Format (
+                "CREATE INDEX {0} ON {1} ({2})",
+                name, TableName, columns
+            ));
+        }
+        
         public virtual void Save (T target)
         {
             try {
@@ -392,7 +400,7 @@ namespace Hyena.Data.Sqlite
             return FetchSingle ((long) id);
         }
         
-        public T FetchSingle (long id)
+        public virtual T FetchSingle (long id)
         {
             using (IDataReader reader = connection.Query (SelectSingleCommand, id)) {
                 if (reader.Read ()) {

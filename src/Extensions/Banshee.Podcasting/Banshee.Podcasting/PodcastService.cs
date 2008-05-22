@@ -90,7 +90,7 @@ namespace Banshee.Podcasting
             InitializeInterface ();
         }
 
-        private void MigrateIfPossible ()
+        private void MigrateLegacyIfNeeded ()
         {
             if (DatabaseConfigurationClient.Client.Get<int> ("Podcast", "Version", 0) == 0) {
                 if (ServiceManager.DbConnection.TableExists ("Podcasts") &&
@@ -180,12 +180,14 @@ namespace Banshee.Podcasting
         public void DelayedInitialize ()
         {
             // Migrate data from 0.13.2 podcast tables, if they exist
-            MigrateIfPossible ();
-              
-            foreach (Feed feed in Feed.Provider.FetchAll ()) {
-                feed.Update ();
-                RefreshArtworkFor (feed);
-            }
+            MigrateLegacyIfNeeded ();
+            
+            Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
+                foreach (Feed feed in Feed.Provider.FetchAll ()) {
+                    feed.Update ();
+                    RefreshArtworkFor (feed);
+                }
+            }));
         }
         
         bool disposing;
@@ -227,7 +229,7 @@ namespace Banshee.Podcasting
         private void RefreshArtworkFor (Feed feed)
         {
             if (feed.LastDownloadTime != DateTime.MinValue)
-                Banshee.Kernel.Scheduler.Schedule (new PodcastImageFetchJob (feed), Banshee.Kernel.JobPriority.Highest);
+                Banshee.Kernel.Scheduler.Schedule (new PodcastImageFetchJob (feed), Banshee.Kernel.JobPriority.Normal);
         }
         
         private void OnItemAdded (FeedItem item)

@@ -36,6 +36,13 @@ using Hyena.Data.Sqlite;
 
 namespace Migo.Syndication
 {
+    public class FeedItemProvider : MigoModelProvider<FeedItem>
+    {
+        public FeedItemProvider (HyenaSqliteConnection connection) : base (connection, "PodcastItems")
+        {
+        }
+    }
+
     public class FeedItem : MigoItem<FeedItem>
     {
         private static SqliteModelProvider<FeedItem> provider;
@@ -49,7 +56,7 @@ namespace Migo.Syndication
         }
         
         public static void Init () {
-            provider = new MigoModelProvider<FeedItem> (FeedsManager.Instance.Connection, "PodcastItems");
+            provider = new FeedItemProvider (FeedsManager.Instance.Connection);
         }
 
         private bool active = true;
@@ -78,7 +85,7 @@ namespace Migo.Syndication
             protected set { dbid = value; }
         }
 
-        [DatabaseColumn("FeedID")]
+        [DatabaseColumn("FeedID", Index = "PodcastItemsFeedIDIndex")]
         protected long feed_id;
         public long FeedId {
             get { return feed_id; }
@@ -112,7 +119,7 @@ namespace Migo.Syndication
             set { description = value; }
         }
         
-        [DatabaseColumn]
+        [DatabaseColumn("Guid", Index = "PodcastItemsGuidIndex")]
         public string Guid {
             get { return guid; }
             set { guid = value; }

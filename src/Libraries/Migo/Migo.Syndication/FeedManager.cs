@@ -59,7 +59,7 @@ namespace Migo.Syndication
             update_task_list = new TaskList<FeedUpdateTask> ();
             
             // Limit to 4 feeds downloading at a time
-            update_task_group = new TaskGroup<FeedUpdateTask> (4, update_task_list);
+            update_task_group = new TaskGroup<FeedUpdateTask> (2, update_task_list);
             
             update_task_group.TaskStopped += OnUpdateTaskStopped;
             update_task_group.TaskAssociated += OnUpdateTaskAdded;

@@ -1,3 +1,37 @@
+2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	There were some pretty big performance issues with podcasting if you had
+	quite a few items in your library.  The two issues were not having proper
+	indices (to join CoreTracks.ExternalID = PodcastItems.ItemID for example)
+	and hitting the database to get Migo.Feed/FeedItem/FeedEnclosure objects
+	when we already had them cached in MigoModelProvider's dictionary.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Schedule a delegate job to reload the feeds on startup.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add an index on CoreTracks for the ExternalID column.
+
+	* src/Core/Banshee.Core/Makefile.am:
+	* src/Core/Banshee.Core/Banshee.Core.mdp:
+	* src/Core/Banshee.Core/Banshee.Kernel/DelegateJob.cs: New class for
+	running parameterless methods/delegates as a Job.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Add a
+	CreateIndex convenience method, and make FetchSingle virtual
+
+	* src/Libraries/Migo/Migo.Syndication/FeedItem.cs:
+	* src/Libraries/Migo/Migo.Syndication/FeedEnclosure.cs:
+	* src/Libraries/Migo/Migo.Syndication/Feed.cs: Add indices, speeds up
+	podcast queries a whole lot.
+
+	* src/Libraries/Migo/Migo.Syndication/MigoModelProvider.cs: Override
+	FetchSingle to pull directly from the dictionary and avoid the DB entirely
+	if possible (happens very frequently).
+
+	* src/Libraries/Migo/Migo.Syndication/FeedManager.cs: Only download 2
+	feeds at at time, not 4.
+
 2008-05-22  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellCheckBox.cs: Save and

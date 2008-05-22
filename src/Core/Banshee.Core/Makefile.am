@@ -49,6 +49,7 @@ SOURCES =  \
 	Banshee.IO/Provider.cs \
 	Banshee.IO/StreamAssist.cs \
 	Banshee.IO/Utilities.cs \
+	Banshee.Kernel/DelegateJob.cs \
 	Banshee.Kernel/IInstanceCriticalJob.cs \
 	Banshee.Kernel/IJob.cs \
 	Banshee.Kernel/Job.cs \

@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 10;
+        protected const int CURRENT_VERSION = 11;
         protected const int CURRENT_METADATA_VERSION = 1;
         
 #region Migration Driver
@@ -381,6 +381,8 @@ namespace Banshee.Database
 
 #endregion
 
+#region Version 10
+
         [DatabaseVersion (10)]
         private bool Migrate_10 ()
         {
@@ -391,6 +393,19 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CoreTracks ADD COLUMN ExternalID INTEGER");
             return true;
         }
+        
+#endregion
+
+#region Version 11
+        
+        [DatabaseVersion (11)]
+        private bool Migrate_11 ()
+        {
+            Execute("CREATE INDEX CoreTracksExternalIDIndex ON CoreTracks(PrimarySourceID, ExternalID)");
+            return true;
+        }
+        
+#endregion
 
 #pragma warning restore 0169
         
@@ -474,6 +489,7 @@ namespace Banshee.Database
             ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
             Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri)");
             Execute("CREATE INDEX CoreTracksAggregatesIndex ON CoreTracks(FileSize, Duration)");
+            Execute("CREATE INDEX CoreTracksExternalIDIndex ON CoreTracks(PrimarySourceID, ExternalID)");
             
             Execute(@"
                 CREATE TABLE CoreAlbums (
