@@ -1,3 +1,7 @@
+2008-05-22  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac: Bumped to 1.0 Beta 2 (0.99.2)
+
 2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
