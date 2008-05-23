@@ -14,39 +14,6 @@ WELCOME TO BANSHEE 1.0 BETA 2! (0.99.2) - Released May 22, 2008
 
 
 ===============================================================================
-BETA RELEASE DISCLAIMER
-===============================================================================
-
-    This is the fifth release in the Banshee 1.0 series. This Beta 2 release 
-    does not have feature parity with previous Banshee releases (the last 
-    being Banshee 0.13.2). This means there are some features in this 
-    release that users may have come to know and love in Banshee that are 
-    missing for the time being. 
-
-    However, although this is an Beta release, it is quite stable and has 
-    many great new features and performance improvements which will be detailed
-    later. It has also been designed to be both installed and run in parallel 
-    with previous Banshee releases, so you can test the release out without 
-    breaking your stable Banshee setup.
-
-    Missing features include:
-
-      * Some hardware support 
-        - CD Burning
-
-      * Some plugins have not yet been ported to the new 1.0 architecture:
-        - DAAP/iTunes Music Sharing, Internet Radio
-        - Recommendations, Batch Cover Art Fetching
-
-    Do not despair, these features will be added back by the final 1.0 
-    release or shortly thereafter. 
-
-    Please read the full release notes on the Banshee Wiki for more details:
-
-      * http://banshee-project.org/Releases/0.99.2
-
-
-===============================================================================
 OTHER NOTES
 ===============================================================================
 
@@ -112,7 +79,7 @@ DEPENDENCIES
       * podsleuth 
       * brasero
 
-    * Required to build unstable, not-enabled-by-default features:
+    * Required to build not-enabled-by-default features:
       * boo >= 0.8.1
       * mono-zeroconf >= 0.7.3
 
