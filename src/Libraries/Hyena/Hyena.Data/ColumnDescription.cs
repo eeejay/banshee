@@ -77,6 +77,7 @@ namespace Hyena.Data
             get { return width; }
             set {
                 double old = width;
+                //Console.WriteLine ("Changing width of {0} from {1} to {2}", Title, Width, value);
                 width = value;
                 
                 if (value != old) {

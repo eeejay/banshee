@@ -373,15 +373,18 @@ namespace Hyena.Data.Gui
         private ColumnController column_controller;
         public ColumnController ColumnController {
             get { return column_controller; }
-            set { 
+            set {
+                if (column_controller == value) {
+                    return;
+                }
+
                 if (column_controller != null) {
                     column_controller.Updated -= OnColumnControllerUpdatedHandler;
                 }
                 
                 column_controller = value;
                 
-                RegenerateColumnCache ();
-                QueueDraw ();
+                OnColumnControllerUpdated ();
                 
                 if (column_controller != null) {
                     column_controller.Updated += OnColumnControllerUpdatedHandler;

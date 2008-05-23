@@ -82,6 +82,8 @@ namespace Banshee.Collection.Gui
                     return;
                 }
                 
+                loaded = false;
+                
                 foreach (Column column in this) {
                     if (column.Id != null) {
                         string @namespace = MakeNamespace (column.Id); 

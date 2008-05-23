@@ -68,24 +68,36 @@ namespace Banshee.Collection.Gui
         
         public override void SetModel (IListModel<TrackInfo> value, double vpos)
         {
-            Source source = ServiceManager.SourceManager.ActiveSource;
-            ColumnController controller = null;
+            //Console.WriteLine ("TrackListView.SetModel for {0} with vpos {1}", value, vpos);
             
-            while (source != null && controller == null) {
-                controller = source.Properties.Get<ColumnController> ("TrackView.ColumnController");
-                string controller_xml = null;
-                if (controller == null) {
-                    controller_xml = source.Properties.GetString ("TrackView.ColumnControllerXml");
-                    if (controller_xml != null) {
-                        controller = new XmlColumnController (controller_xml);
-                        source.Properties.Remove ("TrackView.ColumnControllerXml");
-                        source.Properties.Set<ColumnController> ("TrackView.ColumnController", controller);
+            if (value != null) {
+                Source source = ServiceManager.SourceManager.ActiveSource;
+                ColumnController controller = null;
+                
+                // Get the controller from this source, or its parent(s) if it doesn't have one
+                while (source != null && controller == null) {
+                    controller = source.Properties.Get<ColumnController> ("TrackView.ColumnController");
+                    if (controller == null) {
+                        string controller_xml = source.Properties.GetString ("TrackView.ColumnControllerXml");
+                        if (controller_xml != null) {
+                            controller = new XmlColumnController (controller_xml);
+                            source.Properties.Remove ("TrackView.ColumnControllerXml");
+                            source.Properties.Set<ColumnController> ("TrackView.ColumnController", controller);
+                        }
                     }
+                    source = source.Parent;
                 }
-                source = source.Parent;
+                
+                controller = controller ?? default_column_controller;
+                
+                PersistentColumnController persistent_controller = controller as PersistentColumnController;
+                if (persistent_controller != null) {
+                    //Hyena.Log.InformationFormat ("Setting controller source to {0}", ServiceManager.SourceManager.ActiveSource.Name);
+                    persistent_controller.Source = ServiceManager.SourceManager.ActiveSource;
+                }
+                
+                ColumnController = controller;
             }
-            
-            ColumnController = controller ?? default_column_controller;
             
             base.SetModel (value, vpos);
         }

@@ -165,7 +165,7 @@ namespace Banshee.Sources.Gui
         
         private void Reset ()
         {
-            Hyena.Log.Information ("ListBrowser Reset");
+            //Hyena.Log.Information ("ListBrowser Reset");
             // Unparent the views' scrolled window parents so they can be re-packed in 
             // a new layout. The main container gets destroyed since it will be recreated.
             
@@ -175,15 +175,15 @@ namespace Banshee.Sources.Gui
                     foreach (ScrolledWindow window in filter_scrolled_windows) {
                         filter_container.Remove (window);
                     }
-                } else
-                    Hyena.Log.Information ("No filter container");
-            } else
-                Hyena.Log.Information ("No filter windows");
+                } //else
+                    //Hyena.Log.Information ("No filter container");
+            } //else
+                //Hyena.Log.Information ("No filter windows");
             
             if (container != null && main_scrolled_window != null) {
                 container.Remove (main_scrolled_window);
-            } else
-                Hyena.Log.Information ("No main container");
+            } //else
+                //Hyena.Log.Information ("No main container");
             
             if (container != null) {
                 Remove (container);
@@ -193,7 +193,7 @@ namespace Banshee.Sources.Gui
 
         private void LayoutLeft ()
         {
-            Hyena.Log.Information ("ListBrowser LayoutLeft");
+            //Hyena.Log.Information ("ListBrowser LayoutLeft");
             Reset ();
             
             container = new HPaned ();
@@ -219,7 +219,7 @@ namespace Banshee.Sources.Gui
         
         private void LayoutTop ()
         {
-            Hyena.Log.Information ("ListBrowser LayoutTop");
+            //Hyena.Log.Information ("ListBrowser LayoutTop");
             Reset ();
             
             container = new VPaned ();
@@ -251,7 +251,7 @@ namespace Banshee.Sources.Gui
         
         private void OnViewModeChanged (object o, ChangedArgs args)
         {
-            Hyena.Log.InformationFormat ("ListBrowser mode toggled, val = {0}", args.Current.Value);
+            //Hyena.Log.InformationFormat ("ListBrowser mode toggled, val = {0}", args.Current.Value);
             if (args.Current.Value == 0) {
                 LayoutLeft ();
                 BrowserPosition.Set ("left");

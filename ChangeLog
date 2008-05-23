@@ -1,3 +1,26 @@
+2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Don't set the
+	PersistentColumnController within the composite_view check, move it to
+	TrackListView so it's more general.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:
+	Set loaded to false whenever reloading the source's settings.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	When setting the model, also set the source on the controller if it's a
+	PersistentColumnController.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs: Fix
+	bug with column cache not being invalidated, which caused checkboxes to
+	try to show up in the music library after ejecting an audio cd, causing a
+	crash.  Also, don't do anything if we're already set to the controller in
+	question.
+
+	* src/Libraries/Hyena/Hyena.Data/ColumnDescription.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	Comment out verbose logging.
+
 2008-05-22  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Bumped to 1.0 Beta 2 (0.99.2)
