@@ -121,7 +121,7 @@ namespace Migo.Syndication
         
         [DatabaseColumn("Guid", Index = "PodcastItemsGuidIndex")]
         public string Guid {
-            get { return guid; }
+            get { return String.IsNullOrEmpty (guid) ? Link : guid; }
             set { guid = value; }
         }
 

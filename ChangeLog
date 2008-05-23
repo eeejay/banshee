@@ -1,5 +1,10 @@
 2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Migo/Migo.Syndication/FeedItem.cs: Fix issue with feed
+	item Guids being empty so we'd have duplicates of items.
+
+2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Don't set the
 	PersistentColumnController within the composite_view check, move it to
 	TrackListView so it's more general.
