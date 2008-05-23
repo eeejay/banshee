@@ -1,3 +1,7 @@
+2008-05-22  Aaron Bockover  <abock@gnome.org>
+
+	Banshee 1.0 Beta 2 (0.99.2) Released
+
 2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Migo/Migo.Syndication/FeedItem.cs: Fix issue with feed
