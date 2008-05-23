@@ -1,3 +1,19 @@
+2008-05-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
+	Improve eject-when-done-importing label.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellFileSize.cs:
+	Display nothing for file sizes == 0.
+
+	* src/Core/Banshee.Core/Resources/contributors.xml: Add and alphabetize
+	names.
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs: Add ... at
+	end of Write to CD label.
+
+	* NEWS: Updated for forthcoming 0.99.2 release.
+
 2008-05-22  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Added a
@@ -25,7 +41,7 @@
 	quite a few items in your library.  The two issues were not having proper
 	indices (to join CoreTracks.ExternalID = PodcastItems.ItemID for example)
 	and hitting the database to get Migo.Feed/FeedItem/FeedEnclosure objects
-	when we already had them cached in MigoModelProvider's dictionary.
+	when we already had them cached in our MigoModelProviders' dictionaries.
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	Schedule a delegate job to reload the feeds on startup.

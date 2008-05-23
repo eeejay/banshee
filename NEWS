@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.0 BETA 1! (0.99.1) - Released May 6, 2008
+WELCOME TO BANSHEE 1.0 BETA 2! (0.99.2) - Released May 22, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,14 +10,14 @@ WELCOME TO BANSHEE 1.0 BETA 1! (0.99.1) - Released May 6, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/Releases/0.99.1
+  * Learn More: http://banshee-project.org/Releases/0.99.2
 
 
 ===============================================================================
 BETA RELEASE DISCLAIMER
 ===============================================================================
 
-    This is the fourth release in the Banshee 1.0 series. This Beta 1 release 
+    This is the fifth release in the Banshee 1.0 series. This Beta 2 release 
     does not have feature parity with previous Banshee releases (the last 
     being Banshee 0.13.2). This means there are some features in this 
     release that users may have come to know and love in Banshee that are 
@@ -35,17 +35,15 @@ BETA RELEASE DISCLAIMER
         - CD Burning
 
       * Some plugins have not yet been ported to the new 1.0 architecture:
-        - Podcasting, DAAP/iTunes Music Sharing, Internet Radio
+        - DAAP/iTunes Music Sharing, Internet Radio
         - Recommendations, Batch Cover Art Fetching
 
-    Do not despair, these features will be added back before the final 1.0 
-    release. Many more features are projected to land in the Beta 2 release of
-    Banshee 1.0. We expect releases in quick succession leading up to the
-    final 1.0 release. 
+    Do not despair, these features will be added back by the final 1.0 
+    release or shortly thereafter. 
 
     Please read the full release notes on the Banshee Wiki for more details:
 
-      * http://banshee-project.org/Releases/0.99.1
+      * http://banshee-project.org/Releases/0.99.2
 
 
 ===============================================================================
@@ -71,9 +69,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 0.99.1 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-0.99.1.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-0.99.1.tar.gz
+    * Banshee 0.99.2 Tarballs:
+      http://banshee-project.org/files/banshee/banshee-1-0.99.2.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-0.99.2.tar.gz
 
 Packages
 --------
@@ -89,7 +87,7 @@ Packages
 ChangeLogs
 ----------
 
-    * http://banshee-project.org/files/banshee/banshee-1-0.99.1.changes
+    * http://banshee-project.org/files/banshee/banshee-1-0.99.2.changes
 
 
 ===============================================================================
@@ -105,6 +103,18 @@ DEPENDENCIES
     * NDesk DBus GLib (ndesk-dbus-glib) 0.3
     * Mono.Addins (mono-addins) 0.3.1
     * TagLib# (taglib-sharp) 2.0
+
+    * Required to build default feature stack:
+      * libmtp >= 0.2.0 (0.2.6 recommended)
+      * ipod-sharp >= 0.8.0
+
+    * Run-time requirements for default feature stack:
+      * podsleuth 
+      * brasero
+
+    * Required to build unstable, not-enabled-by-default features:
+      * boo >= 0.8.1
+      * mono-zeroconf >= 0.7.3
 
     Please note that for openSUSE, all of the dependencies above can be 
     found in the openSUSE Build Service, and are linked into the 
@@ -124,9 +134,11 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.0 Beta 1 represents the fourth release since we began rewriting
-    much of the core of Banshee. The primary reason for rewriting this core
-    was to deliver much needed performance improvements.
+    Banshee 1.0 Beta 2 represents the fifth release since we began rewriting
+    much of the core of Banshee. The primary reasons for this rearchitecting 
+    were to deliver much needed performance improvements, make features more
+    powerful and mature, and allow us to add awesome new features like the 
+    Play Queue and video support.
 
     Banshee now uses much less memory and has greatly improved startup speed.
     It can handle collections that are much larger in size without adversely
@@ -138,22 +150,22 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     New features in this release include:
 
-    * MTP and iPod Player Support
-    * Default Smart Playlists
-    * Extension Manager
-    * Minimode extension
+    * Podcast Support
+    * Automatic CD Importing
+    * CD Burning
 
     Other features, bug fixes, and errata:
 
-    * Fullscreen video is now supported (press f or go to Now Playing)
-    * Banshee can be scripted using Boo
-    * Improved gstreamer error handling (for missing files, codecs, etc)
-    * A bug with play counts introduced in Alpha 3 has been fixed
-    * Writing metadata to file is working properly now
-    * Issues with the play queue should all be resolved
-    * Limiting smart playlists by file size or duration works
-    * Shuffle and repeat are automatically disabled while playing Last.fm
-    * Over 30 bugs were fixed since Alpha 3
+    * Genre entry autocompletes in track information editor
+    * Columns specific to type of source (Music, Video, Podcast)
+    * Fix CPU spike triggered by song transition
+    * Fix two fairly common segfault crashes
+    * Add File Size column, right-align it and Duration
+    * Disable writing metadata for videos to file to avoid 100% CPU bug
+    * Add Love/Hate menu items to the Notification Area icon's menu
+    * If a Last.fm station is double clicked, it will start playing once it has loaded
+    * Allow choosing with checkboxes what songs to import from Audio CD
+    * Over 28 bugs were fixed since Beta 1
 
 ===============================================================================
 REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
@@ -166,7 +178,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.99.1
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.99.2
 
 
 ===============================================================================
@@ -179,32 +191,33 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
       
-      Aaron Bockover, Alexander Hixon, Bertrand Lorentz, Christopher Rogers,
-      Gabriel Burt, Scott Peterson, Sebastian Dröge, Wouter Bolsterlee
+      Aaron Bockover, Bertrand Lorentz, Gabriel Burt, James Willcox,
+      Mike Urbanski, Nicholas Parker, Scott Peterson, Sebastian Dröge
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
 
-      Daniel Nylander (sv), Gabor Kelemen (hu), Jordi Mas (ca),
-      Wouter Bolsterlee (nl)
-
+      Daniel Abramov (ru), Jonh Wendell (pt_BR), Luca Ferretti (it),
+      Nickolay Shmyrev
+      
     The release notes and screenshots for this release were crafted by:
 
-      Gabriel Burt, Jorge Castro
+      Gabriel Burt
 
 Contributors In Past Releases
 -----------------------------
 
-    Alan McGovern, Alex Kloss, Alexander Hixon, Alexandros Frantzis, Alp Toker,
-    Aydemir Ulaş Şahin, Ben Maurer, Bertrand Lorentz, Bill Dawson, 
-    Bob Copeland, Bojan Rajkovic, Brian Nickel, Chris Lahey, Chris Toshok,
-    Chris Turchin, Christian Krause, Christopher James Halse Rogers, 
-    Dan Wilson, Dan Winship, Daniel Munkton, Eric Butler, Fredrik Hedberg,
-    Hans Petter Jansson, Igor Guerrero Fonseca, Ilya Konstantinov,
-    Ivan N. Zlatev, James Willcox, Jan Arne Petersen, Jason Conti, Jeff Tickle,
-    Jorge Castro, Juri Pakaste, Ken Vandine, Larry Ewing, Lauri Kotilainen,
-    Michael Monreal, Miguel de Icaza, Mike Urbanski, Nathan Palmer, 
+    Aaron Bockover, Alan McGovern, Alex Kloss, Alexander Hixon,
+    Alexandros Frantzis, Alp Toker, Andy Midgette, Aydemir Ulaş Şahin,
+    Ben Maurer, Bertrand Lorentz, Bill Dawson, Bob Copeland, Bojan Rajkovic,
+    Brian Nickel, Chris Lahey, Chris Toshok, Chris Turchin, Christian Krause,
+    Christopher James Halse Rogers, Dan Wilson, Dan Winship, Daniel Munkton,
+    Eric Butler, Fredrik Hedberg, Gabriel Burt, Hans Petter Jansson,
+    Igor Guerrero Fonseca, Ilya Konstantinov, Ivan N. Zlatev, James Willcox,
+    Jan Arne Petersen, Jason Conti, Jeff Tickle, Jorge Castro, Juri Pakaste,
+    Ken Vandine, Larry Ewing, Lauri Kotilainen, Michael Monreal,
+    Miguel de Icaza, Mike Urbanski, Nathan Palmer, Nicholas Parker,
     Oscar Forero, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch,
-    Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington, 
-	Wouter Bolsterlee
+    Scott Peterson, Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington,
+    Wouter Bolsterlee
 

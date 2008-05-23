@@ -42,7 +42,10 @@ namespace Banshee.Collection.Gui
         
         protected override string Text {
             get {
-                return new FileSizeQueryValue ((long) BoundObject).ToUserQuery (true);
+                long bytes = (long) BoundObject;
+                return bytes <= 0
+                    ? String.Empty
+                    : new FileSizeQueryValue (bytes).ToUserQuery (true);
             }
         }
     }

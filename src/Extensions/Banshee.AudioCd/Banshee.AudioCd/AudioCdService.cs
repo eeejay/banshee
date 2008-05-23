@@ -164,7 +164,7 @@ namespace Banshee.AudioCd
                     "if metadata can be found and it is not already in the library.")));
 
             pref_section.Add (new SchemaPreference<bool> (EjectAfterRipped, 
-                Catalog.GetString ("_Eject after importing"),
+                Catalog.GetString ("_Eject when done importing"),
                 Catalog.GetString ("When an audio CD has been imported, automatically eject it.")));
             
             pref_section.Add (new SchemaPreference<bool> (ErrorCorrection, 

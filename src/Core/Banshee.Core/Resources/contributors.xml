@@ -3,6 +3,7 @@
   <author role="Maintainer">Gabriel Burt</author>
   <author role="Developer">Scott Peterson</author>
   <contributor>Alan McGovern</contributor>
+  <contributor>Alex Kloss</contributor>
   <contributor>Alexander Hixon</contributor>
   <contributor>Alexandros Frantzis</contributor>
   <contributor>Alp Toker</contributor>
@@ -15,13 +16,13 @@
   <contributor>Bojan Rajkovic</contributor>
   <contributor>Brian Nickel</contributor>
   <contributor>Chris Lahey</contributor>
-  <contributor>Christian Krause</contributor>
-  <contributor>Christopher James Halse Rogers</contributor>
   <contributor>Chris Toshok</contributor>
   <contributor>Chris Turchin</contributor>
-  <contributor>Daniel Munkton</contributor>
+  <contributor>Christian Krause</contributor>
+  <contributor>Christopher James Halse Rogers</contributor>
   <contributor>Dan Wilson</contributor>
   <contributor>Dan Winship</contributor>
+  <contributor>Daniel Munkton</contributor>
   <contributor>Eric Butler</contributor>
   <contributor>Fredrik Hedberg</contributor>
   <contributor>Hans Petter Jansson</contributor>
@@ -32,7 +33,7 @@
   <contributor>Jan Arne Petersen</contributor>
   <contributor>Jason Conti</contributor>
   <contributor>Jeff Tickle</contributor>
-  <contributor>Jorge "The Latin Lover" Orlando Castro Rodriguez</contributor>
+  <contributor>Jorge Castro</contributor>
   <contributor>Juri Pakaste</contributor>
   <contributor>Ken Vandine</contributor>
   <contributor>Larry Ewing</contributor>
@@ -41,6 +42,7 @@
   <contributor>Miguel de Icaza</contributor>
   <contributor>Mike Urbanski</contributor>
   <contributor>Nathan Palmer</contributor>
+  <contributor>Nicholas Parker</contributor>
   <contributor>Oscar Forero</contributor>
   <contributor>Patrick van Staveren</contributor> 
   <contributor>Pepijn van de Geer</contributor>
@@ -49,6 +51,7 @@
   <contributor>Tim Yamin</contributor>
   <contributor>Trey Ethridge</contributor>
   <contributor>Will Farrington</contributor>
+  <contributor>Wouter Bolsterlee</contributor>
   <!-- Artists have their own markup because of the GtkAboutBox design -->
   <artist>Garrett LeSage</artist>
   <artist>Jakub Steiner</artist>
