@@ -1,3 +1,10 @@
+2008-05-23  Sebastian Dröge  <slomo@circular-chaos.org>
+
+	* libbanshee/banshee-player-pipeline.c: (_bp_pipeline_construct):
+	Enable the equalizer again and workaround the clipping bug that will
+	be fixed with gst-plugins-good 0.10.10. Also don't leak some elements
+	if the equalizer plugin is not installed.
+
 2008-05-22  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.0 Beta 2 (0.99.2) Released
