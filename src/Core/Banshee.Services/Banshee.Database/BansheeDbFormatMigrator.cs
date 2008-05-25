@@ -759,7 +759,7 @@ namespace Banshee.Database
                     try {
                         track = DatabaseTrackInfo.Provider.Load (reader);
 
-                        if (!track.Uri.IsFile)
+                        if (track == null || track.Uri == null || !track.Uri.IsFile)
                             continue;
                         
                         try {
@@ -775,6 +775,7 @@ namespace Banshee.Database
                         track.Album.Save ();
                     } catch (Exception e) {
                         Log.Warning (String.Format ("Failed to update metadata for {0}", track), e.ToString (), false);
+                        job.Finish ();
                         throw;
                     }
 

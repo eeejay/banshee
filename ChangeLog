@@ -1,3 +1,10 @@
+2008-05-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Be more careful about NREs in the metadata migration.  And, in case we do
+	hit an unexpected exception, close the user-job so it doesn't stay up
+	forever.
+
 2008-05-23  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* libbanshee/banshee-player-pipeline.c: (_bp_pipeline_construct):
