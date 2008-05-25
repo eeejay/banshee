@@ -39,7 +39,7 @@ using Banshee.Database;
 
 namespace Banshee.Collection.Database
 {
-    public class DatabaseAlbumListModel : DatabaseBrowsableListModel<DatabaseAlbumInfo, AlbumInfo>
+    public class DatabaseAlbumListModel : DatabaseFilterListModel<DatabaseAlbumInfo, AlbumInfo>
     {
         public DatabaseAlbumListModel ( Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
             : base (source, trackModel, connection, DatabaseAlbumInfo.Provider, new AlbumInfo (null), uuid)
@@ -58,7 +58,7 @@ namespace Banshee.Collection.Database
             get { return "CoreTracks.AlbumID"; }
         }
         
-        public override string ItemToFilterValue (object item)
+        protected override string ItemToFilterValue (object item)
         {
             return (item is DatabaseAlbumInfo) ? (item as DatabaseAlbumInfo).DbId.ToString () : null;
         }

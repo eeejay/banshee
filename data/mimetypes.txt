@@ -125,5 +125,7 @@ video/x-msvideo
 video/x-nsv
 video/x-ogm+ogg
 video/x-theora+ogg
+video/x-theora
+video/ogg
 x-content/audio-cdda
 x-content/audio-player

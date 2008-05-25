@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 namespace Hyena.Data
 {
-    public abstract class ModelCache<T>
+    public abstract class ModelCache<T> where T : ICacheableItem, new ()
     {
         protected ICacheableModel model;
 

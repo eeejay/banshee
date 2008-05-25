@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 
 using Hyena;
+using Hyena.Data;
 using Hyena.Data.Sqlite;
 
 namespace Migo.Syndication

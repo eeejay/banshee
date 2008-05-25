@@ -1,4 +1,4 @@
-<Project name="Banshee.Core" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Banshee.Core" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assemblyKeyFile="." assembly="Banshee.Core" />
@@ -70,6 +70,7 @@
     <File name="Banshee.Base/Tests/FileNamePatternTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Base/Tests/TaglibReadWriteTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Kernel/DelegateJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/CacheableItem.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />

@@ -1,7 +1,7 @@
 //
-// ICacheableItem.cs
+// PodcastUnheardFilterView.cs
 //
-// Author:
+// Authors:
 //   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
@@ -26,13 +26,36 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using Hyena.Data;
+using System;
+using System.Collections.ObjectModel;
 
-namespace Hyena.Data.Sqlite
+using Mono.Unix;
+
+using Gtk;
+
+using Hyena.Data;
+using Hyena.Data.Gui;
+using Hyena.Collections;
+
+using Banshee.Gui;
+using Banshee.ServiceStack;
+using Banshee.Collection.Gui;
+
+using Banshee.Podcasting.Data;
+
+using Migo.Syndication;
+
+namespace Banshee.Podcasting.Gui
 {
-    public interface ICacheableItem
+    public class PodcastUnheardFilterView : TrackFilterListView<OldNewFilter>
     {
-        long CacheEntryId { get; set; }
-        long CacheModelId { get; set; }
+        public PodcastUnheardFilterView () : base ()
+        {
+            ColumnCellUnheard renderer = new ColumnCellUnheard ();
+            column_controller.Add (new Column ("Unheard Filter", renderer, 1.0));
+            ColumnController = column_controller;
+            
+            IsResizable = false;
+        }
     }
 }

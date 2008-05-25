@@ -189,6 +189,14 @@ namespace Hyena.Collections
             get { return ranges.Ranges; }
         }
         
+        public int FirstIndex {
+            get { return Count > 0 ? ranges[0] : -1; }
+        }
+        
+        public int LastIndex {
+            get { return Count > 0 ? ranges[Count - 1]: -1; }
+        }
+        
 #if NET_2_0
         public IEnumerator<int> GetEnumerator ()
         {

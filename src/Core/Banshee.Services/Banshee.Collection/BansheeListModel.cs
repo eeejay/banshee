@@ -75,23 +75,23 @@ namespace Banshee.Collection
             OnReloaded ();
         }
         
-        public virtual void Clear()
-        {
+        public abstract void Clear();
+        /*{
             throw new NotImplementedException();
-        }
+        }*/
         
-        public virtual void Reload()
-        {
+        public abstract void Reload();
+        /*{
             throw new NotImplementedException();
-        }
+        }*/
     
-        public virtual T this[int index] {
-            get { throw new NotImplementedException(); }
-        }
+        public abstract T this[int index] { get; }
+            /*get { throw new NotImplementedException(); }
+        }*/
 
-        public virtual int Count { 
-            get { throw new NotImplementedException(); }
-        }
+        public abstract int Count { get; }
+            /*get { throw new NotImplementedException(); }
+        }*/
 
         public virtual Selection Selection {
             get { return selection; }

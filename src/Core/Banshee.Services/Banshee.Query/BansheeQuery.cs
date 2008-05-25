@@ -38,6 +38,19 @@ using Hyena.Query;
 
 namespace Banshee.Query
 {
+    /*public interface IQueryDefines
+    {
+        QueryOrder [] Orders { get; }
+        QueryLimit [] Limits { get; }
+        QueryFieldSet FieldSet { get; }
+        string GetSqlSort (string key, bool asc);
+    }
+    
+    public class QueryDefines : IQueryDefines
+    {
+        
+    }*/
+    
     public static class BansheeQuery
     {
         private static bool asc = true;
@@ -72,6 +85,8 @@ namespace Banshee.Query
             new QueryLimit ("MB",      Catalog.GetString ("MB"), "CoreTracks.FileSize", (int) FileSizeFactor.MB),
             new QueryLimit ("GB",      Catalog.GetString ("GB"), "CoreTracks.FileSize", (int) FileSizeFactor.GB)
         };
+        
+#region QueryField Definitions
 
         public static QueryField ArtistField = new QueryField (
             "artist", Catalog.GetString ("Artist"), "CoreArtists.NameLowered", true,
@@ -201,6 +216,8 @@ namespace Banshee.Query
             "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {1})", typeof(SmartPlaylistQueryValue),
             "smartplaylistid", "smartplaylist"
         );
+        
+#endregion
 
         public static QueryFieldSet FieldSet = new QueryFieldSet (
             ArtistField, AlbumField, DiscField, TitleField, YearField, GenreField, ComposerField, RatingField, PlayCountField,
@@ -208,8 +225,7 @@ namespace Banshee.Query
             DateAddedField, PlaylistField, SmartPlaylistField
         );
 
-        private const string default_sort = "CoreArtists.NameLowered ASC, CoreAlbums.TitleLowered ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
-
+        private const string default_sort = @"CoreArtists.NameLowered ASC, CoreAlbums.TitleLowered ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
         public static string GetSort (string key)
         {
             return GetSort (key, false);

@@ -28,10 +28,14 @@
 
 namespace Banshee.Collection
 {
-    public class ArtistInfo 
+    public class ArtistInfo : CacheableItem
     {
         private string name;
         private string musicbrainz_id;
+        
+        public ArtistInfo ()
+        {
+        }
         
         public ArtistInfo(string name)
         {

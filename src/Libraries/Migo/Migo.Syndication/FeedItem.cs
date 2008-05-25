@@ -125,16 +125,10 @@ namespace Migo.Syndication
             set { guid = value; }
         }
 
-        [DatabaseColumn]
+        [DatabaseColumn("IsRead", Index = "PodcastItemIsReadIndex")]
         public bool IsRead {
             get { return isRead; }
-            set {
-                isRead = value;
-                /*if (isRead != value) {
-                    isRead = value;
-                    Save ();
-                }*/                                        
-            }
+            set { isRead = value; }
         }
         
         [DatabaseColumn]

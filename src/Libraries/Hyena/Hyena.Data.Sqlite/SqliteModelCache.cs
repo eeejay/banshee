@@ -296,6 +296,7 @@ namespace Hyena.Data.Sqlite
         }
 
         private bool saved_selection = false;
+        private long saved_focus_entry_id = -1;
         public void SaveSelection ()
         {
             if (model.Selection != null && model.Selection.Count > 0 &&
@@ -303,6 +304,10 @@ namespace Hyena.Data.Sqlite
             {
                 connection.Execute (delete_selection_command);
                 saved_selection = true;
+                
+                if (!has_select_all_item && model.Selection.FocusedIndex != -1) {
+                    saved_focus_entry_id = (int) GetValue (model.Selection.FocusedIndex).CacheEntryId;
+                }
 
                 long start, end;
                 foreach (Hyena.Collections.RangeCollection.Range range in model.Selection.Ranges) {
@@ -344,8 +349,15 @@ namespace Hyena.Data.Sqlite
 
                 if (has_select_all_item && model.Selection.Count == 0) {
                     model.Selection.QuietSelect (0);
+                } if (saved_focus_entry_id != -1) {
+                    long i = IndexOf (saved_focus_entry_id);
+                    if (i != -1) {
+                        // TODO get rid of int cast
+                        model.Selection.FocusedIndex = (int)i;
+                    }
                 }
                 saved_selection = false;
+                saved_focus_entry_id = -1;
             }
         }
 

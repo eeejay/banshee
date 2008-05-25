@@ -1,4 +1,4 @@
-<Project name="Banshee.Podcasting" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Banshee.Podcasting" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assemblyKeyFile="." assembly="Banshee.Podcasting" />
@@ -26,12 +26,6 @@
     <File name="Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/FeedActivityColumnCell.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/ItemActivityColumnCell.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/PixbufColumnCell.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastFeedModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastItemModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastFeedView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastItemView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/Images/podcast-icon-16.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/Images/podcast-icon-22.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/Images/podcast-icon-48.png" subtype="Code" buildaction="EmbedAsResource" />
@@ -40,6 +34,16 @@
     <File name="Banshee.Podcasting/PodcastImageFetchJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/PodcastActions.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/ColumnCellPublished.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Gui/PodcastFeedView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Gui/PodcastItemView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Gui/PodcastUnheardFilterView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Gui/ColumnCellUnheard.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Data/PodcastFeedModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Data/PodcastSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Gui/PodcastSourceContents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Data/PodcastUnheardFilterModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Data/PodcastTrackListModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting/PodcastQuery.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />

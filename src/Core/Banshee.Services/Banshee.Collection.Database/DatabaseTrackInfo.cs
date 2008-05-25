@@ -31,6 +31,7 @@ using System.Data;
 using System.IO;
 
 using Hyena;
+using Hyena.Data;
 using Hyena.Data.Sqlite;
 using Hyena.Query;
 
@@ -58,7 +59,7 @@ namespace Banshee.Collection.Database
         AbsoluteUri = 2
     }
 
-    public class DatabaseTrackInfo : TrackInfo, ICacheableItem
+    public class DatabaseTrackInfo : TrackInfo
     {
         private static DatabaseTrackModelProvider<DatabaseTrackInfo> provider = new DatabaseTrackModelProvider<DatabaseTrackInfo> (
             ServiceManager.DbConnection
@@ -450,22 +451,6 @@ namespace Banshee.Collection.Database
                 Save ();
             }
         }
-
-#region Implement ICacheableItem
-
-        private long cache_entry_id;
-        public long CacheEntryId {
-            get { return cache_entry_id; }
-            set { cache_entry_id = value; }
-        }
-
-        private long cache_model_id;
-        public long CacheModelId {
-            get { return cache_model_id; }
-            set { cache_model_id = value; }
-        }
-
-#endregion
 
         private void UpdateUri ()
         {

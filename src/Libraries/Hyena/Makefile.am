@@ -18,7 +18,6 @@ SOURCES =  \
 	Hyena.Data.Sqlite/HyenaSqliteCommand.cs \
 	Hyena.Data.Sqlite/HyenaSqliteConnection.cs \
 	Hyena.Data.Sqlite/ICacheableDatabaseModel.cs \
-	Hyena.Data.Sqlite/ICacheableItem.cs \
 	Hyena.Data.Sqlite/SqliteModelCache.cs \
 	Hyena.Data.Sqlite/SqliteModelProvider.cs \
 	Hyena.Data.Sqlite/SqliteUtils.cs \
@@ -28,6 +27,7 @@ SOURCES =  \
 	Hyena.Data/ArrayModelCache.cs \
 	Hyena.Data/ColumnDescription.cs \
 	Hyena.Data/DictionaryModelCache.cs \
+	Hyena.Data/ICacheableItem.cs \
 	Hyena.Data/ICacheableModel.cs \
 	Hyena.Data/ICareAboutView.cs \
 	Hyena.Data/IFilterable.cs \

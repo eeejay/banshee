@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 namespace Hyena.Data
 {
-    public abstract class DictionaryModelCache<T> : ModelCache<T>
+    public abstract class DictionaryModelCache<T> : ModelCache<T> where T : ICacheableItem, new ()
     {
         protected Dictionary<long, T> cache;
 

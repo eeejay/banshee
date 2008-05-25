@@ -253,8 +253,13 @@ namespace Banshee.Podcasting
             }
         }
         
+        internal static bool IgnoreItemChanges = false;
+        
         private void OnItemChanged (FeedItem item)
         {
+            if (IgnoreItemChanges)
+                return;
+
             PodcastTrackInfo track = PodcastTrackInfo.GetByItemId (item.DbId);
             if (track != null) {
                 track.SyncWithFeedItem ();

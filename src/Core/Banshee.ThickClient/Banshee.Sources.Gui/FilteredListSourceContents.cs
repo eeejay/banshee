@@ -52,6 +52,7 @@ namespace Banshee.Sources.Gui
 {
     public abstract class FilteredListSourceContents : VBox, ISourceContents
     {
+        private string name;
         private object main_view;
         private Gtk.ScrolledWindow main_scrolled_window;
         
@@ -59,6 +60,7 @@ namespace Banshee.Sources.Gui
         private List<ScrolledWindow> filter_scrolled_windows = new List<ScrolledWindow> ();
         
         private Dictionary<object, double> model_positions = new Dictionary<object, double> ();
+        private Dictionary<ScrolledWindow, bool> resizable_views = new Dictionary<ScrolledWindow, bool> ();
         
         private Paned container;
         private Widget browser_container;
@@ -81,8 +83,9 @@ namespace Banshee.Sources.Gui
             </ui>
         ";
 
-        public FilteredListSourceContents ()
+        public FilteredListSourceContents (string name)
         {
+            this.name = name;
             InitializeViews ();
         
             string position = BrowserPosition.Get ();
@@ -141,7 +144,9 @@ namespace Banshee.Sources.Gui
         
         protected void SetupFilterView<T> (ListView<T> filter_view)
         {
-            filter_scrolled_windows.Add (SetupView (filter_view));
+            ScrolledWindow window = SetupView (filter_view);
+            resizable_views[window] = filter_view.IsResizable;
+            filter_scrolled_windows.Add (window);
             filter_view.HeaderVisible = false;
             filter_view.SelectionProxy.Changed += OnBrowserViewSelectionChanged;
         }
@@ -165,79 +170,103 @@ namespace Banshee.Sources.Gui
         
         private void Reset ()
         {
-            //Hyena.Log.Information ("ListBrowser Reset");
             // Unparent the views' scrolled window parents so they can be re-packed in 
             // a new layout. The main container gets destroyed since it will be recreated.
             
-            if (filter_scrolled_windows.Count > 0) {
-                Container filter_container = filter_scrolled_windows[0].Parent as Container;
+            //Console.WriteLine ("FLSC.reset 1");
+            foreach (ScrolledWindow window in filter_scrolled_windows) {
+                Paned filter_container = window.Parent as Paned;
                 if (filter_container != null) {
-                    foreach (ScrolledWindow window in filter_scrolled_windows) {
-                        filter_container.Remove (window);
-                    }
-                } //else
-                    //Hyena.Log.Information ("No filter container");
-            } //else
-                //Hyena.Log.Information ("No filter windows");
+                    filter_container.Remove (window);
+                }
+            }
+            //Console.WriteLine ("FLSC.reset 2");
             
             if (container != null && main_scrolled_window != null) {
                 container.Remove (main_scrolled_window);
-            } //else
-                //Hyena.Log.Information ("No main container");
+            }
+            
+            //Console.WriteLine ("FLSC.reset 3");
             
             if (container != null) {
                 Remove (container);
-                container.Destroy ();
             }
+            //Console.WriteLine ("FLSC.reset 4");
         }
 
         private void LayoutLeft ()
         {
-            //Hyena.Log.Information ("ListBrowser LayoutLeft");
-            Reset ();
-            
-            container = new HPaned ();
-            VBox filter_box = new VBox ();
-            filter_box.Spacing = 10;
-            
-            foreach (ScrolledWindow window in filter_scrolled_windows) {
-                filter_box.PackStart (window, true, true, 0);
-            }
-            
-            //filter_box.Position = 350;
-            //PersistentPaneController.Control (filter_box, "browser.left.artist_album_box");
-            
-            container.Add1 (filter_box);
-            container.Add2 (main_scrolled_window);
-            
-            browser_container = filter_box;
-            
-            container.Position = 275;
-            PersistentPaneController.Control (container, "browser.left");
-            ShowPack ();
+            Layout (false);
         }
         
         private void LayoutTop ()
         {
-            //Hyena.Log.Information ("ListBrowser LayoutTop");
+            Layout (true);
+        }
+
+        private void Layout (bool top)
+        {
+            //Hyena.Log.Information ("ListBrowser LayoutLeft");
             Reset ();
             
-            container = new VPaned ();
-            HBox filter_box = new HBox ();
-            filter_box.Spacing = 10;
+            container = GetPane (!top);
+            Paned filter_box = GetPane (top);
+            filter_box.PositionSet = true;
+            Paned current_pane = filter_box;
+            //Console.WriteLine ("FLSC.layout 1");
             
-            foreach (ScrolledWindow window in filter_scrolled_windows) {
-                filter_box.PackStart (window, true, true, 0);
+            for (int i = 0; i < filter_scrolled_windows.Count; i++) {
+                ScrolledWindow window = filter_scrolled_windows[i];
+                bool last_even_filter = (i == filter_scrolled_windows.Count - 1 && filter_scrolled_windows.Count % 2 == 0);
+                if (i > 0 && !last_even_filter) {
+                    //Console.WriteLine ("creating new pane for filter {0}", i);
+                    Paned new_pane = GetPane (top);
+                    current_pane.Add2 (new_pane);
+                    current_pane.Position = 350;
+                    PersistentPaneController.Control (current_pane, ControllerName (top, i));
+                    current_pane = new_pane;
+                }
+               
+                if (last_even_filter) {
+                    current_pane.Add2 (window);
+                    current_pane.Position = 350;
+                    PersistentPaneController.Control (current_pane, ControllerName (top, i));
+                } else {
+                    /*if (i == 0)
+                        current_pane.Pack1 (window, false, false);
+                    else*/
+                        current_pane.Add1 (window);
+                }
+                    
+                //Console.WriteLine ("FLSC.layout 2");
             }
             
+            //Console.WriteLine ("FLSC.layout 3");
             container.Add1 (filter_box);
             container.Add2 (main_scrolled_window);
-            
+            //Console.WriteLine ("FLSC.layout 4");
             browser_container = filter_box;
             
-            container.Position = 175;
-            PersistentPaneController.Control (container, "browser.top");
+            container.Position = top ? 175 : 275;
+            PersistentPaneController.Control (container, ControllerName (top, -1));
             ShowPack ();
+            //Console.WriteLine ("FLSC.layout 5");
+        }
+        
+        private string ControllerName (bool top, int filter)
+        {
+            if (filter == -1)
+                return String.Format ("{0}.browser.{1}", name, top ? "top" : "left");
+            else
+                return String.Format ("{0}.browser.{1}.{2}", name, top ? "top" : "left", filter);
+        }
+        
+        private Paned GetPane (bool hpane)
+        {
+            if (hpane)
+                return new HPaned ();
+            else
+                return new VPaned ();
         }
         
         private void ShowPack ()
@@ -283,6 +312,7 @@ namespace Banshee.Sources.Gui
                 foreach (IListView view in filter_views) {
                     if (view.Selection == selection) {
                         view.ScrollTo (0);
+                        break;
                     }
                 }
             }

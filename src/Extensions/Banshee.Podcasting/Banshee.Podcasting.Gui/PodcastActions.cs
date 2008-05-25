@@ -115,13 +115,12 @@ namespace Banshee.Podcasting.Gui
                 new ActionEntry (
                     "PodcastItemMarkNewAction", null,
                      Catalog.GetString ("Mark as New"), 
-                     "<control><shift>N", String.Empty,
+                     null, String.Empty,
                      OnPodcastItemMarkNew
                 ),
                 new ActionEntry (
                     "PodcastItemMarkOldAction", null,
-                     Catalog.GetString ("Mark as Old"),
-                     "<control><shift>O", String.Empty,
+                     Catalog.GetString ("Mark as Old"), "y", String.Empty,
                      OnPodcastItemMarkOld
                 ),
                 new ActionEntry (
@@ -439,36 +438,45 @@ namespace Banshee.Podcasting.Gui
 
         private void OnPodcastItemMarkNew (object sender, EventArgs e)
         {
-            MarkPodcastItemSelection (true);
+            MarkPodcastItemSelection (false);
         }
         
         private void OnPodcastItemMarkOld (object sender, EventArgs e)
         {
-            MarkPodcastItemSelection (false); 
+            MarkPodcastItemSelection (true);
         }     
         
-        private void MarkPodcastItemSelection (bool markNew) 
+        private void MarkPodcastItemSelection (bool markRead) 
         {
-                    /*ReadOnlyCollection<PodcastItem> items = itemModel.CopySelectedItems ();
-
-                    if (items != null) {
-                        ServiceManager.DbConnection.BeginTransaction ();
-                        
-                        try {                    
-                            foreach (PodcastItem pi in items) {
-                                if (pi.Track != null && pi.New != markNew) {
-                                    pi.New = markNew;
-                                    pi.Save ();
-                                }
-                            }
-                            
-                            ServiceManager.DbConnection.CommitTransaction ();
-                        } catch {
-                            ServiceManager.DbConnection.RollbackTransaction ();
-                        }                        
-                        
-                        itemModel.Reload ();                        
-                    }*/
+            TrackInfo new_selection_track = source.TrackModel [source.TrackModel.Selection.LastIndex + 1];
+            
+            PodcastService.IgnoreItemChanges = true;
+            
+            bool any = false;
+            foreach (PodcastTrackInfo track in GetSelectedItems ()) {
+                if (track.Item.IsRead != markRead) {
+                    track.Item.IsRead = markRead;
+                    track.Item.Save ();
+                    any = true;
+                }
+            }
+            
+            PodcastService.IgnoreItemChanges = false;
+            
+            if (any) {
+                source.Reload ();
+                
+                // If we just removed all of the selected items from our view, we should select the
+                // item after the last removed item
+                if (source.TrackModel.Selection.Count == 0 && new_selection_track != null) {
+                    int new_i = source.TrackModel.IndexOf (new_selection_track);
+                    if (new_i != -1) {
+                        source.TrackModel.Selection.Clear (false);
+                        source.TrackModel.Selection.FocusedIndex = new_i;
+                        source.TrackModel.Selection.Select (new_i);
+                    }
+                }
+            }
         }
         
         private void OnPodcastItemCancel (object sender, EventArgs e)

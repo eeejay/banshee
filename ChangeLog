@@ -1,5 +1,181 @@
 2008-05-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	This patch adds another filter to the podcast browser - the ability to
+	filter on all/new/old items.  The default is to only show New Items, in
+	keeping with the most common use case of podcast users.  Items are marked
+	as old after being played.  They can be marked old manually via the
+	Edit menu and track context menu, or by selecting one or more items and
+	pressing y.
+
+	* *.mdp: MonoDevelop changed some <Project> attributes across all these.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Add hack to be able to not handle FeedItem changes when doing bulk ops.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastQuery.cs:
+	New class, commented out, will replace BansheeQuery when in podcasting.
+	Zero work done on it so far.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastSourceContents.cs:
+	Add another filter list view with three options: All Items, New Items, and
+	Old Items.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	Change the Mark as Old keybinding to y (ala gmail archive).  Implement
+	mark old/new.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs:
+	Move go Banshee.Podcasting.Gui namespace directory.  Add the all/new/old
+	filter view.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastItemModel.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastFeedModel.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastFeedView.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastItemView.cs:
+	Move to namespace directories.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastUnheardFilterView.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastUnheardFilterModel.cs:
+	New classes to implement the all/new/old filter.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	Override IncrementPlayCount and set the item as old (if not already set)
+	when incremented.  Catch exceptions in processing file w/ taglib#.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Move PodcastListModel out of here.  Create the all/new/old filter model
+	and add it to the FilterModels.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
+	Moved out of PodcastSource into its own file.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:
+	DatabaseBrowsableListModel renamed to DatabaseFilterListModel, and
+	ItemToFilterValue made protected.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.mdp:
+	* src/Extensions/Banshee.Podcasting/Makefile.am: Reflect new files and
+	moevs.
+
+	* src/Extensions/Banshee.Podcasting/Resources/ActiveSourceUI.xml: Add
+	track actions to the Edit menu (not just the track context menu).
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PersistentPaneController.cs:
+	Use String.Format not +, properly handle setting a new Paned when one was
+	already set (stop listening to old one's events), avoid saving when the
+	value hasn't changed.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Give parent class a name for us (albumartist) for unique gconf position
+	entries
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	Take a name in the ctor so we can save positions in gconf per
+	filtered-list type (eg podcast and albumartist, atm).  Go back and
+	implement packing the N filter views into Gtk.Paneds.  Refactor
+	LayoutLeft/Top code to be the same.
+
+	* src/Core/Banshee.Services/Banshee.Collection/IFilterListModel.cs: New
+	interface.
+
+	* src/Core/Banshee.Services/Banshee.Collection/AlbumListModel.cs:
+	Implement Clear.
+
+	* src/Core/Banshee.Services/Banshee.Collection/BrowsableListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/FilterListModel.cs: Rename,
+	made to not require that the filter model itself be database backed (eg
+	the all/new/old model is just an in-memory enum model).
+
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs:
+	Comment out (should remove) virtual implementations that just threw NIE.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	Move ICacheableItem up (to parent class of *TrackInfo).
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseBrowsableListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
+	Rename.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Handle the provider.Where clause being empty, add spaces around AND'd
+	sql filter fragments from our filtering models.
+
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Makefile.am: New/moved files.
+
+	* src/Libraries/Migo/Migo.Syndication/MigoModelProvider.cs:
+	* src/Libraries/Migo/Migo.Syndication/MigoItem.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelCache.cs: Add
+	using Hyena.Data because ICacheableItem moved there.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Cosmetic
+	changes, getting ready to refactor so sources can set/customize the fields
+	they can be queried with.
+
+	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs: Add empty ctor,
+	inherit from CacheableItem.
+
+	* src/Core/Banshee.Core/Makefile.am:
+	* src/Core/Banshee.Core/Banshee.Core.mdp:
+	* src/Core/Banshee.Core/Banshee.Collection/CacheableItem.cs: New class,
+	just a simple implementation of ICacheableItem.
+
+	* src/Core/Banshee.Core/Resources/translators.xml: Updated.
+
+	* src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs: Check that the
+	escaped artist/album strings aren't empty either (not just null).
+
+	* src/Libraries/Mtp/Mtp/MtpDevice.cs: Move LIBMTP_Init into static ctor,
+	get rid of internal method that called it; wouldn't want to call it twice.
+
+	* src/Libraries/Hyena/Hyena.Collections/Selection.cs: Add convenience
+	properties for FirstIndex and LastIndex.
+
+	* src/Libraries/Hyena/Hyena.mdp:
+	* src/Libraries/Hyena/Makefile.am:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/ICacheableItem.cs:
+	* src/Libraries/Hyena/Hyena.Data/ICacheableItem.cs: Moved here from
+	Hyena.Data.Sqlite.
+
+	* src/Libraries/Hyena/Hyena.Data/ICacheableModel.cs: Inherit ISelctable.
+
+	* src/Libraries/Hyena/Hyena.Data/ArrayModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data/ModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data/DictionaryModelCache.cs: Specify that T
+	must be ICacheableItem.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/ICacheableDatabaseModel.cs:
+	Inheritance from ISelectable moved to parent interface.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: When
+	restoring the selection across a reload, restore the focused index as
+	well, if possible.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCell.cs: If the item to
+	bind is null, set the bound object and parent object to null too.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AccordionPane.cs: New class,
+	completely not done (or really started).  Would be great to refactor the
+	awesome column sizing code out of ListView so could be used by this.  The
+	idea is a new Paned-type widget with N children with min/max/relative
+	widths etc all set, and resizing one will resize others to their min
+	width, etc.
+
+	* src/Libraries/Migo/Migo.Syndication/FeedItem.cs: Add an index to IsRead
+	since we'll be filtering on it a lot.
+
+	* data/mimetypes.txt: Add video/ogg and video/x-theora.
+
+2008-05-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
 	Be more careful about NREs in the metadata migration.  And, in case we do
 	hit an unexpected exception, close the user-job so it doesn't stay up

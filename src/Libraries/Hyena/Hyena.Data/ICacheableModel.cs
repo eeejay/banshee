@@ -31,7 +31,7 @@ using System.Collections.Generic;
 
 namespace Hyena.Data
 {
-    public interface ICacheableModel
+    public interface ICacheableModel : ISelectable
     {
         int FetchCount { get; }
     }

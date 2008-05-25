@@ -1,5 +1,5 @@
 /***************************************************************************
- *  PodcastItemModel.cs
+ *  PodcastFeedModel.cs
  *
  *  Copyright (C) 2007 Michael C. Urbanski
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
@@ -28,17 +28,44 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 using Hyena.Data;
-using Migo.Syndication;
+
+using Banshee.Database;
+using Banshee.Collection.Database;
 using Banshee.Podcasting.Data;
+
+using Migo.Syndication;
 
 namespace Banshee.Podcasting.Gui
 {
-    public static class PodcastItemSortKeys
+    public class PodcastFeedModel : DatabaseFilterListModel<Feed, Feed>
     {
-        public const string PodcastTitle = "PodcastTitle";
-        public const string PubDate = "PubDate";
-        public const string Title = "Title";        
+        public PodcastFeedModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
+            : base (source, trackModel, connection, Feed.Provider, new Feed (null, FeedAutoDownload.None), uuid)
+        {
+            ReloadFragmentFormat = @"
+                FROM PodcastSyndications WHERE FeedID IN
+                    (SELECT FeedID FROM PodcastItems
+                        WHERE ItemID IN
+                            (SELECT CoreTracks.ExternalID FROM CoreTracks, CoreCache{0}
+                                WHERE CoreCache.ModelID = {1} AND CoreCache.ItemId = {2}))
+                    ORDER BY Title";
+        }
+        
+        public override string FilterColumn {
+            get { return Feed.Provider.PrimaryKey; }
+        }
+        
+        protected override string ItemToFilterValue (object item)
+        {
+            return (item != select_all_item && item is Feed) ? (item as Feed).DbId.ToString () : null;
+        }
+        
+        public override void UpdateSelectAllItem (long count)
+        {
+            select_all_item.Title = String.Format ("All Podcasts ({0})", count);
+        }
     }
 }

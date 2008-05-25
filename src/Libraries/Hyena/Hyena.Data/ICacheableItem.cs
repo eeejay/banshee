@@ -1,10 +1,10 @@
 //
-// BrowsableListModel.cs
+// ICacheableItem.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,28 +26,13 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Collections.Generic;
-
 using Hyena.Data;
-using Banshee.ServiceStack;
 
-namespace Banshee.Collection
+namespace Hyena.Data
 {
-    public abstract class BrowsableListModel<T> : BansheeListModel<T>
+    public interface ICacheableItem
     {
-        public BrowsableListModel () : base ()
-        {
-            selection = new SelectAllSelection ();
-            selection.SelectAll ();
-        }
-        
-        public BrowsableListModel (IDBusExportable parent) : base (parent)
-        {
-            selection = new SelectAllSelection ();
-            selection.SelectAll ();
-        }
-        
-        //public abstract void RaiseReloaded ();
+        long CacheEntryId { get; set; }
+        long CacheModelId { get; set; }
     }
 }

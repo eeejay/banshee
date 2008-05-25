@@ -4,14 +4,21 @@ LINK = $(REF_EXTENSION_PODCASTING)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
+	Banshee.Podcasting.Data/PodcastFeedModel.cs \
+	Banshee.Podcasting.Data/PodcastSource.cs \
 	Banshee.Podcasting.Data/PodcastTrackInfo.cs \
+	Banshee.Podcasting.Data/PodcastTrackListModel.cs \
+	Banshee.Podcasting.Data/PodcastUnheardFilterModel.cs \
 	Banshee.Podcasting.Gui/ColumnCellPodcast.cs \
 	Banshee.Podcasting.Gui/ColumnCellPublished.cs \
+	Banshee.Podcasting.Gui/ColumnCellUnheard.cs \
 	Banshee.Podcasting.Gui/DownloadManager/DownloadManagerInterface.cs \
 	Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs \
 	Banshee.Podcasting.Gui/Models/FilterableListModel.cs \
 	Banshee.Podcasting.Gui/Models/ListModel.cs \
 	Banshee.Podcasting.Gui/PodcastActions.cs \
+	Banshee.Podcasting.Gui/PodcastFeedView.cs \
+	Banshee.Podcasting.Gui/PodcastItemView.cs \
 	Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs \
 	Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs \
 	Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs \
@@ -19,14 +26,11 @@ SOURCES =  \
 	Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/FeedActivityColumnCell.cs \
 	Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/ItemActivityColumnCell.cs \
 	Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/PixbufColumnCell.cs \
-	Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastFeedModel.cs \
-	Banshee.Podcasting.Gui/PodcastManager/Source/Models/PodcastItemModel.cs \
-	Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSource.cs \
-	Banshee.Podcasting.Gui/PodcastManager/Source/PodcastSourceContents.cs \
-	Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastFeedView.cs \
-	Banshee.Podcasting.Gui/PodcastManager/Source/Views/PodcastItemView.cs \
+	Banshee.Podcasting.Gui/PodcastSourceContents.cs \
+	Banshee.Podcasting.Gui/PodcastUnheardFilterView.cs \
 	Banshee.Podcasting/PodcastImageFetchJob.cs \
 	Banshee.Podcasting/PodcastImportManager.cs \
+	Banshee.Podcasting/PodcastQuery.cs \
 	Banshee.Podcasting/PodcastService.cs \
 	Banshee.Podcasting/PodcastService_Interface.cs
 

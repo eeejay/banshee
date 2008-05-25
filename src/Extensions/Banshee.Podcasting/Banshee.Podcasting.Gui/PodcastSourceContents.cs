@@ -55,14 +55,16 @@ namespace Banshee.Podcasting.Gui
     {
         private PodcastItemView track_view;
         private PodcastFeedView feed_view;
+        private PodcastUnheardFilterView unheard_view;
         
-        public PodcastSourceContents () : base ()
+        public PodcastSourceContents () : base ("podcast")
         {
         }
 
         protected override void InitializeViews ()
         {
             SetupMainView (track_view = new PodcastItemView ());
+            SetupFilterView (unheard_view = new PodcastUnheardFilterView ());
             SetupFilterView (feed_view = new PodcastFeedView ());
         }
         
@@ -70,6 +72,7 @@ namespace Banshee.Podcasting.Gui
         {
             if (feed_view.Model != null) {
                 feed_view.Selection.Clear ();
+                unheard_view.Selection.Clear ();
             }
         }
 
@@ -87,6 +90,7 @@ namespace Banshee.Podcasting.Gui
 
         public override bool SetSource (ISource source)
         {
+            //Console.WriteLine ("PSC.set_source 1");
             PodcastSource track_source = source as PodcastSource;
             if (track_source == null) {
                 return false;
@@ -97,22 +101,28 @@ namespace Banshee.Podcasting.Gui
             SetModel (track_view, track_source.TrackModel);
             
             foreach (IListModel model in track_source.FilterModels) {
-                if (model is IListModel<Feed>)
+                if (model is PodcastFeedModel)
                     SetModel (feed_view, (model as IListModel<Feed>));
+                else if (model is PodcastUnheardFilterModel)
+                    SetModel (unheard_view, (model as IListModel<OldNewFilter>));
                 else
                     Hyena.Log.DebugFormat ("PodcastContents got non-feed filter model: {0}", model);
             }
             
             track_view.HeaderVisible = true;
+            //Console.WriteLine ("PSC.set_source 2");
             return true;
         }
 
         public override void ResetSource ()
         {
+            //Console.WriteLine ("PSC.reset_source 1");
             source = null;
             track_view.SetModel (null);
+            unheard_view.SetModel (null);
             feed_view.SetModel (null);
             track_view.HeaderVisible = false;
+            //Console.WriteLine ("PSC.reset_source 2");
         }
 
 #endregion        

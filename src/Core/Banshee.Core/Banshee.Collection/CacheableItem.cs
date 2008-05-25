@@ -1,10 +1,10 @@
 //
-// ArrayModelCache.cs
+// CacheableItem.cs
 //
-// Author:
+// Authors:
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,49 +28,28 @@
 
 using System;
 
-namespace Hyena.Data
+using Hyena.Data;
+
+namespace Banshee.Collection
 {
-    public abstract class ArrayModelCache<T> : ModelCache<T> where T : ICacheableItem, new ()
+    public class CacheableItem : ICacheableItem
     {
-        protected T [] cache;
-        protected long offset = -1;
-        protected long limit = 0;
+    
+#region Implement ICacheableItem
 
-        public ArrayModelCache (ICacheableModel model) : base (model)
-        {
-            cache = new T [model.FetchCount];
+        private long cache_entry_id;
+        public long CacheEntryId {
+            get { return cache_entry_id; }
+            set { cache_entry_id = value; }
         }
 
-        public override bool ContainsKey (long i)
-        {
-            return (i >= offset &&
-                    i <= (offset + limit));
+        private long cache_model_id;
+        public long CacheModelId {
+            get { return cache_model_id; }
+            set { cache_model_id = value; }
         }
 
-        public override void Add (long i, T item)
-        {
-            if (cache.Length != model.FetchCount) {
-                cache = new T [model.FetchCount];
-                Clear ();
-            }
+#endregion
 
-            if (offset == -1 || i < offset || i >= (offset + cache.Length)) {
-                offset = i;
-                limit = 0;
-            }
-
-            cache [i - offset] = item;
-            limit++;
-        }
-
-        public override T this [long i] {
-            get { return cache [i - offset]; }
-        }
-
-        public override void Clear ()
-        {
-            offset = -1;
-            limit = 0;
-        }
     }
 }

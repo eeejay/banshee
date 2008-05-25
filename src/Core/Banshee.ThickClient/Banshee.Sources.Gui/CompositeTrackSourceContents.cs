@@ -53,10 +53,10 @@ namespace Banshee.Sources.Gui
         private AlbumListView album_view;
         private TrackListView track_view;
 
-        public CompositeTrackSourceContents () : base ()
+        public CompositeTrackSourceContents () : base ("albumartist")
         {
         }
-        
+
         protected override void InitializeViews ()
         {
             SetupMainView (track_view = new TrackListView ());
@@ -131,6 +131,7 @@ namespace Banshee.Sources.Gui
 
         public override bool SetSource (ISource source)
         {
+            //Console.WriteLine ("CTSC.set_source 1");
             ITrackModelSource track_source = source as ITrackModelSource;
             if (track_source == null) {
                 return false;
@@ -150,16 +151,19 @@ namespace Banshee.Sources.Gui
             }
             
             track_view.HeaderVisible = true;
+            //Console.WriteLine ("CTSC.set_source 2");
             return true;
         }
 
         public override void ResetSource ()
         {
+            //Console.WriteLine ("CTSC.reset_source 1");
             source = null;
             track_view.SetModel (null);
             artist_view.SetModel (null);
             album_view.SetModel (null);
             track_view.HeaderVisible = false;
+            //Console.WriteLine ("CTSC.reset_source 2");
         }
 
 #endregion

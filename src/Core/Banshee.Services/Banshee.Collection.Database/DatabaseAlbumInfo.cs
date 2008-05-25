@@ -31,6 +31,7 @@ using System.Data;
 
 using Mono.Unix;
 
+using Hyena.Data;
 using Hyena.Data.Sqlite;
 
 using Banshee.Database;
@@ -38,7 +39,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Database
 {
-    public class DatabaseAlbumInfo : AlbumInfo, ICacheableItem
+    public class DatabaseAlbumInfo : AlbumInfo
     {
         private static BansheeModelProvider<DatabaseAlbumInfo> provider = new BansheeModelProvider<DatabaseAlbumInfo> (
             ServiceManager.DbConnection, "CoreAlbums"
@@ -125,18 +126,6 @@ namespace Banshee.Collection.Database
         private int dbid;
         public int DbId {
             get { return dbid; }
-        }
-
-        private long cache_entry_id;
-        public long CacheEntryId {
-            get { return cache_entry_id; }
-            set { cache_entry_id = value; }
-        }
-
-        private long cache_model_id;
-        public long CacheModelId {
-            get { return cache_model_id; }
-            set { cache_model_id = value; }
         }
 
         [DatabaseColumn("ArtistID")]

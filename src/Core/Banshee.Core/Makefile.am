@@ -18,6 +18,7 @@ SOURCES =  \
 	Banshee.Base/XdgBaseDirectorySpec.cs \
 	Banshee.Collection/AlbumInfo.cs \
 	Banshee.Collection/ArtistInfo.cs \
+	Banshee.Collection/CacheableItem.cs \
 	Banshee.Collection/FileTrackInfo.cs \
 	Banshee.Collection/IBasicTrackInfo.cs \
 	Banshee.Collection/ITrackInfo.cs \

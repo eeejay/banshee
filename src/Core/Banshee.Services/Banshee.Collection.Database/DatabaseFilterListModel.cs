@@ -33,28 +33,18 @@ using System.Text;
 using System.Collections.Generic;
 
 using Hyena;
+using Hyena.Data;
 using Hyena.Data.Sqlite;
 
 using Banshee.Collection;
 using Banshee.Database;
 
 namespace Banshee.Collection.Database
-{
-    public interface IFilterListModel : Hyena.Data.IListModel
-    {
-        string FilterColumn { get; }
-        string ItemToFilterValue (object item);
-        void RaiseReloaded ();
-        void Reload (bool notify);
-
-        IEnumerable<object> GetSelectedObjects ();
-    }
-    
-    public abstract class DatabaseBrowsableListModel<T, U> : BrowsableListModel<U>, IFilterListModel, ICacheableDatabaseModel
-        where T : ICacheableItem, U, new()
+{   
+    public abstract class DatabaseFilterListModel<T, U> : FilterListModel<U>, ICacheableDatabaseModel
+        where T : U, new () where U : ICacheableItem, new()
     {
         private readonly BansheeModelCache<T> cache;
-        private readonly DatabaseTrackListModel browsing_model;
         private readonly Banshee.Sources.DatabaseSource source;
         
         private long count;
@@ -68,53 +58,30 @@ namespace Banshee.Collection.Database
         
         protected readonly U select_all_item;
 
-        public DatabaseBrowsableListModel ( Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid)
-            : base ()
+        public DatabaseFilterListModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid)
+            : base (trackModel)
         {
             this.source = source;
-            browsing_model = trackModel;
             select_all_item = selectAllItem;
             
             cache = new BansheeModelCache <T> (connection, uuid, this, provider);
             cache.HasSelectAllItem = true;
-
-            Selection.Changed += HandleSelectionChanged;
         }
         
-#region IFilterModel<T> Implementation
-
-        public abstract string FilterColumn { get; }
-        public abstract string ItemToFilterValue (object item);
-
-#endregion
-
-        public IEnumerable<object> GetSelectedObjects ()
+        public override void Clear ()
         {
-            foreach (object o in SelectedItems) {
-                yield return o;
-            }
-        }
-
-        private void HandleSelectionChanged (object sender, EventArgs args)
-        {
-            browsing_model.Reload (this);
-        }
-
-        public override void Reload ()
-        {
-            Reload (false);
         }
         
         protected virtual void GenerateReloadFragment ()
         {
             ReloadFragment = String.Format (
                 ReloadFragmentFormat,
-                browsing_model.CachesJoinTableEntries ? browsing_model.JoinFragment : null,
-                browsing_model.CacheId,
-                browsing_model.CachesJoinTableEntries
+                FilteredModel.CachesJoinTableEntries ? FilteredModel.JoinFragment : null,
+                FilteredModel.CacheId,
+                FilteredModel.CachesJoinTableEntries
                     ? String.Format (
                         "{0}.{1} AND CoreTracks.TrackID = {0}.{2}",
-                        browsing_model.JoinTable, browsing_model.JoinPrimaryKey, browsing_model.JoinColumn
+                        FilteredModel.JoinTable, FilteredModel.JoinPrimaryKey, FilteredModel.JoinColumn
                     ) : "CoreTracks.TrackID",
                 GetFilterFragment ()
             );
@@ -124,9 +91,9 @@ namespace Banshee.Collection.Database
         {
             StringBuilder qb = new StringBuilder ();
             foreach (IFilterListModel model in UpstreamFilters) {
-                string filter = GetFilterFromModel (model);
+                string filter = model.GetSqlFilter ();
                 if (filter != null) {
-                    qb.Append ("AND");
+                    qb.Append (" AND ");
                     qb.Append (filter);
                 }
             }
@@ -144,14 +111,21 @@ namespace Banshee.Collection.Database
                 }
             }
         }
+        
+        protected abstract string ItemToFilterValue (object o);
 
         // Ick, duplicated from DatabaseTrackListModel
-        private string GetFilterFromModel (IFilterListModel model)
+        public override string GetSqlFilter ()
         {
             string filter = null;
             
-            ModelHelper.BuildIdFilter<object> (model.GetSelectedObjects (), model.FilterColumn, null,
-                delegate (object item) { return model.ItemToFilterValue (item); },
+            ModelHelper.BuildIdFilter<object> (GetSelectedObjects (), FilterColumn, null,
+                delegate (object item) {
+                    if (item != select_all_item) {
+                        return ItemToFilterValue (item);
+                    }
+                    return null;
+                },
                 delegate (string new_filter) { filter = new_filter; }
             );
             
@@ -160,7 +134,7 @@ namespace Banshee.Collection.Database
         
         public abstract void UpdateSelectAllItem (long count);
 
-        public void Reload (bool notify)
+        public override void Reload (bool notify)
         {
             GenerateReloadFragment ();
 
@@ -185,7 +159,7 @@ namespace Banshee.Collection.Database
                 return cache.GetValue (index - 1);
             }
         }
-        
+
         public override int Count { 
             get { return (int) count; }
         }
@@ -205,12 +179,21 @@ namespace Banshee.Collection.Database
         public int CacheId {
             get { return (int) cache.CacheId; }
         }
+        
+        public IEnumerable<object> GetSelectedObjects ()
+        {
+            foreach (object o in SelectedItems) {
+                yield return o;
+            }
+        }
 
         public void InvalidateCache ()
         {
             cache.ClearManagedCache ();
             OnReloaded ();
         }
+        
+        public abstract string FilterColumn { get; }
 
         public virtual string JoinTable { get { return null; } }
         public virtual string JoinFragment { get { return null; } }

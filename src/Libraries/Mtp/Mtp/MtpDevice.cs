@@ -50,7 +50,7 @@ namespace Mtp
 		private Folder videoFolder;
 
 		static MtpDevice() {
-			Init();
+			LIBMTP_Init ();
 		}
 		
 		public int BatteryLevel {
@@ -349,11 +349,6 @@ namespace Mtp
             return new Int16[0];
         }
 		
-		internal static void Init ()
-		{
-			LIBMTP_Init ();
-		}
-
 		internal static void ReleaseDevice (IntPtr handle)
 		{
 			LIBMTP_Release_Device(handle);

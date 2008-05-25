@@ -1,10 +1,10 @@
 //
-// AlbumListModel.cs
+// PodcastQuery.cs
 //
-// Author:
-//   Aaron Bockover <abockover@novell.com>
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,33 +27,14 @@
 //
 
 using System;
-using System.Collections.Generic;
 
-using Hyena.Data;
-using Banshee.ServiceStack;
+using Hyena.Query;
 
-namespace Banshee.Collection
+using Banshee.Query;
+
+namespace Banshee.Podcasting
 {
-    public abstract class AlbumListModel : BansheeListModel<AlbumInfo>
+    /*public class PodcastQuery
     {
-        public AlbumListModel() : base ()
-        {
-            selection = new SelectAllSelection ();
-            selection.SelectAll ();
-        }
-        
-        public AlbumListModel(IDBusExportable parent) : base(parent)
-        {
-            selection = new SelectAllSelection ();
-            selection.SelectAll ();
-        }
-        
-        public override void Clear ()
-        {
-        }
-
-        public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
-            set { throw new NotImplementedException(); }
-        }
-    }
+    }*/
 }

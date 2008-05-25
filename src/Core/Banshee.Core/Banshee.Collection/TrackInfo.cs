@@ -38,7 +38,7 @@ using Banshee.Streaming;
 
 namespace Banshee.Collection
 {
-    public class TrackInfo : ITrackInfo
+    public class TrackInfo : CacheableItem, ITrackInfo
     {
         private SafeUri uri;
         private SafeUri more_info_uri;
@@ -308,7 +308,7 @@ namespace Banshee.Collection
             get { return media_attributes; }
             set { media_attributes = value; }
         }
-        
+
         // Generates a{sv} of self according to http://wiki.xmms2.xmms.se/index.php/Media_Player_Interfaces#.22Metadata.22
         public IDictionary<string, object> GenerateExportable ()
         {

@@ -50,6 +50,8 @@ namespace Hyena.Data.Gui
         public void BindListItem (object item)
         {
             if (item == null) {
+                bound_object_parent = null;
+                bound_object = null;
                 return;
             }
             

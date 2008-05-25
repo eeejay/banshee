@@ -174,7 +174,9 @@ namespace Banshee.Collection.Database
             get {
                 return unfiltered_query ?? unfiltered_query = String.Format (
                     "FROM {0}{1} WHERE {2} {3}",
-                    provider.From, JoinFragment, provider.Where, ConditionFragment
+                    provider.From, JoinFragment,
+                    String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where,
+                    ConditionFragment
                 );
             }
         }
@@ -269,16 +271,16 @@ namespace Banshee.Collection.Database
             
             if (with_filters) {
                 foreach (IFilterListModel model in source.FilterModels) {
-                    string filter = GetFilterFromModel (model);
+                    string filter = model.GetSqlFilter ();
                     if (filter != null) {
-                        qb.Append ("AND");
+                        qb.Append (" AND ");
                         qb.Append (filter);
                     }
                 }
             }
             
             if (query_fragment != null) {
-                qb.Append ("AND ");
+                qb.Append (" AND ");
                 qb.Append (query_fragment);
             }
             
@@ -294,7 +296,7 @@ namespace Banshee.Collection.Database
         public override int IndexOf (TrackInfo track)
         {
             DatabaseTrackInfo db_track = track as DatabaseTrackInfo;
-            return (int) (db_track == null ? -1 : cache.IndexOf ((int)db_track.TrackId));
+            return (int) (db_track == null ? -1 : cache.IndexOf ((int)db_track.CacheEntryId));
         }
 
         private DateTime random_began_at = DateTime.MinValue;
@@ -402,22 +404,9 @@ namespace Banshee.Collection.Database
         private string PrefixCondition (string prefix)
         {
             string condition = Condition;
-            if (condition == null || condition == String.Empty)
-                return String.Empty;
-            else
-                return String.Format (" {0} {1} ", prefix, condition);
-        }
-        
-        private string GetFilterFromModel (IFilterListModel model)
-        {
-            string filter = null;
-            
-            ModelHelper.BuildIdFilter<object> (model.GetSelectedObjects (), model.FilterColumn, null,
-                delegate (object item) { return model.ItemToFilterValue (item); },
-                delegate (string new_filter) { filter = new_filter; }
-            );
-            
-            return filter;
+            return String.IsNullOrEmpty (condition)
+                ? String.Empty
+                : String.Format (" {0} {1} ", prefix, condition);
         }
 
         /*public override IEnumerable<ArtistInfo> ArtistInfoFilter {

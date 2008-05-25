@@ -43,10 +43,11 @@ namespace Banshee.Gui
         private uint timer_id = 0;
         private bool pending_changes;
         private Paned pane;
+        private int last_position;
         
         public static void Control (Paned pane, string name)
         {
-            Control (pane, "interface.panes." + name, "position", pane.Position); 
+            Control (pane, String.Format ("interface.panes.{0}", name), "position", pane.Position); 
         }
         
         public static void Control (Paned pane, SchemaEntry<int> entry)
@@ -74,10 +75,25 @@ namespace Banshee.Gui
         
         private Paned Paned {
             set {
+                if (pane == value) {
+                    return;
+                }
+                
+                if (pane != null) {
+                    //pane.MoveHandle -= OnPaneMoved;
+                }
+                
                 pane = value;
                 pane.Position = ConfigurationClient.Get<int> (@namespace, key, fallback);
-                pane.SizeAllocated += delegate { Save (); };
+                //pane.MoveHandle += OnPaneMoved;
+                //pane.AcceptPosition += delegate { Console.WriteLine ("accept pos called, pos = {0}", pane.Position); };
+                pane.SizeAllocated += OnPaneMoved;
             }
+        }
+        
+        private void OnPaneMoved (object sender, EventArgs args)
+        {
+            Save ();
         }
         
         private void Save ()
@@ -95,7 +111,10 @@ namespace Banshee.Gui
                 pending_changes = false;
                 return true;
             } else {
-                ConfigurationClient.Set<int> (@namespace, key, pane.Position);
+                if (pane.Position != last_position) {
+                    ConfigurationClient.Set<int> (@namespace, key, pane.Position);
+                    last_position = pane.Position;
+                }
                 timer_id = 0;
                 return false;
             }

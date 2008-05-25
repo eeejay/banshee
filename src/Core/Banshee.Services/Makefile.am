@@ -10,7 +10,7 @@ SOURCES =  \
 	Banshee.Collection.Database/DatabaseAlbumListModel.cs \
 	Banshee.Collection.Database/DatabaseArtistInfo.cs \
 	Banshee.Collection.Database/DatabaseArtistListModel.cs \
-	Banshee.Collection.Database/DatabaseBrowsableListModel.cs \
+	Banshee.Collection.Database/DatabaseFilterListModel.cs \
 	Banshee.Collection.Database/DatabaseImportManager.cs \
 	Banshee.Collection.Database/DatabaseTrackInfo.cs \
 	Banshee.Collection.Database/DatabaseTrackListModel.cs \
@@ -21,9 +21,10 @@ SOURCES =  \
 	Banshee.Collection/AlbumListModel.cs \
 	Banshee.Collection/ArtistListModel.cs \
 	Banshee.Collection/BansheeListModel.cs \
-	Banshee.Collection/BrowsableListModel.cs \
 	Banshee.Collection/ExportableModel.cs \
+	Banshee.Collection/FilterListModel.cs \
 	Banshee.Collection/IExportableModel.cs \
+	Banshee.Collection/IFilterListModel.cs \
 	Banshee.Collection/ImportEventHandler.cs \
 	Banshee.Collection/ImportManager.cs \
 	Banshee.Collection/MemoryTrackListModel.cs \

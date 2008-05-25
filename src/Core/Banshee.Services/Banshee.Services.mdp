@@ -1,4 +1,4 @@
-<Project name="Banshee.Services" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Banshee.Services" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assembly="Banshee.Services" />
@@ -165,9 +165,10 @@
     <File name="Banshee.ServiceStack/IDelayedInitializeService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/DurationStatusFormatters.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.SmartPlaylist/SmartPlaylistDefinition.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection.Database/DatabaseBrowsableListModel.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Collection/BrowsableListModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Database/DatabaseFilterListModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/FilterListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Playlists.Formats/Tests/PlaylistFormatTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/IFilterListModel.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

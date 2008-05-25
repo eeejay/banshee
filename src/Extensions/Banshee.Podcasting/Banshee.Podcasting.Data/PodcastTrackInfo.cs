@@ -108,6 +108,18 @@ namespace Banshee.Podcasting.Data
             private set { item_id = value; }
         }
         
+        //[VirtualDatabaseColumn ("Title", Item.Feed.Title, "ItemID", "ExternalID")]
+        
+        // Override these two so they aren't considered DatabaseColumns so we don't
+        // join with CoreArtists/CoreAlbums
+        /*public override string AlbumTitle {
+            get { return Item.Feed.Title; }
+        }
+        
+        public override string ArtistName {
+            get { return Item.Author; }
+        }*/
+        
         public FeedEnclosure Enclosure {
             get { return (Item == null) ? null : Item.Enclosure; }
         }
@@ -161,6 +173,16 @@ namespace Banshee.Podcasting.Data
             Provider.Delete (this);
         }
         
+        public override void IncrementPlayCount ()
+        {
+            base.IncrementPlayCount ();
+            
+            if (PlayCount > 0 && !Item.IsRead) {
+                Item.IsRead = true;
+                Item.Save ();
+            }
+        }
+        
         public void SyncWithFeedItem ()
         {
             //Console.WriteLine ("Syncing item, enclosure == null? {0}", Item.Enclosure == null);
@@ -179,8 +201,10 @@ namespace Banshee.Podcasting.Data
             Uri = new Banshee.Base.SafeUri (Item.Enclosure.LocalPath ?? Item.Enclosure.Url);
             
             if (!String.IsNullOrEmpty (Item.Enclosure.LocalPath)) {
-                TagLib.File file = Banshee.Streaming.StreamTagger.ProcessUri (Uri);
-                Banshee.Streaming.StreamTagger.TrackInfoMerge (this, file, true);
+                try {
+                    TagLib.File file = Banshee.Streaming.StreamTagger.ProcessUri (Uri);
+                    Banshee.Streaming.StreamTagger.TrackInfoMerge (this, file, true);
+                } catch {}
             }
         }
         

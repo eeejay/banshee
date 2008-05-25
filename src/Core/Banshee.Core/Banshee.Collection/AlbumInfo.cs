@@ -33,13 +33,17 @@ using Banshee.Base;
 
 namespace Banshee.Collection
 {
-    public class AlbumInfo 
+    public class AlbumInfo : CacheableItem
     {
         private string title;
         private string artist_name;
         private string artwork_id;
         private DateTime release_date = DateTime.MinValue;
         private string musicbrainz_id;
+        
+        public AlbumInfo ()
+        {
+        }
         
         public AlbumInfo (string title)
         {

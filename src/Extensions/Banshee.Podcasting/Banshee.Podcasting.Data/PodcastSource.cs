@@ -53,57 +53,10 @@ using Banshee.Podcasting.Data;
 using Migo.Syndication;
 
 namespace Banshee.Podcasting.Gui
-{
-    public class PodcastListModel : DatabaseTrackListModel, IListModel<PodcastTrackInfo>
-    {
-        public PodcastListModel (BansheeDbConnection conn, IDatabaseTrackModelProvider provider, DatabaseSource source) : base (conn, provider, source)
-        {
-            JoinTable = String.Format ("{0}, {1}, {2}", Feed.Provider.TableName, FeedItem.Provider.TableName, FeedEnclosure.Provider.TableName);
-            JoinPrimaryKey = FeedItem.Provider.PrimaryKey;
-            JoinColumn = "ExternalID";
-            AddCondition (String.Format (
-                "{0}.FeedID = {1}.FeedID AND CoreTracks.ExternalID = {1}.ItemID AND {1}.ItemID = {2}.ItemID",
-                Feed.Provider.TableName, FeedItem.Provider.TableName, FeedEnclosure.Provider.TableName
-            ));
-        }
-
-        protected override void GenerateSortQueryPart ()
-        {
-            SortQuery = (SortColumn == null)
-                ? GetSort ("Published", false)
-                : GetSort (SortColumn.SortKey, SortColumn.SortType == Hyena.Data.SortType.Ascending);
-        }
-
-        public static string GetSort (string key, bool asc)
-        {
-            string ascDesc = asc ? "ASC" : "DESC";
-            string sort_query = null;
-            switch(key) {
-                case "PublishedDate":
-                    sort_query = String.Format (@"
-                        PodcastItems.PubDate {0}", ascDesc);
-                    break;
-
-                case "DownloadStatus":
-                    sort_query = String.Format (@"
-                        PodcastEnclosures.DownloadStatus {0}", ascDesc);
-                    break;
-            }
-
-            return sort_query ?? Banshee.Query.BansheeQuery.GetSort (key, asc);
-        }
-        
-        public new PodcastTrackInfo this[int index] {
-            get {
-                lock (this) {
-                    return cache.GetValue (index) as PodcastTrackInfo;
-                }
-            }
-        }
-    }
-    
+{ 
     public class PodcastSource : Banshee.Library.LibrarySource
     {
+        private PodcastUnheardFilterModel unheard_model;
         private PodcastFeedModel feed_model;
 
         private string baseDirectory;
@@ -193,12 +146,14 @@ namespace Banshee.Podcasting.Gui
             DatabaseTrackModelProvider<PodcastTrackInfo> track_provider =
                 new DatabaseTrackModelProvider<PodcastTrackInfo> (ServiceManager.DbConnection);
 
-            DatabaseTrackModel = new PodcastListModel (ServiceManager.DbConnection, track_provider, this);
+            DatabaseTrackModel = new PodcastTrackListModel (ServiceManager.DbConnection, track_provider, this);
 
             TrackCache = new DatabaseTrackModelCache<PodcastTrackInfo> (ServiceManager.DbConnection,
                     UniqueId, track_model, track_provider);
                     
             feed_model = new PodcastFeedModel (this, DatabaseTrackModel, ServiceManager.DbConnection, "PodcastFeeds");
+            
+            unheard_model = new PodcastUnheardFilterModel (DatabaseTrackModel);
             
             AfterInitialized ();
         }
@@ -235,6 +190,7 @@ namespace Banshee.Podcasting.Gui
         
         public override System.Collections.Generic.IEnumerable<Banshee.Collection.Database.IFilterListModel> FilterModels {
             get {
+                yield return unheard_model;
                 yield return feed_model;
             }
         }

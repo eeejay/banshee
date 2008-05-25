@@ -71,7 +71,7 @@ namespace Banshee.Base
             string sm_artist = EscapePart (artist);
             string sm_album = EscapePart (album);
             
-            return sm_artist == null || sm_album == null 
+            return String.IsNullOrEmpty (sm_artist) || String.IsNullOrEmpty (sm_album)
                 ? null 
                 : String.Format ("{0}{1}{2}", sm_artist, asUriPart ? "/" : "-", sm_album); 
         }
