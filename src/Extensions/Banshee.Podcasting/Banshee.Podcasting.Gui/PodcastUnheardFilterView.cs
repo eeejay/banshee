@@ -54,8 +54,6 @@ namespace Banshee.Podcasting.Gui
             ColumnCellUnheard renderer = new ColumnCellUnheard ();
             column_controller.Add (new Column ("Unheard Filter", renderer, 1.0));
             ColumnController = column_controller;
-            
-            IsResizable = false;
         }
     }
 }

@@ -1,5 +1,11 @@
 2008-05-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastUnheardFilterView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	Fix the build.
+
+2008-05-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This patch adds another filter to the podcast browser - the ability to
 	filter on all/new/old items.  The default is to only show New Items, in
 	keeping with the most common use case of podcast users.  Items are marked

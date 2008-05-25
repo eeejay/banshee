@@ -60,7 +60,6 @@ namespace Banshee.Sources.Gui
         private List<ScrolledWindow> filter_scrolled_windows = new List<ScrolledWindow> ();
         
         private Dictionary<object, double> model_positions = new Dictionary<object, double> ();
-        private Dictionary<ScrolledWindow, bool> resizable_views = new Dictionary<ScrolledWindow, bool> ();
         
         private Paned container;
         private Widget browser_container;
@@ -145,7 +144,6 @@ namespace Banshee.Sources.Gui
         protected void SetupFilterView<T> (ListView<T> filter_view)
         {
             ScrolledWindow window = SetupView (filter_view);
-            resizable_views[window] = filter_view.IsResizable;
             filter_scrolled_windows.Add (window);
             filter_view.HeaderVisible = false;
             filter_view.SelectionProxy.Changed += OnBrowserViewSelectionChanged;
