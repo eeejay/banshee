@@ -158,6 +158,12 @@ namespace Banshee.Collection.Gui
                     column.Title = title;
                 }
                 
+                if (renderer_type != null) {
+                    ColumnCell renderer = GetCellRenderer (renderer_type, renderer_property, renderer_expand);
+                    column.RemoveCell (0);
+                    column.PackStart (renderer);
+                }
+                
                 if (renderer_property != null) {
                     column.GetCell (0).Property = renderer_property;
                 }
@@ -170,20 +176,7 @@ namespace Banshee.Collection.Gui
                     ((SortableColumn)column).SortKey = sort_key;
                 }
             } else {
-                Type type = null;
-                
-                foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies ()) {
-                    type = asm.GetType (renderer_type, false, true);
-                    if (type != null) {
-                        break;
-                    }
-                }
-                
-                if (type == null) {
-                    throw new TypeLoadException (renderer_type);
-                }
-                
-                ColumnCell renderer = (ColumnCell)Activator.CreateInstance (type, renderer_property, renderer_expand);
+                ColumnCell renderer = GetCellRenderer (renderer_type, renderer_property, renderer_expand);
                 
                 Column column = sort_key == null
                     ? new Column (title, renderer, width, visible)
@@ -193,6 +186,24 @@ namespace Banshee.Collection.Gui
                 
                 Add (column);
             }
+        }
+        
+        private ColumnCell GetCellRenderer (string typeName, string property, bool expand)
+        {
+            Type type = null;
+                
+            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies ()) {
+                type = asm.GetType (typeName, false, true);
+                if (type != null) {
+                    break;
+                }
+            }
+            
+            if (type == null) {
+                throw new TypeLoadException (typeName);
+            }
+            
+            return (ColumnCell)Activator.CreateInstance (type, property, expand);
         }
         
         private bool ParseBoolean (string value)

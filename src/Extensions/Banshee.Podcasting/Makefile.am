@@ -10,6 +10,7 @@ SOURCES =  \
 	Banshee.Podcasting.Data/PodcastTrackListModel.cs \
 	Banshee.Podcasting.Data/PodcastUnheardFilterModel.cs \
 	Banshee.Podcasting.Gui/ColumnCellPodcast.cs \
+	Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs \
 	Banshee.Podcasting.Gui/ColumnCellPublished.cs \
 	Banshee.Podcasting.Gui/ColumnCellUnheard.cs \
 	Banshee.Podcasting.Gui/DownloadManager/DownloadManagerInterface.cs \
@@ -37,11 +38,7 @@ SOURCES =  \
 RESOURCES =  \
 	Banshee.Podcasting.addin.xml \
 	Resources/ActiveSourceUI.xml \
-	Resources/GlobalUI.xml \
-	Resources/Images/podcast-icon-16.png \
-	Resources/Images/podcast-icon-22.png \
-	Resources/Images/podcast-icon-48.png \
-	Resources/Images/podcast-new-16.png
+	Resources/GlobalUI.xml
 
 if ENABLE_PODCAST
 include $(top_srcdir)/build/build.mk

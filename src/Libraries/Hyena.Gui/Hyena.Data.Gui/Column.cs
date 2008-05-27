@@ -114,6 +114,16 @@ namespace Hyena.Data.Gui
             return cells[index];
         }
         
+        public void RemoveCell (int index)
+        {
+            cells.RemoveAt (index);
+        }
+        
+        public void ClearCells ()
+        {
+            cells.Clear ();
+        }
+        
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return cells.GetEnumerator ();

@@ -1,3 +1,26 @@
+2008-05-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/XmlColumnController.cs:
+	Support changing the renderer on columns
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellStatusIndicator.cs:
+	Renamed to Status indicator instead of Playback indicator
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Updated to reflect rename of the indicator object
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs:
+	Support removing and clearing renderers
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Load the podcast icons from the theme, not as resources
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs:
+	A custom indicator renderer to show podcast item status
+
 2008-05-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:

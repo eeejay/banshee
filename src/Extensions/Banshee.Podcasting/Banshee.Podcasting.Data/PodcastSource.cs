@@ -96,22 +96,17 @@ namespace Banshee.Podcasting.Gui
         {
             this.baseDirectory = baseDirectory;
 
-            Properties.SetString ("Icon.Name", "podcast-icon-22");
+            Properties.SetString ("Icon.Name", "podcast");
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/PodcastSourcePopup");
             Properties.Set<ISourceContents> ("Nereid.SourceContents", new PodcastSourceContents ());
             
             Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
                     <column-controller>
-                      <column>
-                          <visible>true</visible>
-                          <renderer type=""Banshee.Podcasting.Gui.PodcastItemActivityColumn"" property=""Activity"" />
-                          <sort-key>DownloadStatus</sort-key>
-                          <width>.025</width>
-                          <max-width>30</max-width>
-                          <min-width>30</min-width>
-                      </column>
                       <add-all-defaults />
+                      <column modify-default=""IndicatorColumn"">
+                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellPodcastStatusIndicator"" />
+                      </column>
                       <remove-default column=""TrackColumn"" />
                       <remove-default column=""DiscColumn"" />
                       <remove-default column=""ComposerColumn"" />

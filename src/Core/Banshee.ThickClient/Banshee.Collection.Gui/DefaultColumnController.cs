@@ -83,7 +83,7 @@ namespace Banshee.Collection.Gui
         }
         
         private Column indicator_column 
-            = new Column (null, "indicator", new ColumnCellPlaybackIndicator (null), 0.05, true, 30, 30);
+            = new Column (null, "indicator", new ColumnCellStatusIndicator (null), 0.05, true, 30, 30);
         public Column IndicatorColumn {
             get { return indicator_column; }
         }

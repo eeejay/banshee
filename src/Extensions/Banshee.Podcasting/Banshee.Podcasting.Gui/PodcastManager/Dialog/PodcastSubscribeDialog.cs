@@ -77,9 +77,7 @@ namespace Banshee.Podcasting.Gui
             box.BorderWidth = 6;
             box.Spacing = 12;
 
-            Image image = new Image (
-                Gdk.Pixbuf.LoadFromResource ("podcast-icon-48.png")
-            );
+            Image image = new Image (IconThemeUtils.LoadIcon (48, "podcast"));
             
             image.Yalign = 0.0f;
             
