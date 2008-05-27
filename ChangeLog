@@ -1,5 +1,14 @@
 2008-05-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingEntry.cs: Fix bug where
+	preview-on-hover stars weren't cleared before showing the track context
+	menu (or notification menu) so you'd see whatever hover stars had been
+	there the last time you opened it (even if for another track).  Fixes BGO
+	#534460.
+
+2008-05-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseTrackModelCache.cs:
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Fix two bugs,

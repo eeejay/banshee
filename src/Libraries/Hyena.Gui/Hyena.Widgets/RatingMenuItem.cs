@@ -127,6 +127,7 @@ namespace Hyena.Widgets
         {
             can_activate = false;
             Value = value;
+            entry.ClearHover ();
             can_activate = true;
         }
         

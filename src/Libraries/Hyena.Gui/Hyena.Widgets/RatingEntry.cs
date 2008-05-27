@@ -285,7 +285,7 @@ namespace Hyena.Widgets
         
         protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing crossing)
         {
-            hover_value = renderer.MinRating - 1;
+            ClearHover ();
             QueueDraw ();
             return true;
         }
@@ -329,6 +329,11 @@ namespace Hyena.Widgets
 
 #region Internal API, primarily for RatingMenuItem
         
+        internal void ClearHover ()
+        {
+            hover_value = renderer.MinRating - 1;
+        }
+
         internal bool HandleKeyPress (Gdk.EventKey evnt)
         {
             return this.OnKeyPressEvent (evnt);
