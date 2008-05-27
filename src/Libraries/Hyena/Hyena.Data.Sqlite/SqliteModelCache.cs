@@ -1,10 +1,11 @@
 //
 // SqliteModelCache.cs
 //
-// Author:
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
 //   Scott Peterson <lunchtimemama@gmail.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -32,8 +33,6 @@ using System.Data;
 
 namespace Hyena.Data.Sqlite
 {
-    //public delegate void AggregatesUpdatedEventHandler (IDataReader reader);
-
     public class SqliteModelCache<T> : DictionaryModelCache<T> where T : ICacheableItem, new ()
     {
         private HyenaSqliteConnection connection;
@@ -117,16 +116,6 @@ namespace Hyena.Data.Sqlite
                     provider.Where
                 );
 
-                select_single_command = new HyenaSqliteCommand (
-                    String.Format (@"
-                        SELECT OrderID FROM {0}
-                            WHERE
-                                ModelID = {1} AND
-                                ItemID IN (SELECT {2} FROM {3} WHERE {4} = ?) LIMIT 1",
-                        CacheTableName, uid, model.JoinPrimaryKey, model.JoinTable, model.JoinColumn
-                    )
-                );
-
                 reload_sql = String.Format (@"
                     DELETE FROM {0} WHERE ModelID = {1};
                         INSERT INTO {0} (ModelID, ItemID) SELECT {1}, {2} ",
@@ -145,22 +134,22 @@ namespace Hyena.Data.Sqlite
                     provider.Where
                 );
 
-                select_single_command = new HyenaSqliteCommand (
-                    String.Format (@"
-                        SELECT OrderID FROM {0}
-                            WHERE
-                                ModelID = {1} AND
-                                ItemID = ?",
-                        CacheTableName, uid
-                    )
-                );
-
                 reload_sql = String.Format (@"
                     DELETE FROM {0} WHERE ModelID = {1};
                         INSERT INTO {0} (ModelID, ItemID) SELECT {1}, {2} ",
                     CacheTableName, uid, provider.PrimaryKey
                 );
             }
+
+            select_single_command = new HyenaSqliteCommand (
+                String.Format (@"
+                    SELECT OrderID FROM {0}
+                        WHERE
+                            ModelID = {1} AND
+                            ItemID = ?",
+                    CacheTableName, uid
+                )
+            );
 
             select_range_command = new HyenaSqliteCommand (
                 String.Format ("{0} {1}", select_str, "LIMIT ?, ?")
@@ -228,11 +217,13 @@ namespace Hyena.Data.Sqlite
              }
         }
         
+        // FIXME this should really take a type T, not a confusing, ambiguous long
         public long IndexOf (long item_id)
         {
             lock (this) {
-                if (rows == 0)
+                if (rows == 0) {
                     return -1;
+                }
 
                 long target_id = connection.Query<long> (select_single_command, item_id);
                 if (target_id == 0) {

@@ -296,7 +296,11 @@ namespace Banshee.Collection.Database
         public override int IndexOf (TrackInfo track)
         {
             DatabaseTrackInfo db_track = track as DatabaseTrackInfo;
-            return (int) (db_track == null ? -1 : cache.IndexOf ((int)db_track.CacheEntryId));
+            if (db_track == null || db_track.CacheModelId != CacheId) {
+                return -1;
+            }
+
+            return (int) cache.IndexOf ((int)db_track.CacheEntryId);
         }
 
         private DateTime random_began_at = DateTime.MinValue;

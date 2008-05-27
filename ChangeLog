@@ -1,3 +1,13 @@
+2008-05-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseTrackModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Fix two bugs,
+	one I introduced in my last big podcast commit that made the play queue
+	keep repeating the same song, and another more subtle one, in our
+	implementation of IndexOf for findind the index of an item in playlists.
+	Fixes BGO #534863.
+
 2008-05-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerManager.cs:
