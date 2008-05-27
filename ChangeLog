@@ -1,3 +1,8 @@
+2008-05-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerManager.cs:
+	Handle when the equalizer XML file does not exist
+
 2008-05-27  Michael Monreal  <mmonreal@svn.gnome.org>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:

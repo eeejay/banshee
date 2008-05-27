@@ -138,9 +138,7 @@ namespace Banshee.Equalizer
                 // Set the actual equalizer gain on all bands to 0 dB,
                 // but don't change the gain in the dictionary (we can use/change those values
                 // later, but not affect the actual audio stream until we're enabled again).
-                
-                for (uint i = 0; i < eq.BandCount; i++)
-                {
+                for (uint i = 0; i < eq.BandCount; i++) {
                     ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).SetEqualizerGain (i, 0);
                 }
                 
@@ -156,9 +154,17 @@ namespace Banshee.Equalizer
         public void Load (string path)
         {
             XmlDocument doc = new XmlDocument ();
-            doc.Load (path);
+            
+            try {
+                doc.Load (path);
+            } catch {
+            }
             
             Clear ();
+            
+            if (doc.DocumentElement == null || doc.DocumentElement.ChildNodes == null) {
+                return;
+            }
             
             foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
                 if(node.Name != "equalizer") {
