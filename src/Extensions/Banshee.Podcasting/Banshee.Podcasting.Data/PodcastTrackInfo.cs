@@ -101,6 +101,10 @@ namespace Banshee.Podcasting.Data
             get { return position; }
             set { position = value; }
         }
+
+        public override DateTime ReleaseDate {
+            get { return Item.PubDate; }
+        }
         
         [DatabaseColumn ("ExternalID")]
         public long ItemId {

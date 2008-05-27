@@ -521,14 +521,21 @@ namespace Banshee.Gui.Widgets
             string markup_end = "</span>";
             string markup = null;
 
-            if (track.ArtistName != null && track.AlbumTitle != null) {
+            if ((track.MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
+                // Translators: {0} and {1} are for markup, {2} and {3}
+                // are Podcast Name and Published Date, respectively;
+                // e.g. 'from BBtv published 7/26/2007'
+                markup = String.Format ("{0}from{1} {2} {0}published{1} {3}", markup_begin, markup_end, 
+                    GLib.Markup.EscapeText (track.DisplayAlbumTitle), 
+                    GLib.Markup.EscapeText (track.ReleaseDate.ToShortDateString ()));
+            } else if (!String.IsNullOrEmpty (track.ArtistName) && !String.IsNullOrEmpty (track.AlbumTitle)) {
                 // Translators: {0} and {1} are for markup, {2} and {3}
                 // are Artist Name and Album Title, respectively;
                 // e.g. 'by Parkway Drive from Killing with a Smile'
                 markup = String.Format ("{0}by{1} {2} {0}from{1} {3}", markup_begin, markup_end, 
                     GLib.Markup.EscapeText (track.DisplayArtistName), 
                     GLib.Markup.EscapeText (track.DisplayAlbumTitle));
-            } else if (track.AlbumTitle != null) {
+            } else if (!String.IsNullOrEmpty (track.AlbumTitle)) {
                 // Translators: {0} and {1} are for markup, {2} is for Album Title;
                 // e.g. 'from Killing with a Smile'
                 markup = String.Format ("{0}from{1} {2}", markup_begin, markup_end,
