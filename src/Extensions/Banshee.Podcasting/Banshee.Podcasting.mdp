@@ -1,4 +1,4 @@
-<Project name="Banshee.Podcasting" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Banshee.Podcasting" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assemblyKeyFile="." assembly="Banshee.Podcasting" />
@@ -26,10 +26,6 @@
     <File name="Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/FeedActivityColumnCell.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/ItemActivityColumnCell.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/PixbufColumnCell.cs" subtype="Code" buildaction="Compile" />
-    <File name="Resources/Images/podcast-icon-16.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/Images/podcast-icon-22.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/Images/podcast-icon-48.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Resources/Images/podcast-new-16.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.Podcasting.Gui/ColumnCellPodcast.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting/PodcastImageFetchJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/PodcastActions.cs" subtype="Code" buildaction="Compile" />
@@ -44,6 +40,8 @@
     <File name="Banshee.Podcasting.Data/PodcastUnheardFilterModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Data/PodcastTrackListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting/PodcastQuery.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/Images" subtype="Directory" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />
