@@ -1,3 +1,9 @@
+2008-05-27  Michael Monreal  <mmonreal@svn.gnome.org>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	Use gtk-add instead of gtk-new icon in the podcast source to match the
+	Last.fm source. Fixes BGO #534817.
+
 2008-05-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
