@@ -23,9 +23,6 @@
     <File name="Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/FeedActivityColumnCell.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/ItemActivityColumnCell.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/PixbufColumnCell.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/ColumnCellPodcast.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting/PodcastImageFetchJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/PodcastActions.cs" subtype="Code" buildaction="Compile" />
@@ -41,7 +38,6 @@
     <File name="Banshee.Podcasting.Data/PodcastTrackListModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting/PodcastQuery.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs" subtype="Code" buildaction="Compile" />
-    <File name="Resources/Images" subtype="Directory" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />

@@ -24,9 +24,6 @@ SOURCES =  \
 	Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs \
 	Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs \
 	Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs \
-	Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/FeedActivityColumnCell.cs \
-	Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/ItemActivityColumnCell.cs \
-	Banshee.Podcasting.Gui/PodcastManager/Source/ColumnCells/PixbufColumnCell.cs \
 	Banshee.Podcasting.Gui/PodcastSourceContents.cs \
 	Banshee.Podcasting.Gui/PodcastUnheardFilterView.cs \
 	Banshee.Podcasting/PodcastImageFetchJob.cs \
