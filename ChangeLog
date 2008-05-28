@@ -1,5 +1,18 @@
 2008-05-28  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:
+	Split audio CD preferences into a separate tab
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Collection.cs:
+	* src/Core/Banshee.Services/Banshee.Preferences/Root.cs:
+	Ensure sections and pages actually get inserted in the proper sort order
+
+	* src/Libraries/Hyena/Hyena.Collections/CollectionExtensions.cs:
+	* src/Libraries/Hyena/Hyena.Collections/Tests/RangeCollectionTests.cs:
+	Moved SortedInsert into a new CollectionExtensions helper class
+
+2008-05-28  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
 	Load from the local instance argument queue at startup
 

@@ -30,6 +30,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+using Hyena.Collections;
+
 namespace Banshee.Preferences
 {
     public class Collection<T> : Root, IList<T> where T : Root
@@ -43,7 +45,11 @@ namespace Banshee.Preferences
         public T Add (T item)
         {
             lock (this) {
-                list.Add (item);
+                if (item is Page || item is Section) {
+                    CollectionExtensions.SortedInsert (list, item);
+                } else {
+                    list.Add (item);
+                }
                 return item;
             }
         }

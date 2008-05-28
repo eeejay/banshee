@@ -2,6 +2,7 @@ ASSEMBLY = Hyena
 TARGET = library
 LINK = $(REF_HYENA)
 SOURCES =  \
+	Hyena.Collections/CollectionExtensions.cs \
 	Hyena.Collections/IntervalHeap.cs \
 	Hyena.Collections/IStackProvider.cs \
 	Hyena.Collections/RangeCollection.cs \

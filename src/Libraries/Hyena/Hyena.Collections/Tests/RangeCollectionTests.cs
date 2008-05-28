@@ -370,19 +370,6 @@ namespace Hyena.Collections.Tests
             Assert.AreEqual (12, range[7]);
             Assert.AreEqual (13, range[8]);
         }
-        
-        private static void SortedInsert<T> (List<T> list, T value) 
-            where T : IComparable
-        {
-            if (list.Count == 0 || list[list.Count - 1].CompareTo (value) < 0) {
-                list.Add (value);
-            } else if (list[0].CompareTo (value) > 0) {
-                list.Insert (0, value);
-            } else {
-                int index = list.BinarySearch (value);
-                list.Insert (index < 0 ? ~index : index, value);
-            }
-        }
     
         [Test]
         public void StressForGoodIndexes ()
@@ -394,7 +381,7 @@ namespace Hyena.Collections.Tests
             for (int i = 0, n = 75000; i < n; i++) {
                 int value = random.Next (n);
                 if (ranges.Add (value)) {
-                    SortedInsert (indexes, value);
+                    CollectionExtensions.SortedInsert (indexes, value);
                 }
             } 
             

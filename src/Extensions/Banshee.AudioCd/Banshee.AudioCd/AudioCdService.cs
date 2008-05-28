@@ -43,6 +43,7 @@ namespace Banshee.AudioCd
     public class AudioCdService : IExtensionService, IDisposable
     {
         private Dictionary<string, AudioCdSource> sources;
+        private Page pref_page;
         private Section pref_section;
         private uint global_interface_id;
         
@@ -152,7 +153,10 @@ namespace Banshee.AudioCd
             
             service.InstallWidgetAdapters += OnPreferencesServiceInstallWidgetAdapters;
             
-            pref_section = service["general"].Add (new Section ("audio-cd", 
+            pref_page = new Page ("audio-cd", Catalog.GetString ("Audio CD"), 3);
+            service.Add (pref_page);
+            
+            pref_section = pref_page.Add (new Section ("audio-cd", 
                 Catalog.GetString ("Audio CD Importing"), 20));
 
             pref_section.Add (new VoidPreference ("import-profile",  Catalog.GetString ("_Import format")));
@@ -176,13 +180,14 @@ namespace Banshee.AudioCd
         private void UninstallPreferences ()
         {
             PreferenceService service = ServiceManager.Get<PreferenceService> ();
-            if (service == null || pref_section == null) {
+            if (service == null || pref_page == null) {
                 return;
             }
             
             service.InstallWidgetAdapters -= OnPreferencesServiceInstallWidgetAdapters;
             
-            service["general"].Remove (pref_section);
+            service.Remove (pref_page);
+            pref_page = null;
             pref_section = null;
         }
         

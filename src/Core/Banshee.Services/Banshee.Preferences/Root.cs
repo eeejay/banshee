@@ -30,7 +30,7 @@ using System;
 
 namespace Banshee.Preferences
 {
-    public abstract class Root
+    public abstract class Root : IComparable
     {    
         private string id;
         private string name;
@@ -45,6 +45,16 @@ namespace Banshee.Preferences
         {
             sensitive = true;
             visible = true;
+        }
+        
+        public int CompareTo (object o)
+        {
+            Root r = o as Root;
+            if (r == null) {
+                return -1;
+            }
+            
+            return Order.CompareTo (r.Order);
         }
         
         public string Id {
