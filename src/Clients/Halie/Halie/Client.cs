@@ -60,6 +60,7 @@ namespace Halie
         {
             IPlayerEngineService player = DBusServiceManager.FindInstance<IPlayerEngineService> ("/PlayerEngine");
             IPlaybackControllerService controller = DBusServiceManager.FindInstance<IPlaybackControllerService> ("/PlaybackController");
+            IDictionary<string, object> track = null;
             
             foreach (KeyValuePair<string, string> arg in ApplicationContext.CommandLine.Arguments) {
                 switch (arg.Key) {
@@ -76,8 +77,78 @@ namespace Halie
                     case "stop-when-finished": 
                         controller.StopWhenFinished = !ParseBool (arg.Value);
                         break;
+                    default:
+                        if (arg.Key.StartsWith ("query-")) {
+                            if (track == null) {
+                                track = player.CurrentTrack;
+                            }
+                            HandleQuery (player, track, arg.Key.Substring (6));
+                        }
+                        break;
                 }
             }
+        }
+        
+        private static void HandleQuery (IPlayerEngineService player, IDictionary<string, object> track, string query)
+        {
+            // Translate legacy query arguments into new ones
+            switch (query) {
+                case "title":    query = "name";   break;
+                case "duration": query = "length"; break;
+                case "uri":      query = "URI";    break;
+            }
+            
+            switch (query) {
+                case "all":
+                    foreach (KeyValuePair<string, object> field in track) {
+                        DisplayTrackField (field.Key, field.Value);
+                    }
+                    
+                    HandleQuery (player, track, "position");
+                    HandleQuery (player, track, "volume");
+                    HandleQuery (player, track, "current-state");
+                    HandleQuery (player, track, "last-state");
+                    HandleQuery (player, track, "can-pause");
+                    HandleQuery (player, track, "can-seek");
+                    break; 
+                case "position": 
+                    DisplayTrackField ("position", TimeSpan.FromMilliseconds (player.Position).TotalSeconds); 
+                    break;
+                case "volume":
+                    DisplayTrackField ("volume", player.Volume);
+                    break;
+                case "current-state":
+                    DisplayTrackField ("current-state", player.CurrentState);
+                    break;
+                case "last-state":
+                    DisplayTrackField ("last-state", player.LastState);
+                    break;
+                case "can-pause":
+                    DisplayTrackField ("can-pause", player.CanPause);
+                    break;
+                case "can-seek":
+                    DisplayTrackField ("can-seek", player.CanSeek);
+                    break;
+                default:
+                    if (track.ContainsKey (query)) {
+                        DisplayTrackField (query, track[query]);
+                    } else {
+                        Error ("'{0}' field unknown", query);
+                    }
+                    break;
+            }
+        }
+        
+        private static void DisplayTrackField (string field, object value)
+        {
+            string result = null;
+            if (value is bool) {
+                result = (bool)value ? "true" : "false";
+            } else {
+                result = value.ToString ();
+            }
+            
+            Console.WriteLine ("{0}: {1}", field, result);
         }
         
         private static bool ParseBool (string value)

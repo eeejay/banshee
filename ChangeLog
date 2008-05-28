@@ -1,3 +1,8 @@
+2008-05-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Halie/Halie/Client.cs: Added command line support for 
+	mostly fully controlling the engine and the playback controller
+
 2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Only set the
