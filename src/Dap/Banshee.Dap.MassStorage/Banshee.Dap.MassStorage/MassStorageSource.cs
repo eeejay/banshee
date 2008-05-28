@@ -319,7 +319,10 @@ namespace Banshee.Dap.MassStorage
                         break;
 
                     case "output_formats":
-                        //PlaybackFormats = val.Split (',');
+                        AcceptableMimeTypes = val.Split(',');
+                        for (int i = 0; i < AcceptableMimeTypes.Length; i++) {
+                            AcceptableMimeTypes[i] = AcceptableMimeTypes[i].Trim ();
+                        }
                         break;
 
                     case "folder_depth":

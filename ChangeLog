@@ -1,5 +1,14 @@
 2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Only set the
+	AcceptableMimeTypes if they are null/haven't been set.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Parse the .is_audio_player output_formats key.  The last fix required to
+	close BGO #531769.
+
+2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
 	Only load files from the audio_folders directories.
 
