@@ -301,6 +301,13 @@ namespace Banshee.Sources
                 }
             }
             OnTracksChanged (BansheeQuery.RatingField);
+
+            // In case we updated the currently playing track
+            DatabaseTrackInfo track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo;
+            if (track != null) {
+                track.Refresh ();
+                ServiceManager.PlayerEngine.TrackInfoUpdated ();
+            }
         }
 
         public override SourceMergeType SupportedMergeTypes {

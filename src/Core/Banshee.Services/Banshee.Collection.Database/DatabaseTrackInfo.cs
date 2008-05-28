@@ -160,6 +160,11 @@ namespace Banshee.Collection.Database
         {
             Provider.Save (this);
         }
+
+        public void Refresh ()
+        {
+            ProviderRefresh ();
+        }
         
         protected virtual bool ProviderRefresh ()
         {

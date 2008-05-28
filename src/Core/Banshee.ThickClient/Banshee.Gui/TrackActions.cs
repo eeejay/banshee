@@ -380,14 +380,6 @@ namespace Banshee.Gui
 
         private void OnRateTracks (object o, EventArgs args)
         {
-            foreach (Widget proxy in (o as Gtk.Action).Proxies) {
-                Menu menu = proxy.Parent as Menu;
-                if (menu != null && menu.Visible) {
-                    menu.Popdown ();
-                    menu.Hide ();
-                }
-            }
-
             ThreadAssist.SpawnFromMain (delegate {
                 (ActiveSource as DatabaseSource).RateSelectedTracks (rating_proxy.LastRating);
             });

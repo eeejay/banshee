@@ -119,7 +119,7 @@ namespace Hyena.Widgets
             // value is set, or keeping it up; I like it staying up --Aaron
             //
             if (can_activate) {
-            //    Activate ();
+                Activate ();
             }
         }
         

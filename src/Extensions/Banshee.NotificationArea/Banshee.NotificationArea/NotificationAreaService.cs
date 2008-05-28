@@ -150,7 +150,7 @@ namespace Banshee.NotificationArea
                     }
                     
                     rating_menu_item = new RatingMenuItem ();
-                    rating_menu_item.Activated += OnItemRatingActivated;
+                    rating_menu_item.Activated += OnRatingChanged;
                     ToggleRatingMenuSensitive ();
                     menu.Insert (rating_menu_item, i + 2);
                     break;
@@ -275,6 +275,13 @@ namespace Banshee.NotificationArea
         
         private void OnNotificationAreaPopupMenuEvent (object o, PopupMenuArgs args)
         {
+            if (rating_menu_item.Visible) {
+                TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
+                if (track is DatabaseTrackInfo) {
+                    (track as DatabaseTrackInfo).Refresh ();
+                }
+                rating_menu_item.Reset (track.Rating);
+            }
             menu.Popup (null, null, notif_area.PositionMenu, 3, Gtk.Global.CurrentEventTime);
         }
         
@@ -332,11 +339,11 @@ namespace Banshee.NotificationArea
             notif_area.OnPlayerEvent (args);
         }
         
-        private void OnItemRatingActivated (object o, EventArgs args)
+        private void OnRatingChanged (object o, EventArgs args)
         {
             if (ServiceManager.PlayerEngine.CurrentTrack != null) {
                 ServiceManager.PlayerEngine.CurrentTrack.Rating = rating_menu_item.Value;
-                ServiceManager.PlayerEngine.CurrentTrack.Save ();
+                ServiceManager.PlayerEngine.CurrentTrack.Save (); //true, Banshee.Query.BansheeQuery.RatingField);
                 ServiceManager.PlayerEngine.TrackInfoUpdated ();
             }
         }
@@ -344,7 +351,6 @@ namespace Banshee.NotificationArea
         private void ToggleRatingMenuSensitive () 
         {
             if (ServiceManager.PlayerEngine.CurrentTrack is DatabaseTrackInfo) {
-                rating_menu_item.Reset ((int)ServiceManager.PlayerEngine.CurrentTrack.Rating);
                 rating_menu_item.Show ();
             } else {
                 rating_menu_item.Hide ();
