@@ -1,3 +1,33 @@
+2008-05-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	The new file system queue, much like the old local queue - not finished
+	but mostly working
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Fixed source order
+
+	* src/Clients/Halie/Halie/Client.cs: Support presenting the main window
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Clients/Nereid/Nereid/Client.cs: Call NotifyStartupComplete in case
+	an instance was already running and the new process exits quickly; this
+	prevents GTK/GDK/GNOME from spinning a cursor if the process was started
+	through a GUI launcher
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/IClientWindow.cs: New interface
+	for client windows to expose remote functionality
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Added support
+	for an AutoAddSource property - if it's set to false an extension source
+	will not get added automatically to the source manager
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IDBusObjectName.cs:
+	An interface that can be used to override the export name of a remote object
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Support IDBusObjectName interface naming
+
 2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Add the AccelGroup back as

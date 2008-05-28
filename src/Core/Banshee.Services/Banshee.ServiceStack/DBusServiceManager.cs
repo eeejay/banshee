@@ -67,7 +67,7 @@ namespace Banshee.ServiceStack
             IDBusExportable p = o.Parent;
             
             while (p != null) {
-                paths.Push (String.Format ("{0}/", p.ServiceName));
+                paths.Push (String.Format ("{0}/", GetObjectName (p)));
                 p = p.Parent;
             }
             
@@ -75,9 +75,14 @@ namespace Banshee.ServiceStack
                 object_path.Append (paths.Pop ());
             }
             
-            object_path.Append (o.ServiceName);
+            object_path.Append (GetObjectName (o));
             
             return object_path.ToString ();
+        }
+        
+        private static string GetObjectName (IDBusExportable o)
+        {
+            return o is IDBusObjectName ? ((IDBusObjectName)o).ExportObjectName : o.ServiceName;
         }
         
         public static string [] MakeObjectPathArray<T> (IEnumerable<T> collection) where T : IDBusExportable

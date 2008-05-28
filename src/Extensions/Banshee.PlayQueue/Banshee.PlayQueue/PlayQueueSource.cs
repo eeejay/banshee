@@ -58,7 +58,7 @@ namespace Banshee.PlayQueue
             get { return false; }
         }
         
-        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null, 0)
+        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null, 5)
         {
             BindToDatabase ();
             

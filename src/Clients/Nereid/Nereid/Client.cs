@@ -46,6 +46,7 @@ namespace Nereid
                 // Try running our friend Halie, the DBus command line client
                 AppDomain.CurrentDomain.ExecuteAssembly (Path.Combine (Path.GetDirectoryName (
                     Assembly.GetEntryAssembly ().Location), "Halie.exe"));
+                Gdk.Global.NotifyStartupComplete ();
                 return;
             }
                     

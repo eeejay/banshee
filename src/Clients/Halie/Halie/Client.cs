@@ -27,7 +27,10 @@
 //
 
 using System;
+using System.IO;
 using System.Collections.Generic;
+
+using NDesk.DBus;
 
 using Hyena;
 using Banshee.Base;
@@ -39,6 +42,18 @@ namespace Halie
 {
     public static class Client
     {
+        // NOTE: Interface is copied from Banshee.ThickClient/Banshee.Gui
+        // since we don't want to link against any GUI assemblies for this
+        // client. It's a simple interface
+        [Interface ("org.bansheeproject.Banshee.ClientWindow")]
+        public interface IClientWindow
+        {
+            void Present ();
+        }
+        
+        private static bool hide_field;
+        private static DBusCommandService command;
+    
         public static void Main ()
         {
             if (!DBusConnection.ConnectTried) {
@@ -53,25 +68,49 @@ namespace Halie
                 return;
             }
             
-            HandlePlayerCommands ();
+            command = DBusServiceManager.FindInstance<DBusCommandService> ("/DBusCommandService");
+            hide_field = ApplicationContext.CommandLine.Contains ("hide-field");
+            
             HandleFiles ();
+            bool present = HandlePlayerCommands ();
+            HandleWindowCommands (present);
+        }
+        
+        private static void HandleWindowCommands (bool present)
+        {
+            IClientWindow window = DBusServiceManager.FindInstance<IClientWindow> ("/ClientWindow");
+            if (window == null) {
+                return;
+            }
+            
+            foreach (KeyValuePair<string, string> arg in ApplicationContext.CommandLine.Arguments) {
+                switch (arg.Key) {
+                    case "show":
+                    case "present": present = true; break;
+                }
+            }
+            
+            if (present) {
+                window.Present ();
+            }
         }
         
         private static void HandleFiles ()
         {
-            DBusCommandService command = DBusServiceManager.FindInstance<DBusCommandService> ("/DBusCommandService");
             foreach (string file in ApplicationContext.CommandLine.Files) {
-                command.PushFile (file);
+                command.PushFile (Path.GetFullPath (file));
             }
         }
         
-        private static void HandlePlayerCommands ()
+        private static bool HandlePlayerCommands ()
         {
             IPlayerEngineService player = DBusServiceManager.FindInstance<IPlayerEngineService> ("/PlayerEngine");
             IPlaybackControllerService controller = DBusServiceManager.FindInstance<IPlaybackControllerService> ("/PlaybackController");
             IDictionary<string, object> track = null;
+            int handled_count = 0;
             
             foreach (KeyValuePair<string, string> arg in ApplicationContext.CommandLine.Arguments) {
+                handled_count++;
                 switch (arg.Key) {
                     // For the player engine
                     case "play":           player.Play ();          break;
@@ -92,10 +131,15 @@ namespace Halie
                                 track = player.CurrentTrack;
                             }
                             HandleQuery (player, track, arg.Key.Substring (6));
+                        } else {
+                            command.PushArgument (arg.Key, arg.Value ?? String.Empty);
+                            handled_count--;
                         }
                         break;
                 }
             }
+            
+            return handled_count <= 0;
         }
         
         private static void HandleQuery (IPlayerEngineService player, IDictionary<string, object> track, string query)
@@ -157,7 +201,11 @@ namespace Halie
                 result = value.ToString ();
             }
             
-            Console.WriteLine ("{0}: {1}", field, result);
+            if (hide_field) {
+                Console.WriteLine (result);
+            } else {
+                Console.WriteLine ("{0}: {1}", field, result);
+            }
         }
         
         private static bool ParseBool (string value)

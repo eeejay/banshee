@@ -114,7 +114,13 @@ namespace Banshee.Sources
                 if (args.Change == ExtensionChange.Add && !extension_sources.ContainsKey (node.Id)) {
                     Source source = (Source)node.CreateInstance ();
                     extension_sources.Add (node.Id, source);
-                    AddSource (source);
+                    bool add_source = true;
+                    if (source.Properties.Contains ("AutoAddSource")) {
+                        add_source = source.Properties.GetBoolean ("AutoAddSource");
+                    }
+                    if (add_source) {
+                        AddSource (source);
+                    }
                 } else if (args.Change == ExtensionChange.Remove && extension_sources.ContainsKey (node.Id)) {
                     Source source = extension_sources[node.Id];
                     extension_sources.Remove (node.Id);

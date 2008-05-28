@@ -14,6 +14,7 @@
       <Entry build="True" name="Banshee.Sample" configuration="Debug" />
       <Entry build="True" name="Banshee.BooScript" configuration="Debug" />
       <Entry build="True" name="Banshee.CoverArt" configuration="Debug" />
+      <Entry build="True" name="Banshee.FileSystemQueue" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee.Daap" single="True">
@@ -30,6 +31,7 @@
     <Execute type="None" entry="Banshee.Sample" />
     <Execute type="None" entry="Banshee.BooScript" />
     <Execute type="None" entry="Banshee.CoverArt" />
+    <Execute type="None" entry="Banshee.FileSystemQueue" />
   </StartMode>
   <Entries>
     <Entry filename="Banshee.Daap/Banshee.Daap.mdp" />
@@ -45,5 +47,6 @@
     <Entry filename="Banshee.Sample/Banshee.Sample.mdp" />
     <Entry filename="Banshee.BooScript/Banshee.BooScript.mdp" />
     <Entry filename="Banshee.CoverArt/Banshee.CoverArt.mdp" />
+    <Entry filename="Banshee.FileSystemQueue/Banshee.FileSystemQueue.mdp" />
   </Entries>
 </Combine>

@@ -1,0 +1,6 @@
+<ui>
+    <popup name="FileSystemQueueContextMenu">
+        <menuitem action="ClearFileSystemQueueAction"></menuitem>
+        <menuitem action="ClearFileSystemQueueOnQuitAction"></menuitem>
+    </popup>
+</ui>

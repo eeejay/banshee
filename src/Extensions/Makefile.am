@@ -4,6 +4,7 @@ SUBDIRS = \
 	Banshee.BooScript \
 	Banshee.CoverArt \
 	Banshee.Daap \
+	Banshee.FileSystemQueue \
 	Banshee.Lastfm \
 	Banshee.MiniMode \
 	Banshee.MultimediaKeys \

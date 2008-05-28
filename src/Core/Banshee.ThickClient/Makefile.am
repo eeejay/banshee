@@ -64,6 +64,7 @@ SOURCES =  \
 	Banshee.Gui/GlobalActions.cs \
 	Banshee.Gui/GtkBaseClient.cs \
 	Banshee.Gui/GtkElementsService.cs \
+	Banshee.Gui/IClientWindow.cs \
 	Banshee.Gui/IconThemeUtils.cs \
 	Banshee.Gui/IHasSourceView.cs \
 	Banshee.Gui/InterfaceActionService.cs \

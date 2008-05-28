@@ -54,7 +54,7 @@ using Banshee.Sources.Gui;
 
 namespace Nereid
 {
-    public class PlayerInterface : BaseClientWindow, IService, IDisposable, IHasSourceView
+    public class PlayerInterface : BaseClientWindow, IClientWindow, IDBusObjectName, IService, IDisposable, IHasSourceView
     {
         // Major Layout Components
         private VBox primary_vbox;
@@ -542,6 +542,14 @@ namespace Nereid
         );
 
 #endregion
+
+        IDBusExportable IDBusExportable.Parent {
+            get { return null; }
+        }
+        
+        string IDBusObjectName.ExportObjectName {
+            get { return "ClientWindow"; }
+        }
 
         string IService.ServiceName {
             get { return "NereidPlayerInterface"; }
