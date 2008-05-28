@@ -139,7 +139,7 @@ namespace Banshee.Collection.Gui
             
             Gdk.Pixbuf render_pixbuf = pixbufs[icon_index];
             
-            Cairo.Rectangle pixbuf_area = new Cairo.Rectangle (PixbufSize, 
+            Cairo.Rectangle pixbuf_area = new Cairo.Rectangle ((cellWidth - render_pixbuf.Width) / 2, 
                 (cellHeight - render_pixbuf.Height) / 2, render_pixbuf.Width, render_pixbuf.Height);
             
             if (!context.Sensitive) {

@@ -1,5 +1,10 @@
 2008-05-27  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellStatusIndicator.cs:
+	Fix bug where pixbuf wasn't centered in the cell
+
+2008-05-27  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs:
 	Added support for the classic new item blue ball
 
