@@ -116,8 +116,10 @@ namespace Banshee.Dap.MassStorage
         {
             DatabaseImportManager importer = new DatabaseImportManager (this);
             importer.KeepUserJobHidden = true;
-            importer.Threaded = false; // We're already threaded
-            importer.QueueSource (BaseDirectory);
+            importer.Threaded = false; // We are already threaded
+            foreach (string audio_folder in AudioFolders) {
+                importer.QueueSource (audio_folder);
+            }
         }
 
         public override void Import ()
@@ -189,7 +191,7 @@ namespace Banshee.Dap.MassStorage
         protected string [] AudioFolders {
             get {
                 if (audio_folders == null) {
-                    audio_folders = HasMediaCapabilities ? MediaCapabilities.AudioFolders : new string [] {};
+                    audio_folders = HasMediaCapabilities ? MediaCapabilities.AudioFolders : new string [] { BaseDirectory };
                 }
                 return audio_folders;
             }

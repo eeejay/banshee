@@ -1,5 +1,10 @@
 2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Only load files from the audio_folders directories.
+
+2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Set the
 	FileSize for just-ripped tracks.  Fixes BGO #532077.
 
