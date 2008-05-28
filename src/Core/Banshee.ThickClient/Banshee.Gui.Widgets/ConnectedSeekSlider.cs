@@ -67,6 +67,14 @@ namespace Banshee.Gui.Widgets
             seek_slider.SeekRequested += OnSeekRequested;
         }
 
+        public void Disconnect ()
+        {
+            ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
+            ServiceManager.PlayerEngine.TrackIntercept -= OnTrackIntercept;
+            seek_slider.SeekRequested -= OnSeekRequested;
+            base.Dispose ();
+        }
+
         public StreamPositionLabel StreamPositionLabel {
             get { return stream_position_label; }
         }

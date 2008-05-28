@@ -39,6 +39,7 @@ namespace Banshee.NowPlaying
     {
         private InterfaceActionService action_service;
         private ConnectedVolumeButton volume_button;
+        private ConnectedSeekSlider slider;
         
         public FullscreenControls (Window toplevel, InterfaceActionService actionService) : base (toplevel, 1)
         {
@@ -57,7 +58,7 @@ namespace Banshee.NowPlaying
             box.PackStart (action_service.PlaybackActions["PlayPauseAction"].CreateToolItem (), false, false, 0);
             box.PackStart (new NextButton (action_service), false, false, 0);
             box.PackStart (new RepeatActionButton (true), false, false, 0);
-            box.PackStart (new ConnectedSeekSlider (SeekSliderLayout.Horizontal), true, true, 0);
+            box.PackStart (slider = new ConnectedSeekSlider (SeekSliderLayout.Horizontal), true, true, 0);
             box.PackStart (volume_button, false, false, 0);
             
             Button exit = new Button (Stock.LeaveFullscreen);
@@ -67,6 +68,12 @@ namespace Banshee.NowPlaying
             
             Add (box);
             box.ShowAll ();
+        }
+
+        public override void Destroy ()
+        {
+            slider.Disconnect ();
+            base.Destroy ();
         }
         
         public bool Active {

@@ -140,6 +140,9 @@ namespace Hyena.Query.Gui
 
         private void HandleFieldChanged (object o, EventArgs args)
         {
+            if (field_chooser.Active < 0 || field_chooser.Active >= sorted_fields.Length)
+                return;
+
             QueryField field = sorted_fields [field_chooser.Active];
 
             // Leave everything as is unless the new field is a different type

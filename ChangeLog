@@ -1,3 +1,14 @@
+2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenControls.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	Add method to disconnect the seek slider so it's not still listening for
+	player engine events and trying to update itself after it's been
+	destroyed.  Fixes BGO #535213.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs: Be more
+	defensive to avoid ArrayIndexOutOfBounds.  Fixes BGO #535269;
+
 2008-05-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Halie/Halie/Client.cs: A new Banshee client that runs only
