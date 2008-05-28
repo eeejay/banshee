@@ -183,7 +183,7 @@ namespace Banshee.Base
         internal ProductAuthor (string name, string role)
         {
             if (name == null || role == null) {
-                throw new ArgumentNullException ("name or roll cannot be null");
+                throw new ArgumentNullException ("name or role cannot be null");
             }
             
             this.name = name;
