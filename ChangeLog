@@ -1,3 +1,10 @@
+2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Add the AccelGroup back as
+	soon as the focus leaves the focused Gtk.Entry.  Fixes bug where if you
+	searched, then click to select a track, and hit a keybinding, it wouldn't
+	work until the second press.  Thanks to Jorge Castro for investigating.
+
 2008-05-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:

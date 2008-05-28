@@ -433,16 +433,31 @@ namespace Nereid
 #region Gtk.Window Overrides
 
         private bool accel_group_active = true;
+
+        private void OnEntryFocusOutEvent (object o, FocusOutEventArgs args)
+        {
+            if (!accel_group_active) {
+                AddAccelGroup (ActionService.UIManager.AccelGroup);
+                accel_group_active = true;
+            }
+            last_focus_entry.FocusOutEvent -= OnEntryFocusOutEvent;
+            last_focus_entry = null;
+        }
         
+        private Widget last_focus_entry = null;
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
         {
             bool focus_search = false;
             
-            if (Focus is Entry && (GtkUtilities.NoImportantModifiersAreSet () && 
+            if (Focus is Gtk.Entry && (GtkUtilities.NoImportantModifiersAreSet () && 
                 evnt.Key != Gdk.Key.Control_L && evnt.Key != Gdk.Key.Control_R)) {
                 if (accel_group_active) {
                     RemoveAccelGroup (ActionService.UIManager.AccelGroup);
                     accel_group_active = false;
+
+                    last_focus_entry = Focus;
+                    // Reinstate the AccelGroup as soon as the focus leaves the entry
+                    last_focus_entry.FocusOutEvent += OnEntryFocusOutEvent;
                  }
             } else {
                 if (!accel_group_active) {
