@@ -2,12 +2,15 @@
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="Nereid" configuration="Debug" />
+      <Entry build="True" name="Halie" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Nereid" single="True">
     <Execute type="None" entry="Nereid" />
+    <Execute type="None" entry="Halie" />
   </StartMode>
   <Entries>
     <Entry filename="Nereid/Nereid.mdp" />
+    <Entry filename="Halie/Halie.mdp" />
   </Entries>
 </Combine>

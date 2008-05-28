@@ -34,10 +34,25 @@ namespace Hyena.CommandLine
 {
     public class CommandLineParser
     {
+        private struct Argument
+        {
+            public int Order;
+            public string Value;
+            
+            public Argument (int order, string value)
+            {
+                Order = order;
+                Value = value;
+            }
+        }
+    
+        private int generation;
+        private int sorted_args_generation;
         private int offset;
         private string enqueue_arg;
         private string [] arguments;
-        private Dictionary<string, string> parsed_arguments = new Dictionary<string, string> ();
+        private KeyValuePair<string, Argument> [] sorted_args;
+        private Dictionary<string, Argument> parsed_arguments = new Dictionary<string, Argument> ();
         private List<string> file_list = new List<string> ();
         
         public CommandLineParser () : this (null, Environment.GetCommandLineArgs (), 1)
@@ -82,9 +97,9 @@ namespace Hyena.CommandLine
                 }
                  
                 if (parsed_arguments.ContainsKey (name)) {
-                    parsed_arguments[name] = value;
+                    parsed_arguments[name] = new Argument (i, value);
                 } else {
-                    parsed_arguments.Add (name, value);
+                    parsed_arguments.Add (name, new Argument (i, value));
                 }
             }
         }
@@ -105,8 +120,36 @@ namespace Hyena.CommandLine
         }
         
         public string this[string name] {
-            get { return Contains (name) ? parsed_arguments[name] : String.Empty; }
-            set { parsed_arguments[name] = value; }
+            get { return Contains (name) ? parsed_arguments[name].Value : String.Empty; }
+            set { 
+                Argument arg = parsed_arguments[name];
+                arg.Value = value;
+                parsed_arguments[name] = arg;
+                generation++;
+            }
+        }
+        
+        public IEnumerable<KeyValuePair<string, string>> Arguments {
+            get {
+                if (sorted_args == null || sorted_args_generation != generation) {                
+                    sorted_args = new KeyValuePair<string, Argument>[parsed_arguments.Count];
+                    int i = 0;
+                    
+                    foreach (KeyValuePair<string, Argument> arg in parsed_arguments) {
+                        sorted_args[i++] = arg;
+                    }
+                    
+                    Array.Sort (sorted_args, delegate (KeyValuePair<string, Argument> a, KeyValuePair<string, Argument> b) {
+                        return a.Value.Order.CompareTo (b.Value.Order);
+                    });
+                    
+                    sorted_args_generation = generation;
+                }
+                
+                foreach (KeyValuePair<string, Argument> arg in sorted_args) {
+                    yield return new KeyValuePair<string, string> (arg.Key, arg.Value.Value);
+                }
+            }
         }
 
         public ReadOnlyCollection<string> Files {
@@ -118,8 +161,8 @@ namespace Hyena.CommandLine
             System.Text.StringBuilder builder = new System.Text.StringBuilder ();
 
             builder.Append ("Parsed Arguments\n");
-            foreach (KeyValuePair<string, string> argument in parsed_arguments) {
-                builder.AppendFormat ("  {0} = [{1}]\n", argument.Key, argument.Value); 
+            foreach (KeyValuePair<string, Argument> argument in parsed_arguments) {
+                builder.AppendFormat ("  {0} = [{1}]\n", argument.Key, argument.Value.Value); 
             }
             
             builder.Append ("\nFile List\n");

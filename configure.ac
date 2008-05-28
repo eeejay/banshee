@@ -122,8 +122,9 @@ src/Makefile
 src/AssemblyInfo.cs
 
 src/Clients/Makefile
+src/Clients/banshee-1
+src/Clients/Halie/Makefile
 src/Clients/Nereid/Makefile
-src/Clients/Nereid/banshee-1
 
 src/Core/Makefile
 src/Core/Banshee.Core/Makefile

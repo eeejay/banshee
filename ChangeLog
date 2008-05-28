@@ -1,3 +1,26 @@
+2008-05-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Halie/Halie/Client.cs: A new Banshee client that runs only
+	only the console and proxies command line arguments into DBus calls to
+	communicate with and control an already running Banshee client
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusConnection.cs: Moved
+	the connection logic out of the service since it needs to be used before
+	any services start at the client level for single instance reasons
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Cleaned up, use DBusConnection
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/IPlaybackController.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/IPlaybackControllerService.cs:
+	Worked around stupid issues in NDesk dbus so the controller actually works
+	as a remote object now
+
+	* src/Libraries/Hyena/Hyena.CommandLine/CommandLineParser.cs: Added
+	an Arguments property and added internal logic to keep sort order preserved
+	on the arguments so they can be iterated over in proper order
+
 2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.CoverArt/CoverArtJob.cs:

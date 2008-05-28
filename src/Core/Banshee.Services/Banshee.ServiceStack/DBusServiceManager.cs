@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,6 +28,7 @@
 
 using System;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
     
 using NDesk.DBus;
@@ -40,111 +41,87 @@ namespace Banshee.ServiceStack
 {
     public class DBusServiceManager : IService
     {
-        public const string BusName = "org.bansheeproject.Banshee";
         public const string ObjectRoot = "/org/bansheeproject/Banshee";
-
-        private static bool dbus_enabled;
         
-        public DBusServiceManager()
+        public DBusServiceManager ()
         {
-            dbus_enabled = !Banshee.Base.ApplicationContext.CommandLine.Contains ("disable-dbus");
-            if (!dbus_enabled) {
-                return;
-            }
-            
-            try {
-                BusG.Init();
-            } catch {
-                Log.Warning ("DBus support could not be started. Disabling for this session.");
-                dbus_enabled = false;
-                return;
-            }
-            
-            try {
-                RequestNameReply name_reply = Bus.Session.RequestName(BusName);
-                Log.DebugFormat ("NDesk.DBus.Bus.Session.RequestName ('{0}') => {1}", BusName, name_reply);
-                // TODO: error handling based on nameReply. should probably throw if 
-                // nameReply is anything other than NameReply.PrimaryOwner
-            } catch(Exception e) {
-                throw e;
+            if (!DBusConnection.ConnectTried) {
+                DBusConnection.Connect ();
             }
         }
-
-        public static string MakeDBusSafeString(string str)
+        
+        public static string MakeDBusSafeString (string str)
         {
-            return System.Text.RegularExpressions.Regex.Replace(str, @"[^A-Za-z0-9]*", String.Empty);
+            return Regex.Replace (str, @"[^A-Za-z0-9]*", String.Empty);
         }
         
-        public static string MakeObjectPath(IDBusExportable o)
+        public static string MakeObjectPath (IDBusExportable o)
         {
-            StringBuilder object_path = new StringBuilder();
+            StringBuilder object_path = new StringBuilder ();
             
-            object_path.Append(ObjectRoot);
-            object_path.Append('/');
+            object_path.Append (ObjectRoot);
+            object_path.Append ('/');
             
-            Stack<string> paths = new Stack<string>();
+            Stack<string> paths = new Stack<string> ();
             
             IDBusExportable p = o.Parent;
             
-            while(p != null) {
-                paths.Push(String.Format("{0}/", p.ServiceName));
+            while (p != null) {
+                paths.Push (String.Format ("{0}/", p.ServiceName));
                 p = p.Parent;
             }
             
-            while(paths.Count > 0) {
-                object_path.Append(paths.Pop());
+            while (paths.Count > 0) {
+                object_path.Append (paths.Pop ());
             }
             
-            object_path.Append(o.ServiceName);
+            object_path.Append (o.ServiceName);
             
-            return object_path.ToString();
+            return object_path.ToString ();
         }
         
-        public static string [] MakeObjectPathArray<T>(IEnumerable<T> collection) where T : IDBusExportable
+        public static string [] MakeObjectPathArray<T> (IEnumerable<T> collection) where T : IDBusExportable
         {
-            List<string> paths = new List<string>();
+            List<string> paths = new List<string> ();
             
-            foreach(IDBusExportable item in collection) {
-                paths.Add(MakeObjectPath(item));
+            foreach (IDBusExportable item in collection) {
+                paths.Add (MakeObjectPath (item));
             }
             
-            return paths.ToArray();
+            return paths.ToArray ();
         }
         
-        public void RegisterObject(IDBusExportable o)
+        public void RegisterObject (IDBusExportable o)
         {
-            RegisterObject(o, MakeObjectPath(o));
+            RegisterObject (o, MakeObjectPath (o));
         }
         
-        public void RegisterObject(object o, string objectName)
+        public void RegisterObject (object o, string objectName)
         {
-            if(dbus_enabled && Bus.Session != null) {
-#pragma warning disable 0618
-                Bus.Session.Register(BusName, new ObjectPath(objectName), o);
-#pragma warning restore 0618
-                /*if (Banshee.Base.ApplicationContext.Debugging) {
-                    Banshee.Base.Log.DebugFormat ("Registered {0} on {1}", objectName, BusName);
-                }*/
+            if (DBusConnection.Enabled && Bus.Session != null) {
+                #pragma warning disable 0618
+                Bus.Session.Register (DBusConnection.BusName, new ObjectPath (objectName), o);
+                #pragma warning restore 0618
             }
         }
 
-        public void UnregisterObject(object o)
+        public void UnregisterObject (object o)
         {
             //TODO: unregistering objects with managed dbus
         }
         
-        public static T FindInstance<T>(string objectPath) where T : class
+        public static T FindInstance<T> (string objectPath) where T : class
         {
-            if(!dbus_enabled || !Bus.Session.NameHasOwner(BusName)) {
+            if (!DBusConnection.Enabled || !Bus.Session.NameHasOwner (DBusConnection.BusName)) {
                 return null;
             }
             
             string full_object_path = objectPath;
-            if(!objectPath.StartsWith(ObjectRoot)) {
+            if (!objectPath.StartsWith (ObjectRoot)) {
                 full_object_path = ObjectRoot + objectPath;
             }
 
-            return Bus.Session.GetObject<T>(BusName, new ObjectPath(full_object_path));
+            return Bus.Session.GetObject<T> (DBusConnection.BusName, new ObjectPath (full_object_path));
         }
         
         string IService.ServiceName {

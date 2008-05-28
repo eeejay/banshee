@@ -33,8 +33,24 @@ using Banshee.ServiceStack;
 
 namespace Banshee.PlaybackController
 {
+    public delegate void PlaybackControllerStoppedHandler ();
+    
     [Interface ("org.bansheeproject.Banshee.PlaybackController")]
-    public interface IPlaybackControllerExportable : IPlaybackController, IDBusExportable
+    public interface IPlaybackControllerService : IDBusExportable
     {
+        // FIXME: IPlaybackControllerExportable : IPlaybackController
+        // but NDesk DBus has a design flaw where it only exports 
+        // members of the top level interface where the [Interface] 
+        // attribute is applied
+        
+        event PlaybackControllerStoppedHandler Stopped;
+        
+        void First ();
+        void Next (bool restart);
+        void Previous (bool restart);
+        
+        PlaybackShuffleMode ShuffleMode { get; set; }
+        PlaybackRepeatMode RepeatMode { get; set; }
+        bool StopWhenFinished { get; set; }
     }
 }

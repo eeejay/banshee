@@ -39,7 +39,8 @@ using Banshee.MediaEngine;
 
 namespace Banshee.PlaybackController
 {
-    public class PlaybackControllerService : IRequiredService, ICanonicalPlaybackController, IPlaybackControllerExportable
+    public class PlaybackControllerService : IRequiredService, ICanonicalPlaybackController, 
+        IPlaybackController, IPlaybackControllerService
     {
         private enum Direction
         {
@@ -66,7 +67,7 @@ namespace Banshee.PlaybackController
         private ITrackModelSource next_source;
         
         private event PlaybackControllerStoppedHandler dbus_stopped;
-        event PlaybackControllerStoppedHandler IPlaybackController.Stopped {
+        event PlaybackControllerStoppedHandler IPlaybackControllerService.Stopped {
             add { dbus_stopped += value; }
             remove { dbus_stopped -= value; }
         }

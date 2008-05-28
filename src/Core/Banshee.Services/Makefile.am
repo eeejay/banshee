@@ -88,7 +88,7 @@ SOURCES =  \
 	Banshee.PlaybackController/IBasicPlaybackController.cs \
 	Banshee.PlaybackController/ICanonicalPlaybackController.cs \
 	Banshee.PlaybackController/IPlaybackController.cs \
-	Banshee.PlaybackController/IPlaybackControllerExportable.cs \
+	Banshee.PlaybackController/IPlaybackControllerService.cs \
 	Banshee.PlaybackController/PlaybackControllerDatabaseStack.cs \
 	Banshee.PlaybackController/PlaybackControllerService.cs \
 	Banshee.PlaybackController/PlaybackRepeatMode.cs \
@@ -125,6 +125,7 @@ SOURCES =  \
 	Banshee.ServiceStack/Application.cs \
 	Banshee.ServiceStack/BatchUserJob.cs \
 	Banshee.ServiceStack/Client.cs \
+	Banshee.ServiceStack/DBusConnection.cs \
 	Banshee.ServiceStack/DBusServiceManager.cs \
 	Banshee.ServiceStack/IDBusExportable.cs \
 	Banshee.ServiceStack/IDelayedInitializeService.cs \

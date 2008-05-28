@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,6 +28,11 @@
 
 using System;
 using System.IO;
+using System.Diagnostics;
+using System.Reflection;
+
+using Banshee.Base;
+using Banshee.ServiceStack;
 
 namespace Nereid
 {
@@ -35,11 +40,21 @@ namespace Nereid
     {
         public static void Main ()
         {
+            // Check for single instance
+            DBusConnection.Connect ();
+            if (DBusConnection.InstanceAlreadyRunning) {
+                // Try running our friend Halie, the DBus command line client
+                AppDomain.CurrentDomain.ExecuteAssembly (Path.Combine (Path.GetDirectoryName (
+                    Assembly.GetEntryAssembly ().Location), "Halie.exe"));
+                return;
+            }
+                    
             Hyena.Log.InformationFormat ("Running Banshee {0}", Banshee.ServiceStack.Application.Version);
+            
             // This could go into GtkBaseClient, but it's probably something we
             // should really only support at each client level
-            string user_gtkrc = Path.Combine (Banshee.Base.Paths.ApplicationData, "gtkrc"); 
-            if (File.Exists (user_gtkrc) && !Banshee.Base.ApplicationContext.CommandLine.Contains ("no-gtkrc")) {
+            string user_gtkrc = Path.Combine (Paths.ApplicationData, "gtkrc"); 
+            if (File.Exists (user_gtkrc) && !ApplicationContext.CommandLine.Contains ("no-gtkrc")) {
                 Gtk.Rc.AddDefaultFile (user_gtkrc);
             } 
 
@@ -50,7 +65,7 @@ namespace Nereid
         protected override void OnRegisterServices ()
         {
             // Register the main interface
-            Banshee.ServiceStack.ServiceManager.RegisterService <PlayerInterface> ();
+            ServiceManager.RegisterService <PlayerInterface> ();
         }
         
         public override string ClientId {

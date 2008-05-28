@@ -2,7 +2,6 @@ SUBDIRS = \
 	Banshee.AudioCd \
 	Banshee.Bookmarks \
 	Banshee.BooScript \
-	Banshee.CoverArt \
 	Banshee.Daap \
 	Banshee.Lastfm \
 	Banshee.MiniMode \

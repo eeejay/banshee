@@ -28,12 +28,8 @@
 
 namespace Banshee.PlaybackController
 {
-    public delegate void PlaybackControllerStoppedHandler ();
-
     public interface IPlaybackController : IBasicPlaybackController
     {
-        event PlaybackControllerStoppedHandler Stopped;
-    
         PlaybackShuffleMode ShuffleMode { get; set; }
         PlaybackRepeatMode RepeatMode { get; set; }
         bool StopWhenFinished { get; set; }
