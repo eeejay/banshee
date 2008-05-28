@@ -1,0 +1,9 @@
+<ui>
+    <menubar name="MainMenu">
+        <menu name="ToolsMenu" action="ToolsMenuAction">
+            <menu name="CoverArt" action="CoverArtAction">
+                    <menuitem name="FetchCoverArt" action="FetchCoverArtAction" />
+            </menu>
+        </menu>
+    </menubar>
+</ui>
