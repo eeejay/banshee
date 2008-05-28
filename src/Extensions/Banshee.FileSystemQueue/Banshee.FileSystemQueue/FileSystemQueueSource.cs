@@ -90,6 +90,8 @@ namespace Banshee.FileSystemQueue
             
             UpdateActions ();
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
+
+            TrackModel.Reloaded += OnTrackModelReloaded;
         }
         
         public void Enqueue (string path)
@@ -129,7 +131,10 @@ namespace Banshee.FileSystemQueue
             if (actions_loaded) {
                 UpdateActions ();
             }
-            
+        }
+
+        private void OnTrackModelReloaded (object sender, EventArgs args)
+        {
             if (Count > 0 && !visible) {
                 ServiceManager.SourceManager.AddSource (this);
                 visible = true;
