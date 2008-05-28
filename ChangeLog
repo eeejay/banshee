@@ -1,3 +1,10 @@
+2008-05-28  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerView.cs:
+	Fix small bug where when loading presets from the EQ editor caused the
+	manager to set the dB value for the preamp to 10 times what the value
+	should have been.
+
 2008-05-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellStatusIndicator.cs:

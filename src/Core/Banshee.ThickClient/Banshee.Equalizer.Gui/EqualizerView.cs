@@ -199,7 +199,7 @@ namespace Banshee.Equalizer.Gui
                     return;
                 }
                 
-                AmplifierLevel = active_eq.AmplifierLevel;
+                AmplifierLevel = active_eq.AmplifierLevel / 10;
                 
                 for (int i = 0; i < active_eq.BandCount; i++) {
                     uint x = (uint) i;
