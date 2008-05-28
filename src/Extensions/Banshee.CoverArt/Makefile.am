@@ -4,11 +4,11 @@ LINK = $(REF_EXTENSION_COVERART)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
-	Banshee.CoverArt/CoverArtService.cs \
-	Banshee.CoverArt/CoverArtJob.cs
+	CoverArtJob.cs \
+	CoverArtService.cs
 
 RESOURCES =  \
-	Banshee.CoverArt.addin.xml
+	Banshee.CoverArt.addin.xml \
+	Resources/CoverArtMenu.xml
 
 include $(top_srcdir)/build/build.mk
-
