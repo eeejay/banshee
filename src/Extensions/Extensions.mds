@@ -13,6 +13,7 @@
       <Entry build="True" name="Banshee.Podcasting" configuration="Debug" />
       <Entry build="True" name="Banshee.Sample" configuration="Debug" />
       <Entry build="True" name="Banshee.BooScript" configuration="Debug" />
+      <Entry build="True" name="Banshee.CoverArt" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee.Daap" single="True">
@@ -28,6 +29,7 @@
     <Execute type="None" entry="Banshee.Podcasting" />
     <Execute type="None" entry="Banshee.Sample" />
     <Execute type="None" entry="Banshee.BooScript" />
+    <Execute type="None" entry="Banshee.CoverArt" />
   </StartMode>
   <Entries>
     <Entry filename="Banshee.Daap/Banshee.Daap.mdp" />
@@ -42,5 +44,6 @@
     <Entry filename="Banshee.Podcasting/Banshee.Podcasting.mdp" />
     <Entry filename="Banshee.Sample/Banshee.Sample.mdp" />
     <Entry filename="Banshee.BooScript/Banshee.BooScript.mdp" />
+    <Entry filename="Banshee.CoverArt/Banshee.CoverArt.mdp" />
   </Entries>
 </Combine>

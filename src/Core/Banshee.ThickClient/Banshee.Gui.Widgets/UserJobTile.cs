@@ -239,6 +239,15 @@ namespace Banshee.Gui.Widgets
             if (icon_pixbuf != null) {
                 icon.Pixbuf = icon_pixbuf;
                 icon.Show ();
+                return;
+            }
+
+            icon_pixbuf = new Gdk.Pixbuf (icon_names[0]);
+            if (icon_pixbuf != null) {
+                Gdk.Pixbuf scaled = icon_pixbuf.ScaleSimple (22, 22, Gdk.InterpType.Bilinear);
+                icon_pixbuf.Dispose ();
+                icon.Pixbuf = scaled;
+                icon.Show ();
             }
         }
         

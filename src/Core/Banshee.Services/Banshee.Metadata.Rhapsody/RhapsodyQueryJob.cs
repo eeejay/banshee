@@ -75,6 +75,7 @@ namespace Banshee.Metadata.Rhapsody
             
             string [] content_types = response.Headers.GetValues ("Content-Type");
             if (content_types.Length == 0 || content_types[0] != "text/xml") {
+                response.Close ();
                 return;
             }
             
@@ -98,6 +99,8 @@ namespace Banshee.Metadata.Rhapsody
                     AddTag(tag);
                 }
             }
+            
+            response.Close ();
         }
     }
 }
