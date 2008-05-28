@@ -1,3 +1,10 @@
+2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/CoverArtJob.cs:
+	* src/Extensions/Banshee.CoverArt/Makefile.am:
+	* src/Extensions/Banshee.CoverArt/CoverArtService.cs: Fix the build and
+	put C# files in their proper namespace directory.
+
 2008-05-28  James Willcox  <snorp@novell.com>
 
 	* src/Extensions/Extensions.mds:
