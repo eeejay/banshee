@@ -309,6 +309,7 @@ namespace Hyena.Data.Gui
         {
             ColumnCell cell = column_cache[column_index].Column.GetCell (0);
             cell.BindListItem (item);
+            ColumnCellDataProvider (cell, item);
             
             if (dragging) {
                 Cairo.Color fill_color = Theme.Colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
@@ -370,6 +371,10 @@ namespace Hyena.Data.Gui
             if (IsRealized) {
                 QueueDrawArea (header_rendering_alloc.X, header_rendering_alloc.Y, header_rendering_alloc.Width, header_rendering_alloc.Height);
             }
+        }
+        
+        protected virtual void ColumnCellDataProvider (ColumnCell cell, object boundItem)
+        {
         }
         
         private bool rules_hint = false;

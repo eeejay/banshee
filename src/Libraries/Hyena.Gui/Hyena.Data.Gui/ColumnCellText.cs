@@ -42,6 +42,7 @@ namespace Hyena.Data.Gui
         private Pango.Weight font_weight = Pango.Weight.Normal;
         private Pango.EllipsizeMode ellipsize_mode = Pango.EllipsizeMode.End;
         private Pango.Alignment alignment = Pango.Alignment.Left;
+        private double opacity = 1.0;
         private int text_width;
         private int text_height;
         
@@ -69,7 +70,10 @@ namespace Hyena.Data.Gui
                 context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
             if (!context.Sensitive) {
                 color.A = 0.3;
+            } else {
+                color.A = opacity;
             }
+            
             context.Context.Color = color;
             PangoCairoHelper.ShowLayout (context.Context, context.Layout);
         }
@@ -99,6 +103,11 @@ namespace Hyena.Data.Gui
         public virtual Pango.EllipsizeMode EllipsizeMode {
             get { return ellipsize_mode; }
             set { ellipsize_mode = value; }
+        }
+        
+        public virtual double Opacity {
+            get { return opacity; }
+            set { opacity = value; }
         }
         
         internal static int ComputeRowHeight (Widget widget)

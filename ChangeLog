@@ -1,3 +1,24 @@
+2008-05-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs:
+	Added support for the classic new item blue ball
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastItemView.cs:
+	Implemented a cell data handler to set the opacity on text renderers
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	Implemented a StatusText cell and some helper properties
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Added a Status column
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Added a virtual ColumnCellDataProvider method that is called as soon as
+	a data item is bound to a cell so the view can configure the cell
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs:
+	Added an opacity property
+
 2008-05-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Change

@@ -49,7 +49,7 @@ namespace Banshee.Podcasting.Gui
         }
         
         protected override int PixbufCount {
-            get { return base.PixbufCount + 1; }
+            get { return base.PixbufCount + 2; }
         }
         
         protected override void LoadPixbufs ()
@@ -58,6 +58,9 @@ namespace Banshee.Podcasting.Gui
             
             // Downloading
             Pixbufs[base.PixbufCount + 0] = IconThemeUtils.LoadIcon (PixbufSize, "document-save", "go-bottom");
+            
+            // Podcast is New
+            Pixbufs[base.PixbufCount + 1] = IconThemeUtils.LoadIcon (PixbufSize, "podcast-new");
         }
         
         protected override int GetIconIndex (TrackInfo track)
@@ -72,7 +75,7 @@ namespace Banshee.Podcasting.Gui
                 case PodcastItemActivity.DownloadPending: 
                     return base.PixbufCount + 0;
                 default: 
-                    return -1;
+                    return podcast.IsNew ? base.PixbufCount + 1 : -1;
             }
         }
         

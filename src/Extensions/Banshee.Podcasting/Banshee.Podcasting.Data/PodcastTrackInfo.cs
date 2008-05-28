@@ -28,6 +28,7 @@
 
 using System;
 using System.Text;
+using Mono.Unix;
 
 using System.Collections.Generic;
 
@@ -67,7 +68,6 @@ namespace Banshee.Podcasting.Data
             return Provider.FetchFirstMatching ("ExternalID = ?", item_id);
         }
         
-        private bool @new;
         private int position;
         private long item_id;
 
@@ -92,9 +92,12 @@ namespace Banshee.Podcasting.Data
             get { return Item.PubDate; }
         }
         
-        public bool New {
-            get { return @new; }
-            set { @new = value; }
+        public bool IsNew {
+            get { return !Item.IsRead; }
+        }
+        
+        public bool IsDownloaded {
+            get { return !String.IsNullOrEmpty (Enclosure.LocalPath); }
         }
         
         public int Position {
@@ -154,6 +157,27 @@ namespace Banshee.Podcasting.Data
         
         public override string ArtworkId {
             get { return PodcastService.ArtworkIdFor (Feed); }
+        }
+
+        public string StatusText {
+            get {
+                switch (Activity) {
+                    case PodcastItemActivity.Downloading: return Catalog.GetString ("Downloading");
+                    case PodcastItemActivity.DownloadPending: return Catalog.GetString ("Waiting to download");
+                    case PodcastItemActivity.DownloadPaused: return Catalog.GetString ("Download paused");
+                    case PodcastItemActivity.DownloadFailed: return Catalog.GetString ("Download failed");
+                    default:
+                        string download_status = Activity == PodcastItemActivity.Downloaded
+                            ? Catalog.GetString ("Downloaded")
+                            : Catalog.GetString ("Stream Available");
+                        string new_status = IsNew 
+                            ? Catalog.GetString ("New") 
+                            : ((MediaAttributes & TrackMediaAttributes.VideoStream) != 0
+                                ? Catalog.GetString ("Watched")
+                                : Catalog.GetString ("Heard"));
+                         return String.Format ("{0} / {1}", download_status, new_status);
+                 }
+            }
         }
 
 #endregion

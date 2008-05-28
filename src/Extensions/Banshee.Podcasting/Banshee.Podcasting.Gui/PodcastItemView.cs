@@ -52,6 +52,21 @@ namespace Banshee.Podcasting.Gui
         public PodcastItemView () : base ()
         {
         }
+        
+        protected override void ColumnCellDataProvider (ColumnCell cell, object boundItem)
+        {
+            ColumnCellText text_cell = cell as ColumnCellText;
+            if (text_cell == null) {
+                return;
+            }
+            
+            PodcastTrackInfo podcast = boundItem as PodcastTrackInfo;
+            if (podcast == null) {
+                return;
+            }
+            
+            text_cell.Opacity = podcast.IsDownloaded ? 1.0 : 0.5;
+        }
     }
     /*public class PodcastItemView : ListView<TrackInfo>
     {

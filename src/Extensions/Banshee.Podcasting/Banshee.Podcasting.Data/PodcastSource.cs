@@ -123,6 +123,11 @@ namespace Banshee.Podcasting.Gui
                           <renderer type=""Banshee.Podcasting.Gui.ColumnCellPublished"" property=""PublishedDate"" />
                           <sort-key>PublishedDate</sort-key>
                       </column>
+                      <column>
+                          <visible>true</visible>
+                          <title>Status</title>
+                          <renderer type=""Hyena.Data.Gui.ColumnCellText"" property=""StatusText"" />
+                      </column>
                       <sort-column direction=""desc"">published_date</sort-column>
                     </column-controller>
                 ",
