@@ -210,6 +210,8 @@ namespace Banshee.AudioCd
                 track.Album = DatabaseAlbumInfo.UpdateOrCreate (track.AlbumArtist, track.Album);
                 track.AlbumId = track.Album.DbId;
             }
+
+            track.FileSize = Banshee.IO.File.GetSize (track.Uri);
             
             track.Save ();
             

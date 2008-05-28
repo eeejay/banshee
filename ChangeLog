@@ -1,5 +1,10 @@
 2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Set the
+	FileSize for just-ripped tracks.  Fixes BGO #532077.
+
+2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Fix bug with querying and
 	smart playlists with "genre!:rock" would still match Rock.
 	Fixes BGO #533143.
