@@ -441,8 +441,18 @@ namespace Banshee.MediaEngine
             get { return active_engine.CurrentTrack; }
         }
         
+        private Dictionary<string, object> dbus_sucks;
         IDictionary<string, object> IPlayerEngineService.CurrentTrack {
-            get { return CurrentTrack == null ? null : CurrentTrack.GenerateExportable (); }
+            get { 
+                // FIXME: Managed DBus sucks - it explodes if you transport null
+                // or even an empty dictionary (a{sv} in our case). Piece of shit.
+                if (dbus_sucks == null) {
+                    dbus_sucks = new Dictionary<string, object> ();
+                    dbus_sucks.Add (String.Empty, String.Empty);
+                }
+                
+                return CurrentTrack == null ? dbus_sucks : CurrentTrack.GenerateExportable ();
+            }
         }
         
         public SafeUri CurrentSafeUri {

@@ -1,3 +1,14 @@
+2008-05-28  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Load from the local instance argument queue at startup
+
+	* src/Clients/Halie/Halie/Client.cs: Handle some crasher cases
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Work around a shitty managed DBus bug where sending an empty dictionary 
+	will crash - related to the other shitty null bug
+
 2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:

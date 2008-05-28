@@ -90,6 +90,10 @@ namespace Banshee.FileSystemQueue
             
             UpdateActions ();
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
+            
+            foreach (string path in ApplicationContext.CommandLine.Files) {
+                Enqueue (path);
+            }
 
             TrackModel.Reloaded += OnTrackModelReloaded;
         }

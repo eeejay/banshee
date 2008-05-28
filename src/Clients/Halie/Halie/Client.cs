@@ -128,7 +128,10 @@ namespace Halie
                     default:
                         if (arg.Key.StartsWith ("query-")) {
                             if (track == null) {
-                                track = player.CurrentTrack;
+                                try {
+                                    track = player.CurrentTrack;
+                                } catch {
+                                }
                             }
                             HandleQuery (player, track, arg.Key.Substring (6));
                         } else {
@@ -153,8 +156,10 @@ namespace Halie
             
             switch (query) {
                 case "all":
-                    foreach (KeyValuePair<string, object> field in track) {
-                        DisplayTrackField (field.Key, field.Value);
+                    if (track != null) {
+                        foreach (KeyValuePair<string, object> field in track) {
+                            DisplayTrackField (field.Key, field.Value);
+                        }
                     }
                     
                     HandleQuery (player, track, "position");
@@ -183,6 +188,11 @@ namespace Halie
                     DisplayTrackField ("can-seek", player.CanSeek);
                     break;
                 default:
+                    if (track == null) {
+                        Error ("not playing");
+                        break;
+                    }
+                    
                     if (track.ContainsKey (query)) {
                         DisplayTrackField (query, track[query]);
                     } else {
@@ -194,6 +204,10 @@ namespace Halie
         
         private static void DisplayTrackField (string field, object value)
         {
+            if (field == String.Empty) {
+                return;
+            }
+            
             string result = null;
             if (value is bool) {
                 result = (bool)value ? "true" : "false";
