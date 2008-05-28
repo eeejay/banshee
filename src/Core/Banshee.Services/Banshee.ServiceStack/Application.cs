@@ -75,7 +75,7 @@ namespace Banshee.ServiceStack
         {
             Banshee.Base.PlatformHacks.TrapMonoJitSegv ();
             
-            Catalog.Init ("banshee-1", System.IO.Path.Combine (
+            Catalog.Init (Application.InternalName, System.IO.Path.Combine (
                 Banshee.Base.Paths.InstalledApplicationDataRoot, "locale"));
 
             ServiceManager.Run ();

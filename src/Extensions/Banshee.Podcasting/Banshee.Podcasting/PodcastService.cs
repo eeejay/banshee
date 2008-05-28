@@ -86,6 +86,7 @@ namespace Banshee.Podcasting
             feeds_manager.FeedManager.FeedsChanged += OnFeedsChanged;
 
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
+            ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
 
             InitializeInterface ();
         }
@@ -202,6 +203,7 @@ namespace Banshee.Podcasting
             }
             
             ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
+            ServiceManager.Get<DBusCommandService> ().ArgumentPushed -= OnCommandLineArgument;
 
             if (download_manager_iface != null) {
                 download_manager_iface.Dispose ();                
@@ -224,6 +226,15 @@ namespace Banshee.Podcasting
                 disposing = false;            
                 disposed = true;
             }
+        }
+        
+        private void OnCommandLineArgument (string argument, object value, bool isFile)
+        {
+            if (!isFile) {
+                return;
+            }
+            
+            // TODO: Handle podcast URIs
         }
         
         private void RefreshArtworkFor (Feed feed)

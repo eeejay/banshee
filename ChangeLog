@@ -1,5 +1,22 @@
 2008-05-28  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Listen to the new DBusCommandService
+
+	* src/Clients/Halie/Halie/Client.cs: Proxy files to the DBusCommandService
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusCommandService.cs:
+	A light weight remote object that raises events for command line arguments
+	and files that can be pushed into it
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Register the DBusCommandService
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:
+	Use InternalName
+
+2008-05-28  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Halie/Halie/Client.cs: Added command line support for 
 	mostly fully controlling the engine and the playback controller
 

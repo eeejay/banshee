@@ -54,6 +54,15 @@ namespace Halie
             }
             
             HandlePlayerCommands ();
+            HandleFiles ();
+        }
+        
+        private static void HandleFiles ()
+        {
+            DBusCommandService command = DBusServiceManager.FindInstance<DBusCommandService> ("/DBusCommandService");
+            foreach (string file in ApplicationContext.CommandLine.Files) {
+                command.PushFile (file);
+            }
         }
         
         private static void HandlePlayerCommands ()

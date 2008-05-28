@@ -62,6 +62,7 @@ namespace Banshee.ServiceStack
         static ServiceManager ()
         {
             RegisterService<DBusServiceManager> ();
+            RegisterService<DBusCommandService> ();
             RegisterService<BansheeDbConnection> ();
             RegisterService<Banshee.Preferences.PreferenceService> ();
             RegisterService<SourceManager> ();
