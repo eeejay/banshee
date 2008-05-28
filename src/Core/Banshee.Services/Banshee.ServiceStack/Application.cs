@@ -228,7 +228,7 @@ namespace Banshee.ServiceStack
         }
         
         public static string InternalName {
-            get { return "banshee"; }
+            get { return "banshee-1"; }
         }
         
         public static string IconName {

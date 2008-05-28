@@ -1,5 +1,11 @@
 2008-05-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Change
+	InternalName from banshee to banshee-1, so we actually set the process
+	name correctly, register the right name with MMKeys, etc.
+
+2008-05-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
