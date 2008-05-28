@@ -1,5 +1,11 @@
 2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Fix bug with querying and
+	smart playlists with "genre!:rock" would still match Rock.
+	Fixes BGO #533143.
+
+2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenControls.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
 	Add method to disconnect the seek slider so it's not still listening for

@@ -145,9 +145,10 @@ namespace Hyena.Query
                         // Match string values literally and against a lower'd version.  Mostly a workaround
                         // the fact that Sqlite's lower() method only works for ASCII (meaning even with this,
                         // we're not getting 100% case-insensitive matching).
-                        sb.AppendFormat ("({0} {1} OR LOWER({0}) {2})", Column,
+                        sb.AppendFormat ("({0} {1} {3} LOWER({0}) {2})", Column,
                             String.Format (op.SqlFormat, value),
-                            String.Format (op.SqlFormat, value.ToLower ())
+                            String.Format (op.SqlFormat, value.ToLower ()),
+                            op.IsNot ? "AND" : "OR"
                         );
                     }
                 } else {
