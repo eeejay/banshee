@@ -440,11 +440,10 @@ namespace Nereid
                 AddAccelGroup (ActionService.UIManager.AccelGroup);
                 accel_group_active = true;
             }
-            last_focus_entry.FocusOutEvent -= OnEntryFocusOutEvent;
-            last_focus_entry = null;
+
+            (o as Widget).FocusOutEvent -= OnEntryFocusOutEvent;
         }
         
-        private Widget last_focus_entry = null;
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
         {
             bool focus_search = false;
@@ -455,9 +454,8 @@ namespace Nereid
                     RemoveAccelGroup (ActionService.UIManager.AccelGroup);
                     accel_group_active = false;
 
-                    last_focus_entry = Focus;
                     // Reinstate the AccelGroup as soon as the focus leaves the entry
-                    last_focus_entry.FocusOutEvent += OnEntryFocusOutEvent;
+                    Focus.FocusOutEvent += OnEntryFocusOutEvent;
                  }
             } else {
                 if (!accel_group_active) {

@@ -1,3 +1,8 @@
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Fix crasher introduced by
+	yesterday's keybinding fix.  Thanks to wfarr for catching it.
+
 2008-05-29  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerView.cs:
