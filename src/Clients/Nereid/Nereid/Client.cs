@@ -58,6 +58,10 @@ namespace Nereid
             if (File.Exists (user_gtkrc) && !ApplicationContext.CommandLine.Contains ("no-gtkrc")) {
                 Gtk.Rc.AddDefaultFile (user_gtkrc);
             } 
+            
+            // Ugly hack to avoid stupid themes that set this to 0, causing a huge
+            // bug when constructing the "add to playlist popup menu (BGO #524706)
+            Gtk.Rc.ParseString ("gtk-menu-popup-delay = 225");
 
             // Boot the client
             Banshee.Gui.GtkBaseClient.Entry<Client> ();
