@@ -60,7 +60,7 @@ namespace Banshee.Equalizer.Gui
         {
             Spacing = 10;
         
-            int[] br = ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).BandRange;
+            int [] br = ((IEqualizer)ServiceManager.PlayerEngine.ActiveEngine).BandRange;
             int mid = (br[0] + br[1]) / 2;
             
             range[0] = br[0];
@@ -89,15 +89,12 @@ namespace Banshee.Equalizer.Gui
             BuildBands ();
         }
         
-        /// <summary>
-        /// Utility function to create a dB string for the levels box.
-        /// </summary>
         private string FormatDecibelString (int db)
         {
             if (db > 0) {
-                return String.Format("+{0} dB", db);
+                return String.Format ("+{0} dB", db);
             } else {
-                return String.Format("{0} dB", db);
+                return String.Format ("{0} dB", db);
             }
         }
         
@@ -117,10 +114,10 @@ namespace Banshee.Equalizer.Gui
             
             for (uint i = 0; i < 10; i++) {
                 string label = frequencies[i] < 1000 ? 
-                    String.Format("{0} Hz", frequencies[i]) :
-                    String.Format("{0} kHz", frequencies[i] / 1000);
+                    String.Format ("{0} Hz", frequencies[i]) :
+                    String.Format ("{0} kHz", (int)Math.Round (frequencies[i] / 1000.0));
                 
-                band_scales[i] = new EqualizerBandScale(i, range[1] * 10, range[0] * 10, range[2] * 10, label);
+                band_scales[i] = new EqualizerBandScale (i, range[1] * 10, range[0] * 10, range[2] * 10, label);
                 band_scales[i].ValueChanged += OnEqualizerValueChanged;
                 band_scales[i].Show ();
                 
@@ -157,7 +154,7 @@ namespace Banshee.Equalizer.Gui
         public uint [] Frequencies {
             get { return (uint [])frequencies.Clone (); }
             set { 
-                frequencies = (uint []) value.Clone ();
+                frequencies = (uint [])value.Clone ();
                 BuildBands ();
             }
         }

@@ -1,3 +1,23 @@
+2008-05-29  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerView.cs:
+	Small rounding fix
+
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:
+	Ported from glade, some fixes
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: Only allow one
+	instance of the equalizer to be shown; present the open version if exists
+
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Removed
+	the equalizer
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs
+	* libbanshee/banshee-player-equalizer.c: White space cleanup
+
+	* libbanshee/banshee-player-pipeline.c: White space cleanup and removed
+	a redundant element link
+
 2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Halie/Halie/Client.cs: Don't turn strings that start with

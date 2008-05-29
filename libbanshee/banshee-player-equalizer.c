@@ -4,6 +4,7 @@
 // Authors:
 //   Alexander Hixon <hixon.alexander@mediati.org>
 //   Aaron Bockover <abockover@novell.com>
+//   Sebastian Dröge  <slomo@circular-chaos.org>
 //
 // Copyright (C) 2005-2008 Novell, Inc.
 //

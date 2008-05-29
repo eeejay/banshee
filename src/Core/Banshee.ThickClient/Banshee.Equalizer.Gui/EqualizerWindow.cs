@@ -28,55 +28,84 @@
 //
 
 using System;
-using System.Collections;
 using Mono.Unix;
 using Gtk;
-using Glade;
 
-using Banshee.Base;
-using Banshee.Gui.Dialogs;
-using Banshee.Gui.Widgets;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.Equalizer;
 
 namespace Banshee.Equalizer.Gui
 {
-    public class EqualizerWindow : GladeWindow
+    public class EqualizerWindow : Window
     {
         private EqualizerView eq_view;
         private EqualizerPresetComboBox eq_preset_combo;
-        [Widget] private CheckButton eq_enabled_checkbox;
+        private CheckButton eq_enabled_checkbox;
+        private HBox header_box;
         
-        public EqualizerWindow () : base ("EqualizerWindow")
+        private static EqualizerWindow instance;
+        public static EqualizerWindow Instance {
+            get { return instance; }
+        }
+        
+        public EqualizerWindow (Window parent) : base (Catalog.GetString ("Equalizer"))
         {
+            if (instance == null) {
+                instance = this;
+            }
+            
+            TransientFor = parent;
+            WindowPosition = WindowPosition.CenterOnParent;
+            TypeHint = Gdk.WindowTypeHint.Dialog;
+            SkipPagerHint = true;
+            SkipTaskbarHint = true;
+            AppPaintable = true;
+            
+            SetDefaultSize (-1, 180);
+            
+            VBox box = new VBox ();
+            header_box = new HBox ();
+            header_box.BorderWidth = 4;
+            header_box.Spacing = 2;
+            
+            box.PackStart (header_box, false, false, 0);
+            box.PackStart (new HSeparator (), false, false, 0);
+        
             eq_view = new EqualizerView ();
             eq_view.BorderWidth = 10;
             eq_view.SetSizeRequest (-1, 110);
-            eq_view.Frequencies = ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).EqualizerFrequencies;
+            eq_view.Frequencies = ((IEqualizer)ServiceManager.PlayerEngine.ActiveEngine).EqualizerFrequencies;
             eq_view.Show ();
             
-            eq_enabled_checkbox = (Glade["eq_enabled_checkbox"] as CheckButton);
+            eq_enabled_checkbox = new CheckButton (Catalog.GetString ("Enabled"));
             
             eq_preset_combo = new EqualizerPresetComboBox ();
             eq_preset_combo.Changed += OnPresetChanged;
             eq_preset_combo.Show ();
             
-            Window.Realized += delegate {
-                Widget header = Glade["eq_header_evbox"];
-                header.ModifyBg (StateType.Normal, header.Style.Background (StateType.Active));
-                Window.Show ();
-            };
+            Button new_preset_button = new Button (new Image (Stock.Add, IconSize.Button));
+            new_preset_button.Relief = ReliefStyle.None;
+            new_preset_button.Clicked += OnNewPreset;
             
-            (Glade["eq_view_box"] as Box).PackStart (eq_view, true, true, 0);
-            (Glade["eq_preset_box"] as Box).PackStart (eq_preset_combo, true, false, 0);
-            (Glade["new_preset_button"] as Button).Clicked += OnNewPreset;
-            (Glade["delete_preset_button"] as Button).Clicked += OnDeletePreset;
+            Button delete_preset_button = new Button (new Image (Stock.Remove, IconSize.Button));
+            delete_preset_button.Relief = ReliefStyle.None;
+            delete_preset_button.Clicked += OnDeletePreset;
+            
+            VBox combo_box = new VBox ();
+            combo_box.PackStart (eq_preset_combo, true, false, 0);
+            
+            header_box.PackStart (combo_box, false, false, 0);
+            header_box.PackStart (new_preset_button, false, false, 0);
+            header_box.PackStart (delete_preset_button, false, false, 0);
+            header_box.PackEnd (eq_enabled_checkbox, false, false, 0);
+            
+            box.PackStart (eq_view, true, true, 0);
             
             eq_enabled_checkbox.Active = EqualizerSetting.EnabledSchema.Get ();
             eq_preset_combo.ActivatePreferredEqualizer (EqualizerSetting.PresetSchema.Get ());
             
-            if(eq_enabled_checkbox.Active) {
+            if (eq_enabled_checkbox.Active) {
                 // enable equalizer if was enabled last session
                 EqualizerManager.Instance.Enable (eq_preset_combo.ActiveEqualizer);
             }
@@ -87,10 +116,32 @@ namespace Banshee.Equalizer.Gui
                 
                 // enable our new preset (it has no effect though, since all bands are 0db)
                 eq_enabled_checkbox.Active = true;
-                OnEnableDisable (null, null);    // notify engine and save it for next session
+                OnEnableDisable (null, null);
             }
             
             eq_enabled_checkbox.Clicked += OnEnableDisable;
+            
+            Gdk.Geometry limits = new Gdk.Geometry ();
+            limits.MinWidth = -1;
+            limits.MaxWidth = -1;
+            limits.MinHeight = SizeRequest ().Height;
+            limits.MaxHeight = Gdk.Screen.Default.Height;
+            SetGeometryHints (this, limits, Gdk.WindowHints.MaxSize);
+            
+            Add (box);
+            box.ShowAll ();
+        }
+        
+        protected override void OnDestroyed ()
+        {
+            instance = null;
+            base.OnDestroyed ();
+        }
+
+        protected override bool OnExposeEvent (Gdk.EventExpose evnt)
+        {
+            GdkWindow.DrawRectangle (Style.BackgroundGC (StateType.Active), true, header_box.Allocation);
+            return base.OnExposeEvent (evnt);
         }
          
         private void OnNewPreset (object o, EventArgs args)
@@ -108,7 +159,7 @@ namespace Banshee.Equalizer.Gui
         
         private void OnPresetChanged (object o, EventArgs args)
         {
-            if(eq_preset_combo.ActiveEqualizer != eq_view.EqualizerSetting) {
+            if (eq_preset_combo.ActiveEqualizer != eq_view.EqualizerSetting) {
                 eq_view.EqualizerSetting = eq_preset_combo.ActiveEqualizer;
                 OnEnableDisable (null, null);
             }
@@ -117,9 +168,9 @@ namespace Banshee.Equalizer.Gui
         private void OnEnableDisable (object o, EventArgs args)
         {
             if (eq_enabled_checkbox.Active) {
-                EqualizerManager.Instance.Enable(eq_preset_combo.ActiveEqualizer);
+                EqualizerManager.Instance.Enable (eq_preset_combo.ActiveEqualizer);
             } else {
-                EqualizerManager.Instance.Disable(eq_preset_combo.ActiveEqualizer);
+                EqualizerManager.Instance.Disable (eq_preset_combo.ActiveEqualizer);
             }
         }
     }

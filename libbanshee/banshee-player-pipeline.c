@@ -213,12 +213,12 @@ _bp_pipeline_construct (BansheePlayer *player)
     audiosinkqueue = gst_element_factory_make ("queue", "audiosinkqueue");
     g_return_val_if_fail (audiosinkqueue != NULL, FALSE);
 
-    audioconvert = gst_element_factory_make("audioconvert", "audioconvert");
-    audioconvert2 = gst_element_factory_make("audioconvert", "audioconvert2");
-    player->equalizer = gst_element_factory_make("equalizer-10bands", "equalizer-10bands");
-    player->preamp = gst_element_factory_make("volume", "preamp");
+    audioconvert = gst_element_factory_make ("audioconvert", "audioconvert");
+    audioconvert2 = gst_element_factory_make ("audioconvert", "audioconvert2");
+    player->equalizer = gst_element_factory_make ("equalizer-10bands", "equalizer-10bands");
+    player->preamp = gst_element_factory_make ("volume", "preamp");
 
-    /* Workaround for equalizer bug that caused clipping when processing integer samples */
+    // Workaround for equalizer bug that caused clipping when processing integer samples
     if (player->equalizer != NULL) {
         GstElementFactory *efactory = gst_element_get_factory (player->equalizer);
 
@@ -227,30 +227,33 @@ _bp_pipeline_construct (BansheePlayer *player)
         if (buggy_eq) {
             GstCaps *caps;
 
-            capsfilter = gst_element_factory_make("capsfilter", "capsfilter");
+            capsfilter = gst_element_factory_make ("capsfilter", "capsfilter");
             caps = gst_caps_new_simple ("audio/x-raw-float", NULL);
             g_object_set (capsfilter, "caps", caps, NULL);
             gst_caps_unref (caps);
-      }
+        }
     }
 
     // Add elements to custom audio sink
     gst_bin_add (GST_BIN (player->audiobin), player->audiotee);
+    
     if (player->equalizer != NULL) {
         gst_bin_add (GST_BIN (player->audiobin), audioconvert);
         gst_bin_add (GST_BIN (player->audiobin), audioconvert2);
 
-        if (buggy_eq)
+        if (buggy_eq) {
             gst_bin_add (GST_BIN (player->audiobin), capsfilter);
-
+        }
+        
         gst_bin_add (GST_BIN (player->audiobin), player->equalizer);
         gst_bin_add (GST_BIN (player->audiobin), player->preamp);
     } else {
-        g_object_unref(player->preamp);
+        g_object_unref (player->preamp);
         player->preamp = NULL;
-        g_object_unref(audioconvert);
-        g_object_unref(audioconvert2);
+        g_object_unref (audioconvert);
+        g_object_unref (audioconvert2);
     }
+    
     gst_bin_add (GST_BIN (player->audiobin), audiosinkqueue);
     gst_bin_add (GST_BIN (player->audiobin), audiosink);
    
@@ -266,16 +269,17 @@ _bp_pipeline_construct (BansheePlayer *player)
     // Link the queue and the actual audio sink
     if (player->equalizer != NULL) {
         // link in equalizer, preamp and audioconvert.
-        if (buggy_eq)
-            gst_element_link_many (audiosinkqueue, audioconvert, player->preamp, player->equalizer, audioconvert2, audiosink, NULL);
-        else
-            gst_element_link_many (audiosinkqueue, audioconvert, capsfilter, player->preamp, player->equalizer, audioconvert2, audiosink, NULL);
+        if (buggy_eq) {
+            gst_element_link_many (audiosinkqueue, audioconvert, player->preamp, 
+                player->equalizer, audioconvert2, audiosink, NULL);
+        } else {
+            gst_element_link_many (audiosinkqueue, audioconvert, capsfilter, 
+                player->preamp, player->equalizer, audioconvert2, audiosink, NULL);
+        }
     } else {
         // link the queue with the real audio sink
         gst_element_link (audiosinkqueue, audiosink);
     }
-    
-    gst_element_link (audiosinkqueue, audiosink);
     
     // Now that our internal audio sink is constructed, tell playbin to use it
     g_object_set (G_OBJECT (player->playbin), "audio-sink", player->audiobin, NULL);
@@ -303,7 +307,7 @@ _bp_pipeline_destroy (BansheePlayer *player)
     if (GST_IS_ELEMENT (player->playbin)) {
         player->target_state = GST_STATE_NULL;
         gst_element_set_state (player->playbin, GST_STATE_NULL);
-        gst_object_unref (GST_OBJECT(player->playbin));
+        gst_object_unref (GST_OBJECT (player->playbin));
     }
     
     player->playbin = NULL;

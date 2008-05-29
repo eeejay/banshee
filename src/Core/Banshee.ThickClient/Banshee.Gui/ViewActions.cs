@@ -92,8 +92,12 @@ namespace Banshee.Gui
                 
         private void OnShowEqualizer (object o, EventArgs args)
         {
-            EqualizerWindow eqwin = new EqualizerWindow ();
-            eqwin.Window.Show ();
+            if (EqualizerWindow.Instance == null) {
+                EqualizerWindow eqwin = new EqualizerWindow (ServiceManager.Get<GtkElementsService> ().PrimaryWindow);
+                eqwin.Show ();
+            } else {
+                EqualizerWindow.Instance.Present ();
+            }
         }
 
         private void OnFullScreen (object o, EventArgs args)

@@ -396,7 +396,7 @@ namespace Banshee.GStreamer
         
         public uint [] EqualizerFrequencies {
             get {
-	        uint count = bp_equalizer_get_nbands (handle);
+                uint count = bp_equalizer_get_nbands (handle);
                 double [] freq = new double[count];
 
                 bp_equalizer_get_frequencies (handle, out freq);
@@ -515,7 +515,7 @@ namespace Banshee.GStreamer
         [DllImport ("libbanshee")]
         private static extern void bp_equalizer_get_bandrange (HandleRef player, out int min, out int max);
         
-	[DllImport ("libbanshee")]
+        [DllImport ("libbanshee")]
         private static extern uint bp_equalizer_get_nbands (HandleRef player);
         
         [DllImport ("libbanshee")]
