@@ -78,7 +78,7 @@ hg:
 	pushd bin; \
 	echo "class Entry { static void Main () { Hyena.Gui.TestModuleRunner.Run (); } }" > tester.cs; \
 	gmcs -r:Hyena.Gui.dll tester.cs; \
-	mono tester.exe; \
+	mono --debug tester.exe; \
 	rm tester.*; \
 	popd; 
 

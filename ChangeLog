@@ -1,3 +1,7 @@
+2008-05-29  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SegmentedBar.cs: Add label support
+
 2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Fix crasher introduced by

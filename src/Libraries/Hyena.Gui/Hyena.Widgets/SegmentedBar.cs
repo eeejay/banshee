@@ -38,17 +38,26 @@ namespace Hyena.Widgets
 {
     public class SegmentedBar : Widget
     {
-        public struct Segment
+        public delegate string BarValueFormatHandler (Segment segment);
+    
+        public class Segment
         {
             private string title;
             private double percent;
             private Cairo.Color color;
+            private bool show_in_bar;
             
-            public Segment (string title, double percent, Cairo.Color color)
+            public Segment (string title, double percent, Cairo.Color color) 
+                : this (title, percent, color, true)
+            {
+            }
+            
+            public Segment (string title, double percent, Cairo.Color color, bool showInBar)
             {
                 this.title = title;
                 this.percent = percent;
                 this.color = color;
+                this.show_in_bar = showInBar;
             }
             
             public string Title {
@@ -65,13 +74,34 @@ namespace Hyena.Widgets
                 get { return color; }
                 set { color = value; }
             }
+            
+            public bool ShowInBar {
+                get { return show_in_bar; }
+                set { show_in_bar = value; }
+            }
+            
+            internal int LayoutWidth;
+            internal int LayoutHeight;
         }
         
+        // State
         private List<Segment> segments = new List<Segment> ();
-        private int bar_height = 25;
+        private int layout_width;
+        private int layout_height;
+        
+        // Properties
+        private int bar_height = 26;
+        private int bar_label_spacing = 8;
+        private int segment_label_spacing = 16;
+        private int segment_box_size = 12;
+        private int segment_box_spacing = 6;
+        
+        private bool show_labels = true;
         private bool reflect = true;
         
         private Color remainder_color = CairoExtensions.RgbToColor (0xeeeeee);
+    
+        private BarValueFormatHandler format_handler;
     
         public SegmentedBar ()
         {
@@ -84,6 +114,8 @@ namespace Hyena.Widgets
             base.OnRealized ();
         }
         
+#region Size Calculations
+        
         protected override void OnSizeRequested (ref Requisition requisition)
         {
             requisition.Width = 200;
@@ -92,9 +124,53 @@ namespace Hyena.Widgets
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
-            HeightRequest = reflect ? (int)Math.Ceiling (bar_height * 1.75) : bar_height;
+            int _bar_height = reflect ? (int)Math.Ceiling (bar_height * 1.75) : bar_height;
+            
+            if (show_labels) {
+                ComputeLayoutSize ();
+                HeightRequest = Math.Max (bar_height + bar_label_spacing + layout_height, _bar_height);
+                WidthRequest = layout_width;
+            } else {
+                HeightRequest = _bar_height;
+            }
+            
             base.OnSizeAllocated (allocation);
         }
+        
+        private void ComputeLayoutSize ()
+        {
+            Pango.Layout layout = null;
+            
+            layout_width = layout_height = 0;
+            
+            for (int i = 0, n = segments.Count; i < n; i++) {
+                int aw, ah, bw, bh;
+                
+                layout = CreateAdaptLayout (layout, false, true);
+                layout.SetText (FormatSegmentText (segments[i]));
+                layout.GetPixelSize (out aw, out ah);
+                
+                layout = CreateAdaptLayout (layout, true, false);
+                layout.SetText (FormatSegmentValue (segments[i]));
+                layout.GetPixelSize (out bw, out bh);
+                
+                int w = Math.Max (aw, bw);
+                int h = ah + bh;
+                
+                segments[i].LayoutWidth = w;
+                segments[i].LayoutHeight = Math.Max (h, segment_box_size * 2);
+                
+                layout_width += segments[i].LayoutWidth + segment_box_size + segment_box_spacing 
+                    + (i < n - 1 ? segment_label_spacing : 0);
+                layout_height = Math.Max (layout_height, segments[i].LayoutHeight);
+            }
+            
+            layout.Dispose ();
+        }
+        
+#endregion
+        
+#region Public Methods
         
         public void AddSegmentRgba (string title, double percent, uint rgbaColor)
         {
@@ -108,8 +184,35 @@ namespace Hyena.Widgets
         
         public void AddSegment (string title, double percent, Color color)
         {
+            AddSegment (new Segment (title, percent, color, true));
+        }
+        
+        public void AddSegment (string title, double percent, Color color, bool showInBar)
+        {
+            AddSegment (new Segment (title, percent, color, showInBar));
+        }
+        
+        public void AddSegment (Segment segment)
+        {
             lock (segments) {
-                segments.Add (new Segment (title, percent, color));
+                segments.Add (segment);
+                QueueDraw ();
+            }
+        }
+        
+#endregion
+
+#region Public Properties                
+        
+        public BarValueFormatHandler ValueFormatter {
+            get { return format_handler; }
+            set { format_handler = value; }
+        }
+        
+        public Color RemainderColor {
+            get { return remainder_color; }
+            set { 
+                remainder_color = value;
                 QueueDraw ();
             }
         }
@@ -133,7 +236,60 @@ namespace Hyena.Widgets
                 }
             }
         }
-
+        
+        public bool ShowLabels {
+            get { return show_labels; }
+            set {
+                if (show_labels != value) {
+                    show_labels = value;
+                    QueueResize ();
+                }
+            }
+        }
+        
+        public int SegmentLabelSpacing {
+            get { return segment_label_spacing; }
+            set { 
+                if (segment_label_spacing != value) {
+                    segment_label_spacing = value;
+                    QueueResize ();
+                }
+            }
+        }
+        public int SegmentBoxSize {
+            get { return segment_box_size; }
+            set { 
+                if (segment_box_size != value) {
+                    segment_box_size = value;
+                    QueueResize ();
+                }
+            }
+        }
+        
+        public int SegmentBoxSpacing {
+            get { return segment_box_spacing; }
+            set { 
+                if (segment_box_spacing != value) {
+                    segment_box_spacing = value;
+                    QueueResize ();
+                }
+            }
+        }
+        
+        public int BarLabelSpacing {
+            get { return bar_label_spacing; }
+            set { 
+                if (bar_label_spacing != value) {
+                    bar_label_spacing = value;
+                    QueueResize ();
+                }
+            }
+        }
+        
+#endregion
+        
+#region Rendering
+        
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
             if (evnt.Window != GdkWindow) {
@@ -148,7 +304,8 @@ namespace Hyena.Widgets
             
             cr.Operator = Operator.Over;
             cr.Translate (Allocation.X, Allocation.Y);
-            cr.Rectangle (0, 0, Allocation.Width, 2 * bar_height);
+            cr.Rectangle (0, 0, Allocation.Width, Math.Max (2 * bar_height, 
+                bar_height + bar_label_spacing + layout_height));
             cr.Clip ();
             
             Pattern bar = RenderBar (Allocation.Width, bar_height);
@@ -185,6 +342,13 @@ namespace Hyena.Widgets
                 
                 CairoExtensions.PopGroupToSource (cr);
                 cr.Paint ();
+            }
+            
+            if (show_labels) {
+                cr.Translate ((reflect ? Allocation.X : 0) + (Allocation.Width - layout_width) / 2, 
+                     (reflect ? Allocation.Y : 0) + bar_height + bar_label_spacing);
+                
+                RenderLabels (cr);
             }
             
             bar.Destroy ();
@@ -281,13 +445,108 @@ namespace Hyena.Widgets
         
         private LinearGradient MakeSegmentGradient (int h, Color color)
         {
+            return MakeSegmentGradient (h, color, false);
+        }
+        
+        private LinearGradient MakeSegmentGradient (int h, Color color, bool diag)
+        {
             LinearGradient grad = new LinearGradient (0, 0, 0, h);
             grad.AddColorStop (0, CairoExtensions.ColorShade (color, 1.1));
             grad.AddColorStop (0.35, CairoExtensions.ColorShade (color, 1.2));
             grad.AddColorStop (1, CairoExtensions.ColorShade (color, 0.8));
             return grad;
         }
+        
+        private void RenderLabels (Context cr)
+        {
+            Pango.Layout layout = null;
+            Color text_color = CairoExtensions.GdkColorToCairoColor (Style.Foreground (State));
+            Color box_stroke_color = new Color (0, 0, 0, 0.6);
+            
+            int x = 0;
+            
+            foreach (Segment segment in segments) {
+                cr.LineWidth = 1;
+                cr.Rectangle (x + 0.5, 2 + 0.5, segment_box_size - 1, segment_box_size - 1);
+                LinearGradient grad = MakeSegmentGradient (segment_box_size, segment.Color, true);
+                cr.Pattern = grad;
+                cr.FillPreserve ();
+                cr.Color = box_stroke_color;
+                cr.Stroke ();
+                grad.Destroy ();
+                
+                x += segment_box_size + segment_box_spacing;
+                
+                int lw, lh;
+                layout = CreateAdaptLayout (layout, false, true);
+                layout.SetText (FormatSegmentText (segment));
+                layout.GetPixelSize (out lw, out lh);
+                
+                cr.MoveTo (x, 0);
+                text_color.A = 0.9;
+                cr.Color = text_color;
+                PangoCairoHelper.ShowLayout (cr, layout);
+                cr.Fill ();
+                
+                layout = CreateAdaptLayout (layout, true, false);
+                layout.SetText (FormatSegmentValue (segment));
+                
+                cr.MoveTo (x, lh);
+                text_color.A = 0.75;
+                cr.Color = text_color;
+                PangoCairoHelper.ShowLayout (cr, layout);
+                cr.Fill ();
+                
+                x += segment.LayoutWidth + segment_label_spacing;
+            }
+            
+            layout.Dispose ();
+        }
+        
+#endregion
+
+#region Utilities
+        
+        private int pango_size_normal;
+        
+        private Pango.Layout CreateAdaptLayout (Pango.Layout layout, bool small, bool bold)
+        {
+            if (layout == null) {
+                Pango.Context context = CreatePangoContext ();
+                layout = new Pango.Layout (context);
+                layout.FontDescription = context.FontDescription;
+                pango_size_normal = layout.FontDescription.Size;
+            } 
+            
+            layout.FontDescription.Size = small 
+                ? (int)(layout.FontDescription.Size * Pango.Scale.Small)
+                : pango_size_normal;
+            
+            layout.FontDescription.Weight = bold
+                ? Pango.Weight.Bold
+                : Pango.Weight.Normal;
+            
+            return layout;
+        }
+        
+                
+        private string FormatSegmentText (Segment segment)
+        {
+            return segment.Title;
+        }
+        
+        private string FormatSegmentValue (Segment segment)
+        {
+            return format_handler == null
+                ? String.Format ("{0}%", segment.Percent * 100.0)
+                : format_handler (segment);
+        }
+        
+#endregion
+
     }
+    
+#region Test Module    
     
     [TestModule ("Segmented Bar")]
     internal class SegmentedBarTestModule : Window
@@ -297,15 +556,21 @@ namespace Hyena.Widgets
         public SegmentedBarTestModule () : base ("Segmented Bar")
         {
             BorderWidth = 10;
+            AppPaintable = true;
             
             box = new VBox ();
             box.Spacing = 10;
             Add (box);
             
+            int space = 55;
             bar = new SegmentedBar ();
             bar.AddSegmentRgb ("Audio", 0.20, 0x3465a4);
             bar.AddSegmentRgb ("Video", 0.55, 0x73d216);
             bar.AddSegmentRgb ("Other", 0.10, 0xf57900);
+            bar.AddSegment ("Free Space", 0.15, bar.RemainderColor, false);
+            bar.ValueFormatter = delegate (SegmentedBar.Segment segment) {
+                return String.Format ("{0} GB", space * segment.Percent);
+            };
             
             HBox controls = new HBox ();
             controls.Spacing = 5;
@@ -323,6 +588,11 @@ namespace Hyena.Widgets
             reflect.Toggled += delegate { bar.ShowReflection = reflect.Active; };
             controls.PackStart (reflect, false, false, 0);
             
+            CheckButton labels = new CheckButton ("Labels");
+            labels.Active = bar.ShowLabels;
+            labels.Toggled += delegate { bar.ShowLabels = labels.Active; };
+            controls.PackStart (labels, false, false, 0);
+            
             box.PackStart (controls, false, false, 0);
             box.PackStart (new HSeparator (), false, false, 0);
             box.PackStart (bar, false, false, 0);
@@ -338,4 +608,7 @@ namespace Hyena.Widgets
             SetGeometryHints (this, limits, Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
         }
     }
+    
+#endregion
+    
 }
