@@ -117,14 +117,25 @@ namespace Banshee.Dap.MassStorage
             DatabaseImportManager importer = new DatabaseImportManager (this);
             importer.KeepUserJobHidden = true;
             importer.Threaded = false; // We are already threaded
-            foreach (string audio_folder in AudioFolders) {
+
+            foreach (string audio_folder in BaseDirectories) {
                 importer.QueueSource (audio_folder);
+            }
+        }
+
+        public override void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, BatchUserJob job)
+        {
+            if (track.PrimarySourceId == DbId) {
+                Banshee.IO.File.Copy (track.Uri, uri, false);
             }
         }
 
         public override void Import ()
         {
-            new LibraryImportManager (true).QueueSource (BaseDirectory);
+            LibraryImportManager importer = new LibraryImportManager (true);
+            foreach (string audio_folder in BaseDirectories) {
+                importer.QueueSource (audio_folder);
+            }
         }
 
         public IVolume Volume {
@@ -178,7 +189,7 @@ namespace Banshee.Dap.MassStorage
                     // According to the HAL spec, the first folder listed in the audio_folders property
                     // is the folder to write files to.
                     if (AudioFolders.Length > 0) {
-                        write_path = System.IO.Path.Combine (write_path, AudioFolders[0]);
+                        write_path = Banshee.Base.Paths.Combine (write_path, AudioFolders[0]);
                     }
                 }
                 return write_path;
@@ -191,11 +202,23 @@ namespace Banshee.Dap.MassStorage
         protected string [] AudioFolders {
             get {
                 if (audio_folders == null) {
-                    audio_folders = HasMediaCapabilities ? MediaCapabilities.AudioFolders : new string [] { BaseDirectory };
+                    audio_folders = HasMediaCapabilities ? MediaCapabilities.AudioFolders : new string [] {};
                 }
                 return audio_folders;
             }
             set { audio_folders = value; }
+        }
+
+        protected IEnumerable<string> BaseDirectories {
+            get {
+                if (AudioFolders.Length == 0) {
+                    yield return BaseDirectory;
+                } else {
+                    foreach (string audio_folder in AudioFolders) {
+                        yield return Paths.Combine (BaseDirectory, audio_folder);
+                    }
+                }
+            }
         }
 
         private int folder_depth = -1;

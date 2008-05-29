@@ -231,6 +231,11 @@ namespace Banshee.Base
             return OnFilter (repl_pattern);
         }
 
+        public static string BuildFull (TrackInfo track)
+        {
+            return BuildFull (track, Path.GetExtension (track.Uri.ToString ()));
+        }
+
         public static string BuildFull (ITrackInfo track, string ext)
         {
             if (ext == null || ext.Length < 1) {

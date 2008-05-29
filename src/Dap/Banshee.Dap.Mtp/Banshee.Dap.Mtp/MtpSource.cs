@@ -177,6 +177,18 @@ namespace Banshee.Dap.Mtp
             //new LibraryImportManager (true).QueueSource (BaseDirectory);
         }
 
+        public override void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, BatchUserJob job)
+        {
+            if (track_map.ContainsKey (track.TrackId)) {
+                track_map[track.TrackId].Download (uri.LocalPath, delegate (ulong current, ulong total, IntPtr data) {
+                    job.DetailedProgress = (double) current / total;
+                    return 0;
+                });
+            } else {
+                throw new Exception ("Error copying track from MTP device");
+            }
+        }
+
         public override bool CanRename {
             get { return !(IsAdding || IsDeleting); }
         }

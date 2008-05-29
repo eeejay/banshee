@@ -58,6 +58,7 @@ namespace Banshee.FileSystemQueue
         {
             Properties.SetString ("Icon.Name", "system-file-manager");
             Properties.Set<bool> ("AutoAddSource", false);
+            IsLocal = true;
             
             importer = new DatabaseImportManager (this);
             importer.KeepUserJobHidden = true;
@@ -90,12 +91,13 @@ namespace Banshee.FileSystemQueue
             
             UpdateActions ();
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
-            
+            TrackModel.Reloaded += OnTrackModelReloaded;
+
+            Reload ();
+
             foreach (string path in ApplicationContext.CommandLine.Files) {
                 Enqueue (path);
             }
-
-            TrackModel.Reloaded += OnTrackModelReloaded;
         }
         
         public void Enqueue (string path)

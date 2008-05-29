@@ -50,12 +50,18 @@ namespace Banshee.Library
         {
             Properties.SetString ("GtkActionPath", "/LibraryContextMenu");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Library"));
+            IsLocal = true;
             AfterInitialized ();
         }
 
         public override string BaseDirectory {
             get { return Paths.CachedLibraryLocation; }
         }
+
+        /*public override void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, UserJob job)
+        {
+            Banshee.IO.File.Copy (track.Uri, uri, false);
+        }*/
 
         protected override void DeleteTrack (DatabaseTrackInfo track)
         {
@@ -72,26 +78,32 @@ namespace Banshee.Library
             if (track.PrimarySourceId == DbId)
                 return;
 
-            // Move it if its from another library source
-            if (track.PrimarySource is LibrarySource) {
-                PrimarySource old_primary = track.PrimarySource;
+            PrimarySource source = track.PrimarySource;
+
+            // If it's from a local primary source, change it's PrimarySource
+            if (source.IsLocal || source is LibrarySource) {
                 track.PrimarySource = this;
                 track.Save (false);
-                old_primary.NotifyTracksChanged ();
-                return;
-            }
+                source.NotifyTracksChanged ();
+            } else {
+                // Figure out where we should put it if were to copy it
+                string path = FileNamePattern.BuildFull (track);
+                SafeUri uri = new SafeUri (path);
 
-            // Otherwise, copy it
-            if (track.PrimarySource is LibrarySource) {
-                // queue in importer or something?
-            }
+                // Make sure it's not already in the library
+                if (DatabaseTrackInfo.ContainsUri (uri, Paths.MakePathRelative (uri.AbsolutePath, BaseDirectory) ?? uri.AbsoluteUri, new int [] {DbId})) {
+                    return;
+                }
 
-            /*try {
-                Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
-            } catch (System.IO.FileNotFoundException) {
-            } catch (System.IO.DirectoryNotFoundException) {
-            }*/
+                // Since it's not, copy it and create a new TrackInfo object
+                track.PrimarySource.CopyTrackTo (track, uri, AddTrackJob);
+
+                // Create a new entry in CoreTracks for the copied file
+                DatabaseTrackInfo new_track = new DatabaseTrackInfo (track);
+                new_track.Uri = uri;
+                new_track.PrimarySource = this;
+                new_track.Save (false);
+            }
         }
-
     }
 }

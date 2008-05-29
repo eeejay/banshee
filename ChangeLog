@@ -1,3 +1,42 @@
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add a bool
+	IsLocal property.  If it's false and you drag tracks to a LibrarySource,
+	it will ask the owning PrimarySource to copy the file to a given location
+	by calling its CopyTrackTo method defined here (and implemented in each
+	non-local subclass).
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Reload the FSQ on start to make sure it shows itself if it had saved
+	items.  Also, set IsLocal = true so dragging files between the libraries
+	and it doesn't do a file copy.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Fix bug with importing to the Library not just from the audio folders.
+	Implement CopyTrackTo.
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Add commented
+	out CopyTrackTo skeleton.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Implement
+	CopyToTrack - the nicest implementation in a way, because we get granular
+	progress updates.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Add some NRE defense and debugging for a NRE I saw but don't understand.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	Set IsLocal = true, and fix up AddTrack method so that if the file is from
+	a IsLocal PrimarySource it just 'moves' it (eg changes the
+	PrimarySourceId) but otherwise it asks the owning PrimarySource to copy
+	the file to a location in the library folder.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs: Set
+	the updatd MimeType on the file after transcoding it.
+
+	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs: Add a BuildFull
+	convenience overload.
+
 2008-05-29  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/SegmentedBar.cs: Add label support

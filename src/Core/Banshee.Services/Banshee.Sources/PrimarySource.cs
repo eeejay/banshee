@@ -127,6 +127,13 @@ namespace Banshee.Sources
             }
         }
 
+
+        private bool is_local = false;
+        public bool IsLocal {
+            get { return is_local; }
+            protected set { is_local = value; }
+        }
+
         public delegate void TrackEventHandler (Source sender, TrackEventArgs args);
 
         public event TrackEventHandler TracksAdded;
@@ -238,6 +245,11 @@ namespace Banshee.Sources
                 "UPDATE CorePrimarySources SET CachedCount = ? WHERE PrimarySourceID = ?",
                 Count, DbId
             );
+        }
+
+        public virtual void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, BatchUserJob job)
+        {
+            throw new Exception (String.Format ("CopyToTrack not implemented for source {0}", Name));
         }
 
         internal void NotifyTracksAdded ()
@@ -429,8 +441,9 @@ namespace Banshee.Sources
 
         public override bool AcceptsInputFromSource (Source source)
         {
-            return base.AcceptsInputFromSource (source) && source.Parent != this &&
-                (source.Parent is PrimarySource) && !(source.Parent is Banshee.Library.LibrarySource);
+            return base.AcceptsInputFromSource (source) && source.Parent != this
+                && (source.Parent is PrimarySource || source is PrimarySource)
+                && !(source.Parent is Banshee.Library.LibrarySource);
         }
 
         public override bool AddSelectedTracks (Source source)

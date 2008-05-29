@@ -216,6 +216,7 @@ namespace Banshee.MediaEngine
             }
 
             UserJob.Completed++;
+            args.Track.MimeType = current_context.Config.Profile.MimeTypes[0];
             current_context.Handler (args.Track, current_context.OutUri);
 
             ProcessQueue ();

@@ -74,7 +74,7 @@ namespace Banshee.Dap.Ipod
             
             Initialize ();
         }
-                
+
         public override void Dispose ()
         {
             CancelSyncThread ();
@@ -327,6 +327,11 @@ namespace Banshee.Dap.Ipod
         {
             Log.Information ("Import to Library is not implemented for iPods yet", true);
         }
+
+        /*public override void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, BatchUserJob job)
+        {
+            throw new Exception ("Copy to Library is not implemented for iPods yet");
+        }*/
 
         protected override void DeleteTrack (DatabaseTrackInfo track)
         {
