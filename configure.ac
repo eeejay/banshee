@@ -191,6 +191,8 @@ ${PACKAGE}-${VERSION}
     DAAP Support:      ${enable_daap}	(unstable)
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
+
+    Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "
 if test -d ${expanded_libdir}/${PACKAGE}; then
 	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/${PACKAGE}"

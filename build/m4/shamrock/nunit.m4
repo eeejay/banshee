@@ -1,6 +1,8 @@
 AC_DEFUN([SHAMROCK_CHECK_NUNIT],
 [
-	PKG_CHECK_MODULES(NUNIT, nunit >= 2.4.7, 
+	NUNIT_REQUIRED=2.4.7
+
+	PKG_CHECK_MODULES(NUNIT, nunit >= NUNIT_REQUIRED, 
 		do_tests="yes", do_tests="no")
 	
 	AC_SUBST(NUNIT_LIBS)
