@@ -55,7 +55,11 @@ bp_equalizer_set_gain (BansheePlayer *player, guint bandnum, gdouble gain)
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
     
     if (player->equalizer != NULL) {
-        GstObject *band = gst_child_proxy_get_child_by_index (GST_CHILD_PROXY (player->equalizer), bandnum);
+        GstObject *band;
+
+        g_return_if_fail (bandnum < gst_child_proxy_get_children_count (GST_CHILD_PROXY (player->equalizer)));
+
+        band = gst_child_proxy_get_child_by_index (GST_CHILD_PROXY (player->equalizer), bandnum);
         g_object_set (band, "gain", gain, NULL);
         g_object_unref (band);
     }
@@ -64,15 +68,8 @@ bp_equalizer_set_gain (BansheePlayer *player, guint bandnum, gdouble gain)
 P_INVOKE void
 bp_equalizer_get_bandrange (BansheePlayer *player, gint *min, gint *max)
 {    
-    // NOTE: This only refers to the newer version of the equalizer element.
-    //
-    // GStreamer's equalizer goes from -24 to +12, but -12 to +12 is much better:
-    //  - Equal levels on both sides, which means we get a nice linear y=x
-    //  - This also makes converting other eq presets easier.
-    //  - We get a nice roud 0 dB in the middle of the band range, instead of -6, which is stupid
-    //    since 0 dB gives us no gain, yet its not in the middle - less sense to the end user.
-    
-    GParamSpecDouble *pspec;
+    GParamSpec *pspec;
+    GParamSpecDouble *dpspec;
     
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
     
@@ -81,43 +78,53 @@ bp_equalizer_get_bandrange (BansheePlayer *player, gint *min, gint *max)
     }
     
     // Fetch gain range of first band (since it should be the same for the rest)
-    pspec = (GParamSpecDouble*)g_object_class_find_property (G_OBJECT_GET_CLASS (player->equalizer), "band0");
-    if (pspec != NULL) {
-        // Assume old equalizer.
-        *min = pspec->minimum;
-        *max = pspec->maximum;
+    pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (player->equalizer), "band0::gain");
+    if (pspec == NULL)
+        pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (player->equalizer), "band0");
+
+    if (pspec != NULL && G_IS_PARAM_SPEC_DOUBLE (pspec)) {
+        dpspec = (GParamSpecDouble *) pspec;
+        *min = dpspec->minimum;
+        *max = dpspec->maximum;
         return;
-    } 
-    
-    pspec = (GParamSpecDouble*)g_object_class_find_property (G_OBJECT_GET_CLASS (player->equalizer), "band0::gain");
-    if (pspec != NULL && pspec->maximum == 12) {
-        // New equalizer - return even scale.
-        *min = -12;
-        *max = 12;
-    } else if (pspec != NULL) {
-        // Return just the ranges the equalizer supports
-        *min = pspec->minimum;
-        *max = pspec->maximum;
     } else {
        g_warning ("Could not find valid gain range for equalizer element");
     }
 }
 
+P_INVOKE guint
+bp_equalizer_get_nbands (BansheePlayer *player)
+{
+    guint count;
+    
+    g_return_val_if_fail (IS_BANSHEE_PLAYER (player), 0);
+
+    if (player->equalizer == NULL) {
+        return 0;
+    }
+
+    count = gst_child_proxy_get_children_count (GST_CHILD_PROXY (player->equalizer));
+    return count;
+}
+
 P_INVOKE void
 bp_equalizer_get_frequencies (BansheePlayer *player, gdouble **freq)
 {
-    gint i;
-    gdouble bandfreq[10];
+    gint i, count;
     
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
+
+    if (player->equalizer == NULL) {
+        return;
+    }
+
+    count = gst_child_proxy_get_children_count (GST_CHILD_PROXY (player->equalizer));
     
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < count; i++) {
         GstObject *band;
         
         band = gst_child_proxy_get_child_by_index (GST_CHILD_PROXY (player->equalizer), i);
-        g_object_get (G_OBJECT (band), "freq", &bandfreq[i], NULL);
+        g_object_get (G_OBJECT (band), "freq", &(*freq)[i], NULL);
         g_object_unref (band);
     }
-    
-    *freq = bandfreq;
 }

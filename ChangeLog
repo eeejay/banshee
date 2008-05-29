@@ -1,3 +1,18 @@
+2008-05-29  Sebastian Dröge  <slomo@circular-chaos.org>
+
+	* libbanshee/banshee-player-equalizer.c: (bp_equalizer_set_gain),
+	(bp_equalizer_get_bandrange), (bp_equalizer_get_nbands),
+	(bp_equalizer_get_frequencies):
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	Get the number of frequency bands from the element and always take
+	the complete gain range. Guard against some possible crashes and
+	don't return an array that is allocated on the stack to the caller
+	who provided us with a correctly allocated array already.
+	
+	* libbanshee/banshee-player-pipeline.c: (_bp_pipeline_construct):
+	Some cleanup and only use the capsfilter hack with equalizer versions
+	that had the clipping bug on integer samples.
+
 2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs:
