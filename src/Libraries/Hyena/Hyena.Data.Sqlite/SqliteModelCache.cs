@@ -297,7 +297,10 @@ namespace Hyena.Data.Sqlite
                 saved_selection = true;
                 
                 if (!has_select_all_item && model.Selection.FocusedIndex != -1) {
-                    saved_focus_entry_id = (int) GetValue (model.Selection.FocusedIndex).CacheEntryId;
+                    T item = GetValue (model.Selection.FocusedIndex);
+                    if (item != null) {
+                        saved_focus_entry_id = (int) GetValue (model.Selection.FocusedIndex).CacheEntryId;
+                    }
                 }
 
                 long start, end;

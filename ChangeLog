@@ -1,5 +1,11 @@
 2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Fix crasher
+	in save-selection by being properly defensive and not assuming the item
+	pointed to by the selection focus is still in the model.
+
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
 	Fix bug where if the play queue was empty but you double clicked on it, it
 	would go recursive/eat all your RAM.  Should fix BGO #535369.
