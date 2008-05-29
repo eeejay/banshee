@@ -87,6 +87,7 @@ namespace Banshee.Base
                 part = part.Substring (0, lp_index);
             }
             
+            // TODO compile regex
             return Regex.Replace (part, @"[^A-Za-z0-9]*", "").ToLower ();
         }
         

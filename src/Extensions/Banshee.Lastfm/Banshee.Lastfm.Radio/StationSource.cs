@@ -29,6 +29,7 @@
 using System;
 using System.Data;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Threading;
 using Mono.Unix;
@@ -54,6 +55,22 @@ namespace Banshee.Lastfm.Radio
     public class StationSource : Source, ITrackModelSource, IUnmapableSource, IDisposable, IBasicPlaybackController
     {
         private static string generic_name = Catalog.GetString ("Last.fm Station");
+
+        public static StationSource CreateFromUrl (LastfmSource lastfm, string url)
+        {
+            foreach (StationType type in StationType.Types) {
+                string regex = Regex.Escape (type.GetStationFor ("XXX")).Replace ("XXX", "([^\\/]+)");
+                Match match = Regex.Match (url, regex);
+                if (match.Groups.Count == 2 && match.Groups[0].Captures.Count > 0) {
+                    Log.DebugFormat ("Creating last.fm station from url {0}", url);
+                    string arg = match.Groups[1].Captures[0].Value;
+                    StationSource station = new StationSource (lastfm, arg, type.Name, arg);
+                    lastfm.AddChildSource (station);
+                    station.NotifyUser ();
+                }
+            }
+            return null;
+        }
         
         private MemoryTrackListModel track_model;
         

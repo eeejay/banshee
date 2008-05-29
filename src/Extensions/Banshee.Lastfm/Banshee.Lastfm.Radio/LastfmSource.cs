@@ -112,10 +112,13 @@ namespace Banshee.Lastfm.Radio
             actions = new LastfmActions (this);
 
             ServiceManager.SourceManager.AddSource (this);
+
+            ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
         }
 
         public void Dispose ()
         {
+            ServiceManager.Get<DBusCommandService> ().ArgumentPushed -= OnCommandLineArgument;
             Connection.StateChanged -= HandleConnectionStateChanged;
             Connection.Dispose ();
             actions.Dispose ();
@@ -123,6 +126,18 @@ namespace Banshee.Lastfm.Radio
             actions = null;
             connection = null;
             account = null;
+        }
+
+        private void OnCommandLineArgument (string uri, object value, bool isFile)
+        {
+            if (!isFile || String.IsNullOrEmpty (uri)) {
+                return;
+            }
+            
+            // Handle lastfm:// URIs
+            if (uri.StartsWith ("lastfm://")) {
+                StationSource.CreateFromUrl (this, uri);
+            }
         }
 
         /*public override void AddChildSource (ChildSource source)

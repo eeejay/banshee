@@ -1,3 +1,20 @@
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Halie/Halie/Client.cs: Don't turn strings that start with
+	*:// into local file paths.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs: Add
+	method for creating a station given a lastfm:// url.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	Listen for command line file arguments starting in lastfm:// and try to
+	create new stations for them.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Handle feed:// command line files, subscribing to them.
+
+	* src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs: Add TODO
+
 2008-05-29  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* libbanshee/banshee-player-equalizer.c: (bp_equalizer_set_gain),

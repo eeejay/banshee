@@ -228,13 +228,21 @@ namespace Banshee.Podcasting
             }
         }
         
-        private void OnCommandLineArgument (string argument, object value, bool isFile)
+        private void OnCommandLineArgument (string uri, object value, bool isFile)
         {
-            if (!isFile) {
+            if (!isFile || String.IsNullOrEmpty (uri)) {
                 return;
             }
             
-            // TODO: Handle podcast URIs
+            // Handle podcast URIs
+            if (uri.StartsWith ("feed://")) {
+                string url = String.Format ("http://{0}", uri.Substring (7));
+                Log.DebugFormat ("Subscribing to podcast at {0}", url);
+
+                // TODO replace autodownload w/ actual default preference
+                FeedsManager.Instance.FeedManager.CreateFeed (url, FeedAutoDownload.None);
+                source.NotifyUser ();
+            }
         }
         
         private void RefreshArtworkFor (Feed feed)
@@ -281,6 +289,7 @@ namespace Banshee.Podcasting
         private void OnFeedsChanged (object o, EventArgs args)
         {
             source.Reload ();
+            source.NotifyUser ();
         }
 
         /*private void OnFeedAddedHandler (object sender, FeedEventArgs args)
@@ -338,6 +347,7 @@ namespace Banshee.Podcasting
                 PodcastTrackInfo pi = new PodcastTrackInfo (item);
                 pi.PrimarySource = source;
                 pi.Save (true);
+                source.NotifyUser ();
             } else {
                 item.Delete (false);                      
             }

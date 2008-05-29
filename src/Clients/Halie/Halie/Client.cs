@@ -98,7 +98,13 @@ namespace Halie
         private static void HandleFiles ()
         {
             foreach (string file in ApplicationContext.CommandLine.Files) {
-                command.PushFile (Path.GetFullPath (file));
+                // If it looks like a URI with a protocol, leave it as is
+                Console.WriteLine ("got file '{0}'", file);
+                if (System.Text.RegularExpressions.Regex.IsMatch (file, "^\\w+\\:\\/")) {
+                    command.PushFile (file);
+                } else {
+                    command.PushFile (Path.GetFullPath (file));
+                }
             }
         }
         
