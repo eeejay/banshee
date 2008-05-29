@@ -1,5 +1,11 @@
 2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Fix bug where if the play queue was empty but you double clicked on it, it
+	would go recursive/eat all your RAM.  Should fix BGO #535369.
+
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add a bool
 	IsLocal property.  If it's false and you drag tracks to a LibrarySource,
 	it will ask the owning PrimarySource to copy the file to a given location

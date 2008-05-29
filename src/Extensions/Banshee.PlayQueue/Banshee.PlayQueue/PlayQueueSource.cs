@@ -238,6 +238,7 @@ namespace Banshee.PlayQueue
             RemovePlayingTrack ();
             
             if (Count == 0) {
+                ServiceManager.PlaybackController.Source = (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
                 ServiceManager.PlaybackController.Next (restart);
                 return;
             }
