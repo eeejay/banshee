@@ -59,7 +59,7 @@ namespace Banshee.Podcasting.Gui
             // Downloading
             Pixbufs[base.PixbufCount + 0] = IconThemeUtils.LoadIcon (PixbufSize, "document-save", "go-bottom");
             
-            // Podcast is New
+            // Podcast is Downloaded
             Pixbufs[base.PixbufCount + 1] = IconThemeUtils.LoadIcon (PixbufSize, "podcast-new");
         }
         
@@ -74,8 +74,8 @@ namespace Banshee.Podcasting.Gui
                 case PodcastItemActivity.Downloading:
                 case PodcastItemActivity.DownloadPending: 
                     return base.PixbufCount + 0;
-                default: 
-                    return podcast.IsNew ? base.PixbufCount + 1 : -1;
+                default:
+                    return podcast.IsDownloaded ? base.PixbufCount + 1 : -1;
             }
         }
         

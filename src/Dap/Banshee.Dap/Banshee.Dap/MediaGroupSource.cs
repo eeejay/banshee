@@ -53,6 +53,11 @@ namespace Banshee.Dap
             base.AfterInitialized ();
             Reload ();
         }
+
+        /*public override bool AcceptsInputFromSource (Source source)
+        {
+            return (source is DatabaseSource) && source.Parent != Parent && source != Parent;
+        }*/
         
         public override string ConditionSql {
             get { return base.ConditionSql; }

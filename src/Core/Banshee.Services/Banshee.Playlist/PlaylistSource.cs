@@ -124,7 +124,10 @@ namespace Banshee.Playlist
 
         public override bool AcceptsInputFromSource (Source source)
         {
-            return base.AcceptsInputFromSource (source) && (Parent == null || source == Parent || source.Parent == Parent);
+            return base.AcceptsInputFromSource (source) && (
+                source == Parent || 
+                (source.Parent == Parent || Parent == null || (source.Parent == null && !(source is PrimarySource)))
+            );
         }
         
         public override SourceMergeType SupportedMergeTypes {

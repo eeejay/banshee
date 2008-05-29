@@ -118,8 +118,10 @@ namespace Banshee.Sources.Gui
         
         public Source GetSource (TreePath path)
         {
+            if (path == null)
+                return null;
+
             TreeIter iter;
-        
             if (GetIter (out iter, path)) {
                 return GetSource (iter);
             }

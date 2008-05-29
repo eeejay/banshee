@@ -208,6 +208,12 @@ namespace Banshee.Collection.Database
 
         public void Reload (IListModel reloadTrigger)
         {
+            if (cache == null) {
+                Log.WarningFormat ("Called Reload on {0} for source {1} but cache is null;  Did you forget to call AfterInitialized () in your DatabaseSource ctor?",
+                    this, source == null ? "null source!" : source.Name);
+                return;
+            }
+
             lock (this) {
                 GenerateUserQueryFragment ();
 

@@ -65,7 +65,7 @@ namespace Banshee.Podcasting.Gui
                 return;
             }
             
-            text_cell.Opacity = podcast.IsDownloaded ? 1.0 : 0.5;
+            text_cell.Opacity = podcast.IsNew ? 1.0 : 0.5;
         }
     }
     /*public class PodcastItemView : ListView<TrackInfo>

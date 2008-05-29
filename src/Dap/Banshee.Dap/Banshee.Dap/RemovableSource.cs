@@ -115,6 +115,11 @@ namespace Banshee.Dap
             return true;
         }
 
+        public override bool AcceptsInputFromSource (Source source)
+        {
+            return (source is DatabaseSource) && this != source.Parent;
+        }
+
         private bool syncing = false;
         public bool CanUnmap {
             get { return !syncing; }

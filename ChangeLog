@@ -1,3 +1,21 @@
+2008-05-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastItemView.cs:
+	Change grey to mean the podcast item is old, and the blue indicator to
+	mean the podcast item has been downloaded.  Different than iTunes, but
+	then so are we.  (Plus we let you stream podcast items).
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceModel.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Fix up
+	drag and droppability for sources and tracks.  Fix bug with sources having
+	a border drawn around them when a dnd is cancelled.  Only allowed but
+	not-yet-functional dnd is from DapSource subclass (eg Music) to a library.
+
 2008-05-28  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Nereid/Nereid/Client.cs: Force the gtk-menu-popup-delay

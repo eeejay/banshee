@@ -429,7 +429,8 @@ namespace Banshee.Sources
 
         public override bool AcceptsInputFromSource (Source source)
         {
-            return base.AcceptsInputFromSource (source) && source.Parent != this;
+            return base.AcceptsInputFromSource (source) && source.Parent != this &&
+                (source.Parent is PrimarySource) && !(source.Parent is Banshee.Library.LibrarySource);
         }
 
         public override bool AddSelectedTracks (Source source)

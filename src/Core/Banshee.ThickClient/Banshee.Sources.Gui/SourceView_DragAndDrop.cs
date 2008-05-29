@@ -76,7 +76,10 @@ namespace Banshee.Sources.Gui
             TreeViewDropPosition pos;
             Source active_source = ServiceManager.SourceManager.ActiveSource;
             
-            if (!GetDestRowAtPos (x, y, out path, out pos)) {
+            if (active_source.SupportedMergeTypes == SourceMergeType.None) {
+                Gdk.Drag.Status (context, 0, time);
+                return false;
+            } else if (!GetDestRowAtPos (x, y, out path, out pos)) {
                 Gdk.Drag.Status (context, 0, time);
                 return false;
             }
@@ -90,8 +93,8 @@ namespace Banshee.Sources.Gui
             else if ((Allocation.Height - y) < 20)
                 Vadjustment.Value += 30;
 
-            if (parent_source != null) {
-                ShowNewPlaylistUnder (parent_source);
+            if (parent_source != null && parent_source.AcceptsInputFromSource (active_source)) {
+                ShowNewPlaylistUnder (parent_source, active_source);
             } else if (drop_source != NewPlaylistSource) {
                 HideNewPlaylistRow ();
             }
@@ -111,13 +114,19 @@ namespace Banshee.Sources.Gui
 
         Source new_playlist_parent = null;
         bool parent_was_expanded;
-        private void ShowNewPlaylistUnder (Source parent)
+        private void ShowNewPlaylistUnder (Source parent, Source active)
         {
             if (new_playlist_visible) {
                 if (parent == new_playlist_parent)
                     return;
                 else
                     HideNewPlaylistRow ();
+            }
+
+            NewPlaylistSource.SetParentSource (parent);
+            if (!NewPlaylistSource.AcceptsInputFromSource (active)) {
+                NewPlaylistSource.SetParentSource (new_playlist_parent);
+                return;
             }
 
             TreeIter parent_iter = store.FindSource (parent);
@@ -160,14 +169,17 @@ namespace Banshee.Sources.Gui
             TreeViewDropPosition pos;
             GetDragDestRow (out path, out pos);
 
-            if (path == null) {
+            if (path == null && !TreeIter.Zero.Equals (new_playlist_iter)) {
                 path = store.GetPath (new_playlist_iter);
             }
             
-            final_drag_source = store.GetSource (path);
+            if (path != null) {
+                final_drag_source = store.GetSource (path);
+            }
+
             final_drag_start_time = context.StartTime;
-        
             HideNewPlaylistRow ();
+            SetDragDestRow (null, TreeViewDropPosition.Before);
         }
         
         protected override void OnDragBegin (Gdk.DragContext context)
@@ -175,6 +187,12 @@ namespace Banshee.Sources.Gui
             if (ServiceManager.SourceManager.ActiveSource.SupportedMergeTypes != SourceMergeType.None) {
                 base.OnDragBegin (context);
             }
+        }
+
+        protected override void OnDragEnd (Gdk.DragContext context)
+        {
+            base.OnDragEnd (context);
+            SetDragDestRow (null, TreeViewDropPosition.Before);
         }
 
         protected override void OnDragDataReceived (Gdk.DragContext context, int x, int y,
