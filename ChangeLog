@@ -1,5 +1,10 @@
 2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Don't throw
+	an exception when CopyTo isn't implemented, but log a warning.
+
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Move the
 	NeedsReload methods into DatabaseSource so they can be used by

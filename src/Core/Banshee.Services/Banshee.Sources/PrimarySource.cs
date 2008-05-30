@@ -249,7 +249,7 @@ namespace Banshee.Sources
 
         public virtual void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, BatchUserJob job)
         {
-            throw new Exception (String.Format ("CopyToTrack not implemented for source {0}", Name));
+            Log.WarningFormat ("CopyToTrack not implemented for source {0}", this);
         }
 
         internal void NotifyTracksAdded ()
