@@ -1,5 +1,13 @@
 2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs: Make some
+	text translatable.
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: Change "Manage
+	Extensions" tab to "Extensions".
+
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
 	* src/Core/Banshee.Services/Banshee.Collection/AlbumListModel.cs:

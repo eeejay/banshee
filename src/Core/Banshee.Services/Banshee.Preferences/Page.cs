@@ -74,7 +74,7 @@ namespace Banshee.Preferences
             file_system.Add (new SchemaPreference<string> (LibrarySchema.FilePattern,     
                 Catalog.GetString ("File _name")));
             
-            service.Add (new Page ("extensions", Catalog.GetString ("Manage Extensions"), 10));
+            service.Add (new Page ("extensions", Catalog.GetString ("Extensions"), 10));
         }
     }
 }

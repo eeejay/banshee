@@ -93,8 +93,11 @@ namespace Banshee.Addins.Gui
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
                 
             authors = new WrapLabel ();
-            authors.Markup = String.Format ("<small><b>Authors:</b> <i>{0}</i></small>", 
-                GLib.Markup.EscapeText (addin.Description.Author));
+            authors.Markup = String.Format (
+                "<small><b>{0}</b> <i>{1}</i></small>", 
+                Catalog.GetString ("Authors:"),
+                GLib.Markup.EscapeText (addin.Description.Author)
+            );
             
             Attach (authors, 1, 2, 2, 3,
                 AttachOptions.Expand | AttachOptions.Fill, 
