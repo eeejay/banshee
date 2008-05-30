@@ -94,6 +94,8 @@ namespace Banshee.Sources
             DELETE FROM CoreTracks WHERE PrimarySourceId = ?
         ");
 
+        public readonly SchemaEntry<bool> ExpandedSchema;
+
         private int dbid;
         public int DbId {
             get {
@@ -170,11 +172,28 @@ namespace Banshee.Sources
         protected PrimarySource (string generic_name, string name, string id, int order) : base (generic_name, name, id, order)
         {
             PrimarySourceInitialize ();
+
+            ExpandedSchema = new SchemaEntry<bool> (
+                String.Format ("sources.{0}", ConfigurationId), "expanded", true, "Is source expanded", "Is source expanded"
+            );
         }
 
         protected PrimarySource () : base ()
         {
+            ExpandedSchema = new SchemaEntry<bool> (
+                String.Format ("sources.{0}", ConfigurationId), "expanded", true, "Is source expanded", "Is source expanded"
+            );
         }
+
+        public override bool? AutoExpand {
+            get { return ExpandedSchema.Get (); }
+        }
+
+        public override bool Expanded {
+            get { return ExpandedSchema.Get (); }
+            set { ExpandedSchema.Set (value); }
+        }
+
 
         public virtual void Dispose ()
         {
