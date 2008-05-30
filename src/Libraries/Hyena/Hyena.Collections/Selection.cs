@@ -154,8 +154,6 @@ namespace Hyena.Collections
         
         public void Clear (bool raise)
         {
-            focused_index = -1;
-            
             if (ranges.Count <= 0) {
                 return;
             }

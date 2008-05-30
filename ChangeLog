@@ -1,5 +1,12 @@
 2008-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Collections/Selection.cs: Don't clear the
+	FocusedIndex when we clear the selection - they shouldn't be so tightly
+	linked.  Fixes bug with pressing enter not playing the focused song.
+	Fixes BGO #535587.
+
+2008-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Respect
 	copy-to-library when dragging FileSystemQueue items to the library.
