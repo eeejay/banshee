@@ -174,9 +174,9 @@ _bp_pipeline_construct (BansheePlayer *player)
     GstPad *teepad;
     GstElement *audiosink;
     GstElement *audiosinkqueue;
-    GstElement *audioconvert, *audioconvert2;
-    GstElement *capsfilter = NULL;
-    gboolean buggy_eq = FALSE;
+    //GstElement *audioconvert, *audioconvert2;
+    //GstElement *capsfilter = NULL;
+    //gboolean buggy_eq = FALSE;
     
     g_return_val_if_fail (IS_BANSHEE_PLAYER (player), FALSE);
     
@@ -213,7 +213,7 @@ _bp_pipeline_construct (BansheePlayer *player)
     audiosinkqueue = gst_element_factory_make ("queue", "audiosinkqueue");
     g_return_val_if_fail (audiosinkqueue != NULL, FALSE);
 
-    audioconvert = gst_element_factory_make ("audioconvert", "audioconvert");
+    /*audioconvert = gst_element_factory_make ("audioconvert", "audioconvert");
     audioconvert2 = gst_element_factory_make ("audioconvert", "audioconvert2");
     player->equalizer = gst_element_factory_make ("equalizer-10bands", "equalizer-10bands");
     player->preamp = gst_element_factory_make ("volume", "preamp");
@@ -232,12 +232,12 @@ _bp_pipeline_construct (BansheePlayer *player)
             g_object_set (capsfilter, "caps", caps, NULL);
             gst_caps_unref (caps);
         }
-    }
+    }*/
 
     // Add elements to custom audio sink
     gst_bin_add (GST_BIN (player->audiobin), player->audiotee);
     
-    if (player->equalizer != NULL) {
+    /*if (player->equalizer != NULL) {
         gst_bin_add (GST_BIN (player->audiobin), audioconvert);
         gst_bin_add (GST_BIN (player->audiobin), audioconvert2);
 
@@ -252,7 +252,7 @@ _bp_pipeline_construct (BansheePlayer *player)
         player->preamp = NULL;
         g_object_unref (audioconvert);
         g_object_unref (audioconvert2);
-    }
+    }*/
     
     gst_bin_add (GST_BIN (player->audiobin), audiosinkqueue);
     gst_bin_add (GST_BIN (player->audiobin), audiosink);
@@ -267,7 +267,7 @@ _bp_pipeline_construct (BansheePlayer *player)
         gst_element_get_pad (audiosinkqueue, "sink"));
 
     // Link the queue and the actual audio sink
-    if (player->equalizer != NULL) {
+    /*if (player->equalizer != NULL) {
         // link in equalizer, preamp and audioconvert.
         if (buggy_eq) {
             gst_element_link_many (audiosinkqueue, audioconvert, player->preamp, 
@@ -276,10 +276,10 @@ _bp_pipeline_construct (BansheePlayer *player)
             gst_element_link_many (audiosinkqueue, audioconvert, capsfilter, 
                 player->preamp, player->equalizer, audioconvert2, audiosink, NULL);
         }
-    } else {
+    } else {*/
         // link the queue with the real audio sink
         gst_element_link (audiosinkqueue, audiosink);
-    }
+    //}
     
     // Now that our internal audio sink is constructed, tell playbin to use it
     g_object_set (G_OBJECT (player->playbin), "audio-sink", player->audiobin, NULL);

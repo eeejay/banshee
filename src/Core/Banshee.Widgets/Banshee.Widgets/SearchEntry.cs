@@ -384,7 +384,7 @@ namespace Banshee.Widgets
             get { return entry; }
         }
 
-        private class FilterMenuItem : CheckMenuItem
+        private class FilterMenuItem : MenuItem /*CheckMenuItem*/
         {
             private int id;
             private string label;
@@ -393,7 +393,7 @@ namespace Banshee.Widgets
             {
                 this.id = id;
                 this.label = label;
-                DrawAsRadio = true;
+                //DrawAsRadio = true;
             }
 
             public int ID {
@@ -403,6 +403,23 @@ namespace Banshee.Widgets
             public string Label {
                 get { return label; }
             }
+            
+            // FIXME: Remove when restored to CheckMenuItem
+            private bool active;
+            public bool Active {
+                get { return active; }
+                set { active = value; }
+            }
+            
+            public new event EventHandler Toggled;
+            protected override void OnActivated ()
+            {
+                base.OnActivated ();
+                if (Toggled != null) {
+                    Toggled (this, EventArgs.Empty);
+                }
+            }
+
         }
 
         private class FramelessEntry : Entry

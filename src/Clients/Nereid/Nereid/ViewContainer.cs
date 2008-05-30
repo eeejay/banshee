@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Mono.Unix;
 
@@ -114,18 +115,42 @@ namespace Nereid
             PackEnd (new ConnectedMessageBar (), false, true, 0);
         }
         
+        private struct SearchFilter
+        {
+            public int Id;
+            public string Field;
+            public string Title;
+        }
+        
+        private Dictionary<int, SearchFilter> search_filters = new Dictionary<int, SearchFilter> ();
+        
+        private void AddSearchFilter (TrackFilterType id, string field, string title)
+        {
+            SearchFilter filter = new SearchFilter ();
+            filter.Id = (int)id;
+            filter.Field = field;
+            filter.Title = title;
+            search_filters.Add (filter.Id, filter);
+        }
+        
         private void BuildSearchEntry ()
         {
+            AddSearchFilter (TrackFilterType.None, String.Empty, Catalog.GetString ("All Columns"));
+            AddSearchFilter (TrackFilterType.SongName, "title", Catalog.GetString ("Track Title"));
+            AddSearchFilter (TrackFilterType.ArtistName, "artist", Catalog.GetString ("Artist Name"));
+            AddSearchFilter (TrackFilterType.AlbumTitle, "album", Catalog.GetString ("Album Title"));
+            AddSearchFilter (TrackFilterType.Genre, "genre", Catalog.GetString ("Genre"));
+            AddSearchFilter (TrackFilterType.Year, "year", Catalog.GetString ("Year"));
+        
             search_entry = new SearchEntry ();
             search_entry.SetSizeRequest (200, -1);
             
-            /*search_entry.AddFilterOption ((int)TrackFilterType.None, Catalog.GetString ("All Columns"));
-            search_entry.AddFilterSeparator ();
-            search_entry.AddFilterOption ((int)TrackFilterType.SongName, Catalog.GetString ("Song Name"));
-            search_entry.AddFilterOption ((int)TrackFilterType.ArtistName, Catalog.GetString ("Artist Name"));
-            search_entry.AddFilterOption ((int)TrackFilterType.AlbumTitle, Catalog.GetString ("Album Title"));
-            search_entry.AddFilterOption ((int)TrackFilterType.Genre, Catalog.GetString ("Genre"));
-            search_entry.AddFilterOption ((int)TrackFilterType.Year, Catalog.GetString ("Year"));  */
+            foreach (SearchFilter filter in search_filters.Values) {
+                search_entry.AddFilterOption (filter.Id, filter.Title);
+                if (filter.Id == (int)TrackFilterType.None) {
+                    search_entry.AddFilterSeparator ();
+                }
+            }
             
             search_entry.FilterChanged += OnSearchEntryFilterChanged;
             search_entry.ActivateFilter ((int)TrackFilterType.None);
@@ -135,8 +160,20 @@ namespace Nereid
         
         private void OnSearchEntryFilterChanged (object o, EventArgs args)
         {
-            search_entry.EmptyMessage = String.Format (Catalog.GetString ("Filter on {0}"),
-                search_entry.GetLabelForFilterID (search_entry.ActiveFilterID));
+            search_entry.EmptyMessage = String.Format (Catalog.GetString ("Filter Results"));
+            /*search_entry.EmptyMessage = String.Format (Catalog.GetString ("Filter on {0}"),
+                search_entry.GetLabelForFilterID (search_entry.ActiveFilterID));*/
+                
+            string query = search_filters.ContainsKey (search_entry.ActiveFilterID)
+                ? search_filters[search_entry.ActiveFilterID].Field
+                : String.Empty;
+            
+            search_entry.Query = String.IsNullOrEmpty (query) ? String.Empty : query + ":";
+                
+            Editable editable = search_entry.InnerEntry as Editable;
+            if (editable != null) {
+                editable.Position = search_entry.Query.Length;
+            }
         }
         
         public void SetFooter (Widget contents)
