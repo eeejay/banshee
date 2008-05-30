@@ -51,9 +51,5 @@ namespace Banshee.Collection
         public override void Clear ()
         {
         }
-
-        public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
-            set { throw new NotImplementedException(); }
-        }
     }
 }

@@ -151,7 +151,7 @@ namespace Banshee.Sources
         
         public virtual void MergeSourceInput (Source source, SourceMergeType mergeType)
         {
-            throw new NotImplementedException ();
+            Log.ErrorFormat ("MergeSourceInput not implemented by {0}", this);
         }
         
         public virtual SourceMergeType SupportedMergeTypes {

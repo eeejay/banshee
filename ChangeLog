@@ -1,5 +1,15 @@
 2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/AlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/TrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Remove a bunch of crufty code and replace a bunch of NIEXs with Log.Error.
+
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	Don't pulse the podcasts source when feeds are changes, just when items
 	are added.

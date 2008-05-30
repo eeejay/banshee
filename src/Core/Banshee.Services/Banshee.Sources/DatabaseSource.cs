@@ -469,23 +469,22 @@ namespace Banshee.Sources
 
         protected virtual void RemoveTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
-            throw new NotImplementedException(); 
+            Log.ErrorFormat ("RemoveTrackRange not implemented by {0}", this);
         }
-
 
         protected virtual void DeleteTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
-            throw new NotImplementedException(); 
+            Log.ErrorFormat ("DeleteTrackRange not implemented by {0}", this);
         }
 
         protected virtual void AddTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
-            throw new NotImplementedException(); 
+            Log.ErrorFormat ("AddTrackRange not implemented by {0}", this);
         }
         
         protected virtual void AddTrack (DatabaseTrackInfo track)
         {
-            throw new NotImplementedException(); 
+            Log.ErrorFormat ("AddTrack not implemented by {0}", this);
         }
 
         protected virtual void RateTrackRange (DatabaseTrackListModel model, RangeCollection.Range range, int rating)

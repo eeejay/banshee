@@ -49,23 +49,8 @@ namespace Banshee.Collection
             selection = new Selection ();
         }
         
-        public virtual int IndexOf(TrackInfo track)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract int IndexOf (TrackInfo track);
 
         public abstract TrackInfo GetRandom (DateTime notPlayedSince, bool repeat);
-        
-        public virtual IEnumerable<ArtistInfo> ArtistInfoFilter {
-            set { throw new NotImplementedException(); }
-        }
-        
-        public virtual IEnumerable<AlbumInfo> AlbumInfoFilter {
-            set { throw new NotImplementedException(); }
-        }
-
-        public virtual void ClearArtistAlbumFilters ()
-        {
-        }
     }
 }

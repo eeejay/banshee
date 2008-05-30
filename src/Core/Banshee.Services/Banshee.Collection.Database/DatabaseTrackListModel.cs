@@ -185,12 +185,6 @@ namespace Banshee.Collection.Database
             }
         }
 
-        /*public void UpdateAggregates ()
-        {
-            UpdateUnfilteredAggregates ();
-            UpdateFilteredAggregates ();
-        }*/
-
         private void UpdateUnfilteredAggregates ()
         {
             HyenaSqliteCommand count_command = new HyenaSqliteCommand (String.Format (
@@ -199,12 +193,6 @@ namespace Banshee.Collection.Database
             count = connection.Query<long> (count_command);
         }
 
-        /*private void UpdateFilteredAggregates ()
-        {
-            cache.UpdateAggregates ();
-            filtered_count = cache.Count;
-        }*/
-        
         public override void Reload ()
         {
             Reload (null);
@@ -422,63 +410,6 @@ namespace Banshee.Collection.Database
                 ? String.Empty
                 : String.Format (" {0} {1} ", prefix, condition);
         }
-
-        /*public override IEnumerable<ArtistInfo> ArtistInfoFilter {
-            set {
-                ModelHelper.BuildIdFilter<ArtistInfo> (value, "CoreTracks.ArtistID", artist_id_filter_query,
-                    delegate (ArtistInfo artist) {
-                        if (!(artist is DatabaseArtistInfo)) {
-                            return null;
-                        }
-                        
-                        return ((DatabaseArtistInfo)artist).DbId.ToString ();
-                    },
-                
-                    delegate (string new_filter) {
-                        artist_id_filter_query = new_filter;
-                        Console.WriteLine ("artist filter now set to {0}", artist_id_filter_query);
-                    }
-                );
-            }
-        }
-        
-        public override IEnumerable<AlbumInfo> AlbumInfoFilter {
-            set { 
-                ModelHelper.BuildIdFilter<AlbumInfo> (value, "CoreTracks.AlbumID", album_id_filter_query,
-                    delegate (AlbumInfo album) {
-                        if (!(album is DatabaseAlbumInfo)) {
-                            return null;
-                        }
-                        
-                        return ((DatabaseAlbumInfo)album).DbId.ToString ();
-                    },
-                
-                    delegate (string new_filter) {
-                        album_id_filter_query = new_filter;
-                        Console.WriteLine ("album filter now set to {0}", album_id_filter_query);
-                    }
-                );
-            }
-        }*/
-
-        public override void ClearArtistAlbumFilters ()
-        {
-            Reload ();
-        }
-
-        /*private HyenaSqliteCommand check_artists_command = new HyenaSqliteCommand (
-            "SELECT ItemID FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT ArtistID FROM CoreArtists)"
-        );
-
-        private HyenaSqliteCommand check_albums_command = new HyenaSqliteCommand (
-            "SELECT ItemID FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT AlbumID FROM CoreAlbums)"
-        );*/
-
-        /*public void CheckFilters ()
-        {
-            if (track_model.Artist
-            if (ServiceManager.DbConnection.Query<int> (
-        }*/
 
         public int CacheId {
             get { return (int) cache.CacheId; }
