@@ -330,7 +330,13 @@ namespace Banshee.Sources
         protected override void OnTracksChanged (params QueryField [] fields)
         {
             ThreadAssist.SpawnFromMain (delegate {
-                Reload ();
+                if (NeedsReloadWhenFieldsChanged (fields)) {
+                    Reload ();
+                } else {
+                    InvalidateCaches ();
+                }
+
+                System.Threading.Thread.Sleep (150);
 
                 TrackEventHandler handler = TracksChanged;
                 if (handler != null) {

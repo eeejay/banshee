@@ -1,5 +1,16 @@
 2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Move the
+	NeedsReload methods into DatabaseSource so they can be used by
+	PrimarySource and others.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Only reload
+	when track(s) change if needed, otherwise just invalidate the cache.
+	Should help some with performance/CPU usage when changing songs.
+
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Fix crasher
 	in save-selection by being properly defensive and not assuming the item
 	pointed to by the selection focus is still in the model.

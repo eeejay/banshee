@@ -120,6 +120,56 @@ namespace Banshee.Sources
         {
         }
 
+        protected bool NeedsReloadWhenFieldsChanged (Hyena.Query.QueryField [] fields)
+        {
+            if (fields == null) {
+                return true;
+            }
+
+            foreach (QueryField field in fields)
+                if (NeedsReloadWhenFieldChanged (field))
+                    return true;
+
+            return false;
+        }
+
+        private List<QueryField> query_fields;
+        private QueryNode last_query;
+        protected virtual bool NeedsReloadWhenFieldChanged (Hyena.Query.QueryField field)
+        {
+            if (field == null)
+                return true;
+
+            // If it's the artist or album name, then we care, since it affects the browser
+            if (field == Banshee.Query.BansheeQuery.ArtistField || field == Banshee.Query.BansheeQuery.AlbumField) {
+                return true;
+            }
+
+            ISortableColumn sort_column = (TrackModel is DatabaseTrackListModel)
+                ? (TrackModel as DatabaseTrackListModel).SortColumn : null;
+            // If it's the field we're sorting by, then yes, we care
+            // FIXME this Contains is very hacky, we should link the ISortableColumn to a field and/or a
+            // QueryOrder object
+            if (sort_column != null && field.Column.Contains (sort_column.SortKey)) {
+                return true;
+            }
+
+            // Make sure the query isn't dependent on this field
+            QueryNode query = (TrackModel is DatabaseTrackListModel)
+                ? (TrackModel as DatabaseTrackListModel).Query : null;
+            if (query != null) {
+                if (query != last_query) {
+                    query_fields = new List<QueryField> (query.GetFields ());
+                    last_query = query;
+                }
+
+                if (query_fields.Contains (field))
+                    return true;
+            }
+
+            return false;
+        }
+
 #region Public Properties
 
         public override int Count {
