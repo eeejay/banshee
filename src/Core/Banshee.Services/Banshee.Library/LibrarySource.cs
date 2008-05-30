@@ -83,6 +83,11 @@ namespace Banshee.Library
             // If it's from a local primary source, change it's PrimarySource
             if (source.IsLocal || source is LibrarySource) {
                 track.PrimarySource = this;
+
+                if (!(source is LibrarySource)) {
+                    track.CopyToLibraryIfAppropriate (false);
+                }
+
                 track.Save (false);
                 source.NotifyTracksChanged ();
             } else {

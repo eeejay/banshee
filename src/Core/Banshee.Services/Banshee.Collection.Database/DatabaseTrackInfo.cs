@@ -473,7 +473,6 @@ namespace Banshee.Collection.Database
             }
             
             bool in_library = old_uri.AbsolutePath.StartsWith (Paths.CachedLibraryLocation);
-            //Console.WriteLine ("{0} is{1}in library.", old_uri.ToString (), in_library ? " " : " not ");
 
             if (!in_library && (LibrarySchema.CopyOnImport.Get () || force_copy)) {
                 string new_filename = FileNamePattern.BuildFull (this, Path.GetExtension (old_uri.ToString ()).Substring (1));
@@ -487,7 +486,7 @@ namespace Banshee.Collection.Database
                     Banshee.IO.File.Copy (old_uri, new_uri, false);
                     Uri = new_uri;
                 } catch (Exception e) {
-                    Log.Error (String.Format("Exception copying into library: {0}", e), false);
+                    Log.ErrorFormat ("Exception copying into library: {0}", e);
                 }
             }
         }
