@@ -1,5 +1,12 @@
 2008-05-30  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac: Bump to RC1
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Remove
+	redundant status message part
+
+2008-05-30  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Nereid/Nereid/ViewContainer.cs:
 	* src/Core/Banshee.Widgets/Banshee.Widgets/SearchEntry.cs: Make the 
 	filter menu work by inserting a query part when items are selected
