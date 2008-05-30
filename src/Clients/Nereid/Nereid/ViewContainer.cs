@@ -100,11 +100,11 @@ namespace Nereid
             if (uia != null) {
                 Gtk.Action action = uia.GlobalActions["WikiSearchHelpAction"];
                 if (action != null) {
-                    MenuItem item = new SeparatorMenuItem ();
-                    item.Show ();
-                    search_entry.Menu.Append (item);
+                    //MenuItem item = new SeparatorMenuItem ();
+                    //item.Show ();
+                    //search_entry.Menu.Append (item);
                     
-                    item = new ImageMenuItem (Stock.Help, null);
+                    MenuItem item = new ImageMenuItem (Stock.Help, null);
                     item.Activated += delegate { action.Activate (); };
                     item.Show ();
                     search_entry.Menu.Append (item);
@@ -123,13 +123,13 @@ namespace Nereid
             search_entry = new SearchEntry ();
             search_entry.SetSizeRequest (200, -1);
             
-            search_entry.AddFilterOption ((int)TrackFilterType.None, Catalog.GetString ("All Columns"));
+            /*search_entry.AddFilterOption ((int)TrackFilterType.None, Catalog.GetString ("All Columns"));
             search_entry.AddFilterSeparator ();
             search_entry.AddFilterOption ((int)TrackFilterType.SongName, Catalog.GetString ("Song Name"));
             search_entry.AddFilterOption ((int)TrackFilterType.ArtistName, Catalog.GetString ("Artist Name"));
             search_entry.AddFilterOption ((int)TrackFilterType.AlbumTitle, Catalog.GetString ("Album Title"));
             search_entry.AddFilterOption ((int)TrackFilterType.Genre, Catalog.GetString ("Genre"));
-            search_entry.AddFilterOption ((int)TrackFilterType.Year, Catalog.GetString ("Year"));  
+            search_entry.AddFilterOption ((int)TrackFilterType.Year, Catalog.GetString ("Year"));  */
             
             search_entry.FilterChanged += OnSearchEntryFilterChanged;
             search_entry.ActivateFilter ((int)TrackFilterType.None);

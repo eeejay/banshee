@@ -1,5 +1,12 @@
 2008-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Remove the fields listed in
+	the menu that popped up when you clicked the icon next to the search
+	entry, since they did nothing.  Will probably be added back later, and
+	made to prepend "artist" etc fields.
+
+2008-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Collections/Selection.cs: Don't clear the
 	FocusedIndex when we clear the selection - they shouldn't be so tightly
 	linked.  Fixes bug with pressing enter not playing the focused song.
