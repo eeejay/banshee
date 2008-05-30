@@ -1,5 +1,18 @@
 2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Don't pulse the podcasts source when feeds are changes, just when items
+	are added.
+
+	* src/Libraries/Migo/Migo.Syndication/FeedUpdateTask.cs: If the feed
+	hasn't been updated since we last checked, pass notify=false to feed.Save.
+
+	* src/Libraries/Migo/Migo.Syndication/Feed.cs: Don't raise FeedsChanged
+	when DownloadStatus set, just in Save and Delete.  Add override to Save
+	that takes bool notify arg.
+
+2008-05-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Don't throw
 	an exception when CopyTo isn't implemented, but log a warning.
 

@@ -277,7 +277,7 @@ namespace Migo.Syndication
         private FeedDownloadStatus download_status;
         public FeedDownloadStatus DownloadStatus { 
             get { return download_status; }
-            set { download_status = value; Manager.OnFeedsChanged (); }
+            set { download_status = value; }
         }
         
         [DatabaseColumn("IsSubscribed")]
@@ -544,13 +544,20 @@ namespace Migo.Syndication
 
         public void Save ()
         {
+            Save (true);
+        }
+
+        public void Save (bool notify)
+        {
             Provider.Save (this);
             
             if (LastBuildDate > LastAutoDownload) {
                 CheckForItemsToDownload ();
             }
 
-            Manager.OnFeedsChanged ();
+            if (notify) {
+                Manager.OnFeedsChanged ();
+            }
         }
         
         private void CheckForItemsToDownload ()

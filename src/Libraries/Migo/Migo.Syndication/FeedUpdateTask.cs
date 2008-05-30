@@ -140,6 +140,7 @@ namespace Migo.Syndication
 
         private void OnDownloadDataReceived (object sender, Migo.Net.DownloadStringCompletedEventArgs args) 
         {
+            bool notify_on_save = true;
             lock (SyncRoot) {
                 if (cancelled)
                     return;
@@ -147,37 +148,38 @@ namespace Migo.Syndication
                 wc.DownloadStringCompleted -= OnDownloadDataReceived;
                 FeedDownloadError error;
                 
-                if (args.Error == null) {
+                WebException we = args.Error as WebException;
+                if (we == null) {
                      try {
+                        DateTime last_built_at = feed.LastBuildDate;
                         RssParser parser = new RssParser (feed.Url, args.Result);
                         parser.UpdateFeed (feed);
                         feed.SetItems (parser.GetFeedItems (feed));
                         error = FeedDownloadError.None;
+                        notify_on_save = feed.LastBuildDate > last_built_at;
                     } catch (FormatException e) {
                         Log.Exception (e);
                         error = FeedDownloadError.InvalidFeedFormat;
                     }
                 } else {
                     error = FeedDownloadError.DownloadFailed;
-                    WebException we = args.Error as WebException;
-                    if (we != null) {
-                        HttpWebResponse resp = we.Response as HttpWebResponse;
-                        if (resp != null) {
-                            switch (resp.StatusCode) {
-                            case HttpStatusCode.NotFound:
-                            case HttpStatusCode.Gone:
-                                error = FeedDownloadError.DoesNotExist;
-                                break;                                
-                            case HttpStatusCode.NotModified:
-                                error = FeedDownloadError.None;
-                                break;
-                            case HttpStatusCode.Unauthorized:
-                                error = FeedDownloadError.UnsupportedAuth;
-                                break;                                
-                            default:
-                                error = FeedDownloadError.DownloadFailed;
-                                break;
-                            }
+                    HttpWebResponse resp = we.Response as HttpWebResponse;
+                    if (resp != null) {
+                        switch (resp.StatusCode) {
+                        case HttpStatusCode.NotFound:
+                        case HttpStatusCode.Gone:
+                            error = FeedDownloadError.DoesNotExist;
+                            break;                                
+                        case HttpStatusCode.NotModified:
+                            notify_on_save = false;
+                            error = FeedDownloadError.None;
+                            break;
+                        case HttpStatusCode.Unauthorized:
+                            error = FeedDownloadError.UnsupportedAuth;
+                            break;                                
+                        default:
+                            error = FeedDownloadError.DownloadFailed;
+                            break;
                         }
                     }
                 }
@@ -187,7 +189,7 @@ namespace Migo.Syndication
                     feed.LastDownloadTime = DateTime.Now;
                 }
                     
-                feed.Save ();
+                feed.Save (notify_on_save);
                 
                 EmitCompletionEvents (error);
                 completed = true;

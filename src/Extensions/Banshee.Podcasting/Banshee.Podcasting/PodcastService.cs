@@ -289,7 +289,6 @@ namespace Banshee.Podcasting
         private void OnFeedsChanged (object o, EventArgs args)
         {
             source.Reload ();
-            source.NotifyUser ();
         }
 
         /*private void OnFeedAddedHandler (object sender, FeedEventArgs args)
