@@ -200,6 +200,7 @@ namespace Banshee.Gui
         {
             Source source = ServiceManager.SourceManager.ActiveSource;
             bool in_database = source is DatabaseSource;
+            PrimarySource primary_source = source as PrimarySource ?? source.Parent as PrimarySource;
             
             Hyena.Collections.Selection selection = (source is ITrackModelSource) ? (source as ITrackModelSource).TrackModel.Selection : null;
 
@@ -226,7 +227,8 @@ namespace Banshee.Gui
                     
                     UpdateAction ("TrackPropertiesAction", in_database, has_selection, null);
                     UpdateAction ("RateTracksAction", in_database, has_selection, null);
-                    UpdateAction ("AddToPlaylistAction", in_database, has_selection, null);
+
+                    UpdateAction ("AddToPlaylistAction", in_database && primary_source != null && primary_source.SupportsPlaylists, has_selection, null);
                 }
             }
         }

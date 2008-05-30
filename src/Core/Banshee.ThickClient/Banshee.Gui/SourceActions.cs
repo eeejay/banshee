@@ -326,12 +326,17 @@ namespace Banshee.Gui
                 IUnmapableSource unmapable = source as IUnmapableSource;
                 IImportSource import_source = source as IImportSource;
                 SmartPlaylistSource smart_playlist = source as SmartPlaylistSource;
+                PrimarySource primary_source = source as PrimarySource ?? source.Parent as PrimarySource;
+
                 UpdateAction ("UnmapSourceAction", unmapable != null, unmapable != null && unmapable.CanUnmap, source);
                 UpdateAction ("RenameSourceAction", source.CanRename, true, null);
                 UpdateAction ("ImportSourceAction", import_source != null, import_source != null && import_source.CanImport, source);
                 UpdateAction ("ExportPlaylistAction", source is AbstractPlaylistSource, true, source);
                 UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
                 UpdateAction ("RefreshSmartPlaylistAction", smart_playlist != null && smart_playlist.CanRefresh, true, source);
+
+                UpdateAction ("NewPlaylistAction", primary_source != null && primary_source.SupportsPlaylists, true, source);
+                UpdateAction ("NewSmartPlaylistAction", primary_source != null && primary_source.SupportsPlaylists, true, source);
                 /*UpdateAction ("NewSmartPlaylistFromSearchAction", (source is LibrarySource || source.Parent is LibrarySource),
                         !String.IsNullOrEmpty (source.FilterQuery), source);*/
                 last_source = source;

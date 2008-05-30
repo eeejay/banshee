@@ -1,5 +1,21 @@
 2008-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add property
+	defining whether we support playlists or not.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	For now, at least, we don't support playlists.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Show the Add to Play Queue option if the source is a db source, not just
+	if it's a library source.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Hide
+	playlist-related actions unless the primary source SupportsPlaylists.
+
+2008-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Save and
 	restore the expanded state of all primary sources.
 

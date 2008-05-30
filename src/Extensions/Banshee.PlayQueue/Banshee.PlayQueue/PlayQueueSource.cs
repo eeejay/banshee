@@ -222,10 +222,10 @@ namespace Banshee.PlayQueue
             }
             
             Source source = ServiceManager.SourceManager.ActiveSource;
-            bool in_library = (source != null && source.Parent is LibrarySource) || source is LibrarySource;
+            bool in_db = (source != null && source.Parent is DatabaseSource) || source is DatabaseSource;
             
             uia_service.GlobalActions.UpdateAction ("ClearPlayQueueAction", true, Count > 0);
-            uia_service.TrackActions.UpdateAction ("AddToPlayQueueAction", in_library, true);
+            uia_service.TrackActions.UpdateAction ("AddToPlayQueueAction", in_db, true);
         }
         
         void IBasicPlaybackController.First ()

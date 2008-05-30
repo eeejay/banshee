@@ -96,6 +96,9 @@ namespace Banshee.Podcasting.Gui
         {
             this.baseDirectory = baseDirectory;
 
+            // For now..
+            SupportsPlaylists = false;
+
             Properties.SetString ("Icon.Name", "podcast");
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/PodcastSourcePopup");

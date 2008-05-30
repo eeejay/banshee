@@ -118,6 +118,12 @@ namespace Banshee.Sources
             }
         }
 
+        private bool supports_playlists = true;
+        public bool SupportsPlaylists {
+            get { return supports_playlists; }
+            protected set { supports_playlists = value; }
+        }
+
         public ErrorSource ErrorSource {
             get {
                 if (error_source == null) {
