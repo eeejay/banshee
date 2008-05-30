@@ -35,11 +35,13 @@ using Hyena;
 
 namespace Hyena.Query
 {
-    public enum FileSizeFactor {
+    public enum FileSizeFactor : long {
         None = 1,
         KB = 1024,
         MB = 1048576,
-        GB = 1073741824
+        GB = 1073741824,
+        TB = 1099511627776,
+        PB = 1125899906842624
     }
 
     public class FileSizeQueryValue : IntegerQueryValue
@@ -82,9 +84,11 @@ namespace Hyena.Query
                     case 'k': case 'K': factor = FileSizeFactor.KB; break;
                     case 'm': case 'M': factor = FileSizeFactor.MB; break;
                     case 'g': case 'G': factor = FileSizeFactor.GB; break;
+                    case 't': case 'T': factor = FileSizeFactor.TB; break;
+                    case 'p': case 'P': factor = FileSizeFactor.PB; break;
                     default : factor = FileSizeFactor.None; break;
                 }
-                value = (long) ((double)factor * double_value);
+                value = (long)((double)factor * double_value);
             }
         }
 
@@ -96,7 +100,7 @@ namespace Hyena.Query
 
         public void SetValue (double value, FileSizeFactor factor)
         {
-            this.value = (long) (value * (double)factor);
+            this.value = (long)(value * (double)factor);
             this.factor = factor;
             IsEmpty = false;
         }
@@ -105,7 +109,7 @@ namespace Hyena.Query
         {
             if (!IsEmpty && value != 0) {
                 foreach (FileSizeFactor factor in Enum.GetValues (typeof(FileSizeFactor))) {
-                    if (value >= (double) factor) {
+                    if (value >= (double)factor) {
                         this.factor = factor;
                     }
                 }
@@ -120,9 +124,10 @@ namespace Hyena.Query
         public string ToUserQuery (bool always_decimal)
         {
             if (factor != FileSizeFactor.None) {
-                return String.Format (
-                    "{0} {1}",
-                    IntValue == 0 ? "0" : StringUtil.DoubleToTenthsPrecision (((double)IntValue / (double)factor), always_decimal),
+                return String.Format ("{0} {1}",
+                    IntValue == 0 
+                        ? "0" 
+                        : StringUtil.DoubleToTenthsPrecision (((double)IntValue / (double)factor), always_decimal),
                     factor.ToString ()
                 );
             } else {

@@ -39,6 +39,10 @@ namespace Hyena.Widgets
     public class RoundedFrame : Bin
     {
         private Theme theme;
+        protected Theme Theme {
+            get { return theme; }
+        }
+        
         private int frame_width = 3;
         
         private Widget child;
@@ -46,6 +50,7 @@ namespace Hyena.Widgets
         private bool fill_color_set;
         private Cairo.Color fill_color;
         private bool draw_border = true;
+        private Pattern fill_pattern;
         
         public RoundedFrame ()
         {
@@ -62,6 +67,14 @@ namespace Hyena.Widgets
         {
             fill_color_set = false;
             QueueDraw ();
+        }
+        
+        public Pattern FillPattern {
+            get { return fill_pattern; }
+            set {
+                fill_pattern = value;
+                QueueDraw ();
+            }
         }
         
         public bool DrawBorder {
@@ -158,6 +171,8 @@ namespace Hyena.Widgets
             
             if (fill_color_set) {
                 theme.DrawFrameBackground (cr, rect, fill_color);
+            } else if (fill_pattern != null) {
+                theme.DrawFrameBackground (cr, rect, fill_pattern);
             } else {
                 theme.DrawFrameBackground (cr, rect, true);
                 theme.DrawFrameBorder (cr, rect);

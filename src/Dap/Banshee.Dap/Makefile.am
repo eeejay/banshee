@@ -4,7 +4,9 @@ LINK = $(REF_DAP)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
+	Banshee.Dap.Gui/DapInfoBar.cs \
 	Banshee.Dap.Gui/DapPropertiesDialog.cs \
+	Banshee.Dap.Gui/DapPropertiesDisplay.cs \
 	Banshee.Dap/DapService.cs \
 	Banshee.Dap/DapSource.cs \
 	Banshee.Dap/InvalidDeviceException.cs \

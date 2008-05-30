@@ -43,10 +43,15 @@ using Banshee.Hardware;
 using Banshee.MediaEngine;
 using Banshee.MediaProfiles;
 
+using Banshee.Dap.Gui;
+
 namespace Banshee.Dap
 {
     public abstract class DapSource : RemovableSource, IDisposable
     {
+        private DapInfoBar dap_info_bar;
+        // private DapPropertiesDisplay dap_properties_display;
+        
         private IDevice device;
         internal IDevice Device {
             get { return device; }
@@ -56,6 +61,16 @@ namespace Banshee.Dap
         internal string AddinId {
             get { return addin_id; }
             set { addin_id = value; }
+        }
+        
+        private MediaGroupSource music_group_source;
+        protected MediaGroupSource MusicGroupSource {
+            get { return music_group_source; }
+        }
+        
+        private MediaGroupSource video_group_source;
+        protected MediaGroupSource VideoGroupSource {
+            get { return video_group_source; }
         }
         
         protected DapSource ()
@@ -72,6 +87,16 @@ namespace Banshee.Dap
         {
             PurgeBuiltinSmartPlaylists ();
             PurgeTracks ();
+            
+            Properties.Remove ("Nereid.SourceContents.FooterWidget");
+            if (dap_info_bar != null) {
+                dap_info_bar.Destroy ();
+                dap_info_bar = null;
+            }
+            
+            /*Properties.Remove ("Nereid.SourceContents");
+            dap_properties_display.Destroy ();
+            dap_properties_display = null;*/
         }
         
         private void PurgeBuiltinSmartPlaylists ()
@@ -84,6 +109,11 @@ namespace Banshee.Dap
                 COMMIT TRANSACTION",
                 DbId, DbId
             ));
+        }
+        
+        internal void RaiseUpdated ()
+        {
+            OnUpdated ();
         }
 
 #region Source
@@ -100,6 +130,14 @@ namespace Banshee.Dap
             Properties.Set<OpenPropertiesDelegate> ("SourceProperties.GuiHandler", delegate {
                 new DapPropertiesDialog (this).RunDialog ();
             });
+            
+            Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
+            
+            dap_info_bar = new DapInfoBar (this);
+            Properties.Set<Gtk.Widget> ("Nereid.SourceContents.FooterWidget", dap_info_bar);
+            
+            /*dap_properties_display = new DapPropertiesDisplay (this);
+            Properties.Set<Banshee.Sources.Gui.ISourceContents> ("Nereid.SourceContents", dap_properties_display);*/
 
             if (String.IsNullOrEmpty (GenericName)) {
                 GenericName = Catalog.GetString ("Media Player");
@@ -117,9 +155,12 @@ namespace Banshee.Dap
                     ? MediaCapabilities.PlaybackMimeTypes 
                     : new string [] { "taglib/mp3" };
             }
+            
+            music_group_source = new MusicGroupSource (this);
+            video_group_source = new VideoGroupSource (this);
 
-            AddChildSource (new MusicGroupSource (this));
-            AddChildSource (new VideoGroupSource (this));
+            AddChildSource (music_group_source);
+            AddChildSource (video_group_source);
         }
         
         public override void AddChildSource (Source child)
@@ -159,7 +200,7 @@ namespace Banshee.Dap
         
 #region Track Management/Syncing   
 
-        internal void LoadDeviceContents ()
+        public void LoadDeviceContents ()
         {
             ThreadPool.QueueUserWorkItem (ThreadedLoadDeviceContents);
         }
@@ -306,6 +347,14 @@ namespace Banshee.Dap
         public string [] AcceptableMimeTypes {
             get { return acceptable_mimetypes; }
             protected set { acceptable_mimetypes = value; }
+        }
+       
+        public long BytesVideo {
+            get { return VideoGroupSource == null ? 0 : VideoGroupSource.BytesUsed; }
+        }
+        
+        public long BytesMusic {
+            get { return MusicGroupSource == null ? 0 : MusicGroupSource.BytesUsed; }
         }
         
 #endregion

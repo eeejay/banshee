@@ -1,3 +1,56 @@
+2008-05-30  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	Show the correct number of songs that are ripping in the status area
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Removed disk usage stuff
+	and added footer widget support
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: 
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:
+	Ported the database rebuilder and the unsupported database UI from 0.13.x
+	so now unsupported databases can be rebuilt and users will at least know
+	their shitty iPod won't work in Banshee because they used it with shitty
+	iTunes. Buy an MTP device.
+
+	* src/Dap/Banshee.Dap.Ipod/ThemeIcons/scalable/devices/*.svg: Added the
+	vector versions of the iPods
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs: 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Support the new DapInfoBar
+	in the footer of the source to show the stats on audio, video, and data
+	usage for each DAP
+
+	* src/Dap/Banshee.Dap/Makefile.am:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs: Sweet display for
+	showing disk usage stats
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDisplay.cs:
+	Start of a GUI page for DAPs, not really used yet except for the iPod
+	when the database can't be read
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/MessagePane.cs: Cleaned up
+	to derive directly from table, less window hackery
+
+	* src/Libraries/Hyena/Hyena.Query/FileSizeQueryValue.cs: Added support
+	for converting terabytes and petabytes (IT WILL HAPPEN ONE DAY - GOOGLE
+	ALREADY PROCESSES 20PB/day - JUST WAIT)
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellRating.cs: Fix NRE
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/Theme.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Support setting
+	a pattern as the background for the rounded frame background
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SegmentedBar.cs: More fixes,
+	support horizontal padding, greadly simplified the segment rendering
+	by using two pattern passes instead of N pattern passes, fixes bugs where
+	a segment was shorter than the radius causing strange shit to happen
+
 2008-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Nereid/Nereid/ViewContainer.cs: Remove the fields listed in

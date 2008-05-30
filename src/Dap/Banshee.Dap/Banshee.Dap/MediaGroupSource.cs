@@ -38,14 +38,19 @@ using Banshee.SmartPlaylist;
 
 namespace Banshee.Dap
 {
-    public abstract class MediaGroupSource : SmartPlaylistSource, IDiskUsageReporter
+    public abstract class MediaGroupSource : SmartPlaylistSource
     {
         private DapSource parent;
         
         public MediaGroupSource (DapSource parent, string name) : base (name, parent.DbId)
         {
             this.parent = parent;
-            Properties.Set<string> ("DeleteTracksFromDriveActionLabel", String.Format (Catalog.GetString ("Delete From {0}"), parent.Name));
+            
+            Properties.Set<Gtk.Widget> ("Nereid.SourceContents.FooterWidget", 
+                parent.Properties.Get<Gtk.Widget> ("Nereid.SourceContents.FooterWidget"));
+            
+            Properties.Set<string> ("DeleteTracksFromDriveActionLabel", 
+                String.Format (Catalog.GetString ("Delete From {0}"), parent.Name));
         }
 
         protected override void AfterInitialized ()
@@ -53,6 +58,15 @@ namespace Banshee.Dap
             base.AfterInitialized ();
             Reload ();
         }
+        
+        protected override void OnUpdated ()
+        {
+            base.OnUpdated ();
+            if (parent != null) {
+                parent.RaiseUpdated ();
+            }
+        }
+
 
         /*public override bool AcceptsInputFromSource (Source source)
         {
@@ -80,11 +94,10 @@ namespace Banshee.Dap
         }
 
         public long BytesUsed {
-            get { return parent.BytesUsed; }
-        }
-
-        public long BytesCapacity {
-            get { return parent.BytesCapacity; }
+            get { 
+                IFileSizeAggregator aggregator = this as IFileSizeAggregator;
+                return aggregator == null ? 0 : aggregator.FileSize;
+            }
         }
     }
 }

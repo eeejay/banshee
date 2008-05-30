@@ -130,10 +130,14 @@ namespace Hyena.Gui.Theming
             cr.Translate (-0.5, -0.5);
         }
 
-        public override void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
+        public override void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color, Cairo.Pattern pattern)
         {
             color.A = Context.FillAlpha;
-            cr.Color = color;
+            if (pattern != null) {
+                cr.Pattern = pattern;
+            } else {
+                cr.Color = color;
+            }
             CairoExtensions.RoundedRectangle (cr, alloc.X, alloc.Y, alloc.Width, alloc.Height, Context.Radius, CairoCorners.All);
             cr.Fill ();
         }

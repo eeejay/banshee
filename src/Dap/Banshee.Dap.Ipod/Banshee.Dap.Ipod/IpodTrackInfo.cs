@@ -75,6 +75,7 @@ namespace Banshee.Dap.Ipod
                 TrackCount = track.TrackCount;
                 TrackNumber = track.TrackNumber;
                 Year = track.Year;
+                FileSize = track.FileSize;
                 MediaAttributes = track.MediaAttributes;
             }
             
@@ -98,6 +99,7 @@ namespace Banshee.Dap.Ipod
             TrackCount = track.TotalTracks;
             TrackNumber = track.TrackNumber;
             Year = track.Year;
+            FileSize = track.Size;
             
             AlbumTitle = String.IsNullOrEmpty (track.Album) ? null : track.Album;
             ArtistName = String.IsNullOrEmpty (track.Artist) ? null : track.Artist;
@@ -226,7 +228,7 @@ namespace Banshee.Dap.Ipod
         // FIXME: No reason for this to use GdkPixbuf - the file is on disk already in 
         // the artwork cache as a JPEG, so just shove the bytes from disk into the track
         
-        private void SetIpodCoverArt (IPod.Device device, IPod.Track track, string path)
+        public static void SetIpodCoverArt (IPod.Device device, IPod.Track track, string path)
         {
             try {
                 Gdk.Pixbuf pixbuf = new Gdk.Pixbuf (path);
@@ -239,7 +241,7 @@ namespace Banshee.Dap.Ipod
             }
         }
 
-        private void SetIpodCoverArt (IPod.Device device, IPod.Track track, IPod.ArtworkUsage usage, Gdk.Pixbuf pixbuf)
+        private static void SetIpodCoverArt (IPod.Device device, IPod.Track track, IPod.ArtworkUsage usage, Gdk.Pixbuf pixbuf)
         {
             foreach (IPod.ArtworkFormat format in device.LookupArtworkFormats (usage)) {
                 if (!track.HasCoverArt (format)) {

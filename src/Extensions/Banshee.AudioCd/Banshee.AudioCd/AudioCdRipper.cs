@@ -177,7 +177,7 @@ namespace Banshee.AudioCd
             AudioCdTrackInfo track = queue.Dequeue ();
 
             user_job.Title = String.Format (Catalog.GetString ("Importing {0} of {1}"), 
-                ++track_index, source.TrackModel.Count);
+                ++track_index, source.DiscModel.EnabledCount);
             status = String.Format("{0} - {1}", track.ArtistName, track.TrackTitle);
             user_job.Status = status;
             

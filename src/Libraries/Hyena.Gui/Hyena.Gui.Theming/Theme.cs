@@ -38,6 +38,7 @@ namespace Hyena.Gui.Theming
 {
     public abstract class Theme
     {
+        private static Cairo.Color black = new Cairo.Color (0, 0, 0);
         private Stack<ThemeContext> contexts = new Stack<ThemeContext> ();
         private GtkColors colors;
 
@@ -99,7 +100,17 @@ namespace Hyena.Gui.Theming
                 : colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal));
         }
         
-        public abstract void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);
+        public void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
+        {
+            DrawFrameBackground (cr, alloc, color, null);
+        }
+        
+        public void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Pattern pattern)
+        {
+            DrawFrameBackground (cr, alloc, black , pattern);
+        }
+        
+        public abstract void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color, Cairo.Pattern pattern);
         
         public abstract void DrawFrameBorder (Cairo.Context cr, Gdk.Rectangle alloc);
         

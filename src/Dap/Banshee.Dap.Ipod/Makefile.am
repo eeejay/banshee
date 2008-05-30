@@ -4,10 +4,12 @@ LINK = $(REF_DAP_IPOD)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
+	Banshee.Dap.Ipod/DatabaseRebuilder.cs \
 	Banshee.Dap.Ipod/IpodSource.cs \
 	Banshee.Dap.Ipod/IpodTrackInfo.cs \
 	Banshee.Dap.Ipod/PodSleuthDevice.cs \
-	Banshee.Dap.Ipod/PodSleuthDeviceProvider.cs
+	Banshee.Dap.Ipod/PodSleuthDeviceProvider.cs \
+	Banshee.Dap.Ipod/UnsupportedDatabaseView.cs
 
 RESOURCES = Banshee.Dap.Ipod.addin.xml
 

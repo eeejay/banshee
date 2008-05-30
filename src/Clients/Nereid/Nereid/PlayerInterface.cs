@@ -345,8 +345,17 @@ namespace Nereid
 
             view_container.Header.Visible = source.Properties.Contains ("Nereid.SourceContents.HeaderVisible") ?
                 source.Properties.Get<bool> ("Nereid.SourceContents.HeaderVisible") : true;
-
-            view_container.DiskUsageVisible = (source is IDiskUsageReporter);
+            
+            view_container.ClearFooter ();
+            Widget footer_widget = null;
+            
+            if (source.Properties.Contains ("Nereid.SourceContents.FooterWidget")) {
+                footer_widget = source.Properties.Get<Widget> ("Nereid.SourceContents.FooterWidget");
+            }
+            
+            if (footer_widget != null) {
+                view_container.SetFooter (footer_widget);
+            }
             
             UpdateSourceInformation ();
             view_container.SearchEntry.Ready = true;
@@ -500,22 +509,6 @@ namespace Nereid
             if (source == null) {
                 status_label.Text = String.Empty;
                 return;
-            }
-
-            if (source is IDiskUsageReporter) {
-                IDiskUsageReporter reporter = source as IDiskUsageReporter;
-
-                double fraction = (double)reporter.BytesUsed / (double)reporter.BytesCapacity;
-
-                view_container.DiskUsageBar.Fraction = fraction;
-                view_container.DiskUsageBar.Text = String.Format(
-                    Catalog.GetString("{0} of {1}"),
-                    new Hyena.Query.FileSizeQueryValue (reporter.BytesUsed).ToUserQuery (),
-                    new Hyena.Query.FileSizeQueryValue (reporter.BytesCapacity).ToUserQuery ()
-                );
-
-                //string tooltip = dapSource.DiskUsageString + " (" + dapSource.DiskAvailableString + ")";
-                //toolTips.SetTip (dapDiskUsageBar, tooltip, tooltip);
             }
 
             status_label.Text = source.GetStatusText ();

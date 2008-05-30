@@ -47,8 +47,7 @@ namespace Nereid
         private HBox header;
         private Label title_label;
         private Label search_label;
-        private Label disk_usage_label;
-        private ProgressBar disk_usage_bar;
+        private VBox footer;
         
         private ISourceContents content;
         
@@ -63,6 +62,7 @@ namespace Nereid
         private void BuildHeader ()
         {
             header = new HBox ();
+            footer = new VBox ();
             
             EventBox title_box = new EventBox ();
             title_label = new Label ();
@@ -81,9 +81,6 @@ namespace Nereid
                     ServiceManager.Get<InterfaceActionService> ().SourceActions ["SourceContextMenuAction"].Activate ();
                 }
             };
-
-            disk_usage_label = new Label (Catalog.GetString ("Disk Usage:"));
-            disk_usage_bar = new ProgressBar ();
             
             BuildSearchEntry ();
             
@@ -91,8 +88,6 @@ namespace Nereid
             search_label.MnemonicWidget = search_entry.InnerEntry;
             
             header.PackStart (title_box, true, true, 0);
-            header.PackStart (disk_usage_label, false, false, 5);
-            header.PackStart (disk_usage_bar, false, false, 5);
             header.PackStart (search_label, false, false, 5);
             header.PackStart (search_entry, false, false, 0);
             
@@ -115,6 +110,7 @@ namespace Nereid
             search_entry.Show ();
             
             PackStart (header, false, false, 0);
+            PackEnd (footer, false, false, 0);
             PackEnd (new ConnectedMessageBar (), false, true, 0);
         }
         
@@ -143,6 +139,24 @@ namespace Nereid
                 search_entry.GetLabelForFilterID (search_entry.ActiveFilterID));
         }
         
+        public void SetFooter (Widget contents)
+        {
+            if (contents != null) {
+                footer.PackStart (contents, false, false, 0);
+                contents.Show ();
+                footer.Show ();
+            }
+        }
+        
+        public void ClearFooter ()
+        {
+            foreach (Widget child in footer.Children) {
+                footer.Remove (child);
+            }
+            
+            footer.Hide ();
+        }
+        
         public HBox Header {
             get { return header; }
         }
@@ -150,25 +164,22 @@ namespace Nereid
         public SearchEntry SearchEntry {
             get { return search_entry; }
         }
-
-        public ProgressBar DiskUsageBar {
-            get { return disk_usage_bar; }
-        }
         
         public ISourceContents Content {
             get { return content; }
             set {
-                if (content == value)
+                if (content == value) {
                     return;
-
-                if (content != null) {
+                }
+                
+                if (content != null && content.Widget != null) {
                     content.Widget.Hide ();
                     Remove (content.Widget);
                 }
                 
                 content = value;
                 
-                if (content != null) {
+                if (content != null && content.Widget != null) {
                     PackStart (content.Widget, true, true, 0);
                     content.Widget.Show ();
                 }
@@ -186,14 +197,6 @@ namespace Nereid
                 search_label.Sensitive = value;
                 search_entry.Visible = value;
                 search_label.Visible = value;
-            }
-        }
-
-        public bool DiskUsageVisible {
-            get { return disk_usage_bar.Visible; }
-            set {
-                disk_usage_label.Visible = value;
-                disk_usage_bar.Visible = value;
             }
         }
     }

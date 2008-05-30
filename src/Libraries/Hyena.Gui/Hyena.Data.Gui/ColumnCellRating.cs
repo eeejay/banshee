@@ -116,7 +116,7 @@ namespace Hyena.Data.Gui
         }
         
         private int Value {
-            get { return renderer.ClampValue ((int)BoundObject); }
+            get { return BoundObject == null ? MinRating : renderer.ClampValue ((int)BoundObject); }
             set { BoundObject = renderer.ClampValue (value); }
         }
         

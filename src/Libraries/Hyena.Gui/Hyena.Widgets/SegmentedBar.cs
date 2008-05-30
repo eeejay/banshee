@@ -95,6 +95,7 @@ namespace Hyena.Widgets
         private int segment_label_spacing = 16;
         private int segment_box_size = 12;
         private int segment_box_spacing = 6;
+        private int h_padding = 0;
         
         private bool show_labels = true;
         private bool reflect = true;
@@ -129,9 +130,10 @@ namespace Hyena.Widgets
             if (show_labels) {
                 ComputeLayoutSize ();
                 HeightRequest = Math.Max (bar_height + bar_label_spacing + layout_height, _bar_height);
-                WidthRequest = layout_width;
+                WidthRequest = layout_width + (2 * h_padding);
             } else {
                 HeightRequest = _bar_height;
+                WidthRequest = bar_height + (2 * h_padding);
             }
             
             base.OnSizeAllocated (allocation);
@@ -139,6 +141,10 @@ namespace Hyena.Widgets
         
         private void ComputeLayoutSize ()
         {
+            if (segments.Count == 0) {
+                return;
+            }
+            
             Pango.Layout layout = null;
             
             layout_width = layout_height = 0;
@@ -198,6 +204,12 @@ namespace Hyena.Widgets
                 segments.Add (segment);
                 QueueDraw ();
             }
+        }
+        
+        public void UpdateSegment (int index, double percent)
+        {
+            segments[index].Percent = percent;
+            QueueDraw ();
         }
         
 #endregion
@@ -286,6 +298,16 @@ namespace Hyena.Widgets
             }
         }
         
+        public int HorizontalPadding {
+            get { return h_padding; }
+            set { 
+                if (h_padding != value) {
+                    h_padding = value;
+                    QueueResize ();
+                }
+            }
+        }
+        
 #endregion
         
 #region Rendering
@@ -303,12 +325,12 @@ namespace Hyena.Widgets
             }
             
             cr.Operator = Operator.Over;
-            cr.Translate (Allocation.X, Allocation.Y);
-            cr.Rectangle (0, 0, Allocation.Width, Math.Max (2 * bar_height, 
+            cr.Translate (Allocation.X + h_padding, Allocation.Y);
+            cr.Rectangle (0, 0, Allocation.Width - h_padding, Math.Max (2 * bar_height, 
                 bar_height + bar_label_spacing + layout_height));
             cr.Clip ();
             
-            Pattern bar = RenderBar (Allocation.Width, bar_height);
+            Pattern bar = RenderBar (Allocation.Width - 2 * h_padding, bar_height);
             
             cr.Save ();
             cr.Source = bar;
@@ -318,7 +340,7 @@ namespace Hyena.Widgets
             if (reflect) {
                 cr.Save ();
     
-                cr.Rectangle (0, bar_height, Allocation.Width, bar_height);
+                cr.Rectangle (0, bar_height, Allocation.Width - h_padding, bar_height);
                 cr.Clip ();
                 
                 Matrix matrix = new Matrix ();
@@ -345,7 +367,7 @@ namespace Hyena.Widgets
             }
             
             if (show_labels) {
-                cr.Translate ((reflect ? Allocation.X : 0) + (Allocation.Width - layout_width) / 2, 
+                cr.Translate ((reflect ? Allocation.X : -h_padding) + (Allocation.Width - layout_width) / 2, 
                      (reflect ? Allocation.Y : 0) + bar_height + bar_label_spacing);
                 
                 RenderLabels (cr);
@@ -377,36 +399,29 @@ namespace Hyena.Widgets
         
         private void RenderBarSegments (Context cr, int w, int h, int r)
         {
-            CairoCorners corners_left = CairoCorners.TopLeft | CairoCorners.BottomLeft;
-            CairoCorners corners_right = CairoCorners.TopRight | CairoCorners.BottomRight;
+            LinearGradient grad = new LinearGradient (0, 0, w, 0);
+            double last = 0.0;
             
-            double x = 0;
-            
-            for (int i = 0; i < segments.Count; i++) {
-                LinearGradient grad = MakeSegmentGradient (h, segments[i].Color);
-                double s_w = w * segments[i].Percent;
-                CairoCorners corners = CairoCorners.None;
-                
-                if (i == 0) {
-                    corners |= corners_left;
-                } else if (i == segments.Count - 1 && x + s_w == w) {
-                    corners |= corners_right;
+            foreach (Segment segment in segments) {
+                if (segment.Percent > 0) {
+                    grad.AddColorStop (last, segment.Color);
+                    grad.AddColorStop (last += segment.Percent, segment.Color);
                 }
-                
-                CairoExtensions.RoundedRectangle (cr, x, 0, s_w, h, r, corners);
-                cr.Pattern = grad;
-                cr.Fill ();
-                grad.Destroy ();
-                
-                x += s_w;
             }
             
-            if (x < w) {
-                CairoExtensions.RoundedRectangle (cr, x, 0, w - x, h, r, corners_right);
-                cr.Pattern = MakeSegmentGradient (h, remainder_color);
-                cr.Fill ();
-                cr.Pattern.Destroy ();
-            }
+            CairoExtensions.RoundedRectangle (cr, 0, 0, w, h, r); 
+            cr.Pattern = grad;
+            cr.FillPreserve ();
+            cr.Pattern.Destroy ();
+            
+            grad = new LinearGradient (0, 0, 0, h);
+            grad.AddColorStop (0.0, new Color (1, 1, 1, 0.125));
+            grad.AddColorStop (0.35, new Color (1, 1, 1, 0.255));
+            grad.AddColorStop (1, new Color (0, 0, 0, 0.4));
+            
+            cr.Pattern = grad;
+            cr.Fill ();
+            cr.Pattern.Destroy ();
         }
         
         private void RenderBarStrokes (Context cr, int w, int h, int r)
@@ -459,6 +474,10 @@ namespace Hyena.Widgets
         
         private void RenderLabels (Context cr)
         {
+            if (segments.Count == 0) {
+                return;
+            }
+            
             Pango.Layout layout = null;
             Color text_color = CairoExtensions.GdkColorToCairoColor (Style.Foreground (State));
             Color box_stroke_color = new Color (0, 0, 0, 0.6);
@@ -564,10 +583,12 @@ namespace Hyena.Widgets
             
             int space = 55;
             bar = new SegmentedBar ();
-            bar.AddSegmentRgb ("Audio", 0.20, 0x3465a4);
-            bar.AddSegmentRgb ("Video", 0.55, 0x73d216);
-            bar.AddSegmentRgb ("Other", 0.10, 0xf57900);
-            bar.AddSegment ("Free Space", 0.15, bar.RemainderColor, false);
+            bar.HorizontalPadding = bar.BarHeight / 2;
+            bar.AddSegmentRgb ("Audio", 0.00187992456702332, 0x3465a4);
+            bar.AddSegmentRgb ("Other", 0.0788718162651326, 0xf57900);
+            bar.AddSegmentRgb ("Video", 0.0516869922033282, 0x73d216);
+            bar.AddSegment ("Free Space", 0.867561266964516, bar.RemainderColor, false);
+           
             bar.ValueFormatter = delegate (SegmentedBar.Segment segment) {
                 return String.Format ("{0} GB", space * segment.Percent);
             };
@@ -580,7 +601,7 @@ namespace Hyena.Widgets
             
             SpinButton height = new SpinButton (new Adjustment (bar.BarHeight, 5, 100, 1, 1, 1), 1, 0);
             height.Activated += delegate { bar.BarHeight = height.ValueAsInt; };
-            height.Changed += delegate { bar.BarHeight = height.ValueAsInt; };
+            height.Changed += delegate { bar.BarHeight = height.ValueAsInt; bar.HorizontalPadding = bar.BarHeight / 2; };
             controls.PackStart (height, false, false, 0);
             
             CheckButton reflect = new CheckButton ("Reflection");

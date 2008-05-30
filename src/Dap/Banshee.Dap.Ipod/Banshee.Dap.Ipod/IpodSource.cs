@@ -41,11 +41,17 @@ using Banshee.Dap;
 using Banshee.Hardware;
 using Banshee.Collection.Database;
 
+using Banshee.Dap.Gui;
+
 namespace Banshee.Dap.Ipod
 {
     public class IpodSource : DapSource
     {
         private PodSleuthDevice ipod_device;
+        internal PodSleuthDevice IpodDevice {
+            get { return ipod_device; }
+        }
+        
         private Dictionary<int, IpodTrackInfo> tracks_map = new Dictionary<int, IpodTrackInfo> (); // FIXME: EPIC FAIL
         private bool database_loaded;
         
@@ -58,6 +64,8 @@ namespace Banshee.Dap.Ipod
         internal bool DatabaseSupported {
             get { return database_supported; }
         }
+        
+        private UnsupportedDatabaseView unsupported_view;
         
 #region Device Setup/Dispose
         
@@ -77,6 +85,7 @@ namespace Banshee.Dap.Ipod
 
         public override void Dispose ()
         {
+            ThreadAssist.ProxyToMain (delegate { DestroyUnsupportedView (); });
             CancelSyncThread ();
             base.Dispose ();
         }
@@ -116,7 +125,7 @@ namespace Banshee.Dap.Ipod
             
             try {
                 if (File.Exists (ipod_device.TrackDatabasePath)) { 
-                    ipod_device.LoadTrackDatabase ();
+                    ipod_device.LoadTrackDatabase (false);
                 } else {
                     int count = CountMusicFiles ();
                     Log.DebugFormat ("Found {0} files in /iPod_Control/Music", count);
@@ -125,9 +134,17 @@ namespace Banshee.Dap.Ipod
                     }
                 }
                 database_supported = true;
+                ThreadAssist.ProxyToMain (delegate { DestroyUnsupportedView (); });
             } catch (DatabaseReadException e) {
                 Log.Exception ("Could not read iPod database", e);
                 ipod_device.LoadTrackDatabase (true);
+                
+                ThreadAssist.ProxyToMain (delegate {
+                    DestroyUnsupportedView ();
+                    unsupported_view = new UnsupportedDatabaseView (this);
+                    unsupported_view.Refresh += OnRebuildDatabaseRefresh;
+                    Properties.Set<Banshee.Sources.Gui.ISourceContents> ("Nereid.SourceContents", unsupported_view);
+                });
             } catch (Exception e) {
                 Log.Exception (e);
             }
@@ -180,9 +197,29 @@ namespace Banshee.Dap.Ipod
             }*/
         }
         
+        private void OnRebuildDatabaseRefresh (object o, EventArgs args)
+        {
+            ServiceManager.SourceManager.SetActiveSource (MusicGroupSource);
+            base.LoadDeviceContents ();
+        }
+        
+        private void DestroyUnsupportedView ()
+        {
+            if (unsupported_view != null) {
+                unsupported_view.Refresh -= OnRebuildDatabaseRefresh;
+                unsupported_view.Destroy ();
+                unsupported_view = null;
+            }
+        }
+        
 #endregion
 
 #region Source Cosmetics
+
+        internal string [] _GetIconNames ()
+        {
+            return GetIconNames ();
+        }
 
         protected override string [] GetIconNames ()
         {
@@ -291,6 +328,10 @@ namespace Banshee.Dap.Ipod
                     }
                 }
             }
+        }
+        
+        public override bool CanActivate {
+            get { return unsupported_view != null; }
         }
         
         public override bool CanRename {

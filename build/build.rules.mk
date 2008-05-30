@@ -9,7 +9,7 @@ RESOURCES_BUILD = $(foreach resource, $(RESOURCES_EXPANDED), \
 	-resource:$(resource),$(notdir $(resource)))
 
 INSTALL_ICONS = $(top_srcdir)/build/private-icon-theme-installer "$(mkinstalldirs)" "$(INSTALL_DATA)"
-THEME_ICONS_SOURCE = $(wildcard $(srcdir)/ThemeIcons/*/*/*.png)
+THEME_ICONS_SOURCE = $(wildcard $(srcdir)/ThemeIcons/*/*/*.png) $(wildcard $(srcdir)/ThemeIcons/scalable/*/*.svg)
 THEME_ICONS_RELATIVE = $(subst $(srcdir)/ThemeIcons/, , $(THEME_ICONS_SOURCE))
 
 ASSEMBLY_EXTENSION = $(strip $(patsubst library, dll, $(TARGET)))
