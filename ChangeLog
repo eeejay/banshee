@@ -1,3 +1,10 @@
+2008-05-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/Queue.cs:
+	Don't use Hyena.DateTimeUtil since it has a bug with
+	timezone/daylight-savings that reports times an hour off in some cases.
+	Should fix BGO #528195.
+
 2008-05-30  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:

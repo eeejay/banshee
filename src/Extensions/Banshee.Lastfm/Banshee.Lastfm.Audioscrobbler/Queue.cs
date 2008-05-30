@@ -52,6 +52,8 @@ namespace Banshee.Lastfm.Audioscrobbler
     {
         internal class QueuedTrack
         {
+            private static DateTime epoch = DateTimeUtil.LocalUnixEpoch.ToUniversalTime ();
+
             public QueuedTrack (TrackInfo track, DateTime start_time)
             {
                 this.artist = track.ArtistName;
@@ -59,7 +61,10 @@ namespace Banshee.Lastfm.Audioscrobbler
                 this.title = track.TrackTitle;
                 this.track_number = (int) track.TrackNumber;
                 this.duration = (int) track.Duration.TotalSeconds;
-                this.start_time = DateTimeUtil.ToTimeT(start_time.ToLocalTime ());
+                // Idealy would use Hyena's DateTimeUtil, but it is broken since the "unix epoch" it uses is
+                // not UTC, so depending on whether jan 1 1970 was in day-light savings and whether the user's
+                // current timezone is in DLS, we'll be an hour off.
+                this.start_time = (long) (start_time.ToUniversalTime () - epoch).TotalSeconds;
                 // TODO
                 //this.musicbrainzid = track.MusicBrainzId;
                 
