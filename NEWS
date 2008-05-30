@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.0 BETA 2! (0.99.2) - Released May 22, 2008
+WELCOME TO BANSHEE 1.0 Relese Candidate (RC) 1! (0.99.3) - Released May 30, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,7 +10,7 @@ WELCOME TO BANSHEE 1.0 BETA 2! (0.99.2) - Released May 22, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/Releases/0.99.2
+  * Learn More: http://banshee-project.org/Releases/0.99.3
 
 
 ===============================================================================
@@ -36,9 +36,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 0.99.2 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-0.99.2.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-0.99.2.tar.gz
+    * Banshee 0.99.3 Tarballs:
+      http://banshee-project.org/files/banshee/banshee-1-0.99.3.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-0.99.3.tar.gz
 
 Packages
 --------
@@ -54,7 +54,7 @@ Packages
 ChangeLogs
 ----------
 
-    * http://banshee-project.org/files/banshee/banshee-1-0.99.2.changes
+    * http://banshee-project.org/files/banshee/banshee-1-0.99.3.changes
 
 
 ===============================================================================
@@ -101,7 +101,7 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.0 Beta 2 represents the fifth release since we began rewriting
+    Banshee 1.0 RC 1 represents the sixth release since we began rewriting
     much of the core of Banshee. The primary reasons for this rearchitecting 
     were to deliver much needed performance improvements, make features more
     powerful and mature, and allow us to add awesome new features like the 
@@ -117,22 +117,12 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     New features in this release include:
 
-    * Podcast Support
-    * Automatic CD Importing
-    * CD Burning
+    * 
 
     Other features, bug fixes, and errata:
 
-    * Genre entry autocompletes in track information editor
-    * Columns specific to type of source (Music, Video, Podcast)
-    * Fix CPU spike triggered by song transition
-    * Fix two fairly common segfault crashes
-    * Add File Size column, right-align it and Duration
-    * Disable writing metadata for videos to file to avoid 100% CPU bug
-    * Add Love/Hate menu items to the Notification Area icon's menu
-    * If a Last.fm station is double clicked, it will start playing once it has loaded
-    * Allow choosing with checkboxes what songs to import from Audio CD
-    * Over 28 bugs were fixed since Beta 1
+    * 
+    * Over 22 bugs were fixed since Beta 2
 
 ===============================================================================
 REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
@@ -145,7 +135,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.99.2
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.99.3
 
 
 ===============================================================================
@@ -158,14 +148,13 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
       
-      Aaron Bockover, Bertrand Lorentz, Gabriel Burt, James Willcox,
-      Mike Urbanski, Nicholas Parker, Scott Peterson, Sebastian Dröge
+      Aaron Bockover, Alexander Hixon, Gabriel Burt, James Willcox,
+      Michael Monreal, Sebastian Dröge
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
 
-      Daniel Abramov (ru), Jonh Wendell (pt_BR), Luca Ferretti (it),
-      Nickolay Shmyrev
+      Claude Paroz (fr),  Wouter Bolsterlee (nl)
       
     The release notes and screenshots for this release were crafted by:
 
@@ -187,4 +176,3 @@ Contributors In Past Releases
     Oscar Forero, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch,
     Scott Peterson, Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington,
     Wouter Bolsterlee
-
