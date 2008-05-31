@@ -1,8 +1,9 @@
+REAL_NOTIFY_SHARP_SOURCES = Notifications/Notifications.cs Notifications/Notification.cs
 if EXTERNAL_NOTIFY_SHARP
 NOTIFY_SHARP_SOURCES = 
 NOTIFY_SHARP_LIBS = $(NOTIFY_SHARP_LIBS)
 else
-NOTIFY_SHARP_SOURCES = Notifications/Notifications.cs Notifications/Notification.cs
+NOTIFY_SHARP_SOURCES = $(REAL_NOTIFY_SHARP_SOURCES)
 NOTIFY_SHARP_LIBS = 
 endif
 
@@ -28,5 +29,5 @@ RESOURCES =  \
 include $(top_srcdir)/build/build.mk
 
 module_SCRIPTS += Banshee.NotificationArea.dll.config
-EXTRA_DIST += Banshee.NotificationArea.dll.config
+EXTRA_DIST += Banshee.NotificationArea.dll.config $(REAL_NOTIFY_SHARP_SOURCES)
 

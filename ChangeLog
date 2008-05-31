@@ -1,5 +1,9 @@
 2008-05-30  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NotificationArea/Makefile.am: Build fix
+
+2008-05-30  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac: Bump to RC1
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Remove
