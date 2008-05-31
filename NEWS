@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.0 Relese Candidate (RC) 1! (0.99.3) - Released May 30, 2008
+WELCOME TO BANSHEE 1.0 Relese Candidate 1! (0.99.3) - Released May 30, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -43,11 +43,8 @@ Sources
 Packages
 --------
 
-    Packages are available from the openSUSE Build Service in the
-    Banshee:Preview project. Currently only packages for openSUSE 10.3
-    and openSUSE Factory are being built. We expect to target more
-    distributions and older openSUSE/SLED releases as we approach the
-    final 1.0 release:
+    Packages for openSUSE 11/Factory and openSUSE 10.3 are  available from 
+	the openSUSE Build Service in the Banshee:Preview project.
 
     * http://download.opensuse.org/repositories/Banshee:/Preview/
 
@@ -176,3 +173,4 @@ Contributors In Past Releases
     Oscar Forero, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch,
     Scott Peterson, Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington,
     Wouter Bolsterlee
+
