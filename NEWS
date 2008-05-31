@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.0 Relese Candidate 1! (0.99.3) - Released May 30, 2008
+WELCOME TO BANSHEE 1.0 Release Candidate 1! (0.99.3) - Released May 30, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -114,20 +114,22 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     New features in this release include:
 
-    * 
+    * New Device Storage Indicator
+    * Automatically Grabs all Cover Art
 
     Other features, bug fixes, and errata:
 
-    * 
-    * Over 22 bugs were fixed since Beta 2
+    * Filter for podcasts to only show new items
+    * DBus client w/ command line options and lastfm:// and feed:// support
+    * File system queue
+    * Many drag and drop fixes
+    * Improved performance when changing songs
+    * Lots of fixes for small but annoying UI gotchas 
+    * Over 24 bugs were fixed since Beta 2
 
 ===============================================================================
 REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
 ===============================================================================
-
-    While this is an Beta Release, we have known it to be quite stable. There
-    are some missing features though that will be added back as we
-    progress towards the final 1.0 release of Banshee.
 
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
