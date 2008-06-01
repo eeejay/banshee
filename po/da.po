@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-01 22:28+0200\n"
-"PO-Revision-Date: 2008-06-01 22:28+0100\n"
+"POT-Creation-Date: 2008-06-01 22:32+0200\n"
+"PO-Revision-Date: 2008-06-01 22:32+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -671,7 +671,7 @@ msgstr "Fil_navn"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:77
 msgid "Extensions"
-msgstr "Filendelser"
+msgstr "Udvidelser"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:59
 msgid "Random"
