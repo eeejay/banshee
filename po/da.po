@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-01 22:00+0200\n"
-"PO-Revision-Date: 2008-06-01 22:00+0100\n"
+"POT-Creation-Date: 2008-06-01 22:28+0200\n"
+"PO-Revision-Date: 2008-06-01 22:28+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -465,7 +465,7 @@ msgstr "Nylige favoritter"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:62
 msgid "Songs listened to often in the past week"
-msgstr "Sange lyttet til ofte den sidste uge"
+msgstr "Sange ofte lyttet til den sidste uge"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:66
 msgid "Recently Added"
@@ -489,7 +489,7 @@ msgstr "Oversete favoritter"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:79
 msgid "Favorites not played in over two weeks"
-msgstr "Favoritter ikke afspillet i over to uger"
+msgstr "Favoritter der ikke har været afspillet i over to uger"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:83
 msgid "Least Favorite"
@@ -521,7 +521,7 @@ msgstr "Ikke-bedømt"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:101
 msgid "Songs that haven't been rated"
-msgstr "Sange som ikke er bedømt"
+msgstr "Sange der ikke er bedømt"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:54
 msgid "Importing Songs"
@@ -546,7 +546,7 @@ msgstr "Videoer bedømt med fire eller fem stjerner"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:72
 msgid "Unwatched"
-msgstr "Uset"
+msgstr "Usete"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:73
 msgid "Videos that haven't been played yet"
@@ -1403,7 +1403,7 @@ msgstr "Lær at bruge Banshee"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:98
 msgid "Advanced Collection Searching"
-msgstr "Avanceret samlingssøgning"
+msgstr "Avanceret søgning i samling"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:99
 msgid "Learn advanced ways to search your media collection"
@@ -1586,7 +1586,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:97
 msgid "Shuffle by A_lbum"
-msgstr "Tilfældig afspilning efter a_lbum"
+msgstr "Tilfældig efter a_lbum"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:98
 msgid "Play all songs from an album, then randomly choose another album"
