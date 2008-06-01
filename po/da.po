@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-01 21:52+0200\n"
-"PO-Revision-Date: 2008-06-01 21:48+0100\n"
+"POT-Creation-Date: 2008-06-01 22:00+0200\n"
+"PO-Revision-Date: 2008-06-01 22:00+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -1115,7 +1115,7 @@ msgstr "Fejl"
 #: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:578
 #, csharp-format
 msgid "Adding {0} of {1} to {2}"
-msgstr "tilføjer {0} af {1} til {2}"
+msgstr "Tilføjer {0} af {1} til {2}"
 
 #: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:594
 #, csharp-format
@@ -1532,7 +1532,7 @@ msgstr "Gentag"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:79
 msgid "Repeat _Off"
-msgstr "Gentag slået fra"
+msgstr "Gentag _slået fra"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:80
 msgid "Do not repeat playlist"
@@ -1561,7 +1561,7 @@ msgstr "Tilfældig"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:82
 msgid "Shuffle _Off"
-msgstr "Tilfældig slået fra"
+msgstr "Tilfældig _slået fra"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:83
 msgid "Do not shuffle playlist"
@@ -2925,7 +2925,7 @@ msgstr "Tuner Last.fm ind på {0}."
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:251
 #, csharp-format
 msgid "Failed to tune in station. {0}"
-msgstr "Kunne ikke tune ind på station. {0} "
+msgstr "Kunne ikke tune ind på station. {0}"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:350
 #, csharp-format
@@ -3168,7 +3168,7 @@ msgstr "Aldrig opdateret"
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:113
 #, csharp-format
 msgid "Updated at {0}"
-msgstr "Opdateret kl. {0}"
+msgstr "Opdateret {0}"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:115
 #, csharp-format
