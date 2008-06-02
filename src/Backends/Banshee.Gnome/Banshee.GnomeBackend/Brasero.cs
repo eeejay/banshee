@@ -97,14 +97,19 @@ namespace Banshee.GnomeBackend
             }
             
             try {
-                ProcessStartInfo psi = new ProcessStartInfo (brasero_exec, file_args.ToString ());
-                psi.UseShellExecute = false;
-                Process.Start (psi);
+                Run (file_args.ToString ());
             } catch (Exception e) {
                 Log.Exception ("Problem starting Brasero", e);
                 Log.Error (Catalog.GetString ("Could not write CD"), 
                     Catalog.GetString ("Brasero could not be started"), true);
             }
+        }
+        
+        internal void Run (string args)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo (brasero_exec, args);
+            psi.UseShellExecute = false;
+            Process.Start (psi);
         }
         
         private void UpdateActions ()

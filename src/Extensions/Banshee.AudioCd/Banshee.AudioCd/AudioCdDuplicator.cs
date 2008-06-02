@@ -1,5 +1,5 @@
 //
-// GnomeService.cs
+// AudioCdDuplicator.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,57 +27,40 @@
 //
 
 using System;
+using Mono.Addins;
 
-using Banshee.ServiceStack;
-using Banshee.Web;
+using Banshee.Hardware;
 
-namespace Banshee.GnomeBackend
+namespace Banshee.AudioCd
 {
-    public class GnomeService : IExtensionService, IDisposable 
+    public static class AudioCdDuplicator
     {
-        private Brasero brasero;
-        internal Brasero Brasero {
-            get { return brasero; }
-        }
+        private static bool duplicator_extension_queried = false;
+        private static TypeExtensionNode duplicator_extension_node = null;
         
-        public GnomeService ()
-        {
-        }
-        
-        public void Initialize ()
-        {
-            try {
-                brasero = new Brasero ();
-                brasero.Initialize ();
-            } catch {
-                brasero = null;
-            }
-        
-            if (Browser.OpenHandler == null) {
-                Browser.OpenHandler = OpenUrl;
+        public static bool Supported {
+            get { 
+                if (duplicator_extension_queried) {
+                    return duplicator_extension_node != null;
+                }
+                
+                duplicator_extension_queried = true;
+                
+                foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes (
+                    "/Banshee/Platform/DiscDuplicator")) {
+                    duplicator_extension_node = node;
+                    break;
+                }
+                
+                return duplicator_extension_node != null;
             }
         }
         
-        public void Dispose ()
+        public static void Duplicate (AudioCdDiscModel model)
         {
-            if (brasero != null) {
-                brasero.Dispose ();
-                brasero = null;
+            if (Supported && model != null && model.Volume != null) {
+                ((IDiscDuplicator)duplicator_extension_node.CreateInstance ()).Duplicate (model.Volume);
             }
-        
-            if (Browser.OpenHandler == (Banshee.Web.Browser.OpenUrlHandler) OpenUrl) {
-                Browser.OpenHandler = null;
-            }
-        }
-        
-        private bool OpenUrl (string url)
-        {
-            Hyena.Log.Debug ("Opening URL via gnome-open", url);
-            return Gnome.Url.Show (url);
-        }
-        
-        string IService.ServiceName {
-            get { return "GnomeService"; }
         }
     }
 }

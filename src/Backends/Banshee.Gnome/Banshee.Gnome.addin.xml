@@ -21,4 +21,8 @@
     <ConfigurationClient class="Banshee.GnomeBackend.GConfConfigurationClient"/>
   </Extension>
 
+  <Extension path="/Banshee/Platform/DiscDuplicator">
+    <DiscDuplicator class="Banshee.GnomeBackend.DiscDuplicator"/>
+  </Extension>
+  
 </Addin>

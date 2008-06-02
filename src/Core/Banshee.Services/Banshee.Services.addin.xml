@@ -40,5 +40,9 @@
   <ExtensionPoint path="/Banshee/Platform/HardwareDeviceProvider">
     <ExtensionNode name="HardwareDeviceProvider"/>
   </ExtensionPoint>
+  
+  <ExtensionPoint path="/Banshee/Platform/DiscDuplicator">
+    <ExtensionNode name="DiscDuplicator"/>
+  </ExtensionPoint>
 
 </Addin>

@@ -47,6 +47,7 @@ namespace Banshee.AudioCd
         private AudioCdDiscModel disc_model;
         private SourceMessage query_message;
         
+        
         public AudioCdSource (AudioCdService service, AudioCdDiscModel discModel) 
             : base (Catalog.GetString ("Audio CD"), discModel.Title, 200)
         {
@@ -219,7 +220,12 @@ namespace Banshee.AudioCd
 
         internal void DuplicateDisc ()
         {
-            Hyena.Log.Information ("This feature is not implemented yet.", true);
+            try {
+                AudioCdDuplicator.Duplicate (disc_model);
+            } catch (Exception e) {
+                Hyena.Log.Error (Catalog.GetString ("Could not duplicate audio CD"), e.Message, true);
+                Hyena.Log.Exception (e);
+            }
         }
         
         internal void LockAllTracks ()
@@ -413,6 +419,7 @@ namespace Banshee.AudioCd
             Gtk.Action duplicate_action = uia_service.GlobalActions["DuplicateDiscAction"];
             if (duplicate_action != null) {
                 duplicate_action.IconName = "media-cdrom";
+                duplicate_action.Visible = AudioCdDuplicator.Supported;
             }
         }
         

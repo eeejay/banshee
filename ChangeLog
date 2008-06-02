@@ -1,3 +1,32 @@
+2008-06-02  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDuplicator.cs:
+	Bootstrapper for locating and running an IDiscDuplicator extension
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Implement disc duplication by calling into AudioCdDiscDuplicator if 
+	it is supported
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IDiscDuplicator.cs: Interface
+	to expose disc duplication support
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml: Define a 
+	DiscDuplicator extension point
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeService.cs: Expose
+	Brasero functionality internally
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/DiscDuplicator.cs:
+	Implement an IDiscDuplicator that first tries to use Brasero and falls
+	back to nautilus-cd-burner
+
+	* src/Backends/Banshee.Gnome/Banshee.Gnome.addin.xml: Implement the 
+	DiscDuplicator extension point
+
+	* data/banshee-1.desktop.in.in: Change the Name field to 'Banshee' to
+	eliminate redundancy between Name and GenericNam
+
 2008-06-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:

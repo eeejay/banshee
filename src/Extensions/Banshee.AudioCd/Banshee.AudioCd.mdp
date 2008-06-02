@@ -16,6 +16,7 @@
     <File name="Banshee.AudioCd/AudioCdRipper.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/ActiveSourceUI.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/GlobalUI.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.AudioCd/AudioCdDuplicator.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />

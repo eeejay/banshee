@@ -5,6 +5,7 @@ INSTALL_DIR = $(BACKENDS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.GnomeBackend/Brasero.cs \
+	Banshee.GnomeBackend/DiscDuplicator.cs \
 	Banshee.GnomeBackend/GConfConfigurationClient.cs \
 	Banshee.GnomeBackend/GnomeService.cs
 
