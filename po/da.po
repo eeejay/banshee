@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-01 22:32+0200\n"
-"PO-Revision-Date: 2008-06-01 22:32+0100\n"
+"POT-Creation-Date: 2008-06-02 22:37+0200\n"
+"PO-Revision-Date: 2008-06-02 22:37+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -261,11 +261,11 @@ msgstr "Skriv cd..."
 msgid "Write selected tracks to an audio CD"
 msgstr "Skriv valgte numre til en lyd-cd"
 
-#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:105
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:103
 msgid "Could not write CD"
 msgstr "Kunne ikke skrive cd"
 
-#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:106
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:104
 msgid "Brasero could not be started"
 msgstr "Brasero kunne ikke startes"
 
@@ -461,7 +461,7 @@ msgstr "Sange bedømt med fire eller fem stjerner"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:61
 msgid "Recent Favorites"
-msgstr "Nylige favoritter"
+msgstr "Seneste favoritter"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:62
 msgid "Songs listened to often in the past week"
@@ -469,7 +469,7 @@ msgstr "Sange ofte lyttet til den sidste uge"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:66
 msgid "Recently Added"
-msgstr "Nyligt tilføjede"
+msgstr "Senest tilføjede"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:67
 msgid "Songs imported within the last week"
@@ -1094,6 +1094,37 @@ msgstr "Redigér intelligent spilleliste"
 msgid "Delete Smart Playlist"
 msgstr "Slet intelligent spilleliste"
 
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:53
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:69
+#, csharp-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] "{0} dag"
+msgstr[1] "{0} dage"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:57
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:74
+#, csharp-format
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] "{0} time"
+msgstr[1] "{0} timer"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:61
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:78
+#, csharp-format
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] "{0} minut"
+msgstr[1] "{0} minutter"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:80
+#, csharp-format
+msgid "{0} second"
+msgid_plural "{0} seconds"
+msgstr[0] "{0} sekund"
+msgstr[1] "{0} sekunder"
+
 #: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:56
 msgid "Close Error Report"
 msgstr "Luk fejlrapport"
@@ -1617,6 +1648,10 @@ msgstr "Importér til bibliotek"
 msgid "Import source to library"
 msgstr "Importér kilde til bibliotek"
 
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:90
+msgid "Rename"
+msgstr "Omdøb"
+
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:93
 msgid "Export Playlist..."
 msgstr "Eksportér spilleliste..."
@@ -1624,6 +1659,14 @@ msgstr "Eksportér spilleliste..."
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:94
 msgid "Export a playlist"
 msgstr "Eksportér en spilleliste"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:97
+msgid "Unmap"
+msgstr "Fjern"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:100
+msgid "Source Properties"
+msgstr "Egenskaber for kilde"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:110
 msgid "Refresh"
@@ -1809,6 +1852,36 @@ msgstr "Vis omsl_ag"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:78
 msgid "Toggle display of album cover art"
 msgstr "Slå visning af albumomslag til/fra"
+
+#. Translators: {0} and {1} are for markup, {2} and {3}
+#. are Podcast Name and Published Date, respectively;
+#. e.g. 'from BBtv published 7/26/2007'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:528
+#, csharp-format
+msgid "{0}from{1} {2} {0}published{1} {3}"
+msgstr "{0}fra{1} {2} {0}publiceret{1} {3}"
+
+#. Translators: {0} and {1} are for markup, {2} and {3}
+#. are Artist Name and Album Title, respectively;
+#. e.g. 'by Parkway Drive from Killing with a Smile'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:535
+#, csharp-format
+msgid "{0}by{1} {2} {0}from{1} {3}"
+msgstr "{0}af{1} {2} {0}fra{1} {3}"
+
+#. Translators: {0} and {1} are for markup, {2} is for Album Title;
+#. e.g. 'from Killing with a Smile'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:541
+#, csharp-format
+msgid "{0}from{1} {2}"
+msgstr "{0}fra{1} {2}"
+
+#. Translators: {0} and {1} are for markup, {2} is for Artist Name;
+#. e.g. 'by Parkway Drive'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:546
+#, csharp-format
+msgid "{0}by{1} {2}"
+msgstr "{0}af{1} {2}"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:135
 msgid "Stop Operation"
@@ -2441,7 +2514,7 @@ msgstr "Indlæser {0} - {1} af {2}"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:68
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:156
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:51
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:52
 msgid "Audio CD"
 msgstr "Lyd-cd"
 
@@ -2512,7 +2585,7 @@ msgstr ""
 "hastigheden mærkbart."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:244
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:408
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:414
 msgid "Import CD"
 msgstr "Importér lyd-cd"
 
@@ -2528,38 +2601,42 @@ msgstr "Kopiér cd"
 msgid "Duplicate this audio CD"
 msgstr "Kopiér denne lyd-cd"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:124
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:125
 msgid "Searching for CD metadata..."
 msgstr "Søger efter cd-metadata..."
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:157
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:158
 msgid "Could not fetch metadata for CD."
 msgstr "Kunne ikke hente cd-metadata."
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:185
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:186
 msgid "Automatic import off since this album is already in the Music Library."
 msgstr ""
 "Automatisk importeing slået fra, da dette album allerede findes i "
 "musikbiblioteket."
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:208
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:209
 msgid "Could not import CD"
 msgstr "Kunne ikke importere cd"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:332
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:226
+msgid "Could not duplicate audio CD"
+msgstr "Kunne ikke kopiere lyd-cd"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:338
 msgid "Ejecting audio CD..."
 msgstr "Skubber lyd-cd ud..."
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:350
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:356
 #, csharp-format
 msgid "Could not eject audio CD: {0}"
 msgstr "Kunne ikke skubbe lyd-cd ud: {0}"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:383
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:389
 msgid "Eject Disc"
 msgstr "Skub disk ud"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:407
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:413
 #, csharp-format
 msgid "Import ‟{0}”"
 msgstr "Importér \"{0}\""
@@ -2826,7 +2903,7 @@ msgstr "Stationsnavn"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:169
 msgid "Total Play Count"
-msgstr "Totale afspilninger"
+msgstr "Antal afspilninger"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:174
 msgid "Station Type"
@@ -2865,11 +2942,11 @@ msgstr "Lignende med {0}"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:124
 msgid "Recently Loved Tracks"
-msgstr "Nyligt elskede numre"
+msgstr "Senest elskede numre"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:125
 msgid "Recently Played Tracks"
-msgstr "Nyligt afspillede numre"
+msgstr "Senest afspillede numre"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:126
 msgid "My Top Artists"
