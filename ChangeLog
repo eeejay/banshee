@@ -1,3 +1,8 @@
+2008-06-02  Jordi Mas <jmas@softcatala.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Add GetString to localizable strings
+
 2008-06-02  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDuplicator.cs:
