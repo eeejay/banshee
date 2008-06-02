@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Encoding=UTF-8
-_Name=Banshee
+_Name=Banshee Media Player
 _GenericName=Media Player
 Comment=Play and organize your media collection
 Exec=banshee-1 --play-enqueued --enqueue %U
