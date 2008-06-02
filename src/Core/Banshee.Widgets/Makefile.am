@@ -27,3 +27,6 @@ RESOURCES =
 
 include $(top_srcdir)/build/build.mk
 
+module_SCRIPTS += Banshee.Widgets.dll.config
+EXTRA_DIST += Banshee.Widgets.dll.config
+
