@@ -1,3 +1,8 @@
+2008-06-02  Jordi Mas <jmas@softcatala.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	Add GetString to localizable strings
+
 2008-06-02  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:

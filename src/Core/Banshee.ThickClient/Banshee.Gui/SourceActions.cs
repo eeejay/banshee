@@ -87,17 +87,17 @@ namespace Banshee.Gui
                     Catalog.GetString ("Import source to library"), OnImportSource),
 
                 new ActionEntry ("RenameSourceAction", null,
-                    "Rename", "F2", "Rename", OnRenameSource),
+                    Catalog.GetString ("Rename"), "F2", Catalog.GetString ("Rename"), OnRenameSource),
 
                 new ActionEntry ("ExportPlaylistAction", null,
                     Catalog.GetString ("Export Playlist..."), null,
                     Catalog.GetString ("Export a playlist"), OnExportPlaylist),
 
                 new ActionEntry ("UnmapSourceAction", null,
-                    "Unmap", "<shift>Delete", null, OnUnmapSource),
+                    Catalog.GetString ("Unmap"), "<shift>Delete", null, OnUnmapSource),
                     
                 new ActionEntry ("SourcePropertiesAction", null,
-                    "Source Properties", null, null, OnSourceProperties),
+                    Catalog.GetString ("Source Properties"), null, null, OnSourceProperties),
             });
 
             this["NewPlaylistAction"].IconName = Stock.New;
