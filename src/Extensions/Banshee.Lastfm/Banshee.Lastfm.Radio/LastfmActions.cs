@@ -410,7 +410,7 @@ namespace Banshee.Lastfm.Radio
                 updating = true;
             }
 
-            bool have_user = (lastfm.Account.UserName != null);
+            bool have_user = (lastfm.Account != null && lastfm.Account.UserName != null);
             this["LastfmAddAction"].IsImportant = ServiceManager.PlaybackController.Source is LastfmSource;
             this["LastfmAddAction"].Sensitive = have_user;
             this["LastfmSortAction"].Sensitive = have_user;

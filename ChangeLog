@@ -1,5 +1,10 @@
 2008-06-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Avoid NRE, fixes BGO #535909.
+
+2008-06-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Clients/Nereid/Nereid/ViewContainer.cs: Add the separator back
 	between the filter options and the Help item.  Attempt to fix the
 	"GdkWindow unexpectedly destroyed" warnings (and related partial UI
