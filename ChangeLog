@@ -1,5 +1,26 @@
 2008-06-02  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Added Boyd's panel icon sizing code from Tomboy so we display the best
+	icon for a given panel size, only scaling if we're in SVG territory; 
+	this is so hot I think I'll make my panel like KDE now (BGO #526333)
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying.addin.xml:
+	Make the Now Playing extension required for now
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+	Set the window hint to notification to prevent compiz from doing strange
+	things with the windows when they are mapped/unmapped (BGO #526326)
+
+	* src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinView.cs: Do not
+	show addins where the category starts with 'required:'
+	
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Avoid possible NRE (BGO #532215)
+
+2008-06-02  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
 	Switch to the FSQ source when items get added to it, set it as the next
 	playback source if the --play-enqueued argument has been passed either

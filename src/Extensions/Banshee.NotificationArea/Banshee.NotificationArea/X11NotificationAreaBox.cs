@@ -40,11 +40,18 @@ namespace Banshee.NotificationArea
 {
     public class X11NotificationAreaBox : X11NotificationArea, INotificationAreaBox
     {
+        private enum PanelOrientation { 
+            Horizontal, 
+            Vertical 
+        }
+    
         private EventBox event_box;
+        private Image icon;
         
         private TrackInfoPopup popup;
         private bool can_show_popup = false;
         private bool cursor_over_trayicon = false;
+        private int panel_size;
         
         public event EventHandler Disconnected;
         public event EventHandler Activated;
@@ -57,8 +64,12 @@ namespace Banshee.NotificationArea
         public X11NotificationAreaBox () : base (Catalog.GetString ("Banshee"))
         {
             event_box = new EventBox ();
-            event_box.Add (Image.NewFromIconName (Banshee.ServiceStack.Application.IconName, IconSize.LargeToolbar));
             Add (event_box);
+            icon = new Image ();
+            
+            // Load a 16x16-sized icon to ensure we don't end up with a 1x1 pixel.
+            panel_size = 16;
+            event_box.Add (icon);
             
             event_box.ButtonPressEvent += OnButtonPressEvent;
             event_box.EnterNotifyEvent += OnEnterNotifyEvent;
@@ -102,6 +113,78 @@ namespace Banshee.NotificationArea
                 
             return on_bottom;
         }
+        
+#region Panel Icon Sizing
+
+        // This code has been shamelessly ripped off from 
+        // Tomboy, the wonderful life organizer!
+        
+        private void ConfigureIconSize ()
+        {   
+            // For some reason, the first time we ask for the allocation,
+            // it's a 1x1 pixel.  Prevent against this by returning a
+            // reasonable default.  Setting the icon causes OnSizeAllocated
+            // to be called again anyhow. (--Boyd)
+            int icon_size = panel_size;
+            if (icon_size < 16) {
+                icon_size = 16;
+            }
+            
+            // Control specifically which icon is used at the smaller sizes
+            // so that no scaling occurs. See bug #403500 for more info (--Boyd)
+            if (icon_size <= 21) {
+                icon_size = 16;
+            } else if (icon_size <= 31) {
+                icon_size = 22;
+            } else if (icon_size <= 47) {
+                icon_size = 32;
+            }
+            
+            icon.IconName = Banshee.ServiceStack.Application.IconName;
+            icon.PixelSize = icon_size;
+        }
+
+        private PanelOrientation GetPanelOrientation ()
+        {
+            // Determine whether the tray is inside a horizontal or vertical
+            // panel so the size of the icon can adjust correctly.
+        
+            if (ParentWindow == null) {
+                return PanelOrientation.Horizontal;
+            }
+
+            Gdk.Window top_level_window = ParentWindow.Toplevel;
+
+            Gdk.Rectangle rect = top_level_window.FrameExtents;
+            if (rect.Width < rect.Height) {
+                return PanelOrientation.Vertical;
+            }
+            
+            return PanelOrientation.Horizontal;
+        }
+
+        protected override void OnSizeAllocated (Gdk.Rectangle rect)
+        {
+            base.OnSizeAllocated (rect);
+
+            if (GetPanelOrientation () == PanelOrientation.Horizontal) {
+                if (panel_size == Allocation.Height) {
+                    return;
+                }
+                
+                panel_size = Allocation.Height;
+            } else {
+                if (panel_size == Allocation.Width) {
+                    return;
+                }
+                
+                panel_size = Allocation.Width;
+            }
+
+            ConfigureIconSize ();
+        }
+        
+#endregion
         
         private void HidePopup () 
         {

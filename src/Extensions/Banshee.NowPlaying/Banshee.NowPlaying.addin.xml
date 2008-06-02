@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    We do not want users to disable this extension for
+    1.0, though it should be possible in the future.
+-->
 <Addin 
     id="Banshee.NowPlaying"
     version="1.0"
     compatVersion="1.0"
     copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
     name="Now Playing"
-    category="User Interface"
+    category="required:User Interface"
     description="Provides a source that displays embedded video and provides fullscreen video playback and controls."
     author="Aaron Bockover"
     url="http://banshee-project.org/"

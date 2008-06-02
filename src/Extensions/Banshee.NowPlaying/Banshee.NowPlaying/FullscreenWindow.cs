@@ -107,6 +107,10 @@ namespace Banshee.NowPlaying
             Decorated = false;
             TransientFor = null;
             
+            // FIXME: Not really correct, but prevents Compiz from 
+            // doing strange things with the window
+            TypeHint = Gdk.WindowTypeHint.Notification;
+            
             Gdk.Screen screen = Screen;
             int monitor = screen.GetMonitorAtWindow (parent.GdkWindow);
             Gdk.Rectangle bounds = screen.GetMonitorGeometry (monitor);

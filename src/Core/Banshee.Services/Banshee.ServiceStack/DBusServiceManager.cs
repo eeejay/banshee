@@ -52,7 +52,7 @@ namespace Banshee.ServiceStack
         
         public static string MakeDBusSafeString (string str)
         {
-            return Regex.Replace (str, @"[^A-Za-z0-9]*", String.Empty);
+            return str == null ? String.Empty : Regex.Replace (str, @"[^A-Za-z0-9]*", String.Empty);
         }
         
         public static string MakeObjectPath (IDBusExportable o)

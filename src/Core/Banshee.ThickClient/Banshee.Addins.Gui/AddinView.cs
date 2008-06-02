@@ -55,7 +55,8 @@ namespace Banshee.Addins.Gui
         private void LoadAddins ()
         {
             foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
-                if (addin.Name != addin.Id) {
+                if (addin.Name != addin.Id && addin.Description != null && 
+                    addin.Description.Category != null && !addin.Description.Category.StartsWith ("required:")) {
                     AppendAddin (addin);
                 }
             }

@@ -52,6 +52,7 @@ namespace Banshee.NotificationArea
             BorderWidth = 4;
             AppPaintable = true;
             Resizable = false;
+            TypeHint = Gdk.WindowTypeHint.Notification;
             
             // Position label and linear progress bar
             HBox position_box = new HBox ();
