@@ -142,7 +142,7 @@ namespace Banshee.Equalizer
                     ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).SetEqualizerGain (i, 0);
                 }
                 
-                ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).AmplifierLevel = 1D;
+                ((IEqualizer) ServiceManager.PlayerEngine.ActiveEngine).AmplifierLevel = 0;
             }
         }
         

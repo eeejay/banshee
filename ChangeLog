@@ -1,5 +1,21 @@
 2008-06-02  Sebastian Dröge  <slomo@circular-chaos.org>
 
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	Rename local variable from db to scale as it holds a scale factor
+	which was calculated from a db value and not the other way around.
+
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerManager.cs:
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerSetting.cs:
+	0dB is passthrough and should be used as default value. 1dB will make
+	the sound a bit louder and can already lead to clipping in rare
+	situations.
+
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerView.cs:
+	Make the preamp levels more consistent with the eq levels and don't
+	always do (level / 10) * 10.
+
+2008-06-02  Sebastian Dröge  <slomo@circular-chaos.org>
+
 	* src/Core/Banshee.Core/Banshee.Core.dll.config:
 	* src/Core/Banshee.Core/Makefile.am:
 	* src/Core/Banshee.Widgets/Banshee.Widgets.dll.config:

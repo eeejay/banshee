@@ -39,7 +39,7 @@ namespace Banshee.Equalizer
     {
         private string name;
         private Dictionary<uint, double> bands = new Dictionary<uint, double> ();
-        private double amp = 1;    // dB multiplier (0db is mute, 1db is no change - passthrough)
+        private double amp = 0;    // amplifier dB (0 dB == passthrough)
         private bool enabled = true;
         private const uint bandcount = 10;
         

@@ -378,8 +378,8 @@ namespace Banshee.GStreamer
         
         public double AmplifierLevel {
             set {
-                double db = Math.Pow (10.0, value / 20.0);
-                bp_equalizer_set_preamp_level (handle, db);
+                double scale = Math.Pow (10.0, value / 20.0);
+                bp_equalizer_set_preamp_level (handle, scale);
             }
         }
         

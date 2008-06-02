@@ -130,7 +130,7 @@ namespace Banshee.Equalizer.Gui
             EqualizerBandScale scale = o as EqualizerBandScale;
             
             if (active_eq != null) {
-                active_eq.SetGain (scale.Band, (double)scale.Value / 10D);
+                active_eq.SetGain (scale.Band, (double)scale.Value / 10);
             }
             
             if (EqualizerChanged != null) {
@@ -142,8 +142,7 @@ namespace Banshee.Equalizer.Gui
         {
             EqualizerBandScale scale = o as EqualizerBandScale;
             if (active_eq != null) {
-                double val = (double) scale.Value / 10D;
-                active_eq.AmplifierLevel = val;
+                active_eq.AmplifierLevel = (double) (scale.Value / 10.0);
             }
             
             if (AmplifierChanged != null) {
@@ -182,8 +181,8 @@ namespace Banshee.Equalizer.Gui
         }
 
         public double AmplifierLevel {
-            get { return (double) amplifier_scale.Value / 100D; }
-            set { amplifier_scale.Value = (int) (value * 100); }
+            get { return (double) amplifier_scale.Value / 10; }
+            set { amplifier_scale.Value = (int) (value * 10); }
         }
         
         public EqualizerSetting EqualizerSetting {
@@ -196,7 +195,7 @@ namespace Banshee.Equalizer.Gui
                     return;
                 }
                 
-                AmplifierLevel = active_eq.AmplifierLevel / 10;
+                AmplifierLevel = active_eq.AmplifierLevel;
                 
                 for (int i = 0; i < active_eq.BandCount; i++) {
                     uint x = (uint) i;
