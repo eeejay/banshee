@@ -202,6 +202,7 @@ namespace Banshee.Lastfm.Radio
             Actions.UIManager.RemoveUi (actions_id);
             Actions.RemoveActionGroup (this);
             RestoreShuffleRepeat ();
+            ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
             base.Dispose ();
         }
 
