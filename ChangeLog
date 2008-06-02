@@ -1,3 +1,9 @@
+2008-06-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Don't
+	display cover art as we download, but do show the same Network icon as
+	shown for the podcast download job.  Fixes BGO #535989.
+
 2008-06-02  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:

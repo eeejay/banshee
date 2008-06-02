@@ -83,23 +83,19 @@ namespace Banshee.CoverArt
         }
         
         private void FetchForTrack (TrackInfo track)
-        {       
-            IMetadataLookupJob job = MetadataService.Instance.CreateJob (track);
+        {
             try {
+                IMetadataLookupJob job = MetadataService.Instance.CreateJob (track);
                 job.Run ();
-                string cover_file = CoverArtSpec.GetPath (track.ArtworkId);
-
-                if (File.Exists (cover_file)) {                       
-                    IconNames = new string[] { cover_file };              
-                }
             } catch (Exception e) {
                 Log.Exception (e);
             }
         }
         
         public void Run ()
-        {            
+        {
             this.Status = Catalog.GetString ("Preparing...");
+            this.IconNames = new string [] {Stock.Network};
             
             int current_track_count = 0;
             int total_track_count = 0;
