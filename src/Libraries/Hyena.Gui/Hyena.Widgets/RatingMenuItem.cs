@@ -35,7 +35,6 @@ namespace Hyena.Widgets
     public class RatingMenuItem : ComplexMenuItem
     {
         private RatingEntry entry;
-        private bool pressing;
         private bool can_activate = true;
         private Box box;
 
@@ -74,33 +73,20 @@ namespace Hyena.Widgets
             return x;
         }
 
-        protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
-        {
-            pressing = true;
-            entry.SetValueFromPosition (TransformX (evnt.X));
-            return true;
-        }
-
         protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
         {
-            pressing = false;
+            entry.SetValueFromPosition (TransformX (evnt.X));
             return true;
         }
 
         protected override bool OnMotionNotifyEvent (Gdk.EventMotion evnt)
         {
-            if (!pressing) {
-                return entry.HandleMotionNotify (evnt.State, TransformX (evnt.X));
-            }
-
-            entry.SetValueFromPosition (TransformX (evnt.X));
-            return true;
+            return entry.HandleMotionNotify (evnt.State, TransformX (evnt.X));
         }
-
+        
         protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
         {
-            pressing = false;
-            return true;
+            return entry.HandleLeaveNotify (evnt);
         }
 
         protected override bool OnScrollEvent (Gdk.EventScroll evnt)

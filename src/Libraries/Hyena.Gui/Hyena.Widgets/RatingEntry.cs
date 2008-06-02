@@ -285,9 +285,7 @@ namespace Hyena.Widgets
         
         protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing crossing)
         {
-            ClearHover ();
-            QueueDraw ();
-            return true;
+            return HandleLeaveNotify (crossing);
         }
         
         protected override bool OnMotionNotifyEvent (Gdk.EventMotion motion)
@@ -359,10 +357,17 @@ namespace Hyena.Widgets
         internal bool HandleMotionNotify (Gdk.ModifierType state, double x)
         {
             hover_value = renderer.RatingFromPosition (event_alloc, x);
-            if ((state & Gdk.ModifierType.Button1Mask) != 0) {
+            /*if ((state & Gdk.ModifierType.Button1Mask) != 0) {
                 Value = hover_value;
-            }
+            }*/
             
+            QueueDraw ();
+            return true;
+        }
+        
+        internal bool HandleLeaveNotify (Gdk.EventCrossing crossing)
+        {
+            ClearHover ();
             QueueDraw ();
             return true;
         }

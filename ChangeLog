@@ -1,3 +1,10 @@
+2008-06-02  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingEntry.cs: Only set the rating
+	when the mouse is released; fix some small issues with leave notify on
+	the menu item (BGO #535338)
+
 2008-06-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
