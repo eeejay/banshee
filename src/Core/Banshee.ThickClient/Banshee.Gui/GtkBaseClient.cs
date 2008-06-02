@@ -80,7 +80,7 @@ namespace Banshee.Gui
 
             ThreadAssist.InitializeMainThread ();
             
-            PlatformHacks.GdkSetProgramClass (Application.InternalName);
+            Gdk.Global.ProgramClass = Application.InternalName;
 
             if (ApplicationContext.Debugging) {
                 GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);

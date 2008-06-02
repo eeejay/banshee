@@ -72,20 +72,6 @@ namespace Banshee.Base
             } catch {
             }
         }
-                
-        [DllImport ("libgtk-win32-2.0-0.dll")]
-        private static extern void gdk_set_program_class (string program_class);
-        
-        public static void GdkSetProgramClass (string programClass)
-        {
-            // Force the GDK program class to avoid a bug in some WMs and 
-            // task list versions in GNOME
-            
-            try {
-                gdk_set_program_class (programClass);
-            } catch {
-            }
-        }
         
         [DllImport ("libc")] // Linux
         private static extern int prctl (int option, byte [] arg2, IntPtr arg3, IntPtr arg4, IntPtr arg5);

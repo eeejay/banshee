@@ -1,3 +1,16 @@
+2008-06-02  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Base/PlatformHacks.cs: Removed the 
+	gdk_set_program_class call since it's GUI code and not even really a
+	platform hack
+
+	* src/Core/Banshee.Core/Makefile.am: 
+	* src/Core/Banshee.Core/Banshee.Core.dll.config: Removed .config, not needed
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Replaced
+	the PlatformHacks.GdkSetProgramClass call with the proper 
+	Gdk.Global.ProgramClass property setter
+
 2008-06-02  Sebastian Dröge  <slomo@circular-chaos.org>
 
 	* src/Core/Banshee.Core/Banshee.Core.dll.config:
