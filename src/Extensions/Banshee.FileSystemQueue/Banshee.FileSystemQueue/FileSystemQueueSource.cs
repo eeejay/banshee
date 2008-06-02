@@ -98,11 +98,27 @@ namespace Banshee.FileSystemQueue
             foreach (string path in ApplicationContext.CommandLine.Files) {
                 Enqueue (path);
             }
+            
+            if (ApplicationContext.CommandLine.Contains ("play-enqueued")) {
+                PlayEnqueued ();
+            }
         }
+        
+        uint source_activate_id = 0;
         
         public void Enqueue (string path)
         {
-            importer.QueueSource (path);
+            lock (this) {
+                importer.QueueSource (path);
+                
+                if (source_activate_id == 0) {
+                    source_activate_id = GLib.Timeout.Add (500, delegate {
+                        ServiceManager.SourceManager.SetActiveSource (this);
+                        source_activate_id = 0;
+                        return false;
+                    });
+                }
+            }
         }
         
         public override void Dispose ()
@@ -117,6 +133,9 @@ namespace Banshee.FileSystemQueue
         private void OnCommandLineArgument (string argument, object value, bool isFile)
         {
             if (!isFile) {
+                if (argument == "play-enqueued") {
+                    PlayEnqueued ();
+                }
                 return;
             }
             
@@ -128,6 +147,12 @@ namespace Banshee.FileSystemQueue
                 }
             } catch {
             }
+        }
+        
+        private void PlayEnqueued ()
+        {
+            ServiceManager.PlaybackController.NextSource = this;
+            ServiceManager.PlayerEngine.Play ();
         }
         
         protected override void OnUpdated ()
