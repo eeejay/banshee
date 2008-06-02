@@ -171,25 +171,20 @@ namespace Banshee.Sources.Gui
             // Unparent the views' scrolled window parents so they can be re-packed in 
             // a new layout. The main container gets destroyed since it will be recreated.
             
-            //Console.WriteLine ("FLSC.reset 1");
             foreach (ScrolledWindow window in filter_scrolled_windows) {
                 Paned filter_container = window.Parent as Paned;
                 if (filter_container != null) {
                     filter_container.Remove (window);
                 }
             }
-            //Console.WriteLine ("FLSC.reset 2");
-            
+
             if (container != null && main_scrolled_window != null) {
                 container.Remove (main_scrolled_window);
             }
             
-            //Console.WriteLine ("FLSC.reset 3");
-            
             if (container != null) {
                 Remove (container);
             }
-            //Console.WriteLine ("FLSC.reset 4");
         }
 
         private void LayoutLeft ()
@@ -211,13 +206,11 @@ namespace Banshee.Sources.Gui
             Paned filter_box = GetPane (top);
             filter_box.PositionSet = true;
             Paned current_pane = filter_box;
-            //Console.WriteLine ("FLSC.layout 1");
             
             for (int i = 0; i < filter_scrolled_windows.Count; i++) {
                 ScrolledWindow window = filter_scrolled_windows[i];
                 bool last_even_filter = (i == filter_scrolled_windows.Count - 1 && filter_scrolled_windows.Count % 2 == 0);
                 if (i > 0 && !last_even_filter) {
-                    //Console.WriteLine ("creating new pane for filter {0}", i);
                     Paned new_pane = GetPane (top);
                     current_pane.Add2 (new_pane);
                     current_pane.Position = 350;
@@ -236,19 +229,15 @@ namespace Banshee.Sources.Gui
                         current_pane.Add1 (window);
                 }
                     
-                //Console.WriteLine ("FLSC.layout 2");
             }
             
-            //Console.WriteLine ("FLSC.layout 3");
             container.Add1 (filter_box);
             container.Add2 (main_scrolled_window);
-            //Console.WriteLine ("FLSC.layout 4");
             browser_container = filter_box;
             
             container.Position = top ? 175 : 275;
             PersistentPaneController.Control (container, ControllerName (top, -1));
             ShowPack ();
-            //Console.WriteLine ("FLSC.layout 5");
         }
         
         private string ControllerName (bool top, int filter)

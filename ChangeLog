@@ -1,3 +1,14 @@
+2008-06-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Add the separator back
+	between the filter options and the Help item.  Attempt to fix the
+	"GdkWindow unexpectedly destroyed" warnings (and related partial UI
+	freezing) by hiding the old content, adding and showing the new content,
+	and then removing the old content when switching source contents.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	Remove WriteLine cruft.
+
 2008-06-02  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Banshee.Base/PlatformHacks.cs: Removed the 

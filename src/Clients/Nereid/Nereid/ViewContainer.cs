@@ -96,11 +96,11 @@ namespace Nereid
             if (uia != null) {
                 Gtk.Action action = uia.GlobalActions["WikiSearchHelpAction"];
                 if (action != null) {
-                    //MenuItem item = new SeparatorMenuItem ();
-                    //item.Show ();
-                    //search_entry.Menu.Append (item);
+                    MenuItem item = new SeparatorMenuItem ();
+                    item.Show ();
+                    search_entry.Menu.Append (item);
                     
-                    MenuItem item = new ImageMenuItem (Stock.Help, null);
+                    item = new ImageMenuItem (Stock.Help, null);
                     item.Activated += delegate { action.Activate (); };
                     item.Show ();
                     search_entry.Menu.Append (item);
@@ -208,18 +208,24 @@ namespace Nereid
                 if (content == value) {
                     return;
                 }
-                
+
+                // Hide the old content widget
                 if (content != null && content.Widget != null) {
                     content.Widget.Hide ();
+                }
+
+                // Add and show the new one
+                if (value != null && value.Widget != null) {
+                    PackStart (value.Widget, true, true, 0);
+                    value.Widget.Show ();
+                }
+                
+                // Remove the old one
+                if (content != null && content.Widget != null) {
                     Remove (content.Widget);
                 }
                 
                 content = value;
-                
-                if (content != null && content.Widget != null) {
-                    PackStart (content.Widget, true, true, 0);
-                    content.Widget.Show ();
-                }
             }
         }
         
