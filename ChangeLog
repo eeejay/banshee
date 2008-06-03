@@ -1,5 +1,15 @@
 2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs: Add
+	a CoverArtDownloads table to keep track of when we last tried to download
+	cover art for an album and if we were successful.  With this information,
+	we can avoid trying to download artwork for an album more than once a
+	week.  Fixes BGO #535988.  Should also fix issue with the cover art job
+	saying it's at 100% while it keeps going for many more minutes.
+
+2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellFileSize.cs:
 	Avoid NRE, fix BGO #536148.
 
