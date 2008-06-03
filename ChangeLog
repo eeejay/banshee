@@ -1,6 +1,12 @@
 2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs: And
+	recommit the patch, now that Aaron approves. :)
+
+2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
 	Revert last commit, apparently abock has some grand plans he didn't tell
 	me about.
