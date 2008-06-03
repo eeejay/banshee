@@ -1,3 +1,8 @@
+2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellFileSize.cs:
+	Avoid NRE, fix BGO #536148.
+
 2008-06-03  Jordi Mas <jmas@softcatala.org>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:

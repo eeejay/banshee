@@ -42,6 +42,9 @@ namespace Banshee.Collection.Gui
         
         protected override string Text {
             get {
+                if (BoundObject == null)
+                    return String.Empty;
+
                 long bytes = (long) BoundObject;
                 return bytes <= 0
                     ? String.Empty
