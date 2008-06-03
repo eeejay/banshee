@@ -1,5 +1,11 @@
 2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Migo/Migo.Syndication/RssParser.cs: If a XML blob isn't
+	valid XML, log the actual error so we have a hope of fixing or working
+	around the problem.
+
+2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Avoid
 	issue with last_scan being MinValue and trying to subtract retry_every
 	from it.  Also, wrap the entire fetch loop in a try/catch to make sure we

@@ -44,7 +44,8 @@ namespace Migo.Syndication
             doc = new XmlDocument ();
             try {
                 doc.LoadXml (xml);
-            } catch (XmlException) {
+            } catch (XmlException e) {
+                Hyena.Log.Exception (e);
                 throw new FormatException ("Invalid XML document.");                                  
             }
             CheckRss ();
