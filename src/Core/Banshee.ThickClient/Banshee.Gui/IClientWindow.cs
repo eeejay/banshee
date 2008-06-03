@@ -37,5 +37,6 @@ namespace Banshee.Gui
     public interface IClientWindow : IDBusExportable
     {
         void Present ();
+        void Hide ();
     }
 }

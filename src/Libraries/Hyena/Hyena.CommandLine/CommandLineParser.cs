@@ -119,6 +119,16 @@ namespace Hyena.CommandLine
             return parsed_arguments.ContainsKey (name);
         }
         
+        public bool ContainsStart (string start)
+        {
+            foreach (string argument in parsed_arguments.Keys) {
+                if (argument.StartsWith (start)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         public string this[string name] {
             get { return Contains (name) ? parsed_arguments[name].Value : String.Empty; }
             set { 

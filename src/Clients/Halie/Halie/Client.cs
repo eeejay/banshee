@@ -49,6 +49,7 @@ namespace Halie
         public interface IClientWindow
         {
             void Present ();
+            void Hide ();
         }
         
         private static bool hide_field;
@@ -87,10 +88,12 @@ namespace Halie
                 switch (arg.Key) {
                     case "show":
                     case "present": present = true; break;
+                    case "hide": window.Hide (); break;
+                        
                 }
             }
             
-            if (present) {
+            if (present && !ApplicationContext.CommandLine.Contains ("no-present")) {
                 window.Present ();
             }
         }
@@ -99,7 +102,6 @@ namespace Halie
         {
             foreach (string file in ApplicationContext.CommandLine.Files) {
                 // If it looks like a URI with a protocol, leave it as is
-                Console.WriteLine ("got file '{0}'", file);
                 if (System.Text.RegularExpressions.Regex.IsMatch (file, "^\\w+\\:\\/")) {
                     command.PushFile (file);
                 } else {
@@ -130,6 +132,12 @@ namespace Halie
                     case "previous": controller.Previous (ParseBool (arg.Value, "restart")); break;
                     case "stop-when-finished": 
                         controller.StopWhenFinished = !ParseBool (arg.Value);
+                        break;
+                    case "set-position":
+                        player.Position = (uint)Math.Round (Double.Parse (arg.Value) * 1000);
+                        break;
+                    case "set-volume":
+                        player.Volume = UInt16.Parse (arg.Value);
                         break;
                     default:
                         if (arg.Key.StartsWith ("query-")) {
@@ -212,6 +220,10 @@ namespace Halie
         {
             if (field == String.Empty) {
                 return;
+            } else if (field == "name") {
+                field = "title";
+            } else if (field == "length") {
+                field = "duration";
             }
             
             string result = null;
@@ -224,7 +236,7 @@ namespace Halie
             if (hide_field) {
                 Console.WriteLine (result);
             } else {
-                Console.WriteLine ("{0}: {1}", field, result);
+                Console.WriteLine ("{0}: {1}", field.ToLower (), result);
             }
         }
         

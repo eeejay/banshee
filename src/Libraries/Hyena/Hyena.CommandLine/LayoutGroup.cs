@@ -93,6 +93,11 @@ namespace Hyena.CommandLine
             return null;
         }
         
+        public LayoutOption this[int index] {
+            get { return options[index]; }
+            set { options[index] = value; }
+        }
+        
         public int Count {
             get { return options.Count; }
         }

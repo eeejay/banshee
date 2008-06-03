@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Text;
 using System.Collections.Generic;
 
 namespace Hyena.Collections
@@ -43,6 +44,44 @@ namespace Hyena.Collections
                 int index = list.BinarySearch (value);
                 list.Insert (index < 0 ? ~index : index, value);
             }
+        }
+        
+        public static string Join<T> (IList<T> list)
+        {
+            return Join<T> (list, ", ");
+        }
+        
+        public static string Join<T> (IList<T> list, string separator)
+        {
+            return Join<T> (list, null, null, separator);
+        }
+        
+        public static string Join<T> (IList<T> list, string wrapper, string separator)
+        {
+            return Join<T> (list, wrapper, wrapper, separator);
+        }
+        
+        public static string Join<T> (IList<T> list, string front, string back, string separator)
+        {
+            StringBuilder builder = new StringBuilder ();
+            
+            for (int i = 0, n = list.Count; i < n; i++) {
+                if (front != null) {
+                    builder.Append (front);
+                }
+                
+                builder.Append (list[i]);
+                
+                if (back != null) {
+                    builder.Append (back);
+                }
+                
+                if (i < n - 1) {
+                    builder.Append (separator);
+                }
+            }
+            
+            return builder.ToString ();
         }
     }
 }

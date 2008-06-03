@@ -1,3 +1,23 @@
+2008-06-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Halie/Halie/Client.cs: Translate a few query fields to be
+	more familiar, allow setting volume and seeking, support window hiding
+
+	* src/Clients/Nereid/Nereid/Client.cs: Added --help and --version displays
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/IClientWindow.cs: Added Hide ()
+	
+	* src/Libraries/Hyena/Hyena.Collections/CollectionExtensions.cs: Added
+	some Join methods
+
+	* src/Libraries/Hyena/Hyena.CommandLine/Layout.cs: Support displaying
+	specific sets of groups
+
+	* src/Libraries/Hyena/Hyena.CommandLine/CommandLineParser.cs: Added a
+	ContainsStart method
+
+	* src/Libraries/Hyena/Hyena.CommandLine/LayoutGroup.cs: Added index support
+
 2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:

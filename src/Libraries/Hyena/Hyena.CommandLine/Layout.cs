@@ -45,14 +45,28 @@ namespace Hyena.CommandLine
         {
         }
         
+        private int TerminalWidth {
+            get { return Console.WindowWidth <= 0 ? 80 : Console.WindowWidth; }
+        }
+        
+        public string ToString (params string [] groupIds)
+        {
+            return ToString (GroupIdsToGroups (groupIds));
+        }
+        
         public override string ToString ()
+        {
+            return ToString (groups);
+        }
+        
+        public string ToString (IEnumerable<LayoutGroup> groups)
         {
             StringBuilder builder = new StringBuilder ();
             
-            int terminal_width = Console.WindowWidth <= 0 ? 80 : Console.WindowWidth;
             int min_spacing = 6;
             
             int group_index = 0;
+            int group_count = 0;
             int max_option_length = 0;
             int max_description_length = 0;
             int description_alignment = 0;
@@ -65,31 +79,44 @@ namespace Hyena.CommandLine
                 }
             }
             
-            max_description_length = terminal_width - max_option_length - min_spacing - 4;
+            max_description_length = TerminalWidth - max_option_length - min_spacing - 4;
             description_alignment = max_option_length + min_spacing + 4;
+            
+            IEnumerator<LayoutGroup> enumerator = groups.GetEnumerator ();
+            while (enumerator.MoveNext ()) {
+                group_count++;
+            }
             
             foreach (LayoutGroup group in groups) {
                 if (group.Id != "default") {
                     builder.Append (group.Title);
-                    builder.Append ("\n\n");
+                    builder.AppendLine ();
+                    builder.AppendLine ();
                 }
                 
-                foreach (LayoutOption option in group) {            
-                    int spacing = (max_option_length - option.Name.Length) + min_spacing;
-                    builder.AppendFormat ("  --{0}{2}{1}\n", option.Name, 
-                        WrapAlign (option.Description, max_description_length, description_alignment),
+                for (int i = 0, n = group.Count; i < n; i++) {
+                    int spacing = (max_option_length - group[i].Name.Length) + min_spacing;
+                    builder.AppendFormat ("  --{0}{2}{1}", group[i].Name, 
+                        WrapAlign (group[i].Description, max_description_length, 
+                            description_alignment, i == n - 1),
                         String.Empty.PadRight (spacing));
+                    builder.AppendLine ();
                 }
                 
-                if (group_index++ < groups.Count - 1) {
-                    builder.Append ("\n");
+                if (group_index++ < group_count - 1) {
+                    builder.AppendLine ();
                 }
             }
             
             return builder.ToString ();
         }
         
-        private static string WrapAlign (string str, int width, int align)
+        public string LayoutLine (string str)
+        {
+            return WrapAlign (str, TerminalWidth, 0, true);
+        }
+        
+        private static string WrapAlign (string str, int width, int align, bool last)
         {
             StringBuilder builder = new StringBuilder ();
             bool did_wrap = false;
@@ -100,7 +127,8 @@ namespace Hyena.CommandLine
                     for (int j = i + 1; j < str.Length && str[j] != ' '; word_length++, j++);
                     
                     if (b + word_length >= width) {
-                        builder.AppendFormat ("\n{0}", String.Empty.PadRight (align));
+                        builder.AppendLine ();
+                        builder.Append (String.Empty.PadRight (align));
                         b = 0;
                         did_wrap = true;
                         continue;
@@ -110,8 +138,8 @@ namespace Hyena.CommandLine
                 builder.Append (str[i]);
             }
             
-            if (did_wrap) {
-                builder.Append ('\n');
+            if (did_wrap && !last) {
+                builder.AppendLine ();
             }
             
             return builder.ToString ();
@@ -144,6 +172,16 @@ namespace Hyena.CommandLine
             }
             
             return null;
+        }
+        
+        private IEnumerable<LayoutGroup> GroupIdsToGroups (string [] groupIds)
+        {
+            foreach (string group_id in groupIds) {
+                LayoutGroup group = FindGroup (group_id);
+                if (group != null) {
+                    yield return group;
+                }    
+            }
         }
         
         public static LayoutOption Option (string name, string description)
