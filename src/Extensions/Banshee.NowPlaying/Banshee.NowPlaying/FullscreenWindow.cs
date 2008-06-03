@@ -43,8 +43,10 @@ namespace Banshee.NowPlaying
         private FullscreenControls controls;
         private InterfaceActionService action_service;
         
-        public FullscreenWindow (Window parent) : base (parent.Title)
+        public FullscreenWindow (Window parent) : base (WindowType.Toplevel)
         {
+            Title = parent.Title;
+            
             this.parent = parent;
             this.action_service = ServiceManager.Get<InterfaceActionService> ();
             
@@ -103,9 +105,9 @@ namespace Banshee.NowPlaying
         private void SetupWidget ()
         {
             Deletable = false;
-            KeepAbove = true;
-            Decorated = false;
             TransientFor = null;
+            Decorated = false;
+            CanFocus = true;
             
             // FIXME: Not really correct, but prevents Compiz from 
             // doing strange things with the window
@@ -149,6 +151,7 @@ namespace Banshee.NowPlaying
             base.OnShown ();
             OnHideCursorTimeout ();
             ConfigureWindow ();
+            HasFocus = true;
             parent.AddNotification ("is-active", ParentActiveNotification);
         }
         
