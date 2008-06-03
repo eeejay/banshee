@@ -1,6 +1,13 @@
 2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
+	Revert last commit, apparently abock has some grand plans he didn't tell
+	me about.
+
+2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs: Add
 	a CoverArtDownloads table to keep track of when we last tried to download
 	cover art for an album and if we were successful.  With this information,

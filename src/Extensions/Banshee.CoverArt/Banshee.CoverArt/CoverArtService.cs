@@ -3,7 +3,6 @@
 //
 // Authors:
 //   James Willcox <snorp@novell.com>
-//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2005-2008 Novell, Inc.
 //
@@ -62,15 +61,6 @@ namespace Banshee.CoverArt
         
         void IExtensionService.Initialize ()
         {
-            if (!ServiceManager.DbConnection.TableExists ("CoverArtDownloads")) {
-                ServiceManager.DbConnection.Execute (@"
-                    CREATE TABLE CoverArtDownloads (
-                        AlbumID     INTEGER UNIQUE,
-                        Downloaded  BOOLEAN,
-                        LastAttempt INTEGER NOT NULL
-                    )");
-            }
-
             action_service = ServiceManager.Get<InterfaceActionService> ();
             
             if (!ServiceStartup ()) {
