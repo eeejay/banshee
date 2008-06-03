@@ -111,6 +111,11 @@ namespace Banshee.NowPlaying
             // doing strange things with the window
             TypeHint = Gdk.WindowTypeHint.Notification;
             
+            ConfigureWindow ();
+        }
+        
+        private void ConfigureWindow ()
+        {
             Gdk.Screen screen = Screen;
             int monitor = screen.GetMonitorAtWindow (parent.GdkWindow);
             Gdk.Rectangle bounds = screen.GetMonitorGeometry (monitor);
@@ -143,6 +148,7 @@ namespace Banshee.NowPlaying
         {
             base.OnShown ();
             OnHideCursorTimeout ();
+            ConfigureWindow ();
             parent.AddNotification ("is-active", ParentActiveNotification);
         }
         
@@ -155,6 +161,7 @@ namespace Banshee.NowPlaying
         
         private void OnScreenSizeChanged (object o, EventArgs args)
         {
+            ConfigureWindow ();
         }
         
         private void ParentActiveNotification (object o, GLib.NotifyArgs args)

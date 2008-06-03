@@ -1,5 +1,11 @@
 2008-06-03  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Reconfigure the window when we're shown so we'll fullscreen to the
+	proper monitor (whatever monitor the parent is on) (BGO #535982)
+
+2008-06-03  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
 	In Play (), always call OnPlayWhenIdleRequest if we are in the idle state,
 	otherwise call Play on the base engine (BGO #534472)
