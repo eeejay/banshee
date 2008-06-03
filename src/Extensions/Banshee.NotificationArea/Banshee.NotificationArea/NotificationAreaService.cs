@@ -343,7 +343,6 @@ namespace Banshee.NotificationArea
         {
             if (ServiceManager.PlayerEngine.CurrentTrack != null) {
                 ServiceManager.PlayerEngine.CurrentTrack.Rating = rating_menu_item.Value;
-                ServiceManager.PlayerEngine.CurrentTrack.Save (); //true, Banshee.Query.BansheeQuery.RatingField);
                 ServiceManager.PlayerEngine.TrackInfoUpdated ();
             }
         }

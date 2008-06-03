@@ -395,7 +395,7 @@ namespace Banshee.Collection.Database
         }
         
         [DatabaseColumn ("Rating")]
-        private int rating;
+        protected int rating;
         public override int Rating {
             get { return rating; }
             set {
@@ -444,7 +444,7 @@ namespace Banshee.Collection.Database
         }
         
         [DatabaseColumn ("LastStreamError")]
-        private StreamPlaybackError playback_error;
+        protected StreamPlaybackError playback_error;
         public override StreamPlaybackError PlaybackError {
             get { return playback_error; }
             set {

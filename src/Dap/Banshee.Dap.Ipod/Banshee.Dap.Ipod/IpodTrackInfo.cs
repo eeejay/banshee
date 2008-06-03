@@ -68,7 +68,7 @@ namespace Banshee.Dap.Ipod
                 TrackTitle = track.TrackTitle;
                 Genre = track.Genre;
                 Duration = track.Duration;
-                Rating = track.Rating;
+                rating = track.Rating;
                 PlayCount = track.PlayCount;
                 LastPlayed = track.LastPlayed;
                 DateAdded = track.DateAdded;
@@ -107,13 +107,13 @@ namespace Banshee.Dap.Ipod
             Genre = String.IsNullOrEmpty (track.Genre) ? null : track.Genre;
             
             switch (track.Rating) {
-                case IPod.TrackRating.One:   Rating = 1; break;
-                case IPod.TrackRating.Two:   Rating = 2; break;
-                case IPod.TrackRating.Three: Rating = 3; break;
-                case IPod.TrackRating.Four:  Rating = 4; break;
-                case IPod.TrackRating.Five:  Rating = 5; break;
+                case IPod.TrackRating.One:   rating = 1; break;
+                case IPod.TrackRating.Two:   rating = 2; break;
+                case IPod.TrackRating.Three: rating = 3; break;
+                case IPod.TrackRating.Four:  rating = 4; break;
+                case IPod.TrackRating.Five:  rating = 5; break;
                 case IPod.TrackRating.Zero: 
-                default:                     Rating = 0; break;
+                default:                     rating = 0; break;
             }
             
             if (track.IsProtected) {

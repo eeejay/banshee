@@ -58,7 +58,7 @@ namespace Banshee.Dap.Mtp
             Duration = TimeSpan.FromMilliseconds (file.Duration);
             Genre = file.Genre;
             PlayCount = file.UseCount < 0 ? 0 : (int) file.UseCount;
-            Rating = file.Rating < 0 ? 0 : (file.Rating / 20);
+            rating = file.Rating < 0 ? 0 : (file.Rating / 20);
             TrackTitle = file.Title;
             TrackNumber = file.TrackNumber < 0 ? 0 : (int)file.TrackNumber;
             Year = (file.ReleaseDate != null && file.ReleaseDate.Length >= 4) ? Int32.Parse (file.ReleaseDate.Substring(0, 4)) : 0;

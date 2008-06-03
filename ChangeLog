@@ -1,3 +1,19 @@
+2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Get rid of unnecessary Save call; DatabaseTrackInfo already calls save
+	when you set the Rating.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Expose rating and some other members as protected so subclasses can set it
+	without triggering the save (eg to load initial state).
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpTrackInfo.cs: Hacky fix for
+	BGO #535898, use the protected rating member instead of the Rating
+	property to initialize the rating, to avoid callign Save when we didn't
+	mean to.
+
 2008-06-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Nereid/Nereid/Client.cs: Use ?? 
