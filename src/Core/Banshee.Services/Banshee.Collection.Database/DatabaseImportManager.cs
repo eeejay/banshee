@@ -59,12 +59,12 @@ namespace Banshee.Collection.Database
             "m1v",  "m21",  "m2p",  "m2v",  "m4a",  "m4b",  "m4e",  "m4p",  
             "m4u",  "m4v",  "mp+",  "mid",  "midi", "mjp",  "mkv",  "moov",
             "mov",  "movie","mp1",  "mp2",  "mp21", "mp3",  "mp4",  "mpa",
-            "mpc",  "mpe",  "mpeg", "mpg",  "mpp",  "mpu",  "mpv",  "mpv2",
-            "oga",  "ogg",  "ogv",  "ogm",  "omf",  "qt",   "ra",   "ram",  
-            "raw",  "rm",   "rmvb", "rts",  "smil", "swf",  "tivo", "u",
-            "vfw",  "vob",  "wav",  "wave", "wax",  "wm",   "wma",  "wmd",  
-            "wmv",  "wmx",  "wv",   "wvc",  "wvx",  "yuv",  "f4v",  "f4a",  
-            "f4b"
+            "mpc",  "mpe",  "mpeg", "mpg",  "mpga", "mpp",  "mpu",  "mpv",  
+            "mpv2", "oga",  "ogg",  "ogv",  "ogm",  "omf",  "qt",   "ra",
+            "ram",  "raw",  "rm",   "rmvb", "rts",  "smil", "swf",  "tivo", 
+            "u",    "vfw",  "vob",  "wav",  "wave", "wax",  "wm",   "wma",  
+            "wmd",  "wmv",  "wmx",  "wv",   "wvc",  "wvx",  "yuv",  "f4v",  
+            "f4a",  "f4b"
         };
 
         static DatabaseImportManager ()

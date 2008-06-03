@@ -1,5 +1,14 @@
 2008-06-03  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	In Play (), always call OnPlayWhenIdleRequest if we are in the idle state,
+	otherwise call Play on the base engine (BGO #534472)
+	
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Also add mpga to the white list
+
+2008-06-03  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Remove the footer widget
 	property after destroying the widget to avoid a property notification cycle
 

@@ -372,7 +372,11 @@ namespace Banshee.MediaEngine
         
         public void Play ()
         {
-            active_engine.Play ();
+            if (CurrentState == PlayerState.Idle) {
+                OnPlayWhenIdleRequest ();
+            } else {
+                active_engine.Play ();
+            }
         }
         
         public void Pause ()
@@ -386,16 +390,10 @@ namespace Banshee.MediaEngine
         
         public void TogglePlaying ()
         {
-            switch (CurrentState) {
-                case PlayerState.Idle:
-                    OnPlayWhenIdleRequest ();
-                    break;
-                case PlayerState.Playing:
-                    Pause ();
-                    break;
-                default:
-                    Play ();
-                    break;
+            if (CurrentState == PlayerState.Playing) {
+                Pause ();
+            } else {
+                Play ();
             }
         }
         
