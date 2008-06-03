@@ -1,3 +1,11 @@
+2008-06-03  Jordi Mas <jmas@softcatala.org>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	Add GetString to localizable strings
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	Add GetString to localizable strings
+
 2008-06-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Don't

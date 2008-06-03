@@ -30,6 +30,7 @@
 using System;
 using System.Data;
 using System.Collections.Generic;
+using Mono.Unix;
 
 using Hyena;
 using Hyena.Data.Sqlite;
@@ -63,7 +64,7 @@ namespace Banshee.Collection.Database
         
         public override void UpdateSelectAllItem (long count)
         {
-            select_all_item.Name = String.Format ("All Artists ({0})", count);
+            select_all_item.Name = String.Format (Catalog.GetString ("All Artists ({0})"), count);
         }
     }
 }
