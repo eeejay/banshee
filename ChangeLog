@@ -1,5 +1,9 @@
 2008-06-03  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Nereid/Nereid/Client.cs: Use ?? 
+
+2008-06-03  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Halie/Halie/Client.cs: Translate a few query fields to be
 	more familiar, allow setting volume and seeking, support window hiding
 

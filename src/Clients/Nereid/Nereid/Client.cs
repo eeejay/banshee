@@ -185,10 +185,7 @@ namespace Nereid
                     case "help-playback": Console.WriteLine (commands.ToString ("playback")); break;
                     default:
                         if (argument.Key.StartsWith ("help")) {
-                            if (errors == null) {
-                                errors = new List<string> ();
-                            }
-                            errors.Add (argument.Key);
+                            (errors ?? errors = new List<string> ()).Add (argument.Key);
                         }
                         break;
                 }
