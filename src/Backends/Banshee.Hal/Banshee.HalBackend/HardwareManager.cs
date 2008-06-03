@@ -92,7 +92,11 @@ namespace Banshee.HalBackend
 
         private void OnHalDeviceAdded (object o, Hal.DeviceAddedArgs args)
         {
-            OnHalDeviceAdded (Resolve (args.Device));
+            try {
+                OnHalDeviceAdded (Resolve (args.Device));
+            } catch (Exception e) {
+                Log.Exception (e);
+            }
         }
 
         private IDevice Resolve (Hal.Device hal_device)

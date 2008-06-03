@@ -12,6 +12,7 @@
     <File name="Banshee.BooScript/BooScriptService.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/duration-status-formats.boo" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Resources/filename-transform.boo" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Resources/vorbis-oga-extension.boo" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />

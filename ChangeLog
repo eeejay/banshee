@@ -1,3 +1,22 @@
+2008-06-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Remove the footer widget
+	property after destroying the widget to avoid a property notification cycle
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs: Wrap UpdateUsage
+	in an exception catch/log
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/HardwareManager.cs: Catch
+	any exceptions that HAL might through (particularly if the device no
+	longer exists) when adding devices (BGO #528957)
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Added oga and ogv file extensions to the white list (BGO #532561)
+
+	* src/Extensions/Banshee.BooScript/Resources/vorbis-oga-extension.boo:
+	Added a sample script that will change the Vorbis profile to write files
+	with a .oga extension instead of a .ogg (BGO #532561)
+
 2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:

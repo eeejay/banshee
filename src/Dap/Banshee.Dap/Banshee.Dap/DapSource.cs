@@ -88,11 +88,12 @@ namespace Banshee.Dap
             PurgeBuiltinSmartPlaylists ();
             PurgeTracks ();
             
-            Properties.Remove ("Nereid.SourceContents.FooterWidget");
             if (dap_info_bar != null) {
                 dap_info_bar.Destroy ();
                 dap_info_bar = null;
             }
+            
+            Properties.Remove ("Nereid.SourceContents.FooterWidget");
             
             /*Properties.Remove ("Nereid.SourceContents");
             dap_properties_display.Destroy ();

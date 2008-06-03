@@ -92,7 +92,11 @@ namespace Banshee.Dap.Gui
         
         private void OnSourceUpdated (object o, EventArgs args)
         {
-            UpdateUsage ();
+            try {
+                UpdateUsage ();
+            } catch (Exception e) {
+                Hyena.Log.Exception (e);
+            }
         }
         
         protected override void OnStyleSet (Style previous_style)
