@@ -124,8 +124,6 @@ namespace Banshee.CoverArt
                         track.ArtistName = reader.GetString (2);
                         track.AlbumId = Convert.ToInt32 (reader[0]);
 
-                        Log.DebugFormat ("Downloading cover art for {0} - {1}", track.ArtistName, track.AlbumTitle);
-
                         Progress = (double) current / (double) total;
                         Status = String.Format (Catalog.GetString ("{0} - {1}"), track.ArtistName, track.AlbumTitle);
 

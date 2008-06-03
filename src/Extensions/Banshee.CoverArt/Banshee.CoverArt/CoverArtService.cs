@@ -161,7 +161,6 @@ namespace Banshee.CoverArt
                     last_scan = DatabaseConfigurationClient.Client.Get<DateTime> ("last_cover_art_scan",
                                                                                   DateTime.MinValue);
                 }
-                Log.DebugFormat ("Last cover art scan was '{0}'", last_scan);
                 job = new CoverArtJob (last_scan);
                 job.Finished += delegate {
                     DatabaseConfigurationClient.Client.Set<DateTime> ("last_cover_art_scan",

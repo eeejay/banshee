@@ -143,7 +143,10 @@ namespace Banshee.Gui.Widgets
                             seek_slider.SetIdle ();
                             break;
                         case PlayerState.Idle:
+                            seek_slider.CanSeek = false;
                             if (!transitioning) {
+                                seek_slider.Duration = 0;
+                                seek_slider.SeekValue = 0;
                                 seek_slider.SetIdle ();
                                 stream_position_label.IsContacting = false;
                             }
