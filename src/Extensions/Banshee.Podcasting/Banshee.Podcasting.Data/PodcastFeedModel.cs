@@ -29,6 +29,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Mono.Unix;
 
 using Hyena.Data;
 
@@ -65,7 +66,7 @@ namespace Banshee.Podcasting.Gui
         
         public override void UpdateSelectAllItem (long count)
         {
-            select_all_item.Title = String.Format ("All Podcasts ({0})", count);
+            select_all_item.Title = String.Format (Catalog.GetString ("All Podcasts ({0})"), count);
         }
     }
 }
