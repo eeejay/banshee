@@ -82,6 +82,13 @@ namespace Banshee.CoverArt
         public CoverArtJob (DateTime lastScan) : base (Catalog.GetString ("Downloading Cover Art"))
         {
             last_scan = lastScan;
+
+            // Since we do last_scan - retry_every, avoid out-of-range error by ensuring
+            // the last_scan date isn't already MinValue
+            if (last_scan == DateTime.MinValue) {
+                last_scan = DateTime.Now - TimeSpan.FromDays (300);
+            }
+
             CanCancel = true;
         }
         
@@ -106,33 +113,37 @@ namespace Banshee.CoverArt
             int current = 0;
             int total = 0;
 
-            DatabaseTrackInfo track = new DatabaseTrackInfo ();
-            while (true) {
-                total = current + ServiceManager.DbConnection.Query<int> (count_query, last_scan, ServiceManager.SourceManager.MusicLibrary.DbId, last_scan - retry_every);
-                if (total == 0 || total <= current) {
-                    break;
-                }
+            try {
+                DatabaseTrackInfo track = new DatabaseTrackInfo ();
+                while (true) {
+                    total = current + ServiceManager.DbConnection.Query<int> (count_query, last_scan, ServiceManager.SourceManager.MusicLibrary.DbId, last_scan - retry_every);
+                    if (total == 0 || total <= current) {
+                        break;
+                    }
 
-                using (IDataReader reader = RunQuery ()) {
-                    while (reader.Read ()) {
-                        if (IsCancelRequested) {
-                            Finish ();
-                            return;
+                    using (IDataReader reader = RunQuery ()) {
+                        while (reader.Read ()) {
+                            if (IsCancelRequested) {
+                                Finish ();
+                                return;
+                            }
+                            
+                            track.AlbumTitle = reader.GetString (1);
+                            track.ArtistName = reader.GetString (2);
+                            track.AlbumId = Convert.ToInt32 (reader[0]);
+
+                            Progress = (double) current / (double) total;
+                            Status = String.Format (Catalog.GetString ("{0} - {1}"), track.ArtistName, track.AlbumTitle);
+
+                            FetchForTrack (track);
+                            current++;
                         }
-                        
-                        track.AlbumTitle = reader.GetString (1);
-                        track.ArtistName = reader.GetString (2);
-                        track.AlbumId = Convert.ToInt32 (reader[0]);
-
-                        Progress = (double) current / (double) total;
-                        Status = String.Format (Catalog.GetString ("{0} - {1}"), track.ArtistName, track.AlbumTitle);
-
-                        FetchForTrack (track);
-                        current++;
                     }
                 }
+            } catch (Exception e) {
+                Log.Exception (e);
             }
-            
+ 
             Finish ();
         }
 

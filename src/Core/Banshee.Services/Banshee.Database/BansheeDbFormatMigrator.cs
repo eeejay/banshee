@@ -759,27 +759,25 @@ namespace Banshee.Database
                     try {
                         track = DatabaseTrackInfo.Provider.Load (reader);
 
-                        if (track == null || track.Uri == null || !track.Uri.IsFile)
-                            continue;
-                        
-                        try {
-                            TagLib.File file = StreamTagger.ProcessUri (track.Uri);
-                            StreamTagger.TrackInfoMerge (track, file, true);
-                        } catch (Exception e) {
-                            Log.Warning (String.Format ("Failed to update metadata for {0}", track),
-                                e.GetType ().ToString (), false);
+                        if (track != null && track.Uri != null && track.Uri.IsFile) {
+                            try {
+                                TagLib.File file = StreamTagger.ProcessUri (track.Uri);
+                                StreamTagger.TrackInfoMerge (track, file, true);
+                            } catch (Exception e) {
+                                Log.Warning (String.Format ("Failed to update metadata for {0}", track),
+                                    e.GetType ().ToString (), false);
+                            }
+                            
+                            track.Save (false);
+                            track.Artist.Save ();
+                            track.Album.Save ();
+
+                            job.Status = String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle);
                         }
-                        
-                        track.Save (false);
-                        track.Artist.Save ();
-                        track.Album.Save ();
                     } catch (Exception e) {
                         Log.Warning (String.Format ("Failed to update metadata for {0}", track), e.ToString (), false);
-                        job.Finish ();
-                        throw;
                     }
 
-                    job.Status = String.Format ("{0} - {1}", track.DisplayArtistName, track.DisplayTrackTitle);
                     job.Progress = (double)++count / (double)total;
                 }
             }

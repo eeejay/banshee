@@ -1,3 +1,14 @@
+2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Avoid
+	issue with last_scan being MinValue and trying to subtract retry_every
+	from it.  Also, wrap the entire fetch loop in a try/catch to make sure we
+	exit the user job and log any exception.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Don't stop the entire migration because one track fails.  Log the
+	exception, and keep going.
+
 2008-06-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
