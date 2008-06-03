@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-02 22:37+0200\n"
-"PO-Revision-Date: 2008-06-02 22:37+0100\n"
+"POT-Creation-Date: 2008-06-03 16:39+0200\n"
+"PO-Revision-Date: 2008-06-03 16:38+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -392,6 +392,16 @@ msgstr "Ukendt titel"
 #, csharp-format
 msgid "Saving tags for {0}"
 msgstr "Gemmer mærker for {0}"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:69
+#, csharp-format
+msgid "All Albums ({0})"
+msgstr "Alle album ({0})"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:67
+#, csharp-format
+msgid "All Artists ({0})"
+msgstr "Alle kunstnere ({0})"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:82
 msgid "Scanning for media"
@@ -2668,11 +2678,11 @@ msgstr "{0} ({1}:{2:00})"
 msgid "Downloading Cover Art"
 msgstr "Henter omslag"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:102
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:97
 msgid "Preparing..."
 msgstr "Klargører..."
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:137
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:133
 #, csharp-format
 msgid "{0} - {1}"
 msgstr "{0} - {1}"
@@ -2909,33 +2919,33 @@ msgstr "Antal afspilninger"
 msgid "Station Type"
 msgstr "Stationstype"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:255
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:256
 #, csharp-format
 msgid "http://last.fm/music/{0}"
 msgstr "http://last.fm/music/{0}"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:263
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:271
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:264
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:272
 #, csharp-format
 msgid "http://last.fm/music/{0}/{1}"
 msgstr "http://last.fm/music/{0}/{1}"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:279
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:280
 #, csharp-format
 msgid "http://www.last.fm/music/{0}/+videos"
 msgstr "http://www.last.fm/music/{0}/+videos"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:287
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:288
 #, csharp-format
 msgid "http://en.wikipedia.org/wiki/{0}"
 msgstr "http://da.wikipedia.org/wiki/{0}"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:321
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:322
 #, csharp-format
 msgid "Fans of {0}"
 msgstr "Fans af {0}"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:342
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:343
 #, csharp-format
 msgid "Similar to {0}"
 msgstr "Lignende med {0}"
@@ -3116,7 +3126,7 @@ msgid "Change repeat playback mode"
 msgstr "Gentag afspilning (til/fra)"
 
 #: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:1
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:57
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:64
 msgid "Banshee"
 msgstr "Banshee"
 
@@ -3518,7 +3528,7 @@ msgstr "måneder"
 msgid "years"
 msgstr "år"
 
-#: ../src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:49
+#: ../src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:48
 msgid "Rating:"
 msgstr "Bedømmelse:"
 
