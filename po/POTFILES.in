@@ -16,6 +16,7 @@ src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs
+src/Clients/Nereid/Nereid/Client.cs
 src/Clients/Nereid/Nereid/PlayerInterface.cs
 src/Clients/Nereid/Nereid/ViewContainer.cs
 src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs
