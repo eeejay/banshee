@@ -172,6 +172,16 @@ namespace Banshee.Podcasting
                 DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 1);
             }
 
+            if (DatabaseConfigurationClient.Client.Get<int> ("Podcast", "Version", 0) == 1) {
+                // We were using the Link as the fallback if the actual Guid was missing, but that was a poor choice
+                // since it is not always unique.  We now use the title and pubdate combined.
+                foreach (FeedItem item in FeedItem.Provider.FetchAll ()) {
+                    item.Guid = null;
+                    item.Save ();
+                }
+
+                DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 2);
+            }
         }
         
         public void Initialize ()

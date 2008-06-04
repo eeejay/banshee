@@ -401,7 +401,7 @@ namespace Migo.Syndication
         private bool AddItem (FeedItem item)
         {
             try {
-            if (!FeedItem.Exists (item.Guid)) {
+            if (!FeedItem.Exists (this.DbId, item.Guid)) {
                 item.Feed = this;
                 item.Save ();
                 return true;

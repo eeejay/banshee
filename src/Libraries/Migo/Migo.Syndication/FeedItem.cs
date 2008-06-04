@@ -50,9 +50,12 @@ namespace Migo.Syndication
             get { return provider; }
         }
         
-        public static bool Exists (string guid)
+        public static bool Exists (long feed_id, string guid)
         {
-            return Provider.Connection.Query<int> (String.Format ("select count(*) from {0} where Guid = ?", Provider.TableName), guid) != 0;
+            return Provider.Connection.Query<int> (
+                String.Format ("SELECT count(*) FROM {0} WHERE FeedID = ? AND Guid = ?", Provider.TableName),
+                feed_id, guid
+            ) != 0;
         }
         
         public static void Init () {
@@ -121,7 +124,14 @@ namespace Migo.Syndication
         
         [DatabaseColumn("Guid", Index = "PodcastItemsGuidIndex")]
         public string Guid {
-            get { return String.IsNullOrEmpty (guid) ? Link : guid; }
+            get {
+                if (String.IsNullOrEmpty (guid)) {
+                    guid = String.Format ("{0}-{1}", Title,
+                        PubDate.ToUniversalTime ().ToString (System.Globalization.DateTimeFormatInfo.InvariantInfo)
+                    );
+                }
+                return guid;
+            }
             set { guid = value; }
         }
 

@@ -1,3 +1,16 @@
+2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	* src/Libraries/Migo/Migo.Syndication/FeedItem.cs:
+	* src/Libraries/Migo/Migo.Syndication/Feed.cs: Fix bug with the guid we
+	use for identifying podcast items.  Some feeds don't give a guid for
+	items, so we were using the <link>, but that isn't unique.  Instead, fall
+	back to using a combination of the title and pubdate.  Fixes BGO #536555.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Comment out the eq actions.
+
 2008-06-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:

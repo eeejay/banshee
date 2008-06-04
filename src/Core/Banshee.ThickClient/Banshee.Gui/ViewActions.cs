@@ -59,11 +59,11 @@ namespace Banshee.Gui
         {
             Add (new ActionEntry [] {
                 new ActionEntry ("ViewMenuAction", null,
-                    Catalog.GetString ("_View"), null, null, null),
+                    Catalog.GetString ("_View"), null, null, null)/*,
                     
                 new ActionEntry ("ShowEqualizerAction", null,
                    Catalog.GetString ("_Equalizer"), "<control>E",
-                   Catalog.GetString ("View the graphical equalizer"), OnShowEqualizer)
+                   Catalog.GetString ("View the graphical equalizer"), OnShowEqualizer)*/
             });
 
             AddImportant (new ToggleActionEntry [] {
@@ -86,11 +86,11 @@ namespace Banshee.Gui
         {
             if (((PlayerEventStateChangeArgs)args).Current == PlayerState.Ready && 
                 !ServiceManager.PlayerEngine.SupportsEqualizer) {
-                Actions["View.ShowEqualizerAction"].Sensitive = false;
+                //Actions["View.ShowEqualizerAction"].Sensitive = false;
             }
         }
                 
-        private void OnShowEqualizer (object o, EventArgs args)
+        /*private void OnShowEqualizer (object o, EventArgs args)
         {
             if (EqualizerWindow.Instance == null) {
                 EqualizerWindow eqwin = new EqualizerWindow (ServiceManager.Get<GtkElementsService> ().PrimaryWindow);
@@ -98,7 +98,7 @@ namespace Banshee.Gui
             } else {
                 EqualizerWindow.Instance.Present ();
             }
-        }
+        }*/
 
         private void OnFullScreen (object o, EventArgs args)
         {
