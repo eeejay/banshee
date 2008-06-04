@@ -1,3 +1,14 @@
+2008-06-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Use Gtk.Rc.GetStyleByPaths to grab the GtkTreeView style directly and
+	attach it to our ListView; this is the proper "fix" to bug (BGO #534731),
+	though the bug in LP is again, still quite valid
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListViewBase.cs:
+	Reverted the hacky version of my theme fix from earlier today
+
 2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Migo/Migo.Syndication/FeedManager.cs: Get rid of some racy

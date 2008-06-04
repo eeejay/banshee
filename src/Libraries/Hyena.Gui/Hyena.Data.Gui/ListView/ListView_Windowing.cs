@@ -76,6 +76,8 @@ namespace Hyena.Data.Gui
             event_window = new Gdk.Window (GdkWindow, attributes, attributes_mask);
             event_window.UserData = Handle;
             
+            Style = Gtk.Rc.GetStyleByPaths (Settings, "*.GtkTreeView", "*.GtkTreeView", GType);
+            
             OnDragSourceSet ();
             MoveResize (Allocation);
             

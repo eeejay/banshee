@@ -33,50 +33,5 @@ namespace Hyena.Data.Gui
 {
     public class ListViewBase : Widget
     {
-        private static TreeView tree_view;
-        public static TreeView TreeViewStyleAdapter {
-            get { return tree_view; }
-            set { tree_view = value; }
-        }
-        
-        public ListViewBase ()
-        {
-            if (TreeViewStyleAdapter != null) {
-                TreeViewStyleAdapter.StyleSet += OnTreeViewStyleAdapterStyleSet;
-            }
-        }
-        
-        public override void Dispose ()
-        {
-            if (TreeViewStyleAdapter != null) {
-                TreeViewStyleAdapter.StyleSet -= OnTreeViewStyleAdapterStyleSet;
-            }
-            
-            base.Dispose ();
-        }
-        
-        protected override void OnRealized ()
-        {
-            base.OnRealized ();
-            AdaptTreeViewStyle (TreeViewStyleAdapter);
-        }
-
-        private void OnTreeViewStyleAdapterStyleSet (object o, StyleSetArgs args)
-        {
-            AdaptTreeViewStyle (TreeViewStyleAdapter);
-        }
-        
-        public void AdaptTreeViewStyle (TreeView treeView)
-        {
-            if (treeView == null || !treeView.IsRealized) {
-                return;
-            }
-            
-            foreach (StateType state in Enum.GetValues (typeof (StateType))) {
-                ModifyBg (state, treeView.Style.Background (state));
-                ModifyFg (state, treeView.Style.Foreground (state));
-                ModifyBase (state, treeView.Style.Base (state));
-            }
-        }
     }
 }
