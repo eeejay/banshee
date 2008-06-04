@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee 0.10.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-04 20:30+0200\n"
-"PO-Revision-Date: 2008-06-03 20:34+0200\n"
+"POT-Creation-Date: 2008-06-04 19:48+0200\n"
+"PO-Revision-Date: 2008-06-04 21:54+0200\n"
 "Last-Translator: Philipp Kerling <k.philipp@gmail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -105,17 +105,17 @@ msgid ""
 "Vorbis is an open source, lossy audio codec with high quality output at a "
 "lower file size than MP3."
 msgstr ""
-"Vorbis ist ein verlustbehafteter Open Source Audio Codec mit "
-"hochqualitativer Ausgabe bei kleineren Dateigrößen als MP3."
+"Vorbis ist ein verlustbehafteter Open Source Audio Codec mit hochqualitativer "
+"Ausgabe bei kleineren Dateigrößen als MP3."
 
 #: ../data/audio-profiles/wavpack.xml.in.h:1
 msgid ""
 "A fast and efficient open source audio format offering lossless and high-"
 "quality lossy encoding with great dynamic range."
 msgstr ""
-"Ein schnelles und effizientes Open Source Audioformat, dass ein "
-"verlustfreies und hochqualitatives Encoding mit einer großen dynamischen "
-"Bandbreite anbietet."
+"Ein schnelles und effizientes Open Source Audioformat, dass ein verlustfreies "
+"und hochqualitatives Encoding mit einer großen dynamischen Bandbreite "
+"anbietet."
 
 #: ../data/audio-profiles/wavpack.xml.in.h:4
 msgid "Default"
@@ -283,127 +283,128 @@ msgid "Could not create transcoder"
 msgstr "Transkoder konnte nicht erzeugt werden"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:105
-#, fuzzy
 msgid "Help Options"
-msgstr "CD-Einstellungen"
+msgstr "Hilfeoptionen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:106
 msgid "Show this help"
-msgstr ""
+msgstr "Diese Hilfe anzeigen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:107
 msgid "Show options for controlling playback"
-msgstr ""
+msgstr "Optionen für die Steuerung der Wiedergabe anzeigen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:108
 msgid "Show options for querying the playing track"
-msgstr ""
+msgstr "Optionen für das Abfragen des aktuellen Titels anzeigen"
 
+# CHECK
 #: ../src/Clients/Nereid/Nereid/Client.cs:109
 msgid "Show options for querying the playing engine"
-msgstr ""
+msgstr "Optionen für das Abfragen des Wiedergabeprogrammes anzeigen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:110
-#, fuzzy
 msgid "Show options for the user interface"
-msgstr "Benutzerschnittstelle wird geladen"
+msgstr "Optionen der Benutzerschnittstelle anzeigen"
 
+# O
 #: ../src/Clients/Nereid/Nereid/Client.cs:111
 msgid "Show options for developers and debugging"
-msgstr ""
+msgstr "Optionen für Entwickler und zur Fehlersuche anzeigen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:112
-#, fuzzy
 msgid "Show all option groups"
-msgstr "Station-Gruppe:"
+msgstr "Alle Optionsgruppen anzeigen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:113
-#, fuzzy
 msgid "Show version information"
-msgstr "_Versionsinformation …"
+msgstr "Versionsinformation anzeigen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:116
 msgid "Playback Control Options"
-msgstr ""
+msgstr "Wiedergabeoptionen"
 
+# CHECK
 #: ../src/Clients/Nereid/Nereid/Client.cs:117
-msgid ""
-"Play the next track, optionally restarting if the 'restart' value is set"
+msgid "Play the next track, optionally restarting if the 'restart' value is set"
 msgstr ""
+"Den nächsten Titel abspielen, optional neu starten falls das »restart«-Feld "
+"gesetzt ist"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:118
 msgid ""
 "Play the previous track, optionally restarting if the 'restart value is set"
 msgstr ""
+"Den vorherigen Titel abspielen, optional neu starten falls das »restart«-Feld "
+"gesetzt ist"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:119
 msgid "Automatically start playing any tracks enqueued on the command line"
 msgstr ""
+"Automatisch damit beginnen, alle auf der Kommandozeile angegebenen Titel in "
+"die Warteschlange aufzunehmen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:120
-#, fuzzy
 msgid "Start playback"
-msgstr "Wiedergabe wiederholen"
+msgstr "Wiedergabe starten"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:121
-#, fuzzy
 msgid "Pause playback"
-msgstr "_Wiedergabe"
+msgstr "Wiedergabe pausieren"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:122
-#, fuzzy
 msgid "Completely stop playback"
-msgstr "Wiedergabe wiederholen"
+msgstr "Wiedergabe komplett anhalten"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:124
 msgid ""
 "Enable or disable playback stopping after the currently playing track (value "
 "should be either 'true' or 'false')"
 msgstr ""
+"Stopp nach dem aktuellen Titel aktivieren bzw. deaktivieren (der Wert sollte "
+"entweder »true« oder »false« sein)"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:125
 msgid "Set the playback volume (0-100)"
-msgstr ""
+msgstr "Die Wiedergabelautstärke setzen (0-100)"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:126
-#, fuzzy
 msgid "Seek to a specific point (seconds, float)"
-msgstr "Zu einer bestimmten Position im aktuellen Element bewegen"
+msgstr "Zu einer bestimmten Position bewegen (in Sekunden, als Fließkommazahl)"
 
+# CHECK
 #: ../src/Clients/Nereid/Nereid/Client.cs:129
 msgid "Player Engine Query Options"
-msgstr ""
+msgstr "Optionen zum Abfragen des Wiedergabeprogramms"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:130
 msgid "Current player state"
-msgstr ""
+msgstr "Aktueller Wiedergabestatus"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:131
-#, fuzzy
 msgid "Last player state"
-msgstr "Letzte Wiedergabe"
+msgstr "Letzter Wiedergabestatus"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:132
 msgid "Query whether the player can be paused"
-msgstr ""
+msgstr "Abfragen, ob das Wiedergabeprogramm pausiert werden kann"
 
+# CHECK
 #: ../src/Clients/Nereid/Nereid/Client.cs:133
 msgid "Query whether the player can seek"
-msgstr ""
+msgstr "Abfragen, ob das Wiedergabeprogramm im Titel springen kann"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:134
-#, fuzzy
 msgid "Player volume"
-msgstr "Wiedergabeanzahl"
+msgstr "Wiedergabelautstärke"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:135
-#, fuzzy
 msgid "Player position in currently playing track"
-msgstr "Zum momentan laufenden Element springen"
+msgstr "Abspielposition im aktuellen Titel"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:138
 msgid "Playing Track Metadata Query Options"
-msgstr ""
+msgstr "Optionen zur Abfrage der Metadaten des aktuellen Titels"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:139
 msgid "URI"
@@ -436,14 +437,12 @@ msgid "Track Number"
 msgstr "Titelnummer"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:145
-#, fuzzy
 msgid "Track Count"
-msgstr "Wiedergabeanzahl"
+msgstr "Titelanzahl"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:146
-#, fuzzy
 msgid "Disc Number"
-msgstr "Nummer"
+msgstr "CD-Nummer"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:147
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:143
@@ -461,60 +460,65 @@ msgstr "Bewertung"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:151
 msgid "User Interface Options"
-msgstr ""
+msgstr "Optionen der Benutzeroberfläche"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:152
 msgid "Present the user interface on the active workspace"
-msgstr ""
+msgstr "Die Benutzeroberfläche auf der aktuellen Arbeitsfläche anzeigen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:153
-#, fuzzy
 msgid "Hide the user interface"
-msgstr "Benutzerschnittstelle wird geladen"
+msgstr "Benutzerschnittstelle verstecken"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:154
 msgid "Do not present the user interface, regardless of any other options"
 msgstr ""
+"Die Benutzeroberfläche nicht anzeigen, alle gegenteiligen Optionen ignorieren"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:157
 msgid "Debugging and Development Options"
-msgstr ""
+msgstr "Optionen für Entwickler und zur Fehlersuche"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:158
 msgid "Enable general debugging features"
-msgstr ""
+msgstr "Fehlersuchfunktionen allgemein aktivieren"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:159
 msgid "Enable debugging output of SQL queries"
-msgstr ""
+msgstr "Fehlersuchausgabe von SQL-Abfragen aktivieren"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:160
 msgid "Enable debugging output of Mono.Addins"
-msgstr ""
+msgstr "Fehlersuchausgabe von Mono.Addins aktivieren"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:161
 msgid "Specify an alternate database to use"
-msgstr ""
+msgstr "Eine alternative Datenbank angeben"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:162
 msgid ""
 "Optimize instance for running uninstalled; most notably, this will create an "
 "alternate Mono.Addins database in the working directory"
 msgstr ""
+"Instanz auf die nicht-installierte Benutzung optimieren; dies wird "
+"hauptsächlich eine alternative Mono.Addins-Datenbank im Arbeitsverzeichnis "
+"erstellen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:164
 msgid "Disable DBus support completely"
-msgstr ""
+msgstr "DBus-Unterstützung komplett deaktivieren"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:166
 #, csharp-format
 msgid "Skip loading a custom gtkrc file ({0}) if it exists"
 msgstr ""
+"Das Laden einer benutzerdefinierten gtkrc-Datei ({0}) überspringen, falls "
+"diese existiert"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:196
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "The following help arguments are invalid: {0}"
-msgstr "Die angegebenen Anmeldedaten sind ungültig"
+msgstr "Die folgenden Hilfeoptionen sind ungültig: {0}"
 
 #. Translators: this is the window title when a track is playing
 #. {0} is the track title, {1} is the artist name
@@ -802,11 +806,11 @@ msgstr "Initialisierung läuft"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:130
 msgid ""
-"Files are currently being converted to another format. Would you like to "
-"stop this?"
+"Files are currently being converted to another format. Would you like to stop "
+"this?"
 msgstr ""
-"Dateien werden momentan in ein anderes Format umgewandelt. Möchten Sie "
-"dieses stoppen?"
+"Dateien werden momentan in ein anderes Format umgewandelt. Möchten Sie dieses "
+"stoppen?"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:237
 msgid "Cannot Convert File"
@@ -878,8 +882,8 @@ msgid ""
 "Enable this option to save tags and other metadata inside supported audio "
 "files."
 msgstr ""
-"Diese Option aktivieren, um Tags und andere Metadaten innerhalb "
-"unterstützter Audio-Dateien zu speichern."
+"Diese Option aktivieren, um Tags und andere Metadaten innerhalb unterstützter "
+"Audio-Dateien zu speichern."
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:69
 msgid "File System Organization"
@@ -1489,9 +1493,9 @@ msgid ""
 "Closing Banshee now will cancel any currently running tasks. They cannot be "
 "resumed automatically the next time Banshee is run."
 msgstr ""
-"Das Beenden von Banshee wird die momentan laufenden Aufgaben abbrechen. "
-"Diese können beim nächsten Start von Banshee nicht automatisch "
-"wiederaufgenommen werden."
+"Das Beenden von Banshee wird die momentan laufenden Aufgaben abbrechen. Diese "
+"können beim nächsten Start von Banshee nicht automatisch wiederaufgenommen "
+"werden."
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:54
 msgid "Quit anyway"
@@ -1561,8 +1565,8 @@ msgid ""
 "count, Year, and Rating fields to the rest of the selected tracks in this "
 "editor."
 msgstr ""
-"Die Werte für die Werte Interpret, Album, Titel, Genre, Titelanzahl, Jahr "
-"und Bewertung werden auf die übrigen ausgewählten Titel in diesem Editor "
+"Die Werte für die Werte Interpret, Album, Titel, Genre, Titelanzahl, Jahr und "
+"Bewertung werden auf die übrigen ausgewählten Titel in diesem Editor "
 "angewendet."
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:247
@@ -1629,8 +1633,7 @@ msgstr "_Erweiterungen verwalten"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:78
 msgid "Manage extensions to add new features to Banshee"
-msgstr ""
-"Die Erweiterungen verwalten, um Banshee um neue Fähigkeiten zu ergänzen"
+msgstr "Die Erweiterungen verwalten, um Banshee um neue Fähigkeiten zu ergänzen"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:82
 msgid "_Tools"
@@ -1844,8 +1847,7 @@ msgstr "_Alben zufällig wiedergeben"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:98
 msgid "Play all songs from an album, then randomly choose another album"
-msgstr ""
-"Alle Titel eines Albums wiedergeben, dann ein zufälliges anderes wählen"
+msgstr "Alle Titel eines Albums wiedergeben, dann ein zufälliges anderes wählen"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:71
 msgid "_New Playlist"
@@ -1971,8 +1973,8 @@ msgstr "_Zur Wiedergabeliste hinzufügen"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:80
 msgid "Append selected items to playlist or create new playlist from selection"
 msgstr ""
-"Ausgewählte Elemente zur Wiedergabeliste hinzufügen oder neue "
-"Wiedergabelsite aus der Auswahl erstellen"
+"Ausgewählte Elemente zur Wiedergabeliste hinzufügen oder neue Wiedergabelsite "
+"aus der Auswahl erstellen"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:85
 msgid "Create new playlist from selected tracks"
@@ -2131,8 +2133,7 @@ msgstr "Diese Operation arbeitet noch. Möchten Sie sie stoppen?"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:141
 #, csharp-format
-msgid ""
-"The '{0}' operation is still performing work. Would you like to stop it?"
+msgid "The '{0}' operation is still performing work. Would you like to stop it?"
 msgstr "Die »{0}« Operation arbeitet noch. Möchten Sie diese stoppen?"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:145
@@ -2640,8 +2641,8 @@ msgid ""
 "Banshee and iTunes with the same iPod is not recommended."
 msgstr ""
 "Sie haben diesen iPod mit einer Version von iTunes verwendet, die "
-"Informationen in einer Version der Titel-Datenbank speichert, die zu neu "
-"ist, als dass Banshee diese erkennen könnte.\n"
+"Informationen in einer Version der Titel-Datenbank speichert, die zu neu ist, "
+"als dass Banshee diese erkennen könnte.\n"
 "\n"
 "Banshee kann die Datenbank neu aufbauen, dabei könnten jedoch Einstellungen "
 "verloren gehen. Es wird nicht empfohlen, Banshee und iTunes mit demselben "
@@ -2686,9 +2687,8 @@ msgid ""
 "\n"
 "Are you sure you want to rebuild your iPod database?"
 msgstr ""
-"Der Neuaufbau Ihrer iPod-Datenbank kann einige Zeit in Anspruch nehmen. "
-"Bitte beachten Sie auch, dass alle Wiedergabelisten auf Ihrem iPod verloren "
-"gehen.\n"
+"Der Neuaufbau Ihrer iPod-Datenbank kann einige Zeit in Anspruch nehmen. Bitte "
+"beachten Sie auch, dass alle Wiedergabelisten auf Ihrem iPod verloren gehen.\n"
 "\n"
 "Sind Sie sicher, dass Sie einen Neuaufbau Ihrer iPod-Datenbank wünschen?"
 
@@ -2719,8 +2719,7 @@ msgstr "MTP-Unterstützung ignoriert das Gerät"
 # CHECK: 2x »Gerät« vermeidbar?
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:77
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:116
-msgid ""
-"Banshee's MTP audio player support can only handle one device at a time."
+msgid "Banshee's MTP audio player support can only handle one device at a time."
 msgstr ""
 "Banshees Unterstützung für MTP-Wiedergabegeräte unterstützt nur ein Gerät "
 "gleichzeitig."
@@ -3454,9 +3453,9 @@ msgid "Clear the play queue when quitting"
 msgstr "Die Warteschlange beim Beenden leeren"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:69
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "All Podcasts ({0})"
-msgstr "Alle Künstler ({0})"
+msgstr "Alle Podcasts ({0})"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:95
 msgid "Podcasts"
@@ -3856,8 +3855,7 @@ msgstr "Es gibt nicht genügend Nachbarn für diese Station."
 
 # CHECK: streaming system
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:446
-msgid ""
-"The streaming system is offline for maintenance, please try again later."
+msgid "The streaming system is offline for maintenance, please try again later."
 msgstr ""
 "Das Streaming-System ist gerade nicht verfügbar. Bitte versuchen Sie es "
 "später noch einmal."
@@ -4185,8 +4183,7 @@ msgstr "Unbekannter Podcast"
 #~ msgstr "Fehler beim Schreiben der CD"
 
 #~ msgid "An unknown error occurred when attempting to write the disc."
-#~ msgstr ""
-#~ "Ein unbekannter Fehler trat beim Versuch auf, die CD zu beschreiben."
+#~ msgstr "Ein unbekannter Fehler trat beim Versuch auf, die CD zu beschreiben."
 
 #~ msgid "Disc writing complete"
 #~ msgstr "Disc-Brennvorgang abgeschlossen"
@@ -4247,8 +4244,8 @@ msgstr "Unbekannter Podcast"
 #~ msgstr "Migrieren aus anderen Wiedergabeprogrammen"
 
 #~ msgid ""
-#~ "Select any supported alternate media players that you wish to migrate "
-#~ "into Banshee."
+#~ "Select any supported alternate media players that you wish to migrate into "
+#~ "Banshee."
 #~ msgstr ""
 #~ "Wählen Sie ein unterstütztes Wiedergabeprogramm aus, das Sie nach Banshee "
 #~ "migrieren möchten."
@@ -4282,8 +4279,8 @@ msgstr "Unbekannter Podcast"
 #~ "The playlist import process is currently running. Would you like to stop "
 #~ "it?"
 #~ msgstr ""
-#~ "Der Import-Vorgang für Wiedergabelisten läuft momentan. Möchten Sie "
-#~ "diesen stoppen?"
+#~ "Der Import-Vorgang für Wiedergabelisten läuft momentan. Möchten Sie diesen "
+#~ "stoppen?"
 
 #~ msgid "Verifying playlist tracks exist in library"
 #~ msgstr "Prüfung, ob Wiedergabetitel in der Bibliothek existieren"
@@ -4362,8 +4359,7 @@ msgstr "Unbekannter Podcast"
 
 #~ msgid "Cannot initialize DapCore because HalCore is not initialized"
 #~ msgstr ""
-#~ "DapCore kann nicht intialisiert werden, weil HalCore nicht intialisiert "
-#~ "ist"
+#~ "DapCore kann nicht intialisiert werden, weil HalCore nicht intialisiert ist"
 
 #~ msgid "Owner name"
 #~ msgstr "Name des Besitzers"
@@ -4519,8 +4515,7 @@ msgstr "Unbekannter Podcast"
 #~ msgid "Cannot Rename Playlist"
 #~ msgstr "Wiedergabeliste kann nicht umbenannt werden"
 
-#~ msgid ""
-#~ "A playlist with this name already exists. Please choose another name."
+#~ msgid "A playlist with this name already exists. Please choose another name."
 #~ msgstr ""
 #~ "Eine Wiedergabeliste mit diesem Namen existiert bereits. Bitte wählen Sie "
 #~ "einen anderen Namen."
@@ -4536,8 +4531,7 @@ msgstr "Unbekannter Podcast"
 
 #~ msgid ""
 #~ "Can be either \"systemio\" (.NET System.IO), \"unix\" (Native Unix), or "
-#~ "\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart "
-#~ "necessary)"
+#~ "\"gnomevfs\" (GNOME VFS); takes effect on Banshee start (restart necessary)"
 #~ msgstr ""
 #~ "Gültige Werte sind »systemio« (.NET System.IO), »unix« (Native Unix) oder "
 #~ "»gnomevfs« (GNOME VFS); wird beim Starten von Banshee wirksam (Neustart "
@@ -4575,22 +4569,22 @@ msgstr "Unbekannter Podcast"
 
 #~ msgid ""
 #~ "Format for creating a track filename inside the library. Do not use path "
-#~ "tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, "
-#~ "%album%, %title%, %track_number%, %track_count%, %track_number_nz% (No "
+#~ "tokens/characters here. See LibraryFolderPattern. Legal tokens: %artist%, %"
+#~ "album%, %title%, %track_number%, %track_count%, %track_number_nz% (No "
 #~ "prefixed zero), %track_count_nz% (No prefixed zero)."
 #~ msgstr ""
 #~ "Format zur Erzeugung des Titel-Dateinamen innerhalb der Bibliothek. Es "
 #~ "dürfen keine Pfad-Zeichen/Schlüsselbegriffe verwendet werden. Siehe "
-#~ "LibraryFolderPattern. Zulässige Schlüsselbegriffe sind: %artist%, %album"
-#~ "%, %title%, %track_number%, %track_count%, %track_number_nz% (ohne "
-#~ "führende Null), %track_count_nz% (ohne führende Null)."
+#~ "LibraryFolderPattern. Zulässige Schlüsselbegriffe sind: %artist%, %album%, "
+#~ "%title%, %track_number%, %track_count%, %track_number_nz% (ohne führende "
+#~ "Null), %track_count_nz% (ohne führende Null)."
 
 #~ msgid ""
 #~ "Format for creating a track folder inside the library. Do not create an "
 #~ "absolute path. Path here is relative to the Banshee music directory. See "
-#~ "LibraryLocation. Legal tokens: %artist%, %album%, %title%, %track_number"
-#~ "%, %track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% "
-#~ "(No prefixed zero), %path_sep% (portable directory separator (/))."
+#~ "LibraryLocation. Legal tokens: %artist%, %album%, %title%, %track_number%, "
+#~ "%track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No "
+#~ "prefixed zero), %path_sep% (portable directory separator (/))."
 #~ msgstr ""
 #~ "Format zur Erzeugung des Titel-Ordners innerhalb der Bibliothek. Es darf "
 #~ "kein absoluter Pfad erzeugt werden. Die Pfade hier sind relativ zur "
@@ -4604,8 +4598,8 @@ msgstr "Unbekannter Podcast"
 #~ msgstr "Höhe des Hauptfensters"
 
 #~ msgid ""
-#~ "If enabled, metadata (tags) will be written back to audio files when "
-#~ "using the track metadata editor."
+#~ "If enabled, metadata (tags) will be written back to audio files when using "
+#~ "the track metadata editor."
 #~ msgstr ""
 #~ "Wenn aktiviert, werden die Metadaten bei Verwendung des Metadaten-Editors "
 #~ "zurück in die Audio-Dateien geschrieben."
@@ -4662,8 +4656,8 @@ msgstr "Unbekannter Podcast"
 #~ msgid ""
 #~ "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
 #~ msgstr ""
-#~ "Sortierkriterium der Bibliothek-Wiedergabeliste in der Quellenansicht (0 "
-#~ "= Name, 1 = Größe)"
+#~ "Sortierkriterium der Bibliothek-Wiedergabeliste in der Quellenansicht (0 = "
+#~ "Name, 1 = Größe)"
 
 #~ msgid "Sort criteria of playlists"
 #~ msgstr "Sortierkriterien der Wiedergabelisten"
@@ -4672,8 +4666,8 @@ msgstr "Unbekannter Podcast"
 #~ "Sort order of library playlists in the source view (0 = Ascending, 1 = "
 #~ "Descending)"
 #~ msgstr ""
-#~ "Sortierreihenfolge der Bibliothek-Wiedergabelisten in der Quellenansicht"
-#~ "(0 = Aufsteigend, 1 = Absteigend)"
+#~ "Sortierreihenfolge der Bibliothek-Wiedergabelisten in der Quellenansicht(0 "
+#~ "= Aufsteigend, 1 = Absteigend)"
 
 #~ msgid "Sort order of playlists"
 #~ msgstr "Sortierreihenfolge der Wiedergabelisten"
@@ -4703,8 +4697,7 @@ msgstr "Unbekannter Podcast"
 
 #~ msgid "When importing an audio CD, enable error correction (paranoia mode)"
 #~ msgstr ""
-#~ "Beim Importieren einer Audio-CD Fehlerkorrektur aktivieren (Paranoia-"
-#~ "Modus)"
+#~ "Beim Importieren einer Audio-CD Fehlerkorrektur aktivieren (Paranoia-Modus)"
 
 #~ msgid "Whether to expand the library node in the source view"
 #~ msgstr "Bibliothek-Knoten in der Quellenansicht aufklappen"
@@ -4787,8 +4780,8 @@ msgstr "Unbekannter Podcast"
 #~ "  <big>•</big> Song is protected (DRM)\n"
 #~ "  <big>•</big> Song is on a DAP that does not support playback\n"
 #~ msgstr ""
-#~ "{0} kann durch Banshee nicht wiedergegeben werden. Die häufigsten "
-#~ "Ursachen hierfür sind:\n"
+#~ "{0} kann durch Banshee nicht wiedergegeben werden. Die häufigsten Ursachen "
+#~ "hierfür sind:\n"
 #~ "\n"
 #~ "  <big>•</big> Titel ist geschützt (DRM)\n"
 #~ "  <big>•</big> Titel ist auf einem DAP, welches keine Wiedergabe "
@@ -4817,8 +4810,8 @@ msgstr "Unbekannter Podcast"
 #~ msgstr "{0} wird synchronisiert"
 
 #~ msgid ""
-#~ "You have made changes to your {0}. Please choose a method for updating "
-#~ "the contents of your {0}.\n"
+#~ "You have made changes to your {0}. Please choose a method for updating the "
+#~ "contents of your {0}.\n"
 #~ "\n"
 #~ "<big>•</big> <i>Synchronize Library</i>: synchronize Banshee library to "
 #~ "{0}\n"
@@ -4834,8 +4827,8 @@ msgstr "Unbekannter Podcast"
 #~ "vorgenommenen manuellen Änderungen speichern"
 
 #~ msgid ""
-#~ "<b>Warning:</b> Actions will alter or erase existing iPod contents and "
-#~ "may cause incompatibility with iTunes!"
+#~ "<b>Warning:</b> Actions will alter or erase existing iPod contents and may "
+#~ "cause incompatibility with iTunes!"
 #~ msgstr ""
 #~ "<b>Achtung:</b> Aktionen werden bestehenden iPod-Inhalt ändern oder "
 #~ "löschen und möglicherweise Inkombatibilitäten mit iTunes verursachen!"
@@ -4967,8 +4960,8 @@ msgstr "Unbekannter Podcast"
 #~ "Please consider submitting information about your iPod to the Banshee "
 #~ "Project so your iPod may be more fully identified in the future.\n"
 #~ msgstr ""
-#~ "Bitte ziehen Sie in Betracht, Informationen über Ihren iPod an das "
-#~ "Banshee-Projekt zu übermitteln, sodass Ihr iPod zukünftig vollständiger "
+#~ "Bitte ziehen Sie in Betracht, Informationen über Ihren iPod an das Banshee-"
+#~ "Projekt zu übermitteln, sodass Ihr iPod zukünftig vollständiger "
 #~ "identifiziert werden kann.\n"
 
 #~ msgid "Do not ask me again"
@@ -5004,8 +4997,8 @@ msgstr "Unbekannter Podcast"
 #~ "The audio device song loading process is currently running.  Would you "
 #~ "like to stop it?"
 #~ msgstr ""
-#~ "Der Vorgang zum Laden von Titeln auf das Audio-Gerät läuft gerade. "
-#~ "Möchten Sie diesen stoppen?"
+#~ "Der Vorgang zum Laden von Titeln auf das Audio-Gerät läuft gerade. Möchten "
+#~ "Sie diesen stoppen?"
 
 #~ msgid "Copying {0} of {1}"
 #~ msgstr "{0} von {1} werden kopiert"
@@ -5014,8 +5007,8 @@ msgstr "Unbekannter Podcast"
 #~ msgstr "Auf dem Gerät wiedergegebener Titel"
 
 #~ msgid ""
-#~ "Before you can eject your device, you need to start playing a song that "
-#~ "is not on it.  This is a known bug."
+#~ "Before you can eject your device, you need to start playing a song that is "
+#~ "not on it.  This is a known bug."
 #~ msgstr ""
 #~ "Bevor Sie Ihr Gerät auswerfen können, müssen Sie einen Titel starten, der "
 #~ "sich nicht auf dem Gerät befindet. Dies ist ein bekannter Fehler."
@@ -5061,8 +5054,8 @@ msgstr "Unbekannter Podcast"
 
 #~ msgid ""
 #~ "Your profile page on Last.fm is automatically updated whenever you listen "
-#~ "to music. It lets others see what you're listening to right now, and "
-#~ "shows charts of your listening history."
+#~ "to music. It lets others see what you're listening to right now, and shows "
+#~ "charts of your listening history."
 #~ msgstr ""
 #~ "Ihre Profilseite auf Last.fm wird automatisch aktualisiert, wenn Sie sich "
 #~ "Musik anhören. Es lässt Andere sehen, was Sie gerade hören und zeigt "
@@ -5215,9 +5208,9 @@ msgstr "Unbekannter Podcast"
 #~ msgstr "Suchen"
 
 #~ msgid ""
-#~ "Are you sure you want to stop downloading cover art for the albums in "
-#~ "your library? The operation can be resumed at any time from the <i>Tools</"
-#~ "i> menu."
+#~ "Are you sure you want to stop downloading cover art for the albums in your "
+#~ "library? The operation can be resumed at any time from the <i>Tools</i> "
+#~ "menu."
 #~ msgstr ""
 #~ "Sind Sie sicher, dass Sie das Herunterladen von Album-Covern in Ihre "
 #~ "Bibliothek stoppen möchten? Diese Operation kann jederzeit durch "
@@ -5231,8 +5224,7 @@ msgstr "Unbekannter Podcast"
 #~ "playback controls and track information."
 #~ msgstr ""
 #~ "Mit der Kompaktansicht lässt sich Banshee über ein kleines Fenster "
-#~ "steuern, das nur die Wiedergabesteuerung und Titelinformationen "
-#~ "beinhaltet."
+#~ "steuern, das nur die Wiedergabesteuerung und Titelinformationen beinhaltet."
 
 #~ msgid "MiniMode plugin enabled"
 #~ msgstr "Kompaktansicht-Plugin aktiv"
@@ -5379,13 +5371,12 @@ msgstr "Unbekannter Podcast"
 #~ "Its name comes from the targeting of audio posts to Apple's iPod® audio "
 #~ "player, although podcasts can be listened to directly in {0}."
 #~ msgstr ""
-#~ "Podcasting ist eine Form des Audio-Bloggens, bei denen Benutzer einen "
-#~ "Feed von Sendungen abonnieren können und deren Folgen werden "
-#~ "heruntergeladen und lokal zum Hören verwaltet.\n"
+#~ "Podcasting ist eine Form des Audio-Bloggens, bei denen Benutzer einen Feed "
+#~ "von Sendungen abonnieren können und deren Folgen werden heruntergeladen "
+#~ "und lokal zum Hören verwaltet.\n"
 #~ "\n"
 #~ "Der Name stammt vom Plazieren von Audio-Beiträgen in Apple's iPod® Audio-"
-#~ "Wiedergabeprogramm, obwohl Podcast auch direkt in {0} gehört werden "
-#~ "können."
+#~ "Wiedergabeprogramm, obwohl Podcast auch direkt in {0} gehört werden können."
 
 #~ msgid "Manage the Podcast plugin"
 #~ msgstr "Podcast-Plugin verwalten"
@@ -5525,21 +5516,21 @@ msgstr "Unbekannter Podcast"
 #~ msgstr "Kommentar"
 
 #~ msgid ""
-#~ "Always show stations that require the Helix/RealPlayer engine, even if "
-#~ "the engine is not loaded."
+#~ "Always show stations that require the Helix/RealPlayer engine, even if the "
+#~ "engine is not loaded."
 #~ msgstr ""
-#~ "Immer Stationen anzeigen, die eine Helix/RealPlayer-Engine benötigen, "
-#~ "auch wenn die Engine nicht geladen ist."
+#~ "Immer Stationen anzeigen, die eine Helix/RealPlayer-Engine benötigen, auch "
+#~ "wenn die Engine nicht geladen ist."
 
 #~ msgid "Last time XSPF stations were updated from radio.banshee-project.org"
 #~ msgstr ""
-#~ "Letzter Zeitpunkt, an dem die XSPF-Stationen von radio.banshee-project."
-#~ "org aktualisert worden sind"
+#~ "Letzter Zeitpunkt, an dem die XSPF-Stationen von radio.banshee-project.org "
+#~ "aktualisert worden sind"
 
 #~ msgid "Last time the master station list was checked for updates"
 #~ msgstr ""
-#~ "Letzter Zeitpunkt, an dem die Hauptstation nach Aktualisierungen "
-#~ "überprüft worden ist."
+#~ "Letzter Zeitpunkt, an dem die Hauptstation nach Aktualisierungen überprüft "
+#~ "worden ist."
 
 #~ msgid "Radio plugin enabled"
 #~ msgstr "Radio-Plugin aktiviert"
@@ -5578,9 +5569,9 @@ msgstr "Unbekannter Podcast"
 #~ msgstr "Musikempfehlungen"
 
 #~ msgid ""
-#~ "Automatically recommends music that you might like, based on the "
-#~ "currently playing song. It finds artists and popular songs that others "
-#~ "with similar musical tastes enjoy."
+#~ "Automatically recommends music that you might like, based on the currently "
+#~ "playing song. It finds artists and popular songs that others with similar "
+#~ "musical tastes enjoy."
 #~ msgstr ""
 #~ "Empfiehlt automatisch Musik, die Ihnen gefallen könnte, anhand des "
 #~ "momentan gespielten Titels. Es findet Interpreten und beliebte Titel, die "
