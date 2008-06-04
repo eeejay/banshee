@@ -205,19 +205,7 @@ namespace Banshee.NotificationArea
             
             popup = new TrackInfoPopup ();
             PositionPopup ();
-            
-            // Get initial track progress information.
-            if (ServiceManager.PlayerEngine.CurrentTrack != null) {
-                popup.Duration = (uint)ServiceManager.PlayerEngine.CurrentTrack.Duration.TotalSeconds;
-                // Minus one second because PlayerEngine is weird and adds +1 sec if we're paused.
-                // If we're unpaused, the TrackInfoPopup should fix itself to the real value 
-                // before it displays properly, anyway. It's a win-win! :)
-                popup.Position = (ServiceManager.PlayerEngine.Position / 1000) - 1;
-            } else {
-                popup.Duration = 0;
-                popup.Position = 0;
-            }
-            
+
             popup.Show ();
         }
         
@@ -319,18 +307,6 @@ namespace Banshee.NotificationArea
         public void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
-                case PlayerEvent.Iterate:
-                    if (popup != null) {
-                        if (ServiceManager.PlayerEngine.CurrentTrack != null) {
-                            popup.Duration = (uint)ServiceManager.PlayerEngine.CurrentTrack.Duration.TotalSeconds;
-                            popup.Position = ServiceManager.PlayerEngine.Position / 1000;
-                        } else {
-                            popup.Duration = 0;
-                            popup.Position = 0;
-                        }
-                    }
-                    
-                    break;
                 case PlayerEvent.StartOfStream:
                     can_show_popup = true;
                     break;

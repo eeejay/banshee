@@ -39,13 +39,8 @@ namespace Banshee.NotificationArea
 {
     public class TrackInfoPopup : Gtk.Window
     {
-        private uint position;
-        private uint duration;
         private TrackInfoDisplay header;
-        private VBox header_box = new VBox ();
-        
-        private Label position_label;
-        private LinearProgress linear_progress;
+        private ConnectedSeekSlider seek_slider;
     
         public TrackInfoPopup () : base (Gtk.WindowType.Popup)
         {
@@ -54,22 +49,7 @@ namespace Banshee.NotificationArea
             Resizable = false;
             TypeHint = Gdk.WindowTypeHint.Notification;
             
-            // Position label and linear progress bar
-            HBox position_box = new HBox ();
-            //position_box.Spacing = 10;
-            
-            position_label = new Label ();
-            position_label.Xalign = 0.0f;
-            position_label.Ypad = 5;
-            position_label.Yalign = 1.0f;
-            position_label.ModifyFg (StateType.Normal, this.Style.Base(StateType.Active));
-            
-            VBox progress_box = new VBox ();
-            linear_progress = new LinearProgress ();
-            progress_box.PackStart (linear_progress, true, true, 6);
-            
-            position_box.PackStart (position_label, false, false, 6);
-            position_box.PackStart (progress_box, true, true, 6);
+            VBox box = new VBox ();
             
             header = new TrackInfoDisplay ();
             header.SetSizeRequest (320, 64);
@@ -77,15 +57,13 @@ namespace Banshee.NotificationArea
             Alignment alignment = new Alignment (1.0f, 1.0f, 0.0f, 0.0f);
             alignment.SetPadding (6, 3, 6, 3);
             alignment.Add (header);
-            alignment.Show ();
+            box.PackStart (alignment, true, true, 0);
             
-            header_box.PackStart (alignment, true, true, 0);
-            header_box.PackStart (position_box, false, false, 0);
-            header.Show ();
-            position_box.ShowAll ();
+            seek_slider = new ConnectedSeekSlider (SeekSliderLayout.Horizontal);
+            box.PackStart (seek_slider, false, false, 0);
             
-            Add (header_box);
-            header_box.Show ();
+            Add (box);
+            box.ShowAll ();
         }
         
         public override void Dispose ()
@@ -99,27 +77,6 @@ namespace Banshee.NotificationArea
             Gtk.Style.PaintFlatBox (Style, GdkWindow, StateType.Normal, ShadowType.Out, evnt.Area, this, "tooltip", 
                 0, 0, Allocation.Width, Allocation.Height);
             return base.OnExposeEvent (evnt);
-        }
-        
-        private void UpdatePosition()
-        {
-            linear_progress.Fraction = (double)position / (double)duration;
-            position_label.Markup = String.Format("<small>{0} of {1}</small>",
-                    DateTimeUtil.FormatDuration(position), DateTimeUtil.FormatDuration(duration)); 
-        }
-        
-        public uint Duration {
-            set {
-                duration = value;
-                UpdatePosition();
-            }
-        }
-        
-        public uint Position {
-            set {
-                position = value;
-                UpdatePosition();
-            }
         }
     }
 }

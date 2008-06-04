@@ -157,8 +157,7 @@ namespace Banshee.NotificationArea
                 }
             }
 
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
-               PlayerEvent.Iterate |
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent,
                PlayerEvent.StartOfStream |
                PlayerEvent.EndOfStream |
                PlayerEvent.TrackInfoUpdated |

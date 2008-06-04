@@ -1,3 +1,16 @@
+2008-06-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Remove the Iterate event from the event mask
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Do not update the popup since now all of its children do their own
+	state/event handling
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+	Removed a bunch of crappy legacy code for showing the position/duration
+	via the label and progress bar; replaced with our standard 
+	SeekSlider widget in horizontal mode (BGO #536396)
+
 2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Migo/Migo.Syndication/RssParser.cs: If a XML blob isn't
