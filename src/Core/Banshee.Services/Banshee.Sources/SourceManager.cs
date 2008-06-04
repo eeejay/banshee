@@ -49,7 +49,7 @@ namespace Banshee.Sources
         public int Position;
     }
     
-    public class SourceManager : ISourceManager, IInitializeService, IRequiredService, IDisposable
+    public class SourceManager : /*ISourceManager,*/ IInitializeService, IRequiredService, IDisposable
     {
         private List<Source> sources = new List<Source>();
         private Dictionary<string, Source> extension_sources = new Dictionary<string, Source> ();
@@ -165,7 +165,7 @@ namespace Banshee.Sources
                 video_library = source as VideoLibrarySource;
             }
 
-            ServiceManager.DBusServiceManager.RegisterObject(source);
+            // ServiceManager.DBusServiceManager.RegisterObject(source);
             
             foreach(Source child_source in source.Children) {
                 AddSource(child_source, false);
@@ -296,14 +296,14 @@ namespace Banshee.Sources
             get { return active_source; }
         }
         
-        ISource ISourceManager.DefaultSource {
+        /*ISource ISourceManager.DefaultSource {
             get { return DefaultSource; }
         }
         
         ISource ISourceManager.ActiveSource {
             get { return ActiveSource; }
             set { value.Activate (); }
-        }
+        }*/
         
         public void SetActiveSource(Source source)
         {
@@ -341,13 +341,13 @@ namespace Banshee.Sources
             get { return sources; }
         }
         
-        string [] ISourceManager.Sources {
+        /*string [] ISourceManager.Sources {
             get { return DBusServiceManager.MakeObjectPathArray<Source>(sources); }
         }
         
         IDBusExportable IDBusExportable.Parent {
             get { return null; }
-        }
+        }*/
         
         string Banshee.ServiceStack.IService.ServiceName {
             get { return "SourceManager"; }

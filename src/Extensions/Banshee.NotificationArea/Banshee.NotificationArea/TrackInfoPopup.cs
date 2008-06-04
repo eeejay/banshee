@@ -44,22 +44,23 @@ namespace Banshee.NotificationArea
     
         public TrackInfoPopup () : base (Gtk.WindowType.Popup)
         {
-            BorderWidth = 4;
+            BorderWidth = 8;
             AppPaintable = true;
             Resizable = false;
             TypeHint = Gdk.WindowTypeHint.Notification;
             
             VBox box = new VBox ();
-            
+            box.Spacing = 4;
+
             header = new TrackInfoDisplay ();
             header.SetSizeRequest (320, 64);
             
-            Alignment alignment = new Alignment (1.0f, 1.0f, 0.0f, 0.0f);
-            alignment.SetPadding (6, 3, 6, 3);
-            alignment.Add (header);
-            box.PackStart (alignment, true, true, 0);
-            
             seek_slider = new ConnectedSeekSlider (SeekSliderLayout.Horizontal);
+            seek_slider.Label.FormatString = "<small>{0}</small>";
+            seek_slider.LeftPadding = 0;
+            seek_slider.RightPadding = 0;
+
+            box.PackStart (header, true, true, 0);
             box.PackStart (seek_slider, false, false, 0);
             
             Add (box);

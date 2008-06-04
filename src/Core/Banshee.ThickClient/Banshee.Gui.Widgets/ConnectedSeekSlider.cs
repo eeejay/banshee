@@ -44,7 +44,10 @@ namespace Banshee.Gui.Widgets
     {
         private SeekSlider seek_slider;
         private StreamPositionLabel stream_position_label;
-    
+        public StreamPositionLabel Label {
+            get { return stream_position_label; }
+        }
+
         public ConnectedSeekSlider () : this (SeekSliderLayout.Vertical)
         {
         }

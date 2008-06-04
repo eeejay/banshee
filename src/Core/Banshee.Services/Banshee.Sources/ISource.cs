@@ -34,8 +34,8 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Sources
 {
-    [Interface("org.bansheeproject.Banshee.Sources.Source")]
-    public interface ISource : IDBusExportable
+    //[Interface("org.bansheeproject.Banshee.Sources.Source")]
+    public interface ISource /* : IDBusExportable */
     {
         void Activate();
         void Deactivate();
@@ -50,5 +50,7 @@ namespace Banshee.Sources
         
         // DBus Hack
         string TrackModelPath { get; }
+
+        ISource Parent { get; }
     }
 }

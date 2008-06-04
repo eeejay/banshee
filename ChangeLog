@@ -1,3 +1,19 @@
+2008-06-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Sources/ISource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
+	Disabled exporting of the source manager and its children over DBus
+	since there are issues that need to be worked out in NDesk DBus itself
+	before this can be useful and working (BGO #536526)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	Expose the StreamPositionLabel
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+	Set FormatString on the slider's label to small, not bold; fix padding
+	and spacing after dropping unnecessary alignment
+
 2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Migo/Migo.Syndication/RssParser.cs: If we fail to load a

@@ -102,7 +102,7 @@ namespace Banshee.Sources
         
         protected void OnSetupComplete ()
         {
-            ITrackModelSource tm_source = this as ITrackModelSource;
+            /*ITrackModelSource tm_source = this as ITrackModelSource;
             if (tm_source != null) {
                 tm_source.TrackModel.Parent = this;
                 ServiceManager.DBusServiceManager.RegisterObject (tm_source.TrackModel);
@@ -115,7 +115,7 @@ namespace Banshee.Sources
                         ServiceManager.DBusServiceManager.RegisterObject (exportable);
                     }
                 }
-            }
+            }*/
         }
 
         protected void Remove ()
@@ -588,16 +588,17 @@ namespace Banshee.Sources
             return Name;
         }
         
-        string IService.ServiceName {
+        /*string IService.ServiceName {
             get { return String.Format ("{0}{1}", DBusServiceManager.MakeDBusSafeString (Name), "Source"); }
-        }
+        }*/
         
-        IDBusExportable IDBusExportable.Parent {
+        // FIXME: Replace ISource with IDBusExportable when it's enabled again
+        ISource ISource.Parent {
             get {
                 if (Parent != null) {
                     return ((Source)this).Parent;
                 } else {
-                    return ServiceManager.SourceManager;
+                    return null /*ServiceManager.SourceManager*/;
                 }
             }
         }
