@@ -127,10 +127,10 @@ namespace Migo.Syndication
         {
             lock (update_task_group.SyncRoot) {
                 if (update_task_group != null) {
-                    update_task_group.CancelAsync ();
-                    update_task_group.Handle.WaitOne ();
-                    update_task_group.Dispose (disposeHandle);
-                    disposeHandle.WaitOne ();
+                    //update_task_group.CancelAsync ();
+                    //update_task_group.Handle.WaitOne ();
+                    update_task_group.Dispose ();
+                    //disposeHandle.WaitOne ();
                     
                     update_task_group.TaskStopped -= OnUpdateTaskStopped;
                     update_task_group.TaskAssociated -= OnUpdateTaskAdded;

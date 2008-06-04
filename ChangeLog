@@ -1,5 +1,10 @@
 2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Migo/Migo.Syndication/FeedManager.cs: Get rid of some racy
+	wait handle usage that was causing shutdown to freeze sometimes.
+
+2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	* src/Libraries/Migo/Migo.Syndication/RssParser.cs: Fix bug with earlier
 	fix for <item> guids that would cause some duplicates under some
