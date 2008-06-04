@@ -1,5 +1,10 @@
 2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/MediaProfileManager.cs:
+	Avoid NRE, fixes BGO #536234.
+
+2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	* src/Libraries/Migo/Migo.Syndication/FeedItem.cs:
 	* src/Libraries/Migo/Migo.Syndication/Feed.cs: Fix bug with the guid we

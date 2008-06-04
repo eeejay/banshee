@@ -233,7 +233,7 @@ namespace Banshee.MediaProfiles
 
         public string GetExtensionForMimeType (string mimetype)
         {
-            if (mimetype_extensions.ContainsKey (mimetype))
+            if (mimetype != null && mimetype_extensions.ContainsKey (mimetype))
                 return mimetype_extensions[mimetype];
             return null;
         }
