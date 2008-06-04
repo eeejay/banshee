@@ -1,5 +1,10 @@
 2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs: Fix
+	bug with link we were generating for the Last.fm track page (BGO #536682).
+
+2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Remove the
 	icon from the Source Rename action (BGO #536559).
 

@@ -269,7 +269,7 @@ namespace Banshee.Lastfm.Radio
         private void OnTrackVisitLastfm (object sender, EventArgs args)
         {
             Browser.Open (String.Format (
-                Catalog.GetString ("http://last.fm/music/{0}/{1}"),
+                Catalog.GetString ("http://last.fm/music/{0}/_/{1}"),
                 Encode (CurrentArtist), Encode (CurrentTrack)
             ));
         }
