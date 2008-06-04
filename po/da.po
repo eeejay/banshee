@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-03 16:39+0200\n"
-"PO-Revision-Date: 2008-06-03 16:38+0100\n"
+"POT-Creation-Date: 2008-06-04 17:11+0200\n"
+"PO-Revision-Date: 2008-06-04 17:10+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -193,7 +193,7 @@ msgid "Banshee Media Player"
 msgstr "Banshee medieafspiller"
 
 #: ../data/banshee-1.desktop.in.in.h:2
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:143
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:144
 msgid "Media Player"
 msgstr "Medieafspiller"
 
@@ -289,6 +289,236 @@ msgstr "Ukendt fejl"
 msgid "Could not create transcoder"
 msgstr "Kunne ikke oprette omkoder"
 
+#: ../src/Clients/Nereid/Nereid/Client.cs:105
+msgid "Help Options"
+msgstr "Tilvalg for hjælp"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:106
+msgid "Show this help"
+msgstr "Vis denne hjælp"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:107
+msgid "Show options for controlling playback"
+msgstr "Vis tilvalg for kontrol af afspilning"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:108
+msgid "Show options for querying the playing track"
+msgstr "Vis tilvalg for forespørgsel på det spillende nummer"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:109
+msgid "Show options for querying the playing engine"
+msgstr "Vis tilvalg for forespørgsel på afspillermoteren"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:110
+msgid "Show options for the user interface"
+msgstr "Vis tilvalg for brugergrænsefladen"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:111
+msgid "Show options for developers and debugging"
+msgstr "Vis tilvalg for udviklere og fejlsøgning"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:112
+msgid "Show all option groups"
+msgstr "Vis alle tilvalgsgrupper"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:113
+msgid "Show version information"
+msgstr "Vis versionsinformation"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:116
+msgid "Playback Control Options"
+msgstr "Tilvalg for kontrol af afspilning"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:117
+msgid ""
+"Play the next track, optionally restarting if the 'restart' value is set"
+msgstr ""
+"Afspil det næste nummer, genstart eventuelt hvis \"restart\"-værdien "
+"(genstart) er sat"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:118
+msgid ""
+"Play the previous track, optionally restarting if the 'restart value is set"
+msgstr ""
+"Afspil det forrige nummer, genstart eventuelt hvis \"restart\"-værdien "
+"(genstart) er sat"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:119
+msgid "Automatically start playing any tracks enqueued on the command line"
+msgstr "Start automatisk afspilning af numre sat i kø på kommandolinjen"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:120
+msgid "Start playback"
+msgstr "Start afspilning"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:121
+msgid "Pause playback"
+msgstr "Pause afspilning"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:122
+msgid "Completely stop playback"
+msgstr "Stop afspilning fuldstændigt"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:124
+msgid ""
+"Enable or disable playback stopping after the currently playing track (value "
+"should be either 'true' or 'false')"
+msgstr ""
+"Aktivér eller deaktivér afspilningsstop efter det spillende nummer (værdien "
+"skal være enten \"true\" (sand) eller \"false\" (falsk))"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:125
+msgid "Set the playback volume (0-100)"
+msgstr "Sæt afspilningsvolumen (0-100)"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:126
+msgid "Seek to a specific point (seconds, float)"
+msgstr "Spol til et bestemt sted (sekunder, flydende)"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:129
+msgid "Player Engine Query Options"
+msgstr "Tilvalg for forespørgsel på afspillermotor"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:130
+msgid "Current player state"
+msgstr "Nuværende afspillertilstand"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:131
+msgid "Last player state"
+msgstr "Sidste afspillertilstand"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:132
+msgid "Query whether the player can be paused"
+msgstr "Forespørg om afspilleren kan pauses"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:133
+msgid "Query whether the player can seek"
+msgstr "Forespørg om afspilleren kan spole"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:134
+msgid "Player volume"
+msgstr "Afspillervolume"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:135
+msgid "Player position in currently playing track"
+msgstr "Afspillerposition i det spillende nummer"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:138
+msgid "Playing Track Metadata Query Options"
+msgstr "Tilvalg for forespørgsel af metadata på det spillende nummer"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:139
+msgid "URI"
+msgstr "URI"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:140
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:140
+msgid "Artist Name"
+msgstr "Kunstner"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:141
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:141
+msgid "Album Title"
+msgstr "Albumtitel"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:142
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:139
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:113
+msgid "Track Title"
+msgstr "Nummertitel"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:143
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:115
+msgid "Duration"
+msgstr "Varighed"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:144
+msgid "Track Number"
+msgstr "Spornummer"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:145
+msgid "Track Count"
+msgstr "Antal numre"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:146
+msgid "Disc Number"
+msgstr "Disknummer"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:147
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:143
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:102
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:120
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:127
+msgid "Year"
+msgstr "År"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:148
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:163
+msgid "Rating"
+msgstr "Bedømmelse"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:151
+msgid "User Interface Options"
+msgstr "Tilvalg for brugergrænseflade"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:152
+msgid "Present the user interface on the active workspace"
+msgstr "Vis brugergrænsefladen på det aktive arbejdsområde"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:153
+msgid "Hide the user interface"
+msgstr "Skjul brugergrænsefladen"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:154
+msgid "Do not present the user interface, regardless of any other options"
+msgstr "Vis ikke brugergrænsefladen, uanset ethvert andet argument"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:157
+msgid "Debugging and Development Options"
+msgstr "Tilvalg for fejlsøgning og udvikling"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:158
+msgid "Enable general debugging features"
+msgstr "Aktivér generel fejlsøgningfunktionalitet"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:159
+msgid "Enable debugging output of SQL queries"
+msgstr "Aktivér fejlsøgningsudskrift på SQL-forespørgsler"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:160
+msgid "Enable debugging output of Mono.Addins"
+msgstr "Aktivér fejlsøgningsudskrift på Mono.Addins"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:161
+msgid "Specify an alternate database to use"
+msgstr "Angiv en alternativ database som skal bruges"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:162
+msgid ""
+"Optimize instance for running uninstalled; most notably, this will create an "
+"alternate Mono.Addins database in the working directory"
+msgstr ""
+"Optimér instansen til at køre afinstalleret. Mest bemærkelsesværdig, vil "
+"dette oprette en alternativ Mono.Addins-database i arbejdsmappen"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:164
+msgid "Disable DBus support completely"
+msgstr "Deaktivér DBus-understøttelse fuldstændigt"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:166
+#, csharp-format
+msgid "Skip loading a custom gtkrc file ({0}) if it exists"
+msgstr ""
+"Spring over indlæsning af brugerdefineret gtkrc-fil ({0}), hvis den "
+"eksisterer"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:196
+#, csharp-format
+msgid "The following help arguments are invalid: {0}"
+msgstr "De følgende hjælpeargumenter er ugyldige: {0}"
+
 #. Translators: this is the window title when a track is playing
 #. {0} is the track title, {1} is the artist name
 #: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:94
@@ -304,32 +534,12 @@ msgstr "_Søg:"
 msgid "All Columns"
 msgstr "Alle kolonner"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:139
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:113
-msgid "Track Title"
-msgstr "Nummertitel"
-
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:140
-msgid "Artist Name"
-msgstr "Kunstner"
-
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:141
-msgid "Album Title"
-msgstr "Albumtitel"
-
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:142
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:66
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:127
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:121
 msgid "Genre"
 msgstr "Genre"
-
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:143
-#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:102
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:120
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:127
-msgid "Year"
-msgstr "År"
 
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:163
 #, csharp-format
@@ -375,12 +585,14 @@ msgstr "Nummer (usorteret)"
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:176
 #: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:80
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:86
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:154
 msgid "Unknown Artist"
 msgstr "Ukendt kunstner"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:185
 #: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:82
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:87
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:153
 msgid "Unknown Album"
 msgstr "Ukendt album"
 
@@ -832,11 +1044,6 @@ msgstr "Komponist"
 msgid "composer"
 msgstr "komponist"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:163
-msgid "Rating"
-msgstr "Bedømmelse"
-
 #. , typeof(NullQueryValue)},
 #. Translators: These are unique search fields.  Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:141
@@ -913,11 +1120,6 @@ msgstr "fil"
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:169
 msgid "location"
 msgstr "placering"
-
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:115
-msgid "Duration"
-msgstr "Varighed"
 
 #. Translators: These are unique search fields.  Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:176
@@ -1082,7 +1284,7 @@ msgstr "ender med"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:311
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:334
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:54
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:263
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:264
 msgid "Unknown"
 msgstr "Ukendt"
 
@@ -2259,24 +2461,24 @@ msgstr "Lydløs"
 msgid "Full Volume"
 msgstr "Fuld lydstyrke"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:129
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:130
 msgid "Device Properties"
 msgstr "Egenskaber for enhed"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:150
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:151
 msgid "Product"
 msgstr "Produkt"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:151
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:152
 msgid "Vendor"
 msgstr "Leverandør"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:211
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:212
 #, csharp-format
 msgid "Loading {0}"
 msgstr "Indlæser {0}"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:265
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:266
 #, csharp-format
 msgid ""
 "The {0} format is not supported by the device, and no converter was found to "
@@ -2285,7 +2487,7 @@ msgstr ""
 "{0}-formatet er ikke understøttet af enheden og ingen omkoder blev fundet "
 "til at konvertere det."
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:271
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:272
 msgid "File format conversion is not supported for this device."
 msgstr "Filformatskonvertering er ikke understøttet for denne enhed."
 
@@ -2674,32 +2876,32 @@ msgstr "Fje_rn bogmærke"
 msgid "{0} ({1}:{2:00})"
 msgstr "{0} ({1}:{2:00})"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:54
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:82
 msgid "Downloading Cover Art"
 msgstr "Henter omslag"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:97
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:110
 msgid "Preparing..."
 msgstr "Klargører..."
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:133
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:136
 #, csharp-format
 msgid "{0} - {1}"
 msgstr "{0} - {1}"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:95
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:105
 msgid "_Cover Art"
 msgstr "_Omslag"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:96
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:106
 msgid "Manage cover art"
 msgstr "Håndtér omslag"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:98
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:108
 msgid "_Download Cover Art"
 msgstr "_Hent omslag"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:99
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:109
 msgid "Download cover art for all tracks"
 msgstr "Hent omslag for alle numre"
 
@@ -3154,11 +3356,11 @@ msgstr "Vi_s påmindelser"
 msgid "Show notifications when item changes"
 msgstr "Vis påmindelser når der skiftes element"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:298
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:297
 msgid "Still Running"
 msgstr "Kører stadig"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:299
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:298
 msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
@@ -3166,16 +3368,16 @@ msgstr ""
 "Banshee blev lukket til statusområdet. Brug <i>Afslut</i> for at lukke din "
 "session."
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:401
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:399
 #: ../src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:52
 msgid "Now Playing"
 msgstr "Afspiller nu"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:406
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:404
 msgid "Skip this item"
 msgstr "Spring dette element over"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:412
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:410
 msgid "Cannot show notification"
 msgstr "Kan ikke vise påmindelse"
 
@@ -3202,6 +3404,11 @@ msgstr "Fjern alle numre fra spillekø"
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:96
 msgid "Clear the play queue when quitting"
 msgstr "Ryd spillekøen ved afslutning"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:69
+#, csharp-format
+msgid "All Podcasts ({0})"
+msgstr "Alle podcasts ({0})"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:95
 msgid "Podcasts"
