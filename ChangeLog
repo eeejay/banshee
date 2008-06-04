@@ -1,3 +1,9 @@
+2008-06-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Migo/Migo.Syndication/RssParser.cs: If we fail to load a
+	XML document b/c it's invalid, remove any non-linebreak control
+	characters from it and try loading it again.
+
 2008-06-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:

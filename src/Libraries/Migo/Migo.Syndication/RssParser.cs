@@ -30,6 +30,7 @@
 
 using System;
 using System.Xml;
+using System.Text;
 using System.Collections.Generic;
 
 namespace Migo.Syndication
@@ -45,8 +46,30 @@ namespace Migo.Syndication
             try {
                 doc.LoadXml (xml);
             } catch (XmlException e) {
-                Hyena.Log.Exception (e);
-                throw new FormatException ("Invalid XML document.");                                  
+                bool have_stripped_control = false;
+                StringBuilder sb = new StringBuilder ();
+
+                foreach (char c in xml) {
+                    if (Char.IsControl (c) && c != '\n') {
+                        have_stripped_control = true;
+                    } else {
+                        sb.Append (c);
+                    }
+                }
+
+                bool loaded = false;
+                if (have_stripped_control) {
+                    try {
+                        doc.LoadXml (sb.ToString ());
+                        loaded = true;
+                    } catch (Exception) {
+                    }
+                }
+
+                if (!loaded) {
+                    Hyena.Log.Exception (e);
+                    throw new FormatException ("Invalid XML document.");                                  
+                }
             }
             CheckRss ();
         }
