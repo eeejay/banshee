@@ -102,7 +102,6 @@ namespace Banshee.Gui
 
             this["NewPlaylistAction"].IconName = Stock.New;
             this["UnmapSourceAction"].IconName = Stock.Delete;
-            this["RenameSourceAction"].IconName = "gtk-edit";
             this["SourcePropertiesAction"].IconName = Stock.Properties;
 
             AddImportant (

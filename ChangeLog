@@ -1,3 +1,8 @@
+2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Remove the
+	icon from the Source Rename action (BGO #536559).
+
 2008-06-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
