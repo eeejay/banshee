@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-04 00:04+0200\n"
-"PO-Revision-Date: 2008-06-03 23:37+0100\n"
+"POT-Creation-Date: 2008-06-04 20:20+0200\n"
+"PO-Revision-Date: 2008-06-04 15:54+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Tomasz Dominikowski <gnomepl@aviary.pl>\n"
 "MIME-Version: 1.0\n"
@@ -283,6 +283,239 @@ msgstr "Nieznany błąd"
 msgid "Could not create transcoder"
 msgstr "Nie można utworzyć transkodera"
 
+#: ../src/Clients/Nereid/Nereid/Client.cs:105
+msgid "Help Options"
+msgstr "Opcje pomocy"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:106
+msgid "Show this help"
+msgstr "Wyświetlenie tej pomocy"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:107
+msgid "Show options for controlling playback"
+msgstr "Wyświetlenie opcji do obsługi odtwarzania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:108
+msgid "Show options for querying the playing track"
+msgstr "Wyświetlenie opcji do zapytania o bieżący utwór"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:109
+msgid "Show options for querying the playing engine"
+msgstr "Wyświetlenie opcji do zapytania o mechanizm odtwarzania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:110
+msgid "Show options for the user interface"
+msgstr "Wyświetlenie opcji dla interfejsu użytkownika"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:111
+msgid "Show options for developers and debugging"
+msgstr "Wyświetlenie opcji dla deweloperów i do debugowania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:112
+msgid "Show all option groups"
+msgstr "Wyświetlenie wszystkich grup opcji"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:113
+msgid "Show version information"
+msgstr "Wyświetlenie informacji o wersji"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:116
+msgid "Playback Control Options"
+msgstr "Opcje obsługi odtwarzania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:117
+msgid ""
+"Play the next track, optionally restarting if the 'restart' value is set"
+msgstr ""
+"Odtworzenie następnej ścieżki, opcjonalnie ponowne uruchomienie jeśli "
+"wartość \"restart\" jest ustawiona"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:118
+msgid ""
+"Play the previous track, optionally restarting if the 'restart value is set"
+msgstr ""
+"Odtworzenie poprzedniej ścieżki, opcjonalnie ponowne uruchomienie jeśli "
+"wartość \"restart\" jest ustawiona"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:119
+msgid "Automatically start playing any tracks enqueued on the command line"
+msgstr ""
+"Automatyczne rozpoczęcie odtwarzania dowolnej ścieżki w kolejce z wiersza "
+"poleceń"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:120
+msgid "Start playback"
+msgstr "Uruchomienie odtwarzania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:121
+msgid "Pause playback"
+msgstr "Wstrzymanie odtwarzania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:122
+msgid "Completely stop playback"
+msgstr "Zatrzymanie odtwarzania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:124
+msgid ""
+"Enable or disable playback stopping after the currently playing track (value "
+"should be either 'true' or 'false')"
+msgstr ""
+"Włączenie lub wyłączenie zatrzymywania odtwarzania po odtworzeniu bieżącego "
+"utworu (wartość powinna być \"true\" lub \"false\", odpowiednio włączone, "
+"wyłączone)"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:125
+msgid "Set the playback volume (0-100)"
+msgstr "Ustawienie głośności odtwarzania (0-100)"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:126
+msgid "Seek to a specific point (seconds, float)"
+msgstr ""
+"Przewinięcie do określonego położenia (sekundy, liczba zmiennoprzecinkowa)"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:129
+msgid "Player Engine Query Options"
+msgstr "Opcje zapytań mechanizmu odtwarzania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:130
+msgid "Current player state"
+msgstr "Bieżący stan odtwarzacza"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:131
+msgid "Last player state"
+msgstr "Ostatni stan odtwarzacza"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:132
+msgid "Query whether the player can be paused"
+msgstr "Zapytanie o możliwość spauzowania odtwarzania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:133
+msgid "Query whether the player can seek"
+msgstr "Zapytanie o możliwość przewijania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:134
+msgid "Player volume"
+msgstr "Głośność odtwarzania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:135
+msgid "Player position in currently playing track"
+msgstr "Położenie odtwarzania w bieżącym utworze"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:138
+msgid "Playing Track Metadata Query Options"
+msgstr "Opcje zapytań o metadane bieżącego utworu"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:139
+msgid "URI"
+msgstr "Adres URI"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:140
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:140
+msgid "Artist Name"
+msgstr "Nazwa wykonawcy"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:141
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:141
+msgid "Album Title"
+msgstr "Tytuł albumu"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:142
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:139
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:113
+msgid "Track Title"
+msgstr "Tytuł utworu"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:143
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:115
+msgid "Duration"
+msgstr "Długość"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:144
+msgid "Track Number"
+msgstr "Numer ścieżki"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:145
+msgid "Track Count"
+msgstr "Liczba ścieżek"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:146
+msgid "Disc Number"
+msgstr "Numer płyty"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:147
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:143
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:102
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:120
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:127
+msgid "Year"
+msgstr "Rok"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:148
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:163
+msgid "Rating"
+msgstr "Ocena"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:151
+msgid "User Interface Options"
+msgstr "Opcje interfejsu użytkownika"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:152
+msgid "Present the user interface on the active workspace"
+msgstr "Wyświetlenie interfejsu użytkownika na aktywnym obszarze roboczym"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:153
+msgid "Hide the user interface"
+msgstr "Ukrycie interfejsu użytkownika"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:154
+msgid "Do not present the user interface, regardless of any other options"
+msgstr "Niewyświetlanie interfejsu użytkownika, niezależnie od innych opcji"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:157
+msgid "Debugging and Development Options"
+msgstr "Debugowanie i opcje deweloperskie"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:158
+msgid "Enable general debugging features"
+msgstr "Włączenie ogólnych funkcji do debugowania"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:159
+msgid "Enable debugging output of SQL queries"
+msgstr "Włączenie debugowania na wyjściu zapytań SQL"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:160
+msgid "Enable debugging output of Mono.Addins"
+msgstr "Włączenie debugowania na wyjściu Mono.Addins"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:161
+msgid "Specify an alternate database to use"
+msgstr "Określenie alternatywnej bazy danych do użycia"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:162
+msgid ""
+"Optimize instance for running uninstalled; most notably, this will create an "
+"alternate Mono.Addins database in the working directory"
+msgstr ""
+"Optymalizacja instancji dla uruchamiania bez instalacji; najważniejszym "
+"działaniem jest utworzenie alternatywnej bazy danych Mono.Addins w bieżącym "
+"katalogu"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:164
+msgid "Disable DBus support completely"
+msgstr "Wyłączenie obsługi DBus"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:166
+#, csharp-format
+msgid "Skip loading a custom gtkrc file ({0}) if it exists"
+msgstr "Pominięcie wczytywania własnego pliku gtkrc ({0}) jeśli istnieje"
+
+#: ../src/Clients/Nereid/Nereid/Client.cs:196
+#, csharp-format
+msgid "The following help arguments are invalid: {0}"
+msgstr "Następujące zmienne pomocy są nieprawidłowe: {0}"
+
 #. Translators: this is the window title when a track is playing
 #. {0} is the track title, {1} is the artist name
 #: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:94
@@ -298,32 +531,12 @@ msgstr "Wy_szukiwanie:"
 msgid "All Columns"
 msgstr "Wszystkie kolumny"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:139
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:113
-msgid "Track Title"
-msgstr "Tytuł utworu"
-
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:140
-msgid "Artist Name"
-msgstr "Nazwa wykonawcy"
-
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:141
-msgid "Album Title"
-msgstr "Tytuł albumu"
-
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:142
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:66
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:127
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:121
 msgid "Genre"
 msgstr "Gatunek"
-
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:143
-#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:102
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:120
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:127
-msgid "Year"
-msgstr "Rok"
 
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:163
 #, csharp-format
@@ -369,14 +582,14 @@ msgstr "Numer (nieposortowany)"
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:176
 #: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:80
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:86
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:145
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:154
 msgid "Unknown Artist"
 msgstr "Nieznany wykonawca"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:185
 #: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:82
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:87
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:144
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:153
 msgid "Unknown Album"
 msgstr "Nieznany album"
 
@@ -832,11 +1045,6 @@ msgstr "Kompozytor"
 msgid "composer"
 msgstr "composer"
 
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:163
-msgid "Rating"
-msgstr "Ocena"
-
 #. , typeof(NullQueryValue)},
 #. Translators: These are unique search fields.  Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:141
@@ -913,11 +1121,6 @@ msgstr "file"
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:169
 msgid "location"
 msgstr "location"
-
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
-#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:115
-msgid "Duration"
-msgstr "Długość"
 
 #. Translators: These are unique search fields.  Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:176
@@ -1851,14 +2054,6 @@ msgstr[2] "Na pewno usunąć {0} zaznaczonych elementów z {1}?"
 msgid "_View"
 msgstr "_Widok"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:65
-msgid "_Equalizer"
-msgstr "_Korektor graficzny"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:66
-msgid "View the graphical equalizer"
-msgstr "Wyświetla korektor graficzny."
-
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:71
 msgid "_Fullscreen"
 msgstr "Pełny _ekran"
@@ -2246,19 +2441,19 @@ msgstr ""
 "Wsuń\n"
 "płytę"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:121
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:128
 msgid "Idle"
 msgstr "Bezczynny"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:122
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:129
 msgid "Contacting..."
 msgstr "Łączenie..."
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:128
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:135
 msgid "Buffering"
 msgstr "Buforowanie"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:136
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:143
 #: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:148
 #, csharp-format
 msgid "{0} of {1}"
@@ -2695,11 +2890,11 @@ msgstr "{0} ({1}:{2:00})"
 msgid "Downloading Cover Art"
 msgstr "Pobieranie okładek"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:103
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:110
 msgid "Preparing..."
 msgstr "Przetwarzanie..."
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:130
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:136
 #, csharp-format
 msgid "{0} - {1}"
 msgstr "{0} - {1}"
@@ -3172,11 +3367,11 @@ msgstr "Wyświetlanie _powiadomień"
 msgid "Show notifications when item changes"
 msgstr "Wyświetlanie  powiadomień przy zmianie utworu"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:298
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:297
 msgid "Still Running"
 msgstr "Nadal uruchomiony"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:299
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:298
 msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
@@ -3184,16 +3379,16 @@ msgstr ""
 "Program Banshee został zwinięty do ikony w obszarze powiadamiania. Polecenie "
 "<i>Zakończ</i> pozwala zamknąć program."
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:400
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:399
 #: ../src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:52
 msgid "Now Playing"
 msgstr "Bieżący utwór"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:405
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:404
 msgid "Skip this item"
 msgstr "Pomiń ten element"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:411
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:410
 msgid "Cannot show notification"
 msgstr "Nie można wyświetlić powiadomień"
 
@@ -3651,6 +3846,12 @@ msgstr "Połączono z Last.fm."
 #: ../src/Libraries/Migo/Migo.Syndication/Feed.cs:149
 msgid "Unknown Podcast"
 msgstr "Nieznany podcast"
+
+#~ msgid "_Equalizer"
+#~ msgstr "_Korektor graficzny"
+
+#~ msgid "View the graphical equalizer"
+#~ msgstr "Wyświetla korektor graficzny."
 
 #~ msgid "No decoder could be found for source format."
 #~ msgstr "Nie odnaleziono dekodera obsługującego format źródłowy."
@@ -4172,9 +4373,6 @@ msgstr "Nieznany podcast"
 #~ msgid "Hours"
 #~ msgstr "Godzin"
 
-#~ msgid "Track Number"
-#~ msgstr "Numer ścieżki"
-
 #~ msgid "New _Smart Playlist..."
 #~ msgstr "Nowa _inteligentna lista odtwarzania..."
 
@@ -4267,9 +4465,6 @@ msgstr "Nieznany podcast"
 
 #~ msgid "Initializing scripts"
 #~ msgstr "Inicjowanie skryptów"
-
-#~ msgid "Loading user interface"
-#~ msgstr "Wczytywanie interfejsu użytkownika"
 
 #~ msgid "Log Viewer"
 #~ msgstr "Przeglądarka dziennika"
@@ -4498,9 +4693,6 @@ msgstr "Nieznany podcast"
 #~ msgid "Repeat mode (0 = None, 1 = All, 2 = Single)"
 #~ msgstr "Tryb powtarzania (0 = brak, 1 = wszystkie, 2 - pojedynczy utwór)"
 
-#~ msgid "Repeat playback"
-#~ msgstr "Powtarzanie odtwarzania"
-
 #~ msgid "Set the IO backend in Banshee"
 #~ msgstr "Ustawienie wewnętrznego elementu przetwarzającego"
 
@@ -4544,9 +4736,6 @@ msgstr "Nieznany podcast"
 #~ msgstr ""
 #~ "Prawda, jeśli główne okno jest zmaksymalizowane, fałsz jeśli nie jest "
 #~ "(wartości odpowiednio: \"true\" oraz \"false\")"
-
-#~ msgid "URI"
-#~ msgstr "Adres URI"
 
 #~ msgid "URI List"
 #~ msgstr "Lista URI"
@@ -4981,9 +5170,6 @@ msgstr "Nieznany podcast"
 #~ msgid "Common reasons for connection failures:"
 #~ msgstr "Częste powody problemów z połączeniem:"
 
-#~ msgid "The provided login credentials are invalid"
-#~ msgstr "Dane do zalogowania są nieprawidłowe"
-
 #~ msgid "The login process was canceled"
 #~ msgstr "Proces logowania został anulowany"
 
@@ -5357,9 +5543,6 @@ msgstr "Nieznany podcast"
 #~ msgstr ""
 #~ "Proszę podać grupę, tytuł i adres URL żądanej stacji radiowej. Opis nie "
 #~ "jest wymagany."
-
-#~ msgid "Station Group:"
-#~ msgstr "Grupa stacji:"
 
 #~ msgid "Stream URL:"
 #~ msgstr "URL strumienia:"
