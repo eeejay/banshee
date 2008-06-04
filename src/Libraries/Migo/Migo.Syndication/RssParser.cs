@@ -152,7 +152,9 @@ namespace Migo.Syndication
                 
                 item.Author            = GetXmlNodeText (node, "author");
                 item.Comments          = GetXmlNodeText (node, "comments");
-                item.Guid              = GetXmlNodeText (node, "guid");
+                // Removed, since we form our own Guid, since feeds don't seem to be consistent
+                // about including this element.
+                //item.Guid              = GetXmlNodeText (node, "guid");
                 item.Link              = GetXmlNodeText (node, "link");
                 item.PubDate           = GetRfc822DateTime (node, "pubDate");
                 item.Modified          = GetRfc822DateTime (node, "dcterms:modified");
