@@ -1,5 +1,18 @@
 2008-06-04  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedSeekSlider.cs:
+	When the widget is created and the engine is in the paused state, 
+	synthesize an engine iterate event so the correct state is reflected
+	in the slider and label (BGO #536564)
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:
+	Implement OnSizeRequested to properly do size requisitioning (BGO #536564)
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+	Updated to reflect small API change
+
+2008-06-04  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Sources/ISource.cs:
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
 	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:

@@ -56,7 +56,7 @@ namespace Banshee.NotificationArea
             header.SetSizeRequest (320, 64);
             
             seek_slider = new ConnectedSeekSlider (SeekSliderLayout.Horizontal);
-            seek_slider.Label.FormatString = "<small>{0}</small>";
+            seek_slider.StreamPositionLabel.FormatString = "<small>{0}</small>";
             seek_slider.LeftPadding = 0;
             seek_slider.RightPadding = 0;
 
@@ -73,7 +73,7 @@ namespace Banshee.NotificationArea
             base.Dispose ();
         }
         
-        protected override bool OnExposeEvent(Gdk.EventExpose evnt)
+        protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
             Gtk.Style.PaintFlatBox (Style, GdkWindow, StateType.Normal, ShadowType.Out, evnt.Area, this, "tooltip", 
                 0, 0, Allocation.Width, Allocation.Height);

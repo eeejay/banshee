@@ -44,10 +44,7 @@ namespace Banshee.Gui.Widgets
     {
         private SeekSlider seek_slider;
         private StreamPositionLabel stream_position_label;
-        public StreamPositionLabel Label {
-            get { return stream_position_label; }
-        }
-
+    
         public ConnectedSeekSlider () : this (SeekSliderLayout.Vertical)
         {
         }
@@ -68,6 +65,12 @@ namespace Banshee.Gui.Widgets
             ServiceManager.PlayerEngine.TrackIntercept += OnTrackIntercept;
             
             seek_slider.SeekRequested += OnSeekRequested;
+            
+            // Initialize the display if we're paused since we won't get any
+            // events or state change until something actually happens (BGO #536564)
+            if (ServiceManager.PlayerEngine.CurrentState == PlayerState.Paused) {
+                OnPlayerEngineTick ();
+            }
         }
 
         public void Disconnect ()

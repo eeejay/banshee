@@ -47,6 +47,7 @@ namespace Banshee.Widgets
             
             this.seekRange = seekRange;
             this.seekRange.ValueChanged += OnSliderUpdated;
+            
         }
         
         protected override void OnRealized ()
@@ -62,15 +63,25 @@ namespace Banshee.Widgets
             if (layout != null) {
                 layout.Dispose ();
             }
+            
             layout = new Pango.Layout (PangoContext);
             layout.FontDescription = PangoContext.FontDescription.Copy ();
             layout.Ellipsize = Pango.EllipsizeMode.None;
+        }
+        
+        protected override void OnSizeRequested (ref Gtk.Requisition requisition)
+        {
+            if (!IsRealized || layout == null) {
+                return;
+            }
             
-            layout.SetMarkup (String.Format (format_string, "W"));
+            EnsureStyle ();
             
             int width, height;
             layout.GetPixelSize (out width, out height);
-            HeightRequest = height;
+            
+            requisition.Width = width;
+            requisition.Height = height;
         }
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
@@ -96,12 +107,8 @@ namespace Banshee.Widgets
             int width, height;
             layout.GetPixelSize (out width, out height);
             
-            if (width > Allocation.Width) {
-                WidthRequest = width;
-            }
-            
             int x = Allocation.X + ((Allocation.Width - width) / 2);
-            int y = Allocation.Y + ((Allocation.Height - HeightRequest) / 2);
+            int y = Allocation.Y + ((Allocation.Height - height) / 2);
             Gdk.Rectangle rect = evnt.Area;
             
             if (render_bar) {
@@ -141,7 +148,7 @@ namespace Banshee.Widgets
         private void UpdateLabel (string text)
         {
             layout.SetMarkup (String.Format (format_string, GLib.Markup.EscapeText (text)));
-            QueueDraw ();
+            QueueResize ();
         }
         
         private static string FormatDuration (long time)
