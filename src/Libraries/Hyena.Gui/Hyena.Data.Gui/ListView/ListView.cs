@@ -28,7 +28,7 @@
 
 namespace Hyena.Data.Gui
 {
-    public partial class ListView<T> : Gtk.Widget, IListView<T>
+    public partial class ListView<T> : ListViewBase, IListView<T>
     {
         public ListView ()
         {

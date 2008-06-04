@@ -1,3 +1,27 @@
+2008-06-04  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListViewBase.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	A pretty disgusting hack that forces the style of our source view 
+	GtkTreeView into our custom ListView widget so at least the ListView 
+	will end up with the same color set as the GtkTreeView; this is a 
+	giant and ugly hack that works around a pretty serious bug in some of 
+	Ubuntu's themes where the selection background color is different for
+	GtkTreeView widgets than for other widgets causing inconsistency and 
+	usability issues when reading text on the darker background (BGO #534731);
+	https://bugs.launchpad.net/ubuntu/+source/human-theme/+bug/237261
+
+	The only reason I opted to work around this downstream bug was that some
+	users reported it difficult to read text due to the contrast issue, so
+	I view this as a usability problem more than a cosmetic one.
+
 2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.MediaProfiles/MediaProfileManager.cs:

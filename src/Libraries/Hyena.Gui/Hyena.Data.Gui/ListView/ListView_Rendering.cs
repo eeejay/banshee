@@ -40,7 +40,7 @@ namespace Hyena.Data.Gui
 {
     public delegate int ListViewRowHeightHandler (Widget widget);
 
-    public partial class ListView<T> : Widget
+    public partial class ListView<T> : ListViewBase
     {
         private Cairo.Context cairo_context;
         private CellContext cell_context;

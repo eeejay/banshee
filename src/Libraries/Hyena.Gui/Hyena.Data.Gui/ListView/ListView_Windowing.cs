@@ -34,7 +34,7 @@ using Hyena.Gui.Theming;
 
 namespace Hyena.Data.Gui
 {
-    public partial class ListView<T> : Widget
+    public partial class ListView<T> : ListViewBase
     {
         private Rectangle list_rendering_alloc;
         private Rectangle header_rendering_alloc;

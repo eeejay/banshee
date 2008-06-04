@@ -33,7 +33,7 @@ using Gtk;
 
 namespace Hyena.Data.Gui
 {
-    public partial class ListView<T> : Widget
+    public partial class ListView<T> : ListViewBase
     {
         internal struct CachedColumn
         {

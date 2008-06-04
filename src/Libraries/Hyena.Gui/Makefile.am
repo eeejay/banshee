@@ -21,6 +21,7 @@ SOURCES =  \
 	Hyena.Data.Gui/ListView/ListView_Model.cs \
 	Hyena.Data.Gui/ListView/ListView_Rendering.cs \
 	Hyena.Data.Gui/ListView/ListView_Windowing.cs \
+	Hyena.Data.Gui/ListView/ListViewBase.cs \
 	Hyena.Data.Gui/ListViewTestModule.cs \
 	Hyena.Data.Gui/ObjectListView.cs \
 	Hyena.Data.Gui/RowActivatedHandler.cs \

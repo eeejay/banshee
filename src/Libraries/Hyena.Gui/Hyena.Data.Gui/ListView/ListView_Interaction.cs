@@ -35,7 +35,7 @@ using Selection = Hyena.Collections.Selection;
 
 namespace Hyena.Data.Gui
 {
-    public partial class ListView<T> : Widget
+    public partial class ListView<T> : ListViewBase
     {
         private Adjustment vadjustment;
         public Adjustment Vadjustment {

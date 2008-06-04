@@ -43,7 +43,7 @@ namespace Hyena.Data.Gui
                 (uint)TargetType.ModelSelection);
     }
     
-    public partial class ListView<T> : Widget
+    public partial class ListView<T> : ListViewBase
     {
         private static TargetEntry [] drag_drop_dest_entries = new TargetEntry [] {
             ListViewDragDropTarget.ModelSelection

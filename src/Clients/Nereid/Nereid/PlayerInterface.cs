@@ -172,6 +172,7 @@ namespace Nereid
             view_container = new ViewContainer ();
             
             source_view = new SourceView ();
+            ListViewBase.TreeViewStyleAdapter = source_view;
             composite_view = new CompositeTrackSourceContents ();
             
             Hyena.Widgets.ScrolledWindow source_scroll = new Hyena.Widgets.ScrolledWindow ();
