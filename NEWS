@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.0 Release Candidate 1! (0.99.3) - Released May 30, 2008
+WELCOME TO BANSHEE 1.0 - Released June 5, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,7 +10,7 @@ WELCOME TO BANSHEE 1.0 Release Candidate 1! (0.99.3) - Released May 30, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/Releases/0.99.3
+  * Learn More: http://banshee-project.org/Releases/1.0
 
 
 ===============================================================================
@@ -36,9 +36,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 0.99.3 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-0.99.3.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-0.99.3.tar.gz
+    * Banshee 1.0 Tarballs:
+      http://banshee-project.org/files/banshee/banshee-1-1.0.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-1.0.tar.gz
 
 Packages
 --------
@@ -51,7 +51,7 @@ Packages
 ChangeLogs
 ----------
 
-    * http://banshee-project.org/files/banshee/banshee-1-0.99.3.changes
+    * http://banshee-project.org/files/banshee/banshee-1-1.0.changes
 
 
 ===============================================================================
@@ -98,11 +98,8 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.0 RC 1 represents the sixth release since we began rewriting
-    much of the core of Banshee. The primary reasons for this rearchitecting 
-    were to deliver much needed performance improvements, make features more
-    powerful and mature, and allow us to add awesome new features like the 
-    Play Queue and video support.
+    Banshee 1.0 is the culmination of many months of hard work by dozens of
+    people.
 
     Banshee now uses much less memory and has greatly improved startup speed.
     It can handle collections that are much larger in size without adversely
@@ -114,18 +111,71 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     New features in this release include:
 
-    * New Device Storage Indicator
-    * Automatically Grabs all Cover Art
+      * Artist/Album Browser
+      * Powerful new query/search capabilities
+      * Playback from a dedicated source while interacting with other sources
+      * Play Queue taking control of playback over other sources when populated
+      * Tightly integrated Last.fm and Audioscrobbler support
+      * Create your own custom Last.fm radio stations to suit your tastes
+      * Video management and playback
+      * Now Playing source where video plays and info on playing songs will appear
+      * Audio CD playback and ripping
+      * Mass Storage Digital Audio Player support
+      * MTP and iPod Player Support
+      * Default Smart Playlists
+      * Extension Manager
+      * Minimode extension
+      * Podcast Support
+      * Automatic CD Importing
+      * CD Burning
+      * New Device Storage Indicator
+      * Automatically Grabs all Cover Art
 
     Other features, bug fixes, and errata:
 
-    * Filter for podcasts to only show new items
-    * DBus client w/ command line options and lastfm:// and feed:// support
-    * File system queue
-    * Many drag and drop fixes
-    * Improved performance when changing songs
-    * Lots of fixes for small but annoying UI gotchas 
-    * Over 24 bugs were fixed since Beta 2
+      * Play Count, Skip Count, Last Played, and Last Skipped all now kept up to date
+      * Allow editing of artist and album names
+      * Start playing when artist or album browser is double clicked
+      * Bookmarks extension is now available
+      * Date-based searches and smart playlists should be working much better
+      * Initialize the translation Catalog so translations can actually be used
+      * Improved support for dark themes
+      * Use XDG_CACHE_HOME directory for cache files
+
+      * The main view now respects your system DPI settings and 
+        has seen massive performance improvements.
+      * Jump to playing song is now implemented (Ctrl-J) 
+      * The Last.fm data screen has some visual improvements.
+      * The repeat drop down button now works. 
+
+      * Fullscreen video is now supported (press f or go to Now Playing)
+      * Banshee can be scripted using Boo
+      * Improved gstreamer error handling (for missing files, codecs, etc)
+      * A bug with play counts introduced in Alpha 3 has been fixed
+      * Writing metadata to file is working properly now
+      * Issues with the play queue should all be resolved
+      * Limiting smart playlists by file size or duration works
+      * Shuffle and repeat are automatically disabled while playing Last.fm
+
+      * Genre entry autocompletes in track information editor
+      * Columns specific to type of source (Music, Video, Podcast)
+      * Fix CPU spike triggered by song transition
+      * Fix two fairly common segfault crashes
+      * Add File Size column, right-align it and Duration
+      * Disable writing metadata for videos to file to avoid 100% CPU bug
+      * Add Love/Hate menu items to the Notification Area icon's menu
+      * If a Last.fm station is double clicked, it will start playing once it has loaded
+      * Allow choosing with checkboxes what songs to import from Audio CD
+
+      * Filter for podcasts to only show new items
+      * DBus client w/ command line options and lastfm:// and feed:// support
+      * File system queue
+      * Many drag and drop fixes
+      * Improved performance when changing songs
+      * Lots of fixes for small but annoying UI gotchas 
+
+      * Over 260 bugs were fixed since 0.13.2
+
 
 ===============================================================================
 REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
@@ -134,7 +184,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=0.99.3
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.0
 
 
 ===============================================================================
@@ -146,18 +196,26 @@ Contributors For This Release
 
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
-      
-      Aaron Bockover, Alexander Hixon, Gabriel Burt, James Willcox,
-      Michael Monreal, Sebastian Dröge
+
+      Aaron Bockover, Alan McGovern, Alex Kloss, Alexander Hixon,
+      Bertrand Lorentz, Christopher Rogers, Gabriel Burt, James Willcox,
+      Michael Monreal, Mike Urbanski, Nicholas Parker, Ruben Vermeersch,
+      Scott Peterson, Sebastian Dröge, Will Farrington Wouter Bolsterlee
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
 
-      Claude Paroz (fr),  Wouter Bolsterlee (nl)
-      
+      Artur Flinta, Claude Paroz, Daniel Abramov, Daniel Nylander,
+      Duarte Loreto, Gabor Kelemen, Ignacio Casal Quinteiro, Ihar Hrachyshka,
+      Ilkka Tuohela, Jonh Wendell, Jordi Mas, Jorge Gonzalez,
+      Lasse Bang Mikkelsen, Luca Ferretti, Nickolay V. Shmyrev,
+      Philipp Kerling, Philip Withnall, Wadim Dziedzic, Wouter Bolsterlee,
+      Yair Hershkovitz, Žygimantas Beručka,
+
     The release notes and screenshots for this release were crafted by:
 
-      Gabriel Burt
+      Aaron Bockover, Gabriel Burt, Jorge Castro, Josiah Ritchie,
+      Paul Cutler, Scott Peterson
 
 Contributors In Past Releases
 -----------------------------
@@ -175,4 +233,3 @@ Contributors In Past Releases
     Oscar Forero, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch,
     Scott Peterson, Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington,
     Wouter Bolsterlee
-
