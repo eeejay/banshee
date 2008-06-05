@@ -1,5 +1,10 @@
 2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Fix bug in migrating download preference for feeds.
+
+2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
 	Fix bug with our cell_context.Drawable going missing b/c we weren't
 	transferring it to the new cell_context within OnStyleSet.

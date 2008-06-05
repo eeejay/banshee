@@ -99,7 +99,7 @@ namespace Banshee.Podcasting
                     Hyena.Log.Information ("Migrating Podcast Feeds and Items");
                     ServiceManager.DbConnection.Execute(@"
                         INSERT INTO PodcastSyndications (FeedID, Title, Url, Link,
-                            Description, ImageUrl, LastBuildDate, SyncSetting, IsSubscribed)
+                            Description, ImageUrl, LastBuildDate, AutoDownload, IsSubscribed)
                             SELECT 
                                 PodcastFeedID,
                                 Title,
