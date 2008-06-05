@@ -37,21 +37,21 @@ Sources
 -------
 
     * Banshee 1.0 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-1.0.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-1.0.tar.gz
+      http://banshee-project.org/files/banshee/banshee-1-1.0.0.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-1.0.0.tar.gz
 
 Packages
 --------
 
     Packages for openSUSE 11/Factory and openSUSE 10.3 are  available from 
-	the openSUSE Build Service in the Banshee:Preview project.
+	the openSUSE Build Service in the Banshee project.
 
-    * http://download.opensuse.org/repositories/Banshee:/Preview/
+    * http://download.opensuse.org/repositories/Banshee/
 
 ChangeLogs
 ----------
 
-    * http://banshee-project.org/files/banshee/banshee-1-1.0.changes
+    * http://banshee-project.org/files/banshee/banshee-1-1.0.0.changes
 
 
 ===============================================================================
@@ -82,9 +82,9 @@ DEPENDENCIES
 
     Please note that for openSUSE, all of the dependencies above can be 
     found in the openSUSE Build Service, and are linked into the 
-    Banshee:Preview project. Even if you build from source, if you wish
+    Banshee project. Even if you build from source, if you wish
     to avoid building the entire dependency chain above, add the 
-    Banshee:Preview repository to your repository list.
+    Banshee repository to your repository list.
 
     Historically, Banshee has fostered development of a number of projects
     and bundled their source code instead of depending on external builds.
@@ -163,7 +163,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.0
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.0.0
 
 
 ===============================================================================
