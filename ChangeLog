@@ -1,5 +1,14 @@
 2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Remove some
+	verbose logging.
+
+	* src/Extensions/Banshee.Podcasting/Resources/GlobalUI.xml:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	the Subscribe to Podcast menu item to the Media menu.
+
+2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
 	Only try 5 unplayable items instead of 20 before stopping playback.
 

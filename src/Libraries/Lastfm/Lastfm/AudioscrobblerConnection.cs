@@ -169,8 +169,6 @@ namespace Lastfm
 
         private void StateTransitionHandler (object o, ElapsedEventArgs e)
         {
-            Log.DebugFormat ("State transition handler running; state: {0}, connected: {1}", state, connected);
-            
             // if we're not connected, don't bother doing anything involving the network.
             if (!connected) {
                 return;
@@ -195,7 +193,6 @@ namespace Lastfm
                         // Now playing info needs to be sent
                         NowPlaying (current_now_playing_uri);
                     } else {
-                        Hyena.Log.DebugFormat ("State transition handler going to sleep.");
                         StopTransitionHandler ();
                     }
                 }

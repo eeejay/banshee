@@ -24,6 +24,7 @@
       <menuitem name="Import" action="ImportAction"/>
       <!--<menuitem name="ImportPlaylist" action="ImportPlaylistAction"/>-->
       <menuitem name="OpenLocation" action="OpenLocationAction"/>
+      <placeholder name="BelowOpenLocation"/>
       <separator/>
       <placeholder name="ClosePlaceholder"/>
       <menuitem name="Quit" action="QuitAction"/>
