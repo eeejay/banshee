@@ -43,15 +43,16 @@ Sources
 Packages
 --------
 
-    Packages for openSUSE 11/Factory and openSUSE 10.3 are  available from 
+    Packages for openSUSE 11/Factory and openSUSE 10.3 are available from 
 	the openSUSE Build Service in the Banshee project.
 
     * http://download.opensuse.org/repositories/Banshee/
 
-ChangeLogs
-----------
+ChangeLogs & Checksums
+----------------------
 
     * http://banshee-project.org/files/banshee/banshee-1-1.0.0.changes
+	* http://banshee-project.org/files/banshee/banshee-1-1.0.0.sha1sum
 
 
 ===============================================================================
@@ -119,7 +120,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Tightly integrated Last.fm and Audioscrobbler support
       * Create your own custom Last.fm radio stations to suit your tastes
       * Video management and playback
-      * Now Playing source where video plays and info on playing songs will appear
+      * Now Playing source where video plays
       * Audio CD playback and ripping
       * Mass Storage Digital Audio Player support
       * MTP and iPod Player Support
@@ -212,3 +213,4 @@ Contributors In Past Releases
     Oscar Forero, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch,
     Scott Peterson, Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington,
     Wouter Bolsterlee
+
