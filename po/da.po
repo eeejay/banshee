@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-05 10:03+0200\n"
-"PO-Revision-Date: 2008-06-05 10:02+0100\n"
+"POT-Creation-Date: 2008-06-06 00:02+0200\n"
+"PO-Revision-Date: 2008-06-06 00:02+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -585,14 +585,14 @@ msgstr "Nummer (usorteret)"
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:176
 #: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:80
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:86
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:154
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:155
 msgid "Unknown Artist"
 msgstr "Ukendt kunstner"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:185
 #: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:82
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:87
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:153
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:154
 msgid "Unknown Album"
 msgstr "Ukendt album"
 
@@ -1062,7 +1062,7 @@ msgstr "Afspilninger"
 #. Translators: These are unique search fields.  Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:148
 msgid "plays"
-msgstr "spilninger"
+msgstr "afspilninger"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:148
 msgid "playcount"
@@ -2872,11 +2872,11 @@ msgstr "{0} ({1}:{2:00})"
 msgid "Downloading Cover Art"
 msgstr "Henter omslag"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:110
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:111
 msgid "Preparing..."
 msgstr "Klargører..."
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:136
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:137
 #, csharp-format
 msgid "{0} - {1}"
 msgstr "{0} - {1}"
@@ -3760,7 +3760,7 @@ msgstr "Gem og log ind"
 msgid "Sign up for Last.fm"
 msgstr "Tilmeld Last.fm"
 
-#: ../src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:442
+#: ../src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:439
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:458
 msgid "Last.fm username or password is invalid."
 msgstr "Last.fm brugernavn eller adgangskode er ugyldig."
