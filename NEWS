@@ -99,7 +99,8 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
     Banshee 1.0 is the culmination of many months of hard work by dozens of
-    people.
+    people.  This release cycle has seen Banshee support video, and add the
+    long-requested artist/album browser and play queue.
 
     Banshee now uses much less memory and has greatly improved startup speed.
     It can handle collections that are much larger in size without adversely
@@ -109,12 +110,12 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
     many great new features and provides a framework for new features to
     be easily developed in the future.
 
-    New features in this release include:
+    Features in this release include:
 
       * Artist/Album Browser
+      * Play Queue
       * Powerful new query/search capabilities
       * Playback from a dedicated source while interacting with other sources
-      * Play Queue taking control of playback over other sources when populated
       * Tightly integrated Last.fm and Audioscrobbler support
       * Create your own custom Last.fm radio stations to suit your tastes
       * Video management and playback
@@ -137,43 +138,21 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Allow editing of artist and album names
       * Start playing when artist or album browser is double clicked
       * Bookmarks extension is now available
-      * Date-based searches and smart playlists should be working much better
-      * Initialize the translation Catalog so translations can actually be used
-      * Improved support for dark themes
       * Use XDG_CACHE_HOME directory for cache files
-
-      * The main view now respects your system DPI settings and 
-        has seen massive performance improvements.
       * Jump to playing song is now implemented (Ctrl-J) 
       * The Last.fm data screen has some visual improvements.
-      * The repeat drop down button now works. 
-
       * Fullscreen video is now supported (press f or go to Now Playing)
       * Banshee can be scripted using Boo
       * Improved gstreamer error handling (for missing files, codecs, etc)
-      * A bug with play counts introduced in Alpha 3 has been fixed
-      * Writing metadata to file is working properly now
-      * Issues with the play queue should all be resolved
-      * Limiting smart playlists by file size or duration works
       * Shuffle and repeat are automatically disabled while playing Last.fm
-
-      * Genre entry autocompletes in track information editor
       * Columns specific to type of source (Music, Video, Podcast)
-      * Fix CPU spike triggered by song transition
-      * Fix two fairly common segfault crashes
       * Add File Size column, right-align it and Duration
       * Disable writing metadata for videos to file to avoid 100% CPU bug
       * Add Love/Hate menu items to the Notification Area icon's menu
       * If a Last.fm station is double clicked, it will start playing once it has loaded
-      * Allow choosing with checkboxes what songs to import from Audio CD
-
       * Filter for podcasts to only show new items
       * DBus client w/ command line options and lastfm:// and feed:// support
       * File system queue
-      * Many drag and drop fixes
-      * Improved performance when changing songs
-      * Lots of fixes for small but annoying UI gotchas 
-
       * Over 260 bugs were fixed since 0.13.2
 
 
