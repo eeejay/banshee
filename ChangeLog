@@ -1,5 +1,10 @@
 2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Set
+	DelayShow = true to avoid it popping up so briefly so often.
+
+2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Remove some
 	verbose logging.
 

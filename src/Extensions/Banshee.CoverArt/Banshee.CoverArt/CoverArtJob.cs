@@ -90,6 +90,7 @@ namespace Banshee.CoverArt
             }
 
             CanCancel = true;
+            DelayShow = true;
         }
         
         public void Start ()
