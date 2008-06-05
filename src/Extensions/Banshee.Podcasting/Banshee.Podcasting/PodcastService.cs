@@ -178,7 +178,7 @@ namespace Banshee.Podcasting
                 ServiceManager.DbConnection.Execute ("UPDATE PodcastItems SET Guid = NULL");
                 foreach (FeedItem item in FeedItem.Provider.FetchAll ()) {
                     item.Guid = null;
-                    if (FeedItem.Exists (item.Feed.DbId, item.Guid)) {
+                    if (item.Feed == null || FeedItem.Exists (item.Feed.DbId, item.Guid)) {
                         item.Delete (false);
                     } else {
                         item.Save ();

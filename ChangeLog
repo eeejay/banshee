@@ -1,6 +1,11 @@
 2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Avoid NRE.
+
+2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	Fix bug in migrating download preference for feeds.
 
 2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
