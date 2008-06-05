@@ -1,3 +1,8 @@
+2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPositiveInt.cs:
+	Prevent NRE (BGO #536724).
+
 2008-06-04  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:

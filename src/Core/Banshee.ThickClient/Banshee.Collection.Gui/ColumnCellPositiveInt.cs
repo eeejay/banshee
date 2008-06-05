@@ -40,6 +40,9 @@ namespace Banshee.Collection.Gui
         
         protected override string Text {
             get {
+                if (BoundObject == null)
+                    return String.Empty;
+
                 int val = (int) BoundObject;
                 return val > 0 ? val.ToString () : String.Empty;
             }
