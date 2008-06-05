@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-04 17:11+0200\n"
-"PO-Revision-Date: 2008-06-04 17:10+0100\n"
+"POT-Creation-Date: 2008-06-05 10:03+0200\n"
+"PO-Revision-Date: 2008-06-05 10:02+0100\n"
 "Last-Translator: Lasse Bang Mikkelsen <lbm@lbm.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -1880,48 +1880,48 @@ msgstr "Fjern"
 msgid "Source Properties"
 msgstr "Egenskaber for kilde"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:110
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:109
 msgid "Refresh"
 msgstr "Genopfrisk"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:111
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:110
 msgid "Refresh this randomly sorted smart playlist"
 msgstr "Genopfrisk denne tilfældigt sorterede intelligente spilleliste"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:116
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:115
 msgid "Sort Children"
 msgstr "Sortér underelementer"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:119
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:118
 msgid "Name Ascending"
 msgstr "Navn i stigende orden"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:123
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:122
 msgid "Name Descending"
 msgstr "Navn i faldende orden"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:127
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:126
 msgid "Size Ascending"
 msgstr "Størrelse i stigende orden"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:131
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:130
 msgid "Size Descending"
 msgstr "Størrelse i faldende orden"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:211
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:210
 msgid "GtkActionPath"
 msgstr "GtkActionPath"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:282
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:281
 msgid "Could not export playlist"
 msgstr "Kunne ikke eksportere spilleliste"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:364
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:363
 #, csharp-format
 msgid "Are you sure you want to delete this {0}?"
 msgstr "Er du sikker på du vil slette denne {0}?"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:373
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:372
 #, csharp-format
 msgid "Do not ask me this again"
 msgstr "Spørg mig ikke om dette igen"
@@ -2040,14 +2040,6 @@ msgstr[1] "Er du sikker på du vil fjerne de valgte {0} elementer fra din {1}?"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:62
 msgid "_View"
 msgstr "_Visning"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:65
-msgid "_Equalizer"
-msgstr "_Equalizer"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:66
-msgid "View the graphical equalizer"
-msgstr "Vis den grafiske equalizer"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:71
 msgid "_Fullscreen"
@@ -2435,19 +2427,19 @@ msgstr ""
 "Indsæt\n"
 "disk"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:121
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:128
 msgid "Idle"
 msgstr "Klar"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:122
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:129
 msgid "Contacting..."
 msgstr "Kontakter..."
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:128
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:135
 msgid "Buffering"
 msgstr "Mellemlagrer"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:136
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:143
 #: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:148
 #, csharp-format
 msgid "{0} of {1}"
@@ -3127,10 +3119,14 @@ msgid "http://last.fm/music/{0}"
 msgstr "http://last.fm/music/{0}"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:264
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:272
 #, csharp-format
 msgid "http://last.fm/music/{0}/{1}"
 msgstr "http://last.fm/music/{0}/{1}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:272
+#, csharp-format
+msgid "http://last.fm/music/{0}/_/{1}"
+msgstr "http://last.fm/music/{0}/_/{1}"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:280
 #, csharp-format
@@ -3834,3 +3830,9 @@ msgstr "Tilsluttet til Last.fm."
 #: ../src/Libraries/Migo/Migo.Syndication/Feed.cs:149
 msgid "Unknown Podcast"
 msgstr "Ukendt podcast"
+
+#~ msgid "_Equalizer"
+#~ msgstr "_Equalizer"
+
+#~ msgid "View the graphical equalizer"
+#~ msgstr "Vis den grafiske equalizer"
