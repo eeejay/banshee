@@ -1,3 +1,12 @@
+2008-06-05  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/banshee-player-pipeline.c: Enable the plugin installer support
+
+	* libbanshee/banshee-player-private.h:
+	* libbanshee/banshee-player-missing-elements.c: Keep the missing element
+	details list preserved throughout the instance and allow showing the 
+	installer for each different missing codec, but only once per codec
+
 2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:

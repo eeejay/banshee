@@ -92,8 +92,6 @@ bp_missing_elements_handle_install_result (GstInstallPluginsReturn result, gpoin
     // if (result == GST_INSTALL_PLUGINS_SUCCESS) {
     // }
     
-    player->install_plugins_noprompt = TRUE;
-    
     bp_missing_elements_handle_install_failed (player);
     
     gst_install_plugins_context_free (player->install_plugins_context);
@@ -111,6 +109,7 @@ void _bp_missing_elements_destroy (BansheePlayer *player)
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
     
     bp_slist_destroy (player->missing_element_details);
+    bp_slist_destroy (player->missing_element_details_handled);
     
     #ifdef HAVE_GST_PBUTILS
     if (player->install_plugins_context != NULL) {
@@ -127,8 +126,21 @@ _bp_missing_elements_process_message (BansheePlayer *player, GstMessage *message
     g_return_if_fail (message != NULL);
     
     if (gst_is_missing_plugin_message (message)) {
-        player->missing_element_details = g_slist_append (player->missing_element_details, 
-            gst_missing_plugin_message_get_installer_detail (message));
+        gchar *detail = gst_missing_plugin_message_get_installer_detail (message);
+        GSList *node = player->missing_element_details_handled;
+       
+        player->handle_missing_elements = TRUE;
+       
+        // Only save the error if we've never encounted it before
+        for (; node != NULL; node = node->next) {
+            if (g_ascii_strcasecmp (node->data, detail) == 0) {
+                bp_debug ("Ignoring missing element details, already prompted ('%s')", detail);
+                return;
+            }
+        }
+        
+        bp_debug ("Saving missing element details ('%s')", detail);
+        player->missing_element_details = g_slist_append (player->missing_element_details, detail);  
     }
     #endif
 }
@@ -139,15 +151,21 @@ _bp_missing_elements_handle_state_changed (BansheePlayer *player, GstState old, 
     #ifdef HAVE_GST_PBUTILS
     GstInstallPluginsReturn install_return;
     gchar **details;
+    GSList *node;
     
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
     
-    if (old != GST_STATE_READY || new != GST_STATE_PAUSED || player->install_plugins_context != NULL) {
+    if (old != GST_STATE_READY || new != GST_STATE_PAUSED || 
+        !player->handle_missing_elements || player->install_plugins_context != NULL) {
         return;
-    } else if (player->install_plugins_noprompt) {
+    } else if (player->missing_element_details == NULL) {
+        bp_debug ("Ignoring missing elements, nothing new to handle");
+        player->handle_missing_elements = FALSE;
         bp_missing_elements_handle_install_failed (player);
         return;
     }
+    
+    bp_debug ("Handling missing elements");
     
     details = bp_slist_to_ptr_array (player->missing_element_details);
     player->install_plugins_context = gst_install_plugins_context_new ();
@@ -167,8 +185,22 @@ _bp_missing_elements_handle_state_changed (BansheePlayer *player, GstState old, 
         
         gst_install_plugins_context_free (player->install_plugins_context);
         player->install_plugins_context = NULL;
-    } 
+    }
     
     g_strfreev (details);
+    
+    // Move all the missing element details from the current list to a cached
+    // list so we don't show the same missing elements message twice in an instance
+    bp_debug ("Saving missing elements so we don't bother you again");
+    
+    for (node = player->missing_element_details; node != NULL; node = node->next) {
+        player->missing_element_details_handled = g_slist_append (
+            player->missing_element_details_handled, node->data);
+    }
+    
+    g_slist_free (player->missing_element_details);
+    player->missing_element_details = NULL;
+    player->handle_missing_elements = FALSE;
+    
     #endif
 }

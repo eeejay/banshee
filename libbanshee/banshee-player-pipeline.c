@@ -75,7 +75,7 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
             GstState old, new, pending;
             gst_message_parse_state_changed (message, &old, &new, &pending);
             
-            //_bp_missing_elements_handle_state_changed (player, old, new);
+            _bp_missing_elements_handle_state_changed (player, old, new);
             
             if (player->state_changed_cb != NULL) {
                 player->state_changed_cb (player, old, new, pending);

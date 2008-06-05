@@ -98,7 +98,8 @@ struct BansheePlayer {
     // Plugin Installer State
     GdkWindow *window;
     GSList *missing_element_details;
-    gboolean install_plugins_noprompt;
+    GSList *missing_element_details_handled;
+    gboolean handle_missing_elements;
     #ifdef HAVE_GST_PBUTILS
     GstInstallPluginsContext *install_plugins_context;
     #endif
