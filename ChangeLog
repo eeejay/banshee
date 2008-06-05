@@ -1,3 +1,8 @@
+2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Only try 5 unplayable items instead of 20 before stopping playback.
+
 2008-06-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPositiveInt.cs:

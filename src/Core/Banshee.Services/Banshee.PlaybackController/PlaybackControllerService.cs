@@ -113,7 +113,7 @@ namespace Banshee.PlaybackController
                     EosTransition ();
                        break;
                 case PlayerEvent.Error:
-                    if (++consecutive_errors >= 20) {
+                    if (++consecutive_errors >= 5) {
                         consecutive_errors = 0;
                         player_engine.Close (false);
                         OnStopped ();
