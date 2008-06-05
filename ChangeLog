@@ -1,5 +1,11 @@
 2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Fix bug with our cell_context.Drawable going missing b/c we weren't
+	transferring it to the new cell_context within OnStyleSet.
+
+2008-06-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Set
 	DelayShow = true to avoid it popping up so briefly so often.
 

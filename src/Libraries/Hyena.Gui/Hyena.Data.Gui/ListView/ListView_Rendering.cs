@@ -58,9 +58,14 @@ namespace Hyena.Data.Gui
             base.OnStyleSet (old_style);
             RecomputeRowHeight = true;
             theme = new GtkTheme (this);
+
+            // Save the drawable so we can reuse it
+            Gdk.Drawable drawable = cell_context != null ? cell_context.Drawable : null;
+
             cell_context = new CellContext ();
             cell_context.Theme = theme;
             cell_context.Widget = this;
+            cell_context.Drawable = drawable;
         }
          
         protected override bool OnExposeEvent (EventExpose evnt)
