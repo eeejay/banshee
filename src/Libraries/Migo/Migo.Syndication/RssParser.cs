@@ -42,6 +42,7 @@ namespace Migo.Syndication
         
         public RssParser (string url, string xml)
         {
+            xml = xml.TrimStart ();
             doc = new XmlDocument ();
             try {
                 doc.LoadXml (xml);

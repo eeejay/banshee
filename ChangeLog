@@ -1,3 +1,7 @@
+2008-06-06  Alan McGovern  <alan.mcgovern@gmail.com>
+	* src/Libraries/Migo/Migo.Syndication/RssParser.cs:
+	XmlDocument can't load xml which starts with whitespace.
+
 2008-06-05  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/banshee-player-pipeline.c: Enable the plugin installer support
