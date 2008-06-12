@@ -1,5 +1,11 @@
 2008-06-12  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Ignore the prelit state if we're not embedded in a combo, fixes an
+	works around a bug with some themes (ubuntu studio in particular)
+
+2008-06-12  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/banshee-1.in: Ensure we're not always passing --debug to
 	mono; this was quite an oversight and the wrapper script logic from
 	0.13.x has been ported here - should account for about a 5MB savings of

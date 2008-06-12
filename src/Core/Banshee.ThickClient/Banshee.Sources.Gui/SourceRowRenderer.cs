@@ -98,7 +98,7 @@ namespace Banshee.Sources.Gui
                 return widget.HasFocus ? StateType.Selected : StateType.Active;
             } else if ((flags & CellRendererState.Prelit) == CellRendererState.Prelit) {
                 ComboBox box = parent_widget as ComboBox;
-                return box == null || box.PopupShown ? StateType.Prelight : StateType.Normal;
+                return box != null && box.PopupShown ? StateType.Prelight : StateType.Normal;
             } else if (widget.State == StateType.Insensitive) {
                 return StateType.Insensitive;
             } else {
