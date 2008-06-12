@@ -1,6 +1,24 @@
+2008-06-12  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/banshee-1.in: Ensure we're not always passing --debug to
+	mono; this was quite an oversight and the wrapper script logic from
+	0.13.x has been ported here - should account for about a 5MB savings of
+	RSS on startup and could fix a number of mysterious leaks, since in 
+	many cases Mono leaks stack traces when an exception is thrown in --debug
+	mode (only in --debug mode, Mono does not leak otherwise); Whoops.
+
+	* src/Core/Banshee.Core/Resources/translators.xml: Updated
+
+	* configure.ac: Bump version and turn on the dev build
+
 2008-06-06  Alan McGovern  <alan.mcgovern@gmail.com>
+	
 	* src/Libraries/Migo/Migo.Syndication/RssParser.cs:
 	XmlDocument can't load xml which starts with whitespace.
+
+2008-06-05
+
+	Banshee 1.0 Final (1.0.0) Released
 
 2008-06-05  Aaron Bockover  <abock@gnome.org>
 

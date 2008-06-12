@@ -23,6 +23,7 @@
     <person>Lasse Bang Mikkelsen</person>
   </language>
   <language code="de" name="German">
+    <person>Philipp Kerling</person>
     <person>Jochen Skulj</person>
     <person>Daniel Schindler</person>
   </language>
@@ -52,6 +53,9 @@
     <person>Claude Paroz</person>
     <person>Florent Le Coz</person>
     <person>Robert-André Mauchin</person>
+  </language>
+  <language code="gl" name="Galego">
+    <person>Ignacio Casal Quinteiro</person>
   </language>
   <language code="he" name="hebrew">
     <person>Mark Krapivner</person>
@@ -93,7 +97,7 @@
   <language code="pa" name="Panjabi">
     <person>A S Alam</person>
   </language>
-  <language code="pl" name="Polish">
+  <language code="pl" name="Tomasz Dominikowski">
     <person>Tomasz Dominikowski</person>
   </language>
   <language code="pt" name="Portuguese">
