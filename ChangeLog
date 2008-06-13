@@ -1,3 +1,9 @@
+2008-06-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService_Interface.cs:
+	Patch from Bertrand Lorentz to properly dispose the podcast actions when
+	the extension is disposed (BGO #537066).
+
 2008-06-12  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:

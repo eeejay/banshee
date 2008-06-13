@@ -68,15 +68,13 @@ namespace Banshee.Podcasting
         private void DisposeInterface ()
         {
             if (source != null) {
-                //source.FeedView.SelectionProxy.Changed -= OnFeedSelectionChangedHandler;
-                //source.ItemView.RowActivated -= OnPodcastItemRowActivatedHandler;              
-                
                 ServiceManager.SourceManager.RemoveSource (source);
                 source = null;
             }
             
             if (actions != null) {
-                //podcast_action.
+                actions.Dispose ();
+                actions = null;
             }
         }
     }
