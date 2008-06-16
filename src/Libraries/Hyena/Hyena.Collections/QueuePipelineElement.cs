@@ -52,14 +52,10 @@ namespace Hyena.Collections
             lock (this) {
                 canceled = false;
             }
-            
-            Console.WriteLine ("Finished {0}", GetType ());
         }
         
         protected virtual void OnCanceled ()
         {
-            Console.WriteLine ("Canceled {0}", GetType ());
-        
             lock (queue) {
                 queue.Clear ();
             }

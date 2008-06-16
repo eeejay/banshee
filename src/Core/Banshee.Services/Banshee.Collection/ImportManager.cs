@@ -176,7 +176,9 @@ namespace Banshee.Collection
                     return;
                 }
                 
-                Log.DebugTimerPrint (timer_id, Title + " duration: {0}");
+                if (!KeepUserJobHidden) {
+                    Log.DebugTimerPrint (timer_id, Title + " duration: {0}");
+                }
                 
                 user_job.CancelRequested -= OnCancelRequested;
                 user_job.Finish ();

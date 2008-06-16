@@ -1,6 +1,20 @@
 2008-06-16  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Fix some special case playback issue that was broken depending on cache
+	state between library and FSQ - if an item is not available yet, do not
+	disable the play_enqueued state, instead defer to the next reload; fix
+	the regression where the source was not visible at startup; I really hope
+	this fixes the last of the FSQ issues - it's working *really* well for me
+	but I am about to stab my eye balls out over this code.
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:
+	* src/Libraries/Hyena/Hyena.Collections/QueuePipelineElement.cs: Removed
+	two errant write lines
+
+2008-06-16  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
 	Lots of bug fixes with FSQ behavior around starting a new instance with
 	items in the queue, queueing items remotely, and playing back from the
 	queue automaticaly when --play-enqueued is passed

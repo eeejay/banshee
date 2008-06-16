@@ -91,6 +91,8 @@ namespace Banshee.FileSystemQueue
             UpdateActions ();
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
             TrackModel.Reloaded += OnTrackModelReloaded;
+            
+            Reload ();
 
             play_enqueued = ApplicationContext.CommandLine.Contains ("play-enqueued");
             
@@ -137,13 +139,12 @@ namespace Banshee.FileSystemQueue
         }
         
         private void PlayEnqueued ()
-        {
+        {   
             if (!play_enqueued || path_to_play == null) {
                 return;
             }
             
             SafeUri uri = null;
-            play_enqueued = false;
             
             ServiceManager.PlaybackController.NextSource = this;
             
@@ -165,6 +166,7 @@ namespace Banshee.FileSystemQueue
                     TrackInfo track = TrackModel[index];
                     if (track != null) {
                         ServiceManager.PlayerEngine.OpenPlay (track);
+                        play_enqueued = false;
                     }
                 }
             }
@@ -208,15 +210,6 @@ namespace Banshee.FileSystemQueue
             }
         }
         
-        public override void Reload ()
-        {
-            base.Reload ();
-            
-            //if (Count > 0) {
-                PlayEnqueued ();
-          //  }
-        }
-        
         private void OnTrackModelReloaded (object sender, EventArgs args)
         {
             if (Count > 0 && !visible) {
@@ -225,7 +218,7 @@ namespace Banshee.FileSystemQueue
             } else if (Count <= 0 && visible) {
                 ServiceManager.SourceManager.RemoveSource (this);
                 visible = false;
-            }            
+            }
             
             if (Count > 0) {
                 PlayEnqueued ();
