@@ -71,6 +71,7 @@
     <File name="Banshee.Base/Tests/TaglibReadWriteTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Kernel/DelegateJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/CacheableItem.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.IO/DirectoryScannerPipelineElement.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena" />

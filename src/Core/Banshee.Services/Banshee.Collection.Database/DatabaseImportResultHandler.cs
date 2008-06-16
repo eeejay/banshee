@@ -1,10 +1,10 @@
 //
-// FolderImportSource.cs
+// DatabaseImportResultHandler.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2006-2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,45 +27,34 @@
 //
 
 using System;
-using Mono.Unix;
-using Gtk;
 
-namespace Banshee.Library.Gui
+namespace Banshee.Collection.Database
 {
-    public class FolderImportSource : IImportSource
+    public delegate void DatabaseImportResultHandler (object o, DatabaseImportResultArgs args);
+
+    public sealed class DatabaseImportResultArgs : EventArgs
     {
-        public FolderImportSource ()
+        private DatabaseTrackInfo track;
+        private string path;
+        private Exception error;
+
+        public DatabaseImportResultArgs (DatabaseTrackInfo track, string path, Exception error)
         {
+            this.track = track;
+            this.path = path;
+            this.error = error;
         }
-    
-        public void Import()
-        {
-            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog (
-                Catalog.GetString ("Import Folder to Library"),
-                FileChooserAction.SelectFolder
-            );
-            
-            chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
-            chooser.AddButton (Stock.Open, ResponseType.Ok);
-            chooser.DefaultResponse = ResponseType.Ok;
-            
-            if (chooser.Run () == (int)ResponseType.Ok) {
-                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (chooser.Uri);
-            }
-            
-            chooser.Destroy ();
+                
+        public string Path {
+            get { return path; }
         }
         
-        public string Name {
-            get { return Catalog.GetString ("Local Folder"); }
+        public DatabaseTrackInfo Track {
+            get { return track; }
         }
-        
-        public string [] IconNames {
-            get { return new string [] { "gtk-open" }; }
-        }
-        
-        public bool CanImport {
-            get { return true; }
+
+        public Exception Error {
+            get { return error; }
         }
     }
 }

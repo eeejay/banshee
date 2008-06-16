@@ -40,7 +40,7 @@ namespace Banshee.Podcasting
     {
         public PodcastImportManager (PodcastSource source) : base (source)
         {
-            force_copy = false;
+            ForceCopy = false;
         }
         
         public DatabaseTrackInfo ImportPodcast (string uri)

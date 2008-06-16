@@ -49,23 +49,17 @@ namespace Hyena.CommandLine
         private int generation;
         private int sorted_args_generation;
         private int offset;
-        private string enqueue_arg;
         private string [] arguments;
         private KeyValuePair<string, Argument> [] sorted_args;
         private Dictionary<string, Argument> parsed_arguments = new Dictionary<string, Argument> ();
         private List<string> file_list = new List<string> ();
         
-        public CommandLineParser () : this (null, Environment.GetCommandLineArgs (), 1)
+        public CommandLineParser () : this (Environment.GetCommandLineArgs (), 1)
         {
         }
         
-        public CommandLineParser (string enqueueArgument) : this (enqueueArgument, Environment.GetCommandLineArgs (), 1)
+        public CommandLineParser (string [] arguments, int offset)
         {
-        }
-        
-        public CommandLineParser (string enqueueArgument, string [] arguments, int offset)
-        {
-            this.enqueue_arg = enqueueArgument;
             this.arguments = arguments;
             this.offset = offset;
             
@@ -74,21 +68,14 @@ namespace Hyena.CommandLine
         
         private void Parse ()
         {
-            bool enqueue_mode = false;
-            
             for (int i = offset; i < arguments.Length; i++) {
-                if (enqueue_mode || !IsOption (arguments[i])) {
+                if (!IsOption (arguments[i])) {
                     file_list.Add (arguments[i]);
                     continue;
                 }
                 
                 string name = OptionName (arguments[i]);
                 string value = String.Empty;
-                
-                if (name == enqueue_arg) {
-                    enqueue_mode = true;
-                    continue;
-                }
 
                 int eq_offset = name.IndexOf ('=');
                 if (eq_offset > 1) {

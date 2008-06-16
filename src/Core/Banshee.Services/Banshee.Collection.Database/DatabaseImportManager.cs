@@ -92,16 +92,19 @@ namespace Banshee.Collection.Database
         private TrackPrimarySourceChooser trackPrimarySourceChooser;
         private Dictionary<int, int> counts;
         private ErrorSource error_source;
-        protected int [] primary_source_ids;
-        protected string base_directory;
-        protected bool force_copy;
+        private int [] primary_source_ids;
+        private string base_directory;
+        private bool force_copy;
+        
+        public event DatabaseImportResultHandler ImportResult;
     
         public DatabaseImportManager (PrimarySource psource) :
             this (psource.ErrorSource, delegate { return psource; }, new int [] {psource.DbId}, psource.BaseDirectory)
         {
         }
 
-        public DatabaseImportManager (ErrorSource error_source, TrackPrimarySourceChooser chooser, int [] primarySourceIds, string baseDirectory) : this (chooser)
+        public DatabaseImportManager (ErrorSource error_source, TrackPrimarySourceChooser chooser, 
+            int [] primarySourceIds, string baseDirectory) : this (chooser)
         {
             this.error_source = error_source;
             primary_source_ids = primarySourceIds;
@@ -120,28 +123,46 @@ namespace Banshee.Collection.Database
 
         protected virtual int [] PrimarySourceIds {
             get { return primary_source_ids; }
+            set { primary_source_ids = value; }
         }
 
         protected virtual string BaseDirectory {
             get { return base_directory; }
+            set { base_directory = value; }
+        }
+        
+        protected virtual bool ForceCopy {
+            get { return force_copy; }
+            set { force_copy = value; }
         }
 
         protected override void OnImportRequested (string path)
         {
             if (!IsWhiteListedFile (path)) {
-                IncrementProcessedCount (null);
+                UpdateProgress (null);
                 return;
             }
 
             try {
                 DatabaseTrackInfo track = ImportTrack (path);
                 if (track != null && track.TrackId > 0) {
-                    IncrementProcessedCount (String.Format ("{0} - {1}", 
+                    UpdateProgress (String.Format ("{0} - {1}", 
                         track.DisplayArtistName, track.DisplayTrackTitle));
                 }
+                
+                OnImportResult (track, path, null);
             } catch (Exception e) {
                 LogError (path, e);
-                IncrementProcessedCount (null);
+                UpdateProgress (null);
+                OnImportResult (null, path, e);
+            }
+        }
+        
+        protected virtual void OnImportResult (DatabaseTrackInfo track, string path, Exception error)
+        {
+            DatabaseImportResultHandler handler = ImportResult;
+            if (handler != null) {
+                handler (this, new DatabaseImportResultArgs (track, path, error));
             }
         }
         
@@ -157,7 +178,7 @@ namespace Banshee.Collection.Database
             if (DatabaseTrackInfo.ContainsUri (uri, Paths.MakePathRelative (uri.AbsolutePath, BaseDirectory) ?? uri.AbsoluteUri, PrimarySourceIds)) {
                 // TODO add DatabaseTrackInfo.SyncedStamp property, and if the file has been
                 // updated since the last sync, fetch its metadata into the db.
-                IncrementProcessedCount (null);
+                UpdateProgress (null);
                 return null;
             }
 

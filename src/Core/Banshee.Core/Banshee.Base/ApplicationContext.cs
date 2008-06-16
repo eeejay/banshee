@@ -33,6 +33,8 @@ using Hyena.CommandLine;
 
 namespace Banshee.Base
 {
+    public delegate void InvokeHandler ();
+
     public static class ApplicationContext
     {
         static ApplicationContext () 
@@ -40,7 +42,7 @@ namespace Banshee.Base
             Log.Debugging = Debugging;
         }
     
-        private static CommandLineParser command_line = new CommandLineParser ("enqueue");
+        private static CommandLineParser command_line = new CommandLineParser ();
         public static CommandLineParser CommandLine {
             set { command_line = value; }
             get { return command_line; }

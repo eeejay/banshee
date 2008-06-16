@@ -12,6 +12,7 @@ SOURCES =  \
 	Banshee.Collection.Database/DatabaseArtistListModel.cs \
 	Banshee.Collection.Database/DatabaseFilterListModel.cs \
 	Banshee.Collection.Database/DatabaseImportManager.cs \
+	Banshee.Collection.Database/DatabaseImportResultHandler.cs \
 	Banshee.Collection.Database/DatabaseTrackInfo.cs \
 	Banshee.Collection.Database/DatabaseTrackListModel.cs \
 	Banshee.Collection.Database/DatabaseTrackModelCache.cs \

@@ -50,12 +50,12 @@ namespace Banshee.Base
             }
         }
         
-        public static void ProxyToMain (EventHandler handler)
+        public static void ProxyToMain (InvokeHandler handler)
         {
             if (!InMainThread) {
                 Banshee.ServiceStack.Application.Invoke (handler);
             } else {
-                handler (null, EventArgs.Empty);
+                handler ();
             }
         }
 

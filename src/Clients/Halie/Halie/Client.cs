@@ -72,9 +72,9 @@ namespace Halie
             command = DBusServiceManager.FindInstance<DBusCommandService> ("/DBusCommandService");
             hide_field = ApplicationContext.CommandLine.Contains ("hide-field");
             
-            HandleFiles ();
             bool present = HandlePlayerCommands ();
             HandleWindowCommands (present);
+            HandleFiles ();
         }
         
         private static void HandleWindowCommands (bool present)

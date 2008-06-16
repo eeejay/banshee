@@ -27,43 +27,113 @@
 //
 
 using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Threading;
+using System.Globalization;
 using Mono.Unix;
 
 using Hyena;
+using Hyena.Collections;
+
 using Banshee.IO;
 using Banshee.Base;
 using Banshee.ServiceStack;
 
 namespace Banshee.Collection
 {
-    public class ImportManager
+    public class ImportManager : QueuePipeline<string>
     {
-        private class ImportCanceledException : ApplicationException
+
+#region Importing Pipeline Element
+
+        private class ImportElement : QueuePipelineElement<string>
         {
+            private ImportManager manager;
+            
+            public ImportElement (ImportManager manager)
+            {
+                this.manager = manager;
+            }
+        
+            private int processed_count;
+            public int ProcessedCount {
+                get { return processed_count; }
+            }
+            
+            private int total_count;
+            public int TotalCount {
+                get { return total_count; }
+            }
+            
+            public override void Enqueue (string item)
+            {
+                total_count++;
+                manager.UpdateScannerProgress ();
+                base.Enqueue (item);
+            }
+        
+            protected override string ProcessItem (string item)
+            {
+                manager.OnImportRequested (item);
+                processed_count++;
+                return null;   
+            }
+            
+            protected override void OnFinished ()
+            {
+                base.OnFinished ();
+                manager.DestroyUserJob ();
+                manager.OnImportFinished ();
+            }
+            
+            public void Reset ()
+            {
+                processed_count = 0;
+                total_count = 0;
+            }
         }
+        
+#endregion
+        
+        private static NumberFormatInfo number_format = new NumberFormatInfo ();
+        
+        private DirectoryScannerPipelineElement scanner_element;
+        private ImportElement import_element;
         
         private readonly object user_job_mutex = new object ();
         private UserJob user_job;
-        
-        private Queue<string> path_queue = new Queue<string> ();
-        private bool processing_queue = false;
-        
-        private int total_count;
-        private int processed_count;
-        private int scan_ref_count = 0;
+        private uint timer_id;
         
         public event ImportEventHandler ImportRequested;
         public event EventHandler ImportFinished;
         
         public ImportManager ()
         {
+            AddElement (scanner_element = new DirectoryScannerPipelineElement ());
+            AddElement (import_element = new ImportElement (this));
+        }
+        
+#region Public API
+                      
+        public virtual void Enqueue (UriList uris)
+        {
+            CreateUserJob ();
+            
+            foreach (string path in uris.LocalPaths) {
+                base.Enqueue (path);
+            }
+        }
+        
+        public override void Enqueue (string source)
+        {
+            Enqueue (new UriList (source));
+        }
+        
+        public void Enqueue (string [] paths)
+        {
+            Enqueue (new UriList (paths));
         }
         
         public bool IsImportInProgress {
-            get { return processing_queue; }
+            get { return import_element.Processing; }
         }
 
         private bool keep_user_job_hidden = false;
@@ -72,6 +142,10 @@ namespace Banshee.Collection
             set { keep_user_job_hidden = value; }
         }
         
+#endregion
+        
+#region User Job / Interaction
+        
         private void CreateUserJob ()
         {
             lock (user_job_mutex) {
@@ -79,17 +153,19 @@ namespace Banshee.Collection
                     return;
                 }
                 
+                timer_id = Log.DebugTimerStart ();
+                
                 user_job = new UserJob (Title, Catalog.GetString ("Scanning for media"));
                 user_job.IconNames = new string [] { "system-search", "gtk-find" };
                 user_job.CancelMessage = CancelMessage;
                 user_job.CanCancel = true;
+                user_job.CancelRequested += OnCancelRequested;
 
                 if (!KeepUserJobHidden) {
                     user_job.Register ();
                 }
                 
-                total_count = 0;
-                processed_count = 0;
+                import_element.Reset ();
             }
         }
         
@@ -100,186 +176,58 @@ namespace Banshee.Collection
                     return;
                 }
                 
+                Log.DebugTimerPrint (timer_id, Title + " duration: {0}");
+                
+                user_job.CancelRequested -= OnCancelRequested;
                 user_job.Finish ();
                 user_job = null;
                     
-                total_count = 0;
-                processed_count = 0;
-                scan_ref_count = 0;
+                import_element.Reset ();
             }
         }
         
-        protected void IncrementProcessedCount (string message)
+        private void OnCancelRequested (object o, EventArgs args)
+        {
+            scanner_element.Cancel ();
+        }
+        
+        protected void UpdateProgress (string message)
         {
             CreateUserJob ();
-            processed_count++;
             
-            double new_progress = (double)processed_count / (double)total_count;
+            double new_progress = (double)import_element.ProcessedCount / (double)import_element.TotalCount;
             double old_progress = user_job.Progress;
             
             if (new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs (new_progress - old_progress) > 0.001) {
-                string disp_progress = String.Format (ProgressMessage, processed_count, total_count);
-                
-                user_job.Title = disp_progress;
-                user_job.Status = String.IsNullOrEmpty (message) ? Catalog.GetString ("Scanning...") : message;
-                user_job.Progress = new_progress;
-            }
-        }
-        
-        private void CheckForCanceled ()
-        {
-            lock (user_job_mutex) {
-                if (user_job != null && user_job.IsCancelRequested) {
-                    throw new ImportCanceledException ();  
+                lock (number_format) {
+                    string disp_progress = String.Format (ProgressMessage, 
+                        import_element.ProcessedCount.ToString ("N", number_format), 
+                        import_element.TotalCount.ToString ("N", number_format));
+                    
+                    user_job.Title = disp_progress;
+                    user_job.Status = String.IsNullOrEmpty (message) ? Catalog.GetString ("Scanning...") : message;
+                    user_job.Progress = new_progress;
                 }
             }
-        }
-        
-        private void FinalizeImport ()
-        {
-            path_queue.Clear ();
-            processing_queue = false;
-            DestroyUserJob ();
-            OnImportFinished ();
         }
         
         private DateTime last_enqueue_display = DateTime.Now;
-        private static System.Globalization.NumberFormatInfo nfi = new System.Globalization.NumberFormatInfo ();
         
-        private void Enqueue (string path)
+        private void UpdateScannerProgress ()
         {
-            if (path_queue.Contains (path)) {
-                return;
-            }
-            
-            total_count++;
-            
             if (DateTime.Now - last_enqueue_display > TimeSpan.FromMilliseconds (400)) {
-                lock (nfi) {
-                    nfi.NumberDecimalDigits = 0;
+                lock (number_format) {
+                    number_format.NumberDecimalDigits = 0;
                     user_job.Status = String.Format (Catalog.GetString ("Scanning ({0} files)..."), 
-                        total_count.ToString ("N", nfi));
+                        import_element.TotalCount.ToString ("N", number_format));
                     last_enqueue_display = DateTime.Now;
                 }
             }
-            
-            lock (path_queue) {
-                path_queue.Enqueue (path);
-            }
         }
         
-        public void QueueSource (UriList uris)
-        {
-            CreateUserJob ();
-
-            if (Threaded) {
-                ThreadPool.QueueUserWorkItem (ThreadedQueueSource, uris);
-            } else {
-                ThreadedQueueSource (uris);
-            }
-        }
+#endregion
         
-        public void QueueSource (string source)
-        {
-            QueueSource (new UriList (source));
-        }
-        
-        public void QueueSource (string [] paths)
-        {
-            QueueSource (new UriList (paths));
-        }
-
-        private void ThreadedQueueSource (object o)
-        {
-            UriList uris = (UriList)o;
-
-            try {
-                foreach (string path in uris.LocalPaths) {
-                    Interlocked.Increment (ref scan_ref_count);
-                    ScanForFiles (path);
-                    Interlocked.Decrement (ref scan_ref_count);
-                }
-                
-                if(scan_ref_count == 0) {
-                    ProcessQueue ();
-                }
-            } catch (ImportCanceledException) {
-                FinalizeImport ();
-            }
-        }
-        
-        private void ScanForFiles (string source)
-        {
-            CheckForCanceled ();
-            Interlocked.Increment (ref scan_ref_count);
-            
-            bool is_regular_file = false;
-            bool is_directory = false;
-            
-            SafeUri source_uri = new SafeUri (source);
-            
-            try {
-                is_regular_file = Banshee.IO.File.Exists (source_uri);
-                is_directory = !is_regular_file && Banshee.IO.Directory.Exists (source);
-            } catch {
-                Interlocked.Decrement (ref scan_ref_count);
-                return;
-            }
-            
-            if (is_regular_file) {
-                try {
-                    if (!Path.GetFileName (source).StartsWith (".")) {
-                        Enqueue (source);
-                    }
-                } catch (System.ArgumentException) {
-                    // If there are illegal characters in path
-                }
-            } else if (is_directory) {
-                try {
-                    if (!Path.GetFileName (Path.GetDirectoryName (source)).StartsWith (".")) {
-                        try {
-                            foreach (string file in Banshee.IO.Directory.GetFiles (source)) {
-                                ScanForFiles (file);
-                            }
-
-                            foreach (string directory in Banshee.IO.Directory.GetDirectories (source)) {
-                                ScanForFiles (directory);
-                            }
-                        } catch {
-                        }
-                    }
-                } catch (System.ArgumentException) {
-                    // If there are illegal characters in path
-                }
-            }
-
-            Interlocked.Decrement (ref scan_ref_count);
-        }
-
-        private void ProcessQueue ()
-        {
-            if (processing_queue) {
-                return;
-            }
-            
-            processing_queue = true;
-            uint timer_id = Log.DebugTimerStart ();
-            
-            while (path_queue.Count > 0) {
-                CheckForCanceled ();
-                OnImportRequested (path_queue.Dequeue ());
-            }
-            
-            Log.DebugTimerPrint (timer_id, Title + " duration: {0}");
-            
-            path_queue.Clear ();
-            processing_queue = false;
-            
-            if (scan_ref_count == 0) {
-                DestroyUserJob ();
-                OnImportFinished ();
-            }
-        }
+#region Protected Import Hooks
         
         protected virtual void OnImportRequested (string path)
         {
@@ -287,9 +235,9 @@ namespace Banshee.Collection
             if (handler != null && path != null) {
                 ImportEventArgs args = new ImportEventArgs (path);
                 handler (this, args);
-                IncrementProcessedCount (args.ReturnMessage);
+                UpdateProgress (args.ReturnMessage);
             } else {
-                IncrementProcessedCount (null);
+                UpdateProgress (null);
             }
         }
         
@@ -301,13 +249,18 @@ namespace Banshee.Collection
             }
         }
         
+#endregion
+
+#region Properties
+        
         private string title = Catalog.GetString ("Importing Media");
         public string Title {
             get { return title; }
             set { title = value; }
         }
 
-        private string cancel_message = Catalog.GetString ("The import process is currently running. Would you like to stop it?");
+        private string cancel_message = Catalog.GetString (
+            "The import process is currently running. Would you like to stop it?");
         public string CancelMessage {
             get { return cancel_message; }
             set { cancel_message = value; }
@@ -319,10 +272,11 @@ namespace Banshee.Collection
             set { progress_message = value; }
         }
 
-        private bool threaded = true;
         public bool Threaded {
-            get { return threaded; }
-            set { threaded = value; }
+            set { import_element.Threaded = scanner_element.Threaded = value; }
         }
+        
+#endregion
+
     }
 }

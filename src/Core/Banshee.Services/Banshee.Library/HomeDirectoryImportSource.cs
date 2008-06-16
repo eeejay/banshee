@@ -39,7 +39,7 @@ namespace Banshee.Library
 
         public void Import ()
         {
-            Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().QueueSource (
+            Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (
                 Environment.GetFolderPath (Environment.SpecialFolder.Personal)
             );
         }

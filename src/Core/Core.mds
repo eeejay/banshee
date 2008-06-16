@@ -7,7 +7,7 @@
       <Entry build="True" name="Banshee.ThickClient" configuration="Debug" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="Nereid" single="True">
+  <StartMode startupentry="Banshee.Widgets" single="True">
     <Execute type="None" entry="Banshee.Widgets" />
     <Execute type="None" entry="Banshee.Services" />
     <Execute type="None" entry="Banshee.Core" />

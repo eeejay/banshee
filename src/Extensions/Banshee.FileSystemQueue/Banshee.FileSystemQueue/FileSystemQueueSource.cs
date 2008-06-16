@@ -48,6 +48,8 @@ namespace Banshee.FileSystemQueue
         private DatabaseImportManager importer;
         private bool visible = false;
         private bool actions_loaded = false;
+        private bool play_enqueued = false;
+        private string path_to_play;
         
         protected override string TypeUniqueId {
             get { return "file-system-queue"; }
@@ -59,9 +61,6 @@ namespace Banshee.FileSystemQueue
             Properties.SetString ("Icon.Name", "system-file-manager");
             Properties.Set<bool> ("AutoAddSource", false);
             IsLocal = true;
-            
-            importer = new DatabaseImportManager (this);
-            importer.KeepUserJobHidden = true;
             
             ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
             
@@ -93,14 +92,10 @@ namespace Banshee.FileSystemQueue
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
             TrackModel.Reloaded += OnTrackModelReloaded;
 
-            Reload ();
-
+            play_enqueued = ApplicationContext.CommandLine.Contains ("play-enqueued");
+            
             foreach (string path in ApplicationContext.CommandLine.Files) {
                 Enqueue (path);
-            }
-            
-            if (ApplicationContext.CommandLine.Contains ("play-enqueued")) {
-                PlayEnqueued ();
             }
         }
         
@@ -109,7 +104,27 @@ namespace Banshee.FileSystemQueue
         public void Enqueue (string path)
         {
             lock (this) {
-                importer.QueueSource (path);
+                if (importer == null) {
+                    importer = new DatabaseImportManager (this);
+                    importer.KeepUserJobHidden = true;
+                    importer.ImportResult += delegate (object o, DatabaseImportResultArgs args) {
+                        Banshee.ServiceStack.Application.Invoke (delegate {
+                            if (args.Error != null || path_to_play != null) {
+                                return;
+                            }
+                            
+                            path_to_play = args.Path;
+                            if (args.Track == null) {
+                                // Play immediately if the track is already in the source,
+                                // otherwise the call will be deferred until the track has
+                                // been imported and loaded into the cache
+                                PlayEnqueued ();
+                            }
+                        });
+                    };
+                }
+            
+                importer.Enqueue (path);
                 
                 if (source_activate_id == 0) {
                     source_activate_id = GLib.Timeout.Add (500, delegate {
@@ -117,6 +132,40 @@ namespace Banshee.FileSystemQueue
                         source_activate_id = 0;
                         return false;
                     });
+                }
+            }
+        }
+        
+        private void PlayEnqueued ()
+        {
+            if (!play_enqueued || path_to_play == null) {
+                return;
+            }
+            
+            SafeUri uri = null;
+            play_enqueued = false;
+            
+            ServiceManager.PlaybackController.NextSource = this;
+            
+            try {
+                uri = new SafeUri (path_to_play);
+            } catch {
+            }
+            
+            if (uri == null) {
+                return;
+            }
+            
+            int id = DatabaseTrackInfo.GetTrackIdForUri (uri, Paths.MakePathRelative (
+                uri.AbsolutePath, BaseDirectory), new int [] { DbId });
+            
+            if (id >= 0) {
+                int index = (int)TrackCache.IndexOf ((long)id);
+                if (index >= 0) {
+                    TrackInfo track = TrackModel[index];
+                    if (track != null) {
+                        ServiceManager.PlayerEngine.OpenPlay (track);
+                    }
                 }
             }
         }
@@ -134,12 +183,13 @@ namespace Banshee.FileSystemQueue
         {
             if (!isFile) {
                 if (argument == "play-enqueued") {
-                    PlayEnqueued ();
+                    play_enqueued = true;
+                    path_to_play = null;
                 }
                 return;
             }
             
-            Log.DebugFormat ("FileSystemQueueSource::Enqueue => {0}", argument);
+            Log.DebugFormat ("FSQ Enqueue: {0}", argument);
             
             try {
                 if (Banshee.IO.Directory.Exists (argument) || Banshee.IO.File.Exists (new SafeUri (argument))) {
@@ -147,12 +197,6 @@ namespace Banshee.FileSystemQueue
                 }
             } catch {
             }
-        }
-        
-        private void PlayEnqueued ()
-        {
-            ServiceManager.PlaybackController.NextSource = this;
-            ServiceManager.PlayerEngine.Play ();
         }
         
         protected override void OnUpdated ()
@@ -163,7 +207,16 @@ namespace Banshee.FileSystemQueue
                 UpdateActions ();
             }
         }
-
+        
+        public override void Reload ()
+        {
+            base.Reload ();
+            
+            //if (Count > 0) {
+                PlayEnqueued ();
+          //  }
+        }
+        
         private void OnTrackModelReloaded (object sender, EventArgs args)
         {
             if (Count > 0 && !visible) {
@@ -172,6 +225,10 @@ namespace Banshee.FileSystemQueue
             } else if (Count <= 0 && visible) {
                 ServiceManager.SourceManager.RemoveSource (this);
                 visible = false;
+            }            
+            
+            if (Count > 0) {
+                PlayEnqueued ();
             }
         }
         

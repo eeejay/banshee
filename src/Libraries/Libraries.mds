@@ -11,7 +11,7 @@
       <Entry build="True" name="Migo" configuration="Debug" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="MusicBrainz" single="True">
+  <StartMode startupentry="Hyena" single="True">
     <Execute type="None" entry="Hyena" />
     <Execute type="None" entry="Hyena.Gui" />
     <Execute type="None" entry="Lastfm" />

@@ -36,13 +36,13 @@ using Banshee.Library;
 using Banshee.Playlist;
 using Banshee.SmartPlaylist;
 using Banshee.Sources;
+using Banshee.Base;
 
 namespace Banshee.ServiceStack
 {    
     public delegate bool ShutdownRequestHandler ();
     public delegate bool TimeoutHandler ();
     public delegate bool IdleHandler ();
-    public delegate void InvokeHandler ();
     public delegate bool IdleTimeoutRemoveHandler (uint id);
     public delegate uint TimeoutImplementationHandler (uint milliseconds, TimeoutHandler handler); 
     public delegate uint IdleImplementationHandler (IdleHandler handler);
@@ -159,12 +159,7 @@ namespace Banshee.ServiceStack
         {
             RunIdle (delegate { handler (); return false; });
         }
-        
-        public static void Invoke (EventHandler handler)
-        {
-            RunIdle (delegate { handler (null, EventArgs.Empty); return false; });
-        }
-        
+
         public static uint RunIdle (IdleHandler handler)
         {
             if (idle_handler == null) {

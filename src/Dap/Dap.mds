@@ -7,7 +7,7 @@
       <Entry build="True" name="Banshee.Dap.Ipod" configuration="Debug" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="Banshee.Dap.Ipod" single="True">
+  <StartMode startupentry="Banshee.Dap" single="True">
     <Execute type="None" entry="Banshee.Dap" />
     <Execute type="None" entry="Banshee.Dap.MassStorage" />
     <Execute type="None" entry="Banshee.Dap.Mtp" />

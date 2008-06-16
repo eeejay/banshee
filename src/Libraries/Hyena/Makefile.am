@@ -5,11 +5,15 @@ SOURCES =  \
 	Hyena.Collections/CollectionExtensions.cs \
 	Hyena.Collections/IntervalHeap.cs \
 	Hyena.Collections/IStackProvider.cs \
+	Hyena.Collections/QueuePipeline.cs \
+	Hyena.Collections/QueuePipelineElement.cs \
 	Hyena.Collections/RangeCollection.cs \
 	Hyena.Collections/Selection.cs \
 	Hyena.Collections/SelectionProxy.cs \
 	Hyena.Collections/Tests/IntervalHeapTests.cs \
+	Hyena.Collections/Tests/QueuePipelineTests.cs \
 	Hyena.Collections/Tests/RangeCollectionTests.cs \
+	Hyena.Collections/WriteLineElement.cs \
 	Hyena.CommandLine/CommandLineParser.cs \
 	Hyena.CommandLine/Layout.cs \
 	Hyena.CommandLine/LayoutGroup.cs \

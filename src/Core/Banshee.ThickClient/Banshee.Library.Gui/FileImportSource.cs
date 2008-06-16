@@ -51,9 +51,8 @@ namespace Banshee.Library.Gui
             chooser.SelectMultiple = true;
             chooser.DefaultResponse = ResponseType.Ok;
             
-            if(chooser.Run() == (int)ResponseType.Ok) {
-                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ("LibraryImportManager").QueueSource (
-                    chooser.Uris);   
+            if (chooser.Run () == (int)ResponseType.Ok) {
+                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (chooser.Uris);
             }
             
             chooser.Destroy ();

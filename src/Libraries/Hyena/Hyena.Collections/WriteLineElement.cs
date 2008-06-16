@@ -1,10 +1,10 @@
 //
-// FolderImportSource.cs
+// WriteLineElement.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2006-2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,45 +27,20 @@
 //
 
 using System;
-using Mono.Unix;
-using Gtk;
 
-namespace Banshee.Library.Gui
+namespace Hyena.Collections
 {
-    public class FolderImportSource : IImportSource
+    public class WriteLineElement<T> : QueuePipelineElement<T> where T : class
     {
-        public FolderImportSource ()
+        public WriteLineElement ()
         {
+            Threaded = false;
         }
-    
-        public void Import()
+        
+        protected override T ProcessItem (T item)
         {
-            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog (
-                Catalog.GetString ("Import Folder to Library"),
-                FileChooserAction.SelectFolder
-            );
-            
-            chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
-            chooser.AddButton (Stock.Open, ResponseType.Ok);
-            chooser.DefaultResponse = ResponseType.Ok;
-            
-            if (chooser.Run () == (int)ResponseType.Ok) {
-                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (chooser.Uri);
-            }
-            
-            chooser.Destroy ();
-        }
-        
-        public string Name {
-            get { return Catalog.GetString ("Local Folder"); }
-        }
-        
-        public string [] IconNames {
-            get { return new string [] { "gtk-open" }; }
-        }
-        
-        public bool CanImport {
-            get { return true; }
+            Console.WriteLine (item);
+            return null;
         }
     }
 }

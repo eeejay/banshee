@@ -25,6 +25,10 @@ for arg in $*; do
     case "x--profile=" in ("x${arg:0:10}")
         BANSHEE_PROFILE=$arg
     esac
+
+	case "x--redirect-log" in ("x$arg")
+		BANSHEE_REDIRECT_LOG="$HOME/.config/banshee-1/log"
+	esac
 done
 
 if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
@@ -33,5 +37,12 @@ if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
 fi
 
 # Finally - environment is set up, time to run our beloved
-exec -a banshee-1 mono $MONO_OPTIONS $MONO_EXE "$@"
+exec_args="-a banshee-1 mono $MONO_OPTIONS $MONO_EXE $@"
+
+if [ -z "$BANSHEE_REDIRECT_LOG" ]; then
+	exec $exec_args
+else
+	exec $exec_args &> $BANSHEE_REDIRECT_LOG
+fi
+
 

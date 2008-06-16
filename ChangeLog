@@ -1,3 +1,73 @@
+2008-06-16  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Lots of bug fixes with FSQ behavior around starting a new instance with
+	items in the queue, queueing items remotely, and playing back from the
+	queue automaticaly when --play-enqueued is passed
+	
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Major
+	update to use the new QueuePipeline and DirectoryScannerPipelineElement
+	for improved parallelism, fixed threading issues, and more readable and
+	reliable code
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Added an ImportResult event; small API cleanup
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportResultHandler.cs:
+	New delegate and args class that the DatabaseImportManager uses for the
+	new result event
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Remove unnecessary casting
+
+	* src/Libraries/Hyena/Hyena.Collections/QueuePipeline.cs: Container class
+	for the async queue pipeline; links elements together
+
+	* src/Libraries/Hyena/Hyena.Collections/QueuePipelineElement.cs: Base
+	element class for the pipeline; items pushed into the element's queue are
+	processed async and then pushed to the downstream element in the pipeline,
+	which may run in its own thread; this allows for good parallelism in an
+	easy, safe way (i.e. walk a directory tree while processing results from
+	earlier in the walk at the same time)
+
+	* src/Libraries/Hyena/Hyena.Collections/WriteLineElement.cs: A simple
+	sync element that dumps results to stdout
+
+	* src/Libraries/Hyena/Hyena.Collections/Tests/QueuePipelineTests.cs:
+	Some unit tests for QP/QPE
+
+	* src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibraryImportManager.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastImportManager.cs:
+	Updated to reflect small API changes in base ImportManager class
+
+	* src/Core/Banshee.Services/Banshee.Base/ThreadAssist.cs: 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Remove
+	EventHandler override for doing Invoke/ProxyToMain; just use InvokeHandler
+
+	* src/Core/Banshee.Core/Banshee.IO/DirectoryScannerPipelineElement.cs:
+	Moved the directory scanning code from ImportManager to a nice
+	QueuePipelineElement so it can be reused inside threaded queue pipelines
+
+	* src/Core/Banshee.Core/Banshee.Base/ApplicationContext.cs:
+	* src/Libraries/Hyena/Hyena.CommandLine/CommandLineParser.cs: Remove the
+	notion of --enqueue and just assume anything that does not start with --
+	is a 'file'
+
+	* src/Clients/Halie/Halie/Client.cs: handle files after all commands are
+	handled, so the remote process can get an idea of what is coming
+
+	* src/Clients/banshee-1.in: Added --redirect-log argument that dumps
+	stdin/error to ~/.config/banshee-1/log; sort of a hack job
+	
+	* data/banshee-1.desktop.in.in: Pass --redirect-log and remove --enqueue
+	
+	* build/m4/shamrock/nunit.m4: Fix nunit detection
+
 2008-06-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService_Interface.cs:

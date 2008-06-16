@@ -119,7 +119,7 @@ namespace Banshee.Dap.MassStorage
             importer.Threaded = false; // We are already threaded
 
             foreach (string audio_folder in BaseDirectories) {
-                importer.QueueSource (audio_folder);
+                importer.Enqueue (audio_folder);
             }
         }
 
@@ -134,7 +134,7 @@ namespace Banshee.Dap.MassStorage
         {
             LibraryImportManager importer = new LibraryImportManager (true);
             foreach (string audio_folder in BaseDirectories) {
-                importer.QueueSource (audio_folder);
+                importer.Enqueue (audio_folder);
             }
         }
 

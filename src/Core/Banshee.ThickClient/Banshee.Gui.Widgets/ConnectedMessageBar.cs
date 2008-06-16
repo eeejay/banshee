@@ -85,7 +85,7 @@ namespace Banshee.Gui.Widgets
             ThreadAssist.ProxyToMain (InnerUpdate);
         }
         
-        private void InnerUpdate (object o, EventArgs args)
+        private void InnerUpdate ()
         {
             if (source == null || source.CurrentMessage == null || source.CurrentMessage.IsHidden) {
                 Hide ();

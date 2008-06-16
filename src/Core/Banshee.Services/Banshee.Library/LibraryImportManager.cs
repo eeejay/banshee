@@ -53,7 +53,7 @@ namespace Banshee.Library
 
         public LibraryImportManager (bool force_copy) : base (DefaultTrackPrimarySourceChooser)
         {
-            this.force_copy = force_copy;
+            ForceCopy = force_copy;
         }
 
         protected override ErrorSource ErrorSource {
@@ -62,12 +62,14 @@ namespace Banshee.Library
 
         protected override int [] PrimarySourceIds {
             get {
-                if (primary_source_ids == null) {
-                    primary_source_ids = new int [] {
-                        ServiceManager.SourceManager.VideoLibrary.DbId, ServiceManager.SourceManager.MusicLibrary.DbId
+                if (base.PrimarySourceIds == null) {
+                    base.PrimarySourceIds = new int [] {
+                        ServiceManager.SourceManager.VideoLibrary.DbId, 
+                        ServiceManager.SourceManager.MusicLibrary.DbId
                     };
                 }
-                return primary_source_ids;
+                
+                return base.PrimarySourceIds;
             }
         }
 

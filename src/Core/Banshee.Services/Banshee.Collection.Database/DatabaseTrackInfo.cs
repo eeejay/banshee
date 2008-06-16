@@ -99,11 +99,11 @@ namespace Banshee.Collection.Database
 
         public override bool TrackEqual (TrackInfo track)
         {
-            if (!(track is DatabaseTrackInfo)) {
+            DatabaseTrackInfo db_track = track as DatabaseTrackInfo;
+            if (db_track == null) {
                 return base.TrackEqual (track);
             }
             
-            DatabaseTrackInfo db_track = (DatabaseTrackInfo)track;
             return db_track.TrackId == TrackId && db_track.CacheModelId == CacheModelId && 
                 db_track.CacheEntryId == CacheEntryId;
         }
