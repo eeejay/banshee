@@ -1,5 +1,29 @@
 2008-06-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.InternetRadio/: Created the internet radio 
+	extension skeleton - it currently doesn't do anything
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	The parent radio source, does nothing right now
+	
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:
+	Ported from legacy
+
+	* src/Extensions/Banshee.InternetRadio/ThemeIcons/: Added radio icons
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Updated source orders
+
+2008-06-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
 	Fix some special case playback issue that was broken depending on cache
 	state between library and FSQ - if an item is not available yet, do not

@@ -52,7 +52,7 @@ namespace Banshee.Dap
         {
             base.Initialize ();
 
-            Order = 175;
+            Order = 410;
             Properties.SetString ("UnmapSourceActionIconName", "media-eject");
             Properties.SetString ("GtkActionPath", "/RemovableSourceContextMenu");
             AfterInitialized ();

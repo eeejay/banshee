@@ -73,7 +73,7 @@ namespace Banshee.Lastfm.Radio
             get { return lastfm; }
         }
 
-        public LastfmSource () : base (lastfm, lastfm, 150)
+        public LastfmSource () : base (lastfm, lastfm, 210)
         {
             account = LastfmCore.Account;
 

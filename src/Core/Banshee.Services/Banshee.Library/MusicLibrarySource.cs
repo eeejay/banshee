@@ -38,7 +38,7 @@ namespace Banshee.Library
 {
     public class MusicLibrarySource : LibrarySource
     {
-        public MusicLibrarySource () : base (Catalog.GetString ("Music Library"), "Library", 20)
+        public MusicLibrarySource () : base (Catalog.GetString ("Music Library"), "Library", 40)
         {
             Properties.SetStringList ("Icon.Name", "audio-x-generic", "source-library");
         }

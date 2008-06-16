@@ -58,11 +58,11 @@ namespace Banshee.PlayQueue
             get { return false; }
         }
         
-        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null, 5)
+        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null, 20)
         {
             BindToDatabase ();
             
-            Order = 10;
+            Order = 20;
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
             

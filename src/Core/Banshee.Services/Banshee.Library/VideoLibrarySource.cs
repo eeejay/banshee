@@ -38,7 +38,7 @@ namespace Banshee.Library
 {
     public class VideoLibrarySource : LibrarySource
     {
-        public VideoLibrarySource () : base (Catalog.GetString ("Video Library"), "VideoLibrary", 30)
+        public VideoLibrarySource () : base (Catalog.GetString ("Video Library"), "VideoLibrary", 50)
         {
             Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
             Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"

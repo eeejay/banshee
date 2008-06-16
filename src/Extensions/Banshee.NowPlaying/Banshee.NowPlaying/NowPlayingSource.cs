@@ -49,7 +49,7 @@ namespace Banshee.NowPlaying
             get { return "now-playing"; }
         }
         
-        public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 0)
+        public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 10)
         {
             now_playing_interface = new NowPlayingInterface ();
         

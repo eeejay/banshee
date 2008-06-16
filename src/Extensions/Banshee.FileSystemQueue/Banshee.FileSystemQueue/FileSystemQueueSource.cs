@@ -56,7 +56,7 @@ namespace Banshee.FileSystemQueue
         }
         
         public FileSystemQueueSource () : base (Catalog.GetString ("File System Queue"), 
-            Catalog.GetString ("File System Queue"), "file-system-queue", 9)
+            Catalog.GetString ("File System Queue"), "file-system-queue", 30)
         {
             Properties.SetString ("Icon.Name", "system-file-manager");
             Properties.Set<bool> ("AutoAddSource", false);

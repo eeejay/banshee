@@ -1,0 +1,8 @@
+<ui>
+    <popup name="InternetRadioContextMenu">
+        <menuitem action="AddRadioStationAction"></menuitem>
+        <separator/>
+        <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
+        <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
+    </popup>
+</ui>

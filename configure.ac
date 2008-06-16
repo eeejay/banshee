@@ -160,6 +160,7 @@ src/Extensions/Banshee.BooScript/Makefile
 src/Extensions/Banshee.CoverArt/Makefile
 src/Extensions/Banshee.Daap/Makefile
 src/Extensions/Banshee.FileSystemQueue/Makefile
+src/Extensions/Banshee.InternetRadio/Makefile
 src/Extensions/Banshee.Lastfm/Makefile
 src/Extensions/Banshee.MiniMode/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile

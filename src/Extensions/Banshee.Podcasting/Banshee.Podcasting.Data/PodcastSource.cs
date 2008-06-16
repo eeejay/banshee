@@ -92,7 +92,7 @@ namespace Banshee.Podcasting.Gui
         {
         }
 
-        public PodcastSource (string baseDirectory) : base (Catalog.GetString ("Podcasts"), "PodcastLibrary", 100)
+        public PodcastSource (string baseDirectory) : base (Catalog.GetString ("Podcasts"), "PodcastLibrary", 200)
         {
             this.baseDirectory = baseDirectory;
 

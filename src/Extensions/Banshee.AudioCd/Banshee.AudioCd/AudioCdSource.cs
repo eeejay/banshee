@@ -49,7 +49,7 @@ namespace Banshee.AudioCd
         
         
         public AudioCdSource (AudioCdService service, AudioCdDiscModel discModel) 
-            : base (Catalog.GetString ("Audio CD"), discModel.Title, 200)
+            : base (Catalog.GetString ("Audio CD"), discModel.Title, 400)
         {
             this.service = service;
             this.disc_model = discModel;
