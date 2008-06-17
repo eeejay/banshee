@@ -149,11 +149,11 @@ namespace Banshee.NotificationArea
             // Determine whether the tray is inside a horizontal or vertical
             // panel so the size of the icon can adjust correctly.
         
-            if (ParentWindow == null) {
+            if (event_box.ParentWindow == null) {
                 return PanelOrientation.Horizontal;
             }
 
-            Gdk.Window top_level_window = ParentWindow.Toplevel;
+            Gdk.Window top_level_window = event_box.ParentWindow.Toplevel;
 
             Gdk.Rectangle rect = top_level_window.FrameExtents;
             if (rect.Width < rect.Height) {

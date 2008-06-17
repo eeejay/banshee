@@ -1,3 +1,10 @@
+2008-06-17  Sandy Armstrong <sanfordarmstrong@gmail.com> 
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	  Get top_level_window from notification area box's event_box, so
+	  that panel orientation can be determined correctly.  Fixes bug
+	  #537679.
+
 2008-06-17  Aaron Bockover  <abock@gnome.org>
 
 	Ok, so I'm calling internet radio support 85% complete. Needs more polish,
