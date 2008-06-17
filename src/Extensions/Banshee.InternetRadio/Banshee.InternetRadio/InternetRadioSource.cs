@@ -34,6 +34,7 @@ using Hyena;
 
 using Banshee.Base;
 using Banshee.Sources;
+using Banshee.Streaming;
 using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Collection.Database;
@@ -71,6 +72,24 @@ namespace Banshee.InternetRadio
             
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/InternetRadioContextMenu");
+            
+            Properties.Set<RadioColumnController> ("TrackView.ColumnController", new RadioColumnController ());
+            Properties.SetString ("TrackPropertiesLabel", Catalog.GetString ("Edit Station"));
+            Properties.Set<InvokeHandler> ("TrackPropertiesHandler", delegate {
+                if (TrackModel.SelectedItems == null || TrackModel.SelectedItems.Count <= 0) {
+                    return;
+                }
+                
+                foreach (TrackInfo track in TrackModel.SelectedItems) {
+                    StationTrackInfo station_track = track as StationTrackInfo;
+                    if (station_track != null) {
+                        EditStation (station_track);
+                        return;
+                    }
+                }
+            });
+            
+            ServiceManager.PlayerEngine.TrackIntercept += OnPlayerEngineTrackIntercept;
         }
         
         public override void Dispose ()
@@ -87,16 +106,84 @@ namespace Banshee.InternetRadio
                 uia_service.GlobalActions.Remove ("AddRadioStationAction");
                 ui_id = 0;    
             }
+            
+            ServiceManager.PlayerEngine.TrackIntercept -= OnPlayerEngineTrackIntercept;
+        }
+        
+        private bool OnPlayerEngineTrackIntercept (TrackInfo track)
+        {
+            DatabaseTrackInfo station = track as DatabaseTrackInfo;
+            if (station == null || station.PrimarySource != this) {
+                return false;
+            }
+            
+            new RadioTrackInfo (station.Uri).Play ();
+            
+            return true;
         }
         
         private void OnAddStation (object o, EventArgs args)
         {
-            StationEditor editor = new StationEditor ();
+            EditStation (null);
+        }
+        
+        private void EditStation (StationTrackInfo track)
+        {
+            StationEditor editor = new StationEditor (track);
+            editor.Response += OnStationEditorResponse;
+            editor.Show ();
+        }
+        
+        private void OnStationEditorResponse (object o, ResponseArgs args)
+        {
+            StationEditor editor = (StationEditor)o;
+            bool destroy = true;
+            
             try {
-                editor.Run ();
+                if (args.ResponseId == ResponseType.Ok) {
+                    StationTrackInfo track = editor.Track ?? new StationTrackInfo ();
+                    track.PrimarySource = this;
+                    track.IsLive = true;
+                
+                    try {
+                        track.Uri = new SafeUri (editor.StreamUri);
+                    } catch {
+                        destroy = false;
+                        editor.ErrorMessage = Catalog.GetString ("Please provide a valid station URI");
+                    }
+                    
+                    track.Comment = editor.Description;
+                    
+                    if (!String.IsNullOrEmpty (editor.Genre)) {
+                        track.Genre = editor.Genre;
+                    } else {
+                        destroy = false;
+                        editor.ErrorMessage = Catalog.GetString ("Please provide a station genre");
+                    }
+                    
+                    if (!String.IsNullOrEmpty (editor.StationTitle)) {
+                        track.TrackTitle = editor.StationTitle;
+                    } else {
+                        destroy = false;
+                        editor.ErrorMessage = Catalog.GetString ("Please provide a station title");
+                    }
+                    
+                    track.Rating = editor.Rating;
+                    
+                    if (destroy) {
+                        track.Save ();
+                    }
+                }
             } finally {
-                editor.Destroy ();
+                if (destroy) {
+                    editor.Response -= OnStationEditorResponse;
+                    editor.Destroy ();
+                }
             }
+        }
+        
+        public override bool CanDeleteTracks {
+            get { return false; }
         }
                
         public override bool ShowBrowser {

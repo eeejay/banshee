@@ -273,10 +273,16 @@ namespace Banshee.Gui
         private void OnTrackProperties (object o, EventArgs args)
         {
             if (current_source != null) {
-                TrackEditor propEdit = new TrackEditor (current_source.TrackModel.SelectedItems);
-                propEdit.Saved += delegate {
-                    //ui.playlistView.QueueDraw();
-                };
+                Source source = current_source as Source;
+                InvokeHandler handler = source != null 
+                    ? source.Properties.Get<InvokeHandler> ("TrackPropertiesHandler") 
+                    : null;
+                
+                if (handler != null) {
+                    handler ();
+                } else {
+                    new TrackEditor (current_source.TrackModel.SelectedItems);
+                }
             }
         }
 

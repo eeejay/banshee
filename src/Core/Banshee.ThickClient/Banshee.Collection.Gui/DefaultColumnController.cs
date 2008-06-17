@@ -142,6 +142,12 @@ namespace Banshee.Collection.Gui
             get { return composer_column; }
         }
         
+        private SortableColumn comment_column = new SortableColumn (Catalog.GetString ("Comment"), 
+            new ColumnCellText ("Comment", true), 0.25, "Comment", false);
+        public SortableColumn CommentColumn {
+            get { return comment_column; }
+        }
+        
         private SortableColumn play_count_column = new SortableColumn (Catalog.GetString ("Play Count"), 
             new ColumnCellText ("PlayCount", true), 0.15, "PlayCount", false);
         public SortableColumn PlayCountColumn {

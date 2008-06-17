@@ -5,7 +5,9 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.InternetRadio/InternetRadioSource.cs \
-	Banshee.InternetRadio/StationEditor.cs 
+	Banshee.InternetRadio/RadioColumnController.cs \
+	Banshee.InternetRadio/StationEditor.cs \
+	Banshee.InternetRadio/StationTrackInfo.cs 
 
 RESOURCES =  \
 	Banshee.InternetRadio.addin.xml \

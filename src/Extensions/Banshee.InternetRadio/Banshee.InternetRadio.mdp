@@ -1,4 +1,4 @@
-<Project name="Banshee.InternetRadio" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Banshee.InternetRadio" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assemblyKeyFile="." assembly="Banshee.InternetRadio" />
@@ -13,12 +13,15 @@
     <File name="Resources/GlobalUI.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.InternetRadio/InternetRadioSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.InternetRadio/StationEditor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.InternetRadio/RadioColumnController.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.InternetRadio/StationTrackInfo.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Services" />
     <ProjectReference type="Project" localcopy="True" refto="Banshee.ThickClient" />
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Project" localcopy="True" refto="Hyena" />
   </References>
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />

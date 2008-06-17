@@ -1,5 +1,30 @@
 2008-06-16  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Added the column for the Comments field
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	Support a TrackPropertiesHandler property that is an InvokeHandle; if set
+	it runs the handle instead of the default track editor dialog; this allows
+	sources to provide their own track editor
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	Support station adding, editing, playback, and a custom column controller,
+	making internet radio maybe 70% complete; it works, but it's still missing 
+	polish and finishing touches, so stay tuned
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/RadioColumnController.cs:
+	Custom column controller that exposes and customizes applicable fields
+	for internet radio stations
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:
+	Added rating and support loading and saving of station data
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationTrackInfo.cs:
+	DatabaseTrackInfo wrapper, not in use yet
+
+2008-06-16  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.InternetRadio/: Created the internet radio 
 	extension skeleton - it currently doesn't do anything
 

@@ -30,6 +30,10 @@ using System;
 using Gtk;
 using Mono.Unix;
 
+using Banshee.ServiceStack;
+
+using Hyena.Widgets;
+
 namespace Banshee.InternetRadio
 {
     public class StationEditor : Gtk.Dialog
@@ -38,11 +42,13 @@ namespace Banshee.InternetRadio
         private Entry name_entry;
         private Entry description_entry;
         private Entry stream_entry;
-        private ComboBoxEntry group_entry;
+        private ComboBoxEntry genre_entry;
+        private RatingEntry rating_entry;
         private Alignment error_container;
         private Label error;
+        private StationTrackInfo track;
         
-        public StationEditor () : base()
+        public StationEditor (StationTrackInfo track) : base()
         {
             AccelGroup accel_group = new AccelGroup ();
             AddAccelGroup (accel_group);
@@ -51,7 +57,9 @@ namespace Banshee.InternetRadio
             SkipTaskbarHint = true;
             Modal = true;
             
-            string title = null /*station*/ == null
+            this.track = track;
+            
+            string title = track == null
                 ? Catalog.GetString ("Add new radio station")
                 : Catalog.GetString ("Edit radio station");
             
@@ -82,7 +90,7 @@ namespace Banshee.InternetRadio
             header.Show ();
 
             Label message = new Label ();
-            message.Text = Catalog.GetString ("Enter the Group, Title and URL of the radio station you wish to add. A description is optional.");
+            message.Text = Catalog.GetString ("Enter the Genre, Title and URL of the radio station you wish to add. A description is optional.");
             message.Xalign = 0.0f;
             message.Wrap = true;
             message.Show ();
@@ -91,21 +99,26 @@ namespace Banshee.InternetRadio
             table.RowSpacing = 6;
             table.ColumnSpacing = 6;
             
-            Label label = new Label (Catalog.GetString ("Station Group:"));
+            Label label = new Label (Catalog.GetString ("Station Genre:"));
             label.Xalign = 0.0f;
             
-            group_entry = ComboBoxEntry.NewText ();
+            genre_entry = ComboBoxEntry.NewText ();
             
-            /*foreach(string group_name in station_model.StationGroupNames) {
-                group_entry.AppendText(group_name);
-            }*/
+            System.Data.IDataReader reader = ServiceManager.DbConnection.Query (
+                "SELECT DISTINCT Genre FROM CoreTracks ORDER BY Genre");
+            while (reader != null && reader.Read ()) {
+                string genre = reader[0] as string;
+                if (!String.IsNullOrEmpty (genre)) {
+                    genre_entry.AppendText (genre);
+                }
+            }
             
-            /*if (group != null) {
-                group_entry.Entry.Text = group;
-            }*/
+            if (track != null && !String.IsNullOrEmpty (track.Genre)) {
+                genre_entry.Entry.Text = track.Genre;
+            }
             
             table.Attach (label, 0, 1, 0, 1, AttachOptions.Fill, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
-            table.Attach (group_entry, 1, 2, 0, 1, AttachOptions.Fill | AttachOptions.Expand, AttachOptions.Shrink, 0, 0);
+            table.Attach (genre_entry, 1, 2, 0, 1, AttachOptions.Fill | AttachOptions.Expand, AttachOptions.Shrink, 0, 0);
             
             label = new Label (Catalog.GetString ("Station Title:"));
             label.Xalign = 0.0f;
@@ -130,6 +143,16 @@ namespace Banshee.InternetRadio
             
             table.Attach (label, 0, 1, 3, 4, AttachOptions.Fill, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
             table.Attach (description_entry, 1, 2, 3, 4, AttachOptions.Expand | AttachOptions.Fill, AttachOptions.Shrink, 0, 0);
+            
+            label = new Label (Catalog.GetString ("Rating:"));
+            label.Xalign = 0.0f;
+            
+            rating_entry = new RatingEntry ();
+            
+            table.Attach (label, 0, 1, 4, 5, AttachOptions.Fill, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
+            HBox rating_box = new HBox ();
+            rating_box.PackStart (rating_entry, false, false, 0);
+            table.Attach (rating_box, 1, 2, 4, 5, AttachOptions.Expand | AttachOptions.Fill, AttachOptions.Shrink, 0, 0);
             
             table.ShowAll ();
             
@@ -165,19 +188,21 @@ namespace Banshee.InternetRadio
                 
             name_entry.HasFocus = true;
             
-            /*if (station != null) {
-                if (station.Title != null) {
-                    name_entry.Text = station.Title;
+            if (track != null) {
+                if (!String.IsNullOrEmpty (track.TrackTitle)) {
+                    name_entry.Text = track.TrackTitle;
                 }
                 
-                if (station.LocationCount > 0) {
-                    stream_entry.Text = station.GetLocationAt (0).AbsoluteUri;
+                if (!String.IsNullOrEmpty (track.Uri.AbsoluteUri)) {
+                    stream_entry.Text = track.Uri.AbsoluteUri;
                 }
                 
-                if (station.Annotation != null) {
-                    description_entry.Text = station.Annotation;
+                if (!String.IsNullOrEmpty (track.Comment)) {
+                    description_entry.Text = track.Comment;
                 }
-            }*/
+                
+                rating_entry.Value = track.Rating;
+            }
             
             error_container = new Alignment (0.0f, 0.0f, 1.0f, 1.0f);
             error_container.TopPadding = 6;
@@ -201,7 +226,7 @@ namespace Banshee.InternetRadio
             
             table.Attach (error_container, 0, 2, 4, 5, AttachOptions.Expand | AttachOptions.Fill, AttachOptions.Shrink, 0, 0);
             
-            group_entry.Entry.Changed += OnFieldsChanged;
+            genre_entry.Entry.Changed += OnFieldsChanged;
             name_entry.Changed += OnFieldsChanged;
             stream_entry.Changed += OnFieldsChanged;
             
@@ -210,7 +235,7 @@ namespace Banshee.InternetRadio
         
         private void OnFieldsChanged (object o, EventArgs args)
         {
-            save_button.Sensitive = group_entry.Entry.Text.Trim ().Length > 0 && 
+            save_button.Sensitive = genre_entry.Entry.Text.Trim ().Length > 0 && 
                 name_entry.Text.Trim ().Length > 0 && stream_entry.Text.Trim ().Length > 0;
         }
         
@@ -220,8 +245,12 @@ namespace Banshee.InternetRadio
             stream_entry.SelectRegion (0, stream_entry.Text.Length);
         }
         
-        public new string Group {
-            get { return group_entry.Entry.Text.Trim (); }
+        public StationTrackInfo Track {
+            get { return track; }
+        }
+        
+        public string Genre {
+            get { return genre_entry.Entry.Text.Trim (); }
         }
         
         public string StationTitle {
@@ -234,6 +263,10 @@ namespace Banshee.InternetRadio
         
         public string Description {
             get { return description_entry.Text.Trim (); }
+        }
+        
+        public int Rating {
+            get { return rating_entry.Value; }
         }
         
         public string ErrorMessage {
