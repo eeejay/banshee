@@ -1,4 +1,4 @@
-//
+
 // TrackInfo.cs
 //
 // Author:
@@ -47,6 +47,7 @@ namespace Banshee.Collection
 
         private string artist_name;
         private string album_title;
+        private string album_artist;
         private string track_title;
         private string genre;
         private string composer;
@@ -146,6 +147,11 @@ namespace Banshee.Collection
             set { album_title = value; }
         }
 
+        public virtual string AlbumArtist {
+            get { return album_artist; }
+            set { album_artist = value; }
+        }
+
         public virtual string TrackTitle {
             get { return track_title; }
             set { track_title = value; }
@@ -197,7 +203,7 @@ namespace Banshee.Collection
         }     
         
         public virtual string ArtworkId { 
-            get { return CoverArtSpec.CreateArtistAlbumId (ArtistName, AlbumTitle); }
+            get { return CoverArtSpec.CreateArtistAlbumId (AlbumArtist, AlbumTitle); }
         }
 
         public virtual string Genre {

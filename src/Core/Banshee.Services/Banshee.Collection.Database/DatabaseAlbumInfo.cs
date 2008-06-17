@@ -106,6 +106,7 @@ namespace Banshee.Collection.Database
             if (found != album) {
                 // Overwrite the found album
                 album.Title = found.Title;
+                album.ArtistName = found.ArtistName;
                 album.dbid = found.DbId;
                 album.ArtistId = found.ArtistId;
                 album.Save ();
@@ -158,10 +159,15 @@ namespace Banshee.Collection.Database
             get { return Title == null ? null : Title.ToLower (); }
         }
 
-        [VirtualDatabaseColumn("Name", "CoreArtists", "ArtistID", "ArtistID")]
+        [DatabaseColumn]
         public override string ArtistName {
             get { return base.ArtistName; }
             set { base.ArtistName = value; }
+        }
+
+        [DatabaseColumn(Select = false)]
+        protected string ArtistNameLowered {
+            get { return ArtistName == null ? null : ArtistName.ToLower (); }
         }
 
         public override string ToString ()

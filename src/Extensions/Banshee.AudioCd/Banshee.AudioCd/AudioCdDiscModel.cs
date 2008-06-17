@@ -161,7 +161,6 @@ namespace Banshee.AudioCd
                 model_track.Disc = disc_number;
                 
                 model_track.Album = album;
-                model_track.AlbumArtist = artist;
                 model_track.Artist = new DatabaseArtistInfo ();
                 model_track.Artist.Name = track.Artist.Name;
                 model_track.Artist.MusicBrainzId = track.Artist.Id;

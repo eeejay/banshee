@@ -52,7 +52,7 @@ namespace Banshee.Collection.Database
                             WHERE CoreCache.ModelID = {1} AND
                                   CoreCache.ItemId = {2})
                     {3}
-                    ORDER BY CoreAlbums.TitleLowered, CoreArtists.NameLowered";
+                    ORDER BY CoreAlbums.TitleLowered, CoreAlbums.ArtistNameLowered";
         }
         
         public override string FilterColumn {

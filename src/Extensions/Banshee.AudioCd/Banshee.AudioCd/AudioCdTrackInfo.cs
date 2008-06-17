@@ -60,12 +60,6 @@ namespace Banshee.AudioCd
             get { return index_on_disc; }
         }
         
-        public DatabaseArtistInfo album_artist_info;
-        public DatabaseArtistInfo AlbumArtist {
-            get { return album_artist_info; }
-            set { album_artist_info = value; }
-        }
-        
         private DatabaseAlbumInfo album_info;
         public new DatabaseAlbumInfo Album {
             get { return album_info; }

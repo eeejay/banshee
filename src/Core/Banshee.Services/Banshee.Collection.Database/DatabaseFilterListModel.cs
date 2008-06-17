@@ -81,8 +81,8 @@ namespace Banshee.Collection.Database
                 FilteredModel.CachesJoinTableEntries
                     ? String.Format (
                         "{0}.{1} AND CoreTracks.TrackID = {0}.{2}",
-                        FilteredModel.JoinTable, FilteredModel.JoinPrimaryKey, FilteredModel.JoinColumn
-                    ) : "CoreTracks.TrackID",
+                        FilteredModel.JoinTable, FilteredModel.JoinPrimaryKey, FilteredModel.JoinColumn)
+                    : "CoreTracks.TrackID",
                 GetFilterFragment ()
             );
         }

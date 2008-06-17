@@ -52,7 +52,7 @@ namespace Banshee.Collection.Gui
         {
             if (loadDefault) {
                 AddDefaultColumns ();
-                DefaultSortColumn = ArtistColumn;
+                DefaultSortColumn = TrackColumn;
                 Load ();
             }
         }
@@ -99,7 +99,7 @@ namespace Banshee.Collection.Gui
         public SortableColumn TitleColumn {
             get { return title_column; }
         }
-        
+
         private SortableColumn artist_column = new SortableColumn (Catalog.GetString ("Artist"), 
             new ColumnCellText ("ArtistName", true), 0.225, "Artist", true);
         public SortableColumn ArtistColumn {

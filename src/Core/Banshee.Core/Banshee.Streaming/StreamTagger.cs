@@ -114,6 +114,7 @@ namespace Banshee.Streaming
 
             track.ArtistName = Choose (file.Tag.JoinedPerformers, track.ArtistName, preferTrackInfo);
             track.AlbumTitle = Choose (file.Tag.Album, track.AlbumTitle, preferTrackInfo);
+            track.AlbumArtist = Choose (file.Tag.FirstAlbumArtist, track.AlbumArtist, preferTrackInfo);
             track.TrackTitle = Choose (file.Tag.Title, track.TrackTitle, preferTrackInfo);
             track.Genre = Choose (file.Tag.FirstGenre, track.Genre, preferTrackInfo);
             track.Composer = Choose (file.Tag.FirstComposer, track.Composer, preferTrackInfo);

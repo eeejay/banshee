@@ -200,21 +200,10 @@ namespace Banshee.AudioCd
             track.PrimarySource = ServiceManager.SourceManager.MusicLibrary;
             track.Uri = args.Uri;
             
-            if (track.Artist != null) {
-                track.Artist = DatabaseArtistInfo.UpdateOrCreate (track.Artist);
-                track.ArtistId = track.Artist.DbId;
-            }
-            
-            if (track.Album != null && track.AlbumArtist != null) {
-                DatabaseArtistInfo.UpdateOrCreate (track.AlbumArtist);
-                track.Album = DatabaseAlbumInfo.UpdateOrCreate (track.AlbumArtist, track.Album);
-                track.AlbumId = track.Album.DbId;
-            }
-
             track.FileSize = Banshee.IO.File.GetSize (track.Uri);
             
             track.Save ();
-            
+
             source.UnlockTrack (track);
             RipNextTrack ();
         }

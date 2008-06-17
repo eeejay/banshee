@@ -121,9 +121,9 @@ namespace Banshee.Collection.Database
         public DatabaseArtistInfo Artist {
             get { return DatabaseArtistInfo.FindOrCreate (ArtistName); }
         }
-        
+
         public DatabaseAlbumInfo Album {
-            get { return DatabaseAlbumInfo.FindOrCreate (Artist, AlbumTitle); }
+            get { return DatabaseAlbumInfo.FindOrCreate (DatabaseArtistInfo.FindOrCreate (AlbumArtist), AlbumTitle); }
         }
 
         private static bool notify_saved = true;
@@ -225,11 +225,16 @@ namespace Banshee.Collection.Database
                 if (value == null)
                     return;
 
+                // Overwrite the AlbumArtist if it was set to our old value
+                if (String.IsNullOrEmpty (AlbumArtist) || AlbumArtist == ArtistName) {
+                    AlbumArtist = value;
+                }
+
                 base.ArtistName = value;
                 artist_changed = artist_changed != null;
             }
         }
-        
+
         [VirtualDatabaseColumn ("Title", "CoreAlbums", "AlbumID", "AlbumID")]
         public override string AlbumTitle {
             get { return base.AlbumTitle; }
@@ -239,6 +244,19 @@ namespace Banshee.Collection.Database
                     return;
 
                 base.AlbumTitle = value;
+                album_changed = album_changed != null;
+            }
+        }
+
+        [VirtualDatabaseColumn ("ArtistName", "CoreAlbums", "AlbumID", "AlbumID")]
+        public override string AlbumArtist {
+            get { return base.AlbumArtist; }
+            set {
+                value = CleanseString (value, AlbumArtist);
+                if (value == null)
+                    return;
+
+                base.AlbumArtist = value;
                 album_changed = album_changed != null;
             }
         }

@@ -65,6 +65,7 @@ namespace Banshee.Streaming
             TagLib.File file = StreamTagger.ProcessUri (track.Uri);
             file.Tag.Performers = new string [] { track.ArtistName };
             file.Tag.Album = track.AlbumTitle;
+            file.Tag.AlbumArtists = track.AlbumArtist == null ? new string [0] : new string [] {track.AlbumArtist};
             // Bug in taglib-sharp-2.0.3.0: Crash if you send it a genre of "{ null }"
             // on a song with both ID3v1 and ID3v2 metadata. It's happy with "{}", though.
             // (see http://forum.taglib-sharp.com/viewtopic.php?f=5&t=239 )

@@ -1,9 +1,34 @@
+2008-06-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	This commit adds support for multi-artist (compilation) albums.  It
+	triggers a metadata refresh for already imported items to get the
+	AlbumArtist metadata from the files, and gets it for new ones on import.
+	It also writes AlbumArtist back to the files if the preference is set.
+	Given proper AlbumArtist info (editable in the information editor), the
+	issues with sorting and many-copies-of-one-album in the album list should
+	be fixed (BGO #517671)
+
 2008-06-17  Sandy Armstrong <sanfordarmstrong@gmail.com> 
 
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
-	  Get top_level_window from notification area box's event_box, so
-	  that panel orientation can be determined correctly.  Fixes bug
-	  #537679.
+	Get top_level_window from notification area box's event_box, so
+	that panel orientation can be determined correctly (BGO #537679)
 
 2008-06-17  Aaron Bockover  <abock@gnome.org>
 

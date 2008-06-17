@@ -662,7 +662,6 @@ namespace Hyena.Data.Sqlite
             
             StringBuilder where_builder = new StringBuilder ();
             Dictionary<string, string> tables = new Dictionary<string,string> (virtual_columns.Count + 1);
-            tables.Add (TableName, null);
             bool first_virtual = true;
             foreach (VirtualDatabaseColumn column in virtual_columns) {
                 if (first_virtual) {
@@ -693,13 +692,9 @@ namespace Hyena.Data.Sqlite
             }
             
             StringBuilder from_builder = new StringBuilder ();
-            bool first_tables = true;
+            from_builder.Append (TableName);
             foreach (KeyValuePair<string, string> pair in tables) {
-                if (first_tables) {
-                    first_tables = false;
-                } else {
-                    from_builder.Append (',');
-                }
+                from_builder.Append (',');
                 from_builder.Append (pair.Key);
             }
 

@@ -52,8 +52,8 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 11;
-        protected const int CURRENT_METADATA_VERSION = 1;
+        protected const int CURRENT_VERSION = 12;
+        protected const int CURRENT_METADATA_VERSION = 2;
         
 #region Migration Driver
         
@@ -402,6 +402,18 @@ namespace Banshee.Database
         private bool Migrate_11 ()
         {
             Execute("CREATE INDEX CoreTracksExternalIDIndex ON CoreTracks(PrimarySourceID, ExternalID)");
+            return true;
+        }
+        
+#endregion
+
+#region Version 12
+
+        [DatabaseVersion (12)]
+        private bool Migrate_12 ()
+        {
+            Execute ("ALTER TABLE CoreAlbums ADD COLUMN ArtistName STRING");
+            Execute ("ALTER TABLE CoreAlbums ADD COLUMN ArtistNameLowered STRING");
             return true;
         }
         

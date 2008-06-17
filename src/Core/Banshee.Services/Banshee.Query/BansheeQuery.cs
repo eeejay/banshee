@@ -225,7 +225,7 @@ namespace Banshee.Query
             DateAddedField, PlaylistField, SmartPlaylistField
         );
 
-        private const string default_sort = @"CoreArtists.NameLowered ASC, CoreAlbums.TitleLowered ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
+        private const string default_sort = @"CoreAlbums.ArtistNameLowered ASC, CoreAlbums.TitleLowered ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC, CoreTracks.Uri ASC";
         public static string GetSort (string key)
         {
             return GetSort (key, false);
@@ -238,8 +238,9 @@ namespace Banshee.Query
             switch(key) {
                 case "Track":
                     sort_query = String.Format (@"
-                        CoreArtists.NameLowered ASC, 
+                        CoreAlbums.ArtistNameLowered ASC, 
                         CoreAlbums.TitleLowered ASC, 
+                        CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber {0}", ascDesc); 
                     break;
 
@@ -263,7 +264,7 @@ namespace Banshee.Query
                 case "Title":
                     sort_query = String.Format (@"
                         CoreTracks.TitleLowered {0},
-                        CoreArtists.NameLowered ASC, 
+                        CoreAlbums.ArtistNameLowered ASC, 
                         CoreAlbums.TitleLowered ASC", ascDesc); 
                     break;
 

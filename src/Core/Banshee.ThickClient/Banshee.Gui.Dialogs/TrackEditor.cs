@@ -55,6 +55,7 @@ namespace Banshee.Gui.Dialogs
         
         public string ArtistName;
         public string AlbumTitle;
+        public string AlbumArtist;
         public string TrackTitle;
         public string Genre;
         public SafeUri Uri;
@@ -86,6 +87,7 @@ namespace Banshee.Gui.Dialogs
         {
             ArtistName = track.ArtistName ?? String.Empty;
             AlbumTitle = track.AlbumTitle ?? String.Empty;
+            AlbumArtist = track.AlbumArtist ?? String.Empty;
             TrackTitle = track.TrackTitle ?? String.Empty;
             Genre = track.Genre ?? String.Empty;
             Disc = track.Disc;
@@ -100,6 +102,7 @@ namespace Banshee.Gui.Dialogs
         {
             track.ArtistName = ArtistName;
             track.AlbumTitle = AlbumTitle;
+            track.AlbumArtist = AlbumArtist;
             track.TrackTitle = TrackTitle;
             track.Genre = Genre;
             track.Disc = Disc;
@@ -124,6 +127,7 @@ namespace Banshee.Gui.Dialogs
         [Widget] private Button Next;
         [Widget] private Button TrackNumberIterator;
         [Widget] private Button TrackCountSync;
+        [Widget] private Button AlbumArtistSync;
         [Widget] private Button ArtistSync;
         [Widget] private Button AlbumSync;
         [Widget] private Button YearSync;
@@ -135,6 +139,7 @@ namespace Banshee.Gui.Dialogs
         [Widget] private SpinButton TrackNumber;
         [Widget] private SpinButton Disc;
         [Widget] private Entry Year;
+        [Widget] private Entry AlbumArtist;
         [Widget] private Entry Artist;
         [Widget] private Entry Album;
         [Widget] private Entry Title;
@@ -189,6 +194,7 @@ namespace Banshee.Gui.Dialogs
             TrackNumberIterator.Clicked += OnTrackNumberIteratorClicked;
             TrackCountSync.Clicked += OnTrackCountSyncClicked;
             ArtistSync.Clicked += OnArtistSyncClicked;
+            AlbumArtistSync.Clicked += OnAlbumArtistSyncClicked;
             AlbumSync.Clicked += OnAlbumSyncClicked;
             GenreSync.Clicked += OnGenreSyncClicked;
             DiscSync.Clicked += OnDiscSyncClicked;
@@ -225,6 +231,7 @@ namespace Banshee.Gui.Dialogs
             Glade["MultiTrackButtons"].Visible = TrackSet.Count > 1;
             TrackNumberIterator.Visible = TrackSet.Count > 1;
             TrackCountSync.Visible = TrackSet.Count > 1;
+            AlbumArtistSync.Visible = TrackSet.Count > 1;
             ArtistSync.Visible = TrackSet.Count > 1;
             AlbumSync.Visible = TrackSet.Count > 1;
             GenreSync.Visible = TrackSet.Count > 1;
@@ -238,7 +245,8 @@ namespace Banshee.Gui.Dialogs
 
             tips.SetTip (TrackNumberIterator, Catalog.GetString ("Automatically set all track numbers in increasing order"), "track iterator");
             tips.SetTip (TrackCountSync, Catalog.GetString ("Set all track counts to this value"), "track counts");
-            tips.SetTip (ArtistSync, Catalog.GetString ("Set all artists to this value"), "artists");
+            tips.SetTip (AlbumArtistSync, Catalog.GetString ("Set all album artists to this value"), "artists");
+            tips.SetTip (ArtistSync, Catalog.GetString ("Set all track artists to this value"), "artists");
             tips.SetTip (AlbumSync, Catalog.GetString ("Set all albums to this value"), "albums");
             tips.SetTip (DiscSync, Catalog.GetString ("Set all disc numbers to this value"), "discs");
             tips.SetTip (GenreSync, Catalog.GetString ("Set all genres to this value"), "genres"); 
@@ -297,6 +305,7 @@ namespace Banshee.Gui.Dialogs
             Year.Text = track.Year.ToString ();
             rating_entry.Value = (int)track.Rating;
         
+            (Glade["AlbumArtist"] as Entry).Text = track.AlbumArtist;
             (Glade["Artist"] as Entry).Text = track.ArtistName;
             (Glade["Album"] as Entry).Text = track.AlbumTitle;
             (Glade["Title"] as Entry).Text = track.TrackTitle;
@@ -477,6 +486,13 @@ namespace Banshee.Gui.Dialogs
                 track.Disc = (int)Disc.Value;
             }
         }
+
+        private void OnAlbumArtistSyncClicked (object o, EventArgs args)
+        {
+            foreach (EditorTrack track in TrackSet) {
+                track.AlbumArtist = AlbumArtist.Text;
+            }
+        }
         
         private void OnArtistSyncClicked (object o, EventArgs args)
         {
@@ -498,6 +514,7 @@ namespace Banshee.Gui.Dialogs
             OnGenreSyncClicked (o, args);
             OnDiscSyncClicked (o, args);
             OnAlbumSyncClicked (o, args);
+            OnAlbumArtistSyncClicked (o, args);
             OnArtistSyncClicked (o, args);
             OnYearSyncClicked (o, args);
             OnRatingSyncClicked (o, args);
@@ -571,6 +588,7 @@ namespace Banshee.Gui.Dialogs
             track.TrackNumber = (int)TrackNumber.Value;
             track.TrackCount = (int)TrackCount.Value;
             track.Disc = (int)Disc.Value;
+            track.AlbumArtist = AlbumArtist.Text;
             track.ArtistName = Artist.Text;
             track.AlbumTitle = Album.Text;
             track.TrackTitle = Title.Text;
