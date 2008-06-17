@@ -27,22 +27,6 @@
 
 2008-06-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
-	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
-	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
-	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
-	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
-	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade:
-	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
-	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
-	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
-	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
-	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
-	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
-	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
-	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs:
-	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
-	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
 	This commit adds support for multi-artist (compilation) albums.  It
 	triggers a metadata refresh for already imported items to get the
 	AlbumArtist metadata from the files, and gets it for new ones on import.
@@ -50,6 +34,48 @@
 	Given proper AlbumArtist info (editable in the information editor), the
 	issues with sorting and many-copies-of-one-album in the album list should
 	be fixed (BGO #517671)
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs: 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdTrackInfo.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	Remove the AlbumArtist code, since this is taken care of at a higher level
+	now.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Set the default sort column to track #, since sorting by artist doesn't
+	work for compilation albums.
+
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs: Add a
+	row for editing the album artist.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs: 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add ArtistName and ArtistNameLowered columns to CoreAlbums.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
+	Order by the Album Artist named (lowered), fixed issues with
+	sorting/grouping for compilation albums.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	When saving, find/create the album based on the AlbumArtist, which is set
+	equal to the ArtistName by default, unless explicitly set to something
+	else.  Add the AlbumArtist virtual column property.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
+	Whitespace.
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Add AlbumArtist
+	virtual property.
+
+	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Save and load
+	the AlbumArtist metadata.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Make sure
+	the model's table gets listed first in the FROM list of tables.  Fixes a
+	performance issue I was noticing occuring every so often.
 
 2008-06-17  Sandy Armstrong <sanfordarmstrong@gmail.com> 
 
