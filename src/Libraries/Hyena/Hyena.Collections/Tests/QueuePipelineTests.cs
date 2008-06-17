@@ -79,62 +79,6 @@ namespace Hyena.Collections.Tests
                 element = (FakeElement)element.NextElement;
             }
         }
-        
-        [Test]
-        public void Blah ()
-        {
-            QueuePipeline<string> pipeline = new QueuePipeline<string> ();
-            pipeline.AddElement (new EvenFilterElement ());
-            pipeline.AddElement (new RandomFilterElement ());
-            pipeline.AddElement (new TerminationElement ());
-            
-            for (int i = 0; i < 1000; i++) {
-                pipeline.Enqueue (i.ToString ());
-            }
-            
-            Console.ReadLine ();
-        }
-        
-        private class EvenFilterElement : QueuePipelineElement<string>
-        {
-            private int index;
-            private Random random = new Random ();
-            
-            protected override string ProcessItem (string item)
-            {
-                System.Threading.Thread.Sleep (random.Next (0, 10));
-                return index++ % 2 == 0 ? item : null;
-            }
-        }
-        
-        private class RandomFilterElement : QueuePipelineElement<string>
-        {
-            private Random random = new Random ();
-        
-            public RandomFilterElement ()
-            {
-                Threaded = true;
-            }
-            
-            protected override string ProcessItem (string item)
-            {   
-                return random.Next () % 2 == 0 ? null : item;
-            }
-        }
-        
-        private class TerminationElement : QueuePipelineElement<string>
-        {
-            public TerminationElement ()
-            {
-                Threaded = true;
-            }
-        
-            protected override string ProcessItem (string item)
-            {
-                Console.WriteLine ("TerminationElement: {0}", item);
-                return null;
-            }
-        }
     }
 }
 
