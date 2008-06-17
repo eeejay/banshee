@@ -7,7 +7,7 @@ SOURCES =  \
 	Banshee.InternetRadio/InternetRadioSource.cs \
 	Banshee.InternetRadio/RadioColumnController.cs \
 	Banshee.InternetRadio/StationEditor.cs \
-	Banshee.InternetRadio/StationTrackInfo.cs 
+	Banshee.InternetRadio/XspfMigrator.cs 
 
 RESOURCES =  \
 	Banshee.InternetRadio.addin.xml \

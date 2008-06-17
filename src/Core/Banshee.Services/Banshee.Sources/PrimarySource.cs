@@ -71,8 +71,16 @@ namespace Banshee.Sources
         }
     }
 
+    public delegate bool TrackEqualHandler (DatabaseTrackInfo a, TrackInfo b);
+
     public abstract class PrimarySource : DatabaseSource, IDisposable
     {
+        private TrackEqualHandler track_equal_handler;
+        public TrackEqualHandler TrackEqualHandler {
+            get { return track_equal_handler; }
+            protected set { track_equal_handler = value; }
+        }
+    
         protected ErrorSource error_source;
         protected bool error_source_visible = false;
 

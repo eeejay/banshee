@@ -41,6 +41,7 @@ namespace Banshee.InternetRadio
                 IndicatorColumn,
                 TitleColumn,
                 GenreColumn,
+                ArtistColumn,
                 CommentColumn,
                 RatingColumn,
                 PlayCountColumn,
@@ -53,9 +54,13 @@ namespace Banshee.InternetRadio
             IndicatorColumn.Visible = true;
             TitleColumn.Visible = true;
             GenreColumn.Visible = true;
+            RatingColumn.Visible = true;
+            
             CommentColumn.Visible = true;
             CommentColumn.Title = Catalog.GetString ("Description");
-            RatingColumn.Visible = true;
+            
+            ArtistColumn.Visible = true;
+            ArtistColumn.Title = Catalog.GetString ("Creator");
         }
     }
 }

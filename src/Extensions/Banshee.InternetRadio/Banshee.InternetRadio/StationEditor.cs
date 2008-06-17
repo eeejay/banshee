@@ -31,6 +31,7 @@ using Gtk;
 using Mono.Unix;
 
 using Banshee.ServiceStack;
+using Banshee.Collection.Database;
 
 using Hyena.Widgets;
 
@@ -46,9 +47,9 @@ namespace Banshee.InternetRadio
         private RatingEntry rating_entry;
         private Alignment error_container;
         private Label error;
-        private StationTrackInfo track;
+        private DatabaseTrackInfo track;
         
-        public StationEditor (StationTrackInfo track) : base()
+        public StationEditor (DatabaseTrackInfo track) : base()
         {
             AccelGroup accel_group = new AccelGroup ();
             AddAccelGroup (accel_group);
@@ -245,7 +246,7 @@ namespace Banshee.InternetRadio
             stream_entry.SelectRegion (0, stream_entry.Text.Length);
         }
         
-        public StationTrackInfo Track {
+        public DatabaseTrackInfo Track {
             get { return track; }
         }
         

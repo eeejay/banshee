@@ -1,3 +1,36 @@
+2008-06-17  Aaron Bockover  <abock@gnome.org>
+
+	Ok, so I'm calling internet radio support 85% complete. Needs more polish,
+	but it's working pretty well. Am almost liking it.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	If the track's PrimarySource and its TrackEqualHandler is set, proxy
+	the comparison through that handler; split out the ID comparison into
+	a reusable static method
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Added
+	a TrackEqualHandler delegate/property that allows a primary source to
+	override the default TrackEqual comparison on its child tracks
+
+	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs: Support
+	holding a reference to a parent track
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	Run the XspfMigrator on startup; provide a TrackEqualHandler that ensures
+	any RadioTrackInfo object bound to the player engine is associated 
+	with its parent station track in the controller/view
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/XspfMigrator.cs:
+	Added the first pass at migrating old XSPF stored playlists, so we don't
+	piss users off by forgetting about their old stations :)
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/RadioColumnController.cs:
+	Added an 'Artist' column (the station creator/owner)
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationTrackInfo.cs:
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:
+	Reverted to not using a StationTrackInfo since we don't need it
+
 2008-06-16  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:

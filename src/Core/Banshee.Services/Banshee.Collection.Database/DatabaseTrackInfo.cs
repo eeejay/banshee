@@ -43,7 +43,6 @@ using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.Streaming;
 
-        using System.Diagnostics;
 // Disabling "is never used" warnings here because there are a lot
 // of properties/fields that are set via reflection at the database
 // layer - that is, they really are used, but the compiler doesn't
@@ -99,13 +98,24 @@ namespace Banshee.Collection.Database
 
         public override bool TrackEqual (TrackInfo track)
         {
+            if (PrimarySource != null && PrimarySource.TrackEqualHandler != null) {
+                return PrimarySource.TrackEqualHandler (this, track);
+            }
+            
             DatabaseTrackInfo db_track = track as DatabaseTrackInfo;
             if (db_track == null) {
                 return base.TrackEqual (track);
             }
             
-            return db_track.TrackId == TrackId && db_track.CacheModelId == CacheModelId && 
-                db_track.CacheEntryId == CacheEntryId;
+            return TrackEqual (this, db_track);
+        }
+        
+        public static bool TrackEqual (DatabaseTrackInfo a, DatabaseTrackInfo b)
+        {
+            return a != null && b != null && 
+                a.TrackId == b.TrackId && 
+                a.CacheModelId == b.CacheModelId && 
+                a.CacheEntryId == b.CacheEntryId;
         }
         
         public DatabaseArtistInfo Artist {

@@ -49,6 +49,12 @@ namespace Banshee.Streaming
         private bool loaded = false;
         private bool parsing_playlist = false;
         
+        private TrackInfo parent_track;
+        public TrackInfo ParentTrack {
+            get { return parent_track; }
+            set { parent_track = value; }
+        }
+        
         public event EventHandler ParsingPlaylistEvent;
         
         protected RadioTrackInfo()
@@ -68,6 +74,11 @@ namespace Banshee.Streaming
             this.single_location = uri;
         }
         
+        public RadioTrackInfo (TrackInfo parentTrack) : this (parentTrack.Uri)
+        {
+            ParentTrack = parentTrack;
+        }
+
         public void Play()
         {
             if(!loaded) {

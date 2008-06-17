@@ -81,7 +81,7 @@ namespace Banshee.InternetRadio
                 }
                 
                 foreach (TrackInfo track in TrackModel.SelectedItems) {
-                    StationTrackInfo station_track = track as StationTrackInfo;
+                    DatabaseTrackInfo station_track = track as DatabaseTrackInfo;
                     if (station_track != null) {
                         EditStation (station_track);
                         return;
@@ -90,6 +90,16 @@ namespace Banshee.InternetRadio
             });
             
             ServiceManager.PlayerEngine.TrackIntercept += OnPlayerEngineTrackIntercept;
+            
+            TrackEqualHandler = delegate (DatabaseTrackInfo a, TrackInfo b) {
+                RadioTrackInfo radio_track = b as RadioTrackInfo;
+                return radio_track != null && DatabaseTrackInfo.TrackEqual (
+                    radio_track.ParentTrack as DatabaseTrackInfo, a);
+            };
+            
+            if (new XspfMigrator (this).Migrate ()) {
+                Reload ();
+            }
         }
         
         public override void Dispose ()
@@ -117,7 +127,7 @@ namespace Banshee.InternetRadio
                 return false;
             }
             
-            new RadioTrackInfo (station.Uri).Play ();
+            new RadioTrackInfo (station).Play ();
             
             return true;
         }
@@ -127,7 +137,7 @@ namespace Banshee.InternetRadio
             EditStation (null);
         }
         
-        private void EditStation (StationTrackInfo track)
+        private void EditStation (DatabaseTrackInfo track)
         {
             StationEditor editor = new StationEditor (track);
             editor.Response += OnStationEditorResponse;
@@ -141,7 +151,7 @@ namespace Banshee.InternetRadio
             
             try {
                 if (args.ResponseId == ResponseType.Ok) {
-                    StationTrackInfo track = editor.Track ?? new StationTrackInfo ();
+                    DatabaseTrackInfo track = editor.Track ?? new DatabaseTrackInfo ();
                     track.PrimarySource = this;
                     track.IsLive = true;
                 
