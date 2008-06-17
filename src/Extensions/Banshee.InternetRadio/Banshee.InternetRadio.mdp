@@ -1,4 +1,4 @@
-<Project name="Banshee.InternetRadio" fileversion="2.0" UseParentDirectoryAsNamespace="True" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Banshee.InternetRadio" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assemblyKeyFile="." assembly="Banshee.InternetRadio" />
@@ -13,7 +13,6 @@
     <File name="Resources/GlobalUI.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.InternetRadio/InternetRadioSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.InternetRadio/StationEditor.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.InternetRadio/RadioColumnController.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.InternetRadio/XspfMigrator.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>

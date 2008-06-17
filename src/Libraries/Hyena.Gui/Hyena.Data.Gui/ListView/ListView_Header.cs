@@ -329,7 +329,7 @@ namespace Hyena.Data.Gui
                 return null;
             }
             
-            x += (int)hadjustment.Value;
+            x += HadjustmentValue;
             
             for (int i = 0; i < column_cache.Length - 1; i++) {
                 if (x >= column_cache[i].ResizeX1 - 2 && 
@@ -348,7 +348,7 @@ namespace Hyena.Data.Gui
                 return null;
             }
             
-            x += (int)hadjustment.Value;
+            x += HadjustmentValue;
             
             foreach (CachedColumn column in column_cache) {
                 if (x >= column.X1 && x <= column.X2) {

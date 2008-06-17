@@ -84,8 +84,12 @@ namespace Hyena.Data.Gui
             if (header_visible && column_controller != null) {
                 PaintHeader (damage);
             }
+           
             Theme.DrawFrameBorder (cairo_context, Allocation);
-            PaintRows(damage);
+            if (Model != null) {
+                PaintRows(damage);
+            }
+            
             PaintDraggingColumn (damage);
             
             ((IDisposable)cairo_context.Target).Dispose ();
@@ -117,13 +121,13 @@ namespace Hyena.Data.Gui
                     continue;
                 }
                 
-                cell_area.X = column_cache[ci].X1 + Theme.TotalBorderWidth + header_rendering_alloc.X - (int)hadjustment.Value;
+                cell_area.X = column_cache[ci].X1 + Theme.TotalBorderWidth + header_rendering_alloc.X - HadjustmentValue;
                 cell_area.Width = column_cache[ci].Width;
                 PaintHeaderCell (cell_area, ci, false);
             }
             
             if (pressed_column_is_dragging && pressed_column_index >= 0) {
-                cell_area.X = pressed_column_x_drag + Allocation.X - (int)hadjustment.Value;
+                cell_area.X = pressed_column_x_drag + Allocation.X - HadjustmentValue;
                 cell_area.Width = column_cache[pressed_column_index].Width;
                 PaintHeaderCell (cell_area, pressed_column_index, true);
             }
@@ -174,7 +178,7 @@ namespace Hyena.Data.Gui
             if (sort_column_index != -1 && (!pressed_column_is_dragging || pressed_column_index != sort_column_index)) {
                 CachedColumn col = column_cache[sort_column_index];
                 Theme.DrawRowRule (cairo_context,
-                    list_rendering_alloc.X + col.X1 - (int)hadjustment.Value,
+                    list_rendering_alloc.X + col.X1 - HadjustmentValue,
                     header_rendering_alloc.Bottom + Theme.BorderWidth,
                     col.Width, list_rendering_alloc.Height + Theme.InnerBorderWidth * 2);
             }
@@ -186,7 +190,7 @@ namespace Hyena.Data.Gui
             cell_context.Clip = clip;
             cell_context.TextAsForeground = false;
             
-            int vadjustment_value = (int)vadjustment.Value;
+            int vadjustment_value = VadjustmentValue;
             int first_row = vadjustment_value / RowHeight;
             int last_row = Math.Min (model.Count, first_row + RowsInView);
             int offset = list_rendering_alloc.Y - vadjustment_value % RowHeight;
@@ -194,7 +198,7 @@ namespace Hyena.Data.Gui
             Rectangle selected_focus_alloc = Rectangle.Zero;
             Rectangle single_list_alloc = new Rectangle ();
             
-            single_list_alloc.X = list_rendering_alloc.X - (int)(hadjustment.Value);
+            single_list_alloc.X = list_rendering_alloc.X - HadjustmentValue;
             single_list_alloc.Y = offset;
             single_list_alloc.Width = list_rendering_alloc.Width;
             single_list_alloc.Height = RowHeight;
@@ -340,7 +344,7 @@ namespace Hyena.Data.Gui
             
             CachedColumn column = column_cache[pressed_column_index];
             
-            int x = pressed_column_x_drag + Allocation.X + 1 - (int)hadjustment.Value;
+            int x = pressed_column_x_drag + Allocation.X + 1 - HadjustmentValue;
             
             Cairo.Color fill_color = Theme.Colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
             fill_color.A = 0.45;

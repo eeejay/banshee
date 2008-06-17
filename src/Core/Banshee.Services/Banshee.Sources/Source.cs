@@ -231,6 +231,15 @@ namespace Banshee.Sources
             }
         }
         
+        public T GetInheritedProperty<T> (string name)
+        {
+            return Properties.Contains (name)
+                ? Properties.Get<T> (name)
+                : Parent != null 
+                    ? Parent.GetInheritedProperty<T> (name)
+                    : default (T);
+        }
+        
 #endregion
         
 #region Protected Methods

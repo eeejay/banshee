@@ -5,7 +5,6 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.InternetRadio/InternetRadioSource.cs \
-	Banshee.InternetRadio/RadioColumnController.cs \
 	Banshee.InternetRadio/StationEditor.cs \
 	Banshee.InternetRadio/XspfMigrator.cs 
 

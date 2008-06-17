@@ -56,12 +56,24 @@ namespace Hyena.Data.Gui
             get { return model.Selection; }
         }
         
+        private int HadjustmentValue {
+            get { return hadjustment == null ? 0 : (int)hadjustment.Value; }
+        }
+        
+        private int VadjustmentValue {
+            get { return vadjustment == null ? 0 : (int)vadjustment.Value; }
+        }
+        
         public event RowActivatedHandler<T> RowActivated;
         
 #region Row/Selection, Keyboard/Mouse Interaction
 
         private bool KeyboardScroll (Gdk.ModifierType modifier, int relative_row, bool align_y)
         {
+            if (Model == null) {
+                return true;
+            }
+        
             int row_limit;
             if (relative_row < 0) {
                 if (Selection.FocusedIndex == -1) {
@@ -103,12 +115,12 @@ namespace Hyena.Data.Gui
             // Scroll if needed
             double y_at_row = GetYAtRow (row_index);
             if (align_y) {
-                if (y_at_row < vadjustment.Value) {
+                if (y_at_row < VadjustmentValue) {
                     ScrollTo (y_at_row);
-                } else if ((y_at_row + RowHeight) > (vadjustment.Value + vadjustment.PageSize)) {
+                } else if (vadjustment != null && (y_at_row + RowHeight) > (vadjustment.Value + vadjustment.PageSize)) {
                     ScrollTo (y_at_row + RowHeight - (vadjustment.PageSize));
                 }
-            } else {
+            } else if (vadjustment != null) {
                 ScrollTo (vadjustment.Value + ((row_index - Selection.FocusedIndex) * RowHeight));
             }
 
@@ -152,13 +164,13 @@ namespace Hyena.Data.Gui
 
                 case Gdk.Key.Page_Up:
                 case Gdk.Key.KP_Page_Up:
-                    handled = KeyboardScroll (press.State, 
+                    handled = vadjustment != null && KeyboardScroll (press.State, 
                         (int)(-vadjustment.PageIncrement / (double)RowHeight), false);
                     break;
 
                 case Gdk.Key.Page_Down:
                 case Gdk.Key.KP_Page_Down:
-                    handled = KeyboardScroll (press.State, 
+                    handled = vadjustment != null && KeyboardScroll (press.State, 
                         (int)(vadjustment.PageIncrement / (double)RowHeight), false);
                     break;
 
@@ -208,8 +220,8 @@ namespace Hyena.Data.Gui
             Gdk.Rectangle icell_area;
             bool redraw = ProxyEventToCell (evnt, press, out icell, out icell_area);
             
-            int xoffset = (int)hadjustment.Value;
-            int yoffset = (int)vadjustment.Value;
+            int xoffset = HadjustmentValue;
+            int yoffset = VadjustmentValue;
             
             if (last_icell_area != icell_area) {
                 if (last_icell != null && last_icell.PointerLeaveEvent ()) {
@@ -231,6 +243,10 @@ namespace Hyena.Data.Gui
             icell = null;
             icell_area = Gdk.Rectangle.Zero;
             
+            if (Model == null) {
+                return false;
+            }
+               
             int evnt_x;
             int evnt_y;
             
@@ -273,7 +289,7 @@ namespace Hyena.Data.Gui
             
             // Turn the view-absolute coordinates into cell-relative coordinates
             x -= cached_column.X1;
-            int page_offset = (int)vadjustment.Value % RowHeight;
+            int page_offset = VadjustmentValue % RowHeight;
             y = (y + page_offset) % RowHeight;
             
             // Bind the row to the cell and then send it a synthesized input event
@@ -332,7 +348,7 @@ namespace Hyena.Data.Gui
                     pressed_column_index = column_c.Index;
                     pressed_column_x_start = x;
                     pressed_column_x_offset = pressed_column_x_start - column_c.X1;
-                    pressed_column_x_start_hadjustment = (int)hadjustment.Value;
+                    pressed_column_x_start_hadjustment = HadjustmentValue;
                 }
             }
             
@@ -341,6 +357,10 @@ namespace Hyena.Data.Gui
         
         private bool OnListButtonPressEvent (Gdk.EventButton evnt)
         {
+            if (Model == null) {
+                return true;
+            }
+            
             int y = (int)evnt.Y - list_interaction_alloc.Y;
             
             GrabFocus ();
@@ -455,6 +475,10 @@ namespace Hyena.Data.Gui
         
         private bool OnListButtonRelease (Gdk.EventButton evnt)
         {
+            if (Model == null) {
+                return true;
+            }
+        
             int y = (int)evnt.Y - list_interaction_alloc.Y;
             
             GrabFocus ();
@@ -546,7 +570,7 @@ namespace Hyena.Data.Gui
                 }
             }
             
-            pressed_column_x_drag = x - pressed_column_x_offset - (pressed_column_x_start_hadjustment - (int)hadjustment.Value);
+            pressed_column_x_drag = x - pressed_column_x_offset - (pressed_column_x_start_hadjustment - HadjustmentValue);
             
             QueueDraw ();
             return true;
@@ -554,7 +578,7 @@ namespace Hyena.Data.Gui
         
         private bool OnDragHScrollTimeout ()
         {
-            ScrollTo (hadjustment, hadjustment.Value + (drag_scroll_velocity * drag_scroll_velocity_max));
+            ScrollTo (hadjustment, HadjustmentValue + (drag_scroll_velocity * drag_scroll_velocity_max));
             OnMotionNotifyEvent (pressed_column_x);
             return true;
         }
@@ -594,8 +618,8 @@ namespace Hyena.Data.Gui
                 return -1;
             }
             
-            int page_offset = (int)vadjustment.Value % RowHeight;
-            int first_row = (int)vadjustment.Value / RowHeight;
+            int page_offset = VadjustmentValue % RowHeight;
+            int first_row = VadjustmentValue / RowHeight;
             int row_offset = (y + page_offset) / RowHeight;
             
             return first_row + row_offset;

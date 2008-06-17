@@ -90,7 +90,9 @@ namespace Hyena.Data.Gui
                         CenterOn (Selection.Ranges[0].Start);
                     }
                 } else {
-                    ScrollTo (vadjustment.Value);
+                    if (vadjustment != null) {
+                        ScrollTo (vadjustment.Value);
+                    }
                 }
             }
             

@@ -108,12 +108,12 @@ namespace Banshee.Gui
 
                 // If this source has a label property for this action, override the current label, otherwise reset it
                 // to the original label
-                string label = source.Properties.GetString (String.Format ("{0}Label", action_name)) ?? labels[action_name];
+                string label = source.GetInheritedProperty<string> (String.Format ("{0}Label", action_name)) ?? labels[action_name];
                 action.Label = label;
 
                 // If this source has an icon property for this action, override the current icon, othewise reset it
                 // to the original icon
-                string icon = source.Properties.GetString (String.Format ("{0}IconName", action_name)) ?? icons[action_name];
+                string icon = source.GetInheritedProperty<string> (String.Format ("{0}IconName", action_name)) ?? icons[action_name];
                 if (!String.IsNullOrEmpty (icon)) {
                     action.IconName = icon;
                 }

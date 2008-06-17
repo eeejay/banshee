@@ -225,7 +225,7 @@ namespace Banshee.Gui
                     UpdateAction ("DeleteTracksFromDriveAction", is_track_source && track_source.CanDeleteTracks, has_selection, source);
                     UpdateAction ("RemoveTracksFromLibraryAction", source.Parent is LibrarySource, has_selection, null);
                     
-                    UpdateAction ("TrackPropertiesAction", in_database, has_selection, null);
+                    UpdateAction ("TrackPropertiesAction", in_database, has_selection, source);
                     UpdateAction ("RateTracksAction", in_database, has_selection, null);
 
                     UpdateAction ("AddToPlaylistAction", in_database && primary_source != null && primary_source.SupportsPlaylists, has_selection, null);
@@ -275,7 +275,7 @@ namespace Banshee.Gui
             if (current_source != null) {
                 Source source = current_source as Source;
                 InvokeHandler handler = source != null 
-                    ? source.Properties.Get<InvokeHandler> ("TrackPropertiesHandler") 
+                    ? source.GetInheritedProperty<InvokeHandler> ("TrackPropertiesActionHandler") 
                     : null;
                 
                 if (handler != null) {

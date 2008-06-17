@@ -1,3 +1,30 @@
+2008-06-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/RadioColumnController.cs:
+	Removed in favor of the XML column controller stuff I completely forgot
+	that I had implemented
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	Implement the column controller in XML
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:
+	Get action labels and icons through source inheritance 
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Allow the
+	track properties action to have its settings overridden
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Gabe implemented
+	GetInheritedProperty that will look for a given property in the
+	source chain, walking up to the parent
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs:
+	Fixes to ensure that the view will still work if there are no 
+	adjustments (not packed in a scrolled window) or no model is set
+
 2008-06-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:

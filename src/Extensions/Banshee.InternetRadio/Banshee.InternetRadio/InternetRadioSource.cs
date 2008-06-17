@@ -41,6 +41,7 @@ using Banshee.Collection.Database;
 using Banshee.Configuration;
 
 using Banshee.Gui;
+using Banshee.Sources.Gui;
 
 namespace Banshee.InternetRadio
 {
@@ -51,6 +52,7 @@ namespace Banshee.InternetRadio
         }
         
         private uint ui_id;
+     //   private InternetRadioSourceContents source_contents;
         
         public InternetRadioSource () : base (Catalog.GetString ("Radio"), 
             Catalog.GetString ("Radio"), "internet-radio", 220)
@@ -73,9 +75,11 @@ namespace Banshee.InternetRadio
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/InternetRadioContextMenu");
             
-            Properties.Set<RadioColumnController> ("TrackView.ColumnController", new RadioColumnController ());
-            Properties.SetString ("TrackPropertiesLabel", Catalog.GetString ("Edit Station"));
-            Properties.Set<InvokeHandler> ("TrackPropertiesHandler", delegate {
+           // source_contents = new InternetRadioSourceContents ();
+           // Properties.Set<ISourceContents> ("Nereid.SourceContents", source_contents);
+            
+            Properties.SetString ("TrackPropertiesActionLabel", Catalog.GetString ("Edit Station"));
+            Properties.Set<InvokeHandler> ("TrackPropertiesActionHandler", delegate {
                 if (TrackModel.SelectedItems == null || TrackModel.SelectedItems.Count <= 0) {
                     return;
                 }
@@ -88,6 +92,37 @@ namespace Banshee.InternetRadio
                     }
                 }
             });
+            
+            Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
+                <column-controller>
+                  <!--<column modify-default=""IndicatorColumn"">
+                    <renderer type=""Banshee.Podcasting.Gui.ColumnCellPodcastStatusIndicator"" />
+                  </column>-->
+                  <add-default column=""IndicatorColumn"" />
+                  <add-default column=""GenreColumn"" />
+                  <column modify-default=""GenreColumn"">
+                    <visible>true</visible>
+                  </column>
+                  <add-default column=""TitleColumn"" />
+                  <add-default column=""ArtistColumn"" />
+                  <column modify-default=""ArtistColumn"">
+                    <title>{0}</title>
+                  </column>
+                  <add-default column=""CommentColumn"" />
+                  <column modify-default=""CommentColumn"">
+                    <title>{1}</title>
+                  </column>
+                  <add-default column=""RatingColumn"" />
+                  <add-default column=""PlayCountColumn"" />
+                  <add-default column=""LastPlayedColumn"" />
+                  <add-default column=""LastSkippedColumn"" />
+                  <add-default column=""DateAddedColumn"" />
+                  <add-default column=""UriColumn"" />
+                  <sort-column direction=""asc"">genre</sort-column>
+                </column-controller>",
+                Catalog.GetString ("Creator"),
+                Catalog.GetString ("Description")
+            ));
             
             ServiceManager.PlayerEngine.TrackIntercept += OnPlayerEngineTrackIntercept;
             
