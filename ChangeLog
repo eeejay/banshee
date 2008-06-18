@@ -1,3 +1,16 @@
+2008-06-18  Aaron Bockover  <abock@gnome.org>
+
+	* gstreamer/equalizer/: Copied the GStreamer equalizer (10-band) element
+	from GStreamer CVS so we can include it without depending on the very
+	latest GStreamer. It has a number of necessary bug fixes which won't
+	be available to many users for quite some time through normal distribution
+	channels
+
+	* gstreamer/COPYING: A copy of the LGPL
+	
+	* gstreamer/gst-package.mk: Define some metadata required for GStreamer
+	plugins inside of the main GStreamer build environment
+
 2008-06-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:

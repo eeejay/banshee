@@ -1,0 +1,26 @@
+--- gstiirequalizer.c.orig	2008-06-18 17:21:37.000000000 -0400
++++ gstiirequalizer.c	2008-06-18 17:20:51.000000000 -0400
+@@ -27,8 +27,6 @@
+ #include <string.h>
+ 
+ #include "gstiirequalizer.h"
+-#include "gstiirequalizernbands.h"
+-#include "gstiirequalizer3bands.h"
+ #include "gstiirequalizer10bands.h"
+ 
+ GST_DEBUG_CATEGORY (equalizer_debug);
+@@ -725,14 +723,6 @@
+ {
+   GST_DEBUG_CATEGORY_INIT (equalizer_debug, "equalizer", 0, "equalizer");
+ 
+-  if (!(gst_element_register (plugin, "equalizer-nbands", GST_RANK_NONE,
+-              GST_TYPE_IIR_EQUALIZER_NBANDS)))
+-    return FALSE;
+-
+-  if (!(gst_element_register (plugin, "equalizer-3bands", GST_RANK_NONE,
+-              GST_TYPE_IIR_EQUALIZER_3BANDS)))
+-    return FALSE;
+-
+   if (!(gst_element_register (plugin, "equalizer-10bands", GST_RANK_NONE,
+               GST_TYPE_IIR_EQUALIZER_10BANDS)))
+     return FALSE;

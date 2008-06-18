@@ -2,6 +2,7 @@ SUBDIRS = \
 	build \
 	data \
 	libbanshee \
+	gstreamer \
 	src \
 	docs \
 	tests \

@@ -116,6 +116,9 @@ extras/Makefile
 
 libbanshee/Makefile
 
+gstreamer/Makefile
+gstreamer/equalizer/Makefile
+
 src/Makefile
 src/AssemblyInfo.cs
 
