@@ -139,7 +139,7 @@ namespace Banshee.Hardware
         {
             foreach (ICustomDeviceProvider provider in custom_device_providers.Values) {
                 T new_device = provider.GetCustomDevice (device);
-                if (new_device != device && new_device is T) {
+                if (new_device != device) {
                     return new_device;
                 }
             }
