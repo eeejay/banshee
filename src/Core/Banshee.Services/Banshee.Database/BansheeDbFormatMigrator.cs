@@ -672,22 +672,39 @@ namespace Banshee.Database
                         FROM Tracks
             ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
 
-            Execute ("update coretracks set lastplayedstamp = NULL where lastplayedstamp = -62135575200");
+            Execute ("UPDATE CoreTracks SET LastPlayedStamp = NULL WHERE LastPlayedStamp = -62135575200");
 
-            Execute(@"
-                INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType)
-                    SELECT * FROM Playlists
-            ");
+            // Old versions of Banshee had different columns for Playlists/PlaylistEntries, so be careful
+            try {
+                Execute(@"
+                    INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType)
+                        SELECT * FROM Playlists;
+                    INSERT INTO CorePlaylistEntries
+                        SELECT * FROM PlaylistEntries
+                ");
+            } catch (Exception e) {
+                Log.Exception ("Must be a pre-0.13.2 banshee.db, attempting to migrate", e);
+                try {
+                    Execute(@"
+                        INSERT INTO CorePlaylists (PlaylistID, Name)
+                            SELECT PlaylistID, Name FROM Playlists;
+                        INSERT INTO CorePlaylistEntries (EntryID, PlaylistID, TrackID)
+                            SELECT EntryID, PlaylistID, TrackID FROM PlaylistEntries
+                    ");
+                    Log.Debug ("Success, was able to migrate older playlist information");
+                } catch (Exception e2) {
+                    Log.Exception ("Failed to migrate playlists", e2);
+                }
+            }
 
-            Execute(@"
-                INSERT INTO CorePlaylistEntries
-                    SELECT * FROM PlaylistEntries
-            ");
 
-            Execute(@"
-                INSERT INTO CoreSmartPlaylists (SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion)
-                    SELECT * FROM SmartPlaylists
-            ");
+            // Really old versions of Banshee didn't have SmartPlaylists, so ignore errors
+            try {
+                Execute(@"
+                    INSERT INTO CoreSmartPlaylists (SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion)
+                        SELECT * FROM SmartPlaylists
+                ");
+            } catch {}
 
             Execute ("UPDATE CoreSmartPlaylists SET PrimarySourceID = 1");
             Execute ("UPDATE CorePlaylists SET PrimarySourceID = 1");

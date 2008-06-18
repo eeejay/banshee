@@ -1,5 +1,11 @@
 2008-06-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Fix crasher caused by trying to migrate playlist data from old (pre
+	0.13.2) versions of Banshee (BGO #538993).
+
+2008-06-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/OverlayWindow.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
