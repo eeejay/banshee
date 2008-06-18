@@ -176,9 +176,7 @@ namespace Banshee.ServiceStack
                 
                 extension_services.Add (node.Path, service);
             
-                if (service is IDisposable) {
-                    dispose_services.Push (service);
-                }
+                dispose_services.Push (service);
             } catch (Exception e) {
                 Log.Exception (e.InnerException ?? e);
                 Log.Warning (String.Format ("Extension `{0}' not started: {1}", 

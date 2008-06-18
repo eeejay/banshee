@@ -1,5 +1,10 @@
 2008-06-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Another unnecessary type check.
+
+2008-06-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs: Remove
 	unnecessary type check.
 
