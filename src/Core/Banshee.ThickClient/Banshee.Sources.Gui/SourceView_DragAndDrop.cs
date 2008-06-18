@@ -85,7 +85,7 @@ namespace Banshee.Sources.Gui
             }
             
             Source drop_source = store.GetSource (path);
-            Source parent_source = drop_source as LibrarySource ?? drop_source.Parent as LibrarySource;
+            Source parent_source = (drop_source as LibrarySource) ?? (drop_source.Parent as LibrarySource);
 
             // Scroll if within 20 pixels of the top or bottom
             if (y < 20)

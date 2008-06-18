@@ -86,12 +86,12 @@ namespace Banshee.Gui
                     OnAddToNewPlaylist),
 
                 new ActionEntry ("RemoveTracksAction", Stock.Remove,
-                    Catalog.GetString("_Remove"), "Delete",
-                    Catalog.GetString("Remove selected track(s) from this source"), OnRemoveTracks),
+                    Catalog.GetString ("_Remove"), "Delete",
+                    Catalog.GetString ("Remove selected track(s) from this source"), OnRemoveTracks),
 
                 new ActionEntry ("RemoveTracksFromLibraryAction", null,
-                    Catalog.GetString("Remove From _Library"), "",
-                    Catalog.GetString("Remove selected track(s) from library"), OnRemoveTracksFromLibrary),
+                    Catalog.GetString ("Remove From _Library"), "",
+                    Catalog.GetString ("Remove selected track(s) from library"), OnRemoveTracksFromLibrary),
 
                 new ActionEntry ("DeleteTracksFromDriveAction", null,
                     Catalog.GetString ("_Delete From Drive"), null,
@@ -200,7 +200,7 @@ namespace Banshee.Gui
         {
             Source source = ServiceManager.SourceManager.ActiveSource;
             bool in_database = source is DatabaseSource;
-            PrimarySource primary_source = source as PrimarySource ?? source.Parent as PrimarySource;
+            PrimarySource primary_source = (source as PrimarySource) ?? (source.Parent as PrimarySource);
             
             Hyena.Collections.Selection selection = (source is ITrackModelSource) ? (source as ITrackModelSource).TrackModel.Selection : null;
 

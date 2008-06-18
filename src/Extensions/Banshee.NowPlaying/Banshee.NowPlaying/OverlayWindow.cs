@@ -150,7 +150,7 @@ namespace Banshee.NowPlaying
         protected virtual void ShapeSurface (Cairo.Context cr, Cairo.Color color)
         {
             cr.Operator = Cairo.Operator.Source;
-            Cairo.Pattern pattern = new Cairo.SolidPattern (color);
+            Cairo.Pattern pattern = new Cairo.SolidPattern (color, false);
             cr.Source = pattern;
             pattern.Destroy ();
             cr.Paint ();

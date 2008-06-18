@@ -322,10 +322,10 @@ namespace Banshee.Gui
             Source source = ActionSource;
 
             if (source != last_source && source != null) {
-                IUnmapableSource unmapable = source as IUnmapableSource;
-                IImportSource import_source = source as IImportSource;
-                SmartPlaylistSource smart_playlist = source as SmartPlaylistSource;
-                PrimarySource primary_source = source as PrimarySource ?? source.Parent as PrimarySource;
+                IUnmapableSource unmapable = (source as IUnmapableSource);
+                IImportSource import_source = (source as IImportSource);
+                SmartPlaylistSource smart_playlist = (source as SmartPlaylistSource);
+                PrimarySource primary_source = (source as PrimarySource) ?? (source.Parent as PrimarySource);
 
                 UpdateAction ("UnmapSourceAction", unmapable != null, unmapable != null && unmapable.CanUnmap, source);
                 UpdateAction ("RenameSourceAction", source.CanRename, true, null);

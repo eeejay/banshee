@@ -1,5 +1,14 @@
 2008-06-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/OverlayWindow.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Patch from Alex Launi, adds some parenthesis that Mono 1.2.6 seems to need
+	to compile Banshee (BGO #538973).
+
+2008-06-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
 	Another unnecessary type check.
 
