@@ -1,5 +1,11 @@
 2008-06-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Fix the
+	OnSizeRequested override so that the Recommendations pane is the right
+	height.  Proper implementation gleaned from gtkframe.c.
+
+2008-06-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:

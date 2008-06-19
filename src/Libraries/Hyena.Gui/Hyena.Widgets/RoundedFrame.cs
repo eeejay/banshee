@@ -93,20 +93,23 @@ namespace Hyena.Widgets
         protected override void OnSizeRequested (ref Requisition requisition)
         {
             if (child == null) {
+                base.OnSizeRequested (ref requisition);
                 return;
             }
             
-            int width = requisition.Width;
-            int height = requisition.Height;
-                
-            child.SizeRequest ();
-            child.GetSizeRequest (out width, out height);
-            if (width == -1 || height == -1) {
-                width = height = 80;
-            }
-                
-            SetSizeRequest (width + ((int)BorderWidth + frame_width) * 2, 
-                height + ((int)BorderWidth + frame_width) * 2);
+            requisition.Width = 0;
+            requisition.Height = 0;
+            
+            // Add the child's width/height        
+            Requisition child_requisition = child.SizeRequest ();
+            requisition.Width = Math.Max (requisition.Width, child_requisition.Width);
+            requisition.Height += child_requisition.Height;
+            
+            // Add the frame border
+            requisition.Width += ((int)BorderWidth + frame_width) * 2;
+            requisition.Height += ((int)BorderWidth + frame_width) * 2;
+            
+            base.OnSizeRequested (ref requisition);
         }
 
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
@@ -118,7 +121,7 @@ namespace Hyena.Widgets
             if (child == null || !child.Visible) {
                 return;
             }
-                
+            
             child_allocation.X = (int)BorderWidth + frame_width;
             child_allocation.Y = (int)BorderWidth + frame_width;
             child_allocation.Width = (int)Math.Max (1, Allocation.Width - child_allocation.X * 2);
@@ -127,7 +130,7 @@ namespace Hyena.Widgets
                 
             child_allocation.X += Allocation.X;
             child_allocation.Y += Allocation.Y;
-                
+            
             child.SizeAllocate (child_allocation);
         }
         
