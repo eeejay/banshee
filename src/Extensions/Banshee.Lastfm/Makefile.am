@@ -26,8 +26,8 @@ RESOURCES =  \
 	Resources/GlobalUI.xml \
 	Resources/lastfm.glade \
 	Resources/LastfmTrackActions.xml \
-	Resources/RecommendationMenu.xml \
-	Resources/no-results.png
+	Resources/no-results.png \
+	Resources/RecommendationMenu.xml
 
 include $(top_srcdir)/build/build.mk
 
