@@ -1,5 +1,10 @@
 2008-06-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Have AlbumArtist
+	fall back on ArtistName.  Fixes issue with Last.fm cover art.
+
+2008-06-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	Try to subscribe to any uri passed on the command line that contains rss,
 	xml, feed, or starts with itpc.

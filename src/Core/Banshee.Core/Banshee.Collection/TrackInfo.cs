@@ -148,7 +148,7 @@ namespace Banshee.Collection
         }
 
         public virtual string AlbumArtist {
-            get { return album_artist; }
+            get { return album_artist ?? ArtistName; }
             set { album_artist = value; }
         }
 
