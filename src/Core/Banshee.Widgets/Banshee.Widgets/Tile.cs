@@ -41,6 +41,11 @@ namespace Banshee.Widgets
         
         private string primary_text;
         private string secondary_text;
+        
+        public Tile (string primaryText) : base ()
+        {
+            PrimaryText = primaryText;
+        }
     
         public Tile()
         {

@@ -152,26 +152,6 @@ namespace Banshee.Lastfm.Radio
             }
         }
 
-        public class TitledList : VBox
-        {
-            private Label title;
-
-            public TitledList (string title_str) : base ()
-            {
-                title = new Label ();
-                title.Xalign = 0;
-                title.Ellipsize = Pango.EllipsizeMode.End;
-                title.Markup = String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (title_str));
-
-                PackStart (title, false, false, 0);
-                title.Show ();
-
-                StyleSet += delegate {
-                    title.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
-                    title.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
-                };
-            }
-        }
 
         public class NumberedTileView : TileView
         {
@@ -284,6 +264,39 @@ namespace Banshee.Lastfm.Radio
                     (sender as Button).Relief = ReliefStyle.None;
                 };
             }
+        }
+    }
+
+    public class TitledList : VBox
+    {
+        private Label title;
+
+        public string Title {
+            get { return title.Text; }
+            set {
+                title.Markup = String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (value));
+            }
+        }
+
+        public int TitleWidthChars {
+            get { return title.WidthChars; }
+            set { title.WidthChars = value; }
+        }
+
+        public TitledList (string title_str) : base (false, 3)
+        {
+            title = new Label ();
+            title.Xalign = 0;
+            title.Ellipsize = Pango.EllipsizeMode.End;
+            Title = title_str;
+
+            PackStart (title, false, false, 0);
+            title.Show ();
+
+            StyleSet += delegate {
+                title.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
+                title.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
+            };
         }
     }
 }

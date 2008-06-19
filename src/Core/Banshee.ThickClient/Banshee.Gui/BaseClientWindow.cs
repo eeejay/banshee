@@ -62,6 +62,8 @@ namespace Banshee.Gui
             
             InitializeWindow ();
         }
+
+        public abstract Box ViewContainer { get; }
         
         public void ToggleVisibility ()
         {

@@ -2,7 +2,10 @@
 // LastfmData.cs
 //
 // Authors:
-//   Gabriel Burt <gburt@novell.com>
+//   Gabriel Burt
+//   Fredrik Hedberg
+//   Aaron Bockover
+//   Lukas Lipka
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -48,7 +51,8 @@ namespace Lastfm.Data
 
     public class LastfmData<T> : IEnumerable<T> where T : DataEntry
     {
-        protected DataEntryCollection<T> collection;
+        private static DataEntryCollection<T> empty_collection = new DataEntryCollection<T> ((XmlNodeList)null);
+        protected DataEntryCollection<T> collection = empty_collection;
         protected XmlDocument doc;
         protected string data_url;
         protected string cache_file;
@@ -71,8 +75,8 @@ namespace Lastfm.Data
         {
             DataCore.Initialize ();
 
-            this.data_url = HostInjectionHack (String.Format ("http://ws.audioscrobbler.com/1.0/{0}", dataUrlFragment));
-            this.cache_file = GetCachedPathFromUrl (data_url);
+            this.data_url = DataCore.FixLastfmUrl (String.Format ("http://ws.audioscrobbler.com/1.0/{0}", dataUrlFragment));
+            this.cache_file = DataCore.GetCachedPathFromUrl (data_url);
             this.cache_duration = cacheDuration;
             this.xpath = xpath;
 
@@ -90,7 +94,7 @@ namespace Lastfm.Data
         private void GetData ()
         {
             // Download the content if necessary
-            DownloadContent ();
+            DataCore.DownloadContent (data_url, cache_file, cache_duration);
 
             // Load the XML from the new or cached local file
             doc = new XmlDocument ();
@@ -132,73 +136,6 @@ namespace Lastfm.Data
 #endregion
 
 #region Private methods
-
-        private void DownloadContent ()
-        {
-            // See if we have a valid cached copy
-            if (cache_duration != CacheDuration.None) {
-                if (File.Exists (cache_file)) {
-                    DateTime last_updated_time = File.GetLastWriteTime (cache_file);
-                    if (cache_duration == CacheDuration.Infinite || DateTime.Now - last_updated_time < DataCore.NormalCacheTime) {
-                        return;
-                    }
-                }
-            }
-
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create (data_url);
-            request.UserAgent = DataCore.UserAgent;
-            request.KeepAlive = false;
-            
-            using (HttpWebResponse response = (HttpWebResponse) request.GetResponse ()) {
-                using (Stream stream = GetResponseStream (response)) {
-                    using (FileStream file_stream = File.Open (cache_file, FileMode.Create)) {
-                        using (BufferedStream buffered_stream = new BufferedStream (file_stream)) {
-                            byte [] buffer = new byte[8192];
-                            int read;
-                            
-                            while (true) {
-                                read = stream.Read (buffer, 0, buffer.Length);
-                                if (read <= 0) {
-                                    break;
-                                }
-                                
-                                buffered_stream.Write (buffer, 0, read);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private static Stream GetResponseStream (HttpWebResponse response) 
-        {
-            return response.ContentEncoding == "gzip"
-                ? new GZipInputStream (response.GetResponseStream ())
-                : response.GetResponseStream ();
-        }
-
-    
-        private static string GetCachedPathFromUrl (string url)
-        {
-            string hash = url.GetHashCode ().ToString ("X").ToLower ();
-            return Path.Combine (Path.Combine (DataCore.CachePath, hash.Substring (0, 2)), hash);
-        }
-
-        // FIXME: This is to (try to) work around a bug in last.fm's XML
-        // Some XML nodes with URIs as content do not return a URI with a
-        // host name. It appears that in these cases the hostname is to be
-        // static3.last.fm, but it may not always be the case - this is
-        // a bug in last.fm, but we attempt to work around it here
-        // http://bugzilla.gnome.org/show_bug.cgi?id=408068
-
-        private static string HostInjectionHack (string url)
-        {
-            if (url.StartsWith ("http:///storable/")) {
-                url = url.Insert (7, "static3.last.fm");
-            }
-
-            return url;
-        }
 
 #endregion
 

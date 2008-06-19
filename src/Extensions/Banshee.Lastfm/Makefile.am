@@ -13,7 +13,11 @@ SOURCES =  \
 	Banshee.Lastfm.Radio/LastfmTrackInfo.cs \
 	Banshee.Lastfm.Radio/StationEditor.cs \
 	Banshee.Lastfm.Radio/StationSource.cs \
-	Banshee.Lastfm.Radio/StationType.cs
+	Banshee.Lastfm.Radio/StationType.cs \
+	Banshee.Lastfm.Recommendations/RecommendationActions.cs \
+	Banshee.Lastfm.Recommendations/RecommendationPane.cs \
+	Banshee.Lastfm.Recommendations/RecommendationService.cs
+
 
 RESOURCES =  \
 	Banshee.Lastfm.addin.xml \
@@ -21,7 +25,9 @@ RESOURCES =  \
 	Resources/AudioscrobblerMenu.xml \
 	Resources/GlobalUI.xml \
 	Resources/lastfm.glade \
-	Resources/LastfmTrackActions.xml
+	Resources/LastfmTrackActions.xml \
+	Resources/RecommendationMenu.xml \
+	Resources/no-results.png
 
 include $(top_srcdir)/build/build.mk
 

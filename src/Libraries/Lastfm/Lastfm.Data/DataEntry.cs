@@ -191,6 +191,8 @@ namespace Lastfm.Data
     // Artist entries
     public class SimilarArtist : NamedEntry
     {
+        public string ImageUrl          { get { return Get<string>   ("image"); } }
+        public string SmallImageUrl     { get { return Get<string>   ("image_small"); } }
         public double Match             { get { return Get<double>   ("match"); } }
         public int MatchAsInt           { get { return (int) Math.Round (Match); } }
     }

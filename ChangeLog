@@ -1,3 +1,63 @@
+2008-06-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	First pass at bringing the recommendations extension back.  It's got three
+	big bugs atm: 1) background isn't white 2) height is too small 3) the
+	similar artist tiles are not sized properly (they're tiny).
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationActions.cs:
+	Small class for adding/removing/handling the Show Recommendations action.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationService.cs:
+	Ported from 0.13.2, listens to the source changes and player engine
+	changes and shows the recommendation pane when appropriate.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:
+	Ported from 0.13.2 but made to use the Lastfm library, shows similar
+	artists and the top albums and tracks for an artist.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	Move the TitledList class to not be an inner class; should really be in
+	its own file.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.addin.xml: Update authors,
+	add recommendations service.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.mdp: Add recommendations
+	source files, and add hyena refs.
+
+	* src/Extensions/Banshee.Lastfm/Makefile.am: Add recommendation sources
+	and resouces.
+
+	* src/Extensions/Banshee.Lastfm/Resources/RecommendationMenu.xml: Brought
+	over verbatim from 0.13.2.
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Add
+	ViewContainer property so that recommendations can put itself below the
+	track list.
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/Tile.cs: Add a convenience ctor
+	for setting the primary text.
+
+	* src/Libraries/Lastfm/Lastfm.mdp: Add a bunch of assembly refs.
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs: Add a couple missing
+	properties to the SimilarArtist class.
+
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmData.cs: Set the collection this
+	class backs to a static empty collection until it's loaded its own, so
+	that the ICollection fucntions will not crash if called before its set.
+	Move download code into DataCore.
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataCore.cs: Moved a bunch of functions
+	here from LastfmData, and expose a new DownloadContent method so that the
+	recommendations extension can download cover art and cache it in the
+	lastfm cache.
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntryCollection.cs: In the
+	XmlNodeList ctor, handle the list being null (used by the static
+	collection mentioned in LastfmData above).
+
 2008-06-18  Aaron Bockover  <abock@gnome.org>
 
 	* gstreamer/equalizer/: Copied the GStreamer equalizer (10-band) element

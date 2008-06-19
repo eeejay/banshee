@@ -437,6 +437,10 @@ namespace Nereid
             source_view.ResetHighlight ();
         }
 
+        public override Box ViewContainer {
+            get { return view_container; }
+        }
+
 #endregion
         
 #region Gtk.Window Overrides

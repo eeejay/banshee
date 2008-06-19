@@ -7,7 +7,7 @@
     name="Last.fm Radio and Scrobbling"
     category="User Interface"
     description="Provides tightly integrated Last.fm streaming radio and community features."
-    author="Gabriel Burt, Alexander Hixon"
+    author="Gabriel Burt, Alexander Hixon, Chris Toshok, Fredrik Hedberg, Aaron Bockover, Lukas Lipka"
     url="http://banshee-project.org/"
     defaultEnabled="true">
 
@@ -22,6 +22,10 @@
   
   <Extension path="/Banshee/ServiceManager/Service">
     <Service class="Banshee.Lastfm.Audioscrobbler.AudioscrobblerService"/>
+  </Extension>
+
+  <Extension path="/Banshee/ServiceManager/Service">
+    <Service class="Banshee.Lastfm.Recommendations.RecommendationService"/>
   </Extension>
   
 </Addin>

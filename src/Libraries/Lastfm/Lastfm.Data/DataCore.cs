@@ -2,7 +2,10 @@
 // DataCore.cs
 //
 // Authors:
-//   Gabriel Burt <gburt@novell.com>
+//   Gabriel Burt
+//   Fredrik Hedberg
+//   Aaron Bockover
+//   Lukas Lipka
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -28,6 +31,12 @@
 
 using System;
 using System.IO;
+using System.Net;
+using System.Web;
+using System.Xml;
+using System.Collections;
+using System.Collections.Generic;
+using ICSharpCode.SharpZipLib.GZip;
 
 using Hyena;
 
@@ -54,6 +63,85 @@ namespace Lastfm.Data
                 CheckForCacheWipe();
                 SetupCache();
             }
+        }
+        
+        public static string DownloadContent (string data_url)
+        {
+            return DownloadContent (data_url, CacheDuration.Infinite);
+        }
+        
+        public static string DownloadContent (string data_url, CacheDuration cache_duration)
+        {
+            return DownloadContent (data_url, GetCachedPathFromUrl (data_url), cache_duration);
+        }
+
+        internal static string DownloadContent (string data_url, string cache_file, CacheDuration cache_duration)
+        {
+            data_url = FixLastfmUrl (data_url);
+            // See if we have a valid cached copy
+            if (cache_duration != CacheDuration.None) {
+                if (File.Exists (cache_file)) {
+                    DateTime last_updated_time = File.GetLastWriteTime (cache_file);
+                    if (cache_duration == CacheDuration.Infinite || DateTime.Now - last_updated_time < DataCore.NormalCacheTime) {
+                        return cache_file;
+                    }
+                }
+            }
+
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create (data_url);
+            request.UserAgent = DataCore.UserAgent;
+            request.KeepAlive = false;
+            
+            using (HttpWebResponse response = (HttpWebResponse) request.GetResponse ()) {
+                using (Stream stream = GetResponseStream (response)) {
+                    using (FileStream file_stream = File.Open (cache_file, FileMode.Create)) {
+                        using (BufferedStream buffered_stream = new BufferedStream (file_stream)) {
+                            byte [] buffer = new byte[8192];
+                            int read;
+                            
+                            while (true) {
+                                read = stream.Read (buffer, 0, buffer.Length);
+                                if (read <= 0) {
+                                    break;
+                                }
+                                
+                                buffered_stream.Write (buffer, 0, read);
+                            }
+                        }
+                    }
+                }
+            }
+            return cache_file;
+        }
+
+        
+        public static string GetCachedPathFromUrl (string url)
+        {
+            string hash = FixLastfmUrl (url).GetHashCode ().ToString ("X").ToLower ();
+            return Path.Combine (Path.Combine (DataCore.CachePath, hash.Substring (0, 2)), hash);
+        }
+        
+        private static Stream GetResponseStream (HttpWebResponse response) 
+        {
+            return response.ContentEncoding == "gzip"
+                ? new GZipInputStream (response.GetResponseStream ())
+                : response.GetResponseStream ();
+        }
+
+        // FIXME: This is to (try to) work around a bug in last.fm's XML
+        // Some XML nodes with URIs as content do not return a URI with a
+        // host name. It appears that in these cases the hostname is to be
+        // static3.last.fm, but it may not always be the case - this is
+        // a bug in last.fm, but we attempt to work around it here
+        // http://bugzilla.gnome.org/show_bug.cgi?id=408068
+
+        internal static string FixLastfmUrl (string url)
+        {
+            if (url.StartsWith ("http:///storable/")) {
+                url = url.Insert (7, "static3.last.fm");
+            }
+
+            return url;
         }
 
         private static void SetupCache()

@@ -49,7 +49,7 @@ namespace Lastfm.Data
         public DataEntryCollection (XmlNodeList nodes)
         {
             this.nodes = nodes;
-            count = nodes.Count;
+            count = nodes == null ? 0 : nodes.Count;
         }
 
         public int Count {
