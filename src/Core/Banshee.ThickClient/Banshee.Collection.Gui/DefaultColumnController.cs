@@ -167,7 +167,7 @@ namespace Banshee.Collection.Gui
         }
         
         private SortableColumn rating_column = new SortableColumn (Catalog.GetString ("Rating"),
-            new ColumnCellRating ("Rating", true), 0.15, "Rating", false);
+            new ColumnCellRating ("SavedRating", true), 0.15, "Rating", false);
         public SortableColumn RatingColumn {
             get { return rating_column; }
         }

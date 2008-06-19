@@ -426,6 +426,11 @@ namespace Banshee.Collection.Database
         protected int rating;
         public override int Rating {
             get { return rating; }
+            set { rating = value; }
+        }
+
+        public int SavedRating {
+            get { return rating; }
             set {
                 if (rating != value) {
                     rating = value;
@@ -491,7 +496,7 @@ namespace Banshee.Collection.Database
                 Uri = PrimarySource.UriAndTypeToSafeUri (UriType, UriField);
             }
         }
-        
+
         public void CopyToLibraryIfAppropriate (bool force_copy)
         {
             SafeUri old_uri = this.Uri;

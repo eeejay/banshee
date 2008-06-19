@@ -340,8 +340,16 @@ namespace Banshee.NotificationArea
         
         private void OnRatingChanged (object o, EventArgs args)
         {
-            if (ServiceManager.PlayerEngine.CurrentTrack != null) {
-                ServiceManager.PlayerEngine.CurrentTrack.Rating = rating_menu_item.Value;
+            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
+            if (track != null) {
+                DatabaseTrackInfo db_track = track as DatabaseTrackInfo;
+                if (db_track != null) {
+                    db_track.SavedRating = rating_menu_item.Value;
+                } else {
+                    track.Rating = rating_menu_item.Value;
+                    track.Save ();
+                }
+
                 ServiceManager.PlayerEngine.TrackInfoUpdated ();
             }
         }
