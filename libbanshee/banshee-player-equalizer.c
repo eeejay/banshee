@@ -30,6 +30,68 @@
 
 #include "banshee-player-private.h"
 
+enum _BpEqStatus {
+    BP_EQ_STATUS_UNCHECKED,
+    BP_EQ_STATUS_DISABLED,
+    BP_EQ_STATUS_USE_BUILTIN,
+    BP_EQ_STATUS_USE_SYSTEM
+};
+
+// ---------------------------------------------------------------------------
+// Internal Functions
+// ---------------------------------------------------------------------------
+
+GstElement *
+_bp_equalizer_new (BansheePlayer *player)
+{
+    GstElement *equalizer;
+    
+    if (player->equalizer_status == BP_EQ_STATUS_DISABLED) {
+        return NULL;
+    }
+    
+    if (player->equalizer_status == BP_EQ_STATUS_UNCHECKED || 
+        player->equalizer_status == BP_EQ_STATUS_USE_BUILTIN) {
+        equalizer = gst_element_factory_make ("banshee-equalizer", "banshee-equalizer");
+        if (equalizer != NULL) {
+            if (player->equalizer_status == BP_EQ_STATUS_UNCHECKED) {
+                player->equalizer_status = BP_EQ_STATUS_USE_BUILTIN;
+                bp_debug ("Using built-in equalizer element");
+            }
+            
+            return equalizer;
+        }
+    }
+    
+    if (player->equalizer_status == BP_EQ_STATUS_UNCHECKED || 
+        player->equalizer_status == BP_EQ_STATUS_USE_SYSTEM) {
+        equalizer = gst_element_factory_make ("equalizer-10bands", "equalizer-10bands");
+        if (equalizer != NULL) {
+            if (player->equalizer_status == BP_EQ_STATUS_USE_SYSTEM) {
+                return equalizer;
+            }
+            
+            GstElementFactory *efactory = gst_element_get_factory (equalizer);
+            if (gst_plugin_feature_check_version (GST_PLUGIN_FEATURE (efactory), 0, 10, 9)) {
+                bp_debug ("Using system (gst-plugins-good) equalizer element");
+                player->equalizer_status = BP_EQ_STATUS_USE_SYSTEM;
+                return equalizer;
+            }
+            
+            bp_debug ("Buggy system equalizer found. gst-plugins-good 0.10.9 or better "
+                "required, or build Banshee with the built-in equalizer.");
+            gst_object_unref (equalizer);
+        } else {
+            bp_debug ("No system equalizer found");
+        }
+    }
+    
+    bp_debug ("No suitable equalizer element could be found, disabling EQ for this session");
+    player->equalizer_status = BP_EQ_STATUS_DISABLED;
+    return NULL;
+}
+
+
 // ---------------------------------------------------------------------------
 // Public Functions
 // ---------------------------------------------------------------------------

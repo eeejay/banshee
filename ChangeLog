@@ -1,3 +1,32 @@
+2008-06-19  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Enabled the equalizer again in the UI
+
+	* gstreamer/equalizer/gstiirequalizer.c:
+	* gstreamer/equalizer/remove-n-and-3-bands.diff: Rename the built-in
+	equalizer element 'banshee-equalizer' so we don't have to do as much
+	inspection at runtime to figure out if the element is built-in or not
+
+	* libbanshee/banshee-player-equalizer.c: Added a _bp_equalizer_new function
+	that will always return a non-buggy equalizer or NULL; that is, it will
+	check to see if the built-in equalizer is available, and if not, if
+	the system equalizer is available /and/ is 0.10.9 or newer; the detection
+	state is saved so the probing only needs to be done once
+
+	* libbanshee/banshee-player-pipeline.c: Use _bp_equalizer_new and only
+	create the other elements if we were actually given an equalizer (instead
+	of always creating the other elements and unreffing if the equalizer was
+	not returned)
+
+	* libbanshee/banshee-player-equalizer.h: Expose _bp_equalizer_new	
+
+	* libbanshee/banshee-player-private.h: Added a equalizer_status field to
+	the private player structure
+
+	* src/Core/Banshee.Core/Resources/translators.xml: Updated
+
 2008-06-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Fix the

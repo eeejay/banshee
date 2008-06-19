@@ -81,6 +81,7 @@ struct BansheePlayer {
     GstElement *audiobin;
     GstElement *equalizer;
     GstElement *preamp;
+    gint equalizer_status;
     
     // Pipeline/Playback State
     GMutex *mutex;

@@ -25,6 +25,7 @@ libbanshee_la_SOURCES =  \
 noinst_HEADERS =  \
 	banshee-gst.h \
 	banshee-player-cdda.h \
+	banshee-player-equalizer.h \
 	banshee-player-missing-elements.h \
 	banshee-player-pipeline.h \
 	banshee-player-private.h \

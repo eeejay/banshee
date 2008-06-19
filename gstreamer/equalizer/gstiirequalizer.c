@@ -723,7 +723,7 @@ plugin_init (GstPlugin * plugin)
 {
   GST_DEBUG_CATEGORY_INIT (equalizer_debug, "equalizer", 0, "equalizer");
 
-  if (!(gst_element_register (plugin, "equalizer-10bands", GST_RANK_NONE,
+  if (!(gst_element_register (plugin, "banshee-equalizer", GST_RANK_NONE,
               GST_TYPE_IIR_EQUALIZER_10BANDS)))
     return FALSE;
 
