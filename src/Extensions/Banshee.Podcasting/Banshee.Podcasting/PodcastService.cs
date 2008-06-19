@@ -250,12 +250,13 @@ namespace Banshee.Podcasting
             }
             
             // Handle podcast URIs
-            if (uri.StartsWith ("feed://")) {
-                string url = String.Format ("http://{0}", uri.Substring (7));
-                Log.DebugFormat ("Subscribing to podcast at {0}", url);
+            if (uri.Contains ("xml") || uri.Contains ("rss") || uri.Contains ("feed") || uri.StartsWith ("itpc")) {
+                if (uri.StartsWith ("feed://") || uri.StartsWith ("itpc://")) {
+                    uri = String.Format ("http://{0}", uri.Substring (7));
+                }
 
                 // TODO replace autodownload w/ actual default preference
-                FeedsManager.Instance.FeedManager.CreateFeed (url, FeedAutoDownload.None);
+                FeedsManager.Instance.FeedManager.CreateFeed (uri, FeedAutoDownload.None);
                 source.NotifyUser ();
             }
         }
