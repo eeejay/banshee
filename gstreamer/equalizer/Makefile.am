@@ -8,7 +8,7 @@ libgstequalizer_la_SOURCES = \
         gstiirequalizer10bands.c gstiirequalizer10bands.h
 
 libgstequalizer_la_CFLAGS = $(GST_CFLAGS) $(GST_INFO_FLAGS)
-libgstequalizer_la_LIBADD = $(GST_LIBS)
+libgstequalizer_la_LIBADD = $(GST_LIBS) -lgstaudio-0.10
 libgstequalizer_la_LDFLAGS = -avoid-version -module
 
 noinst_HEADERS = gstiirequalizer.h
