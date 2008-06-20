@@ -70,7 +70,7 @@ namespace Banshee.Lastfm.Recommendations
         private TitledList album_box;
         private TitledList track_box;
         
-        private Hyena.Widgets.ScrolledWindow similar_artists_view_sw;
+        private Gtk.ScrolledWindow similar_artists_view_sw;
         
         private TileView similar_artists_view;
         private VBox album_list;
@@ -138,25 +138,25 @@ namespace Banshee.Lastfm.Recommendations
 
         public RecommendationPane () : base ()
         {
-            //ShadowType = ShadowType.In;
-
             main_box = new HBox ();
             main_box.BorderWidth = 5;
 
             artist_box = new TitledList (String.Format ("Recommended Artists"));
             similar_artists_view = new TileView (2);
-            similar_artists_view_sw = new Hyena.Widgets.ScrolledWindow ();
-            similar_artists_view_sw.SetPolicy (PolicyType.Automatic, PolicyType.Automatic);
+            similar_artists_view_sw = new Gtk.ScrolledWindow ();
+            similar_artists_view_sw.SetPolicy (PolicyType.Never, PolicyType.Automatic);
             similar_artists_view_sw.Add (similar_artists_view);
             similar_artists_view_sw.ShowAll ();
-            artist_box.PackEnd (similar_artists_view_sw, true, true, 0);
+            artist_box.PackStart (similar_artists_view_sw, true, true, 0);
 
             album_box  = new TitledList (null);
             album_box.TitleWidthChars = 25;
+            album_box.SizeAllocated += OnSideSizeAllocated;
             album_list = new VBox ();
-            album_box.PackStart (album_list, true, true, 0);
+            album_box.PackStart (album_list, false, false, 0);
 
             track_box  = new TitledList (null);
+            track_box.SizeAllocated += OnSideSizeAllocated;
             track_box.TitleWidthChars = 25;
             track_list = new VBox ();
             track_box.PackStart (track_list, true, true, 0);
@@ -183,21 +183,20 @@ namespace Banshee.Lastfm.Recommendations
             main_box.PackStart (new VSeparator (), false, false, 0);
             main_box.PackStart (track_box, false, false, 5);
             
-            EventBox event_box = new EventBox ();
-            
-            /*no_artists_pane.StyleSet += delegate {
-                event_box.ModifyBg (StateType.Normal, no_artists_pane.Style.Base (StateType.Normal));
-                similar_artists_view.ModifyBg (StateType.Normal, no_artists_pane.Style.Base (StateType.Normal));
-            };*/
-            
-            /*StyleSet += delegate {
-                ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
-                ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
-            };*/
-
-            event_box.Add (main_box);
             no_artists_pane.Hide ();
-            Add (event_box);
+            
+            Add (main_box);
+        }
+        
+        private void OnSideSizeAllocated (object o, SizeAllocatedArgs args)
+        {
+            SetSizeRequest (-1, args.Allocation.Height + (Allocation.Height - args.Allocation.Height));
+        }
+        
+        protected override void OnStyleSet (Style previous_style)
+        {
+            base.OnStyleSet (previous_style);
+            similar_artists_view.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
         }
         
         private void UpdateForArtist (string artist_name)
@@ -216,7 +215,8 @@ namespace Banshee.Lastfm.Recommendations
             }
         }
         
-        private void UpdateForArtist (string artist_name, LastfmData<SimilarArtist> similar_artists, LastfmData<ArtistTopAlbum> top_albums, LastfmData<ArtistTopTrack> top_tracks)
+        private void UpdateForArtist (string artist_name, LastfmData<SimilarArtist> similar_artists, 
+            LastfmData<ArtistTopAlbum> top_albums, LastfmData<ArtistTopTrack> top_tracks)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 album_box.Title = String.Format (album_title_format, artist);
@@ -228,21 +228,8 @@ namespace Banshee.Lastfm.Recommendations
                 
                 // Similar Artists                
                 for (int i = 0; i < Math.Min (20, similar_artists.Count); i++) {
-                    SimilarArtist similar_artist = similar_artists[i];
-                    Tile tile = new Tile (similar_artist.Name);
-                    try {
-                        tile.Pixbuf = new Gdk.Pixbuf (DataCore.GetCachedPathFromUrl (similar_artist.SmallImageUrl));
-                    } catch {
-                        tile.Pixbuf = IconThemeUtils.LoadIcon ("generic-artist", 48);
-                    }
-                    
-                    try {
-                        tile.SecondaryText = String.Format (Catalog.GetString ("{0}% Similarity"), similar_artist.MatchAsInt);
-                    } catch {
-                        tile.SecondaryText = Catalog.GetString ("Unknown Similarity");
-                    }
-                    
-                    tile.Clicked += delegate { Banshee.Web.Browser.Open (similar_artist.Url); };
+                    SimilarArtistTile tile = new SimilarArtistTile (similar_artists[i]);
+                    tile.ShowAll ();
                     similar_artists_view.AddWidget (tile);
                 }
                 

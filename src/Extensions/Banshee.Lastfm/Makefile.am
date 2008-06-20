@@ -16,7 +16,8 @@ SOURCES =  \
 	Banshee.Lastfm.Radio/StationType.cs \
 	Banshee.Lastfm.Recommendations/RecommendationActions.cs \
 	Banshee.Lastfm.Recommendations/RecommendationPane.cs \
-	Banshee.Lastfm.Recommendations/RecommendationService.cs
+	Banshee.Lastfm.Recommendations/RecommendationService.cs \
+	Banshee.Lastfm.Recommendations/SimilarArtistTile.cs
 
 
 RESOURCES =  \
