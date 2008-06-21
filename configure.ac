@@ -33,6 +33,8 @@ BANSHEE_CHECK_LIBBANSHEE
 #BANSHEE_CHECK_NAUTILUS_BURN
 BANSHEE_CHECK_GSTREAMER
 
+BANSHEE_CHECK_NOW_PLAYING_X11
+
 dnl Mono and gmcs
 SHAMROCK_CHECK_MONO_MODULE(1.2.2)
 SHAMROCK_FIND_MONO_2_0_COMPILER
@@ -138,6 +140,8 @@ src/Backends/Banshee.Gnome/Makefile
 src/Backends/Banshee.GStreamer/Makefile
 src/Backends/Banshee.Hal/Makefile
 src/Backends/Banshee.Unix/Makefile
+src/Backends/Banshee.NowPlaying.X11/Makefile
+src/Backends/Banshee.NowPlaying.X11/libbnpx11/Makefile
 
 src/Libraries/Makefile
 src/Libraries/Hyena/Makefile
@@ -193,6 +197,7 @@ ${PACKAGE}-${VERSION}
     DAAP Support:      ${enable_daap}	(unstable)
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
+    X11 Video Support: ${have_xvidmode}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "

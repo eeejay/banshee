@@ -1,3 +1,34 @@
+2008-06-21  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying.addin.xml: Define
+	the new FullscreenAdapter extension point
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenAdapter.cs:
+	The manager fullscreen adapter that also provides stock GTK fullscreening
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Get rid of the type hint since it really confuses older Compiz (on 10.3)
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/IFullscreenAdapter.cs:
+	A basic interface for FullscreenAdapter extensions which allow platforms
+	to define solid fullscreen behavior above and beyond that which stock
+	GTK can provide
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	Use the FullscreenAdapter stuff to go fullscreen
+
+	* src/Backends/Banshee.NowPlaying.X11/Banshee.NowPlaying.X11: An X11 
+	specific backend for providing an IFullscreenAdapter extension to the
+	now playing video extension; this binds the hard and valued work of
+	BaconResize found in Totem. Respek.
+
+	* build/m4/banshee/bnpx11.m4:
+	* src/Backends/Banshee.NowPlaying.X11/libbnpx11/bacon-resize.c: 
+	* src/Backends/Banshee.NowPlaying.X11/libbnpx11/bacon-resize.h: Lovingly
+	borrowed from our good friends, Totem. <3 Bastien. That is, the X11/XRandR
+	support for doing proper fullscreen in some annoying situations, and the
+	configure foo to detect it at build time
+
 2008-06-20  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:

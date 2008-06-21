@@ -4,8 +4,10 @@ LINK = $(REF_EXTENSION_NOWPLAYING)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
+	Banshee.NowPlaying/FullscreenAdapter.cs \
 	Banshee.NowPlaying/FullscreenControls.cs \
 	Banshee.NowPlaying/FullscreenWindow.cs \
+	Banshee.NowPlaying/IFullscreenAdapter.cs \
 	Banshee.NowPlaying/NowPlayingInterface.cs \
 	Banshee.NowPlaying/NowPlayingSource.cs \
 	Banshee.NowPlaying/OverlayWindow.cs \

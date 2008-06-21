@@ -24,4 +24,8 @@
     <Source class="Banshee.NowPlaying.NowPlayingSource"/>
   </Extension>
 
+  <ExtensionPoint path="/Banshee/NowPlaying/FullscreenAdapter">
+    <ExtensionNode name="FullscreenAdapter"/>
+  </ExtensionPoint>
+
 </Addin>

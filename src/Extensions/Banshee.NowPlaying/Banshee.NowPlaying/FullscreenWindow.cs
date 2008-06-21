@@ -109,10 +109,6 @@ namespace Banshee.NowPlaying
             Decorated = false;
             CanFocus = true;
             
-            // FIXME: Not really correct, but prevents Compiz from 
-            // doing strange things with the window
-            TypeHint = Gdk.WindowTypeHint.Notification;
-            
             ConfigureWindow ();
         }
         

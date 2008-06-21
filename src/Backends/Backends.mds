@@ -5,6 +5,7 @@
       <Entry build="True" name="Banshee.Gnome" configuration="Debug" />
       <Entry build="True" name="Banshee.Unix" configuration="Debug" />
       <Entry build="True" name="Banshee.Hal" configuration="Debug" />
+      <Entry build="True" name="Banshee.NowPlaying.X11" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee.GStreamer" single="True">
@@ -12,11 +13,13 @@
     <Execute type="None" entry="Banshee.Gnome" />
     <Execute type="None" entry="Banshee.Unix" />
     <Execute type="None" entry="Banshee.Hal" />
+    <Execute type="None" entry="Banshee.NowPlaying.X11" />
   </StartMode>
   <Entries>
     <Entry filename="Banshee.GStreamer/Banshee.GStreamer.mdp" />
     <Entry filename="Banshee.Gnome/Banshee.Gnome.mdp" />
     <Entry filename="Banshee.Unix/Banshee.Unix.mdp" />
     <Entry filename="Banshee.Hal/Banshee.Hal.mdp" />
+    <Entry filename="Banshee.NowPlaying.X11/Banshee.NowPlaying.X11.mdp" />
   </Entries>
 </Combine>

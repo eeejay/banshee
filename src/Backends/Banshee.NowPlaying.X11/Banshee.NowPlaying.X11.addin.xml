@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.NowPlaying.X11"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
+    category="required:Backends"
+    description="Provides an X11 backend for video support, which enables proper fullscreen support."
+    defaultEnabled="true">
+
+  <Dependencies>
+    <Addin id="Banshee.Core" version="1.0"/>
+    <Addin id="Banshee.Services" version="1.0"/>
+    <Addin id="Banshee.NowPlaying" version="1.0"/>
+  </Dependencies>
+  
+  <Extension path="/Banshee/NowPlaying/FullscreenAdapter">
+    <FullscreenAdapter class="Banshee.NowPlaying.X11.FullscreenAdapter"/>
+  </Extension>
+
+</Addin>
