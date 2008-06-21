@@ -9,5 +9,9 @@ SOURCES = Banshee.NowPlaying.X11/FullscreenAdapter.cs
 
 RESOURCES = Banshee.NowPlaying.X11.addin.xml
 
+if HAVE_XVIDMODE
 include $(top_srcdir)/build/build.mk
+else
+EXTRA_DIST = $(SOURCES) $(RESOURCES)
+endif
 

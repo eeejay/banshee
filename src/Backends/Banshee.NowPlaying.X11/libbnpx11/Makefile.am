@@ -1,10 +1,10 @@
+SOURCES = bacon-resize.c bacon-resize.h
+
+if HAVE_XVIDMODE
 bnpx11dir = $(pkglibdir)/Backends
 bnpx11_LTLIBRARIES = libbnpx11.la
 
-libbnpx11_la_SOURCES = \
-	bacon-resize.c \
-	bacon-resize.h
-
+libbnpx11_la_SOURCES = $(SOURCES)
 libbnpx11_la_CFLAGS = $(BNPX_CFLAGS) $(BNPX_GTK_CFLAGS)
 libbnpx11_la_LIBADD = $(BNPX_LIBS) $(BNPX_GTK_LIBS) -lX11 -lXxf86vm
 libbnpx11_la_LDFLAGS = -avoid-version -module
@@ -18,6 +18,10 @@ $(top_builddir)/bin/libbnpx11.so: .libs/libbnpx11.so
 	cp -f $< $@
 
 CLEANFILES = $(top_builddir)/bin/libbnpx11.so
+
+else
+EXTRA_DIST = $(SOURCES)
+endif
 
 MAINTAINERCLEANFILES = Makefile.in
 
