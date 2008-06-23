@@ -51,6 +51,7 @@ namespace Banshee.PlayQueue
     {
         private static string special_playlist_name = "Play Queue";//typeof (PlayQueueSource).ToString ();
 
+        private ITrackModelSource prior_playback_source;
         private DatabaseTrackInfo playing_track;
         private bool actions_loaded = false;
 
@@ -115,7 +116,7 @@ namespace Banshee.PlayQueue
             
             TrackModel.Reloaded += delegate {
                 if (this == ServiceManager.PlaybackController.Source && Count == 0) {
-                    ServiceManager.PlaybackController.Source = (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
+                    ServiceManager.PlaybackController.Source = PriorSource;
                 }
             };
             
@@ -127,6 +128,7 @@ namespace Banshee.PlayQueue
         private void SetAsPlaybackSourceUnlessPlaying ()
         {
             if (Count > 0) {
+                PriorSource = ServiceManager.PlaybackController.Source;
                 ServiceManager.PlaybackController.NextSource = this;
             }
         }
@@ -174,6 +176,7 @@ namespace Banshee.PlayQueue
         private void OnCanonicalPlaybackControllerTransition (object o, EventArgs args)
         {
             if (Count > 0) {
+                PriorSource = ServiceManager.PlaybackController.Source;
                 ServiceManager.PlaybackController.Source = this;
             }
         }
@@ -238,7 +241,7 @@ namespace Banshee.PlayQueue
             RemovePlayingTrack ();
             
             if (Count == 0) {
-                ServiceManager.PlaybackController.Source = (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
+                ServiceManager.PlaybackController.Source = PriorSource;
                 ServiceManager.PlaybackController.Next (restart);
                 return;
             }
@@ -255,6 +258,21 @@ namespace Banshee.PlayQueue
             if (playing_track != null) {
                 RemoveTrack (playing_track);
                 playing_track = null;
+            }
+        }
+        
+        private ITrackModelSource PriorSource {
+            get {
+                if (prior_playback_source == null || prior_playback_source == this) {
+                    return (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
+                }
+                return prior_playback_source;
+            }
+            set {
+                if (value == null || value == this) {
+                    return;
+                }
+                prior_playback_source = value;
             }
         }
         

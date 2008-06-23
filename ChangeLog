@@ -1,5 +1,14 @@
 2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Remember the last playback source when switching to the play queue, so
+	when the queue is empty we can switch back to it.
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Have the playback source follow the active source when first started up.
+
+2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellQueryText.cs:
 	New class that shows the Text of the object, or if blank, a given string.
 

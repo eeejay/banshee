@@ -57,6 +57,7 @@ namespace Banshee.PlaybackController
         private bool transition_track_started = false;
         private int consecutive_errors;
         private uint error_transition_id;
+        private DateTime source_auto_set_at = DateTime.MinValue;
     
         private PlaybackShuffleMode shuffle_mode;
         private PlaybackRepeatMode repeat_mode;
@@ -90,6 +91,14 @@ namespace Banshee.PlaybackController
                 PlayerEvent.StateChange |
                 PlayerEvent.Error, 
                 true);
+
+            ServiceManager.SourceManager.ActiveSourceChanged += delegate {
+                ITrackModelSource active_source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
+                if (active_source != null && source_auto_set_at == source_set_at && !player_engine.IsPlaying ()) {
+                    Source = active_source;
+                    source_auto_set_at = source_set_at;
+                }
+            };
         }
         
         protected virtual void InstantiateStacks ()
@@ -384,7 +393,7 @@ namespace Banshee.PlaybackController
             protected set { current_track = value; }
         }
         
-        protected DateTime source_set_at;
+        protected DateTime source_set_at = DateTime.MinValue;
         public ITrackModelSource Source {
             get { 
                 if (source == null && ServiceManager.SourceManager.DefaultSource is ITrackModelSource) {
