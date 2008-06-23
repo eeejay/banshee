@@ -1,5 +1,10 @@
 2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:
+	Change the download user job's name to specify it's downloading podcasts.
+
+2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
 	Don't put (disconnected) in the source name; it confuses some users,
 	making them think scrobbling won't work, it's not very useful, and it
