@@ -167,8 +167,9 @@ namespace Banshee.Sources
 
             // ServiceManager.DBusServiceManager.RegisterObject(source);
             
-            foreach(Source child_source in source.Children) {
-                AddSource(child_source, false);
+            List<Source> children = new List<Source> (source.Children);
+            foreach(Source child_source in children) {
+                AddSource (child_source, false);
             }
                 
             if(isDefault && ActiveSource == null) {

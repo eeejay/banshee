@@ -1,5 +1,10 @@
 2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Avoid
+	collection modified exception in AddSource.
+
+2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
 	Remember the last playback source when switching to the play queue, so
 	when the queue is empty we can switch back to it.
