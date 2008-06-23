@@ -75,19 +75,24 @@ namespace Banshee.Lastfm.Recommendations
         private TileView similar_artists_view;
         private VBox album_list;
         private VBox track_list;
-        
-        private object update_sync = new object ();
 
         private static string album_title_format = Catalog.GetString ("Top Albums by {0}");
         private static string track_title_format = Catalog.GetString ("Top Tracks by {0}");
         
         private bool ready = false;
+        private bool refreshing = false;
         private bool show_when_ready = true;
         public bool ShowWhenReady {
             get { return show_when_ready; }
             set {
                 show_when_ready = value;
                 UpdateVisiblity ();
+                
+                if (!show_when_ready) {
+                    CancelTasks ();
+                } else if (!ready && !refreshing) {
+                    RefreshRecommendations ();
+                }
             }
         }
         
@@ -115,12 +120,24 @@ namespace Banshee.Lastfm.Recommendations
                 
                 artist = value;
                 HideWithTimeout ();
-                System.Threading.ThreadPool.QueueUserWorkItem (delegate {
-                    lock (update_sync) {
-                        UpdateForArtist (artist);
-                    }
-                });
+                RefreshRecommendations ();
             }
+        }
+        
+        private void RefreshRecommendations ()
+        {
+            CancelTasks ();
+            
+            if (show_when_ready && !String.IsNullOrEmpty (Artist)) {
+                refreshing = true;
+                Banshee.Kernel.Scheduler.Schedule (new RefreshRecommendationsJob (this, Artist));
+            }
+        }
+        
+        private void CancelTasks ()
+        {
+            Banshee.Kernel.Scheduler.Unschedule (typeof (RefreshRecommendationsJob));
+            refreshing = false;
         }
         
         public void HideWithTimeout ()
@@ -199,17 +216,34 @@ namespace Banshee.Lastfm.Recommendations
             similar_artists_view.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
         }
         
-        private void UpdateForArtist (string artist_name)
+        private class RefreshRecommendationsJob : Banshee.Kernel.Job
+        {
+            private RecommendationPane pane;
+            private string artist;
+            
+            public RefreshRecommendationsJob (RecommendationPane pane, string artist)
+            {
+                this.pane = pane;
+                this.artist = artist;
+            }
+            
+            protected override void RunJob ()
+            {
+                pane.UpdateForArtist (artist);
+            }
+        }
+            
+        private void UpdateForArtist (string artist)
         {
             try {
-                LastfmArtistData artist = new LastfmArtistData (artist_name);
+                LastfmArtistData artist_data = new LastfmArtistData (artist);
                 
                 // Make sure all the album art is downloaded
-                foreach (SimilarArtist similar in artist.SimilarArtists) {
+                foreach (SimilarArtist similar in artist_data.SimilarArtists) {
                     DataCore.DownloadContent (similar.SmallImageUrl);
                 }
                 
-                UpdateForArtist (artist_name, artist.SimilarArtists, artist.TopAlbums, artist.TopTracks);
+                UpdateForArtist (artist, artist_data.SimilarArtists, artist_data.TopAlbums, artist_data.TopTracks);
             } catch (Exception e) {
                 Log.Exception (e);
             }
@@ -290,6 +324,7 @@ namespace Banshee.Lastfm.Recommendations
                 track_box.ShowAll ();
                 
                 ready = true;
+                refreshing = false;
                 UpdateVisiblity ();
             });
         }
