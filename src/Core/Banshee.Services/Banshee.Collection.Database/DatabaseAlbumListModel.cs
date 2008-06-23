@@ -46,12 +46,10 @@ namespace Banshee.Collection.Database
             : base (source, trackModel, connection, DatabaseAlbumInfo.Provider, new AlbumInfo (null), uuid)
         {
             ReloadFragmentFormat = @"
-                FROM CoreAlbums INNER JOIN CoreArtists ON CoreAlbums.ArtistID = CoreArtists.ArtistID
-                    WHERE CoreAlbums.AlbumID IN
+                FROM CoreAlbums WHERE CoreAlbums.AlbumID IN
                         (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreCache{0}
                             WHERE CoreCache.ModelID = {1} AND
-                                  CoreCache.ItemId = {2})
-                    {3}
+                                  CoreCache.ItemId = {2} {3})
                     ORDER BY CoreAlbums.TitleLowered, CoreAlbums.ArtistNameLowered";
         }
         

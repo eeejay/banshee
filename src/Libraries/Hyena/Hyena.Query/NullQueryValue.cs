@@ -36,7 +36,9 @@ namespace Hyena.Query
 {
     public class NullQueryValue : QueryValue
     {
-        public static readonly Operator IsNullOrEmpty  = new Operator ("empty", "IS NULL", "!");
+        public static readonly Operator IsNullOrEmpty  = new Operator ("empty", "IN (NULL, '', 0)", true, "!");
+        
+        public static readonly NullQueryValue Instance = new NullQueryValue ();
 
         public override string XmlElementName {
             get { return "empty"; }
@@ -51,12 +53,16 @@ namespace Hyena.Query
             get { return operators; }
         }
 
-        public NullQueryValue ()
+        private NullQueryValue ()
         {
             IsEmpty = false;
         }
 
         public override void ParseUserQuery (string input)
+        {
+        }
+        
+        public override void LoadString (string input)
         {
         }
 

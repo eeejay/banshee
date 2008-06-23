@@ -62,6 +62,24 @@ namespace Hyena.Query
 
             return null;
         }
+        
+        public static QueryValue CreateFromStringValue (string input, QueryField field)
+        {
+            if (field == null) {
+                QueryValue val = new StringQueryValue ();
+                val.LoadString (input);
+                return val;
+            } else {
+                foreach (QueryValue val in field.CreateQueryValues ()) {
+                    val.LoadString (input);
+                    if (!val.IsEmpty) {
+                        return val;
+                    }
+                }
+            }
+
+            return null;
+        }
 
         public static QueryValue CreateFromXml (XmlElement parent, QueryField field)
         {
@@ -103,6 +121,7 @@ namespace Hyena.Query
         public abstract string XmlElementName { get; }
         public abstract AliasedObjectSet<Operator> OperatorSet { get; }
 
+        public abstract void LoadString (string input);
         public abstract void ParseXml (XmlElement node);
 
         public virtual void AppendXml (XmlElement node)

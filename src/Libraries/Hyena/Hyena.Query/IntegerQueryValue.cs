@@ -53,6 +53,11 @@ namespace Hyena.Query
         {
             IsEmpty = !Int64.TryParse (input, out value);
         }
+        
+        public override void LoadString (string input)
+        {
+            ParseUserQuery (input);
+        }
 
         public override void ParseXml (XmlElement node)
         {

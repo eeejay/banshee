@@ -121,7 +121,7 @@ namespace Hyena.Query
             IsEmpty = false;
         }
 
-        public void LoadString (string val)
+        public override void LoadString (string val)
         {
             try {
                 SetRelativeValue (Convert.ToDouble (val), TimeFactor.Second);

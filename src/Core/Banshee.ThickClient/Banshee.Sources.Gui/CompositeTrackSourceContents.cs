@@ -41,6 +41,7 @@ using Hyena.Widgets;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.Configuration;
 using Banshee.Gui;
 using Banshee.Collection.Gui;
@@ -49,6 +50,7 @@ namespace Banshee.Sources.Gui
 {
     public class CompositeTrackSourceContents : FilteredListSourceContents, ITrackModelSourceContents
     {
+        private QueryFilterView<string> genre_view;
         private ArtistListView artist_view;
         private AlbumListView album_view;
         private TrackListView track_view;
@@ -60,12 +62,16 @@ namespace Banshee.Sources.Gui
         protected override void InitializeViews ()
         {
             SetupMainView (track_view = new TrackListView ());
+            SetupFilterView (genre_view = new QueryFilterView<string> (Catalog.GetString ("Not Set")));
             SetupFilterView (artist_view = new ArtistListView ());
             SetupFilterView (album_view = new AlbumListView ());
         }
         
         protected override void ClearFilterSelections ()
         {
+            if (genre_view.Model != null) {
+                genre_view.Selection.Clear ();
+            }
             if (artist_view.Model != null) {
                 artist_view.Selection.Clear ();
             }
@@ -74,11 +80,12 @@ namespace Banshee.Sources.Gui
             }
         }
 
-        public void SetModels (TrackListModel track, IListModel<ArtistInfo> artist, IListModel<AlbumInfo> album)
+        public void SetModels (TrackListModel track, IListModel<ArtistInfo> artist, IListModel<AlbumInfo> album, IListModel<QueryFilterInfo<string>> genre)
         {
             SetModel (track);
             SetModel (artist);
             SetModel (album);
+            SetModel (genre);
         }
         
         IListView<TrackInfo> ITrackModelSourceContents.TrackView {
@@ -146,6 +153,8 @@ namespace Banshee.Sources.Gui
                     SetModel (artist_view, (model as IListModel<ArtistInfo>));
                 else if (model is IListModel<AlbumInfo>)
                     SetModel (album_view, (model as IListModel<AlbumInfo>));
+                else if (model is IListModel<QueryFilterInfo<string>>)
+                    SetModel (genre_view, (model as IListModel<QueryFilterInfo<string>>));
                 else
                     Hyena.Log.DebugFormat ("CompositeTrackSourceContents got non-album/artist filter model: {0}", model);
             }
@@ -162,6 +171,7 @@ namespace Banshee.Sources.Gui
             track_view.SetModel (null);
             artist_view.SetModel (null);
             album_view.SetModel (null);
+            genre_view.SetModel (null);
             track_view.HeaderVisible = false;
             //Console.WriteLine ("CTSC.reset_source 2");
         }

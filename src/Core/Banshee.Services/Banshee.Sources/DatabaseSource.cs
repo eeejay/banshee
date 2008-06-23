@@ -54,6 +54,8 @@ namespace Banshee.Sources
         protected DatabaseTrackListModel track_model;
         protected DatabaseAlbumListModel album_model;
         protected DatabaseArtistListModel artist_model;
+        
+        private DatabaseQueryFilterModel<string> genre_model;
 
         protected RateLimiter reload_limiter;
         
@@ -109,6 +111,9 @@ namespace Banshee.Sources
             InitializeTrackModel ();
 
             if (HasArtistAlbum) {
+                genre_model = new Banshee.Collection.Database.DatabaseQueryFilterModel<string> (this, DatabaseTrackModel, ServiceManager.DbConnection,
+                    Catalog.GetString ("All Genres ({0})"), UniqueId, BansheeQuery.GenreField, "Genre");
+                
                 artist_model = new DatabaseArtistListModel (this, DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
                 album_model = new DatabaseAlbumListModel (this, DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
             }
@@ -224,6 +229,9 @@ namespace Banshee.Sources
         
         public virtual IEnumerable<IFilterListModel> FilterModels {
             get {
+                if (genre_model != null)
+                    yield return genre_model;
+
                 if (artist_model != null)
                     yield return artist_model;
                     
@@ -523,6 +531,9 @@ namespace Banshee.Sources
         protected void InvalidateCaches ()
         {
             track_model.InvalidateCache ();
+            
+            if (genre_model != null)
+                genre_model.InvalidateCache ();
             
             // TODO invalidate cache on all FilterModels
             if (artist_model != null)

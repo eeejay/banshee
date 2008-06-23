@@ -1,5 +1,5 @@
 //
-// IListView.cs
+// QueryFilterView.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -26,21 +26,24 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Hyena.Data.Gui
+using System;
+
+using Hyena.Data.Gui;
+
+using Banshee.Collection.Database;
+
+namespace Banshee.Collection.Gui
 {
-    public interface IListView
+    public class QueryFilterView<T> : TrackFilterListView<QueryFilterInfo<string>>
     {
-        Hyena.Collections.SelectionProxy SelectionProxy { get; }
-        Hyena.Collections.Selection Selection { get; }
-        
-        void ScrollTo (int index);
-        void CenterOn (int index);
-        ColumnController ColumnController { get; set; }
-    }
-    
-    public interface IListView<T> : IListView
-    {
-        void SetModel (IListModel<T> model);
-        IListModel<T> Model { get; }
+        public QueryFilterView (string blank) : this (new Column ("Filter", new ColumnCellQueryText (blank, "Title", true), 1.0))
+        {
+        }
+
+        public QueryFilterView (Column column) : base ()
+        {
+            column_controller.Add (column);
+            ColumnController = column_controller;
+        }
     }
 }

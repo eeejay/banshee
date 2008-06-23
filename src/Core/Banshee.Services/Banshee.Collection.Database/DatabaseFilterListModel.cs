@@ -58,7 +58,7 @@ namespace Banshee.Collection.Database
         
         protected readonly U select_all_item;
 
-        public DatabaseFilterListModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid)
+        public DatabaseFilterListModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, HyenaSqliteConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid)
             : base (trackModel)
         {
             this.source = source;
@@ -111,6 +111,8 @@ namespace Banshee.Collection.Database
                 }
             }
         }
+        
+        public virtual bool CachesValues { get { return false; } }
         
         protected abstract string ItemToFilterValue (object o);
 
@@ -166,7 +168,7 @@ namespace Banshee.Collection.Database
 
         // Implement ICacheableModel
         public virtual int FetchCount {
-            get { return 20; }
+            get { return 40; }
         }
 
         public virtual string SelectAggregates { get { return null; } }

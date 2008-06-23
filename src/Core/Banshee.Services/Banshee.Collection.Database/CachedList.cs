@@ -117,6 +117,7 @@ namespace Banshee.Collection.Database
             public string JoinPrimaryKey { get { return null; } }
             public string JoinColumn { get { return null; } }
             public bool CachesJoinTableEntries { get { return false; } }
+            public bool CachesValues { get { return false; } }
             public Selection Selection { get { return null; } }
         }
     }

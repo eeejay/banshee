@@ -88,7 +88,7 @@ namespace Hyena.Query
             IsEmpty = false;
         }
 
-        public void LoadString (string val, bool isRelative)
+        public override void LoadString (string val)
         {
             try {
                 SetValue (DateTime.Parse (val));
@@ -100,7 +100,7 @@ namespace Hyena.Query
         public override void ParseXml (XmlElement node)
         {
             try {
-                LoadString (node.InnerText, node.HasAttribute ("type") && node.GetAttribute ("type") == "rel");
+                LoadString (node.InnerText);
             } catch {
                 IsEmpty = true;
             }

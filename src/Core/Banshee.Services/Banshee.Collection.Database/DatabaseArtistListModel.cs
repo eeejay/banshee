@@ -45,16 +45,15 @@ namespace Banshee.Collection.Database
             : base (source, trackModel, connection, DatabaseArtistInfo.Provider, new ArtistInfo (null), uuid)
         {
             ReloadFragmentFormat = @"
-                FROM CoreArtists 
-                    WHERE CoreArtists.ArtistID IN
-                        (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreCache{0}
-                            WHERE CoreCache.ModelID = {1} AND
-                                  CoreCache.ItemID = {2})
+                FROM CoreArtists WHERE CoreArtists.ArtistID IN
+                    (SELECT CoreTracks.ArtistID FROM CoreTracks, CoreCache{0}
+                        WHERE CoreCache.ModelID = {1} AND
+                              CoreCache.ItemID = {2} {3})
                     ORDER BY NameLowered";
         }
         
         public override string FilterColumn {
-            get { return "CoreArtists.ArtistID"; }
+            get { return "CoreTracks.ArtistID"; }
         }
         
         protected override string ItemToFilterValue (object item)

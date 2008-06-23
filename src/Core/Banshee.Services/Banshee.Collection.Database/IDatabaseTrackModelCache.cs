@@ -42,7 +42,8 @@ namespace Banshee.Collection.Database
         void RestoreSelection ();
         long Count { get; }
         void Reload ();
-        long IndexOf (long item_entry_id);
+        long IndexOf (Hyena.Data.ICacheableItem item);
+        long IndexOf (object item_entry_id);
         TrackInfo GetSingle (string random_fragment, params object [] args);
         TrackInfo GetValue (long index);
         long CacheId { get; }

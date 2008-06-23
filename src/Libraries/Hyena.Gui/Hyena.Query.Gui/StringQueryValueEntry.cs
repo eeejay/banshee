@@ -58,7 +58,7 @@ namespace Hyena.Query.Gui
 
         protected void HandleChanged (object o, EventArgs args)
         {
-            query_value.SetValue (entry.Text);
+            query_value.ParseUserQuery (entry.Text);
         }
     }
 }

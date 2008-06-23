@@ -33,7 +33,7 @@ using System.Text;
 
 namespace Hyena.Data.Sqlite
 {
-    internal abstract class AbstractDatabaseColumn
+    public abstract class AbstractDatabaseColumn
     {
         private readonly FieldInfo field_info;
         private readonly PropertyInfo property_info;
@@ -111,7 +111,7 @@ namespace Hyena.Data.Sqlite
         }
     }
     
-    internal sealed class DatabaseColumn : AbstractDatabaseColumn
+    public sealed class DatabaseColumn : AbstractDatabaseColumn
     {
         private DatabaseColumnAttribute attribute;
         

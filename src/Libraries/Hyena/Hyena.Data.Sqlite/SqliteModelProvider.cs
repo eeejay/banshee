@@ -213,36 +213,8 @@ namespace Hyena.Data.Sqlite
                 DatabaseColumn c = member is FieldInfo
                     ? new DatabaseColumn ((FieldInfo)member, column)
                     : new DatabaseColumn ((PropertyInfo)member, column);
-                
-                foreach (DatabaseColumn col in columns) {
-                    if (col.Name == c.Name) {
-                        throw new Exception (String.Format (
-                            "{0} has multiple columns named {1}",
-                             TableName, c.Name)
-                        );
-                    }
-                    if (col.Index != null && col.Index == c.Index) {
-                        throw new Exception (String.Format (
-                            "{0} has multiple indecies named {1}",
-                            TableName, c.Name)
-                        );
-                    }
-                }
-                
-                columns.Add (c);
-
-                if (column.Select) {
-                    select_columns.Add (c);
-                }
-                
-                if ((c.Constraints & DatabaseColumnConstraints.PrimaryKey) > 0) {
-                    if (key != null) {
-                        throw new Exception (String.Format (
-                            "Multiple primary keys in the {0} table", TableName)
-                        );
-                    }
-                    key = c;
-                }
+                    
+                AddColumn (c, column.Select);
             }
             VirtualDatabaseColumnAttribute virtual_column = attribute as VirtualDatabaseColumnAttribute;
             if (virtual_column != null) {
@@ -251,6 +223,39 @@ namespace Hyena.Data.Sqlite
                 } else {
                     virtual_columns.Add (new VirtualDatabaseColumn ((PropertyInfo) member, virtual_column));
                 }
+            }
+        }
+        
+        protected void AddColumn (DatabaseColumn c, bool select)
+        {
+            foreach (DatabaseColumn col in columns) {
+                if (col.Name == c.Name) {
+                    throw new Exception (String.Format (
+                        "{0} has multiple columns named {1}",
+                         TableName, c.Name)
+                    );
+                }
+                if (col.Index != null && col.Index == c.Index) {
+                    throw new Exception (String.Format (
+                        "{0} has multiple indecies named {1}",
+                        TableName, c.Name)
+                    );
+                }
+            }
+            
+            columns.Add (c);
+
+            if (select) {
+                select_columns.Add (c);
+            }
+            
+            if ((c.Constraints & DatabaseColumnConstraints.PrimaryKey) > 0) {
+                if (key != null) {
+                    throw new Exception (String.Format (
+                        "Multiple primary keys in the {0} table", TableName)
+                    );
+                }
+                key = c;
             }
         }
         
@@ -643,6 +648,7 @@ namespace Hyena.Data.Sqlite
                 }
                 return primary_key;
             }
+            protected set { primary_key = value; }
         }
         
         private void BuildQuerySql ()

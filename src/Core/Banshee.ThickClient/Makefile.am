@@ -16,11 +16,13 @@ SOURCES =  \
 	Banshee.Collection.Gui/ColumnCellDuration.cs \
 	Banshee.Collection.Gui/ColumnCellFileSize.cs \
 	Banshee.Collection.Gui/ColumnCellPositiveInt.cs \
+	Banshee.Collection.Gui/ColumnCellQueryText.cs \
 	Banshee.Collection.Gui/ColumnCellStatusIndicator.cs \
 	Banshee.Collection.Gui/ColumnCellTrack.cs \
 	Banshee.Collection.Gui/ColumnCellTrackNumber.cs \
 	Banshee.Collection.Gui/DefaultColumnController.cs \
 	Banshee.Collection.Gui/PersistentColumnController.cs \
+	Banshee.Collection.Gui/QueryFilterView.cs \
 	Banshee.Collection.Gui/TerseTrackListView.cs \
 	Banshee.Collection.Gui/TrackFilterListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \

@@ -121,6 +121,17 @@ namespace Hyena.Data.Sqlite
                         INSERT INTO {0} (ModelID, ItemID) SELECT {1}, {2} ",
                     CacheTableName, uid, model.JoinPrimaryKey
                 );
+            } else if (model.CachesValues) {
+                select_str = String.Format (
+                    @"SELECT OrderID, ItemID FROM {0} WHERE {0}.ModelID = {1}",
+                    CacheTableName, uid
+                );
+                
+                reload_sql = String.Format (@"
+                    DELETE FROM {0} WHERE ModelID = {1};
+                    INSERT INTO {0} (ModelID, ItemID) SELECT DISTINCT {1}, {2} ",
+                    CacheTableName, uid, provider.Select
+                );
             } else {
                 select_str = String.Format (
                     @"SELECT {0}, {2}.ItemID FROM {1}
@@ -217,8 +228,16 @@ namespace Hyena.Data.Sqlite
              }
         }
         
-        // FIXME this should really take a type T, not a confusing, ambiguous long
-        public long IndexOf (long item_id)
+        public long IndexOf (ICacheableItem item)
+        {
+            if (item == null || item.CacheModelId != CacheId) {
+                return -1;
+            }
+            
+            return IndexOf (item.CacheEntryId);
+        }
+
+        public long IndexOf (object item_id)
         {
             lock (this) {
                 if (rows == 0) {
@@ -247,7 +266,7 @@ namespace Hyena.Data.Sqlite
             using (IDataReader reader = connection.Query (get_single_command, args)) {
                 if (reader.Read ()) {
                     T item = provider.Load (reader);
-                    item.CacheEntryId = Convert.ToInt64 (reader[reader.FieldCount - 1]);
+                    item.CacheEntryId = reader[reader.FieldCount - 1];
                     item.CacheModelId = uid;
                     return item;
                 }
@@ -287,7 +306,7 @@ namespace Hyena.Data.Sqlite
         }
 
         private bool saved_selection = false;
-        private long saved_focus_entry_id = -1;
+        private ICacheableItem saved_focus_item = null;
         public void SaveSelection ()
         {
             if (model.Selection != null && model.Selection.Count > 0 &&
@@ -299,7 +318,7 @@ namespace Hyena.Data.Sqlite
                 if (!has_select_all_item && model.Selection.FocusedIndex != -1) {
                     T item = GetValue (model.Selection.FocusedIndex);
                     if (item != null) {
-                        saved_focus_entry_id = (int) GetValue (model.Selection.FocusedIndex).CacheEntryId;
+                        saved_focus_item = GetValue (model.Selection.FocusedIndex);
                     }
                 }
 
@@ -343,15 +362,15 @@ namespace Hyena.Data.Sqlite
 
                 if (has_select_all_item && model.Selection.Count == 0) {
                     model.Selection.QuietSelect (0);
-                } if (saved_focus_entry_id != -1) {
-                    long i = IndexOf (saved_focus_entry_id);
+                } if (saved_focus_item != null) {
+                    long i = IndexOf (saved_focus_item);
                     if (i != -1) {
                         // TODO get rid of int cast
                         model.Selection.FocusedIndex = (int)i;
                     }
                 }
                 saved_selection = false;
-                saved_focus_entry_id = -1;
+                saved_focus_item = null;
             }
         }
 
@@ -363,7 +382,7 @@ namespace Hyena.Data.Sqlite
                     while (reader.Read ()) {
                         if (!ContainsKey (offset)) {
                             item = provider.Load (reader);
-                            item.CacheEntryId = Convert.ToInt64 (reader[reader.FieldCount - 1]);
+                            item.CacheEntryId = reader[reader.FieldCount - 1];
                             item.CacheModelId = uid;
                             Add (offset, item);
                         }

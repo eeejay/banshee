@@ -37,8 +37,8 @@ namespace Banshee.Collection
     
 #region Implement ICacheableItem
 
-        private long cache_entry_id;
-        public long CacheEntryId {
+        private object cache_entry_id;
+        public object CacheEntryId {
             get { return cache_entry_id; }
             set { cache_entry_id = value; }
         }

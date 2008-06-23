@@ -70,10 +70,9 @@ namespace Hyena.Query
             IsEmpty = String.IsNullOrEmpty (value);
         }
 
-        public void SetValue (string str)
+        public override void LoadString (string str)
         {
-            value = str;
-            IsEmpty = String.IsNullOrEmpty (value);
+            ParseUserQuery (str);
         }
 
         public override string ToSql ()

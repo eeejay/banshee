@@ -1,5 +1,5 @@
 //
-// IListView.cs
+// ColumnCellQueryText.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -26,21 +26,25 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Hyena.Data.Gui
+using System;
+
+using Hyena.Data.Gui;
+
+namespace Banshee.Collection.Gui
 {
-    public interface IListView
+    public class ColumnCellQueryText : ColumnCellText
     {
-        Hyena.Collections.SelectionProxy SelectionProxy { get; }
-        Hyena.Collections.Selection Selection { get; }
+        private string blank;
+        public ColumnCellQueryText (string blank, string property, bool expand) : base (property, expand)
+        {
+            this.blank = blank;
+        }
         
-        void ScrollTo (int index);
-        void CenterOn (int index);
-        ColumnController ColumnController { get; set; }
-    }
-    
-    public interface IListView<T> : IListView
-    {
-        void SetModel (IListModel<T> model);
-        IListModel<T> Model { get; }
+        protected override string Text {
+            get { 
+                string text = base.Text;
+                return String.IsNullOrEmpty (text) ? blank : text;
+            }
+        }
     }
 }

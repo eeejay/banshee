@@ -1,5 +1,91 @@
 2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellQueryText.cs:
+	New class that shows the Text of the object, or if blank, a given string.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/QueryFilterView.cs:
+	A simple ListView derivative for showing a ColumnCellQueryText column.
+
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.mdp:
+	* src/Core/Banshee.ThickClient/Makefile.am: The new files above.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Add a genre browser, hardcoded in for now (like artist/album).  We should
+	make these configurable, rearrangable, etc.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseQueryFilterModel.cs:
+	Class that makes it very easy to have a new database-backed model for
+	filters based on arbitrary columns from CoreTracks.  Currently used for
+	the new genre browser.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/FilterModelProvider.cs:
+	New class, derived from SqliteModelProvider, used for the new model
+	mentioned above.  Overrides the Select statement so we'll be able to do
+	things like "select distinct year/10" to get the decades of a track
+	collection.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/QueryFilterInfo.cs:
+	New class for each result row of the FilterModelProvider.  Holds the
+	value, eg the decade in the above example, and has a settable Title.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
+	Update FetchCount to 40, implement new CachesValues property, and don't
+	require the connection be a BansheeDbConnection.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	Tweak both reload SQL fragments for performance.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/ICacheableDatabaseModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/CachedList.cs:
+	Add CachesValues property.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Implement CachesValues, and fix IndexOf to use new, improved
+	cache.IndexOf.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseTrackModelCache.cs:
+	Change IndexOf method to accept a ICacheableItem, and add an override that
+	takes a cache_entry_id object.
+
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Makefile.am: Add new files.
+
+	* src/Libraries/Migo/Migo.Syndication/MigoItem.cs:
+	* src/Libraries/Hyena/Hyena.Data/ICacheableItem.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/CacheableItem.cs: CacheEntryId
+	is now an object.
+
+	* src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/QueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/TimeSpanQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Add abstract LoadString
+	method and implement in subclasses.  Also fix the
+	NullQueryValue.IsNullOrEmpty operator.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Add new
+	AddColumn protected method so subclasses can manually define their
+	columns.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/DatabaseColumn.cs: Make classes
+	public, not internal.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Implement new
+	IndexOf methods, and check model.CachesValues, and if so, select straight
+	out of the CoreCache table the stored distinct genre values, say.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/IListView.cs: Expose the
+	SelectionProxy.
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/StringQueryValueEntry.cs: Use
+	ParseUserQuery instead of SetValue, since the input text is from the user.
+
+2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:
 	Use the Banshee.Kernel to schedule/cancel recommendation refresh jobs.
 

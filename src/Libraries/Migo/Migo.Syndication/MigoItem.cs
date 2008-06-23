@@ -37,8 +37,8 @@ namespace Migo.Syndication
     // This class is generic b/c of some ideas that I didn't implement yet...could be made non-generic
     public abstract class MigoItem<T> : ICacheableItem
     {
-        private long cache_entry_id;
-        public long CacheEntryId {
+        private object cache_entry_id;
+        public object CacheEntryId {
             get { return cache_entry_id; }
             set { cache_entry_id = value; }
         }

@@ -41,5 +41,6 @@ namespace Hyena.Data.Sqlite
         string JoinPrimaryKey { get; }
         string JoinColumn { get; }
         bool CachesJoinTableEntries { get; }
+        bool CachesValues { get; }
     }
 }
