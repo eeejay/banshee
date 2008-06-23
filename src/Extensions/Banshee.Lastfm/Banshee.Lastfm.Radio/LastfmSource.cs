@@ -293,8 +293,6 @@ namespace Banshee.Lastfm.Radio
                 ClearChildSources ();
             }
 
-            Name = (Connection.State == ConnectionState.Connected ) ? lastfm : Catalog.GetString ("Last.fm (Disconnected)");
-
             if (Connection.Connected) {
                 HideStatus ();
             } else {
