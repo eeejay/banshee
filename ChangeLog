@@ -1,5 +1,30 @@
 2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Some good changes to the DAAP extension.  It should now load the remote
+	track list much much faster.  Still needs work though.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Bind the ExternalId in DatabaseTrackInfo.
+
+	* src/Extensions/Banshee.Daap/Daap/ServiceLocator.cs: Clean up logging.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Remove the
+	container source when disposing the service.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Get rid of the
+	Dictionary track_map (instead use the CoreTracks.ExternalId column),
+	improve logging, and purge tracks and unmap playlists when disposed.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapTrackInfo.cs: Set the
+	MimeType and ExternalId properties.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs: First
+	pass at making playlists much more efficient (one SQL command instead of
+	N).
+
+2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Avoid
 	collection modified exception in AddSource.
 

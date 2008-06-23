@@ -78,6 +78,11 @@ namespace Banshee.Daap
                 kv.Value.Dispose ();
             }
             
+            if (container != null) {
+                ServiceManager.SourceManager.RemoveSource (container, false);
+                container = null;
+            }
+            
             source_map.Clear ();
         }
         

@@ -102,7 +102,6 @@ namespace Daap {
         
         public ServiceLocator ()
         {
-            Log.Debug ("ServiceLocator backend", "using Mono.Zeroconf.");
         }
         
         public void Start () {
@@ -124,28 +123,28 @@ namespace Daap {
         
         private void OnServiceAdded (object o, ServiceBrowseEventArgs args) {
             args.Service.Resolved += OnServiceResolved;
-            Log.DebugFormat ("Got {0}, trying to resolve...", args.Service.Name);
+            Log.DebugFormat ("Found DAAP share {0}, trying to resolve...", args.Service.Name);
             args.Service.Resolve ();
         }
         
         private void OnServiceResolved (object o, ServiceResolvedEventArgs args) {
             string name = args.Service.Name;
 
-            Log.DebugFormat ("Managed to resolve {0}.", args.Service.Name);
+            Log.DebugFormat ("Managed to resolve DAAP share {0}.", args.Service.Name);
                         
-            bool pwRequired = false;
+            bool password_required = false;
 
             // iTunes tacks this on to indicate a passsword protected share.  Ugh.
             if (name.EndsWith ("_PW")) {
                 name = name.Substring (0, name.Length - 3);
-                pwRequired = true;
+                password_required = true;
             }
             
             IResolvableService service = (IResolvableService) args.Service;
             
             foreach(TxtRecordItem item in service.TxtRecord) {
                 if(item.Key.ToLower () == "password") {
-                    pwRequired = item.ValueString.ToLower () == "true";
+                    password_required = item.ValueString.ToLower () == "true";
                 } else if (item.Key.ToLower () == "machine name") {
                     name = item.ValueString;
                 }
@@ -176,7 +175,7 @@ namespace Daap {
             Log.DebugFormat ("Using address {0}", address);
             
             Daap.Service svc = new Daap.Service (address, (ushort)service.Port, 
-                name, pwRequired);
+                name, password_required);
             
             if (services.ContainsKey (name)) {
                 services[name] = svc;

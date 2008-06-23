@@ -69,7 +69,6 @@ namespace Banshee.Podcasting.Data
         }
         
         private int position;
-        private long item_id;
 
 #region Properties
 
@@ -80,12 +79,12 @@ namespace Banshee.Podcasting.Data
         private FeedItem item;
         public FeedItem Item {
             get {
-                if (item == null && item_id > 0) {
-                    item = FeedItem.Provider.FetchSingle (item_id);
+                if (item == null && ExternalId > 0) {
+                    item = FeedItem.Provider.FetchSingle (ExternalId);
                 }
                 return item;
             }
-            set { item = value; item_id = value.DbId; }
+            set { item = value; ExternalId = value.DbId; }
         }
         
         public DateTime PublishedDate {
@@ -107,12 +106,6 @@ namespace Banshee.Podcasting.Data
 
         public override DateTime ReleaseDate {
             get { return Item.PubDate; }
-        }
-        
-        [DatabaseColumn ("ExternalID")]
-        public long ItemId {
-            get { return item_id; }
-            private set { item_id = value; }
         }
         
         //[VirtualDatabaseColumn ("Title", Item.Feed.Title, "ItemID", "ExternalID")]

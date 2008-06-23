@@ -451,6 +451,13 @@ namespace Banshee.Collection.Database
             set { base.SkipCount = value; }
         }
         
+        private long external_id;
+        [DatabaseColumn ("ExternalID")]
+        public long ExternalId {
+            get { return external_id; }
+            set { external_id = value; }
+        }
+        
         [DatabaseColumn ("LastPlayedStamp")]
         public override DateTime LastPlayed {
             get { return base.LastPlayed; }

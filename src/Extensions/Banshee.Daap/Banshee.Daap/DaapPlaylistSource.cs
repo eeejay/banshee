@@ -27,10 +27,13 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Hyena;
+using Hyena.Data.Sqlite;
 
+using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Playlist;
@@ -42,6 +45,11 @@ namespace Banshee.Daap
 {
     public class DaapPlaylistSource : PlaylistSource
     {
+        private HyenaSqliteCommand insert_track_command = new HyenaSqliteCommand (@"
+            INSERT INTO CorePlaylistEntries (PlaylistID, EntryID) 
+                SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND ExternalID IN (?)"
+        );
+        
         private DaapSource parent;
         public DAAP.Database Database {
             get { return parent.Database; }
@@ -50,26 +58,23 @@ namespace Banshee.Daap
         public DaapPlaylistSource (DAAP.Playlist playlist, int id, DaapSource parent) : base (playlist.Name, parent.DbId)
         {
             this.parent = parent;
-            this.Save ();
+            Save ();
             
-            foreach (DAAP.Track track in playlist.Tracks) {
-                if (track != null && parent.TrackMap.ContainsKey (track.Id)) {
-                    Console.WriteLine ("Adding track {0} to {1}", parent.TrackMap [track.Id], DbId);
-                    AddTrack (parent.TrackMap [track.Id]);
-                } else {
-                    Log.Warning ("Can't find track: was either null or not in map.", false);
+            if (playlist.Tracks.Count > 0) {
+                //IList<DAAP.Track> tracks = playlist.Tracks;
+                int [] external_ids = new int [playlist.Tracks.Count];
+                //for (int i = 0; i < tracks.Count; i++) {
+                int i = 0;
+                foreach (DAAP.Track track in playlist.Tracks) {
+                    external_ids[i] = track.Id;
+                    i++;
                 }
+                HyenaSqliteCommand.LogAll = true;
+                ServiceManager.DbConnection.Execute (insert_track_command, DbId, parent.DbId, external_ids);
+                HyenaSqliteCommand.LogAll = false;
             }
-            
-            this.Reload ();
-        }
-        
-        public override bool ShowBrowser {
-            get { return false; }
-        }
-        
-        protected override string TypeUniqueId {
-            get { return "daap-playlist"; }
+            SavedCount = playlist.Tracks.Count;
+            OnUpdated ();
         }
     }
 }
