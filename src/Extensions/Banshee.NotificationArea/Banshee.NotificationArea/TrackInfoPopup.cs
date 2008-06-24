@@ -52,7 +52,7 @@ namespace Banshee.NotificationArea
             VBox box = new VBox ();
             box.Spacing = 4;
 
-            header = new TrackInfoDisplay ();
+            header = new ClassicTrackInfoDisplay ();
             header.SetSizeRequest (320, 64);
             
             seek_slider = new ConnectedSeekSlider (SeekSliderLayout.Horizontal);

@@ -154,7 +154,7 @@ namespace Nereid
             seek_slider.Show ();
             ActionService.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/SeekSlider", seek_slider);
             
-            TrackInfoDisplay track_info_display = new TrackInfoDisplay ();
+            TrackInfoDisplay track_info_display = new ClassicTrackInfoDisplay ();
             track_info_display.Show ();
             ActionService.PopulateToolbarPlaceholder (header_toolbar, "/HeaderToolbar/TrackInfoDisplay", track_info_display, true);
             

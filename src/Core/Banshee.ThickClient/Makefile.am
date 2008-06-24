@@ -48,6 +48,7 @@ SOURCES =  \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
 	Banshee.Gui.Widgets/ArtworkPopup.cs \
+	Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs \
 	Banshee.Gui.Widgets/ConnectedMessageBar.cs \
 	Banshee.Gui.Widgets/ConnectedSeekSlider.cs \
 	Banshee.Gui.Widgets/ConnectedVolumeButton.cs \

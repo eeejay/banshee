@@ -1,3 +1,18 @@
+2008-06-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs:
+	Split out layout rendering and event logic from TrackInfoDisplay, 
+	which is now abstract, into ClassicTrackInfoDisplay so the widget is 
+	now easier to maintain and also new displays can be built by extending 
+	TrackInfoDisplay - the extending class only has to worry about 
+	rendering frames (no animation, group, xfade, etc.)
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/TrackInfoPopup.cs:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	Updated to use ClassicTrackInfoDisplay
+
 2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Importing playlists (.m3u and .pls) should work again.

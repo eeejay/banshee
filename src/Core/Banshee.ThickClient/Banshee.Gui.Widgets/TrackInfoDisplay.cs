@@ -46,30 +46,60 @@ using Banshee.MediaEngine;
 
 namespace Banshee.Gui.Widgets
 {
-    public class TrackInfoDisplay : Widget
+    public abstract class TrackInfoDisplay : Widget
     {
-        private Gdk.Window event_window;
-        
         private ArtworkManager artwork_manager;
+        protected ArtworkManager ArtworkManager {
+            get { return artwork_manager; }
+        }
+        
         private Pixbuf current_pixbuf;
+        protected Pixbuf CurrentPixbuf {
+            get { return current_pixbuf; }
+        }
+        
         private Pixbuf incoming_pixbuf;
+        protected Pixbuf IncomingPixbuf {
+            get { return incoming_pixbuf; }
+        }
+        
         private Pixbuf missing_audio_pixbuf;
+        protected Pixbuf MissingAudioPixbuf {
+            get { return missing_audio_pixbuf; }
+        }
+        
         private Pixbuf missing_video_pixbuf;
+        protected Pixbuf MissingVideoPixbuf {
+            get { return missing_video_pixbuf; }
+        }
         
         private Cairo.Color background_color;
+        protected Cairo.Color BackgroundColor {
+            get { return background_color; }
+        }
+        
         private Cairo.Color text_color;
+        protected Cairo.Color TextColor {
+            get { return text_color; }
+        }
+        
         private Cairo.Color text_light_color;
+        protected Cairo.Color TextLightColor {
+            get { return text_light_color; }
+        }
         
         private TrackInfo current_track;
-        private TrackInfo incoming_track;        
-
-        private SingleActorStage stage = new SingleActorStage ();
+        protected TrackInfo CurrentTrack {
+            get { return current_track; }
+        }
         
-        private ArtworkPopup popup;
-        private uint popup_timeout_id;
-        private uint idle_timeout_id;
-        private bool in_popup;
-        private bool in_thumbnail_region;
+        private TrackInfo incoming_track;   
+        protected TrackInfo IncomingTrack {
+            get { return incoming_track; }
+        }
+        
+        private uint idle_timeout_id = 0;
+        private SingleActorStage stage = new SingleActorStage ();
         
         protected TrackInfoDisplay (IntPtr native) : base (native)
         {
@@ -79,8 +109,8 @@ namespace Banshee.Gui.Widgets
         {
             stage.Iteration += OnStageIteration;
         
-            if (ServiceManager.Contains ("ArtworkManager")) {
-                artwork_manager = ServiceManager.Get<ArtworkManager> ("ArtworkManager");
+            if (ServiceManager.Contains<ArtworkManager> ()) {
+                artwork_manager = ServiceManager.Get<ArtworkManager> ();
             }
             
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
@@ -102,160 +132,17 @@ namespace Banshee.Gui.Widgets
             stage.Iteration -= OnStageIteration;
             stage = null;
             
-            HidePopup ();
-            
             base.Dispose ();
         }
-
-#region Widget Window Management
         
-        protected override void OnRealized ()
-        {
-            WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
-            GdkWindow = Parent.GdkWindow;
-            
-            WindowAttr attributes = new WindowAttr ();
-            attributes.WindowType = Gdk.WindowType.Child;
-            attributes.X = Allocation.X;
-            attributes.Y = Allocation.Y;
-            attributes.Width = Allocation.Width;
-            attributes.Height = Allocation.Height;
-            attributes.Wclass = WindowClass.InputOnly;
-            attributes.EventMask = (int)(
-                EventMask.PointerMotionMask |
-                EventMask.EnterNotifyMask |
-                EventMask.LeaveNotifyMask |
-                EventMask.ExposureMask);
-            
-            WindowAttributesType attributes_mask =
-                WindowAttributesType.X | WindowAttributesType.Y | WindowAttributesType.Wmclass;
-            
-            event_window = new Gdk.Window (GdkWindow, attributes, attributes_mask);
-            event_window.UserData = Handle;
-            
-            base.OnRealized ();
-        }
-        
-        protected override void OnUnrealized ()
-        {
-            WidgetFlags ^= WidgetFlags.Realized;
-            
-            event_window.UserData = IntPtr.Zero;
-            event_window.Destroy ();
-            event_window = null;
-            
-            base.OnUnrealized ();
-        }
-        
-        protected override void OnMapped ()
-        {
-            event_window.Show ();
-            base.OnMapped ();
-        }
-
-        protected override void OnUnmapped ()
-        {
-            event_window.Hide ();
-            base.OnUnmapped ();
-        }
-        
-        protected override void OnSizeAllocated (Gdk.Rectangle allocation)
+        protected override void OnSizeAllocated (Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
-            
-            if (IsRealized) {
-                event_window.MoveResize (allocation);
-            }
             
             if (current_track == null) {
                 LoadCurrentTrack ();
             }
         }
-        
-        protected override void OnSizeRequested (ref Requisition requisition)
-        {
-            requisition.Height = ComputeWidgetHeight ();
-        }
-        
-        private int ComputeWidgetHeight ()
-        {
-            int width, height;
-            Pango.Layout layout = new Pango.Layout (PangoContext);
-            layout.SetText ("W");
-            layout.GetPixelSize (out width, out height);
-            layout.Dispose ();
-            return 2 * height;
-        }
-
-#endregion
-
-#region Interaction Events
-
-        protected override bool OnEnterNotifyEvent (EventCrossing evnt)
-        {
-            in_thumbnail_region = evnt.X <= Allocation.Height;
-            return ShowHideCoverArt ();
-        }
-        
-        protected override bool OnLeaveNotifyEvent (EventCrossing evnt)
-        {
-            in_thumbnail_region = false;
-            return ShowHideCoverArt ();
-        }
-        
-        protected override bool OnMotionNotifyEvent (EventMotion evnt)
-        {
-            in_thumbnail_region = evnt.X <= Allocation.Height;
-            return ShowHideCoverArt ();
-        }
-        
-        private void OnPopupEnterNotifyEvent (object o, EnterNotifyEventArgs args)
-        {
-            in_popup = true;
-        }
-        
-        private void OnPopupLeaveNotifyEvent (object o, LeaveNotifyEventArgs args)
-        {
-            in_popup = false;
-            HidePopup ();
-        }
-        
-        private bool ShowHideCoverArt ()
-        {
-            if (!in_thumbnail_region) {
-                if (popup_timeout_id > 0) {
-                    GLib.Source.Remove (popup_timeout_id);
-                    popup_timeout_id = 0;
-                }
-                
-                GLib.Timeout.Add (100, delegate {
-                    if (!in_popup) {
-                        HidePopup ();
-                    }
-
-                    return false;
-                });
-            } else {
-                if (popup_timeout_id > 0) {
-                    return false;
-                }
-                
-                popup_timeout_id = GLib.Timeout.Add (500, delegate {
-                    if (in_thumbnail_region) {
-                        UpdatePopup ();
-                    }
-                    
-                    popup_timeout_id = 0;
-                    return false;
-                });
-            }
-            
-            return true;
-        }
-
-#endregion
-        
-#region Drawing
 
         protected override void OnStyleSet (Style previous)
         {
@@ -349,69 +236,18 @@ namespace Banshee.Gui.Widgets
             RenderTrackInfo (cr, track, true, true);
         }
         
-        private void RenderCoverArt (Cairo.Context cr, Pixbuf pixbuf)
+        protected virtual void RenderCoverArt (Cairo.Context cr, Pixbuf pixbuf)
         {
             ArtworkRenderer.RenderThumbnail (cr, pixbuf, false, Allocation.X, Allocation.Y, Allocation.Height, Allocation.Height, 
                 !IsMissingPixbuf (pixbuf), 0, IsMissingPixbuf (pixbuf), background_color);
         }
 
-        private bool IsMissingPixbuf (Pixbuf pb)
+        protected bool IsMissingPixbuf (Pixbuf pb)
         {
             return (pb == missing_audio_pixbuf || pb == missing_video_pixbuf);
         }
         
-        private void RenderTrackInfo (Cairo.Context cr, TrackInfo track, bool renderTrack, bool renderArtistAlbum)
-        {
-            if (track == null) {
-                return;
-            }
-            
-            double offset = Allocation.Height + 10, y = 0;
-            double x = Allocation.X + offset;
-            double width = Allocation.Width - offset;
-            int fl_width, fl_height, sl_width, sl_height;
-
-            // Set up the text layouts
-            Pango.Layout first_line_layout = null;
-            CairoExtensions.CreateLayout (this, cr, ref first_line_layout);
-            first_line_layout.Width = (int)(width * Pango.Scale.PangoScale);
-            first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
-                        
-            Pango.Layout second_line_layout = first_line_layout.Copy ();
-            
-            // Compute the layout coordinates
-            first_line_layout.SetMarkup (GetFirstLineText (track));
-            first_line_layout.GetPixelSize (out fl_width, out fl_height);
-            second_line_layout.SetMarkup (GetSecondLineText (track));
-            second_line_layout.GetPixelSize (out sl_width, out sl_height);
-            
-            if (fl_height + sl_height > Allocation.Height) {
-                SetSizeRequest (-1, fl_height + sl_height);
-            }
-            
-            y = Allocation.Y + (Allocation.Height - (fl_height + sl_height)) / 2;
-            
-            // Render the layouts
-            cr.Antialias = Cairo.Antialias.Default;
-            
-            if (renderTrack) {
-                cr.MoveTo (x, y);
-                cr.Color = text_color;
-                PangoCairoHelper.ShowLayout (cr, first_line_layout);
-            }
-
-            if (!renderArtistAlbum) {
-                first_line_layout.Dispose ();
-                second_line_layout.Dispose ();
-                return;
-            }
-            
-            cr.MoveTo (x, y + fl_height);
-            PangoCairoHelper.ShowLayout (cr, second_line_layout);
-            
-            first_line_layout.Dispose ();
-            second_line_layout.Dispose ();
-        }
+        protected abstract void RenderTrackInfo (Cairo.Context cr, TrackInfo track, bool renderTrack, bool renderArtistAlbum);
         
         private void OnPlayerEvent (PlayerEventArgs args)
         {
@@ -506,15 +342,19 @@ namespace Banshee.Gui.Widgets
             
             incoming_track = null;
             
-            UpdatePopup ();
+            OnArtworkChanged ();
         }
         
-        private string GetFirstLineText (TrackInfo track)
+        protected virtual void OnArtworkChanged ()
+        {
+        }
+        
+        protected virtual string GetFirstLineText (TrackInfo track)
         {
             return String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (track.DisplayTrackTitle));
         }
         
-        private string GetSecondLineText (TrackInfo track)
+        protected virtual string GetSecondLineText (TrackInfo track)
         {
             string markup_begin = String.Format ("<span color=\"{0}\" size=\"small\">", 
                 CairoExtensions.ColorGetHex (text_light_color, false));
@@ -551,50 +391,5 @@ namespace Banshee.Gui.Widgets
                 CairoExtensions.ColorGetHex (text_color, false),
                 markup);
         }
-        
-        private bool UpdatePopup ()
-        {
-            if (current_track == null || artwork_manager == null) {
-                HidePopup ();
-                return false;
-            }
-            
-            Gdk.Pixbuf pixbuf = artwork_manager.Lookup (current_track.ArtworkId);
-         
-            if (pixbuf == null) {
-                HidePopup ();
-                return false;
-            }
-            
-            if (popup == null) {
-                popup = new ArtworkPopup ();
-                popup.EnterNotifyEvent += OnPopupEnterNotifyEvent;
-                popup.LeaveNotifyEvent += OnPopupLeaveNotifyEvent;
-            }
-            
-            popup.Label = String.Format ("{0} - {1}", current_track.DisplayArtistName, 
-                current_track.DisplayAlbumTitle);
-            popup.Image = pixbuf;
-                
-            if (in_thumbnail_region) {
-                popup.Show ();
-            }
-            
-            return true;
-        }
-        
-        private void HidePopup ()
-        {
-            if (popup != null) {
-                ArtworkRenderer.DisposePixbuf (popup.Image);
-                popup.Destroy ();
-                popup.EnterNotifyEvent -= OnPopupEnterNotifyEvent;
-                popup.LeaveNotifyEvent -= OnPopupLeaveNotifyEvent;
-                popup = null;
-            }
-        }
-        
-#endregion
-        
     }
 }

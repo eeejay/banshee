@@ -121,7 +121,7 @@ namespace Banshee.MiniMode
             source_combo_box.Show();
             
             // Track info
-            track_info_display = new TrackInfoDisplay ();
+            track_info_display = new ClassicTrackInfoDisplay ();
             track_info_display.Show ();
             CoverBox.PackStart(track_info_display, true, true, 0);
 
