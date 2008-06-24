@@ -1,5 +1,24 @@
 2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap.mdp: Reflect addins mv and
+	proxy file from last commit, new error view file and refs this commit.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Set the
+	ErrorView when we fail to login to a share we detected.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs: Tweak for
+	trunk, subclassing from RoundedFrame and no border, and implementing
+	ISourceContents.
+
+	* src/Extensions/Banshee.Daap/Makefile.am:  Add the new error view.
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Listen for changed to the
+	active source's Nereid.SourceContents property, keeping it synced - so
+	that we can change to the error source for a daap share, and then back to
+	the normal contents by unsetting the property.
+
+2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Daap/Daap/Database.cs: Style.
 
 	* src/Extensions/Banshee.Daap/Resources/Banshee.Daap.addin.xml:

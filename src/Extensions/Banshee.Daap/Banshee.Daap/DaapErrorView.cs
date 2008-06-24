@@ -31,9 +31,10 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.Base;
+using Banshee.Gui;
 using Banshee.Widgets;
 
-namespace Banshee.Plugins.Daap
+namespace Banshee.Daap
 {
     public enum DaapErrorType {
         BrokenAuthentication,
@@ -41,17 +42,25 @@ namespace Banshee.Plugins.Daap
         UserDisconnect
     }
     
-    public class DaapErrorView : ShadowContainer
+    public class DaapErrorView : Hyena.Widgets.RoundedFrame, Banshee.Sources.Gui.ISourceContents
     {
         private MessagePane pane;
         private bool info_link_clicked;
         private DaapSource source;
         private DaapErrorType failure;
         
-        public DaapErrorView(DaapSource source, DaapErrorType failure) : base()
+        public Banshee.Sources.ISource Source {
+            get { return source; }
+        }
+
+        public Widget Widget {
+            get { return this; }
+        }
+        
+        public DaapErrorView (DaapSource source, DaapErrorType failure) : base()
         {
-            AppPaintable = true;
-            BorderWidth = 10;
+            //AppPaintable = true;
+            //BorderWidth = 10;
             
             this.source = source;
             this.failure = failure;
@@ -138,6 +147,15 @@ namespace Banshee.Plugins.Daap
                 link.Show();
                 pane.Append(link, Gtk.AttachOptions.Expand | Gtk.AttachOptions.Fill, 0, true);
             }
+        }
+
+        public bool SetSource (Banshee.Sources.ISource source)
+        {
+            return this.source == source;
+        }
+
+        public void ResetSource ()
+        {
         }
     }
 }

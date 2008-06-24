@@ -280,6 +280,7 @@ namespace Nereid
             view_container.SearchEntry.Ready = true;
         }
         
+        private Source previous_source = null;
         private TrackListModel previous_track_model = null;
         private void OnActiveSourceChanged (SourceEventArgs args)
         {
@@ -313,7 +314,33 @@ namespace Nereid
                 previous_track_model = (source as ITrackModelSource).TrackModel;
                 previous_track_model.Reloaded += HandleTrackModelReloaded;
             }
-
+            
+            if (previous_source != null) {
+                previous_source.Properties.PropertyChanged -= OnSourcePropertyChanged;
+            }
+            
+            previous_source = source;
+            previous_source.Properties.PropertyChanged += OnSourcePropertyChanged;
+            
+            UpdateSourceContents (source);
+            
+            UpdateSourceInformation ();
+            view_container.SearchEntry.Ready = true;
+        }
+        
+        private void OnSourcePropertyChanged (object o, PropertyChangeEventArgs args)
+        {
+            if (args.PropertyName == "Nereid.SourceContents") {
+                UpdateSourceContents (previous_source);
+            }
+        }
+        
+        private void UpdateSourceContents (Source source)
+        {
+            if (source == null) {
+                return;
+            }
+            
             // Connect the source models to the views if possible
             if (source.Properties.Contains ("Nereid.SourceContents")) {
                 view_container.Content = source.Properties.Get<ISourceContents> ("Nereid.SourceContents");
@@ -356,9 +383,6 @@ namespace Nereid
             if (footer_widget != null) {
                 view_container.SetFooter (footer_widget);
             }
-            
-            UpdateSourceInformation ();
-            view_container.SearchEntry.Ready = true;
         }
 
         private void OnSourceUpdated (SourceEventArgs args)

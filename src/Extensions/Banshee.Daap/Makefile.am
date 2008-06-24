@@ -5,6 +5,7 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.Daap/DaapContainerSource.cs \
+	Banshee.Daap/DaapErrorView.cs \
 	Banshee.Daap/DaapLoginDialog.cs \
 	Banshee.Daap/DaapPlaylistSource.cs \
 	Banshee.Daap/DaapProxyWebServer.cs \

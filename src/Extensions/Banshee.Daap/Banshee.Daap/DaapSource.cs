@@ -84,6 +84,8 @@ namespace Banshee.Daap
                 return;
             }
             
+            ClearErrorView ();
+            
             is_activating = true;
             base.Activate ();
             
@@ -100,12 +102,26 @@ namespace Banshee.Daap
                         ThreadAssist.ProxyToMain (PromptLogin);
                     }
                 } catch(Exception e) {
-                    SetStatus (String.Format (Catalog.GetString ("Failed to connect to {0}"), service.Name), true);
+                    ShowErrorView (DaapErrorType.BrokenAuthentication);
                     Hyena.Log.Exception (e);
                 }
                
                 is_activating = false;
             });
+        }
+        
+        private void ShowErrorView (DaapErrorType error_type)
+        {
+            client = null;
+            DaapErrorView error_view = new DaapErrorView (this, error_type);
+            error_view.Show ();
+            Properties.Set<Banshee.Sources.Gui.ISourceContents> ("Nereid.SourceContents", error_view);
+            HideStatus ();
+        }
+        
+        private void ClearErrorView ()
+        {
+            Properties.Remove ("Nereid.SourceContents");
         }
         
         internal bool Disconnect (bool logout)
@@ -163,14 +179,14 @@ namespace Banshee.Daap
         
         private void PromptLogin ()
         {
-            SetStatus (String.Format (Catalog.GetString ("Logging in to {0}"), Name), false);
+            SetStatus (Catalog.GetString ("Logging in to {0}."), false);
             
             DaapLoginDialog dialog = new DaapLoginDialog (client.Name, 
             client.AuthenticationMethod == DAAP.AuthenticationMethod.UserAndPassword);
             if (dialog.Run () == (int) Gtk.ResponseType.Ok) {
                 AuthenticatedLogin (dialog.Username, dialog.Password);
             } else {
-                Unmap ();
+                ShowErrorView (DaapErrorType.UserDisconnect);
             }
 
             dialog.Destroy ();
@@ -182,7 +198,9 @@ namespace Banshee.Daap
                 try {
                     client.Login (username, password);
                 } catch (DAAP.AuthenticationException) {
-                    ThreadAssist.ProxyToMain (PromptLogin);
+                    ThreadAssist.ProxyToMain (delegate {
+                        ShowErrorView (DaapErrorType.InvalidAuthentication);
+                    });
                 }
             });
         }
@@ -195,7 +213,7 @@ namespace Banshee.Daap
                 database.TrackAdded += OnDatabaseTrackAdded;
                 database.TrackRemoved += OnDatabaseTrackRemoved;
                 
-                SetStatus (String.Format (Catalog.GetString ("Loading {0} tracks"), database.Tracks.Count), false, true, "gtk-refresh");
+                SetStatus (String.Format (Catalog.GetString ("Loading {0} tracks."), database.Tracks.Count), false);
                 
                 int count = 0;
                 DaapTrackInfo daap_track = null;
