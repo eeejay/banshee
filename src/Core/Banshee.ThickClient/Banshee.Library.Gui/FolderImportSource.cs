@@ -48,6 +48,7 @@ namespace Banshee.Library.Gui
             chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
             chooser.AddButton (Stock.Open, ResponseType.Ok);
             chooser.DefaultResponse = ResponseType.Ok;
+            FileImportSource.SetChooserShortcuts (chooser);
             
             if (chooser.Run () == (int)ResponseType.Ok) {
                 Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (chooser.Uri);

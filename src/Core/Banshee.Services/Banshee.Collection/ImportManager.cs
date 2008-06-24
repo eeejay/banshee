@@ -72,8 +72,12 @@ namespace Banshee.Collection
         
             protected override string ProcessItem (string item)
             {
-                manager.OnImportRequested (item);
-                processed_count++;
+                try {
+                    manager.OnImportRequested (item);
+                    processed_count++;
+                } catch (Exception e) {
+                    Hyena.Log.Exception (e);
+                }
                 return null;   
             }
             

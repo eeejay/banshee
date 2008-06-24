@@ -110,5 +110,17 @@ namespace Banshee.Library
                 new_track.Save (false);
             }
         }
+        
+        public static int GetTrackIdForUri (string uri)
+        {
+            return DatabaseTrackInfo.GetTrackIdForUri (new SafeUri (uri), Paths.MakePathRelative (uri, Paths.LibraryLocation), LibraryIds);
+        }
+        
+        private static int [] library_ids;
+        private static int [] LibraryIds {
+            get {
+                return library_ids ?? library_ids = new int [] {ServiceManager.SourceManager.MusicLibrary.DbId, ServiceManager.SourceManager.VideoLibrary.DbId};
+            }
+        }
     }
 }

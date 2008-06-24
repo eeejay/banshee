@@ -46,7 +46,7 @@ namespace Banshee.Daap
     public class DaapPlaylistSource : PlaylistSource
     {
         private HyenaSqliteCommand insert_track_command = new HyenaSqliteCommand (@"
-            INSERT INTO CorePlaylistEntries (PlaylistID, EntryID) 
+            INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) 
                 SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND ExternalID IN (?)"
         );
         

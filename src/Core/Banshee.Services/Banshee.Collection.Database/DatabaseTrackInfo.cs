@@ -543,20 +543,22 @@ namespace Banshee.Collection.Database
 
         public static int GetTrackIdForUri (string relative_path, int [] primary_sources)
         {
-            return ServiceManager.DbConnection.Query<int> (check_command,
-                primary_sources, relative_path, relative_path);
+            return GetTrackIdForUri (relative_path, relative_path, primary_sources);
+        }
+        
+        public static int GetTrackIdForUri (string uri, string relative_path, int [] primary_sources)
+        {
+            return ServiceManager.DbConnection.Query<int> (check_command, primary_sources, uri, relative_path);
         }
         
         public static bool ContainsUri (string relative_path, int [] primary_sources)
         {
-            return ServiceManager.DbConnection.Query<int> (check_command,
-                primary_sources, relative_path, relative_path) > 0;
+            return GetTrackIdForUri (relative_path, primary_sources) > 0;
         }
 
         public static bool ContainsUri (SafeUri uri, string relative_path, int [] primary_sources)
         {
-            return ServiceManager.DbConnection.Query<int> (check_command,
-                primary_sources, relative_path, uri.AbsoluteUri) > 0;
+            return GetTrackIdForUri (uri, relative_path, primary_sources) > 0;
         }
     }
 }

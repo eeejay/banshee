@@ -52,7 +52,7 @@ namespace Banshee.Collection.Database
         // used to see if we should allow the file to be processed by TagLib. The
         // point is to rule out, at the path level, files that we won't support.
         
-        private static readonly string [] white_list_file_extensions = new string [] {
+        public static readonly string [] WhiteListFileExtensions = new string [] {
             "3g2",  "3gp",  "3gp2", "3gpp", "aac",  "ac3",  "aif",  "aifc", 
             "aiff", "al",   "alaw", "ape",  "asf",  "asx",  "au",   "avi", 
             "cda",  "cdr",  "divx", "dv",   "flac", "flv",  "gvi",  "gvp", 
@@ -69,7 +69,7 @@ namespace Banshee.Collection.Database
 
         static DatabaseImportManager ()
         {
-            Array.Sort<string> (white_list_file_extensions);
+            Array.Sort<string> (WhiteListFileExtensions);
         }
 
         public static bool IsWhiteListedFile (string path)
@@ -83,7 +83,7 @@ namespace Banshee.Collection.Database
                 return false;
             }
             
-            return Array.BinarySearch<string> (white_list_file_extensions, 
+            return Array.BinarySearch<string> (WhiteListFileExtensions, 
                 path.Substring (index + 1).ToLower ()) >= 0;
         }
 

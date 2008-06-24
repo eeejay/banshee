@@ -114,6 +114,7 @@ namespace Banshee.Playlists.Formats
                 IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance(matching_format.Type);
                 playlist.BaseUri = BaseUri;
                 playlist.Load(stream, false);
+                stream.Dispose ();
                 
                 elements = playlist.Elements;
                 return true;

@@ -76,6 +76,7 @@ namespace Banshee.Playlists.Formats
                 return uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri;
             }
             
+            // TODO replace with call to Paths.MakeRelativeTo
             string base_uri = uri.IsLocalPath ? BaseUri.LocalPath : BaseUri.AbsoluteUri;
             string relative_uri = uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri;
             

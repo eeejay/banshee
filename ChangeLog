@@ -1,3 +1,50 @@
+2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Importing playlists (.m3u and .pls) should work again.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs: Fix
+	typo/bug.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Uncomment out
+	the playlist import action/handler.
+
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:
+	Set some default shortcut folders for the file choosers, and set a
+	FileFilter from the white listed files for the File importer.
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Add
+	exception handling/logging.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Make string [] of white listed extensions public/readonly.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Reduce duplication in still-ugly *ForUri static methods.
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistParser.cs:
+	Dispose of the input stream when finished with it.
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistFormatBase.cs:
+	Add TODO.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs: Add
+	ImportPlaylistToLibrary method, and use it for the Import Playlist(s)
+	actions.  Implement the ImportPlaylistWorker class to work with trunk.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Add
+	convenience method GetTrackIdForUrl that uses the DatabaseTrackInfo
+	methods.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add some indices, and fix a bug where the changes from migration 12 were
+	not also done for the intial db creation code.
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkUtilities.cs: Add two methods, one
+	for creating a FileFilter from a string [] of extensions, and one for
+	setting a bunch of shortcut folders for a file chooser (w/ try/catch).
+
 2008-06-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Some good changes to the DAAP extension.  It should now load the remote

@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 12;
+        protected const int CURRENT_VERSION = 13;
         protected const int CURRENT_METADATA_VERSION = 2;
         
 #region Migration Driver
@@ -419,6 +419,18 @@ namespace Banshee.Database
         
 #endregion
 
+#region Version 13
+
+        [DatabaseVersion (13)]
+        private bool Migrate_13 ()
+        {
+            Execute("CREATE INDEX CoreAlbumsArtistIndex ON CoreAlbums(TitleLowered, ArtistNameLowered)");
+            Execute("CREATE INDEX CoreTracksUriIndex ON CoreTracks(PrimarySourceID, Uri)");
+            return true;
+        }
+        
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -502,6 +514,7 @@ namespace Banshee.Database
             Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri)");
             Execute("CREATE INDEX CoreTracksAggregatesIndex ON CoreTracks(FileSize, Duration)");
             Execute("CREATE INDEX CoreTracksExternalIDIndex ON CoreTracks(PrimarySourceID, ExternalID)");
+            Execute("CREATE INDEX CoreTracksUriIndex ON CoreTracks(PrimarySourceID, Uri)");
             
             Execute(@"
                 CREATE TABLE CoreAlbums (
@@ -518,10 +531,14 @@ namespace Banshee.Database
                     Duration            INTEGER,
                     Year                INTEGER,
                     
+                    ArtistName          TEXT,
+                    ArtistNameLowered   TEXT,
+                    
                     Rating              INTEGER
                 )
             ");
             Execute("CREATE INDEX CoreAlbumsIndex       ON CoreAlbums(ArtistID, TitleLowered)");
+            Execute("CREATE INDEX CoreAlbumsArtistIndex       ON CoreAlbums(TitleLowered, ArtistNameLowered)");
 
             Execute(@"
                 CREATE TABLE CoreArtists (

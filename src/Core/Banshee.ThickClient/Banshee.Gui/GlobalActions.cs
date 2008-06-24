@@ -53,9 +53,9 @@ namespace Banshee.Gui
                     Catalog.GetString ("Import _Media..."), "<control>I",
                     Catalog.GetString ("Import media from a variety of sources"), OnImport),
 
-                /*new ActionEntry ("ImportPlaylistAction", null,
+                new ActionEntry ("ImportPlaylistAction", null,
                     Catalog.GetString ("Import Playlist..."), null,
-                    Catalog.GetString ("Import a playlist"), OnImportPlaylist),*/
+                    Catalog.GetString ("Import a playlist"), OnImportPlaylist),
 
                 new ActionEntry ("OpenLocationAction", null, 
                     Catalog.GetString ("Open _Location..."), "<control>L",
@@ -165,68 +165,44 @@ namespace Banshee.Gui
             }
         }
 
-        /*private void OnImportPlaylist (object o, EventArgs args)
+        private void OnImportPlaylist (object o, EventArgs args)
         {
             // Prompt user for location of the playlist.
-            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog(
+            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog (
                 Catalog.GetString("Import Playlist"),
                 PrimaryWindow,
                 FileChooserAction.Open
             );
                          
             chooser.DefaultResponse = ResponseType.Ok;
-            chooser.SelectMultiple = false;
+            chooser.SelectMultiple = true;
+            chooser.AddFilter (Hyena.Gui.GtkUtilities.GetFileFilter (Catalog.GetString ("Playlists"), PlaylistFileUtil.PlaylistExtensions));
+            try {
+                chooser.AddShortcutFolder (Paths.LibraryLocation);
+            } catch {}
 
-            chooser.AddButton(Stock.Cancel, ResponseType.Cancel);
-            chooser.AddButton(Catalog.GetString("Import"), ResponseType.Ok);
+            chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
+            chooser.AddButton (Catalog.GetString("Import"), ResponseType.Ok);
             
-            string playlist_uri = null;
             int response = chooser.Run();            
 
-            if(response == (int) ResponseType.Ok) {                    
-                playlist_uri = SafeUri.UriToFilename(chooser.Uri);              
-                chooser.Destroy(); 
+            string [] uris = null;
+            if (response == (int) ResponseType.Ok) {
+                uris = chooser.Uris;
+                chooser.Destroy();
             } else {
-                // User cancelled import.
-                chooser.Destroy();                 
-                return;
-            } 
-
-            // Read the contents of the playlist.
-            string[] uris = null;
-            try {                    
-                uris = PlaylistFileUtil.ImportPlaylist(playlist_uri);                    
-            } catch (Exception e) {
-                HigMessageDialog md = new HigMessageDialog(PrimaryWindow, 
-                    DialogFlags.DestroyWithParent, 
-                    MessageType.Error,  
-                    ButtonsType.Ok,
-                    Catalog.GetString("Unable to Import Playlist"),
-                    e.Message);
-
-                md.Run();
-                md.Destroy();
+                chooser.Destroy();
                 return;
             }
-
-            // Import the tracks specified in the playlist.
-            if (uris != null) {
-                ImportPlaylistWorker worker = new ImportPlaylistWorker(playlist_uri, uris);
-                worker.Import ();
-            } else {
-                HigMessageDialog md = new HigMessageDialog(PrimaryWindow, 
-                    DialogFlags.DestroyWithParent, 
-                    MessageType.Error,  
-                    ButtonsType.Ok,
-                    Catalog.GetString("Unable to Import Playlist"),
-                    Catalog.GetString("Banshee was unable to find any valid tracks to import.  Please check the playlist and try again.")
-                );
-
-                md.Run();
-                md.Destroy();
+            
+            if (uris == null || uris.Length == 0) {
                 return;
             }
-        }*/
+            
+            foreach (string uri in uris) {
+                PlaylistFileUtil.ImportPlaylistToLibrary (uri);
+            }
+        }
         
         private void OnQuit (object o, EventArgs args)
         {

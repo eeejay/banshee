@@ -43,6 +43,11 @@ namespace Banshee.Playlist
             PlsPlaylistFormat.FormatDescription
         };
         
+        public static readonly string [] PlaylistExtensions = new string [] {
+            M3uPlaylistFormat.FormatDescription.FileExtension,
+            PlsPlaylistFormat.FormatDescription.FileExtension
+        };
+        
         public static PlaylistFormatDescription [] ExportFormats {
             get { return export_formats; }
         }
@@ -85,7 +90,6 @@ namespace Banshee.Playlist
             try {
                 DefaultExportFormat.Set (format.FileExtension);        
             } catch (Exception) {
-                // Ignore errors.                
             }            
         }
         
@@ -144,12 +148,37 @@ namespace Banshee.Playlist
         
             return uris.ToArray ();
         }
+        
+        public static void ImportPlaylistToLibrary (string path)
+        {
+            try {
+                SafeUri uri = new SafeUri (path);
+                PlaylistParser parser = new PlaylistParser ();
+                string relative_dir = System.IO.Path.GetDirectoryName (uri.LocalPath);
+                if (relative_dir[relative_dir.Length - 1] != System.IO.Path.DirectorySeparatorChar) {
+                    relative_dir = relative_dir + System.IO.Path.DirectorySeparatorChar;
+                }
+                parser.BaseUri = new Uri (relative_dir);
+                if (parser.Parse (uri)) {
+                    List<string> uris = new List<string> ();
+                    foreach (Dictionary<string, object> element in parser.Elements) {
+                        uris.Add (((Uri)element["uri"]).LocalPath);
+                    }
+                    
+                    ImportPlaylistWorker worker = new ImportPlaylistWorker (System.IO.Path.GetFileNameWithoutExtension (uri.LocalPath), uris.ToArray ());
+                    worker.Import ();
+                }
+            } catch (Exception e) {
+                Hyena.Log.Exception (e);
+            }
+        }
     }
     
-    /*public class ImportPlaylistWorker
+    public class ImportPlaylistWorker
     {
         private string [] uris;
         private string name;
+        private LibraryImportManager importer;
         
         public ImportPlaylistWorker (string name, string [] uris)
         {
@@ -158,38 +187,39 @@ namespace Banshee.Playlist
         }
         
         public void Import ()
-        {    
+        {
             try {
-                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().ImportFinished += delegate {
-                    CreatePlaylist ();
-                };
-
-                Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().QueueSource (uris);
-            } catch (PlaylistImportCanceledException) {
-                // Do nothing, user canceled import.
+                importer = new LibraryImportManager ();
+                importer.ImportFinished += CreatePlaylist;
+                importer.Enqueue (uris);
+            } catch (PlaylistImportCanceledException e) {
+                Hyena.Log.Exception (e);
             }
         }
         
-        private void CreatePlaylist ()
+        private void CreatePlaylist (object o, EventArgs args)
         {
             try {
                 PlaylistSource playlist = new PlaylistSource (name, ServiceManager.SourceManager.MusicLibrary.DbId);
                 playlist.Save ();
+                ServiceManager.SourceManager.MusicLibrary.AddChildSource (playlist);
 
-                HyenaSqliteCommand command = new HyenaSqliteCommand (
-                    @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
-                        VALUES (?, (SELECT TrackID FROM CoreTracks WHERE Uri = ?))"
-                );
+                HyenaSqliteCommand insert_command = new HyenaSqliteCommand (String.Format (
+                    @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES ({0}, ?)", playlist.DbId));
 
-                ServiceManager.DbConnection.BeginTransaction ();
+                //ServiceManager.DbConnection.BeginTransaction ();
                 foreach (string uri in uris) {
-                    ServiceManager.DbConnection.Execute (command, playlist.DbId, uri);
+                    int track_id = LibrarySource.GetTrackIdForUri (uri);
+                    if (track_id > 0) {
+                        ServiceManager.DbConnection.Execute (insert_command, track_id);
+                    }
                 }
-                ServiceManager.DbConnection.CommitTransaction ();
+                
+                playlist.Reload ();
+                playlist.NotifyUser ();
             } catch (Exception e) {
-                Log.Exception (e);
-                ServiceManager.DbConnection.RollbackTransaction ();
+                Hyena.Log.Exception (e);
             }
         }
-    }*/
+    }
 }

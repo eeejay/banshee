@@ -64,6 +64,25 @@ namespace Hyena.Gui
             return true;
         }
         
+        public static FileFilter GetFileFilter (string name, string [] extensions)
+        {
+            FileFilter filter = new FileFilter ();
+            filter.Name = name;
+            foreach (string extension in extensions) {
+                filter.AddPattern (String.Format ("*.{0}", extension));
+            }
+            return filter;
+        }
+        
+        public static void SetChooserShortcuts (Gtk.FileChooserDialog chooser, params string [] shortcuts)
+        {
+            foreach (string shortcut in shortcuts) {
+                try {
+                    chooser.AddShortcutFolder (shortcut);
+                } catch {}
+            }
+        }
+        
         public static Gdk.Color ColorBlend (Gdk.Color a, Gdk.Color b)
         {
             // at some point, might be nice to allow any blend?

@@ -30,6 +30,8 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Banshee.ServiceStack;
+
 namespace Banshee.Library.Gui
 {
     public class FileImportSource : IImportSource
@@ -47,9 +49,11 @@ namespace Banshee.Library.Gui
             
             chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
             chooser.AddButton (Stock.Open, ResponseType.Ok);
-            
+            chooser.AddFilter (Hyena.Gui.GtkUtilities.GetFileFilter (Catalog.GetString ("Media Files"), Banshee.Collection.Database.DatabaseImportManager.WhiteListFileExtensions));
             chooser.SelectMultiple = true;
             chooser.DefaultResponse = ResponseType.Ok;
+            
+            SetChooserShortcuts (chooser);
             
             if (chooser.Run () == (int)ResponseType.Ok) {
                 Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (chooser.Uris);
@@ -68,6 +72,14 @@ namespace Banshee.Library.Gui
         
         public bool CanImport {
             get { return true; }
+        }
+        
+        public static void SetChooserShortcuts (Gtk.FileChooserDialog chooser)
+        {
+            Hyena.Gui.GtkUtilities.SetChooserShortcuts (chooser,
+                ServiceManager.SourceManager.MusicLibrary.BaseDirectory,
+                ServiceManager.SourceManager.VideoLibrary.BaseDirectory
+            );
         }
     }
 }
