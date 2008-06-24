@@ -1,5 +1,11 @@
 2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Patch from Sandy Armstrong and Bertrand Lorentz, fixes bug where
+	notification popups were no longer showing on track change (BGO #537004).
+
+2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:
 	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs: Patch from
 	Peter de Kraker adds ability to press enter from password entry on Last.fm

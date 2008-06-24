@@ -318,14 +318,9 @@ namespace Banshee.NotificationArea
         private void OnPlayerEvent (PlayerEventArgs args) 
         {
             switch (args.Event) {
-                case PlayerEvent.Iterate:
-                    if (current_track != ServiceManager.PlayerEngine.CurrentTrack) {
-                        current_track = ServiceManager.PlayerEngine.CurrentTrack;
-                        ShowTrackNotification ();
-                    }
-                    break;
                 case PlayerEvent.StartOfStream:
                 case PlayerEvent.TrackInfoUpdated:
+                    current_track = ServiceManager.PlayerEngine.CurrentTrack;
                     ToggleRatingMenuSensitive ();
                     ShowTrackNotification ();
                     break;
