@@ -125,23 +125,24 @@ namespace Daap {
             get { return client; }
         }
 
-        private Database () {
+        private Database ()
+        {
             this.id = nextid++;
         }
 
-        public Database (string name) : this () {
+        public Database (string name) : this ()
+        {
             this.Name = name;
         }
 
-        internal Database (Client client, ContentNode dbNode) : this () {
+        internal Database (Client client, ContentNode dbNode) : this ()
+        {
             this.client = client;
-
             Parse (dbNode);
         }
 
         private void Parse (ContentNode dbNode) {
             foreach (ContentNode item in (ContentNode[]) dbNode.Value) {
-
                 switch (item.Name) {
                 case "dmap.itemid":
                     id = (int) item.Value;

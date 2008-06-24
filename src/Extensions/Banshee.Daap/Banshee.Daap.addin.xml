@@ -6,8 +6,8 @@
     copyright="© 2008 Alexander Hixon. Licensed under the MIT X11 license."
     name="DAAP"
     category=""
-    description=""
-    author="Alexander Hixon"
+    description="Browse and listen to music shared over your local network."
+    author="Aaron Bockover, James Willcox, Alexander Hixon, Gabriel Burt"
     url="http://banshee-project.org/"
     defaultEnabled="true">
 

@@ -41,9 +41,14 @@ namespace Banshee.Daap
     public class DaapService : IExtensionService, IDisposable
     {
         private ServiceLocator locator;
+        private static DaapProxyWebServer proxy_server;
         
         private DaapContainerSource container;
         private Dictionary<string, DaapSource> source_map;
+        
+        internal static DaapProxyWebServer ProxyServer {
+            get { return proxy_server; }
+        }
         
         void IExtensionService.Initialize ()
         {
@@ -61,6 +66,9 @@ namespace Banshee.Daap
             locator.Removed += OnServiceRemoved;
             locator.ShowLocalServices = true;
             locator.Start ();
+            
+            proxy_server = new DaapProxyWebServer ();
+            proxy_server.Start ();
         }
         
         public void Dispose ()
@@ -72,6 +80,11 @@ namespace Banshee.Daap
                 locator = null;
             }
             
+            if (proxy_server != null) {
+                proxy_server.Stop ();
+                proxy_server = null;
+            }
+            
             // Dispose any remaining child sources
             foreach (KeyValuePair <string, DaapSource> kv in source_map) {
                 kv.Value.Disconnect (true);
@@ -79,7 +92,7 @@ namespace Banshee.Daap
             }
             
             if (container != null) {
-                ServiceManager.SourceManager.RemoveSource (container, false);
+                ServiceManager.SourceManager.RemoveSource (container, true);
                 container = null;
             }
             
@@ -105,6 +118,7 @@ namespace Banshee.Daap
             }
             
             container.AddChildSource (source);
+            source.NotifyUser ();
         }
         
         private void OnServiceRemoved (object o, ServiceArgs args)

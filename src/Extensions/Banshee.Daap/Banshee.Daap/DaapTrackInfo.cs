@@ -53,28 +53,17 @@ namespace Banshee.Daap
             TrackNumber = track.TrackNumber;
             Year = track.Year;
             Duration = track.Duration;
-            MimeType = track.Format;
+            MimeType = String.Format ("taglib/{0}", track.Format);
             ExternalId = track.Id;
             
             PrimarySource = source;
             
-            string session_id = String.Empty;
-            if (source.Database.Client.Fetcher.SessionId != 0) {
-                session_id = String.Format ("?session-id={0}", source.Database.Client.Fetcher.SessionId);
-            }
-
-            string uri = String.Format ("http://{0}:{1}/databases/{2}/items/{3}.{4}{5}",
-                                        source.Database.Client.Address.ToString (),
-                                        source.Database.Client.Port,
-                                        source.Database.Id,
-                                        track.Id,
-                                        track.Format,
-                                        session_id);
+            Uri = new SafeUri (String.Format (
+                "{0}{1}/{2}", DaapService.ProxyServer.HttpBaseAddress, source.Database.GetHashCode (), track.Id
+            ));
             
-            Uri = new SafeUri (uri);
-            
-            //this.IsLive = true;
-            this.CanSaveToDatabase = false;
+            //this.IsLive = false;
+            //this.CanSaveToDatabase = false;
         }
     }
 }

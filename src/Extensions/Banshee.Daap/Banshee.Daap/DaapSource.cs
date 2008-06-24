@@ -52,9 +52,8 @@ namespace Banshee.Daap
         public DAAP.Database Database {
             get { return database; }
         }
-        
+
         private bool is_activating;
-        private int playlistid;
         
         public DaapSource (DAAP.Service service) : base (Catalog.GetString ("Music Share"), service.Name, 
                                                     (service.Address.ToString () + service.Port).Replace (":", "").Replace (".", ""), 300)
@@ -63,10 +62,11 @@ namespace Banshee.Daap
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Disconnect"));
             Properties.SetString ("UnmapSourceActionIconName", "gtk-disconnect");
             
+            SupportsPlaylists = false;
+            SavedCount = 0;
             UpdateIcon ();
             
             AfterInitialized ();
-            playlistid = this.DbId;
         }
         
         private void UpdateIcon ()
@@ -88,8 +88,6 @@ namespace Banshee.Daap
             base.Activate ();
             
             SetStatus (String.Format (Catalog.GetString ("Connecting to {0}"), service.Name), false);
-            
-            Console.WriteLine ("Connecting to {0}:{1}", service.Address, service.Port);
             
             ThreadAssist.Spawn (delegate {
                 try {
@@ -120,7 +118,7 @@ namespace Banshee.Daap
                         ServiceManager.PlayerEngine.Close ();
                     }
                 }
-            } catch { }
+            } catch {}
             
             // Remove tracks associated with this source, since we don't want
             // them after we unmap - we'll refetch.
@@ -137,6 +135,9 @@ namespace Banshee.Daap
             }
             
             if (database != null) {
+                try {
+                    DaapService.ProxyServer.UnregisterDatabase (database);
+                } catch {}
                 database.TrackAdded -= OnDatabaseTrackAdded;
                 database.TrackRemoved -= OnDatabaseTrackRemoved;
                 database = null;
@@ -190,6 +191,7 @@ namespace Banshee.Daap
         {
             if (database == null && client.Databases.Count > 0) {
                 database = client.Databases[0];
+                DaapService.ProxyServer.RegisterDatabase (database);
                 database.TrackAdded += OnDatabaseTrackAdded;
                 database.TrackRemoved += OnDatabaseTrackRemoved;
                 
@@ -199,6 +201,7 @@ namespace Banshee.Daap
                 DaapTrackInfo daap_track = null;
                 foreach (DAAP.Track track in database.Tracks) {
                     daap_track = new DaapTrackInfo (track, this);
+                    // Only notify once every 250 tracks
                     daap_track.Save (++count % 250 == 0);
                 }
                 
@@ -222,9 +225,8 @@ namespace Banshee.Daap
         private void AddPlaylistSources ()
         {
             foreach (DAAP.Playlist pl in database.Playlists) {
-                DaapPlaylistSource source = new DaapPlaylistSource (pl, playlistid, this);
+                DaapPlaylistSource source = new DaapPlaylistSource (pl, this);
                 AddChildSource (source);
-                playlistid ++;
             }
         }
         

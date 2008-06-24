@@ -51,6 +51,10 @@ namespace Banshee.Daap
             get { return false; }
         }
         
+        public override bool CanRename {
+            get { return false; }
+        }
+        
         protected override string TypeUniqueId {
             get { return "daap-container"; }
         }

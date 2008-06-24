@@ -1,3 +1,39 @@
+2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Daap/Daap/Database.cs: Style.
+
+	* src/Extensions/Banshee.Daap/Resources/Banshee.Daap.addin.xml:
+	* src/Extensions/Banshee.Daap/Banshee.Daap.addin.xml: Move up from
+	Resources, and add original DAAP plugin authors.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapProxyWebServer.cs: Copied
+	from stable branch.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Create a new
+	proxy server instance.  Make new shares pulsate.  Dispose shares
+	recursively.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Prevent creating
+	playlists/smart playlists, initialize count to 0, [un]register our
+	database with the proxy server.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapTrackInfo.cs: Use the proxy
+	server url, don't set CanSavetoDatabase to false, that prevents daap
+	tracks from being used with the queue.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs: Override
+	quite a few things: no removing/deleting tracks, renaming, unmapping, or
+	adding tracks.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:
+	CanRename = false.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs: Copied from
+	stable, not yet used.
+
+	* src/Extensions/Banshee.Daap/Makefile.am: Add the proxy server class,
+	move the addins file.
+
 2008-06-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:

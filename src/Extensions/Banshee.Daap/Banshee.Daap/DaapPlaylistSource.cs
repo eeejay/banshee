@@ -55,7 +55,7 @@ namespace Banshee.Daap
             get { return parent.Database; }
         }
         
-        public DaapPlaylistSource (DAAP.Playlist playlist, int id, DaapSource parent) : base (playlist.Name, parent.DbId)
+        public DaapPlaylistSource (DAAP.Playlist playlist, DaapSource parent) : base (playlist.Name, parent.DbId)
         {
             this.parent = parent;
             Save ();
@@ -63,18 +63,31 @@ namespace Banshee.Daap
             if (playlist.Tracks.Count > 0) {
                 //IList<DAAP.Track> tracks = playlist.Tracks;
                 int [] external_ids = new int [playlist.Tracks.Count];
-                //for (int i = 0; i < tracks.Count; i++) {
                 int i = 0;
                 foreach (DAAP.Track track in playlist.Tracks) {
-                    external_ids[i] = track.Id;
-                    i++;
+                    external_ids[i++] = track == null ? -1 : track.Id;
                 }
-                HyenaSqliteCommand.LogAll = true;
+
                 ServiceManager.DbConnection.Execute (insert_track_command, DbId, parent.DbId, external_ids);
-                HyenaSqliteCommand.LogAll = false;
             }
             SavedCount = playlist.Tracks.Count;
             OnUpdated ();
+        }
+        
+        public override bool CanDeleteTracks {
+            get { return false; }
+        }
+        
+        public override bool CanAddTracks {
+            get { return false; }
+        }
+        
+        public override bool CanRename {
+            get { return false; }
+        }
+        
+        public override bool CanUnmap {
+            get { return false; }
         }
     }
 }

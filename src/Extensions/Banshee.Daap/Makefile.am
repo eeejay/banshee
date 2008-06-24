@@ -7,6 +7,7 @@ SOURCES =  \
 	Banshee.Daap/DaapContainerSource.cs \
 	Banshee.Daap/DaapLoginDialog.cs \
 	Banshee.Daap/DaapPlaylistSource.cs \
+	Banshee.Daap/DaapProxyWebServer.cs \
 	Banshee.Daap/DaapService.cs \
 	Banshee.Daap/DaapSource.cs \
 	Banshee.Daap/DaapTrackInfo.cs \
@@ -28,8 +29,8 @@ SOURCES =  \
 	Daap/Utility.cs
 
 RESOURCES =  \
-	Daap/content-codes \
-	Resources/Banshee.Daap.addin.xml
+	Banshee.Daap.addin.xml \
+	Daap/content-codes
 
 if DAAP_ENABLED
 include $(top_srcdir)/build/build.mk
