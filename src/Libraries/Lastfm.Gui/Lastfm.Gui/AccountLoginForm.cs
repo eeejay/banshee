@@ -42,6 +42,9 @@ namespace Lastfm.Gui
         private LinkButton signup_button;
         
         private bool save_on_edit = false;
+        
+        private bool save_on_enter = false;
+        private Gtk.Dialog parentDialog;
 
         public AccountLoginForm (Account account) : base (2, 2, false)
         {
@@ -64,6 +67,15 @@ namespace Lastfm.Gui
             
             password_entry = new Entry ();
             password_entry.Visibility = false;
+
+            //When the user presses enter in the password field: save, and then destroy the AcountLoginDialog
+            password_entry.Activated += delegate {
+                    if (save_on_enter) {
+                        this.Save ();
+                        parentDialog.Destroy ();
+                    }
+                };
+            
             password_entry.Show ();
             
             Attach (username_label, 0, 1, 0, 1, AttachOptions.Fill, 
@@ -118,6 +130,13 @@ namespace Lastfm.Gui
             set { save_on_edit = value; }
         }
         
+        //enable save on Enter and destruction of the parentDialog.
+        public void SaveOnEnter (Gtk.Dialog parentDialog) 
+        {
+           save_on_enter = true;
+           this.parentDialog = parentDialog;
+        }
+                
         public string Username {
             get { return username_entry.Text; }
         }

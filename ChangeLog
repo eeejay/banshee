@@ -1,5 +1,12 @@
 2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs: Patch from
+	Peter de Kraker adds ability to press enter from password entry on Last.fm
+	login form to save and close the dialog (BGO #536328).
+
+2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Daap/Banshee.Daap.mdp: Reflect addins mv and
 	proxy file from last commit, new error view file and refs this commit.
 

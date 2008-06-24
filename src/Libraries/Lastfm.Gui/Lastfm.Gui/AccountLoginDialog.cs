@@ -112,6 +112,7 @@ namespace Lastfm.Gui
                     login_form.Save ();
                 };
                 AddActionWidget (button, ResponseType.Ok);
+                login_form.SaveOnEnter (this);
             }
         }
         
