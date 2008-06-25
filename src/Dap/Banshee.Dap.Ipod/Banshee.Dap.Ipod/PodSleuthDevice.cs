@@ -204,7 +204,8 @@ namespace Banshee.Dap.Ipod
                 int size;
                 PixelFormat pformat;
 
-                correlationId = width = height = rotation = size = 0;
+                size = 0;
+                correlationId = width = height = rotation = 0;
                 usage = ArtworkUsage.Unknown;
                 pformat = PixelFormat.Unknown;
 

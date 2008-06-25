@@ -255,11 +255,11 @@ namespace Banshee.MediaProfiles
         public int AvailableProfileCount {
             get {
                 int count = 0;
-                #pragma warning disable 0168
+                #pragma warning disable 0168, 0219
                 foreach(Profile profile in GetAvailableProfiles()) {
                     count++;
                 }
-                #pragma warning restore 0168
+                #pragma warning restore 0168, 0219
                 return count;
             }
         }

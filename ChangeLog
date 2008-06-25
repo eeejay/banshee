@@ -1,3 +1,15 @@
+2008-06-25  Aaron Bockover  <abock@gnome.org>
+
+	This commit fixes two new errors exposed due to fixes in gmcs trunk
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/PodSleuthDevice.cs: Due to 
+	different assignment evaluation, type checking happens differently so
+	int can't be assigned to short during zero-value initialization
+	
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/MediaProfileManager.cs:
+	Update ignore pragma for the different (more correct) warning 
+	that is thrown now
+
 2008-06-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
