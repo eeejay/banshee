@@ -440,14 +440,16 @@ namespace Banshee.Lastfm.Radio
             PlaybackRepeatActions repeat_actions = Actions.PlaybackActions.RepeatActions;
             PlaybackShuffleActions shuffle_actions = Actions.PlaybackActions.ShuffleActions;
 
-            // Save/clear or restore shuffle/repeat values when we first switch to a Last.fm station
+            // Save/clear shuffle/repeat values when we first switch to a Last.fm station
             if (is_lastfm && !was_lastfm) {
                 old_repeat = repeat_actions.Active;
                 repeat_actions.Active = repeat_actions["RepeatNoneAction"] as RadioAction;
                 
                 old_shuffle = shuffle_actions.Active;
                 shuffle_actions.Active = shuffle_actions["ShuffleOffAction"] as RadioAction;
-            } else {
+            }
+            // Restore shuffle/repeat values when we switch from a Last.fm station to a non Last.fm source
+            if (!is_lastfm && was_lastfm) {
                 RestoreShuffleRepeat ();
             }
             

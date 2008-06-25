@@ -1,3 +1,9 @@
+2008-06-25  Bertrand Lorentz <bertrand.lorentz@gmail.com> 
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs: Fix
+	  bug where the repeat and shuffle mode were restored when switching
+	  between two Last.fm stations (BGO #538946).
+
 2008-06-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena/Hyena.Query/Tests/QueryTests.cs: Make the query
