@@ -39,6 +39,40 @@ namespace Hyena.Query.Tests
     [TestFixture]
     public class QueryTests : Hyena.Tests.TestBase
     {
+        private static QueryField ArtistField = new QueryField (
+            "artist", "Artist", "CoreArtists.NameLowered", true,
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            "by", "artist", "artists"
+        );
+
+        private static QueryField AlbumField = new QueryField (
+            "album", "Album", "CoreAlbums.TitleLowered", true,
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            "on", "album", "from", "albumtitle"
+        );
+
+        private static QueryField PlayCountField = new QueryField (
+            "playcount", "Play Count", "CoreTracks.PlayCount", typeof(IntegerQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            "plays", "playcount", "numberofplays", "listens"
+        );
+
+        private static QueryField DurationField = new QueryField (
+            "duration", "Duration", "CoreTracks.Duration", typeof(TimeSpanQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            "duration", "length", "time"
+        );
+
+        private static QueryField MimeTypeField = new QueryField (
+            "mimetype", "Mime Type", "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}",
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            "type", "mimetype", "format", "ext", "mime"
+        );
+
+        private static QueryFieldSet FieldSet = new QueryFieldSet (
+            ArtistField, AlbumField, PlayCountField, MimeTypeField, DurationField
+        );
+
         [Test]
         public void QueryValueSql ()
         {
@@ -88,15 +122,15 @@ namespace Hyena.Query.Tests
                 "-(foo or bar)",
                 "-(foo (-bar or baz))",
                 "-(foo (-bar or -baz))",
-                "artist:foo",
-                "-artist:foo",
-                "-artist!=foo",
+                "by:foo",
+                "-by:foo",
+                "-by!=foo",
                 "duration>\"2 minutes\"",
-                "rating>3",
-                "-rating>3",
-                "artist:baz -album:bar",
-                "artist:baz -album:bar",
-                "artist:baz (rating>3 or rating<2)",
+                "plays>3",
+                "-plays>3",
+                "by:baz -on:bar",
+                "by:baz -on:bar",
+                "by:baz (plays>3 or plays<2)",
             };
     
             AssertForEach<string> (tests, UserQueryParsesAndGenerates);
@@ -105,26 +139,24 @@ namespace Hyena.Query.Tests
         [Test]
         public void CustomFormatParenthesisBugFixed ()
         {
-            Assert.Fail ("gabe is lame and should fix this. kthx, --aaron");
-            /*QueryValue val = new StringQueryValue ();
+            QueryValue val = new StringQueryValue ();
             val.ParseUserQuery ("mp3");
     
             Assert.AreEqual (
                 "(CoreTracks.MimeType LIKE '%mp3%' OR CoreTracks.Uri LIKE '%mp3%')",
-                BansheeQuery.MimeTypeField.ToSql (StringQueryValue.Contains, val)
-            );*/
+                MimeTypeField.ToSql (StringQueryValue.Contains, val)
+            );
         }
     
         private static void UserQueryParsesAndGenerates (string query)
         {
-            Assert.Fail ("gabe is lame and should fix this. kthx, --aaron");
-            /*QueryNode node = UserQueryParser.Parse (query, BansheeQuery.FieldSet);
+            QueryNode node = UserQueryParser.Parse (query, FieldSet);
             if (query == null || query.Trim () == String.Empty) {
                 Assert.AreEqual (node, null); 
                 return;
             }
     
-            Assert.AreEqual (query, node.ToUserQuery ());*/
+            Assert.AreEqual (query, node.ToUserQuery ());
         }
     }
 }
