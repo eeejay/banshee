@@ -60,17 +60,23 @@ namespace Banshee.Daap
             this.parent = parent;
             Save ();
             
+            int count = 0;
             if (playlist.Tracks.Count > 0) {
                 //IList<DAAP.Track> tracks = playlist.Tracks;
                 int [] external_ids = new int [playlist.Tracks.Count];
                 int i = 0;
                 foreach (DAAP.Track track in playlist.Tracks) {
                     external_ids[i++] = track == null ? -1 : track.Id;
+                    if (track != null) {
+                        count++;
+                    }
                 }
 
-                ServiceManager.DbConnection.Execute (insert_track_command, DbId, parent.DbId, external_ids);
+                if (count > 0) {
+                    ServiceManager.DbConnection.Execute (insert_track_command, DbId, parent.DbId, external_ids);
+                }
             }
-            SavedCount = playlist.Tracks.Count;
+            SavedCount = count;
             OnUpdated ();
         }
         

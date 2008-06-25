@@ -53,8 +53,21 @@ namespace Banshee.Collection.Database
         }
 
         private BansheeModelCache<T> cache;
-
+        
+        public static CachedList<DatabaseTrackInfo> CreateFromModel (DatabaseTrackListModel model)
+        {
+            Selection selection = new Selection ();
+            selection.MaxIndex = model.Count;
+            selection.SelectAll ();
+            return CreateFromModelAndSelection (model, selection);
+        }
+        
         public static CachedList<DatabaseTrackInfo> CreateFromModelSelection (DatabaseTrackListModel model)
+        {
+            return CreateFromModelAndSelection (model, model.Selection);
+        }
+
+        public static CachedList<DatabaseTrackInfo> CreateFromModelAndSelection (DatabaseTrackListModel model, Selection selection)
         {
             CachedList<DatabaseTrackInfo> list = new CachedList<DatabaseTrackInfo> (DatabaseTrackInfo.Provider);
 
@@ -64,7 +77,7 @@ namespace Banshee.Collection.Database
             ));
 
             lock (model) {
-                foreach (RangeCollection.Range range in model.Selection.Ranges) {
+                foreach (RangeCollection.Range range in selection.Ranges) {
                     ServiceManager.DbConnection.Execute (add_range_command, list.CacheId, model.CacheId, range.Start, range.Count);
                 }
             }

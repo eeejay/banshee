@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Text.RegularExpressions;
 
 using Banshee.Base;
 using Banshee.Collection;
@@ -145,7 +146,28 @@ namespace Banshee.Streaming
                         track.ArtistName = Choose ((string)tag.Value, track.ArtistName);
                         break;
                     case CommonTags.Title:
-                        track.TrackTitle = Choose ((string)tag.Value, track.TrackTitle);
+                        //track.TrackTitle = Choose ((string)tag.Value, track.TrackTitle);
+                        string title = Choose ((string)tag.Value, track.TrackTitle);
+
+                        // Try our best to figure out common patterns in poor radio metadata.
+                        // Often only one tag is sent on track changes inside the stream, 
+                        // which is title, and usually contains artist and track title, separated
+                        // with a " - " string.
+                        if (track.IsLive && title.Contains (" - ")) {
+                            string [] parts = Regex.Split (title, " - ");
+                            track.TrackTitle = parts[1].Trim ();
+                            track.ArtistName = parts[0].Trim ();
+
+                            // Often, the title portion contains a postfix with more information
+                            // that will confuse lookups, such as "Talk [Studio Version]".
+                            // Strip out the [] part.
+                            Match match = Regex.Match (track.TrackTitle, "^(.+)[ ]+\\[.*\\]$");
+                            if (match.Groups.Count == 2) {
+                                track.TrackTitle = match.Groups[1].Value;
+                            }
+                        } else {
+                            track.TrackTitle = title;
+                        }
                         break;
                     case CommonTags.Album:
                         track.AlbumTitle = Choose ((string)tag.Value, track.AlbumTitle);

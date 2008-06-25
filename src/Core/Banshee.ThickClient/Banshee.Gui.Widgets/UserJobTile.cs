@@ -158,21 +158,27 @@ namespace Banshee.Gui.Widgets
             cancel_dialog = null;
         }
         
+        private void SetTitle (string new_title)
+        {
+            if (String.IsNullOrEmpty (new_title)) {
+                title_label.Hide ();
+            } else {
+                title_label.Markup = String.Format ("<small><b>{0}</b></small>", GLib.Markup.EscapeText (new_title));
+                title_label.Show ();
+            }
+            title = new_title;
+        }
+        
         private void UpdateFromJob ()
         {
             if (cancel_dialog != null && !job.CanCancel) {
                 cancel_dialog.Respond (Gtk.ResponseType.Cancel);
             }
             
-            if (title != job.Title) {
-                if (String.IsNullOrEmpty (job.Title)) {
-                    title_label.Hide ();
-                } else {
-                    title_label.Markup = String.Format ("<small><b>{0}</b></small>", 
-                        GLib.Markup.EscapeText (job.Title));
-                    title_label.Show ();
-                }
-                title = job.Title;
+            if (job.IsCancelRequested) {
+                SetTitle (Catalog.GetString ("Stopping..."));
+            } else if (title != job.Title) {
+                SetTitle (job.Title);
             }
             
             if (status != job.Status) {
@@ -197,7 +203,7 @@ namespace Banshee.Gui.Widgets
                 }
             }
             
-            cancel_button.Sensitive = job.CanCancel;
+            cancel_button.Sensitive = job.CanCancel && !job.IsCancelRequested;
             
             if (job.Progress == 0 && progress_bounce_id > 0) {
                 return;

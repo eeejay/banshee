@@ -41,6 +41,7 @@ namespace Banshee.Gui.Widgets
     {
         private AnimatedVBox box;
         private Dictionary<IUserJob, UserJobTile> job_tiles = new Dictionary<IUserJob, UserJobTile> ();
+        private Dictionary<IUserJob, DateTime> job_start_times = new Dictionary<IUserJob, DateTime> ();
         
         public UserJobTileHost () : base (0.0f, 0.0f, 1.0f, 1.0f)
         {
@@ -69,45 +70,66 @@ namespace Banshee.Gui.Widgets
         }
 
         private void AddJob (IUserJob job)
-        {                    
-            if (job == null || job.IsFinished) {
-                return;
-            }
-            
-            if ((job.DelayShow && job.Progress < 0.33) || !job.DelayShow) {
-                UserJobTile tile = new UserJobTile (job);
-                job_tiles.Add (job, tile);
-                box.PackEnd (tile, Easing.QuadraticOut);
-                tile.Show ();
+        {                
+            lock (this) {    
+                if (job == null || job.IsFinished) {
+                    return;
+                }
+                
+                if ((job.DelayShow && job.Progress < 0.33) || !job.DelayShow) {
+                    UserJobTile tile = new UserJobTile (job);
+                    job_tiles.Add (job, tile);
+                    job_start_times.Add (job, DateTime.Now);
+                    box.PackEnd (tile, Easing.QuadraticOut);
+                    tile.Show ();
+                }
             }
         }
         
         private void OnJobAdded (object o, UserJobEventArgs args)
         {
             ThreadAssist.ProxyToMain (delegate {
-                lock (this) {
-                    if (args.Job.DelayShow) {
-                        // Give the Job 1 second to become more than 33% complete
-                        Banshee.ServiceStack.Application.RunTimeout (1000, delegate {
-                            AddJob (args.Job);
-                            return false;
-                        });
-                    } else {
+                if (args.Job.DelayShow) {
+                    // Give the Job 1 second to become more than 33% complete
+                    Banshee.ServiceStack.Application.RunTimeout (1000, delegate {
                         AddJob (args.Job);
-                    }
+                        return false;
+                    });
+                } else {
+                    AddJob (args.Job);
                 }
             });
+        }
+        
+        private void RemoveJob (IUserJob job)
+        {
+            lock (this) {
+                if (job_tiles.ContainsKey (job)) {
+                    UserJobTile tile = job_tiles[job];
+                    box.Remove (tile);
+                    job_tiles.Remove (job);
+                    job_start_times.Remove (job);
+                }
+            }
         }
         
         private void OnJobRemoved (object o, UserJobEventArgs args)
         {
             ThreadAssist.ProxyToMain (delegate {
                 lock (this) {
-                    if (job_tiles.ContainsKey (args.Job)) {
-                        UserJobTile tile = job_tiles[args.Job];
-                        box.Remove (tile);
-                        job_tiles.Remove (args.Job);
+                    if (job_start_times.ContainsKey (args.Job)) {
+                        double ms_since_added = (DateTime.Now - job_start_times[args.Job]).TotalMilliseconds;
+                        if (ms_since_added < 1000) {
+                            // To avoid user jobs flasing up and out, don't let any job be visible for less than 1 second
+                            Banshee.ServiceStack.Application.RunTimeout ((uint) (1000 - ms_since_added), delegate {
+                                RemoveJob (args.Job);
+                                return false;
+                            });
+                            return;
+                        }
                     }
+                    
+                    RemoveJob (args.Job);
                 }
             });
         }

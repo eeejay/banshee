@@ -1,3 +1,67 @@
+2008-06-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit has a few goodies.  The track header info for radio stations
+	is much improved, showing song information (if we have it) plus the
+	station name.  Transferring of DAAP tracks to the library (by DnD and via
+	Importing) works now (with smooth progress updates for the transfer).  The
+	AddTrack to library job is now cancellable.
+
+	* src/Extensions/Banshee.Daap/Daap/Database.cs: Rework the Fetch/Stream
+	methods to not require a Track object, but only the track_id and type,
+	which is all they really need.  This lets us avoid the O(n) track lookup.
+	Add yield return progress updates to the DownloadTrack method.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Implement
+	CopyTrackTo and Import so that dragging and importing tracks from a DAAP
+	share into the library works.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapTrackInfo.cs: Tweak the
+	mimetype to save the DAAP.Track's Format without modification.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs: Get a
+	more accurate count if some (or all) tracks are null.
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	Set the track's Album and Artist from the station editor.
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:
+	Factor out the table-row entry code, and add a Station Creator row (aka
+	artist).
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	Ensure no user job is displayed for less than 1 second, to avoid things
+	appearing and disappearing so fast some times.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Refactor a lot of code, and special case RadioTrackInfo objects, tacking
+	on "on {radio station name}" to the second line if it has an artist or
+	album, or just using the station name as the second line if it doesn't.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs: When
+	the stop button is pressed and confirmed, set the job title to
+	"Stopping..." and make the button not sensitive.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Not sure
+	what SourceMergeType.All is really for, but treat it the same as
+	SourceMergeType.Source.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Override
+	AddAllTracks the same as AddSelectedTracks is overriden.  Allow cancelling
+	the add job.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IUserJob.cs: Expose
+	IsCancelRequested property.
+
+	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs: Default
+	the title/artist/album for the track to its parent's values.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/CachedList.cs: Add
+	another static helper for creating a cached list from an entire model.
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Bring code over
+	from stable, that when given a new track title splits it on " - " if the
+	track.IsLive.
+
 2008-06-25  Bertrand Lorentz <bertrand.lorentz@gmail.com> 
 
 	* build/m4/banshee/boo.m4: Add a disable-boo flag. If boo is not present and

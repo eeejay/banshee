@@ -43,11 +43,14 @@ namespace Banshee.InternetRadio
         private Entry name_entry;
         private Entry description_entry;
         private Entry stream_entry;
+        private Entry creator_entry;
         private ComboBoxEntry genre_entry;
         private RatingEntry rating_entry;
         private Alignment error_container;
         private Label error;
         private DatabaseTrackInfo track;
+        
+        Table table;
         
         public StationEditor (DatabaseTrackInfo track) : base()
         {
@@ -96,19 +99,13 @@ namespace Banshee.InternetRadio
             message.Wrap = true;
             message.Show ();
             
-            Table table = new Table (5, 2, false);
+            table = new Table (5, 2, false);
             table.RowSpacing = 6;
             table.ColumnSpacing = 6;
-            
-            Label label = new Label (Catalog.GetString ("Station Genre:"));
-            label.Xalign = 0.0f;
-            
+                        
             genre_entry = ComboBoxEntry.NewText ();
-            
-            System.Data.IDataReader reader = ServiceManager.DbConnection.Query (
-                "SELECT DISTINCT Genre FROM CoreTracks ORDER BY Genre");
-            while (reader != null && reader.Read ()) {
-                string genre = reader[0] as string;
+
+            foreach (string genre in ServiceManager.DbConnection.QueryEnumerable<string> ("SELECT DISTINCT Genre FROM CoreTracks ORDER BY Genre")) {
                 if (!String.IsNullOrEmpty (genre)) {
                     genre_entry.AppendText (genre);
                 }
@@ -118,42 +115,17 @@ namespace Banshee.InternetRadio
                 genre_entry.Entry.Text = track.Genre;
             }
             
-            table.Attach (label, 0, 1, 0, 1, AttachOptions.Fill, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
-            table.Attach (genre_entry, 1, 2, 0, 1, AttachOptions.Fill | AttachOptions.Expand, AttachOptions.Shrink, 0, 0);
+            AddRow (Catalog.GetString ("Station Genre:"), genre_entry);
             
-            label = new Label (Catalog.GetString ("Station Title:"));
-            label.Xalign = 0.0f;
-            
-            name_entry = new Entry ();
-            
-            table.Attach (label, 0, 1, 1, 2, AttachOptions.Fill, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
-            table.Attach (name_entry, 1, 2, 1, 2, AttachOptions.Fill | AttachOptions.Expand, AttachOptions.Shrink, 0, 0);
-
-            label = new Label (Catalog.GetString ("Stream URL:"));
-            label.Xalign = 0.0f;
-            
-            stream_entry = new Entry ();
-            
-            table.Attach (label, 0, 1, 2, 3, AttachOptions.Fill, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
-            table.Attach (stream_entry, 1, 2, 2, 3, AttachOptions.Fill | AttachOptions.Expand, AttachOptions.Shrink, 0, 0);
-            
-            label = new Label (Catalog.GetString ("Description:"));
-            label.Xalign = 0.0f;
-            
-            description_entry = new Entry ();
-            
-            table.Attach (label, 0, 1, 3, 4, AttachOptions.Fill, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
-            table.Attach (description_entry, 1, 2, 3, 4, AttachOptions.Expand | AttachOptions.Fill, AttachOptions.Shrink, 0, 0);
-            
-            label = new Label (Catalog.GetString ("Rating:"));
-            label.Xalign = 0.0f;
+            name_entry        = AddEntryRow (Catalog.GetString ("Station Name:"));
+            stream_entry      = AddEntryRow (Catalog.GetString ("Stream URL:"));
+            creator_entry     = AddEntryRow (Catalog.GetString ("Station Creator:"));
+            description_entry = AddEntryRow (Catalog.GetString ("Description:"));
             
             rating_entry = new RatingEntry ();
-            
-            table.Attach (label, 0, 1, 4, 5, AttachOptions.Fill, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
             HBox rating_box = new HBox ();
             rating_box.PackStart (rating_entry, false, false, 0);
-            table.Attach (rating_box, 1, 2, 4, 5, AttachOptions.Expand | AttachOptions.Fill, AttachOptions.Shrink, 0, 0);
+            AddRow (Catalog.GetString ("Rating:"), rating_box);
             
             table.ShowAll ();
             
@@ -202,6 +174,10 @@ namespace Banshee.InternetRadio
                     description_entry.Text = track.Comment;
                 }
                 
+                if (!String.IsNullOrEmpty (track.ArtistName)) {
+                    creator_entry.Text = track.ArtistName;
+                }
+                
                 rating_entry.Value = track.Rating;
             }
             
@@ -234,6 +210,24 @@ namespace Banshee.InternetRadio
             OnFieldsChanged (this, EventArgs.Empty);
         }
         
+        private Entry AddEntryRow (string title)
+        {
+            Entry entry = new Entry ();
+            AddRow (title, entry);
+            return entry;
+        }
+        
+        private uint row = 0;
+        private void AddRow (string title, Widget entry)
+        {
+            Label label = new Label (title);
+            label.Xalign = 0.0f;
+            
+            table.Attach (label, 0, 1, row, row + 1, AttachOptions.Fill, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
+            table.Attach (entry, 1, 2, row, row + 1, AttachOptions.Fill | AttachOptions.Expand, AttachOptions.Shrink, 0, 0);
+            row++;
+        }
+        
         private void OnFieldsChanged (object o, EventArgs args)
         {
             save_button.Sensitive = genre_entry.Entry.Text.Trim ().Length > 0 && 
@@ -252,6 +246,10 @@ namespace Banshee.InternetRadio
         
         public string Genre {
             get { return genre_entry.Entry.Text.Trim (); }
+        }
+        
+        public string StationCreator {
+            get { return creator_entry.Text.Trim (); }
         }
         
         public string StationTitle {

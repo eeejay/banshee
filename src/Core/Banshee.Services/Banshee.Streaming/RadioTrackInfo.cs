@@ -76,6 +76,9 @@ namespace Banshee.Streaming
         
         public RadioTrackInfo (TrackInfo parentTrack) : this (parentTrack.Uri)
         {
+            ArtistName = parentTrack.ArtistName;
+            TrackTitle = parentTrack.TrackTitle;
+            AlbumTitle = parentTrack.AlbumTitle;
             ParentTrack = parentTrack;
         }
 

@@ -53,7 +53,7 @@ namespace Banshee.Daap
             TrackNumber = track.TrackNumber;
             Year = track.Year;
             Duration = track.Duration;
-            MimeType = String.Format ("taglib/{0}", track.Format);
+            MimeType = track.Format;
             ExternalId = track.Id;
             
             PrimarySource = source;

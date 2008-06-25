@@ -374,7 +374,7 @@ namespace Banshee.Sources
 
         public override void MergeSourceInput (Source source, SourceMergeType mergeType)
         {
-            if (mergeType == SourceMergeType.Source) {
+            if (mergeType == SourceMergeType.Source || mergeType == SourceMergeType.All) {
                 AddAllTracks (source);
             } else if (mergeType == SourceMergeType.ModelSelection) {
                 AddSelectedTracks (source);

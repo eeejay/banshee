@@ -494,9 +494,18 @@ namespace Banshee.Sources
 
             // Store a snapshot of the current selection
             CachedList<DatabaseTrackInfo> cached_list = CachedList<DatabaseTrackInfo>.CreateFromModelSelection (model);
-
             System.Threading.ThreadPool.QueueUserWorkItem (AddTrackList, cached_list);
-
+            return true;
+        }
+        
+        public override bool AddAllTracks (Source source)
+        {
+            if (!AcceptsInputFromSource (source) || source.Count == 0)
+                return false;
+            
+            DatabaseTrackListModel model = (source as ITrackModelSource).TrackModel as DatabaseTrackListModel;
+            CachedList<DatabaseTrackInfo> cached_list = CachedList<DatabaseTrackInfo>.CreateFromModel (model);
+            System.Threading.ThreadPool.QueueUserWorkItem (AddTrackList, cached_list);
             return true;
         }
 
@@ -524,6 +533,12 @@ namespace Banshee.Sources
             AddTrackJob.Total += (int) list.Count;
 
             foreach (DatabaseTrackInfo track in list) {
+                if (AddTrackJob.IsCancelRequested) {
+                    AddTrackJob.Finish ();
+                    IncrementAddedTracks ();
+                    break;
+                }
+                
                 if (track == null) {
                     IncrementAddedTracks ();
                     continue;
@@ -586,6 +601,7 @@ namespace Banshee.Sources
                             "Adding {0} of {1} to {2}"), "{0}", "{1}", Name), 
                             Properties.GetStringList ("Icon.Name"));
                         add_track_job.DelayShow = DelayAddJob;
+                        add_track_job.CanCancel = true;
                         add_track_job.Register ();
                     }
                 }

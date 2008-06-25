@@ -197,6 +197,10 @@ namespace Banshee.InternetRadio
                         editor.ErrorMessage = Catalog.GetString ("Please provide a valid station URI");
                     }
                     
+                    if (!String.IsNullOrEmpty (editor.StationCreator)) {
+                        track.ArtistName = editor.StationCreator;
+                    }    
+                    
                     track.Comment = editor.Description;
                     
                     if (!String.IsNullOrEmpty (editor.Genre)) {
@@ -208,6 +212,7 @@ namespace Banshee.InternetRadio
                     
                     if (!String.IsNullOrEmpty (editor.StationTitle)) {
                         track.TrackTitle = editor.StationTitle;
+                        track.AlbumTitle = editor.StationTitle;
                     } else {
                         destroy = false;
                         editor.ErrorMessage = Catalog.GetString ("Please provide a station title");

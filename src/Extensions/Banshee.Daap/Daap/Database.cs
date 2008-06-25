@@ -396,34 +396,51 @@ namespace Daap {
             RefreshPlaylists (revquery);
         }
 
-        private HttpWebResponse FetchTrack (Track track, long offset) {
-            return client.Fetcher.FetchFile (String.Format ("/databases/{0}/items/{1}.{2}", id, track.Id, track.Format),
-                                             offset);
+        private HttpWebResponse FetchTrack (int track_id, string format, long offset)
+        {
+            return client.Fetcher.FetchFile (String.Format ("/databases/{0}/items/{1}.{2}", id, track_id, format), offset);
         }
 
-        public Stream StreamTrack (Track track, out long length) {
+        public Stream StreamTrack (Track track, out long length)
+        {
             return StreamTrack (track, -1, out length);
         }
         
-        public Stream StreamTrack (Track track, long offset, out long length) {
-            HttpWebResponse response = FetchTrack (track, offset);
+        public Stream StreamTrack (Track track, long offset, out long length)
+        {
+            return StreamTrack (track.Id, track.Format, offset, out length);
+        }
+        
+        public Stream StreamTrack (int track_id, string track_format, out long length)
+        {
+            return StreamTrack (track_id, track_format, -1, out length);
+        }
+        
+        public Stream StreamTrack (int track_id, string track_format, long offset, out long length) 
+        {
+            HttpWebResponse response = FetchTrack (track_id, track_format, offset);
             length = response.ContentLength;
             return response.GetResponseStream ();
         }
 
-        public void DownloadTrack (Track track, string dest) {
-
+        public IEnumerable<double> DownloadTrack (int track_id, string track_format, string dest) {
             BinaryWriter writer = new BinaryWriter (File.Open (dest, FileMode.Create));
 
             try {
-                long len;
-                using (BinaryReader reader = new BinaryReader (StreamTrack (track, out len))) {
+                long len, pos = 0, i = 0;
+                using (BinaryReader reader = new BinaryReader (StreamTrack (track_id, track_format, out len))) {
                     int count = 0;
-                    byte[] buf = new byte[ChunkLength];
+                    byte [] buf = new byte[ChunkLength];
                     
                     do {
                         count = reader.Read (buf, 0, ChunkLength);
+                        pos += count;
                         writer.Write (buf, 0, count);
+                        
+                        // Roughly every 40KB yield an updated percent-done double
+                        if (i++ % 5 == 0) {
+                            yield return (double)pos / (double)len;
+                        }
                     } while (count != 0);
                 }
             } finally {

@@ -78,6 +78,16 @@ namespace Banshee.Daap
             }
         }
         
+        public override void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, BatchUserJob job)
+        {
+            if (track.PrimarySource == this && track.Uri.Scheme.StartsWith ("http")) {
+                foreach (double percent in database.DownloadTrack ((int)track.ExternalId, track.MimeType, uri.AbsolutePath)) {
+                    job.DetailedProgress = percent;
+                }
+            }
+        }
+
+        
         public override void Activate ()
         {
             if (client != null || is_activating) {
@@ -244,7 +254,11 @@ namespace Banshee.Daap
         {
             foreach (DAAP.Playlist pl in database.Playlists) {
                 DaapPlaylistSource source = new DaapPlaylistSource (pl, this);
-                AddChildSource (source);
+                if (source.Count == 0) {
+                    source.Unmap ();
+                } else {
+                    AddChildSource (source);
+                }
             }
         }
         
@@ -289,12 +303,7 @@ namespace Banshee.Daap
         
         public void Import ()
         {
-            Log.Debug ("Starting import...");
-            DateTime start = DateTime.Now;
-            ServiceManager.SourceManager.MusicLibrary.AddAllTracks (this);
-            DateTime finish = DateTime.Now;
-            TimeSpan time = finish - start;
-            Log.DebugFormat ("Import completed. Took {0} seconds.", time.TotalSeconds);
+            ServiceManager.SourceManager.MusicLibrary.MergeSourceInput (this, SourceMergeType.All);
         }
         
         public bool CanImport {

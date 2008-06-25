@@ -48,6 +48,7 @@ namespace Banshee.ServiceStack
         bool CanCancel { get; }
         
         bool IsFinished { get; }
+        bool IsCancelRequested { get; }
         bool DelayShow { get; }
     }
 }
