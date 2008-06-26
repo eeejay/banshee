@@ -1,5 +1,11 @@
 2008-06-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Make the
+	service a DelayedInitializeService.  Seems to fix most (all?) of the
+	problems finding shares on startup.
+
+2008-06-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
 	Remove WriteLines.
 

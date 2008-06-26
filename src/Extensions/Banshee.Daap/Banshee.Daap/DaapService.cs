@@ -38,7 +38,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Daap
 {
-    public class DaapService : IExtensionService, IDisposable
+    public class DaapService : IExtensionService, IDisposable, IDelayedInitializeService
     {
         private ServiceLocator locator;
         private static DaapProxyWebServer proxy_server;
@@ -52,23 +52,6 @@ namespace Banshee.Daap
         
         void IExtensionService.Initialize ()
         {
-            // Add the source, even though its empty, so that the user sees the
-            // plugin is enabled, just no child sources yet.
-            source_map = new Dictionary<string, DaapSource> ();
-            container = new DaapContainerSource ();
-            
-            // Now start looking for services.
-            // We do this after creating the source because if we do it before
-            // there's a race condition where we get a service before the source
-            // is added.
-            locator = new ServiceLocator ();
-            locator.Found += OnServiceFound;
-            locator.Removed += OnServiceRemoved;
-            locator.ShowLocalServices = true;
-            locator.Start ();
-            
-            proxy_server = new DaapProxyWebServer ();
-            proxy_server.Start ();
         }
         
         public void Dispose ()
@@ -133,6 +116,27 @@ namespace Banshee.Daap
             if (source_map.Count == 0) {
                 ServiceManager.SourceManager.RemoveSource (container);
             }
+        }
+
+        public void DelayedInitialize ()
+        {
+            // Add the source, even though its empty, so that the user sees the
+            // plugin is enabled, just no child sources yet.
+            source_map = new Dictionary<string, DaapSource> ();
+            container = new DaapContainerSource ();
+            
+            // Now start looking for services.
+            // We do this after creating the source because if we do it before
+            // there's a race condition where we get a service before the source
+            // is added.
+            locator = new ServiceLocator ();
+            locator.Found += OnServiceFound;
+            locator.Removed += OnServiceRemoved;
+            locator.ShowLocalServices = true;
+            locator.Start ();
+            
+            proxy_server = new DaapProxyWebServer ();
+            proxy_server.Start ();
         }
         
         string IService.ServiceName {
