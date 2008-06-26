@@ -1,5 +1,43 @@
 2008-06-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Remove WriteLines.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/FilterModelProvider.cs:
+	Remove expensive ifnull call; all blank (empty or all white space) strings
+	should now be saved as null.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Increase the cache size if the library has > 10K tracks, use LogAll = true
+	for sql debugging.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Update CoreTracks genre, composer etc to be null if blank/whitespace.
+	Drop the CoreCache table - will be recreated as needed, and as a temporary
+	table (small performance win).  Vacuum and analyze the db, for good
+	measure.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Remove
+	expensive sort by Uri as the fallback for most non-URI sort options.
+
+	* src/Libraries/Hyena/Hyena.Query/QueryTermNode.cs: Explicitly set the
+	no-field-specified operator (to contains).
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/Tests/SqliteModelProviderTests.cs:
+	Test that blank/whitespace strings get saved as null.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: If a string is
+	empty or whitespace only, save it as null.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Change
+	Exists function to check sqltie_temp_master too.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Wrap the
+	reload query (delete + insert into CoreCache) in a transaction.  Make the
+	CoreCache table a TEMP table for performance.
+
+2008-06-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This commit adds manual playlist (including play queue) sorting.  To
 	manually sort a playlist, you need to turn off column sorting by clicking
 	the sorted column until the sort arrow disappears (it has three states,

@@ -283,7 +283,7 @@ namespace Hyena.Data.Sqlite
             lock (this) {
                 if (last_reload_fragment != model.ReloadFragment || last_reload_command == null) {
                     last_reload_fragment = model.ReloadFragment;
-                    last_reload_command = new HyenaSqliteCommand (String.Format ("{0}{1}", reload_sql, last_reload_fragment));
+                    last_reload_command = new HyenaSqliteCommand (String.Format ("BEGIN; {0}{1}; COMMIT", reload_sql, last_reload_fragment));
                 }
 
                 Clear ();
@@ -438,7 +438,7 @@ namespace Hyena.Data.Sqlite
 
             if (!connection.TableExists (CacheTableName)) {
                 connection.Execute (String.Format (@"
-                    CREATE TABLE {0} (
+                    CREATE TEMP TABLE {0} (
                         OrderID INTEGER PRIMARY KEY,
                         ModelID INTEGER,
                         ItemID INTEGER)", CacheTableName

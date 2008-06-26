@@ -48,7 +48,7 @@ namespace Banshee.Collection.Database
 
             AddColumn (new DatabaseColumn (value_info, new DatabaseColumnAttribute ()), true);
             
-            select = String.Format ("ifnull({0}, '') as Value", value_column);
+            select = String.Format ("{0} as Value", value_column);
         }
         
         public override string TableName { get { return table_name; } }

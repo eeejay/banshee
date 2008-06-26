@@ -49,7 +49,12 @@ namespace Hyena.Data.Sqlite
         
         public static object ToDbFormat (Type type, object value)
         {
-            if (type == typeof (DateTime)) {
+            if (type == typeof (string)) {
+                // Treat blank strings or strings with only whitespace as null
+                return value == null || String.IsNullOrEmpty (((string)value).Trim ())
+                    ? null
+                    : value;
+            } else if (type == typeof (DateTime)) {
                 return DateTime.MinValue.Equals ((DateTime)value)
                     ? (object)null
                     : DateTimeUtil.FromDateTime ((DateTime)value);

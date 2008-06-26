@@ -47,8 +47,8 @@ namespace Banshee.Database
         public BansheeDbConnection () : base (DatabaseFile)
         {
             // Each cache page is about 1.5K, so 32768 pages = 49152K = 48M
-            //Execute ("PRAGMA cache_size = 32768");
-            Execute ("PRAGMA cache_size = 16384");
+            int cache_size = Query<long> ("SELECT COUNT(*) FROM CoreTracks") > 10000 ? 32768 : 16384;
+            Execute ("PRAGMA cache_size = ?", cache_size);
             Execute ("PRAGMA synchronous = OFF");
             Execute ("PRAGMA temp_store = MEMORY");
             Execute ("PRAGMA count_changes = OFF");
@@ -61,9 +61,7 @@ namespace Banshee.Database
             migrator = new BansheeDbFormatMigrator (this);
             
             if (Banshee.Base.ApplicationContext.CommandLine.Contains ("debug-sql")) {
-                this.Executing += delegate (object sender, ExecutingEventArgs args) {
-                    Log.Debug (String.Format ("Executing: {0}", args.Command.CommandText));
-                };
+                Hyena.Data.Sqlite.HyenaSqliteCommand.LogAll = true;
             }
         }
 

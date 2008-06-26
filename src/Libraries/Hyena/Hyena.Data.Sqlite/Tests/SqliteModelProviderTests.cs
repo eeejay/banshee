@@ -109,6 +109,24 @@ namespace Hyena.Data.Sqlite.Tests
             Assert.AreEqual (newed_item.GetPrivateStringField (), loaded_item.GetPrivateStringField ());
             Assert.AreEqual (newed_item.GetPrivateStringProperty (), loaded_item.GetPrivateStringProperty ());
         }
+
+        [Test]
+        public void BlankStringMembers ()
+        {
+            DbBoundType newed_item = new DbBoundType ();
+            newed_item.PublicStringField = "";
+            newed_item.PublicStringProperty = null;
+            newed_item.SetPrivateStringField (" \t ");
+            newed_item.SetPrivateStringProperty (" foo ");
+            
+            provider.Save (newed_item);
+            
+            DbBoundType loaded_item = provider.FetchSingle (newed_item.PrimaryKey);
+            Assert.AreEqual (null, loaded_item.PublicStringField);
+            Assert.AreEqual (null, loaded_item.PublicStringProperty);
+            Assert.AreEqual (null, loaded_item.GetPrivateStringField ());
+            Assert.AreEqual (" foo ", loaded_item.GetPrivateStringProperty ());
+        }
     
         [Test]
         public void NullStringMembers ()

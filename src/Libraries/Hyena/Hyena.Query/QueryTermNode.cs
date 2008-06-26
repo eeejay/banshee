@@ -73,6 +73,7 @@ namespace Hyena.Query
             if (term.Value == null) {
                 term.Field = null;
                 term.Value = QueryValue.CreateFromUserQuery (token, term.Field);
+                term.Operator = StringQueryValue.Contains;
             }
 
             return term;

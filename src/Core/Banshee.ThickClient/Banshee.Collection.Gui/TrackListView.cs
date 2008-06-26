@@ -130,11 +130,9 @@ namespace Banshee.Collection.Gui
                 if (playlist != null) {
                     //Gtk.Drag.
                     int row = GetRowAtY (y);
-                    Console.WriteLine ("track drag drop at y {0}, row {1}; y at row 0 is {2}, row height = {3}", y, row, GetYAtRow (0), RowHeight);
                     if (row != GetRowAtY (y + RowHeight / 2)) {
                         row += 1;
                     }
-                    Console.WriteLine ("track drag drop, row + 1/2 is {0}", GetRowAtY (y + (RowHeight / 2)));
                     
                     if (playlist.TrackModel.Selection.Contains (row)) {
                         // can't drop within the selection

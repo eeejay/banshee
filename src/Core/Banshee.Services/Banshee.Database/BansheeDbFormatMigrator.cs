@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 14;
+        protected const int CURRENT_VERSION = 16;
         protected const int CURRENT_METADATA_VERSION = 2;
         
 #region Migration Driver
@@ -442,6 +442,34 @@ namespace Banshee.Database
         
 #endregion
 
+#region Version 15
+
+        [DatabaseVersion (15)]
+        private bool Migrate_15 ()
+        {
+            string [] columns = new string [] {"Genre", "Composer", "Copyright", "LicenseUri", "Comment"};
+            foreach (string column in columns) {
+                Execute (String.Format ("UPDATE CoreTracks SET {0} = NULL WHERE {0} IS NOT NULL AND trim({0}) = ''", column));
+            }
+            return true;
+        }
+        
+#endregion
+
+#region Version 16
+
+        [DatabaseVersion (16)]
+        private bool Migrate_16 ()
+        {
+            // The CoreCache table is now created as needed, and as a TEMP table
+            Execute ("DROP TABLE CoreCache");
+            Execute ("COMMIT; VACUUM; BEGIN");
+            Execute ("ANALYZE");
+            return true;
+        }
+        
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -621,14 +649,6 @@ namespace Banshee.Database
                     ModelID             TEXT
                 )
             ");
-            
-            Execute(@"
-                CREATE TABLE CoreCache (
-                    OrderID             INTEGER PRIMARY KEY,
-                    ModelID             INTEGER,
-                    ItemID              INTEGER
-                )
-            ");
 
             // This index slows down queries were we shove data into the CoreCache.
             // Since we do that frequently, not using it.
@@ -738,6 +758,7 @@ namespace Banshee.Database
             Execute ("UPDATE CorePlaylists SET PrimarySourceID = 1");
             
             InitializeOrderedTracks ();
+            Migrate_15 ();
         }
 
 #endregion

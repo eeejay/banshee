@@ -272,14 +272,15 @@ namespace Hyena.Data.Sqlite
         
         private bool Exists (string type, string name)
         {
-            return
-                Query<int> (
-                    String.Format (@"
-                        SELECT COUNT(*)
-                            FROM sqlite_master
-                            WHERE Type='{0}' AND Name='{1}'",
-                        type, name)
-                ) > 0;
+            return Exists (type, name, "sqlite_master") || Exists (type, name, "sqlite_temp_master");
+        }
+        
+        private bool Exists (string type, string name, string master)
+        {
+            return Query<int> (String.Format (
+                "SELECT COUNT(*) FROM {0} WHERE Type='{1}' AND Name='{2}'",
+                master, type, name)
+            ) > 0;
         }
 
         private delegate void SchemaHandler (string column);
