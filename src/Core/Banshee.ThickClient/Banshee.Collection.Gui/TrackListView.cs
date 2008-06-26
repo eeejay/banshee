@@ -36,6 +36,7 @@ using Hyena.Data.Gui;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
+using Banshee.Playlist;
 
 using Banshee.Gui;
 
@@ -119,6 +120,33 @@ namespace Banshee.Collection.Gui
         {
             base.OnDragSourceSet ();
             Drag.SourceSetIconName (this, "audio-x-generic");
+        }
+        
+        protected override bool OnDragDrop (Gdk.DragContext context, int x, int y, uint time_)
+        {
+            y = TranslateToListY (y);
+            if (Gtk.Drag.GetSourceWidget (context) == this) {
+                PlaylistSource playlist = ServiceManager.SourceManager.ActiveSource as PlaylistSource;
+                if (playlist != null) {
+                    //Gtk.Drag.
+                    int row = GetRowAtY (y);
+                    Console.WriteLine ("track drag drop at y {0}, row {1}; y at row 0 is {2}, row height = {3}", y, row, GetYAtRow (0), RowHeight);
+                    if (row != GetRowAtY (y + RowHeight / 2)) {
+                        row += 1;
+                    }
+                    Console.WriteLine ("track drag drop, row + 1/2 is {0}", GetRowAtY (y + (RowHeight / 2)));
+                    
+                    if (playlist.TrackModel.Selection.Contains (row)) {
+                        // can't drop within the selection
+                        return false;
+                    }
+                    
+                    playlist.ReorderSelectedTracks (row);
+                    return true;
+                }
+            }
+            
+            return false;
         }
 
         protected override void OnDragDataGet (Gdk.DragContext context, SelectionData selection_data, uint info, uint time)

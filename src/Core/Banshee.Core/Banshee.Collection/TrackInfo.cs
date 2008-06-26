@@ -314,6 +314,23 @@ namespace Banshee.Collection
             get { return media_attributes; }
             set { media_attributes = value; }
         }
+        
+        public bool IsMedia (TrackMediaAttributes attr)
+        {
+            return (MediaAttributes & attr) != 0;
+        }
+        
+        public string MediaTypeName {
+            get {
+                if (IsMedia (TrackMediaAttributes.Podcast))
+                    return Catalog.GetString ("Podcast");
+                if (IsMedia (TrackMediaAttributes.VideoStream))
+                    return Catalog.GetString ("Video");
+                if (IsMedia (TrackMediaAttributes.Music))
+                    return Catalog.GetString ("Song");
+                return Catalog.GetString ("Item");
+            }
+        }
 
         // Generates a{sv} of self according to http://wiki.xmms2.xmms.se/index.php/Media_Player_Interfaces#.22Metadata.22
         public IDictionary<string, object> GenerateExportable ()

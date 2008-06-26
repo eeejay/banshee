@@ -124,8 +124,10 @@ namespace Banshee.Collection.Database
 
         protected virtual void GenerateSortQueryPart ()
         {
-            SortQuery = (SortColumn == null)
-                ? BansheeQuery.GetSort ("Artist", true)
+            SortQuery = (SortColumn == null || SortColumn.SortType == SortType.None)
+                ? (SortColumn != null && source is Banshee.Playlist.PlaylistSource)
+                    ? "CorePlaylistEntries.ViewOrder ASC, CorePlaylistEntries.EntryID ASC" 
+                    : BansheeQuery.GetSort ("Artist", true)
                 : BansheeQuery.GetSort (SortColumn.SortKey, SortColumn.SortType == SortType.Ascending);
         }
 
@@ -137,11 +139,18 @@ namespace Banshee.Collection.Database
                 }
                 
                 if (sort_column == column && sort_column != null) {
-                    sort_column.SortType = sort_column.SortType == SortType.Ascending 
-                        ? SortType.Descending 
-                        : SortType.Ascending;
+                    switch (sort_column.SortType) {
+                        case SortType.Ascending:    sort_column.SortType = SortType.Descending; break;
+                        case SortType.Descending:   sort_column.SortType = SortType.None; break;
+                        case SortType.None:         sort_column.SortType = SortType.Ascending; break;
+                    }
                 }
-            
+                
+                // If we're switching from a different column, or we aren't in a playlist, make sure sort type isn't None
+                if (sort_column != null && (sort_column != column || !(source is Banshee.Playlist.PlaylistSource)) && sort_column.SortType == SortType.None) {
+                    sort_column.SortType = SortType.Ascending;
+                }
+                
                 sort_column = column;
             
                 GenerateSortQueryPart ();

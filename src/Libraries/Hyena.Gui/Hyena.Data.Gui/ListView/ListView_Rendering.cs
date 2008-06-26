@@ -225,16 +225,7 @@ namespace Hyena.Data.Gui
                             single_list_alloc.Width, single_list_alloc.Height);
                     }
                     
-                    if (ri == drag_reorder_row_index && Reorderable) {
-                        cairo_context.Save ();
-                        cairo_context.LineWidth = 1.0;
-                        cairo_context.Antialias = Cairo.Antialias.None;
-                        cairo_context.MoveTo (single_list_alloc.Left, single_list_alloc.Top);
-                        cairo_context.LineTo (single_list_alloc.Right, single_list_alloc.Top);
-                        cairo_context.Color = Theme.Colors.GetWidgetColor (GtkColorClass.Text, StateType.Normal);
-                        cairo_context.Stroke ();
-                        cairo_context.Restore ();
-                    }
+                    PaintReorderLine (ri, single_list_alloc);
                     
                     if (Selection != null && Selection.FocusedIndex == ri && !Selection.Contains (ri) && HasFocus) {
                         CairoCorners corners = CairoCorners.All;
@@ -263,6 +254,9 @@ namespace Hyena.Data.Gui
                 single_list_alloc.Y += single_list_alloc.Height;
             }
             
+            // In case the user is dragging to the end of the list
+            PaintReorderLine (last_row, single_list_alloc);
+            
             if (selection_height > 0) {
                 Theme.DrawRowSelection (cairo_context, list_rendering_alloc.X, selection_y, 
                     list_rendering_alloc.Width, selection_height);
@@ -281,6 +275,20 @@ namespace Hyena.Data.Gui
             }
             
             cairo_context.ResetClip ();
+        }
+        
+        private void PaintReorderLine (int row_index, Rectangle single_list_alloc)
+        {
+            if (row_index == drag_reorder_row_index && Reorderable) {
+                cairo_context.Save ();
+                cairo_context.LineWidth = 1.0;
+                cairo_context.Antialias = Cairo.Antialias.None;
+                cairo_context.MoveTo (single_list_alloc.Left, single_list_alloc.Top);
+                cairo_context.LineTo (single_list_alloc.Right, single_list_alloc.Top);
+                cairo_context.Color = Theme.Colors.GetWidgetColor (GtkColorClass.Text, StateType.Normal);
+                cairo_context.Stroke ();
+                cairo_context.Restore ();
+            }
         }
 
         private void PaintRow (int row_index, Rectangle area, StateType state)
@@ -418,7 +426,7 @@ namespace Hyena.Data.Gui
         }
         
         private int row_height = 32;
-        private int RowHeight {
+        protected int RowHeight {
             get {
                 if (RecomputeRowHeight) {
                     row_height = RowHeightProvider != null 

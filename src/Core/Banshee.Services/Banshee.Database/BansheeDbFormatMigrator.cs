@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 13;
+        protected const int CURRENT_VERSION = 14;
         protected const int CURRENT_METADATA_VERSION = 2;
         
 #region Migration Driver
@@ -431,6 +431,17 @@ namespace Banshee.Database
         
 #endregion
 
+#region Version 14
+
+        [DatabaseVersion (14)]
+        private bool Migrate_14 ()
+        {
+            InitializeOrderedTracks ();
+            return true;
+        }
+        
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -725,11 +736,28 @@ namespace Banshee.Database
 
             Execute ("UPDATE CoreSmartPlaylists SET PrimarySourceID = 1");
             Execute ("UPDATE CorePlaylists SET PrimarySourceID = 1");
+            
+            InitializeOrderedTracks ();
         }
 
 #endregion
 
 #region Utilities / Source / Service Stuff
+
+        private void InitializeOrderedTracks ()
+        {
+            foreach (long playlist_id in connection.QueryEnumerable<long> ("SELECT PlaylistID FROM CorePlaylists ORDER BY PlaylistID")) {
+                if (connection.Query<long> (@"SELECT COUNT(*) FROM CorePlaylistEntries 
+                    WHERE PlaylistID = ? AND ViewOrder > 0", playlist_id) <= 0) {
+                
+                    long first_id = connection.Query<long> ("SELECT COUNT(*) FROM CorePlaylistEntries WHERE PlaylistID < ?", playlist_id);
+                    connection.Execute (
+                        @"UPDATE CorePlaylistEntries SET ViewOrder = (ROWID - ?) WHERE PlaylistID = ?",
+                        first_id, playlist_id
+                    );
+                }
+            }
+        }
 
         private void OnServiceStarted (ServiceStartedArgs args)
         {

@@ -69,24 +69,31 @@ namespace Banshee.Playlist
         protected override string TrackJoinTable {
             get { return "CorePlaylistEntries"; }
         }
+        
+        protected long MaxViewOrder {
+            get {
+                return ServiceManager.DbConnection.Query<long> (
+                    "SELECT MAX(ViewOrder) + 1 FROM CorePlaylistEntries WHERE PlaylistID = ?", DbId);
+            }
+        }
 
         static PlaylistSource () 
         {
             add_track_range_command = new HyenaSqliteCommand (@"
                 INSERT INTO CorePlaylistEntries
-                    SELECT null, ?, ItemID, 0
+                    SELECT null, ?, ItemID, OrderId + ?
                         FROM CoreCache WHERE ModelID = ?
                         LIMIT ?, ?"
             );
 
             add_track_command = new HyenaSqliteCommand (@"
                 INSERT INTO CorePlaylistEntries
-                    VALUES (null, ?, ?, 0)"
+                    VALUES (null, ?, ?, ?)"
             );
 
             add_track_range_from_joined_model_sql = @"
                 INSERT INTO CorePlaylistEntries
-                    SELECT null, ?, TrackID, 0
+                    SELECT null, ?, TrackID, OrderId + ?
                         FROM CoreCache c INNER JOIN {0} e ON c.ItemID = e.{1}
                         WHERE ModelID = ?
                         LIMIT ?, ?";
@@ -214,7 +221,7 @@ namespace Banshee.Playlist
 
         protected void AddTrack (int track_id)
         {
-            ServiceManager.DbConnection.Execute (add_track_command, DbId, track_id);
+            ServiceManager.DbConnection.Execute (add_track_command, DbId, track_id, MaxViewOrder);
             OnTracksAdded ();
         }
         
@@ -236,6 +243,38 @@ namespace Banshee.Playlist
             }
             return false;
         }
+        
+        public void ReorderSelectedTracks (int drop_row)
+        {
+            if (TrackModel.Selection.Count == 0 || TrackModel.Selection.AllSelected) {
+                return;
+            }
+            
+            TrackInfo track = TrackModel[drop_row];
+            long order = track == null
+                ? ServiceManager.DbConnection.Query<long> ("SELECT MAX(ViewOrder) + 1 FROM CorePlaylistEntries WHERE PlaylistID = ?", DbId)
+                : ServiceManager.DbConnection.Query<long> ("SELECT ViewOrder FROM CorePlaylistEntries WHERE PlaylistID = ? AND EntryID = ?", DbId, Convert.ToInt64 (track.CacheEntryId));
+            
+            // Make room for our new items
+            if (track != null) {
+                ServiceManager.DbConnection.Execute ("UPDATE CorePlaylistEntries SET ViewOrder = ViewOrder + ? WHERE PlaylistID = ? AND ViewOrder >= ?",
+                    TrackModel.Selection.Count, DbId, order
+                );
+            }
+            
+            HyenaSqliteCommand update_command = new HyenaSqliteCommand (String.Format ("UPDATE CorePlaylistEntries SET ViewOrder = ? WHERE PlaylistID = {0} AND EntryID = ?", DbId));
+            HyenaSqliteCommand select_command = new HyenaSqliteCommand (String.Format ("SELECT ItemID FROM CoreCache WHERE ModelID = {0} LIMIT ?, ?", DatabaseTrackModel.CacheId));
+            
+            // Reorder the selected items
+            // TODO put in transaction
+            foreach (RangeCollection.Range range in TrackModel.Selection.Ranges) {
+                foreach (long entry_id in ServiceManager.DbConnection.QueryEnumerable<long> (select_command, range.Start, range.Count)) {
+                    ServiceManager.DbConnection.Execute (update_command, order++, entry_id);
+                }
+            }
+            
+            Reload ();
+        }
 
         DatabaseTrackListModel last_add_range_from_model;
         HyenaSqliteCommand last_add_range_command = null;
@@ -247,7 +286,8 @@ namespace Banshee.Playlist
                     ? last_add_range_command
                     : new HyenaSqliteCommand (String.Format (add_track_range_from_joined_model_sql, from.JoinTable, from.JoinPrimaryKey));
 
-            ServiceManager.DbConnection.Execute (last_add_range_command, DbId, from.CacheId, range.Start, range.Count);
+            long first_order_id = ServiceManager.DbConnection.Query<long> ("SELECT OrderID FROM CoreCache WHERE ModelID = ? LIMIT 1 OFFSET ?", from.CacheId, range.Start);
+            ServiceManager.DbConnection.Execute (last_add_range_command, DbId, MaxViewOrder - first_order_id, from.CacheId, range.Start, range.Count);
 
             last_add_range_from_model = from;
         }

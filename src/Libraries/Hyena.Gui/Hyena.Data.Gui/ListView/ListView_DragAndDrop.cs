@@ -173,11 +173,27 @@ namespace Hyena.Data.Gui
         
         private void DragReorderUpdateRow ()
         {
-            int row = GetRowAtY (drag_reorder_motion_y) - 1;
+            int row = GetDragRow (drag_reorder_motion_y);
             if (row != drag_reorder_row_index) {
                 drag_reorder_row_index = row;
                 InvalidateList ();
             }   
+        }
+        
+        protected int GetDragRow (int y)
+        {
+            y = TranslateToListY (y);
+            int row = GetRowAtY (y);
+            
+            if (row == -1) {
+                return -1;
+            }
+
+            if (row != GetRowAtY (y + RowHeight / 2)) {
+                row++;
+            }
+
+            return row;
         }
     }
 }

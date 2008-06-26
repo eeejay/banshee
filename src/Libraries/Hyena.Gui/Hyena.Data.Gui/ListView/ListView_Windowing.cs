@@ -107,6 +107,11 @@ namespace Hyena.Data.Gui
             event_window.Hide ();
         }
         
+        protected int TranslateToListY (int y)
+        {
+            return y - list_interaction_alloc.Y;
+        }
+        
         private void MoveResize (Rectangle allocation)
         {
             if (Theme == null) {

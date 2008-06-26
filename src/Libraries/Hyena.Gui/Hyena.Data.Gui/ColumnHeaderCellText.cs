@@ -62,7 +62,11 @@ namespace Hyena.Data.Gui
             alloc.Y = ((int)cellHeight - alloc.Height) / 2;
             
             base.Render (context, state, cellWidth - 2 * alloc.Width - 10, cellHeight);
-            context.Theme.DrawArrow (context.Context, alloc, ((ISortableColumn)data_handler ()).SortType);
+            
+            SortType sort_type = ((ISortableColumn)data_handler ()).SortType;
+            if (sort_type != SortType.None) {
+                context.Theme.DrawArrow (context.Context, alloc, sort_type);
+            }
         }
         
         protected override string Text {

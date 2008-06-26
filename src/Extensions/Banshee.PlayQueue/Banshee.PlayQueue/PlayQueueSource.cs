@@ -67,7 +67,7 @@ namespace Banshee.PlayQueue
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
             
-            ((DatabaseTrackListModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.EntryID ASC";
+            ((DatabaseTrackListModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.ViewOrder ASC, CorePlaylistEntries.EntryID ASC";
             
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent);
             ServiceManager.PlaybackController.Transition += OnCanonicalPlaybackControllerTransition;
@@ -115,8 +115,10 @@ namespace Banshee.PlayQueue
             ServiceManager.SourceManager.VideoLibrary.TracksDeleted += HandleTracksDeleted;
             
             TrackModel.Reloaded += delegate {
-                if (this == ServiceManager.PlaybackController.Source && Count == 0) {
-                    ServiceManager.PlaybackController.Source = PriorSource;
+                if (Count == 0) {
+                    if (this == ServiceManager.PlaybackController.Source || this == ServiceManager.PlaybackController.NextSource) {
+                        ServiceManager.PlaybackController.NextSource = ServiceManager.PlaybackController.Source = PriorSource;
+                    }
                 }
             };
             

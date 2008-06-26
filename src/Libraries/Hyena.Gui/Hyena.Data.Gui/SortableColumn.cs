@@ -36,7 +36,7 @@ namespace Hyena.Data.Gui
     public class SortableColumn : Column, ISortableColumn
     {
         private string sort_key;
-        private SortType sort_type;
+        private SortType sort_type = SortType.Ascending;
         
         public SortableColumn(string title, ColumnCell cell, double width, string sort_key, bool visible) : 
             base(title, cell, width, visible)

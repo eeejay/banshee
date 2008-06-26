@@ -1,3 +1,54 @@
+2008-06-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit adds manual playlist (including play queue) sorting.  To
+	manually sort a playlist, you need to turn off column sorting by clicking
+	the sorted column until the sort arrow disappears (it has three states,
+	asc, desc, manual sort order).
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Fix bug with my return-to-previous-playback-source code where if the Play
+	Queue was the *next* playback source and was then emptied, it wouldn't
+	fall back to the previous and/or current.  Also, force sorting by
+	ViewOrder, enabling manual sort order.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Handle DragDrop for playlists, reordering the selected tracks.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Handle the new SortType (None) for playlists, sorting by ViewOrder.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Implement
+	reordering and setting default order when adding tracks to a playlist.
+	Adding tracks still uses a constant number of queries, but reordering uses
+	N + 2 or 3 where N is the number of tracks you dragged.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Make sure the playlist order column is initialized w/ decent values.
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Add a
+	MediaTypeName property, will be used for menu items and other UI for
+	calling an item by a more descriptive name (eg Podcast, Video, etc).
+
+	* src/Libraries/Hyena/Hyena.Data/SortType.cs: Add None type.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs: Don't
+	draw an arrow if sort type is None.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/SortableColumn.cs: Explicitly set
+	the default sort type to ascending.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	Add protected helper method GetDragRow (int y) that returns the drop row
+	index for a given y, such that if over the top half of a row, returns that
+	index, else returns the one after.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Add protected helper, TranslateToListY that subtracts the header height.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Factor out the reorder line painting into its own method, and fix a bug
+	where the line wasn't drawn if the position was after the last row.
+
 2008-06-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit has a few goodies.  The track header info for radio stations
