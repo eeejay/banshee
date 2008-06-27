@@ -31,8 +31,9 @@ using System;
 using System.Data;
 using System.IO;
 
-using Mono.Data.SqliteClient;
 using Mono.Unix;
+
+using Hyena.Data.Sqlite;
 
 using Banshee.Base;
 using Banshee.Collection.Database;
@@ -43,87 +44,82 @@ namespace Banshee.PlayerMigration
 {
     public sealed class AmarokPlayerImportSource : ThreadPoolImportSource
     {
-        private static readonly string library_path = Path.Combine ( Path.Combine (Path.Combine (Path.Combine (Path.Combine (
-                                                 Environment.GetFolderPath(Environment.SpecialFolder.Personal),
-                                                 ".kde"),
-                                                 "share"),
-                                                 "apps"),
-                                                 "amarok"),
-                                                 "collection.db");
+        private static readonly string amarok_db_path = Paths.Combine (Environment.GetFolderPath (Environment.SpecialFolder.Personal), ".kde", "share", "apps", "amarok", "collection.db");
 
         protected override void ImportCore ()
         {
-            LibraryImportManager import_manager = ServiceManager.Get<LibraryImportManager> ("LibraryImportManager");
-            IDbConnection conn;
+            LibraryImportManager import_manager = ServiceManager.Get<LibraryImportManager> ();
+            HyenaSqliteConnection conn;
 
             try {
-                conn = new SqliteConnection ("Version=3,URI=file://" + library_path);
-                conn.Open ();
+                conn = new HyenaSqliteConnection (amarok_db_path);
             } catch (Exception e) {
-                LogError (library_path, String.Format (
+                LogError (amarok_db_path, String.Format (
                     "Unable to open Amarok database: {0}", e.Message));
                 return;
             }
             
             int count = 0;
             try {
-                IDbCommand cmd = conn.CreateCommand ();
-                cmd.CommandText = @"
-                                    SELECT COUNT(*)
-                                    FROM tags";
-                count = Convert.ToInt32 (cmd.ExecuteScalar ());
+                count = conn.Query<int> ("SELECT COUNT(*) FROM tags");
             } catch (Exception) {}
 
             try {
-                IDbCommand cmd = conn.CreateCommand ();
-                cmd.CommandText = @"
-                                    CREATE TEMP TABLE devices_tmp
-                                           (id INTEGER PRIMARY KEY,
-                                            lastmountpoint VARCHAR(255));
-                                    INSERT INTO devices_tmp (id, lastmountpoint)
-                                           SELECT devices.id,
-                                                  devices.lastmountpoint
-                                           FROM devices;
-                                    INSERT OR IGNORE INTO devices_tmp (id, lastmountpoint)
-                                           VALUES (-1, '/');";
-                cmd.ExecuteNonQuery ();
+                conn.Execute (@"
+                    CREATE TEMP TABLE devices_tmp
+                           (id INTEGER PRIMARY KEY,
+                            lastmountpoint VARCHAR(255));
+                    INSERT INTO devices_tmp (id, lastmountpoint)
+                           SELECT devices.id,
+                                  devices.lastmountpoint
+                           FROM devices;
+                    INSERT OR IGNORE INTO devices_tmp (id, lastmountpoint)
+                           VALUES (-1, '/');"
+                );
                 
-                cmd = conn.CreateCommand ();
-                cmd.CommandText = @"
-                                    SELECT DISTINCT
-                                           devices_tmp.lastmountpoint,
-                                           tags.url,
-                                           tags.title,
-                                           artist.name,
-                                           genre.name,
-                                           album.name,
-                                           year.name,
-                                           tags.track,
-                                           tags.length,
-                                           tags.deviceid
-                                     FROM  tags,
-                                           devices_tmp,
-                                           artist,
-                                           album,
-                                           genre,
-                                           year
-                                     WHERE tags.deviceid = devices_tmp.id
-                                       AND tags.artist = artist.id
-                                       AND tags.album = album.id
-                                       AND tags.genre = genre.id
-                                       AND tags.year = year.id";
+                HyenaSqliteCommand cmd = new HyenaSqliteCommand (@"
+                    SELECT DISTINCT
+                           devices_tmp.lastmountpoint,
+                           tags.url,
+                           tags.title,
+                           artist.name,
+                           genre.name,
+                           album.name,
+                           year.name,
+                           tags.track,
+                           tags.length,
+                           tags.deviceid
+                     FROM  tags,
+                           devices_tmp,
+                           artist,
+                           album,
+                           genre,
+                           year
+                     WHERE tags.deviceid = devices_tmp.id
+                       AND tags.artist = artist.id
+                       AND tags.album = album.id
+                       AND tags.genre = genre.id
+                       AND tags.year = year.id"
+                );
+                
+                HyenaSqliteCommand stats_cmd = new HyenaSqliteCommand (@"
+                                                     SELECT DISTINCT rating/2, playcounter
+                                                     FROM   statistics
+                                                     WHERE  accessdate > 0 AND url = ? AND deviceid = ?");
 
-                 IDataReader reader = cmd.ExecuteReader ();
-                 int processed = 0;
+                int processed = 0;
 
-                 while (reader.Read ()) {
+                IDataReader reader = conn.Query (cmd);
+                while (reader.Read ()) {
                      if (CheckForCanceled ())
                          break;
 
                      processed++;
 
                      try {
-                         string mountpoint = (string) reader[0], path = (string) reader[1];
+                         string mountpoint = (string) reader[0];
+                         string path = (string) reader[1];
+                         
                          SafeUri uri = null;
                          if (path.StartsWith ("./")) {
                              uri = new SafeUri (Path.Combine (mountpoint, path.Substring (2)));
@@ -142,22 +138,10 @@ namespace Banshee.PlayerMigration
                          // Try to read stats
                          try {
                              int deviceid = Convert.ToInt32 (reader [9]);
-
-                             IDbCommand stats_cmd = conn.CreateCommand ();
-                             stats_cmd.CommandText = @"
-                                                     SELECT DISTINCT
-                                                            statistics.percentage,
-                                                            statistics.playcounter
-                                                     FROM   statistics
-                                                     WHERE  statistics.url = :path
-                                                       AND  statistics.deviceid = :deviceid";
-                             stats_cmd.Parameters.Add (new SqliteParameter ("path", path));
-                             stats_cmd.Parameters.Add (new SqliteParameter ("deviceid", deviceid));
-
-                             IDataReader stats_reader = stats_cmd.ExecuteReader ();
+                             IDataReader stats_reader = conn.Query (stats_cmd, path, deviceid);
 
                              while (stats_reader.Read ()) {
-                                 rating = (int) Math.Round (5.0 * (Convert.ToDouble (stats_reader[0]) / 100.0));
+                                 rating = Convert.ToInt32 (stats_reader[0]);
                                  playcount = Convert.ToInt32 (stats_reader[1]);
                              }
                              stats_reader.Close ();
@@ -169,36 +153,46 @@ namespace Banshee.PlayerMigration
                              DatabaseTrackInfo track = import_manager.ImportTrack (uri);
                             
                              if (track == null) {
-                                 throw new Exception (String.Format ("Unable to import track: {0}", uri.AbsoluteUri));
+                                 throw new Exception (String.Format (Catalog.GetString ("Unable to import track: {0}"), uri.AbsoluteUri));
                              }
                             
-                             track.Rating = rating;
-                             track.PlayCount = playcount;
-                             track.Save ();
+                             if (rating > 0 || playcount > 0) {
+                                 track.Rating = rating;
+                                 track.PlayCount = playcount;
+                                 track.Save (false);
+                             }
                          } catch (Exception e) {
                              LogError (SafeUri.UriToFilename (uri), e);
                          }
-                     } catch (Exception) {
+                     } catch (Exception e) {
+                         Hyena.Log.Exception (e);
                          // something went wrong, skip entry
                      }
                  }
-
-                 try {
-                     reader.Close ();
-                     conn.Close ();
-                 } catch (Exception) {}
-            } catch (Exception) {
-                LogError (library_path, "Importing from Amarok database failed");
+                 reader.Close ();
+                 
+                 // TODO migrating more than the podcast subscriptions (eg whether to auto sync them etc) means 1) we need to have those features
+                 // and 2) we need to depend on Migo and/or the Podcast extension
+                 DBusCommandService cmd_service = ServiceManager.Get<DBusCommandService> ();
+                 if (cmd_service != null && ServiceManager.DbConnection.TableExists ("PodcastSyndications")) {
+                     foreach (string podcast_url in conn.QueryEnumerable<string> ("SELECT url FROM podcastchannels")) {
+                         cmd_service.PushFile (podcast_url.Replace ("http:", "feed:"));
+                     }
+                 }
+                 
+            } catch (Exception e) {
+                Hyena.Log.Exception (e);
+                LogError (amarok_db_path, Catalog.GetString ("Importing from Amarok failed"));
+            } finally {
+                conn.Dispose ();
             }
         }
         
-        public static new bool CanImport
-        {
-            get { return File.Exists (library_path); }
+        public static new bool CanImport {
+            get { return Banshee.IO.File.Exists (new SafeUri (amarok_db_path)); }
         }
         
-        public override string Name
-        {
+        public override string Name {
             get { return Catalog.GetString ("Amarok"); }
         }
 

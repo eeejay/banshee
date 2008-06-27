@@ -1,5 +1,14 @@
 2008-06-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:
+	Fix NRE that totally broke the Amarok importer.
+
+	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
+	Improve the Amarok importer, including fixes for broken rating importing.
+	Also, migrate the podcast subscriptions.
+
+2008-06-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:
 	Sort podcasts by case-insensitive title.
 

@@ -104,7 +104,7 @@ namespace Banshee.Library
         protected virtual string UserJobTitle {
             get {
                 if (user_job_title == null) {
-                    user_job_title = String.Format (Catalog.GetString ("Importing Songs from {0}"), Name);
+                    user_job_title = String.Format (Catalog.GetString ("Importing From {0}"), Name);
                 }
                 return user_job_title;
             }
@@ -138,7 +138,6 @@ namespace Banshee.Library
             importing = true;
             CreateUserJob ();
             ThreadPool.QueueUserWorkItem (ImportCore);
-            DestroyUserJob ();
             importing = false;
         }
         
@@ -147,6 +146,7 @@ namespace Banshee.Library
         private void ImportCore (object o)
         {
             ImportCore ();
+            DestroyUserJob ();
         }
         
         protected abstract void ImportCore ();
