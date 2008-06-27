@@ -1,3 +1,8 @@
+2008-06-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Fix
+	bug I introduced yesterday for people starting w/ no db.
+
 2008-06-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Make the

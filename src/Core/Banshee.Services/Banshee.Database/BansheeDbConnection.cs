@@ -47,7 +47,7 @@ namespace Banshee.Database
         public BansheeDbConnection () : base (DatabaseFile)
         {
             // Each cache page is about 1.5K, so 32768 pages = 49152K = 48M
-            int cache_size = Query<long> ("SELECT COUNT(*) FROM CoreTracks") > 10000 ? 32768 : 16384;
+            int cache_size = (TableExists ("CoreTracks") && Query<long> ("SELECT COUNT(*) FROM CoreTracks") > 10000) ? 32768 : 16384;
             Execute ("PRAGMA cache_size = ?", cache_size);
             Execute ("PRAGMA synchronous = OFF");
             Execute ("PRAGMA temp_store = MEMORY");
