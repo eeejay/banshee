@@ -1,5 +1,43 @@
 2008-06-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:
+	Sort podcasts by case-insensitive title.
+
+	* src/Extensions/Banshee.Daap/Daap/Database.cs: Fix bug with not
+	specifying what meta fields to return when fetching playlists (actually
+	crashed new RB and got bad data from old RB).
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Proxy UI
+	actions to the main loop, and don't flash new shares within 5 seconds of
+	starting the locator.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Make Disconnect
+	and Import actions insensitive unless connected.  Handle disconnecting
+	while loading the tracks (BGO #526817).  When we disconnect, show the
+	disconnected error view.  Proxy ui actions to main loop.  While loading
+	tracks, reload fewer times for big collections.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs: Proxy
+	OnUpdated call to main.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Listen for
+	the active source's Updated event and UpdateActions when it is raised.
+
+	* src/Core/Banshee.Services/Banshee.Web/Browser.cs: Fix typo in UserAgent
+	string (no closing parenthesis.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Don't set a source
+	as the active source unless source.CanActivate is true.
+
+	* src/Libraries/Migo/Migo.Net/AsyncWebClient.cs: Some servers seem to
+	return Bad Request when HttpWebRequest auto redirects (because it sets
+	Content-Length:0, apparently) - so work around that by grabbing the final
+	URI directly.  Fixes, for example, the ogg podcast of "this WEEK in Tech".
+
+2008-06-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs: Fix
 	bug I introduced yesterday for people starting w/ no db.
 

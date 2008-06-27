@@ -41,6 +41,7 @@ namespace Banshee.Daap
     public class DaapService : IExtensionService, IDisposable, IDelayedInitializeService
     {
         private ServiceLocator locator;
+        private DateTime locator_started;
         private static DaapProxyWebServer proxy_server;
         
         private DaapContainerSource container;
@@ -84,38 +85,46 @@ namespace Banshee.Daap
         
         private void OnServiceFound (object o, ServiceArgs args)
         {
-            DaapSource source = new DaapSource (args.Service);
-            string key = String.Format ("{0}:{1}", args.Service.Name, args.Service.Port);
-            
-            if (source_map.Count == 0) {
-                ServiceManager.SourceManager.AddSource (container);
-            }
-            
-            if (source_map.ContainsKey (key)) {
-                // Received new connection info for service
-                container.RemoveChildSource (source_map [key]);
-                source_map [key] = source;
-            } else {
-                // New service information
-                source_map.Add (key, source);
-            }
-            
-            container.AddChildSource (source);
-            source.NotifyUser ();
+            ThreadAssist.ProxyToMain (delegate {
+                DaapSource source = new DaapSource (args.Service);
+                string key = String.Format ("{0}:{1}", args.Service.Name, args.Service.Port);
+                
+                if (source_map.Count == 0) {
+                    ServiceManager.SourceManager.AddSource (container);
+                }
+                
+                if (source_map.ContainsKey (key)) {
+                    // Received new connection info for service
+                    container.RemoveChildSource (source_map [key]);
+                    source_map [key] = source;
+                } else {
+                    // New service information
+                    source_map.Add (key, source);
+                }
+                
+                container.AddChildSource (source);
+                
+                // Don't flash shares we find on startup (well, within 5s of startup)
+                if ((DateTime.Now - locator_started).TotalSeconds > 5) {
+                    source.NotifyUser ();
+                }
+            });
         }
         
         private void OnServiceRemoved (object o, ServiceArgs args)
         {
-            string key = String.Format ("{0}:{1}", args.Service.Name, args.Service.Port);
-            DaapSource source = source_map [key];
-            
-            source.Disconnect (true);
-            container.RemoveChildSource (source);
-            source_map.Remove (key);
-            
-            if (source_map.Count == 0) {
-                ServiceManager.SourceManager.RemoveSource (container);
-            }
+            ThreadAssist.ProxyToMain (delegate {
+                string key = String.Format ("{0}:{1}", args.Service.Name, args.Service.Port);
+                DaapSource source = source_map [key];
+                
+                source.Disconnect (true);
+                container.RemoveChildSource (source);
+                source_map.Remove (key);
+                
+                if (source_map.Count == 0) {
+                    ServiceManager.SourceManager.RemoveSource (container);
+                }
+            });
         }
 
         public void DelayedInitialize ()
@@ -133,6 +142,7 @@ namespace Banshee.Daap
             locator.Found += OnServiceFound;
             locator.Removed += OnServiceRemoved;
             locator.ShowLocalServices = true;
+            locator_started = DateTime.Now;
             locator.Start ();
             
             proxy_server = new DaapProxyWebServer ();

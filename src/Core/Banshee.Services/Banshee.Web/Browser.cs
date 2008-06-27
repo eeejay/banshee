@@ -65,7 +65,7 @@ namespace Banshee.Web
             }
         }
 
-        public static readonly string UserAgent = String.Format ("Banshee {0} (http://banshee-project.org/", 
+        public static readonly string UserAgent = String.Format ("Banshee {0} (http://banshee-project.org/)", 
             Application.Version);
     }
 }

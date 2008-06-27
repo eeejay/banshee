@@ -33,6 +33,7 @@ using Mono.Unix;
 using Hyena;
 using Hyena.Data.Sqlite;
 
+using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Collection.Database;
@@ -77,7 +78,10 @@ namespace Banshee.Daap
                 }
             }
             SavedCount = count;
-            OnUpdated ();
+            
+            ThreadAssist.ProxyToMain (delegate {
+                OnUpdated ();
+            });
         }
         
         public override bool CanDeleteTracks {

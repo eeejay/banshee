@@ -461,7 +461,7 @@ namespace Migo.Net
         {
             try {
                 tsm.Reset ();
-                request = PrepRequest (uri);             
+                request = PrepRequest (uri);
 
                 IAsyncResult ar = request.BeginGetResponse (
                     OnResponseCallback, null
@@ -566,7 +566,7 @@ namespace Migo.Net
                 }
             }
             
-			responseHeaders = null;                        
+			responseHeaders = null;                       
             
             return req;
         }         
@@ -574,6 +574,7 @@ namespace Migo.Net
         private void OnResponseCallback (IAsyncResult ar)
         {    
             Exception err = null;
+            bool redirect_workaround = false;
             
             try {
                 //Console.WriteLine ("0");
@@ -594,12 +595,23 @@ namespace Migo.Net
                     //Console.WriteLine ("Why {1}:  {0}", we.Status, this.fileName);
                     //Console.WriteLine ("Cancelled:  {0}", this.Cancelled);
                     err = we;
+                    
+                    HttpWebResponse response = we.Response as HttpWebResponse;
+                    if (response != null && response.StatusCode == HttpStatusCode.BadRequest && response.ResponseUri != request.RequestUri) {
+                        Hyena.Log.DebugFormat ("Identified Content-Length: 0 redirection bug for {0}; trying to get {1} directly", request.RequestUri, response.ResponseUri);
+                        redirect_workaround = true;
+                        uri = response.ResponseUri;
+                        ImplDownloadAsync ();
+                    }
                 }
             } catch (Exception e) {
                 //Console.WriteLine ("GetResponseCallback:  {0}", e.Message);
                 err = e;                
+                //Console.WriteLine (request.
             } finally {
-                Completed (err);
+                if (!redirect_workaround) {
+                    Completed (err);
+                }
                 //Console.WriteLine ("3");  
             }
         }        

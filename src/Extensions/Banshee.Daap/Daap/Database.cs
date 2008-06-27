@@ -265,7 +265,7 @@ namespace Daap {
             byte[] playlistsData;
 
             try {
-                playlistsData = client.Fetcher.Fetch (String.Format ("/databases/{0}/containers", id, revquery));
+                playlistsData = client.Fetcher.Fetch (String.Format ("/databases/{0}/containers", id), revquery);
             } catch (WebException) {
                 return;
             }
@@ -304,8 +304,9 @@ namespace Daap {
 
             // add/remove tracks in the playlists
             foreach (Playlist pl in playlists) {
-                byte[] playlistTracksData = client.Fetcher.Fetch (String.Format ("/databases/{0}/containers/{1}/items",
-                                                                                id, pl.Id), revquery);
+                byte [] playlistTracksData = client.Fetcher.Fetch (String.Format (
+                    "/databases/{0}/containers/{1}/items", id, pl.Id), String.Format ("meta=dmap.itemid,dmap.containeritemid&{0}", revquery)
+                );
                 ContentNode playlistTracksNode = ContentParser.Parse (client.Bag, playlistTracksData);
 
                 if (IsUpdateResponse (playlistTracksNode))

@@ -191,6 +191,11 @@ namespace Banshee.Sources.Gui
                 OnPopupMenu ();
                 return true;
             }
+            
+            if (!source.CanActivate) {
+                return false;
+            }
+            
 
             if (press.Button == 1) {
                 if (ServiceManager.SourceManager.ActiveSource != source) {

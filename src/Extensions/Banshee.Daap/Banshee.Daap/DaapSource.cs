@@ -48,6 +48,7 @@ namespace Banshee.Daap
         private DAAP.Service service;
         private DAAP.Client client;
         private DAAP.Database database;
+        private bool connected = false;
         
         public DAAP.Database Database {
             get { return database; }
@@ -68,6 +69,8 @@ namespace Banshee.Daap
             
             AfterInitialized ();
         }
+        
+        
         
         private void UpdateIcon ()
         {
@@ -122,6 +125,8 @@ namespace Banshee.Daap
         
         private void ShowErrorView (DaapErrorType error_type)
         {
+            PurgeTracks ();
+            Reload ();
             client = null;
             DaapErrorView error_view = new DaapErrorView (this, error_type);
             error_view.Show ();
@@ -145,6 +150,8 @@ namespace Banshee.Daap
                     }
                 }
             } catch {}
+            
+            connected = false;
             
             // Remove tracks associated with this source, since we don't want
             // them after we unmap - we'll refetch.
@@ -176,7 +183,7 @@ namespace Banshee.Daap
                 }
             }
             
-            ClearChildSources();
+            ClearChildSources ();
             
             return true;
         }
@@ -217,48 +224,64 @@ namespace Banshee.Daap
         
         private void OnClientUpdated (object o, EventArgs args)
         {
-            if (database == null && client.Databases.Count > 0) {
-                database = client.Databases[0];
-                DaapService.ProxyServer.RegisterDatabase (database);
-                database.TrackAdded += OnDatabaseTrackAdded;
-                database.TrackRemoved += OnDatabaseTrackRemoved;
-                
-                SetStatus (String.Format (Catalog.GetString ("Loading {0} tracks."), database.Tracks.Count), false);
-                
-                int count = 0;
-                DaapTrackInfo daap_track = null;
-                foreach (DAAP.Track track in database.Tracks) {
-                    daap_track = new DaapTrackInfo (track, this);
-                    // Only notify once every 250 tracks
-                    daap_track.Save (++count % 250 == 0);
+            try {
+                if (database == null && client.Databases.Count > 0) {
+                    database = client.Databases[0];
+                    DaapService.ProxyServer.RegisterDatabase (database);
+                    database.TrackAdded += OnDatabaseTrackAdded;
+                    database.TrackRemoved += OnDatabaseTrackRemoved;
+                    
+                    SetStatus (String.Format (Catalog.GetString ("Loading {0} tracks."), database.Tracks.Count), false);
+                    
+                    // Notify (eg reload the source before sync is done) at most 5 times
+                    int notify_every = Math.Max (250, (database.Tracks.Count / 4));
+                    notify_every -= notify_every % 250;
+                    
+                    int count = 0;
+                    DaapTrackInfo daap_track = null;
+                    foreach (DAAP.Track track in database.Tracks) {
+                        daap_track = new DaapTrackInfo (track, this);
+                        
+                        // Only notify once in a while because otherwise the source Reloading slows things way down
+                        daap_track.Save (++count % notify_every == 0);
+                    }
+                    
+                    // Save the last track once more to trigger the NotifyTrackAdded
+                    if (daap_track != null) {
+                        daap_track.Save ();
+                    }
+                    
+                    SetStatus (Catalog.GetString ("Loading playlists"), false);
+                    AddPlaylistSources ();
+                    connected = true;
+                    Reload ();
+                    HideStatus ();
                 }
                 
-                // Save the last track once more to trigger the NotifyTrackAdded
-                if (daap_track != null) {
-                    daap_track.Save ();
-                }
+                Name = client.Name;
                 
-                SetStatus (Catalog.GetString ("Loading playlists"), false);
-                AddPlaylistSources ();
-                Reload ();
-                HideStatus ();
+                UpdateIcon ();
+                OnUpdated ();
+            } catch (Exception e) {
+                Hyena.Log.Exception ("Caught exception while loading daap share", e);
+                ThreadAssist.ProxyToMain (delegate {
+                    HideStatus ();
+                    ShowErrorView (DaapErrorType.UserDisconnect);
+                });
             }
-            
-            Name = client.Name;
-            
-            UpdateIcon ();
-            OnUpdated ();
         }
         
         private void AddPlaylistSources ()
         {
             foreach (DAAP.Playlist pl in database.Playlists) {
                 DaapPlaylistSource source = new DaapPlaylistSource (pl, this);
-                if (source.Count == 0) {
-                    source.Unmap ();
-                } else {
-                    AddChildSource (source);
-                }
+                ThreadAssist.ProxyToMain (delegate {
+                    if (source.Count == 0) {
+                        source.Unmap ();
+                    } else {
+                        AddChildSource (source);
+                    }
+                });
             }
         }
         
@@ -289,12 +312,13 @@ namespace Banshee.Daap
         {
             // Disconnect and clear out our tracks and such.
             Disconnect (true);
+            ShowErrorView (DaapErrorType.UserDisconnect);
             
             return true;
         }
         
         public bool CanUnmap {
-            get { return true; }
+            get { return connected; }
         }
         
         public bool ConfirmBeforeUnmap {
@@ -307,7 +331,7 @@ namespace Banshee.Daap
         }
         
         public bool CanImport {
-            get { return true; }
+            get { return connected; }
         }
         
         public string [] IconNames {

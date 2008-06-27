@@ -144,11 +144,24 @@ namespace Banshee.Gui
         private void HandleActiveSourceChanged (SourceEventArgs args)
         {
             UpdateActions ();
+            
+            if (last_source != null) {
+                last_source.Updated -= HandleActiveSourceUpdated;
+            }
+            
+            if (ActiveSource != null) {
+                ActiveSource.Updated += HandleActiveSourceUpdated;
+            }
         }
 
         private void HandleEditMenuActivated (object sender, EventArgs args)
         {
             UpdateActions ();
+        }
+        
+        private void HandleActiveSourceUpdated (object o, EventArgs args)
+        {
+            UpdateActions (true);
         }
 
 #endregion
@@ -319,9 +332,14 @@ namespace Banshee.Gui
         private Source last_source = null;
         private void UpdateActions ()
         {
+            UpdateActions (false);
+        }
+        
+        private void UpdateActions (bool force)
+        {
             Source source = ActionSource;
 
-            if (source != last_source && source != null) {
+            if ((force || source != last_source) && source != null) {
                 IUnmapableSource unmapable = (source as IUnmapableSource);
                 IImportSource import_source = (source as IImportSource);
                 SmartPlaylistSource smart_playlist = (source as SmartPlaylistSource);

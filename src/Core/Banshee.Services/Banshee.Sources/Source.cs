@@ -184,7 +184,9 @@ namespace Banshee.Sources
                 child_sources.Remove (child);
                 
                 if (ServiceManager.SourceManager.ActiveSource == child) {
-                    ServiceManager.SourceManager.SetActiveSource (this);
+                    if (CanActivate) {
+                        ServiceManager.SourceManager.SetActiveSource (this);
+                    }
                 }
                 
                 OnChildSourceRemoved (child);

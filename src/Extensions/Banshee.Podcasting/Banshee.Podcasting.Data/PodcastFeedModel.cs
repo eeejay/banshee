@@ -52,7 +52,7 @@ namespace Banshee.Podcasting.Gui
                         WHERE ItemID IN
                             (SELECT CoreTracks.ExternalID FROM CoreTracks, CoreCache{0}
                                 WHERE CoreCache.ModelID = {1} AND CoreCache.ItemId = {2}))
-                    ORDER BY Title";
+                    ORDER BY lower(Title)";
         }
         
         public override string FilterColumn {

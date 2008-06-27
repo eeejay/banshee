@@ -313,7 +313,7 @@ namespace Banshee.Sources
         
         public void SetActiveSource(Source source, bool notify)
         {
-            if(source == null || active_source == source) {
+            if(source == null || !source.CanActivate || active_source == source) {
                 return;
             }
             
