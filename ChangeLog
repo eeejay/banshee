@@ -1,3 +1,10 @@
+2008-07-01  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:
+	Ignore the first size allocation since it's the default window size and
+	causes the notification area to resize to a huge dimension until a new
+	request is queued for the actual icon size (BGO #540885)
+
 2008-06-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:

@@ -163,10 +163,22 @@ namespace Banshee.NotificationArea
             return PanelOrientation.Horizontal;
         }
 
+        private bool first_alloc = true;
+
         protected override void OnSizeAllocated (Gdk.Rectangle rect)
         {
+            // Ignore the first allocation dimensions (typically 200x200) and use only 
+            // the allocation's position and the default icon size for dimension (16x16).
+            // A proper size request will be queued later through ConfigureIconSize ().
+            // Fix for BGO #540885
+            if (first_alloc) {
+                base.OnSizeAllocated (new Gdk.Rectangle (rect.X, rect.Y, panel_size, panel_size));
+                first_alloc = false;
+                return;
+            }
+            
             base.OnSizeAllocated (rect);
-
+            
             if (GetPanelOrientation () == PanelOrientation.Horizontal) {
                 if (panel_size == Allocation.Height) {
                     return;
