@@ -1,3 +1,7 @@
+2008-07-15  Daniel Nylander <po@danielnylander.se>
+
+	* data/banshee-1.desktop.in.in: Changed Comment to be translatable.
+
 2008-07-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena/Hyena.Query/UserQueryParser.cs: Patch from Michael
