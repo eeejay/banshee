@@ -1,3 +1,9 @@
+2008-07-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena/Hyena.Query/UserQueryParser.cs: Patch from Michael
+	Kaiser fixing issue with parsing user queries starting with a "-" (BGO
+	#538203).  Fixes the two broken query parsing unit tests.
+
 2008-07-01  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:

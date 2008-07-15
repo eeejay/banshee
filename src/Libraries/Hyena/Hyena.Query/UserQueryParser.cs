@@ -136,17 +136,20 @@ namespace Hyena.Query
                     // Only push a node if the current_parent is not the same as this token
                     if (current_parent.Keyword == Keyword.Not ||
                             current_parent.Keyword == (token.ID == TokenID.Or ? Keyword.And : Keyword.Or)) {
+
                         QueryListNode list = new QueryListNode (token.ID == TokenID.Or ? Keyword.Or : Keyword.And);
                         QueryListNode p = current_parent.Parent;
+
                         if (p != null) {
                             current_parent.Parent.RemoveChild (current_parent);
                         }
 
-                        if (current_parent.ChildCount <= 1) {
-                            list.TakeChildren (current_parent);
-                        } else {
+                        if (current_parent.Keyword == Keyword.Not || current_parent.ChildCount > 1) {
                             list.AddChild (current_parent);
+                        } else {
+                            list.TakeChildren (current_parent);
                         }
+
                         current_parent = p;
                         NodePush (list);
                     }
