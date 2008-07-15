@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-15 17:10+0200\n"
-"PO-Revision-Date: 2008-07-15 17:11+0100\n"
+"POT-Creation-Date: 2008-07-15 17:13+0200\n"
+"PO-Revision-Date: 2008-07-15 20:21+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -224,16 +224,15 @@ msgstr "Kunde inte konstruera rörledning"
 
 #: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:64
 msgid "Write CD..."
-msgstr "Skriv cd..."
+msgstr "Skriv skiva..."
 
 #: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:65
-#, fuzzy
 msgid "Write selected tracks to an audio CD"
-msgstr "Skriv markering till cd"
+msgstr "Skriv markerade spår till en ljudskiva"
 
 #: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:103
 msgid "Could not write CD"
-msgstr "Kunde inte skriva cd"
+msgstr "Kunde inte skriva skiva"
 
 #: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:104
 msgid "Brasero could not be started"
@@ -269,24 +268,23 @@ msgstr "Visa denna hjälp"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:107
 msgid "Show options for controlling playback"
-msgstr ""
+msgstr "Visa flaggor för styrning av uppspelning"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:108
 msgid "Show options for querying the playing track"
-msgstr ""
+msgstr "Visa flaggor för frågor om uppspelat spår"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:109
 msgid "Show options for querying the playing engine"
-msgstr ""
+msgstr "Visa flaggor för frågor om uppspelningsmotor"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:110
-#, fuzzy
 msgid "Show options for the user interface"
-msgstr "Läser in användargränssnitt"
+msgstr "Visa flaggor för användargränssnittet"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:111
 msgid "Show options for developers and debugging"
-msgstr ""
+msgstr "Visa flaggor för utvecklare och felsökning"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:112
 msgid "Show all option groups"
@@ -298,19 +296,19 @@ msgstr "Visa versionsinformation"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:116
 msgid "Playback Control Options"
-msgstr ""
+msgstr "Flaggor för styrning av uppspelning"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:117
 msgid "Play the next track, optionally restarting if the 'restart' value is set"
-msgstr ""
+msgstr "Spela upp nästa spår, valfritt även omstart om värdet \"restart\" är inställt"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:118
 msgid "Play the previous track, optionally restarting if the 'restart value is set"
-msgstr ""
+msgstr "Spela upp föregående spår, valfritt även omstart om värdet \"restart\" är inställt"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:119
 msgid "Automatically start playing any tracks enqueued on the command line"
-msgstr ""
+msgstr "Starta automatiskt uppspelning av kölagda spår på kommandoraden "
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:120
 msgid "Start playback"
@@ -326,21 +324,19 @@ msgstr "Stoppa uppspelningen helt"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:124
 msgid "Enable or disable playback stopping after the currently playing track (value should be either 'true' or 'false')"
-msgstr ""
+msgstr "Aktivera eller inaktivera stopp av uppspelning efter det aktuella spåret har spelats (värdet ska vara antingen \"true\" eller \"false\")"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:125
 msgid "Set the playback volume (0-100)"
 msgstr "Ställ in uppspelningsvolymen (0-100)"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:126
-#, fuzzy
 msgid "Seek to a specific point (seconds, float)"
-msgstr "Spola till en specifik plats i aktuellt objekt"
+msgstr "Spola till en specifik plats (sekunder, flytande)"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:129
-#, fuzzy
 msgid "Player Engine Query Options"
-msgstr "Namn på uppspelningsmotor"
+msgstr "Flaggor för frågor om uppspelningsmotor"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:130
 msgid "Current player state"
@@ -368,7 +364,7 @@ msgstr "Spelarens position i det för närvarande spelade spåret"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:138
 msgid "Playing Track Metadata Query Options"
-msgstr ""
+msgstr "Flaggor för frågor om spelande spårets metadata"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:139
 msgid "URI"
@@ -424,11 +420,11 @@ msgstr "Betyg"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:151
 msgid "User Interface Options"
-msgstr "Alternativ för användargränssnitt"
+msgstr "Flaggor för användargränssnitt"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:152
 msgid "Present the user interface on the active workspace"
-msgstr ""
+msgstr "Visa användargränssnittet på den aktiva skrivbordsytan"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:153
 msgid "Hide the user interface"
@@ -436,7 +432,7 @@ msgstr "Dölj användargränssnittet"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:154
 msgid "Do not present the user interface, regardless of any other options"
-msgstr ""
+msgstr "Visa inte användargränssnittet, oavsett vad andra flaggor säger"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:157
 msgid "Debugging and Development Options"
@@ -460,7 +456,7 @@ msgstr "Ange en alternativ databas att använda"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:162
 msgid "Optimize instance for running uninstalled; most notably, this will create an alternate Mono.Addins database in the working directory"
-msgstr ""
+msgstr "Optimera instansen för körning oinstallerad; noterbart är att detta kommer att skapa en alternativ Mono.Addins-databas i arbetskatalogen"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:164
 msgid "Disable DBus support completely"
@@ -469,7 +465,7 @@ msgstr "Inaktivera allt DBus-stöd"
 #: ../src/Clients/Nereid/Nereid/Client.cs:166
 #, csharp-format
 msgid "Skip loading a custom gtkrc file ({0}) if it exists"
-msgstr ""
+msgstr "Hoppa över inläsning av en anpassad gtkrc-fil ({0}), om den finns"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:196
 #, csharp-format
@@ -693,7 +689,7 @@ msgstr "Minst omtyckta"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:84
 msgid "Songs rated one or two stars or that you have frequently skipped"
-msgstr ""
+msgstr "Låtar betygsatta med en eller två stjärnor eller som du har ofta hoppat över"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:88
 msgid "700 MB of Favorites"
@@ -701,7 +697,7 @@ msgstr "700 MB favoriter"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:89
 msgid "A data CD worth of favorite songs"
-msgstr ""
+msgstr "En dataskiva full med favoritlåtar"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:94
 msgid "80 Minutes of Favorites"
@@ -709,7 +705,7 @@ msgstr "80 minuter favoriter"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:95
 msgid "An audio CD worth of favorite songs"
-msgstr ""
+msgstr "En ljudskiva full med favoritlåtar"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:100
 msgid "Unrated"
@@ -717,7 +713,7 @@ msgstr "Inte betygsatt"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:101
 msgid "Songs that haven't been rated"
-msgstr ""
+msgstr "Låtar som inte har blivit betygsatta"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:54
 msgid "Importing Songs"
@@ -738,15 +734,15 @@ msgstr "Producerad av"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:68
 msgid "Videos rated four and five stars"
-msgstr ""
+msgstr "Videoklipp betygsatta med fyra och fem stjärnor"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:72
 msgid "Unwatched"
-msgstr "Inte sedd"
+msgstr "Inte sedda"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:73
 msgid "Videos that haven't been played yet"
-msgstr ""
+msgstr "Videoklipp som inte har spelats ännu"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:92
 msgid "Default player engine"
@@ -770,9 +766,8 @@ msgid "Initializing"
 msgstr "Initierar"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:130
-#, fuzzy
 msgid "Files are currently being converted to another format. Would you like to stop this?"
-msgstr "Filer håller för närvarande på att konverteras till ett annat ljudformat. Vill du stoppa detta?"
+msgstr "Filer håller för närvarande på att konverteras till ett annat format. Vill du stoppa detta?"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:237
 msgid "Cannot Convert File"
@@ -843,18 +838,16 @@ msgid "General"
 msgstr "Allmänt"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:61
-#, fuzzy
 msgid "Co_py files to media folders when importing"
-msgstr "Ko_piera filer till musikmapp vid importering"
+msgstr "Ko_piera filer till mediamappar vid importering"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:64
 msgid "Write _metadata to files"
 msgstr "Skriv _metadata till filer"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:65
-#, fuzzy
 msgid "Enable this option to save tags and other metadata inside supported audio files."
-msgstr "Aktivera detta alternativ för att spara taggar och annat metadata i ljudfiler som stöds"
+msgstr "Aktivera detta alternativ för att spara taggar och annat metadata inne i ljudfiler som stöds."
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:69
 msgid "File System Organization"
@@ -1584,7 +1577,7 @@ msgstr "Öppna en fjärrplats för uppspelning"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:65
 msgid "_Quit"
-msgstr "_Avsluta"
+msgstr "A_vsluta"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:66
 msgid "Quit Banshee"
@@ -1746,7 +1739,7 @@ msgstr "Starta om aktuellt objekt"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:90
 msgid "_Stop When Finished"
-msgstr "_Stoppa när färdig"
+msgstr "Stoppa när _färdig"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:91
 msgid "Stop playback after the current item finishes playing"
@@ -1872,7 +1865,7 @@ msgstr "Exportera en spellista"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:97
 msgid "Unmap"
-msgstr ""
+msgstr "Ta bort"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:100
 msgid "Source Properties"
@@ -2203,7 +2196,7 @@ msgstr "Ny smart spellista"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:65
 msgid "Not Set"
-msgstr ""
+msgstr "Inte inställt"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:105
 msgid "Browser on Left"
@@ -2504,11 +2497,11 @@ msgstr "Läser in {0}"
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:266
 #, csharp-format
 msgid "The {0} format is not supported by the device, and no converter was found to convert it."
-msgstr ""
+msgstr "Formatet {0} stöds inte av enheten och inget konverteringsprogram hittades för att konvertera den."
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:272
 msgid "File format conversion is not supported for this device."
-msgstr ""
+msgstr "Filformatskonvertering stöds inte för den här enheten."
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:68
 msgid "None"
@@ -2520,7 +2513,7 @@ msgstr "Ljud"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:74
 msgid "Other"
-msgstr ""
+msgstr "Övrigt"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:75
 msgid "Free Space"
@@ -2593,7 +2586,7 @@ msgstr "Behandlar spår..."
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:144
 msgid "Ordering Tracks..."
-msgstr ""
+msgstr "Beställer spår..."
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:215
 msgid "Saving new database..."
@@ -2753,9 +2746,8 @@ msgid "Cannot Import CD"
 msgstr "Kan inte importera skiva"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:160
-#, fuzzy
 msgid "Audio CD Importing"
-msgstr "<b>Skivimportering</b>"
+msgstr "Import av ljudskivor"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:162
 msgid "_Import format"
@@ -2767,7 +2759,7 @@ msgstr "Importera _automatiskt ljudskivor när de matas in"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:167
 msgid "When an audio CD is inserted, automatically begin importing it if metadata can be found and it is not already in the library."
-msgstr ""
+msgstr "När en ljudskiva matas in ska importering automatiskt påbörjas om metadata kan hittas och den inte redan finns i biblioteket."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:171
 msgid "_Eject when done importing"
@@ -2775,7 +2767,7 @@ msgstr "_Mata ut efter importering"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:172
 msgid "When an audio CD has been imported, automatically eject it."
-msgstr ""
+msgstr "När en ljudskiva har importerats färdig ska den matas ut."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:175
 msgid "Use error correction when importing"
@@ -2812,16 +2804,15 @@ msgstr "Kunde inte hämta metadata för skiva."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:186
 msgid "Automatic import off since this album is already in the Music Library."
-msgstr ""
+msgstr "Automatisk importering kommer inte att ske eftersom detta album redan finns i musikbiblioteket."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:209
 msgid "Could not import CD"
 msgstr "Kunde inte importera skiva"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:226
-#, fuzzy
 msgid "Could not duplicate audio CD"
-msgstr "Kunde inte läsa ljud-cd"
+msgstr "Kunde inte duplicera ljudskiva"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:338
 msgid "Ejecting audio CD..."
@@ -2968,9 +2959,8 @@ msgid "Clear on Quit"
 msgstr "Töm vid avslut"
 
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:80
-#, fuzzy
 msgid "Clear the file system queue when quitting"
-msgstr "Töm spelkön vid avslut"
+msgstr "Töm filsystemskön vid avslut"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:124
 msgid "_Last.fm"
@@ -3341,7 +3331,7 @@ msgstr "Normalt läge"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:116
 msgid "_Close"
-msgstr "_Stäng"
+msgstr "S_täng"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:117
 msgid "Close"
@@ -3349,7 +3339,7 @@ msgstr "Stäng"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:123
 msgid "_Show Notifications"
-msgstr "_Visa notifieringar"
+msgstr "Visa not_ifieringar"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:124
 msgid "Show notifications when item changes"
@@ -3533,9 +3523,8 @@ msgid "Download All Episodes"
 msgstr "Hämta alla avsnitt"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:105
-#, fuzzy
 msgid "Visit Podcast Homepage"
-msgstr "Besök Podcast Alley"
+msgstr "Besök poddsändningens webbplats"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:111
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:153
@@ -3572,9 +3561,8 @@ msgid "Invalid URL"
 msgstr "Ogiltig URL"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:261
-#, fuzzy
 msgid "Podcast URL is invalid."
-msgstr "URL för poddsändningskanal är ogiltig."
+msgstr "URL för poddsändningen är ogiltig."
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:74
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:87
@@ -3618,9 +3606,8 @@ msgid "Subscribe to New Podcast"
 msgstr "Prenumerera på ny poddsändning"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:100
-#, fuzzy
 msgid "Please enter the URL of the podcast to which you would like to subscribe."
-msgstr "Ange URL:en till poddsändningen som du vill prenumerera på."
+msgstr "Ange URL:en till den poddsändning som du vill prenumerera på."
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:112
 msgid "When new episodes are available:  "
@@ -3662,11 +3649,11 @@ msgstr "Ett ohanterat undantag kastades: "
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:58
 msgid "Assembly Version Information"
-msgstr "Monteringsversionsinformation"
+msgstr "Versionsinformation för assembly"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:64
 msgid "Assembly Name"
-msgstr "Monteringsnamn"
+msgstr "Assembly-namn"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:66
 msgid "Version"
