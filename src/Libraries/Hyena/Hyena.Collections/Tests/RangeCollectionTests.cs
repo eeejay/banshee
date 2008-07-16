@@ -76,6 +76,21 @@ namespace Hyena.Collections.Tests
         }
         
         [Test]
+        public void LargeSequentialContains ()
+        {
+            RangeCollection range = new RangeCollection ();
+            int i, n = 1000000;
+            
+            for (i = 0; i < n; i++) {
+                range.Add (i);
+            }
+            
+            for (i = 0; i < n; i++) {
+                Assert.AreEqual (true, range.Contains (i));
+            }
+        }
+        
+        [Test]
         public void LargeSequential ()
         { 
             RangeCollection range = new RangeCollection ();
@@ -426,6 +441,56 @@ namespace Hyena.Collections.Tests
             range.Add (6);
             
             Assert.AreEqual (4, range.Count);
+        }
+        
+        [Test]
+        public void NegativeIndices ()
+        {
+            RangeCollection c = new RangeCollection ();
+            c.Add (-10);
+            c.Add (-5);
+            c.Add (5);
+            c.Add (-8);
+            c.Add (10);
+            c.Add (-9);
+            c.Add (-11);
+
+            Assert.IsTrue (c.Contains(-10), "#1");
+            Assert.IsTrue (c.Contains(-5), "#2");
+            Assert.IsTrue (c.Contains(5), "#3");
+            Assert.IsTrue (c.Contains(-8), "#4");
+            Assert.AreEqual (4, c.RangeCount, "#5");
+            Assert.AreEqual (new RangeCollection.Range (-11, -8), c.Ranges[0], "#6");
+            Assert.AreEqual (new RangeCollection.Range (-5, -5), c.Ranges[1], "#7");
+            Assert.AreEqual (new RangeCollection.Range (5, 5), c.Ranges[2], "#8");
+            Assert.AreEqual (new RangeCollection.Range (10, 10), c.Ranges[3], "#9");
+            
+            Assert.AreEqual (0, c.FindRangeIndexForValue (-9), "#10");
+            Assert.IsTrue (c.FindRangeIndexForValue (-7) < 0, "#11");
+        }
+
+        [Test]
+        public void IPAddressRanges ()
+        {
+            RangeCollection ranges = new RangeCollection ();
+
+            int start = GetAddress ("127.0.0.1");
+            int end = GetAddress ("127.0.0.50");
+
+            for (int i = start; i <= end; i++) {
+                ranges.Add (i);
+            }
+            
+            Assert.IsTrue (ranges.Contains (GetAddress ("127.0.0.15")));
+            Assert.IsFalse (ranges.Contains (GetAddress ("127.0.0.0")));
+            Assert.IsFalse (ranges.Contains (GetAddress ("127.0.0.51")));
+        }
+        
+        private static int GetAddress (string addressStr)
+        {
+            System.Net.IPAddress address = System.Net.IPAddress.Parse (addressStr);
+            return (int)(System.Net.IPAddress.NetworkToHostOrder (
+                BitConverter.ToInt32 (address.GetAddressBytes (), 0)) >> 32);
         }
     }
 }

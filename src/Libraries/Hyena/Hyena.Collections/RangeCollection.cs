@@ -53,50 +53,32 @@ namespace Hyena.Collections
         ICollection
 #endif
     {
-        public struct Range :
-#if NET_2_0
-            IComparable<Range>
-#else
-            IComparable
-#endif
+        public struct Range
         {
-            public int Start;
-            public int End;
+            private int start;
+            private int end;
             
             public Range (int start, int end)
             {
                 Start = start;
                 End = end;
             }
-            
-#if !NET_2_0
-            public int CompareTo (object o)
-            {
-                return CompareTo ((Range)o);
-            }
-#endif
 
-            public int CompareTo (Range x)
-            {
-                // When End == -1, a comparison is created to
-                // match an index inside of a range; otherwise
-                // two actual ranges are being compared
-
-                return End == -1 
-                    ? (Start >= x.Start 
-                        ? (Start <= x.End 
-                            ? 0   // In Range
-                            : 1)  // Above Range
-                        : -1)     // Below Range
-                    : (Start + (End - Start)).CompareTo (
-                        x.Start + (x.End - x.Start));
-            }
-            
             public override string ToString ()
             {
                 return String.Format ("{0}-{1} ({2})", Start, End, Count);
             }
 
+            public int Start {
+                get { return start; }
+                set { start = value; }
+            }
+            
+            public int End {
+                get { return end; }
+                set { end = value; }
+            }
+            
             public int Count {
                 get { return End - Start + 1; }
             }
@@ -226,6 +208,11 @@ namespace Hyena.Collections
 
             return false;
         }
+        
+        private int CompareRanges (Range a, Range b)
+        {
+            return (a.Start + (a.End - a.Start)).CompareTo (b.Start + (b.End - b.Start));
+        }
 
         private int FindInsertionPosition (Range range)
         {
@@ -234,12 +221,12 @@ namespace Hyena.Collections
             
             while (min <= max) {
                 int mid = min + ((max - min) / 2);
-                int cmp = ranges[mid].CompareTo (range);
+                int cmp = CompareRanges (ranges[mid], range);
                  
                 if (cmp == 0) {
                     return mid;
                 } else if (cmp > 0) {
-                    if (mid > 0 && ranges[mid - 1].CompareTo (range) < 0) {
+                    if (mid > 0 && CompareRanges (ranges[mid - 1], range) < 0) {
                         return mid;
                     }
                     
@@ -253,8 +240,23 @@ namespace Hyena.Collections
         }
         
         public int FindRangeIndexForValue (int value)
-        {
-            return Array.BinarySearch (ranges, 0, range_count, new Range (value, -1));
+        {  
+            int min = 0;
+			int max = range_count - 1;
+			
+			while (min <= max) {
+				int mid = min + ((max - min) / 2);
+				Range range = ranges[mid];
+				if (value >= range.Start && value <= range.End) {
+				    return mid;    // In Range
+				} else if (value < range.Start) {
+					max = mid - 1; // Below Range
+				} else {
+					min = mid + 1; // Above Range
+		        }
+			}
+
+			return ~min;
         }
         
 #endregion 
