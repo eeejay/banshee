@@ -1,3 +1,8 @@
+2008-07-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena/Hyena.Collections/RangeCollection.cs: Make
+	CompareRanges static
+
 2008-07-16  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena/Hyena.Collections/Tests/RangeCollectionTests.cs:

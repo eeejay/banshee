@@ -209,7 +209,7 @@ namespace Hyena.Collections
             return false;
         }
         
-        private int CompareRanges (Range a, Range b)
+        private static int CompareRanges (Range a, Range b)
         {
             return (a.Start + (a.End - a.Start)).CompareTo (b.Start + (b.End - b.Start));
         }
