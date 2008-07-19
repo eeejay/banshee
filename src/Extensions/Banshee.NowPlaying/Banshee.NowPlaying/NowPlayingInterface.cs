@@ -45,6 +45,7 @@ namespace Banshee.NowPlaying
         private Hyena.Widgets.RoundedFrame frame;
         private Gtk.Window video_window;
         private FullscreenAdapter fullscreen_adapter;
+        private ScreensaverManager screensaver;
 
         public VideoDisplay VideoDisplay {
             get { return video_display; }
@@ -74,6 +75,7 @@ namespace Banshee.NowPlaying
             PackStart (frame, true, true, 0);
             
             fullscreen_adapter = new FullscreenAdapter ();
+            screensaver = new ScreensaverManager ();
         }
         
         private void MoveVideoExternal (bool hidden)
@@ -155,7 +157,9 @@ namespace Banshee.NowPlaying
                 MoveVideoExternal (true);
                 video_window.ShowAll ();
                 fullscreen_adapter.Fullscreen (video_window, true);
+                screensaver.Inhibit ();
             } else {
+                screensaver.UnInhibit ();
                 fullscreen_adapter.Fullscreen (video_window, false);
                 video_window.Hide ();
             }

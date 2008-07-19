@@ -1,3 +1,26 @@
+2008-07-19  Alexander Hixon  <ahixon@gnome.org>
+
+	Patch from Christopher Halse Rogers to disable the screensaver when
+	watching fullscreen video (BGO #531192) under GNOME (with the ability to
+	use other backends).
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/IScreensaverManager.cs: 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/ScreensaverManager.cs: 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying.addin.xml: Add an
+	extension point for screensaver extensions for disabling the screensaver
+	or power management while playing fullscreen.
+	
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs: 
+	Implement a ScreensaverManager to control GNOME screensaver.
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs: 
+	Use ScreensaverManager to inhibit the screensaver when switching to
+	fullscreen, and re-enable it when switching away.
+
+	* build/build.environment.mk:
+	Add Banshee.NowPlaying to the references for Banshee.GnomeBackend to build
+	GnomeScreensaverManager.
+
 2008-07-17  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena/Hyena.Collections/RangeCollection.cs: Make

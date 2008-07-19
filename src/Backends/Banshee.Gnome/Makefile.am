@@ -7,6 +7,7 @@ SOURCES =  \
 	Banshee.GnomeBackend/Brasero.cs \
 	Banshee.GnomeBackend/DiscDuplicator.cs \
 	Banshee.GnomeBackend/GConfConfigurationClient.cs \
+	Banshee.GnomeBackend/GnomeScreensaverManager.cs \
 	Banshee.GnomeBackend/GnomeService.cs
 
 RESOURCES =  \

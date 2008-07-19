@@ -8,9 +8,11 @@ SOURCES =  \
 	Banshee.NowPlaying/FullscreenControls.cs \
 	Banshee.NowPlaying/FullscreenWindow.cs \
 	Banshee.NowPlaying/IFullscreenAdapter.cs \
+	Banshee.NowPlaying/IScreensaverManager.cs \
 	Banshee.NowPlaying/NowPlayingInterface.cs \
 	Banshee.NowPlaying/NowPlayingSource.cs \
 	Banshee.NowPlaying/OverlayWindow.cs \
+	Banshee.NowPlaying/ScreensaverManager.cs \
 	Banshee.NowPlaying/VideoDisplay.cs \
 	Banshee.NowPlaying/XOverlayVideoDisplay.cs
 
