@@ -109,7 +109,7 @@ namespace Banshee.Metadata.MusicBrainz
         private string FindAsin ()
         {
             Uri uri = new Uri (String.Format ("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
-                Track.ArtistName, Track.AlbumTitle));
+                Track.AlbumArtist, Track.AlbumTitle));
 
             HttpWebResponse response = GetHttpStream (uri);
             if (response == null) {

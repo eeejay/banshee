@@ -1,5 +1,11 @@
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	Patch from Peter de Kraker, looks up the release using the AlbumArtist
+	instead of the track artist (BGO #539570).
+
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Patch from Peter de Kraker adding support for fetching cover art from
 	Last.fm (BGO #536132), with a few tiny changes (mostly HACKING style
 	issues) by me.
