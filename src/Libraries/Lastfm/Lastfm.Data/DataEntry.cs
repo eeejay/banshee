@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Globalization;
 using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace Lastfm.Data
             try {
                 XmlElement node = root[name];
                 if (node != null) {
-                    return (T) Convert.ChangeType (node.InnerText, typeof(T));
+                    return (T) Convert.ChangeType (node.InnerText, typeof(T), CultureInfo.InvariantCulture);
                 } else if (root.HasAttribute (name)) {
                     return (T) Convert.ChangeType (root.GetAttribute (name), typeof(T));
                 }

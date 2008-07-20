@@ -1,3 +1,9 @@
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs: Patch from Arthur Carli
+	fixing issue with parsing percentages from Last.fm without culture
+	invariant info (BGO #539528).
+
 2008-07-20  Bertrand Lorentz  <lorentz@siva>
 
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add a lock 
