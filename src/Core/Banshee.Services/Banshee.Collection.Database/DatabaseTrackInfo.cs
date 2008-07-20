@@ -106,7 +106,6 @@ namespace Banshee.Collection.Database
             if (db_track == null) {
                 return base.TrackEqual (track);
             }
-            
             return TrackEqual (this, db_track);
         }
         
@@ -115,7 +114,7 @@ namespace Banshee.Collection.Database
             return a != null && b != null && 
                 a.TrackId == b.TrackId && 
                 a.CacheModelId == b.CacheModelId && 
-                a.CacheEntryId == b.CacheEntryId;
+                (int)a.CacheEntryId == (int)b.CacheEntryId;
         }
         
         public DatabaseArtistInfo Artist {

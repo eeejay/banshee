@@ -1,3 +1,11 @@
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Cast CacheEntryIds to ints to get value comparison.  Fixes bug where the
+	playback indicator next to the playing track would disappear, which was
+	introduced when I committed the genre filter support and made the
+	CacheEntryId an object.
+
 2008-07-19  Alexander Hixon  <ahixon@gnome.org>
 
 	Patch from Christopher Halse Rogers to disable the screensaver when
