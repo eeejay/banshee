@@ -1,3 +1,8 @@
+2008-07-20  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs:
+	Add constructors to prevent seemingly random crashes (BGO #540728).
+
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs: Patch from Arthur Carli

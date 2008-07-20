@@ -46,6 +46,14 @@ namespace Banshee.Gui.Widgets
         private bool in_popup;
         private bool in_thumbnail_region;
         
+        public ClassicTrackInfoDisplay () : base ()
+        {
+        }
+        
+        protected ClassicTrackInfoDisplay (IntPtr native) : base (native)
+        {
+        }
+        
         public override void Dispose ()
         {
             base.Dispose ();
