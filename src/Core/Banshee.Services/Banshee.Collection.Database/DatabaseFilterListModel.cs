@@ -121,15 +121,20 @@ namespace Banshee.Collection.Database
         {
             string filter = null;
             
-            ModelHelper.BuildIdFilter<object> (GetSelectedObjects (), FilterColumn, null,
-                delegate (object item) {
-                    if (item != select_all_item) {
-                        return ItemToFilterValue (item);
-                    }
-                    return null;
-                },
-                delegate (string new_filter) { filter = new_filter; }
-            );
+            // If the only item is the "All" item, then we shouldn't allow any matches, so insert an always-false condition
+            if (Count == 1) {
+                return "0=1";
+            } else {
+                ModelHelper.BuildIdFilter<object> (GetSelectedObjects (), FilterColumn, null,
+                    delegate (object item) {
+                        if (item != select_all_item) {
+                            return ItemToFilterValue (item);
+                        }
+                        return null;
+                    },
+                    delegate (string new_filter) { filter = new_filter; }
+                );
+            }
             
             return filter;
         }

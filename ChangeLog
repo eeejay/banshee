@@ -1,5 +1,17 @@
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
+	Fix bug where if a filter model (eg artist or album browser) had zero
+	items in it (just the All Albums item), it wouldn't filter the view, so
+	that if you had an artist selected and searched for a string that didn't
+	match, the artist filter would be cleared and the search ran against all
+	artists - not what you'd expect.  So this fixed that bug, but it should be
+	improved more by remembering and restoring the last filter selection
+	before the zero items query, so that when you back out your search you'll
+	still have that artist (or albums, etc) selected.
+
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Use Banshee.Kernel
 	instead of ThreadAssist.SpawnFromMain.
 
