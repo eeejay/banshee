@@ -1,5 +1,10 @@
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Widgets/Banshee.Widgets/Tile.cs: Prevent NRE when
+	setting the Pixbuf of a Tile to null (BGO #542921).
+
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
 	Patch from Peter de Kraker, looks up the release using the AlbumArtist
 	instead of the track artist (BGO #539570).

@@ -96,7 +96,11 @@ namespace Banshee.Widgets
         
         public Gdk.Pixbuf Pixbuf {
             get { return image.Pixbuf; }
-            set { 
+            set {
+                if(value == null) {
+                    return;
+                }
+
                 if(value.Width <= pixbuf_size && value.Height <= pixbuf_size) {
                     image.Pixbuf = value;
                     return;
