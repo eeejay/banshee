@@ -675,7 +675,7 @@ namespace Banshee.Database
                             FROM CoreArtists 
                             WHERE Name = Tracks.Artist
                             LIMIT 1),
-                        0, null, AlbumTitle, NULL, ReleaseDate, 0, 0, 0
+                        0, null, AlbumTitle, NULL, ReleaseDate, 0, 0, Artist, NULL, 0
                         FROM Tracks
                         ORDER BY AlbumTitle
             ");

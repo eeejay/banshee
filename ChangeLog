@@ -1,5 +1,12 @@
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Patch from Fabian Jost fixing issue with migrations - I added the new
+	columns in both the migration and the initial db creation, but I forgot to
+	add the columns to the data migration code (BGO #542345).
+
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Widgets/Banshee.Widgets/Tile.cs: Prevent NRE when
 	setting the Pixbuf of a Tile to null (BGO #542921).
 
