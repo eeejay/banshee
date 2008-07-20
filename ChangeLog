@@ -1,5 +1,10 @@
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	Add comments.
+
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
 	Fix bug where if a filter model (eg artist or album browser) had zero
 	items in it (just the All Albums item), it wouldn't filter the view, so

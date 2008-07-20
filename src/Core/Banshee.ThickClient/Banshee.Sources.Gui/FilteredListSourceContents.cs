@@ -293,9 +293,10 @@ namespace Banshee.Sources.Gui
         
         protected virtual void OnBrowserViewSelectionChanged (object o, EventArgs args)
         {
+            // If the All item is now selected, scroll to the top
             Hyena.Collections.Selection selection = (Hyena.Collections.Selection) o;
-
             if (selection.AllSelected) {
+                // Find the view associated with this selection; a bit yuck; pass view in args?
                 foreach (IListView view in filter_views) {
                     if (view.Selection == selection) {
                         view.ScrollTo (0);
