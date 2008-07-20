@@ -308,12 +308,14 @@ namespace Banshee.Sources
 
         protected void OnErrorSourceUpdated (object o, EventArgs args)
         {
-            if (error_source.Count > 0 && !error_source_visible) {
-                AddChildSource (error_source);
-                error_source_visible = true;
-            } else if (error_source.Count <= 0 && error_source_visible) {
-                RemoveChildSource (error_source);
-                error_source_visible = false;
+            lock (error_source) {
+                if (error_source.Count > 0 && !error_source_visible) {
+                    error_source_visible = true;
+                    AddChildSource (error_source);
+                } else if (error_source.Count <= 0 && error_source_visible) {
+                    error_source_visible = false;
+                    RemoveChildSource (error_source);
+                }
             }
         }
 
