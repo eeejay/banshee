@@ -1,5 +1,10 @@
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Use Banshee.Kernel
+	instead of ThreadAssist.SpawnFromMain.
+
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	Cast CacheEntryIds to ints to get value comparison.  Fixes bug where the
 	playback indicator next to the playing track would disappear, which was

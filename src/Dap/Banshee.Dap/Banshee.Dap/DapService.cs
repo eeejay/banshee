@@ -141,33 +141,37 @@ namespace Banshee.Dap
         
         private void MapDevice (IDevice device)
         {
-            Banshee.Base.ThreadAssist.SpawnFromMain (delegate {
+            Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
                 lock (this) {
-                    if (sources.ContainsKey (device.Uuid)) {
-                        return;
-                    }
-                    
-                    if (device is ICdromDevice || device is IDiscVolume) {
-                        return;
-                    }
-                    
-                    if (device is IVolume && (device as IVolume).ShouldIgnore) {
-                        return;
-                    }
-                    
-                    if (device.MediaCapabilities == null && !(device is IBlockDevice) && !(device is IVolume)) {
-                        return;
-                    }
-                    
-                    DapSource source = FindDeviceSource (device);
-                    if (source != null) {
-                        Log.DebugFormat ("Found DAP support ({0}) for device {1}", source.GetType ().FullName, source.Name);
-                        sources.Add (device.Uuid, source);
-                        ServiceManager.SourceManager.AddSource (source);
-                        source.NotifyUser ();
+                    try {
+                        if (sources.ContainsKey (device.Uuid)) {
+                            return;
+                        }
+                        
+                        if (device is ICdromDevice || device is IDiscVolume) {
+                            return;
+                        }
+                        
+                        if (device is IVolume && (device as IVolume).ShouldIgnore) {
+                            return;
+                        }
+                        
+                        if (device.MediaCapabilities == null && !(device is IBlockDevice) && !(device is IVolume)) {
+                            return;
+                        }
+                        
+                        DapSource source = FindDeviceSource (device);
+                        if (source != null) {
+                            Log.DebugFormat ("Found DAP support ({0}) for device {1}", source.GetType ().FullName, source.Name);
+                            sources.Add (device.Uuid, source);
+                            ServiceManager.SourceManager.AddSource (source);
+                            source.NotifyUser ();
+                        }
+                    } catch (Exception e) {
+                        Log.Exception (e);
                     }
                 }
-            });
+            }));
         }
         
         internal void UnmapDevice (string uuid)
