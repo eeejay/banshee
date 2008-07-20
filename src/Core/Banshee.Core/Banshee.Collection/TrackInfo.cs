@@ -40,6 +40,9 @@ namespace Banshee.Collection
 {
     public class TrackInfo : CacheableItem, ITrackInfo
     {
+        public delegate bool IsPlayingHandler (TrackInfo track);
+        public static IsPlayingHandler IsPlayingMethod;
+            
         private SafeUri uri;
         private SafeUri more_info_uri;
         private string mimetype;
@@ -115,6 +118,10 @@ namespace Banshee.Collection
 
         public virtual void Save ()
         {
+        }
+        
+        public bool IsPlaying {
+            get { return (IsPlayingMethod != null) ? IsPlayingMethod (this) : false; }
         }
 
         public virtual SafeUri Uri {

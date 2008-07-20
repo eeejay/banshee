@@ -334,6 +334,10 @@ namespace Banshee.Daap
             get { return connected; }
         }
         
+        int IImportSource.SortOrder {
+            get { return 30; }
+        }
+        
         public string [] IconNames {
             get { return Properties.GetStringList ("Icon.Name"); }
         }

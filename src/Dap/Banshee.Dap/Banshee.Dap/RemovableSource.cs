@@ -87,6 +87,10 @@ namespace Banshee.Dap
         public virtual bool CanImport {
             get { return true; }
         }
+        
+        int IImportSource.SortOrder {
+            get { return 20; }
+        }
 
 #region IUnmapableSource Implementation
 

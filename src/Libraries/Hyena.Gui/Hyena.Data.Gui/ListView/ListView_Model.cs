@@ -75,20 +75,8 @@ namespace Hyena.Data.Gui
                 ScrollTo ((double) vpos);
             } else {
                 if (Model.Count <= RowsInView) {
+                    // If our view fits all rows at once, make sure we're scrolled to the top
                     ScrollTo (0.0);
-                } else if (Selection.Count > 0) {
-                    bool selection_in_view = false;
-                    int first_row = GetRowAtY (0);
-                    for (int i = 0; i < RowsInView; i++) {
-                        if (Selection.Contains (first_row + i)) {
-                            selection_in_view = true;
-                            break;
-                        }
-                    }
-
-                    if (!selection_in_view) {
-                        CenterOn (Selection.Ranges[0].Start);
-                    }
                 } else {
                     if (vadjustment != null) {
                         ScrollTo (vadjustment.Value);
@@ -170,6 +158,43 @@ namespace Hyena.Data.Gui
             }
             
             return (bool)row_sensitive_property_info.GetValue (item, null);
+        }
+        
+        private string row_bold_property_name = "IsBold";
+        private PropertyInfo row_bold_property_info;
+        bool row_bold_property_invalid = false;
+        
+        public string RowBoldPropertyName {
+            get { return row_bold_property_name; }
+            set { 
+                if (value == row_bold_property_name) {
+                    return;
+                }
+                
+                row_bold_property_name = value;
+                row_bold_property_info = null;
+                row_bold_property_invalid = false;
+                
+                InvalidateList ();
+            }
+        }
+        
+        private bool IsRowBold (object item)
+        {
+            if (item == null || row_bold_property_invalid) {
+                return false;
+            }
+         
+            if (row_bold_property_info == null || row_bold_property_info.ReflectedType != item.GetType ()) {
+                row_bold_property_info = item.GetType ().GetProperty (row_bold_property_name);
+                if (row_bold_property_info == null || row_bold_property_info.PropertyType != typeof (bool)) {
+                    row_bold_property_info = null;
+                    row_bold_property_invalid = true;
+                    return false;
+                }
+            }
+            
+            return (bool)row_bold_property_info.GetValue (item, null);
         }
         
         #pragma warning disable 0169

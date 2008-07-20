@@ -74,6 +74,10 @@ namespace Banshee.Library.Gui
             get { return true; }
         }
         
+        public int SortOrder {
+            get { return 5; }
+        }
+        
         public static void SetChooserShortcuts (Gtk.FileChooserDialog chooser)
         {
             Hyena.Gui.GtkUtilities.SetChooserShortcuts (chooser,

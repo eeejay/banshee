@@ -299,6 +299,7 @@ namespace Hyena.Data.Gui
             
             object item = model[row_index];
             bool sensitive = IsRowSensitive (item);
+            bool bold = IsRowBold (item);
             
             Rectangle cell_area = new Rectangle ();
             cell_area.Height = RowHeight;
@@ -311,22 +312,27 @@ namespace Hyena.Data.Gui
                 
                 cell_area.Width = column_cache[ci].Width;
                 cell_area.X = column_cache[ci].X1 + area.X;
-                PaintCell (item, ci, row_index, cell_area, sensitive, state, false);
+                PaintCell (item, ci, row_index, cell_area, sensitive, bold, state, false);
             }
             
             if (pressed_column_is_dragging && pressed_column_index >= 0) {
                 cell_area.Width = column_cache[pressed_column_index].Width;
                 cell_area.X = pressed_column_x_drag + list_rendering_alloc.X - list_interaction_alloc.X;
-                PaintCell (item, pressed_column_index, row_index, cell_area, sensitive, state, true);
+                PaintCell (item, pressed_column_index, row_index, cell_area, sensitive, bold, state, true);
             }
         }
         
-        private void PaintCell (object item, int column_index, int row_index, Rectangle area, bool sensitive,
+        private void PaintCell (object item, int column_index, int row_index, Rectangle area, bool sensitive, bool bold,
             StateType state, bool dragging)
         {
             ColumnCell cell = column_cache[column_index].Column.GetCell (0);
             cell.BindListItem (item);
             ColumnCellDataProvider (cell, item);
+            
+            ColumnCellText text_cell = cell as ColumnCellText;
+            if (text_cell != null) {
+                text_cell.FontWeight = bold ? Pango.Weight.Bold : Pango.Weight.Normal;
+            }
             
             if (dragging) {
                 Cairo.Color fill_color = Theme.Colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal);

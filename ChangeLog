@@ -1,5 +1,43 @@
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:
+	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/IImportSource.cs: Add a
+	SortOrder int property so we can hint at the order import sources should
+	be displayed in the import dialog.  In particular, puts the folder import
+	first.
+
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/ImportDialog.cs: Sort
+	the import sources before adding them to the combo box.
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Add a static
+	IsPlayingMethod delegate used by the new IsPlaying property to determine
+	if the current instance is playing.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Set the TrackInfo.IsPlayingMethod to our IsPlaying (track) method.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs: Fix
+	issue with the ListView position getting scrolled to the top of the list
+	when it probably shouldn't be.  Add RowBoldPropertyName (like
+	RowSensitivePropertyName) and IsRowBold method.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Set the RowBoldPropertyName to use TrackInfo's IsPlaying property.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	If IsRowBold set the FontWeight property to bold for all ColumnCellText
+	cells.
+
+	* src/Core/Banshee.Core/Resources/translators.xml: Automatically updated.
+
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
 	Add comments.
 

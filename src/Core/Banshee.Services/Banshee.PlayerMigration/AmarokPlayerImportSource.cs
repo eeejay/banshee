@@ -199,5 +199,9 @@ namespace Banshee.PlayerMigration
         public override string [] IconNames {
             get { return new string [] { "system-search" }; }
         }
+        
+        public override int SortOrder {
+            get { return 40; }
+        }
     }
 }

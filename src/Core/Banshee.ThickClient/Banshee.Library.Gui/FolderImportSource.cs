@@ -68,5 +68,9 @@ namespace Banshee.Library.Gui
         public bool CanImport {
             get { return true; }
         }
+        
+        public int SortOrder {
+            get { return 0; }
+        }
     }
 }

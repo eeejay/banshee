@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Gtk;
 using Glade;
 
@@ -94,16 +95,26 @@ namespace Banshee.Library.Gui
             
             TreeIter active_iter = TreeIter.Zero;
             
+            List<IImportSource> sources = new List<IImportSource> ();
+            
             // Add the standalone import sources
             foreach (IImportSource source in ServiceManager.Get<ImportSourceManager> ()) {
-                AddSource (source);
+                sources.Add (source);
             }
             
             // Find active sources that implement IImportSource
             foreach (Source source in ServiceManager.SourceManager.Sources) {
                 if (source is IImportSource) {
-                    AddSource ((IImportSource)source);
+                    sources.Add ((IImportSource)source);
                 }
+            }
+            
+            // Sort the sources by their SortOrder properties
+            sources.Sort (import_source_comparer);
+            
+            // And actually add them to the dialog
+            foreach (IImportSource source in sources) {
+                AddSource (source);
             }
             
             if (!active_iter.Equals(TreeIter.Zero) || (active_iter.Equals (TreeIter.Zero) && 
@@ -206,6 +217,18 @@ namespace Banshee.Library.Gui
                 }
                 
                 return null;
+            }
+        }
+         
+        private static IComparer<IImportSource> import_source_comparer = new ImportSourceComparer ();
+        private class ImportSourceComparer : IComparer<IImportSource>
+        {
+            public int Compare (IImportSource a, IImportSource b)
+            {
+                int ret = a.SortOrder.CompareTo (b.SortOrder);
+                return ret != 0
+                    ? ret
+                    : a.Name.CompareTo (b.Name);
             }
         }
     }

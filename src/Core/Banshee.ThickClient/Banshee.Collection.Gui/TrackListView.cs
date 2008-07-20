@@ -52,6 +52,7 @@ namespace Banshee.Collection.Gui
 
             RulesHint = true;
             RowSensitivePropertyName = "CanPlay";
+            RowBoldPropertyName = "IsPlaying";
             
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
             

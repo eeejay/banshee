@@ -105,6 +105,8 @@ namespace Banshee.MediaEngine
             }
             
             MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;
+            
+            TrackInfo.IsPlayingMethod = IsPlaying;
         }
         
         private void LoadEngine (TypeExtensionNode node)
