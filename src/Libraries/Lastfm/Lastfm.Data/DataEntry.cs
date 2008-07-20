@@ -211,4 +211,29 @@ namespace Lastfm.Data
     {
         public int Reach                { get { return Get<int>      ("reach"); } }
     }
+    
+    // Album Data
+    public class AlbumData : DataEntry 
+    {            
+        public string Reach             { get { return Get<string>      ("reach"); } }            
+        public string LastfmUrl         { get { return Get<string>      ("url"); } }
+        public DateTime ReleaseDate     { get { return Get<DateTime>    ("releasedate"); } }        
+    }
+    
+    public class AlbumCoverUrls : DataEntry
+    {        
+        public string Small             { get { return Get<string>      ("small"); } }
+        public string Medium            { get { return Get<string>      ("medium"); } }
+        public string Large             { get { return Get<string>      ("large"); } }        
+        public string[] AllUrls() {
+            return (new string[] {Small, Medium, Large});
+        }
+    }
+       
+    public class AlbumTrack : DataEntry
+    {
+        public string Title             { get { return Get<string>      ("title"); } }            
+        public int Reach                { get { return Get<int>         ("reach"); } }
+        public string LastfmUrl         { get { return Get<string>      ("url"); } }
+    }   
 }

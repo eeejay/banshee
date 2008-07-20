@@ -49,22 +49,22 @@ namespace Banshee.Metadata.MusicBrainz
     
         private string asin;
         
-        public MusicBrainzQueryJob(IBasicTrackInfo track)
+        public MusicBrainzQueryJob (IBasicTrackInfo track)
         {
             Track = track;
         }
         
-        public MusicBrainzQueryJob(IBasicTrackInfo track, string asin) : this(track)
+        public MusicBrainzQueryJob (IBasicTrackInfo track, string asin) : this (track)
         {
             this.asin = asin;
         }
         
-        public override void Run()
+        public override void Run ()
         {
-            Lookup();
+            Lookup ();
         }
         
-        public bool Lookup()
+        public bool Lookup ()
         {
             if (Track == null || (Track.MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
                 return false;
@@ -72,29 +72,29 @@ namespace Banshee.Metadata.MusicBrainz
             
             string artwork_id = Track.ArtworkId;
             
-            if(artwork_id == null) {
+            if (artwork_id == null) {
                 return false;
-            } else if(CoverArtSpec.CoverExists(artwork_id)) {
+            } else if (CoverArtSpec.CoverExists (artwork_id)) {
                 return false;
-            } else if(!NetworkDetect.Instance.Connected) {
+            } else if (!NetworkDetect.Instance.Connected) {
                 return false;
             }
             
-            if(asin == null) {
-                asin = FindAsin();
-                if(asin == null) {
+            if (asin == null) {
+                asin = FindAsin ();
+                if (asin == null) {
                     return false;
                 }
             }
             
-            if(SaveHttpStreamCover(new Uri(String.Format(AmazonUriFormat, asin)), artwork_id, 
+            if (SaveHttpStreamCover (new Uri (String.Format (AmazonUriFormat, asin)), artwork_id, 
                 new string [] { "image/gif" })) {
                 Log.Debug ("Downloaded cover art from Amazon", artwork_id);
-                StreamTag tag = new StreamTag();
+                StreamTag tag = new StreamTag ();
                 tag.Name = CommonTags.AlbumCoverId;
                 tag.Value = artwork_id;
 
-                AddTag(tag);
+                AddTag (tag);
                 
                 return true;
             }
@@ -106,30 +106,30 @@ namespace Banshee.Metadata.MusicBrainz
         // instead of using the stuff in the MusicBrainz namespace 
         // which sucks and doesn't even appear to work anymore.
         
-        private string FindAsin()
+        private string FindAsin ()
         {
-            Uri uri = new Uri(String.Format("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
+            Uri uri = new Uri (String.Format ("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
                 Track.ArtistName, Track.AlbumTitle));
 
-            HttpWebResponse response = GetHttpStream(uri);
+            HttpWebResponse response = GetHttpStream (uri);
             if (response == null) {
                 return null;
             }
             
             using (Stream stream = response.GetResponseStream ()) {
-                XmlTextReader reader = new XmlTextReader(stream);
+                XmlTextReader reader = new XmlTextReader (stream);
     
                 bool haveMatch = false;
                 
-                while(reader.Read()) {
-                    if(reader.NodeType == XmlNodeType.Element) {
+                while (reader.Read ()) {
+                    if (reader.NodeType == XmlNodeType.Element) {
                         switch (reader.LocalName) {
                             case "release":
                                 haveMatch = reader["ext:score"] == "100";
                                 break;
                             case "asin":
-                                if(haveMatch) {
-                                    return reader.ReadString();
+                                if (haveMatch) {
+                                    return reader.ReadString ();
                                 }
                             break;
                         default:

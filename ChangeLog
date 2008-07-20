@@ -1,5 +1,36 @@
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patch from Peter de Kraker adding support for fetching cover art from
+	Last.fm (BGO #536132), with a few tiny changes (mostly HACKING style
+	issues) by me.
+
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataService.cs:
+	Whitespace issues, and add the Lastfm provider.
+
+	* src/Core/Banshee.Services/Banshee.Services.addins:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Banshee.Metadata.LastFM/LastFMMetadataProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.LastFM/LastFMQueryJob.cs: New
+	files implementing cover art fetching from Last.fm.
+
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	Whitespace fixes.
+
+	* src/Libraries/Lastfm/Lastfm.mdp:
+	* src/Libraries/Lastfm/Makefile.am:
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs:
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmAlbumData.cs: Wrap album
+	information from Last.fm.
+
+	* src/Core/Banshee.Core/Banshee.Core.mdp:
+	* build/build.environment.mk: Banshee.Services now depends on Lastfm.
+	Ideally we will move these providers out into extensions at some point.
+
+	* src/Core/Banshee.Core/Resources/contributors.xml: Add Peter and Sandy.
+
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:
 	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:

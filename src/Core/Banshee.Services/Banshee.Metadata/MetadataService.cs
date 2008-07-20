@@ -42,8 +42,8 @@ namespace Banshee.Metadata
         
         public static MetadataService Instance {
             get {
-                if(instance == null) {
-                    instance = new MetadataService();
+                if (instance == null) {
+                    instance = new MetadataService ();
                 }
                 
                 return instance;
@@ -51,80 +51,81 @@ namespace Banshee.Metadata
         }
         
         private Dictionary<IBasicTrackInfo, IMetadataLookupJob> queries 
-            = new Dictionary<IBasicTrackInfo, IMetadataLookupJob>();
-        private List<IMetadataProvider> providers = new List<IMetadataProvider>();
+            = new Dictionary<IBasicTrackInfo, IMetadataLookupJob> ();
+        private List<IMetadataProvider> providers = new List<IMetadataProvider> ();
 
-        public MetadataService()
+        public MetadataService ()
         {
-            AddProvider(new Banshee.Metadata.Embedded.EmbeddedMetadataProvider());
-            AddProvider(new Banshee.Metadata.Rhapsody.RhapsodyMetadataProvider());
-            AddProvider(new Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider());
+            AddProvider (new Banshee.Metadata.Embedded.EmbeddedMetadataProvider ());
+            AddProvider (new Banshee.Metadata.Rhapsody.RhapsodyMetadataProvider ());
+            AddProvider (new Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider ());
+            AddProvider (new Banshee.Metadata.LastFM.LastFMMetadataProvider ());
             
             Scheduler.JobFinished += OnSchedulerJobFinished;
             Scheduler.JobUnscheduled += OnSchedulerJobUnscheduled;
         }
 
-        public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
+        public override IMetadataLookupJob CreateJob (IBasicTrackInfo track)
         {
-            return new MetadataServiceJob(this, track);
+            return new MetadataServiceJob (this, track);
         }
         
-        public override void Lookup(IBasicTrackInfo track)
+        public override void Lookup (IBasicTrackInfo track)
         {
-            Lookup(track, JobPriority.Highest);
+            Lookup (track, JobPriority.Highest);
         }
         
-        public void Lookup(IBasicTrackInfo track, JobPriority priority)
+        public void Lookup (IBasicTrackInfo track, JobPriority priority)
         {
-            if(track == null || queries == null) {
+            if (track == null || queries == null) {
                 return;
             }
             
-            lock(((ICollection)queries).SyncRoot) {
-                if(!queries.ContainsKey(track)) {
-                    IMetadataLookupJob job = CreateJob(track);
-                    if(job == null) {
+            lock (((ICollection)queries).SyncRoot) {
+                if (!queries.ContainsKey (track)) {
+                    IMetadataLookupJob job = CreateJob (track);
+                    if (job == null) {
                         return;
                     }
                     
-                    queries.Add(track, job);
-                    Scheduler.Schedule(job, priority);
+                    queries.Add (track, job);
+                    Scheduler.Schedule (job, priority);
                 }
             }
         }
 
-        public void AddProvider(IMetadataProvider provider)
+        public void AddProvider (IMetadataProvider provider)
         {
-            AddProvider(-1, provider);
+            AddProvider (-1, provider);
         }
 
-        public void AddProvider(int position, IMetadataProvider provider)
+        public void AddProvider (int position, IMetadataProvider provider)
         {
-            lock(providers) {
-                if(position < 0) {
-                    providers.Add(provider);
+            lock (providers) {
+                if (position < 0) {
+                    providers.Add (provider);
                 } else {
-                    providers.Insert(position, provider);
+                    providers.Insert (position, provider);
                 }
             }
         }
 
-        public void RemoveProvider(IMetadataProvider provider)
+        public void RemoveProvider (IMetadataProvider provider)
         {
-            lock(providers) {
-                providers.Remove(provider);
+            lock (providers) {
+                providers.Remove (provider);
             }
         }
         
-        private bool RemoveJob(IMetadataLookupJob job)
+        private bool RemoveJob (IMetadataLookupJob job)
         {
-            if(job == null) {
+            if (job == null) {
                 return false;
             }
             
-            lock(((ICollection)queries).SyncRoot) {
-                if(queries.ContainsKey(job.Track)) {
-                    queries.Remove(job.Track);
+            lock (((ICollection)queries).SyncRoot) {
+                if (queries.ContainsKey (job.Track)) {
+                    queries.Remove (job.Track);
                     return true;
                 }
                 
@@ -132,29 +133,29 @@ namespace Banshee.Metadata
             }
         }
         
-        private void OnSchedulerJobFinished(IJob job)
+        private void OnSchedulerJobFinished (IJob job)
         {
-            if(!(job is IMetadataLookupJob)) {
+            if (!(job is IMetadataLookupJob)) {
                 return;
             }
             
             IMetadataLookupJob lookup_job = (IMetadataLookupJob)job;
-            if(RemoveJob(lookup_job)) {
-                Banshee.Base.ThreadAssist.ProxyToMain(delegate { 
-                    OnHaveResult(lookup_job.Track, lookup_job.ResultTags); 
+            if (RemoveJob (lookup_job)) {
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate { 
+                    OnHaveResult (lookup_job.Track, lookup_job.ResultTags); 
                 });
             }
         }
         
-        private void OnSchedulerJobUnscheduled(IJob job)
+        private void OnSchedulerJobUnscheduled (IJob job)
         {
-            RemoveJob(job as IMetadataLookupJob);
+            RemoveJob (job as IMetadataLookupJob);
         }
         
         public ReadOnlyCollection<IMetadataProvider> Providers {
             get {
-                lock(providers) {
-                    return new ReadOnlyCollection<IMetadataProvider>(providers);
+                lock (providers) {
+                    return new ReadOnlyCollection<IMetadataProvider> (providers);
                 }
             }
         }
