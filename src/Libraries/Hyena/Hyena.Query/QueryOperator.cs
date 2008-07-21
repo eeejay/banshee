@@ -67,13 +67,14 @@ namespace Hyena.Query
             get { return is_not; }
         }
         
-        internal Operator (string name, string sql_format, params string [] userOps) : this (name, sql_format, false, userOps)
+        internal Operator (string name, string label, string sql_format, params string [] userOps) : this (name, label, sql_format, false, userOps)
         {
         }
 
-        internal Operator (string name, string sql_format, bool is_not, params string [] userOps)
+        internal Operator (string name, string label, string sql_format, bool is_not, params string [] userOps)
         {
             this.name = name;
+            this.label = label;
             this.sql_format = sql_format;
             this.aliases = userOps;
             this.is_not = is_not;

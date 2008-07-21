@@ -41,7 +41,7 @@ namespace Banshee.Collection.Database
 {
     public class DatabaseArtistListModel : DatabaseFilterListModel<DatabaseArtistInfo, ArtistInfo>
     {
-        public DatabaseArtistListModel ( Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
+        public DatabaseArtistListModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
             : base (source, trackModel, connection, DatabaseArtistInfo.Provider, new ArtistInfo (null), uuid)
         {
             ReloadFragmentFormat = @"

@@ -206,8 +206,9 @@ namespace Banshee.Gui
 
             if (selection != null) {
                 bool has_selection = selection.Count > 0;
-                foreach (string action in require_selection_actions)
+                foreach (string action in require_selection_actions) {
                     this[action].Sensitive = has_selection;
+                }
 
                 bool has_single_selection = selection.Count == 1;
 

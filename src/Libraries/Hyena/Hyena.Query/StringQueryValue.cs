@@ -30,18 +30,20 @@ using System;
 using System.Xml;
 using System.Text;
 
+using Mono.Unix;
+
 using Hyena;
 
 namespace Hyena.Query
 {
     public class StringQueryValue : QueryValue
     {
-        public static readonly Operator Contains       = new Operator ("contains", "LIKE '%{0}%'", ":");
-        public static readonly Operator DoesNotContain = new Operator ("doesNotContain", "NOT LIKE '%{0}%'", true, "!:");
-        public static readonly Operator Equal          = new Operator ("equals", "= '{0}'", "==");
-        public static readonly Operator NotEqual       = new Operator ("notEqual", "!= '{0}'", true, "!=");
-        public static readonly Operator StartsWith     = new Operator ("startsWith", "LIKE '{0}%'", "=");
-        public static readonly Operator EndsWith       = new Operator ("endsWith", "LIKE '%{0}'", ":=");
+        public static readonly Operator Contains       = new Operator ("contains", Catalog.GetString ("contains"), "LIKE '%{0}%'", ":");
+        public static readonly Operator DoesNotContain = new Operator ("doesNotContain", Catalog.GetString ("doesn't contain"), "NOT LIKE '%{0}%'", true, "!:");
+        public static readonly Operator Equal          = new Operator ("equals", Catalog.GetString ("is"), "= '{0}'", "==");
+        public static readonly Operator NotEqual       = new Operator ("notEqual", Catalog.GetString ("is not"), "!= '{0}'", true, "!=");
+        public static readonly Operator StartsWith     = new Operator ("startsWith", Catalog.GetString ("starts with"), "LIKE '{0}%'", "=");
+        public static readonly Operator EndsWith       = new Operator ("endsWith", Catalog.GetString ("ends with"), "LIKE '%{0}'", ":=");
 
         protected string value;
 

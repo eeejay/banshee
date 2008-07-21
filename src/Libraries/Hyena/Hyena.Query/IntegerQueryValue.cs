@@ -30,18 +30,20 @@ using System;
 using System.Xml;
 using System.Text;
 
+using Mono.Unix;
+
 using Hyena;
 
 namespace Hyena.Query
 {
     public class IntegerQueryValue : QueryValue
     {
-        public static readonly Operator Equal              = new Operator ("equals", "= {0}", "=", "==", ":");
-        public static readonly Operator NotEqual           = new Operator ("notEqual", "!= {0}", true, "!=", "!:");
-        public static readonly Operator LessThanEqual      = new Operator ("lessThanEquals", "<= {0}", "<=");
-        public static readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", ">= {0}", ">=");
-        public static readonly Operator LessThan           = new Operator ("lessThan", "< {0}", "<");
-        public static readonly Operator GreaterThan        = new Operator ("greaterThan", "> {0}", ">");
+        public static readonly Operator Equal              = new Operator ("equals", Catalog.GetString ("is"), "= {0}", "=", "==", ":");
+        public static readonly Operator NotEqual           = new Operator ("notEqual", Catalog.GetString ("is not"), "!= {0}", true, "!=", "!:");
+        public static readonly Operator LessThanEqual      = new Operator ("lessThanEquals", Catalog.GetString ("at most"), "<= {0}", "<=");
+        public static readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", Catalog.GetString ("at least"), ">= {0}", ">=");
+        public static readonly Operator LessThan           = new Operator ("lessThan", Catalog.GetString ("less than"), "< {0}", "<");
+        public static readonly Operator GreaterThan        = new Operator ("greaterThan", Catalog.GetString ("more than"), "> {0}", ">");
 
         protected long value;
 

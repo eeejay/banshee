@@ -36,5 +36,7 @@ namespace Banshee.Collection.Database
         string GetSqlFilter ();
         void RaiseReloaded ();
         void Reload (bool notify);
+        string FilterName { get; }
+        string FilterLabel { get; }
     }
 }

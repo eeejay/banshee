@@ -235,6 +235,7 @@ namespace Banshee.Query
         {
             string ascDesc = asc ? "ASC" : "DESC";
             string sort_query = null;
+            // TODO use the QueryFields here instead of matching on a string key
             switch(key) {
                 case "Track":
                     sort_query = String.Format (@"
@@ -324,35 +325,6 @@ namespace Banshee.Query
         private static string CreateOrderName (string name, bool asc)
         {
             return String.Format ("{0}-{1}", name, asc ? "ASC" : "DESC");
-        }
-
-        static BansheeQuery () {
-            // Set translated names for operators
-            IntegerQueryValue.Equal.Label            = Catalog.GetString ("is");
-            IntegerQueryValue.NotEqual.Label         = Catalog.GetString ("is not");
-            IntegerQueryValue.LessThanEqual.Label    = Catalog.GetString ("at most");
-            IntegerQueryValue.GreaterThanEqual.Label = Catalog.GetString ("at least");
-            IntegerQueryValue.LessThan.Label         = Catalog.GetString ("less than");
-            IntegerQueryValue.GreaterThan.Label      = Catalog.GetString ("more than");
-
-            //DateQueryValue.Equal.Label               = Catalog.GetString ("is");
-            //DateQueryValue.NotEqual.Label            = Catalog.GetString ("is not");
-            //DateQueryValue.LessThanEqual.Label       = Catalog.GetString ("at most");
-            //DateQueryValue.GreaterThanEqual.Label    = Catalog.GetString ("at least");
-            DateQueryValue.LessThan.Label            = Catalog.GetString ("before");
-            DateQueryValue.GreaterThan.Label         = Catalog.GetString ("after");
-
-            RelativeTimeSpanQueryValue.GreaterThan.Label         = Catalog.GetString ("more than");
-            RelativeTimeSpanQueryValue.LessThan.Label            = Catalog.GetString ("less than");
-            RelativeTimeSpanQueryValue.GreaterThanEqual.Label    = Catalog.GetString ("at least");
-            RelativeTimeSpanQueryValue.LessThanEqual.Label       = Catalog.GetString ("at most");
-
-            StringQueryValue.Equal.Label             = Catalog.GetString ("is");
-            StringQueryValue.NotEqual.Label          = Catalog.GetString ("is not");
-            StringQueryValue.Contains.Label          = Catalog.GetString ("contains");
-            StringQueryValue.DoesNotContain.Label    = Catalog.GetString ("doesn't contain");
-            StringQueryValue.StartsWith.Label        = Catalog.GetString ("starts with");
-            StringQueryValue.EndsWith.Label          = Catalog.GetString ("ends with");
         }
     }
 }

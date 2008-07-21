@@ -68,21 +68,6 @@ namespace Banshee.Collection
         
         public abstract void Reload (bool notify);
         
-        /*protected virtual void GenerateReloadFragment ()
-        {
-            ReloadFragment = String.Format (
-                ReloadFragmentFormat,
-                browsing_model.CachesJoinTableEntries ? browsing_model.JoinFragment : null,
-                browsing_model.CacheId,
-                browsing_model.CachesJoinTableEntries
-                    ? String.Format (
-                        "{0}.{1} AND CoreTracks.TrackID = {0}.{2}",
-                        browsing_model.JoinTable, browsing_model.JoinPrimaryKey, browsing_model.JoinColumn
-                    ) : "CoreTracks.TrackID",
-                GetFilterFragment ()
-            );
-        }*/
-        
         private void HandleSelectionChanged (object sender, EventArgs args)
         {
             browsing_model.Reload (this);
@@ -91,9 +76,19 @@ namespace Banshee.Collection
 #region IFilterModel Implementation
 
         public abstract string GetSqlFilter ();
+        
+        private string filter_name;
+        public string FilterName {
+            get { return filter_name; }
+            protected set { filter_name = value; }
+        }
+        
+        private string filter_label;
+        public string FilterLabel {
+            get { return filter_label; }
+            protected set { filter_label = value; }
+        }
 
 #endregion
-        
-        //public abstract void RaiseReloaded ();
     }
 }

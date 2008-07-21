@@ -1,3 +1,27 @@
+2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Add curlies.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	Fix whitespace.
+
+	* src/Core/Banshee.Services/Banshee.Collection/IFilterListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/FilterListModel.cs: Add
+	FilterName and FilterLabel properties that will be used in making the
+	filters configurable.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Add TODO
+	comment, and get rid of static ctor where we set the labels for the
+	QueryValue operators (they are set in Hyena now).
+
+	* src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/QueryOperator.cs:
+	* src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs: Set the translated
+	labels for the operators in their ctors.
+
 2008-07-20  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs:
