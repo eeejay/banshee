@@ -1,5 +1,11 @@
 2008-07-21  Alexander Hixon  <ahixon@gnome.org>
 
+	* src/Libraries/Lastfm/Lastfm.Data/DataCore.cs: Make sure that we check
+	the hash string length before performing a substring operation to avoid
+	out-of-range exceptions.
+
+2008-07-21  Alexander Hixon  <ahixon@gnome.org>
+
 	* src/Backends/Banshee.Gnome/Banshee.Gnome.addin.xml: Forgot to commit
 	this so that the GNOME ScreensaverManager implementation gets loaded.
 

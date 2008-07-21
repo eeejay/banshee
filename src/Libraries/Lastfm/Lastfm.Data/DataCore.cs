@@ -118,7 +118,11 @@ namespace Lastfm.Data
         public static string GetCachedPathFromUrl (string url)
         {
             string hash = FixLastfmUrl (url).GetHashCode ().ToString ("X").ToLower ();
-            return Path.Combine (Path.Combine (DataCore.CachePath, hash.Substring (0, 2)), hash);
+            if (hash.Length > 2) {
+                return Path.Combine (Path.Combine (DataCore.CachePath, hash.Substring (0, 2)), hash);
+            } else {
+                return String.Empty;
+            }
         }
         
         private static Stream GetResponseStream (HttpWebResponse response) 
