@@ -1,3 +1,8 @@
+2008-07-21  Alexander Hixon  <ahixon@gnome.org>
+
+	* src/Backends/Banshee.Gnome/Banshee.Gnome.addin.xml: Forgot to commit
+	this so that the GNOME ScreensaverManager implementation gets loaded.
+
 2008-07-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Add curlies.

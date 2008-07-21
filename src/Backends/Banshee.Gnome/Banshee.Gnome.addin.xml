@@ -11,6 +11,7 @@
   <Dependencies>
     <Addin id="Banshee.Core" version="1.0"/>
     <Addin id="Banshee.Services" version="1.0"/>
+    <Addin id="Banshee.NowPlaying" version="1.0"/>
   </Dependencies>
   
   <Extension path="/Banshee/ServiceManager/Service">
@@ -25,4 +26,7 @@
     <DiscDuplicator class="Banshee.GnomeBackend.DiscDuplicator"/>
   </Extension>
   
+  <Extension path="/Banshee/NowPlaying/ScreensaverManager">
+    <ScreensaverManager class="Banshee.GnomeBackend.GnomeScreensaverManager"/>
+  </Extension>
 </Addin>
