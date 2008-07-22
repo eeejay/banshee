@@ -1,5 +1,11 @@
 2008-07-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Fix glitch where the resize cursor would flash away when you actually
+	pressed the mouse button, but then come back when you started moving.
+
+2008-07-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Services.mdp:
 	* src/Core/Banshee.Services/Makefile.am:
 	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemMetadataProvider.cs:

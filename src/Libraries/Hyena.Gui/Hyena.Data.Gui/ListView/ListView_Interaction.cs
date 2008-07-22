@@ -585,7 +585,6 @@ namespace Hyena.Data.Gui
         
         protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
         {
-            GdkWindow.Cursor = null;
             if (evnt.Mode == Gdk.CrossingMode.Normal) {
                 ProxyEventToCell (evnt, false);
             }
