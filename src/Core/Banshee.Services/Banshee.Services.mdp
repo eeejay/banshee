@@ -79,6 +79,8 @@
     <File name="Banshee.Metadata/IMetadataProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Metadata/MetadataService.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Metadata/MetadataServiceJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata.FileSystem/FileSystemMetadataProvider.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Metadata.FileSystem/FileSystemQueryJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Metadata.Embedded/EmbeddedMetadataProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Metadata.Embedded/EmbeddedQueryJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs" subtype="Code" buildaction="Compile" />

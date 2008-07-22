@@ -1,10 +1,10 @@
 //
-// IBasicTrackInfo.cs
+// FileSystemMetadataProvider.cs
 //
-// Author:
-//   Aaron Bockover <abockover@novell.com>
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2006-2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,16 +26,24 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Banshee.Collection
+using System;
+using System.Collections.Generic;
+
+using Banshee.Base;
+using Banshee.Collection;
+using Banshee.Metadata;
+
+namespace Banshee.Metadata.FileSystem
 {
-    public interface IBasicTrackInfo
+    public class FileSystemMetadataProvider : BaseMetadataProvider
     {
-        string ArtistName { get; }
-        string AlbumArtist { get; }
-        string AlbumTitle { get; }
-        string TrackTitle { get; }
-        string ArtworkId { get; }
-        Banshee.Base.SafeUri Uri { get; }
-        TrackMediaAttributes MediaAttributes { get; }
+        public FileSystemMetadataProvider() : base()
+        {
+        }
+        
+        public override IMetadataLookupJob CreateJob (IBasicTrackInfo track)
+        {
+            return new FileSystemQueryJob (track);
+        }
     }
 }

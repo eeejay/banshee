@@ -79,6 +79,8 @@ SOURCES =  \
 	Banshee.MediaProfiles/ProfileConfiguration.cs \
 	Banshee.Metadata.Embedded/EmbeddedMetadataProvider.cs \
 	Banshee.Metadata.Embedded/EmbeddedQueryJob.cs \
+	Banshee.Metadata.FileSystem/FileSystemMetadataProvider.cs \
+	Banshee.Metadata.FileSystem/FileSystemQueryJob.cs \
 	Banshee.Metadata.LastFM/LastFMMetadataProvider.cs \
 	Banshee.Metadata.LastFM/LastFMQueryJob.cs \
 	Banshee.Metadata.MusicBrainz/MusicBrainzMetadataProvider.cs \

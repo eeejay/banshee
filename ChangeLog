@@ -1,4 +1,19 @@
-2008-07-21  Gabriel Burt  <gabriel.burt@gmail.com>
+2008-07-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemMetadataProvider.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemQueryJob.cs:
+	New provider that gets cover art files from the folder a track is in (BGO
+	#528137, BGO #336249).  Looks for the largest JPG file in the folder.
+
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataService.cs: Use the
+	new provider, after the embedded provider.
+
+	* src/Core/Banshee.Core/Banshee.Collection/IBasicTrackInfo.cs: Add Uri
+	property.
+
+2008-07-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit does the backend (non-UI) work to make filters (eg
 	artist/album/genre/etc browsers) on sources customizable.  All the UI work
