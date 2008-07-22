@@ -38,5 +38,6 @@ namespace Banshee.Collection.Database
         void Reload (bool notify);
         string FilterName { get; }
         string FilterLabel { get; }
+        void InvalidateCache ();
     }
 }

@@ -42,7 +42,8 @@ namespace Banshee.Collection.Database
     public class DatabaseArtistListModel : DatabaseFilterListModel<DatabaseArtistInfo, ArtistInfo>
     {
         public DatabaseArtistListModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
-            : base (source, trackModel, connection, DatabaseArtistInfo.Provider, new ArtistInfo (null), uuid)
+            : base (Banshee.Query.BansheeQuery.ArtistField.Name, Banshee.Query.BansheeQuery.ArtistField.Label, 
+                    source, trackModel, connection, DatabaseArtistInfo.Provider, new ArtistInfo (null), uuid)
         {
             ReloadFragmentFormat = @"
                 FROM CoreArtists WHERE CoreArtists.ArtistID IN

@@ -554,6 +554,16 @@ namespace Banshee.Sources
             set { ConfigurationClient.Set<int> (String.Format ("sources.{0}", ConfigurationId), "status_format", value); }
         }
         
+        public SchemaEntry<T> CreateSchema<T> (string name)
+        {
+            return CreateSchema<T> (name, default(T), null, null);
+        }
+        
+        public SchemaEntry<T> CreateSchema<T> (string name, T defaultValue, string shotDescription, string longDescription)
+        {
+            return new SchemaEntry<T> (String.Format ("sources.{0}", ConfigurationId), name, defaultValue, shotDescription, longDescription); 
+        }
+        
         public void CycleStatusFormat ()
         {
             int new_status_format = CurrentStatusFormat + 1;

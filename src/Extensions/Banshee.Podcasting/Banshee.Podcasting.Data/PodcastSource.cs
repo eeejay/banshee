@@ -158,6 +158,12 @@ namespace Banshee.Podcasting.Gui
             
             unheard_model = new PodcastUnheardFilterModel (DatabaseTrackModel);
             
+            AvailableFilters.Add (unheard_model);
+            AvailableFilters.Add (feed_model);
+            
+            DefaultFilters.Add (unheard_model);
+            DefaultFilters.Add (feed_model);
+            
             AfterInitialized ();
         }
         
@@ -190,13 +196,6 @@ namespace Banshee.Podcasting.Gui
             // considered a Podcast item
             base.AddTrack (track);
         }*/
-        
-        public override System.Collections.Generic.IEnumerable<Banshee.Collection.Database.IFilterListModel> FilterModels {
-            get {
-                yield return unheard_model;
-                yield return feed_model;
-            }
-        }
         
         public override bool ShowBrowser {
             get { return true; }

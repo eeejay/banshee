@@ -100,7 +100,7 @@ namespace Banshee.Podcasting.Gui
             
             SetModel (track_view, track_source.TrackModel);
             
-            foreach (IListModel model in track_source.FilterModels) {
+            foreach (IListModel model in track_source.CurrentFilters) {
                 if (model is PodcastFeedModel)
                     SetModel (feed_view, (model as IListModel<Feed>));
                 else if (model is PodcastUnheardFilterModel)

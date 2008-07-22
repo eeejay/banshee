@@ -138,9 +138,9 @@ namespace Banshee.Sources.Gui
 
         public override bool SetSource (ISource source)
         {
-            //Console.WriteLine ("CTSC.set_source 1");
             ITrackModelSource track_source = source as ITrackModelSource;
-            if (track_source == null) {
+            IFilterableSource filterable_source = source as IFilterableSource;
+            if (track_source == null || filterable_source == null) {
                 return false;
             }
             
@@ -148,32 +148,31 @@ namespace Banshee.Sources.Gui
             
             SetModel (track_view, track_source.TrackModel);
             
-            foreach (IListModel model in track_source.FilterModels) {
-                if (model is IListModel<ArtistInfo>)
-                    SetModel (artist_view, (model as IListModel<ArtistInfo>));
-                else if (model is IListModel<AlbumInfo>)
-                    SetModel (album_view, (model as IListModel<AlbumInfo>));
-                else if (model is IListModel<QueryFilterInfo<string>>)
-                    SetModel (genre_view, (model as IListModel<QueryFilterInfo<string>>));
-                else
-                    Hyena.Log.DebugFormat ("CompositeTrackSourceContents got non-album/artist filter model: {0}", model);
+            if (filterable_source.CurrentFilters != null) {
+                foreach (IListModel model in filterable_source.CurrentFilters) {
+                    if (model is IListModel<ArtistInfo>)
+                        SetModel (artist_view, (model as IListModel<ArtistInfo>));
+                    else if (model is IListModel<AlbumInfo>)
+                        SetModel (album_view, (model as IListModel<AlbumInfo>));
+                    else if (model is IListModel<QueryFilterInfo<string>>)
+                        SetModel (genre_view, (model as IListModel<QueryFilterInfo<string>>));
+                    else
+                        Hyena.Log.DebugFormat ("CompositeTrackSourceContents got non-album/artist filter model: {0}", model);
+                }
             }
             
             track_view.HeaderVisible = true;
-            //Console.WriteLine ("CTSC.set_source 2");
             return true;
         }
 
         public override void ResetSource ()
         {
-            //Console.WriteLine ("CTSC.reset_source 1");
             source = null;
             track_view.SetModel (null);
             artist_view.SetModel (null);
             album_view.SetModel (null);
             genre_view.SetModel (null);
             track_view.HeaderVisible = false;
-            //Console.WriteLine ("CTSC.reset_source 2");
         }
 
 #endregion

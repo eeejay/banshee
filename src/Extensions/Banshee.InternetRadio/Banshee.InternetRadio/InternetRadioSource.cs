@@ -52,14 +52,13 @@ namespace Banshee.InternetRadio
         }
         
         private uint ui_id;
-     //   private InternetRadioSourceContents source_contents;
         
-        public InternetRadioSource () : base (Catalog.GetString ("Radio"), 
-            Catalog.GetString ("Radio"), "internet-radio", 220)
+        public InternetRadioSource () : base (Catalog.GetString ("Radio"), Catalog.GetString ("Radio"), "internet-radio", 220)
         {
             Properties.SetString ("Icon.Name", "radio");
             IsLocal = false;
             
+            InternetRadioInitialize ();
             AfterInitialized ();
             
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
@@ -74,9 +73,6 @@ namespace Banshee.InternetRadio
             
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/InternetRadioContextMenu");
-            
-           // source_contents = new InternetRadioSourceContents ();
-           // Properties.Set<ISourceContents> ("Nereid.SourceContents", source_contents);
             
             Properties.SetString ("TrackPropertiesActionLabel", Catalog.GetString ("Edit Station"));
             Properties.Set<InvokeHandler> ("TrackPropertiesActionHandler", delegate {
@@ -101,7 +97,7 @@ namespace Banshee.InternetRadio
                   <add-default column=""IndicatorColumn"" />
                   <add-default column=""GenreColumn"" />
                   <column modify-default=""GenreColumn"">
-                    <visible>true</visible>
+                    <visible>false</visible>
                   </column>
                   <add-default column=""TitleColumn"" />
                   <add-default column=""ArtistColumn"" />
@@ -135,6 +131,18 @@ namespace Banshee.InternetRadio
             if (new XspfMigrator (this).Migrate ()) {
                 Reload ();
             }
+        }
+        
+        protected override void Initialize ()
+        {
+            base.Initialize ();
+            InternetRadioInitialize ();
+        }
+        
+        private void InternetRadioInitialize ()
+        {
+            AvailableFilters.Add (GenreModel);
+            DefaultFilters.Add (GenreModel);
         }
         
         public override void Dispose ()
@@ -235,12 +243,17 @@ namespace Banshee.InternetRadio
         public override bool CanDeleteTracks {
             get { return false; }
         }
-               
+
+        // TODO change this to true once the Composite widget is made to work w/ variable number/type of filters
         public override bool ShowBrowser {
             get { return false; }
         }
         
         public override bool CanRename {
+            get { return false; }
+        }
+        
+        protected override bool HasArtistAlbum {
             get { return false; }
         }
     }

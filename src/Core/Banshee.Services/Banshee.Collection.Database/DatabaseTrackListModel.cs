@@ -223,10 +223,10 @@ namespace Banshee.Collection.Database
 
                 List<IFilterListModel> reload_models = new List<IFilterListModel> ();
                 bool found = (reloadTrigger == null);
-                foreach (IFilterListModel model in source.FilterModels) {
+                foreach (IFilterListModel filter in source.CurrentFilters) {
                     if (found) {
-                        reload_models.Add (model);
-                    } else if (model == reloadTrigger) {
+                        reload_models.Add (filter);
+                    } else if (filter == reloadTrigger) {
                         found = true;
                     }
                 }
@@ -241,8 +241,8 @@ namespace Banshee.Collection.Database
                     }
                     
                     bool have_filters = false;
-                    foreach (IFilterListModel model in source.FilterModels) {
-                        have_filters |= !model.Selection.AllSelected;
+                    foreach (IFilterListModel filter in source.CurrentFilters) {
+                        have_filters |= !filter.Selection.AllSelected;
                     }
                     
                     // Unless both artist/album selections are "all" (eg unfiltered), reload
@@ -277,11 +277,11 @@ namespace Banshee.Collection.Database
             qb.Append (UnfilteredQuery);
             
             if (with_filters) {
-                foreach (IFilterListModel model in source.FilterModels) {
-                    string filter = model.GetSqlFilter ();
-                    if (filter != null) {
+                foreach (IFilterListModel filter in source.CurrentFilters) {
+                    string filter_sql = filter.GetSqlFilter ();
+                    if (filter_sql != null) {
                         qb.Append (" AND ");
-                        qb.Append (filter);
+                        qb.Append (filter_sql);
                     }
                 }
             }

@@ -28,6 +28,7 @@
 //
 
 using System;
+using System.Text;
 using System.Collections.Generic;
 
 using Mono.Unix;
@@ -43,12 +44,15 @@ using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
 using Banshee.Collection.Database;
+using Banshee.Configuration;
 using Banshee.Query;
 
 namespace Banshee.Sources
 {
-    public abstract class DatabaseSource : Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator
+    public abstract class DatabaseSource : Source, ITrackModelSource, IFilterableSource, IDurationAggregator, IFileSizeAggregator
     {
+        public event EventHandler FiltersChanged;
+
         protected delegate void TrackRangeHandler (DatabaseTrackListModel model, RangeCollection.Range range);
 
         protected DatabaseTrackListModel track_model;
@@ -56,6 +60,13 @@ namespace Banshee.Sources
         protected DatabaseArtistListModel artist_model;
         
         private DatabaseQueryFilterModel<string> genre_model;
+        protected DatabaseQueryFilterModel<string> GenreModel {
+            get {
+                return genre_model ?? 
+                    genre_model = new Banshee.Collection.Database.DatabaseQueryFilterModel<string> (this, DatabaseTrackModel, ServiceManager.DbConnection,
+                        Catalog.GetString ("All Genres ({0})"), UniqueId, BansheeQuery.GenreField, "Genre");
+            }
+        }
 
         protected RateLimiter reload_limiter;
         
@@ -109,13 +120,20 @@ namespace Banshee.Sources
         private void DatabaseSourceInitialize ()
         {
             InitializeTrackModel ();
+            
+            current_filters_schema = CreateSchema<string[]> ("current_filters");
 
             if (HasArtistAlbum) {
-                genre_model = new Banshee.Collection.Database.DatabaseQueryFilterModel<string> (this, DatabaseTrackModel, ServiceManager.DbConnection,
-                    Catalog.GetString ("All Genres ({0})"), UniqueId, BansheeQuery.GenreField, "Genre");
-                
                 artist_model = new DatabaseArtistListModel (this, DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
                 album_model = new DatabaseAlbumListModel (this, DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
+                
+                AvailableFilters.Add (GenreModel);
+                AvailableFilters.Add (artist_model);
+                AvailableFilters.Add (album_model);
+                
+                DefaultFilters.Add (GenreModel);
+                DefaultFilters.Add (artist_model);
+                DefaultFilters.Add (album_model);
             }
 
             reload_limiter = new RateLimiter (RateLimitedReload);
@@ -227,19 +245,6 @@ namespace Banshee.Sources
             get { return DatabaseTrackModel; }
         }
         
-        public virtual IEnumerable<IFilterListModel> FilterModels {
-            get {
-                if (genre_model != null)
-                    yield return genre_model;
-
-                if (artist_model != null)
-                    yield return artist_model;
-                    
-                if (album_model != null)
-                    yield return album_model;
-            }
-        }
-        
         public virtual bool ShowBrowser { 
             get { return true; }
         }
@@ -254,6 +259,94 @@ namespace Banshee.Sources
         {
             return CanAddTracks && source != this;
         }
+
+#endregion
+        
+#region Filters (aka Browsers)
+        
+        private IList<IFilterListModel> available_filters;
+        public IList<IFilterListModel> AvailableFilters {
+            get { return available_filters ?? available_filters = new List<IFilterListModel> (); }
+            protected set { available_filters = value; }
+        }
+        
+        private IList<IFilterListModel> default_filters;
+        public IList<IFilterListModel> DefaultFilters {
+            get { return default_filters ?? default_filters = new List<IFilterListModel> (); }
+            protected set { default_filters = value; }
+        }
+        
+        private IList<IFilterListModel> current_filters;
+        public IList<IFilterListModel> CurrentFilters {
+            get {
+                if (current_filters == null) {
+                    current_filters = new List<IFilterListModel> ();
+                    string [] current = current_filters_schema.Get ();
+                    if (current != null) {
+                        foreach (string filter_name in current) {
+                            foreach (IFilterListModel filter in AvailableFilters) {
+                                if (filter.FilterName == filter_name) {
+                                    current_filters.Add (filter);
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        foreach (IFilterListModel filter in DefaultFilters) {
+                            current_filters.Add (filter);
+                        }
+                    }
+                }
+                return current_filters;
+            }
+            protected set { current_filters = value; }
+        }
+        
+        public void ReplaceFilter (IFilterListModel old_filter, IFilterListModel new_filter)
+        {
+            int i = current_filters.IndexOf (old_filter);
+            if (i != -1) {
+                current_filters[i] = new_filter;
+                SaveCurrentFilters ();
+            }
+        }
+        
+        public void AppendFilter (IFilterListModel filter)
+        {
+            if (current_filters.IndexOf (filter) == -1) {
+                current_filters.Add (filter);
+                SaveCurrentFilters ();
+            }
+        }
+        
+        public void RemoveFilter (IFilterListModel filter)
+        {
+            if (current_filters.Remove (filter)) {
+                SaveCurrentFilters ();
+            }
+        }
+        
+        private void SaveCurrentFilters ()
+        {
+            Reload ();
+            if (current_filters == null) {
+                current_filters_schema.Set (null);
+            } else {
+                string [] filters = new string [current_filters.Count];
+                int i = 0;
+                foreach (IFilterListModel filter in CurrentFilters) {
+                    filters[i++] = filter.FilterName;
+                }
+                current_filters_schema.Set (filters);
+            }
+            
+            EventHandler handler = FiltersChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+        
+        private SchemaEntry<string[]> current_filters_schema;
 
 #endregion
 
@@ -531,16 +624,10 @@ namespace Banshee.Sources
         protected void InvalidateCaches ()
         {
             track_model.InvalidateCache ();
-            
-            if (genre_model != null)
-                genre_model.InvalidateCache ();
-            
-            // TODO invalidate cache on all FilterModels
-            if (artist_model != null)
-                artist_model.InvalidateCache ();
 
-            if (album_model != null)
-                album_model.InvalidateCache ();
+            foreach (IFilterListModel filter in CurrentFilters) {
+                filter.InvalidateCache ();
+            }
         }
 
         protected virtual void PruneArtistsAlbums ()

@@ -231,6 +231,7 @@ namespace Banshee.Podcasting.Data
         
         protected override void ProviderSave ()
         {
+            MediaAttributes |= TrackMediaAttributes.Podcast;
             Provider.Save (this);
         }
         

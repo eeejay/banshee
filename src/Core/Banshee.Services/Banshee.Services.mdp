@@ -179,6 +179,7 @@
     <File name="Banshee.Collection.Database/DatabaseQueryFilterModel.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Database/FilterModelProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Database/QueryFilterInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Sources/IFilterableSource.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

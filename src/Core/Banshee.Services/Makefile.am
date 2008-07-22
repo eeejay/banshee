@@ -159,6 +159,7 @@ SOURCES =  \
 	Banshee.Sources/IDiskUsageReporter.cs \
 	Banshee.Sources/IDurationAggregator.cs \
 	Banshee.Sources/IFileSizeAggregator.cs \
+	Banshee.Sources/IFilterableSource.cs \
 	Banshee.Sources/IImportable.cs \
 	Banshee.Sources/ISource.cs \
 	Banshee.Sources/ISourceManager.cs \

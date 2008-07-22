@@ -58,10 +58,13 @@ namespace Banshee.Collection.Database
         
         protected readonly U select_all_item;
 
-        public DatabaseFilterListModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, HyenaSqliteConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid)
+        public DatabaseFilterListModel (string name, string label, Banshee.Sources.DatabaseSource source, 
+                                        DatabaseTrackListModel trackModel, HyenaSqliteConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid) 
             : base (trackModel)
         {
             this.source = source;
+            FilterName = name;
+            FilterLabel = label;
             select_all_item = selectAllItem;
             
             cache = new BansheeModelCache <T> (connection, uuid, this, provider);
@@ -102,7 +105,7 @@ namespace Banshee.Collection.Database
 
         private IEnumerable<IFilterListModel> UpstreamFilters {
             get {
-                foreach (IFilterListModel model in source.FilterModels) {
+                foreach (IFilterListModel model in source.CurrentFilters) {
                     if (this == model) {
                         break;
                     } else {
@@ -194,7 +197,7 @@ namespace Banshee.Collection.Database
             }
         }
 
-        public void InvalidateCache ()
+        public override void InvalidateCache ()
         {
             cache.ClearManagedCache ();
             OnReloaded ();

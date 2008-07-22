@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Mono.Unix;
 
@@ -35,6 +36,7 @@ using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 
 using Gtk;
 using Banshee.Gui;
@@ -67,7 +69,7 @@ namespace Banshee.AudioCd
             disc_model.MetadataQueryFinished += OnMetadataQueryFinished;
             disc_model.EnabledCountChanged += OnEnabledCountChanged;
             disc_model.LoadModelFromDisc ();
-            
+
             SetupGui ();
         }
         
@@ -80,10 +82,6 @@ namespace Banshee.AudioCd
                 AudioCdTrackInfo playing_track = ServiceManager.PlayerEngine.CurrentTrack as AudioCdTrackInfo;
                 return playing_track != null && playing_track.Model == disc_model;
             }
-        }
-        
-        public System.Collections.Generic.IEnumerable<Banshee.Collection.Database.IFilterListModel> FilterModels {
-            get { yield break; }
         }
         
         public void StopPlayingDisc ()

@@ -44,7 +44,7 @@ namespace Banshee.Podcasting.Gui
     public class PodcastFeedModel : DatabaseFilterListModel<Feed, Feed>
     {
         public PodcastFeedModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
-            : base (source, trackModel, connection, Feed.Provider, new Feed (null, FeedAutoDownload.None), uuid)
+            : base ("podcast", Catalog.GetString ("Podcast"), source, trackModel, connection, Feed.Provider, new Feed (null, FeedAutoDownload.None), uuid)
         {
             ReloadFragmentFormat = @"
                 FROM PodcastSyndications WHERE FeedID IN

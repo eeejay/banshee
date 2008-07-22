@@ -45,7 +45,7 @@ namespace Banshee.Collection.Database
 
         public DatabaseQueryFilterModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, 
             HyenaSqliteConnection connection, string select_all_fmt, string uuid, QueryField field, string filter_column)
-            : base (source, trackModel, connection, QueryFilterInfo<T>.CreateProvider (filter_column, field), new QueryFilterInfo<T> (), String.Format ("{0}-{1}", uuid, field.Name))
+            : base (field.Name, field.Label, source, trackModel, connection, QueryFilterInfo<T>.CreateProvider (filter_column, field), new QueryFilterInfo<T> (), String.Format ("{0}-{1}", uuid, field.Name))
         {
             this.field = field;
             this.select_all_fmt = select_all_fmt;

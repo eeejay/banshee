@@ -1,3 +1,63 @@
+2008-07-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This commit does the backend (non-UI) work to make filters (eg
+	artist/album/genre/etc browsers) on sources customizable.  All the UI work
+	still needs to be done - actually supporting showing an arbitrary number
+	and set of filters, and the UI, perhaps menus, to actually
+	add/remove/replace filters.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Since the FilterModels property was removed from the ITrackModelSource, no
+	longer need to implement it for sources that aren't filterable.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastSourceContents.cs:
+	Renamed FilterModels property to CurrentFilters.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Use the new AvailableFilters and DefaultFilters properties instead of just
+	overriding the FilterModels property.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseQueryFilterModel.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:
+	Pass a name and label to the filter ctor, so we can expose the label in a
+	menu later to make the filters customizable.
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	Make the changes necessary to display a genre browser, but keep it hidden
+	for now because the Composite widget is hard coded to show three filters,
+	even if a source only has one.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
+	Set the FilterName and Label from the new ctor args.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.mdp:
+	* src/Core/Banshee.Services/Banshee.Sources/IFilterableSource.cs: New
+	interface that exposes CurrentFilters property and a FiltersChanged event.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ITrackModelSource.cs: Remove
+	the FilterModels property (and comment cruft).
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Add a bunch
+	of methods for allowing customization of filters -
+	adding/removing/replacing them, and saving/loading to/from gconf.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add CreateSchema
+	convenience methods that given a name and a T give you a source-scoped
+	SchemaEntry.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Avoid NRE by
+	using a lazily-loaded property instead of its backing variable.
+
+	* src/Core/Banshee.Services/Banshee.Collection/IFilterListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/FilterListModel.cs: Add
+	InvalidateCache method.
+
 2008-07-21  Alexander Hixon  <ahixon@gnome.org>
 
 	* src/Libraries/Lastfm/Lastfm.Data/DataCore.cs: Make sure that we check

@@ -88,6 +88,10 @@ namespace Banshee.Collection
             get { return filter_label; }
             protected set { filter_label = value; }
         }
+        
+        public virtual void InvalidateCache ()
+        {
+        }
 
 #endregion
     }

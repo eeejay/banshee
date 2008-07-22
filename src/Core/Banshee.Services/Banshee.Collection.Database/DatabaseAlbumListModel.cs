@@ -43,7 +43,8 @@ namespace Banshee.Collection.Database
     public class DatabaseAlbumListModel : DatabaseFilterListModel<DatabaseAlbumInfo, AlbumInfo>
     {
         public DatabaseAlbumListModel ( Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
-            : base (source, trackModel, connection, DatabaseAlbumInfo.Provider, new AlbumInfo (null), uuid)
+            : base (Banshee.Query.BansheeQuery.AlbumField.Name, Banshee.Query.BansheeQuery.AlbumField.Label,
+                    source, trackModel, connection, DatabaseAlbumInfo.Provider, new AlbumInfo (null), uuid)
         {
             ReloadFragmentFormat = @"
                 FROM CoreAlbums WHERE CoreAlbums.AlbumID IN

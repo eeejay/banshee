@@ -1,10 +1,10 @@
 //
-// ITrackModelSource.cs
+// IFilterableSource.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -35,21 +35,9 @@ using Banshee.Collection;
 
 namespace Banshee.Sources
 {
-    public interface ITrackModelSource : ISource
+    public interface IFilterableSource : ISource
     {
-        TrackListModel TrackModel { get; }
-
-        void Reload ();
-        bool HasDependencies { get; }
-
-        void RemoveSelectedTracks ();
-        void DeleteSelectedTracks ();
-
-        bool CanAddTracks { get; }
-        bool CanRemoveTracks { get; }
-        bool CanDeleteTracks { get; }
-        bool ConfirmRemoveTracks { get; }
-        
-        bool ShowBrowser { get; }
+        event EventHandler FiltersChanged;
+        IList<Banshee.Collection.Database.IFilterListModel> CurrentFilters { get; }
     }
 }
