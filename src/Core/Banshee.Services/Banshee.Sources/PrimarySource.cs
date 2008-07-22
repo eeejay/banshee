@@ -161,6 +161,18 @@ namespace Banshee.Sources
         {
             return (primary_sources.ContainsKey (id)) ? primary_sources[id] : null;
         }
+        
+        public virtual SafeUri UriToSafeUri (string uri_field)
+        {
+            if (String.IsNullOrEmpty (uri_field)) {
+                return null;
+            }
+            
+            return UriAndTypeToSafeUri (
+                uri_field[0] == System.IO.Path.DirectorySeparatorChar ? TrackUriType.AbsolutePath : TrackUriType.RelativePath,
+                uri_field
+            );
+        }
 
         public virtual SafeUri UriAndTypeToSafeUri (TrackUriType type, string uri_field)
         {

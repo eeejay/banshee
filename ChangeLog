@@ -1,5 +1,16 @@
 2008-07-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add a
+	UriToSafeUri method that checks to see if the uri is relative and does the
+	right thing.
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Set the
+	Uri on the track object we pass to the metadata provider, fixes bug where
+	the cover art extension wasn't able to use the new cover-art-in-folder
+	lookup provider (BGO #544226).
+
+2008-07-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
 	Optimize the loop that checks to see if a click happened on a column's
 	resize area.  Add some comments.

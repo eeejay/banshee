@@ -75,8 +75,8 @@ namespace Banshee.CoverArt
         ));
 
         private static HyenaSqliteCommand select_query = new HyenaSqliteCommand (String.Format (query,
-            "DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name",
-            "LIMIT ?"
+            "DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri",
+            "GROUP BY CoreAlbums.AlbumID LIMIT ?"
         ));
         
         public CoverArtJob (DateTime lastScan) : base (Catalog.GetString ("Downloading Cover Art"))
@@ -131,7 +131,10 @@ namespace Banshee.CoverArt
                             
                             track.AlbumTitle = reader.GetString (1);
                             track.ArtistName = reader.GetString (2);
+                            track.PrimarySource = ServiceManager.SourceManager.MusicLibrary;
+                            track.Uri = track.PrimarySource.UriToSafeUri (reader.GetString (3));
                             track.AlbumId = Convert.ToInt32 (reader[0]);
+                            //Console.WriteLine ("have album {0}/{1} for track uri {2}", track.AlbumId, track.AlbumTitle, track.Uri);
 
                             Progress = (double) current / (double) total;
                             Status = String.Format (Catalog.GetString ("{0} - {1}"), track.ArtistName, track.AlbumTitle);
