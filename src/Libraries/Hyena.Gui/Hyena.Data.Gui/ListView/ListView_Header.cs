@@ -91,6 +91,7 @@ namespace Hyena.Data.Gui
                     continue;
                 }
                 
+                // If we don't already have a MinWidth set, use the width of our Title text
                 if (column.MinWidth == 0) {
                     int w;
                     int h;
@@ -129,6 +130,7 @@ namespace Hyena.Data.Gui
             }
             
             for (int i = 0; i < column_cache.Length; i++) {
+                // Calculate this column's proportional share of the width, and set positions (X1/X2)
                 column_cache[i].Width = (int)Math.Round (((double)header_width * column_cache[i].Column.Width));
                 column_cache[i].X1 = i == 0 ? 0 : column_cache[i - 1].X2;
                 column_cache[i].X2 = column_cache[i].X1 + column_cache[i].Width;
@@ -332,8 +334,10 @@ namespace Hyena.Data.Gui
             x += HadjustmentValue;
             
             for (int i = 0; i < column_cache.Length - 1; i++) {
-                if (x >= column_cache[i].ResizeX1 - 2 && 
-                    x <= column_cache[i].ResizeX2 + 2 &&
+                if (x < column_cache[i].ResizeX1 - 2) {
+                    // No point in checking other columns since their ResizeX1 are even larger
+                    break;
+                } else if (x <= column_cache[i].ResizeX2 + 2 &&
                     column_cache[i].Column.MaxWidth != column_cache[i].Column.MinWidth) {
                     return column_cache[i].Column;
                 }

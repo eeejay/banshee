@@ -1,5 +1,11 @@
 2008-07-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Optimize the loop that checks to see if a click happened on a column's
+	resize area.  Add some comments.
+
+2008-07-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
 	Fix glitch where the resize cursor would flash away when you actually
 	pressed the mouse button, but then come back when you started moving.
