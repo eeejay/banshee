@@ -1,3 +1,16 @@
+2008-07-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkWorkarounds.cs: Work around a nasty
+	little bug in GDK and subsequently Gdk# (2.8.5 through 2.12.1) where
+	managed Gdk.Window.Destroy function does not obtain a normal (non-toggle)
+	reference on the GdkWindow before calling gdk_window_destroy on it,
+	which the native function apparently expects. This work around ensures
+	that GdkWindows will be properly destroyed regardless of the Gdk# 
+	version in use
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Use GtkWorkarounds.WindowDestroy
+
 2008-07-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add a

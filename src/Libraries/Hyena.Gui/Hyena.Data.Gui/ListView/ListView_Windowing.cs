@@ -89,7 +89,7 @@ namespace Hyena.Data.Gui
             WidgetFlags &= ~WidgetFlags.Realized;
             
             event_window.UserData = IntPtr.Zero;
-            event_window.Destroy ();
+            Hyena.Gui.GtkWorkarounds.WindowDestroy (event_window);
             event_window = null;
             
             base.OnUnrealized ();
