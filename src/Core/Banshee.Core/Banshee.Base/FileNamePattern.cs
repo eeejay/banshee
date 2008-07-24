@@ -245,11 +245,9 @@ namespace Banshee.Base
             }
             
             string songpath = CreateFromTrackInfo (track) + ext;
-            string dir = Path.GetFullPath (Paths.LibraryLocation + 
-                Path.DirectorySeparatorChar + 
-                Path.GetDirectoryName (songpath));
-            string filename = dir + Path.DirectorySeparatorChar + 
-                Path.GetFileName (songpath);
+            string dir = Path.GetFullPath (Path.Combine (Paths.LibraryLocation, 
+                Path.GetDirectoryName (songpath)));
+            string filename = Path.Combine (dir, Path.GetFileName (songpath));
                 
             if (!Banshee.IO.Directory.Exists (dir)) {
                 Banshee.IO.Directory.Create (dir);

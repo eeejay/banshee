@@ -1,3 +1,10 @@
+2008-07-24  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs: Replace string 
+	concatenations with Path.Combine calls, and get rid of useless Substring
+	call (BGO #544427).
+
 2008-07-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkWorkarounds.cs: Work around a nasty

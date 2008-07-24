@@ -514,7 +514,7 @@ namespace Banshee.Collection.Database
             bool in_library = old_uri.AbsolutePath.StartsWith (Paths.CachedLibraryLocation);
 
             if (!in_library && (LibrarySchema.CopyOnImport.Get () || force_copy)) {
-                string new_filename = FileNamePattern.BuildFull (this, Path.GetExtension (old_uri.ToString ()).Substring (1));
+                string new_filename = FileNamePattern.BuildFull (this, Path.GetExtension (old_uri.ToString ()));
                 SafeUri new_uri = new SafeUri (new_filename);
 
                 try {
