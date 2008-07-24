@@ -86,12 +86,16 @@ namespace Banshee.Sources.Gui
         {
             this.name = name;
             InitializeViews ();
-        
-            string position = BrowserPosition.Get ();
+            
+            string position = ForcePosition == null ? BrowserPosition.Get () : ForcePosition;
             if (position == "top") {
                 LayoutTop ();
             } else {
                 LayoutLeft ();
+            }
+            
+            if (ForcePosition != null) {
+                return;
             }
             
             if (ServiceManager.Contains ("InterfaceActionService")) {
@@ -262,7 +266,7 @@ namespace Banshee.Sources.Gui
             NoShowAll = false;
             ShowAll ();
             NoShowAll = true;
-            browser_container.Visible = BrowserVisible.Get ();
+            browser_container.Visible = ForcePosition != null || BrowserVisible.Get ();
         }
         
         private void OnViewModeChanged (object o, ChangedArgs args)
@@ -338,6 +342,10 @@ namespace Banshee.Sources.Gui
                     return (ListView<T>) view;
 
             return null;
+        }
+        
+        protected virtual string ForcePosition {
+            get { return null; }
         }
 
         protected abstract bool ActiveSourceCanHasBrowser { get; }

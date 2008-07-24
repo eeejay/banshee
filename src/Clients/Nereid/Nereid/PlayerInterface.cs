@@ -342,8 +342,14 @@ namespace Nereid
             }
             
             // Connect the source models to the views if possible
-            if (source.Properties.Contains ("Nereid.SourceContents")) {
-                view_container.Content = source.Properties.Get<ISourceContents> ("Nereid.SourceContents");
+            ISourceContents contents = source.GetInheritedProperty<bool> ("Nereid.SourceContentsPropagate")
+                ? source.GetInheritedProperty<ISourceContents> ("Nereid.SourceContents")
+                : source.Properties.Get<ISourceContents> ("Nereid.SourceContents");
+            
+            if (contents != null) {
+                if (view_container.Content != contents) {
+                    view_container.Content = contents;
+                }
                 view_container.Content.SetSource (source);
                 view_container.Show ();
             } else if (source is ITrackModelSource) {
@@ -366,8 +372,6 @@ namespace Nereid
             if (view_container.Visible && view_container.Content is ITrackModelSourceContents) {
                 ITrackModelSourceContents track_content = view_container.Content as ITrackModelSourceContents;
                 source.Properties.Set<IListView<TrackInfo>>  ("Track.IListView", track_content.TrackView);
-                source.Properties.Set<IListView<ArtistInfo>> ("Artist.IListView", track_content.ArtistView);
-                source.Properties.Set<IListView<AlbumInfo>>  ("Album.IListView", track_content.AlbumView);
             }
 
             view_container.Header.Visible = source.Properties.Contains ("Nereid.SourceContents.HeaderVisible") ?

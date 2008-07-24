@@ -51,6 +51,7 @@ namespace Banshee.InternetRadio
             get { return "internet-radio"; }
         }
         
+        private InternetRadioSourceContents source_contents;
         private uint ui_id;
         
         public InternetRadioSource () : base (Catalog.GetString ("Radio"), Catalog.GetString ("Radio"), "internet-radio", 220)
@@ -73,6 +74,10 @@ namespace Banshee.InternetRadio
             
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/InternetRadioContextMenu");
+            
+            source_contents = new InternetRadioSourceContents ();
+            Properties.Set<bool> ("Nereid.SourceContentsPropagate", true);
+            Properties.Set<ISourceContents> ("Nereid.SourceContents", source_contents);
             
             Properties.SetString ("TrackPropertiesActionLabel", Catalog.GetString ("Edit Station"));
             Properties.Set<InvokeHandler> ("TrackPropertiesActionHandler", delegate {
@@ -100,13 +105,16 @@ namespace Banshee.InternetRadio
                     <visible>false</visible>
                   </column>
                   <add-default column=""TitleColumn"" />
+                  <column modify-default=""TitleColumn"">
+                    <title>{0}</title>
+                  </column>
                   <add-default column=""ArtistColumn"" />
                   <column modify-default=""ArtistColumn"">
-                    <title>{0}</title>
+                    <title>{1}</title>
                   </column>
                   <add-default column=""CommentColumn"" />
                   <column modify-default=""CommentColumn"">
-                    <title>{1}</title>
+                    <title>{2}</title>
                   </column>
                   <add-default column=""RatingColumn"" />
                   <add-default column=""PlayCountColumn"" />
@@ -116,6 +124,7 @@ namespace Banshee.InternetRadio
                   <add-default column=""UriColumn"" />
                   <sort-column direction=""asc"">genre</sort-column>
                 </column-controller>",
+                Catalog.GetString ("Station"),
                 Catalog.GetString ("Creator"),
                 Catalog.GetString ("Description")
             ));
@@ -244,9 +253,8 @@ namespace Banshee.InternetRadio
             get { return false; }
         }
 
-        // TODO change this to true once the Composite widget is made to work w/ variable number/type of filters
         public override bool ShowBrowser {
-            get { return false; }
+            get { return true; }
         }
         
         public override bool CanRename {

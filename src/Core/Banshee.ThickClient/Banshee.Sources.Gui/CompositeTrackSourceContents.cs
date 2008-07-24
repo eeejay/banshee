@@ -50,7 +50,7 @@ namespace Banshee.Sources.Gui
 {
     public class CompositeTrackSourceContents : FilteredListSourceContents, ITrackModelSourceContents
     {
-        private QueryFilterView<string> genre_view;
+        // private QueryFilterView<string> genre_view;
         private ArtistListView artist_view;
         private AlbumListView album_view;
         private TrackListView track_view;
@@ -62,19 +62,21 @@ namespace Banshee.Sources.Gui
         protected override void InitializeViews ()
         {
             SetupMainView (track_view = new TrackListView ());
-            SetupFilterView (genre_view = new QueryFilterView<string> (Catalog.GetString ("Not Set")));
+            // SetupFilterView (genre_view = new QueryFilterView<string> (Catalog.GetString ("Not Set")));
             SetupFilterView (artist_view = new ArtistListView ());
             SetupFilterView (album_view = new AlbumListView ());
         }
         
         protected override void ClearFilterSelections ()
         {
-            if (genre_view.Model != null) {
-                genre_view.Selection.Clear ();
-            }
+            // if (genre_view.Model != null) {
+            //     genre_view.Selection.Clear ();
+            // }
+            
             if (artist_view.Model != null) {
                 artist_view.Selection.Clear ();
             }
+            
             if (album_view.Model != null) {
                 album_view.Selection.Clear ();
             }
@@ -85,43 +87,19 @@ namespace Banshee.Sources.Gui
             SetModel (track);
             SetModel (artist);
             SetModel (album);
-            SetModel (genre);
+            // SetModel (genre);
         }
         
         IListView<TrackInfo> ITrackModelSourceContents.TrackView {
             get { return track_view; }
         }
-        
-        IListView<ArtistInfo> ITrackModelSourceContents.ArtistView {
-            get { return artist_view; }
-        }
-        
-        IListView<AlbumInfo> ITrackModelSourceContents.AlbumView {
-            get { return album_view; }
-        }
 
         public TrackListView TrackView {
             get { return track_view; }
         }
-        
-        public ArtistListView ArtistView {
-            get { return artist_view; }
-        }
-        
-        public AlbumListView AlbumView {
-            get { return album_view; }
-        }
-        
+
         public TrackListModel TrackModel {
             get { return (TrackListModel)track_view.Model; }
-        }
-        
-        public ArtistListModel ArtistModel {
-            get { return (ArtistListModel)artist_view.Model; }
-        }
-
-        public AlbumListModel AlbumModel {
-            get { return (AlbumListModel)album_view.Model; }
         }
 
         protected override bool ActiveSourceCanHasBrowser {
@@ -154,10 +132,10 @@ namespace Banshee.Sources.Gui
                         SetModel (artist_view, (model as IListModel<ArtistInfo>));
                     else if (model is IListModel<AlbumInfo>)
                         SetModel (album_view, (model as IListModel<AlbumInfo>));
-                    else if (model is IListModel<QueryFilterInfo<string>>)
-                        SetModel (genre_view, (model as IListModel<QueryFilterInfo<string>>));
-                    else
-                        Hyena.Log.DebugFormat ("CompositeTrackSourceContents got non-album/artist filter model: {0}", model);
+                    // else if (model is IListModel<QueryFilterInfo<string>>)
+                    //    SetModel (genre_view, (model as IListModel<QueryFilterInfo<string>>));
+                    // else
+                    //    Hyena.Log.DebugFormat ("CompositeTrackSourceContents got non-album/artist filter model: {0}", model);
                 }
             }
             
@@ -171,7 +149,7 @@ namespace Banshee.Sources.Gui
             track_view.SetModel (null);
             artist_view.SetModel (null);
             album_view.SetModel (null);
-            genre_view.SetModel (null);
+            // genre_view.SetModel (null);
             track_view.HeaderVisible = false;
         }
 

@@ -38,7 +38,5 @@ namespace Banshee.Sources.Gui
     public interface ITrackModelSourceContents : ISourceContents
     {
         IListView<TrackInfo> TrackView { get; }
-        IListView<ArtistInfo> ArtistView { get; }
-        IListView<AlbumInfo> AlbumView { get; }
     }
 }
