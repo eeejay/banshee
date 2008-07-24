@@ -1,4 +1,4 @@
-<Project name="Hyena.Gui" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Hyena.Gui" fileversion="2.0" language="C#" UseParentDirectoryAsNamespace="True" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assembly="Hyena.Gui" />
@@ -83,6 +83,7 @@
     <File name="Hyena.Widgets/ComplexMenuItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Gui/RatingRenderer.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Data.Gui/ListView/ListViewBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Gui/GtkWorkarounds.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

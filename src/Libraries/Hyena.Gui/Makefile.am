@@ -43,6 +43,7 @@ SOURCES =  \
 	Hyena.Gui/EntryInsertAction.cs \
 	Hyena.Gui/EntryUndoAdapter.cs \
 	Hyena.Gui/GtkUtilities.cs \
+	Hyena.Gui/GtkWorkarounds.cs \
 	Hyena.Gui/PangoCairoHelper.cs \
 	Hyena.Gui/RatingRenderer.cs \
 	Hyena.Gui/ShadingTestWindow.cs \
