@@ -1,5 +1,12 @@
 2008-07-24  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fix the 
+	comparison between the field column and the current sort column, so that
+	"CoreTracks.skippedcount" doesn't match "Track". Makes BGO #544415 less
+	likely to happen, but doesn't fix it.
+
+2008-07-24  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs: Replace string 
 	concatenations with Path.Combine calls, and get rid of useless Substring
