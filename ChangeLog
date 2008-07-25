@@ -1,3 +1,9 @@
+2008-07-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Fix
+	major performance issue I introduced within the last week.  With this and
+	snorp and my earlier commits, BGO #541469 is fixed.
+
 2008-07-25  James Willcox  <snorp@snorp.net>
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:

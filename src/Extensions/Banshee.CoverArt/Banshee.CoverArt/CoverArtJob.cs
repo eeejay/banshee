@@ -76,7 +76,7 @@ namespace Banshee.CoverArt
 
         private static HyenaSqliteCommand select_query = new HyenaSqliteCommand (String.Format (query,
             "DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri",
-            "GROUP BY CoreAlbums.AlbumID LIMIT ?"
+            "GROUP BY CoreTracks.AlbumID LIMIT ?"
         ));
         
         public CoverArtJob (DateTime lastScan) : base (Catalog.GetString ("Downloading Cover Art"))
