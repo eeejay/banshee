@@ -13,7 +13,7 @@ $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY): GConfSchemaExtractor.cs
 
 $(TRANSLATOR_EXTRACTOR_ASSEMBLY): TranslatorExtractor.cs
 	if [ "x$(top_srcdir)" = "x$(top_builddir)" ]; then \
-		$(MCS) -out:$@ $< && $(MONO) $@ $(top_builddir)/po > \
+		$(MCS) -out:$@ $< && LC_ALL=en_US.utf8 $(MONO) $@ $(top_builddir)/po > \
 			$(top_srcdir)/src/Core/Banshee.Core/Resources/translators.xml; \
 	fi;
 
