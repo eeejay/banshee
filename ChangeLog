@@ -1,3 +1,10 @@
+2008-07-25  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:
+	Prevent crash when switching to mini-mode in a paused state; ensure stream
+	position label's layout is rebuilt when the theme changes to account for
+	any potential font size change (BGO #541102)
+
 2008-07-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Fix

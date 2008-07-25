@@ -47,13 +47,11 @@ namespace Banshee.Widgets
             
             this.seekRange = seekRange;
             this.seekRange.ValueChanged += OnSliderUpdated;
-            
         }
         
         protected override void OnRealized ()
         {
             base.OnRealized ();
-            
             BuildLayouts ();
             UpdateLabel ();
         }
@@ -67,6 +65,20 @@ namespace Banshee.Widgets
             layout = new Pango.Layout (PangoContext);
             layout.FontDescription = PangoContext.FontDescription.Copy ();
             layout.Ellipsize = Pango.EllipsizeMode.None;
+        }
+        
+        private bool first_style_set = false;
+        
+        protected override void OnStyleSet (Style old_style)
+        {
+            base.OnStyleSet (old_style);
+            
+            if (first_style_set) {
+                BuildLayouts ();
+                UpdateLabel ();
+            }
+            
+            first_style_set = true;
         }
         
         protected override void OnSizeRequested (ref Gtk.Requisition requisition)
@@ -130,6 +142,10 @@ namespace Banshee.Widgets
 
         private void UpdateLabel ()
         {
+            if (!IsRealized || layout == null) {
+                return;
+            }
+            
             if (is_buffering) {
                 double progress = buffering_progress * 100.0;
                 UpdateLabel (String.Format ("{0}: {1}%", Catalog.GetString("Buffering"), progress.ToString ("0.0")));
@@ -147,6 +163,10 @@ namespace Banshee.Widgets
         
         private void UpdateLabel (string text)
         {
+            if (!IsRealized || layout == null) {
+                return;
+            }
+            
             layout.SetMarkup (String.Format (format_string, GLib.Markup.EscapeText (text)));
             QueueResize ();
         }
