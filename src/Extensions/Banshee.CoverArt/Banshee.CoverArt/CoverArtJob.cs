@@ -96,7 +96,7 @@ namespace Banshee.CoverArt
         public void Start ()
         {
             Register ();
-            Scheduler.Schedule (this);
+            Scheduler.Schedule (this, JobPriority.Lowest);
         }
 
         private IDataReader RunQuery ()

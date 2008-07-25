@@ -1,3 +1,8 @@
+2008-07-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
+	Schedule the cover art lookup job w/ the lowest priority.
+
 2008-07-25  Aaron Bockover  <abock@gnome.org>
 
 	* build/Makefile.am: Patch from Bertrand Lorentz to force UTF-8 local
