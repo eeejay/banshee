@@ -173,7 +173,7 @@ namespace Banshee.CoverArt
         
         private void OnFetchCoverArt (object o, EventArgs args)
         {
-            FetchCoverArt ();
+            FetchCoverArt (true);
         }
         
         private void OnTracksAdded (Source sender, TrackEventArgs args)

@@ -1,3 +1,9 @@
+2008-07-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
+	When the update cover art action is triggered, force refresh of cover art
+	even for albums we've checked within the last N days.
+
 2008-07-25  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:
