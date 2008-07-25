@@ -59,12 +59,12 @@ namespace Banshee.CoverArt
 
         private static string query = @"
                 SELECT {0}
-                FROM CoreAlbums, CoreArtists, CoreTracks
+                FROM CoreTracks, CoreAlbums, CoreArtists
                 WHERE
-                    CoreAlbums.ArtistID = CoreArtists.ArtistID AND
-                    CoreTracks.AlbumID = CoreAlbums.AlbumID AND
-                    CoreTracks.DateUpdatedStamp > ? AND
                     CoreTracks.PrimarySourceID = ? AND
+                    CoreTracks.DateUpdatedStamp > ? AND
+                    CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
+                    CoreAlbums.ArtistID = CoreArtists.ArtistID AND
                     CoreTracks.AlbumID NOT IN (
                         SELECT AlbumID FROM CoverArtDownloads WHERE
                             LastAttempt > ? OR Downloaded = 1)
@@ -102,7 +102,7 @@ namespace Banshee.CoverArt
         private IDataReader RunQuery ()
         {
             return ServiceManager.DbConnection.Query (select_query,
-                last_scan, ServiceManager.SourceManager.MusicLibrary.DbId, last_scan - retry_every, BatchSize
+                ServiceManager.SourceManager.MusicLibrary.DbId, last_scan, last_scan - retry_every, BatchSize
             );
         }
         
@@ -117,7 +117,7 @@ namespace Banshee.CoverArt
             try {
                 DatabaseTrackInfo track = new DatabaseTrackInfo ();
                 while (true) {
-                    total = current + ServiceManager.DbConnection.Query<int> (count_query, last_scan, ServiceManager.SourceManager.MusicLibrary.DbId, last_scan - retry_every);
+                    total = current + ServiceManager.DbConnection.Query<int> (count_query, ServiceManager.SourceManager.MusicLibrary.DbId, last_scan, last_scan - retry_every);
                     if (total == 0 || total <= current) {
                         break;
                     }

@@ -1,5 +1,11 @@
 2008-07-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Ok,
+	last fix for Cover Art, I swear.  Thought I'd fixed all the sql issues in
+	the last commit, but hadn't - this one should really fix BGO #541469.
+
+2008-07-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
 	When the update cover art action is triggered, force refresh of cover art
 	even for albums we've checked within the last N days.
