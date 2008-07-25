@@ -183,7 +183,17 @@ namespace Banshee.CoverArt
         
         private void OnTracksChanged (Source sender, TrackEventArgs args)
         {
-            FetchCoverArt ();
+            if (args.ChangedFields == null) {
+                FetchCoverArt ();
+            } else {
+                foreach (Hyena.Query.QueryField field in args.ChangedFields) {
+                    if (field == Banshee.Query.BansheeQuery.AlbumField ||
+                        field == Banshee.Query.BansheeQuery.ArtistField) {
+                        FetchCoverArt ();
+                        break;
+                    }
+                }
+            }
         }
     
         string IService.ServiceName {

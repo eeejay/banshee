@@ -1,3 +1,9 @@
+2008-07-25  James Willcox  <snorp@snorp.net>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
+	Properly respond to TrackChanged events, and only fetch cover art
+	if something changed that we care about.
+
 2008-07-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
