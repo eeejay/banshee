@@ -1,8 +1,8 @@
 dnl Automake setup
 
-AC_INIT([banshee-1], [1.0.1]) 
-ASM_DISPLAY_VERSION="1.0.1"
-DEVEL_BUILD=yes
+AC_INIT([banshee-1], [1.2.0]) 
+ASM_DISPLAY_VERSION="1.2"
+DEVEL_BUILD=no
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
