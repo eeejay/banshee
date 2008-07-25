@@ -40,6 +40,7 @@ namespace Hyena.Widgets
         
         public WrapLabel ()
         {
+            WidgetFlags |= WidgetFlags.NoWindow;
         }
         
         private void CreateLayout ()
@@ -78,15 +79,8 @@ namespace Hyena.Widgets
         
         protected override void OnRealized ()
         {
-            WidgetFlags |= WidgetFlags.NoWindow;
             GdkWindow = Parent.GdkWindow;
             base.OnRealized ();
-        }
-        
-        protected override void OnUnrealized ()
-        {
-            WidgetFlags &= ~WidgetFlags.NoWindow;
-            base.OnUnrealized ();
         }
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
@@ -103,13 +97,11 @@ namespace Hyena.Widgets
 
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
-            if (evnt.Window != GdkWindow) {
-                return base.OnExposeEvent (evnt);
+            if (evnt.Window == GdkWindow) {
+                Gtk.Style.PaintLayout (Style, GdkWindow, State, false, 
+                    evnt.Area, this, null, Allocation.X, Allocation.Y, layout);
             }
-            
-            Gtk.Style.PaintLayout (Style, GdkWindow, State, false, evnt.Area, 
-                this, null, Allocation.X, Allocation.Y, layout);
-            
+
             return true;
         }
         
