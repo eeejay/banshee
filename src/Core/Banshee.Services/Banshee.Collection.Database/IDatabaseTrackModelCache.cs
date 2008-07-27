@@ -36,7 +36,6 @@ namespace Banshee.Collection.Database
     public interface IDatabaseTrackModelCache
     {
         void Clear ();
-        void ClearManagedCache ();
         void SaveSelection ();
         void UpdateAggregates ();
         void RestoreSelection ();

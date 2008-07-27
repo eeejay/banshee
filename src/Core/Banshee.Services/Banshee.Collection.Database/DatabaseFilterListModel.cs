@@ -199,7 +199,7 @@ namespace Banshee.Collection.Database
 
         public override void InvalidateCache ()
         {
-            cache.ClearManagedCache ();
+            cache.Clear ();
             OnReloaded ();
         }
         

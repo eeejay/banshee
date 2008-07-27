@@ -1,5 +1,18 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseTrackModelCache.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs:
+	Remove ClearManagedCache method, was redundant w/ Clear method.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: When the
+	source is Deactivated, call InvalidateCache on the Track model and all
+	filter models.  This should help prevent Banshee from using more and more
+	RAM as you switch sources and scroll through lists.
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
 	When a Uri list is dropped onto a source, import the uris into the
 	library.

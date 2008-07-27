@@ -567,6 +567,14 @@ namespace Banshee.Sources
             if (!ever_reloaded)
                 Reload ();
         }
+        
+        public override void Deactivate ()
+        {
+            DatabaseTrackModel.InvalidateCache ();
+            foreach (IFilterListModel filter in AvailableFilters) {
+                filter.InvalidateCache ();
+            }
+        }
 
         protected virtual void RemoveTrackRange (DatabaseTrackListModel model, RangeCollection.Range range)
         {
