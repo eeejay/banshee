@@ -356,6 +356,16 @@ namespace Banshee.Gui
                 UpdateAction ("NewSmartPlaylistAction", primary_source != null && primary_source.SupportsPlaylists, true, source);
                 /*UpdateAction ("NewSmartPlaylistFromSearchAction", (source is LibrarySource || source.Parent is LibrarySource),
                         !String.IsNullOrEmpty (source.FilterQuery), source);*/
+                    
+                ActionGroup browser_actions = Actions.FindActionGroup ("BrowserView");
+                if (browser_actions != null) {
+                    IFilterableSource filterable_source = source as IFilterableSource;
+                    bool has_browser = filterable_source != null && filterable_source.AvailableFilters.Count > 0;
+                    UpdateAction (browser_actions["BrowserTopAction"], has_browser);
+                    UpdateAction (browser_actions["BrowserLeftAction"], has_browser);
+                    UpdateAction (browser_actions["BrowserVisibleAction"], has_browser);
+                }
+
                 last_source = source;
             }
             

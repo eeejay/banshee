@@ -94,8 +94,7 @@ namespace Banshee.Gui
         public void UpdateAction (string action_name, bool visible, bool sensitive, Source source)
         {
             Gtk.Action action = this[action_name];
-            action.Visible = visible;
-            action.Sensitive = visible && sensitive;
+            UpdateAction (action, visible, sensitive);
 
             if (source != null && action.Visible) {
                 // Save the original label
@@ -118,6 +117,17 @@ namespace Banshee.Gui
                     action.IconName = icon;
                 }
             }
+        }
+        
+        public static void UpdateAction (Gtk.Action action, bool visible_and_sensitive)
+        {
+            UpdateAction (action, visible_and_sensitive, visible_and_sensitive);
+        }
+        
+        public static void UpdateAction (Gtk.Action action, bool visible, bool sensitive)
+        {
+            action.Visible = visible;
+            action.Sensitive = visible && sensitive;
         }
         
         protected void ShowContextMenu (string menu_name)

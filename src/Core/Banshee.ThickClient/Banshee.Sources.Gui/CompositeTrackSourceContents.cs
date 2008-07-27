@@ -118,7 +118,7 @@ namespace Banshee.Sources.Gui
         {
             ITrackModelSource track_source = source as ITrackModelSource;
             IFilterableSource filterable_source = source as IFilterableSource;
-            if (track_source == null || filterable_source == null) {
+            if (track_source == null) {
                 return false;
             }
             
@@ -126,7 +126,7 @@ namespace Banshee.Sources.Gui
             
             SetModel (track_view, track_source.TrackModel);
             
-            if (filterable_source.CurrentFilters != null) {
+            if (filterable_source != null && filterable_source.CurrentFilters != null) {
                 foreach (IListModel model in filterable_source.CurrentFilters) {
                     if (model is IListModel<ArtistInfo>)
                         SetModel (artist_view, (model as IListModel<ArtistInfo>));

@@ -57,6 +57,10 @@ namespace Banshee.Library
         public override bool ShowBrowser {
             get { return false; }
         }
+        
+        protected override bool HasArtistAlbum {
+            get { return false; }
+        }
 
         public override IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {
             get { return default_smart_playlists; }

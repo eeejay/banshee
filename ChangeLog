@@ -1,5 +1,25 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Add
+	static UpdateAction convenience methods that set the
+	visiblity/sensitivity of actions.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Hide the
+	browser-related actions when the source doesn't have any filters.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	Fix issue with not allowing sources that didn't implement
+	IFilterableSource to be used by this view.  Patch also created by Bertrand
+	Lorentz (BGO #544989).
+
+	* src/Core/Banshee.Services/Banshee.Sources/IFilterableSource.cs: Add
+	AvailableFilters getter to the interface.
+
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:
+	Override HasArtistAlbum to false.
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/IDatabaseTrackModelCache.cs:

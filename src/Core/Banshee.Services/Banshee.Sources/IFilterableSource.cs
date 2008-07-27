@@ -39,5 +39,6 @@ namespace Banshee.Sources
     {
         event EventHandler FiltersChanged;
         IList<Banshee.Collection.Database.IFilterListModel> CurrentFilters { get; }
+        IList<Banshee.Collection.Database.IFilterListModel> AvailableFilters { get; }
     }
 }
