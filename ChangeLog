@@ -1,5 +1,11 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Fix the regression where the New Playlist wouldn't appear in the sources
+	list when you were drag and dropping some tracks.
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/ScreensaverManager.cs:
 	Keep track of whether the screensaver is already inhibited.  Implement
 	IDisposable and uninhibit when Disposed.

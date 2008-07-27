@@ -94,11 +94,7 @@ namespace Banshee.Sources.Gui
             else if ((Allocation.Height - y) < 20)
                 Vadjustment.Value += 30;
 
-            if (parent_source != null && parent_source.AcceptsInputFromSource (active_source)) {
-                ShowNewPlaylistUnder (parent_source, active_source);
-            } else if (drop_source != NewPlaylistSource) {
-                HideNewPlaylistRow ();
-            }
+            ShowNewPlaylistUnder (parent_source, active_source);
 
             if (!drop_source.AcceptsInputFromSource (active_source)) {
                 Gdk.Drag.Status (context, 0, time);
@@ -122,6 +118,10 @@ namespace Banshee.Sources.Gui
                     return;
                 else
                     HideNewPlaylistRow ();
+            }
+            
+            if (parent == null || active == null) {
+                return;
             }
 
             NewPlaylistSource.SetParentSource (parent);
