@@ -54,9 +54,10 @@ namespace Banshee.Gui.DragDrop
             return SplitSelectionData(SelectionDataToString(data));
         }
 
+        private static string [] newline = new string [] { "\r\n" };
         public static string [] SplitSelectionData(string data)
         {
-            return Regex.Split(data, "\r\n");
+            return data == null ? new string [0] : data.Split (newline, StringSplitOptions.RemoveEmptyEntries);
         }
         
         public static TreePath [] SelectionDataToTreePaths(Gtk.SelectionData data)

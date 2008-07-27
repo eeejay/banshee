@@ -1,3 +1,9 @@
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.DragDrop/DragDropUtilities.cs:
+	Change the SplitSelectionData method to use String.Split, and to remove
+	empty items.
+
 2008-07-27  Todd Berman  <tberman@off.net>
 
 	* src/Dap/Banshee.Dap.Ipod/IpodSource.cs: Implement Import (BGO #541684)
