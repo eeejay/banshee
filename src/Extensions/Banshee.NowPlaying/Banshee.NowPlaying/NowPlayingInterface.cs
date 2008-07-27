@@ -78,6 +78,13 @@ namespace Banshee.NowPlaying
             screensaver = new ScreensaverManager ();
         }
         
+        public override void Dispose ()
+        {
+            base.Dispose ();
+            screensaver.Dispose ();
+        }
+
+        
         private void MoveVideoExternal (bool hidden)
         {
             if (video_display.Parent != video_window) {

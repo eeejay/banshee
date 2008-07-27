@@ -73,6 +73,7 @@ namespace Banshee.NowPlaying
 
             if (now_playing_interface != null) {
                 now_playing_interface.Destroy ();
+                now_playing_interface.Dispose ();
                 now_playing_interface = null;
             }
         }

@@ -1,5 +1,21 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/ScreensaverManager.cs:
+	Keep track of whether the screensaver is already inhibited.  Implement
+	IDisposable and uninhibit when Disposed.
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	Override Dispose and call Dispose on the ScreensaveManager.
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Call Dispose on the NowPlayingInterface.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Make all track
+	actions not visible/sensitive when dealing with a non ITrackModelSoure,
+	for example the Now Playing source (BGO #538398).
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Patches from Bertrand Lorentz fixing issues with files in folders whose
 	name start the same as the library folder.
 

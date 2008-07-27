@@ -205,6 +205,7 @@ namespace Banshee.Gui
             Hyena.Collections.Selection selection = (source is ITrackModelSource) ? (source as ITrackModelSource).TrackModel.Selection : null;
 
             if (selection != null) {
+                Sensitive = Visible = true;
                 bool has_selection = selection.Count > 0;
                 foreach (string action in require_selection_actions) {
                     this[action].Sensitive = has_selection;
@@ -228,9 +229,10 @@ namespace Banshee.Gui
                     
                     UpdateAction ("TrackPropertiesAction", in_database, has_selection, source);
                     UpdateAction ("RateTracksAction", in_database, has_selection, null);
-
                     UpdateAction ("AddToPlaylistAction", in_database && primary_source != null && primary_source.SupportsPlaylists, has_selection, null);
                 }
+            } else {
+                Sensitive = Visible = false;
             }
         }
 

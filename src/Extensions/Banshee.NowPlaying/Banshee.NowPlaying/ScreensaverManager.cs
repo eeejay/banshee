@@ -32,9 +32,10 @@ using Mono.Addins;
 
 namespace Banshee.NowPlaying
 {
-    public class ScreensaverManager : IScreensaverManager
+    public class ScreensaverManager : IScreensaverManager, IDisposable
     {
         private IScreensaverManager manager;
+        bool inhibited = false;
         
         public ScreensaverManager ()
         {
@@ -49,20 +50,27 @@ namespace Banshee.NowPlaying
             }
         }
         
+        public void Dispose ()
+        {
+            UnInhibit ();
+        }
+        
         public void Inhibit ()
         {
-            if (manager != null) {
+            if (manager != null && !inhibited) {
                 Log.Information ("Inhibiting screensaver during fullscreen playback");
                 manager.Inhibit ();
+                inhibited = true;
             }
         }
         
         public void UnInhibit ()
         {
-            if (manager != null) {
-                Log.Information ("Re-enabling screensaver");
+            if (manager != null && inhibited) {
+                Log.Information ("Uninhibiting screensaver");
                 manager.UnInhibit ();
+                inhibited = false;
             }
-        }           
+        }
     }
 }
