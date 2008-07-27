@@ -1,5 +1,11 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* build/m4/banshee/daap.m4: Enable DAAP by default.
+
+	* configure.ac: Remove unstable warning for DAAP in configure.
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
 	Fix the regression where the New Playlist wouldn't appear in the sources
 	list when you were drag and dropping some tracks.

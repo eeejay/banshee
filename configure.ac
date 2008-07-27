@@ -194,7 +194,7 @@ ${PACKAGE}-${VERSION}
       MTP:             ${enable_libmtp}
       iPod:            ${enable_ipodsharp}
 
-    DAAP Support:      ${enable_daap}	(unstable)
+    DAAP Support:      ${enable_daap}
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
