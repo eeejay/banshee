@@ -40,6 +40,7 @@ using Banshee.ServiceStack;
 using Banshee.Dap;
 using Banshee.Hardware;
 using Banshee.Collection.Database;
+using Banshee.Library;
 
 using Banshee.Dap.Gui;
 
@@ -366,7 +367,7 @@ namespace Banshee.Dap.Ipod
         
         public override void Import ()
         {
-            Log.Information ("Import to Library is not implemented for iPods yet", true);
+            Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (Path.Combine (ipod_device.ControlPath, "Music"));
         }
 
         /*public override void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, BatchUserJob job)

@@ -1,3 +1,7 @@
+2008-07-27  Todd Berman  <tberman@off.net>
+
+	* src/Dap/Banshee.Dap.Ipod/IpodSource.cs: Implement Import (BGO #541684)
+
 2008-07-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Ok,
