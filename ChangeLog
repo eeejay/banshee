@@ -1,5 +1,11 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	When a Uri list is dropped onto a source, import the uris into the
+	library.
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.DragDrop/DragDropUtilities.cs:
 	Change the SplitSelectionData method to use String.Split, and to remove
 	empty items.

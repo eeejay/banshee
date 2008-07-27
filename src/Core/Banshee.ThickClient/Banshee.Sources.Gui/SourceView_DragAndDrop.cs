@@ -52,7 +52,8 @@ namespace Banshee.Sources.Gui
             
         private static TargetEntry [] dnd_dest_entries = new TargetEntry [] {
             Banshee.Gui.DragDrop.DragDropTarget.Source,
-            Hyena.Data.Gui.ListViewDragDropTarget.ModelSelection
+            Hyena.Data.Gui.ListViewDragDropTarget.ModelSelection,
+            Banshee.Gui.DragDrop.DragDropTarget.UriList
         };
         
         private Source new_playlist_source = null;
@@ -196,7 +197,7 @@ namespace Banshee.Sources.Gui
         }
 
         protected override void OnDragDataReceived (Gdk.DragContext context, int x, int y,
-            Gtk.SelectionData selectionData, uint info, uint time)
+            Gtk.SelectionData data, uint info, uint time)
         {
             try {
                 if (final_drag_start_time != context.StartTime || final_drag_source == null) {
@@ -214,14 +215,23 @@ namespace Banshee.Sources.Gui
                     drop_source = playlist;
                 }
                 
-                if (Gtk.Drag.GetSourceWidget (context) == this) {
-                    DragDropList<Source> sources = selectionData;
+                if (data.Target.Name == Banshee.Gui.DragDrop.DragDropTarget.Source.Target) {
+                    DragDropList<Source> sources = data;
                     if (sources.Count > 0) {
                         drop_source.MergeSourceInput (sources[0], SourceMergeType.Source);
                     }
-                } else {
+                } else if (data.Target.Name == Banshee.Gui.DragDrop.DragDropTarget.UriList.Target) {
+                    foreach (string uri in DragDropUtilities.SplitSelectionData (data)) {
+                        // TODO if we dropped onto a playlist, add ourselves
+                        // to it after importing (or if already imported, find
+                        // and add to playlist)
+                        ServiceManager.Get<Banshee.Library.LibraryImportManager> ().Enqueue (uri);
+                    }
+                } else if (data.Target.Name == Hyena.Data.Gui.ListViewDragDropTarget.ModelSelection.Target) {
                     drop_source.MergeSourceInput (ServiceManager.SourceManager.ActiveSource, 
                         SourceMergeType.ModelSelection);
+                } else {
+                    Hyena.Log.DebugFormat ("SourceView got unknown drag target type: {0}", data.Target.Name);
                 }
                 
                 Gtk.Drag.Finish (context, true, false, time);
