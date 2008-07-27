@@ -40,31 +40,31 @@ namespace Hyena.Query.Tests
     public class QueryTests : Hyena.Tests.TestBase
     {
         private static QueryField ArtistField = new QueryField (
-            "artist", "Artist", "CoreArtists.NameLowered", true,
+            "artist", "ArtistName", "Artist", "CoreArtists.NameLowered", true,
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "by", "artist", "artists"
         );
 
         private static QueryField AlbumField = new QueryField (
-            "album", "Album", "CoreAlbums.TitleLowered", true,
+            "album", "AlbumTitle", "Album", "CoreAlbums.TitleLowered", true,
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "on", "album", "from", "albumtitle"
         );
 
         private static QueryField PlayCountField = new QueryField (
-            "playcount", "Play Count", "CoreTracks.PlayCount", typeof(IntegerQueryValue),
+            "playcount", "PlayCount", "Play Count", "CoreTracks.PlayCount", typeof(IntegerQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "plays", "playcount", "numberofplays", "listens"
         );
 
         private static QueryField DurationField = new QueryField (
-            "duration", "Duration", "CoreTracks.Duration", typeof(TimeSpanQueryValue),
+            "duration", "Duration", "Duration", "CoreTracks.Duration", typeof(TimeSpanQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "duration", "length", "time"
         );
 
         private static QueryField MimeTypeField = new QueryField (
-            "mimetype", "Mime Type", "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}",
+            "mimetype", "MimeType", "Mime Type", "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}",
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "type", "mimetype", "format", "ext", "mime"
         );

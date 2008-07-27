@@ -37,6 +37,7 @@ namespace Hyena.Data.Gui
     {
         private string sort_key;
         private SortType sort_type = SortType.Ascending;
+        private Hyena.Query.QueryField field;
         
         public SortableColumn(string title, ColumnCell cell, double width, string sort_key, bool visible) : 
             base(title, cell, width, visible)
@@ -58,6 +59,11 @@ namespace Hyena.Data.Gui
         public SortType SortType {
             get { return sort_type; }
             set { sort_type = value; }
+        }
+
+        public Hyena.Query.QueryField Field {
+            get { return field; }
+            set { field = value; }
         }
     }
 }

@@ -32,5 +32,6 @@ namespace Hyena.Data
     {
         string SortKey { get; }
         SortType SortType { get; set; }
+        Hyena.Query.QueryField Field { get; }
     }
 }

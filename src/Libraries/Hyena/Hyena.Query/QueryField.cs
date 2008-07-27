@@ -48,6 +48,12 @@ namespace Hyena.Query
             get { return name; }
             set { name = value; }
         }
+        
+        private string property_name;
+        public string PropertyName {
+            get { return property_name; }
+            set { property_name = value; }
+        }
 
         private string label;
         public string Label {
@@ -74,29 +80,30 @@ namespace Hyena.Query
             get { return is_default; }
         }
 
-        public QueryField (string name, string label, string column, params string [] aliases)
-            : this (name, label, column, false, aliases)
+        public QueryField (string name, string propertyName, string label, string column, params string [] aliases)
+            : this (name, propertyName, label, column, false, aliases)
         {
         }
 
-        public QueryField (string name, string label, string column, bool isDefault, params string [] aliases)
-            : this (name, label, column, new Type [] {typeof(StringQueryValue)}, isDefault, aliases)
+        public QueryField (string name, string propertyName, string label, string column, bool isDefault, params string [] aliases)
+            : this (name, propertyName, label, column, new Type [] {typeof(StringQueryValue)}, isDefault, aliases)
         {
         }
 
-        public QueryField (string name, string label, string column, Type valueType, params string [] aliases)
-            : this (name, label, column, new Type [] {valueType}, false, aliases)
+        public QueryField (string name, string propertyName, string label, string column, Type valueType, params string [] aliases)
+            : this (name, propertyName, label, column, new Type [] {valueType}, false, aliases)
         {
         }
 
-        public QueryField (string name, string label, string column, Type [] valueTypes, params string [] aliases)
-            : this (name, label, column, valueTypes, false, aliases)
+        public QueryField (string name, string propertyName, string label, string column, Type [] valueTypes, params string [] aliases)
+            : this (name, propertyName, label, column, valueTypes, false, aliases)
         {
         }
 
-        public QueryField (string name, string label, string column, Type [] valueTypes, bool isDefault, params string [] aliases)
+        public QueryField (string name, string propertyName, string label, string column, Type [] valueTypes, bool isDefault, params string [] aliases)
         {
             this.name = name;
+            this.property_name = propertyName;
             this.label = label;
             this.column = column;
             this.value_types = valueTypes;

@@ -35,7 +35,7 @@ using Hyena.Gui.Theming;
 
 namespace Hyena.Data.Gui
 {
-    public class ColumnCellText : ColumnCell
+    public class ColumnCellText : ColumnCell, ISizeRequestCell
     {
         public delegate string DataHandler ();
     
@@ -118,6 +118,36 @@ namespace Hyena.Data.Gui
             layout.GetPixelSize (out w_width, out row_height);
             layout.Dispose ();
             return row_height + 8;
+        }
+
+        #region ISizeRequestCell implementation 
+        
+        public void GetSize (out int width, out int height)
+        {
+            if (get_size_request != null) {
+                get_size_request (out width, out height);
+            } else {
+                // Should never really get here, because RestrictSize should return false
+                width = height = 0;
+            }
+        }
+        
+        private bool restrict_size = false;
+        public bool RestrictSize {
+            get { return restrict_size && get_size_request != null; }
+            set { restrict_size = value; }
+        }
+        
+        #endregion
+        
+        public delegate void GetSizeRequestHandler (out int width, out int height);
+        private GetSizeRequestHandler get_size_request;
+        public GetSizeRequestHandler GetSizeHandler {
+            get { return get_size_request; }
+            set {
+                get_size_request = value;
+                RestrictSize = value != null;
+            }
         }
     }
 }

@@ -170,10 +170,9 @@ namespace Banshee.Sources
 
             ISortableColumn sort_column = (TrackModel is DatabaseTrackListModel)
                 ? (TrackModel as DatabaseTrackListModel).SortColumn : null;
+
             // If it's the field we're sorting by, then yes, we care
-            // FIXME this EndsWith is very hacky, we should link the ISortableColumn to a field and/or a
-            // QueryOrder object
-            if (sort_column != null && field.Column.EndsWith (sort_column.SortKey)) {
+            if (sort_column != null && sort_column.Field == field) {
                 return true;
             }
 

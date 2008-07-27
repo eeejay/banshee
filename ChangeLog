@@ -1,5 +1,34 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Create default columns within a private method so we can manipulate them
+	beyond just their ctor (not yet done, but will use this to set better
+	widths soon).  Also, use the new Column/QueryField integration to avoid
+	duplication of names/labels.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Fix
+	properly the detection of if any of the columns changed in a TracksChanged
+	event are being sorted by, using the new Field property on SortableColumn.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Add a
+	PropertyName property used to create/bind columns from a QueryField
+	object.  Add a comment field.  Modify the GetSort method just enough to
+	work with the new 'sort keys' (QueryField.Name) that will be passed in.
+
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs:
+	* src/Libraries/Hyena/Hyena.Query/Tests/QueryTests.cs: Add PropertyName.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/SortableColumn.cs:
+	* src/Libraries/Hyena/Hyena.Data/ISortableColumn.cs: Add QueryField Field
+	property, the first step in integrating columns with QueryFields, which
+	should probably be named something more generic like ModelFields.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Implement
+	ISizeRequestCell and add delegate property to allow external code to
+	specify what width a text cell should have.  Not used yet.
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Add
 	static UpdateAction convenience methods that set the
 	visiblity/sensitivity of actions.
