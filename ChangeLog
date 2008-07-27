@@ -1,5 +1,21 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patches from Bertrand Lorentz fixing issues with files in folders whose
+	name start the same as the library folder.
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Add
+	CachedLibraryLocationWithSeparator property.  Fix MakePathRelative method
+	to add a path seperator as needed (BGO #539511).
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Use the new -WithSeparator property, fixing copy-on-import (BGO #533177).
+
+	* src/Core/Banshee.Core/Banshee.Base/Tests/FileNamePatternTests.cs: Unit
+	tests written by me to make sure MakePathRelative works how we expect it
+	to.
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
 	Create default columns within a private method so we can manipulate them
 	beyond just their ctor (not yet done, but will use this to set better

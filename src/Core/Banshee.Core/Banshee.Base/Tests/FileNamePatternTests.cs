@@ -44,6 +44,16 @@ namespace Banshee.Base.Tests
             string str = Convert.ToString(num);
             return num < 10 ? "0" + str : str;
         }
+
+        [Test]
+        public void MakePathsRelative ()
+        {
+            Assert.AreEqual ("baz", Paths.MakePathRelative ("/foo/bar/baz", "/foo/bar"));
+            Assert.AreEqual ("baz", Paths.MakePathRelative ("/foo/bar/baz", "/foo/bar/"));
+            Assert.AreEqual ("",    Paths.MakePathRelative ("/foo/bar/baz", "/foo/bar/baz"));
+            Assert.AreEqual (null,  Paths.MakePathRelative ("/foo/bar/baz", "foo"));
+            Assert.AreEqual (null,  Paths.MakePathRelative ("/fo", "/foo"));
+        }
     
         [Test]
         public void CreateFromTrackInfo()

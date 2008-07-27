@@ -114,12 +114,20 @@ namespace Banshee.Base
                 return null;
             }
             
-            if (path.Length < to.Length + 1) {
+            if (path == to) {
+                return String.Empty;
+            }
+            
+            if (to[to.Length - 1] != Path.DirectorySeparatorChar) {
+                to = to + Path.DirectorySeparatorChar;
+            }
+            
+            if (path.Length < to.Length) {
                 return null;
             }
             
             return path.StartsWith (to)
-                ? path.Substring (to.Length + 1)
+                ? path.Substring (to.Length)
                 : null;
         }
         
@@ -172,6 +180,7 @@ namespace Banshee.Base
         }
         
         private static string cached_library_location;
+        private static string cached_library_location_with_separator;
         public static string LibraryLocation {
              get {
                 string path = LibrarySchema.Location.Get (Paths.DefaultLibraryPath);
@@ -185,12 +194,22 @@ namespace Banshee.Base
              
              set {
                 cached_library_location = value;
+                cached_library_location_with_separator = null;
                 LibrarySchema.Location.Set (cached_library_location); 
             }
         }
         
         public static string CachedLibraryLocation {
             get { return cached_library_location ?? LibraryLocation; }
+        }
+        
+        public static string CachedLibraryLocationWithSeparator {
+            get {
+                if (cached_library_location_with_separator == null) {
+                    cached_library_location_with_separator = CachedLibraryLocation + Path.DirectorySeparatorChar;
+                }
+                return cached_library_location_with_separator;
+            }
         }
         
         private static string installed_application_prefix = null;
