@@ -1,3 +1,9 @@
+2008-07-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: Comment out
+	Show Cover Art menu item/action.
+
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Remove cruft.

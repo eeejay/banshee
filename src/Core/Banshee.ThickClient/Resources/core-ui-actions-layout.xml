@@ -54,7 +54,7 @@
     </menu>
 
     <menu name="ViewMenu" action="ViewMenuAction">
-      <menuitem name="ShowCoverArt" action="ShowCoverArtAction"/>
+        <!--<menuitem name="ShowCoverArt" action="ShowCoverArtAction"/>-->
       <placeholder name="BrowserViews"/>
       <placeholder name="ViewMenuAdditions"/>
       <menuitem name="FullScreen" action="FullScreenAction"/>
