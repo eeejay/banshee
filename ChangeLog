@@ -1,5 +1,13 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Remove cruft.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Set the
+	focus index as well as the selection when jumping to current song (BGO
+	#538227).
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
 	Replace spaces with underscores in artist name before encoding for
 	Wikipedia URL (BGO #537682).

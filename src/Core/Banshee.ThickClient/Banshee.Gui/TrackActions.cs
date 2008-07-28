@@ -111,10 +111,6 @@ namespace Banshee.Gui
                 new ActionEntry ("SearchForSameArtistAction", null,
                     Catalog.GetString ("By Matching A_rtist"), null,
                     Catalog.GetString ("Search all songs of this artist"), OnSearchForSameArtist),
-
-                //new ActionEntry ("JumpToPlayingTrackAction", null,
-                //    Catalog.GetString ("_Jump to playing song"), "<control>J",
-                //    null, OnJumpToPlayingTrack),
             });
 
             Actions.UIManager.ActionsChanged += HandleActionsChanged;
@@ -415,10 +411,6 @@ namespace Banshee.Gui
                 }
             }
         }
-
-        /*private void OnJumpToPlayingTrack (object o, EventArgs args)
-        {
-        }*/
 
 #endregion
 

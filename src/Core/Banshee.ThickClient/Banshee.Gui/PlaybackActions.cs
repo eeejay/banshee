@@ -245,6 +245,7 @@ namespace Banshee.Gui
                         ServiceManager.SourceManager.SetActiveSource (src);
                         track_src.TrackModel.Selection.Clear (false);
                         track_src.TrackModel.Selection.Select (i);
+                        track_src.TrackModel.Selection.FocusedIndex = i;
                         track_list.CenterOn (i);
                     }
                 }
