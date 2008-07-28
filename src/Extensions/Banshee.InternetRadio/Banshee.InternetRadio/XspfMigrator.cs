@@ -58,13 +58,17 @@ namespace Banshee.InternetRadio
             DatabaseConfigurationClient.Client.Set<bool> ("InternetRadio.LegacyXspfMigrated", true);
             
             string xspf_path = Paths.Combine (Paths.LegacyApplicationData, "plugins", "stations");
-            
-            foreach (string file in Directory.GetFiles (Paths.Combine (xspf_path, "user"), "*.xspf")) {
-                MigrateXspf (file);
-            }
-            
-            foreach (string file in Directory.GetFiles (xspf_path, "*.xspf")) {
-                MigrateXspf (file);
+
+            try {
+                foreach (string file in Directory.GetFiles (Paths.Combine (xspf_path, "user"), "*.xspf")) {
+                    MigrateXspf (file);
+                }
+                
+                foreach (string file in Directory.GetFiles (xspf_path, "*.xspf")) {
+                    MigrateXspf (file);
+                }
+            } catch (Exception e) {
+                Hyena.Log.Exception ("Migrating Internet Radio Stations", e);
             }
             
             return true;

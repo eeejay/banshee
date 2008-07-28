@@ -1,5 +1,13 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/XspfMigrator.cs:
+	Catch exceptions when migrating old internet radio stations over (BGO
+	#539424).
+
+	* NEWS: Some updates for 1.2
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* build/m4/banshee/daap.m4: Enable DAAP by default.
 
 	* configure.ac: Remove unstable warning for DAAP in configure.
@@ -746,13 +754,13 @@
 2008-06-25  Bertrand Lorentz <bertrand.lorentz@gmail.com> 
 
 	* build/m4/banshee/boo.m4: Add a disable-boo flag. If boo is not present and
-	  disable-boo is not set, configure will fail (BGO #532420).
+	disable-boo is not set, configure will fail (BGO #532420).
 
 2008-06-25  Bertrand Lorentz <bertrand.lorentz@gmail.com> 
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs: Fix
-	  bug where the repeat and shuffle mode were restored when switching
-	  between two Last.fm stations (BGO #538946).
+	bug where the repeat and shuffle mode were restored when switching
+	between two Last.fm stations (BGO #538946).
 
 2008-06-25  Gabriel Burt  <gabriel.burt@gmail.com>
 

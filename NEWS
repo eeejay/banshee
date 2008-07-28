@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.0 - Released June 5, 2008
+WELCOME TO BANSHEE 1.2 - Released July 29, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,7 +10,7 @@ WELCOME TO BANSHEE 1.0 - Released June 5, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/Releases/1.0
+  * Learn More: http://banshee-project.org/Releases/1.2
 
 
 ===============================================================================
@@ -36,9 +36,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 1.0 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-1.0.0.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-1.0.0.tar.gz
+    * Banshee 1.2 Tarballs:
+      http://banshee-project.org/files/banshee/banshee-1-1.2.0.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-1.2.0.tar.gz
 
 Packages
 --------
@@ -51,8 +51,8 @@ Packages
 ChangeLogs & Checksums
 ----------------------
 
-    * http://banshee-project.org/files/banshee/banshee-1-1.0.0.changes
-	* http://banshee-project.org/files/banshee/banshee-1-1.0.0.sha1sum
+    * http://banshee-project.org/files/banshee/banshee-1-1.2.0.changes
+	* http://banshee-project.org/files/banshee/banshee-1-1.2.0.sha1sum
 
 
 ===============================================================================
@@ -72,14 +72,15 @@ DEPENDENCIES
     * Required to build default feature stack:
       * libmtp >= 0.2.0 (0.2.6 recommended)
       * ipod-sharp >= 0.8.0
+      * mono-zeroconf >= 0.7.3
 
     * Run-time requirements for default feature stack:
       * podsleuth 
       * brasero
+      * avahi
 
     * Required to build not-enabled-by-default features:
       * boo >= 0.8.1
-      * mono-zeroconf >= 0.7.3
 
     Please note that for openSUSE, all of the dependencies above can be 
     found in the openSUSE Build Service, and are linked into the 
@@ -99,7 +100,7 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.0 is the culmination of many months of hard work by dozens of
+    Banshee 1.2 is the culmination of many months of hard work by dozens of
     people.  This release cycle has seen Banshee support video, and add the
     long-requested artist/album browser and play queue.
 
@@ -111,50 +112,28 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
     many great new features and provides a framework for new features to
     be easily developed in the future.
 
-    Features in this release include:
+    Big features in this release include:
 
-      * Artist/Album Browser
-      * Play Queue
-      * Powerful new query/search capabilities
-      * Playback from a dedicated source while interacting with other sources
-      * Tightly integrated Last.fm and Audioscrobbler support
-      * Create your own custom Last.fm radio stations to suit your tastes
-      * Video management and playback
-      * Now Playing source where video plays
-      * Audio CD playback and ripping
-      * Mass Storage Digital Audio Player support
-      * MTP and iPod Player Support
-      * Default Smart Playlists
-      * Extension Manager
-      * Minimode extension
-      * Podcast Support
-      * Automatic CD Importing
-      * CD Burning
-      * New Device Storage Indicator
-      * Automatically Grabs all Cover Art
+      * 10-band Equalizer
+      * Internet Radio
+      * Music Recommendations
+      * DAAP Client
+      * Playlist Importing (.pls, .m3u)
+      * Multi-Artist (Compilation) Album Support
+      * Playlist/Play Queue manual reordering
 
     Other features, bug fixes, and errata:
 
-      * Play Count, Skip Count, Last Played, and Last Skipped all now kept up to date
-      * Allow editing of artist and album names
-      * Start playing when artist or album browser is double clicked
-      * Bookmarks extension is now available
-      * Use XDG_CACHE_HOME directory for cache files
-      * Jump to playing song is now implemented (Ctrl-J) 
-      * The Last.fm data screen has some visual improvements.
-      * Fullscreen video is now supported (press f or go to Now Playing)
-      * Banshee can be scripted using Boo
-      * Improved gstreamer error handling (for missing files, codecs, etc)
-      * Shuffle and repeat are automatically disabled while playing Last.fm
-      * Columns specific to type of source (Music, Video, Podcast)
-      * Add File Size column, right-align it and Duration
-      * Disable writing metadata for videos to file to avoid 100% CPU bug
-      * Add Love/Hate menu items to the Notification Area icon's menu
-      * If a Last.fm station is double clicked, it will start playing once it has loaded
-      * Filter for podcasts to only show new items
-      * DBus client w/ command line options and lastfm:// and feed:// support
-      * File system queue
-      * Over 260 bugs were fixed since 0.13.2
+      * More robust parsing of podcast (RSS) files
+      * Find and use cover art from the album folder (cover.jpg, etc)
+      * Fetch covers from Last.fm if can't find using the existing providers
+      * Lots of small UI tweaks/fixes
+      * Better performance (start up time, memory usage, searching, etc)
+      * Disable the screensaver when in fullscreen mode
+      * Don't trigger cover art scan just because item played/skipped
+      * Fix issues with importing and playing files in folders named Music*
+
+      * Over 65 bugs were fixed since 1.0
 
 
 ===============================================================================
@@ -164,7 +143,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.0.0
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.2.0
 
 
 ===============================================================================
@@ -177,40 +156,32 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
 
-      Aaron Bockover, Alan McGovern, Alex Kloss, Alexander Hixon,
-      Bertrand Lorentz, Christopher Rogers, Gabriel Burt, James Willcox,
-      Michael Monreal, Mike Urbanski, Nicholas Parker, Ruben Vermeersch,
-      Scott Peterson, Sebastian Dröge, Will Farrington, Wouter Bolsterlee
+      Aaron Bockover, Alan McGovern, Alexander Hixon, Alex Launi,
+      Arthur Carli, Bertrand Lorentz, Christopher Rogers, Fabian Jost,
+      Gabriel Burt, James Willcox, Michael Kaiser, Peter de Kraker,
+      Sandy Armstrong, Sebastian Dröge, Todd Berman
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
 
-      Artur Flinta, Claude Paroz, Daniel Abramov, Daniel Nylander,
-      Duarte Loreto, Gabor Kelemen, Ignacio Casal Quinteiro, Ihar Hrachyshka,
-      Ilkka Tuohela, Jonh Wendell, Jordi Mas, Jorge Gonzalez,
-      Lasse Bang Mikkelsen, Luca Ferretti, Nickolay V. Shmyrev,
-      Philipp Kerling, Philip Withnall, Wadim Dziedzic, Wouter Bolsterlee,
-      Yair Hershkovitz, Žygimantas Beručka
-
-    The release notes and screenshots for this release were crafted by:
-
-      Aaron Bockover, Gabriel Burt, Jorge Castro, Josiah Ritchie,
-      Paul Cutler, Scott Peterson
+      Andre Klapper, Benjamín Valero Espinosa, 甘露(Lu Gan)
 
 Contributors In Past Releases
 -----------------------------
 
-    Aaron Bockover, Alan McGovern, Alex Kloss, Alexander Hixon,
-    Alexandros Frantzis, Alp Toker, Andy Midgette, Aydemir Ulaş Şahin,
-    Ben Maurer, Bertrand Lorentz, Bill Dawson, Bob Copeland, Bojan Rajkovic,
-    Brian Nickel, Chris Lahey, Chris Toshok, Chris Turchin, Christian Krause,
-    Christopher James Halse Rogers, Dan Wilson, Dan Winship, Daniel Munkton,
-    Eric Butler, Fredrik Hedberg, Gabriel Burt, Hans Petter Jansson,
+    Aaron Bockover, Alan McGovern, Alexander Hixon, Alexandros Frantzis,
+    Alex Kloss, Alex Launi, Alp Toker, Andy Midgette, Arthur Carli,
+    Aydemir Ulaş Şahin, Ben Maurer, Bertrand Lorentz, Bill Dawson,
+    Bob Copeland, Bojan Rajkovic, Brian Nickel, Chris Lahey, Christian Krause,
+    Christopher James Halse Rogers, Christopher Rogers, Chris Toshok,
+    Chris Turchin, Daniel Munkton, Dan Wilson, Dan Winship, Eric Butler,
+    Fabian Jost, Fredrik Hedberg, Gabriel Burt, Hans Petter Jansson,
     Igor Guerrero Fonseca, Ilya Konstantinov, Ivan N. Zlatev, James Willcox,
     Jan Arne Petersen, Jason Conti, Jeff Tickle, Jorge Castro, Juri Pakaste,
-    Ken Vandine, Larry Ewing, Lauri Kotilainen, Michael Monreal,
-    Miguel de Icaza, Mike Urbanski, Nathan Palmer, Nicholas Parker,
-    Oscar Forero, Patrick van Staveren, Pepijn van de Geer, Ruben Vermeersch,
-    Scott Peterson, Sebastian Dröge, Tim Yamin, Trey Ethridge, Will Farrington,
+    Ken Vandine, Larry Ewing, Lauri Kotilainen, Michael Kaiser,
+    Michael Monreal, Miguel de Icaza, Mike Urbanski, Nathan Palmer,
+    Nicholas Parker, Oscar Forero, Patrick van Staveren, Pepijn van de Geer,
+    Peter de Kraker, Ruben Vermeersch, Sandy Armstrong, Scott Peterson,
+    Sebastian Dröge, Tim Yamin, Todd Berman, Trey Ethridge, Will Farrington,
     Wouter Bolsterlee
 
