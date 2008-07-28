@@ -1,5 +1,11 @@
 2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Replace spaces with underscores in artist name before encoding for
+	Wikipedia URL (BGO #537682).
+
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/XspfMigrator.cs:
 	Catch exceptions when migrating old internet radio stations over (BGO
 	#539424).

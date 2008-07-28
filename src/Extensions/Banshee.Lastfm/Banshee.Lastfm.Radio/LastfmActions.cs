@@ -286,7 +286,7 @@ namespace Banshee.Lastfm.Radio
         {
             Browser.Open (String.Format (
                 Catalog.GetString ("http://en.wikipedia.org/wiki/{0}"),
-                Encode (CurrentArtist)
+                Encode ((CurrentArtist ?? String.Empty).Replace (' ', '_'))
             ));
         }
 
