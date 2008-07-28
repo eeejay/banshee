@@ -1,3 +1,7 @@
+2008-07-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* POTFILES.in: Updated
+
 2008-07-25  Lasse Bang Mikkelsen  <lbm@lbm.dk>
 
 	* da.po: Updated Danish translation.
@@ -24,7 +28,7 @@
 
 2008-06-08  甘露 (Lu Gan) <rhythm.gan@gmail.com>
 
-        * zh_CN.po: Updated zh_CN translation.
+	* zh_CN.po: Updated zh_CN translation.
 
 2008-06-21  Luca Ferretti  <elle.uca@libero.it>
 
@@ -56,11 +60,11 @@
 
 2008-06-08  甘露 (Lu Gan) <rhythm.gan@gmail.com>
 
-        * zh_CN.po: Updated zh_CN translation, now 100% UI translated for upcoming 1.0.
+	* zh_CN.po: Updated zh_CN translation, now 100% UI translated for upcoming 1.0.
 
 2008-06-06  Funda Wang <fundawang@gmail.com>
 
-        * zh_CN.po: Updated zh_CN translation
+	* zh_CN.po: Updated zh_CN translation
 	
 2008-06-06  Jordi Mas <jmas@softcatala.org>
 

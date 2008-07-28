@@ -1,5 +1,6 @@
 # List of source files containing translatable strings.
-# Please keep this file in alphabetical order.
+# Please keep this file in alphabetical order; run ./sort-potfiles
+# after adding files here.
 [encoding: UTF-8]
 data/audio-profiles/base.xml.in
 data/audio-profiles/flac.xml.in
@@ -13,6 +14,7 @@ data/banshee-1.desktop.in.in
 libbanshee/banshee-ripper.c
 libbanshee/banshee-transcoder.c
 src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs
+src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs
@@ -46,6 +48,7 @@ src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs
 src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs
 src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs
 src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs
+src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs
 src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs
 src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs
 src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs
@@ -108,10 +111,14 @@ src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs
 src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs
 src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs
 src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs
+src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs
 src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs
 src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs
 src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs
 src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs
+src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSourceContents.cs
+src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs
+src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs
@@ -119,6 +126,9 @@ src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs
+src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationActions.cs
+src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs
+src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/SimilarArtistTile.cs
 src/Extensions/Banshee.Lastfm/Resources/lastfm.glade
 src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeService.cs
 src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs
@@ -150,7 +160,10 @@ src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs
 src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs
 src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs
 src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs
 src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs
 src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs
 src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs
