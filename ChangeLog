@@ -1,5 +1,9 @@
 2008-07-29  Aaron Bockover  <abock@gnome.org>
 
+	Banshee 1.2 Final (1.2.0) Released
+
+2008-07-29  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
 	Reworked the count query so that it really is fast now
 
