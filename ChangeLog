@@ -1,3 +1,9 @@
+2008-07-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add an index on CoreTracks that should help with the performance of the
+	cover art query.
+
 2008-07-29  Aaron Bockover  <abock@gnome.org>
 
 	* gstreamer/equalizer/Makefile.am: -lm
