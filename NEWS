@@ -100,17 +100,8 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.2 is the culmination of many months of hard work by dozens of
-    people.  This release cycle has seen Banshee support video, and add the
-    long-requested artist/album browser and play queue.
-
-    Banshee now uses much less memory and has greatly improved startup speed.
-    It can handle collections that are much larger in size without adversely
-    affecting application speed or memory usage.
-
-    These core architectural changes also allowed us to cleanly implement
-    many great new features and provides a framework for new features to
-    be easily developed in the future.
+    Banshee 1.2 builds on the momentum from Banshee 1.0, adding several big
+    features and fixing many annoyances and long standing bugs.
 
     Big features in this release include:
 
@@ -120,7 +111,8 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * DAAP Client
       * Playlist Importing (.pls, .m3u)
       * Multi-Artist (Compilation) Album Support
-      * Playlist/Play Queue manual reordering
+      * Manual Reordering of Playlists and Play Queue
+      * Amarok migration works (including ratings, playcounts, and podcasts)
 
     Other features, bug fixes, and errata:
 
@@ -133,7 +125,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Don't trigger cover art scan just because item played/skipped
       * Fix issues with importing and playing files in folders named Music*
 
-      * Over 65 bugs were fixed since 1.0
+      * Over 75 bugs were fixed since 1.0
 
 
 ===============================================================================
