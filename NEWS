@@ -117,6 +117,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * More robust parsing of podcast (RSS) files
       * Find and use cover art from the album folder (cover.jpg, etc)
       * Add Last.fm as a cover art provider
+      * The last playback source is used when the Play Queue is empty
       * Better performance (start up time, memory usage, searching, etc)
       * Disable the screensaver when in fullscreen mode
       * Much improved performance and UI for automatic cover art fetching
