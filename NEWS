@@ -10,7 +10,7 @@ WELCOME TO BANSHEE 1.2 - Released July 29, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/Releases/1.2
+  * Learn More: http://banshee-project.org/download/archives/1.2.0/
 
 
 ===============================================================================
@@ -73,14 +73,12 @@ DEPENDENCIES
       * libmtp >= 0.2.0 (0.2.6 recommended)
       * ipod-sharp >= 0.8.0
       * mono-zeroconf >= 0.7.3
+      * boo >= 0.8.1
 
     * Run-time requirements for default feature stack:
       * podsleuth 
       * brasero
       * avahi
-
-    * Required to build not-enabled-by-default features:
-      * boo >= 0.8.1
 
     Please note that for openSUSE, all of the dependencies above can be 
     found in the openSUSE Build Service, and are linked into the 
@@ -112,20 +110,19 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Playlist Importing (.pls, .m3u)
       * Multi-Artist (Compilation) Album Support
       * Manual Reordering of Playlists and Play Queue
-      * Amarok migration works (including ratings, playcounts, and podcasts)
+      * Amarok migration (including ratings, playcounts, and podcasts)
 
     Other features, bug fixes, and errata:
 
       * More robust parsing of podcast (RSS) files
       * Find and use cover art from the album folder (cover.jpg, etc)
-      * Fetch covers from Last.fm if can't find using the existing providers
-      * Lots of small UI tweaks/fixes
+      * Add Last.fm as a cover art provider
       * Better performance (start up time, memory usage, searching, etc)
       * Disable the screensaver when in fullscreen mode
-      * Don't trigger cover art scan just because item played/skipped
+      * Much improved performance and UI for automatic cover art fetching
       * Fix issues with importing and playing files in folders named Music*
 
-      * Over 75 bugs were fixed since 1.0
+      * Over 80 bugs were fixed since 1.0
 
 
 ===============================================================================
@@ -156,7 +153,8 @@ Contributors For This Release
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
 
-      Andre Klapper, Benjamín Valero Espinosa, 甘露(Lu Gan)
+      Andre Klapper, Benjamín Valero Espinosa, Djihed Afifi,
+      甘露(Lu Gan), Wouter Bolsterlee,
 
 Contributors In Past Releases
 -----------------------------
