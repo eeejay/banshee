@@ -1,3 +1,9 @@
+2008-07-29  Aaron Bockover  <abock@gnome.org>
+
+	* gstreamer/equalizer/Makefile.am: -lm
+
+	* src/Backends/Banshee.NowPlaying.X11/libbnpx11/Makefile.am: -lXrandr
+
 2008-07-29  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
