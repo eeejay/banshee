@@ -138,7 +138,7 @@ namespace Banshee.Gui
             if (play_pause_action == null) {
                 play_pause_action = Actions["Playback.PlayPauseAction"];
             }
-            
+
             switch (args.Current) {
                 case PlayerState.Contacting:
                 case PlayerState.Playing:
@@ -178,7 +178,7 @@ namespace Banshee.Gui
             if (ServiceManager.PlayerEngine.CanPause) {
                 ShowPause ();
             } else {
-                ShowPlay ();
+                ShowStop ();
             }
         }
         
@@ -192,6 +192,12 @@ namespace Banshee.Gui
         {
             play_pause_action.Label = Catalog.GetString ("_Play");
             play_pause_action.IconName = "media-playback-start";
+        }
+                
+        private void ShowStop ()
+        {
+            play_pause_action.Label = Catalog.GetString ("Sto_p");
+            play_pause_action.IconName = "media-playback-stop";
         }
                 
         private void OnPlayPauseAction (object o, EventArgs args)
