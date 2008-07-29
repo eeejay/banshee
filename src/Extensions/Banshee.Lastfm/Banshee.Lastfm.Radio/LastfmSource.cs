@@ -223,10 +223,12 @@ namespace Banshee.Lastfm.Radio
         }
 
         private string last_username;
+        private bool last_was_subscriber = false;
         public void SetUserName (string username)
         {
-            if (username != last_username) {
+            if (username != last_username || last_was_subscriber != Connection.Subscriber) {
                 last_username = username;
+                last_was_subscriber = Connection.Subscriber;
                 LastfmSource.LastUserSchema.Set (last_username);
                 ClearChildSources ();
                 sorting = true;
