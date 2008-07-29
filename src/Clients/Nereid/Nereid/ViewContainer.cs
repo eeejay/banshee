@@ -160,6 +160,7 @@ namespace Nereid
         
         private void OnSearchEntryFilterChanged (object o, EventArgs args)
         {
+			/* Translators: this is a verb (command), not a noun (things) */
             search_entry.EmptyMessage = String.Format (Catalog.GetString ("Filter Results"));
             /*search_entry.EmptyMessage = String.Format (Catalog.GetString ("Filter on {0}"),
                 search_entry.GetLabelForFilterID (search_entry.ActiveFilterID));*/

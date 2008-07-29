@@ -1,3 +1,8 @@
+2008-07-29  Wouter Bolsterlee  <wbolster@svn.gnome.org>
+
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Added
+	translator comment.
+
 2008-07-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
