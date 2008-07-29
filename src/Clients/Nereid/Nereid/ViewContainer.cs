@@ -141,36 +141,36 @@ namespace Nereid
             AddSearchFilter (TrackFilterType.AlbumTitle, "album", Catalog.GetString ("Album Title"));
             AddSearchFilter (TrackFilterType.Genre, "genre", Catalog.GetString ("Genre"));
             AddSearchFilter (TrackFilterType.Year, "year", Catalog.GetString ("Year"));
-        
+
             search_entry = new SearchEntry ();
             search_entry.SetSizeRequest (200, -1);
-            
+
             foreach (SearchFilter filter in search_filters.Values) {
                 search_entry.AddFilterOption (filter.Id, filter.Title);
                 if (filter.Id == (int)TrackFilterType.None) {
                     search_entry.AddFilterSeparator ();
                 }
             }
-            
+
             search_entry.FilterChanged += OnSearchEntryFilterChanged;
             search_entry.ActivateFilter ((int)TrackFilterType.None);
-            
+
             OnSearchEntryFilterChanged (search_entry, EventArgs.Empty);
         }
-        
+
         private void OnSearchEntryFilterChanged (object o, EventArgs args)
         {
-			/* Translators: this is a verb (command), not a noun (things) */
+            /* Translators: this is a verb (command), not a noun (things) */
             search_entry.EmptyMessage = String.Format (Catalog.GetString ("Filter Results"));
             /*search_entry.EmptyMessage = String.Format (Catalog.GetString ("Filter on {0}"),
                 search_entry.GetLabelForFilterID (search_entry.ActiveFilterID));*/
-                
+
             string query = search_filters.ContainsKey (search_entry.ActiveFilterID)
                 ? search_filters[search_entry.ActiveFilterID].Field
                 : String.Empty;
-            
+
             search_entry.Query = String.IsNullOrEmpty (query) ? String.Empty : query + ":";
-                
+
             Editable editable = search_entry.InnerEntry as Editable;
             if (editable != null) {
                 editable.Position = search_entry.Query.Length;
