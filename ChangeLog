@@ -1,3 +1,13 @@
+2008-07-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Make UpdateUnfilteredAggregates virtual, expose UnfilteredCount setter and
+	Connection via protected properties.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
+	Use the above changes to show the # of new podcast items in the
+	SourceView, instead of the total # of items.
+
 2008-07-29  Wouter Bolsterlee  <wbolster@svn.gnome.org>
 
 	* src/Clients/Nereid/Nereid/ViewContainer.cs: Added

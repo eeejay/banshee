@@ -77,6 +77,10 @@ namespace Banshee.Collection.Database
             this.provider = provider;
             this.source = source;
         }
+        
+        protected HyenaSqliteConnection Connection {
+            get { return connection; }
+        }
 
         private bool initialized = false;
         public void Initialize (IDatabaseTrackModelCache cache)
@@ -194,7 +198,7 @@ namespace Banshee.Collection.Database
             }
         }
 
-        private void UpdateUnfilteredAggregates ()
+        protected virtual void UpdateUnfilteredAggregates ()
         {
             HyenaSqliteCommand count_command = new HyenaSqliteCommand (String.Format (
                 "SELECT COUNT(*) {0}", UnfilteredQuery
@@ -351,6 +355,7 @@ namespace Banshee.Collection.Database
         
         public int UnfilteredCount {
             get { return (int) count; }
+            set { count = value; }
         }
 
         public string UserQuery {
