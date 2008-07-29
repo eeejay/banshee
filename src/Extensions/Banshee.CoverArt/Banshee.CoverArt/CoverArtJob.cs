@@ -57,27 +57,28 @@ namespace Banshee.CoverArt
         private DateTime last_scan = DateTime.MinValue;
         private TimeSpan retry_every = TimeSpan.FromDays (7);
 
-        private static string query = @"
-                SELECT {0}
-                FROM CoreTracks, CoreAlbums, CoreArtists
-                WHERE
-                    CoreTracks.PrimarySourceID = ? AND
-                    CoreTracks.DateUpdatedStamp > ? AND
-                    CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
-                    CoreAlbums.ArtistID = CoreArtists.ArtistID AND
-                    CoreTracks.AlbumID NOT IN (
-                        SELECT AlbumID FROM CoverArtDownloads WHERE
-                            LastAttempt > ? OR Downloaded = 1)
-                {1}";
+        private static HyenaSqliteCommand count_query = new HyenaSqliteCommand (@"
+            SELECT count(DISTINCT CoreTracks.AlbumID)
+            FROM CoreTracks
+            WHERE
+                CoreTracks.PrimarySourceID = ? AND
+                CoreTracks.DateUpdatedStamp > ? AND
+                CoreTracks.AlbumID NOT IN (
+                    SELECT AlbumID FROM CoverArtDownloads WHERE
+                        LastAttempt > ? OR Downloaded = 1)");
 
-        private static HyenaSqliteCommand count_query = new HyenaSqliteCommand (String.Format (query,
-            "count(DISTINCT CoreAlbums.AlbumID)", null
-        ));
-
-        private static HyenaSqliteCommand select_query = new HyenaSqliteCommand (String.Format (query,
-            "DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri",
-            "GROUP BY CoreTracks.AlbumID LIMIT ?"
-        ));
+        private static HyenaSqliteCommand select_query = new HyenaSqliteCommand (@"
+            SELECT DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri
+            FROM CoreTracks, CoreArtists, CoreAlbums
+            WHERE
+                CoreTracks.PrimarySourceID = ? AND
+                CoreTracks.DateUpdatedStamp > ? AND
+                CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
+                CoreAlbums.ArtistID = CoreArtists.ArtistID AND
+                CoreTracks.AlbumID NOT IN (
+                    SELECT AlbumID FROM CoverArtDownloads WHERE
+                        LastAttempt > ? OR Downloaded = 1)
+            GROUP BY CoreTracks.AlbumID LIMIT ?");
         
         public CoverArtJob (DateTime lastScan) : base (Catalog.GetString ("Downloading Cover Art"))
         {
