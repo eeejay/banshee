@@ -134,19 +134,23 @@ namespace Banshee.Daap
             source_map = new Dictionary<string, DaapSource> ();
             container = new DaapContainerSource ();
             
-            // Now start looking for services.
-            // We do this after creating the source because if we do it before
-            // there's a race condition where we get a service before the source
-            // is added.
-            locator = new ServiceLocator ();
-            locator.Found += OnServiceFound;
-            locator.Removed += OnServiceRemoved;
-            locator.ShowLocalServices = true;
-            locator_started = DateTime.Now;
-            locator.Start ();
-            
-            proxy_server = new DaapProxyWebServer ();
-            proxy_server.Start ();
+            try {
+                // Now start looking for services.
+                // We do this after creating the source because if we do it before
+                // there's a race condition where we get a service before the source
+                // is added.
+                locator = new ServiceLocator ();
+                locator.Found += OnServiceFound;
+                locator.Removed += OnServiceRemoved;
+                locator.ShowLocalServices = true;
+                locator_started = DateTime.Now;
+                locator.Start ();
+                
+                proxy_server = new DaapProxyWebServer ();
+                proxy_server.Start ();
+            } catch (Exception e) {
+                Hyena.Log.Exception ("Failed to start DAAP client", e);
+            }
         }
         
         string IService.ServiceName {

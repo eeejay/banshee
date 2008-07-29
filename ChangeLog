@@ -1,5 +1,10 @@
 2008-07-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Catch
+	exceptions caused by not having any DAAP backends (avahi, etc).
+
+2008-07-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Shorten track
 	and title query labels.
 
