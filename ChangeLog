@@ -1,5 +1,10 @@
 2008-07-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Shorten track
+	and title query labels.
+
+2008-07-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Fix bug
 	where IsLive tracks wouldn't change the play icon to stop (BGO #539021).
 

@@ -114,7 +114,7 @@ namespace Banshee.Query
         
         public static QueryField TrackNumberField = new QueryField (
             "track", "TrackNumber",
-            Catalog.GetString ("Track Number"), "CoreTracks.TrackNumber", typeof(NaturalIntegerQueryValue),
+            Catalog.GetString ("Track"), "CoreTracks.TrackNumber", typeof(NaturalIntegerQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "#", Catalog.GetString ("track"), Catalog.GetString ("trackno"), Catalog.GetString ("tracknum"),
             "track", "trackno", "tracknum"
@@ -122,7 +122,7 @@ namespace Banshee.Query
 
         public static QueryField TitleField = new QueryField (
             "title", "TrackTitle",
-            Catalog.GetString ("Track Title"), "CoreTracks.TitleLowered", true,
+            Catalog.GetString ("Title"), "CoreTracks.TitleLowered", true,
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("title"), Catalog.GetString ("titled"), Catalog.GetString ("name"), Catalog.GetString ("named"),
             "title", "titled", "name", "named"
