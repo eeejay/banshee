@@ -64,6 +64,13 @@ namespace Banshee.Collection.Database
         private static int last_artist_id;
         private static string last_title;
         private static DatabaseAlbumInfo last_album;
+        
+        public static void Reset ()
+        {
+            last_artist_id = -1;
+            last_title = null;
+            last_album = null;
+        }
 
         public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, string title)
         {

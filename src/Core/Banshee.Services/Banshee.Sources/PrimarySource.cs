@@ -643,6 +643,8 @@ namespace Banshee.Sources
         {
             ServiceManager.DbConnection.Execute (prune_artists_albums_command);
             base.PruneArtistsAlbums ();
+            DatabaseAlbumInfo.Reset ();
+            DatabaseArtistInfo.Reset ();
         }
     }
 }

@@ -1,3 +1,11 @@
+2008-07-29  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Reset the
+	fields about the last artist and last album imported when the artists 
+	and albums are pruned from the DB.
+
 2008-07-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Catch
