@@ -208,6 +208,16 @@ namespace Banshee.Collection
                     : title; 
             } 
         }     
+
+        public string DisplayGenre { 
+            get { 
+                string genre = Genre == null ? null : Genre.Trim ();
+                return String.IsNullOrEmpty (genre) 
+                    ? Catalog.GetString ("Unknown Genre") 
+                    : genre; 
+            } 
+        }     
+        
         
         public virtual string ArtworkId { 
             get { return CoverArtSpec.CreateArtistAlbumId (AlbumArtist, AlbumTitle); }

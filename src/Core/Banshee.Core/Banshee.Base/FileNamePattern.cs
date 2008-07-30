@@ -88,7 +88,12 @@ namespace Banshee.Base
                 delegate (ITrackInfo t, object r) {
                     return Escape (t == null ? (string)r : t.DisplayArtistName);
             });
-            
+                        
+            AddConversion ("genre", Catalog.GetString ("Genre"),  
+                delegate (ITrackInfo t, object r) {
+                    return Escape (t == null ? (string)r : t.DisplayGenre);
+            });
+
             AddConversion ("album", Catalog.GetString ("Album"),  
                 delegate (ITrackInfo t, object r) {
                     return Escape (t == null ? (string)r : t.DisplayAlbumTitle);

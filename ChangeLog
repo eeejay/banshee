@@ -1,3 +1,12 @@
+2008-07-30  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/ITrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Configuration.Schema/LibrarySchema.cs:
+	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs: Patch from 
+	Brian Teague adding the genre option to the file name pattern 
+	construction (BGO #492181).
+
 2008-07-29  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.2 Final (1.2.0) Released

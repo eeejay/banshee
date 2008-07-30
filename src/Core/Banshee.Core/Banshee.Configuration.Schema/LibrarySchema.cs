@@ -46,8 +46,9 @@ namespace Banshee.Configuration.Schema
             "Library Folder Pattern",
             "Format for creating a track folder inside the library. Do not create an absolute path. " +
                 "Location here is relative to the Banshee music directory. See LibraryLocation. Legal tokens: " +
-                "%artist%, %album%, %title%, %track_number%, %track_count%, %track_number_nz% (No prefixed zero), " + 
-                "%track_count_nz% (No prefixed zero), %path_sep% (portable directory separator (/))."
+                "%artist%, %album%, %genre%, %title%, %track_number%, %track_count%, " +
+                "%track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero), " +
+                "%path_sep% (portable directory separator (/))."
         );
 
         public static readonly SchemaEntry<string> FilePattern = new SchemaEntry<string>(
@@ -55,8 +56,8 @@ namespace Banshee.Configuration.Schema
             Banshee.Base.FileNamePattern.DefaultFile,
             "Library File Pattern",
             "Format for creating a track filename inside the library. Do not use path tokens/characters here. " +
-                "See LibraryFolderPattern. Legal tokens: %artist%, %album%, %title%, %track_number%, %track_count%, " +
-                "%track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero)."
+                "See LibraryFolderPattern. Legal tokens: %artist%, %album%, %genre%, %title%, %track_number%, " +
+                "%track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero)."
         );
 
         public static readonly SchemaEntry<int> SortColumn = new SchemaEntry<int>(
