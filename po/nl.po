@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-29 02:23+0200\n"
-"PO-Revision-Date: 2008-07-29 02:23+0200\n"
+"POT-Creation-Date: 2008-07-31 00:17+0200\n"
+"PO-Revision-Date: 2008-07-31 00:17+0200\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -427,7 +427,6 @@ msgstr "Albumtitel"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:142
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:139
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:125
 msgid "Track Title"
 msgstr "Nummertitel"
 
@@ -437,7 +436,6 @@ msgid "Duration"
 msgstr "Duur"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:144
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:117
 msgid "Track Number"
 msgstr "Nummer"
 
@@ -451,7 +449,7 @@ msgstr "Aantal schijven"
 
 #: ../src/Clients/Nereid/Nereid/Client.cs:147
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:143
-#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:102
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:107
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:133
 msgid "Year"
 msgstr "Jaar"
@@ -535,6 +533,7 @@ msgid "All Columns"
 msgstr "Alle kolommen"
 
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:142
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:92
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:66
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:141
 msgid "Genre"
@@ -552,44 +551,45 @@ msgstr "Resultaten filteren"
 msgid "Artist"
 msgstr "Artiest"
 
-#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:92
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:97
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:63
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:101
 msgid "Album"
 msgstr "Album"
 
-#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:97
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:102
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:65
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:125
 msgid "Title"
 msgstr "Titel"
 
-#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:107
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:112
 msgid "Count"
 msgstr "Aantal"
 
-#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:112
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:117
 msgid "Number"
 msgstr "Nummer"
 
-#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:117
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:122
 msgid "Count (unsorted)"
 msgstr "Aantal (ongesorteerd)"
 
-#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:122
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:127
 msgid "Number (unsorted)"
 msgstr "Aantal (gesorteerd)"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:189
-#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:80
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:86
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:86
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:158
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:159
 msgid "Unknown Artist"
 msgstr "Onbekende artiest"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:198
-#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:82
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:89
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:87
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:157
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:158
 msgid "Unknown Album"
 msgstr "Onbekend album"
 
@@ -597,22 +597,26 @@ msgstr "Onbekend album"
 msgid "Unknown Title"
 msgstr "Onbekende titel"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:333
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:216
+msgid "Unknown Genre"
+msgstr "Onbekend genre"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:343
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:47
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:137
 msgid "Podcast"
 msgstr "Podcast"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:335
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:345
 #: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:73
 msgid "Video"
 msgstr "Video"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:337
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:347
 msgid "Song"
 msgstr "Nummer"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:338
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:348
 msgid "Item"
 msgstr "Item"
 
@@ -637,7 +641,7 @@ msgid "Scanning for media"
 msgstr "Zoeken naar media"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:214
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:837
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:850
 msgid "Scanning..."
 msgstr "Bezig met zoeken…"
 
@@ -673,7 +677,7 @@ msgstr ""
 "Even geduld tijdens het omzetten van de oude Banshee-database naar het "
 "nieuwe formaat."
 
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:836
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:849
 msgid "Refreshing Metadata"
 msgstr "Metadata bijwerken"
 
@@ -1028,6 +1032,10 @@ msgstr "cd"
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:111
 msgid "discnum"
 msgstr "discnum"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:117
+msgid "Track"
+msgstr "Nummer"
 
 #. Translators: These are unique search fields.  Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:119
@@ -1786,6 +1794,10 @@ msgstr "Naar _huidige video springen"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:187
 msgid "_Pause"
 msgstr "_Pauze"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:199
+msgid "Sto_p"
+msgstr "Sto_p"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:73
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:74
@@ -2944,15 +2956,15 @@ msgstr "Bladwijzer ver_wijderen"
 msgid "{0} ({1}:{2:00})"
 msgstr "{0} ({1}:{2:00})"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:82
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:83
 msgid "Downloading Cover Art"
 msgstr "Albumafbeeldingen downloaden"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:111
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:112
 msgid "Preparing..."
 msgstr "Voorbereiden…"
 
-#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:140
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:141
 #, csharp-format
 msgid "{0} - {1}"
 msgstr "{0} — {1}"
@@ -3394,11 +3406,11 @@ msgstr "{0} maal afgespeeld"
 msgid "Edit Last.fm Settings"
 msgstr "Last.fm-instellingen bewerken"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:321
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:323
 msgid "Account Settings"
 msgstr "Accountinstellingen"
 
-#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:323
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:325
 msgid "Join Last.fm"
 msgstr "Bij Last.fm registreren"
 
