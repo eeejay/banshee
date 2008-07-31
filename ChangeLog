@@ -1,3 +1,8 @@
+2008-07-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
+	Fix bug with podcasts not getting sorted by published date on startup.
+
 2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceIconResolver.cs:

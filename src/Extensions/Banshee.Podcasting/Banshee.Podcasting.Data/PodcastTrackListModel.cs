@@ -70,7 +70,7 @@ namespace Banshee.Podcasting.Gui
         protected override void GenerateSortQueryPart ()
         {
             SortQuery = (SortColumn == null)
-                ? GetSort ("Published", false)
+                ? GetSort ("PublishedDate", false)
                 : GetSort (SortColumn.SortKey, SortColumn.SortType == Hyena.Data.SortType.Ascending);
         }
         
