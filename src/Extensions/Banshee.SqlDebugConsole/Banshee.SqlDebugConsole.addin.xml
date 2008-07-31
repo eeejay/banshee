@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.SqlDebugConsole"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
+    name="SQL Debug Console"
+    category="Debug"
+    description="Provides a UI for monitoring Banshee's SQL usage, and running queries."
+    author="Gabriel Burt"
+    url="http://banshee-project.org/"
+    defaultEnabled="false">
+
+  <Dependencies>
+    <Addin id="Banshee.Services" version="1.0"/>
+    <Addin id="Banshee.ThickClient" version="1.0"/>
+  </Dependencies>
+
+  <!--<Extension path="/Banshee/ServiceManager/Service">
+    <Service class="Banshee.SqlDebugConsole.SqlMonitor"/>
+</Extension>-->
+
+  <Extension path="/Banshee/ServiceManager/Service">
+    <Service class="Banshee.SqlDebugConsole.SqlActions"/>
+  </Extension>
+
+</Addin>

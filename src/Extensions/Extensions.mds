@@ -16,6 +16,7 @@
       <Entry build="True" name="Banshee.CoverArt" configuration="Debug" />
       <Entry build="True" name="Banshee.FileSystemQueue" configuration="Debug" />
       <Entry build="True" name="Banshee.InternetRadio" configuration="Debug" />
+      <Entry build="True" name="Banshee.SqlDebugConsole" configuration="Debug" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="Banshee.Daap" single="True">
@@ -34,6 +35,7 @@
     <Execute type="None" entry="Banshee.CoverArt" />
     <Execute type="None" entry="Banshee.FileSystemQueue" />
     <Execute type="None" entry="Banshee.InternetRadio" />
+    <Execute type="None" entry="Banshee.SqlDebugConsole" />
   </StartMode>
   <Entries>
     <Entry filename="Banshee.Daap/Banshee.Daap.mdp" />
@@ -51,5 +53,6 @@
     <Entry filename="Banshee.CoverArt/Banshee.CoverArt.mdp" />
     <Entry filename="Banshee.FileSystemQueue/Banshee.FileSystemQueue.mdp" />
     <Entry filename="Banshee.InternetRadio/Banshee.InternetRadio.mdp" />
+    <Entry filename="Banshee.SqlDebugConsole/Banshee.SqlDebugConsole.mdp" />
   </Entries>
 </Combine>

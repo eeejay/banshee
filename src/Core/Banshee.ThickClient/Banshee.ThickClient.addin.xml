@@ -19,13 +19,13 @@
   </Extension>
 
   <ExtensionPoint path="/Banshee/ThickClient/ActionGroup">
-    <Description>Defines a new action group, possibly in conjunction with a Source extension.</Description>
+    <Description>Defines a new GTK+ action group, possibly in conjunction with a Source extension.</Description>
     <ExtensionNode name="ActionGroup"/>
   </ExtensionPoint>
 
   <ExtensionPoint path="/Banshee/ThickClient/SourceView">
-    <Description>Defines a new action group, possibly in conjunction with a Source extension.</Description>
-    <ExtensionNode name="ActionGroup"/>
+    <Description>Defines a new GTK+ source view, possibly in conjunction with a Source extension.</Description>
+    <ExtensionNode name="SourceView"/>
   </ExtensionPoint>
   
 </Addin>

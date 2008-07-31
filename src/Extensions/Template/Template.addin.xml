@@ -4,7 +4,7 @@
     version="1.0"
     compatVersion="1.0"
     copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
-    name=""
+    name="@EXTENSION_NAME@"
     category=""
     description=""
     author=""

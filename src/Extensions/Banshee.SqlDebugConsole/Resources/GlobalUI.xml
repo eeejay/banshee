@@ -1,0 +1,11 @@
+<ui>
+  <menubar name="MainMenu" action="MainMenuAction">
+    <menu name="ToolsMenu" action="ToolsMenuAction">
+      <separator/>
+      <menuitem name="ShowConsole" action="ShowConsoleAction"/>
+      <menuitem name="StartSqlMonitoring" action="StartSqlMonitoringAction"/>
+      <menuitem name="StopSqlMonitoring" action="StopSqlMonitoringAction"/>
+      <separator/>
+    </menu>
+  </menubar>
+</ui>

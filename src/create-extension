@@ -129,4 +129,6 @@ done
 popd &>/dev/null
 
 echo "Done."
+echo "You will need to fix the generated Makefile.am, .addins.xml file, "
+echo "and add an entry to ../configure.ac, then run autogen.sh again."
 

@@ -56,7 +56,8 @@ namespace Banshee.Addins.Gui
         {
             foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
                 if (addin.Name != addin.Id && addin.Description != null && 
-                    addin.Description.Category != null && !addin.Description.Category.StartsWith ("required:")) {
+                    addin.Description.Category != null && !addin.Description.Category.StartsWith ("required:") &&
+                    (!addin.Description.Category.Contains ("Debug") || Banshee.Base.ApplicationContext.Debugging)) {
                     AppendAddin (addin);
                 }
             }

@@ -1,5 +1,28 @@
 2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Extensions.mds:
+	* src/Extensions/Banshee.SqlDebugConsole/Makefile.am:
+	* src/Extensions/Banshee.SqlDebugConsole/Resources/GlobalUI.xml:
+	* src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole.addin.xml:
+	* src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole.mdp:
+	* src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinView.cs: New addin,
+	not yet finished or really working, to view SQL queries that are run in
+	Banshee, and eventually be able to run them and arbitrary queries in
+	Banshee's connection, with an option to run them 50 or whatever times to
+	benchmark them.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Add a new
+	EventArgs subclass for the new CommandExecuted event.  This event is only
+	fired if LogAll is true.
+
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml:
+	* src/Extensions/Template/Template.addin.xml:
+	* src/create-extension:
+	* configure.ac: Clarify and simplify extension creation.
+
+2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml: Forgot to
 	commit this, actually adds the photo folder import source.
 

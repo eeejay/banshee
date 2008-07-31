@@ -40,6 +40,22 @@ using Mono.Data.SqliteClient;
 
 namespace Hyena.Data.Sqlite
 {
+    public class CommandExecutedArgs : EventArgs
+    {
+        public CommandExecutedArgs (string sql, string sqlWithValues, string stackTrace, long ms)
+        {
+            Sql = sql;
+            SqlWithValues = sqlWithValues;
+            StackTrace = stackTrace;
+            Ms = ms;
+        }
+        
+        public string Sql;
+        public string SqlWithValues;
+        public string StackTrace;
+        public long Ms;
+    }
+    
     public class HyenaSqliteCommand
     {
         protected object result = null;
@@ -60,6 +76,9 @@ namespace Hyena.Data.Sqlite
             get { return log_all; }
             set { log_all = value; }
         }
+        
+        public delegate void CommandExecutedHandler (object o, CommandExecutedArgs args);
+        public static event CommandExecutedHandler CommandExecuted;
 
         public string Text {
             get { return command; }
@@ -118,8 +137,13 @@ namespace Hyena.Data.Sqlite
                         break;
                 }
 
-                if (log_all)
-                    Log.DebugFormat ("Executed SQL in {0} ms: {1}", System.Environment.TickCount - ticks, sql_command.CommandText);
+                if (log_all) {
+                    Log.DebugFormat ("Executed in {0}ms {1}", System.Environment.TickCount - ticks, sql_command.CommandText);
+                    CommandExecutedHandler handler = CommandExecuted;
+                    if (handler != null) {
+                        handler (this, new CommandExecutedArgs (Text, sql_command.CommandText, null, System.Environment.TickCount - ticks));
+                    }
+                }
             } catch (Exception e) {
                 Log.DebugFormat (String.Format ("Exception executing command: {0}", sql_command.CommandText), e.ToString ()); 
                 execution_exception = e;
