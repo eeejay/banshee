@@ -118,6 +118,7 @@
     <File name="Banshee.Collection.Gui/ColumnCellQueryText.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Gui/QueryFilterView.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Library.Gui/PhotoFolderImportSource.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />
@@ -139,6 +140,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="taglib-sharp, Version=2.0.3.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
+  <GtkDesignInfo gtkVersion="2.12.1" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

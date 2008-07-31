@@ -81,6 +81,7 @@ SOURCES =  \
 	Banshee.Library.Gui/FileImportSource.cs \
 	Banshee.Library.Gui/FolderImportSource.cs \
 	Banshee.Library.Gui/ImportDialog.cs \
+	Banshee.Library.Gui/PhotoFolderImportSource.cs \
 	Banshee.MediaProfiles.Gui/ProfileComboBox.cs \
 	Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs \
 	Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs \
