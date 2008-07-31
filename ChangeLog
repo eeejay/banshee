@@ -1,5 +1,10 @@
 2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml: Forgot to
+	commit this, actually adds the photo folder import source.
+
+2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Makefile.am:
 	* src/Core/Banshee.ThickClient/Banshee.ThickClient.mdp:
 	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/PhotoFolderImportSource.cs:
