@@ -1,3 +1,9 @@
+2008-07-31  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs:
+	Log a friendlier warning when the GNOME screensaver isn't running (BGO
+	#545600).
+
 2008-07-31  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:

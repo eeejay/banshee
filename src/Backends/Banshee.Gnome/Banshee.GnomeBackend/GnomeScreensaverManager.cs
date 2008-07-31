@@ -49,31 +49,40 @@ namespace Banshee.GnomeBackend
 
         public GnomeScreensaverManager ()
         {
-            if(!Bus.Session.NameHasOwner (DBUS_INTERFACE)) {
-                throw new ApplicationException (String.Format ("Could not find {0}", DBUS_INTERFACE));
+            if (Manager == null) {
+                Hyena.Log.Information ("GNOME screensaver service not found");
             }
-            
-            manager = Bus.Session.GetObject<IGnomeScreensaver> (DBUS_INTERFACE,
-                                                                new ObjectPath (DBUS_PATH));
-            
-            if (manager == null) {
-                throw new ApplicationException (String.Format ("The {0} object could not be located on the DBus interface {1}",
-                                                               DBUS_PATH, DBUS_INTERFACE));
+        }
+
+        private IGnomeScreensaver Manager {
+            get {
+                if (manager == null) {
+                    if (!Bus.Session.NameHasOwner (DBUS_INTERFACE)) {
+                        return null;
+                    }
+                    
+                    manager = Bus.Session.GetObject<IGnomeScreensaver> (DBUS_INTERFACE, new ObjectPath (DBUS_PATH));
+                    
+                    if (manager == null) {
+                        Hyena.Log.ErrorFormat ("The {0} object could not be located on the DBus interface {1}",
+                            DBUS_PATH, DBUS_INTERFACE);
+                    }
+                }
+                return manager;
             }
         }
         
         public void Inhibit ()
         {
-            if (!cookie.HasValue) {
-                cookie = manager.Inhibit ("Banshee", 
-                                          Catalog.GetString ("Fullscreen video playback active"));
+            if (!cookie.HasValue && Manager != null) {
+                cookie = Manager.Inhibit ("Banshee", Catalog.GetString ("Fullscreen video playback active"));
             }
         }
 
         public void UnInhibit ()
         {
-            if (cookie.HasValue) {
-                manager.UnInhibit (cookie.Value);
+            if (cookie.HasValue && Manager != null) {
+                Manager.UnInhibit (cookie.Value);
                 cookie = null;
             }
         }
