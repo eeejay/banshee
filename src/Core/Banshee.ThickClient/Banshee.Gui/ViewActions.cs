@@ -69,7 +69,7 @@ namespace Banshee.Gui
             AddImportant (new ToggleActionEntry [] {
                 new ToggleActionEntry ("FullScreenAction", "gtk-fullscreen",
                     Catalog.GetString ("_Fullscreen"), "F",
-                    Catalog.GetString ("Toggle Fullscreen Mode"), OnFullScreen, false),
+                    Catalog.GetString ("Enter or leave fullscreen mode"), OnFullScreen, false),
             });
 
             /*Add (new ToggleActionEntry [] {

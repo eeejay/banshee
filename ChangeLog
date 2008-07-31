@@ -1,3 +1,22 @@
+2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Fix a bunch of translatability issues (BGO #545239).
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Fix plural
+	string issue.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs: Add
+	and clarify translator comments.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:
+	Avoid contraction.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs: Avoid 'toggle'.
+
 2008-07-30  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:

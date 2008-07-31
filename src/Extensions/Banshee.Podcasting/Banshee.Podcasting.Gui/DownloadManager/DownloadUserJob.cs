@@ -49,7 +49,7 @@ namespace Banshee.Podcasting.Gui
             
             Title = Catalog.GetString ("Downloading Podcast(s)");
             Status = Catalog.GetString ("Initializing...");           
-            CancelMessage = Catalog.GetString ("Are you sure that you'd like to cancel all podcast downloads?");
+            CancelMessage = Catalog.GetString ("Cancel all podcast downloads?");
 
             this.IconNames = new string[1] {
                 Stock.Network

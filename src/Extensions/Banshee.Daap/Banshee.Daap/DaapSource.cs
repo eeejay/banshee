@@ -231,7 +231,10 @@ namespace Banshee.Daap
                     database.TrackAdded += OnDatabaseTrackAdded;
                     database.TrackRemoved += OnDatabaseTrackRemoved;
                     
-                    SetStatus (String.Format (Catalog.GetString ("Loading {0} tracks."), database.Tracks.Count), false);
+                    SetStatus (String.Format (Catalog.GetPluralString (
+                        "Loading {0} track.", "Loading {0} tracks.", database.Tracks.Count),
+                        database.Tracks.Count), false
+                    );
                     
                     // Notify (eg reload the source before sync is done) at most 5 times
                     int notify_every = Math.Max (250, (database.Tracks.Count / 4));

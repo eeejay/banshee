@@ -360,7 +360,7 @@ namespace Banshee.Gui.Widgets
             Banshee.Streaming.RadioTrackInfo radio_track = track as Banshee.Streaming.RadioTrackInfo;
 
             if ((track.MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
-                // Translators: {0} and {1} are for markup, {2} and {3}
+                // Translators: {0} and {1} are for markup so ignore them, {2} and {3}
                 // are Podcast Name and Published Date, respectively;
                 // e.g. 'from BBtv published 7/26/2007'
                 markup = MarkupFormat (Catalog.GetString ("{0}from{1} {2} {0}published{1} {3}"), 
@@ -378,7 +378,7 @@ namespace Banshee.Gui.Widgets
                     // simply: "Chicago Public Radio" or whatever the artist name is
                     markup = GLib.Markup.EscapeText (radio_track.ParentTrack.ArtistName ?? Catalog.GetString ("Unknown Stream"));
                 } else {
-                    // Translators: {0} and {1} are markup, {2} is the name of the radio station
+                    // Translators: {0} and {1} are markup so ignore them, {2} is the name of the radio station
                     string on = MarkupFormat (Catalog.GetString ("{0}on{1} {2}"), radio_track.ParentTrack.TrackTitle);
                     
                     // Translators: {0} is the "from {album} by {artist}" type string, and {1} is the "on {radio station name}" string
@@ -387,7 +387,6 @@ namespace Banshee.Gui.Widgets
             } else {
                 markup = GetByFrom (track.ArtistName, track.DisplayArtistName, track.AlbumTitle, track.DisplayAlbumTitle, true);
             }
-                 
             
             return String.Format ("<span color=\"{0}\">{1}</span>",  
                 CairoExtensions.ColorGetHex (text_color, false),
@@ -416,16 +415,16 @@ namespace Banshee.Gui.Widgets
 
             string markup = null;
             if (has_artist && has_album) {
-                // Translators: {0} and {1} are for markup, {2} and {3}
+                // Translators: {0} and {1} are for markup so ignore them, {2} and {3}
                 // are Artist Name and Album Title, respectively;
                 // e.g. 'by Parkway Drive from Killing with a Smile'
                 markup = MarkupFormat (Catalog.GetString ("{0}by{1} {2} {0}from{1} {3}"), display_artist, display_album);
             } else if (has_album) {
-                // Translators: {0} and {1} are for markup, {2} is for Album Title;
+                // Translators: {0} and {1} are for markup so ignore them, {2} is for Album Title;
                 // e.g. 'from Killing with a Smile'
                 markup = MarkupFormat (Catalog.GetString ("{0}from{1} {2}"), display_album);
             } else if (has_artist || unknown_ok) {
-                // Translators: {0} and {1} are for markup, {2} is for Artist Name;
+                // Translators: {0} and {1} are for markup so ignore them, {2} is for Artist Name;
                 // e.g. 'by Parkway Drive'
                 markup = MarkupFormat (Catalog.GetString ("{0}by{1} {2}"), display_artist);
             }

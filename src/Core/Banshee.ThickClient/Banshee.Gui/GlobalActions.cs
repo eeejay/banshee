@@ -182,6 +182,7 @@ namespace Banshee.Gui
             } catch {}
 
             chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
+            // Translators: verb
             chooser.AddButton (Catalog.GetString("Import"), ResponseType.Ok);
             
             int response = chooser.Run();            

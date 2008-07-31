@@ -81,7 +81,9 @@ namespace Banshee.Lastfm.Radio
                 )
             });
 
+            // Translators: {0} is a type of Last.fm station, eg "Fans of" or "Similar to".
             string listen_to = Catalog.GetString ("Listen to {0} Station");
+            // Translators: {0} is a type of Last.fm station, eg "Fans of" or "Similar to".
             string listen_to_long = Catalog.GetString ("Listen to the Last.fm {0} station for this artist");
 
             // Artist actions
