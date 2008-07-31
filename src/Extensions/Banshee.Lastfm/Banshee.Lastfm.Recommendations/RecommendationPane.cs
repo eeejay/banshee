@@ -158,7 +158,7 @@ namespace Banshee.Lastfm.Recommendations
             main_box = new HBox ();
             main_box.BorderWidth = 5;
 
-            artist_box = new TitledList (String.Format ("Recommended Artists"));
+            artist_box = new TitledList (Catalog.GetString ("Recommended Artists"));
             similar_artists_view = new TileView (2);
             similar_artists_view_sw = new Gtk.ScrolledWindow ();
             similar_artists_view_sw.SetPolicy (PolicyType.Never, PolicyType.Automatic);

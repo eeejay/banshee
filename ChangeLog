@@ -1,3 +1,8 @@
+2008-07-31  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:
+	Mark a string for translation (BGO #545677).
+
 2008-07-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
