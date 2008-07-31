@@ -169,10 +169,11 @@ namespace Hyena.Data
             Set<int>(name, value);
         }
         
-        public string GetString(string name)
+        // No longer used, since it causes strings to be marked for translation
+        /*public string GetString(string name)
         {
             return Get<string>(name);
-        }
+        }*/
         
         public void SetString(string name, string value)
         {

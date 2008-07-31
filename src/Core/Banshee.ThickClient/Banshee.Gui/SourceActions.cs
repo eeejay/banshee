@@ -220,7 +220,7 @@ namespace Banshee.Gui
         {
             UpdateActions ();
 
-            string path = ActionSource.Properties.GetString ("GtkActionPath") ?? "/SourceContextMenu";
+            string path = ActionSource.Properties.Get<string> ("GtkActionPath") ?? "/SourceContextMenu";
             Gtk.Menu menu = Actions.UIManager.GetWidget (path) as Menu;
             if (menu == null || menu.Children.Length == 0) {
                 SourceView.ResetHighlight ();

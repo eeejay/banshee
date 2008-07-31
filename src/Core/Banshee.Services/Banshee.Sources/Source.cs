@@ -469,12 +469,12 @@ namespace Banshee.Sources
         }
 
         public virtual string Name {
-            get { return properties.GetString ("Name"); }
+            get { return properties.Get<string> ("Name"); }
             set { properties.SetString ("Name", value); }
         }
 
         public virtual string GenericName {
-            get { return properties.GetString ("GenericName"); }
+            get { return properties.Get<string> ("GenericName"); }
             set { properties.SetString ("GenericName", value); }
         }
         
@@ -496,7 +496,7 @@ namespace Banshee.Sources
         }
                 
         public virtual string FilterQuery {
-            get { return properties.GetString ("FilterQuery"); }
+            get { return properties.Get<string> ("FilterQuery"); }
             set { properties.SetString ("FilterQuery", value); }
         }
         

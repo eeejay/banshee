@@ -70,9 +70,9 @@ namespace Banshee.Sources.Gui
             Assembly asm = source.Properties.Get<Assembly> ("ResourceAssembly");
             
             if (icon_type == typeof (string)) {
-                icon = IconThemeUtils.LoadIcon (asm, size, source.Properties.GetString (name_property));
+                icon = IconThemeUtils.LoadIcon (asm, size, source.Properties.Get<string> (name_property));
             } else if (icon_type == typeof (string [])) {
-                icon = IconThemeUtils.LoadIcon (asm, size, source.Properties.GetStringList (name_property));
+                icon = IconThemeUtils.LoadIcon (asm, size, source.Properties.Get<string> (name_property));
             }
 
             if (icon == null) {

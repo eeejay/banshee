@@ -1,5 +1,16 @@
 2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceIconResolver.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Libraries/Hyena/Hyena.Data/PropertyStore.cs: Change GetString calls
+	to Get<string> calls, to avoid a lot of strings being marked for
+	translation when they shouldn't be.
+
+2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Fix a bunch of translatability issues (BGO #545239).
 
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Fix plural

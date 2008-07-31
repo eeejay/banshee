@@ -187,7 +187,7 @@ namespace Banshee.Gui
             }
                 
             Assembly assembly = Assembly.GetAssembly (active_source.GetType ());
-            string ui_file = active_source.Properties.GetString ("ActiveSourceUIResource");
+            string ui_file = active_source.Properties.Get<string> ("ActiveSourceUIResource");
             
             if (ui_file != null) {
                 using (StreamReader reader = new StreamReader (assembly.GetManifestResourceStream (ui_file))) {

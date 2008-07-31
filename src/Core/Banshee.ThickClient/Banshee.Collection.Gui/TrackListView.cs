@@ -80,7 +80,7 @@ namespace Banshee.Collection.Gui
                 while (source != null && controller == null) {
                     controller = source.Properties.Get<ColumnController> ("TrackView.ColumnController");
                     if (controller == null) {
-                        string controller_xml = source.Properties.GetString ("TrackView.ColumnControllerXml");
+                        string controller_xml = source.Properties.Get<string> ("TrackView.ColumnControllerXml");
                         if (controller_xml != null) {
                             controller = new XmlColumnController (controller_xml);
                             source.Properties.Remove ("TrackView.ColumnControllerXml");
