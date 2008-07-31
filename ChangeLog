@@ -1,5 +1,12 @@
 2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceIconResolver.cs:
+	Whoops, revert crasher from previous GetString changes.
+
+	* data/audio-profiles/mp3-lame.xml.in: Add 256 kbps as an option.
+
+2008-07-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Extensions.mds:
 	* src/Extensions/Banshee.SqlDebugConsole/Makefile.am:
 	* src/Extensions/Banshee.SqlDebugConsole/Resources/GlobalUI.xml:
