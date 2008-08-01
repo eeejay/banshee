@@ -45,8 +45,8 @@ namespace Banshee.Library.Gui
             
             photo_folders = new string [] {
                 Environment.GetFolderPath (Environment.SpecialFolder.MyPictures),
-                Paths.Combine (desktop, "Photos"),
-                Paths.Combine (personal, "Photos")
+                Paths.Combine (desktop, "Photos"), Paths.Combine (desktop, "photos"),
+                Paths.Combine (personal, "Photos"), Paths.Combine (personal, "photos")
             };
             
             // Make sure we don't accidentally scan the entire home or desktop directory

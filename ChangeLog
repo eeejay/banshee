@@ -1,3 +1,27 @@
+2008-08-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Makefile.am:
+	* src/Extensions/Extensions.mds:
+	* src/Extensions/Banshee.MediaWeb/*: New but totally-unfinished extension
+	for embedding WebKit.
+
+	* configure.ac:
+	* build/build.environment.mk:
+	* build/m4/banshee/mediaweb.m4: Add config option to --enable-mediaweb
+	that also checks for webkit-sharp.
+
+	* src/Extensions/Template/Makefile.am:
+	* src/create-extension: A few tweaks to do more for the user.
+
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/PhotoFolderImportSource.cs:
+	Add a couple more possible photo folder paths.
+
+	* NEWS:
+	* src/Core/Banshee.Core/Resources/contributors.xml: Make our credits of
+	Christopher Halse Rogers consistent.
+
+	* src/Libraries/Lastfm/Lastfm.mdp: Remove duplicate Hyena ref.
+
 2008-07-31  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs:

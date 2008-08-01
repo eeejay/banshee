@@ -9,6 +9,7 @@
       <Entry build="True" name="Banshee.NowPlaying" configuration="Debug" />
       <Entry build="True" name="Banshee.Bookmarks" configuration="Debug" />
       <Entry build="True" name="Banshee.AudioCd" configuration="Debug" />
+      <Entry build="True" name="Banshee.MediaWeb" configuration="Debug" />
       <Entry build="True" name="Banshee.MiniMode" configuration="Debug" />
       <Entry build="True" name="Banshee.Podcasting" configuration="Debug" />
       <Entry build="True" name="Banshee.Sample" configuration="Debug" />
@@ -28,6 +29,7 @@
     <Execute type="None" entry="Banshee.NowPlaying" />
     <Execute type="None" entry="Banshee.Bookmarks" />
     <Execute type="None" entry="Banshee.AudioCd" />
+    <Execute type="None" entry="Banshee.MediaWeb" />
     <Execute type="None" entry="Banshee.MiniMode" />
     <Execute type="None" entry="Banshee.Podcasting" />
     <Execute type="None" entry="Banshee.Sample" />
@@ -46,6 +48,7 @@
     <Entry filename="Banshee.NowPlaying/Banshee.NowPlaying.mdp" />
     <Entry filename="Banshee.Bookmarks/Banshee.Bookmarks.mdp" />
     <Entry filename="Banshee.AudioCd/Banshee.AudioCd.mdp" />
+    <Entry filename="Banshee.MediaWeb/Banshee.MediaWeb.mdp" />
     <Entry filename="Banshee.MiniMode/Banshee.MiniMode.mdp" />
     <Entry filename="Banshee.Podcasting/Banshee.Podcasting.mdp" />
     <Entry filename="Banshee.Sample/Banshee.Sample.mdp" />

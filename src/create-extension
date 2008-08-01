@@ -108,7 +108,7 @@ done
 
 EX_DEPS="  <Dependencies>^${EX_DEPS}^  </Dependencies>"
 
-mkdir -p "${EX_PATH}"
+mkdir -p "${EX_PATH}/${EX_NAME}"
 cp ${TEMPLATE_PATH}/Template.mdp "${EX_PATH}/${EX_NAME}.mdp"
 cp ${TEMPLATE_PATH}/Template.addin.xml "${EX_PATH}/${EX_NAME}.addin.xml"
 cp ${TEMPLATE_PATH}/Makefile.am "${EX_PATH}"

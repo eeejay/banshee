@@ -64,6 +64,9 @@ BANSHEE_CHECK_BOO
 dnl Monodoc (optional through --disable-docs)
 SHAMROCK_CHECK_MONODOC
 
+dnl MediaWeb (optional through --enable-mediaweb)
+BANSHEE_CHECK_MEDIAWEB
+
 dnl NUnit (optional)
 SHAMROCK_CHECK_NUNIT
 
@@ -169,6 +172,7 @@ src/Extensions/Banshee.Daap/Makefile
 src/Extensions/Banshee.FileSystemQueue/Makefile
 src/Extensions/Banshee.InternetRadio/Makefile
 src/Extensions/Banshee.Lastfm/Makefile
+src/Extensions/Banshee.MediaWeb/Makefile
 src/Extensions/Banshee.MiniMode/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
@@ -199,6 +203,9 @@ ${PACKAGE}-${VERSION}
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
+
+    Unfinished, unstable, unusable components:
+      MediaWeb:        ${enable_mediaweb}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "
