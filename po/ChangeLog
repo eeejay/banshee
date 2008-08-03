@@ -1,3 +1,8 @@
+2008-08-03  Andre Klapper  <a9016009@gmx.de>
+
+	* be@latin.po:
+	* he.po: Fix language team names to fix bug #546023.
+
 2008-08-01  Ignacio Casal Quinteiro  <nacho.resa@gmail.com>
 
 	 gl.po: Updated Galician translation
