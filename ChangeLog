@@ -1,3 +1,9 @@
+2008-08-04  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemQueryJob.cs:
+	Patch from  Benjamín Valero Espinosa that adds preferential filenames when 
+	looking for cover art file (BGO #545911).
+
 2008-08-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Makefile.am:

@@ -58,6 +58,7 @@ namespace Banshee.Metadata.FileSystem
         }
         
         private static string [] extensions = new string [] { ".jpg", ".jpeg" };
+        private static string [] filenames = new string [] { "cover", "folder", "front" };
         
         protected void Fetch ()
         {
@@ -80,6 +81,12 @@ namespace Banshee.Metadata.FileSystem
                 
                 string extension = System.IO.Path.GetExtension (file).ToLower ();
                 if (Array.IndexOf (extensions, extension) != -1) {
+                    string filename = System.IO.Path.GetFileNameWithoutExtension (file).ToLower ();
+                    if (Array.IndexOf (filenames, filename) != -1) {
+                        best_file = file;
+                        break;
+                    }
+
                     long size = Banshee.IO.File.GetSize (new SafeUri (file));
                     if (size > max_size) {
                         max_size = size;
