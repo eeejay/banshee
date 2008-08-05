@@ -81,11 +81,15 @@ namespace Banshee.InternetRadio
             
             Properties.SetString ("TrackPropertiesActionLabel", Catalog.GetString ("Edit Station"));
             Properties.Set<InvokeHandler> ("TrackPropertiesActionHandler", delegate {
-                if (TrackModel.SelectedItems == null || TrackModel.SelectedItems.Count <= 0) {
+                ITrackModelSource active_track_model_source =
+                    (ITrackModelSource) ServiceManager.SourceManager.ActiveSource;
+
+                if (active_track_model_source.TrackModel.SelectedItems == null ||
+                    active_track_model_source.TrackModel.SelectedItems.Count <= 0) {
                     return;
                 }
                 
-                foreach (TrackInfo track in TrackModel.SelectedItems) {
+                foreach (TrackInfo track in active_track_model_source.TrackModel.SelectedItems) {
                     DatabaseTrackInfo station_track = track as DatabaseTrackInfo;
                     if (station_track != null) {
                         EditStation (station_track);

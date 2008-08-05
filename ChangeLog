@@ -1,3 +1,9 @@
+2008-08-05  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	Patch from Félix Velasco to select the proper source when showing the radio
+	station editor (BGO #539397).
+
 2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackFilterListView.cs:
