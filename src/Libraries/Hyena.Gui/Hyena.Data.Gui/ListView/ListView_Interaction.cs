@@ -186,12 +186,7 @@ namespace Hyena.Data.Gui
 
                 case Gdk.Key.Return:
                 case Gdk.Key.KP_Enter:
-                    if (Selection != null && Selection.FocusedIndex != -1) {
-                        Selection.Clear (false);
-                        Selection.Select (Selection.FocusedIndex);
-                        OnRowActivated ();
-                        handled = true;
-                    }
+                    handled = ActivateSelection ();
                     break;
                 
                 case Gdk.Key.space:
@@ -207,6 +202,17 @@ namespace Hyena.Data.Gui
             }
             
             return base.OnKeyPressEvent (press);
+        }
+        
+        protected bool ActivateSelection ()
+        {
+            if (Selection != null && Selection.FocusedIndex != -1) {
+                Selection.Clear (false);
+                Selection.Select (Selection.FocusedIndex);
+                OnRowActivated ();
+                return true;
+            }
+            return false;
         }
         
 #region Cell Event Proxy        

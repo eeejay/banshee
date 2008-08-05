@@ -68,6 +68,15 @@ namespace Banshee.Collection.Gui
             };
         }
         
+        protected override bool OnKeyPressEvent (Gdk.EventKey press)
+        {
+            // Have o act the same as enter - activate the selection
+            if (press.Key == Gdk.Key.o && ActivateSelection ()) {
+                return true;
+            }
+            return base.OnKeyPressEvent (press);
+        }
+        
         public override void SetModel (IListModel<TrackInfo> value, double vpos)
         {
             //Console.WriteLine ("TrackListView.SetModel for {0} with vpos {1}", value, vpos);

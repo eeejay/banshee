@@ -91,13 +91,13 @@ namespace Banshee.Gui
                 new ActionEntry ("WikiGuideAction", Stock.Help,
                     Catalog.GetString ("Banshee _User Guide (Wiki)"), null,
                     Catalog.GetString ("Learn about how to use Banshee"), delegate {
-                        Banshee.Web.Browser.Open ("http://banshee-project.org/Guide");
+                        Banshee.Web.Browser.Open ("http://banshee-project.org/support/guide/");
                     }),
                     
                 new ActionEntry ("WikiSearchHelpAction", null,
                     Catalog.GetString ("Advanced Collection Searching"), null,
                     Catalog.GetString ("Learn advanced ways to search your media collection"), delegate {
-                        Banshee.Web.Browser.Open ("http://banshee-project.org/OnePointEx/Search");
+                        Banshee.Web.Browser.Open ("http://banshee-project.org/support/guide/searching/");
                     }),
                     
                 new ActionEntry ("WikiAction", null,
@@ -109,7 +109,7 @@ namespace Banshee.Gui
                 new ActionEntry ("WikiDeveloperAction", null,
                     Catalog.GetString ("_Get Involved"), null,
                     Catalog.GetString ("Become a contributor to Banshee"), delegate {
-                        Banshee.Web.Browser.Open ("http://banshee-project.org/Developers");
+                        Banshee.Web.Browser.Open ("http://banshee-project.org/contribute/");
                     }),
                  
                 new ActionEntry ("VersionInformationAction", null,

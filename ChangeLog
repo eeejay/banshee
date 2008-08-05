@@ -1,3 +1,22 @@
+2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Factor out activate-selection code into protected method.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Handle 'o' the same as enter - activate the row(s), which starts playing
+	them.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Update links to
+	the website.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Update
+	copyright.
+
+	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:
+	Make sure errors are reported on the main thread, avoid hanging when
+	importing from Amarok.
+
 2008-08-04  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemQueryJob.cs:
