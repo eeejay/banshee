@@ -1,3 +1,13 @@
+2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistParser.cs:
+	Instead of throwing an exception when the uri scheme isn't one we support,
+	simply return false to indicate the parsing failed.  Fixes bug where
+	mms:// URIs wouldn't load (BGO #546392).
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Call
+	typeof (T) once instead of N times.
+
 2008-08-05  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:

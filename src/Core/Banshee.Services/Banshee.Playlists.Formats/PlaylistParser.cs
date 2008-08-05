@@ -91,7 +91,8 @@ namespace Banshee.Playlists.Formats
                         response.Close();
                     }
                 } else {
-                    throw new InvalidOperationException("Only HTTP and local playlist access is supported");
+                    Hyena.Log.DebugFormat ("Not able to parse playlist at {0}", uri);
+                    return false;
                 }
                                   
                 PlaylistFormatDescription matching_format = null;

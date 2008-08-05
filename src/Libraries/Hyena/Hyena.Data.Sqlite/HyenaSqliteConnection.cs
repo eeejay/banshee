@@ -117,9 +117,10 @@ namespace Hyena.Data.Sqlite
         // SELECT single column, multiple rows queries
         public IEnumerable<T> QueryEnumerable<T> (HyenaSqliteCommand command)
         {
+            Type type = typeof (T);
             using (IDataReader reader = Query (command)) {
                 while (reader.Read ()) {
-                    yield return (T)SqliteUtils.FromDbFormat (typeof (T), reader[0]);
+                    yield return (T)SqliteUtils.FromDbFormat (type, reader[0]);
                 }
             }
         }
