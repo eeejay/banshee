@@ -1,5 +1,10 @@
 2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Nereid/Nereid/Client.cs: Patch from Jo Shields fixing bug
+	where --help-query-player didn't work (BGO #546334).
+
+2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistParser.cs:
 	Instead of throwing an exception when the uri scheme isn't one we support,
 	simply return false to indicate the parsing failed.  Fixes bug where

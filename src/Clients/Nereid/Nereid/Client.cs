@@ -180,7 +180,7 @@ namespace Nereid
                     case "help": Console.WriteLine (commands.ToString ("help")); break;
                     case "help-debug": Console.WriteLine (commands.ToString ("debugging")); break;
                     case "help-query-track": Console.WriteLine (commands.ToString ("query-track")); break;
-                    case "help-control-player": Console.WriteLine (commands.ToString ("query-player")); break;
+                    case "help-query-player": Console.WriteLine (commands.ToString ("query-player")); break;
                     case "help-ui": Console.WriteLine (commands.ToString ("ui")); break;
                     case "help-playback": Console.WriteLine (commands.ToString ("playback")); break;
                     default:
