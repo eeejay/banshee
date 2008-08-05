@@ -89,7 +89,7 @@ namespace Banshee.Playlists.Formats
                 
                 Dictionary<string, object> element = AddElement();
                 
-                while(!xml_reader.EOF && xml_reader.Depth > 1) {
+                do {
                     try {
                         xml_reader.Read();
                     } catch {
@@ -106,7 +106,7 @@ namespace Banshee.Playlists.Formats
                             element["title"] = xml_reader.Value;
                             break;
                         case "ref":
-                            element["uri"] = ResolveUri(xml_reader["href"]);
+                            element["uri"] = ResolveUri(xml_reader["HREF"] ?? xml_reader["href"]);
                             break;
                         case "duration":
                             try {
@@ -116,7 +116,7 @@ namespace Banshee.Playlists.Formats
                             }
                             break;
                     }
-                }
+                } while(!xml_reader.EOF && xml_reader.Depth > 1); 
             }
         }
         

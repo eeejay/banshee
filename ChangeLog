@@ -1,5 +1,11 @@
 2008-08-05  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:
+	Another patch from Félix Velasco, this time to fix the parsing of ASX 
+	playlists (BGO #545646).
+
+2008-08-05  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
 	Patch from Félix Velasco to select the proper source when showing the radio
 	station editor (BGO #539397).
