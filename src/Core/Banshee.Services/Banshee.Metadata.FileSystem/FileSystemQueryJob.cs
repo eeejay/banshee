@@ -71,6 +71,7 @@ namespace Banshee.Metadata.FileSystem
             long max_size = 0;
             string best_file = null;
             int items_in_directory = 0;
+            bool found_definite_best = false;
             int max_acceptable_items = Math.Max (20, track.TrackCount + 8);
             foreach (string file in Banshee.IO.Directory.GetFiles (directory)) {
                 // Ignore directories with tons of songs in them; this lookup is only intended for when the
@@ -79,18 +80,22 @@ namespace Banshee.Metadata.FileSystem
                     return;
                 }
                 
+                if (found_definite_best) {
+                    continue;
+                }
+                
                 string extension = System.IO.Path.GetExtension (file).ToLower ();
                 if (Array.IndexOf (extensions, extension) != -1) {
                     string filename = System.IO.Path.GetFileNameWithoutExtension (file).ToLower ();
                     if (Array.IndexOf (filenames, filename) != -1) {
                         best_file = file;
-                        break;
-                    }
-
-                    long size = Banshee.IO.File.GetSize (new SafeUri (file));
-                    if (size > max_size) {
-                        max_size = size;
-                        best_file = file;
+                        found_definite_best = true;
+                    } else {
+                        long size = Banshee.IO.File.GetSize (new SafeUri (file));
+                        if (size > max_size) {
+                            max_size = size;
+                            best_file = file;
+                        }
                     }
                 }
             }

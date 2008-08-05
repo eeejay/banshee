@@ -39,6 +39,9 @@ namespace Banshee.NowPlaying
     {
         private Gdk.Pixbuf idle_pixbuf;
         private bool render_idle = true;
+        private bool render_video = false;
+        private Gdk.Pixbuf last_coverart_pixbuf;
+        private string last_coverart_id;
 
         public VideoDisplay ()
         {
@@ -64,23 +67,60 @@ namespace Banshee.NowPlaying
                 return true;
             }
             
-            if (!render_idle && ServiceManager.PlayerEngine.SupportsVideo) {
+            if (render_video && ServiceManager.PlayerEngine.SupportsVideo) {
                 ExposeVideo (evnt);
                 return true;
             }
-            
+
+            if (render_idle || !DrawCoverArt ()) {
+                DrawIdle ();
+            }
+
+            return true;
+        }
+        
+        private void DrawIdle ()
+        {
             if (idle_pixbuf == null) {
                 idle_pixbuf = Gdk.Pixbuf.LoadFromResource ("idle-logo.png");
             }
             
             if (idle_pixbuf == null) {
-                return true;
+                return;
             }
             
             RenderWindow.DrawPixbuf (Style.BackgroundGC (StateType.Normal), idle_pixbuf, 0, 0, 
                 (Allocation.Width - idle_pixbuf.Width) / 2, (Allocation.Height - idle_pixbuf.Height) / 2, 
                 idle_pixbuf.Width, idle_pixbuf.Height, Gdk.RgbDither.Normal, 0, 0);
+        }
+        
+        private bool DrawCoverArt ()
+        {
+            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
+            if (track == null) {
+                return false;
+            }
             
+            Gdk.Pixbuf display_pixbuf = null;
+            
+            if (track.ArtworkId == last_coverart_id) {
+                display_pixbuf = last_coverart_pixbuf;
+            } else if (Banshee.Base.CoverArtSpec.CoverExists (track.ArtworkId)) {
+                if (last_coverart_pixbuf != null) {
+                    last_coverart_pixbuf.Dispose ();
+                }
+                last_coverart_id = track.ArtworkId;
+                display_pixbuf = last_coverart_pixbuf = new Gdk.Pixbuf (Banshee.Base.CoverArtSpec.GetPath (last_coverart_id));
+            } else {
+                return false;
+            }
+            
+            int img_w = Math.Min (Allocation.Width, display_pixbuf.Width);
+            int img_h = Math.Min (Allocation.Height, display_pixbuf.Height);
+            RenderWindow.DrawPixbuf (Style.BackgroundGC (StateType.Normal), display_pixbuf, 0, 0, 
+                (Allocation.Width - img_w) / 2, (Allocation.Height - img_h) / 2, 
+                img_w, img_h, Gdk.RgbDither.Normal, 0, 0
+            );
             return true;
         }
         
@@ -92,7 +132,8 @@ namespace Banshee.NowPlaying
         private void ToggleIdleVisibility ()
         {
             TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
-            render_idle = track == null || (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0;
+            render_idle = track == null;
+            render_video = !render_idle && (track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0;
             QueueDraw ();
         }
         

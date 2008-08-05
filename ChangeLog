@@ -1,5 +1,14 @@
 2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	Show cover art here when playing music (BGO #539180).
+
+	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemQueryJob.cs:
+	Fix bug just introduced by recent commit that ignored the
+	too-many-random-files-in-this-folder limit if the file was cover.jpg etc.
+
+2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Clients/Nereid/Nereid/Client.cs: Patch from Jo Shields fixing bug
 	where --help-query-player didn't work (BGO #546334).
 
