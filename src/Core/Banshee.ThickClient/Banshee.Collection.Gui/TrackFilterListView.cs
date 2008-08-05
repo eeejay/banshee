@@ -27,6 +27,7 @@
 //
 
 using System;
+using Gtk;
 
 using Hyena.Data;
 using Hyena.Data.Gui;
@@ -44,6 +45,8 @@ namespace Banshee.Collection.Gui
         public TrackFilterListView () : base ()
         {
             column_controller = new ColumnController ();
+
+            ForceDragSourceSet = true;
             
             RowActivated += delegate {
                 ServiceManager.PlaybackController.NextSource = (ServiceManager.SourceManager.ActiveSource as Banshee.Sources.ITrackModelSource);
@@ -71,5 +74,16 @@ namespace Banshee.Collection.Gui
             ServiceManager.Get<InterfaceActionService> ().TrackActions.UnsuppressSelectActions ();
             return base.OnFocusOutEvent(evnt);
         }
+
+#region Drag and Drop
+
+        protected override void OnDragSourceSet ()
+        {
+            base.OnDragSourceSet ();
+            Drag.SourceSetIconName (this, "audio-x-generic");
+        }
+
+#endregion
+
     }
 }

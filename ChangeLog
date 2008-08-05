@@ -1,5 +1,18 @@
 2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackFilterListView.cs:
+	Enable dragging filter items (artists/albums/etc) the same as you would
+	drag tracks - onto the play queue, etc (BGO #524418).
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	Check where the drag came from, and if it wasn't directly from the track
+	view, assume it was from a filter view, and add everything in the track
+	model to the drop destination instead of just the user-selected items.
+
+	* src/Core/Banshee.Core/Resources/translators.xml: Updated
+
+2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
 	Factor out activate-selection code into protected method.
 

@@ -228,8 +228,14 @@ namespace Banshee.Sources.Gui
                         ServiceManager.Get<Banshee.Library.LibraryImportManager> ().Enqueue (uri);
                     }
                 } else if (data.Target.Name == Hyena.Data.Gui.ListViewDragDropTarget.ModelSelection.Target) {
-                    drop_source.MergeSourceInput (ServiceManager.SourceManager.ActiveSource, 
-                        SourceMergeType.ModelSelection);
+                    // If the drag source is not the track list, it's a filter list, and instead of
+                    // only merging the track model's selected tracks, we should merge all the tracks
+                    // currently matching the active filters.
+                    bool from_filter = !(Gtk.Drag.GetSourceWidget (context) is Banshee.Collection.Gui.TrackListView);
+                    drop_source.MergeSourceInput (
+                        ServiceManager.SourceManager.ActiveSource,
+                        from_filter ? SourceMergeType.Source : SourceMergeType.ModelSelection
+                    );
                 } else {
                     Hyena.Log.DebugFormat ("SourceView got unknown drag target type: {0}", data.Target.Name);
                 }
