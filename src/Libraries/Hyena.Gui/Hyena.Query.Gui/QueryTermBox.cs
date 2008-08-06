@@ -238,6 +238,8 @@ namespace Hyena.Query.Gui
 
                 field_chooser.Active = Array.IndexOf (sorted_fields, node.Field);
 
+                op_chooser.Active = operators.IndexOf (node.Operator);
+
                 current_value_entry.QueryValue = node.Value;
                 /*foreach (QueryValueEntry entry in value_entries) {
                     if (QueryValueEntry.GetValueType (entry) == node.Value.GetType ()) {
@@ -248,7 +250,6 @@ namespace Hyena.Query.Gui
                     }
                 }*/
 
-                op_chooser.Active = operators.IndexOf (node.Operator);
             }
         }
     }

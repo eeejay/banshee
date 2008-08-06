@@ -1,3 +1,9 @@
+2008-08-06  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs: Patch from 
+	Félix Velasco fixing a crash when editing a smart playlist with a date 
+	field (BGO #539960).
+
 2008-08-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
