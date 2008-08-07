@@ -508,7 +508,7 @@ namespace Banshee.Database
                 )
             ");
             Execute (String.Format ("INSERT INTO CoreConfiguration VALUES (null, 'DatabaseVersion', {0})", CURRENT_VERSION));
-            Execute ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', 0)");
+            Execute (String.Format ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', {0})", CURRENT_METADATA_VERSION));
             
             Execute(@"
                 CREATE TABLE CorePrimarySources (

@@ -32,6 +32,7 @@ using Gtk;
 
 using Hyena.Data;
 using Hyena.Data.Gui;
+using Hyena.Gui;
 
 using Banshee.Sources;
 using Banshee.ServiceStack;
@@ -71,7 +72,7 @@ namespace Banshee.Collection.Gui
         protected override bool OnKeyPressEvent (Gdk.EventKey press)
         {
             // Have o act the same as enter - activate the selection
-            if (press.Key == Gdk.Key.o && ActivateSelection ()) {
+            if (GtkUtilities.NoImportantModifiersAreSet () && press.Key == Gdk.Key.o && ActivateSelection ()) {
                 return true;
             }
             return base.OnKeyPressEvent (press);

@@ -1,3 +1,22 @@
+2008-08-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Make sure no modifiers are set when handling o like enter.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Only reload a max of 5 times during a given import; every 250 items or
+	20%, whatever is more.
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Add a
+	protected TotalCount property for the above 20% to use.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Fix bug where the metadata refresh was triggered for brand new databases.
+
+	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
+	Fix bug with rounding Amarok's ratings down (eg 7 down to 3, etc), and not
+	migrating the added and last played stamps.
+
 2008-08-06  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryTermBox.cs: Patch from 

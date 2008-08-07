@@ -206,7 +206,10 @@ namespace Banshee.Collection.Database
             }
 
             counts[track.PrimarySourceId] = counts.ContainsKey (track.PrimarySourceId) ? counts[track.PrimarySourceId] + 1 : 1;
-            if (counts[track.PrimarySourceId] % 250 == 0) {
+            
+            // Reload every 20% or every 250 tracks, whatever is more (eg at most reload 5 times during an import)
+            if (counts[track.PrimarySourceId] >= Math.Max (TotalCount/5, 250)) {
+                counts[track.PrimarySourceId] = 0;
                 track.PrimarySource.NotifyTracksAdded ();
             }
 
@@ -227,15 +230,18 @@ namespace Banshee.Collection.Database
             ErrorSource.AddMessage (Path.GetFileName (path), msg);
             Log.Error (path, msg, false);
         }
-
-        protected override void OnImportFinished ()
+        
+        public void NotifyAllSources ()
         {
             foreach (int primary_source_id in counts.Keys) {
                 PrimarySource.GetById (primary_source_id).NotifyTracksAdded ();
             }
-
             counts.Clear ();
+        }
 
+        protected override void OnImportFinished ()
+        {
+            NotifyAllSources ();
             base.OnImportFinished ();
         }
     }

@@ -282,6 +282,10 @@ namespace Banshee.Collection
             set { import_element.Threaded = scanner_element.Threaded = value; }
         }
         
+        protected int TotalCount {
+            get { return import_element == null ? 0 : import_element.TotalCount; }
+        }
+        
 #endregion
 
     }

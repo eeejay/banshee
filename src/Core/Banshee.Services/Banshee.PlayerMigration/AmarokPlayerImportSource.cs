@@ -65,21 +65,8 @@ namespace Banshee.PlayerMigration
             } catch (Exception) {}
 
             try {
-                conn.Execute (@"
-                    CREATE TEMP TABLE devices_tmp
-                           (id INTEGER PRIMARY KEY,
-                            lastmountpoint VARCHAR(255));
-                    INSERT INTO devices_tmp (id, lastmountpoint)
-                           SELECT devices.id,
-                                  devices.lastmountpoint
-                           FROM devices;
-                    INSERT OR IGNORE INTO devices_tmp (id, lastmountpoint)
-                           VALUES (-1, '/');"
-                );
-                
                 HyenaSqliteCommand cmd = new HyenaSqliteCommand (@"
-                    SELECT DISTINCT
-                           devices_tmp.lastmountpoint,
+                    SELECT DISTINCT NULL,
                            tags.url,
                            tags.title,
                            artist.name,
@@ -87,15 +74,13 @@ namespace Banshee.PlayerMigration
                            album.name,
                            year.name,
                            tags.track,
-                           tags.length,
-                           tags.deviceid
+                           tags.length
                      FROM  tags,
-                           devices_tmp,
                            artist,
                            album,
                            genre,
                            year
-                     WHERE tags.deviceid = devices_tmp.id
+                     WHERE tags.deviceid = -1
                        AND tags.artist = artist.id
                        AND tags.album = album.id
                        AND tags.genre = genre.id
@@ -103,9 +88,9 @@ namespace Banshee.PlayerMigration
                 );
                 
                 HyenaSqliteCommand stats_cmd = new HyenaSqliteCommand (@"
-                                                     SELECT DISTINCT rating/2, playcounter
+                                                     SELECT DISTINCT (rating+rating%2)/2, playcounter, createdate, accessdate
                                                      FROM   statistics
-                                                     WHERE  accessdate > 0 AND url = ? AND deviceid = ?");
+                                                     WHERE  url = ? AND deviceid = -1");
 
                 int processed = 0;
 
@@ -117,12 +102,11 @@ namespace Banshee.PlayerMigration
                      processed++;
 
                      try {
-                         string mountpoint = (string) reader[0];
                          string path = (string) reader[1];
                          
                          SafeUri uri = null;
                          if (path.StartsWith ("./")) {
-                             uri = new SafeUri (Path.Combine (mountpoint, path.Substring (2)));
+                             uri = new SafeUri (path.Substring (1));
                          } else if (path.StartsWith ("/")) {
                              uri = new SafeUri (path);
                          } else {
@@ -131,18 +115,21 @@ namespace Banshee.PlayerMigration
 
                          string title = (string) reader[2];
                          string artist = (string) reader[3];
+                         //Console.WriteLine ("Amarok import has {0}/{1} - {2}", artist, title, uri);
                          
                          // the following fields are not critical and can be skipped if something goes wrong
                          int rating = 0, playcount = 0;
+                         long created = 0, accessed = 0;
 
                          // Try to read stats
                          try {
-                             int deviceid = Convert.ToInt32 (reader [9]);
-                             IDataReader stats_reader = conn.Query (stats_cmd, path, deviceid);
+                             IDataReader stats_reader = conn.Query (stats_cmd, path);
 
                              while (stats_reader.Read ()) {
                                  rating = Convert.ToInt32 (stats_reader[0]);
                                  playcount = Convert.ToInt32 (stats_reader[1]);
+                                 created = Convert.ToInt64 (stats_reader[2]);
+                                 accessed = Convert.ToInt64 (stats_reader[3]);
                              }
                              stats_reader.Close ();
                          } catch (Exception) {}
@@ -156,9 +143,13 @@ namespace Banshee.PlayerMigration
                                  throw new Exception (String.Format (Catalog.GetString ("Unable to import track: {0}"), uri.AbsoluteUri));
                              }
                             
-                             if (rating > 0 || playcount > 0) {
+                             if (rating > 0 || playcount > 0 || created > 0 || accessed > 0) {
                                  track.Rating = rating;
                                  track.PlayCount = playcount;
+                                 if (created > 0)
+                                     track.DateAdded = Hyena.DateTimeUtil.FromTimeT (created);
+                                 if (accessed > 0)
+                                     track.LastPlayed = Hyena.DateTimeUtil.FromTimeT (accessed);
                                  track.Save (false);
                              }
                          } catch (Exception e) {
@@ -170,6 +161,7 @@ namespace Banshee.PlayerMigration
                      }
                  }
                  reader.Close ();
+                 import_manager.NotifyAllSources ();
                  
                  // TODO migrating more than the podcast subscriptions (eg whether to auto sync them etc) means 1) we need to have those features
                  // and 2) we need to depend on Migo and/or the Podcast extension
