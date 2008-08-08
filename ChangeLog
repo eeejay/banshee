@@ -1,3 +1,8 @@
+2008-08-08  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerBandScale.cs:
+	Show the dB value in a tooltip against the band sliders
+
 2008-08-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Extensions/Banshee.Daap/Daap/ServiceLocator.cs: Prevent a crash on
