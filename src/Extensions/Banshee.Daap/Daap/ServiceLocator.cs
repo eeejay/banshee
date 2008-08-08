@@ -116,8 +116,10 @@ namespace Daap {
         }
         
         public void Stop () {
-            browser.Dispose ();
-            browser = null;
+            if (browser != null) {
+                browser.Dispose ();
+                browser = null;
+            }
             services.Clear ();
         }
         
