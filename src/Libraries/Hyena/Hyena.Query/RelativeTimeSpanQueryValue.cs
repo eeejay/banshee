@@ -41,9 +41,9 @@ namespace Hyena.Query
     public class RelativeTimeSpanQueryValue : TimeSpanQueryValue
     {
         // The SQL operators in these Operators are reversed from normal on purpose
-        public static new readonly Operator GreaterThan        = new Operator ("greaterThan", Catalog.GetString ("more than"), "< {0}", ">");
+        public static new readonly Operator GreaterThan        = new Operator ("greaterThan", Catalog.GetString ("more than"), "< {0}", true, ">");
         public static new readonly Operator LessThan           = new Operator ("lessThan", Catalog.GetString ("less than"), "> {0}", "<");
-        public static new readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", Catalog.GetString ("at least"), "<= {0}", ">=");
+        public static new readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", Catalog.GetString ("at least"), "<= {0}", true, ">=");
         public static new readonly Operator LessThanEqual      = new Operator ("lessThanEquals", Catalog.GetString ("at most"), ">= {0}", "<=");
 
         protected static new AliasedObjectSet<Operator> operators = new AliasedObjectSet<Operator> (GreaterThan, LessThan, GreaterThanEqual, LessThanEqual);
