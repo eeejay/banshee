@@ -1,3 +1,9 @@
+2008-08-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataCore.cs: Patch from Félix Velasco
+	and myself adding NRE protection, should fix some issues with
+	recommendation pane not showing up (BGO #547177).
+
 2008-08-11  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:

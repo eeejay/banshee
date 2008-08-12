@@ -77,6 +77,10 @@ namespace Lastfm.Data
 
         internal static string DownloadContent (string data_url, string cache_file, CacheDuration cache_duration)
         {
+            if (String.IsNullOrEmpty (data_url) || String.IsNullOrEmpty (cache_file)) {
+                return null;
+            }
+
             data_url = FixLastfmUrl (data_url);
             // See if we have a valid cached copy
             if (cache_duration != CacheDuration.None) {
@@ -117,6 +121,10 @@ namespace Lastfm.Data
         
         public static string GetCachedPathFromUrl (string url)
         {
+            if (url == null) {
+                return null;
+            }
+
             string hash = FixLastfmUrl (url).GetHashCode ().ToString ("X").ToLower ();
             if (hash.Length > 2) {
                 return Path.Combine (Path.Combine (DataCore.CachePath, hash.Substring (0, 2)), hash);
