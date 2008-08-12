@@ -64,7 +64,8 @@ namespace Banshee.Gui.Widgets
         
         protected override void OnRealized ()
         {
-            base.OnRealized ();
+            WidgetFlags |= WidgetFlags.Realized | WidgetFlags.NoWindow;
+            GdkWindow = Parent.GdkWindow;
             
             WindowAttr attributes = new WindowAttr ();
             attributes.WindowType = Gdk.WindowType.Child;
@@ -84,6 +85,8 @@ namespace Banshee.Gui.Widgets
             
             event_window = new Gdk.Window (GdkWindow, attributes, attributes_mask);
             event_window.UserData = Handle;
+            
+            base.OnRealized ();
         }
         
         protected override void OnUnrealized ()
@@ -91,7 +94,7 @@ namespace Banshee.Gui.Widgets
             WidgetFlags ^= WidgetFlags.Realized;
             
             event_window.UserData = IntPtr.Zero;
-            Hyena.Gui.GtkWorkarounds.WindowDestroy (event_window);
+            event_window.Destroy ();
             event_window = null;
             
             base.OnUnrealized ();

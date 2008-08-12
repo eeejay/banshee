@@ -1,3 +1,9 @@
+2008-08-12  Aaron Bockover  <abock@gnome.org>
+
+	* Revert: svn merge -r 4350:4349; backed out my large commit from yesterday
+	due to some apparent internal windowing regressions experience by some;
+	unfortunately no bling for 1.2.1, but I'll work to get it back into 1.2.2
+
 2008-08-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:

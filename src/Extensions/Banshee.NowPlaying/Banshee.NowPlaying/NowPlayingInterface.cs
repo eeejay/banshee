@@ -41,17 +41,21 @@ namespace Banshee.NowPlaying
     public class NowPlayingInterface : VBox, ISourceContents
     {   
         private NowPlayingSource source;
+        private VideoDisplay video_display;
         private Hyena.Widgets.RoundedFrame frame;
         private Gtk.Window video_window;
         private FullscreenAdapter fullscreen_adapter;
         private ScreensaverManager screensaver;
-        private NowPlayingContents contents;
+
+        public VideoDisplay VideoDisplay {
+            get { return video_display; }
+        }
         
         public NowPlayingInterface ()
         {
             GtkElementsService service = ServiceManager.Get<GtkElementsService> ();
             
-            contents = new NowPlayingContents ();
+            video_display = new XOverlayVideoDisplay ();
             
             // This is my really sweet hack - it's where the video widget
             // is sent when the source is not active. This keeps the video
@@ -61,7 +65,7 @@ namespace Banshee.NowPlaying
             video_window = new FullscreenWindow (service.PrimaryWindow);
             video_window.Hidden += OnFullscreenWindowHidden;
             video_window.Realize ();
-            video_window.Add (contents);
+            video_window.Add (video_display);
             
             frame = new Hyena.Widgets.RoundedFrame ();
             frame.SetFillColor (new Cairo.Color (0, 0, 0));
@@ -80,19 +84,20 @@ namespace Banshee.NowPlaying
             screensaver.Dispose ();
         }
 
+        
         private void MoveVideoExternal (bool hidden)
         {
-            if (contents.Parent != video_window) {
-                contents.Visible = !hidden;
-                contents.Reparent (video_window);
+            if (video_display.Parent != video_window) {
+                video_display.Visible = !hidden;
+                video_display.Reparent (video_window);
             }
         }
         
         private void MoveVideoInternal ()
         {
-            if (contents.Parent != frame) {
-                contents.Reparent (frame);
-                contents.Show ();
+            if (video_display.Parent != frame) {
+                video_display.Reparent (frame);
+                video_display.Show ();
             }
         }
         
@@ -157,7 +162,7 @@ namespace Banshee.NowPlaying
         {
             if (fullscreen) {
                 MoveVideoExternal (true);
-                video_window.Show ();
+                video_window.ShowAll ();
                 fullscreen_adapter.Fullscreen (video_window, true);
                 screensaver.Inhibit ();
             } else {

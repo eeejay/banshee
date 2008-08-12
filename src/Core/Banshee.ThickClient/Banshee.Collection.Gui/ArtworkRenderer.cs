@@ -49,14 +49,6 @@ namespace Banshee.Collection.Gui
             double x, double y, double width, double height, bool drawBorder, double radius, 
             bool fill, Color fillColor)
         {
-            RenderThumbnail (cr, pixbuf, dispose, x, y, width, height, drawBorder, radius, 
-                fill, fillColor, CairoCorners.All);
-        }
-        
-        public static void RenderThumbnail (Cairo.Context cr, Gdk.Pixbuf pixbuf, bool dispose,
-            double x, double y, double width, double height, bool drawBorder, double radius, 
-            bool fill, Color fillColor, CairoCorners corners)
-        {
             if (pixbuf == null || pixbuf.Handle == IntPtr.Zero) {
                 return;
             }
@@ -74,15 +66,11 @@ namespace Banshee.Collection.Gui
                 cr.Fill();
             }
             
-            CairoExtensions.RoundedRectangle (cr, p_x, p_y, pixbuf.Width, pixbuf.Height, radius, corners);
+            CairoExtensions.RoundedRectangle (cr, p_x, p_y, pixbuf.Width, pixbuf.Height, radius);
             Gdk.CairoHelper.SetSourcePixbuf (cr, pixbuf, p_x, p_y);
             cr.Fill ();
             
             if (!drawBorder) {
-                if (dispose) {
-                    DisposePixbuf (pixbuf);
-                }
-                
                 return;
             }
             
@@ -90,12 +78,12 @@ namespace Banshee.Collection.Gui
             if (radius < 1) {
                 cr.Antialias = Antialias.None;
                 
-                CairoExtensions.RoundedRectangle (cr, x + 1.5, y + 1.5, width - 3, height - 3, radius, corners);
+                CairoExtensions.RoundedRectangle (cr, x + 1.5, y + 1.5, width - 3, height - 3, radius);
                 cr.Color = cover_border_light_color;
                 cr.Stroke ();
             }
             
-            CairoExtensions.RoundedRectangle (cr, x + 0.5, y + 0.5, width - 1, height - 1, radius, corners);
+            CairoExtensions.RoundedRectangle (cr, x + 0.5, y + 0.5, width - 1, height - 1, radius);
             cr.Color = cover_border_dark_color;
             cr.Stroke ();
             

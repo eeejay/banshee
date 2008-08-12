@@ -119,7 +119,6 @@
     <File name="Banshee.Collection.Gui/QueryFilterView.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Library.Gui/PhotoFolderImportSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />
