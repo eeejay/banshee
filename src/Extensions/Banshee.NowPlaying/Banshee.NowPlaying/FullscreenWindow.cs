@@ -46,6 +46,7 @@ namespace Banshee.NowPlaying
         public FullscreenWindow (Window parent) : base (WindowType.Toplevel)
         {
             Title = parent.Title;
+            AppPaintable = true;
             
             this.parent = parent;
             this.action_service = ServiceManager.Get<InterfaceActionService> ();
@@ -53,6 +54,12 @@ namespace Banshee.NowPlaying
             AddAccelGroup (action_service.UIManager.AccelGroup);
             
             SetupWidget ();
+        }
+        
+        protected override bool OnExposeEvent (Gdk.EventExpose evnt)
+        {
+            evnt.Window.DrawRectangle (Style.BlackGC, true, Allocation);
+            return base.OnExposeEvent (evnt);
         }
         
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
@@ -145,6 +152,10 @@ namespace Banshee.NowPlaying
         protected override void OnShown ()
         {
             base.OnShown ();
+            if (Child != null) {
+                Child.Show ();
+            }
+            
             OnHideCursorTimeout ();
             ConfigureWindow ();
             HasFocus = true;

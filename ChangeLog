@@ -1,3 +1,42 @@
+2008-08-11  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:
+	Implemented a new high resolution track info display; quite optimized for
+	smooth xfade at higher resolutions through cairo; sits in the now playing
+	source and works in full screen
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Support Cairo Surface caching
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs:
+	Fixed some windowing issues
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Added a 
+	CreateSurfaceForPixbuf method
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	Removed non-video rendering code (idle logo, album art)
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingTrackInfoDisplay.cs:
+	LargeTrackInfoDisplay themed for the now playing source
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingContents.cs:
+	Base contents widget for now playing source; random things can be packed,
+	including the video display and the album art view
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/XOverlayVideoDisplay.cs:
+	Eliminate an internal GdkWindow, attaching the video window to the root
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	Use the NowPlayingContents widget as the main widget to be detached for
+	fullscreen mode
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Fixed rendering/mapping issue
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkRenderer.cs:
+	Support specifying which corners to round
+
 2008-08-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:

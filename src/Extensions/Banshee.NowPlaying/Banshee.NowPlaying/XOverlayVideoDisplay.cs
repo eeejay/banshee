@@ -42,40 +42,23 @@ namespace Banshee.NowPlaying
 
         public XOverlayVideoDisplay () : base ()
         {
+            WidgetFlags = WidgetFlags.NoWindow;
         }
         
         protected override void OnRealized ()
         {
             WidgetFlags |= WidgetFlags.Realized;
-        
-            Gdk.WindowAttr attributes = new Gdk.WindowAttr ();
-            attributes.WindowType = Gdk.WindowType.Child;
-            attributes.X = Allocation.X;
-            attributes.Y = Allocation.Y;
-            attributes.Width = Allocation.Width;
-            attributes.Height = Allocation.Height;
-            attributes.Visual = Visual;
-            attributes.Wclass = Gdk.WindowClass.InputOutput;
-            attributes.Colormap = Colormap;
-            attributes.EventMask = (int)(Gdk.EventMask.ExposureMask | Gdk.EventMask.VisibilityNotifyMask);
             
-            Gdk.WindowAttributesType attributes_mask = 
-                Gdk.WindowAttributesType.X | 
-                Gdk.WindowAttributesType.Y | 
-                Gdk.WindowAttributesType.Visual | 
-                Gdk.WindowAttributesType.Colormap;
-                
-            GdkWindow = new Gdk.Window (Parent.GdkWindow, attributes, attributes_mask);
-            GdkWindow.UserData = Handle;
+            GdkWindow = Parent.GdkWindow;
             
             if (video_window != null) {
                 video_window.Reparent (GdkWindow, 0, 0);
-                video_window.MoveResize (0, 0, Allocation.Width, Allocation.Height);
+                video_window.MoveResize (Allocation.X, Allocation.Y, Allocation.Width, Allocation.Height);
                 video_window.ShowUnraised ();
                 return;
             }
             
-            attributes = new Gdk.WindowAttr ();
+            Gdk.WindowAttr attributes = new Gdk.WindowAttr ();
             attributes.WindowType = Gdk.WindowType.Child;
             attributes.X = 0;
             attributes.Y = 0;
@@ -86,7 +69,7 @@ namespace Banshee.NowPlaying
             attributes.Colormap = Colormap;
             attributes.EventMask = (int)(Gdk.EventMask.ExposureMask | Gdk.EventMask.VisibilityNotifyMask);
             
-            attributes_mask = 
+            Gdk.WindowAttributesType attributes_mask = 
                 Gdk.WindowAttributesType.X | 
                 Gdk.WindowAttributesType.Y | 
                 Gdk.WindowAttributesType.Visual | 
@@ -110,18 +93,14 @@ namespace Banshee.NowPlaying
 
         protected override void OnMapped ()
         {
-            WidgetFlags |= WidgetFlags.Mapped;
-            
-            GdkWindow.Show ();
+            base.OnMapped ();
             video_window.ShowUnraised ();
         }
         
         protected override void OnUnmapped ()
         {
-            WidgetFlags &= ~WidgetFlags.Mapped;
-            
             video_window.Hide ();
-            GdkWindow.Hide ();
+            base.OnUnmapped ();
         }
         
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
@@ -130,7 +109,7 @@ namespace Banshee.NowPlaying
                 return;
             }
             
-            Gdk.Rectangle rect = new Gdk.Rectangle (0, 0, allocation.Width, allocation.Height);
+            Gdk.Rectangle rect = new Gdk.Rectangle (allocation.X, allocation.Y, allocation.Width, allocation.Height);
             video_window.MoveResize (rect);
             
             base.OnSizeAllocated (allocation);

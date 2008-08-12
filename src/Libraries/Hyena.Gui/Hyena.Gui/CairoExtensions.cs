@@ -63,6 +63,17 @@ namespace Hyena.Gui
                 PangoCairoHelper.ContextSetResolution (context, resolution);
             }
         }
+        
+        public static Surface CreateSurfaceForPixbuf (Cairo.Context cr, Gdk.Pixbuf pixbuf)
+        {
+            Surface surface = cr.Target.CreateSimilar (cr.Target.Content, pixbuf.Width, pixbuf.Height);
+            Cairo.Context surface_cr = new Context (surface);
+            surface_cr.Rectangle (0, 0, pixbuf.Width, pixbuf.Height);
+            Gdk.CairoHelper.SetSourcePixbuf (surface_cr, pixbuf, 0, 0);
+            surface_cr.Fill ();
+            ((IDisposable)surface_cr).Dispose ();
+            return surface;
+        }
     
         public static Cairo.Color GdkColorToCairoColor(Gdk.Color color)
         {
