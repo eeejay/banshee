@@ -14,6 +14,7 @@ SUBDIRS = \
 	Banshee.NowPlaying \
 	Banshee.PlayQueue \
 	Banshee.Podcasting \
-	Banshee.Sample
+	Banshee.Sample \
+	Banshee.SqlDebugConsole
 
 MAINTAINERCLEANFILES = Makefile.in

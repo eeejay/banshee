@@ -77,6 +77,7 @@ src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs
+src/Core/Banshee.ThickClient/Banshee.Library.Gui/PhotoFolderImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs
 src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs
@@ -149,6 +150,7 @@ src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/P
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs
 src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs
+src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs
 src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs

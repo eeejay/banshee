@@ -37,22 +37,22 @@ Sources
 -------
 
     * Banshee 1.2.1 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-1.2.1.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-1.2.1.tar.gz
+      http://download.banshee-project.org/banshee/banshee-1-1.2.1.tar.bz2
+      http://download.banshee-project.org/banshee/banshee-1-1.2.1.tar.gz
 
 Packages
 --------
 
-    Packages for openSUSE 11/Factory and openSUSE 10.3 are available from 
-	the openSUSE Build Service in the Banshee project.
+    Packages for openSUSE 11.0, openSUSE 10.3, and openSUSE Factory are 
+	available from the openSUSE Build Service in the Banshee project.
 
     * http://download.opensuse.org/repositories/Banshee/
 
 ChangeLogs & Checksums
 ----------------------
 
-    * http://banshee-project.org/files/banshee/banshee-1-1.2.1.changes
-	* http://banshee-project.org/files/banshee/banshee-1-1.2.1.sha1sum
+    * http://download.banshee-project.org/banshee/banshee-1-1.2.1.changes
+	* http://download.banshee-project.org/banshee/banshee-1-1.2.1.sha1sum
 
 
 ===============================================================================

@@ -1,3 +1,8 @@
+2008-08-12  Aaron Bockover  <abock@gnome.org>
+
+	* POTFILES.in:
+	* sort-potfiles:
+
 2008-08-12  Gabor Kelemen  <kelemeng@gnome.hu>
 
 	* hu.po: Translation updated.
