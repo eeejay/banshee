@@ -208,11 +208,15 @@ namespace Banshee.Dap
         
         private void ThreadedLoadDeviceContents (object state)
         {
-            PurgeTracks ();
-            SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
-            LoadFromDevice ();
-            OnTracksAdded ();
-            HideStatus ();
+            try {
+                PurgeTracks ();
+                SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
+                LoadFromDevice ();
+                OnTracksAdded ();
+                HideStatus ();
+            } catch (Exception e) {
+                Log.Exception (e);
+            }
         }
 
         protected virtual void LoadFromDevice ()

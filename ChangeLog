@@ -1,5 +1,19 @@
 2008-08-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Catch and log exceptions
+	thrown while loading the device's items.
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Don't
+	create the user job if it's just going to be hidden.  Avoid a NRE if the
+	ImportElement already fired the Finished event and the job was destroyed.
+
+	* src/Libraries/Hyena/Hyena.Collections/QueuePipelineElement.cs: Prevent
+	NRE by making sure the element is threaded.  This and the above NRE fix
+	should fix the bug with mass storage devices not getting loaded (BGO
+	#545604).
+
+2008-08-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Lastfm/Lastfm.Data/DataCore.cs: Patch from Félix Velasco
 	and myself adding NRE protection, should fix some issues with
 	recommendation pane not showing up (BGO #547177).

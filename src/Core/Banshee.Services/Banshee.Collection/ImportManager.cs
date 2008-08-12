@@ -153,7 +153,7 @@ namespace Banshee.Collection
         private void CreateUserJob ()
         {
             lock (user_job_mutex) {
-                if (user_job != null) {
+                if (user_job != null || KeepUserJobHidden) {
                     return;
                 }
                 
@@ -200,19 +200,20 @@ namespace Banshee.Collection
         protected void UpdateProgress (string message)
         {
             CreateUserJob ();
-            
-            double new_progress = (double)import_element.ProcessedCount / (double)import_element.TotalCount;
-            double old_progress = user_job.Progress;
-            
-            if (new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs (new_progress - old_progress) > 0.001) {
-                lock (number_format) {
-                    string disp_progress = String.Format (ProgressMessage, 
-                        import_element.ProcessedCount.ToString ("N", number_format), 
-                        import_element.TotalCount.ToString ("N", number_format));
-                    
-                    user_job.Title = disp_progress;
-                    user_job.Status = String.IsNullOrEmpty (message) ? Catalog.GetString ("Scanning...") : message;
-                    user_job.Progress = new_progress;
+            if (user_job != null) {
+                double new_progress = (double)import_element.ProcessedCount / (double)import_element.TotalCount;
+                double old_progress = user_job.Progress;
+                
+                if (new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs (new_progress - old_progress) > 0.001) {
+                    lock (number_format) {
+                        string disp_progress = String.Format (ProgressMessage, 
+                            import_element.ProcessedCount.ToString ("N", number_format), 
+                            import_element.TotalCount.ToString ("N", number_format));
+                        
+                        user_job.Title = disp_progress;
+                        user_job.Status = String.IsNullOrEmpty (message) ? Catalog.GetString ("Scanning...") : message;
+                        user_job.Progress = new_progress;
+                    }
                 }
             }
         }
@@ -221,12 +222,15 @@ namespace Banshee.Collection
         
         private void UpdateScannerProgress ()
         {
-            if (DateTime.Now - last_enqueue_display > TimeSpan.FromMilliseconds (400)) {
-                lock (number_format) {
-                    number_format.NumberDecimalDigits = 0;
-                    user_job.Status = String.Format (Catalog.GetString ("Scanning ({0} files)..."), 
-                        import_element.TotalCount.ToString ("N", number_format));
-                    last_enqueue_display = DateTime.Now;
+            CreateUserJob ();
+            if (user_job != null) {
+                if (DateTime.Now - last_enqueue_display > TimeSpan.FromMilliseconds (400)) {
+                    lock (number_format) {
+                        number_format.NumberDecimalDigits = 0;
+                        user_job.Status = String.Format (Catalog.GetString ("Scanning ({0} files)..."), 
+                            import_element.TotalCount.ToString ("N", number_format));
+                        last_enqueue_display = DateTime.Now;
+                    }
                 }
             }
         }

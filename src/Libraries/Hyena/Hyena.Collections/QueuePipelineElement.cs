@@ -121,6 +121,9 @@ namespace Hyena.Collections
                 
                 lock (this) {
                     processing = false;
+                }
+
+                if (threaded) {
                     thread_wait.Close ();
                     thread_wait = null;
                 }
