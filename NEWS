@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.2 - Released July 29, 2008
+WELCOME TO BANSHEE 1.2.1 - Released August 12, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,7 +10,7 @@ WELCOME TO BANSHEE 1.2 - Released July 29, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/download/archives/1.2.0/
+  * Learn More: http://banshee-project.org/download/archives/1.2.1/
 
 
 ===============================================================================
@@ -36,9 +36,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 1.2 Tarballs:
-      http://banshee-project.org/files/banshee/banshee-1-1.2.0.tar.bz2
-      http://banshee-project.org/files/banshee/banshee-1-1.2.0.tar.gz
+    * Banshee 1.2.1 Tarballs:
+      http://banshee-project.org/files/banshee/banshee-1-1.2.1.tar.bz2
+      http://banshee-project.org/files/banshee/banshee-1-1.2.1.tar.gz
 
 Packages
 --------
@@ -51,8 +51,8 @@ Packages
 ChangeLogs & Checksums
 ----------------------
 
-    * http://banshee-project.org/files/banshee/banshee-1-1.2.0.changes
-	* http://banshee-project.org/files/banshee/banshee-1-1.2.0.sha1sum
+    * http://banshee-project.org/files/banshee/banshee-1-1.2.1.changes
+	* http://banshee-project.org/files/banshee/banshee-1-1.2.1.sha1sum
 
 
 ===============================================================================
@@ -98,32 +98,29 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.2 builds on the momentum from Banshee 1.0, adding several big
-    features and fixing many annoyances and long standing bugs.
+    Banshee 1.2.1 builds on the successful Banshee 1.2 release, adding better 
+    translation coverage, several bug fixes, and a couple new features.
 
-    Big features in this release include:
+    Big features and bug fixes in this release include:
 
-      * 10-band Equalizer
-      * Internet Radio
-      * Music Recommendations
-      * DAAP Client
-      * Playlist Importing (.pls, .m3u)
-      * Multi-Artist (Compilation) Album Support
-      * Manual Reordering of Playlists and Play Queue
-      * Amarok migration (including ratings, playcounts, and podcasts)
+      * Translation updates from 19 translators
+      * Drag and drop albums or artists from the browser
+      * Show cover art in Now Playing
+      * Fix ASX and mms:// support
+      * Fix a common crash when quitting Banshee 1.2
+      * Fix bug with loading USB Mass Storage Players
 
     Other features, bug fixes, and errata:
 
-      * More robust parsing of podcast (RSS) files
-      * Find and use cover art from the album folder (cover.jpg, etc)
-      * Add Last.fm as a cover art provider
-      * The last playback source is used when the Play Queue is empty
-      * Better performance (start up time, memory usage, searching, etc)
-      * Disable the screensaver when in fullscreen mode
-      * Much improved performance and UI for automatic cover art fetching
-      * Fix issues with importing and playing files in folders named Music*
+      * New import source to aid in importing videos from your camera
+      * Amarok importer now migrates date added and last played
+      * Pressing play will play the first track selected if nothing is loaded
+      * Pressing o on a track selection behaves the same as pressing enter
+      * Include never-played tracks when querying for last played > N
+      * Prefer cover art named cover/folder/front.jpg over other image files
+      * Fix crash when editing smart playlists with date fields
 
-      * Over 80 bugs were fixed since 1.0
+      * Over 24 bugs were fixed since 1.2
 
 
 ===============================================================================
@@ -133,7 +130,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.2.0
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.2.1
 
 
 ===============================================================================
@@ -146,33 +143,33 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
 
-      Aaron Bockover, Alan McGovern, Alexander Hixon, Alex Launi,
-      Arthur Carli, Bertrand Lorentz, Christopher Halse Rogers, Fabian Jost,
-      Gabriel Burt, James Willcox, Michael Kaiser, Peter de Kraker,
-      Sandy Armstrong, Sebastian Dröge, Todd Berman
+      Aaron Bockover, Benjamín Valero Espinosa, Bertrand Lorentz,
+      Brian Teague, Félix Velasco, Gabriel Burt, Jo Shields
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
 
-      Andre Klapper, Benjamín Valero Espinosa, Djihed Afifi,
-      甘露(Lu Gan), Wouter Bolsterlee
+      Ahmad Farghal, Alexandre Franke, Alexandre Prokoudine, Andre Klapper,
+      Benjamín Valero Espinosa, Claude Paroz, Daniel Nylander, Fabricio Godoy,
+      Gabor Kelemen, Gianvito Cavasoli, Ignacio Casal Quinteiro, Jochen Skulj,
+      Jordi Mas, Mark Krapivner, Og Maciel, Tomasz Dominikowski, Vladimir Melo,
+      Wouter Bolsterlee, Žygimantas Beručka
 
 Contributors In Past Releases
 -----------------------------
 
     Aaron Bockover, Alan McGovern, Alexander Hixon, Alexandros Frantzis,
     Alex Kloss, Alex Launi, Alp Toker, Andy Midgette, Arthur Carli,
-    Aydemir Ulaş Şahin, Ben Maurer, Bertrand Lorentz, Bill Dawson,
-    Bob Copeland, Bojan Rajkovic, Brian Nickel, Chris Lahey, Christian Krause,
-    Christopher Halse Rogers, Chris Toshok,
-    Chris Turchin, Daniel Munkton, Dan Wilson, Dan Winship, Eric Butler,
-    Fabian Jost, Fredrik Hedberg, Gabriel Burt, Hans Petter Jansson,
-    Igor Guerrero Fonseca, Ilya Konstantinov, Ivan N. Zlatev, James Willcox,
-    Jan Arne Petersen, Jason Conti, Jeff Tickle, Jorge Castro, Juri Pakaste,
-    Ken Vandine, Larry Ewing, Lauri Kotilainen, Michael Kaiser,
-    Michael Monreal, Miguel de Icaza, Mike Urbanski, Nathan Palmer,
-    Nicholas Parker, Oscar Forero, Patrick van Staveren, Pepijn van de Geer,
-    Peter de Kraker, Ruben Vermeersch, Sandy Armstrong, Scott Peterson,
-    Sebastian Dröge, Tim Yamin, Todd Berman, Trey Ethridge, Will Farrington,
-    Wouter Bolsterlee
-
+    Aydemir Ulaş Şahin, Benjamín Valero Espinosa, Ben Maurer,
+    Bertrand Lorentz, Bill Dawson, Bob Copeland, Bojan Rajkovic, Brian Nickel,
+    Brian Teague, Chris Lahey, Christian Krause, Christopher Halse Rogers,
+    Chris Toshok, Chris Turchin, Daniel Munkton, Dan Wilson, Dan Winship,
+    Eric Butler, Fabian Jost, Félix Velasco, Fredrik Hedberg, Gabriel Burt,
+    Hans Petter Jansson, Igor Guerrero Fonseca, Ilya Konstantinov,
+    Ivan N. Zlatev, James Willcox, Jan Arne Petersen, Jason Conti, Jeff Tickle,
+    Jorge Castro, Jo Shields, Juri Pakaste, Ken Vandine, Larry Ewing,
+    Lauri Kotilainen, Michael Kaiser, Michael Monreal, Miguel de Icaza,
+    Mike Urbanski, Nathan Palmer, Nicholas Parker, Oscar Forero,
+    Patrick van Staveren, Pepijn van de Geer, Peter de Kraker,
+    Ruben Vermeersch, Sandy Armstrong, Scott Peterson, Sebastian Dröge,
+    Tim Yamin, Todd Berman, Trey Ethridge, Will Farrington, Wouter Bolsterlee
