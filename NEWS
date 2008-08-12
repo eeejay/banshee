@@ -103,12 +103,12 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     Big features and bug fixes in this release include:
 
-      * Translation updates from 19 translators
       * Drag and drop albums or artists from the browser
       * Show cover art in Now Playing
+      * Translation updates from 19 translators
+      * Fix bug with loading USB Mass Storage Players
       * Fix ASX and mms:// support
       * Fix a common crash when quitting Banshee 1.2
-      * Fix bug with loading USB Mass Storage Players
 
     Other features, bug fixes, and errata:
 
@@ -120,7 +120,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Prefer cover art named cover/folder/front.jpg over other image files
       * Fix crash when editing smart playlists with date fields
 
-      * Over 24 bugs were fixed since 1.2
+      * 24 bugs were fixed since 1.2
 
 
 ===============================================================================
