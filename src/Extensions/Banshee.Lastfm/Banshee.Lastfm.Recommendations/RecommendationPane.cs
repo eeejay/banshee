@@ -287,7 +287,7 @@ namespace Banshee.Lastfm.Recommendations
                     album_button.Add (label);
         
                     album_button.Clicked += delegate {
-                        Banshee.Web.Browser.Open (album.Name);
+                        Banshee.Web.Browser.Open (album.Url);
                     };
                     album_list.PackStart (album_button, false, true, 0);
                 }

@@ -1,3 +1,8 @@
+2008-08-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:
+	Fix bug where top album buttons tried to open the wrong URL.
+
 2008-08-12  Aaron Bockover  <abock@gnome.org>
 
 	* Revert: svn merge -r 4350:4349; backed out my large commit from yesterday
