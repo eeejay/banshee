@@ -109,7 +109,15 @@ namespace Banshee.PlaybackController
         
         private void OnPlayerEnginePlayWhenIdleRequest (object o, EventArgs args)
         {
-            Next ();
+            ITrackModelSource next_source = NextSource;
+            if (next_source != null && next_source.TrackModel.Selection.Count > 0) {
+                Source = NextSource;
+                CancelErrorTransition ();
+                CurrentTrack = next_source.TrackModel[next_source.TrackModel.Selection.FirstIndex];
+                QueuePlayTrack ();
+            } else {
+                Next ();
+            }
         }
         
         private void OnPlayerEvent (PlayerEventArgs args)
@@ -120,7 +128,7 @@ namespace Banshee.PlaybackController
                     break;
                 case PlayerEvent.EndOfStream:
                     EosTransition ();
-                       break;
+                    break;
                 case PlayerEvent.Error:
                     if (++consecutive_errors >= 5) {
                         consecutive_errors = 0;
@@ -130,6 +138,7 @@ namespace Banshee.PlaybackController
                     }
                     
                     CancelErrorTransition ();
+                    // TODO why is this so long? any reason not to be instantaneous?
                     Application.RunTimeout (500, EosTransition);
                     break;
                 case PlayerEvent.StateChange:

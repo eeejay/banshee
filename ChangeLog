@@ -1,5 +1,12 @@
 2008-08-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	If there is no track loaded/playing and the user presses Play, if one or
+	more items are selected, play the first intead of playing the first item
+	in the source.
+
+2008-08-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Catch and log exceptions
 	thrown while loading the device's items.
 
