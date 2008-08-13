@@ -90,6 +90,9 @@ BANSHEE_CHECK_DAP_IPOD
 dnl DAAP support (optional)
 BANSHEE_CHECK_DAAP
 
+dnl MonoTorrent support (optional)
+BANSHEE_CHECK_TORRENT
+
 dnl i18n
 SHAMROCK_CONFIGURE_I18N($PACKAGE)
 
@@ -181,6 +184,7 @@ src/Extensions/Banshee.PlayQueue/Makefile
 src/Extensions/Banshee.Podcasting/Makefile
 src/Extensions/Banshee.SqlDebugConsole/Makefile
 src/Extensions/Banshee.Sample/Makefile
+src/Extensions/Banshee.Torrent/Makefile
 ])
 
 echo "
@@ -204,8 +208,9 @@ ${PACKAGE}-${VERSION}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
 
-    Unfinished, unstable, unusable components:
+    Unfinished, unstable, under development components:
       MediaWeb:        ${enable_mediaweb}
+      Torrent Podcasts:${enable_torrent}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "

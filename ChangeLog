@@ -1,5 +1,22 @@
 2008-08-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Extensions.mds:
+	* src/Extensions/Makefile.am:
+	* src/Extensions/Banshee.Torrent/Banshee.Torrent.mdp:
+	* src/Extensions/Banshee.Torrent/Banshee.Torrent/TorrentService.cs:
+	* src/Extensions/Banshee.Torrent/Banshee.Torrent/TorrentFileDownloadTask.cs:
+	* src/Extensions/Banshee.Torrent/Makefile.am:
+	* src/Extensions/Banshee.Torrent/Banshee.Torrent.addin.xml:
+	* build/m4/banshee/torrent.m4:
+	* build/build.environment.mk:
+	* configure.ac: Patch from Alan McGovern adding support for downloading
+	.torrent podcast enclosures, with some build/style fixes by me.  Is not
+	built by default (requires --enable-torrent option) and probably not
+	buildable at all except within MonoDevelop.  Still under development, do
+	not enable unless you know what you're doing.
+
+2008-08-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Patch from Alan McGovern laying the groundwork for torrent support in Migo.
 
 	* src/Libraries/Migo/Migo.DownloadCore/DownloadManager.cs: Add support for

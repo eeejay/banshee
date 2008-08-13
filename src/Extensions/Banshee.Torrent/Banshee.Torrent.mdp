@@ -1,0 +1,33 @@
+<Project name="Banshee.Torrent" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="../../../bin" assemblyKeyFile="." assembly="Banshee.Torrent" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="Banshee.Torrent.addin.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Torrent/TorrentService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Torrent/TorrentFileDownloadTask.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="Banshee.Core, Version=0.99.3.35355, Culture=neutral, PublicKeyToken=null" />
+    <ProjectReference type="Gac" localcopy="True" refto="Banshee.Services, Version=0.99.3.35356, Culture=neutral, PublicKeyToken=null" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../../../bin/Migo.dll" />
+    <ProjectReference type="Gac" localcopy="True" refto="NDesk.DBus, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f6716e4f9b2ed099" />
+    <ProjectReference type="Gac" localcopy="True" refto="Hyena, Version=0.99.3.39455, Culture=neutral, PublicKeyToken=null" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../../../../bitsharp-dbus/Sample/bin/Debug/monotorrent-dbus.dll" />
+  </References>
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="./Makefile.am">
+    <BuildFilesVar Sync="True" Name="SOURCES" />
+    <DeployFilesVar />
+    <ResourcesVar Sync="True" Name="RESOURCES" />
+    <OthersVar />
+    <GacRefVar />
+    <AsmRefVar />
+    <ProjectRefVar />
+  </MonoDevelop.Autotools.MakefileInfo>
+</Project>
