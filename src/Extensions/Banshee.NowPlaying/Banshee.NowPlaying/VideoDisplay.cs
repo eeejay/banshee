@@ -103,15 +103,22 @@ namespace Banshee.NowPlaying
             
             Gdk.Pixbuf display_pixbuf = null;
             
-            if (track.ArtworkId == last_coverart_id) {
+            if (track.ArtworkId == last_coverart_id && last_coverart_pixbuf != null) {
                 display_pixbuf = last_coverart_pixbuf;
             } else if (Banshee.Base.CoverArtSpec.CoverExists (track.ArtworkId)) {
                 if (last_coverart_pixbuf != null) {
                     last_coverart_pixbuf.Dispose ();
                 }
                 last_coverart_id = track.ArtworkId;
-                display_pixbuf = last_coverart_pixbuf = new Gdk.Pixbuf (Banshee.Base.CoverArtSpec.GetPath (last_coverart_id));
-            } else {
+                try {
+                    display_pixbuf = last_coverart_pixbuf = new Gdk.Pixbuf (Banshee.Base.CoverArtSpec.GetPath (last_coverart_id));
+                } catch {
+                    last_coverart_id = null;
+                    display_pixbuf = null;
+                }
+            }
+
+            if (display_pixbuf == null) {
                 return false;
             }
             

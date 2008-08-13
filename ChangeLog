@@ -1,3 +1,9 @@
+2008-08-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	Fix a NRE in the cover art display when the ArtworkId for a track is null
+	(BGO #547520).
+
 2008-08-12  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.2.1 Released
