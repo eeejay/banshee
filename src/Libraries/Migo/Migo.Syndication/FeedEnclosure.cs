@@ -153,6 +153,9 @@ namespace Migo.Syndication
 
         public void SetFileImpl (string url, string path, string mimeType, string filename)
         {
+            if (filename.EndsWith (".torrent", StringComparison.OrdinalIgnoreCase)) {
+                filename = filename.Substring(0, filename.Length - 8);
+            }
             string tmpLocalPath;
             string fullPath = path;
             string localEnclosurePath = Item.Feed.LocalEnclosurePath;

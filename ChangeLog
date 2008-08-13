@@ -1,3 +1,13 @@
+2008-08-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Patch from Alan McGovern laying the groundwork for torrent support in Migo.
+
+	* src/Libraries/Migo/Migo.DownloadCore/DownloadManager.cs: Add support for
+	other types of DownloadTasks.
+
+	* src/Libraries/Migo/Migo.Syndication/FeedEnclosure.cs: Strip the trailing
+	.torrent extension for the file name.
+
 2008-08-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:

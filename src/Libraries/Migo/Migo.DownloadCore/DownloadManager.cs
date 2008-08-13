@@ -44,6 +44,20 @@ namespace Migo.DownloadCore
 {
 	public class DownloadManager : IDisposable
 	{
+        private static Dictionary<string, Type> downloader_types;
+
+        static DownloadManager () {
+            downloader_types = new Dictionary<string,Type> (StringComparer.OrdinalIgnoreCase);
+        }
+		
+        public static void Register (string fileType, Type type)
+        {
+            lock (downloader_types) {
+                downloader_types.Add (fileType, type);
+            }
+        }
+		
+		
         private bool disposed;
         private string tmpDir;
         
@@ -124,12 +138,17 @@ namespace Migo.DownloadCore
                                          .Replace ("-", String.Empty)
                                          .ToLower ();
             
-            HttpFileDownloadTask task = new HttpFileDownloadTask (
-                url, tmpDir + urlHash + Path.DirectorySeparatorChar +
-                System.Web.HttpUtility.UrlDecode (fileName), 
-                userState
-            );
+            string remoteUri = url;
+            string localPath = tmpDir + urlHash + Path.DirectorySeparatorChar + System.Web.HttpUtility.UrlDecode (fileName);
 
+            HttpFileDownloadTask task = null;
+            string [] parts = fileName.Split ('.');
+            if (parts.Length > 0 && downloader_types.ContainsKey (parts[parts.Length - 1])) {
+                task = (HttpFileDownloadTask) Activator.CreateInstance (downloader_types[parts[parts.Length - 1]], remoteUri, localPath, userState);
+            } else {
+                task = new HttpFileDownloadTask (url , localPath, userState );
+            }
+			
             return task;
         }
 
