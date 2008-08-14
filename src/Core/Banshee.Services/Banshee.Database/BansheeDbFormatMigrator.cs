@@ -52,8 +52,8 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 17;
-        protected const int CURRENT_METADATA_VERSION = 2;
+        protected const int CURRENT_VERSION = 18;
+        protected const int CURRENT_METADATA_VERSION = 3;
         
 #region Migration Driver
         
@@ -482,6 +482,17 @@ namespace Banshee.Database
         
 #endregion
 
+#region Version 18
+
+        [DatabaseVersion (18)]
+        private bool Migrate_18 ()
+        {
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN MetadataHash TEXT");
+            return true;
+        }
+        
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -559,7 +570,8 @@ namespace Banshee.Database
                     LastPlayedStamp     INTEGER,
                     LastSkippedStamp    INTEGER,
                     DateAddedStamp      INTEGER,
-                    DateUpdatedStamp    INTEGER
+                    DateUpdatedStamp    INTEGER,
+                    MetadataHash        TEXT
                 )
             ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
             Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri)");
@@ -729,7 +741,8 @@ namespace Banshee.Database
                         LastPlayedStamp,
                         NULL,
                         DateAddedStamp,
-                        DateAddedStamp
+                        DateAddedStamp,
+                        NULL
                         FROM Tracks
             ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
 

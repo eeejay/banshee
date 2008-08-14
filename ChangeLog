@@ -1,5 +1,25 @@
 2008-08-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Add protected MetadataHash property, really only used to store a hashed
+	string of title, artist, album, genre, duration, etc.  Will be used for
+	sql-powered sync - select all the MetadataHashes that are in the library
+	but not the device, and vice-versa.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add MetadataHash column to CoreTracks, and trigger metadata refresh so the
+	hashes are generated for existing tracks.
+
+	* src/Libraries/Hyena/Hyena/CryptoUtil.cs: Speed up the MD5 hashing by
+	caching the MD5 algorithm object, and speed up the IsMd5Encoded method by
+	caching the Regex.
+
+	* src/Libraries/Hyena/Hyena/Tests/CryptoUtilTests.cs: Make public instead
+	of internal so these tests are actually ran, and add tests for null/empty
+	strings.
+
+2008-08-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Lock on private object,
 	not this to avoid deadlock with external code locking on this.
 

@@ -360,6 +360,21 @@ namespace Banshee.Collection.Database
         protected string TitleLowered {
             get { return TrackTitle == null ? null : TrackTitle.ToLower (); }
         }
+
+        [DatabaseColumn(Select = false)]
+        protected string MetadataHash {
+            get {
+                System.Text.StringBuilder sb = new System.Text.StringBuilder ();
+                sb.Append (AlbumTitle);
+                sb.Append (ArtistName);
+                sb.Append ((int)Duration.TotalSeconds);
+                sb.Append (Genre);
+                sb.Append (TrackTitle);
+                sb.Append (TrackNumber);
+                sb.Append (Year);
+                return Hyena.CryptoUtil.Md5Encode (sb.ToString (), System.Text.Encoding.UTF8);
+            }
+        }
         
         [DatabaseColumn]
         public override int TrackNumber {

@@ -35,12 +35,14 @@ using Hyena;
 namespace Hyena.Tests
 {
     [TestFixture]
-    internal class CryptoUtilTests
+    public class CryptoUtilTests
     {
         [Test]
         public void Md5Encode ()
         {
             Assert.AreEqual ("ae2b1fca515949e5d54fb22b8ed95575", CryptoUtil.Md5Encode ("testing"));
+            Assert.AreEqual ("", CryptoUtil.Md5Encode (null));
+            Assert.AreEqual ("", CryptoUtil.Md5Encode (""));
         }
     
         [Test]
@@ -50,7 +52,20 @@ namespace Hyena.Tests
             Assert.IsFalse (CryptoUtil.IsMd5Encoded ("abc233"));
             Assert.IsFalse (CryptoUtil.IsMd5Encoded ("lebowski"));
             Assert.IsFalse (CryptoUtil.IsMd5Encoded ("ae2b1fca515949e5g54fb22b8ed95575"));
+            Assert.IsFalse (CryptoUtil.IsMd5Encoded (null));
+            Assert.IsFalse (CryptoUtil.IsMd5Encoded (""));
         }
+
+        /*[Test]
+        public void Md5Performance ()
+        {
+            int max = 10000;
+            using (new Timer (String.Format ("Computed {0} MD5 hashes", max))) {
+                for (int i = 0; i < max; i++) {
+                    CryptoUtil.Md5Encode ("LkaJSd Flkjdf234234lkj3WlkejewrVlkdf @343434 dsfjk 3497u34 l 2008 lkjdf");
+                }
+            }
+        }*/
     }
 }
 
