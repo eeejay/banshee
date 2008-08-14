@@ -75,13 +75,10 @@ namespace Banshee.Torrent
             ObjectPath path = engine.RegisterTorrent (torrentUri, savePath);
             IDownloader downloader = bus.GetObject <IDownloader> (BusName, path);
             
-            if (downloader.State == TorrentState.Stopped)
-            {
+            if (downloader.State == TorrentState.Stopped) {
                 downloader.Start ();
                 Console.WriteLine ("Started: {0}", downloader.Path);
-            }
-            else
-            {
+            } else {
                 Console.WriteLine ("{0} already running", downloader.Path);
             }
             return downloader;
@@ -89,7 +86,10 @@ namespace Banshee.Torrent
         
         public void Dispose ()
         {
-            service.DestroyEngine (EngineName);
+            if (service != null) {
+                service.DestroyEngine (EngineName);
+                service = null;
+            }
         }
 
         public void Initialize ()
@@ -100,16 +100,14 @@ namespace Banshee.Torrent
         {
             bus = Bus.Session;
                         
-            try
-            {
+            try {
                 // Get the service and call a method on it to ensure that it is
                 // running and able to answer queries.
                 service = bus.GetObject<ITorrentService> (BusName, ServicePath);
                 service.AvailableEngines ();
-            }
-            catch
-            {
+            } catch {
                 Log.Error ("Torrent backend could not be found and could not be auto-started");
+                service = null;
                 return;
             }
             
