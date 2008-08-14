@@ -1,5 +1,10 @@
 2008-08-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Lock on private object,
+	not this to avoid deadlock with external code locking on this.
+
+2008-08-14  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Torrent/Banshee.Torrent/TorrentService.cs: Fix
 	style issues.
 

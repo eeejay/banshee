@@ -48,6 +48,7 @@ namespace Banshee.Dap
         private Dictionary<string, DapSource> sources;
         private List<TypeExtensionNode> supported_dap_types = new List<TypeExtensionNode> ();
         private bool initialized;
+        private object sync = new object ();
 
         public void Initialize ()
         {
@@ -55,7 +56,7 @@ namespace Banshee.Dap
 
         public void DelayedInitialize ()
         {
-            lock (this) {
+            lock (sync) {
                 sources = new Dictionary<string, DapSource> ();
                 
                 AddinManager.AddExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
@@ -69,7 +70,7 @@ namespace Banshee.Dap
 
         private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
         {
-            lock (this) {
+            lock (sync) {
                 TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
                 
                 if (args.Change == ExtensionChange.Add) {
@@ -99,7 +100,7 @@ namespace Banshee.Dap
 
         public void Dispose ()
         {
-            lock (this) {
+            lock (sync) {
                 if (!initialized)
                     return;
 
@@ -142,7 +143,7 @@ namespace Banshee.Dap
         private void MapDevice (IDevice device)
         {
             Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
-                lock (this) {
+                lock (sync) {
                     try {
                         if (sources.ContainsKey (device.Uuid)) {
                             return;
@@ -176,7 +177,7 @@ namespace Banshee.Dap
         
         internal void UnmapDevice (string uuid)
         {
-            lock (this) {
+            lock (sync) {
                 if (sources.ContainsKey (uuid)) {
                     Log.DebugFormat ("Unmapping DAP source ({0})", uuid);
                     DapSource source = sources[uuid];
@@ -191,7 +192,7 @@ namespace Banshee.Dap
         {
             DapSource dap_source = args.Source as DapSource;
             if (dap_source != null) {
-                lock (this) {
+                lock (sync) {
                     UnmapDevice (dap_source.Device.Uuid);
                 }
             }
@@ -199,14 +200,14 @@ namespace Banshee.Dap
         
         private void OnHardwareDeviceAdded (object o, DeviceAddedArgs args)
         {
-            lock (this) {
+            lock (sync) {
                 MapDevice (args.Device);
             }
         }
         
         private void OnHardwareDeviceRemoved (object o, DeviceRemovedArgs args)
         {
-            lock (this) {
+            lock (sync) {
                 UnmapDevice (args.DeviceUuid);
             }
         }
