@@ -1,4 +1,4 @@
-<Project name="Banshee.NowPlaying" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Banshee.NowPlaying" fileversion="2.0" language="C#" UseParentDirectoryAsNamespace="True" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assemblyKeyFile="." assembly="Banshee.NowPlaying" />
@@ -12,7 +12,6 @@
     <File name="Banshee.NowPlaying/NowPlayingSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.NowPlaying/NowPlayingInterface.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.NowPlaying/VideoDisplay.cs" subtype="Code" buildaction="Compile" />
-    <File name="Resources/idle-logo.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.NowPlaying/FullscreenWindow.cs" subtype="Code" buildaction="Compile" />
     <File name="Resources/ActiveSourceUI.xml" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Banshee.NowPlaying/XOverlayVideoDisplay.cs" subtype="Code" buildaction="Compile" />
@@ -22,6 +21,9 @@
     <File name="Banshee.NowPlaying/FullscreenAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.NowPlaying/IScreensaverManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.NowPlaying/ScreensaverManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.NowPlaying/NowPlayingContents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.NowPlaying/NowPlayingTrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/idle-logo.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />
@@ -36,6 +38,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </References>
+  <GtkDesignInfo gtkVersion="2.12.1" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

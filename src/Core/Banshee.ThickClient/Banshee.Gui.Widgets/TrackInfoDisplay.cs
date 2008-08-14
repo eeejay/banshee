@@ -28,7 +28,7 @@
 //
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Mono.Unix;
 
 using Gtk;
@@ -74,17 +74,17 @@ namespace Banshee.Gui.Widgets
         }
         
         private Cairo.Color background_color;
-        protected Cairo.Color BackgroundColor {
+        protected virtual Cairo.Color BackgroundColor {
             get { return background_color; }
         }
         
         private Cairo.Color text_color;
-        protected Cairo.Color TextColor {
+        protected virtual Cairo.Color TextColor {
             get { return text_color; }
         }
         
         private Cairo.Color text_light_color;
-        protected Cairo.Color TextLightColor {
+        protected virtual Cairo.Color TextLightColor {
             get { return text_light_color; }
         }
         
@@ -100,6 +100,7 @@ namespace Banshee.Gui.Widgets
         
         private uint idle_timeout_id = 0;
         private SingleActorStage stage = new SingleActorStage ();
+        private Dictionary<Pixbuf, Cairo.Surface> surface_cache = new Dictionary<Pixbuf, Cairo.Surface> ();
         
         protected TrackInfoDisplay (IntPtr native) : base (native)
         {
@@ -117,6 +118,8 @@ namespace Banshee.Gui.Widgets
                 PlayerEvent.StartOfStream | 
                 PlayerEvent.TrackInfoUpdated | 
                 PlayerEvent.StateChange);
+                
+            WidgetFlags |= WidgetFlags.NoWindow;
         }
         
         public override void Dispose ()
@@ -132,7 +135,21 @@ namespace Banshee.Gui.Widgets
             stage.Iteration -= OnStageIteration;
             stage = null;
             
+            SurfaceCacheFlush ();
+            
             base.Dispose ();
+        }
+        
+        protected override void OnRealized ()
+        {
+            GdkWindow = Parent.GdkWindow;
+            base.OnRealized ();
+        }
+        
+        protected override void OnUnrealized ()
+        {
+            base.OnUnrealized ();
+            SurfaceCacheFlush ();
         }
         
         protected override void OnSizeAllocated (Rectangle allocation)
@@ -141,6 +158,8 @@ namespace Banshee.Gui.Widgets
             
             if (current_track == null) {
                 LoadCurrentTrack ();
+            } else {
+                LoadPixbuf (current_track);
             }
         }
 
@@ -165,17 +184,37 @@ namespace Banshee.Gui.Widgets
         
         protected override bool OnExposeEvent (EventExpose evnt)
         {
-            if (!Visible || !IsMapped || (incoming_track == null && current_track == null)) {
+            bool idle = incoming_track == null && current_track == null;
+            if (!Visible || !IsMapped || (idle && !CanRenderIdle)) {
                 return true;
             }
             
             Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
-            cr.Rectangle (Allocation.X, Allocation.Y, Allocation.Width, Allocation.Height);
-            cr.Clip ();
-            RenderAnimation (cr);
+            
+            foreach (Gdk.Rectangle damage in evnt.Region.GetRectangles ()) {
+                cr.Rectangle (damage.X, damage.Y, damage.Width, damage.Height);
+                cr.Clip ();
+            
+                if (idle) {
+                    RenderIdle (cr);
+                } else {
+                    RenderAnimation (cr);
+                }
+            
+                cr.ResetClip ();
+            }
+            
             CairoExtensions.DisposeContext (cr);
             
             return true;
+        }
+
+        protected virtual bool CanRenderIdle {
+            get { return false; }
+        }
+        
+        protected virtual void RenderIdle (Cairo.Context cr)
+        {
         }
         
         private void RenderAnimation (Cairo.Context cr)
@@ -238,8 +277,10 @@ namespace Banshee.Gui.Widgets
         
         protected virtual void RenderCoverArt (Cairo.Context cr, Pixbuf pixbuf)
         {
-            ArtworkRenderer.RenderThumbnail (cr, pixbuf, false, Allocation.X, Allocation.Y, Allocation.Height, Allocation.Height, 
-                !IsMissingPixbuf (pixbuf), 0, IsMissingPixbuf (pixbuf), background_color);
+            ArtworkRenderer.RenderThumbnail (cr, pixbuf, false, Allocation.X, Allocation.Y, 
+                ArtworkSizeRequest, ArtworkSizeRequest, 
+                !IsMissingPixbuf (pixbuf), 0, 
+                IsMissingPixbuf (pixbuf), BackgroundColor);
         }
 
         protected bool IsMissingPixbuf (Pixbuf pb)
@@ -248,6 +289,14 @@ namespace Banshee.Gui.Widgets
         }
         
         protected abstract void RenderTrackInfo (Cairo.Context cr, TrackInfo track, bool renderTrack, bool renderArtistAlbum);
+        
+        protected virtual int ArtworkSizeRequest {
+            get { return Allocation.Height; }
+        }
+        
+        protected virtual int MissingIconSizeRequest {
+            get { return 32; }
+        }
         
         private void OnPlayerEvent (PlayerEventArgs args)
         {
@@ -294,18 +343,27 @@ namespace Banshee.Gui.Widgets
             }
 
             incoming_track = track;
-
-            Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtworkId, Allocation.Height);
             
+            LoadPixbuf (track);
+
+            if (stage.Actor == null) {
+                stage.Reset ();
+            }
+        }
+        
+        private void LoadPixbuf (TrackInfo track)
+        {
+            Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtworkId, ArtworkSizeRequest);
+
             if (pixbuf == null) {
                 if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
                     if (missing_video_pixbuf == null) {
-                        missing_video_pixbuf = IconThemeUtils.LoadIcon (32, "video-x-generic");
+                        missing_video_pixbuf = IconThemeUtils.LoadIcon (MissingIconSizeRequest, "video-x-generic");
                     }
                     incoming_pixbuf = missing_video_pixbuf;
                 } else {
                     if (missing_audio_pixbuf == null) {
-                        missing_audio_pixbuf = IconThemeUtils.LoadIcon (32, "audio-x-generic");
+                        missing_audio_pixbuf = IconThemeUtils.LoadIcon (MissingIconSizeRequest, "audio-x-generic");
                     }
                     incoming_pixbuf = missing_audio_pixbuf;
                 }
@@ -313,8 +371,8 @@ namespace Banshee.Gui.Widgets
                 incoming_pixbuf = pixbuf;
             }
             
-            if (stage.Actor == null) {
-                stage.Reset ();
+            if (track == current_track) {
+                current_pixbuf = incoming_pixbuf;
             }
         }
         
@@ -322,12 +380,14 @@ namespace Banshee.Gui.Widgets
         
         private void OnStageIteration (object o, EventArgs args)
         {
-            QueueDraw ();
+            Invalidate ();
             
             if (stage.Actor != null) {
                 last_fps = stage.Actor.FramesPerSecond;
                 return;
             }
+            
+            SurfaceCacheFlush ();
             
             if (ApplicationContext.Debugging) {
                 Log.DebugFormat ("TrackInfoDisplay RenderAnimation: {0:0.00} FPS", last_fps);
@@ -343,6 +403,11 @@ namespace Banshee.Gui.Widgets
             incoming_track = null;
             
             OnArtworkChanged ();
+        }
+        
+        protected virtual void Invalidate ()
+        {
+            QueueDraw ();
         }
         
         protected virtual void OnArtworkChanged ()
@@ -389,7 +454,7 @@ namespace Banshee.Gui.Widgets
             }
             
             return String.Format ("<span color=\"{0}\">{1}</span>",  
-                CairoExtensions.ColorGetHex (text_color, false),
+                CairoExtensions.ColorGetHex (TextColor, false),
                 markup);
         }
         
@@ -397,7 +462,7 @@ namespace Banshee.Gui.Widgets
         {
             string [] new_args = new string [args.Length + 2];
             new_args[0] = String.Format ("<span color=\"{0}\" size=\"small\">", 
-                CairoExtensions.ColorGetHex (text_light_color, false));
+                CairoExtensions.ColorGetHex (TextLightColor, false));
             new_args[1] = "</span>";
             
             for (int i = 0; i < args.Length; i++) {
@@ -429,6 +494,47 @@ namespace Banshee.Gui.Widgets
                 markup = MarkupFormat (Catalog.GetString ("{0}by{1} {2}"), display_artist);
             }
             return markup;
+        }
+        
+        protected void SurfaceExpire (Gdk.Pixbuf pixbuf)
+        {
+            if (pixbuf == null) {
+                return;
+            }
+            
+            Cairo.Surface surface = null;
+            if (surface_cache.TryGetValue (pixbuf, out surface)) {
+                surface.Destroy ();
+                surface_cache.Remove (pixbuf);
+            }
+        }
+        
+        protected void SurfaceCacheFlush ()
+        {
+            foreach (Cairo.Surface surface in surface_cache.Values) {
+                surface.Destroy ();
+            }
+            
+            surface_cache.Clear ();
+        }
+        
+        protected void SurfaceCache (Gdk.Pixbuf pixbuf, Cairo.Surface surface)
+        {
+            if (pixbuf == null || surface == null) {
+                return;
+            }
+            
+            SurfaceExpire (pixbuf);
+            surface_cache.Add (pixbuf, surface);
+        }
+        
+        protected Cairo.Surface SurfaceLookup (Gdk.Pixbuf pixbuf)
+        {
+            Cairo.Surface surface = null;
+            if (pixbuf != null) {
+                surface_cache.TryGetValue (pixbuf, out surface);
+            }
+            return surface;
         }
     }
 }
