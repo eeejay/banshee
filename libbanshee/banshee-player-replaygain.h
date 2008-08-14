@@ -1,5 +1,5 @@
 //
-// SchemaPreference.cs
+// banshee-player-replaygain.h
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -26,43 +26,23 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
+#ifndef _BANSHEE_PLAYER_REPLAYGAIN_H
+#define _BANSHEE_PLAYER_REPLAYGAIN_H
 
-using Banshee.Configuration;
+#include "banshee-player-private.h"
 
-namespace Banshee.Preferences
+void _bp_replaygain_process_tag          (BansheePlayer *player, const gchar *tag_name, const GValue *value);
+void _bp_replaygain_handle_state_changed (BansheePlayer *player, GstState old, GstState new, GstState pending);
+void _bp_replaygain_update_volume        (BansheePlayer *player);
+
+static inline void
+_bp_replaygain_init (BansheePlayer *player)
 {
-    public delegate void SchemaPreferenceUpdatedHandler ();
-
-    public class SchemaPreference<T> : Preference<T>
-    {
-        private SchemaEntry<T> schema;
-        private SchemaPreferenceUpdatedHandler handler;
-        
-        public SchemaPreference (SchemaEntry<T> schema, string name) : this (schema, name, null)
-        {
-        }
-        
-        public SchemaPreference (SchemaEntry<T> schema, string name, string description) 
-            : this (schema, name, description, null)
-        {
-        }
-        
-        public SchemaPreference (SchemaEntry<T> schema, string name, string description, SchemaPreferenceUpdatedHandler handler) 
-            : base (schema.Key, name, description)
-        {
-            this.schema = schema;
-            this.handler = handler;
-        }
-        
-        public override T Value {
-            get { return schema.Get (); }
-            set { 
-                schema.Set (value); 
-                if (handler != null) {
-                    handler ();
-                }
-            }
-        }
+    gint i;
+    for (i = 0; i < 11; i++) {
+        player->volume_scale_history[i] = 1.0;
     }
+    
 }
+
+#endif /* _BANSHEE_PLAYER_REPLAYGAIN_H */

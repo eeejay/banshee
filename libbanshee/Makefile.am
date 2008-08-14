@@ -17,6 +17,7 @@ libbanshee_la_SOURCES =  \
 	banshee-player-equalizer.c \
 	banshee-player-missing-elements.c \
 	banshee-player-pipeline.c \
+	banshee-player-replaygain.c \
 	banshee-player-video.c \
 	banshee-ripper.c \
 	banshee-tagger.c \
@@ -29,6 +30,7 @@ noinst_HEADERS =  \
 	banshee-player-missing-elements.h \
 	banshee-player-pipeline.h \
 	banshee-player-private.h \
+	banshee-player-replaygain.h \
 	banshee-player-video.h \
 	banshee-tagger.h
 

@@ -73,6 +73,8 @@ namespace Banshee.Preferences
             
             file_system.Add (new SchemaPreference<string> (LibrarySchema.FilePattern,     
                 Catalog.GetString ("File _name")));
+                
+            general.Add (new Section ("playback", Catalog.GetString ("Playback"), 20));
             
             service.Add (new Page ("extensions", Catalog.GetString ("Extensions"), 10));
         }

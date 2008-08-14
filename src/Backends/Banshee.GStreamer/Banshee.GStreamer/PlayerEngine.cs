@@ -37,6 +37,8 @@ using Banshee.Base;
 using Banshee.Streaming;
 using Banshee.MediaEngine;
 using Banshee.ServiceStack;
+using Banshee.Configuration;
+using Banshee.Preferences;
 
 namespace Banshee.GStreamer
 {
@@ -74,7 +76,7 @@ namespace Banshee.GStreamer
         private GstTaggerTagFoundCallback tag_found_callback;
         
         private bool buffering_finished;
-        private short pending_volume = -1;
+        private int pending_volume = -1;
         private bool xid_is_set = false;
         
         public PlayerEngine ()
@@ -126,10 +128,14 @@ namespace Banshee.GStreamer
             if (pending_volume >= 0) {
                 Volume = (ushort)pending_volume;
             }
+            
+            InstallPreferences ();
+            ReplayGainEnabled = ReplayGainEnabledSchema.Get ();
         }
         
         public override void Dispose ()
         {
+            UninstallPreferences ();
             base.Dispose ();
             bp_destroy (handle);
         }
@@ -314,14 +320,14 @@ namespace Banshee.GStreamer
         }
         
         public override ushort Volume {
-            get { return (ushort)bp_get_volume (handle); }
+            get { return (ushort)Math.Round (bp_get_volume (handle) * 100.0); }
             set { 
                 if ((IntPtr)handle == IntPtr.Zero) {
-                    pending_volume = (short)value;
+                    pending_volume = value;
                     return;
                 }
                 
-                bp_set_volume (handle, (int)value);
+                bp_set_volume (handle, value / 100.0);
                 OnEventChanged (PlayerEvent.Volume);
             }
         }
@@ -329,7 +335,7 @@ namespace Banshee.GStreamer
         public override uint Position {
             get { return (uint)bp_get_position(handle); }
             set { 
-                bp_set_position(handle, (ulong)value);
+                bp_set_position (handle, (ulong)value);
                 OnEventChanged (PlayerEvent.Seek);
             }
         }
@@ -425,6 +431,49 @@ namespace Banshee.GStreamer
             get { return decoder_capabilities; }
         }
         
+        private bool ReplayGainEnabled {
+            get { return bp_replaygain_get_enabled (handle); }
+            set { bp_replaygain_set_enabled (handle, value); }
+        }
+        
+#region Preferences
+
+        private PreferenceBase replaygain_preference;
+
+        private void InstallPreferences ()
+        {
+            PreferenceService service = ServiceManager.Get<PreferenceService> ();
+            if (service == null) {
+                return;
+            }
+            
+            replaygain_preference = service["general"]["playback"].Add (new SchemaPreference<bool> (ReplayGainEnabledSchema, 
+                Catalog.GetString ("_Enable ReplayGain Correction"),
+                Catalog.GetString ("For tracks that have ReplayGain data, automatically scale (normalize) playback volume."),
+                delegate { ReplayGainEnabled = ReplayGainEnabledSchema.Get (); }
+            ));
+        }
+        
+        private void UninstallPreferences ()
+        {
+            PreferenceService service = ServiceManager.Get<PreferenceService> ();
+            if (service == null) {
+                return;
+            }
+            
+            service["general"]["playback"].Remove (replaygain_preference);
+            replaygain_preference = null;
+        }
+        
+        public static readonly SchemaEntry<bool> ReplayGainEnabledSchema = new SchemaEntry<bool> (
+            "player_engine", "replay_gain_enabled", 
+            false,
+            "Enable ReplayGain",
+            "If ReplayGain data is present on tracks when playing, allow volume scaling"
+        );
+
+#endregion
+        
         [DllImport ("libbanshee")]
         private static extern IntPtr bp_new ();
         
@@ -466,10 +515,10 @@ namespace Banshee.GStreamer
         private static extern void bp_play (HandleRef player);
         
         [DllImport ("libbanshee")]
-        private static extern void bp_set_volume (HandleRef player, int volume);
+        private static extern void bp_set_volume (HandleRef player, double volume);
         
         [DllImport("libbanshee")]
-        private static extern int bp_get_volume (HandleRef player);
+        private static extern double bp_get_volume (HandleRef player);
         
         [DllImport ("libbanshee")]
         private static extern bool bp_can_seek (HandleRef player);
@@ -521,5 +570,11 @@ namespace Banshee.GStreamer
         [DllImport ("libbanshee")]
         private static extern void bp_equalizer_get_frequencies (HandleRef player,
             [MarshalAs (UnmanagedType.LPArray)] out double [] freq);
+            
+        [DllImport ("libbanshee")]
+        private static extern void bp_replaygain_set_enabled (HandleRef player, bool enabled);
+        
+        [DllImport ("libbanshee")]
+        private static extern bool bp_replaygain_get_enabled (HandleRef player);
     }
 }

@@ -30,6 +30,7 @@
 #include "banshee-player-pipeline.h"
 #include "banshee-player-cdda.h"
 #include "banshee-player-missing-elements.h"
+#include "banshee-player-replaygain.h"
 
 // ---------------------------------------------------------------------------
 // Private Functions
@@ -122,6 +123,8 @@ bp_new ()
     BansheePlayer *player = g_new0 (BansheePlayer, 1);
     
     player->mutex = g_mutex_new ();
+    
+    _bp_replaygain_init (player);
     
     if (!_bp_pipeline_construct (player)) {
         bp_destroy (player);
@@ -268,19 +271,18 @@ bp_can_seek (BansheePlayer *player)
 }
 
 P_INVOKE void
-bp_set_volume (BansheePlayer *player, gint volume)
+bp_set_volume (BansheePlayer *player, gdouble volume)
 {
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
-    g_object_set (G_OBJECT (player->playbin), "volume", CLAMP (volume, 0, 100) / 100.0, NULL);
+    player->current_volume = CLAMP (volume, 0.0, 1.0);
+    _bp_replaygain_update_volume (player);
 }
 
-P_INVOKE gint
+P_INVOKE gdouble
 bp_get_volume (BansheePlayer *player)
 {
-    gdouble volume = 0.0;
-    g_return_val_if_fail (IS_BANSHEE_PLAYER (player), 0);
-    g_object_get (player->playbin, "volume", &volume, NULL);
-    return (gint)(volume * 100.0);
+    g_return_val_if_fail (IS_BANSHEE_PLAYER (player), 0.0);
+    return player->current_volume;
 }
 
 P_INVOKE gboolean

@@ -31,6 +31,7 @@
 #include "banshee-player-video.h"
 #include "banshee-player-equalizer.h"
 #include "banshee-player-missing-elements.h"
+#include "banshee-player-replaygain.h"
 
 // ---------------------------------------------------------------------------
 // Private Functions
@@ -51,8 +52,12 @@ bp_pipeline_process_tag (const GstTagList *tag_list, const gchar *tag_name, Bans
     
     value = gst_tag_list_get_value_index (tag_list, tag_name, 0);
 
-    if (value != NULL && player->tag_found_cb != NULL) {
-        player->tag_found_cb (player, tag_name, value);
+    if (value != NULL) {
+        _bp_replaygain_process_tag (player, tag_name, value);
+    
+        if (player->tag_found_cb != NULL) {
+            player->tag_found_cb (player, tag_name, value);
+        }
     }
 }
 
@@ -77,6 +82,7 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
             gst_message_parse_state_changed (message, &old, &new, &pending);
             
             _bp_missing_elements_handle_state_changed (player, old, new);
+            _bp_replaygain_handle_state_changed (player, old, new, pending);
             
             if (player->state_changed_cb != NULL) {
                 player->state_changed_cb (player, old, new, pending);

@@ -1,3 +1,31 @@
+2008-08-14  Aaron Bockover  <abock@gnome.org>
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs: 
+	Implement ReplayGain preference and cope with the volume format change
+
+	* libbanshee/banshee-player.c:
+	* libbanshee/banshee-player-pipeline.c:
+	* libbanshee/banshee-player-private.h: Integrate the ReplayGain support
+	into the pipeline/player object; store user volume in the player object
+	since the pipeline volume may have a ReplayGain scale factor; use a 
+	double [0..1] to store the volume to make life easier
+
+	* libbanshee/banshee-player-replaygain.c:
+	* libbanshee/banshee-player-replaygain.h: Implemented ReplayGain volume
+	scaling, reading data from GST_TAG_[TRACK|ALBUM]_[GAIN|PEAK] tags; 
+	implemented based on the http://replaygain.hydrogenaudio.org/ spec, 
+	including the 10 track scale history to implement average scale on 
+	tracks without ReplayGain data
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/NotebookPage.cs:
+	Do not show empty sections
+	
+	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: Add an empty
+	playback section
+	
+	* src/Core/Banshee.Services/Banshee.Preferences/SchemaPreference.cs:
+	Support a notification callback when the schema value is toggled
+
 2008-08-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:

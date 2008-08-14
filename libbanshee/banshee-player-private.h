@@ -82,6 +82,7 @@ struct BansheePlayer {
     GstElement *equalizer;
     GstElement *preamp;
     gint equalizer_status;
+    gdouble current_volume;
     
     // Pipeline/Playback State
     GMutex *mutex;
@@ -104,6 +105,24 @@ struct BansheePlayer {
     #ifdef HAVE_GST_PBUTILS
     GstInstallPluginsContext *install_plugins_context;
     #endif
+    
+    // ReplayGain State
+    gboolean replaygain_enabled;
+    
+    // ReplayGain history: stores the previous 10 scale factors
+    // and the current scale factor with the current at index 0
+    // and the oldest at index 10. History is used to compute 
+    // gain on a track where no adjustment information is present.
+    // http://replaygain.hydrogenaudio.org/player_scale.html
+    gdouble volume_scale_history[11];
+    gboolean volume_scale_history_shift;
+    gboolean current_scale_from_history;
+    
+    // ReplayGain cache
+    gdouble album_gain;
+    gdouble album_peak;
+    gdouble track_gain;
+    gdouble track_peak;
 };
 
 #endif /* _BANSHEE_PLAYER_PRIVATE_H */

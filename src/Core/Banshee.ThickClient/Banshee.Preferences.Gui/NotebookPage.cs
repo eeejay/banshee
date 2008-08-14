@@ -70,6 +70,10 @@ namespace Banshee.Preferences.Gui
         {
             Frame frame = null;
             
+            if (section.Count == 0) {
+                return;
+            }
+            
             if (section.ShowLabel) {
                 frame = new Frame ();
                 Label label = new Label ();
