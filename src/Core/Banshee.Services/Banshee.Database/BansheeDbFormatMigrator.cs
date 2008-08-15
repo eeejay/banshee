@@ -219,7 +219,7 @@ namespace Banshee.Database
         private bool Migrate_1 ()
         {
             if (TableExists("Tracks")) {
-                InitializeFreshDatabase ();
+                InitializeFreshDatabase (true);
                 
                 uint timer_id = Log.DebugTimerStart ("Database Schema Migration");
 
@@ -240,7 +240,7 @@ namespace Banshee.Database
                 
                 return false;
             } else {
-                InitializeFreshDatabase ();
+                InitializeFreshDatabase (false);
                 return false;
             }
         }
@@ -497,7 +497,7 @@ namespace Banshee.Database
         
 #region Fresh database setup
         
-        private void InitializeFreshDatabase ()
+        private void InitializeFreshDatabase (bool refresh_metadata)
         {
             Execute("DROP TABLE IF EXISTS CoreConfiguration");
             Execute("DROP TABLE IF EXISTS CoreTracks");
@@ -519,7 +519,9 @@ namespace Banshee.Database
                 )
             ");
             Execute (String.Format ("INSERT INTO CoreConfiguration VALUES (null, 'DatabaseVersion', {0})", CURRENT_VERSION));
-            Execute (String.Format ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', {0})", CURRENT_METADATA_VERSION));
+            if (!refresh_metadata) {
+                Execute (String.Format ("INSERT INTO CoreConfiguration VALUES (null, 'MetadataVersion', {0})", CURRENT_METADATA_VERSION));
+            }
             
             Execute(@"
                 CREATE TABLE CorePrimarySources (

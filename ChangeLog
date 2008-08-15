@@ -1,3 +1,8 @@
+2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Fix bug with not triggering metadata refresh when migrating from 0.13.2.
+
 2008-08-15  Alexander Hixon  <ahixon@gnome.org>
 
 	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Only use 'Log'
