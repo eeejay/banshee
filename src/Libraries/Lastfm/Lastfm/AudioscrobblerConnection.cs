@@ -263,8 +263,7 @@ namespace Lastfm
             state = State.WaitingForRequestStream;
             current_async_result = current_web_req.BeginGetRequestStream (TransmitGetRequestStream, ts);
             if (!(current_async_result.AsyncWaitHandle.WaitOne (TIME_OUT, false))) {
-                Hyena.Log.Warning ("Audioscrobbler upload failed", 
-                                             "The request timed out and was aborted", false);
+                Log.Warning ("Audioscrobbler upload failed", "The request timed out and was aborted", false);
                 next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
                 hard_failures++;
                 state = State.Idle;
@@ -310,7 +309,7 @@ namespace Lastfm
                 resp = current_web_req.EndGetResponse (ar);
             }
             catch (Exception e) {
-                Hyena.Log.Warning (String.Format("Failed to get the response: {0}", e), false);
+                Log.Warning (String.Format("Failed to get the response: {0}", e), false);
 
                 state = State.Idle;
                 next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
@@ -329,7 +328,7 @@ namespace Lastfm
             DateTime now = DateTime.Now;
             if (line.StartsWith ("FAILED")) {
                 if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
-                    Hyena.Log.Warning ("Audioscrobbler upload failed", line.Substring ("FAILED".Length).Trim(), false);
+                    Log.Warning ("Audioscrobbler upload failed", line.Substring ("FAILED".Length).Trim(), false);
                     last_upload_failed_logged = now;
                 }
                 
@@ -339,7 +338,7 @@ namespace Lastfm
             }
             else if (line.StartsWith ("BADSESSION")) {
                 if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
-                    Hyena.Log.Warning ("Audioscrobbler upload failed", "session ID sent was invalid", false);
+                    Log.Warning ("Audioscrobbler upload failed", "session ID sent was invalid", false);
                     last_upload_failed_logged = now;
                 }
                 
@@ -351,7 +350,7 @@ namespace Lastfm
             } else if (line.StartsWith ("OK")) {
                 /* if we've previously logged failures, be nice and log the successful upload. */
                 if (last_upload_failed_logged != DateTime.MinValue) {
-                    Hyena.Log.Debug ("Audioscrobbler upload succeeded");
+                    Log.Debug ("Audioscrobbler upload succeeded");
                     last_upload_failed_logged = DateTime.MinValue;
                 }
                 
@@ -364,7 +363,7 @@ namespace Lastfm
                 state = State.Idle;
             } else {
                 if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
-                    Hyena.Log.Warning ("Audioscrobbler upload failed", String.Format ("Unrecognized response: {0}", line), false);
+                    Log.Warning ("Audioscrobbler upload failed", String.Format ("Unrecognized response: {0}", line), false);
                     last_upload_failed_logged = now;
                 }
                 
@@ -418,7 +417,7 @@ namespace Lastfm
                 resp = current_web_req.EndGetResponse (ar);
             }
             catch (Exception e) {
-                Hyena.Log.Warning ("Failed to handshake: {0}", e.ToString (), false);
+                Log.Warning ("Failed to handshake: {0}", e.ToString (), false);
 
                 // back off for a time before trying again
                 state = State.Idle;
@@ -434,18 +433,17 @@ namespace Lastfm
 
             line = sr.ReadLine ();
             if (line.StartsWith ("BANNED")) {
-                Hyena.Log.Warning ("Audioscrobbler sign-on failed", "Player is banned", false);
+                Log.Warning ("Audioscrobbler sign-on failed", "Player is banned", false);
                                    
             } else if (line.StartsWith ("BADAUTH")) {
-                Hyena.Log.Warning ("Audioscrobbler sign-on failed", Catalog.GetString ("Last.fm username or password is invalid."));
+                Log.Warning ("Audioscrobbler sign-on failed", Catalog.GetString ("Last.fm username or password is invalid."));
                 LastfmCore.Account.CryptedPassword = null;
             } else if (line.StartsWith ("BADTIME")) {
-                Hyena.Log.Warning ("Audioscrobbler sign-on failed", 
+                Log.Warning ("Audioscrobbler sign-on failed", 
                                                   "timestamp provided was not close enough to the current time", false);
             } else if (line.StartsWith ("FAILED")) {
-                Hyena.Log.Warning ("Audioscrobbler sign-on failed",
-                                                  String.Format ("Temporary server failure: {0}",
-                                                                  line.Substring ("FAILED".Length).Trim()), false);
+                Log.Warning ("Audioscrobbler sign-on failed",
+                    String.Format ("Temporary server failure: {0}", line.Substring ("FAILED".Length).Trim ()), false);
                 hard_failure = true;
             } else if (line.StartsWith ("OK")) {
                 success = true;
@@ -555,7 +553,7 @@ namespace Lastfm
                     now_playing_started = true;
                 }
             } catch (Exception ex) {
-                Hyena.Log.Warning ("Audioscrobbler NowPlaying failed",
+                Log.Warning ("Audioscrobbler NowPlaying failed",
                                   String.Format ("Exception while creating request: {0}", ex), false);
                 
                 // Reset current_now_playing_uri if it was the problem.
@@ -573,11 +571,11 @@ namespace Lastfm
 
                 string line = sr.ReadLine ();
                 if (line == null) {
-                    Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "No response", false);
+                    Log.Warning ("Audioscrobbler NowPlaying failed", "No response", false);
                 }
                 
                 if (line.StartsWith ("BADSESSION")) {
-                    Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "Session ID sent was invalid", false);
+                    Log.Warning ("Audioscrobbler NowPlaying failed", "Session ID sent was invalid", false);
                     // attempt to re-handshake on the next interval
                     session_id = null;
                     next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
@@ -586,18 +584,18 @@ namespace Lastfm
                     return;
                 } else if (line.StartsWith ("OK")) {
                     // NowPlaying submitted  
-                    Hyena.Log.DebugFormat ("Submitted NowPlaying track to Audioscrobbler");
+                    Log.DebugFormat ("Submitted NowPlaying track to Audioscrobbler");
                     now_playing_started = false;
                     now_playing_post = null;
                     current_now_playing_uri = null;
                     return;
                 } else {
-                    Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", "Unexpected or no response", false);       
+                    Log.Warning ("Audioscrobbler NowPlaying failed", "Unexpected or no response", false);       
                 }
             }
             catch (Exception e) {
-                Hyena.Log.Warning ("Audioscrobbler NowPlaying failed", 
-                              String.Format("Failed to post NowPlaying: {0}", e), false);
+                Log.Warning ("Audioscrobbler NowPlaying failed", 
+                    String.Format("Failed to post NowPlaying: {0}", e), false);
             }
             
             // NowPlaying error/success is non-crutial.

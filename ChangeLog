@@ -1,5 +1,14 @@
 2008-08-15  Alexander Hixon  <ahixon@gnome.org>
 
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Only use 'Log'
+	rather than 'Hyena.Log' in the code since we've already referenced it.
+
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:
+	Make sure we can use the hotkeys from the main window. Based on a patch by
+	Ruben Vermeersch. Fixes BGO #385849.
+
+2008-08-15  Alexander Hixon  <ahixon@gnome.org>
+
 	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Only post Now
 	Playing information to AS servers after all tracks have been uploaded.
 	Should also fix consecutive Now Playing updates. Closes BGO #524992.

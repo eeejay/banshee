@@ -136,6 +136,9 @@ namespace Banshee.MiniMode
             SetTip(fullmode_button, Catalog.GetString("Switch back to full mode"));
             SetTip(repeat_toggle_button, Catalog.GetString("Change repeat playback mode"));
             
+            // Use the hotkeys from the main window.
+            AddAccelGroup(interface_action_service.UIManager.AccelGroup);
+            
             // Hook up everything
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
                 PlayerEvent.Error |
