@@ -1,5 +1,9 @@
 2008-08-14  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/banshee-1.in: Fixes BGO #547725 (hyperair)
+
+2008-08-14  Aaron Bockover  <abock@gnome.org>
+
 	Merged the really nice and blingy cover art display back from r4350 now
 	that 1.2.1 is out and we can afford more time to stress test it. Please
 	file bugs.
