@@ -1,5 +1,10 @@
 2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Data/PropertyStore.cs: Fix deadlock caused by
+	a property change event triggering a propety get/set/remove.
+
+2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
 	Fix bug with not triggering metadata refresh when migrating from 0.13.2.
 

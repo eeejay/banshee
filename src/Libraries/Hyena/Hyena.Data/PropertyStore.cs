@@ -94,12 +94,18 @@ namespace Hyena.Data
             
         public void Remove(string name)
         {
+            bool raise = false;
+            object old_value = null;
             lock(this) {
                 if(object_store.ContainsKey(name)) {
-                    object old_value = object_store[name];
+                    old_value = object_store[name];
                     object_store.Remove(name);
-                    OnPropertyChanged(name, false, true, old_value, null);
+                    raise = true;
                 }
+            }
+
+            if (raise) {
+                OnPropertyChanged(name, false, true, old_value, null);
             }
         }
         
@@ -126,10 +132,9 @@ namespace Hyena.Data
         
         public void Set<T>(string name, T value)
         {
+            bool added = false;
+            T old_value = default(T);
             lock(this) {
-                bool added = false;
-                T old_value = default(T);
-                
                 if(object_store == null) {
                     object_store = new Dictionary<string, object>();
                 }
@@ -143,9 +148,8 @@ namespace Hyena.Data
                     added = true;
                     object_store.Add(name, value);
                 }
-                
-                OnPropertyChanged(name, added, false, old_value, value);
             }
+            OnPropertyChanged(name, added, false, old_value, value);
         }
         
         public T Get<T>(string name)
