@@ -1,3 +1,15 @@
+2008-08-15  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Dap/Banshee.Dap.Karma/Banshee.Dap.Karma.addin.xml:
+	* src/Dap/Banshee.Dap.Karma/Banshee.Dap.Karma/KarmaTrackInfo.cs:
+	* src/Dap/Banshee.Dap.Karma/Banshee.Dap.Karma/KarmaSource.cs:
+	* src/Dap/Banshee.Dap.Karma/Makefile.am:
+	* src/Dap/Makefile.am:
+	* build/build.environment.mk:
+	* configure.ac: Patch from Bob Copeland to add Karma DAP support. It is 
+	enabled through the --enable-karma configure option and requires karma-sharp
+	(BGO #541828).
+
 2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Fix bug with sometimes doing

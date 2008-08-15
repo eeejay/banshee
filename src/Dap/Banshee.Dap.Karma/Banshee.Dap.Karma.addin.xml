@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addin
+    id="Banshee.Dap.Karma"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2008 Bob Copeland. Licensed under the MIT X11 license."
+    name="Karma Support"
+    category="Hardware"
+    description="Provides support for Rio Karma devices."
+    author="Bob Copeland"
+    url="http://banshee-project.org/"
+    defaultEnabled="true">
+
+  <Dependencies>
+    <Addin id="Banshee.Dap" version="1.0"/>
+  </Dependencies>
+
+  <Extension path="/Banshee/Dap/DeviceClass">
+    <DeviceClass class="Banshee.Dap.Karma.KarmaSource"/>
+  </Extension>
+
+</Addin>

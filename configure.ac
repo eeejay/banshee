@@ -86,6 +86,7 @@ AM_GCONF_SOURCE_2
 dnl DAP support (each module is optional)
 BANSHEE_CHECK_DAP_MTP
 BANSHEE_CHECK_DAP_IPOD
+BANSHEE_CHECK_DAP_KARMA
 
 dnl DAAP support (optional)
 BANSHEE_CHECK_DAAP
@@ -165,6 +166,7 @@ src/Dap/Banshee.Dap/Makefile
 src/Dap/Banshee.Dap.Ipod/Makefile
 src/Dap/Banshee.Dap.MassStorage/Makefile
 src/Dap/Banshee.Dap.Mtp/Makefile
+src/Dap/Banshee.Dap.Karma/Makefile
 
 src/Extensions/Makefile
 src/Extensions/Banshee.AudioCd/Makefile
@@ -202,6 +204,7 @@ ${PACKAGE}-${VERSION}
       Mass Storage:    yes
       MTP:             ${enable_libmtp}
       iPod:            ${enable_ipodsharp}
+      Karma:           ${enable_karmasharp}
 
     DAAP Support:      ${enable_daap}
     Podcast Support:   ${enable_podcast}
