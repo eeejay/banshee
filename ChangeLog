@@ -1,3 +1,9 @@
+2008-08-15  Alexander Hixon  <ahixon@gnome.org>
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Only post Now
+	Playing information to AS servers after all tracks have been uploaded.
+	Should also fix consecutive Now Playing updates. Closes BGO #524992.
+
 2008-08-14  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/banshee-1.in: Fixes BGO #547725 (hyperair)

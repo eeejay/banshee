@@ -86,6 +86,7 @@ namespace Lastfm
         private int hard_failure_retry_sec = 60;
         
         private HttpWebRequest now_playing_post;
+        private bool now_playing_started;
         private string current_now_playing_uri;
         private HttpWebRequest current_web_req;
         private IAsyncResult current_async_result;
@@ -262,7 +263,7 @@ namespace Lastfm
             state = State.WaitingForRequestStream;
             current_async_result = current_web_req.BeginGetRequestStream (TransmitGetRequestStream, ts);
             if (!(current_async_result.AsyncWaitHandle.WaitOne (TIME_OUT, false))) {
-		        Hyena.Log.Warning ("Audioscrobbler upload failed", 
+                Hyena.Log.Warning ("Audioscrobbler upload failed", 
                                              "The request timed out and was aborted", false);
                 next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
                 hard_failures++;
@@ -507,19 +508,19 @@ namespace Lastfm
                                         uriprefix,
                                         HttpUtility.UrlEncode(artist),
                                         HttpUtility.UrlEncode(title),
-			                            HttpUtility.UrlEncode(album),
+                                        HttpUtility.UrlEncode(album),
                                         duration.ToString(),
                                         str_track_number,
-			                            mbrainzid);
+                                        mbrainzid);
 
+            Console.WriteLine ("Submitting via non-uri handler.");            
             NowPlaying (uri);
         }
         
         private void NowPlaying (string uri)
         {            
-            if (now_playing_post != null) {
-                Hyena.Log.DebugFormat ("Now-playing submission already started - aborting.");
-                now_playing_post.Abort ();
+            if (now_playing_started) {
+                return;
             }
             
             // If the URI begins with #, then we know the URI was created before we
@@ -546,7 +547,13 @@ namespace Lastfm
                 now_playing_post.Method = "POST";
                 now_playing_post.ContentType = "application/x-www-form-urlencoded";
                 now_playing_post.ContentLength = uri.Length;
-                now_playing_post.BeginGetResponse (NowPlayingGetResponse, null);
+                if (state == State.Idle) {
+                    // Don't actually POST it until we're idle (that is, we
+                    // probably have stuff queued which will reset the Now
+                    // Playing if we send them first).
+                    now_playing_post.BeginGetResponse (NowPlayingGetResponse, null);
+                    now_playing_started = true;
+                }
             } catch (Exception ex) {
                 Hyena.Log.Warning ("Audioscrobbler NowPlaying failed",
                                   String.Format ("Exception while creating request: {0}", ex), false);
@@ -580,6 +587,7 @@ namespace Lastfm
                 } else if (line.StartsWith ("OK")) {
                     // NowPlaying submitted  
                     Hyena.Log.DebugFormat ("Submitted NowPlaying track to Audioscrobbler");
+                    now_playing_started = false;
                     now_playing_post = null;
                     current_now_playing_uri = null;
                     return;
@@ -599,6 +607,7 @@ namespace Lastfm
             } else {
                 // Give up - NowPlaying status information is non-critical.
                 current_now_playing_uri = null;
+                now_playing_started = false;
                 now_playing_post = null;
             }
         }
