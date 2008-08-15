@@ -107,8 +107,7 @@ namespace Banshee.Daap
                     Socket client = server.Accept();
                     clients.Add(client);
                     ThreadPool.QueueUserWorkItem(HandleConnection, client);
-                } catch(SocketException e) {
-                    Hyena.Log.Exception (e);
+                } catch(SocketException) {
                     break;
                 }
             }

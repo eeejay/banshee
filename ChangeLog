@@ -1,5 +1,10 @@
 2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapProxyWebServer.cs: Don't
+	log DAAP socket errors.
+
+2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs: Avoid NRE, and move a
 	delegate to a method.
 
