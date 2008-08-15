@@ -44,6 +44,7 @@ using Banshee.Collection;
 using Banshee.Sources;
 using Banshee.Collection.Database;
 
+using Hyena;
 using Hyena.Gui;
 using Hyena.Widgets;
 
@@ -311,8 +312,7 @@ namespace Banshee.Gui.Dialogs
             (Glade["Title"] as Entry).Text = track.TrackTitle;
             (Glade["Genre"] as ComboBoxEntry).Entry.Text = track.Genre;
             
-            (Glade["DurationLabel"] as Label).Text = String.Format ("{0}:{1}", 
-                track.Track.Duration.Minutes, (track.Track.Duration.Seconds).ToString ("00"));
+            (Glade["DurationLabel"] as Label).Text = DateTimeUtil.FormatDuration (track.Track.Duration);
             (Glade["PlayCountLabel"] as Label).Text = track.Track.PlayCount.ToString ();
             (Glade["LastPlayedLabel"] as Label).Text = track.Track.LastPlayed == DateTime.MinValue ?
                 Catalog.GetString ("Never played") : track.Track.LastPlayed.ToString ();

@@ -1,3 +1,10 @@
+2008-08-16  Alexander Hixon  <hixon.alexander@mediati.org>
+
+	* src/Libraries/Hyena/Hyena/DateTimeUtil.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs: Enable
+	the track editor to display the duration of tracks one hour or longer
+	correctly. Adds some overloaded FormatDuration methods. Fixes BGO #537774.
+
 2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapProxyWebServer.cs: Don't
