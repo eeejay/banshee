@@ -1,5 +1,12 @@
 2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs: Avoid NRE, and move a
+	delegate to a method.
+
+	* configure.ac: turn DEVEL_BUILD back on
+
+2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Be more careful about
 	what we do inside lock().  Do actual interaction with SourceManager
 	outside the lock() for Map/Unmap dap functions.

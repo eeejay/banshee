@@ -62,12 +62,7 @@ namespace Banshee.Dap.Gui
             
             disk_bar_align = new Alignment (0.5f, 0.5f, 1.0f, 1.0f);
             disk_bar = new SegmentedBar ();
-            disk_bar.ValueFormatter = delegate (SegmentedBar.Segment segment) {
-                long size = (long)(source.BytesCapacity * segment.Percent);
-                return size <= 0 
-                    ? Catalog.GetString ("None")
-                    : new Hyena.Query.FileSizeQueryValue (size).ToUserQuery ();
-            };
+            disk_bar.ValueFormatter = DapValueFormatter;
             
             disk_bar.AddSegmentRgb (Catalog.GetString ("Audio"), 0, 0x3465a4);
             disk_bar.AddSegmentRgb (Catalog.GetString ("Video"), 0, 0x73d216);
@@ -88,6 +83,18 @@ namespace Banshee.Dap.Gui
                 SetBackground ();
                 disk_bar.HorizontalPadding = (int)(args.Allocation.Width * 0.25);
             };
+        }
+
+        private string DapValueFormatter (SegmentedBar.Segment segment)
+        {
+            if (source == null) {
+                return null;
+            }
+
+            long size = (long)(source.BytesCapacity * segment.Percent);
+            return size <= 0 
+                ? Catalog.GetString ("None")
+                : new Hyena.Query.FileSizeQueryValue (size).ToUserQuery ();
         }
         
         private void OnSourceUpdated (object o, EventArgs args)
