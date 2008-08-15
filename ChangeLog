@@ -1,5 +1,10 @@
 2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Fix bug with sometimes doing
+	GTK/UI work not in the main thread.
+
+2008-08-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data/PropertyStore.cs: Fix deadlock caused by
 	a property change event triggering a propety get/set/remove.
 
