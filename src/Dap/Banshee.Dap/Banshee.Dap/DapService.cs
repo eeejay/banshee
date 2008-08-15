@@ -143,6 +143,7 @@ namespace Banshee.Dap
         private void MapDevice (IDevice device)
         {
             Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
+                DapSource source = null;
                 lock (sync) {
                     try {
                         if (sources.ContainsKey (device.Uuid)) {
@@ -161,29 +162,40 @@ namespace Banshee.Dap
                             return;
                         }
                         
-                        DapSource source = FindDeviceSource (device);
+                        source = FindDeviceSource (device);
                         if (source != null) {
                             Log.DebugFormat ("Found DAP support ({0}) for device {1}", source.GetType ().FullName, source.Name);
                             sources.Add (device.Uuid, source);
-                            ServiceManager.SourceManager.AddSource (source);
-                            source.NotifyUser ();
                         }
                     } catch (Exception e) {
                         Log.Exception (e);
                     }
+                }
+
+                if (source != null) {
+                    ServiceManager.SourceManager.AddSource (source);
+                    source.NotifyUser ();
                 }
             }));
         }
         
         internal void UnmapDevice (string uuid)
         {
+            DapSource source = null;
             lock (sync) {
                 if (sources.ContainsKey (uuid)) {
                     Log.DebugFormat ("Unmapping DAP source ({0})", uuid);
-                    DapSource source = sources[uuid];
-                    source.Dispose ();
+                    source = sources[uuid];
                     sources.Remove (uuid);
+                }
+            }
+
+            if (source != null) {
+                try {
+                    source.Dispose ();
                     ServiceManager.SourceManager.RemoveSource (source);
+                } catch (Exception e) {
+                    Log.Exception (e);
                 }
             }
         }
@@ -192,9 +204,7 @@ namespace Banshee.Dap
         {
             DapSource dap_source = args.Source as DapSource;
             if (dap_source != null) {
-                lock (sync) {
-                    UnmapDevice (dap_source.Device.Uuid);
-                }
+                UnmapDevice (dap_source.Device.Uuid);
             }
         }
         
