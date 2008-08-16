@@ -1,3 +1,13 @@
+2008-08-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	Don't dispose the missing-coverart pixbuf, fixes recent issue with it
+	disappearing.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkRenderer.cs:
+	Fix issue with the Album Browser being really slow/mushy to scroll by only
+	calling GC.Collect every 100th pixbuf.Dispose (BGO #547628).
+
 2008-08-16  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Libraries/Hyena/Hyena.Query/UserQueryParser.cs: Fix handling of 

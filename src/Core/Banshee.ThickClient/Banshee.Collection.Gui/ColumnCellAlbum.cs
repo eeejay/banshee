@@ -78,7 +78,7 @@ namespace Banshee.Collection.Gui
             int x = pixbuf_spacing;
             int y = ((int)cellHeight - pixbuf_render_size) / 2;
             
-            ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, true, x, y, 
+            ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, !is_default, x, y, 
                 pixbuf_render_size, pixbuf_render_size, !is_default, context.Theme.Context.Radius);
                 
             int fl_width = 0, fl_height = 0, sl_width = 0, sl_height = 0;

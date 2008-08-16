@@ -104,12 +104,20 @@ namespace Banshee.Collection.Gui
             }
         }
         
+        private static int dispose_count = 0;
         public static void DisposePixbuf (Gdk.Pixbuf pixbuf)
         {
             if (pixbuf != null && pixbuf.Handle != IntPtr.Zero) {
                 pixbuf.Dispose ();
                 pixbuf = null;
-                GC.Collect ();
+                
+                // There is an issue with disposing Pixbufs where we need to explicitly 
+                // call the GC otherwise it doesn't get done in a timely way.  But if we
+                // do it every time, it slows things down a lot; so only do it every 100th.
+                if (++dispose_count % 100 == 0) {
+                    GC.Collect ();
+                    dispose_count = 0;
+                }
             }
         }
     }
