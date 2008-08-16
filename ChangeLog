@@ -1,3 +1,9 @@
+2008-08-16  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Check if
+	the cast of the TrackModel to DatabaseTrackListModel succeeded, to avoid
+	a potential crash (BGO #547092).
+
 2008-08-16  Alexander Hixon  <hixon.alexander@mediati.org>
 
 	* src/Libraries/Hyena/Hyena/DateTimeUtil.cs:

@@ -414,6 +414,9 @@ namespace Banshee.Sources
                 return false;
 
             DatabaseTrackListModel model = (source as ITrackModelSource).TrackModel as DatabaseTrackListModel;
+            if (model == null) {
+                return false;
+            }
             WithTrackSelection (model, AddTrackRange);
             OnTracksAdded ();
             OnUserNotifyUpdated ();
