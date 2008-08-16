@@ -216,9 +216,9 @@ namespace Hyena.Query
 
         // TODO: Allow white space before/after term operators
 
-        private bool IsStringTerminationChar (char ch, bool allow_whitespace)
+        private bool IsStringTerminationChar (char ch)
         {
-            return (!allow_whitespace && Char.IsWhiteSpace (ch)) || ch == '(' || ch == ')' || ch == '|' || ch == ',';
+            return Char.IsWhiteSpace (ch) || ch == '(' || ch == ')' || ch == '|' || ch == ',';
         }
 
         private string ScanString ()
@@ -227,7 +227,7 @@ namespace Hyena.Query
             bool in_string = false;
 
             while (true) {
-                if (IsStringTerminationChar (peek, in_string)) {
+                if (!in_string && IsStringTerminationChar (peek)) {
                     break;
                 } else if (peek == '"') {
                     in_string = !in_string;
@@ -241,7 +241,7 @@ namespace Hyena.Query
                 ReadChar ();
 
                 if (reader.EndOfStream) {
-                    if (!IsStringTerminationChar (peek, false) && peek != '"') {
+                    if (!IsStringTerminationChar (peek) && peek != '"') {
                         buffer.Append (peek);
                     }
 

@@ -1,5 +1,13 @@
 2008-08-16  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Query/UserQueryParser.cs: Fix handling of 
+	special characters in quotes (BGO #547078).
+
+	* src/Libraries/Hyena/Hyena.Query/Tests/QueryTests.cs: Unit test for
+	the above bug, written by Sandy Armstrong and modified by me.	
+
+2008-08-16  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Check if
 	the cast of the TrackModel to DatabaseTrackListModel succeeded, to avoid
 	a potential crash (BGO #547092).

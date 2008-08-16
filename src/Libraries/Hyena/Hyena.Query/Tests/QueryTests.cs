@@ -147,6 +147,18 @@ namespace Hyena.Query.Tests
                 MimeTypeField.ToSql (StringQueryValue.Contains, val)
             );
         }
+		
+        [Test]
+        // Test behavior issues described in
+        // http://bugzilla.gnome.org/show_bug.cgi?id=547078
+        public void ParenthesesInQuotes ()
+        {
+            string query = "artist==\"foo (disc 2)\"";
+
+            QueryNode query_tree = UserQueryParser.Parse (query, FieldSet);
+            Assert.IsNotNull (query_tree, "Query should parse");
+            Assert.AreEqual ("by==\"foo (disc 2)\"", query_tree.ToUserQuery ());
+        }
     
         private static void UserQueryParsesAndGenerates (string query)
         {
