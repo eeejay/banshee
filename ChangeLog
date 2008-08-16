@@ -1,5 +1,10 @@
 2008-08-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Avoid NRE (BGO #546864).
+
+2008-08-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
 	Don't dispose the missing-coverart pixbuf, fixes recent issue with it
 	disappearing.

@@ -267,7 +267,7 @@ namespace Banshee.MediaEngine
         
         private void OpenPlay (TrackInfo track, bool play)
         {
-            if (!track.CanPlay || OnTrackIntercept (track)) {
+            if (track == null || !track.CanPlay || OnTrackIntercept (track)) {
                 return;
             }
         
