@@ -1,3 +1,8 @@
+2008-08-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Only update a feed on startup if it hasn't been updated in over an hour.
+
 2008-08-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:

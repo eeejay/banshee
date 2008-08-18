@@ -199,9 +199,12 @@ namespace Banshee.Podcasting
             MigrateLegacyIfNeeded ();
             
             Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
+                DateTime now = DateTime.Now;
                 foreach (Feed feed in Feed.Provider.FetchAll ()) {
-                    feed.Update ();
-                    RefreshArtworkFor (feed);
+                    if ((now - feed.LastDownloadTime).TotalHours > 1) {
+                        feed.Update ();
+                        RefreshArtworkFor (feed);
+                    }
                 }
             }));
         }
