@@ -266,8 +266,9 @@ namespace Banshee.Podcasting
         
         private void RefreshArtworkFor (Feed feed)
         {
-            if (feed.LastDownloadTime != DateTime.MinValue)
-                Banshee.Kernel.Scheduler.Schedule (new PodcastImageFetchJob (feed), Banshee.Kernel.JobPriority.Normal);
+            if (feed.LastDownloadTime != DateTime.MinValue && !CoverArtSpec.CoverExists (PodcastService.ArtworkIdFor (feed))) {
+                Banshee.Kernel.Scheduler.Schedule (new PodcastImageFetchJob (feed), Banshee.Kernel.JobPriority.BelowNormal);
+            }
         }
         
         private void OnItemAdded (FeedItem item)

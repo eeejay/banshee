@@ -1,5 +1,13 @@
 2008-08-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Avoid scheduling artwork tasks for feeds we already have icons for.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:
+	Fix the same disposing-the-default-pixbuf error.
+
+2008-08-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Hardware/IDevice.cs:
 	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs:
 	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs:
