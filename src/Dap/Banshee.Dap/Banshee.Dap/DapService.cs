@@ -35,6 +35,7 @@ using Mono.Addins;
 
 using Hyena;
 using Banshee.Base;
+using Banshee.Kernel;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
@@ -46,7 +47,7 @@ namespace Banshee.Dap
     public class DapService : IExtensionService, IDelayedInitializeService, IDisposable
     {
         private Dictionary<string, DapSource> sources;
-        private List<TypeExtensionNode> supported_dap_types = new List<TypeExtensionNode> ();
+        private List<TypeExtensionNode> supported_dap_types;
         private bool initialized;
         private object sync = new object ();
 
@@ -57,7 +58,11 @@ namespace Banshee.Dap
         public void DelayedInitialize ()
         {
             lock (sync) {
+                if (initialized)
+                    return;
+
                 sources = new Dictionary<string, DapSource> ();
+                supported_dap_types = new List<TypeExtensionNode> ();
                 
                 AddinManager.AddExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
                 
@@ -100,6 +105,7 @@ namespace Banshee.Dap
 
         public void Dispose ()
         {
+            Scheduler.Unschedule (typeof(MapDeviceJob));
             lock (sync) {
                 if (!initialized)
                     return;
@@ -117,6 +123,9 @@ namespace Banshee.Dap
                 
                 sources.Clear ();
                 sources = null;
+                supported_dap_types.Clear ();
+                supported_dap_types = null;
+                initialized = false;
             }
         }
         
@@ -142,11 +151,32 @@ namespace Banshee.Dap
         
         private void MapDevice (IDevice device)
         {
-            Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
+            lock (sync) {
+                Scheduler.Schedule (new MapDeviceJob (this, device));
+            }
+        }
+
+        private class MapDeviceJob : IJob
+        {
+            IDevice device;
+            DapService service;
+
+            public MapDeviceJob (DapService service, IDevice device)
+            {
+                this.device = device;
+                this.service = service;
+            }
+
+            public string Uuid {
+                get { return device.Uuid; }
+            }
+            
+            public void Run ()
+            {
                 DapSource source = null;
-                lock (sync) {
+                lock (service.sync) {
                     try {
-                        if (sources.ContainsKey (device.Uuid)) {
+                        if (service.sources.ContainsKey (device.Uuid)) {
                             return;
                         }
                         
@@ -162,10 +192,10 @@ namespace Banshee.Dap
                             return;
                         }
                         
-                        source = FindDeviceSource (device);
+                        source = service.FindDeviceSource (device);
                         if (source != null) {
                             Log.DebugFormat ("Found DAP support ({0}) for device {1}", source.GetType ().FullName, source.Name);
-                            sources.Add (device.Uuid, source);
+                            service.sources.Add (device.Uuid, source);
                         }
                     } catch (Exception e) {
                         Log.Exception (e);
@@ -173,10 +203,12 @@ namespace Banshee.Dap
                 }
 
                 if (source != null) {
-                    ServiceManager.SourceManager.AddSource (source);
-                    source.NotifyUser ();
+                    ThreadAssist.ProxyToMain (delegate {
+                        ServiceManager.SourceManager.AddSource (source);
+                        source.NotifyUser ();
+                    });
                 }
-            }));
+            }
         }
         
         internal void UnmapDevice (string uuid)
@@ -193,7 +225,9 @@ namespace Banshee.Dap
             if (source != null) {
                 try {
                     source.Dispose ();
-                    ServiceManager.SourceManager.RemoveSource (source);
+                    ThreadAssist.ProxyToMain (delegate {
+                        ServiceManager.SourceManager.RemoveSource (source);
+                    });
                 } catch (Exception e) {
                     Log.Exception (e);
                 }
@@ -210,16 +244,12 @@ namespace Banshee.Dap
         
         private void OnHardwareDeviceAdded (object o, DeviceAddedArgs args)
         {
-            lock (sync) {
-                MapDevice (args.Device);
-            }
+            MapDevice (args.Device);
         }
         
         private void OnHardwareDeviceRemoved (object o, DeviceRemovedArgs args)
         {
-            lock (sync) {
-                UnmapDevice (args.DeviceUuid);
-            }
+            UnmapDevice (args.DeviceUuid);
         }
         
         string IService.ServiceName {

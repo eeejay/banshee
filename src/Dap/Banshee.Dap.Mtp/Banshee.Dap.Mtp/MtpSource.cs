@@ -104,7 +104,7 @@ namespace Banshee.Dap.Mtp
             } else {
                 string mtp_serial = devices[0].SerialNumber;
                 if (!String.IsNullOrEmpty (mtp_serial)) {
-                    if (mtp_serial.Contains (device.Uuid)) {
+                    if (mtp_serial.Contains (device.Serial)) {
                         mtp_device = devices[0];
                         mtp_source = this;
                     }

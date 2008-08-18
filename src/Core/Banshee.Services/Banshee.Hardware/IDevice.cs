@@ -33,6 +33,7 @@ namespace Banshee.Hardware
     public interface IDevice
     {
         string Uuid { get; }
+        string Serial { get; }
         string Name { get; }
 
         string Product { get; }

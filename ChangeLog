@@ -1,5 +1,26 @@
 2008-08-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Hardware/IDevice.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Volume.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/PodSleuthDevice.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Add Serial
+	property, keeping Uuid for the HAL udi (or equiv on other backends).
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Make more thread safe.
+
+	* src/Core/Banshee.Services/Banshee.Base/ThreadAssist.cs: Add
+	AssertInMainThread method; logs a warning if in --debug mode and not
+	called from the main thread.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Assert that
+	we're in the main thread when adding and removing sources.
+
+	* src/Core/Banshee.Core/Banshee.Kernel/Scheduler.cs: Fix up the logging so
+	that jobs that have exceptions are actually logged.
+
+2008-08-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	Only update a feed on startup if it hasn't been updated in over an hour.
 

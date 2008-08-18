@@ -265,6 +265,11 @@ namespace Banshee.Dap.Ipod
         public string Uuid {
             get { return volume.Uuid; }
         }
+
+        public string Serial {
+            get { return volume.Serial; }
+        }
+
         public string Product {
             get { return volume.Product; }
         }

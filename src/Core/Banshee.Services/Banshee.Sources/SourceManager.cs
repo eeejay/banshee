@@ -136,6 +136,7 @@ namespace Banshee.Sources
         
         public void AddSource(Source source, bool isDefault)
         {
+            Banshee.Base.ThreadAssist.AssertInMainThread ();
             if(source == null || ContainsSource (source)) {
                 return;
             }
@@ -184,6 +185,7 @@ namespace Banshee.Sources
 
         public void RemoveSource (Source source, bool recursivelyDispose)
         {
+            Banshee.Base.ThreadAssist.AssertInMainThread ();
             if(source == null || !ContainsSource (source)) {
                 return;
             }
@@ -313,6 +315,7 @@ namespace Banshee.Sources
         
         public void SetActiveSource(Source source, bool notify)
         {
+            Banshee.Base.ThreadAssist.AssertInMainThread ();
             if(source == null || !source.CanActivate || active_source == source) {
                 return;
             }

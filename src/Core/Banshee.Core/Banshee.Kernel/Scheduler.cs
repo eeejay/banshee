@@ -30,6 +30,7 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 
+using Hyena;
 using Hyena.Collections;
 
 namespace Banshee.Kernel
@@ -63,7 +64,7 @@ namespace Banshee.Kernel
                 }
                 
                 heap.Push(job, (int)priority);
-                Debug("Job scheduled ({0}, {1})", job, priority);
+                //Log.DebugFormat("Job scheduled ({0}, {1})", job, priority);
                 OnJobScheduled(job);
                 CheckRun();
             }
@@ -77,10 +78,10 @@ namespace Banshee.Kernel
                 }
                 
                 if(heap.Remove(job)) {
-                    Debug("Job unscheduled ({0}), job", job);
+                    Log.DebugFormat("Job unscheduled ({0}), job", job);
                     OnJobUnscheduled(job);
                 } else {
-                    Debug("Job not unscheduled; not located in heap");
+                    Log.DebugFormat("Job not unscheduled; not located in heap");
                 }
             }
         }
@@ -183,7 +184,7 @@ namespace Banshee.Kernel
         private static bool IsDisposed()
         {
             if(disposed) {
-                Debug("Job not unscheduled; disposing scheduler");
+                //Log.Debug("Job not unscheduled; disposing scheduler");
                 return true;
             }
             
@@ -195,7 +196,6 @@ namespace Banshee.Kernel
             if(heap.Count <= 0) {
                 return;
             } else if(job_thread == null) {
-                Debug("execution thread created");
                 job_thread = new Thread(new ThreadStart(ProcessJobThread));
                 job_thread.Priority = ThreadPriority.BelowNormal;
                 job_thread.IsBackground = true;
@@ -215,27 +215,24 @@ namespace Banshee.Kernel
                     
                 lock(this_mutex) {
                     if(disposed) {
-                        Console.WriteLine("execution thread destroyed, dispose requested");
+                        job_thread = null;
                         return;
                     }
                 
                     try {
                         current_running_job = heap.Pop();
                     } catch(InvalidOperationException) {
-                        Debug("execution thread destroyed, no more jobs scheduled");
                         job_thread = null;
                         return;
                     }
                 }
                 
                 try {
-                    Debug("Job started ({0})", current_running_job);
                     OnJobStarted(current_running_job);
                     current_running_job.Run();
-                    Debug("Job ended ({0})", current_running_job);
                     OnJobFinished(current_running_job);
                 } catch(Exception e) {
-                    Debug("Job threw an unhandled exception: {0}", e);
+                    Log.Exception (e);
                 }
             }
         }
@@ -274,13 +271,6 @@ namespace Banshee.Kernel
             if(handler != null) {
                 handler(job);
             }
-        }
-        
-        private static void Debug(string message, params object [] args)
-        {
-            /*if(Banshee.Base.Globals.Debugging) {
-                Console.Error.WriteLine(String.Format("** Scheduler: {0}", message), args);
-            }*/
         }
     }
 }

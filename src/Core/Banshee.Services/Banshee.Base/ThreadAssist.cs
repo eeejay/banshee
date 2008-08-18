@@ -50,6 +50,13 @@ namespace Banshee.Base
             }
         }
         
+        public static void AssertInMainThread ()
+        {
+            if (ApplicationContext.Debugging && !InMainThread) {
+                Hyena.Log.Warning ("Not in main thread!", System.Environment.StackTrace);
+            }
+        }
+        
         public static void ProxyToMain (InvokeHandler handler)
         {
             if (!InMainThread) {
