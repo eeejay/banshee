@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-11 14:07+0300\n"
-"PO-Revision-Date: 2008-08-11 14:10+0300\n"
+"POT-Creation-Date: 2008-08-18 15:16+0300\n"
+"PO-Revision-Date: 2008-08-18 15:19+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -276,13 +276,25 @@ msgstr "Nepavyko rasti enkoderio."
 msgid "Could not create CD ripping driver."
 msgstr "Nepavyko sukurti rašymo iš CD tvarkyklės."
 
-#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:102
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:104
 msgid "Could not initialize GStreamer library"
 msgstr "Nepavyko inicializuoti GStreamer bibliotekos"
 
-#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:225
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:231
 msgid "Unknown Error"
 msgstr "Nežinoma klaida"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:451
+msgid "_Enable ReplayGain Correction"
+msgstr "Įju_ngti ReplayGain korekciją"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:452
+msgid ""
+"For tracks that have ReplayGain data, automatically scale (normalize) "
+"playback volume."
+msgstr ""
+"Automatiškai normalizuoja takelių, kuriuose yra ReplayGain duomenų, grojimo "
+"garsumą."
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs:63
 msgid "Could not create transcoder"
@@ -601,7 +613,7 @@ msgid "Podcast"
 msgstr "Podcast"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:345
-#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:73
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:68
 msgid "Video"
 msgstr "Vaizdas"
 
@@ -633,25 +645,25 @@ msgid "Scanning for media"
 msgstr "Ieškoma medijos"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:214
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:850
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:865
 msgid "Scanning..."
 msgstr "Skenuojama..."
 
-#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:227
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:230
 #, csharp-format
 msgid "Scanning ({0} files)..."
 msgstr "Skenuojama ({0} failai)..."
 
-#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:262
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:266
 msgid "Importing Media"
 msgstr "Importuojama medija"
 
-#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:269
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:273
 #: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:115
 msgid "The import process is currently running. Would you like to stop it?"
 msgstr "Šiuo metu dar importuojama. Ar norite sustabdyti šį procesą?"
 
-#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:275
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:279
 #: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:77
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:179
 #, csharp-format
@@ -669,7 +681,7 @@ msgstr ""
 "Luktelėkite, kol bus atnaujintas jūsų senosios Banshee duomenų bazės "
 "formatas."
 
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:849
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:864
 msgid "Refreshing Metadata"
 msgstr "Atnaujinami metaduomenys"
 
@@ -902,19 +914,35 @@ msgstr ""
 "Įjunkite šią parinktį, jei norite įrašyti žymas ir kitus metaduomenis "
 "palaikomuose garso failuose"
 
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:68
+msgid "_Update file and folder names"
+msgstr "_Atnaujinti failų ir aplankų vardus"
+
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:69
+msgid ""
+"Enabling this option ensures that files and folders are renamed according to "
+"the metadata."
+msgstr ""
+"Įjungus šią parinktį užtikrinama, kad failai ir aplankai yra pervadinami "
+"pagal metaduomenis."
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:73
 msgid "File System Organization"
 msgstr "Failų sistemos tvarkymas"
 
-#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:72
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:76
 msgid "Folder hie_rarchy"
 msgstr "Aplankų hie_rarchija"
 
-#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:75
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:79
 msgid "File _name"
 msgstr "Failo _vardas"
 
-#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:77
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:81
+msgid "Playback"
+msgstr "Grojimas"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:83
 msgid "Extensions"
 msgstr "Plėtiniai"
 
@@ -1269,7 +1297,7 @@ msgstr "Išmanusis grojaraštis"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:320
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:343
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:55
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:264
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:268
 msgid "Unknown"
 msgstr "Nežinoma"
 
@@ -1484,39 +1512,39 @@ msgstr "Naršyti..."
 msgid "Open Location"
 msgstr "Atverti vietą"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:246
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:247
 msgid "Automatically set all track numbers in increasing order"
 msgstr "Automatiškai nurodyti visų takelių numerius didėjančia tvarka"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:247
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:248
 msgid "Set all track counts to this value"
 msgstr "Nustatyti visų takelių skaičių į šią reikšmę"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:248
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:249
 msgid "Set all album artists to this value"
 msgstr "Nustatyti visus albumo atlikėjus į šią reikšmę"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:249
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:250
 msgid "Set all track artists to this value"
 msgstr "Nustatyti visus takelius į šią reikšmę"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:250
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:251
 msgid "Set all albums to this value"
 msgstr "Nustatyti visus albumus į šią reikšmę"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:251
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:252
 msgid "Set all disc numbers to this value"
 msgstr "Nustatyti visų diskų numerius į šią reikšmę"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:252
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:253
 msgid "Set all genres to this value"
 msgstr "Nustatyti visus žanrus į šią reikšmę"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:253
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:254
 msgid "Set all years to this value"
 msgstr "Nustatyti visus metus į šią reikšmę"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:254
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:255
 msgid ""
 "Apply the values of this track set for the Artist, Album Title, Genre, Track "
 "count, Year, and Rating fields to the rest of the selected tracks in this "
@@ -1526,7 +1554,7 @@ msgstr ""
 "pavadinimas, žanras, takelių skaičius, metai ir įvertinimas, kitiems šiame "
 "redaktoriuje pasirinktiems takeliams."
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:255
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:256
 msgid "Set all ratings to this value"
 msgstr "Nustatyti visus įvertinimus į šią reikšmę"
 
@@ -2045,24 +2073,24 @@ msgstr "Įjungti arba išjungti viso ekrano veiksena"
 #. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
 #. are Podcast Name and Published Date, respectively;
 #. e.g. 'from BBtv published 7/26/2007'
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:366
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:431
 #, csharp-format
 msgid "{0}from{1} {2} {0}published{1} {3}"
 msgstr "{0}iš{1} {2}, {0}publikuota{1} {3}"
 
 #. simply: "Chicago Public Radio" or whatever the artist name is
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:379
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:444
 msgid "Unknown Stream"
 msgstr "Nežinomas srautas"
 
 #. Translators: {0} and {1} are markup so ignore them, {2} is the name of the radio station
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:382
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:447
 #, csharp-format
 msgid "{0}on{1} {2}"
 msgstr "{0}stotyje{1} {2}"
 
 #. Translators: {0} is the "from {album} by {artist}" type string, and {1} is the "on {radio station name}" string
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:385
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:450
 #, csharp-format
 msgid "{0} {1}"
 msgstr "{0} {1}"
@@ -2070,21 +2098,21 @@ msgstr "{0} {1}"
 #. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
 #. are Artist Name and Album Title, respectively;
 #. e.g. 'by Parkway Drive from Killing with a Smile'
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:421
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:486
 #, csharp-format
 msgid "{0}by{1} {2} {0}from{1} {3}"
 msgstr "{0}atlieka{1} {2} {0}iš{1} {3}"
 
 #. Translators: {0} and {1} are for markup so ignore them, {2} is for Album Title;
 #. e.g. 'from Killing with a Smile'
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:425
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:490
 #, csharp-format
 msgid "{0}from{1} {2}"
 msgstr "{0}iš{1} {2}"
 
 #. Translators: {0} and {1} are for markup so ignore them, {2} is for Artist Name;
 #. e.g. 'by Parkway Drive'
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:429
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:494
 #, csharp-format
 msgid "{0}by{1} {2}"
 msgstr "{0}atlieka{1} {2}"
@@ -2140,6 +2168,10 @@ msgstr "Importuoti aplanką į biblioteką"
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:61
 msgid "Local Folder"
 msgstr "Vietinis aplankas"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/PhotoFolderImportSource.cs:67
+msgid "Videos from Photos Folder"
+msgstr "Vaizdai iš nuotraukų aplanko"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs:84
 msgid "No available profiles"
@@ -2480,12 +2512,12 @@ msgstr "Produktas"
 msgid "Vendor"
 msgstr "Pardavėjas"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:212
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:213
 #, csharp-format
 msgid "Loading {0}"
 msgstr "Įkeliama {0}"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:266
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:270
 #, csharp-format
 msgid ""
 "The {0} format is not supported by the device, and no converter was found to "
@@ -2494,25 +2526,25 @@ msgstr ""
 "Įrenginys nepalaiko formato {0}, taip pat nerasta jį konvertuoti galinti "
 "programa."
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:272
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:276
 msgid "File format conversion is not supported for this device."
 msgstr "Šiam įrenginiui konvertuoti failo formato negalima."
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:68
-msgid "None"
-msgstr "Nėra"
-
-#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:72
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:67
 msgid "Audio"
 msgstr "Garsas"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:74
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:69
 msgid "Other"
 msgstr "Kita"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:75
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:70
 msgid "Free Space"
 msgstr "Laisva vieta"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:96
+msgid "None"
+msgstr "Nėra"
 
 #. Translators: {0} is the name assigned to a Digital Audio Player by its owner
 #: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:55
@@ -3830,6 +3862,18 @@ msgstr "Leisti man nuspręsti, kuriuos epizodus atsiųsti"
 #: ../src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs:40
 msgid "Sample"
 msgstr "Išranka"
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:59
+msgid "Show SQL Console"
+msgstr "Rodyti SQL konsolę"
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:64
+msgid "Start SQL Monitoring"
+msgstr "Pradėti SQL stebėjimą"
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:69
+msgid "Stop SQL Monitoring"
+msgstr "Sustabdyti SQL stebėjimą"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:465
 #, csharp-format
