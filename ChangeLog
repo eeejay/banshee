@@ -1,5 +1,10 @@
 2008-08-17  Ruben Vermeersch  <ruben@savanne.be>
 
+	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: Add a checkbox to
+	enable the renaming of files and folders.
+
+2008-08-17  Ruben Vermeersch  <ruben@savanne.be>
+
 	* src/Core/Banshee.Core/Banshee.IO/Utilities.cs: Split
 	TrimEmptyDirectories out of DeleteFileTrimmingParentDirectories, useful in
 	case  you don't need the Delete.

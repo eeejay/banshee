@@ -63,6 +63,10 @@ namespace Banshee.Preferences
             music_library.Add (new SchemaPreference<bool> (LibrarySchema.WriteMetadata, 
                 Catalog.GetString ("Write _metadata to files"),
                 Catalog.GetString ("Enable this option to save tags and other metadata inside supported audio files.")));
+
+            music_library.Add (new SchemaPreference<bool> (LibrarySchema.MoveOnInfoSave,
+                Catalog.GetString ("_Update file and folder names"),
+                Catalog.GetString ("Enabling this option ensures that files and folders are renamed according to the metadata.")));
             
             // File System Organization Prefs
             Section file_system = general.Add (new Section ("file-system", 
