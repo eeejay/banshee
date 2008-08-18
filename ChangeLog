@@ -1,5 +1,11 @@
 2008-08-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Fix bug with custom icon
+	naming scheme for DAPs; was missing multimedia-player- prefix (BGO
+	#537368).
+
+2008-08-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	Avoid scheduling artwork tasks for feeds we already have icons for.
 

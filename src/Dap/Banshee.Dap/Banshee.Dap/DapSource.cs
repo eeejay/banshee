@@ -311,7 +311,7 @@ namespace Banshee.Dap
 
             if (!String.IsNullOrEmpty (vendor) && !String.IsNullOrEmpty (product)) {
                 return new string [] { 
-                    String.Format ("{0}-{1}", vendor, product).Replace (' ', '-').ToLower (), 
+                    String.Format ("multimedia-player-{0}-{1}", vendor, product).Replace (' ', '-').ToLower (), 
                     FallbackIcon
                 };
             } else {
