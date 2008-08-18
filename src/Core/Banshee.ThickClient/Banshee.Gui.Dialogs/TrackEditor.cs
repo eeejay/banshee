@@ -658,6 +658,10 @@ namespace Banshee.Gui.Dialogs
                 SaveToFile (track);
             }
 
+            if (LibrarySchema.MoveOnInfoSave.Get ()) {
+                MoveSavedFile (track);
+            }
+
             if (track.Track == ServiceManager.PlayerEngine.CurrentTrack) {
                 ServiceManager.PlayerEngine.TrackInfoUpdated ();
             }
@@ -666,6 +670,11 @@ namespace Banshee.Gui.Dialogs
         private void SaveToFile (EditorTrack track)
         {
             Banshee.Kernel.Scheduler.Schedule (new SaveTrackMetadataJob (track.Track), Banshee.Kernel.JobPriority.Highest);
+        }
+
+        private void MoveSavedFile (EditorTrack track)
+        {
+            Banshee.Kernel.Scheduler.Schedule (new MoveOnInfoSaveJob (track.Track), Banshee.Kernel.JobPriority.Highest);
         }
     }
 }

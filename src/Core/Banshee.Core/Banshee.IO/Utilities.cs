@@ -37,7 +37,11 @@ namespace Banshee.IO
         public static void DeleteFileTrimmingParentDirectories (SafeUri uri)
         {
             Banshee.IO.File.Delete (uri);
-            
+            TrimEmptyDirectories (uri);
+        }
+
+        public static void TrimEmptyDirectories (SafeUri uri)
+        {
             try {
                 string old_dir = System.IO.Path.GetDirectoryName (uri.LocalPath);
                 while (old_dir != null && old_dir != String.Empty) {

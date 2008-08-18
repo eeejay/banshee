@@ -33,6 +33,7 @@ SOURCES =  \
 	Banshee.Collection/ImportManager.cs \
 	Banshee.Collection/MemoryTrackListModel.cs \
 	Banshee.Collection/ModelHelper.cs \
+	Banshee.Collection/MoveOnInfoSaveJob.cs \
 	Banshee.Collection/SelectAllSelection.cs \
 	Banshee.Collection/TrackListModel.cs \
 	Banshee.Configuration/DatabaseConfigurationClient.cs \
