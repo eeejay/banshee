@@ -1,5 +1,10 @@
 2008-08-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataService.cs: Avoid
+	NRE.
+
+2008-08-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Ensure TrackCount
 	and DiscCount are never less than TrackNumber and DiscNumber respectively.
 

@@ -120,7 +120,7 @@ namespace Banshee.Metadata
         
         private bool RemoveJob (IMetadataLookupJob job)
         {
-            if (job == null) {
+            if (job == null || job.Track == null) {
                 return false;
             }
             
