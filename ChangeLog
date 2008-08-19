@@ -1,5 +1,10 @@
 2008-08-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Ensure TrackCount
+	and DiscCount are never less than TrackNumber and DiscNumber respectively.
+
+2008-08-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:

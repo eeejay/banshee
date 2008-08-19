@@ -245,7 +245,7 @@ namespace Banshee.Collection
         }
 
         public virtual int TrackCount {
-            get { return track_count; }
+            get { return TrackNumber > track_count ? TrackNumber : track_count; }
             set { track_count = value; }
         }
 
@@ -255,7 +255,7 @@ namespace Banshee.Collection
         }
 
         public virtual int DiscCount {
-            get { return disc_count; }
+            get { return DiscNumber > disc_count ? DiscNumber : disc_count; }
             set { disc_count = value; }
         }
 
