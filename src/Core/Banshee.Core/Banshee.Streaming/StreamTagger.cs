@@ -105,10 +105,14 @@ namespace Banshee.Streaming
 
         public static void TrackInfoMerge (TrackInfo track, TagLib.File file, bool preferTrackInfo)
         {
+            // TODO support these as arrays:
+            // Performers[] (track artists), AlbumArtists[], Composers[], Genres[]
+
             // Note: this should be kept in sync with the metadata written in SaveTrackMetadataJob.cs
             track.Uri = new SafeUri (file.Name);
             track.MimeType = file.MimeType;
             track.FileSize = Banshee.IO.File.GetSize (track.Uri);
+            track.BitRate  = file.Properties.AudioBitrate;
             track.Duration = file.Properties.Duration;
             
             FindTrackMediaAttributes (track, file);
@@ -116,16 +120,22 @@ namespace Banshee.Streaming
             track.ArtistName = Choose (file.Tag.JoinedPerformers, track.ArtistName, preferTrackInfo);
             track.AlbumTitle = Choose (file.Tag.Album, track.AlbumTitle, preferTrackInfo);
             track.AlbumArtist = Choose (file.Tag.FirstAlbumArtist, track.AlbumArtist, preferTrackInfo);
+            track.IsCompilation = IsCompilation (file.Tag);
+            
             track.TrackTitle = Choose (file.Tag.Title, track.TrackTitle, preferTrackInfo);
             track.Genre = Choose (file.Tag.FirstGenre, track.Genre, preferTrackInfo);
             track.Composer = Choose (file.Tag.FirstComposer, track.Composer, preferTrackInfo);
+            track.Conductor = Choose (file.Tag.Conductor, track.Conductor, preferTrackInfo);
+            track.Grouping = Choose (file.Tag.Grouping, track.Grouping, preferTrackInfo);
             track.Copyright = Choose (file.Tag.Copyright, track.Copyright, preferTrackInfo);
             track.Comment = Choose (file.Tag.Comment, track.Comment, preferTrackInfo);
 
             track.TrackNumber = Choose ((int)file.Tag.Track, track.TrackNumber, preferTrackInfo);
             track.TrackCount = Choose ((int)file.Tag.TrackCount, track.TrackCount, preferTrackInfo);
-            track.Disc = Choose ((int)file.Tag.Disc, track.Disc, preferTrackInfo);
+            track.DiscNumber = Choose ((int)file.Tag.Disc, track.DiscNumber, preferTrackInfo);
+            track.DiscCount = Choose ((int)file.Tag.DiscCount, track.DiscCount, preferTrackInfo);
             track.Year = Choose ((int)file.Tag.Year, track.Year, preferTrackInfo);
+            track.Bpm = Choose ((int)file.Tag.BeatsPerMinute, track.Bpm, preferTrackInfo);
 
             if (String.IsNullOrEmpty (track.TrackTitle)) {
                 try {
@@ -136,6 +146,27 @@ namespace Banshee.Streaming
                     }
                 } catch {}
             }
+            
+            // TODO look for track number in the file name if not set?
+            // TODO could also pull artist/album from folders _iff_ files two levels deep in the MusicLibrary folder
+            // TODO these ideas could also be done in an extension that collects such hacks
+        }
+            
+        private static bool IsCompilation (TagLib.Tag tag)
+        {
+            TagLib.Id3v2.Tag id3v2_tag = tag as TagLib.Id3v2.Tag;
+            if (id3v2_tag != null && id3v2_tag.IsCompilation)
+                return true;
+
+            TagLib.Mpeg4.AppleTag apple_tag = tag as TagLib.Mpeg4.AppleTag;
+            if (apple_tag != null && apple_tag.IsCompilation)
+                return true;
+            
+            if (tag.Performers.Length > 0 && tag.AlbumArtists.Length > 0 &&
+                (tag.Performers.Length != tag.AlbumArtists.Length || tag.FirstAlbumArtist != tag.FirstPerformer)) {
+                return true;
+            }
+            return false;
         }
     
         public static void TrackInfoMerge (TrackInfo track, StreamTag tag)
@@ -173,8 +204,13 @@ namespace Banshee.Streaming
                         track.AlbumTitle = Choose ((string)tag.Value, track.AlbumTitle);
                         break;
                     case CommonTags.Disc:
+                    case CommonTags.AlbumDiscNumber:
                         int disc = (int)tag.Value;
-                        track.Disc = disc == 0 ? track.Disc : disc;
+                        track.DiscNumber = disc == 0 ? track.DiscNumber : disc;
+                        break;
+                    case CommonTags.AlbumDiscCount:
+                        int count = (int)tag.Value;
+                        track.DiscCount = count == 0 ? track.DiscCount : count;
                         break;
                     case CommonTags.Genre:
                         track.Genre = Choose ((string)tag.Value, track.Genre);
@@ -198,6 +234,9 @@ namespace Banshee.Streaming
                     case CommonTags.TrackCount:
                         track.TrackCount = (int)tag.Value;
                         break;
+                    case CommonTags.BeatsPerMinute:
+                        track.Bpm = (int)tag.Value;
+                        break;
                     case CommonTags.Duration:
                         if (tag.Value is TimeSpan) {
                             track.Duration = (TimeSpan)tag.Value;
@@ -212,6 +251,9 @@ namespace Banshee.Streaming
                     case CommonTags.Year:
                         track.Year = (uint)tag.Value;
                         break;*/
+                    case CommonTags.NominalBitrate:
+                        track.BitRate = (int)tag.Value;
+                        break;
                     case CommonTags.StreamType:
                         track.MimeType = (string)tag.Value;
                         break;

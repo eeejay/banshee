@@ -57,7 +57,8 @@ namespace Banshee.GStreamer
             
             AddTag (CommonTags.TrackNumber, (uint)track.TrackNumber);
             AddTag (CommonTags.TrackCount, (uint)track.TrackCount);
-            AddTag (CommonTags.AlbumVolumeNumber, (uint)track.Disc);
+            AddTag (CommonTags.AlbumDiscNumber, (uint)track.DiscNumber);
+            AddTag (CommonTags.AlbumDiscCount, (uint)track.DiscCount);
             
             AddYear (track.Year);
             AddDate (track.ReleaseDate);

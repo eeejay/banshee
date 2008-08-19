@@ -1,3 +1,24 @@
+2008-08-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/FileTrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/CommonTags.cs:
+	* src/Core/Banshee.Core/Banshee.Base/Tests/TaglibReadWriteTests.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/TagList.cs: Read BPM,
+	Grouping, Bitrate, Conductor, DiscCount, and IsCompilation from TagLib#,
+	and write the values that make sense (all but Bitrate).  This update
+	triggers a metadata refresh to read in this info.
+
 2008-08-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Add inner class for

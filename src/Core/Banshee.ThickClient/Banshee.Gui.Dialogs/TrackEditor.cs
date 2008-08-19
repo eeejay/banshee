@@ -91,7 +91,7 @@ namespace Banshee.Gui.Dialogs
             AlbumArtist = track.AlbumArtist ?? String.Empty;
             TrackTitle = track.TrackTitle ?? String.Empty;
             Genre = track.Genre ?? String.Empty;
-            Disc = track.Disc;
+            Disc = track.DiscNumber;
             TrackNumber = track.TrackNumber;
             TrackCount = track.TrackCount;
             Year = track.Year;
@@ -106,7 +106,7 @@ namespace Banshee.Gui.Dialogs
             track.AlbumArtist = AlbumArtist;
             track.TrackTitle = TrackTitle;
             track.Genre = Genre;
-            track.Disc = Disc;
+            track.DiscNumber = Disc;
             track.TrackNumber = TrackNumber;
             track.TrackCount = TrackCount;
             track.Uri = Uri;

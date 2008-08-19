@@ -90,8 +90,8 @@ namespace Banshee.Collection.Database
                 if (reader.Read ()) {
                     last_artist = provider.Load (reader);
                 } else {
+                    artist.Save ();
                     last_artist = artist;
-                    last_artist.Save ();
                 }
             }
             

@@ -81,7 +81,7 @@ namespace Banshee.AudioCd
                 AudioCdTrackInfo track = new AudioCdTrackInfo (this, volume.DeviceNode, i);
                 track.TrackNumber = i + 1;
                 track.TrackCount = n;
-                track.Disc = 1;
+                track.DiscNumber = 1;
                 track.Duration = TimeSpan.FromSeconds (mb_disc.TrackDurations[i]);
                 track.ArtistName = Catalog.GetString ("Unknown Artist");
                 track.AlbumTitle = Catalog.GetString ("Unknown Album");
@@ -158,7 +158,7 @@ namespace Banshee.AudioCd
                 model_track.TrackTitle = track.Title;
                 model_track.ArtistName = track.Artist.Name;
                 model_track.AlbumTitle = release.Title;
-                model_track.Disc = disc_number;
+                model_track.DiscNumber = disc_number;
                 
                 model_track.Album = album;
                 model_track.Artist = new DatabaseArtistInfo ();

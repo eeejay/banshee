@@ -74,11 +74,32 @@ namespace Banshee.Streaming
             file.Tag.Track = (uint)track.TrackNumber;
             file.Tag.TrackCount = (uint)track.TrackCount;
             file.Tag.Composers = new string [] { track.Composer };
+            file.Tag.Conductor = track.Conductor;
+            file.Tag.Grouping = track.Grouping;
             file.Tag.Copyright = track.Copyright;
             file.Tag.Comment = track.Comment;
-            file.Tag.Disc = (uint)track.Disc;
+            file.Tag.Disc = (uint)track.DiscNumber;
+            file.Tag.DiscCount = (uint)track.DiscCount;
             file.Tag.Year = (uint)track.Year;
+            file.Tag.BeatsPerMinute = (uint)track.Bpm;
+            
+            SaveIsCompilation (file.Tag, track.IsCompilation);
             file.Save ();
+        }
+        
+        private static void SaveIsCompilation (TagLib.Tag tag, bool is_compilation)
+        {
+            TagLib.Id3v2.Tag id3v2_tag = tag as TagLib.Id3v2.Tag;
+            if (id3v2_tag != null) {
+                id3v2_tag.IsCompilation = is_compilation;
+                return;
+            }
+
+            TagLib.Mpeg4.AppleTag apple_tag = tag as TagLib.Mpeg4.AppleTag;
+            if (apple_tag != null) {
+                apple_tag.IsCompilation = is_compilation;
+                return;
+            }
         }
     }
 }

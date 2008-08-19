@@ -52,8 +52,8 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 18;
-        protected const int CURRENT_METADATA_VERSION = 3;
+        protected const int CURRENT_VERSION = 19;
+        protected const int CURRENT_METADATA_VERSION = 4;
         
 #region Migration Driver
         
@@ -492,6 +492,22 @@ namespace Banshee.Database
         }
         
 #endregion
+        
+#region Version 19
+
+        [DatabaseVersion (19)]
+        private bool Migrate_19 ()
+        {
+            Execute ("ALTER TABLE CoreAlbums ADD COLUMN IsCompilation INTEGER DEFAULT 0");
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN BPM INTEGER");
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN DiscCount INTEGER");
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN Conductor TEXT");
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN Grouping TEXT");
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN BitRate INTEGER DEFAULT 0");
+            return true;
+        }
+        
+#endregion
 
 #pragma warning restore 0169
         
@@ -550,6 +566,7 @@ namespace Banshee.Database
                     UriType             INTEGER,
                     MimeType            TEXT,
                     FileSize            INTEGER,
+                    BitRate             INTEGER,
                     Attributes          INTEGER DEFAULT {0},
                     LastStreamError     INTEGER DEFAULT {1},
                     
@@ -558,10 +575,13 @@ namespace Banshee.Database
                     TrackNumber         INTEGER,
                     TrackCount          INTEGER,
                     Disc                INTEGER,
+                    DiscCount           INTEGER,
                     Duration            INTEGER,
                     Year                INTEGER,
                     Genre               TEXT,
                     Composer            TEXT,
+                    Conductor           TEXT,
+                    Grouping            TEXT,
                     Copyright           TEXT,
                     LicenseUri          TEXT,
 
@@ -573,7 +593,8 @@ namespace Banshee.Database
                     LastSkippedStamp    INTEGER,
                     DateAddedStamp      INTEGER,
                     DateUpdatedStamp    INTEGER,
-                    MetadataHash        TEXT
+                    MetadataHash        TEXT,
+                    BPM                 INTEGER
                 )
             ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
             Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri)");
@@ -596,6 +617,7 @@ namespace Banshee.Database
                     ReleaseDate         INTEGER,
                     Duration            INTEGER,
                     Year                INTEGER,
+                    IsCompilation       INTEGER DEFAULT 0,
                     
                     ArtistName          TEXT,
                     ArtistNameLowered   TEXT,
@@ -702,7 +724,7 @@ namespace Banshee.Database
                             FROM CoreArtists 
                             WHERE Name = Tracks.Artist
                             LIMIT 1),
-                        0, null, AlbumTitle, NULL, ReleaseDate, 0, 0, Artist, NULL, 0
+                        0, null, AlbumTitle, NULL, ReleaseDate, 0, 0, 0, Artist, NULL, 0
                         FROM Tracks
                         ORDER BY AlbumTitle
             ");
@@ -726,17 +748,17 @@ namespace Banshee.Database
                         Uri,
                         0,
                         MimeType,
-                        0,
+                        0, 0,
                         {0},
                         {1},
                         Title, NULL,
                         TrackNumber,
                         TrackCount,
-                        0,
+                        0, 0,
                         Duration * 1000,
                         Year,
                         Genre,
-                        NULL, NULL, NULL, NULL,
+                        NULL, NULL, NULL, NULL, NULL, NULL,
                         Rating,
                         NumberOfPlays,
                         0,
@@ -744,7 +766,7 @@ namespace Banshee.Database
                         NULL,
                         DateAddedStamp,
                         DateAddedStamp,
-                        NULL
+                        NULL, NULL
                         FROM Tracks
             ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
 

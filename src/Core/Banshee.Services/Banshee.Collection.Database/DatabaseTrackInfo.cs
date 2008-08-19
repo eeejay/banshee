@@ -122,7 +122,7 @@ namespace Banshee.Collection.Database
         }
 
         public DatabaseAlbumInfo Album {
-            get { return DatabaseAlbumInfo.FindOrCreate (DatabaseArtistInfo.FindOrCreate (AlbumArtist), AlbumTitle); }
+            get { return DatabaseAlbumInfo.FindOrCreate (DatabaseArtistInfo.FindOrCreate (AlbumArtist), AlbumTitle, IsCompilation); }
         }
 
         private static bool notify_saved = true;
@@ -224,8 +224,7 @@ namespace Banshee.Collection.Database
                 if (value == null)
                     return;
 
-                // Overwrite the AlbumArtist if it was set to our old value
-                if (String.IsNullOrEmpty (AlbumArtist) || AlbumArtist == ArtistName) {
+                if (!IsCompilation) {
                     AlbumArtist = value;
                 }
 
@@ -256,6 +255,15 @@ namespace Banshee.Collection.Database
                     return;
 
                 base.AlbumArtist = value;
+                album_changed = album_changed != null;
+            }
+        }
+        
+        [VirtualDatabaseColumn ("IsCompilation", "CoreAlbums", "AlbumID", "AlbumID")]
+        public override bool IsCompilation {
+            get { return base.IsCompilation; }
+            set {
+                base.IsCompilation = value;
                 album_changed = album_changed != null;
             }
         }
@@ -389,9 +397,15 @@ namespace Banshee.Collection.Database
         }
         
         [DatabaseColumn]
-        public override int Disc {
-            get { return base.Disc; }
-            set { base.Disc = value; }
+        public override int DiscNumber {
+            get { return base.DiscNumber; }
+            set { base.DiscNumber = value; }
+        }
+
+        [DatabaseColumn]
+        public override int DiscCount {
+            get { return base.DiscCount; }
+            set { base.DiscCount = value; }
         }
         
         [DatabaseColumn]
@@ -419,6 +433,18 @@ namespace Banshee.Collection.Database
         }
 
         [DatabaseColumn]
+        public override string Conductor {
+            get { return base.Conductor; }
+            set { base.Conductor = value; }
+        }
+
+        [DatabaseColumn]
+        public override string Grouping {
+            get { return base.Grouping; }
+            set { base.Grouping = value; }
+        }
+
+        [DatabaseColumn]
         public override string Copyright {
             get { return base.Copyright; }
             set { base.Copyright = value; }
@@ -436,7 +462,19 @@ namespace Banshee.Collection.Database
             set { base.Comment = value; }
         }
         
-        [DatabaseColumn ("Rating")]
+        [DatabaseColumn("BPM")]
+        public override int Bpm {
+            get { return base.Bpm; }
+            set { base.Bpm = value; }
+        }
+
+        [DatabaseColumn]
+        public override int BitRate {
+            get { return base.BitRate; }
+            set { base.BitRate = value; }
+        }
+        
+        [DatabaseColumn("Rating")]
         protected int rating;
         public override int Rating {
             get { return rating; }

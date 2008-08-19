@@ -177,7 +177,7 @@ namespace Banshee.AudioCd
                     CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
                     CoreArtists.Name = ? AND CoreAlbums.Title = ? AND (CoreTracks.Disc = ? OR CoreTracks.Disc = 0)",
                     ServiceManager.SourceManager.MusicLibrary.DbId,
-                    track.ArtistName, track.AlbumTitle, track.Disc
+                    track.ArtistName, track.AlbumTitle, track.DiscNumber
             );
 
             if (count > 0) {

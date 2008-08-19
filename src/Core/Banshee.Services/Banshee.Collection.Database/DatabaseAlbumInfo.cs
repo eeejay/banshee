@@ -50,7 +50,7 @@ namespace Banshee.Collection.Database
         }
 
         private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (String.Format (
-            "SELECT {0} FROM {1} WHERE {2} AND CoreAlbums.ArtistID = ? AND CoreAlbums.Title = ?",
+            "SELECT {0} FROM {1} WHERE {2} AND CoreAlbums.ArtistID = ? AND CoreAlbums.Title = ? AND CoreAlbums.IsCompilation = ?",
             provider.Select, provider.From,
             (String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where)
         ));
@@ -63,6 +63,7 @@ namespace Banshee.Collection.Database
 
         private static int last_artist_id;
         private static string last_title;
+        private static bool last_compilation;
         private static DatabaseAlbumInfo last_album;
         
         public static void Reset ()
@@ -72,16 +73,17 @@ namespace Banshee.Collection.Database
             last_album = null;
         }
 
-        public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, string title)
+        public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, string title, bool isCompilation)
         {
             DatabaseAlbumInfo album = new DatabaseAlbumInfo ();
             album.Title = title;
+            album.IsCompilation = isCompilation;
             return FindOrCreate (artist, album);
         }
 
         public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, DatabaseAlbumInfo album)
         {
-            if (album.Title == last_title && artist.DbId == last_artist_id && last_album != null) {
+            if (album.Title == last_title && artist.DbId == last_artist_id && last_album != null && last_compilation == album.IsCompilation) {
                 return last_album;
             }
 
@@ -89,21 +91,25 @@ namespace Banshee.Collection.Database
                 album.Title = Catalog.GetString ("Unknown Album");
             }
 
-            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, album.Title)) {
+            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, album.Title, album.IsCompilation)) {
                 if (reader.Read ()) {
                     last_album = provider.Load (reader);
-                    last_album.ArtistId = artist.DbId;
-                    last_album.ArtistName = artist.Name;
+                    // If the artist name has changed since last time (but it's the same artist) then update our copy of the ArtistName
+                    if (last_album.ArtistName != artist.Name) {
+                        last_album.ArtistName = artist.Name;
+                        last_album.Save ();
+                    }
                 } else {
+                    album.ArtistId = artist.DbId;
+                    album.ArtistName = artist.Name;
+                    album.Save ();
                     last_album = album;
-                    last_album.ArtistId = artist.DbId;
-                    last_album.ArtistName = artist.Name;
-                    last_album.Save ();
                 }
             }
             
             last_title = album.Title;
             last_artist_id = artist.DbId;
+            last_compilation = album.IsCompilation;
             return last_album;
         }
 
@@ -114,6 +120,7 @@ namespace Banshee.Collection.Database
                 // Overwrite the found album
                 album.Title = found.Title;
                 album.ArtistName = found.ArtistName;
+                album.IsCompilation = found.IsCompilation;
                 album.dbid = found.DbId;
                 album.ArtistId = found.ArtistId;
                 album.Save ();
@@ -153,6 +160,12 @@ namespace Banshee.Collection.Database
         public override DateTime ReleaseDate {
             get { return base.ReleaseDate; }
             set { base.ReleaseDate = value; }
+        }
+        
+        [DatabaseColumn]
+        public override bool IsCompilation {
+            get { return base.IsCompilation; }
+            set { base.IsCompilation = value; }
         }
 
         [DatabaseColumn]

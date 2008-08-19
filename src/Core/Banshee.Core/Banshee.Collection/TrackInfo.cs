@@ -51,9 +51,12 @@ namespace Banshee.Collection
         private string artist_name;
         private string album_title;
         private string album_artist;
+        private bool is_compilation;
         private string track_title;
         private string genre;
         private string composer;
+        private string conductor;
+        private string grouping;
         private string copyright;
         private string license_uri;
         private string musicbrainz_id;
@@ -61,9 +64,12 @@ namespace Banshee.Collection
         private string comment;
         private int track_number;
         private int track_count;
-        private int disc;
+        private int disc_number;
+        private int disc_count;
         private int year;
         private int rating;
+        private int bpm;
+        private int bit_rate;
 
         private TimeSpan duration;
         private DateTime release_date;
@@ -155,8 +161,13 @@ namespace Banshee.Collection
         }
 
         public virtual string AlbumArtist {
-            get { return album_artist ?? ArtistName; }
+            get { return album_artist ?? (IsCompilation ? Catalog.GetString ("Various Artists") : ArtistName); }
             set { album_artist = value; }
+        }
+        
+        public virtual bool IsCompilation {
+            get { return is_compilation; }
+            set { is_compilation = value; }
         }
 
         public virtual string TrackTitle {
@@ -238,9 +249,14 @@ namespace Banshee.Collection
             set { track_count = value; }
         }
 
-        public virtual int Disc {
-            get { return disc; }
-            set { disc = value; }
+        public virtual int DiscNumber {
+            get { return disc_number; }
+            set { disc_number = value; }
+        }
+
+        public virtual int DiscCount {
+            get { return disc_count; }
+            set { disc_count = value; }
         }
 
         public virtual int Year {
@@ -251,6 +267,16 @@ namespace Banshee.Collection
         public virtual string Composer {
             get { return composer; }
             set { composer = value; }
+        }
+
+        public virtual string Conductor {
+            get { return conductor; }
+            set { conductor = value; }
+        }
+
+        public virtual string Grouping {
+            get { return grouping; }
+            set { grouping = value; }
         }
 
         public virtual string Copyright {
@@ -271,6 +297,16 @@ namespace Banshee.Collection
         public virtual int Rating {
             get { return rating; }
             set { rating = value; }
+        }
+        
+        public virtual int Bpm {
+            get { return bpm; }
+            set { bpm = value; }
+        }
+
+        public virtual int BitRate {
+            get { return bit_rate; }
+            set { bit_rate = value; }
         }
 
         public virtual int PlayCount {
@@ -364,7 +400,7 @@ namespace Banshee.Collection
             // Our own
             dict.Add ("track-number", TrackNumber);
             dict.Add ("track-count", TrackCount);
-            dict.Add ("disc", Disc);
+            dict.Add ("disc", DiscNumber);
             dict.Add ("year", year);
             dict.Add ("rating", rating);
             

@@ -42,8 +42,8 @@ namespace Banshee.Streaming
         public const string Composer          = "composer";
         public const string TrackNumber       = "track-number";
         public const string TrackCount        = "track-count";
-        public const string AlbumVolumeNumber = "album-disc-number";
-        public const string AlbumVolumeCount  = "album-disc-count";
+        public const string AlbumDiscNumber   = "album-disc-number";
+        public const string AlbumDiscCount    = "album-disc-count";
         public const string Location          = "location";
         public const string Description       = "description";
         public const string Version           = "version";

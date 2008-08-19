@@ -114,7 +114,7 @@ namespace Banshee.Base.Tests
             track.AlbumTitle = "My Album";
             track.Genre = genre;
             track.TrackNumber = 4;
-            track.Disc = 4;
+            track.DiscNumber = 4;
             track.Year = 1999;
     
             // Save changes
@@ -131,7 +131,7 @@ namespace Banshee.Base.Tests
             Assert.AreEqual ("My Album", track.AlbumTitle);
             Assert.AreEqual (genre, track.Genre);
             Assert.AreEqual (4, track.TrackNumber);
-            Assert.AreEqual (4, track.Disc);
+            Assert.AreEqual (4, track.DiscNumber);
             Assert.AreEqual (1999, track.Year);
         }
         
