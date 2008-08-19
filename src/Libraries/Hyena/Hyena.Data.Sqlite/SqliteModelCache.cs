@@ -348,11 +348,9 @@ namespace Hyena.Data.Sqlite
 
                 model.Selection.Clear (false);
 
-                using (IDataReader reader = connection.Query (get_selection_command)) {
-                    while (reader.Read ()) {
-                        selected_id = Convert.ToInt64 (reader[0]) - first_id;
-                        model.Selection.QuietSelect ((int)selected_id);
-                    }
+                foreach (long order_id in connection.QueryEnumerable<long> (get_selection_command)) {
+                    selected_id = order_id - first_id;
+                    model.Selection.QuietSelect ((int)selected_id);
                 }
 
                 if (has_select_all_item && model.Selection.Count == 0) {

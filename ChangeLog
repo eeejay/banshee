@@ -1,3 +1,15 @@
+2008-08-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Add inner class for
+	testing sync logic.  Currently will calculate how many items are on the
+	device but not in the library and vice versa, and logs that info.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add new
+	HyenaDataReader convenience class.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelCache.cs: Use the
+	QueryEnumerable<T> method instead of manually reading the IDataReader.
+
 2008-08-17  Ruben Vermeersch  <ruben@savanne.be>
 
 	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: Add a checkbox to

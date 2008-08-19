@@ -39,6 +39,33 @@ using Mono.Data.SqliteClient;
 
 namespace Hyena.Data.Sqlite
 {
+    public class HyenaDataReader : IDisposable
+    {
+        private IDataReader reader;
+        
+        public HyenaDataReader (IDataReader reader)
+        {
+            this.reader = reader;
+            reader.Read ();
+        }
+        
+        public T Get<T> (int i)
+        {
+            return (T) SqliteUtils.FromDbFormat (typeof(T), reader[i]);
+        }
+        
+        public bool Read ()
+        {
+            return reader.Read ();
+        }
+        
+        public void Dispose ()
+        {
+            reader.Dispose ();
+            reader = null;
+        }
+    }
+    
     public class ExecutingEventArgs : EventArgs
     {
         public readonly SqliteCommand Command;
@@ -120,7 +147,7 @@ namespace Hyena.Data.Sqlite
             Type type = typeof (T);
             using (IDataReader reader = Query (command)) {
                 while (reader.Read ()) {
-                    yield return (T)SqliteUtils.FromDbFormat (type, reader[0]);
+                    yield return (T) SqliteUtils.FromDbFormat (type, reader[0]);
                 }
             }
         }
