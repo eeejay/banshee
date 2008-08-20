@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-20 17:24+0200\n"
-"PO-Revision-Date: 2008-08-20 18:00+0100\n"
+"PO-Revision-Date: 2008-08-20 18:09+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Aviary.pl <gnomepl@aviary.pl>\n"
 "MIME-Version: 1.0\n"
@@ -267,13 +267,12 @@ msgid "Unknown Error"
 msgstr "Nieznany błąd"
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:451
-#, fuzzy
 msgid "_Enable ReplayGain Correction"
-msgstr "Włącz korekcję błędów"
+msgstr "_Korekcja ReplayGain"
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:452
 msgid "For tracks that have ReplayGain data, automatically scale (normalize) playback volume."
-msgstr ""
+msgstr "Automatyczne normalizowanie (dopasowanie) głośności odtwarzania dla ścieżek zawierających dane ReplayGain."
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs:63
 msgid "Could not create transcoder"
@@ -553,9 +552,8 @@ msgid "Number (unsorted)"
 msgstr "Numer (nieposortowany)"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:164
-#, fuzzy
 msgid "Various Artists"
-msgstr "artists"
+msgstr "Różni wykonawcy"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:200
 #: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:86
@@ -875,11 +873,11 @@ msgstr "Włączenie tej funkcji spowoduje zapisywanie znaczników i innych metad
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:68
 msgid "_Update file and folder names"
-msgstr ""
+msgstr "_Aktualizowanie nazw plików i katalogów"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:69
 msgid "Enabling this option ensures that files and folders are renamed according to the metadata."
-msgstr ""
+msgstr "Funkcja zapewnia zmienianie nazw plików i katalogów wg metadanych."
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:73
 msgid "File System Organization"
@@ -894,9 +892,8 @@ msgid "File _name"
 msgstr "_Nazwa pliku"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:81
-#, fuzzy
 msgid "Playback"
-msgstr "_Odtwarzanie"
+msgstr "Odtwarzanie"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:83
 msgid "Extensions"
