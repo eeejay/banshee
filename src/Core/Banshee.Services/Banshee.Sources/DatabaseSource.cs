@@ -97,11 +97,11 @@ namespace Banshee.Sources
             get { return true; }
         }
 
-        protected DatabaseTrackListModel DatabaseTrackModel {
+        public DatabaseTrackListModel DatabaseTrackModel {
             get {
                 return track_model ?? track_model = new DatabaseTrackListModel (ServiceManager.DbConnection, TrackProvider, this);
             }
-            set { track_model = value; }
+            protected set { track_model = value; }
         }
 
         private IDatabaseTrackModelCache track_cache;
@@ -475,7 +475,7 @@ namespace Banshee.Sources
                 AddSelectedTracks (source);
             }
         }
-
+        
 #endregion
         
 #region Protected Methods

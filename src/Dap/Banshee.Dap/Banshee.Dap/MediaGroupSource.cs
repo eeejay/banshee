@@ -94,10 +94,7 @@ namespace Banshee.Dap
         }
 
         public long BytesUsed {
-            get { 
-                IFileSizeAggregator aggregator = this as IFileSizeAggregator;
-                return aggregator == null ? 0 : aggregator.FileSize;
-            }
+            get { return DatabaseTrackModel.UnfilteredFileSize; }
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Banshee.Collection.Database
 
         private long filtered_count;
         private TimeSpan filtered_duration;
-        private long filtered_filesize;
+        private long filtered_filesize, filesize;
         
         private ISortableColumn sort_column;
         private string sort_query;
@@ -172,6 +172,7 @@ namespace Banshee.Collection.Database
         {
             cache.Clear ();
             count = 0;
+            filesize = 0;
             filtered_count = 0;
             OnCleared ();
         }
@@ -201,9 +202,13 @@ namespace Banshee.Collection.Database
         protected virtual void UpdateUnfilteredAggregates ()
         {
             HyenaSqliteCommand count_command = new HyenaSqliteCommand (String.Format (
-                "SELECT COUNT(*) {0}", UnfilteredQuery
+                "SELECT COUNT(*), SUM(CoreTracks.FileSize) {0}", UnfilteredQuery
             ));
-            count = connection.Query<long> (count_command);
+            
+            using (HyenaDataReader reader = new HyenaDataReader (connection.Query (count_command))) {
+                count = reader.Get<long> (0);
+                filesize = reader.Get<long> (1);
+            }
         }
 
         public override void Reload ()
@@ -353,6 +358,10 @@ namespace Banshee.Collection.Database
             get { return filtered_filesize; }
         }
         
+        public long UnfilteredFileSize {
+            get { return filesize; }
+        }
+        
         public int UnfilteredCount {
             get { return (int) count; }
             set { count = value; }
@@ -403,7 +412,7 @@ namespace Banshee.Collection.Database
         {
             condition = condition == null ? part : String.Format ("{0} AND {1}", condition, part);
         }
-
+        
         public string Condition {
             get { return condition; }
         }

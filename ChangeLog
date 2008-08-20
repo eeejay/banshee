@@ -1,3 +1,15 @@
+2008-08-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs: Use the
+	UnfilteredFileSize so that the dap info bar isn't inaccurate when
+	filtering (BGO #537366).
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs: 
+	Get the unfiltered total file size in addition to the count.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Make the
+	getter for DatabaseTrackModel public.
+
 2008-08-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Metadata/MetadataService.cs: Avoid
