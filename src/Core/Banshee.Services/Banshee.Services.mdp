@@ -1,4 +1,4 @@
-<Project name="Banshee.Services" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Banshee.Services" fileversion="2.0" language="C#" UseParentDirectoryAsNamespace="True" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assembly="Banshee.Services" />
@@ -182,6 +182,8 @@
     <File name="Banshee.Collection.Database/FilterModelProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection.Database/QueryFilterInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Sources/IFilterableSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.MediaEngine/IVisualizationDataSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection/MoveOnInfoSaveJob.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -200,6 +202,7 @@
     <ProjectReference type="Project" localcopy="False" refto="Lastfm" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
+  <GtkDesignInfo gtkVersion="2.12.1" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

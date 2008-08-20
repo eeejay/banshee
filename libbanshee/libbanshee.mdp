@@ -28,6 +28,8 @@
     <File name="banshee-player-equalizer.h" subtype="Code" buildaction="Nothing" />
     <File name="banshee-player-replaygain.c" subtype="Code" buildaction="Compile" />
     <File name="banshee-player-replaygain.h" subtype="Code" buildaction="Nothing" />
+    <File name="banshee-player-vis.c" subtype="Code" buildaction="Compile" />
+    <File name="banshee-player-vis.h" subtype="Code" buildaction="Nothing" />
   </Contents>
   <compiler ctype="GccCompiler" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">

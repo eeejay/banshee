@@ -19,6 +19,7 @@ libbanshee_la_SOURCES =  \
 	banshee-player-pipeline.c \
 	banshee-player-replaygain.c \
 	banshee-player-video.c \
+	banshee-player-vis.c \
 	banshee-ripper.c \
 	banshee-tagger.c \
 	banshee-transcoder.c
@@ -32,6 +33,7 @@ noinst_HEADERS =  \
 	banshee-player-private.h \
 	banshee-player-replaygain.h \
 	banshee-player-video.h \
+	banshee-player-vis.h \
 	banshee-tagger.h
 
 libbanshee_la_LIBADD = \

@@ -32,6 +32,7 @@
 #include "banshee-player-equalizer.h"
 #include "banshee-player-missing-elements.h"
 #include "banshee-player-replaygain.h"
+#include "banshee-player-vis.h"
 
 // ---------------------------------------------------------------------------
 // Private Functions
@@ -161,6 +162,7 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
         
         case GST_MESSAGE_ELEMENT: {
             _bp_missing_elements_process_message (player, message);
+            _bp_vis_process_message (player, message);
             break;
         }
         
@@ -259,6 +261,8 @@ _bp_pipeline_construct (BansheePlayer *player)
         gst_element_link (audiosinkqueue, audiosink);
     }
     
+    _bp_vis_pipeline_setup (player);
+    
     // Now that our internal audio sink is constructed, tell playbin to use it
     g_object_set (G_OBJECT (player->playbin), "audio-sink", player->audiobin, NULL);
     
@@ -287,6 +291,8 @@ _bp_pipeline_destroy (BansheePlayer *player)
         gst_element_set_state (player->playbin, GST_STATE_NULL);
         gst_object_unref (GST_OBJECT (player->playbin));
     }
+    
+    _bp_vis_pipeline_destroy (player);
     
     player->playbin = NULL;
 }

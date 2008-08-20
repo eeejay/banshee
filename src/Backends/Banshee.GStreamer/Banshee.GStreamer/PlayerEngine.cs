@@ -56,10 +56,11 @@ namespace Banshee.GStreamer
     internal delegate void BansheePlayerStateChangedCallback (IntPtr player, GstState old_state, GstState new_state, GstState pending_state);
     internal delegate void BansheePlayerIterateCallback (IntPtr player);
     internal delegate void BansheePlayerBufferingCallback (IntPtr player, int buffering_progress);
+    internal delegate void BansheePlayerVisDataCallback (IntPtr player, int channels, int samples, IntPtr data, IntPtr spectrum);
 
     internal delegate void GstTaggerTagFoundCallback (IntPtr player, string tagName, ref GLib.Value value);
     
-    public class PlayerEngine : Banshee.MediaEngine.PlayerEngine, Banshee.MediaEngine.IEqualizer
+    public class PlayerEngine : Banshee.MediaEngine.PlayerEngine, IEqualizer, IVisualizationDataSource
     {
         private uint GST_CORE_ERROR = 0;
         private uint GST_LIBRARY_ERROR = 0;
@@ -73,11 +74,37 @@ namespace Banshee.GStreamer
         private BansheePlayerStateChangedCallback state_changed_callback;
         private BansheePlayerIterateCallback iterate_callback;
         private BansheePlayerBufferingCallback buffering_callback;
+        private BansheePlayerVisDataCallback vis_data_callback;
         private GstTaggerTagFoundCallback tag_found_callback;
         
         private bool buffering_finished;
         private int pending_volume = -1;
         private bool xid_is_set = false;
+        
+        private event VisualizationDataHandler data_available = null;
+        public event VisualizationDataHandler DataAvailable {
+            add {
+                if (value == null) {
+                    return;
+                } else if (data_available == null) {
+                    bp_set_vis_data_callback (handle, vis_data_callback);
+                }
+
+                data_available += value;
+            }
+            
+            remove {
+                if (value == null) {
+                    return;
+                }
+
+                data_available -= value;
+
+                if (data_available == null) {
+                    bp_set_vis_data_callback (handle, null);
+                }
+            }
+        }
         
         public PlayerEngine ()
         {
@@ -114,6 +141,7 @@ namespace Banshee.GStreamer
             state_changed_callback = new BansheePlayerStateChangedCallback (OnStateChange);
             iterate_callback = new BansheePlayerIterateCallback (OnIterate);
             buffering_callback = new BansheePlayerBufferingCallback (OnBuffering);
+            vis_data_callback = new BansheePlayerVisDataCallback (OnVisualizationData);
             tag_found_callback = new GstTaggerTagFoundCallback (OnTagFound);
             
             bp_set_eos_callback (handle, eos_callback);
@@ -293,7 +321,35 @@ namespace Banshee.GStreamer
         {
             OnTagFound (ProcessNativeTagResult (tagName, ref value));
         }
+        
+        private void OnVisualizationData (IntPtr player, int channels, int samples, IntPtr data, IntPtr spectrum)
+        {
+            VisualizationDataHandler handler = data_available;
             
+            if (handler == null) {
+                return;
+            }
+            
+            float [] flat = new float[channels * samples];
+            Marshal.Copy (data, flat, 0, flat.Length);
+            
+            float [][] cbd = new float[channels][];
+            for (int i = 0; i < channels; i++) {
+                float [] channel = new float[samples];
+                Array.Copy (flat, i * samples, channel, 0, samples);
+                cbd[i] = channel;
+            }
+            
+            float [] spec = new float[512];
+            Marshal.Copy (spectrum, spec, 0, 512);
+            
+            try {
+                handler (cbd, new float[][] { spec });
+            } catch (Exception e) {
+                Log.Exception ("Uncaught exception during visualization data post.", e);
+            }
+        }
+        
         private static StreamTag ProcessNativeTagResult (string tagName, ref GLib.Value valueRaw)
         {
             if (tagName == String.Empty || tagName == null) {
@@ -485,6 +541,9 @@ namespace Banshee.GStreamer
         
         [DllImport ("libbanshee")]
         private static extern void bp_set_error_callback (HandleRef player, BansheePlayerErrorCallback cb);
+        
+        [DllImport ("libbanshee")]
+        private static extern void bp_set_vis_data_callback (HandleRef player, BansheePlayerVisDataCallback cb);
         
         [DllImport ("libbanshee")]
         private static extern void bp_set_state_changed_callback (HandleRef player, 

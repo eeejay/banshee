@@ -1,3 +1,26 @@
+2008-08-20  Aaron Bockover  <abock@gnome.org>
+
+	Committed a revised/reorganized version of Chris Howie's <cdhowie@gmail.com>
+	visualization support patch (BGO #529479); this does not actually implement
+	visualization, but adds support for extensions to do so by harvesting
+	spectrum data that is now readily available.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IVisualizationDataSource.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/VisualizationDataCallback.cs:
+	Add interface for PlayerEngines that can provide data for visualizations.
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	Implement IVisualizationDataSource, binding the unmanaged visualization
+	support from libbanshee's BansheePlayer
+
+	* libbanshee/banshee-player-vis.c
+	* libbanshee/banshee-player-vis.h: Unmanaged support for gathering
+	visualization data on the pipeline using the spectrum element
+
+	* libbanshee/banshee-player-pipeline.c:
+	* libbanshee/banshee-player-private.h: Integrate new vis code into the
+	pipeline and player object
+
 2008-08-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs: Use the
@@ -12,8 +35,7 @@
 
 2008-08-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
-	* src/Core/Banshee.Services/Banshee.Metadata/MetadataService.cs: Avoid
-	NRE.
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataService.cs: Avoid NRE.
 
 2008-08-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
