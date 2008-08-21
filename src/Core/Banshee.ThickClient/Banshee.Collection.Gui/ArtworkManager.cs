@@ -120,7 +120,7 @@ namespace Banshee.Collection.Gui
             }
             
             string orig_path = CoverArtSpec.GetPathForSize (id, 0);
-            if (File.Exists (orig_path)) {
+            if (File.Exists (orig_path) && size > 1) {
                 try {
                     Pixbuf pixbuf = new Pixbuf (orig_path);
                     Pixbuf scaled_pixbuf = pixbuf.ScaleSimple (size, size, Gdk.InterpType.Bilinear);

@@ -1,3 +1,9 @@
+2008-08-21  Sandy Armstrong  <sanfordarmstrong@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	Don't try to to scale cover art if the size specified is <= 1.  Fixes
+	hangs described in BGO #548300.
+
 2008-08-20  Aaron Bockover  <abock@gnome.org>
 
 	Committed a revised/reorganized version of Chris Howie's <cdhowie@gmail.com>
