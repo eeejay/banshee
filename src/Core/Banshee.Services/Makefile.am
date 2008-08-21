@@ -94,7 +94,7 @@ SOURCES =  \
 	Banshee.Metadata/IMetadataProvider.cs \
 	Banshee.Metadata/MetadataService.cs \
 	Banshee.Metadata/MetadataServiceJob.cs \
-	Banshee.Networking/NetworkDetect.cs \
+	Banshee.Networking/Network.cs \
 	Banshee.Networking/NetworkManager.cs \
 	Banshee.PlaybackController/IBasicPlaybackController.cs \
 	Banshee.PlaybackController/ICanonicalPlaybackController.cs \
@@ -145,6 +145,7 @@ SOURCES =  \
 	Banshee.ServiceStack/IExtensionService.cs \
 	Banshee.ServiceStack/IInitializeService.cs \
 	Banshee.ServiceStack/InterfaceAction.cs \
+	Banshee.ServiceStack/IRegisterOnDemandService.cs \
 	Banshee.ServiceStack/IRequiredService.cs \
 	Banshee.ServiceStack/IService.cs \
 	Banshee.ServiceStack/IUserJob.cs \

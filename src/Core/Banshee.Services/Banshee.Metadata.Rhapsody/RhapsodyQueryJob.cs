@@ -61,7 +61,7 @@ namespace Banshee.Metadata.Rhapsody
         
             string artwork_id = Track.ArtworkId;
             
-            if(artwork_id == null || CoverArtSpec.CoverExists(artwork_id) || !NetworkDetect.Instance.Connected) {
+            if(artwork_id == null || CoverArtSpec.CoverExists(artwork_id) || !InternetConnected) {
                 return;
             }
             

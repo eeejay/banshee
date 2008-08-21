@@ -43,6 +43,7 @@ using Banshee.Metadata;
 using Banshee.Kernel;
 using Banshee.Streaming;
 using Banshee.Networking;
+using Banshee.ServiceStack;
 
 using Lastfm;
 
@@ -64,7 +65,7 @@ namespace Banshee.Metadata.LastFM
         
             string artwork_id = Track.ArtworkId;
 
-            if (artwork_id == null || CoverArtSpec.CoverExists (artwork_id) || !NetworkDetect.Instance.Connected) {
+            if (artwork_id == null || CoverArtSpec.CoverExists (artwork_id) || !ServiceManager.Get<Network> ().Connected) {
                 return;
             }
             

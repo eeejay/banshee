@@ -87,7 +87,7 @@
     <File name="Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Metadata.Rhapsody/RhapsodyMetadataProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs" subtype="Code" buildaction="Compile" />
-    <File name="Banshee.Networking/NetworkDetect.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Networking/Network.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Networking/NetworkManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Database/BansheeModelProvider.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Database/BansheeModelCache.cs" subtype="Code" buildaction="Compile" />
@@ -184,6 +184,7 @@
     <File name="Banshee.Sources/IFilterableSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.MediaEngine/IVisualizationDataSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Collection/MoveOnInfoSaveJob.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.ServiceStack/IRegisterOnDemandService.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

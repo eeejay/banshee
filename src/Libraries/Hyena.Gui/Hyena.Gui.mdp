@@ -97,6 +97,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
+  <GtkDesignInfo gtkVersion="2.12.1" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

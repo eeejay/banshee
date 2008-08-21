@@ -91,8 +91,9 @@ namespace Banshee.Lastfm.Radio
             Browser.Open = Banshee.Web.Browser.Open;
             
             connection = LastfmCore.Radio;
-            connection.UpdateNetworkState (NetworkDetect.Instance.Connected);
-            NetworkDetect.Instance.StateChanged += delegate (object o, NetworkStateChangedArgs args) {
+            Network network = ServiceManager.Get<Network> ();
+            connection.UpdateNetworkState (network.Connected);
+            network.StateChanged += delegate (object o, NetworkStateChangedArgs args) {
                 connection.UpdateNetworkState (args.Connected);
             };
 

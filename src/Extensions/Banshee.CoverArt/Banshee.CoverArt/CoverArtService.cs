@@ -50,7 +50,7 @@ namespace Banshee.CoverArt
     public class CoverArtService : IExtensionService
     {
         private InterfaceActionService action_service;
-		private ActionGroup actions;
+        private ActionGroup actions;
         private bool disposed;
         private uint ui_manager_id;
         
@@ -154,7 +154,7 @@ namespace Banshee.CoverArt
         
         public void FetchCoverArt (bool force)
         {
-            if (job == null && NetworkDetect.Instance.Connected) {
+            if (job == null && ServiceManager.Get<Network> ().Connected) {
                 DateTime last_scan = DateTime.MinValue;
                 
                 if (!force) {

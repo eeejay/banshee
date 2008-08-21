@@ -36,6 +36,7 @@ using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Streaming;
 using Banshee.Networking;
+using Banshee.ServiceStack;
 
 namespace Banshee.Metadata
 {
@@ -44,6 +45,10 @@ namespace Banshee.Metadata
         private MetadataService service;
         private IBasicTrackInfo track;
         private List<StreamTag> tags = new List<StreamTag>();
+        
+        protected bool InternetConnected {
+            get { return ServiceManager.Get<Network> ().Connected; }
+        }
         
         protected MetadataServiceJob()
         {
@@ -92,7 +97,7 @@ namespace Banshee.Metadata
 
         protected HttpWebResponse GetHttpStream(Uri uri, string [] ignoreMimeTypes)
         {
-            if(!NetworkDetect.Instance.Connected) {
+            if(!InternetConnected) {
                 throw new NetworkUnavailableException();
             }
         

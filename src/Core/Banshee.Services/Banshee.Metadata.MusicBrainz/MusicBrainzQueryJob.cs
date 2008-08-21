@@ -76,7 +76,7 @@ namespace Banshee.Metadata.MusicBrainz
                 return false;
             } else if (CoverArtSpec.CoverExists (artwork_id)) {
                 return false;
-            } else if (!NetworkDetect.Instance.Connected) {
+            } else if (!InternetConnected) {
                 return false;
             }
             

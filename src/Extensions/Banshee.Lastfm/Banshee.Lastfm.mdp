@@ -1,4 +1,4 @@
-<Project name="Banshee.Plugins.Lastfm" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Banshee.Plugins.Lastfm" fileversion="2.0" language="C#" UseParentDirectoryAsNamespace="True" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="." assembly="Banshee.Plugins.LastFM" />
@@ -57,7 +57,5 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
-  <DeploymentInformation strategy="File">
-    <excludeFiles />
-  </DeploymentInformation>
+  <DeploymentInformation strategy="File" />
 </Project>

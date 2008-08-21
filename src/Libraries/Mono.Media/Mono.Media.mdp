@@ -15,13 +15,13 @@
     <File name="Media.Playlists.Xspf/W3CDateTime.cs" subtype="Code" buildaction="Compile" />
     <File name="Media.Playlists.Xspf/XmlUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="Media.Playlists.Xspf/XspfBaseObject.cs" subtype="Code" buildaction="Compile" />
-    <File name="Media.Playlists.Xspf/Tests" subtype="Directory" buildaction="Compile" />
     <File name="Media.Playlists.Xspf/Tests/XspfTests.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
+  <GtkDesignInfo gtkVersion="2.12.1" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

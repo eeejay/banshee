@@ -1,4 +1,4 @@
-<Project name="Hyena" fileversion="2.0" language="C#" clr-version="Net_2_0" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="Hyena" fileversion="2.0" language="C#" UseParentDirectoryAsNamespace="True" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="../../../bin" assembly="Hyena" />
@@ -109,6 +109,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="nunit.core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
+  <GtkDesignInfo gtkVersion="2.12.1" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

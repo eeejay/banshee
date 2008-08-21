@@ -503,7 +503,7 @@ namespace Banshee.GStreamer
                 return;
             }
             
-            replaygain_preference = service["general"]["playback"].Add (new SchemaPreference<bool> (ReplayGainEnabledSchema, 
+            replaygain_preference = service["general"]["misc"].Add (new SchemaPreference<bool> (ReplayGainEnabledSchema, 
                 Catalog.GetString ("_Enable ReplayGain Correction"),
                 Catalog.GetString ("For tracks that have ReplayGain data, automatically scale (normalize) playback volume."),
                 delegate { ReplayGainEnabled = ReplayGainEnabledSchema.Get (); }
@@ -517,7 +517,7 @@ namespace Banshee.GStreamer
                 return;
             }
             
-            service["general"]["playback"].Remove (replaygain_preference);
+            service["general"]["misc"].Remove (replaygain_preference);
             replaygain_preference = null;
         }
         

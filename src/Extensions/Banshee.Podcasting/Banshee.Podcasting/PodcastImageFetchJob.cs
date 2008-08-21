@@ -75,7 +75,7 @@ namespace Banshee.Podcasting
                 return;
             } else if (CoverArtSpec.CoverExists (cover_art_id)) {
                 return;
-            } else if (!NetworkDetect.Instance.Connected) {
+            } else if (!InternetConnected) {
                 return;
             }
             

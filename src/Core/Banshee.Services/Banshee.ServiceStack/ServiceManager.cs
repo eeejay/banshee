@@ -106,36 +106,7 @@ namespace Banshee.ServiceStack
                 uint cumulative_timer_id = Log.InformationTimerStart ();
                 
                 foreach (Type type in service_types) {
-                    IService service = null;
-                    
-                    try {
-                        uint timer_id = Log.DebugTimerStart ();
-                        service = (IService)Activator.CreateInstance (type);
-                        RegisterService (service);
-                        
-                        Log.DebugTimerPrint (timer_id, String.Format (
-                            "Core service started ({0}, {{0}})", service.ServiceName));
-                        
-                        OnServiceStarted (service);
-                        
-                        if (service is IDisposable) {
-                            dispose_services.Push (service);
-                        }
-
-                        if (service is IInitializeService) {
-                            ((IInitializeService)service).Initialize ();
-                        }
-                    } catch (Exception e) {
-                        if (service is IRequiredService) {
-                            Log.ErrorFormat ("Error initializing required service {0}",
-                                    service == null ? type.ToString () : service.ServiceName, false);
-                            throw;
-                        }
-                        
-                        Log.Warning (String.Format ("Service `{0}' not started: {1}", type.FullName, 
-                            e.InnerException != null ? e.InnerException.Message : e.Message));
-                        Log.Exception (e.InnerException ?? e);
-                    }
+                    RegisterService (type);
                 }
                 
                 foreach (TypeExtensionNode node in extension_nodes) {
@@ -150,6 +121,44 @@ namespace Banshee.ServiceStack
                 
                 OnStartupFinished ();
             }
+        }
+        
+        private static IService RegisterService (Type type)
+        {
+            IService service = null;
+            
+            try {
+                uint timer_id = Log.DebugTimerStart ();
+                service = (IService)Activator.CreateInstance (type);
+                RegisterService (service);
+                
+                Log.DebugTimerPrint (timer_id, String.Format (
+                    "Core service started ({0}, {{0}})", service.ServiceName));
+                
+                OnServiceStarted (service);
+                
+                if (service is IDisposable) {
+                    dispose_services.Push (service);
+                }
+
+                if (service is IInitializeService) {
+                    ((IInitializeService)service).Initialize ();
+                }
+                
+                return service;
+            } catch (Exception e) {
+                if (service is IRequiredService) {
+                    Log.ErrorFormat ("Error initializing required service {0}",
+                            service == null ? type.ToString () : service.ServiceName, false);
+                    throw;
+                }
+                
+                Log.Warning (String.Format ("Service `{0}' not started: {1}", type.FullName, 
+                    e.InnerException != null ? e.InnerException.Message : e.Message));
+                Log.Exception (e.InnerException ?? e);
+            }
+            
+            return null;
         }
         
         private static void StartExtension (TypeExtensionNode node)
@@ -296,7 +305,13 @@ namespace Banshee.ServiceStack
         
         public static T Get<T> () where T : class, IService
         {
-            return Get (typeof (T).Name) as T;
+            Type type = typeof (T);
+            T service = Get (type.Name) as T;
+            if (service == null && type.GetInterface ("Banshee.ServiceStack.IRegisterOnDemandService") != null) {
+                return RegisterService (type) as T;
+            }
+            
+            return service;
         }
         
         private static void OnStartupBegin ()

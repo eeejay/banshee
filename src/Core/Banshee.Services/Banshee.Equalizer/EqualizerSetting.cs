@@ -138,14 +138,14 @@ namespace Banshee.Equalizer
         }
         
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool> (
-            "player", "equalizer_enabled",
+            "player_engine", "equalizer_enabled",
             false,
             "Equalizer status",
             "Whether or not the equalizer is set to be enabled."
         );
         
         public static readonly SchemaEntry<string> PresetSchema = new SchemaEntry<string> (
-            "player", "equalizer_preset",
+            "player_engine", "equalizer_preset",
             "",
             "Equalizer preset",
             "Default preset to load into equalizer."

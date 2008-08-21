@@ -1,3 +1,31 @@
+2008-08-21  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Networking/Network.cs: Turned into
+	a real service and support overriding the connection status to support
+	an offline mode, configurable in preferences
+	
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IRegisterOnDemandService.cs
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Added support for services to be registered when they are first requested
+	
+	* src/Core/Banshee.Services/Banshee.Equalizer/EqualizerSetting.cs:
+	Use the player_engine namespace like the rest of the engine settings
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Page.cs: 
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	Added a misc section to the general prefs section; put replaygain there;
+	not happy with this but it'll have to work for now
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastImageFetchJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.LastFM/LastFMQueryJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.Rhapsody/RhapsodyQueryJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.MusicBrainz/MusicBrainzQueryJob.cs:
+	Updated to use the slightly changed network service API
+
 2008-08-21  Sandy Armstrong  <sanfordarmstrong@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
