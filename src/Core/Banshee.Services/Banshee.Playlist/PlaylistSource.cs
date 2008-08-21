@@ -111,12 +111,12 @@ namespace Banshee.Playlist
         {
         }
 
-        protected PlaylistSource (string name, int? dbid, int primarySourceId) : this (name, dbid, -1, 0, primarySourceId, 0)
+        protected PlaylistSource (string name, int? dbid, int primarySourceId) : this (name, dbid, -1, 0, primarySourceId, 0, false)
         {
         }
 
-        protected PlaylistSource (string name, int? dbid, int sortColumn, int sortType, int primarySourceId, int count)
-            : base (generic_name, name, dbid, sortColumn, sortType, primarySourceId)
+        protected PlaylistSource (string name, int? dbid, int sortColumn, int sortType, int primarySourceId, int count, bool is_temp)
+            : base (generic_name, name, dbid, sortColumn, sortType, primarySourceId, is_temp)
         {
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
@@ -153,19 +153,20 @@ namespace Banshee.Playlist
                         SET Name = ?,
                             SortColumn = ?,
                             SortType = ?,
-                            CachedCount = ?
+                            CachedCount = ?,
+                            IsTemporary = ?
                         WHERE PlaylistID = ?",
                     SourceTable
-                ), Name, -1, 0, Count, dbid
+                ), Name, -1, 0, Count, IsTemporary, dbid
             ));
         }
 
         protected override void Create ()
         {
             DbId = ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (
-                @"INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType, PrimarySourceID)
-                    VALUES (NULL, ?, ?, ?, ?)",
-                Name, -1, 1, PrimarySourceId //SortColumn, SortType
+                @"INSERT INTO CorePlaylists (PlaylistID, Name, SortColumn, SortType, PrimarySourceID, IsTemporary)
+                    VALUES (NULL, ?, ?, ?, ?, ?)",
+                Name, -1, 1, PrimarySourceId, IsTemporary //SortColumn, SortType
             ));
         }
 
@@ -330,16 +331,31 @@ namespace Banshee.Playlist
 
         public static IEnumerable<PlaylistSource> LoadAll (int primary_id)
         {
-            using (IDataReader reader = ServiceManager.DbConnection.Query (
-                @"SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID, CachedCount FROM CorePlaylists 
-                    WHERE Special = 0 AND PrimarySourceID = ?", primary_id)) {
+            ClearTemporary ();
+            using (HyenaDataReader reader = new HyenaDataReader (ServiceManager.DbConnection.Query (
+                @"SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID, CachedCount, IsTemporary FROM CorePlaylists 
+                    WHERE Special = 0 AND PrimarySourceID = ?", primary_id))) {
                 while (reader.Read ()) {
                     yield return new PlaylistSource (
-                        reader[1] as string, Convert.ToInt32 (reader[0]),
-                        Convert.ToInt32 (reader[2]), Convert.ToInt32 (reader[3]), Convert.ToInt32 (reader[4]),
-                        Convert.ToInt32 (reader[5])
+                        reader.Get<string> (1), reader.Get<int> (0),
+                        reader.Get<int> (2), reader.Get<int> (3), reader.Get<int> (4),
+                        reader.Get<int> (5), reader.Get<bool> (6)
                     );
                 }
+            }
+        }
+
+        private static bool temps_cleared = false;
+        private static void ClearTemporary ()
+        {
+            if (!temps_cleared) {
+                temps_cleared = true;
+                ServiceManager.DbConnection.Execute (@"
+                    BEGIN TRANSACTION;
+                        DELETE FROM CorePlaylistEntries WHERE PlaylistID IN (SELECT PlaylistID FROM CorePlaylists WHERE IsTemporary = 1);
+                        DELETE FROM CorePlaylists WHERE IsTemporary = 1;
+                    COMMIT TRANSACTION"
+                );
             }
         }
 

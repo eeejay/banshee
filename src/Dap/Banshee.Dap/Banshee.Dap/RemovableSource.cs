@@ -145,6 +145,9 @@ namespace Banshee.Dap
         
         public abstract long BytesUsed { get; }
         public abstract long BytesCapacity { get; }
+        public virtual long BytesAvailable {
+            get { return BytesCapacity - BytesUsed; }
+        }
 
         public abstract void Import ();
 

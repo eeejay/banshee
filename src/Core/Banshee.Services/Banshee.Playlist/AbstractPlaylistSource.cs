@@ -78,6 +78,12 @@ namespace Banshee.Playlist
             get { return true; }
         }
 
+        private bool is_temporary = false;
+        public bool IsTemporary {
+            get { return is_temporary; }
+            set { is_temporary = value; }
+        }
+
         public int? DbId {
             get { return dbid; }
             protected set {
@@ -123,13 +129,14 @@ namespace Banshee.Playlist
         }
 
         public AbstractPlaylistSource (string generic_name, string name, int primarySourceId)
-            : this (generic_name, name, null, -1, 0, primarySourceId)
+            : this (generic_name, name, null, -1, 0, primarySourceId, false)
         {
         }
 
-        public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType, int primarySourceId)
+        public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType, int primarySourceId, bool is_temp)
             : base (generic_name, name, Convert.ToString (dbid), 500)
         {
+            IsTemporary = is_temp;
             this.primary_source_id = primarySourceId;
         }
 

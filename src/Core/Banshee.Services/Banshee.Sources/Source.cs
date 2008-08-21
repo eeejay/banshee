@@ -559,9 +559,14 @@ namespace Banshee.Sources
             return CreateSchema<T> (name, default(T), null, null);
         }
         
-        public SchemaEntry<T> CreateSchema<T> (string name, T defaultValue, string shotDescription, string longDescription)
+        public SchemaEntry<T> CreateSchema<T> (string name, T defaultValue, string shortDescription, string longDescription)
         {
-            return new SchemaEntry<T> (String.Format ("sources.{0}", ConfigurationId), name, defaultValue, shotDescription, longDescription); 
+            return new SchemaEntry<T> (String.Format ("sources.{0}", ConfigurationId), name, defaultValue, shortDescription, longDescription); 
+        }
+        
+        public SchemaEntry<T> CreateSchema<T> (string ns, string name, T defaultValue, string shortDescription, string longDescription)
+        {
+            return new SchemaEntry<T> (String.Format ("sources.{0}.{1}", ConfigurationId, ns), name, defaultValue, shortDescription, longDescription); 
         }
         
         public void CycleStatusFormat ()

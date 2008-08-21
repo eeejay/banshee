@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 19;
+        protected const int CURRENT_VERSION = 20;
         protected const int CURRENT_METADATA_VERSION = 4;
         
 #region Migration Driver
@@ -509,6 +509,19 @@ namespace Banshee.Database
         
 #endregion
 
+#region Version 20
+
+        [DatabaseVersion (20)]
+        private bool Migrate_20 ()
+        {
+            Execute ("ALTER TABLE CoreSmartPlaylists ADD COLUMN IsTemporary INTEGER DEFAULT 0");
+            Execute ("ALTER TABLE CorePlaylists ADD COLUMN IsTemporary INTEGER DEFAULT 0");
+            Execute ("ALTER TABLE CorePrimarySources ADD COLUMN IsTemporary INTEGER DEFAULT 0");
+            return true;
+        }
+        
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -543,7 +556,8 @@ namespace Banshee.Database
                 CREATE TABLE CorePrimarySources (
                     PrimarySourceID     INTEGER PRIMARY KEY,
                     StringID            TEXT UNIQUE,
-                    CachedCount         INTEGER
+                    CachedCount         INTEGER,
+                    IsTemporary         INTEGER DEFAULT 0
                 )
             ");
             Execute ("INSERT INTO CorePrimarySources (StringID) VALUES ('MusicLibrarySource-Library')");
@@ -648,7 +662,8 @@ namespace Banshee.Database
                     SortColumn          INTEGER NOT NULL DEFAULT -1,
                     SortType            INTEGER NOT NULL DEFAULT 0,
                     Special             INTEGER NOT NULL DEFAULT 0,
-                    CachedCount         INTEGER
+                    CachedCount         INTEGER,
+                    IsTemporary         INTEGER DEFAULT 0
                 )
             ");
             
@@ -671,7 +686,8 @@ namespace Banshee.Database
                     OrderBy             TEXT,
                     LimitNumber         TEXT,
                     LimitCriterion      TEXT,
-                    CachedCount         INTEGER
+                    CachedCount         INTEGER,
+                    IsTemporary         INTEGER DEFAULT 0
                 )
             ");
                 

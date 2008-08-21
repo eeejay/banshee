@@ -82,6 +82,7 @@ namespace Banshee.Dap
         {
             this.device = device;
             type_unique_id = device.Uuid;
+            space_for_data = CreateSchema<long> ("space_for_data", 0, "How much space, in bytes, to reserve for data on the device.", "");
         }
 
         public override void Dispose ()
@@ -201,76 +202,7 @@ namespace Banshee.Dap
 #endregion
         
 #region Track Management/Syncing   
-
-        public void SyncWith (PrimarySource source)
-        {
-            try {
-                SourceSync from_music = new SourceSync (ServiceManager.SourceManager.MusicLibrary, this);
-                Log.Information (from_music.ToString ());
-                
-                SourceSync to_music = new SourceSync (this, ServiceManager.SourceManager.MusicLibrary);
-                Log.Information (to_music.ToString ());
-            } catch (Exception e) {
-                Log.Exception (e);
-            }
-        }
-        
-        public class SourceSync
-        {
-            const string intersection = @"PrimarySourceId = ? AND MetadataHash NOT IN 
-                    (SELECT MetadataHash FROM CoreTracks WHERE PrimarySourceID = ?)";
-            
-            PrimarySource from, to;
-            int count;
-            long file_size;
-            TimeSpan duration;
-            
-            public SourceSync (PrimarySource from, PrimarySource to)
-            {
-                this.from = from;
-                this.to = to;
-                Update ();
-            }
-            
-            public void Update ()
-            {
-                using (new Hyena.Timer ("seeing what there is to sync")) {
-                    using (HyenaDataReader reader = new HyenaDataReader (ServiceManager.DbConnection.Query (SelectSql (
-                        "COUNT(*), SUM(FileSize), SUM(Duration)")))) {
-                        count = reader.Get<int> (0);
-                        file_size = reader.Get<long> (1);
-                        duration = reader.Get<TimeSpan> (2); 
-                    }
-                }
-            }
-                    
-            private HyenaSqliteCommand SelectSql (string select)
-            {
-                return new HyenaSqliteCommand (
-                    String.Format ("SELECT {0} FROM CoreTracks WHERE {1}", select, intersection),
-                    from.DbId, to.DbId
-                );
-            }
-            
-            public int Count {
-                get { return count; }
-            }
-            
-            public long FileSize {
-                get { return file_size; }
-            }
-            
-            public TimeSpan Duration {
-                get { return duration; }
-            }
-            
-            public override string ToString ()
-            {
-                return String.Format ("There are {0} items, {1} MB, and {2} to sync from {3} to {4}",
-                    count, file_size/(1024*1024), duration, from, to);
-            }
-        }
-        
+ 
         public void LoadDeviceContents ()
         {
             ThreadPool.QueueUserWorkItem (ThreadedLoadDeviceContents);
@@ -285,7 +217,9 @@ namespace Banshee.Dap
                 OnTracksAdded ();
                 HideStatus ();
                 
-                SyncWith (ServiceManager.SourceManager.MusicLibrary);
+                using (new Hyena.Timer ("calculating sync for dap..")) {
+                new DapSync (this).CalculateSync ();
+                }
             } catch (Exception e) {
                 Log.Exception (e);
             }
@@ -294,8 +228,15 @@ namespace Banshee.Dap
         protected virtual void LoadFromDevice ()
         {
         }
+
+        private void AttemptToAddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
+        {
+            if (BytesAvailable - Banshee.IO.File.GetSize (fromUri) >= 0) {
+                AddTrackToDevice (track, fromUri);
+            }
+        }
         
-        protected abstract void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri);  
+        protected abstract void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri);
 
         protected bool TrackNeedsTranscoding (TrackInfo track)
         {
@@ -328,7 +269,7 @@ namespace Banshee.Dap
         protected override void AddTrackAndIncrementCount (DatabaseTrackInfo track)
         {
             if (!TrackNeedsTranscoding (track)) {
-                AddTrackToDevice (track, track.Uri);
+                AttemptToAddTrackToDevice (track, track.Uri);
                 IncrementAddedTracks ();
                 return;
             }
@@ -356,7 +297,7 @@ namespace Banshee.Dap
             AddTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
             
             try {
-                AddTrackToDevice ((DatabaseTrackInfo)track, outputUri);
+                AttemptToAddTrackToDevice ((DatabaseTrackInfo)track, outputUri);
             } catch (Exception e) {
                 Log.Exception (e);
             }
@@ -433,7 +374,21 @@ namespace Banshee.Dap
         public long BytesMusic {
             get { return MusicGroupSource == null ? 0 : MusicGroupSource.BytesUsed; }
         }
-        
+                    
+        public long BytesData {
+            get { return BytesUsed - BytesVideo - BytesMusic; }
+        }
+                    
+        public long BytesReserved {
+            get { return space_for_data.Get (); }
+            set { space_for_data.Set (value); }
+        }
+                    
+        public override long BytesAvailable {
+            get { return BytesCapacity - BytesUsed - Math.Max (0, BytesReserved - BytesData); }
+        }
+            
+        private Banshee.Configuration.SchemaEntry<long> space_for_data;
 #endregion
         
     }

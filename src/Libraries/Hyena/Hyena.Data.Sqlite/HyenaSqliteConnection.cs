@@ -42,20 +42,24 @@ namespace Hyena.Data.Sqlite
     public class HyenaDataReader : IDisposable
     {
         private IDataReader reader;
+        private bool read = false;
         
         public HyenaDataReader (IDataReader reader)
         {
             this.reader = reader;
-            reader.Read ();
         }
         
         public T Get<T> (int i)
         {
+            if (!read) {
+                Read ();
+            }
             return (T) SqliteUtils.FromDbFormat (typeof(T), reader[i]);
         }
         
         public bool Read ()
         {
+            read = true;
             return reader.Read ();
         }
         

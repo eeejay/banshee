@@ -19,6 +19,8 @@
     <File name="Banshee.Dap/MusicGroupSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Dap.Gui/DapInfoBar.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Dap.Gui/DapPropertiesDisplay.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Dap/DapSync.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Dap/DapLibrarySync.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />
@@ -31,6 +33,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Widgets" />
   </References>
+  <GtkDesignInfo gtkVersion="2.12.1" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

@@ -361,6 +361,20 @@ namespace Banshee.Collection
             get { return can_play; }
             set { can_play = value; }
         }
+        
+        public virtual string MetadataHash {
+            get {
+                System.Text.StringBuilder sb = new System.Text.StringBuilder ();
+                sb.Append (AlbumTitle);
+                sb.Append (ArtistName);
+                sb.Append ((int)Duration.TotalSeconds);
+                sb.Append (Genre);
+                sb.Append (TrackTitle);
+                sb.Append (TrackNumber);
+                sb.Append (Year);
+                return Hyena.CryptoUtil.Md5Encode (sb.ToString (), System.Text.Encoding.UTF8);
+            }
+        }
 
         private TrackMediaAttributes media_attributes = TrackMediaAttributes.Default;
         public virtual TrackMediaAttributes MediaAttributes {

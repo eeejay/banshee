@@ -1,3 +1,48 @@
+2008-08-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Makefile.am:
+	* src/Dap/Banshee.Dap/Banshee.Dap.mdp: Add new files.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs: New classes that
+	contain all the logic for syncing a DAP to the libraries.  Use smart
+	playlists to represent the 
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Add a virtual
+	BytesAvailable property.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Remove temporary sync code
+	I recently committed, add a schema pref for space_for_data and respect it
+	when transferring files, override the BytesAvailable to subtract out the
+	bytes reserved for data.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Move the
+	MetadataHash property to TrackInfo.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Add an IsTemporary property, and delete temporary playlists from the
+	database on startup.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add another
+	CreateSchema override that takes a namespace.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add IsTemporary columns to CorePlaylists/SmartPlaylists/PrimarySources.
+
+	* src/Core/Banshee.Core/Resources/contributors.xml: Add Andrew Conkling -
+	he has done so much work for so long in Bugzilla, should have been listed
+	here long ago.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Fix
+	small bug in HyenaDataReader in how/when it calls .Read on the underlying
+	IDataReader.
+
+	* build/m4/banshee/taglib.m4: Require 2.0.3 since that's when
+	IsCompilation was introduced.
+
 2008-08-21  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Networking/Network.cs: Turned into
