@@ -29,6 +29,8 @@
 using System;
 using System.Collections.Generic;
 
+using Mono.Unix;
+
 using Hyena;
 using Hyena.Query;
 
@@ -39,6 +41,7 @@ using Banshee.Library;
 using Banshee.Playlist;
 using Banshee.SmartPlaylist;
 using Banshee.Query;
+using Banshee.Preferences;
 
 namespace Banshee.Dap
 {
@@ -47,8 +50,12 @@ namespace Banshee.Dap
         private DapSource dap;
         private string conf_ns;
         private List<DapLibrarySync> library_syncs = new List<DapLibrarySync> ();
-        private SchemaEntry<bool> enabled, auto_sync;
+        private SchemaEntry<bool> manually_manage, auto_sync;
         private SmartPlaylistSource to_remove;
+        private Section dap_prefs_section;
+        private List<Section> pref_sections = new List<Section> ();
+
+        public event Action<DapSync> Updated;
 
         internal string ConfigurationNamespace {
             get { return conf_ns; }
@@ -59,13 +66,21 @@ namespace Banshee.Dap
         public DapSource Dap {
             get { return dap; }
         }
+
+        public IEnumerable<DapLibrarySync> LibrarySyncs {
+            get { return library_syncs; }
+        }
         
         public bool Enabled {
-            get { return enabled.Get (); }
+            get { return manually_manage.Get (); }
         }
         
         public bool AutoSync {
             get { return auto_sync.Get (); }
+        }
+
+        public IEnumerable<Section> PreferenceSections {
+            get { return pref_sections; }
         }
         
         #endregion
@@ -73,17 +88,39 @@ namespace Banshee.Dap
         public DapSync (DapSource dapSource)
         {
             dap = dapSource;
-            conf_ns = String.Format ("{0}.{1}", dapSource.ConfigurationId, "sync");
+            BuildPreferences ();
+            BuildSyncLists ();
+        }
+
+        private void BuildPreferences ()
+        {
+            conf_ns = String.Format ("{0}.{1}", dap.ConfigurationId, "sync");
             
-            enabled = dap.CreateSchema<bool> (conf_ns, "enabled", true,  // todo change default to false
-                "Whether sync is enabled at all for this device", "");
+            manually_manage = dap.CreateSchema<bool> (conf_ns, "enabled", true,
+                Catalog.GetString ("Manually manage this device"),
+                Catalog.GetString ("Manually managing your device means you can drag and drop items onto the device, and manually remove them.")
+            );
             
             auto_sync = dap.CreateSchema<bool> (conf_ns, "auto_sync", false,
-                "If syncing is enabled, whether to sync the device as soon as its plugged in or the libraries change", "");
+                Catalog.GetString ("Automaticlly sync the device when plugged in or the libraries change"),
+                Catalog.GetString ("Begin synchronizing the device as soon as the device is plugged in or the libraries change.")
+            );
 
+            dap_prefs_section = new Section ("dap", Catalog.GetString ("Sync Preferences"), 0);
+            dap_prefs_section.Add (manually_manage);
+            dap_prefs_section.Add (auto_sync);
+            pref_sections.Add (dap_prefs_section);
+        }
+
+        private void BuildSyncLists ()
+        {
+            int i = 0;
             foreach (Source source in ServiceManager.SourceManager.Sources) {
                 if (source is LibrarySource) {
-                    library_syncs.Add (new DapLibrarySync (this, source as LibrarySource));
+                    DapLibrarySync library_sync = new DapLibrarySync (this, source as LibrarySource);
+                    library_syncs.Add (library_sync);
+                    pref_sections.Add (library_sync.PrefsSection);
+                    library_sync.PrefsSection.Order = ++i;
                 }
             }
 
@@ -129,6 +166,11 @@ namespace Banshee.Dap
             }
             to_remove.RefreshAndReload ();
             Log.Information (ToString ());
+
+            Action<DapSync> handler = Updated;
+            if (handler != null) {
+                handler (this);
+            }
         }
 
         public override string ToString ()
@@ -138,7 +180,6 @@ namespace Banshee.Dap
                 sb.Append (library_sync.ToString ());
                 sb.Append ("\n");
             }
-
             sb.Append (String.Format ("And {0} items to remove", to_remove.Count));
             return sb.ToString ();
         }
@@ -146,11 +187,10 @@ namespace Banshee.Dap
         
         public void Sync ()
         {
+            // TODO: remove all items in to_remove
             foreach (DapLibrarySync library_sync in library_syncs) {
                 library_sync.Sync ();
             }
-
-            // TODO: remove all items in to_remove
         }
     }
 }

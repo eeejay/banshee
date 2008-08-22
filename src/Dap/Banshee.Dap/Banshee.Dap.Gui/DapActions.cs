@@ -1,8 +1,8 @@
 //
-// Section.cs
+// DapActions.cs
 //
-// Author:
-//   Aaron Bockover <abockover@novell.com>
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2008 Novell, Inc.
 //
@@ -27,34 +27,38 @@
 //
 
 using System;
-using System.Collections.Generic;
+using Mono.Unix;
+using Gtk;
 
-using Banshee.Configuration;
+using Banshee.Dap;
+using Banshee.Gui;
 
-namespace Banshee.Preferences
+namespace Banshee.Dap.Gui
 {
-    public class Section : Collection<PreferenceBase>
+    public class DapActions : BansheeActionGroup
     {
-        private bool show_label = true;
-        public bool ShowLabel {
-            get { return show_label; }
-            set { show_label = value; }
-        }
-        
-        public Section ()
+        private DapSource dap;
+        public DapActions (DapSource dap) : base ("dap-actions")
         {
-        }
-        
-        public Section (string id, string name, int order)
-        {
-            Id = id;
-            Name = name;
-            Order = order;
+            this.dap = dap;
+            AddImportant (
+                new ActionEntry ("SyncDapAction", null,
+                    Catalog.GetString ("Synchronize"), null,
+                    String.Format (Catalog.GetString ("Synchronize {0}"), dap.Name), OnSyncDap)
+            );
+            
+            this["SyncDapAction"].IconName = Stock.Refresh;
+            UpdateActions ();
         }
 
-        public void Add<T> (SchemaEntry<T> schema)
+        private void UpdateActions ()
         {
-            Add (new SchemaPreference<T> (schema, schema.ShortDescription, schema.LongDescription));
+            UpdateAction ("SyncDapAction", dap.Sync.Enabled);
+        }
+
+        private void OnSyncDap (object o, EventArgs args)
+        {
+            dap.Sync.Sync ();
         }
     }
 }

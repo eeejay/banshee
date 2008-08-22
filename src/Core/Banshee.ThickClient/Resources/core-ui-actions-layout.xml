@@ -124,6 +124,7 @@
       <menuitem name="SortChildrenSizeDesc" action="SortChildrenSizeDescAction"/>
     </menu>
     <separator/>
+    <placeholder name="AboveImportSource"/>
     <menuitem name="ImportSource" action="ImportSourceAction"/>
     <menuitem name="RenameSource" action="RenameSourceAction"/>
     <menuitem name="UnmapSource" action="UnmapSourceAction"/>

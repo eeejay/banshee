@@ -4,6 +4,8 @@ LINK = $(REF_DAP)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
+	Banshee.Dap.Gui/DapActions.cs \
+	Banshee.Dap.Gui/DapContent.cs \
 	Banshee.Dap.Gui/DapInfoBar.cs \
 	Banshee.Dap.Gui/DapPropertiesDialog.cs \
 	Banshee.Dap.Gui/DapPropertiesDisplay.cs \
@@ -17,7 +19,9 @@ SOURCES =  \
 	Banshee.Dap/RemovableSource.cs \
 	Banshee.Dap/VideoGroupSource.cs
 
-RESOURCES = Banshee.Dap.addin.xml
+RESOURCES =  \
+	Banshee.Dap.addin.xml \
+	Resources/ActiveSourceUI.xml
 
 include $(top_srcdir)/build/build.mk
 

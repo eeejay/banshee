@@ -1,0 +1,14 @@
+<ui>
+  <toolbar name="HeaderToolbar">
+    <placeholder name="SourceActions">
+      <toolitem action="UnmapSourceAction"/>
+      <toolitem action="SyncDapAction"/>
+    </placeholder>
+  </toolbar>
+
+  <popup name="RemovableSourceContextMenu" action="RemovableSourceContextMenuAction">
+    <placeholder name="AboveImportSource">
+      <menuitem action="SyncDapAction"/>
+    </placeholder>
+  </popup>
+</ui>

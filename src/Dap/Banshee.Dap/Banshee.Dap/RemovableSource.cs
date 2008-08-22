@@ -63,10 +63,10 @@ namespace Banshee.Dap
             DelayDeleteJob = false;
         }
 
-        public override string GenericName {
-            get { return base.GenericName; }
+        public override string Name {
+            get { return base.Name; }
             set {
-                base.GenericName = value;
+                base.Name = value;
                 Properties.SetString ("DeleteTracksActionLabel", String.Format (Catalog.GetString ("Delete From {0}"), value));
                 Properties.SetString ("UnmapSourceActionLabel", String.Format (Catalog.GetString ("Eject {0}"), value));
             }

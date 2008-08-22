@@ -43,9 +43,29 @@ namespace Banshee.Gui
         protected Dictionary<string, string> labels = new Dictionary<string, string> ();
         protected Dictionary<string, string> icons = new Dictionary<string, string> ();
 
+        private bool important_by_default = true;
+        protected bool ImportantByDefault {
+            get { return important_by_default; }
+            set { important_by_default = value; }
+        }
+
+        public BansheeActionGroup (string name)
+            : this (ServiceManager.Get<InterfaceActionService> (), name)
+        {
+        }
+        
         public BansheeActionGroup (InterfaceActionService action_service, string name) : base (name)
         {
             this.action_service = action_service;
+        }
+
+        public new void Add (ActionEntry [] action_entries)
+        {
+            if (ImportantByDefault) {
+                AddImportant (action_entries);
+            } else {
+                base.Add (action_entries);
+            }
         }
         
         public void AddImportant (params ActionEntry [] action_entries)
@@ -86,6 +106,11 @@ namespace Banshee.Gui
             }
         }
 
+        public void UpdateAction (string action_name, bool visible_and_sensitive)
+        {
+            UpdateAction (action_name, visible_and_sensitive, visible_and_sensitive);
+        }
+        
         public void UpdateAction (string action_name, bool visible, bool sensitive)
         {
             UpdateAction (action_name, visible, sensitive, null);

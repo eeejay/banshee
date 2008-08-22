@@ -186,9 +186,11 @@ namespace Banshee.Gui
                 AddActionGroup (active_source_actions);
             }
                 
-            Assembly assembly = Assembly.GetAssembly (active_source.GetType ());
+            Assembly assembly = 
+                active_source.Properties.Get<Assembly> ("ActiveSourceUIResource.Assembly") ??
+                Assembly.GetAssembly (active_source.GetType ());
+
             string ui_file = active_source.Properties.Get<string> ("ActiveSourceUIResource");
-            
             if (ui_file != null) {
                 using (StreamReader reader = new StreamReader (assembly.GetManifestResourceStream (ui_file))) {
                     active_source_uiid = ui_manager.AddUiFromString (reader.ReadToEnd ());

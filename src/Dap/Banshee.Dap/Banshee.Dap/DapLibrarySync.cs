@@ -29,10 +29,13 @@
 using System;
 using System.Collections.Generic;
 
+using Mono.Unix;
+
 using Hyena;
 using Hyena.Query;
 
 using Banshee.Configuration;
+using Banshee.Preferences;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.Library;
@@ -50,6 +53,7 @@ namespace Banshee.Dap
         private SchemaEntry<bool> enabled, sync_entire_library;
         private SchemaEntry<string[]> playlist_ids;
         private SmartPlaylistSource sync_src, to_add;
+        private Section library_prefs_section;
         
         #region Public Properties
 
@@ -59,6 +63,10 @@ namespace Banshee.Dap
         
         public bool SyncEntireLibrary {
             get { return sync_entire_library.Get (); }
+        }
+
+        public Section PrefsSection {
+            get { return library_prefs_section; }
         }
         
         #endregion
@@ -93,10 +101,17 @@ namespace Banshee.Dap
         {
             this.sync = sync;
             this.library = library;
+
+            BuildPreferences ();
+            BuildSyncLists ();
+        }
+
+        private void BuildPreferences ()
+        {
             conf_ns = String.Format ("{0}.{1}", sync.ConfigurationNamespace, library.ConfigurationId);
             
             enabled = sync.Dap.CreateSchema<bool> (conf_ns, "enabled", true,
-                "Whether sync is enabled for this device and library source.", "");
+                String.Format (Catalog.GetString ("Sync {0}"), library.Name), "");
             
             sync_entire_library = sync.Dap.CreateSchema<bool> (conf_ns, "sync_entire_library", true,
                 "Whether to sync the entire library and all playlists.", "");
@@ -104,6 +119,14 @@ namespace Banshee.Dap
             playlist_ids = sync.Dap.CreateSchema<string[]> (conf_ns, "playlist_ids", new string [0],
                 "If sync_entire_library is false, this contains a list of playlist ids specifically to sync", "");
 
+            library_prefs_section = new Section (String.Format ("{0} sync", library.Name),
+                //String.Format (Catalog.GetString ("{0}"), library.Name)
+                library.Name, 0);
+            library_prefs_section.Add<bool> (enabled);
+        }
+
+        private void BuildSyncLists ()
+        {
             // This smart playlist is the list of items we want on the device - nothing more, nothing less
             sync_src = new SmartPlaylistSource ("sync_list", library.DbId);
             sync_src.IsTemporary = true;

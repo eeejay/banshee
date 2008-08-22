@@ -43,6 +43,7 @@ using Banshee.Collection.Database;
 using Banshee.Hardware;
 using Banshee.MediaEngine;
 using Banshee.MediaProfiles;
+using Banshee.Preferences;
 
 using Banshee.Dap.Gui;
 
@@ -50,7 +51,9 @@ namespace Banshee.Dap
 {
     public abstract class DapSource : RemovableSource, IDisposable
     {
+        private DapSync sync;
         private DapInfoBar dap_info_bar;
+        private Page page;
         // private DapPropertiesDisplay dap_properties_display;
         
         private IDevice device;
@@ -82,7 +85,6 @@ namespace Banshee.Dap
         {
             this.device = device;
             type_unique_id = device.Uuid;
-            space_for_data = CreateSchema<long> ("space_for_data", 0, "How much space, in bytes, to reserve for data on the device.", "");
         }
 
         public override void Dispose ()
@@ -135,7 +137,10 @@ namespace Banshee.Dap
             });
             
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
-            
+            Properties.Set<System.Reflection.Assembly> ("ActiveSourceUIResource.Assembly", System.Reflection.Assembly.GetExecutingAssembly ());
+            Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
+
+            sync = new DapSync (this);
             dap_info_bar = new DapInfoBar (this);
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents.FooterWidget", dap_info_bar);
             
@@ -159,11 +164,26 @@ namespace Banshee.Dap
                     : new string [] { "taglib/mp3" };
             }
             
-            music_group_source = new MusicGroupSource (this);
-            video_group_source = new VideoGroupSource (this);
+            AddChildSource (music_group_source = new MusicGroupSource (this));
+            AddChildSource (video_group_source = new VideoGroupSource (this));
 
-            AddChildSource (music_group_source);
-            AddChildSource (video_group_source);
+            BuildPreferences ();
+            Properties.Set<Banshee.Sources.Gui.ISourceContents> ("Nereid.SourceContents", new DapContent (this));
+        }
+
+        private void BuildPreferences ()
+        {
+            page = new Page ();
+            Section main_section = new Section ();
+            main_section.Order = -1;
+            
+            space_for_data = CreateSchema<long> ("space_for_data", 0, "How much space, in bytes, to reserve for data on the device.", "");
+            main_section.Add (space_for_data);
+            page.Add (main_section);
+
+            foreach (Section section in sync.PreferenceSections) {
+                page.Add (section);
+            }
         }
         
         public override void AddChildSource (Source child)
@@ -174,13 +194,14 @@ namespace Banshee.Dap
             
             base.AddChildSource (child);
         }
+
+        // Force to zero so that count doesn't show up
+        public override int Count {
+            get { return 0; }
+        }
         
         public override bool HasProperties {
             get { return true; }
-        }
-        
-        public override bool CanActivate {
-            get { return false; }
         }
 
         public override void SetStatus (string message, bool can_close, bool is_spinning, string icon_name)
@@ -216,10 +237,7 @@ namespace Banshee.Dap
                 LoadFromDevice ();
                 OnTracksAdded ();
                 HideStatus ();
-                
-                using (new Hyena.Timer ("calculating sync for dap..")) {
-                new DapSync (this).CalculateSync ();
-                }
+                sync.CalculateSync ();
             } catch (Exception e) {
                 Log.Exception (e);
             }
@@ -343,7 +361,15 @@ namespace Banshee.Dap
         protected virtual IDeviceMediaCapabilities MediaCapabilities {
             get { return device.MediaCapabilities; }
         }
-        
+
+        public Page Preferences {
+            get { return page; }
+        }
+
+        public DapSync Sync {
+            get { return sync; }
+        }
+
         private ProfileConfiguration preferred_config;
         private ProfileConfiguration PreferredConfiguration {
             get {

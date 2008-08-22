@@ -21,6 +21,9 @@
     <File name="Banshee.Dap.Gui/DapPropertiesDisplay.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Dap/DapSync.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Dap/DapLibrarySync.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Dap.Gui/DapContent.cs" subtype="Code" buildaction="Compile" />
+    <File name="Resources/ActiveSourceUI.xml" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Banshee.Dap.Gui/DapActions.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Core" />
@@ -32,6 +35,7 @@
     <ProjectReference type="Project" localcopy="True" refto="Hyena.Gui" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Cairo, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Widgets" />
+    <ProjectReference type="Project" localcopy="True" refto="Banshee.ThickClient" />
   </References>
   <GtkDesignInfo gtkVersion="2.12.1" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">

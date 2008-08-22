@@ -40,6 +40,8 @@ namespace Banshee.Preferences
         private bool visible;
         private object display_widget;
         private object mnemonic_widget;
+
+        public event Action<Root> Changed;
                 
         public Root ()
         {
@@ -79,12 +81,18 @@ namespace Banshee.Preferences
         
         public bool Sensitive {
             get { return sensitive; }
-            set { sensitive = value; }
+            set {
+                sensitive = value;
+                OnChanged ();
+            }
         }
         
         public bool Visible {
             get { return visible; }
-            set { visible = value; }
+            set {
+                visible = value;
+                OnChanged ();
+            }
         }
         
         public virtual object DisplayWidget {
@@ -95,6 +103,14 @@ namespace Banshee.Preferences
         public virtual object MnemonicWidget {
             get { return mnemonic_widget ?? DisplayWidget; }
             set { mnemonic_widget = value; }
+        }
+
+        protected void OnChanged ()
+        {
+            Action<Root> handler = Changed;
+            if (handler != null) {
+                handler (this);
+            }
         }
     }
 }

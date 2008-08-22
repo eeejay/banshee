@@ -59,6 +59,8 @@ namespace Banshee.Gui
         
         public PlaybackActions (InterfaceActionService actionService) : base (actionService, "Playback")
         {
+            ImportantByDefault = false;
+
             Add (new ActionEntry [] {
                 new ActionEntry ("PlayPauseAction", null,
                     Catalog.GetString ("_Play"), "space",

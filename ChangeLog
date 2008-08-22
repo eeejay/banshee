@@ -1,3 +1,52 @@
+2008-08-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Makefile.am:
+	* src/Dap/Banshee.Dap/Banshee.Dap.mdp: Add new files.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: Use the Name not the
+	GenericName in the unmap and delete tracks action labels.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Use Banshee.Preferences.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Use Banshee.Preferences,
+	expose DapSync object, set a Nereid.SourceContents override (and make
+	activatable), and override Count to 0 so it doesn't show next to the main
+	dap source.
+
+	* src/Dap/Banshee.Dap/Resources/ActiveSourceUI.xml: Add eject and sync to
+	the toolbar, and sync to the source context menu.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs: New class, completely
+	unfinished, displays the preferences for syncing etc.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs: Add and handle a
+	Synchronize action.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs: Add
+	and check a source property for the assembly the ActiveSourceUIResource
+	file is located in.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Make all
+	actions important by default, but add protected property to use old
+	behavior.  Add another override to UpdateAction.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Set the
+	default to not be all actions important.
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/WidgetFactory.cs:
+	Listen for the preference's Changed event to update visible/sensitive.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add a
+	placeholder in the removable source context menu.
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Root.cs: Add a Changed
+	event and fire it when sensitive/visible change.
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Section.cs: Add
+	convenience Add override that takes a SchemaEntry and creates a
+	SchemaPreference automatically from its Short and LongDescription.
+
 2008-08-22  James Willcox  <snorp@novell.com>
 
 	* src/Extensions/Banshee.Lastfm/Resources/lastfm.glade:

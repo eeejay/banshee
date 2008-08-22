@@ -43,16 +43,24 @@ namespace Banshee.Preferences.Gui
             }
             
             Widget display_widget = preference.DisplayWidget as Widget;
+            OnPreferenceChanged (preference);
             
             return display_widget ?? GetWidget (preference, preference.GetType ().GetProperty ("Value").PropertyType);
         }
         
         private static Widget GetWidget (PreferenceBase preference, Type type)
         {
+            Widget widget = null;
             if (type == typeof (bool)) {
-                return new PreferenceCheckButton (preference);
+                widget = new PreferenceCheckButton (preference);
             } else if (type == typeof (string)) {
-                return new PreferenceEntry (preference);
+                widget = new PreferenceEntry (preference);
+            }
+
+            if (widget != null) {
+                preference.Changed += OnPreferenceChanged;
+                //widget.Destroyed += OnWidgetDestroyed;
+                return widget;
             }
             
             return null;
@@ -65,6 +73,19 @@ namespace Banshee.Preferences.Gui
             }
             
             return preference.MnemonicWidget as Widget;
+        }
+
+        /*private static void OnWidgetDestroyed (object sender, EventArgs args)
+        {
+        }*/
+
+        private static void OnPreferenceChanged (Root preference)
+        {
+            Widget widget = preference.DisplayWidget as Widget;
+            if (widget != null) {
+                widget.Sensitive = preference.Sensitive;
+                widget.Visible = preference.Visible;
+            }
         }
         
         private class PreferenceCheckButton : CheckButton
