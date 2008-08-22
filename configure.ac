@@ -211,12 +211,13 @@ ${PACKAGE}-${VERSION}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
 
-    Unfinished, unstable, under development components:
-      MediaWeb:        ${enable_mediaweb}
-      Torrent Podcasts:${enable_torrent}
-
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "
+
+#    Unfinished, unstable, under development components:
+#      MediaWeb:        ${enable_mediaweb}
+#      Torrent Podcasts:${enable_torrent}
+
 if test -d ${expanded_libdir}/${PACKAGE}; then
 	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/${PACKAGE}"
 	echo "         Remove the existing install before installing this build."
