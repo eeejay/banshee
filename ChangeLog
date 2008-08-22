@@ -1,3 +1,9 @@
+2008-08-22  James Willcox  <snorp@novell.com>
+
+	* src/Extensions/Banshee.Lastfm/Resources/lastfm.glade:
+
+	Make the entry activate the default action.
+
 2008-08-22  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
