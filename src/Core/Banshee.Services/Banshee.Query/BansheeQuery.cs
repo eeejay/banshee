@@ -106,7 +106,7 @@ namespace Banshee.Query
         );
 
         public static QueryField DiscField = new QueryField (
-            "disc", "Disc",
+            "disc", "DiscNumber",
             Catalog.GetString ("Disc"), "CoreTracks.Disc", typeof(NaturalIntegerQueryValue),
             // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
             Catalog.GetString ("disc"), Catalog.GetString ("cd"), Catalog.GetString ("discnum"),

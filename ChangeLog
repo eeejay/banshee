@@ -1,3 +1,9 @@
+2008-08-22  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Fix a crash 
+	caused by the DiscNumber property name change (BGO #548975).
+
 2008-08-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Makefile.am:

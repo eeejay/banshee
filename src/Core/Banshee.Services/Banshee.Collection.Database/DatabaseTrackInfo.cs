@@ -386,7 +386,7 @@ namespace Banshee.Collection.Database
             set { base.TrackCount = value; }
         }
         
-        [DatabaseColumn]
+        [DatabaseColumn ("Disc")]
         public override int DiscNumber {
             get { return base.DiscNumber; }
             set { base.DiscNumber = value; }
