@@ -24,6 +24,7 @@ src/Clients/Nereid/Nereid/ViewContainer.cs
 src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs
 src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs
 src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs
+src/Core/Banshee.Services/Banshee.Collection/MoveOnInfoSaveJob.cs
 src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs
 src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs
 src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs
@@ -37,7 +38,7 @@ src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs
 src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs
 src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs
 src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs
-src/Core/Banshee.Services/Banshee.Networking/NetworkDetect.cs
+src/Core/Banshee.Services/Banshee.Networking/Network.cs
 src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs
 src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs
@@ -93,8 +94,11 @@ src/Core/Banshee.Widgets/Banshee.Widgets/DiscUsageDisplay.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs
 src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs
+src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs
 src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs
 src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs
+src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs
+src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs
 src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs
 src/Dap/Banshee.Dap/Banshee.Dap/MusicGroupSource.cs
 src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs
