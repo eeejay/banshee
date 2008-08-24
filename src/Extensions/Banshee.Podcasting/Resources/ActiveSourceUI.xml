@@ -14,8 +14,8 @@
         <menuitem name="PodcastItemDeleteFile" action="PodcastItemDeleteFileAction" />
         <!--
         <menuitem name="PodcastItemCancel" action="PodcastItemCancelAction" />-->
-        <menuitem name="PodcastItemMarkOld" action="PodcastItemMarkOldAction" />
         <menuitem name="PodcastItemMarkNew" action="PodcastItemMarkNewAction" />
+        <menuitem name="PodcastItemMarkOld" action="PodcastItemMarkOldAction" />
         <separator />
       </placeholder>
     </menu>
@@ -30,8 +30,8 @@
         <!--
         <menuitem name="PodcastItemCancel" action="PodcastItemCancelAction" />-->
         <separator />
-        <menuitem name="PodcastItemMarkOld" action="PodcastItemMarkOldAction" />
         <menuitem name="PodcastItemMarkNew" action="PodcastItemMarkNewAction" />
+        <menuitem name="PodcastItemMarkOld" action="PodcastItemMarkOldAction" />
     </placeholder>
   </popup>
 </ui>

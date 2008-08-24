@@ -40,8 +40,9 @@ namespace Banshee.Gui
     public class BansheeActionGroup : ActionGroup
     {
         private InterfaceActionService action_service;
-        protected Dictionary<string, string> labels = new Dictionary<string, string> ();
-        protected Dictionary<string, string> icons = new Dictionary<string, string> ();
+        private Dictionary<string, string> labels = new Dictionary<string, string> ();
+        private Dictionary<string, string> icons = new Dictionary<string, string> ();
+        private List<uint> ui_merge_ids = new List<uint> ();
 
         private bool important_by_default = true;
         protected bool ImportantByDefault {
@@ -57,6 +58,25 @@ namespace Banshee.Gui
         public BansheeActionGroup (InterfaceActionService action_service, string name) : base (name)
         {
             this.action_service = action_service;
+        }
+
+        public void AddUiFromFile (string ui_file)
+        {
+            ui_merge_ids.Add (Actions.AddUiFromFileInCurrentAssembly (ui_file));
+        }
+
+        public override void Dispose ()
+        {
+            Actions.RemoveActionGroup (this);
+
+            foreach (uint merge_id in ui_merge_ids) {
+                if (merge_id > 0) {
+                    Actions.UIManager.RemoveUi (merge_id);
+                }
+            }
+            ui_merge_ids.Clear ();
+
+            base.Dispose ();
         }
 
         public new void Add (ActionEntry [] action_entries)

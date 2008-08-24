@@ -1,3 +1,24 @@
+2008-08-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Resources/ActiveSourceUI.xml: Put
+	'Mark New' above 'Mark Old'.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Add Album Artist, Comment, Track Count, Disc Count, Bpm, BitRate,
+	Conductor, and Grouping column.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Add
+	helpers for adding/removing UIManager elements.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Add
+	AlbumArtist, Disc Count, TrackCount, Bpm, BitRate, Conductor, and Gruping
+	query fields and sorting.  Add TrackNumber, which previously was defined
+	as a query field but not in the default FieldSet.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Don't increment the play/skip count if the file had an error.
+
 2008-08-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Makefile.am:

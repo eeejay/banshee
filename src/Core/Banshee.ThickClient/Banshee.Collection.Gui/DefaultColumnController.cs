@@ -69,6 +69,7 @@ namespace Banshee.Collection.Gui
                 TitleColumn,
                 ArtistColumn,
                 AlbumColumn,
+                CommentColumn,
                 RatingColumn,
                 DurationColumn,
                 GenreColumn,
@@ -82,7 +83,14 @@ namespace Banshee.Collection.Gui
                 LastSkippedColumn,
                 DateAddedColumn,
                 UriColumn,
-                MimeTypeColumn
+                MimeTypeColumn,
+                AlbumArtistColumn,
+                TrackCountColumn,
+                DiscCountColumn,
+                BpmColumn,
+                BitRateColumn,
+                ConductorColumn,
+                GroupingColumn
             );
         }
 
@@ -97,15 +105,22 @@ namespace Banshee.Collection.Gui
             album_column        = CreateText (BansheeQuery.AlbumField, 0.225, true);
 
             // Others
+            album_artist_column = CreateText (BansheeQuery.AlbumArtistField, 0.225);
             genre_column        = CreateText (BansheeQuery.GenreField, 0.25);
 
             duration_column     = Create (BansheeQuery.DurationField, 0.10, true, new ColumnCellDuration (null, true));
             year_column         = Create (BansheeQuery.YearField, 0.15, false, new ColumnCellPositiveInt (null, true));
             file_size_column    = Create (BansheeQuery.FileSizeField, 0.15, false, new ColumnCellFileSize (null, true));
+            track_count_column  = Create (BansheeQuery.TrackCountField, 0.10, false, new ColumnCellTrackNumber (null, true));
             disc_column         = Create (BansheeQuery.DiscField, 0.10, false, new ColumnCellPositiveInt (null, true));
+            disc_count_column   = Create (BansheeQuery.DiscCountField, 0.10, false, new ColumnCellPositiveInt (null, true));
+            bpm_column          = Create (BansheeQuery.BpmField, 0.10, false, new ColumnCellPositiveInt (null, true));
+            bitrate_column      = Create (BansheeQuery.BitRateField, 0.10, false, new ColumnCellPositiveInt (null, true));
             rating_column       = Create (BansheeQuery.RatingField, 0.15, false, new ColumnCellRating (null, true));
 
             composer_column     = CreateText (BansheeQuery.ComposerField, 0.25);
+            conductor_column    = CreateText (BansheeQuery.ConductorField, 0.25);
+            grouping_column     = CreateText (BansheeQuery.GroupingField, 0.25);
             comment_column      = CreateText (BansheeQuery.CommentField, 0.25);
             play_count_column   = CreateText (BansheeQuery.PlayCountField, 0.15);
             skip_count_column   = CreateText (BansheeQuery.SkipCountField, 0.15);
@@ -235,6 +250,41 @@ namespace Banshee.Collection.Gui
         private SortableColumn uri_column;
         public SortableColumn UriColumn {
             get { return uri_column; }
+        }
+
+        private SortableColumn album_artist_column;
+        public SortableColumn AlbumArtistColumn {
+            get { return album_artist_column; }
+        }
+        
+        private SortableColumn track_count_column;
+        public SortableColumn TrackCountColumn {
+            get { return track_count_column; }
+        }
+        
+        private SortableColumn disc_count_column;
+        public SortableColumn DiscCountColumn {
+            get { return disc_count_column; }
+        }
+        
+        private SortableColumn bpm_column;
+        public SortableColumn BpmColumn {
+            get { return bpm_column; }
+        }
+        
+        private SortableColumn bitrate_column;
+        public SortableColumn BitRateColumn {
+            get { return bitrate_column; }
+        }
+
+        private SortableColumn conductor_column;
+        public SortableColumn ConductorColumn {
+            get { return conductor_column; }
+        }
+
+        private SortableColumn grouping_column;
+        public SortableColumn GroupingColumn {
+            get { return grouping_column; }
         }
         
         private SortableColumn mime_type_column;

@@ -97,6 +97,16 @@ namespace Banshee.Query
             "by", "artist", "artists"
         );
 
+        public static QueryField AlbumArtistField = new QueryField (
+            "albumartist", "AlbumArtist",
+            Catalog.GetString ("Album Artist"), "CoreAlbums.ArtistNameLowered", true,
+            // Translators: These are unique search aliases for "album".  Please, no spaces. Blank ok.
+            Catalog.GetString ("albumartist"), Catalog.GetString ("compilationartist"),
+            "albumartist", "compilationartist"
+        );
+
+        // TODO add IsCompilationField
+
         public static QueryField AlbumField = new QueryField (
             "album", "AlbumTitle",
             Catalog.GetString ("Album"), "CoreAlbums.TitleLowered", true,
@@ -112,6 +122,14 @@ namespace Banshee.Query
             Catalog.GetString ("disc"), Catalog.GetString ("cd"), Catalog.GetString ("discnum"),
             "disc", "cd", "discnum"
         );
+
+        public static QueryField DiscCountField = new QueryField (
+            "disccount", "DiscCount",
+            Catalog.GetString ("Disc Count"), "CoreTracks.DiscCount", typeof(NaturalIntegerQueryValue),
+            // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+            Catalog.GetString ("discs"), Catalog.GetString ("cds"),
+            "discs", "cds"
+        );
         
         public static QueryField TrackNumberField = new QueryField (
             "track", "TrackNumber",
@@ -120,6 +138,33 @@ namespace Banshee.Query
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "#", Catalog.GetString ("track"), Catalog.GetString ("trackno"), Catalog.GetString ("tracknum"),
             "track", "trackno", "tracknum"
+        );
+
+        public static QueryField TrackCountField = new QueryField (
+            "trackcount", "TrackCount",
+            // Translators: noun
+            Catalog.GetString ("Track Count"), "CoreTracks.TrackCount", typeof(NaturalIntegerQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("tracks"), Catalog.GetString ("trackcount"),
+            "tracks", "trackcount"
+        );
+
+        public static QueryField BpmField = new QueryField (
+            "bpm", "Bpm",
+            // Translators: noun
+            Catalog.GetString ("BPM"), "CoreTracks.BPM", typeof(NaturalIntegerQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("bpm"),
+            "bpm"
+        );
+
+        public static QueryField BitRateField = new QueryField (
+            "bitrate", "BitRate",
+            // Translators: noun
+            Catalog.GetString ("Bit Rate"), "CoreTracks.BitRate", typeof(NaturalIntegerQueryValue),
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("bitrate"), Catalog.GetString ("kbs"), Catalog.GetString ("kps"),
+            "bitrate", "kbs", "kps"
         );
 
         public static QueryField TitleField = new QueryField (
@@ -150,6 +195,20 @@ namespace Banshee.Query
             Catalog.GetString ("Composer"), "CoreTracks.Composer", false,
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("composer"), "composer"
+        );
+
+        public static QueryField ConductorField = new QueryField (
+            "conductor", "Conductor",
+            Catalog.GetString ("Conductor"), "CoreTracks.Conductor", false,
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("conductor"), "conductor"
+        );
+
+        public static QueryField GroupingField = new QueryField (
+            "grouping", "Grouping",
+            Catalog.GetString ("Grouping"), "CoreTracks.Grouping", false,
+            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            Catalog.GetString ("grouping"), "grouping"
         );
 
         public static QueryField CommentField = new QueryField (
@@ -202,7 +261,7 @@ namespace Banshee.Query
 
         public static QueryField DurationField = new QueryField (
             "duration", "Duration",
-            Catalog.GetString ("Duration"), "CoreTracks.Duration", typeof(TimeSpanQueryValue),
+            Catalog.GetString ("Time"), "CoreTracks.Duration", typeof(TimeSpanQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("duration"), Catalog.GetString ("length"), Catalog.GetString ("time"),
             "duration", "length", "time"
@@ -218,7 +277,7 @@ namespace Banshee.Query
 
         public static QueryField LastPlayedField = new QueryField (
             "lastplayed", "LastPlayed",
-            Catalog.GetString ("Last Played Date"), "CoreTracks.LastPlayedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
+            Catalog.GetString ("Last Played"), "CoreTracks.LastPlayedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("lastplayed"), Catalog.GetString ("played"), Catalog.GetString ("playedon"),
             "lastplayed", "played", "playedon"
@@ -226,7 +285,7 @@ namespace Banshee.Query
 
         public static QueryField LastSkippedField = new QueryField (
             "lastskipped", "LastSkipped",
-            Catalog.GetString ("Last Skipped Date"), "CoreTracks.LastSkippedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
+            Catalog.GetString ("Last Skipped"), "CoreTracks.LastSkippedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("lastskipped"), Catalog.GetString ("skipped"), Catalog.GetString ("skippedon"),
             "lastskipped", "skipped", "skippedon"
@@ -255,9 +314,10 @@ namespace Banshee.Query
 #endregion
 
         public static QueryFieldSet FieldSet = new QueryFieldSet (
-            ArtistField, AlbumField, DiscField, TitleField, YearField, GenreField, ComposerField, CommentField, RatingField, PlayCountField,
+            ArtistField, AlbumField, AlbumArtistField, TitleField, TrackNumberField, TrackCountField, DiscField, DiscCountField,
+            YearField, GenreField, ComposerField, ConductorField, GroupingField, CommentField, RatingField, PlayCountField,
             SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField, LastSkippedField,
-            DateAddedField, PlaylistField, SmartPlaylistField
+            BpmField, BitRateField, DateAddedField, PlaylistField, SmartPlaylistField
         );
 
         private const string default_sort = @"CoreAlbums.ArtistNameLowered ASC, CoreAlbums.TitleLowered ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC";
@@ -279,6 +339,14 @@ namespace Banshee.Query
                         CoreAlbums.TitleLowered ASC, 
                         CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber {0}", ascDesc); 
+                    break;
+
+                case "albumartist":
+                    sort_query = String.Format (@"
+                        CoreAlbums.ArtistNameLowered {0}, 
+                        CoreAlbums.TitleLowered ASC, 
+                        CoreTracks.Disc ASC,
+                        CoreTracks.TrackNumber ASC", ascDesc); 
                     break;
 
                 case "artist":
@@ -318,8 +386,14 @@ namespace Banshee.Query
                     goto case "comment";
 
                 case "year":
-                case "genre":
+                case "bitrate":
+                case "bpm":
+                case "conductor":
+                case "grouping":
+                case "trackcount":
                 case "disc":
+                case "disccount":
+                case "genre":
                 case "duration":
                 case "rating":
                 case "playcount":
