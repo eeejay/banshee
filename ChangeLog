@@ -1,3 +1,29 @@
+2008-08-24  Aaron Bockover  <abock@gnome.org>
+
+	Phase 1 of Hackweek: wrote JSON tokenizer and parser/deserializer and 
+	lots of unit tests. It covers 100% of the 'spec' at json.org, implemented
+	from reading the grammar images published there.
+
+	* src/Libraries/Hyena/Hyena.Json/Tokenizer.cs: Lex JSON according to
+	the spec on json.org, transform to stream of tokens
+
+	* src/Libraries/Hyena/Hyena.Json/Deserializer.cs: Parser built on top
+	of the tokenizer that constructs the JSON objects from the token stream
+	
+	* src/Libraries/Hyena/Hyena.Json/IJsonCollection.cs: Collection interface
+	providing Dump methods
+
+	* src/Libraries/Hyena/Hyena.Json/JsonArray.cs:
+	* src/Libraries/Hyena/Hyena.Json/JsonObject.cs: The two collection 
+	objects in JSON, derived from List and Dictionary respectively
+
+	* src/Libraries/Hyena/Hyena.Json/Token.cs:
+	* src/Libraries/Hyena/Hyena.Json/TokenType.cs: Token class and type flags
+
+	* src/Libraries/Hyena/Hyena.Json/Tests/DeserializerTests.cs:
+	* src/Libraries/Hyena/Hyena.Json/Tests/TokenizerTests.cs: Unit tests for
+	the tokenizer and deserializer
+
 2008-08-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Resources/ActiveSourceUI.xml: Put

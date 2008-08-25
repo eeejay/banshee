@@ -101,6 +101,15 @@
     <File name="Hyena.Collections/Tests/QueuePipelineTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Collections/QueuePipelineElement.cs" subtype="Code" buildaction="Compile" />
     <File name="Hyena.Collections/WriteLineElement.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Json/Tokenizer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Json/Token.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Json/JsonObject.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Json/JsonArray.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Json/Tests/TokenizerTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Json/TokenType.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Json/Deserializer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Json/IJsonCollection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Hyena.Json/Tests/DeserializerTests.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -109,7 +118,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="nunit.core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
-  <GtkDesignInfo gtkVersion="2.12.1" />
+  <GtkDesignInfo />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

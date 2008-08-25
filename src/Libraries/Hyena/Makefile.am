@@ -45,6 +45,15 @@ SOURCES =  \
 	Hyena.Data/ModelSelection.cs \
 	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/SortType.cs \
+	Hyena.Json/Deserializer.cs \
+	Hyena.Json/IJsonCollection.cs \
+	Hyena.Json/JsonArray.cs \
+	Hyena.Json/JsonObject.cs \
+	Hyena.Json/Tests/DeserializerTests.cs \
+	Hyena.Json/Tests/TokenizerTests.cs \
+	Hyena.Json/Token.cs \
+	Hyena.Json/Tokenizer.cs \
+	Hyena.Json/TokenType.cs \
 	Hyena.Query/AliasedObjectSet.cs \
 	Hyena.Query/DateQueryValue.cs \
 	Hyena.Query/FileSizeQueryValue.cs \
@@ -97,4 +106,9 @@ SOURCES =  \
 	Hyena/UndoManager.cs
 
 include $(top_srcdir)/build/build.mk
+
+test: all
+	pushd $(top_srcdir)/tests; \
+	make hyena; \
+	popd
 
