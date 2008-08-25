@@ -229,20 +229,21 @@ namespace Hyena.Json
             if (peek == '.') {
                 value += LexFraction ();
             }
-                if (peek == 'e' || peek == 'E') {
+            
+            if (peek == 'e' || peek == 'E') {
+                ReadChar ();
+                if (peek == '-') {
                     ReadChar ();
-                    if (peek == '-') {
-                        ReadChar ();
-                        value /= Math.Pow (10, LexInt ());
-                    } else if (peek == '+') {
-                        ReadChar ();
-                        value *= Math.Pow (10, LexInt ());
-                    } else if (Char.IsDigit (peek)) {
-                        value *= Math.Pow (10, LexInt ());
-                    } else {
-                        InvalidSyntax ("Malformed exponent");
-                    }
+                    value /= Math.Pow (10, LexInt ());
+                } else if (peek == '+') {
+                    ReadChar ();
+                    value *= Math.Pow (10, LexInt ());
+                } else if (Char.IsDigit (peek)) {
+                    value *= Math.Pow (10, LexInt ());
+                } else {
+                    InvalidSyntax ("Malformed exponent");
                 }
+            }
             
             if (Char.IsDigit (peek)) {
                 InvalidSyntax ("Numbers starting with 0 must be followed by a . or not " +
