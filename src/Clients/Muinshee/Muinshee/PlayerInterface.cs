@@ -62,6 +62,8 @@ namespace Muinshee
         private Toolbar footer_toolbar;
         private HPaned views_pane;
         private ViewContainer view_container;
+
+        private MuinsheeActions actions;
         
         // Major Interaction Components
         private SourceView source_view;
@@ -75,6 +77,8 @@ namespace Muinshee
         
         protected override void Initialize ()
         {
+            actions = new MuinsheeActions ();
+
             BuildPrimaryLayout ();
             ConnectEvents ();
 
@@ -106,6 +110,7 @@ namespace Muinshee
         {
             lock (this) {
                 Hide ();
+                actions.Dispose ();
                 base.Dispose ();
                 Gtk.Application.Quit ();
             }

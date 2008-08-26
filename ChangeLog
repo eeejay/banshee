@@ -1,5 +1,17 @@
 2008-08-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Muinshee/Makefile.am:
+	* src/Clients/Muinshee/Muinshee.mdp:
+	* src/Clients/Muinshee/Muinshee/MuinsheeActions.cs: New file adding
+	Muinshee's Gtk.Actions and UIManager XML.
+
+	* src/Clients/Muinshee/Muinshee/PlayerInterface.cs: Instantiate and
+	dispose the MuinsheeActions.
+
+	* src/Clients/Muinshee/Muinshee/Client.cs: Change client's name.
+
+2008-08-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Clients/Clients.mds:
 	* src/Clients/Makefile.am:
 	* src/Clients/Muinshee/Makefile.am:

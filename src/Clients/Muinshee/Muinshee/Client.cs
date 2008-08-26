@@ -205,7 +205,7 @@ namespace Muinshee
         }
         
         public override string ClientId {
-            get { return "nereid"; }
+            get { return "muinshee"; }
         }
     }
 }
