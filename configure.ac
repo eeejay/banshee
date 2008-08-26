@@ -134,6 +134,7 @@ src/AssemblyInfo.cs
 src/Clients/Makefile
 src/Clients/banshee-1
 src/Clients/Halie/Makefile
+src/Clients/Muinshee/Makefile
 src/Clients/Nereid/Makefile
 
 src/Core/Makefile

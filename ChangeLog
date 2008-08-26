@@ -1,3 +1,14 @@
+2008-08-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Clients.mds:
+	* src/Clients/Makefile.am:
+	* src/Clients/Muinshee/Makefile.am:
+	* src/Clients/Muinshee/Muinshee.mdp:
+	* src/Clients/Muinshee/Muinshee/PlayerInterface.cs:
+	* src/Clients/Muinshee/Muinshee/ViewContainer.cs:
+	* src/Clients/Muinshee/Muinshee/Client.cs:
+	* configure.ac: Groundwork for a new client: Muinshee
+
 2008-08-25  Aaron Bockover  <abock@gnome.org>
 
 	* build/pkg-config/Makefile.am:
