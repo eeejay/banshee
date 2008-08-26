@@ -1,6 +1,6 @@
 prefix=@prefix@
 exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
+libdir=@libdir@
 bansheedir=${libdir}/banshee-1
 
 Name: Banshee Hyena GUI

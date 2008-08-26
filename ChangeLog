@@ -1,3 +1,11 @@
+2008-08-25  Aaron Bockover  <abock@gnome.org>
+
+	* build/pkg-config/Makefile.am:
+	* build/pkg-config/*.pc.in: Use @libdir@ to make sure the .pc file 
+	work on 64 bit (lib64)
+
+	* configure.ac: Bump version
+
 2008-08-24  Aaron Bockover  <abock@gnome.org>
 
 	Phase 1 of Hackweek: wrote JSON tokenizer and parser/deserializer and 
