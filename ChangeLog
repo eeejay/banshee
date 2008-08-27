@@ -1,5 +1,12 @@
 2008-08-26  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Services.addins: Tell Mono.Addins
+	to look in /tmp/banshee-addins-dev for extensions; developers who wish
+	to run external extensions they are developing should copy their extensions
+	here, run banshee
+
+2008-08-26  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac: Fix the assembly versioning to eliminate the build 
 	revision so MD doesn't go apeshit. Awesome. (BNC #352440, not fixed)
 

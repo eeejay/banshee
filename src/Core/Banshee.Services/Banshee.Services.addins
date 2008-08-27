@@ -2,5 +2,6 @@
   <Directory include-subdirs="true">./Backends</Directory>
   <Directory include-subdirs="true">./Extensions</Directory>
   <Directory include-subdirs="true">./Libraries</Directory>
+  <Directory include-subdirs="true">/tmp/banshee-addins-dev</Directory>
 </Addins>
 
