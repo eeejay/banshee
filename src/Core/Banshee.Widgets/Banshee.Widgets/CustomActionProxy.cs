@@ -82,8 +82,8 @@ namespace Banshee.Widgets
             if (uninitialized_actions.ContainsKey (args.Action.Name)) {
                 ActionMenuPath path = uninitialized_actions[args.Action.Name];
 
-                MenuItem item = (path.AfterMenuItem != null)
-                    ? ui.GetWidget (String.Format ("{0}/{1}", path.MenuPath, path.AfterMenuItem)) as MenuItem
+                Widget item = (path.AfterMenuItem != null)
+                    ? ui.GetWidget (String.Format ("{0}/{1}", path.MenuPath, path.AfterMenuItem))
                     : null;
 
                 InsertProxy (args.Action, ui.GetWidget (path.MenuPath), item);
@@ -94,15 +94,41 @@ namespace Banshee.Widgets
             }
         }
 
-        protected virtual void InsertProxy (Gtk.Action menuAction, Widget menu, MenuItem afterItem)
+        protected virtual void InsertProxy (Gtk.Action menuAction, Widget parent, Widget afterItem)
         {
-            Menu parent_menu = ((menu is MenuItem) ? (menu as MenuItem).Submenu : menu) as Menu;
-            int position = (afterItem != null) ? Array.IndexOf (parent_menu.Children, afterItem) + 1 : 0;
-            Widget item = GetNewItem ();
-            parent_menu.Insert (item, position);
-            action.ConnectProxy (item);
+            int position = 0;
+            Widget item = null;
+            if (parent is MenuItem || parent is Menu) {
+                Menu parent_menu = ((parent is MenuItem) ? (parent as MenuItem).Submenu : parent) as Menu;
+                position = (afterItem != null) ? Array.IndexOf (parent_menu.Children, afterItem as MenuItem) + 1 : 0;
+                item = GetNewMenuItem ();
+                if (item != null) {
+                    parent_menu.Insert (item, position);
+                }
+            } else if (parent is Toolbar) {
+                ToolItem after_item = afterItem as ToolItem;
+                if (after_item != null) {
+                    position = (parent as Toolbar).GetItemIndex (after_item);
+                    ToolItem tool_item = GetNewToolItem ();
+                    if (tool_item != null) {
+                        (parent as Toolbar).Insert (tool_item, position);
+                        item = tool_item;
+                    }
+                }
+            }
+
+            if (item != null) {
+                action.ConnectProxy (item);
+            }
         }
 
-        protected abstract ComplexMenuItem GetNewItem ();
+        protected virtual ComplexMenuItem GetNewMenuItem ()
+        {
+            return null;
+        }
+        
+        protected virtual ToolItem GetNewToolItem () {
+            return null;
+        }
     }
 }

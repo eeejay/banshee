@@ -49,7 +49,7 @@ namespace Banshee.Widgets
         //    base.InsertProxy (menuAction, menu, afterItem);
         //}
 
-        protected override ComplexMenuItem GetNewItem ()
+        protected override ComplexMenuItem GetNewMenuItem ()
         {
             RatingMenuItem item = new RatingMenuItem ();
             item.RatingEntry.Changing += HandleChanging;

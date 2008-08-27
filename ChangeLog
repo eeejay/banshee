@@ -1,3 +1,10 @@
+2008-08-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingActionProxy.cs:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/CustomActionProxy.cs: Make work
+	with Toolbars as well, so we can have custom toolbar widgets connected to
+	Gtk.Actions.
+
 2008-08-26  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Services.addins: Tell Mono.Addins
