@@ -177,7 +177,8 @@ SOURCES =  \
 	Banshee.Sources/SourceMergeType.cs \
 	Banshee.Sources/SourceMessage.cs \
 	Banshee.Streaming/RadioTrackInfo.cs \
-	Banshee.Web/Browser.cs
+	Banshee.Web/Browser.cs \
+	Banshee.Web/HttpRequest.cs
 
 RESOURCES =  \
 	Banshee.Services.addin.xml \

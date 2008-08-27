@@ -1,3 +1,18 @@
+2008-08-26  Aaron Bockover  <abock@gnome.org>
+
+	* configure.ac: Fix the assembly versioning to eliminate the build 
+	revision so MD doesn't go apeshit. Awesome. (BNC #352440, not fixed)
+
+	* src/Core/Banshee.Core/Banshee.IO/StreamAssist.cs: Provide some overrides
+	to avoid closing streams when writing if desired
+
+	* src/Core/Banshee.Services/Banshee.Web/HttpRequest.cs: A reusable
+	HttpRequest object that makes fetching streams and making requests easier
+	and more unified and consistent for Banshee; probably not complete and
+	not used anywhere yet
+
+	* src/Core/Banshee.Core/Resources/translators.xml: Updated
+
 2008-08-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Muinshee/Makefile.am:

@@ -35,21 +35,29 @@ namespace Banshee.IO
     {
         public static void Save (Stream from, Stream to)
         {
-            Save (from, to, 8192);
+            Save (from, to, 8192, true);
+        }
+        
+        public static void Save (Stream from, Stream to, bool close)
+        {
+            Save (from, to, 8192, close);
         }
 
-        public static void Save (Stream from, Stream to, int bufferSize)
+        public static void Save (Stream from, Stream to, int bufferSize, bool close)
         {
-            using (from) {
+            try {
                 long bytes_read = 0;
-                using (to) {
-                    byte [] buffer = new byte[bufferSize];
-                    int chunk_bytes_read = 0;
-
-                    while ((chunk_bytes_read = from.Read (buffer, 0, buffer.Length)) > 0) {
-                        to.Write (buffer, 0, chunk_bytes_read);
-                        bytes_read += chunk_bytes_read;
-                    }
+                byte [] buffer = new byte[bufferSize];
+                int chunk_bytes_read = 0;
+                
+                while ((chunk_bytes_read = from.Read (buffer, 0, buffer.Length)) > 0) {
+                    to.Write (buffer, 0, chunk_bytes_read);
+                    bytes_read += chunk_bytes_read;
+                }
+            } finally {
+                if (close) {
+                    from.Close ();
+                    to.Close ();
                 }
             }
         }
