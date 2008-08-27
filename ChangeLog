@@ -1,3 +1,12 @@
+2008-08-27  Brad Taylor  <brad@getcoded.net>
+
+	* configure.ac:
+	* build/build.environment.mk:
+	* src/Extensions/Makefile.am:
+	* build/m4/banshee/remote-audio.m4:
+	* src/Extensions/Banshee.RemoteAudio/: Begin support for Remote Audio (aka
+	  AirTunes).
+
 2008-08-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingActionProxy.cs:

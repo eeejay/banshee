@@ -91,6 +91,9 @@ BANSHEE_CHECK_DAP_KARMA
 dnl DAAP support (optional)
 BANSHEE_CHECK_DAAP
 
+dnl RemoteAudio support (optional)
+BANSHEE_CHECK_REMOTE_AUDIO
+
 dnl MonoTorrent support (optional)
 BANSHEE_CHECK_TORRENT
 
@@ -188,6 +191,7 @@ src/Extensions/Banshee.Podcasting/Makefile
 src/Extensions/Banshee.SqlDebugConsole/Makefile
 src/Extensions/Banshee.Sample/Makefile
 src/Extensions/Banshee.Torrent/Makefile
+src/Extensions/Banshee.RemoteAudio/Makefile
 ])
 
 echo "
@@ -208,6 +212,7 @@ ${PACKAGE}-${VERSION}
       Karma:           ${enable_karmasharp}
 
     DAAP Support:      ${enable_daap}
+    Remote Audio:      ${enable_remote_audio}
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
