@@ -37,7 +37,7 @@
     <ProjectReference type="Project" localcopy="True" refto="Banshee.Widgets" />
     <ProjectReference type="Project" localcopy="True" refto="Banshee.ThickClient" />
   </References>
-  <GtkDesignInfo gtkVersion="2.12.1" />
+  <GtkDesignInfo />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

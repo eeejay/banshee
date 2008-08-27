@@ -141,7 +141,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="taglib-sharp, Version=2.0.3.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
   </References>
   <Deployment.LinuxDeployData generateScript="False" />
-  <GtkDesignInfo gtkVersion="2.12.1" />
+  <GtkDesignInfo />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

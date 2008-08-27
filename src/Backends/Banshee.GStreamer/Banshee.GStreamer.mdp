@@ -26,7 +26,7 @@
     <ProjectReference type="Project" localcopy="False" refto="Banshee.Core" />
     <ProjectReference type="Project" localcopy="True" refto="Hyena" />
   </References>
-  <GtkDesignInfo gtkVersion="2.12.1" />
+  <GtkDesignInfo />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />

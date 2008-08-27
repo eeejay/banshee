@@ -20,5 +20,5 @@
     <ProjectReference type="Gac" localcopy="True" refto="gnome-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Project" localcopy="True" refto="Lastfm" />
   </References>
-  <GtkDesignInfo gtkVersion="2.12.1" />
+  <GtkDesignInfo />
 </Project>
