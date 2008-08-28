@@ -62,7 +62,7 @@ namespace Banshee.Gui
 
         public void AddUiFromFile (string ui_file)
         {
-            ui_merge_ids.Add (Actions.AddUiFromFileInCurrentAssembly (ui_file));
+            ui_merge_ids.Add (Actions.AddUiFromFile (ui_file, System.Reflection.Assembly.GetCallingAssembly ()));
         }
 
         public void Register ()

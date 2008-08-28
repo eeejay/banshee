@@ -1,5 +1,10 @@
 2008-08-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Fix bug
+	by ensuring we get the UI resource file from the calling assembly.
+
+2008-08-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Add
 	Register and UnRegister methods that Add/Remove the ActionGroup from the
 	InterfaceActionService.
