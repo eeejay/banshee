@@ -1,3 +1,23 @@
+2008-08-28  Brad Taylor  <brad@getcoded.net>
+
+	* src/Extensions/Banshee.RemoteAudio/Resources:
+	* src/Extensions/Banshee.RemoteAudio/Resources/GlobalUI.xml:
+	* src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio.addin.xml:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteAudioActions.cs:
+	* src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteSpeakersComboBox.cs:
+	* src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteSpeakersWidget.cs:
+	Add UI to select a remote speaker.
+
+	* src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteAudioService.cs:
+	Thread safety and add debugging information.
+
+	* src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteSpeaker.cs:
+	Add a Name property that will hold the fuzzy name of the device.
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/DictionaryComboBox.cs: Add a
+	  clear method, and handle setting ActiveValue to null to deselect.
+
 2008-08-28  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Fix bug

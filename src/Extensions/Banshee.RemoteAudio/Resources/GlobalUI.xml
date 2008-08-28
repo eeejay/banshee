@@ -1,0 +1,7 @@
+<ui>
+  <toolbar name="FooterToolbar">
+    <placeholder name="Extensions">
+        <placeholder name="RemoteAudio" />
+    </placeholder>
+  </toolbar>
+</ui>

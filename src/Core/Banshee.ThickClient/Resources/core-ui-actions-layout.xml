@@ -12,6 +12,7 @@
   </toolbar>
   <toolbar name="FooterToolbar">
     <placeholder name="StatusBar"/>
+    <placeholder name="Extensions"/>
     <placeholder name="RepeatButton"/>
   </toolbar>
 

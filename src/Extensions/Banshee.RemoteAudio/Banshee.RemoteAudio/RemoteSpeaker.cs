@@ -33,33 +33,49 @@ namespace Banshee.RemoteAudio
 {
     public class RemoteSpeaker
     {
+        private string name;
+        public string Name {
+            get { return name; }
+        }
+        
+        private IPAddress host;
         public IPAddress Host {
             get { return host; }
         }
 
+        private short port;
         public short Port {
             get { return port; }
         }
 
+        private string version;
         public string Version {
             get { return version; }
         }
 
+        private int sample_rate;
         public int SampleRate {
             get { return sample_rate; }
         }
 
+        private int sample_size;
         public int SampleSize {
             get { return sample_size; }
         }
 
+        private int channels;
         public int Channels {
             get { return channels; }
         }
 
-        internal RemoteSpeaker (IPAddress host, short port, string version,
-                                int sample_rate, int sample_size, int channels)
+        public static RemoteSpeaker None
+            = new RemoteSpeaker ("None", IPAddress.None, 0, String.Empty,
+                                 0, 0, 0);
+
+        internal RemoteSpeaker (string name, IPAddress host, short port, string version,
+            int sample_rate, int sample_size, int channels)
         {
+            this.name = name;
             this.host = host;
             this.port = port;
             this.version = version;
@@ -67,12 +83,5 @@ namespace Banshee.RemoteAudio
             this.sample_size = sample_size;
             this.channels = channels;
         }
-
-        private IPAddress host;
-        private short port;
-        private string version;
-        private int sample_rate;
-        private int sample_size;
-        private int channels;
     }
 }

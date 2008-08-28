@@ -50,6 +50,11 @@ namespace Banshee.Widgets
             return store.AppendValues(key, value);
         }
         
+        public new void Clear ()
+        {
+            store.Clear ();
+        }
+        
         public T ActiveValue {
             get { 
                 TreeIter iter;
@@ -61,6 +66,11 @@ namespace Banshee.Widgets
             }
             
             set {
+                if(value == null) {
+                    SetActiveIter(TreeIter.Zero);
+                    return;
+                }
+
                 for(int i = 0, n = store.IterNChildren(); i < n; i++) {
                     TreeIter iter;
                     if(store.IterNthChild(out iter, i)) {

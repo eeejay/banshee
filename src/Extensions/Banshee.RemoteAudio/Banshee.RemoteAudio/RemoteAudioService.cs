@@ -54,7 +54,7 @@ namespace Banshee.RemoteAudio
         }
 
         public ReadOnlyCollection<RemoteSpeaker> Speakers {
-            get { return speakers.AsReadOnly (); }
+            get { lock (speakers) { return speakers.AsReadOnly (); } }
         }
         
         void IExtensionService.Initialize ()
@@ -65,6 +65,10 @@ namespace Banshee.RemoteAudio
             if (network.Connected) {
                 Browse ();
             }
+
+            // TODO: move this to another service
+            RemoteAudioActions a = new RemoteAudioActions ();
+            a.Register ();
         }
   
         public void Dispose ()
@@ -97,6 +101,7 @@ namespace Banshee.RemoteAudio
 
         private void OnServiceAdded (object o, ServiceBrowseEventArgs args)
         {
+            Log.Debug ("Found RAOP service...");
             args.Service.Resolved += OnServiceResolved;
             args.Service.Resolve ();
         }
@@ -113,7 +118,7 @@ namespace Banshee.RemoteAudio
                 return;
             }
     
-            Log.DebugFormat ("Resolved a service! ip = {0}", service.HostEntry.AddressList[0]);
+            Log.DebugFormat ("Resolved RAOP service at {0}", service.HostEntry.AddressList[0]);
 
             ITxtRecord record = service.TxtRecord;
 
@@ -138,8 +143,12 @@ namespace Banshee.RemoteAudio
                 }
             }
 
-            speakers.Add (new RemoteSpeaker (service.HostEntry.AddressList[0], service.Port,
-                version, sample_rate, sample_size, channels));
+            lock (speakers) {
+                // TODO: better Name
+                speakers.Add (new RemoteSpeaker (service.HostEntry.HostName,
+                    service.HostEntry.AddressList[0], service.Port,
+                    version, sample_rate, sample_size, channels));
+            }
 
             EventHandler handler = SpeakersChanged;
             if (handler != null) {
