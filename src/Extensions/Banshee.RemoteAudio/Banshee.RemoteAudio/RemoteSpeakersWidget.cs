@@ -29,9 +29,12 @@
 using System;
 using System.Collections.Generic;
 
+using Mono.Unix;
+
 using Gtk;
 
 using Hyena.Widgets;
+
 using Banshee.Gui;
 using Banshee.Base;
 using Banshee.ServiceStack;
