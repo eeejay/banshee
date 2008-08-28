@@ -67,6 +67,9 @@ SHAMROCK_CHECK_MONODOC
 dnl MediaWeb (optional through --enable-mediaweb)
 BANSHEE_CHECK_MEDIAWEB
 
+dnl Moonlight (optional through --enable-moonlight)
+BANSHEE_CHECK_MOONLIGHT
+
 dnl NUnit (optional)
 SHAMROCK_CHECK_NUNIT
 
@@ -216,6 +219,7 @@ ${PACKAGE}-${VERSION}
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
+    Moonlight Effects: ${enable_moonlight}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "
