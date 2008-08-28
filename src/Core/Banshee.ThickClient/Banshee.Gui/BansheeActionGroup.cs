@@ -65,9 +65,19 @@ namespace Banshee.Gui
             ui_merge_ids.Add (Actions.AddUiFromFileInCurrentAssembly (ui_file));
         }
 
-        public override void Dispose ()
+        public void Register ()
+        {
+            Actions.AddActionGroup (this);
+        }
+
+        public void UnRegister ()
         {
             Actions.RemoveActionGroup (this);
+        }
+
+        public override void Dispose ()
+        {
+            UnRegister ();
 
             foreach (uint merge_id in ui_merge_ids) {
                 if (merge_id > 0) {

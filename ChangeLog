@@ -1,3 +1,9 @@
+2008-08-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Add
+	Register and UnRegister methods that Add/Remove the ActionGroup from the
+	InterfaceActionService.
+
 2008-08-27  Brad Taylor  <brad@getcoded.net>
 
 	* configure.ac:
@@ -7,7 +13,7 @@
 	* src/Extensions/Banshee.RemoteAudio/: Begin support for Remote Audio (aka
 	  AirTunes).
 
-2008-08-26  Gabriel Burt  <gabriel.burt@gmail.com>
+2008-08-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Widgets/Banshee.Widgets/RatingActionProxy.cs:
 	* src/Core/Banshee.Widgets/Banshee.Widgets/CustomActionProxy.cs: Make work
