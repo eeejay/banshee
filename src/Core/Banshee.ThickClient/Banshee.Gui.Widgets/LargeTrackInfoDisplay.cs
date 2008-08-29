@@ -59,7 +59,7 @@ namespace Banshee.Gui.Widgets
         }
         
         protected virtual int Spacing {
-            get { return 10; }
+            get { return 30; }
         }
         
         protected override int ArtworkSizeRequest {

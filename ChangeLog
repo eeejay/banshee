@@ -1,3 +1,10 @@
+2008-08-30  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Resources/contributors.xml: Added his highness, Brad
+	
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:
+	Increase spacing to 30px
+
 2008-08-28  Brad Taylor  <brad@getcoded.net>
 
 	* src/Extensions/Banshee.RemoteAudio/Resources:
