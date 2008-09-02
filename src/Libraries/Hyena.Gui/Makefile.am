@@ -39,6 +39,7 @@ SOURCES =  \
 	Hyena.Gui/CairoExtensions.cs \
 	Hyena.Gui/CleanRoomStartup.cs \
 	Hyena.Gui/CompositeUtils.cs \
+	Hyena.Gui/Contrast.cs \
 	Hyena.Gui/EntryEraseAction.cs \
 	Hyena.Gui/EntryInsertAction.cs \
 	Hyena.Gui/EntryUndoAdapter.cs \

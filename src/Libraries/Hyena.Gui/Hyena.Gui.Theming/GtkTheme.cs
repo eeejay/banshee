@@ -45,10 +45,7 @@ namespace Hyena.Gui.Theming
         {
             Cairo.Color text_color = CairoExtensions.GdkColorToCairoColor (widget.Style.Foreground (StateType.Normal));
             Cairo.Color background_color = CairoExtensions.GdkColorToCairoColor (widget.Style.Background (StateType.Normal));
-            // This is lame
-            Cairo.Color c = CairoExtensions.ColorAdjustBrightness (text_color, 
-                CairoExtensions.ColorIsDark (background_color) ? 0.65 : 0.5);
-            return c;
+            return CairoExtensions.AlphaBlend (text_color, background_color, 0.5);
         }
         
         public static Gdk.Color GetGdkTextMidColor (Widget widget)

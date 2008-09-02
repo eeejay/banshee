@@ -74,7 +74,15 @@ namespace Hyena.Gui
             ((IDisposable)surface_cr).Dispose ();
             return surface;
         }
-    
+        
+        public static Cairo.Color AlphaBlend (Cairo.Color ca, Cairo.Color cb, double alpha)
+        {
+            return new Cairo.Color (
+                (1.0 - alpha) * ca.R + alpha * cb.R,
+                (1.0 - alpha) * ca.G + alpha * cb.G,
+                (1.0 - alpha) * ca.B + alpha * cb.B);
+        }
+        
         public static Cairo.Color GdkColorToCairoColor(Gdk.Color color)
         {
             return GdkColorToCairoColor(color, 1.0);

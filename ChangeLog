@@ -1,3 +1,14 @@
+2008-09-02  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Change
+	GetCairoTextMidColor to use AlphaBlend function (BGO #544840)
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Implemented simple
+	color alpha blending utility [P=(1-a)P_0 + aP_1]
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/Contrast.cs: Add some color contrast
+	utilities, copied from Tomboy and modified to work with Cairo colors
+
 2008-08-30  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Core/Resources/contributors.xml: Added his highness, Brad
