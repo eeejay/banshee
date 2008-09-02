@@ -48,6 +48,7 @@
     <ProjectReference type="Project" localcopy="True" refto="Hyena" />
     <ProjectReference type="Project" localcopy="True" refto="Hyena.Gui" />
   </References>
+  <GtkDesignInfo gtkVersion="2.12.1" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am">
     <BuildFilesVar Sync="True" Name="SOURCES" />
     <DeployFilesVar />
