@@ -43,39 +43,13 @@ using Banshee.Gui;
 
 namespace Banshee.Collection.Gui
 {
-    public class TrackListView : ListView<TrackInfo>
+    public class TrackListView : BaseTrackListView
     {
         private ColumnController default_column_controller;
         
         public TrackListView () : base ()
         {
             default_column_controller = new DefaultColumnController ();
-
-            RulesHint = true;
-            RowSensitivePropertyName = "CanPlay";
-            RowBoldPropertyName = "IsPlaying";
-            
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
-            
-            ForceDragSourceSet = true;
-            Reorderable = true;
-            
-            RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
-                ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
-                if (source != null && source.TrackModel == Model) {
-                    ServiceManager.PlaybackController.Source = source;
-                    ServiceManager.PlayerEngine.OpenPlay (args.RowValue);
-                }
-            };
-        }
-        
-        protected override bool OnKeyPressEvent (Gdk.EventKey press)
-        {
-            // Have o act the same as enter - activate the selection
-            if (GtkUtilities.NoImportantModifiersAreSet () && press.Key == Gdk.Key.o && ActivateSelection ()) {
-                return true;
-            }
-            return base.OnKeyPressEvent (press);
         }
         
         public override void SetModel (IListModel<TrackInfo> value, double vpos)
@@ -113,59 +87,5 @@ namespace Banshee.Collection.Gui
             
             base.SetModel (value, vpos);
         }
-
-        protected override bool OnPopupMenu ()
-        {
-            ServiceManager.Get<InterfaceActionService> ().TrackActions["TrackContextMenuAction"].Activate ();
-            return true;
-        }
-        
-        private void OnPlayerEvent (PlayerEventArgs args)
-        {
-            QueueDraw ();
-        }
-        
-#region Drag and Drop
-
-        protected override void OnDragSourceSet ()
-        {
-            base.OnDragSourceSet ();
-            Drag.SourceSetIconName (this, "audio-x-generic");
-        }
-        
-        protected override bool OnDragDrop (Gdk.DragContext context, int x, int y, uint time_)
-        {
-            y = TranslateToListY (y);
-            if (Gtk.Drag.GetSourceWidget (context) == this) {
-                PlaylistSource playlist = ServiceManager.SourceManager.ActiveSource as PlaylistSource;
-                if (playlist != null) {
-                    //Gtk.Drag.
-                    int row = GetRowAtY (y);
-                    if (row != GetRowAtY (y + RowHeight / 2)) {
-                        row += 1;
-                    }
-                    
-                    if (playlist.TrackModel.Selection.Contains (row)) {
-                        // can't drop within the selection
-                        return false;
-                    }
-                    
-                    playlist.ReorderSelectedTracks (row);
-                    return true;
-                }
-            }
-            
-            return false;
-        }
-
-        protected override void OnDragDataGet (Gdk.DragContext context, SelectionData selection_data, uint info, uint time)
-        {
-            if (info != (int)ListViewDragDropTarget.TargetType.ModelSelection || Selection.Count <= 0) {
-                return;
-            }
-        }
-
-#endregion
-
     }
 }

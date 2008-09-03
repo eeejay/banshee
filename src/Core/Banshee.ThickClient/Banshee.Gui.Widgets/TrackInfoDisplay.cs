@@ -65,12 +65,12 @@ namespace Banshee.Gui.Widgets
         
         private Pixbuf missing_audio_pixbuf;
         protected Pixbuf MissingAudioPixbuf {
-            get { return missing_audio_pixbuf; }
+            get { return missing_audio_pixbuf ?? missing_audio_pixbuf = IconThemeUtils.LoadIcon (MissingIconSizeRequest, "audio-x-generic"); }
         }
         
         private Pixbuf missing_video_pixbuf;
         protected Pixbuf MissingVideoPixbuf {
-            get { return missing_video_pixbuf; }
+            get { return missing_video_pixbuf ?? missing_video_pixbuf = IconThemeUtils.LoadIcon (MissingIconSizeRequest, "video-x-generic"); }
         }
         
         private Cairo.Color background_color;
@@ -250,7 +250,7 @@ namespace Banshee.Gui.Widgets
             
             if (same_artist_album) {
                 RenderTrackInfo (cr, incoming_track, same_track, true);
-            } 
+            }
             
             if (stage.Actor.Percent <= 0.5) {
                 // Fade out old text
@@ -356,17 +356,7 @@ namespace Banshee.Gui.Widgets
             Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtworkId, ArtworkSizeRequest);
 
             if (pixbuf == null) {
-                if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
-                    if (missing_video_pixbuf == null) {
-                        missing_video_pixbuf = IconThemeUtils.LoadIcon (MissingIconSizeRequest, "video-x-generic");
-                    }
-                    incoming_pixbuf = missing_video_pixbuf;
-                } else {
-                    if (missing_audio_pixbuf == null) {
-                        missing_audio_pixbuf = IconThemeUtils.LoadIcon (MissingIconSizeRequest, "audio-x-generic");
-                    }
-                    incoming_pixbuf = missing_audio_pixbuf;
-                }
+                LoadMissingPixbuf ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0);
             } else {
                 incoming_pixbuf = pixbuf;
             }
@@ -374,6 +364,11 @@ namespace Banshee.Gui.Widgets
             if (track == current_track) {
                 current_pixbuf = incoming_pixbuf;
             }
+        }
+
+        private void LoadMissingPixbuf (bool is_video)
+        {
+            incoming_pixbuf = is_video ? MissingVideoPixbuf : MissingAudioPixbuf;
         }
         
         private double last_fps = 0.0;

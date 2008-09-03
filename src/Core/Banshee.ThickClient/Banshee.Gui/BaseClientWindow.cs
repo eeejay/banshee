@@ -28,14 +28,19 @@
 
 using System;
 using Gtk;
+using Mono.Unix;
 
 using Banshee.ServiceStack;
+using Banshee.MediaEngine;
+using Banshee.Collection;
 using Banshee.Configuration;
 
 namespace Banshee.Gui
 {
     public abstract class BaseClientWindow : Window
     {
+        private PersistentWindowController window_controller;
+
         private GtkElementsService elements_service;
         protected GtkElementsService ElementsService {
             get { return elements_service; }
@@ -48,13 +53,15 @@ namespace Banshee.Gui
         
         public event EventHandler TitleChanged;
     
-        public BaseClientWindow (string title) : base (title)
+        public BaseClientWindow (string title, string configNameSpace, int defaultWidth, int defaultHeight) : base (title)
         {
             elements_service = ServiceManager.Get<GtkElementsService> ("GtkElementsService");
             action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
             
             ConfigureWindow ();
-            ResizeMoveWindow ();
+
+            window_controller = new PersistentWindowController (this, configNameSpace, defaultWidth, defaultHeight, WindowPersistOptions.All);
+            window_controller.Restore ();
             
             elements_service.PrimaryWindow = this;
             
@@ -63,39 +70,16 @@ namespace Banshee.Gui
             InitializeWindow ();
         }
 
-        public abstract Box ViewContainer { get; }
+        public virtual Box ViewContainer { get { return null; } }
         
         public void ToggleVisibility ()
         {
             if (Visible) {
-                SaveWindowSizePosition ();
+                window_controller.Save ();
                 Visible = false;
             } else {
-                RestoreWindowSizePosition ();
+                window_controller.Restore ();
                 Present ();
-            }
-        }
-        
-        private int x, y, w, h;
-        private bool maximized;
-        
-        private void SaveWindowSizePosition ()
-        {
-            maximized = ((GdkWindow.State & Gdk.WindowState.Maximized) > 0);
-
-            if (!maximized) {
-                GetPosition (out x, out y);
-                GetSize (out w, out h);
-            }
-        }
-
-        private void RestoreWindowSizePosition () 
-        {
-            if (maximized) {
-                Maximize ();
-            } else {
-                Resize (w, h);
-                Move (x, y);
             }
         }
         
@@ -105,36 +89,24 @@ namespace Banshee.Gui
         }
         
         protected abstract void Initialize ();
+
+        protected virtual void ConnectEvents ()
+        {
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
+                PlayerEvent.StartOfStream |
+                PlayerEvent.TrackInfoUpdated |
+                PlayerEvent.EndOfStream);
+        }
+
+        private void OnPlayerEvent (PlayerEventArgs args) 
+        {
+            UpdateTitle ();
+        }
     
         protected virtual void ConfigureWindow ()
         {
-            WindowPosition = WindowPosition.Center;
         }
     
-        protected virtual void ResizeMoveWindow ()
-        {
-            int x = XPosSchema.Get ();
-            int y = YPosSchema.Get (); 
-            int width = WidthSchema.Get ();
-            int height = HeightSchema.Get ();
-           
-            if(width != 0 && height != 0) {
-                Resize (width, height);
-            }
-
-            if (x == 0 && y == 0) {
-                SetPosition (WindowPosition.Center);
-            } else {
-                Move (x, y);
-            }
-            
-            if (MaximizedSchema.Get ()) {
-                Maximize ();
-            } else {
-                Unmaximize ();
-            }
-        }
-        
         protected override bool OnDeleteEvent (Gdk.Event evnt)
         {
              if (ElementsService.PrimaryWindowClose != null) {
@@ -147,32 +119,13 @@ namespace Banshee.Gui
             return base.OnDeleteEvent (evnt);
         }
 
-        protected override bool OnConfigureEvent (Gdk.EventConfigure evnt)
-        {
-            int x, y, width, height;
-
-            if ((GdkWindow.State & Gdk.WindowState.Maximized) != 0) {
-                return base.OnConfigureEvent (evnt);
-            }
-            
-            GetPosition (out x, out y);
-            GetSize (out width, out height);
-           
-            XPosSchema.Set (x);
-            YPosSchema.Set (y);
-            WidthSchema.Set (width);
-            HeightSchema.Set (height);
-            
-            return base.OnConfigureEvent (evnt);
-        }
-        
         protected override bool OnWindowStateEvent (Gdk.EventWindowState evnt)
         {
             ToggleAction fullscreen_action = (ToggleAction) ServiceManager.Get<InterfaceActionService> ().ViewActions["FullScreenAction"];
             fullscreen_action.Active = (evnt.NewWindowState & Gdk.WindowState.Fullscreen) != 0;
             
             if ((evnt.NewWindowState & Gdk.WindowState.Withdrawn) == 0) {
-                MaximizedSchema.Set ((evnt.NewWindowState & Gdk.WindowState.Maximized) != 0);
+                window_controller.Save ();
             }
             
             return base.OnWindowStateEvent (evnt);
@@ -186,41 +139,35 @@ namespace Banshee.Gui
             }
         }
         
-        protected abstract void UpdateTitle ();
-        
-        public static readonly SchemaEntry<int> WidthSchema = new SchemaEntry<int>(
-            "player_window", "width",
-            1024,
-            "Window Width",
-            "Width of the main interface window."
-        );
+        protected virtual void UpdateTitle ()
+        {
+            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
+            if (track != null) {
+                // Translators: this is the window title when a track is playing
+                //              {0} is the track title, {1} is the artist name
+                Title = String.Format (Catalog.GetString ("{0} by {1}"), 
+                    track.DisplayTrackTitle, track.DisplayArtistName);
+            } else {
+                Title = Catalog.GetString ("Banshee Media Player");
+            }
+            
+            OnTitleChanged ();
+        }
 
-        public static readonly SchemaEntry<int> HeightSchema = new SchemaEntry<int>(
-            "player_window", "height",
-            700,
-            "Window Height",
-            "Height of the main interface window."
-        );
+        protected void OnToolbarExposeEvent (object o, ExposeEventArgs args)
+        {
+            Toolbar toolbar = (Toolbar)o;
 
-        public static readonly SchemaEntry<int> XPosSchema = new SchemaEntry<int>(
-            "player_window", "x_pos",
-            0,
-            "Window Position X",
-            "Pixel position of Main Player Window on the X Axis"
-        );
+            // This forces the toolbar to look like it's just a regular part
+            // of the window since the stock toolbar look makes Banshee look ugly.
+            Style.ApplyDefaultBackground (toolbar.GdkWindow, true, State, 
+                args.Event.Area, toolbar.Allocation.X, toolbar.Allocation.Y, 
+                toolbar.Allocation.Width, toolbar.Allocation.Height);
 
-        public static readonly SchemaEntry<int> YPosSchema = new SchemaEntry<int>(
-            "player_window", "y_pos",
-            0,
-            "Window Position Y",
-            "Pixel position of Main Player Window on the Y Axis"
-        );
-
-        public static readonly SchemaEntry<bool> MaximizedSchema = new SchemaEntry<bool>(
-            "player_window", "maximized",
-            false,
-            "Window Maximized",
-            "True if main window is to be maximized, false if it is not."
-        );
+            // Manually expose all the toolbar's children
+            foreach (Widget child in toolbar.Children) {
+                toolbar.PropagateExpose (child, args.Event);
+            }
+        }
     }
 }

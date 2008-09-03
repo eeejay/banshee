@@ -1,0 +1,17 @@
+<ui>
+  <toolbar name="MuinsheeHeaderToolbar">
+    <toolitem action="PlayPauseAction"/>
+    <toolitem action="PreviousAction"/>
+    <placeholder name="NextArrowButton"/>
+    <!--<placeholder name="SeekSlider"/>-->
+    <!--<placeholder name="TrackInfoDisplay"/>-->
+    <!--<placeholder name="SourceActions">
+        <toolitem name="RefreshSmartPlaylist" action="RefreshSmartPlaylistAction"/>
+    </placeholder>-->
+    <separator />
+    <placeholder name="VolumeButton"/>
+    <separator expand="true"/>
+    <toolitem action="PlaySongAction"/>
+    <toolitem action="PlayAlbumAction"/>
+  </toolbar>
+</ui>

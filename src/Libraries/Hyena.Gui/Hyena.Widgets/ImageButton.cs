@@ -1,10 +1,10 @@
 //
-// Muinshee.cs
+// ImageButton.cs
 //
-// Author:
-//   Aaron Bockover <abockover@novell.com>
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,36 +27,33 @@
 //
 
 using System;
-using System.IO;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections.Generic;
-using Mono.Unix;
+using Gtk;
 
-using Hyena;
-using Hyena.CommandLine;
-
-using Banshee.Base;
-using Banshee.ServiceStack;
-
-namespace Muinshee
+namespace Hyena.Widgets
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public class ImageButton : Button
     {
-        public static void Main (string [] args)
+        public ImageButton (string text, string iconName) : this (text, iconName, Gtk.IconSize.Button)
         {
-            Startup<Muinshee.Client> (args);
         }
         
-        protected override void OnRegisterServices ()
+        public ImageButton (string text, string iconName, Gtk.IconSize iconSize) : base ()
         {
-            // Register the main interface
-            ServiceManager.RegisterService<Muinshee.PlayerInterface> ();
-        }
-        
-        public override string ClientId {
-            get { return "muinshee"; }
+            Image image = new Image ();
+            image.IconName = iconName;
+            image.IconSize = (int) iconSize;
+
+            Label label = new Label ();
+            label.Markup = text;
+
+            HBox hbox = new HBox ();
+            hbox.Spacing = 2;
+            hbox.PackStart (image, false, false, 0);
+            hbox.PackStart (label, false, false, 0);
+
+            Child = hbox;
+            CanDefault = true;
+            ShowAll ();
         }
     }
 }
-

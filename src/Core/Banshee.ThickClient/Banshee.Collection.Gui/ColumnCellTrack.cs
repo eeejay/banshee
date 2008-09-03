@@ -30,12 +30,16 @@ using System;
 using Gtk;
 using Cairo;
 
+using Hyena.Gui;
 using Hyena.Data.Gui;
+using Hyena.Gui.Theming;
 
 namespace Banshee.Collection.Gui
 {
-    public class ColumnCellTrack : ColumnCell
+    public class ColumnCellTrack : ColumnCell, ITextCell
     {
+        private Pango.Weight font_weight = Pango.Weight.Normal;
+
         public ColumnCellTrack () : base (null, true)
         {
         }
@@ -61,26 +65,31 @@ namespace Banshee.Collection.Gui
             }
             
             TrackInfo track = (TrackInfo)BoundObject;
-            
-            Pango.Layout layout = context.Layout;
-            
-            int x = 5, y = 0;
-            int lw, lh;
-            
-            layout.Width = (int)((cellWidth - 2 * x) * Pango.Scale.PangoScale);
-            layout.Ellipsize = Pango.EllipsizeMode.End;
-            layout.FontDescription = context.Widget.PangoContext.FontDescription.Copy ();
-            layout.SetMarkup (String.Format ("<b>{0}</b>\n<small><i>{1}</i></small>", 
+
+            context.Layout.Width = (int)((cellWidth - 8) * Pango.Scale.PangoScale);
+            context.Layout.Ellipsize = Pango.EllipsizeMode.End;
+            //context.Layout.FontDescription = context.Widget.PangoContext.FontDescription.Copy ();
+            context.Layout.FontDescription.Weight = font_weight;
+            context.Layout.SetMarkup (String.Format ("<b>{0}</b>\n<small><i>{1}</i></small>", 
                 GLib.Markup.EscapeText (track.DisplayTrackTitle), 
                 GLib.Markup.EscapeText (track.DisplayArtistName)));
+
+            int text_width;
+            int text_height;
+            context.Layout.GetPixelSize (out text_width, out text_height);
             
-            layout.GetPixelSize (out lw, out lh);
+            context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
+            Cairo.Color color = context.Theme.Colors.GetWidgetColor (
+                context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
+            color.A = (!context.Sensitive) ? 0.3 : 1.0;
+            context.Context.Color = color;
             
-            y = (int)((cellHeight - lh) / 2);
-            
-            Style.PaintLayout (context.Widget.Style, context.Drawable, state, true, 
-                context.Area, context.Widget, "text",
-                context.Area.X + x, context.Area.Y + y, layout);
+            PangoCairoHelper.ShowLayout (context.Context, context.Layout);
+        }
+
+        public Pango.Weight FontWeight {
+            get { return font_weight; }
+            set { font_weight = value; }
         }
     }
 }

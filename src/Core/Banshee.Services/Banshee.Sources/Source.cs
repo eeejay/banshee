@@ -549,7 +549,7 @@ namespace Banshee.Sources
             get { return duration_status_formatters.Count; }
         }
         
-        protected virtual int CurrentStatusFormat {
+        public virtual int CurrentStatusFormat {
             get { return ConfigurationClient.Get<int> (String.Format ("sources.{0}", ConfigurationId), "status_format", 0); }
             set { ConfigurationClient.Set<int> (String.Format ("sources.{0}", ConfigurationId), "status_format", value); }
         }

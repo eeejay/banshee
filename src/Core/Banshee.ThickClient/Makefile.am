@@ -11,6 +11,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/ArtistListView.cs \
 	Banshee.Collection.Gui/ArtworkManager.cs \
 	Banshee.Collection.Gui/ArtworkRenderer.cs \
+	Banshee.Collection.Gui/BaseTrackListView.cs \
 	Banshee.Collection.Gui/ColumnCellAlbum.cs \
 	Banshee.Collection.Gui/ColumnCellDateTime.cs \
 	Banshee.Collection.Gui/ColumnCellDuration.cs \
@@ -95,6 +96,7 @@ SOURCES =  \
 	Banshee.Gui/IHasSourceView.cs \
 	Banshee.Gui/InterfaceActionService.cs \
 	Banshee.Gui/PersistentPaneController.cs \
+	Banshee.Gui/PersistentWindowController.cs \
 	Banshee.Gui/PlaybackActions.cs \
 	Banshee.Gui/PlaybackRepeatActions.cs \
 	Banshee.Gui/PlaybackShuffleActions.cs \

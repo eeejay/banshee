@@ -120,6 +120,8 @@
     <File name="Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Library.Gui/PhotoFolderImportSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Collection.Gui/BaseTrackListView.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui/PersistentWindowController.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.TrackEditor/TrackEditorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.TrackEditor/ITrackEditorPage.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs" subtype="Code" buildaction="Compile" />

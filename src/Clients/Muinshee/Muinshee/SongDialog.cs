@@ -1,10 +1,11 @@
 //
-// Muinshee.cs
+// SongDialog.cs
 //
-// Author:
-//   Aaron Bockover <abockover@novell.com>
+// Authors:
+//   Brad Taylor <brad@getcoded.net>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,36 +28,52 @@
 //
 
 using System;
-using System.IO;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections.Generic;
 using Mono.Unix;
-
+using Gtk;
 using Hyena;
-using Hyena.CommandLine;
+using Hyena.Data;
+using Hyena.Widgets;
 
-using Banshee.Base;
+using Banshee.Gui;
+using Banshee.Widgets;
+using Banshee.Gui.Dialogs;
+using Banshee.Playlist;
+using Banshee.Collection;
+using Banshee.Collection.Gui;
 using Banshee.ServiceStack;
+using Banshee.Configuration;
+using Banshee.Collection.Database;
+using Banshee.PlaybackController;
+using Banshee.MediaEngine;
 
 namespace Muinshee
 {
-    public class Client : Banshee.Gui.GtkBaseClient
+    public class SongDialog : BaseDialog
     {
-        public static void Main (string [] args)
+        public SongDialog (PlaylistSource queue) : base (queue, Catalog.GetString ("Play Song"), "song")
         {
-            Startup<Muinshee.Client> (args);
         }
-        
-        protected override void OnRegisterServices ()
+
+        protected override Widget GetItemWidget ()
         {
-            // Register the main interface
-            ServiceManager.RegisterService<Muinshee.PlayerInterface> ();
+            TerseTrackListView track_list = new TerseTrackListView ();
+            track_list.SetModel (Music.DatabaseTrackModel);
+            return track_list;
         }
-        
-        public override string ClientId {
-            get { return "muinshee"; }
+
+        protected override void Queue ()
+        {
+            QueueSource.AddSelectedTracks (Music);
+        }
+
+        protected override TrackInfo FirstTrack {
+            get { return Music.TrackModel[Music.TrackModel.Selection.FirstIndex]; }
+        }
+
+        public override void Destroy ()
+        {
+            Music.TrackModel.Selection.Clear ();
+            base.Destroy ();
         }
     }
 }
-

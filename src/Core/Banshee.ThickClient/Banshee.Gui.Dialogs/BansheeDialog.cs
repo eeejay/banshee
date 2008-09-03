@@ -99,7 +99,11 @@ namespace Banshee.Gui.Dialogs
             button.CanDefault = true;
             button.UseStock = isStock;
             button.Show ();
+            AddButton (button, response, isDefault);
+        }
 
+        public void AddButton (Button button, ResponseType response, bool isDefault)
+        {
             AddActionWidget (button, response);
 
             if (isDefault) {

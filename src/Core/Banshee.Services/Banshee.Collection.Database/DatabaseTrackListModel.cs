@@ -314,6 +314,11 @@ namespace Banshee.Collection.Database
             return (int) cache.IndexOf (track as DatabaseTrackInfo);
         }
 
+        public int IndexOfFirst (TrackInfo track)
+        {
+            return IndexOf (cache.GetSingle ("AND MetadataHash = ? ORDER BY OrderID", track.MetadataHash));
+        }
+
         private DateTime random_began_at = DateTime.MinValue;
         private DateTime last_random = DateTime.MinValue;
         private static string random_fragment = "AND (LastPlayedStamp < ? OR LastPlayedStamp IS NULL) AND (LastSkippedStamp < ? OR LastSkippedStamp IS NULL) ORDER BY RANDOM()";

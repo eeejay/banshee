@@ -1,10 +1,10 @@
 SUBDIRS = \
 	Libraries \
 	Core \
-	Clients \
 	Dap \
 	Extensions \
-	Backends
+	Backends \
+	Clients
 
 EXTRA_DIST = AssemblyInfo.cs.in
 

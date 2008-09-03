@@ -329,7 +329,7 @@ namespace Hyena.Data.Gui
             cell.BindListItem (item);
             ColumnCellDataProvider (cell, item);
             
-            ColumnCellText text_cell = cell as ColumnCellText;
+            ITextCell text_cell = cell as ITextCell;
             if (text_cell != null) {
                 text_cell.FontWeight = bold ? Pango.Weight.Bold : Pango.Weight.Normal;
             }

@@ -1,10 +1,10 @@
 //
-// Muinshee.cs
+// ITextCell.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,37 +26,13 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+
 using System;
-using System.IO;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections.Generic;
-using Mono.Unix;
 
-using Hyena;
-using Hyena.CommandLine;
-
-using Banshee.Base;
-using Banshee.ServiceStack;
-
-namespace Muinshee
-{
-    public class Client : Banshee.Gui.GtkBaseClient
+namespace Hyena.Data.Gui
+{   
+    public interface ITextCell
     {
-        public static void Main (string [] args)
-        {
-            Startup<Muinshee.Client> (args);
-        }
-        
-        protected override void OnRegisterServices ()
-        {
-            // Register the main interface
-            ServiceManager.RegisterService<Muinshee.PlayerInterface> ();
-        }
-        
-        public override string ClientId {
-            get { return "muinshee"; }
-        }
+        Pango.Weight FontWeight { get; set; }
     }
 }
-

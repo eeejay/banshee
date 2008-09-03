@@ -1,3 +1,8 @@
+2008-09-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Merged branches/banshee/gburt/ -r4443:4452 to trunk (muinshee, working
+	well but no easy way for end users to run it other than cli).
+
 2008-09-03  Aaron Bockover  <abock@gnome.org>
 
 	Merged branches/banshee/abock/@4403 to trunk (the hot new track editor,
@@ -40,6 +45,99 @@
 
 	* src/Core/Banshee.Widgets/Banshee.Widgets/DictionaryComboBox.cs: Add a
 	  clear method, and handle setting ActiveValue to null to deselect.
+
+2008-08-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Muinshee/Resources/GlobalUI.xml: Add missing file.
+
+2008-08-28  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Clients/Muinshee/Muinshee/PlayerInterface.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Move a lot
+	of method up to BaseClientWindow from Nereid's PlayerInterface so can be
+	used by Muinshee too.
+
+	* src/Clients/Muinshee/Makefile.am:
+	* src/Clients/Muinshee/Muinshee.mdp: Add and remove files.
+
+	* src/Clients/Nereid/Nereid/Client.cs:
+	* src/Clients/Muinshee/Muinshee/Client.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Factor our a
+	lot of common functionality into the parent class.
+
+	* src/Clients/Muinshee/Muinshee/ViewContainer.cs: Deleted
+
+	* src/Clients/Muinshee/Muinshee/MuinsheeActions.cs: Set disc icon on Play
+	Album action, and launch the Dialogs when the actions are activated.
+
+	* src/Clients/Muinshee/Muinshee/MuinsheeTrackInfoDisplay.cs:
+
+	* src/Clients/Muinshee/Muinshee/AlbumDialog.cs:
+	* src/Clients/Muinshee/Muinshee/SongDialog.cs:
+	* src/Clients/Muinshee/Muinshee/BaseDialog.cs: Split dialog classes out,
+	and implement query, queue, and play functionality.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrack.cs:
+	Implement ITextCell.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BaseTrackListView.cs:
+	Factored out from TrackListView.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs:
+	Inherit from BaseTrackListview.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TerseTrackListView.cs:
+	Inherit from BaseTrackListview, getting us lots of goodies - DnD, context
+	menu, o-to-play, and double-click to play.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackFilterListView.cs:
+	Hide the header, and move RowActivated handler to virtual method.
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.mdp: Add new files.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PersistentWindowController.cs:
+	New class that can save and restore the size and/or position of a
+	Gtk.Window.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Lazily load the missing pixbufs.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/BansheeDialog.cs: Add
+	another convenience override.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	Whitespace.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Add nifty IndexOfFirst (TrackInfo) class that uses the super-powers of
+	MetadataHash.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Make the
+	CurrentStatusFormat public.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ITextCell.cs: New inteface that
+	has a FontWeight property.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Implement
+	ITextCell.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Instead of checking for ColumnCellText objects and setting their weight,
+	do the same for all ITextCell instances.
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.mdp:
+	* src/Libraries/Hyena.Gui/Makefile.am:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ImageButton.cs: New convenience
+	class for a Button that has an image and a label in it.
+
+	* build/build.environment.mk: Add vars to enable linking against the
+	PlayQueue.
+
+	* Makefile.am: Temporarily start Banshee with the Muine client.  This
+	needs to be reworked so that the previously used client is automatically
+	used.
 
 2008-08-28  Gabriel Burt  <gabriel.burt@gmail.com>
 

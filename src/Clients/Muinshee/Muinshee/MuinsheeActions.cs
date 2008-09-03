@@ -35,31 +35,41 @@ using Banshee.Gui;
 namespace Muinshee
 {
     public class MuinsheeActions : BansheeActionGroup
-    {       
-        public MuinsheeActions () : base ("muinshee")
+    {
+        private Banshee.Playlist.PlaylistSource queue;
+        
+        public MuinsheeActions (Banshee.Playlist.PlaylistSource queue) : base ("muinshee")
         {
+            this.queue = queue;
             AddImportant (
                 new ActionEntry (
                     "PlaySongAction", Stock.Add,
-                     Catalog.GetString ("_Play Song"),
-                     null, Catalog.GetString ("Add a song to the playlist"), OnPlaySong
+                     Catalog.GetString ("Play _Song"), "S",
+                     Catalog.GetString ("Add a song to the playlist"), OnPlaySong
                 ),
                 new ActionEntry (
-                    "PlayAlbumAction", Stock.Add,
-                     Catalog.GetString ("_Play Album"),
-                     null, Catalog.GetString ("Add an album to the playlist"), OnPlayAlbum
+                    "PlayAlbumAction", null,
+                     Catalog.GetString ("Play _Album"), "A",
+                     Catalog.GetString ("Add an album to the playlist"), OnPlayAlbum
                 )
             );
+
+            this["PlayAlbumAction"].IconName = "media-optical";
+
+            // TODO disable certain actions
+            // Actions.TrackActions.UpdateActions (false, false, "SearchMenu");
             
             AddUiFromFile ("GlobalUI.xml");
         }
 
         private void OnPlaySong (object sender, EventArgs args)
         {
+            new SongDialog (queue).TryRun ();
         }
 
         private void OnPlayAlbum (object sender, EventArgs args)
         {
+            new AlbumDialog (queue).TryRun ();
         }
     }
 }

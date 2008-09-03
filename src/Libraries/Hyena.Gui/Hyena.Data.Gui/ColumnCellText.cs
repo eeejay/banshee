@@ -35,7 +35,7 @@ using Hyena.Gui.Theming;
 
 namespace Hyena.Data.Gui
 {
-    public class ColumnCellText : ColumnCell, ISizeRequestCell
+    public class ColumnCellText : ColumnCell, ISizeRequestCell, ITextCell
     {
         public delegate string DataHandler ();
     
@@ -68,13 +68,9 @@ namespace Hyena.Data.Gui
             context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
             Cairo.Color color = context.Theme.Colors.GetWidgetColor (
                 context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
-            if (!context.Sensitive) {
-                color.A = 0.3;
-            } else {
-                color.A = opacity;
-            }
-            
+            color.A = (!context.Sensitive) ? 0.3 : opacity;
             context.Context.Color = color;
+
             PangoCairoHelper.ShowLayout (context.Context, context.Layout);
         }
         

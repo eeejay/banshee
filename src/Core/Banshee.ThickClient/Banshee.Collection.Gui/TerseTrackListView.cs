@@ -37,22 +37,21 @@ using Banshee.Gui;
 
 namespace Banshee.Collection.Gui
 {
-    public class TerseTrackListView : ListView<TrackInfo>
+    public class TerseTrackListView : BaseTrackListView
     {
         private ColumnController column_controller;
         
         public TerseTrackListView () : base ()
         {
-            ColumnCellTrack renderer = new ColumnCellTrack ();
-        
             column_controller = new ColumnController ();
+
+            ColumnCellTrack renderer = new ColumnCellTrack ();
             column_controller.Add (new Column ("Track", renderer, 1.0));
             
             ColumnController = column_controller;
             
             RowHeightProvider = renderer.ComputeRowHeight;
             HeaderVisible = false;
-            RulesHint = true;
         }
     }
 }

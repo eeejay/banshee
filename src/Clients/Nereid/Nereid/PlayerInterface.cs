@@ -69,7 +69,7 @@ namespace Nereid
         private ObjectListSourceContents object_view;
         private Label status_label;
         
-        public PlayerInterface () : base (Catalog.GetString ("Banshee Media Player"))
+        public PlayerInterface () : base (Catalog.GetString ("Banshee Media Player"), "player_window", 1024, 700)
         {
         }
         
@@ -83,21 +83,6 @@ namespace Nereid
             composite_view.TrackView.HasFocus = true;
             
             Show ();
-        }
-        
-        protected override void UpdateTitle ()
-        {
-            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
-            if (track != null) {
-                // Translators: this is the window title when a track is playing
-                //              {0} is the track title, {1} is the artist name
-                Title = String.Format (Catalog.GetString ("{0} by {1}"), 
-                    track.DisplayTrackTitle, track.DisplayArtistName);
-            } else {
-                Title = Catalog.GetString ("Banshee Media Player");
-            }
-            
-            OnTitleChanged ();
         }
         
 #region System Overrides 
@@ -232,15 +217,13 @@ namespace Nereid
         
 #region Events and Logic Setup
         
-        private void ConnectEvents ()
+        protected override void ConnectEvents ()
         {
+            base.ConnectEvents ();
+
             // Service events
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             ServiceManager.SourceManager.SourceUpdated += OnSourceUpdated;
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
-                PlayerEvent.StartOfStream |
-                PlayerEvent.TrackInfoUpdated |
-                PlayerEvent.EndOfStream);
             
             ActionService.TrackActions ["SearchForSameArtistAction"].Activated += OnProgrammaticSearch;
             ActionService.TrackActions ["SearchForSameAlbumAction"].Activated += OnProgrammaticSearch;
@@ -398,12 +381,7 @@ namespace Nereid
                 view_container.Title = args.Source.Name;
             }
         }
-        
-        private void OnPlayerEvent (PlayerEventArgs args) 
-        {
-            UpdateTitle ();
-        }
-        
+
 #endregion
 
 #region UI Event Handlers
@@ -418,39 +396,9 @@ namespace Nereid
             source.FilterQuery = view_container.SearchEntry.Query;
         }
         
-        private void OnToolbarExposeEvent (object o, ExposeEventArgs args)
-        {
-            Toolbar toolbar = (Toolbar)o;
-
-            // This forces the toolbar to look like it's just a regular part
-            // of the window since the stock toolbar look makes Banshee look ugly.
-            Style.ApplyDefaultBackground (toolbar.GdkWindow, true, State, 
-                args.Event.Area, toolbar.Allocation.X, toolbar.Allocation.Y, 
-                toolbar.Allocation.Width, toolbar.Allocation.Height);
-
-            // Manually expose all the toolbar's children
-            foreach (Widget child in toolbar.Children) {
-                toolbar.PropagateExpose (child, args.Event);
-            }
-        }
-        
 #endregion
 
 #region Implement Interfaces
-
-        // IHasTrackSelection
-        /*public IEnumerable<TrackInfo> GetSelectedTracks ()
-        {
-            return new ModelSelection<TrackInfo> (composite_view.TrackModel, composite_view.TrackView.Selection);
-        }
-
-        public Hyena.Collections.SelectionProxy TrackSelectionProxy {
-            get { return composite_view.TrackView.SelectionProxy; }
-        }
-
-        public DatabaseTrackListModel TrackModel {
-            get { return composite_view.TrackModel as DatabaseTrackListModel; }
-        }*/
 
         // IHasSourceView
         public Source HighlightedSource {

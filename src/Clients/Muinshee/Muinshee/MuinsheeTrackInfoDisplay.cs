@@ -1,10 +1,10 @@
 //
-// Muinshee.cs
+// MuinsheeTrackDisplay.cs
 //
-// Author:
-//   Aaron Bockover <abockover@novell.com>
+// Authors:
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,36 +27,29 @@
 //
 
 using System;
-using System.IO;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections.Generic;
-using Mono.Unix;
 
-using Hyena;
-using Hyena.CommandLine;
-
-using Banshee.Base;
-using Banshee.ServiceStack;
+using Banshee.Collection.Gui;
 
 namespace Muinshee
-{
-    public class Client : Banshee.Gui.GtkBaseClient
+{    
+    public class MuinsheeTrackInfoDisplay : Banshee.Gui.Widgets.ClassicTrackInfoDisplay
     {
-        public static void Main (string [] args)
+        private Gdk.Pixbuf idle_album;
+
+        public MuinsheeTrackInfoDisplay () : base ()
         {
-            Startup<Muinshee.Client> (args);
         }
-        
-        protected override void OnRegisterServices ()
+
+        protected override bool CanRenderIdle {
+            get { return true; }
+        }
+
+        protected override void RenderIdle (Cairo.Context cr)
         {
-            // Register the main interface
-            ServiceManager.RegisterService<Muinshee.PlayerInterface> ();
-        }
-        
-        public override string ClientId {
-            get { return "muinshee"; }
+            idle_album = idle_album ?? Banshee.Gui.IconThemeUtils.LoadIcon (ArtworkSizeRequest, "media-optical");
+            ArtworkRenderer.RenderThumbnail (cr, idle_album, false, Allocation.X, Allocation.Y, 
+                ArtworkSizeRequest, ArtworkSizeRequest, 
+                false, 0, true, BackgroundColor);
         }
     }
 }
-

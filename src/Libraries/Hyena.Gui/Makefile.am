@@ -14,6 +14,7 @@ SOURCES =  \
 	Hyena.Data.Gui/IInteractiveCell.cs \
 	Hyena.Data.Gui/IListView.cs \
 	Hyena.Data.Gui/ISizeRequestCell.cs \
+	Hyena.Data.Gui/ITextCell.cs \
 	Hyena.Data.Gui/ListView/ListView.cs \
 	Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs \
 	Hyena.Data.Gui/ListView/ListView_Header.cs \
@@ -70,6 +71,7 @@ SOURCES =  \
 	Hyena.Widgets/AnimatedVBox.cs \
 	Hyena.Widgets/AnimatedWidget.cs \
 	Hyena.Widgets/ComplexMenuItem.cs \
+	Hyena.Widgets/ImageButton.cs \
 	Hyena.Widgets/MenuButton.cs \
 	Hyena.Widgets/MessageBar.cs \
 	Hyena.Widgets/RatingEntry.cs \
