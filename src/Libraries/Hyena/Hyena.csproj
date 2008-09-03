@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{95374549-9553-4C1E-9D89-667755F90E12}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
+    <AssemblyName>Hyena</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="Mono.Data.Sqlite" />
+    <Reference Include="nunit.core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Hyena.Data\ICareAboutView.cs" />
+    <Compile Include="Hyena.Data\IFilterable.cs" />
+    <Compile Include="Hyena.Data\IListModel.cs" />
+    <Compile Include="Hyena.Data\ISortable.cs" />
+    <Compile Include="Hyena.Data\ISortableColumn.cs" />
+    <Compile Include="Hyena.Data\ModelSelection.cs" />
+    <Compile Include="Hyena.Data\SortType.cs" />
+    <Compile Include="Hyena.Query\QueryListNode.cs" />
+    <Compile Include="Hyena.Query\QueryNode.cs" />
+    <Compile Include="Hyena.Query\QueryParser.cs" />
+    <Compile Include="Hyena.Query\QueryTermNode.cs" />
+    <Compile Include="Hyena.Query\QueryToken.cs" />
+    <Compile Include="Hyena.Data\PropertyStore.cs" />
+    <Compile Include="Hyena.CommandLine\Layout.cs" />
+    <Compile Include="Hyena.CommandLine\LayoutOption.cs" />
+    <Compile Include="Hyena.CommandLine\LayoutGroup.cs" />
+    <Compile Include="Hyena.CommandLine\CommandLineParser.cs" />
+    <Compile Include="Hyena.Data\IPropertyStoreExpose.cs" />
+    <Compile Include="Hyena\IUndoAction.cs" />
+    <Compile Include="Hyena\UndoManager.cs" />
+    <Compile Include="Hyena.Data\ColumnDescription.cs" />
+    <Compile Include="Hyena.Data\ICacheableModel.cs" />
+    <Compile Include="Hyena.Collections\RangeCollection.cs" />
+    <Compile Include="Hyena.Collections\IStackProvider.cs" />
+    <Compile Include="Hyena.Collections\IntervalHeap.cs" />
+    <Compile Include="Hyena.Collections\Selection.cs" />
+    <Compile Include="Hyena.Collections\SelectionProxy.cs" />
+    <Compile Include="Hyena.Query\QueryField.cs" />
+    <Compile Include="Hyena.Query\UserQueryParser.cs" />
+    <Compile Include="Hyena.Query\XmlQueryParser.cs" />
+    <Compile Include="Hyena.Query\QueryFieldSet.cs" />
+    <Compile Include="Hyena.Data.Sqlite\DatabaseColumn.cs" />
+    <Compile Include="Hyena.Data.Sqlite\DatabaseColumnAttribute.cs" />
+    <Compile Include="Hyena.Data.Sqlite\SqliteModelProvider.cs" />
+    <Compile Include="Hyena.Data.Sqlite\HyenaSqliteCommand.cs" />
+    <Compile Include="Hyena.Data.Sqlite\HyenaSqliteConnection.cs" />
+    <Compile Include="Hyena.Data.Sqlite\ICacheableDatabaseModel.cs" />
+    <Compile Include="Hyena.Data\ModelCache.cs" />
+    <Compile Include="Hyena.Data.Sqlite\SqliteModelCache.cs" />
+    <Compile Include="Hyena.Query\DateQueryValue.cs" />
+    <Compile Include="Hyena.Query\FileSizeQueryValue.cs" />
+    <Compile Include="Hyena.Query\IntegerQueryValue.cs" />
+    <Compile Include="Hyena.Query\QueryOperator.cs" />
+    <Compile Include="Hyena.Query\QueryValue.cs" />
+    <Compile Include="Hyena.Query\StringQueryValue.cs" />
+    <Compile Include="Hyena\Timer.cs" />
+    <Compile Include="Hyena\DateTimeUtil.cs" />
+    <Compile Include="Hyena.SExpEngine\ArithmeticFunctionSet.cs" />
+    <Compile Include="Hyena.SExpEngine\CastFunctionSet.cs" />
+    <Compile Include="Hyena.SExpEngine\CompareFunctionSet.cs" />
+    <Compile Include="Hyena.SExpEngine\ControlFunctionSet.cs" />
+    <Compile Include="Hyena.SExpEngine\Evaluator.cs" />
+    <Compile Include="Hyena.SExpEngine\EvaluatorBase.cs" />
+    <Compile Include="Hyena.SExpEngine\FunctionFunctionSet.cs" />
+    <Compile Include="Hyena.SExpEngine\FunctionNode.cs" />
+    <Compile Include="Hyena.SExpEngine\FunctionSet.cs" />
+    <Compile Include="Hyena.SExpEngine\ListFunctionSet.cs" />
+    <Compile Include="Hyena.SExpEngine\Literals.cs" />
+    <Compile Include="Hyena.SExpEngine\LogicFunctionSet.cs" />
+    <Compile Include="Hyena.SExpEngine\Parser.cs" />
+    <Compile Include="Hyena.SExpEngine\StringFunctionSet.cs" />
+    <Compile Include="Hyena.SExpEngine\TreeNode.cs" />
+    <Compile Include="Hyena.SExpEngine\UtilityFunctionSet.cs" />
+    <Compile Include="Hyena.Data\ArrayModelCache.cs" />
+    <Compile Include="Hyena.Data\DictionaryModelCache.cs" />
+    <Compile Include="Hyena.Query\AliasedObjectSet.cs" />
+    <Compile Include="Hyena\StringUtil.cs" />
+    <Compile Include="Hyena.Query\QueryLimit.cs" />
+    <Compile Include="Hyena.Query\QueryOrder.cs" />
+    <Compile Include="Hyena.Data.Sqlite\SqliteUtils.cs" />
+    <Compile Include="Hyena\Log.cs" />
+    <Compile Include="Hyena\CryptoUtil.cs" />
+    <Compile Include="Hyena.Query\IntegerKeyedObjectQueryValue.cs" />
+    <Compile Include="Hyena\ConsoleCrayon.cs" />
+    <Compile Include="Hyena.Data\ISelectable.cs" />
+    <Compile Include="Hyena.Query\NullQueryValue.cs" />
+    <Compile Include="Hyena.Query\RelativeTimeSpanQueryValue.cs" />
+    <Compile Include="Hyena.Query\TimeSpanQueryValue.cs" />
+    <Compile Include="Hyena.Collections\Tests\IntervalHeapTests.cs" />
+    <Compile Include="Hyena.Collections\Tests\RangeCollectionTests.cs" />
+    <Compile Include="Hyena.Data.Sqlite\Tests\DbBoundType.cs" />
+    <Compile Include="Hyena.Data.Sqlite\Tests\SqliteCommandTests.cs" />
+    <Compile Include="Hyena.Data.Sqlite\Tests\SqliteModelProviderTests.cs" />
+    <Compile Include="Hyena.Query\Tests\QueryTests.cs" />
+    <Compile Include="Hyena\Tests\CryptoUtilTests.cs" />
+    <Compile Include="Hyena\Tests\StringUtilTests.cs" />
+    <Compile Include="Hyena\Tests\TestBase.cs" />
+    <Compile Include="Hyena.Data\ICacheableItem.cs" />
+    <Compile Include="Hyena.Collections\CollectionExtensions.cs" />
+    <Compile Include="Hyena.Collections\QueuePipeline.cs" />
+    <Compile Include="Hyena.Collections\Tests\QueuePipelineTests.cs" />
+    <Compile Include="Hyena.Collections\QueuePipelineElement.cs" />
+    <Compile Include="Hyena.Collections\WriteLineElement.cs" />
+    <Compile Include="Hyena.Json\Tokenizer.cs" />
+    <Compile Include="Hyena.Json\Token.cs" />
+    <Compile Include="Hyena.Json\JsonObject.cs" />
+    <Compile Include="Hyena.Json\JsonArray.cs" />
+    <Compile Include="Hyena.Json\Tests\TokenizerTests.cs" />
+    <Compile Include="Hyena.Json\TokenType.cs" />
+    <Compile Include="Hyena.Json\Deserializer.cs" />
+    <Compile Include="Hyena.Json\IJsonCollection.cs" />
+    <Compile Include="Hyena.Json\Tests\DeserializerTests.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties xmlns="">
+        <Deployment.LinuxDeployData generateScript="false" />
+        <GtkDesignInfo />
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
+          <BuildFilesVar Sync="true" Name="SOURCES" />
+          <DeployFilesVar />
+          <ResourcesVar />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{C9E904B1-1141-49F4-BE84-85222A8E8A79}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
+    <AssemblyName>Banshee.Daap</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <AssemblyKeyFile>.</AssemblyKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Banshee.Core\Banshee.Core.csproj">
+      <Project>{2ADB831A-A050-47D0-B6B9-9C19D60233BB}</Project>
+      <Name>Banshee.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Banshee.Services\Banshee.Services.csproj">
+      <Project>{B28354F0-BA87-44E8-989F-B864A3C7C09F}</Project>
+      <Name>Banshee.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">
+      <Project>{95374549-9553-4C1E-9D89-667755F90E12}</Project>
+      <Name>Hyena</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Banshee.ThickClient\Banshee.ThickClient.csproj">
+      <Project>{AC839523-7BDF-4AB6-8115-E17921B96EC6}</Project>
+      <Name>Banshee.ThickClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Hyena.Gui\Hyena.Gui.csproj">
+      <Project>{C856EFD8-E812-4E61-8B76-E3583D94C233}</Project>
+      <Name>Hyena.Gui</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Mono.Zeroconf, Version=3.0.0.80, Culture=neutral, PublicKeyToken=e60c4f4a95e1099e" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Banshee.Daap\DaapService.cs" />
+    <Compile Include="Banshee.Daap\DaapContainerSource.cs" />
+    <Compile Include="Banshee.Daap\DaapSource.cs" />
+    <Compile Include="Banshee.Daap\DaapTrackInfo.cs" />
+    <Compile Include="Daap\AuthenticationException.cs" />
+    <Compile Include="Daap\BrokenMD5.cs" />
+    <Compile Include="Daap\Client.cs" />
+    <Compile Include="Daap\ContentCodeBag.cs" />
+    <Compile Include="Daap\ContentFetcher.cs" />
+    <Compile Include="Daap\ContentParser.cs" />
+    <Compile Include="Daap\ContentWriter.cs" />
+    <Compile Include="Daap\Database.cs" />
+    <Compile Include="Daap\Hasher.cs" />
+    <Compile Include="Daap\LoginException.cs" />
+    <Compile Include="Daap\Playlist.cs" />
+    <Compile Include="Daap\ServerInfo.cs" />
+    <Compile Include="Daap\ServiceLocator.cs" />
+    <Compile Include="Daap\Track.cs" />
+    <Compile Include="Daap\User.cs" />
+    <Compile Include="Daap\Utility.cs" />
+    <Compile Include="Banshee.Daap\DaapLoginDialog.cs" />
+    <Compile Include="Banshee.Daap\DaapPlaylistSource.cs" />
+    <Compile Include="Banshee.Daap\DaapProxyWebServer.cs" />
+    <Compile Include="Banshee.Daap\DaapErrorView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Daap\content-codes">
+      <LogicalName>content-codes</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Banshee.Daap.addin.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties xmlns="">
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="./Makefile.am">
+          <BuildFilesVar Sync="true" Name="SOURCES" />
+          <DeployFilesVar />
+          <ResourcesVar Sync="true" Name="RESOURCES" />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

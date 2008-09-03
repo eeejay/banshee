@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{9C7B8E9C-A4E6-4459-A2C4-3D2D199EA919}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
+    <AssemblyName>Migo</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hyena\Hyena.csproj">
+      <Project>{95374549-9553-4C1E-9D89-667755F90E12}</Project>
+      <Name>Hyena</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Migo.TaskCore\AsyncCommandQueue\AsyncCommandQueue.cs" />
+    <Compile Include="Migo.TaskCore\AsyncCommandQueue\CommandDelegate.cs" />
+    <Compile Include="Migo.TaskCore\AsyncCommandQueue\CommandQueueManager.cs" />
+    <Compile Include="Migo.TaskCore\AsyncCommandQueue\CommandWrapper.cs" />
+    <Compile Include="Migo.TaskCore\AsyncCommandQueue\EventWrapper.cs" />
+    <Compile Include="Migo.TaskCore\AsyncCommandQueue\ICommand.cs" />
+    <Compile Include="Migo.TaskCore\Enumerations\TaskPriority.cs" />
+    <Compile Include="Migo.TaskCore\Enumerations\TaskStatus.cs" />
+    <Compile Include="Migo.TaskCore\EventArgs\GroupStatusChangedEventArgs.cs" />
+    <Compile Include="Migo.TaskCore\EventArgs\TaskCompletedEventArgs.cs" />
+    <Compile Include="Migo.TaskCore\EventArgs\TaskEventArgs.cs" />
+    <Compile Include="Migo.TaskCore\EventArgs\TaskStatusChangedEventArgs.cs" />
+    <Compile Include="Migo.TaskCore\EventArgs\TaskStatusChangedInfo.cs" />
+    <Compile Include="Migo.TaskCore\Exceptions\TaskStatusException.cs" />
+    <Compile Include="Migo.TaskCore\Migo.TaskCore.Collections\EventArgs\ManipulatedEventArgs.cs" />
+    <Compile Include="Migo.TaskCore\Migo.TaskCore.Collections\EventArgs\ReorderedEventArgs.cs" />
+    <Compile Include="Migo.TaskCore\Migo.TaskCore.Collections\EventArgs\TaskAddedEventArgs.cs" />
+    <Compile Include="Migo.TaskCore\Migo.TaskCore.Collections\EventArgs\TaskRemovedEventArgs.cs" />
+    <Compile Include="Migo.TaskCore\Migo.TaskCore.Collections\ITaskCollectionEnumerator.cs" />
+    <Compile Include="Migo.TaskCore\Migo.TaskCore.Collections\PriorityQueue.cs" />
+    <Compile Include="Migo.TaskCore\Migo.TaskCore.Collections\TaskCollection.cs" />
+    <Compile Include="Migo.TaskCore\Migo.TaskCore.Collections\TaskList.cs" />
+    <Compile Include="Migo.TaskCore\Migo.TaskCore.Collections\TaskListEnumerator.cs" />
+    <Compile Include="Migo.TaskCore\AsyncTaskScheduler.cs" />
+    <Compile Include="Migo.TaskCore\GroupProgressManager.cs" />
+    <Compile Include="Migo.TaskCore\GroupStatusManager.cs" />
+    <Compile Include="Migo.TaskCore\Task.cs" />
+    <Compile Include="Migo.TaskCore\TaskGroup.cs" />
+    <Compile Include="Migo.Syndication\Enumerations\FeedBackgroundSyncAction.cs" />
+    <Compile Include="Migo.Syndication\Enumerations\FeedBackgroundSyncStatus.cs" />
+    <Compile Include="Migo.Syndication\Enumerations\FeedDownloadError.cs" />
+    <Compile Include="Migo.Syndication\Enumerations\FeedDownloadStatus.cs" />
+    <Compile Include="Migo.Syndication\Enumerations\FEEDS_EVENTS_DOWNLOAD_COUNT_FLAGS.cs" />
+    <Compile Include="Migo.Syndication\Enumerations\FEEDS_EVENTS_ITEM_COUNT_FLAGS.cs" />
+    <Compile Include="Migo.Syndication\Enumerations\FeedSyncSetting.cs" />
+    <Compile Include="Migo.Syndication\EventArgs\FeedDownloadCompletedEventArgs.cs" />
+    <Compile Include="Migo.Syndication\EventArgs\FeedDownloadCountChangedEventArgs.cs" />
+    <Compile Include="Migo.Syndication\EventArgs\FeedEventArgs.cs" />
+    <Compile Include="Migo.Syndication\EventArgs\FeedItemCountChangedEventArgs.cs" />
+    <Compile Include="Migo.Syndication\EventArgs\FeedItemEventArgs.cs" />
+    <Compile Include="Migo.Syndication\Migo.Syndication.Data\TablesManagers\EnclosuresTableManager.cs" />
+    <Compile Include="Migo.Syndication\Migo.Syndication.Data\TablesManagers\FeedsTableManager.cs" />
+    <Compile Include="Migo.Syndication\Migo.Syndication.Data\TablesManagers\ItemsTableManager.cs" />
+    <Compile Include="Migo.Syndication\Tests\XmlTests.cs" />
+    <Compile Include="Migo.Syndication\EnclosureManager.cs" />
+    <Compile Include="Migo.Syndication\Feed.cs" />
+    <Compile Include="Migo.Syndication\FeedEnclosure.cs" />
+    <Compile Include="Migo.Syndication\FeedItem.cs" />
+    <Compile Include="Migo.Syndication\FeedManager.cs" />
+    <Compile Include="Migo.Syndication\FeedsManager.cs" />
+    <Compile Include="Migo.Syndication\FeedUpdateTask.cs" />
+    <Compile Include="Migo.Syndication\MigoItem.cs" />
+    <Compile Include="Migo.Syndication\MigoModelProvider.cs" />
+    <Compile Include="Migo.Syndication\OpmlParser.cs" />
+    <Compile Include="Migo.Syndication\Rfc822DateTime.cs" />
+    <Compile Include="Migo.Syndication\RssParser.cs" />
+    <Compile Include="Migo.Net\EventArgs\DownloadDataCompletedEventArgs.cs" />
+    <Compile Include="Migo.Net\EventArgs\DownloadProgressChangedEventArgs.cs" />
+    <Compile Include="Migo.Net\EventArgs\DownloadStringCompletedEventArgs.cs" />
+    <Compile Include="Migo.Net\EventArgs\TransferRateUpdatedEventArgs.cs" />
+    <Compile Include="Migo.Net\Exceptions\RemoteFileModifiedException.cs" />
+    <Compile Include="Migo.Net\AsyncWebClient.cs" />
+    <Compile Include="Migo.Net\AsyncWebClientStatus.cs" />
+    <Compile Include="Migo.Net\TransferStatusManager.cs" />
+    <Compile Include="Migo.DownloadCore\DownloadGroupStatusChangedEventArgs.cs" />
+    <Compile Include="Migo.DownloadCore\DownloadGroupStatusManager.cs" />
+    <Compile Include="Migo.DownloadCore\DownloadManager.cs" />
+    <Compile Include="Migo.DownloadCore\HttpDownloadTaskErrors.cs" />
+    <Compile Include="Migo.DownloadCore\HttpFileDownloadGroup.cs" />
+    <Compile Include="Migo.DownloadCore\HttpFileDownloadTask.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties xmlns="">
+        <Deployment.LinuxDeployData generateScript="false" />
+        <GtkDesignInfo />
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
+          <BuildFilesVar Sync="true" Name="SOURCES" />
+          <DeployFilesVar />
+          <ResourcesVar />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

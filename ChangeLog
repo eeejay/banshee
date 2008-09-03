@@ -1,3 +1,9 @@
+2008-09-03  Aaron Bockover  <abock@gnome.org>
+
+	Converted project infrastructure from MonoDevelop 1.0 format (mds/mdp) to 
+	VisualStudio 2005 format (sln/csproj) to help in getting the managed
+	code to build in Windows
+
 2008-09-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Merged branches/banshee/gburt/ -r4443:4452 to trunk (muinshee, working

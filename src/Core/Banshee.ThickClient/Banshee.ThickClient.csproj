@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{AC839523-7BDF-4AB6-8115-E17921B96EC6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Hyena.Gui\Hyena.Gui.csproj">
+      <Project>{C856EFD8-E812-4E61-8B76-E3583D94C233}</Project>
+      <Name>Hyena.Gui</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Banshee.Services\Banshee.Services.csproj">
+      <Project>{B28354F0-BA87-44E8-989F-B864A3C7C09F}</Project>
+      <Name>Banshee.Services</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">
+      <Project>{95374549-9553-4C1E-9D89-667755F90E12}</Project>
+      <Name>Hyena</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Banshee.Core\Banshee.Core.csproj">
+      <Project>{2ADB831A-A050-47D0-B6B9-9C19D60233BB}</Project>
+      <Name>Banshee.Core</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Banshee.Widgets\Banshee.Widgets.csproj">
+      <Project>{A3701765-E571-413D-808C-9788A22791AF}</Project>
+      <Name>Banshee.Widgets</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Addins, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <Reference Include="Mono.Addins.Gui, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <Reference Include="Mono.Addins.Setup, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <Reference Include="System.Xml" />
+    <Reference Include="taglib-sharp, Version=2.0.3.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\browser-album-cover.png">
+      <LogicalName>browser-album-cover.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\core-ui-actions-layout.xml">
+      <LogicalName>core-ui-actions-layout.xml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\banshee-dialogs.glade">
+      <LogicalName>banshee-dialogs.glade</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Banshee.ThickClient.addin.xml" />
+    <EmbeddedResource Include="Resources\banshee-logo.png">
+      <LogicalName>banshee-logo.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\jcastro.png">
+      <LogicalName>jcastro.png</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Banshee.Collection.Gui\TrackListView.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellAlbum.cs" />
+    <Compile Include="Banshee.Collection.Gui\ArtworkManager.cs" />
+    <Compile Include="Banshee.Collection.Gui\ArtistListView.cs" />
+    <Compile Include="Banshee.Collection.Gui\AlbumListView.cs" />
+    <Compile Include="Banshee.Sources.Gui\SourceView.cs" />
+    <Compile Include="Banshee.Gui.DragDrop\DragDropList.cs" />
+    <Compile Include="Banshee.Gui.DragDrop\DragDropTarget.cs" />
+    <Compile Include="Banshee.Gui.DragDrop\DragDropUtilities.cs" />
+    <Compile Include="Banshee.Gui\IconThemeUtils.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\ConfirmShutdownDialog.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\ErrorListDialog.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\GladeDialog.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\GladeWindow.cs" />
+    <Compile Include="Banshee.Gui\GtkElementsService.cs" />
+    <Compile Include="Banshee.Gui\BansheeIconFactory.cs" />
+    <Compile Include="Banshee.Gui\InterfaceActionService.cs" />
+    <Compile Include="Banshee.Gui\PlaybackActions.cs" />
+    <Compile Include="Banshee.Gui\ViewActions.cs" />
+    <Compile Include="Banshee.Gui\GlobalActions.cs" />
+    <Compile Include="Banshee.Gui.Widgets\ConnectedVolumeButton.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellStatusIndicator.cs" />
+    <Compile Include="Banshee.Gui.Widgets\ConnectedSeekSlider.cs" />
+    <Compile Include="Banshee.Gui.Widgets\TrackInfoDisplay.cs" />
+    <Compile Include="Banshee.Gui.Widgets\UserJobTile.cs" />
+    <Compile Include="Banshee.Gui.Widgets\UserJobTileHost.cs" />
+    <Compile Include="Banshee.Gui\CommonServices.cs" />
+    <Compile Include="Banshee.Gui\GtkBaseClient.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\SeekDialog.cs" />
+    <Compile Include="Banshee.Library.Gui\FileImportSource.cs" />
+    <Compile Include="Banshee.Library.Gui\FolderImportSource.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\FileChooserDialog.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\ImageFileChooserDialog.cs" />
+    <Compile Include="Banshee.Library.Gui\ImportDialog.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\AboutDialog.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\OpenLocationDialog.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellDuration.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\TrackEditor.cs" />
+    <Compile Include="Banshee.Collection.Gui\ArtworkRenderer.cs" />
+    <Compile Include="Banshee.Gui\TrackActions.cs" />
+    <Compile Include="Banshee.Gui.Widgets\ArtworkPopup.cs" />
+    <Compile Include="Banshee.MediaProfiles.Gui\ProfileComboBox.cs" />
+    <Compile Include="Banshee.MediaProfiles.Gui\ProfileComboBoxConfigurable.cs" />
+    <Compile Include="Banshee.MediaProfiles.Gui\ProfileConfigurationDialog.cs" />
+    <Compile Include="Banshee.MediaProfiles.Gui\ProfileConfigureButton.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellDateTime.cs" />
+    <Compile Include="Banshee.Gui\BansheeActionGroup.cs" />
+    <Compile Include="Banshee.Gui\IHasSourceView.cs" />
+    <Compile Include="Banshee.Gui\SourceActions.cs" />
+    <Compile Include="Banshee.Equalizer.Gui\EqualizerBandScale.cs" />
+    <Compile Include="Banshee.Equalizer.Gui\EqualizerLevelsBox.cs" />
+    <Compile Include="Banshee.Equalizer.Gui\EqualizerPresetComboBox.cs" />
+    <Compile Include="Banshee.Equalizer.Gui\EqualizerView.cs" />
+    <Compile Include="Banshee.Equalizer.Gui\EqualizerWindow.cs" />
+    <Compile Include="Banshee.Sources.Gui\CellEditEntry.cs" />
+    <Compile Include="Banshee.Sources.Gui\SourceRowRenderer.cs" />
+    <Compile Include="Banshee.Sources.Gui\SourceView_DragAndDrop.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellTrackNumber.cs" />
+    <Compile Include="Banshee.Query.Gui\BansheeQueryBox.cs" />
+    <Compile Include="Banshee.Query.Gui\RatingQueryValueEntry.cs" />
+    <Compile Include="Banshee.Query.Gui\PlaylistQueryValueEntry.cs" />
+    <Compile Include="Banshee.SmartPlaylist.Gui\Editor.cs" />
+    <Compile Include="Banshee.Collection.Gui\PersistentColumnController.cs" />
+    <Compile Include="Banshee.Gui.Widgets\PlaylistMenuItem.cs" />
+    <Compile Include="Banshee.Query.Gui\SmartPlaylistQueryValueEntry.cs" />
+    <Compile Include="Banshee.Gui.Widgets\ConnectedMessageBar.cs" />
+    <Compile Include="Banshee.Sources.Gui\SourceIconResolver.cs" />
+    <Compile Include="Banshee.Gui\BaseClientWindow.cs" />
+    <Compile Include="Banshee.Sources.Gui\CompositeTrackSourceContents.cs" />
+    <Compile Include="Banshee.Sources.Gui\ISourceContents.cs" />
+    <Compile Include="Banshee.Sources.Gui\ObjectListSourceContents.cs" />
+    <Compile Include="Banshee.Playlist.Gui\PlaylistExportDialog.cs" />
+    <Compile Include="Banshee.Gui.Widgets\RepeatActionButton.cs" />
+    <Compile Include="Banshee.Gui\PlaybackRepeatActions.cs" />
+    <Compile Include="Banshee.Gui\BansheeDbFormatMigratorMonitor.cs" />
+    <Compile Include="Banshee.Collection.Gui\TerseTrackListView.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellTrack.cs" />
+    <Compile Include="Banshee.Sources.Gui\ITrackModelSourceContents.cs" />
+    <Compile Include="Banshee.Gui\PlaybackShuffleActions.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\ExtensionManagerDialog.cs" />
+    <Compile Include="Banshee.Gui\PersistentPaneController.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellPositiveInt.cs" />
+    <Compile Include="Banshee.Gui.Widgets\MainMenu.cs" />
+    <Compile Include="Banshee.Gui.Widgets\NextButton.cs" />
+    <Compile Include="Banshee.Preferences.Gui\PreferenceDialog.cs" />
+    <Compile Include="Banshee.Gui.Dialogs\BansheeDialog.cs" />
+    <Compile Include="Banshee.Preferences.Gui\NotebookPage.cs" />
+    <Compile Include="Banshee.Preferences.Gui\SectionBox.cs" />
+    <Compile Include="Banshee.Preferences.Gui\WidgetFactory.cs" />
+    <Compile Include="Banshee.Preferences.Gui\DefaultPreferenceWidgets.cs" />
+    <Compile Include="Banshee.Addins.Gui\AddinDetailsDialog.cs" />
+    <Compile Include="Banshee.Addins.Gui\AddinTile.cs" />
+    <Compile Include="Banshee.Addins.Gui\AddinView.cs" />
+    <Compile Include="Banshee.Sources.Gui\SourceModel.cs" />
+    <Compile Include="Banshee.Sources.Gui\SourceComboBox.cs" />
+    <Compile Include="Banshee.Collection.Gui\TrackFilterListView.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellFileSize.cs" />
+    <Compile Include="Banshee.Sources.Gui\FilteredListSourceContents.cs" />
+    <Compile Include="Banshee.Collection.Gui\DefaultColumnController.cs" />
+    <Compile Include="Banshee.Collection.Gui\XmlColumnController.cs" />
+    <Compile Include="Banshee.Gui\IClientWindow.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellQueryText.cs" />
+    <Compile Include="Banshee.Collection.Gui\QueryFilterView.cs" />
+    <Compile Include="Banshee.Gui.Widgets\ClassicTrackInfoDisplay.cs" />
+    <Compile Include="Banshee.Library.Gui\PhotoFolderImportSource.cs" />
+    <Compile Include="Banshee.Gui.Widgets\LargeTrackInfoDisplay.cs" />
+    <Compile Include="Banshee.Collection.Gui\BaseTrackListView.cs" />
+    <Compile Include="Banshee.Gui\PersistentWindowController.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\TrackEditorDialog.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\ITrackEditorPage.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\BasicTrackDetailsPage.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\EditorUtilities.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\TitleEntry.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\ExtraTrackDetailsPage.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\RangeEntry.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\RatingEntry.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\TextViewEntry.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\FieldPage.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\TextEntry.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\SpinButtonEntry.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\LyricsPage.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\EditorTrackInfo.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\IEditorField.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\FieldOptions.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\GenreEntry.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\StatisticsPage.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\EditorMode.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\PageType.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\HelpPage.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\SyncButton.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties xmlns="">
+        <Deployment.LinuxDeployData generateScript="false" />
+        <GtkDesignInfo />
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
+          <BuildFilesVar Sync="true" Name="SOURCES" />
+          <DeployFilesVar />
+          <ResourcesVar Sync="true" Name="RESOURCES" />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

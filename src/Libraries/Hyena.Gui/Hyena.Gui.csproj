@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{C856EFD8-E812-4E61-8B76-E3583D94C233}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
+    <AssemblyName>Hyena.Gui</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System.Xml" />
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hyena\Hyena.csproj">
+      <Project>{95374549-9553-4C1E-9D89-667755F90E12}</Project>
+      <Name>Hyena</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Hyena.Data.Gui\Column.cs" />
+    <Compile Include="Hyena.Data.Gui\ColumnCell.cs" />
+    <Compile Include="Hyena.Data.Gui\ColumnCellText.cs" />
+    <Compile Include="Hyena.Data.Gui\ColumnController.cs" />
+    <Compile Include="Hyena.Data.Gui\ColumnHeaderCellText.cs" />
+    <Compile Include="Hyena.Data.Gui\SortableColumn.cs" />
+    <Compile Include="Hyena.Gui\CleanRoomStartup.cs" />
+    <Compile Include="Hyena.Gui.Dialogs\ExceptionDialog.cs" />
+    <Compile Include="Hyena.Gui.Dialogs\VersionInformationDialog.cs" />
+    <Compile Include="Hyena.Gui\CairoExtensions.cs" />
+    <Compile Include="Hyena.Data.Gui\ObjectListView.cs" />
+    <Compile Include="Hyena.Gui\EntryEraseAction.cs" />
+    <Compile Include="Hyena.Gui\EntryInsertAction.cs" />
+    <Compile Include="Hyena.Gui\EntryUndoAdapter.cs" />
+    <Compile Include="Hyena.Gui\GtkUtilities.cs" />
+    <Compile Include="Hyena.Data.Gui\CellContext.cs" />
+    <Compile Include="Hyena.Data.Gui\IHeaderCell.cs" />
+    <Compile Include="Hyena.Widgets\ScrolledWindow.cs" />
+    <Compile Include="Hyena.Widgets\RoundedFrame.cs" />
+    <Compile Include="Hyena.Gui.Theatrics\Actor.cs" />
+    <Compile Include="Hyena.Gui.Theatrics\Stage.cs" />
+    <Compile Include="Hyena.Gui.Theatrics\SingleActorStage.cs" />
+    <Compile Include="Hyena.Query.Gui\DateQueryValueEntry.cs" />
+    <Compile Include="Hyena.Query.Gui\IntegerQueryValueEntry.cs" />
+    <Compile Include="Hyena.Query.Gui\QueryBox.cs" />
+    <Compile Include="Hyena.Query.Gui\QueryTermBox.cs" />
+    <Compile Include="Hyena.Query.Gui\QueryValueEntry.cs" />
+    <Compile Include="Hyena.Query.Gui\StringQueryValueEntry.cs" />
+    <Compile Include="Hyena.Data.Gui\ListView\ListView.cs" />
+    <Compile Include="Hyena.Data.Gui\ListView\ListView_Windowing.cs" />
+    <Compile Include="Hyena.Data.Gui\ListView\ListView_Rendering.cs" />
+    <Compile Include="Hyena.Data.Gui\ListView\ListView_Header.cs" />
+    <Compile Include="Hyena.Data.Gui\ListView\ListView_Model.cs" />
+    <Compile Include="Hyena.Data.Gui\ListView\ListView_Interaction.cs" />
+    <Compile Include="Hyena.Data.Gui\RowActivatedHandler.cs" />
+    <Compile Include="Hyena.Query.Gui\FileSizeQueryValueEntry.cs" />
+    <Compile Include="Hyena.Query.Gui\QueryLimitBox.cs" />
+    <Compile Include="Hyena.Query.Gui\QueryTermsBox.cs" />
+    <Compile Include="Hyena.Widgets\MessageBar.cs" />
+    <Compile Include="Hyena.Widgets\AnimatedImage.cs" />
+    <Compile Include="Hyena.Gui.Theming\Theme.cs" />
+    <Compile Include="Hyena.Gui.Theming\GtkColors.cs" />
+    <Compile Include="Hyena.Gui.Theming\ThemeContext.cs" />
+    <Compile Include="Hyena.Gui.Theming\GtkTheme.cs" />
+    <Compile Include="Hyena.Data.Gui\ListView\ListView_DragAndDrop.cs" />
+    <Compile Include="Hyena.Gui\PangoCairoHelper.cs" />
+    <Compile Include="Hyena.Widgets\AnimatedBox.cs" />
+    <Compile Include="Hyena.Widgets\AnimatedHBox.cs" />
+    <Compile Include="Hyena.Widgets\AnimatedVBox.cs" />
+    <Compile Include="Hyena.Widgets\AnimatedWidget.cs" />
+    <Compile Include="Hyena.Gui.Theatrics\Choreographer.cs" />
+    <Compile Include="Hyena.Gui\ShadingTestWindow.cs" />
+    <Compile Include="Hyena.Query.Gui\NullQueryValueEntry.cs" />
+    <Compile Include="Hyena.Query.Gui\RelativeTimeSpanQueryValueEntry.cs" />
+    <Compile Include="Hyena.Query.Gui\TimeSpanQueryValueEntry.cs" />
+    <Compile Include="Hyena.Data.Gui\IListView.cs" />
+    <Compile Include="Hyena.Widgets\SmoothScrolledWindow.cs" />
+    <Compile Include="Hyena.Widgets\MenuButton.cs" />
+    <Compile Include="Hyena.Gui\CompositeUtils.cs" />
+    <Compile Include="Hyena.Gui\TooltipSetter.cs" />
+    <Compile Include="Hyena.Widgets\WrapLabel.cs" />
+    <Compile Include="Hyena.Query.Gui\QueryDebugger.cs" />
+    <Compile Include="Hyena.Gui\TestModuleAttribute.cs" />
+    <Compile Include="Hyena.Gui\TestModuleRunner.cs" />
+    <Compile Include="Hyena.Widgets\SegmentedBar.cs" />
+    <Compile Include="Hyena.Data.Gui\ListViewTestModule.cs" />
+    <Compile Include="Hyena.Data.Gui\IInteractiveCell.cs" />
+    <Compile Include="Hyena.Data.Gui\ColumnCellCheckBox.cs" />
+    <Compile Include="Hyena.Data.Gui\ISizeRequestCell.cs" />
+    <Compile Include="Hyena.Data.Gui\ColumnCellRating.cs" />
+    <Compile Include="Hyena.Widgets\RatingEntry.cs" />
+    <Compile Include="Hyena.Widgets\RatingMenuItem.cs" />
+    <Compile Include="Hyena.Widgets\ComplexMenuItem.cs" />
+    <Compile Include="Hyena.Gui\RatingRenderer.cs" />
+    <Compile Include="Hyena.Data.Gui\ListView\ListViewBase.cs" />
+    <Compile Include="Hyena.Gui\GtkWorkarounds.cs" />
+    <Compile Include="Hyena.Gui\Contrast.cs" />
+    <Compile Include="Hyena.Widgets\ImageButton.cs" />
+    <Compile Include="Hyena.Data.Gui\ITextCell.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties xmlns="">
+        <Deployment.LinuxDeployData generateScript="false" />
+        <GtkDesignInfo />
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
+          <BuildFilesVar Sync="true" Name="SOURCES" />
+          <DeployFilesVar />
+          <ResourcesVar Sync="true" Name="RESOURCES" />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>
