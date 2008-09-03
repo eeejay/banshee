@@ -1,5 +1,10 @@
 2008-09-03  Aaron Bockover  <abock@gnome.org>
 
+	* libbanshee/banshee-player-pipeline.c: Disabled the visualization 
+	pipeline for now since it's a huge CPU hog
+
+2008-09-03  Aaron Bockover  <abock@gnome.org>
+
 	Converted project infrastructure from MonoDevelop 1.0 format (mds/mdp) to 
 	VisualStudio 2005 format (sln/csproj) to help in getting the managed
 	code to build in Windows

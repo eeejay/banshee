@@ -261,7 +261,7 @@ _bp_pipeline_construct (BansheePlayer *player)
         gst_element_link (audiosinkqueue, audiosink);
     }
     
-    _bp_vis_pipeline_setup (player);
+    // _bp_vis_pipeline_setup (player);
     
     // Now that our internal audio sink is constructed, tell playbin to use it
     g_object_set (G_OBJECT (player->playbin), "audio-sink", player->audiobin, NULL);
