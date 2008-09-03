@@ -168,6 +168,8 @@ namespace Hyena.Widgets
             event_window = new Gdk.Window (GdkWindow, attributes, attributes_mask);
             event_window.UserData = Handle;
             
+            Style = Gtk.Rc.GetStyleByPaths (Settings, "*.GtkEntry", "*.GtkEntry", GType);
+            
             base.OnRealized ();
         }
          
@@ -176,7 +178,7 @@ namespace Hyena.Widgets
             WidgetFlags &= ~WidgetFlags.Realized;
             
             event_window.UserData = IntPtr.Zero;
-            event_window.Destroy ();
+            Hyena.Gui.GtkWorkarounds.WindowDestroy (event_window);
             event_window = null;
             
             base.OnUnrealized ();
@@ -193,7 +195,7 @@ namespace Hyena.Widgets
             WidgetFlags &= ~WidgetFlags.Mapped;
             event_window.Hide ();
         }
-        
+
         private bool changing_style;
         protected override void OnStyleSet (Style previous_style)
         {
@@ -201,11 +203,11 @@ namespace Hyena.Widgets
                 return;
             }
             
+            base.OnStyleSet (previous_style);
+            
             changing_style = true;
             focus_width = (int)StyleGetProperty ("focus-line-width");
             interior_focus = (bool)StyleGetProperty ("interior-focus");
-            
-            ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
             changing_style = false;
         }
         
@@ -245,15 +247,16 @@ namespace Hyena.Widgets
             }
             
             if (HasFrame) {
-                int y_mid = (Allocation.Height - renderer.Height) / 2;
-                Gtk.Style.PaintFlatBox (Style, GdkWindow, StateType.Normal, ShadowType.None, evnt.Area, this, "entry", 
+                int y_mid = (int)Math.Round ((Allocation.Height - renderer.Height) / 2.0);
+                Gtk.Style.PaintFlatBox (Style, GdkWindow, State, ShadowType.None, evnt.Area, this, "entry", 
                     Allocation.X, Allocation.Y + y_mid, Allocation.Width, renderer.Height);
-                Gtk.Style.PaintShadow (Style, GdkWindow, StateType.Normal, ShadowType.In,
+                Gtk.Style.PaintShadow (Style, GdkWindow, State, ShadowType.In,
                     evnt.Area, this, "entry", Allocation.X, Allocation.Y + y_mid, Allocation.Width, renderer.Height);
             }
             
             Cairo.Context cr = Gdk.CairoHelper.Create (GdkWindow);
-            renderer.Render (cr, Allocation, CairoExtensions.GdkColorToCairoColor (Style.Foreground (State)), 
+            renderer.Render (cr, Allocation, 
+                CairoExtensions.GdkColorToCairoColor (HasFrame ? Style.Text (State) : Style.Foreground (State)), 
                 AlwaysShowEmptyStars || (PreviewOnHover && hover_value >= renderer.MinRating), hover_value,
                 State == StateType.Insensitive ? 1 : 0.90, 
                 State == StateType.Insensitive ? 1 : 0.65, 

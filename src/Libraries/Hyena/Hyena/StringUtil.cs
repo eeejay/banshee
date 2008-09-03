@@ -63,6 +63,11 @@ namespace Hyena
         
         public static string CamelCaseToUnderCase (string s)
         {
+            return CamelCaseToUnderCase (s, '_');
+        }
+        
+        public static string CamelCaseToUnderCase (string s, char underscore)
+        {
             if (String.IsNullOrEmpty (s)) {
                 return null;
             }
@@ -77,7 +82,7 @@ namespace Hyena
 
                 undercase.Append (tokens[i].ToLower ());
                 if (i < tokens.Length - 2) {
-                    undercase.Append ('_');
+                    undercase.Append (underscore);
                 }
             }
             

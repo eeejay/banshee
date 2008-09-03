@@ -34,6 +34,8 @@ namespace Banshee.Collection.Gui
 {
     public class ColumnCellDuration : ColumnCellText
     {
+        private System.Text.StringBuilder builder = new System.Text.StringBuilder ();
+    
         public ColumnCellDuration (string property, bool expand) : base (property, expand)
         {
             Alignment = Pango.Alignment.Right;
@@ -50,12 +52,13 @@ namespace Banshee.Collection.Gui
                 //int seconds = (int)Math.Round(((TimeSpan)BoundObject).TotalSeconds);
                 int seconds = (int) ((TimeSpan)BoundObject).TotalSeconds;
                 
-                if (seconds == 0)
+                if (seconds == 0) {
                     return String.Empty;
+                }
                 
-                return seconds >= 3600 ? 
-                    String.Format ("{0}:{1:00}:{2:00}", seconds / 3600, (seconds / 60) % 60, seconds % 60) :
-                    String.Format ("{0}:{1:00}", seconds / 60, seconds % 60);
+                builder.Remove (0, builder.Length);
+                Banshee.Sources.DurationStatusFormatters.ConfusingPreciseFormatter (builder, TimeSpan.FromSeconds (seconds));
+                return builder.ToString ();
             }
         }
     }

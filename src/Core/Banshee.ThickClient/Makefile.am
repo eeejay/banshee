@@ -47,6 +47,28 @@ SOURCES =  \
 	Banshee.Gui.DragDrop/DragDropList.cs \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
+	Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs \
+	Banshee.Gui.TrackEditor/EditorMode.cs \
+	Banshee.Gui.TrackEditor/EditorTrackInfo.cs \
+	Banshee.Gui.TrackEditor/EditorUtilities.cs \
+	Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs \
+	Banshee.Gui.TrackEditor/FieldOptions.cs \
+	Banshee.Gui.TrackEditor/FieldPage.cs \
+	Banshee.Gui.TrackEditor/GenreEntry.cs \
+	Banshee.Gui.TrackEditor/HelpPage.cs \
+	Banshee.Gui.TrackEditor/IEditorField.cs \
+	Banshee.Gui.TrackEditor/ITrackEditorPage.cs \
+	Banshee.Gui.TrackEditor/LyricsPage.cs \
+	Banshee.Gui.TrackEditor/PageType.cs \
+	Banshee.Gui.TrackEditor/RangeEntry.cs \
+	Banshee.Gui.TrackEditor/RatingEntry.cs \
+	Banshee.Gui.TrackEditor/SpinButtonEntry.cs \
+	Banshee.Gui.TrackEditor/StatisticsPage.cs \
+	Banshee.Gui.TrackEditor/SyncButton.cs \
+	Banshee.Gui.TrackEditor/TextEntry.cs \
+	Banshee.Gui.TrackEditor/TextViewEntry.cs \
+	Banshee.Gui.TrackEditor/TitleEntry.cs \
+	Banshee.Gui.TrackEditor/TrackEditorDialog.cs \
 	Banshee.Gui.Widgets/ArtworkPopup.cs \
 	Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs \
 	Banshee.Gui.Widgets/ConnectedMessageBar.cs \

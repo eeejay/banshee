@@ -28,6 +28,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using System.Collections.Generic;
 using Mono.Unix;
 
@@ -40,6 +41,15 @@ namespace Banshee.Collection
 {
     public class TrackInfo : CacheableItem, ITrackInfo
     {
+        public class ExportableAttribute : Attribute
+        {
+            private string export_name;
+            public string ExportName {
+                get { return export_name; }
+                set { export_name = value; }
+            }
+        }
+    
         public delegate bool IsPlayingHandler (TrackInfo track);
         public static IsPlayingHandler IsPlayingMethod;
             
@@ -130,64 +140,77 @@ namespace Banshee.Collection
             get { return (IsPlayingMethod != null) ? IsPlayingMethod (this) : false; }
         }
 
+        [Exportable (ExportName = "URI")]
         public virtual SafeUri Uri {
             get { return uri; }
             set { uri = value; }
         }
 
+        [Exportable]
         public SafeUri MoreInfoUri {
             get { return more_info_uri; }
             set { more_info_uri = value; }
         }
 
+        [Exportable]
         public virtual string MimeType {
             get { return mimetype; }
             set { mimetype = value; }
         }
 
+        [Exportable]
         public virtual long FileSize {
             get { return filesize; }
             set { filesize = value; }
         }
 
+        [Exportable (ExportName = "artist")]
         public virtual string ArtistName {
             get { return artist_name; }
             set { artist_name = value; }
         }
 
+        [Exportable (ExportName = "album")]
         public virtual string AlbumTitle {
             get { return album_title; }
             set { album_title = value; }
         }
 
+        [Exportable]
         public virtual string AlbumArtist {
             get { return album_artist ?? (IsCompilation ? Catalog.GetString ("Various Artists") : ArtistName); }
             set { album_artist = value; }
         }
         
+        [Exportable]
         public virtual bool IsCompilation {
             get { return is_compilation; }
             set { is_compilation = value; }
         }
 
+        [Exportable (ExportName = "name")]
         public virtual string TrackTitle {
             get { return track_title; }
             set { track_title = value; }
         }
         
+        [Exportable]
         public virtual string MusicBrainzId {
             get { return musicbrainz_id; }
             set { musicbrainz_id = value; }
         }
         
+        [Exportable]
         public virtual string ArtistMusicBrainzId {
             get { return null; }
         }
         
+        [Exportable]
         public virtual string AlbumMusicBrainzId {
             get { return null; }
         }
         
+        [Exportable]
         public virtual DateTime ReleaseDate {
             get { return release_date; }
             set { release_date = value; }
@@ -229,111 +252,131 @@ namespace Banshee.Collection
             } 
         }     
         
-        
         public virtual string ArtworkId { 
             get { return CoverArtSpec.CreateArtistAlbumId (AlbumArtist, AlbumTitle); }
         }
 
+        [Exportable]
         public virtual string Genre {
             get { return genre; }
             set { genre = value; }
         }
 
+        [Exportable]
         public virtual int TrackNumber {
             get { return track_number; }
             set { track_number = value; }
         }
 
+        [Exportable]
         public virtual int TrackCount {
             get { return TrackNumber > track_count ? TrackNumber : track_count; }
             set { track_count = value; }
         }
 
+        [Exportable]
         public virtual int DiscNumber {
             get { return disc_number; }
             set { disc_number = value; }
         }
-
+        
+        [Exportable]
         public virtual int DiscCount {
             get { return DiscNumber > disc_count ? DiscNumber : disc_count; }
             set { disc_count = value; }
         }
 
+        [Exportable]
         public virtual int Year {
             get { return year; }
             set { year = value; }
         }
 
+        [Exportable]
         public virtual string Composer {
             get { return composer; }
             set { composer = value; }
         }
 
+        [Exportable]
         public virtual string Conductor {
             get { return conductor; }
             set { conductor = value; }
         }
-
+        
+        [Exportable]
         public virtual string Grouping {
             get { return grouping; }
             set { grouping = value; }
         }
-
+        
+        [Exportable]
         public virtual string Copyright {
             get { return copyright; }
             set { copyright = value; }
         }
 
+        [Exportable]        
         public virtual string LicenseUri {
             get { return license_uri; }
             set { license_uri = value; }
         }
 
+        [Exportable]
         public virtual string Comment {
             get { return comment; }
             set { comment = value; }
         }
 
+        [Exportable]
         public virtual int Rating {
             get { return rating; }
             set { rating = value; }
         }
         
+        [Exportable]
         public virtual int Bpm {
             get { return bpm; }
             set { bpm = value; }
         }
 
+        [Exportable]
         public virtual int BitRate {
             get { return bit_rate; }
             set { bit_rate = value; }
         }
 
+        [Exportable]
         public virtual int PlayCount {
             get { return play_count; }
             set { play_count = value; }
         }
 
+        [Exportable]
         public virtual int SkipCount {
             get { return skip_count; }
             set { skip_count = value; }
         }
 
+        [Exportable (ExportName = "length")]
         public virtual TimeSpan Duration {
             get { return duration; }
             set { duration = value; }
         }
         
+        [Exportable]
         public virtual DateTime DateAdded {
             get { return date_added; }
             set { date_added = value; }
         }
 
+        [Exportable]
         public virtual DateTime LastPlayed {
             get { return last_played; }
             set { last_played = value; }
         }
 
+        [Exportable]
         public virtual DateTime LastSkipped {
             get { return last_skipped; }
             set { last_skipped = value; }
@@ -377,6 +420,8 @@ namespace Banshee.Collection
         }
 
         private TrackMediaAttributes media_attributes = TrackMediaAttributes.Default;
+        
+        [Exportable]
         public virtual TrackMediaAttributes MediaAttributes {
             get { return media_attributes; }
             set { media_attributes = value; }
@@ -398,25 +443,62 @@ namespace Banshee.Collection
                 return Catalog.GetString ("Item");
             }
         }
+        
+        public static void ExportableMerge (TrackInfo source, TrackInfo dest)
+        {
+            foreach (PropertyInfo property in typeof (TrackInfo).GetProperties (BindingFlags.Public | BindingFlags.Instance)) {
+                try {
+                    object [] exportable_attrs = property.GetCustomAttributes (typeof (TrackInfo.ExportableAttribute), true);
+                    if (exportable_attrs != null && exportable_attrs.Length > 0 && property.CanWrite) {
+                        property.SetValue (dest, property.GetValue (source, null), null);
+                    }
+                } catch (Exception e) {
+                    Log.Exception (e);
+                }
+            }
+        }
 
         // Generates a{sv} of self according to http://wiki.xmms2.xmms.se/index.php/Media_Player_Interfaces#.22Metadata.22
         public IDictionary<string, object> GenerateExportable ()
         {
             Dictionary<string, object> dict = new Dictionary<string, object> ();
             
-            // Properties specified by the XMMS2 player spec
-            dict.Add ("URI", Uri == null ? String.Empty : Uri.AbsoluteUri);
-            dict.Add ("length", Duration.TotalSeconds);
-            dict.Add ("name", TrackTitle);
-            dict.Add ("artist", ArtistName);
-            dict.Add ("album", AlbumTitle);
-            
-            // Our own
-            dict.Add ("track-number", TrackNumber);
-            dict.Add ("track-count", TrackCount);
-            dict.Add ("disc", DiscNumber);
-            dict.Add ("year", year);
-            dict.Add ("rating", rating);
+            foreach (PropertyInfo property in GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance)) {
+                object [] exportable_attrs = property.GetCustomAttributes (typeof (TrackInfo.ExportableAttribute), true);
+                if (exportable_attrs == null || exportable_attrs.Length == 0) {
+                    continue;
+                }
+                
+                string export_name = ((ExportableAttribute)exportable_attrs[0]).ExportName
+                    ?? StringUtil.CamelCaseToUnderCase (property.Name, '-');
+                
+                object value = property.GetValue (this, null);
+                if (String.IsNullOrEmpty (export_name) || value == null) {
+                    continue;
+                }
+                
+                if (value is TimeSpan) {
+                    value = ((TimeSpan)value).TotalSeconds;
+                } else if (value is DateTime) {
+                    DateTime date = (DateTime)value;
+                    value = date == DateTime.MinValue ? 0l : DateTimeUtil.ToTimeT (date);
+                } else if (value is SafeUri) {
+                    value = ((SafeUri)value).AbsoluteUri;
+                } else if (value is TrackMediaAttributes) {
+                    value = value.ToString ();
+                } else if (!(
+                    value is ushort || value is short || 
+                    value is uint || value is int ||
+                    value is ulong || value is long ||
+                    value is float || value is double ||
+                    value is bool || value is string)) {
+                    Log.WarningFormat ("Invalid property in {0} marked as [Exportable]: ({1} is a {2})", 
+                        property.DeclaringType, property.Name, value.GetType ());
+                    continue;
+                }
+                
+                dict.Add (export_name, value);
+            }
             
             return dict;
         }

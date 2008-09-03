@@ -120,6 +120,28 @@
     <File name="Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Library.Gui/PhotoFolderImportSource.cs" subtype="Code" buildaction="Compile" />
     <File name="Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/TrackEditorDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/ITrackEditorPage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/EditorUtilities.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/TitleEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/RangeEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/RatingEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/TextViewEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/FieldPage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/TextEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/SpinButtonEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/LyricsPage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/EditorTrackInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/IEditorField.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/FieldOptions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/GenreEntry.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/StatisticsPage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/EditorMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/PageType.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/HelpPage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Banshee.Gui.TrackEditor/SyncButton.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="False" refto="Hyena.Gui" />

@@ -114,6 +114,11 @@ namespace Hyena.Gui
             Gdk.Colormap.System.AllocColor (ref color, true, true);
             return color;
         }
-
+        
+        public static T StyleGetProperty<T> (Widget widget, string property, T default_value)
+        {
+            object result = widget.StyleGetProperty (property);
+            return result != null && result.GetType () == typeof (T) ? (T)result : default_value;
+        }
     }
 }

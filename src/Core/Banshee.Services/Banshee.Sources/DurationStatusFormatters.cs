@@ -88,7 +88,11 @@ namespace Banshee.Sources
                 builder.AppendFormat ("{0}:", span.Hours);
             }
             
-            builder.AppendFormat ("{0:00}:{1:00}", span.Minutes, span.Seconds);
+            if (span.TotalHours < 1 || span.TotalMinutes < 1) {
+                builder.AppendFormat ("{0}:{1:00}", span.Minutes, span.Seconds);
+            } else {
+                builder.AppendFormat ("{0:00}:{1:00}", span.Minutes, span.Seconds);
+            }
         }
     }
 }

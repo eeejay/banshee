@@ -1,3 +1,8 @@
+2008-09-03  Aaron Bockover  <abock@gnome.org>
+
+	Merged branches/banshee/abock/@4403 to trunk (the hot new track editor,
+	but it's still not complete and is disabled by default right now)
+
 2008-09-02  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui.Theming/GtkTheme.cs: Change
@@ -337,6 +342,123 @@
 
 	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Make the
 	getter for DatabaseTrackModel public.
+
+2008-08-22  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Recursively find all SyncButton instances inside of the notebook and
+	click them - this enables the 'sync all fields' button
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorUtilities.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SyncButton.cs:
+	Removed the utility to create a sync button, replaced with a proper 
+	SyncButton class so that type detection can be done at runtime
+
+2008-08-22  Aaron Bockover  <abock@gnome.org>
+
+	This commit enables view and edit modes for the dialog and allows pages
+	to be displayed or hidden based on their type and the mode of the editor;
+	help is also moved into its own extension page
+
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml: Add help page
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Use wrapper
+	API for running the editor dialog
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/PageType.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorMode.cs:
+	Added enum for page types and editor mode
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Updated to implement new ITrackEditor page API
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ITrackEditorPage.cs:
+	Added TabWidget and PageType properties
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Support edit modes (view and edit) and only show pages as appropriate to
+	the mode based on their type
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/HelpPage.cs: Moved
+	the Help into an actual extension page
+
+2008-08-22  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Name it "properties"
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Add a label showing which track/count we're at
+
+2008-08-22  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/GenreEntry.cs:
+	Use QueryEnumerable
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Some cleanup
+
+2008-08-22  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
+	Use the DurationStatusFormatters.ConfusingPreciseFormatter to display dur
+
+	* src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:
+	Do not display minutes as {0:00} if hours < 1
+	
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml: Added stats
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
+	Fix bug, name the tab "Extra"
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/GenreEntry.cs:
+	Implemented the genre combo box entry
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Implemented an awesome new stats page to show detailed file info
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorTrackInfo.cs:
+	Implement the TagLib file property
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Make the sync all button nicer
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TextViewEntry.cs:
+	Restrict the comments field two two lines of text
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
+	Use the new genre entry
+
+2008-08-20  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	Hook up field syncing
+	
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorTrackInfo.cs:
+	Support setting the index of the track in editor speak
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Split LoadTrack and GetTrack, provide ForeachNonCurrentTrack method
+
+2008-08-20  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
+	Change the expand=false parameters to pass FieldOptions.Shrink; pass
+	the dialog reference to the title entry field
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	Do not add a sync button if the field has the FieldOptions.NoSync option
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Make the navigation API public
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldOptions.cs:
+	Added an enum of options to reduce the AddField overloads
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TitleEntry.cs:
+	Implement keyboard navigation when activating the title entry
 
 2008-08-19  Gabriel Burt  <gabriel.burt@gmail.com>
 

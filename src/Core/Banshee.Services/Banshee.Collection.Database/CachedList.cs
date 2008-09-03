@@ -98,13 +98,17 @@ namespace Banshee.Collection.Database
         {
             ServiceManager.DbConnection.Execute ("DELETE FROM CoreCache WHERE ModelId = ?", CacheId);
         }
+        
+        public T this[int index] {
+            get { return cache.GetValue (index); }
+        }
 
         public long CacheId {
             get { return cache.CacheId; }
         }
 
-        public long Count {
-            get { return cache.Count; }
+        public int Count {
+            get { return (int)cache.Count; }
         }
 
         public IEnumerator<T> GetEnumerator ()
