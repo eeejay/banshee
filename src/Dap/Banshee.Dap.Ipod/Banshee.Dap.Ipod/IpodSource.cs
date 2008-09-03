@@ -78,10 +78,22 @@ namespace Banshee.Dap.Ipod
             if (ipod_device == null) {
                 throw new InvalidDeviceException ();
             }
-            
+
             name_path = Path.Combine (Path.GetDirectoryName (ipod_device.TrackDatabasePath), "BansheeIPodName");
-            
+            Name = GetDeviceName ();
+
             Initialize ();
+
+            AddDapProperty (Catalog.GetString ("Color"), ipod_device.ModelInfo.ShellColor);
+            AddDapProperty (Catalog.GetString ("Generation"), ipod_device.ModelInfo.Generation.ToString ());
+            AddDapProperty (Catalog.GetString ("Produced on"), ipod_device.ProductionInfo.DisplayDate);
+            AddDapProperty (Catalog.GetString ("Firmware"), ipod_device.FirmwareVersion);
+
+            string [] capabilities = new string [ipod_device.ModelInfo.Capabilities.Count];
+            ipod_device.ModelInfo.Capabilities.CopyTo (capabilities, 0);
+            AddDapProperty (Catalog.GetString ("Capabilities"), String.Join (", ", capabilities));
+            AddDapProperty (Catalog.GetString ("Supports cover art"), ipod_device.ModelInfo.AlbumArtSupported ? Catalog.GetString ("Yes") : Catalog.GetString ("No"));
+            AddDapProperty (Catalog.GetString ("Supports photos"), ipod_device.ModelInfo.PhotosSupported ? Catalog.GetString ("Yes") : Catalog.GetString ("No"));
         }
 
         public override void Dispose ()
@@ -135,7 +147,7 @@ namespace Banshee.Dap.Ipod
                     }
                 }
                 database_supported = true;
-                ThreadAssist.ProxyToMain (delegate { DestroyUnsupportedView (); });
+                ThreadAssist.ProxyToMain (DestroyUnsupportedView);
             } catch (DatabaseReadException e) {
                 Log.Exception ("Could not read iPod database", e);
                 ipod_device.LoadTrackDatabase (true);
@@ -151,6 +163,8 @@ namespace Banshee.Dap.Ipod
             }
             
             database_loaded = true;
+
+            Name = GetDeviceName ();
         }
         
         private int CountMusicFiles ()
@@ -178,16 +192,20 @@ namespace Banshee.Dap.Ipod
             }
             
             tracks_map.Clear ();
-             
+
             if (database_supported || (ipod_device.HasTrackDatabase && 
                 ipod_device.ModelInfo.DeviceClass == "shuffle")) {
                 foreach (Track ipod_track in ipod_device.TrackDatabase.Tracks) {
-                    IpodTrackInfo track = new IpodTrackInfo (ipod_track);
-                    track.PrimarySource = this;
-                    track.Save (false);
-                    tracks_map.Add (track.TrackId, track);
+                    try {
+                        IpodTrackInfo track = new IpodTrackInfo (ipod_track);
+                        track.PrimarySource = this;
+                        track.Save (false);
+                        tracks_map.Add (track.TrackId, track);
+                    } catch (Exception e) {
+                        Log.Exception (e);
+                    }
                 }
-            } 
+            }
             
             /*else {
                 BuildDatabaseUnsupportedWidget ();
@@ -289,50 +307,34 @@ namespace Banshee.Dap.Ipod
                 Log.Exception (e);
             }
             
-            this.name = null;
             ipod_device.Name = name;
             base.Rename (name);
         }
         
-        private string name;
-        public override string Name {
-            get {
-                if (name != null) {
-                    return name;
-                }
-                
-                if (File.Exists (name_path)) {
-                    using (StreamReader reader = new StreamReader (name_path, System.Text.Encoding.Unicode)) {
-                        name = reader.ReadLine ();
-                    }
-                }
-                
-                if (String.IsNullOrEmpty (name) && database_loaded && database_supported) {
-                    name = ipod_device.Name;
-                }
-                    
-                if (!String.IsNullOrEmpty (name)) {
-                    return name;
-                } else if (ipod_device.PropertyExists ("volume.label")) {
-                    name = ipod_device.GetPropertyString ("volume.label");
-                } else if (ipod_device.PropertyExists ("info.product")) {
-                    name = ipod_device.GetPropertyString ("info.product");
-                } else {
-                    name = ((IDevice)ipod_device).Name ?? "iPod";
-                }
-                
-                try {
-                    return name;
-                } finally {
-                    if (!database_loaded) {
-                        name = null;
-                    }
+        private string GetDeviceName ()
+        {
+            string name = null;
+            if (File.Exists (name_path)) {
+                using (StreamReader reader = new StreamReader (name_path, System.Text.Encoding.Unicode)) {
+                    name = reader.ReadLine ();
                 }
             }
-        }
-        
-        public override bool CanActivate {
-            get { return unsupported_view != null; }
+            
+            if (String.IsNullOrEmpty (name) && database_loaded && database_supported) {
+                name = ipod_device.Name;
+            }
+                
+            if (!String.IsNullOrEmpty (name)) {
+                return name;
+            } else if (ipod_device.PropertyExists ("volume.label")) {
+                name = ipod_device.GetPropertyString ("volume.label");
+            } else if (ipod_device.PropertyExists ("info.product")) {
+                name = ipod_device.GetPropertyString ("info.product");
+            } else {
+                name = ((IDevice)ipod_device).Name ?? "iPod";
+            }
+            
+            return name;
         }
         
         public override bool CanRename {
@@ -453,20 +455,24 @@ namespace Banshee.Dap.Ipod
         
         private void PerformSyncThread ()
         {
-            while (true) {
-                sync_thread_wait.WaitOne ();
-                if (sync_thread_dispose) {
-                    break;
+            try {
+                while (true) {
+                    sync_thread_wait.WaitOne ();
+                    if (sync_thread_dispose) {
+                        break;
+                    }
+                    
+                    PerformSyncThreadCycle ();
                 }
                 
-                PerformSyncThreadCycle ();
-            }
-            
-            lock (sync_mutex) {
-                sync_thread_dispose = false;
-                sync_thread_wait.Close ();
-                sync_thread_wait = null;
-                sync_thread = null;
+                lock (sync_mutex) {
+                    sync_thread_dispose = false;
+                    sync_thread_wait.Close ();
+                    sync_thread_wait = null;
+                    sync_thread = null;
+                }
+            } catch (Exception e) {
+                Log.Exception (e);
             }
         }
         

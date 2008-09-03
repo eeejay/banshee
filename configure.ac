@@ -215,16 +215,16 @@ ${PACKAGE}-${VERSION}
       Karma:           ${enable_karmasharp}
 
     DAAP Support:      ${enable_daap}
-    Remote Audio:      ${enable_remote_audio}
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
-    Moonlight Effects: ${enable_moonlight}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "
 
 #    Unfinished, unstable, under development components:
+#    Moonlight Effects: ${enable_moonlight}
+#    Remote Audio:      ${enable_remote_audio}
 #      MediaWeb:        ${enable_mediaweb}
 #      Torrent Podcasts:${enable_torrent}
 

@@ -1,3 +1,25 @@
+2008-09-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Add a bunch of
+	properties (model, color, firmware, etc) to the properties dialog.  When
+	loading tracks, don't fail entirely if there is an exception on one.
+	Improve how/when the name is retrieved off the device, and set as
+	Activatable so the new Sync UI is visible.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Don't automatically save in the PlaybackError setter (BGO #539696).
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Add a
+	SavePlaybackError method that sets it and then saves it.
+
+	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs: Use
+	the new SavePlaybackError method.
+
+	* configure.ac: Remove remote audio/moonlight from the echo since they're
+	not yet finished/usable.
+
 2008-09-03  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/banshee-player-pipeline.c: Disabled the visualization 

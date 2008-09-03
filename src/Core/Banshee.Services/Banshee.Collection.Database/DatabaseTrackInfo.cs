@@ -535,7 +535,6 @@ namespace Banshee.Collection.Database
                 }
                 
                 playback_error = value; 
-                Save ();
             }
         }
 

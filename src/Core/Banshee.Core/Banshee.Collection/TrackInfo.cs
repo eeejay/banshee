@@ -387,6 +387,14 @@ namespace Banshee.Collection
             set { playback_error = value; }
         }
 
+        public void SavePlaybackError (StreamPlaybackError value)
+        {
+            if (PlaybackError != value) {
+                PlaybackError = value;
+                Save ();
+            }
+        }
+
         private bool can_save_to_database = true;
         public bool CanSaveToDatabase {
             get { return can_save_to_database; }

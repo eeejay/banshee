@@ -264,7 +264,7 @@ namespace Banshee.GStreamer
                 if (CurrentTrack != null) {
                     switch (domain_code) {
                         case GstResourceError.NotFound:
-                            CurrentTrack.PlaybackError = StreamPlaybackError.ResourceNotFound;
+                            CurrentTrack.SavePlaybackError (StreamPlaybackError.ResourceNotFound);
                             break;
                         default:
                             break;
@@ -277,7 +277,7 @@ namespace Banshee.GStreamer
                 if (CurrentTrack != null) {
                     switch (domain_code) {
                         case GstStreamError.CodecNotFound:
-                            CurrentTrack.PlaybackError = StreamPlaybackError.CodecNotFound;
+                            CurrentTrack.SavePlaybackError (StreamPlaybackError.CodecNotFound);
                             break;
                         default:
                             break;
@@ -290,7 +290,7 @@ namespace Banshee.GStreamer
                 if (CurrentTrack != null) {
                     switch (domain_code) {
                         case GstCoreError.MissingPlugin:
-                            CurrentTrack.PlaybackError = StreamPlaybackError.CodecNotFound;
+                            CurrentTrack.SavePlaybackError (StreamPlaybackError.CodecNotFound);
                             break;
                         default:
                             break;

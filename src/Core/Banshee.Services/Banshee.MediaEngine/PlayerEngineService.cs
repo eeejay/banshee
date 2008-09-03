@@ -196,10 +196,10 @@ namespace Banshee.MediaEngine
             if (CurrentTrack != null) {
                 if (args.Event == PlayerEvent.Error 
                     && CurrentTrack.PlaybackError == StreamPlaybackError.None) {
-                    CurrentTrack.PlaybackError = StreamPlaybackError.Unknown;
+                    CurrentTrack.SavePlaybackError (StreamPlaybackError.Unknown);
                 } else if (args.Event == PlayerEvent.Iterate 
                     && CurrentTrack.PlaybackError != StreamPlaybackError.None) {
-                    CurrentTrack.PlaybackError = StreamPlaybackError.None;
+                    CurrentTrack.SavePlaybackError (StreamPlaybackError.None);
                 }
             }
             

@@ -152,10 +152,10 @@ namespace Banshee.Streaming
                     stream_uris.Add(new SafeUri(uri));
                 }
             } catch(System.Net.WebException) {
-                PlaybackError = StreamPlaybackError.ResourceNotFound;
+                SavePlaybackError (StreamPlaybackError.ResourceNotFound);
             } catch(Exception e) {
                 Console.WriteLine(e);
-                PlaybackError = StreamPlaybackError.ResourceNotFound;
+                SavePlaybackError (StreamPlaybackError.ResourceNotFound);
             }   
         }
         
