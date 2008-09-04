@@ -98,7 +98,11 @@ namespace Lastfm.Data
 
             // Load the XML from the new or cached local file
             doc = new XmlDocument ();
-            using (StreamReader reader = new StreamReader (cache_file)) {
+
+            XmlReaderSettings settings = new XmlReaderSettings ();
+            settings.CheckCharacters = false;
+            
+            using (XmlReader reader = XmlReader.Create (cache_file, settings)) {
                 doc.Load (reader);
             }
 

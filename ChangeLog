@@ -1,3 +1,9 @@
+2008-09-04  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Libraries/Lastfm/Lastfm.Data/LastfmData.cs: Patch from Iain Lane to
+	not validate characters in XML returned from Last.fm. The Last.fm API 
+	accepts (and returns) invalid characters sent to it (BGO #538206).
+
 2008-09-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastSourceContents.cs:
