@@ -1,5 +1,11 @@
 2008-09-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Correct
+	logged comment, and fix bug I just introduced with remember the expansion
+	state of primary sources.
+
+2008-09-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
 	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemQueryJob.cs:
 	Handle more gracefully the case that the directory or file is missing.

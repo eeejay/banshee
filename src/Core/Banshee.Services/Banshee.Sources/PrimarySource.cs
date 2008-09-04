@@ -272,10 +272,11 @@ namespace Banshee.Sources
                 if (sp_count > 0)
                     HaveCreatedSmartPlaylists = true;
 
-                expanded_schema = new SchemaEntry<bool> (
-                    String.Format ("sources.{0}", ConfigurationId), "expanded", true, "Is source expanded", "Is source expanded"
-                );
             }
+
+            expanded_schema = new SchemaEntry<bool> (
+                String.Format ("sources.{0}", ConfigurationId), "expanded", true, "Is source expanded", "Is source expanded"
+            );
         }
 
         private bool HaveCreatedSmartPlaylists {
@@ -293,7 +294,7 @@ namespace Banshee.Sources
 
         public virtual void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, BatchUserJob job)
         {
-            Log.WarningFormat ("CopyToTrack not implemented for source {0}", this);
+            Log.WarningFormat ("CopyTrackTo not implemented for source {0}", this);
         }
 
         internal void NotifyTracksAdded ()
