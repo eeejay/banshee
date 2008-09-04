@@ -62,11 +62,13 @@ namespace Banshee.Metadata.FileSystem
         
         protected void Fetch ()
         {
-            if (Track.Uri == null || !Track.Uri.IsFile || Track.ArtworkId == null)
+            if (Track.Uri == null || !Track.Uri.IsFile ||
+                    Track.ArtworkId == null || !Banshee.IO.File.Exists (Track.Uri)) {
                 return;
+            }
             
             string directory = System.IO.Path.GetDirectoryName (Track.Uri.AbsolutePath);
-            
+
             // Get the largest (in terms of file size) JPEG in the directory
             long max_size = 0;
             string best_file = null;

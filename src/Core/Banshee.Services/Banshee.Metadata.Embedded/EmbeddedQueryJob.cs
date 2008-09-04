@@ -60,7 +60,7 @@ namespace Banshee.Metadata.Embedded
         
         protected void Fetch()
         {
-            if (track.Uri == null || !track.Uri.IsFile)
+            if (track.Uri == null || !track.Uri.IsFile || !Banshee.IO.File.Exists (track.Uri))
                 return;
 
             string artist_album_id = track.ArtworkId;

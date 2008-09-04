@@ -1,5 +1,11 @@
 2008-09-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemQueryJob.cs:
+	Handle more gracefully the case that the directory or file is missing.
+
+2008-09-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationService.cs:
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
