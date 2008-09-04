@@ -8,6 +8,7 @@
     <OutputType>Library</OutputType>
     <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
     <AssemblyName>Banshee.Services</AssemblyName>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,16 +24,8 @@
     <Reference Include="System.Data" />
     <Reference Include="Mono.Data.SqliteClient" />
     <Reference Include="Mono.Posix" />
-    <Reference Include="NDesk.DBus">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ext\dbus-sharp\NDesk.DBus.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NDesk.DBus.GLib">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ext\dbus-sharp\NDesk.DBus.GLib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="NDesk.DBus, Version=1.0.0.0, Culture=neutral" />
+    <Reference Include="NDesk.DBus.GLib, Version=1.0.0.0, Culture=neutral" />
     <Reference Include="Mono.Addins, Version=0.3.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="TagLib, Version=0.0.0.0, Culture=neutral" />
@@ -233,6 +226,7 @@
     <Compile Include="Banshee.Collection\MoveOnInfoSaveJob.cs" />
     <Compile Include="Banshee.ServiceStack\IRegisterOnDemandService.cs" />
     <Compile Include="Banshee.Web\HttpRequest.cs" />
+    <Compile Include="Banshee.Collection.Indexer\CollectionIndexer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />
@@ -241,7 +235,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties xmlns="">
+      <Properties>
         <Deployment.LinuxDeployData generateScript="false" />
         <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">

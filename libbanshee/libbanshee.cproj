@@ -6,10 +6,10 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <ProjectGuid>{6B781836-AB65-49EF-BECD-CCC193C5D589}</ProjectGuid>
     <Packages>
-      <Packages xmlns="" />
+      <Packages />
     </Packages>
     <Compiler>
-      <Compiler ctype="GccCompiler" xmlns="" />
+      <Compiler ctype="GccCompiler" />
     </Compiler>
     <Language>C</Language>
     <Target>Bin</Target>
@@ -19,7 +19,7 @@
     <OutputPath>..\bin</OutputPath>
     <DefineSymbols>DEBUG MONODEVELOP</DefineSymbols>
     <CodeGeneration>
-      <CodeGeneration ctype="CCompilationParameters" xmlns="" />
+      <CodeGeneration ctype="CCompilationParameters" />
     </CodeGeneration>
     <OutputName>libbanshee</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
@@ -52,7 +52,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties xmlns="">
+      <Properties>
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
           <BuildFilesVar Sync="true" Name="libbanshee_la_SOURCES" />
           <DeployFilesVar />

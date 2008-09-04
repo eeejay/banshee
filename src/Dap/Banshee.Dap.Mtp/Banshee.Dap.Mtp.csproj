@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Banshee.Dap.Mtp\MtpSource.cs" />
     <Compile Include="Banshee.Dap.Mtp\MtpTrackInfo.cs" />
+    <Compile Include="Banshee.Dap.Mtp\Tests\MtpDapTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Dap.Mtp.addin.xml" />
@@ -51,7 +52,7 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <GtkDesignInfo gtkVersion="2.12.1" />
+        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="./Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />

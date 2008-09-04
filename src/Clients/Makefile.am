@@ -1,4 +1,5 @@
 SUBDIRS = \
+	Beroe \
 	Halie \
 	Muinshee \
 	Nereid

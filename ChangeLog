@@ -1,3 +1,9 @@
+2008-09-04  Aaron Bockover  <abock@gnome.org>
+
+	* *.csproj: fixups
+
+	* src/Clients/Beroe: Stubbed new indexer client
+
 2008-09-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Correct

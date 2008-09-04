@@ -29,10 +29,7 @@
     </Reference>
     <Reference Include="NDesk.DBus, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f6716e4f9b2ed099" />
     <Reference Include="Hyena, Version=1.2.2.0, Culture=neutral" />
-    <Reference Include="monotorrent-dbus">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bitsharp-dbus\Sample\bin\Debug\monotorrent-dbus.dll</HintPath>
-    </Reference>
+    <Reference Include="monotorrent-dbus" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Torrent.addin.xml" />
@@ -44,7 +41,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties xmlns="">
+      <Properties>
+        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="./Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />
