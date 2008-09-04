@@ -39,16 +39,15 @@ using Banshee.Preferences.Gui;
 
 namespace Banshee.Dap.Gui
 {
-    public class DapContent : ISourceContents
+    public class DapContent : DapPropertiesDisplay
     {
         private DapSource dap;
         private DapActions actions;
 
-        private RoundedFrame frame;
         private VBox vbox;
         private WrapLabel dap_stats;
 
-        public DapContent (DapSource source)
+        public DapContent (DapSource source) : base (source)
         {
             dap = source;
             BuildWidgets ();
@@ -57,14 +56,18 @@ namespace Banshee.Dap.Gui
 
         private void BuildWidgets ()
         {
-            frame = new RoundedFrame ();
             vbox = new VBox ();
-            frame.Add (vbox);
+            Add (vbox);
 
+            HBox header_box = new HBox ();
+            header_box.PackStart (new Image (LargeIcon), false, false, 0);
+            
             Label title = new Label ();
             title.Markup = String.Format ("<span size=\"x-large\" weight=\"bold\">{0}</span>", dap.Name);
             title.Xalign = 0f;
-            vbox.PackStart (title, false, false, 0);
+            header_box.PackStart (title, false, false, 0);
+            
+            vbox.PackStart (header_box, false, false, 0);
             
             vbox.PackStart (new Banshee.Preferences.Gui.NotebookPage (dap.Preferences), false, false, 0);
 
@@ -75,7 +78,7 @@ namespace Banshee.Dap.Gui
             dap_stats.Text = dap.Sync.ToString ();
             vbox.PackStart (dap_stats, false, false, 0);
             
-            frame.ShowAll ();
+            ShowAll ();
         }
 
         private void BuildActions ()
@@ -83,27 +86,5 @@ namespace Banshee.Dap.Gui
             actions = new DapActions (dap);
             dap.Properties.Set<Banshee.Gui.BansheeActionGroup> ("ActiveSourceActions", actions);
         }
-
-        #region ISourceContents implementation 
-        
-        public bool SetSource (Banshee.Sources.ISource source)
-        {
-            return (source == this.dap);
-        }
-        
-        public void ResetSource ()
-        {
-        }
-        
-        public Banshee.Sources.ISource Source {
-            get { return dap; }
-        }
-        
-        public Gtk.Widget Widget {
-            get { return frame; }
-        }
-        
-        #endregion 
-        
     }
 }

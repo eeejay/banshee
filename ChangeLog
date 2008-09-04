@@ -1,5 +1,18 @@
 2008-09-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Add more
+	properties that show up in the properties dialog.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp.csproj: Reference Mtp.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Fix typo.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs: Subclass from
+	DapPropertiesDiaplay and pack in the LargeIcon.
+
+2008-09-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Add a bunch of
 	properties (model, color, firmware, etc) to the properties dialog.  When
 	loading tracks, don't fail entirely if there is an exception on one.

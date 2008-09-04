@@ -35,6 +35,10 @@
       <Project>{BC2E94DF-7A82-461E-BE7C-60E41ADC3562}</Project>
       <Name>Banshee.Dap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Mtp\Mtp.csproj">
+      <Project>{0DF72691-E61C-4E9C-A1F1-2F7F17958630}</Project>
+      <Name>Mtp</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banshee.Dap.Mtp\MtpSource.cs" />
@@ -46,7 +50,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
-      <Properties xmlns="">
+      <Properties>
+        <GtkDesignInfo gtkVersion="2.12.1" />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="./Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />

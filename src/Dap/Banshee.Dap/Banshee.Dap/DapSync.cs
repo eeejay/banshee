@@ -102,7 +102,7 @@ namespace Banshee.Dap
             );
             
             auto_sync = dap.CreateSchema<bool> (conf_ns, "auto_sync", false,
-                Catalog.GetString ("Automaticlly sync the device when plugged in or the libraries change"),
+                Catalog.GetString ("Automatically sync the device when plugged in or the libraries change"),
                 Catalog.GetString ("Begin synchronizing the device as soon as the device is plugged in or the libraries change.")
             );
 

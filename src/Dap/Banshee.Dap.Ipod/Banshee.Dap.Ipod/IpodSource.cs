@@ -84,8 +84,11 @@ namespace Banshee.Dap.Ipod
 
             Initialize ();
 
+            AddDapProperty (Catalog.GetString ("Device"), ipod_device.ModelInfo.DeviceClass);
             AddDapProperty (Catalog.GetString ("Color"), ipod_device.ModelInfo.ShellColor);
             AddDapProperty (Catalog.GetString ("Generation"), ipod_device.ModelInfo.Generation.ToString ());
+            AddDapProperty (Catalog.GetString ("Capacity"), ipod_device.ModelInfo.AdvertisedCapacity);
+            AddDapProperty (Catalog.GetString ("Serial number"), ipod_device.Serial);
             AddDapProperty (Catalog.GetString ("Produced on"), ipod_device.ProductionInfo.DisplayDate);
             AddDapProperty (Catalog.GetString ("Firmware"), ipod_device.FirmwareVersion);
 

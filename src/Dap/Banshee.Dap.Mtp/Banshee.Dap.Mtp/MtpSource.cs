@@ -138,6 +138,10 @@ namespace Banshee.Dap.Mtp
                 }
             }
             AcceptableMimeTypes = mimetypes.ToArray ();
+
+            AddDapProperty (Catalog.GetString ("Serial number"), mtp_device.SerialNumber);
+            AddDapProperty (Catalog.GetString ("Version"), mtp_device.Version);
+            AddDapProperty (Catalog.GetString ("Battery level"), String.Format ("{0:0%}", mtp_device.BatteryLevel/100.0));
         }
 
         protected override void LoadFromDevice ()
