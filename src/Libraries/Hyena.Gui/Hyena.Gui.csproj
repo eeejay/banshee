@@ -121,6 +121,7 @@
     <MonoDevelop>
       <Properties>
         <Deployment.LinuxDeployData generateScript="false" />
+        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />

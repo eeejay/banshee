@@ -13,6 +13,7 @@
     </Compiler>
     <Language>C</Language>
     <Target>Bin</Target>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

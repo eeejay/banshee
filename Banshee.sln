@@ -120,6 +120,7 @@ Global
 		{01818BD5-9A0C-4C89-84FB-08D0E968778F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01818BD5-9A0C-4C89-84FB-08D0E968778F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02FD8195-9796-4AF5-A9D2-D310721963F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02FD8195-9796-4AF5-A9D2-D310721963F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DF72691-E61C-4E9C-A1F1-2F7F17958630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DF72691-E61C-4E9C-A1F1-2F7F17958630}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E1A7F20-E49B-4F9D-AEA0-2B1AD64326AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -256,6 +257,6 @@ Global
 		name = Banshee
 		version = 1.3
 		outputpath = .
-		StartupItem = src\Clients\Nereid\Nereid.csproj
+		StartupItem = src\Clients\Muinshee\Muinshee.csproj
 	EndGlobalSection
 EndGlobal
