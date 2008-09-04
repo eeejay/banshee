@@ -200,8 +200,6 @@ Global
 		{F45E7AF1-BEBB-4266-A221-50DDD5E4E739}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCC1AE87-E10B-4B47-8ADE-D5F447E48518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FCC1AE87-E10B-4B47-8ADE-D5F447E48518}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B574AEB0-59F1-4FB7-A91A-8E5A651970CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B574AEB0-59F1-4FB7-A91A-8E5A651970CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EB1FDF3F-048C-4010-80F5-D936A312580F} = {E6AD3714-5EA3-49D9-BA8D-12C69B2B8067}
@@ -256,7 +254,7 @@ Global
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		name = Banshee
-		version = 0.1
+		version = 1.3
 		outputpath = .
 		StartupItem = src\Clients\Nereid\Nereid.csproj
 	EndGlobalSection
