@@ -1,5 +1,16 @@
 2008-09-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastSourceContents.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadStatusFilterView.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/DownloadStatusFilterModel.cs:
+	* src/Extensions/Banshee.Podcasting/Makefile.am:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.csproj: Add another
+	filter for episode downloaded status.
+
+2008-09-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
 	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Add more
 	properties that show up in the properties dialog.

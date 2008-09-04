@@ -4,17 +4,20 @@ LINK = $(REF_EXTENSION_PODCASTING)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
+	Banshee.Podcasting.Data/DownloadStatusFilterModel.cs \
 	Banshee.Podcasting.Data/PodcastFeedModel.cs \
 	Banshee.Podcasting.Data/PodcastSource.cs \
 	Banshee.Podcasting.Data/PodcastTrackInfo.cs \
 	Banshee.Podcasting.Data/PodcastTrackListModel.cs \
 	Banshee.Podcasting.Data/PodcastUnheardFilterModel.cs \
+	Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs \
 	Banshee.Podcasting.Gui/ColumnCellPodcast.cs \
 	Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs \
 	Banshee.Podcasting.Gui/ColumnCellPublished.cs \
 	Banshee.Podcasting.Gui/ColumnCellUnheard.cs \
 	Banshee.Podcasting.Gui/DownloadManager/DownloadManagerInterface.cs \
 	Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs \
+	Banshee.Podcasting.Gui/DownloadStatusFilterView.cs \
 	Banshee.Podcasting.Gui/Models/FilterableListModel.cs \
 	Banshee.Podcasting.Gui/Models/ListModel.cs \
 	Banshee.Podcasting.Gui/PodcastActions.cs \

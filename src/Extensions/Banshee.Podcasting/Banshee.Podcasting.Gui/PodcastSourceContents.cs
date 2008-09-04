@@ -56,6 +56,7 @@ namespace Banshee.Podcasting.Gui
         private PodcastItemView track_view;
         private PodcastFeedView feed_view;
         private PodcastUnheardFilterView unheard_view;
+        private DownloadStatusFilterView download_view;
         
         public PodcastSourceContents () : base ("podcast")
         {
@@ -65,6 +66,7 @@ namespace Banshee.Podcasting.Gui
         {
             SetupMainView (track_view = new PodcastItemView ());
             SetupFilterView (unheard_view = new PodcastUnheardFilterView ());
+            SetupFilterView (download_view = new DownloadStatusFilterView ());
             SetupFilterView (feed_view = new PodcastFeedView ());
         }
         
@@ -73,6 +75,7 @@ namespace Banshee.Podcasting.Gui
             if (feed_view.Model != null) {
                 feed_view.Selection.Clear ();
                 unheard_view.Selection.Clear ();
+                download_view.Selection.Clear ();
             }
         }
 
@@ -105,6 +108,8 @@ namespace Banshee.Podcasting.Gui
                     SetModel (feed_view, (model as IListModel<Feed>));
                 else if (model is PodcastUnheardFilterModel)
                     SetModel (unheard_view, (model as IListModel<OldNewFilter>));
+                else if (model is DownloadStatusFilterModel)
+                    SetModel (download_view, (model as IListModel<DownloadedStatusFilter>));
                 else
                     Hyena.Log.DebugFormat ("PodcastContents got non-feed filter model: {0}", model);
             }
@@ -120,6 +125,7 @@ namespace Banshee.Podcasting.Gui
             source = null;
             track_view.SetModel (null);
             unheard_view.SetModel (null);
+            download_view.SetModel (null);
             feed_view.SetModel (null);
             track_view.HeaderVisible = false;
             //Console.WriteLine ("PSC.reset_source 2");

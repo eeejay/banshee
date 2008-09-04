@@ -57,6 +57,7 @@ namespace Banshee.Podcasting.Gui
     public class PodcastSource : Banshee.Library.LibrarySource
     {
         private PodcastUnheardFilterModel unheard_model;
+        private DownloadStatusFilterModel download_model;
         private PodcastFeedModel feed_model;
 
         private string baseDirectory;
@@ -157,11 +158,14 @@ namespace Banshee.Podcasting.Gui
             feed_model = new PodcastFeedModel (this, DatabaseTrackModel, ServiceManager.DbConnection, "PodcastFeeds");
             
             unheard_model = new PodcastUnheardFilterModel (DatabaseTrackModel);
+            download_model = new DownloadStatusFilterModel (DatabaseTrackModel);
             
             AvailableFilters.Add (unheard_model);
+            AvailableFilters.Add (download_model);
             AvailableFilters.Add (feed_model);
             
             DefaultFilters.Add (unheard_model);
+            DefaultFilters.Add (download_model);
             DefaultFilters.Add (feed_model);
             
             AfterInitialized ();
