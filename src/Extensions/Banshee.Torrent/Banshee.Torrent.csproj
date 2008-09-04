@@ -42,7 +42,6 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="./Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />
