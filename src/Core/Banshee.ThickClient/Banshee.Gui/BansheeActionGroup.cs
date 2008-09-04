@@ -62,6 +62,7 @@ namespace Banshee.Gui
 
         public void AddUiFromFile (string ui_file)
         {
+            Banshee.Base.ThreadAssist.AssertInMainThread ();
             ui_merge_ids.Add (Actions.AddUiFromFile (ui_file, System.Reflection.Assembly.GetCallingAssembly ()));
         }
 
@@ -77,16 +78,18 @@ namespace Banshee.Gui
 
         public override void Dispose ()
         {
-            UnRegister ();
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                UnRegister ();
 
-            foreach (uint merge_id in ui_merge_ids) {
-                if (merge_id > 0) {
-                    Actions.UIManager.RemoveUi (merge_id);
+                foreach (uint merge_id in ui_merge_ids) {
+                    if (merge_id > 0) {
+                        Actions.UIManager.RemoveUi (merge_id);
+                    }
                 }
-            }
-            ui_merge_ids.Clear ();
+                ui_merge_ids.Clear ();
 
-            base.Dispose ();
+                base.Dispose ();
+            });
         }
 
         public new void Add (ActionEntry [] action_entries)

@@ -74,11 +74,16 @@ namespace Banshee.Dap.Gui
             vbox.PackStart (new HSeparator (), false, false, 0);
 
             dap_stats = new WrapLabel ();
-            dap.Sync.Updated += delegate { dap_stats.Text = dap.Sync.ToString (); };
+            dap.Sync.Updated += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateStatus); };
             dap_stats.Text = dap.Sync.ToString ();
             vbox.PackStart (dap_stats, false, false, 0);
             
             ShowAll ();
+        }
+
+        private void UpdateStatus ()
+        {
+            dap_stats.Text = dap.Sync.ToString ();
         }
 
         private void BuildActions ()

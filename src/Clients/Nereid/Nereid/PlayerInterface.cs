@@ -316,7 +316,9 @@ namespace Nereid
         private void OnSourcePropertyChanged (object o, PropertyChangeEventArgs args)
         {
             if (args.PropertyName == "Nereid.SourceContents") {
-                UpdateSourceContents (previous_source);
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    UpdateSourceContents (previous_source);
+                });
             }
         }
         
@@ -377,8 +379,10 @@ namespace Nereid
         private void OnSourceUpdated (SourceEventArgs args)
         {
             if (args.Source == ServiceManager.SourceManager.ActiveSource) {
-                UpdateSourceInformation ();
-                view_container.Title = args.Source.Name;
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    UpdateSourceInformation ();
+                    view_container.Title = args.Source.Name;
+                });
             }
         }
 
@@ -482,7 +486,7 @@ namespace Nereid
 
         private void HandleTrackModelReloaded (object sender, EventArgs args)
         {
-            UpdateSourceInformation ();
+            Banshee.Base.ThreadAssist.ProxyToMain (UpdateSourceInformation);
         }
 
         private void UpdateSourceInformation ()

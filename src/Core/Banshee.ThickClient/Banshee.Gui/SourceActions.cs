@@ -143,15 +143,17 @@ namespace Banshee.Gui
 
         private void HandleActiveSourceChanged (SourceEventArgs args)
         {
-            UpdateActions ();
-            
-            if (last_source != null) {
-                last_source.Updated -= HandleActiveSourceUpdated;
-            }
-            
-            if (ActiveSource != null) {
-                ActiveSource.Updated += HandleActiveSourceUpdated;
-            }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                UpdateActions ();
+                
+                if (last_source != null) {
+                    last_source.Updated -= HandleActiveSourceUpdated;
+                }
+                
+                if (ActiveSource != null) {
+                    ActiveSource.Updated += HandleActiveSourceUpdated;
+                }
+            });
         }
 
         private void HandleEditMenuActivated (object sender, EventArgs args)
@@ -161,7 +163,9 @@ namespace Banshee.Gui
         
         private void HandleActiveSourceUpdated (object o, EventArgs args)
         {
-            UpdateActions (true);
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                UpdateActions (true);
+            });
         }
 
 #endregion

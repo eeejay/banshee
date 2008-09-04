@@ -72,8 +72,8 @@ namespace Banshee.GnomeBackend
             uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
             
             UpdateActions ();
-            uia_service.TrackActions.SelectionChanged += delegate { UpdateActions (); };
-            ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
+            uia_service.TrackActions.SelectionChanged += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
+            ServiceManager.SourceManager.ActiveSourceChanged += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
         }
         
         public void Dispose ()

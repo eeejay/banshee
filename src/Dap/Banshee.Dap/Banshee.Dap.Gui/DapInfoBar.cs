@@ -99,11 +99,13 @@ namespace Banshee.Dap.Gui
         
         private void OnSourceUpdated (object o, EventArgs args)
         {
-            try {
-                UpdateUsage ();
-            } catch (Exception e) {
-                Hyena.Log.Exception (e);
-            }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                try {
+                    UpdateUsage ();
+                } catch (Exception e) {
+                    Hyena.Log.Exception (e);
+                }
+            });
         }
         
         protected override void OnStyleSet (Style previous_style)

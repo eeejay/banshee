@@ -49,11 +49,11 @@ namespace Banshee.Sources.Gui
             Model = store;
             
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { 
-                UpdateActiveSource (); 
+                Banshee.Base.ThreadAssist.ProxyToMain (UpdateActiveSource);
             };
             
             ServiceManager.SourceManager.SourceUpdated += delegate {
-                QueueDraw ();
+                Banshee.Base.ThreadAssist.ProxyToMain (QueueDraw);                    
             };
             
             store.Refresh ();

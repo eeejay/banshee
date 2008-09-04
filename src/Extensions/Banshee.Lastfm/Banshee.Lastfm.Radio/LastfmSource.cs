@@ -68,13 +68,10 @@ namespace Banshee.Lastfm.Radio
         public LastfmActions Actions {
             get { return actions; }
         }
-        
-        protected override string TypeUniqueId {
-            get { return lastfm; }
-        }
 
         public LastfmSource () : base (lastfm, lastfm, 210)
         {
+            TypeUniqueId = lastfm;
             account = LastfmCore.Account;
 
             // We don't automatically connect to Last.fm, but load the last Last.fm

@@ -91,11 +91,13 @@ namespace Banshee.MiniMode
                 AddSource(child, AppendNode(iter));
             }
 
-            source.ChildSourceAdded += delegate(SourceEventArgs e) {
-                AddSource(e.Source, AppendNode(iter));
+            source.ChildSourceAdded += delegate (SourceEventArgs e) {
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    AddSource(e.Source, AppendNode(iter));
+                });
             };
 
-            source.ChildSourceRemoved += delegate(SourceEventArgs e) {
+            source.ChildSourceRemoved += delegate (SourceEventArgs e) {
                 RemoveSource(e.Source);
             };
         }

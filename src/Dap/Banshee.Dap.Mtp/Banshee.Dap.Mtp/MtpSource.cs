@@ -166,7 +166,7 @@ namespace Banshee.Dap.Mtp
                     if ((track_id = DatabaseTrackInfo.GetTrackIdForUri (MtpTrackInfo.GetPathFromMtpTrack (mtp_track), source_ids)) > 0) {
                         track_map[track_id] = mtp_track;
                     } else {
-                        MtpTrackInfo track = new MtpTrackInfo (mtp_track);
+                        MtpTrackInfo track = new MtpTrackInfo (mtp_device, mtp_track);
                         track.PrimarySource = this;
                         track.Save (false);
                         track_map[track.TrackId] = mtp_track;
@@ -199,24 +199,23 @@ namespace Banshee.Dap.Mtp
             get { return !(IsAdding || IsDeleting); }
         }
 
+        private static SafeUri empty_file = new SafeUri (Paths.Combine (Paths.ApplicationCache, "mtp.mp3"));
         protected override void OnTracksDeleted ()
         {
             // Hack to get the disk usage indicate to be accurate, which seems to
             // only be updated when tracks are added, not removed.
-            SafeUri empty_file = new SafeUri (Paths.Combine (Paths.ApplicationCache, "mtp.mp3"));
             try {
-                using (System.IO.TextWriter writer = new System.IO.StreamWriter (Banshee.IO.File.OpenWrite (empty_file, true))) {
-                    writer.Write ("foo");
-                }
-                Track mtp_track = new Track (System.IO.Path.GetFileName (empty_file.LocalPath), 3);
                 lock (mtp_device) {
+                    using (System.IO.TextWriter writer = new System.IO.StreamWriter (Banshee.IO.File.OpenWrite (empty_file, true))) {
+                        writer.Write ("foo");
+                    }
+                    Track mtp_track = new Track (System.IO.Path.GetFileName (empty_file.LocalPath), 3);
+
                     mtp_device.UploadTrack (empty_file.AbsolutePath, mtp_track, mtp_device.MusicFolder);
                     mtp_device.Remove (mtp_track);
+                    Banshee.IO.File.Delete (empty_file);
                 }
-            } finally {
-                Banshee.IO.File.Delete (empty_file);
-            }
-
+            } catch {}
             base.OnTracksDeleted ();
         }
 
@@ -265,7 +264,7 @@ namespace Banshee.Dap.Mtp
             bool video = (track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0;
             Console.WriteLine ("Sending file {0}, is video? {1}", fromUri.LocalPath, video);
             lock (mtp_device) {
-                mtp_device.UploadTrack (fromUri.LocalPath, mtp_track, video ? mtp_device.VideoFolder : mtp_device.MusicFolder, OnUploadProgress);
+                mtp_device.UploadTrack (fromUri.LocalPath, mtp_track, GetFolderForTrack (track), OnUploadProgress);
             }
 
             // Add/update album art
@@ -295,12 +294,21 @@ namespace Banshee.Dap.Mtp
                 }
             }
 
-            MtpTrackInfo new_track = new MtpTrackInfo (mtp_track);
+            MtpTrackInfo new_track = new MtpTrackInfo (mtp_device, mtp_track);
             new_track.PrimarySource = this;
             new_track.Save (false);
             track_map[new_track.TrackId] = mtp_track;
         }
 
+        private Folder GetFolderForTrack (TrackInfo track)
+        {
+            if (track.HasAttribute (TrackMediaAttributes.Podcast))
+                return mtp_device.PodcastFolder;
+            else if (track.HasAttribute (TrackMediaAttributes.VideoStream))
+                return mtp_device.VideoFolder;
+            else
+                return mtp_device.MusicFolder;
+        }
 
         private int OnUploadProgress (ulong sent, ulong total, IntPtr data)
         {
@@ -333,17 +341,9 @@ namespace Banshee.Dap.Mtp
         public Track TrackInfoToMtpTrack (TrackInfo track, SafeUri fromUri)
         {
 			Track f = new Track (System.IO.Path.GetFileName (fromUri.LocalPath), (ulong) Banshee.IO.File.GetSize (fromUri));
-			f.Album = track.AlbumTitle;
-			f.Artist = track.ArtistName;
-			f.Duration = (uint)track.Duration.TotalMilliseconds;
-			f.Genre = track.Genre;
-			f.Rating = (ushort)(track.Rating * 20);
-			f.Title = track.TrackTitle;
-			f.TrackNumber = (ushort)track.TrackNumber;
-			f.UseCount = (uint)track.PlayCount;
-            f.ReleaseDate = track.Year + "0101T0000.0";
+            MtpTrackInfo.ToMtpTrack (track, f);
             return f;
-		}
+        }
 
         public override void Dispose ()
         {

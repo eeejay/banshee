@@ -52,7 +52,10 @@ namespace Banshee.Preferences
         
         public virtual T Value {
             get { return this.value; }
-            set { this.value = value; }
+            set {
+                this.value = value;
+                OnValueChanged ();
+            }
         }
         
         public override object BoxedValue {

@@ -44,13 +44,10 @@ namespace Banshee.NowPlaying
     {
         private TrackInfo transitioned_track;
         private NowPlayingInterface now_playing_interface;
-
-        protected override string TypeUniqueId {
-            get { return "now-playing"; }
-        }
         
         public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 10)
         {
+            TypeUniqueId = "now-playing";
             now_playing_interface = new NowPlayingInterface ();
         
             Properties.SetString ("Icon.Name", "applications-multimedia");

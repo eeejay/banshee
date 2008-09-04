@@ -47,16 +47,13 @@ namespace Banshee.InternetRadio
 {
     public class InternetRadioSource : PrimarySource, IDisposable
     {
-        protected override string TypeUniqueId {
-            get { return "internet-radio"; }
-        }
-        
         private InternetRadioSourceContents source_contents;
         private uint ui_id;
         
         public InternetRadioSource () : base (Catalog.GetString ("Radio"), Catalog.GetString ("Radio"), "internet-radio", 220)
         {
             Properties.SetString ("Icon.Name", "radio");
+            TypeUniqueId = "internet-radio";
             IsLocal = false;
             
             InternetRadioInitialize ();

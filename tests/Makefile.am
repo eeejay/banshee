@@ -6,8 +6,8 @@ TEST_ASSEMBLIES = \
 	Hyena.dll \
 	Migo.dll \
 	Banshee.Core.dll \
-	Banshee.Services.dll
-
+	Banshee.Services.dll \
+	Banshee.Dap.Mtp.dll
 
 RUNNER = for asm in $${TEST_ASSEMBLIES}; do echo -e "\033[1mRunning tests on $${asm}...\033[0m"; TZ=America/Chicago LC_ALL=it_IT LANG=it_IT nunit-console2 /nologo $$asm; done
 

@@ -62,6 +62,7 @@ namespace Banshee.Preferences
                 if (handler != null) {
                     handler ();
                 }
+                OnValueChanged ();
             }
         }
     }

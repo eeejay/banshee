@@ -670,29 +670,32 @@ namespace Hyena.Data.Sqlite
             Dictionary<string, string> tables = new Dictionary<string,string> (virtual_columns.Count + 1);
             bool first_virtual = true;
             foreach (VirtualDatabaseColumn column in virtual_columns) {
-                if (first_virtual) {
-                    first_virtual = false;
-                } else {
-                    where_builder.Append (" AND ");
-                }
                 if (first) {
                     first = false;
                 } else {
                     select_builder.Append (',');
                 }
+
                 select_builder.Append (column.TargetTable);
                 select_builder.Append ('.');
                 select_builder.Append (column.Name);
+
+                bool table_not_joined = !tables.ContainsKey (column.TargetTable);
+                if (first_virtual) {
+                    first_virtual = false;
+                } else if (table_not_joined) {
+                    where_builder.Append (" AND ");
+                }
                 
-                where_builder.Append (column.TargetTable);
-                where_builder.Append ('.');
-                where_builder.Append (column.ForeignKey);
-                where_builder.Append (" = ");
-                where_builder.Append (TableName);
-                where_builder.Append ('.');
-                where_builder.Append (column.LocalKey);
+                if (table_not_joined) {
+                    where_builder.Append (column.TargetTable);
+                    where_builder.Append ('.');
+                    where_builder.Append (column.ForeignKey);
+                    where_builder.Append (" = ");
+                    where_builder.Append (TableName);
+                    where_builder.Append ('.');
+                    where_builder.Append (column.LocalKey);
                 
-                if (!tables.ContainsKey (column.TargetTable)) {
                     tables.Add (column.TargetTable, null);
                 }
             }

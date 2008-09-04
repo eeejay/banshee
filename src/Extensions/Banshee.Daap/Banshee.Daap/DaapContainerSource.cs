@@ -41,6 +41,7 @@ namespace Banshee.Daap
         public DaapContainerSource () :  base (Catalog.GetString ("Shared Music"), Catalog.GetString ("Shared Music"), 300)
         {
             Properties.SetStringList ("Icon.Name", "applications-internet", "network-server");
+            TypeUniqueId = "daap-container";
         }
         
         public override bool? AutoExpand {
@@ -53,10 +54,6 @@ namespace Banshee.Daap
         
         public override bool CanRename {
             get { return false; }
-        }
-        
-        protected override string TypeUniqueId {
-            get { return "daap-container"; }
         }
     }
 }

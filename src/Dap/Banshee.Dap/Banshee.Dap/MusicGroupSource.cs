@@ -39,9 +39,7 @@ namespace Banshee.Dap
         {
             Properties.Remove ("Icon.Name");
             Properties.SetStringList ("Icon.Name", Banshee.ServiceStack.ServiceManager.SourceManager.MusicLibrary.Properties.GetStringList ("Icon.Name"));
-            
-            ConditionSql = String.Format ("(CoreTracks.Attributes & {0}) == {0} And (CoreTracks.Attributes & {1}) == 0",
-                (int)TrackMediaAttributes.AudioStream, (int)TrackMediaAttributes.VideoStream);
+            ConditionSql = Banshee.ServiceStack.ServiceManager.SourceManager.MusicLibrary.AttributesCondition;
         }
     }
 }

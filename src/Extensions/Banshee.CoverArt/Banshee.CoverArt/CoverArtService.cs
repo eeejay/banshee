@@ -98,6 +98,7 @@ namespace Banshee.CoverArt
         
         private void Initialize ()
         {            
+            Banshee.Base.ThreadAssist.AssertInMainThread ();
             actions = new ActionGroup ("CoverArt");
             
             ActionEntry[] action_list = new ActionEntry [] {
@@ -123,22 +124,24 @@ namespace Banshee.CoverArt
             if (disposed) {
                 return;
             }
+
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                Gtk.Action fetch_action = action_service.GlobalActions["FetchCoverArtAction"];
+                if (fetch_action != null) {
+                    action_service.GlobalActions.Remove (fetch_action);
+                }
+                
+                action_service.RemoveActionGroup ("CoverArt");
+                action_service.UIManager.RemoveUi (ui_manager_id);
+                
+                actions = null;
+                action_service = null;
+                
+                ServiceManager.SourceManager.MusicLibrary.TracksAdded -= OnTracksAdded;
+                ServiceManager.SourceManager.MusicLibrary.TracksChanged -= OnTracksChanged;
             
-            Gtk.Action fetch_action = action_service.GlobalActions["FetchCoverArtAction"];
-            if (fetch_action != null) {
-                action_service.GlobalActions.Remove (fetch_action);
-            }
-            
-            action_service.RemoveActionGroup ("CoverArt");
-            action_service.UIManager.RemoveUi (ui_manager_id);
-            
-            actions = null;
-            action_service = null;
-            
-            ServiceManager.SourceManager.MusicLibrary.TracksAdded -= OnTracksAdded;
-            ServiceManager.SourceManager.MusicLibrary.TracksChanged -= OnTracksChanged;
-            
-            disposed = true;
+                disposed = true;
+            });
         }
         
         public void FetchCoverArt ()

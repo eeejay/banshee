@@ -79,7 +79,7 @@ namespace Banshee.Streaming
         
         private static void FindTrackMediaAttributes (TrackInfo track, TagLib.File file)
         {
-            track.MediaAttributes = TrackMediaAttributes.None;
+            track.MediaAttributes = track.MediaAttributes;
             
             if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) != 0) {
                 track.MediaAttributes |= TrackMediaAttributes.AudioStream;

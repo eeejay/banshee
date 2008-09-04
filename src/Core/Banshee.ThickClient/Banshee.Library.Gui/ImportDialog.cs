@@ -159,27 +159,33 @@ namespace Banshee.Library.Gui
         private void OnSourceAdded (SourceAddedArgs args)
         {
             if(args.Source is IImportSource) {
-                AddSource ((IImportSource)args.Source);
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    AddSource ((IImportSource)args.Source);
+                });
             }
         }
         
         private void OnSourceRemoved (SourceEventArgs args)
         {
             if (args.Source is IImportSource) {
-                TreeIter iter;
-                if (FindSourceIter (out iter, (IImportSource)args.Source)) {
-                    source_model.Remove (ref iter);
-                }
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    TreeIter iter;
+                    if (FindSourceIter (out iter, (IImportSource)args.Source)) {
+                        source_model.Remove (ref iter);
+                    }
+                });
             }
         }
         
         private void OnSourceUpdated (SourceEventArgs args)
         {
             if (args.Source is IImportSource) {
-                TreeIter iter;
-                if(FindSourceIter (out iter, (IImportSource)args.Source)) {
-                    source_model.SetValue (iter, 1, args.Source.Name);
-                }
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    TreeIter iter;
+                    if(FindSourceIter (out iter, (IImportSource)args.Source)) {
+                        source_model.SetValue (iter, 1, args.Source.Name);
+                    }
+                });
             }
         }
         

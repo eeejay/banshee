@@ -96,6 +96,9 @@ namespace Banshee.Podcasting.Gui
         public PodcastSource (string baseDirectory) : base (Catalog.GetString ("Podcasts"), "PodcastLibrary", 200)
         {
             this.baseDirectory = baseDirectory;
+            MediaTypes = TrackMediaAttributes.Podcast;
+            NotMediaTypes = TrackMediaAttributes.AudioBook;
+            SyncCondition = "substr(CoreTracks.Uri, 0, 4) != 'http'";
 
             // For now..
             SupportsPlaylists = false;

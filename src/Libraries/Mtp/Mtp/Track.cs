@@ -64,6 +64,11 @@ namespace Mtp
 			set { trackStruct.date = value; }
 		}
 
+		public int Year {
+			get { return ReleaseDate == null || ReleaseDate.Length < 4 ? 0 : Int32.Parse (ReleaseDate.Substring(0, 4)); }
+			set { ReleaseDate = String.Format ("{0:0000}0101T0000.00", value); }
+		}
+
 		public uint Duration {
 			get { return trackStruct.duration; }
 			set { trackStruct.duration = value; }
@@ -141,6 +146,11 @@ namespace Mtp
 			this.device = device;
 			this.trackStruct = track;
 		}
+
+        public bool InFolder (Folder folder)
+        {
+            return folder != null && trackStruct.parent_id == folder.FolderId;
+        }
 		
 		public void Download (string path)
 		{

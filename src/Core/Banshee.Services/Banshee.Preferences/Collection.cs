@@ -77,6 +77,30 @@ namespace Banshee.Preferences
                 return null;
             }
         }
+
+#region Root overrides
+
+        public override bool Sensitive {
+            get { return base.Sensitive; }
+            set {
+                base.Sensitive = value;
+                foreach (Root child in this) {
+                    child.Sensitive = value;
+                }
+            }
+        }
+
+        public override bool Visible {
+            get { return base.Visible; }
+            set {
+                base.Visible = value;
+                foreach (Root child in this) {
+                    child.Visible = value;
+                }
+            }
+        }
+        
+#endregion
         
 #region IList
 

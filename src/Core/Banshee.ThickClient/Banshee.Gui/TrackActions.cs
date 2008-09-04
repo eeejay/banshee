@@ -137,7 +137,7 @@ namespace Banshee.Gui
                 current_source = new_source;
             }
             
-            UpdateActions ();
+            Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions);
         }
 
         private void HandleActionsChanged (object sender, EventArgs args)
@@ -152,8 +152,10 @@ namespace Banshee.Gui
 
         private void HandleSelectionChanged (object sender, EventArgs args)
         {
-            OnSelectionChanged ();
-            UpdateActions ();
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                OnSelectionChanged ();
+                UpdateActions ();
+            });
         }
 
         private void HandleEditMenuActivated (object sender, EventArgs args)

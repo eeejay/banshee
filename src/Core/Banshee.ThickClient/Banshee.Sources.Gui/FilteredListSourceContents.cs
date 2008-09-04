@@ -132,7 +132,9 @@ namespace Banshee.Sources.Gui
             }
             
             ServiceManager.SourceManager.ActiveSourceChanged += delegate {
-                browser_container.Visible = ActiveSourceCanHasBrowser ? BrowserVisible.Get () : false; 
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    browser_container.Visible = ActiveSourceCanHasBrowser ? BrowserVisible.Get () : false;
+                });
             };
             
             NoShowAll = true;

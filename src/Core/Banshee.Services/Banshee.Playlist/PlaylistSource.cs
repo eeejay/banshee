@@ -107,25 +107,30 @@ namespace Banshee.Playlist
 
 #region Constructors
 
-        public PlaylistSource (string name, int primarySourceId) : this (name, null, primarySourceId)
+        public PlaylistSource (string name, int primarySourceId) : base (generic_name, name, primarySourceId)
+        {
+            SetProperties ();
+        }
+
+        protected PlaylistSource (string name, int dbid, int primarySourceId) : this (name, dbid, -1, 0, primarySourceId, 0, false)
         {
         }
 
-        protected PlaylistSource (string name, int? dbid, int primarySourceId) : this (name, dbid, -1, 0, primarySourceId, 0, false)
-        {
-        }
-
-        protected PlaylistSource (string name, int? dbid, int sortColumn, int sortType, int primarySourceId, int count, bool is_temp)
+        protected PlaylistSource (string name, int dbid, int sortColumn, int sortType, int primarySourceId, int count, bool is_temp)
             : base (generic_name, name, dbid, sortColumn, sortType, primarySourceId, is_temp)
         {
-            Properties.SetString ("Icon.Name", "source-playlist");
-            Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
-            Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
-            DbId = dbid;
+            SetProperties ();
             SavedCount = count;
         }
 
 #endregion
+
+        private void SetProperties ()
+        {
+            Properties.SetString ("Icon.Name", "source-playlist");
+            Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Playlist"));
+            Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Delete Playlist"));
+        }
 
 #region Source Overrides
 

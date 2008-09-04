@@ -213,7 +213,6 @@ namespace Banshee.Podcasting.Data
             Year = Item.PubDate.Year;
             CanPlay = true;
             Genre = Genre ?? "Podcast";
-            MediaAttributes |= TrackMediaAttributes.Podcast;
             ReleaseDate = Item.PubDate;
             MimeType = Item.Enclosure.MimeType;
             Duration = Item.Enclosure.Duration;
@@ -227,6 +226,8 @@ namespace Banshee.Podcasting.Data
                     Banshee.Streaming.StreamTagger.TrackInfoMerge (this, file, true);
                 } catch {}
             }
+
+            MediaAttributes |= TrackMediaAttributes.Podcast;
         }
         
         protected override void ProviderSave ()

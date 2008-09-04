@@ -32,6 +32,7 @@ using System.Collections.Generic;
 
 using Mono.Unix;
 
+using Banshee.Collection;
 using Banshee.SmartPlaylist;
 
 namespace Banshee.Library
@@ -40,6 +41,8 @@ namespace Banshee.Library
     {
         public MusicLibrarySource () : base (Catalog.GetString ("Music Library"), "Library", 40)
         {
+            MediaTypes = TrackMediaAttributes.Music | TrackMediaAttributes.AudioStream;
+            NotMediaTypes = TrackMediaAttributes.Podcast | TrackMediaAttributes.VideoStream | TrackMediaAttributes.AudioBook;
             Properties.SetStringList ("Icon.Name", "audio-x-generic", "source-library");
         }
 

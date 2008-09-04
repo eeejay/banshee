@@ -34,6 +34,7 @@ using Mono.Unix;
 using Hyena;
 using Hyena.Query;
 
+using Banshee.Base;
 using Banshee.Configuration;
 using Banshee.Sources;
 using Banshee.ServiceStack;
@@ -45,15 +46,16 @@ using Banshee.Preferences;
 
 namespace Banshee.Dap
 {
-    public sealed class DapSync
+    public sealed class DapSync : IDisposable
     {
         private DapSource dap;
         private string conf_ns;
         private List<DapLibrarySync> library_syncs = new List<DapLibrarySync> ();
         private SchemaEntry<bool> manually_manage, auto_sync;
-        private SmartPlaylistSource to_remove;
         private Section dap_prefs_section;
+        private PreferenceBase manually_manage_pref;//, auto_sync_pref;
         private List<Section> pref_sections = new List<Section> ();
+        private RateLimiter sync_limiter;
 
         public event Action<DapSync> Updated;
 
@@ -72,11 +74,11 @@ namespace Banshee.Dap
         }
         
         public bool Enabled {
-            get { return manually_manage.Get (); }
+            get { return !manually_manage.Get (); }
         }
         
         public bool AutoSync {
-            get { return auto_sync.Get (); }
+            get { return Enabled && auto_sync.Get (); }
         }
 
         public IEnumerable<Section> PreferenceSections {
@@ -88,8 +90,21 @@ namespace Banshee.Dap
         public DapSync (DapSource dapSource)
         {
             dap = dapSource;
+            sync_limiter = new RateLimiter (RateLimitedSync);
             BuildPreferences ();
             BuildSyncLists ();
+        }
+
+        public void Dispose ()
+        {
+            foreach (LibrarySource source in Libraries) {
+                source.TracksAdded -= OnLibraryChanged;
+                source.TracksDeleted -= OnLibraryChanged;
+            }
+
+            foreach (DapLibrarySync sync in library_syncs) {
+                sync.Dispose ();
+            }
         }
 
         private void BuildPreferences ()
@@ -102,49 +117,94 @@ namespace Banshee.Dap
             );
             
             auto_sync = dap.CreateSchema<bool> (conf_ns, "auto_sync", false,
-                Catalog.GetString ("Automatically sync the device when plugged in or the libraries change"),
+                Catalog.GetString ("Automatically sync the device when plugged in or when the libraries change"),
                 Catalog.GetString ("Begin synchronizing the device as soon as the device is plugged in or the libraries change.")
             );
 
             dap_prefs_section = new Section ("dap", Catalog.GetString ("Sync Preferences"), 0);
-            dap_prefs_section.Add (manually_manage);
-            dap_prefs_section.Add (auto_sync);
             pref_sections.Add (dap_prefs_section);
+
+            manually_manage_pref = dap_prefs_section.Add (manually_manage);
+            manually_manage_pref.ShowDescription = true;
+            manually_manage_pref.ShowLabel = false;
+            SchemaPreference<bool> auto_sync_pref = dap_prefs_section.Add (auto_sync);
+            auto_sync_pref.ValueChanged += OnAutoSyncChanged;
+            
+            //manually_manage_pref.Changed += OnEnabledChanged;
+            //auto_sync_pref.Changed += delegate { OnUpdated (); };
+            //OnEnabledChanged (null);
         }
 
         private void BuildSyncLists ()
         {
             int i = 0;
-            foreach (Source source in ServiceManager.SourceManager.Sources) {
-                if (source is LibrarySource) {
-                    DapLibrarySync library_sync = new DapLibrarySync (this, source as LibrarySource);
-                    library_syncs.Add (library_sync);
-                    pref_sections.Add (library_sync.PrefsSection);
-                    library_sync.PrefsSection.Order = ++i;
-                }
+            foreach (LibrarySource source in Libraries) {
+                DapLibrarySync library_sync = new DapLibrarySync (this, source);
+                library_syncs.Add (library_sync);
+                pref_sections.Add (library_sync.PrefsSection);
+                library_sync.PrefsSection.Order = ++i;
             }
 
-            bool first = true;
-            System.Text.StringBuilder sb = new System.Text.StringBuilder ();
-            foreach (DapLibrarySync sync in library_syncs) {
-                if (first) {
-                    first = false;
-                } else {
-                    sb.Append (",");
-                }
-                sb.Append (sync.SmartPlaylistId);
+            foreach (LibrarySource source in Libraries) {
+                source.TracksAdded += OnLibraryChanged;
+                source.TracksDeleted += OnLibraryChanged;
             }
 
-            // Any items on the device that aren't in the sync lists need to be removed
-            to_remove = new SmartPlaylistSource ("to_remove", dap.DbId);
-            to_remove.IsTemporary = true;
-            to_remove.Save ();
-            to_remove.DatabaseTrackModel.AddCondition (String.Format (
-                @"MetadataHash NOT IN (SELECT MetadataHash FROM CoreTracks, CoreSmartPlaylistEntries 
-                    WHERE CoreSmartPlaylistEntries.SmartPlaylistID IN ({0}) AND
-                        CoreTracks.TrackID = CoreSmartPlaylistEntries.TrackID)",
-                sb.ToString ()
-            ));
+            dap.TracksAdded += OnDapChanged;
+            dap.TracksDeleted += OnDapChanged;
+        }
+
+        /*private void OnEnabledChanged (Root pref)
+        {
+            Console.WriteLine ("got manual mng changed, Enabled = {0}", Enabled);
+            auto_sync_pref.Sensitive = Enabled;
+            foreach (Section section in pref_sections) {
+                if (section != dap_prefs_section) {
+                    section.Sensitive = Enabled;
+                 }
+             }
+            OnUpdated ();
+        }*/
+
+        private void OnAutoSyncChanged (Root preference)
+        {
+            if (AutoSync) {
+                Sync ();
+            }
+        }
+
+        private void OnDapChanged (Source sender, TrackEventArgs args)
+        {
+            if (!AutoSync) {
+                foreach (DapLibrarySync lib_sync in library_syncs) {
+                    lib_sync.CalculateSync ();
+                }
+            }
+        }
+
+        private void OnLibraryChanged (Source sender, TrackEventArgs args)
+        {
+            foreach (DapLibrarySync lib_sync in library_syncs) {
+                if (lib_sync.Library == sender) {
+                    if (AutoSync) {
+                        lib_sync.Sync ();
+                    } else {
+                        lib_sync.CalculateSync ();
+                        OnUpdated ();
+                    }
+                    break;
+                }
+            }
+         }
+
+        private IEnumerable<LibrarySource> Libraries {
+            get {
+                foreach (Source source in ServiceManager.SourceManager.Sources) {
+                    if (source is LibrarySource) {
+                        yield return source as LibrarySource;
+                    }
+                }
+            }
         }
         
         public int ItemCount {
@@ -164,9 +224,13 @@ namespace Banshee.Dap
             foreach (DapLibrarySync library_sync in library_syncs) {
                 library_sync.CalculateSync ();
             }
-            to_remove.RefreshAndReload ();
-            Log.Information (ToString ());
 
+            Log.Information (ToString ());
+            OnUpdated ();
+        }
+
+        internal void OnUpdated ()
+        {
             Action<DapSync> handler = Updated;
             if (handler != null) {
                 handler (this);
@@ -180,14 +244,16 @@ namespace Banshee.Dap
                 sb.Append (library_sync.ToString ());
                 sb.Append ("\n");
             }
-            sb.Append (String.Format ("And {0} items to remove", to_remove.Count));
             return sb.ToString ();
         }
 
-        
         public void Sync ()
         {
-            // TODO: remove all items in to_remove
+            sync_limiter.Execute ();
+        }
+
+        private void RateLimitedSync ()
+        {
             foreach (DapLibrarySync library_sync in library_syncs) {
                 library_sync.Sync ();
             }

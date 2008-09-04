@@ -30,6 +30,7 @@ using System;
 using Gtk;
 
 using Hyena.Widgets;
+using Banshee.Preferences.Gui;
 
 namespace Banshee.MediaProfiles.Gui
 {
@@ -37,7 +38,7 @@ namespace Banshee.MediaProfiles.Gui
     {
         private ProfileComboBox combo;
         private ProfileConfigureButton button;
-        private WrapLabel description;
+        private DescriptionLabel description;
         private string configuration_id;
         
         public ProfileComboBoxConfigurable(MediaProfileManager manager, string configurationId) 
@@ -62,40 +63,24 @@ namespace Banshee.MediaProfiles.Gui
             editor.PackStart(button, false, false, 0);
             editor.Show();
             
-            description = new WrapLabel();
-            description.Show();
-            
             ProfileConfiguration config = manager.GetActiveProfileConfiguration (configurationId);
             
             if (config != null) {
                 Combo.SetActiveProfile(config.Profile);
             }
 
-            SetDescription();
+            description = new DescriptionLabel (delegate { return Combo.ActiveProfile.Description; });
             
             Combo.Changed += delegate {
                 if(Combo.ActiveProfile != null) {
                     ProfileConfiguration.SaveActiveProfile(Combo.ActiveProfile, configurationId);
-                    SetDescription();
+                    description.Update ();
                 }
             };
             
             Spacing = 5;
             PackStart(editor, true, true, 0);
-            
-            bool expand = parent != null;
-            
-            if(parent == null) {
-                parent = this;
-            }
-            
-            parent.PackStart(description, expand, expand, 0);
-        }
-        
-        private void SetDescription()
-        {
-            description.Markup = String.Format ("<small><i>{0}</i></small>", 
-                GLib.Markup.EscapeText (Combo.ActiveProfile.Description));
+            description.PackInto (parent ?? this, parent != null);
         }
         
         public ProfileComboBox Combo {

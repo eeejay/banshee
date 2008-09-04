@@ -92,12 +92,12 @@ namespace Banshee.Lastfm.Recommendations
 
         private void OnActiveSourceChanged (EventArgs args)
         {
-            UpdateVisibility ();
+            Banshee.Base.ThreadAssist.ProxyToMain (UpdateVisibility);
         }
 
         private void OnSourceChanged (object sender, EventArgs args)
         {
-            UpdateVisibility ();
+            Banshee.Base.ThreadAssist.ProxyToMain (UpdateVisibility);
         }
 
         private void OnPlayerEvent (PlayerEventArgs args)

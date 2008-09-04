@@ -62,12 +62,17 @@ namespace Banshee.Sources
         public event SourceEventHandler ChildSourceRemoved;
 
         public delegate void OpenPropertiesDelegate ();
-        
-        protected Source (string generic_name, string name, int order)
+
+        protected Source (string generic_name, string name, int order) : this (generic_name, name, order, null)
+        {
+        }
+
+        protected Source (string generic_name, string name, int order, string type_unique_id)
         {
             GenericName = generic_name;
             Name = name;
             Order = order;
+            TypeUniqueId = type_unique_id;
 
             SourceInitialize ();
         }
@@ -165,32 +170,36 @@ namespace Banshee.Sources
         
         public virtual void AddChildSource (Source child)
         {
-            lock (Children) {
-                if (!child_sources.Contains (child)) {
-                    child.SetParentSource (this);
-                    child_sources.Add (child);
-                    OnChildSourceAdded (child);
+            ThreadAssist.ProxyToMain (delegate {
+                lock (Children) {
+                    if (!child_sources.Contains (child)) {
+                        child.SetParentSource (this);
+                        child_sources.Add (child);
+                        OnChildSourceAdded (child);
+                    }
                 }
-            }
+            });
         }
 
         public virtual void RemoveChildSource (Source child)
         {
-            lock (Children) {
-                if (child.Children.Count > 0) {
-                    child.ClearChildSources ();
-                }
-                
-                child_sources.Remove (child);
-                
-                if (ServiceManager.SourceManager.ActiveSource == child) {
-                    if (CanActivate) {
-                        ServiceManager.SourceManager.SetActiveSource (this);
+            ThreadAssist.ProxyToMain (delegate {
+                lock (Children) {
+                    if (child.Children.Count > 0) {
+                        child.ClearChildSources ();
                     }
+                    
+                    child_sources.Remove (child);
+                    
+                    if (ServiceManager.SourceManager.ActiveSource == child) {
+                        if (CanActivate) {
+                            ServiceManager.SourceManager.SetActiveSource (this);
+                        }
+                    }
+                    
+                    OnChildSourceRemoved (child);
                 }
-                
-                OnChildSourceRemoved (child);
-            }
+            });
         }
         
         public virtual void ClearChildSources ()
@@ -455,10 +464,19 @@ namespace Banshee.Sources
         
         private string unique_id;
         public string UniqueId {
-            get { return unique_id ?? unique_id = String.Format ("{0}-{1}", this.GetType ().Name, TypeUniqueId); }
+            get {
+                if (unique_id == null && type_unique_id == null) {
+                    Log.ErrorFormat ("Creating Source.UniqueId for {0}, but TypeUniqueId is null; trace is {1}", this.Name, System.Environment.StackTrace);
+                }
+                return unique_id ?? unique_id = String.Format ("{0}-{1}", this.GetType ().Name, TypeUniqueId);
+            }
         }
         
-        protected abstract string TypeUniqueId { get; }
+        private string type_unique_id;
+        protected string TypeUniqueId {
+            get { return type_unique_id; }
+            set { type_unique_id = value; }
+        }
 
         public virtual bool CanRename {
             get { return false; }

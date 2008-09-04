@@ -42,7 +42,10 @@ namespace Banshee.Library
         
         public override string Value {
             get { return Paths.LibraryLocation; }
-            set { Paths.LibraryLocation = value; }
+            set {
+                Paths.LibraryLocation = value;
+                OnValueChanged ();
+            }
         }
     }
 }

@@ -435,18 +435,25 @@ namespace Banshee.Collection
             set { media_attributes = value; }
         }
         
-        public bool IsMedia (TrackMediaAttributes attr)
+        public bool HasAttribute (TrackMediaAttributes attr)
         {
             return (MediaAttributes & attr) != 0;
+        }
+
+        protected void SetAttributeIf (bool condition, TrackMediaAttributes attr)
+        {
+            if (condition) {
+                MediaAttributes |= attr;
+            }
         }
         
         public string MediaTypeName {
             get {
-                if (IsMedia (TrackMediaAttributes.Podcast))
+                if (HasAttribute (TrackMediaAttributes.Podcast))
                     return Catalog.GetString ("Podcast");
-                if (IsMedia (TrackMediaAttributes.VideoStream))
+                if (HasAttribute (TrackMediaAttributes.VideoStream))
                     return Catalog.GetString ("Video");
-                if (IsMedia (TrackMediaAttributes.Music))
+                if (HasAttribute (TrackMediaAttributes.Music))
                     return Catalog.GetString ("Song");
                 return Catalog.GetString ("Item");
             }

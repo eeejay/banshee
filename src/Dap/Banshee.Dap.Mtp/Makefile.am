@@ -5,7 +5,8 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.Dap.Mtp/MtpSource.cs \
-	Banshee.Dap.Mtp/MtpTrackInfo.cs
+	Banshee.Dap.Mtp/MtpTrackInfo.cs \
+	Banshee.Dap.Mtp/Tests/MtpDapTests.cs
 
 RESOURCES = Banshee.Dap.Mtp.addin.xml
 

@@ -60,12 +60,10 @@ namespace Banshee.Collection.Database
 
     public class DatabaseTrackInfo : TrackInfo
     {
-        private static DatabaseTrackModelProvider<DatabaseTrackInfo> provider = new DatabaseTrackModelProvider<DatabaseTrackInfo> (
-            ServiceManager.DbConnection
-        );
+        private static DatabaseTrackModelProvider<DatabaseTrackInfo> provider;
 
         public static DatabaseTrackModelProvider<DatabaseTrackInfo> Provider {
-            get { return provider; }
+            get { return provider ?? provider = new DatabaseTrackModelProvider<DatabaseTrackInfo> (ServiceManager.DbConnection); }
         }
 
         private bool? artist_changed = null, album_changed = null;

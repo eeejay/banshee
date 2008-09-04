@@ -1,3 +1,167 @@
+2008-09-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationService.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/SourceModel.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/ImportDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceModel.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceComboBox.cs:
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs: Use
+	ThreadAssist.ProxyToMain to ensure GUI actions happen on the main thread.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Get rid of virtual TypeUniqueId property, replace with protected setter.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Use the TypeUniqueId setter, and define SyncCondition and MediaType
+	properties.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	Set the Podcast MediaType flag after loading the track info from file (if
+	downloaded) to ensure it doesn't get unset.
+
+	* src/Dap/Banshee.Dap.Mtp/Makefile.am:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/Tests/MtpDapTests.cs: Tests for
+	converting from TrackInfo to Mtp.Track and back.
+
+	* tests/Makefile.am: Add Banshee.Dap.Mtp to list of assemblies to test.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Be more careful
+	about threading, add a GetFolderForTrack method to support Podcasts, and
+	move the TrackInfo/Mtp.Track conversion into MtpTrackInfo.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpTrackInfo.cs: Try harder to
+	set the MediaAttributes, and add an internal method for converting from
+	TrackInfo to Mtp.Track.
+
+	* src/Dap/Banshee.Dap/Makefile.am:
+	* src/Dap/Banshee.Dap/Banshee.Dap/PodcastGroupSource.cs: New child of
+	DAPs.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/VideoGroupSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/MusicGroupSource.cs: Set the condition
+	based on the Music/VideoLibrary's AttributesCondition.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Implement IDisposable, fix
+	up preferences, listen for libraries to change and auto-sync if
+	appropriate, move the to_remove list into each DapLibrarySync so they
+	don't clobber other libraries' items.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Add PodcastGroupSource,
+	use new TypeUniqueId setter, and auto-sync when plugged in if appropriate.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs: Add to_remove smart
+	playlist, and actually implement deleting the tracks from the DAP and
+	adding the new ones.
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/WidgetFactory.cs:
+	If the ShowDescription property of the pref is true, then pack the widget
+	into a VBox and put the description in a label below it.
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DescriptionLabel.cs:
+	New class that shows text formatted and can be updated via a delegate,
+	factored out from code in ProfileComboBoxConfigurable.
+
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/MediaProfileManager.cs:
+	Add new GetProfileForExtension helper method.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Lazily initialize the provider.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Prevent NRE and handle empty strings in the AddCondition method.
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Root.cs:
+	* src/Core/Banshee.Services/Banshee.Preferences/Collection.cs: Override
+	Sensitive and Visible setters, setting the value for each child.
+
+	* src/Core/Banshee.Services/Banshee.Preferences/SchemaPreference.cs:
+	* src/Core/Banshee.Services/Banshee.Preferences/Preference.cs: Raise
+	ValueChanged event when the value is changed.
+
+	* src/Core/Banshee.Services/Banshee.Preferences/Section.cs: Return the
+	SchemaPreference<T> object created in the Add (SchemaEntry<T>) helper.
+
+	* src/Core/Banshee.Services/Banshee.Preferences/PreferenceBase.cs: Add
+	ShowDescription property, and ValueChanged event.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Use the new
+	TypeUniqueId setter, and fix how DbId and AfterInitialize etc are called.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add
+	DeleteAllTracks method, refactor creation of expanded_schema, and
+	ProxyToMain OnTracksAdded etc calls.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs: Use new
+	TypeUniqueId setter and ProxyToMain for OnCleared and OnReloaded methods.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Set the Podcast MediaAttribute on all items in the Podcast primary source,
+	since we had that bug in PodcastTrackInfo that's now fixed.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibraryLocationPreference.cs:
+	Raise ValueChanged where appropriate.
+
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs: Add
+	SyncCondition, AttributesCondition, MediaTypes, and NotMediaTypes
+	properties.
+
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs: Set
+	MediaTypes and NotMediaTypes to filter on audio/video/podcasts as
+	appropriate.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	New AddCondition method for restricting a SmartPlaylist beyond the
+	ConditionTree.
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Rename IsMedia to
+	HasAttribute, and add SetAttributeIf (bool, attr) helper.
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Only add new
+	attributes in FindTrackMediaAttributes, don't remove current ones.
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GConfConfigurationClient.cs:
+	Handle null keys.
+
+	* src/Libraries/Mtp/Mtp/MtpDevice.cs: Make sure the folder is set, falling
+	back to the MusicFolder if it's not.
+
+	* src/Libraries/Mtp/Mtp/Track.cs: Add a Year helper property that sets the
+	ReleaseDate appropriately, and add InFolder method.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Fix bug
+	where VirtualColumns (values from tables other than the primary one)
+	caused the join-condition with their table to be duplicated.
+
+	* Makefile.am: Add make mdb helper, though I haven't really gotten it to
+	work great yet.
+
 2008-09-04  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Libraries/Lastfm/Lastfm.Data/LastfmData.cs: Patch from Iain Lane to

@@ -110,15 +110,12 @@ namespace Banshee.Lastfm.Radio
 
         private int dbid;
         
-        protected override string TypeUniqueId {
-            get { return Convert.ToString (dbid); }
-        }
-        
         // For StationSources that already exist in the db
         protected StationSource (LastfmSource lastfm, int dbId, string name, string type, string arg, int playCount) : base (generic_name, name, 150)
         {
             this.lastfm = lastfm;
             dbid = dbId;
+            TypeUniqueId = dbid.ToString ();
             Type = StationType.FindByName (type);
             Arg = arg;
             PlayCount = playCount;
@@ -179,6 +176,7 @@ namespace Banshee.Lastfm.Radio
             );
 
             dbid = ServiceManager.DbConnection.Execute (command);
+            TypeUniqueId = dbid.ToString ();
         }
 
         private void Update ()

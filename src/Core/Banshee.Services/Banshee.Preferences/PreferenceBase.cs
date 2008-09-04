@@ -31,7 +31,9 @@ using System;
 namespace Banshee.Preferences
 {
     public abstract class PreferenceBase : Root
-    {
+    {        
+        public event Action<Root> ValueChanged;
+
         public PreferenceBase ()
         {
         }
@@ -42,6 +44,20 @@ namespace Banshee.Preferences
         public virtual bool ShowLabel {
             get { return show_label; }
             set { show_label = value; }
+        }
+
+        private bool show_description = false;
+        public virtual bool ShowDescription {
+            get { return show_description; }
+            set { show_description = value; }
+        }
+
+        protected void OnValueChanged ()
+        {
+            Action<Root> handler = ValueChanged;
+            if (handler != null) {
+                handler (this);
+            }
         }
     }
 }

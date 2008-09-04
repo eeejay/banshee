@@ -76,6 +76,11 @@ namespace Banshee.Dap
         protected MediaGroupSource VideoGroupSource {
             get { return video_group_source; }
         }
+
+        private MediaGroupSource podcast_group_source;
+        protected MediaGroupSource PodcastGroupSource {
+            get { return podcast_group_source; }
+        }
         
         protected DapSource ()
         {
@@ -84,7 +89,7 @@ namespace Banshee.Dap
         public virtual void DeviceInitialize (IDevice device)
         {
             this.device = device;
-            type_unique_id = device.Uuid;
+            TypeUniqueId = device.Uuid;
         }
 
         public override void Dispose ()
@@ -166,6 +171,7 @@ namespace Banshee.Dap
             
             AddChildSource (music_group_source = new MusicGroupSource (this));
             AddChildSource (video_group_source = new VideoGroupSource (this));
+            AddChildSource (podcast_group_source = new PodcastGroupSource (this));
 
             BuildPreferences ();
             Properties.Set<Banshee.Sources.Gui.ISourceContents> ("Nereid.SourceContents", new DapContent (this));
@@ -237,7 +243,11 @@ namespace Banshee.Dap
                 LoadFromDevice ();
                 OnTracksAdded ();
                 HideStatus ();
+
                 sync.CalculateSync ();
+                if (sync.AutoSync) {
+                    sync.Sync ();
+                }
             } catch (Exception e) {
                 Log.Exception (e);
             }

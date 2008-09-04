@@ -93,7 +93,7 @@ namespace Banshee.GnomeBackend
         
         public T Get<T> (string @namespace, string key, T fallback)
         {
-            if (DisableGConf) {
+            if (DisableGConf || key == null) {
                 return fallback;
             }
             
@@ -120,7 +120,7 @@ namespace Banshee.GnomeBackend
         
         public void Set<T> (string @namespace, string key, T value)
         {
-            if (DisableGConf) {
+            if (DisableGConf || key == null) {
                 return;
             }
             

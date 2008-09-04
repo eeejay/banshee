@@ -166,31 +166,33 @@ namespace Banshee.Gui
         
         private void OnActiveSourceChanged (SourceEventArgs args)
         {
-            if (active_source_uiid > 0) {
-                ui_manager.RemoveUi (active_source_uiid);
-                active_source_uiid = 0;
-            }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                if (active_source_uiid > 0) {
+                    ui_manager.RemoveUi (active_source_uiid);
+                    active_source_uiid = 0;
+                }
+                    
+                if (active_source_actions != null) {
+                    RemoveActionGroup (active_source_actions.Name);
+                    active_source_actions = null;
+                }
                 
-            if (active_source_actions != null) {
-                RemoveActionGroup (active_source_actions.Name);
-                active_source_actions = null;
-            }
-            
-            Source active_source = ServiceManager.SourceManager.ActiveSource;
-            if (active_source == null) {
-                return;
-            }
-            
-            active_source_actions = active_source.Properties.Get<BansheeActionGroup> ("ActiveSourceActions");
-            if (active_source_actions != null) {
-                AddActionGroup (active_source_actions);
-            }
+                Source active_source = ServiceManager.SourceManager.ActiveSource;
+                if (active_source == null) {
+                    return;
+                }
                 
-            Assembly assembly = 
-                active_source.Properties.Get<Assembly> ("ActiveSourceUIResource.Assembly") ??
-                Assembly.GetAssembly (active_source.GetType ());
-
-            active_source_uiid = AddUiFromFile (active_source.Properties.Get<string> ("ActiveSourceUIResource"), assembly);
+                active_source_actions = active_source.Properties.Get<BansheeActionGroup> ("ActiveSourceActions");
+                if (active_source_actions != null) {
+                    AddActionGroup (active_source_actions);
+                }
+                    
+                Assembly assembly = 
+                    active_source.Properties.Get<Assembly> ("ActiveSourceUIResource.Assembly") ??
+                    Assembly.GetAssembly (active_source.GetType ());
+    
+                active_source_uiid = AddUiFromFile (active_source.Properties.Get<string> ("ActiveSourceUIResource"), assembly);
+            });
         }
 
         public uint AddUiFromFileInCurrentAssembly (string ui_file)

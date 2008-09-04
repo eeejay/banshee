@@ -51,13 +51,10 @@ namespace Banshee.FileSystemQueue
         private bool play_enqueued = false;
         private string path_to_play;
         
-        protected override string TypeUniqueId {
-            get { return "file-system-queue"; }
-        }
-        
         public FileSystemQueueSource () : base (Catalog.GetString ("File System Queue"), 
             Catalog.GetString ("File System Queue"), "file-system-queue", 30)
         {
+            TypeUniqueId = "file-system-queue";
             Properties.SetString ("Icon.Name", "system-file-manager");
             Properties.Set<bool> ("AutoAddSource", false);
             IsLocal = true;
@@ -89,7 +86,7 @@ namespace Banshee.FileSystemQueue
             actions_loaded = true;
             
             UpdateActions ();
-            ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
+            ServiceManager.SourceManager.ActiveSourceChanged += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
             TrackModel.Reloaded += OnTrackModelReloaded;
             
             Reload ();

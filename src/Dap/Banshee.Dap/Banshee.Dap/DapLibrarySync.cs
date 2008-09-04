@@ -52,7 +52,7 @@ namespace Banshee.Dap
         private string conf_ns;
         private SchemaEntry<bool> enabled, sync_entire_library;
         private SchemaEntry<string[]> playlist_ids;
-        private SmartPlaylistSource sync_src, to_add;
+        private SmartPlaylistSource sync_src, to_add, to_remove;
         private Section library_prefs_section;
         
         #region Public Properties
@@ -67,6 +67,10 @@ namespace Banshee.Dap
 
         public Section PrefsSection {
             get { return library_prefs_section; }
+        }
+
+        public LibrarySource Library {
+            get { return library; }
         }
         
         #endregion
@@ -106,6 +110,18 @@ namespace Banshee.Dap
             BuildSyncLists ();
         }
 
+        internal void Dispose ()
+        {
+            if (to_add != null)
+                to_add.Unmap ();
+
+            if (to_remove != null)
+                to_remove.Unmap ();
+
+            if (sync_src != null)
+                sync_src.Unmap ();
+        }
+
         private void BuildPreferences ()
         {
             conf_ns = String.Format ("{0}.{1}", sync.ConfigurationNamespace, library.ConfigurationId);
@@ -119,9 +135,7 @@ namespace Banshee.Dap
             playlist_ids = sync.Dap.CreateSchema<string[]> (conf_ns, "playlist_ids", new string [0],
                 "If sync_entire_library is false, this contains a list of playlist ids specifically to sync", "");
 
-            library_prefs_section = new Section (String.Format ("{0} sync", library.Name),
-                //String.Format (Catalog.GetString ("{0}"), library.Name)
-                library.Name, 0);
+            library_prefs_section = new Section (String.Format ("{0} sync", library.Name), library.Name, 0);
             library_prefs_section.Add<bool> (enabled);
         }
 
@@ -131,6 +145,8 @@ namespace Banshee.Dap
             sync_src = new SmartPlaylistSource ("sync_list", library.DbId);
             sync_src.IsTemporary = true;
             sync_src.Save ();
+            sync_src.AddCondition (library.AttributesCondition);
+            sync_src.AddCondition (library.SyncCondition);
 
             // This is the same as the previous list with the items that are already on the device removed
             to_add = new SmartPlaylistSource ("to_add", library.DbId);
@@ -141,12 +157,24 @@ namespace Banshee.Dap
             to_add.DatabaseTrackModel.AddCondition (String.Format (
                 "MetadataHash NOT IN (SELECT MetadataHash FROM CoreTracks WHERE PrimarySourceId = {0})", sync.Dap.DbId
             ));
+
+            // Any items on the device that aren't in the sync lists need to be removed
+            to_remove = new SmartPlaylistSource ("to_remove", sync.Dap.DbId);
+            to_remove.IsTemporary = true;
+            to_remove.Save ();
+            to_remove.AddCondition (library.AttributesCondition);
+            to_remove.AddCondition (String.Format (
+                @"MetadataHash NOT IN (SELECT MetadataHash FROM CoreTracks, CoreSmartPlaylistEntries 
+                    WHERE CoreSmartPlaylistEntries.SmartPlaylistID = {0} AND
+                        CoreTracks.TrackID = CoreSmartPlaylistEntries.TrackID)",
+                sync_src.DbId
+            ));
         }
         
         internal void CalculateSync ()
         {
             if (SyncEntireLibrary) {
-                to_add.ConditionTree = null;
+                sync_src.ConditionTree = null;
             } else if (SyncPlaylistIds.Length > 0) {
                 QueryListNode playlists_node = new QueryListNode (Keyword.Or);
                 foreach (AbstractPlaylistSource src in SyncPlaylists) {
@@ -160,22 +188,36 @@ namespace Banshee.Dap
             }
             sync_src.RefreshAndReload ();
             to_add.RefreshAndReload ();
+            to_remove.RefreshAndReload ();
         }
 
         public override string ToString ()
         {
-            return String.Format ("Sync calculated for {1}: to add: {0} items", to_add.Count, library.Name);
+            return String.Format ("Sync calculated for {1}: to add: {0} items, remove {2} items; sync_src.cacheid = {5}, to_add.cacheid = {3}, to_remove.cacheid = {4}", to_add.Count, library.Name, to_remove.Count,
+                                  to_add.DatabaseTrackModel.CacheId, to_remove.DatabaseTrackModel.CacheId, sync_src.DatabaseTrackModel.CacheId);
         }
         
         internal void Sync ()
         {
-            CalculateSync ();
-            
-            DoSyncPlaylists ();
-        }
-        
-        private void DoSyncPlaylists ()
-        {
+            if (Enabled) {
+                Log.InformationFormat ("Syncing {0}, in main thread? {1}", library, Banshee.Base.ThreadAssist.InMainThread);
+                if (to_remove.Count > 0) {
+                    Log.DebugFormat ("deleting items for {0} - {1} items; to_remove is smartplaylist {2}, with cachid {3}", library.Name, to_remove.Count, to_remove.DbId, to_remove.DatabaseTrackModel.CacheId);
+                    sync.Dap.DeleteAllTracks (to_remove);
+                }
+
+                if (to_add.Count > 0) {
+                    Log.DebugFormat ("adding {0} items to {1}", to_add.Count, library.Name);
+                    sync.Dap.AddAllTracks (to_add);
+                }
+
+                CalculateSync ();
+                sync.OnUpdated ();
+            }
+            //sync.Dap.AddAllTracks (to_add);
+
+            // Sync Playlists
+            /*
             // Remove all playlists
             foreach (Source child in sync.Dap.Children) {
                 if (child is AbstractPlaylistSource && !(child is MediaGroupSource)) {
@@ -189,15 +231,21 @@ namespace Banshee.Dap
 
             foreach (AbstractPlaylistSource src in SyncPlaylists) {
                 SyncPlaylist (src);
-            }
+            }*/
         }
         
-        private void SyncPlaylist (AbstractPlaylistSource from)
+        /*private void SyncPlaylist (AbstractPlaylistSource from)
         {
-            //PlaylistSource to = new PlaylistSource (from.Name, sync.Dap.DbId);
-            //to.Save ();
-            
-            // copy playlist/track entries based on metadatahash..
-        }
+            PlaylistSource to = new PlaylistSource (from.Name, sync.Dap.DbId);
+            to.Save ();
+
+            ServiceManager.DbConnection.Execute (
+                @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
+                    SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND MetadataHash IN (
+                        SELECT t.MetadataHash FROM CoreTracks t, CorePlaylistEntries e
+                            WHERE t.TrackID = e.TrackID AND e.PlaylistID = ?)",
+                to.DbId, sync.Dap.DbId, from.DbId
+            );
+        }*/
     }
 }

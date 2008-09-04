@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 20;
+        protected const int CURRENT_VERSION = 21;
         protected const int CURRENT_METADATA_VERSION = 4;
         
 #region Migration Driver
@@ -517,6 +517,21 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CoreSmartPlaylists ADD COLUMN IsTemporary INTEGER DEFAULT 0");
             Execute ("ALTER TABLE CorePlaylists ADD COLUMN IsTemporary INTEGER DEFAULT 0");
             Execute ("ALTER TABLE CorePrimarySources ADD COLUMN IsTemporary INTEGER DEFAULT 0");
+            return true;
+        }
+        
+#endregion
+
+#region Version 21
+
+        [DatabaseVersion (21)]
+        private bool Migrate_21 ()
+        {
+            // We had a bug where downloaded podcast episodes would no longer have the Podcast attribute.
+            int id = connection.Query<int> ("SELECT PrimarySourceId FROM CorePrimarySources WHERE StringID = 'PodcastSource-PodcastLibrary'");
+            if (id > 0) {
+                connection.Execute ("UPDATE CoreTracks SET Attributes = Attributes | ? WHERE PrimarySourceID = ?", (int)TrackMediaAttributes.Podcast, id);
+            }
             return true;
         }
         

@@ -113,6 +113,7 @@ SOURCES =  \
 	Banshee.MediaProfiles.Gui/ProfileConfigureButton.cs \
 	Banshee.Playlist.Gui/PlaylistExportDialog.cs \
 	Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs \
+	Banshee.Preferences.Gui/DescriptionLabel.cs \
 	Banshee.Preferences.Gui/NotebookPage.cs \
 	Banshee.Preferences.Gui/PreferenceDialog.cs \
 	Banshee.Preferences.Gui/SectionBox.cs \

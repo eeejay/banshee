@@ -55,6 +55,7 @@ namespace Banshee.AudioCd
         {
             this.service = service;
             this.disc_model = discModel;
+            TypeUniqueId = discModel.Title;
             
             Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
                 <column-controller>
@@ -254,10 +255,6 @@ namespace Banshee.AudioCd
 
 #region Source Overrides
 
-        protected override string TypeUniqueId {
-            get { return "audio-cd"; }
-        }
-        
         public override int Count {
             get { return disc_model.Count; }
         }

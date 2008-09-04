@@ -38,7 +38,7 @@ namespace Banshee.Dap.Gui
     public class DapActions : BansheeActionGroup
     {
         private DapSource dap;
-        public DapActions (DapSource dap) : base ("dap-actions")
+        public DapActions (DapSource dap) : base ("dap")
         {
             this.dap = dap;
             AddImportant (
@@ -49,16 +49,19 @@ namespace Banshee.Dap.Gui
             
             this["SyncDapAction"].IconName = Stock.Refresh;
             UpdateActions ();
+            dap.Sync.Updated += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
         }
 
         private void UpdateActions ()
         {
-            UpdateAction ("SyncDapAction", dap.Sync.Enabled);
+            UpdateAction ("SyncDapAction", dap.Sync.Enabled && !dap.Sync.AutoSync);
         }
 
         private void OnSyncDap (object o, EventArgs args)
         {
-            dap.Sync.Sync ();
+            Banshee.Base.ThreadAssist.SpawnFromMain (delegate {
+                dap.Sync.Sync ();
+            });
         }
     }
 }

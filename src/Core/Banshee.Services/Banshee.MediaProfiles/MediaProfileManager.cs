@@ -231,6 +231,22 @@ namespace Banshee.MediaProfiles
             return null;
         }
 
+        public Profile GetProfileForExtension (string extension)
+        {
+            if (extension == null || extension.Length < 2)
+                return null;
+
+            if (extension[0] == '.')
+                extension = extension.Substring (1, extension.Length - 1);
+            
+            foreach (Profile profile in this) {
+                if (profile.OutputFileExtension == extension) {
+                    return profile;
+                }
+            }
+            return null;
+        }
+
         public string GetExtensionForMimeType (string mimetype)
         {
             if (mimetype != null && mimetype_extensions.ContainsKey (mimetype))

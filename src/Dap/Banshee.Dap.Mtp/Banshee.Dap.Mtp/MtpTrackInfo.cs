@@ -30,7 +30,10 @@ using System;
 using System.IO;
 
 using Banshee.Base;
+using Banshee.Collection;
 using Banshee.Collection.Database;
+using Banshee.ServiceStack;
+using Banshee.MediaProfiles;
 
 using Mtp;
 
@@ -49,7 +52,7 @@ namespace Banshee.Dap.Mtp
             return String.Format ("mtp://{0}/{1}", track.FileId, track.FileName);
         }
         
-        public MtpTrackInfo (Track file) : base()
+        public MtpTrackInfo (MtpDevice device, Track file) : base()
 		{
             this.file = file;
 			
@@ -61,8 +64,20 @@ namespace Banshee.Dap.Mtp
             rating = file.Rating < 0 ? 0 : (file.Rating / 20);
             TrackTitle = file.Title;
             TrackNumber = file.TrackNumber < 0 ? 0 : (int)file.TrackNumber;
-            Year = (file.ReleaseDate != null && file.ReleaseDate.Length >= 4) ? Int32.Parse (file.ReleaseDate.Substring(0, 4)) : 0;
+            Year = file.Year;
             FileSize = (long)file.FileSize;
+
+            MediaAttributes = TrackMediaAttributes.AudioStream;
+            if (device != null) {
+                SetAttributeIf (file.InFolder (device.PodcastFolder) || Genre == "Podcast", TrackMediaAttributes.Podcast);
+                SetAttributeIf (file.InFolder (device.MusicFolder), TrackMediaAttributes.Music);
+                SetAttributeIf (file.InFolder (device.VideoFolder), TrackMediaAttributes.VideoStream);
+            }
+            // TODO set VideoStream for video podcast episodes
+            /*Profile profile = ServiceManager.Get<MediaProfileManager> ().GetProfileForExtension (System.IO.Path.GetExtension (file.FileName));
+            if (profile != null) {
+                profile.
+            }*/
 
             // This can be implemented if there's enough people requesting it
             CanPlay = false;
@@ -74,6 +89,19 @@ namespace Banshee.Dap.Mtp
 			// Set a URI even though it's not actually accessible through normal API's.
 			Uri = new SafeUri (GetPathFromMtpTrack (file));
         }
+
+        internal static void ToMtpTrack (TrackInfo track, Track f)
+        {
+			f.Album = track.AlbumTitle;
+			f.Artist = track.ArtistName;
+			f.Duration = (uint)track.Duration.TotalMilliseconds;
+			f.Genre = track.Genre;
+			f.Rating = (ushort)(track.Rating * 20);
+			f.Title = track.TrackTitle;
+			f.TrackNumber = (ushort)track.TrackNumber;
+			f.UseCount = (uint)track.PlayCount;
+            f.Year = track.Year;
+		}
         
         /*public override bool Equals (object o)
         {

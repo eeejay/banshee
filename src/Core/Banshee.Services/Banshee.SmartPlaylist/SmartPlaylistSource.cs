@@ -125,6 +125,14 @@ namespace Banshee.SmartPlaylist
             }
         }
 
+        private string additional_conditions;
+        public void AddCondition (string part)
+        {
+            if (!String.IsNullOrEmpty (part)) {
+                additional_conditions = additional_conditions == null ? part : String.Format ("{0} AND {1}", additional_conditions, part);
+            }
+        }
+
         private string condition_sql;
         public virtual string ConditionSql {
             get { return condition_sql; }
@@ -182,43 +190,39 @@ namespace Banshee.SmartPlaylist
 
 #region Constructors
 
-        public SmartPlaylistSource (string name, int primarySourceId) : this (null, name, String.Empty, String.Empty, String.Empty, String.Empty, primarySourceId, 0, false)
+        public SmartPlaylistSource (string name, int primarySourceId) : base (generic_name, name, primarySourceId)
         {
+            SetProperties ();
         }
 
         public SmartPlaylistSource (string name, QueryNode condition, QueryOrder order, QueryLimit limit, IntegerQueryValue limit_value, int primarySourceId)
-            : base (generic_name, name, null, -1, 0, primarySourceId, false)
+            : this (name, primarySourceId)
         {
             ConditionTree = condition;
             QueryOrder = order;
             Limit = limit;
             LimitValue = limit_value;
 
-            InstallProperties ();
+            SetProperties ();
             UpdateDependencies ();
         }
 
         // For existing smart playlists that we're loading from the database
-        protected SmartPlaylistSource (int? dbid, string name, string condition_xml, string order_by, string limit_number, string limit_criterion, int primarySourceId, int count, bool is_temp) :
+        protected SmartPlaylistSource (int dbid, string name, string condition_xml, string order_by, string limit_number, string limit_criterion, int primarySourceId, int count, bool is_temp) :
             base (generic_name, name, dbid, -1, 0, primarySourceId, is_temp)
         {
             ConditionXml = condition_xml;
             QueryOrder = BansheeQuery.FindOrder (order_by);
-            
             Limit = BansheeQuery.FindLimit (limit_criterion);
-
             LimitValue = new IntegerQueryValue ();
             LimitValue.ParseUserQuery (limit_number);
-
-            DbId = dbid;
             SavedCount = count;
 
-            InstallProperties ();
-
+            SetProperties ();
             UpdateDependencies ();
         }
 
-        protected void InstallProperties ()
+        private void SetProperties ()
         {
             Properties.SetString ("Icon.Name", "source-smart-playlist");
             Properties.SetString ("SourcePropertiesActionLabel", properties_label);
@@ -346,11 +350,11 @@ namespace Banshee.SmartPlaylist
             string reload_str = String.Format (
                 @"DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {0};
                   INSERT INTO CoreSmartPlaylistEntries 
-                    SELECT NULL, {0} as SmartPlaylistID, TrackId
-                        FROM CoreTracks, CoreArtists, CoreAlbums
-                        WHERE CoreTracks.ArtistID = CoreArtists.ArtistID AND CoreTracks.AlbumID = CoreAlbums.AlbumID AND CoreTracks.PrimarySourceID = {1}
-                        {2} {3} {4}",
-                DbId, PrimarySourceId, PrependCondition("AND"), OrderSql, LimitSql
+                    SELECT NULL, {0} as SmartPlaylistID, TrackId FROM {1}
+                        WHERE {2} AND CoreTracks.PrimarySourceID = {3}
+                        {4} {5} {6}",
+                DbId, DatabaseTrackInfo.Provider.From, DatabaseTrackInfo.Provider.Where,
+                PrimarySourceId, PrependCondition ("AND"), OrderSql, LimitSql
             );
             ServiceManager.DbConnection.Execute (reload_str);
 
@@ -475,7 +479,11 @@ namespace Banshee.SmartPlaylist
 
         private string PrependCondition (string with)
         {
-            return String.IsNullOrEmpty (ConditionSql) ? " " : String.Format ("{0} ({1})", with, ConditionSql);
+            string sql = String.IsNullOrEmpty (ConditionSql) ? " " : String.Format ("{0} ({1})", with, ConditionSql);
+            if (!String.IsNullOrEmpty (additional_conditions)) {
+                sql = String.IsNullOrEmpty (sql) ? additional_conditions : String.Format ("{0} AND ({1})", sql, additional_conditions);
+            }
+            return sql;
         }
 
         public static IEnumerable<SmartPlaylistSource> LoadAll (int primary_id)

@@ -58,7 +58,7 @@ namespace Banshee.Preferences
             
             return Order.CompareTo (r.Order);
         }
-        
+
         public string Id {
             get { return id; }
             set { id = value; }
@@ -79,7 +79,7 @@ namespace Banshee.Preferences
             set { order = value; }
         }
         
-        public bool Sensitive {
+        public virtual bool Sensitive {
             get { return sensitive; }
             set {
                 sensitive = value;
@@ -87,7 +87,7 @@ namespace Banshee.Preferences
             }
         }
         
-        public bool Visible {
+        public virtual bool Visible {
             get { return visible; }
             set {
                 visible = value;

@@ -67,6 +67,7 @@ namespace Banshee.Gui.Widgets
         
         private void BuildWidget ()
         {
+            ThreadAssist.AssertInMainThread ();
             ColumnSpacing = 5;
             RowSpacing = 2;
             
@@ -171,6 +172,7 @@ namespace Banshee.Gui.Widgets
         
         private void UpdateFromJob ()
         {
+            ThreadAssist.AssertInMainThread ();
             if (cancel_dialog != null && !job.CanCancel) {
                 cancel_dialog.Respond (Gtk.ResponseType.Cancel);
             }

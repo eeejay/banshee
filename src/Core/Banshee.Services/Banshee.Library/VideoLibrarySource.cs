@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Banshee.SmartPlaylist;
+using Banshee.Collection;
 
 namespace Banshee.Library
 {
@@ -40,6 +41,8 @@ namespace Banshee.Library
     {
         public VideoLibrarySource () : base (Catalog.GetString ("Video Library"), "VideoLibrary", 50)
         {
+            MediaTypes = TrackMediaAttributes.VideoStream;
+            NotMediaTypes = TrackMediaAttributes.Podcast;
             Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
             Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
                 <column-controller>

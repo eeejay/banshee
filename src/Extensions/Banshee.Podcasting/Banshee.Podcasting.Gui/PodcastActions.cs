@@ -161,8 +161,8 @@ namespace Banshee.Podcasting.Gui
 
             ServiceManager.SourceManager.ActiveSourceChanged += HandleActiveSourceChanged;
             
-            source.TrackModel.Selection.Changed += delegate { UpdateItemActions (); };
-            source.FeedModel.Selection.Changed += delegate { UpdateFeedActions (); };
+            source.TrackModel.Selection.Changed += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateItemActions); };
+            source.FeedModel.Selection.Changed += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateFeedActions); };
             
             UpdateFeedActions ();
             UpdateItemActions ();
@@ -179,8 +179,10 @@ namespace Banshee.Podcasting.Gui
 
         private void HandleActiveSourceChanged (SourceEventArgs args)
         {
-            UpdateFeedActions ();
-            UpdateItemActions ();
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                UpdateFeedActions ();
+                UpdateItemActions ();
+            });
         }
 
 #endregion

@@ -44,12 +44,6 @@ namespace Banshee.Sources
         public event EventHandler Cleared;
         public event EventHandler Reloaded;
         
-        private static Random rand = new Random ();
-        private string tuid = rand.Next ().ToString ();
-        protected override string TypeUniqueId {
-            get { return tuid; }
-        }
-
         public ErrorSource (string name) : base (name, name, 0)
         {
             Properties.SetStringList ("Icon.Name", "dialog-error", "gtk-dialog-error");
@@ -66,18 +60,22 @@ namespace Banshee.Sources
         
         private void OnReloaded ()
         {
-            EventHandler handler = Reloaded;
-            if (handler != null) {
-                handler (this, EventArgs.Empty);
-            }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                EventHandler handler = Reloaded;
+                if (handler != null) {
+                    handler (this, EventArgs.Empty);
+                }
+            });
         }
         
         private void OnCleared ()
         {
-            EventHandler handler = Cleared;
-            if (handler != null) {
-                handler (this, EventArgs.Empty);
-            }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                EventHandler handler = Cleared;
+                if (handler != null) {
+                    handler (this, EventArgs.Empty);
+                }
+            });
         }
         
         private ColumnDescription [] columns = new ColumnDescription [] {

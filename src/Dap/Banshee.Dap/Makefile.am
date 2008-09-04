@@ -16,6 +16,7 @@ SOURCES =  \
 	Banshee.Dap/InvalidDeviceException.cs \
 	Banshee.Dap/MediaGroupSource.cs \
 	Banshee.Dap/MusicGroupSource.cs \
+	Banshee.Dap/PodcastGroupSource.cs \
 	Banshee.Dap/RemovableSource.cs \
 	Banshee.Dap/VideoGroupSource.cs
 

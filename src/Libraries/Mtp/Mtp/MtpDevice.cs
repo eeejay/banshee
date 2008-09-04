@@ -231,6 +231,7 @@ namespace Mtp
 			if (track == null)
 				throw new ArgumentNullException("track");
 
+            folder = folder ?? MusicFolder;
             track.trackStruct.parent_id = folder.FolderId;
 			
 			// We send the trackstruct by ref so that when the file_id gets filled in, our copy is updated

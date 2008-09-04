@@ -54,6 +54,28 @@ namespace Banshee.Library
             AfterInitialized ();
         }
 
+        public string AttributesCondition {
+            get { return String.Format ("((CoreTracks.Attributes & {0}) == {0} AND (CoreTracks.Attributes & {1}) == 0)", (int)MediaTypes, (int)NotMediaTypes); }
+        }
+
+        private string sync_condition;
+        public string SyncCondition {
+            get { return sync_condition; }
+            protected set { sync_condition = value; }
+        }
+
+        private TrackMediaAttributes media_types;
+        protected TrackMediaAttributes MediaTypes {
+            get { return media_types; }
+            set { media_types = value; }
+        }
+
+        private TrackMediaAttributes not_media_types = TrackMediaAttributes.None;
+        protected TrackMediaAttributes NotMediaTypes {
+            get { return not_media_types; }
+            set { not_media_types = value; }
+        }
+
         public override string BaseDirectory {
             get { return Paths.CachedLibraryLocation; }
         }

@@ -60,10 +60,16 @@ namespace Banshee.Preferences.Gui
             if (widget != null) {
                 preference.Changed += OnPreferenceChanged;
                 //widget.Destroyed += OnWidgetDestroyed;
-                return widget;
+            }
+
+            if (preference.ShowDescription) {
+                VBox box = new VBox ();
+                box.PackStart (widget, false, false, 0);
+                new DescriptionLabel (preference.Description).PackInto (box, false);
+                widget = box;
             }
             
-            return null;
+            return widget;
         }
 
         public static Widget GetMnemonicWidget (PreferenceBase preference)
@@ -121,7 +127,7 @@ namespace Banshee.Preferences.Gui
             {
                 this.preference = preference;
                 string value = (string)preference.BoxedValue;
-                Text = value == null ? String.Empty : value;
+                Text = value ?? String.Empty;
                 sync = true;
             }
             

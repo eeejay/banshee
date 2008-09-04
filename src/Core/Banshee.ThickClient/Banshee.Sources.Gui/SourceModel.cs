@@ -64,6 +64,8 @@ namespace Banshee.Sources.Gui
 
     public class SourceModel : TreeStore
     {
+        private object sync = new object ();
+
         public event SourceRowEventHandler SourceRowInserted;
         public event SourceRowEventHandler SourceRowRemoved;
         
@@ -85,12 +87,16 @@ namespace Banshee.Sources.Gui
         
         private void OnSourceAdded (SourceAddedArgs args)
         {
-            AddSource (args.Source);
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                AddSource (args.Source);
+            });
         }
         
         private void OnSourceRemoved (SourceEventArgs args)
         {
-            RemoveSource (args.Source);
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                RemoveSource (args.Source);
+            });
         }
         
         protected virtual void OnSourceRowInserted (Source source, TreeIter iter, TreeIter parentIter)
@@ -204,49 +210,53 @@ namespace Banshee.Sources.Gui
 
         public void AddSource (Source source, TreeIter parent)
         {
-            // Don't add duplicates
-            if (!FindSource (source).Equals (TreeIter.Zero)) {
-                return;
-            }
-            
-            // Don't add a child source before its parent
-            if (parent.Equals (TreeIter.Zero) && source.Parent != null) {
-                return;
-            }
-            
-            int position = source.Order;
-            
-            TreeIter iter = parent.Equals (TreeIter.Zero)
-                ? InsertNode (position) 
-                : InsertNode (parent, position);
-            
-            SetValue (iter, 0, source);
-            SetValue (iter, 1, source.Order);
-            SetValue (iter, 2, false);
-
-            lock (source.Children) {
-                foreach (Source child in source.Children) {
-                    AddSource (child, iter);
+            lock (sync) {
+                // Don't add duplicates
+                if (!FindSource (source).Equals (TreeIter.Zero)) {
+                    return;
                 }
+                
+                // Don't add a child source before its parent
+                if (parent.Equals (TreeIter.Zero) && source.Parent != null) {
+                    return;
+                }
+                
+                int position = source.Order;
+                
+                TreeIter iter = parent.Equals (TreeIter.Zero)
+                    ? InsertNode (position) 
+                    : InsertNode (parent, position);
+                
+                SetValue (iter, 0, source);
+                SetValue (iter, 1, source.Order);
+                SetValue (iter, 2, false);
+
+                lock (source.Children) {
+                    foreach (Source child in source.Children) {
+                        AddSource (child, iter);
+                    }
+                }
+                
+                source.ChildSourceAdded += OnSourceChildSourceAdded; 
+                source.ChildSourceRemoved += OnSourceChildSourceRemoved;
+                
+                OnSourceRowInserted (source, iter, parent);
             }
-            
-            source.ChildSourceAdded += OnSourceChildSourceAdded; 
-            source.ChildSourceRemoved += OnSourceChildSourceRemoved;
-            
-            OnSourceRowInserted (source, iter, parent);
         }
         
         public void RemoveSource (Source source)
         {
-            TreeIter iter = FindSource (source);
-            if (!iter.Equals (TreeIter.Zero)) {
-                Remove (ref iter);
+            lock (sync) {
+                TreeIter iter = FindSource (source);
+                if (!iter.Equals (TreeIter.Zero)) {
+                    Remove (ref iter);
+                }
+                
+                source.ChildSourceAdded -= OnSourceChildSourceAdded;
+                source.ChildSourceRemoved -= OnSourceChildSourceRemoved;
+              
+                OnSourceRowRemoved (source, iter);
             }
-            
-            source.ChildSourceAdded -= OnSourceChildSourceAdded;
-            source.ChildSourceRemoved -= OnSourceChildSourceRemoved;
-          
-            OnSourceRowRemoved (source, iter);
         }
         
         public void Refresh ()
@@ -259,12 +269,16 @@ namespace Banshee.Sources.Gui
         
         private void OnSourceChildSourceAdded (SourceEventArgs args)
         {
-            AddSource (args.Source, FindSource (args.Source.Parent));
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                AddSource (args.Source, FindSource (args.Source.Parent));
+            });
         }
         
         private void OnSourceChildSourceRemoved (SourceEventArgs args)
         {
-            RemoveSource (args.Source);
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                RemoveSource (args.Source);
+            });
         }
         
 #endregion

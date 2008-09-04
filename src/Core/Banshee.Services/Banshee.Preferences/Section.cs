@@ -40,7 +40,7 @@ namespace Banshee.Preferences
             get { return show_label; }
             set { show_label = value; }
         }
-        
+
         public Section ()
         {
         }
@@ -52,9 +52,11 @@ namespace Banshee.Preferences
             Order = order;
         }
 
-        public void Add<T> (SchemaEntry<T> schema)
+        public SchemaPreference<T> Add<T> (SchemaEntry<T> schema)
         {
-            Add (new SchemaPreference<T> (schema, schema.ShortDescription, schema.LongDescription));
+            SchemaPreference<T> pref = new SchemaPreference<T> (schema, schema.ShortDescription, schema.LongDescription);
+            Add (pref);
+            return pref;
         }
     }
 }

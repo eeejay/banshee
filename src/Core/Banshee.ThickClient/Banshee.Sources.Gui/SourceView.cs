@@ -102,7 +102,7 @@ namespace Banshee.Sources.Gui
         private void ConnectEvents ()
         {
             ServiceManager.SourceManager.ActiveSourceChanged += delegate (SourceEventArgs args) {
-                ResetSelection ();
+                Banshee.Base.ThreadAssist.ProxyToMain (ResetSelection);
             };
             
             ServiceManager.SourceManager.SourceUpdated += delegate (SourceEventArgs args) {
@@ -118,10 +118,11 @@ namespace Banshee.Sources.Gui
             };
             
             ServiceManager.PlaybackController.NextSourceChanged += delegate {
-                QueueDraw ();
+                Banshee.Base.ThreadAssist.ProxyToMain (QueueDraw);
             };
             
             notify_stage.ActorStep += delegate (Actor<TreeIter> actor) {
+                Banshee.Base.ThreadAssist.AssertInMainThread ();
                 if (!store.IterIsValid (actor.Target)) {
                     return false;
                 }

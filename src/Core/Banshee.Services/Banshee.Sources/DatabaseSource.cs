@@ -68,16 +68,10 @@ namespace Banshee.Sources
             }
         }
 
-        protected RateLimiter reload_limiter;
+        private RateLimiter reload_limiter;
         
-        protected string type_unique_id;
-        protected override string TypeUniqueId {
-            get { return type_unique_id; }
-        }
-        
-        public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order)
+        public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order, id)
         {
-            type_unique_id = id;
             DatabaseSourceInitialize ();
         }
 

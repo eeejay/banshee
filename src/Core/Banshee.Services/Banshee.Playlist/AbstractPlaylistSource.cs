@@ -89,7 +89,6 @@ namespace Banshee.Playlist
             protected set {
                 if (value != null && value != dbid) {
                     dbid = value;
-                    AfterInitialized ();
                 }
             }
         }
@@ -128,16 +127,20 @@ namespace Banshee.Playlist
             }
         }
 
-        public AbstractPlaylistSource (string generic_name, string name, int primarySourceId)
-            : this (generic_name, name, null, -1, 0, primarySourceId, false)
+        public AbstractPlaylistSource (string generic_name, string name, int primarySourceId) : base ()
         {
+            GenericName = generic_name;
+            Name = name;
+            primary_source_id = primarySourceId;
         }
 
-        public AbstractPlaylistSource (string generic_name, string name, int? dbid, int sortColumn, int sortType, int primarySourceId, bool is_temp)
-            : base (generic_name, name, Convert.ToString (dbid), 500)
+        public AbstractPlaylistSource (string generic_name, string name, int dbid, int sortColumn, int sortType, int primarySourceId, bool is_temp)
+            : base (generic_name, name, dbid.ToString (), 500)
         {
+            DbId = dbid;
             IsTemporary = is_temp;
             this.primary_source_id = primarySourceId;
+            AfterInitialized ();
         }
 
         protected override void AfterInitialized ()
@@ -147,7 +150,6 @@ namespace Banshee.Playlist
             DatabaseTrackModel.JoinColumn = "TrackID";
             DatabaseTrackModel.CachesJoinTableEntries = CachesJoinTableEntries;
             DatabaseTrackModel.AddCondition (String.Format (TrackCondition, dbid));
-
             base.AfterInitialized ();
         }
 
@@ -167,10 +169,14 @@ namespace Banshee.Playlist
 
         public override void Save ()
         {
-            if (dbid == null || dbid <= 0)
+            if (dbid == null || dbid <= 0) {
                 Create ();
-            else
+                TypeUniqueId = dbid.ToString ();
+                Initialize ();
+                AfterInitialized ();
+            } else {
                 Update ();
+            }
         }
 
         // Have our parent handle deleting tracks

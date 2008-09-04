@@ -70,6 +70,11 @@ gdb:
 	gdb mono --eval-command="handle SIGXCPU SIG35 SIGPWR nostop noprint" --eval-command="b g_return_if_fail_warning" --eval-command="r --debug Nereid.exe --debug --uninstalled"; \
 	popd;
 
+mdb:
+	@pushd bin; \
+	mdb -run -args Nereid.exe --debug --uninstalled"; \
+	popd;
+
 test:
 	@pushd tests; \
 	make test \

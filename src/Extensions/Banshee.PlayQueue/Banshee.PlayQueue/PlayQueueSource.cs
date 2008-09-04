@@ -59,9 +59,12 @@ namespace Banshee.PlayQueue
             get { return false; }
         }
         
-        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null, 20)
+        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), 0)
         {
             BindToDatabase ();
+            TypeUniqueId = DbId.ToString ();
+            Initialize ();
+            AfterInitialized ();
             
             Order = 20;
             Properties.SetString ("Icon.Name", "source-playlist");
@@ -106,7 +109,7 @@ namespace Banshee.PlayQueue
             actions_loaded = true;
             
             UpdateActions ();
-            ServiceManager.SourceManager.ActiveSourceChanged += delegate { UpdateActions (); };
+            ServiceManager.SourceManager.ActiveSourceChanged += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
 
             // TODO listen to all primary sources, and handle transient primary sources
             ServiceManager.SourceManager.MusicLibrary.TracksChanged += HandleTracksChanged;

@@ -387,7 +387,9 @@ namespace Banshee.Collection.Database
             set { 
                 forced_sort_query = value != null;
                 sort_query = value;
-                cache.Clear ();
+                if (cache != null) {
+                    cache.Clear ();
+                }
             }
         }
 
@@ -415,7 +417,9 @@ namespace Banshee.Collection.Database
         
         public void AddCondition (string part)
         {
-            condition = condition == null ? part : String.Format ("{0} AND {1}", condition, part);
+            if (!String.IsNullOrEmpty (part)) {
+                condition = condition == null ? part : String.Format ("{0} AND {1}", condition, part);
+            }
         }
         
         public string Condition {

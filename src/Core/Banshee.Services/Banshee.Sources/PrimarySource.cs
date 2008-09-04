@@ -102,7 +102,10 @@ namespace Banshee.Sources
             DELETE FROM CoreTracks WHERE PrimarySourceId = ?
         ");
 
-        public readonly SchemaEntry<bool> ExpandedSchema;
+        private SchemaEntry<bool> expanded_schema;
+        public SchemaEntry<bool> ExpandedSchema {
+            get { return expanded_schema; }
+        }
 
         private int dbid;
         public int DbId {
@@ -198,17 +201,10 @@ namespace Banshee.Sources
         protected PrimarySource (string generic_name, string name, string id, int order) : base (generic_name, name, id, order)
         {
             PrimarySourceInitialize ();
-
-            ExpandedSchema = new SchemaEntry<bool> (
-                String.Format ("sources.{0}", ConfigurationId), "expanded", true, "Is source expanded", "Is source expanded"
-            );
         }
 
         protected PrimarySource () : base ()
         {
-            ExpandedSchema = new SchemaEntry<bool> (
-                String.Format ("sources.{0}", ConfigurationId), "expanded", true, "Is source expanded", "Is source expanded"
-            );
         }
 
         public override bool? AutoExpand {
@@ -219,7 +215,6 @@ namespace Banshee.Sources
             get { return ExpandedSchema.Get (); }
             set { ExpandedSchema.Set (value); }
         }
-
 
         public virtual void Dispose ()
         {
@@ -276,6 +271,10 @@ namespace Banshee.Sources
                 // if we didn't have any and the list of default ones is empty atm).
                 if (sp_count > 0)
                     HaveCreatedSmartPlaylists = true;
+
+                expanded_schema = new SchemaEntry<bool> (
+                    String.Format ("sources.{0}", ConfigurationId), "expanded", true, "Is source expanded", "Is source expanded"
+                );
             }
         }
 
@@ -433,20 +432,28 @@ namespace Banshee.Sources
             DeleteSelectedTracks (source.TrackModel as DatabaseTrackListModel);
         }
 
+        public void DeleteAllTracks (AbstractPlaylistSource source)
+        {
+            if (source.PrimarySource != this) {
+                Log.WarningFormat ("Cannot delete all tracks from {0} via primary source {1}", source, this);
+                return;
+            }
+            
+            ThreadAssist.SpawnFromMain (delegate {
+                CachedList<DatabaseTrackInfo> list = CachedList<DatabaseTrackInfo>.CreateFromModel (source.DatabaseTrackModel);
+                DeleteTrackList (list);
+            });
+        }
+
         protected override void DeleteSelectedTracks (DatabaseTrackListModel model)
         {
+            if (model == null) {
+                return;
+            }
+            
             ThreadAssist.SpawnFromMain (delegate {
-                if (model == null)
-                    return;
-
                 CachedList<DatabaseTrackInfo> list = CachedList<DatabaseTrackInfo>.CreateFromModelSelection (model);
                 DeleteTrackList (list);
-
-                OnTracksDeleted ();
-                OnUserNotifyUpdated ();
-                ThreadAssist.ProxyToMain (delegate {
-                    OnUpdated ();
-                });
             });
         }
 
@@ -485,6 +492,12 @@ namespace Banshee.Sources
 
             // Remove from database
             ServiceManager.DbConnection.Execute (remove_list_command, DateTime.Now, list.CacheId, list.CacheId);
+
+            ThreadAssist.ProxyToMain (delegate {
+                OnTracksDeleted ();
+                OnUserNotifyUpdated ();
+                OnUpdated ();
+            });
         }
 
         protected virtual void DeleteTrack (DatabaseTrackInfo track)
@@ -508,7 +521,11 @@ namespace Banshee.Sources
 
             // Store a snapshot of the current selection
             CachedList<DatabaseTrackInfo> cached_list = CachedList<DatabaseTrackInfo>.CreateFromModelSelection (model);
-            System.Threading.ThreadPool.QueueUserWorkItem (AddTrackList, cached_list);
+            if (ThreadAssist.InMainThread) {
+                System.Threading.ThreadPool.QueueUserWorkItem (AddTrackList, cached_list);
+            } else {
+                AddTrackList (cached_list);
+            }
             return true;
         }
         
@@ -519,7 +536,11 @@ namespace Banshee.Sources
             
             DatabaseTrackListModel model = (source as ITrackModelSource).TrackModel as DatabaseTrackListModel;
             CachedList<DatabaseTrackInfo> cached_list = CachedList<DatabaseTrackInfo>.CreateFromModel (model);
-            System.Threading.ThreadPool.QueueUserWorkItem (AddTrackList, cached_list);
+            if (ThreadAssist.InMainThread) {
+                System.Threading.ThreadPool.QueueUserWorkItem (AddTrackList, cached_list);
+            } else {
+                AddTrackList (cached_list);
+            }
             return true;
         }
 
@@ -587,11 +608,14 @@ namespace Banshee.Sources
                 }
             }
 
-            if (notify || finished)
-                OnTracksAdded ();
-
-            if (finished)
-                OnUserNotifyUpdated ();
+            if (notify || finished) {
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    OnTracksAdded ();
+    
+                if (finished)
+                    OnUserNotifyUpdated ();
+                });
+            }
         }
 
         private bool delay_add_job = true;
