@@ -1,0 +1,4366 @@
+# translation of banshee.HEAD.gu.po to Gujarati
+# Copyright (C) 2006 The GNOME Foundation
+# This file is distributed under the same license as the banshee package.
+#
+#
+# Christopher Orr <chris@orr.me.uk>, 2006.
+# Krunali Patel <krunaliben.patel@gmail.com>, 2007.
+# Ankit Patel <ankit@redhat.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: banshee.HEAD.gu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-09-04 03:57+0000\n"
+"PO-Revision-Date: 2008-09-04 16:44+0530\n"
+"Last-Translator: Ankit Patel <ankit@redhat.com>\n"
+"Language-Team: Gujarati <fedora-trans-gu@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"X-Poedit-Language: Gujarati\n"
+"X-Poedit-Country: INDIA\n"
+"Plural-Forms:  nplurals=2; plural=(n!=1);\n\n"
+
+#: ../data/audio-profiles/base.xml.in.h:1
+msgid "Channels"
+msgstr "ચેનલો"
+
+#: ../data/audio-profiles/flac.xml.in.h:1
+msgid "Free Lossless Audio Codec"
+msgstr "Free Lossless Audio Codec"
+
+#: ../data/audio-profiles/flac.xml.in.h:2
+msgid ""
+"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
+"does not degrade audio quality."
+msgstr ""
+"Free Lossless Audio Codec (FLAC) એ ઓપન સોર્સ કોડેક છે કે જે સંકોચન કરે છે પરંતુ "
+"ઓડિયોની ગુણવત્તા ઘટાડતું નથી."
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:1
+#: ../data/audio-profiles/mp3-xing.xml.in.h:1
+msgid ""
+"A proprietary and older, but also popular, lossy audio format that produces "
+"larger files at lower bitrates."
+msgstr ""
+"ખાનગી અને જૂનું, અને પ્રખ્યાત પણ, એવું આછું ઓડિયો બંધારણ કે જે નીચા બીટદરોએ મોટી ફાઈલો પેદા "
+"કરે છે."
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:2
+msgid "Average Bitrate"
+msgstr "સરેરાશ બીટદર"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:3
+#: ../data/audio-profiles/vorbis.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:2
+#: ../data/audio-profiles/wma.xml.in.h:3
+msgid "Best"
+msgstr "શ્રેષ્ઠ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:4
+#: ../data/audio-profiles/mp3-xing.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:3
+#: ../data/audio-profiles/wma.xml.in.h:4
+msgid "Bitrate"
+msgstr "બીટદર"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:5
+msgid "Constant Bitrate"
+msgstr "અચળ બીટદર"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:6
+msgid "MP3 (LAME Encoder)"
+msgstr "MP3 (LAME Encoder)"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:7
+msgid "VBR Mode"
+msgstr "VBR સ્થિતિ"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:8
+msgid "VBR Quality"
+msgstr "VBR ગુણવત્તા"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:9
+msgid "Variable Bitrate"
+msgstr "ચલ બીટદર"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:10
+#: ../data/audio-profiles/vorbis.xml.in.h:5
+#: ../data/audio-profiles/wavpack.xml.in.h:11
+#: ../data/audio-profiles/wma.xml.in.h:7
+msgid "Worst"
+msgstr "ખરાબ"
+
+#: ../data/audio-profiles/mp3-xing.xml.in.h:3
+msgid "MP3 (Xing Encoder)"
+msgstr "MP3 (Xing Encoder)"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:1
+msgid "Audio quality"
+msgstr "ઓડિયો ગુણવત્તા"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:3
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:4
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr "Vorbis એ ઓપન સોર્સ, આછી ઓડિયો કોડેક છે ઊંચી ગુણવત્તા સાથે અને MP3 કરતાં નીચા માપ સાથે."
+
+#: ../data/audio-profiles/wavpack.xml.in.h:1
+msgid ""
+"A fast and efficient open source audio format offering lossless and high-"
+"quality lossy encoding with great dynamic range."
+msgstr ""
+"ઝડપી અને અસરકારક ઓપન સોર્સ ઓડિયો બંધારણ નષ્ટવીહિન અને ઊંચી-ગુણવત્તાની આછી સંગ્રહપદ્ધતિ "
+"શ્રેષ્ઠ વૈશ્વિક વિસ્તાર સાથે પૂરી પાડે છે."
+
+#: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Default"
+msgstr "મૂળભૂત"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
+msgid "Extra processing"
+msgstr "વધારાની પ્રક્રિયા"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Highest"
+msgstr "ઉચ્ચતમ"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
+msgid "Lossy mode"
+msgstr "Lossy સ્થિતિ"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:8
+msgid "Mode"
+msgstr "સ્થિતિ"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:9
+msgid "Store MD5 sum in the file"
+msgstr "MD5 સરવાળાને ફાઈલમાં સંગ્રહો"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:10
+msgid "Wavpack"
+msgstr "Wavpack"
+
+#: ../data/audio-profiles/wav.xml.in.h:1
+msgid ""
+"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+"modulated (PCM) audio."
+msgstr ""
+"WAV+PCM એ નષ્ટવીહિન બંધારણ છે કે જે વિસંકોચન, કાચો pulse-code modulated (PCM) "
+"ઓડિયો સાચવે છે."
+
+#: ../data/audio-profiles/wav.xml.in.h:2
+msgid "Waveform PCM"
+msgstr "Waveform PCM"
+
+#: ../data/audio-profiles/wma.xml.in.h:1
+msgid ""
+"A proprietary lossy audio format with high quality output at a lower file "
+"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
+msgstr ""
+"ઊંચી ગુણવત્તા સાથેનું આઉટપુટ સાથે ખાનગી આછું ઓડિયો બંધારણ MP3 કરતાં નીચા ફાઈલ માપમાં. 96 "
+"kbps WMA એ 128 kbps MP3 ને સમતુલ્ય છે."
+
+#: ../data/audio-profiles/wma.xml.in.h:2
+msgid "Audio Quality"
+msgstr "ઓડિયો ગુણવત્તા"
+
+#: ../data/audio-profiles/wma.xml.in.h:5
+msgid "Use a variable bitrate"
+msgstr "ચલ બીટદર વાપરો"
+
+#: ../data/audio-profiles/wma.xml.in.h:6
+msgid "Windows Media Audio"
+msgstr "Windows Media Audio"
+
+#: ../data/banshee-1.desktop.in.in.h:1
+#: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:72
+msgid "Banshee Media Player"
+msgstr "Banshee મીડિયા પ્લેયર"
+
+#: ../data/banshee-1.desktop.in.in.h:2
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:151
+msgid "Media Player"
+msgstr "મીડિયા પ્લેયર"
+
+#: ../data/banshee-1.desktop.in.in.h:3
+msgid "Play and organize your media collection"
+msgstr "તમારો મીડિયા સંગ્રહ વગાડો અને આયોજીત કરો"
+
+#: ../libbanshee/banshee-ripper.c:201
+msgid "Could not create pipeline"
+msgstr "પાઈપલાઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-ripper.c:207
+msgid "Could not initialize element from cdda URI"
+msgstr "cdda URI માંથી ઘટકનો આરંભ કરી શક્યા નહિં"
+
+#: ../libbanshee/banshee-ripper.c:221
+msgid "Could not create encoder pipeline"
+msgstr "એનકોડર પાઈપલાઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-ripper.c:227
+msgid "Could not create queue plugin"
+msgstr "કતાર પ્લગઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-ripper.c:235
+msgid "Could not create filesink plugin"
+msgstr "filesink પ્લગઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-ripper.c:242
+msgid "Could not link pipeline elements"
+msgstr "પાઈપલાઈન ઘટકોની કડી કરી શક્યા નહિં"
+
+#: ../libbanshee/banshee-transcoder.c:241
+msgid "Could not create 'filesrc' plugin"
+msgstr "'filesrc' પ્લગઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-transcoder.c:247
+msgid "Could not create 'decodebin' plugin"
+msgstr "'decodebin' પ્લગઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-transcoder.c:253
+msgid "Could not create 'filesink' plugin"
+msgstr "'filesink' પ્લગઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-transcoder.c:259
+msgid "Could not create 'sinkben' plugin"
+msgstr "'sinkben' પ્લગઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-transcoder.c:265
+msgid "Could not create 'audioconvert' plugin"
+msgstr "'audioconvert' પ્લગઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-transcoder.c:271
+msgid "Could not create encoding pipeline"
+msgstr "એનકોડીંગ પાઈપલાઈન બનાવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-transcoder.c:277
+msgid "Could not get sink pad from encoder"
+msgstr "એનકોડરમાંથી સીંક પેડ મેળવી શક્યા નહિં"
+
+#: ../libbanshee/banshee-transcoder.c:345
+msgid "Could not construct pipeline"
+msgstr "પાઈપલાઈન રચી શક્યા નહિં"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:64
+msgid "Write CD..."
+msgstr "CD લખો..."
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:65
+msgid "Write selected tracks to an audio CD"
+msgstr "પસંદગી થયેલ ટ્રેકને ઓડિયો CD માં લખો"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:103
+msgid "Could not write CD"
+msgstr "CD લખી શક્યા નહિં"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:104
+msgid "Brasero could not be started"
+msgstr "Brasero શરૂ કરી શક્યા નહિં"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs:78
+msgid "Fullscreen video playback active"
+msgstr "સંપૂર્ણસ્ક્રીન વીડિયો પ્લેબેક સક્રિય"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:75
+msgid "Could not find an encoder for ripping."
+msgstr "રીપ કરવા માટે એનકોડર પ્લગઈન શોધી શક્યા નહિં."
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:91
+msgid "Could not create CD ripping driver."
+msgstr "CD રીપીંગ ડ્રાઈવર બનાવી શક્યા નહિં."
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:131
+msgid "Could not initialize GStreamer library"
+msgstr "GStreamer લાઈબ્રેરીનો આરંભ કરી શક્યા નહિં"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:259
+msgid "Unknown Error"
+msgstr "અજ્ઞાત ભૂલ"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:507
+msgid "_Enable ReplayGain Correction"
+msgstr "ફરીવગાડોપ્રાપ્તિ સુધારો સક્રિય કરો (_E)"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:508
+msgid ""
+"For tracks that have ReplayGain data, automatically scale (normalize) "
+"playback volume."
+msgstr ""
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs:63
+msgid "Could not create transcoder"
+msgstr "ટ્રાન્સકોડર બનાવી શક્યા નહિં"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:88
+msgid "_Search:"
+msgstr "શોધો (_S):"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:138
+#, fuzzy
+msgid "All Columns"
+msgstr "સ્તંભો..."
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:139
+#, fuzzy
+msgid "Track Title"
+msgstr "શીર્ષક"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:140
+msgid "Artist Name"
+msgstr "કલાકાર નામ"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:141
+msgid "Album Title"
+msgstr "આલ્બમ શીર્ષક"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:142
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:92
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:67
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:188
+msgid "Genre"
+msgstr "જાતિ"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:143
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:107
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:180
+msgid "Year"
+msgstr "વર્ષ"
+
+#. Translators: this is a verb (command), not a noun (things)
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:164
+#, csharp-format
+msgid "Filter Results"
+msgstr ""
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:87
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:64
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:94
+msgid "Artist"
+msgstr "કલાકાર"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:97
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:63
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:112
+msgid "Album"
+msgstr "આલ્બમ"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:102
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:66
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:172
+msgid "Title"
+msgstr "શીર્ષક"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:112
+msgid "Count"
+msgstr "ગણો"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:117
+msgid "Number"
+msgstr "અંક"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:122
+msgid "Count (unsorted)"
+msgstr "ગણો (ક્રમમાં નહિં)"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:127
+msgid "Number (unsorted)"
+msgstr "અંક (ક્રમમાં નહિં)"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:181
+msgid "Various Artists"
+msgstr ""
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:223
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:86
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:86
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:159
+msgid "Unknown Artist"
+msgstr "અજાણ્યો કલાકાર"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:232
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:91
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:87
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:158
+msgid "Unknown Album"
+msgstr "અજાણ્યું આલ્બમ"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:241
+msgid "Unknown Title"
+msgstr "અજ્ઞાત શીર્ષક"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:250
+#, fuzzy
+msgid "Unknown Genre"
+msgstr "અજ્ઞાત મિનિટો"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:446
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:47
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:138
+msgid "Podcast"
+msgstr "પોડકાસ્ટ"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:448
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:68
+#, fuzzy
+msgid "Video"
+msgstr "દેખાવ (_V)"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:450
+#, fuzzy
+msgid "Song"
+msgstr "ગીતો"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:451
+msgid "Item"
+msgstr ""
+
+#: ../src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs:42
+#, csharp-format
+msgid "Saving tags for {0}"
+msgstr "{0} માટે ટેગો સંગ્રહી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/MoveOnInfoSaveJob.cs:44
+#, fuzzy, csharp-format
+msgid "Renaming {0}"
+msgstr "{0} નું નામ બદલો"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:68
+#, fuzzy, csharp-format
+msgid "All Albums ({0})"
+msgstr "{0} પ્રમાણે ટોચના ટ્રેકો"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:67
+#, csharp-format
+msgid "All Artists ({0})"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:162
+#, fuzzy
+msgid "Scanning for media"
+msgstr "મીડિયા માટે રાહ જોઈ રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:214
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:903
+msgid "Scanning..."
+msgstr "સ્કેન કરી રહ્યા છીએ..."
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:230
+#, fuzzy, csharp-format
+msgid "Scanning ({0} files)..."
+msgstr "iPod સ્કેન કરી રહ્યા છીએ..."
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:266
+#, fuzzy
+msgid "Importing Media"
+msgstr "આયાત કરવાનું"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:273
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:115
+msgid "The import process is currently running. Would you like to stop it?"
+msgstr "આયાત પ્રક્રિયા વર્તમાનમાં ચાલી રહી છે. શું તમે તેને અટકાવવા ઈચ્છો છો?"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:279
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:77
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:179
+#, csharp-format
+msgid "Importing {0} of {1}"
+msgstr "{1} માંનુ {0} આયાત કરી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:226
+msgid "Upgrading your Banshee Database"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:227
+msgid "Please wait while your old Banshee database is migrated to the new format."
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:902
+#, fuzzy
+msgid "Refreshing Metadata"
+msgstr "ગીત મેટાડેટામાં ફેરફાર કરો (_E)"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs:48
+msgid "Home Directory"
+msgstr "ઘર ડિરેક્ટરી"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:52
+#, fuzzy
+msgid "Remove From Library"
+msgstr "પસંદગીને લાઈબ્રેરીમાંથી દૂર કરો"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:41
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:56
+msgid "Music Library"
+msgstr "મ્યુઝીક લાઈબ્રેરી"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:56
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:71
+#, fuzzy
+msgid "Favorites"
+msgstr "નકારાયેલ મનગમતાઓ"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:57
+msgid "Songs rated four and five stars"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:61
+#, fuzzy
+msgid "Recent Favorites"
+msgstr "નકારાયેલ મનગમતાઓ"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:62
+msgid "Songs listened to often in the past week"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:66
+#, fuzzy
+msgid "Recently Added"
+msgstr "એકદમ છેલ્લે ઉમેરાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:67
+msgid "Songs imported within the last week"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:71
+msgid "Unheard"
+msgstr "નહિં સંભળાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:72
+msgid "Songs that have not been played or skipped"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:78
+msgid "Neglected Favorites"
+msgstr "નકારાયેલ મનગમતાઓ"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:79
+msgid "Favorites not played in over two weeks"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:83
+#, fuzzy
+msgid "Least Favorite"
+msgstr "નકારાયેલ મનગમતાઓ"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:84
+msgid "Songs rated one or two stars or that you have frequently skipped"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:88
+msgid "700 MB of Favorites"
+msgstr "મનગમતાનુ 700 MB"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:89
+msgid "A data CD worth of favorite songs"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:94
+msgid "80 Minutes of Favorites"
+msgstr "મનગમતાની 80 મિનિટો"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:95
+msgid "An audio CD worth of favorite songs"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:100
+msgid "Unrated"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:101
+msgid "Songs that haven't been rated"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:54
+msgid "Importing Songs"
+msgstr "ગીતો આયાત કરી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:109
+#, fuzzy, csharp-format
+msgid "Importing From {0}"
+msgstr "{1} માંનુ {0} આયાત કરી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:41
+#, fuzzy
+msgid "Video Library"
+msgstr "મ્યુઝીક લાઈબ્રેરી"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:54
+msgid "Produced By"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:72
+msgid "Videos rated four and five stars"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:76
+#, fuzzy
+msgid "Unwatched"
+msgstr "નહિં સંભળાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:77
+msgid "Videos that haven't been played yet"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:92
+msgid "Default player engine"
+msgstr "મૂળભૂત પ્લેયર એંજીન"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:99
+msgid ""
+"No player engines were found. Please ensure Banshee has been cleanly "
+"installed."
+msgstr ""
+"કોઈ પ્લેયર એંજીનો મળ્યા નહિં. મહેરબાની કરીને ખાતરી કરો કે Banshee સ્વચ્છ રીતે સ્થાપિત "
+"થયેલ છે."
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:279
+msgid "Problem with Player Engine"
+msgstr "પ્લેયર એંજીન સાથે સમસ્યા"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:129
+#, fuzzy, csharp-format
+msgid "Converting {0} of {1}"
+msgstr "{1} માંનુ {0} આયાત કરી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:129
+#, fuzzy
+msgid "Initializing"
+msgstr "ડ્રાઈવનો આરંભ કરી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:130
+#, fuzzy
+msgid ""
+"Files are currently being converted to another format. Would you like to "
+"stop this?"
+msgstr "ફાઈલો વર્તમાનમાં અન્ય ઓડિયો બંધારણમાં રૂપાંતરિત થઈ ગયેલ છે. શું તમે આ અટકાવવા ઈચ્છો છો?"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:237
+#, fuzzy
+msgid "Cannot Convert File"
+msgstr "ફાઈલો રૂપાંતરિત કરી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:52
+msgid "There is no available network connection"
+msgstr "ત્યાં કોઈ નેટવર્ક જોડાણ ઉપલબ્ધ નથી"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:78
+msgid "Cannot connect to NetworkManager"
+msgstr "NetworkManager સાથે જોડાઈ શકતા નથી"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:79
+msgid "An available, working network connection will be assumed"
+msgstr "ઉપલબ્ધ, કામ કરતું નેટવર્ક જોડાણ ધારવામાં આવશે"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:141
+msgid "_Disable features requiring Internet access"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:142
+msgid ""
+"Some features require a broadband Internet connection such as Last.fm or "
+"cover art fetching"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:143
+#, fuzzy, csharp-format
+msgid "Unable to import track: {0}"
+msgstr "{0} માંથી ટ્રેક આયાત કરી શકતા નથી"
+
+#: ../src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:177
+msgid "Importing from Amarok failed"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:188
+#, fuzzy
+msgid "Amarok"
+msgstr "કલાકારીગીરી"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:59
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:303
+msgid "Playlist"
+msgstr "વગાડવા માટેની યાદી"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:122
+#, fuzzy
+msgid "Remove From Playlist"
+msgstr "સ્માર્ટ પ્લેલીસ્ટ"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:123
+msgid "Delete Playlist"
+msgstr "પ્લેલીસ્ટ કાઢી નાંખો"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:387
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:393
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:84
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:447
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:211
+msgid "New Playlist"
+msgstr "નવું પ્લેલીસ્ટ"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
+#, fuzzy
+msgid "Windows Media ASX (*.asx)"
+msgstr "Windows Media Audio"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:44
+msgid "MPEG Version 3.0 Extended (*.m3u)"
+msgstr "MPEG Version 3.0 Extended (*.m3u)"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/PlsPlaylistFormat.cs:51
+msgid "Shoutcast Playlist version 2 (*.pls)"
+msgstr "Shoutcast Playlist version 2 (*.pls)"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:52
+#, fuzzy
+msgid "General"
+msgstr "જાતિ"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:61
+#, fuzzy
+msgid "Co_py files to media folders when importing"
+msgstr "જ્યારે આયાત કરી રહ્યા હોય ત્યારે ફાઈલોની મ્યુઝીક ફોલ્ડરમાં નકલ કરો (_p)"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:64
+msgid "Write _metadata to files"
+msgstr "મેટાડેટાને ફાઈલોમાં લખો (_m)"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:65
+#, fuzzy
+msgid ""
+"Enable this option to save tags and other metadata inside supported audio "
+"files."
+msgstr ""
+"ટેગો સંગ્રહવા માટે અને આધારભૂત ઓડિયો ફાઈલોની અંદર અન્ય મેટાડેટા સંગ્રહવા માટે આ વિકલ્પ "
+"સક્રિય કરો"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:68
+msgid "_Update file and folder names"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:69
+msgid ""
+"Enabling this option ensures that files and folders are renamed according to "
+"the metadata."
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:73
+#, fuzzy
+msgid "File System Organization"
+msgstr "<b>ફાઈલ સિસ્ટમ આયોજન</b>"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:76
+#, fuzzy
+msgid "Folder hie_rarchy"
+msgstr "ફોલ્ડર વંશવેલો (_r):"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:79
+#, fuzzy
+msgid "File _name"
+msgstr "ફાઈલ નામ (_n):"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:81
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:83
+msgid "Extensions"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:59
+msgid "Random"
+msgstr "રેન્ડમ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:69
+msgid "Highest Rating"
+msgstr "ઊચ્ચ ક્રમાંકન"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:70
+msgid "Lowest Rating"
+msgstr "નિમ્ન ક્રમાંકન"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:72
+msgid "Most Often Played"
+msgstr "વધુ વાર રમાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:73
+msgid "Least Often Played"
+msgstr "ઓછી વાર રમાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:75
+msgid "Most Recently Played"
+msgstr "એકદમ છેલ્લે રમાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:76
+msgid "Least Recently Played"
+msgstr "ઓછા સમયે રમાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:78
+msgid "Most Recently Added"
+msgstr "એકદમ છેલ્લે ઉમેરાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:79
+msgid "Least Recently Added"
+msgstr "ઓછા સમયે ઉમેરાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:83
+#, fuzzy
+msgid "items"
+msgstr "મિનિટો"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:84
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:60
+msgid "minutes"
+msgstr "મિનિટો"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:85
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:61
+msgid "hours"
+msgstr "કલાકો"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:86
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:63
+msgid "MB"
+msgstr "MB"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:87
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:64
+msgid "GB"
+msgstr ""
+
+#. Translators: These are unique search aliases for "artist".  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:96
+#, fuzzy
+msgid "artist"
+msgstr "કલાકાર"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:96
+msgid "by"
+msgstr "દ્વારા"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:96
+#, fuzzy
+msgid "artists"
+msgstr "કલાકાર"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:102
+#, fuzzy
+msgid "Album Artist"
+msgstr "આલ્બમ શીર્ષક"
+
+#. Translators: These are unique search aliases for "album".  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:104
+msgid "albumartist"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:104
+#, fuzzy
+msgid "compilationartist"
+msgstr "કલાકાર સરખાવીને (_r)"
+
+#. Translators: These are unique search aliases for "album".  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:114
+#, fuzzy
+msgid "album"
+msgstr "આલ્બમ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:114
+#, fuzzy
+msgid "on"
+msgstr "પૂરુ થયું"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:114
+msgid "from"
+msgstr "તરફથી"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:120
+#, fuzzy
+msgid "Disc"
+msgstr "છે"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:122
+#, fuzzy
+msgid "disc"
+msgstr "છે"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:122
+msgid "cd"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:122
+#, fuzzy
+msgid "discnum"
+msgstr "મધ્યમ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:128
+#, fuzzy
+msgid "Disc Count"
+msgstr "જોડાણ તોડો"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:130
+msgid "discs"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:130
+#, fuzzy
+msgid "cds"
+msgstr "સેકન્ડો"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:137
+msgid "Track"
+msgstr "ટ્રેક"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
+#, fuzzy
+msgid "track"
+msgstr "ટ્રેક"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
+#, fuzzy
+msgid "trackno"
+msgstr "ટ્રેક"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
+#, fuzzy
+msgid "tracknum"
+msgstr "ટ્રેક"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:146
+#, fuzzy
+msgid "Track Count"
+msgstr "રમત ગણતરી"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:148
+#, fuzzy
+msgid "tracks"
+msgstr "ટ્રેક"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:148
+#, fuzzy
+msgid "trackcount"
+msgstr "<b>ટ્રેક ગણતરી (_c):</b>"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:155
+msgid "BPM"
+msgstr ""
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:157
+msgid "bpm"
+msgstr ""
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:164
+#, fuzzy
+msgid "Bit Rate"
+msgstr "બીટદર"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:166
+#, fuzzy
+msgid "bitrate"
+msgstr "બીટદર"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:166
+msgid "kbs"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:166
+msgid "kps"
+msgstr ""
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
+#, fuzzy
+msgid "title"
+msgstr "શીર્ષક"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
+#, fuzzy
+msgid "titled"
+msgstr "શીર્ષક"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
+#, fuzzy
+msgid "name"
+msgstr "વપરાશકર્તાનામ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
+#, fuzzy
+msgid "named"
+msgstr "સક્રિયકૃત"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+#, fuzzy
+msgid "year"
+msgstr "વર્ષ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+msgid "released"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+msgid "yr"
+msgstr ""
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:190
+#, fuzzy
+msgid "genre"
+msgstr "જાતિ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:195
+#, fuzzy
+msgid "Composer"
+msgstr "બંધ કરો"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:197
+msgid "composer"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:202
+#, fuzzy
+msgid "Conductor"
+msgstr "ફાળો આપનારાઓ"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:204
+msgid "conductor"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:209
+msgid "Grouping"
+msgstr ""
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:211
+msgid "grouping"
+msgstr ""
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:217
+msgid "Comment"
+msgstr "ટિપ્પણી"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:219
+#, fuzzy
+msgid "comment"
+msgstr "ટિપ્પણી"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:224
+msgid "Rating"
+msgstr "ક્રમાંકન"
+
+#. , typeof(NullQueryValue)},
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:226
+#, fuzzy
+msgid "rating"
+msgstr "ક્રમાંકન"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:226
+#, fuzzy
+msgid "stars"
+msgstr "થી શરૂ થાય"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:232
+msgid "Play Count"
+msgstr "રમત ગણતરી"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:234
+#, fuzzy
+msgid "plays"
+msgstr "વગાડે છે"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:234
+#, fuzzy
+msgid "playcount"
+msgstr "રમત ગણતરી"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:234
+msgid "listens"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:240
+#, fuzzy
+msgid "Skip Count"
+msgstr "ગણો"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:242
+msgid "skips"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:242
+msgid "skipcount"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:248
+#, fuzzy
+msgid "File Size"
+msgstr "ફાઈલ નામ"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:250
+msgid "size"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:250
+msgid "filesize"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:256
+#, fuzzy
+msgid "File Location"
+msgstr "જગ્યા ખોલો"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:258
+msgid "uri"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:258
+#, fuzzy
+msgid "path"
+msgstr "પાથ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:258
+#, fuzzy
+msgid "file"
+msgstr "શીર્ષક"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:258
+#, fuzzy
+msgid "location"
+msgstr "સ્થાન"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:264
+msgid "Time"
+msgstr "સમય"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:266
+#, fuzzy
+msgid "duration"
+msgstr "સમયગાળો"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:266
+msgid "length"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:266
+#, fuzzy
+msgid "time"
+msgstr "સમય"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:272
+msgid "Mime Type"
+msgstr ""
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:274
+msgid "type"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:274
+msgid "mimetype"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:274
+#, fuzzy
+msgid "format"
+msgstr "ડિસ્ક બંધારણ:"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:274
+#, fuzzy
+msgid "ext"
+msgstr "આગળ (_N)"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:280
+msgid "Last Played"
+msgstr "છેલ્લે રમેલ"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:282
+#, fuzzy
+msgid "lastplayed"
+msgstr "છેલ્લે રમેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:282
+#, fuzzy
+msgid "played"
+msgstr "ક્યારેય નહિં વગાડેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:282
+#, fuzzy
+msgid "playedon"
+msgstr "ક્યારેય નહિં વગાડેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:288
+#, fuzzy
+msgid "Last Skipped"
+msgstr "છેલ્લે સુધારેલ:"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:290
+msgid "lastskipped"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:290
+msgid "skipped"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:290
+msgid "skippedon"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:296
+msgid "Date Added"
+msgstr "તારીખે ઉમેરાયેલ"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:298
+#, fuzzy
+msgid "added"
+msgstr "તારીખે ઉમેરાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:298
+#, fuzzy
+msgid "imported"
+msgstr "આયાત"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:298
+msgid "addedon"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:298
+#, fuzzy
+msgid "dateadded"
+msgstr "તારીખે ઉમેરાયેલ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:298
+#, fuzzy
+msgid "importedon"
+msgstr "આયાત કરવાનું"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:309
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:66
+msgid "Smart Playlist"
+msgstr "સ્માર્ટ પ્લેલીસ્ટ"
+
+#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:245
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:320
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:343
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:55
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:299
+msgid "Unknown"
+msgstr "અજ્ઞાત"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:79
+#, fuzzy
+msgid "Unable to Migrate Smart Playlists"
+msgstr "સ્માર્ટ પ્લેલીસ્ટ કાઢી નાંખો"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:80
+#, csharp-format
+msgid "Please file a bug with this error: {0}"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:67
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:51
+msgid "Edit Smart Playlist"
+msgstr "સ્માર્ટ પ્લેલીસ્ટમાં ફેરફાર કરો"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:225
+msgid "Delete Smart Playlist"
+msgstr "સ્માર્ટ પ્લેલીસ્ટ કાઢી નાંખો"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:67
+#, csharp-format
+msgid "All Genres ({0})"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:53
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:69
+#, fuzzy, csharp-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] "{0} દિવસ{0} દિવસો"
+msgstr[1] "{0} દિવસ{0} દિવસો"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:57
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:74
+#, fuzzy, csharp-format
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] "{0} કલાક{0} કલાકો"
+msgstr[1] "{0} કલાક{0} કલાકો"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:61
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:78
+#, fuzzy, csharp-format
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] "{0} મિનિટો"
+msgstr[1] "{0} મિનિટો"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:80
+#, fuzzy, csharp-format
+msgid "{0} second"
+msgid_plural "{0} seconds"
+msgstr[0] "{0} સેકન્ડ{0} સેકન્ડો"
+msgstr[1] "{0} સેકન્ડ{0} સેકન્ડો"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:56
+msgid "Close Error Report"
+msgstr "ક્ષતિ અહેવાલ બંધ કરો"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:84
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:43
+msgid "Error"
+msgstr "ક્ષતિ"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:85
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:34
+msgid "Details"
+msgstr "વિગતો"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:138
+msgid "Errors"
+msgstr "ક્ષતિઓ"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:615
+#, fuzzy, csharp-format
+msgid "Adding {0} of {1} to {2}"
+msgstr "{1} નું {0} લાવી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:632
+#, fuzzy, csharp-format
+msgid "Deleting {0} of {1} From {2}"
+msgstr "{1} માંથી {0} ને દૂર કરી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:592
+#, fuzzy, csharp-format
+msgid "{0} item"
+msgid_plural "{0} items"
+msgstr[0] "{0} મિનિટો"
+msgstr[1] "{0} મિનિટો"
+
+#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:61
+msgid "Could not launch URL"
+msgstr "URL લાવી શક્યા નહિં"
+
+#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:62
+#, csharp-format
+msgid ""
+"{0} could not be opened: {1}\n"
+"\n"
+" Check your 'Preferred Applications' settings."
+msgstr ""
+"{0} ખોલી શક્યા નહિં: {1}\n"
+"\n"
+" તમારા પ્રાધાન્યવાળા કાર્યક્રમોના સુયોજનો ચકાસો."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:69
+#, fuzzy
+msgid "Version:"
+msgstr "આવૃત્તિ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:72
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:98
+#, fuzzy
+msgid "Authors:"
+msgstr "લેખક(ઓ)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:75
+msgid "Copyright/License:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:79
+msgid "Extension Dependencies:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:183
+msgid "Disable"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:184
+#, fuzzy
+msgid "Enable"
+msgstr "સક્રિયકૃત"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:52
+msgid "Equalizer"
+msgstr "ઈક્વીલાઈઝર"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:81
+msgid "Enabled"
+msgstr "સક્રિયકૃત"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:49
+msgid "Primary Development"
+msgstr "પ્રાથમિક વિકાસ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:57
+msgid "Contributors"
+msgstr "ફાળો આપનારાઓ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:89
+#, fuzzy
+msgid "Extraordinary Multimedia Management and Playback"
+msgstr "મ્યુઝીક વ્યવસ્થાપન અને જીનોમ માટે પ્લેબેક."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:91
+#, fuzzy
+msgid ""
+"Copyright © 2005–2008 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Copyright © 2005-2007 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:96
+msgid "Banshee Wiki"
+msgstr "Banshee વીકી"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:45
+msgid "Important tasks are running"
+msgstr "મહત્વની ક્રિયાઓ ચાલી રહી છે"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:47
+msgid ""
+"Closing Banshee now will cancel any currently running tasks. They cannot be "
+"resumed automatically the next time Banshee is run."
+msgstr ""
+"Banshee ને બંધ કરવાનું હવે કોઈપણ વર્તમાનમાં ચાલી રહેલ ક્રિયાઓ રદ કરી નાંખશે. તેઓ આગળના "
+"સમયે જ્યારે Banshee ચાલે ત્યારે આપોઆપ ફરીથી ચાલુ કરી શકાશે."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:54
+msgid "Quit anyway"
+msgstr "ગમે તે રીતે બંધ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:55
+msgid "Continue running"
+msgstr "ચલાવવાનું ચાલુ રાખો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:39
+msgid "Select album cover image"
+msgstr "આલ્બમ કવર ઈમેજ પસંદ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:47
+msgid "All image files"
+msgstr "બધી ચિત્ર ફાઈલો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:54
+msgid "JPEG image files"
+msgstr "JPEG ચિત્ર ફાઈલો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:59
+msgid "PNG image files"
+msgstr "PNG ચિત્ર ફાઈલો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs:54
+msgid "Browse..."
+msgstr "બ્રાઉઝ કરો..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs:98
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:48
+msgid "Open Location"
+msgstr "જગ્યા ખોલો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:247
+msgid "Automatically set all track numbers in increasing order"
+msgstr "બધા ટ્રેક નંબરો આપોઆપ વધતા ક્રમમાં સુયોજીત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:248
+msgid "Set all track counts to this value"
+msgstr "બધી ટ્રેક ગણતરીઓ આ કિંમતમાં સુયોજીત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:249
+#, fuzzy
+msgid "Set all album artists to this value"
+msgstr "બધા કલાકારોને આ કિંમતમાં સુયોજીત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:250
+#, fuzzy
+msgid "Set all track artists to this value"
+msgstr "બધા કલાકારોને આ કિંમતમાં સુયોજીત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:251
+msgid "Set all albums to this value"
+msgstr "બધા આલ્બમોને આ કિંમતમાં સુયોજીત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:252
+#, fuzzy
+msgid "Set all disc numbers to this value"
+msgstr "બધા વર્ષોને આ કિંમતમાં સુયોજીત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:253
+msgid "Set all genres to this value"
+msgstr "બધી જાતિઓને આ કિંમતમાં સુયોજીત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:254
+msgid "Set all years to this value"
+msgstr "બધા વર્ષોને આ કિંમતમાં સુયોજીત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:255
+msgid ""
+"Apply the values of this track set for the Artist, Album Title, Genre, Track "
+"count, Year, and Rating fields to the rest of the selected tracks in this "
+"editor."
+msgstr ""
+"આ ટ્રેક સમૂહની કલાકાર, આલ્બમ શીર્ષક, જાતિ, ટ્રેક ગણતરી, વર્ષ, અને ક્રમ ક્ષેત્રો માટેની "
+"કિંમતો આ ટ્રેક સંપાદકમાં બાકીના પસંદિત ટ્રેકોને લાગુ કરો."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:256
+msgid "Set all ratings to this value"
+msgstr "બધા ક્રમોને આ કિંમતમાં સુયોજીત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:318
+msgid "Never played"
+msgstr "ક્યારેય નહિં વગાડેલ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:332
+#, fuzzy, csharp-format
+msgid "Editing item {0} of {1}"
+msgstr "{1} માંનુ ગીત {0} બદલી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:333
+#, csharp-format
+msgid "Editing {0}"
+msgstr "{0} ફેરફાર કરી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:50
+#, fuzzy
+msgid "_Media"
+msgstr "મધ્યમ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:53
+#, fuzzy
+msgid "Import _Media..."
+msgstr "સંગીત આયાત કરો (_M)..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:54
+#, fuzzy
+msgid "Import media from a variety of sources"
+msgstr "વિવિધ સ્રોતોમાંથી સંગીત આયાત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:57
+#, fuzzy
+msgid "Import Playlist..."
+msgstr "સ્માર્ટ પ્લેલીસ્ટ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:58
+#, fuzzy
+msgid "Import a playlist"
+msgstr "સ્માર્ટ પ્લેલીસ્ટ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:61
+msgid "Open _Location..."
+msgstr "સ્થાન ખોલો (_L)..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:62
+msgid "Open a remote location for playback"
+msgstr "વગાડવા માટે દૂરસ્થ સ્થાન ખોલો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:65
+msgid "_Quit"
+msgstr "બહાર નીકળો (_Q)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:66
+msgid "Quit Banshee"
+msgstr "Banshee બંધ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:70
+msgid "_Edit"
+msgstr "ફેરફાર (_E)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:73
+#, fuzzy
+msgid "_Preferences"
+msgstr "પસંદગીઓ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:74
+msgid "Modify your personal preferences"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:77
+msgid "Manage _Extensions"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:78
+msgid "Manage extensions to add new features to Banshee"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:82
+msgid "_Tools"
+msgstr "સાધનો (_T)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:86
+msgid "_Help"
+msgstr "મદદ (_H)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:89
+msgid "_Web Resources"
+msgstr "વેબ સ્રોતો (_W)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:92
+msgid "Banshee _User Guide (Wiki)"
+msgstr "Banshee વપરાશકર્તા માર્ગદર્શન (Wiki) (_U)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:93
+msgid "Learn about how to use Banshee"
+msgstr "Banshee કેવી રીતે વાપરવું તેના વિશે શીખો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:98
+msgid "Advanced Collection Searching"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:99
+msgid "Learn advanced ways to search your media collection"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:104
+msgid "Banshee _Home Page"
+msgstr "Banshee ઘર પાનું (_H)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:105
+msgid "Visit the Banshee Home Page"
+msgstr "Banshee ઘર પાનાંની મુલાકાત લો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:110
+msgid "_Get Involved"
+msgstr "સંડોવાયેલ રહો (_G)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:111
+msgid "Become a contributor to Banshee"
+msgstr "Banshee ને ફાળો આપનાર બનો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:116
+msgid "_Version Information..."
+msgstr "આવૃત્તિ જાણકારી (_V)..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:117
+msgid "View detailed version and configuration information"
+msgstr "વિગતવાર આવૃત્તિ અને રૂપરેખાંકન જાણકારી જુઓ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:156
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:163
+msgid "Error opening stream"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:157
+#, fuzzy
+msgid "Could not open stream or playlist"
+msgstr "પ્લેલીસ્ટનું પુનરાવર્તન કરશો નહિં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:164
+#, fuzzy
+msgid "Problem parsing playlist"
+msgstr "CD બનાવવામાં સમસ્યા"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:172
+#, fuzzy
+msgid "Import Playlist"
+msgstr "પ્લેલીસ્ટો ક્રમમાં ગોઠવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:179
+#, fuzzy
+msgid "Playlists"
+msgstr "વગાડવા માટેની યાદી"
+
+#. Translators: verb
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:186
+msgid "Import"
+msgstr "આયાત"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:66
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:195
+msgid "_Play"
+msgstr "રમો (_P)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:67
+#, fuzzy
+msgid "Play or pause the current item"
+msgstr "વર્તમાન ગીત વગાડો કે અટકાવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:70
+msgid "_Next"
+msgstr "આગળ (_N)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:71
+#, fuzzy
+msgid "Play the next item"
+msgstr "આગળનું ગીત વગાડો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:74
+msgid "Pre_vious"
+msgstr "પહેલાંનુ (_v)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:75
+#, fuzzy
+msgid "Play the previous item"
+msgstr "પહેલાંનુ ગીત વગાડો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:78
+#, fuzzy
+msgid "Seek _to..."
+msgstr "સુધી પહોંચો (_T)..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:79
+#, fuzzy
+msgid "Seek to a specific location in current item"
+msgstr "વર્તમાન ગીતમાં ચોક્કસ સ્થાને પહોંચો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:82
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:169
+#, fuzzy
+msgid "_Jump to Playing Song"
+msgstr "વાગી રહેલ ગીત પર કૂદો (_J)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:83
+#, fuzzy
+msgid "Jump to the currently playing item"
+msgstr "વર્તમાન વાગી રહેલ ગીતનું પુનરાવર્તન કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:86
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:164
+msgid "_Restart Song"
+msgstr "ગીતનું પુનરાવર્તન કરો (_R)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:87
+#, fuzzy
+msgid "Restart the current item"
+msgstr "વર્તમાન ગીત ફરી શરૂ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:92
+#, fuzzy
+msgid "_Stop When Finished"
+msgstr "જ્યારે સમાપ્ત થાય ત્યારે અટકાવો (_S)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:93
+#, fuzzy
+msgid "Stop playback after the current item finishes playing"
+msgstr "વર્તમાન ગીત વગાડવાનું સમાપ્ત થાય પછી વગાડવાનું અટકાવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:99
+msgid "_Playback"
+msgstr "વગાડો (_P)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:165
+#, fuzzy
+msgid "_Restart Video"
+msgstr "ગીતનું પુનરાવર્તન કરો (_R)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:170
+#, fuzzy
+msgid "_Jump to Playing Video"
+msgstr "વાગી રહેલ ગીત પર કૂદો (_J)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:189
+#, fuzzy
+msgid "_Pause"
+msgstr "વિરામ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:201
+#, fuzzy
+msgid "Sto_p"
+msgstr "અટકો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:73
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:74
+#, fuzzy
+msgid "Repeat"
+msgstr "બધું પુનરાવર્તન કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:79
+#, fuzzy
+msgid "Repeat _Off"
+msgstr "બધું પુનરાવર્તન કરો (_A)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:80
+msgid "Do not repeat playlist"
+msgstr "પ્લેલીસ્ટનું પુનરાવર્તન કરશો નહિં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:84
+msgid "Repeat _All"
+msgstr "બધું પુનરાવર્તન કરો (_A)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:85
+msgid "Play all songs before repeating playlist"
+msgstr "પ્લેલીસ્ટનું પુનરાવર્તન કરવા પહેલાં બધા ગીતો વગાડો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:89
+#, fuzzy
+msgid "Repeat Singl_e"
+msgstr "એકનું પુનરાવર્તન કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:90
+msgid "Repeat the current playing song"
+msgstr "વર્તમાન વાગી રહેલ ગીતનું પુનરાવર્તન કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:76
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:77
+msgid "Shuffle"
+msgstr "આડુઅવળુ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:82
+#, fuzzy
+msgid "Shuffle _Off"
+msgstr "આડુઅવળુ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:83
+#, fuzzy
+msgid "Do not shuffle playlist"
+msgstr "પ્લેલીસ્ટનું પુનરાવર્તન કરશો નહિં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:87
+#, fuzzy
+msgid "Shuffle by _Song"
+msgstr "આડુઅવળુ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:88
+#, fuzzy
+msgid "Play songs randomly from the playlist"
+msgstr "પ્લેલીસ્ટનું પુનરાવર્તન કરવા પહેલાં બધા ગીતો વગાડો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:92
+msgid "Shuffle by A_rtist"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:93
+msgid "Play all songs by an artist, then randomly choose another artist"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:97
+#, fuzzy
+msgid "Shuffle by A_lbum"
+msgstr "રેન્ડમ પ્લેબેક"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:98
+msgid "Play all songs from an album, then randomly choose another album"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:71
+msgid "_New Playlist"
+msgstr "નવી પ્લેલીસ્ટ (_N)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:72
+msgid "Create a new empty playlist"
+msgstr "નવું ખાલી પ્લેલીસ્ટ બનાવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:75
+#, fuzzy
+msgid "New _Smart Playlist"
+msgstr "નવું સ્માર્ટ પ્લેલીસ્ટ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:76
+#, fuzzy
+msgid "Create a new smart playlist"
+msgstr "નવું ખાલી પ્લેલીસ્ટ બનાવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:86
+#, fuzzy
+msgid "Import to Library"
+msgstr "ફાઈલોને લાઈબ્રેરીમાં આયાત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:87
+msgid "Import source to library"
+msgstr "સ્રોતને લાઈબ્રેરીમાં આયાત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:90
+#, fuzzy
+msgid "Rename"
+msgstr "{0} નું નામ બદલો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:93
+#, fuzzy
+msgid "Export Playlist..."
+msgstr "સ્માર્ટ પ્લેલીસ્ટમાં ફેરફાર કરો..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:94
+#, fuzzy
+msgid "Export a playlist"
+msgstr "પ્લેલીસ્ટો ક્રમમાં ગોઠવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:97
+msgid "Unmap"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:100
+#, fuzzy
+msgid "Source Properties"
+msgstr "સ્રોત ગુણધર્મો..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:109
+#, fuzzy
+msgid "Refresh"
+msgstr "સ્ટેશનો પુનઃતાજાં કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:110
+msgid "Refresh this randomly sorted smart playlist"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:115
+msgid "Sort Children"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:118
+msgid "Name Ascending"
+msgstr "નામ ચડતા ક્રમમાં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:122
+msgid "Name Descending"
+msgstr "નામ ઊતરતા ક્રમમાં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:126
+msgid "Size Ascending"
+msgstr "માપ ચડતા ક્રમમાં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:130
+msgid "Size Descending"
+msgstr "માપ ઊતરતા ક્રમમાં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:294
+#, fuzzy
+msgid "Could not export playlist"
+msgstr "પ્લેલીસ્ટનું પુનરાવર્તન કરશો નહિં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:391
+#, csharp-format
+msgid "Are you sure you want to delete this {0}?"
+msgstr "શું તમે ખરેખર આ {0} કાઢી નાંખવા માંગો છો?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:400
+#, csharp-format
+msgid "Do not ask me this again"
+msgstr "મને ફરીથી આવું પૂછશો નહિં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:67
+msgid "Select _All"
+msgstr "બધું પસંદ કરો (_A)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:68
+#, fuzzy
+msgid "Select all tracks"
+msgstr "બધું પસંદ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:71
+msgid "Select _None"
+msgstr "કંઈપણ પસંદ કરશો નહિં (_N)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:72
+msgid "Unselect all tracks"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:75
+#, fuzzy
+msgid "_Edit Track Information"
+msgstr "લાઈબ્રેરી જાણકારી વાંચી રહ્યા છીએ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:76
+#, fuzzy
+msgid "Edit information on selected tracks"
+msgstr "પસંદિત ગીતો પરની મેટાડેટામાં ફેરફાર કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:79
+msgid "Add _to Playlist"
+msgstr "પ્લેલીસ્ટમાં ઉમેરો (_t)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:80
+#, fuzzy
+msgid "Append selected items to playlist or create new playlist from selection"
+msgstr "પસંદિત ગીતોને પ્લેલીસ્ટમાં ઉમેરો કે પસંદગીમાંથી નવું પ્લેલીસ્ટ બનાવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:85
+#, fuzzy
+msgid "Create new playlist from selected tracks"
+msgstr "શોધમાંથી સ્માર્ટ પ્લેલીસ્ટ બનાવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:89
+msgid "_Remove"
+msgstr "દૂર કરો (_R)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:90
+#, fuzzy
+msgid "Remove selected track(s) from this source"
+msgstr "પસંદિત ગીત(ઓ)ને લાઈબ્રેરીમાંથી દૂર કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:93
+#, fuzzy
+msgid "Remove From _Library"
+msgstr "પસંદગીને લાઈબ્રેરીમાંથી દૂર કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:94
+#, fuzzy
+msgid "Remove selected track(s) from library"
+msgstr "પસંદિત ગીત(ઓ)ને લાઈબ્રેરીમાંથી દૂર કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:97
+msgid "_Delete From Drive"
+msgstr "ડ્રાઈવમાંથી કાઢી નાંખો (_D)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:98
+#, fuzzy
+msgid "Permanently delete selected item(s) from medium"
+msgstr "પસંદિત ગીત(ઓ)ને સંગ્રહસ્થાન માધ્યમમાંતી કાયમીપણે કાઢી નાંખો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:104
+#, fuzzy
+msgid "_Search"
+msgstr "શોધો (_S):"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:105
+#, fuzzy
+msgid "Search for items matching certain criteria"
+msgstr "ચોક્કસ વિચારધારા બંધબેસતા ગીતો માટે શોધો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:108
+#, fuzzy
+msgid "By Matching _Album"
+msgstr "આલ્બમ સાથે સરખાવીને (_a)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:109
+msgid "Search all songs of this album"
+msgstr "આ આલ્બમના બધા ગીતો શોધો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:112
+#, fuzzy
+msgid "By Matching A_rtist"
+msgstr "કલાકાર સરખાવીને (_r)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:113
+msgid "Search all songs of this artist"
+msgstr "આ કલાકાર માટેના બધા ગીતો માટે શોધો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:432
+#, fuzzy, csharp-format
+msgid "Are you sure you want to permanently delete this item?"
+msgid_plural "Are you sure you want to permanently delete the selected {0} items?"
+msgstr[0] "શું તમે ખરેખર આ {0} કાઢી નાંખવા માંગો છો?"
+msgstr[1] "શું તમે ખરેખર આ {0} કાઢી નાંખવા માંગો છો?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:436
+msgid "If you delete the selection, it will be permanently lost."
+msgstr "જો તમે પસંદગી કાઢી નાંખો, તો તે કાયમ માટે નષ્ટ થઈ જશે."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:439
+#, fuzzy, csharp-format
+msgid "Remove selection from {0}?"
+msgstr "પસંદગીને લાઈબ્રેરીમાંથી દૂર કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:442
+#, fuzzy, csharp-format
+msgid "Are you sure you want to remove the selected item from your {1}?"
+msgid_plural "Are you sure you want to remove the selected {0} items from your {1}?"
+msgstr[0] "શું તમે ખરેખર આ {0} કાઢી નાંખવા માંગો છો?"
+msgstr[1] "શું તમે ખરેખર આ {0} કાઢી નાંખવા માંગો છો?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:62
+msgid "_View"
+msgstr "દેખાવ (_V)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:65
+#, fuzzy
+msgid "_Equalizer"
+msgstr "ઈક્વીલાઈઝર"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:66
+#, fuzzy
+msgid "View the graphical equalizer"
+msgstr "ઈક્વીલાઈઝર દર્શાવો."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:71
+msgid "_Fullscreen"
+msgstr "પૂર્ણ સ્ક્રીન (_F)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:72
+#, fuzzy
+msgid "Enter or leave fullscreen mode"
+msgstr "સંપૂર્ણસ્ક્રીન સ્થિતિ બદલો"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
+#. are Podcast Name and Published Date, respectively;
+#. e.g. 'from BBtv published 7/26/2007'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:426
+#, csharp-format
+msgid "{0}from{1} {2} {0}published{1} {3}"
+msgstr ""
+
+#. simply: "Chicago Public Radio" or whatever the artist name is
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:439
+#, fuzzy
+msgid "Unknown Stream"
+msgstr "અજ્ઞાત શીર્ષક"
+
+#. Translators: {0} and {1} are markup so ignore them, {2} is the name of the radio station
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:442
+#, fuzzy, csharp-format
+msgid "{0}on{1} {2}"
+msgstr "{0}:{1:00} જેટલું {2} માંનુ"
+
+#. Translators: {0} is the "from {album} by {artist}" type string, and {1} is the "on {radio station name}" string
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:445
+#, fuzzy, csharp-format
+msgid "{0} {1}"
+msgstr "{1} માંનુ {0}"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
+#. are Artist Name and Album Title, respectively;
+#. e.g. 'by Parkway Drive from Killing with a Smile'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:481
+#, csharp-format
+msgid "{0}by{1} {2} {0}from{1} {3}"
+msgstr ""
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} is for Album Title;
+#. e.g. 'from Killing with a Smile'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:485
+#, fuzzy, csharp-format
+msgid "{0}from{1} {2}"
+msgstr "{0}:{1:00} જેટલું {2} માંનુ"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} is for Artist Name;
+#. e.g. 'by Parkway Drive'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:489
+#, fuzzy, csharp-format
+msgid "{0}by{1} {2}"
+msgstr "{0}:{1:00} જેટલું {2} માંનુ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:135
+#, fuzzy
+msgid "Stop Operation"
+msgstr "સ્ટેશન"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:136
+#, csharp-format
+msgid "Stop {0}"
+msgstr "{0} અટકાવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:139
+#, fuzzy
+msgid "This operation is still performing work. Would you like to stop it?"
+msgstr "'{0}' પ્રક્રિયા હજુ પણ કામ કરી રહી છે. શું તમે તેને અટકાવવા ઈચ્છો છો?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:141
+#, csharp-format
+msgid "The '{0}' operation is still performing work. Would you like to stop it?"
+msgstr "'{0}' પ્રક્રિયા હજુ પણ કામ કરી રહી છે. શું તમે તેને અટકાવવા ઈચ્છો છો?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:145
+#, fuzzy
+msgid "Continue"
+msgstr "{0} ચાલુ રાખો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:146
+#, csharp-format
+msgid "Continue {0}"
+msgstr "{0} ચાલુ રાખો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:179
+#, fuzzy
+msgid "Stopping..."
+msgstr "સ્કેન કરી રહ્યા છીએ..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:46
+msgid "Import Files to Library"
+msgstr "ફાઈલોને લાઈબ્રેરીમાં આયાત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:52
+#, fuzzy
+msgid "Media Files"
+msgstr "સ્થાનિક ફાઈલો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:66
+msgid "Local Files"
+msgstr "સ્થાનિક ફાઈલો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:44
+msgid "Import Folder to Library"
+msgstr "ફોલ્ડરને લાઈબ્રેરીમાં આયાત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:61
+msgid "Local Folder"
+msgstr "સ્થાનિક ફોલ્ડર"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/PhotoFolderImportSource.cs:67
+msgid "Videos from Photos Folder"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs:84
+msgid "No available profiles"
+msgstr "કોઈ રૂપરેખાઓ ઉપલબ્ધ નથી"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs:72
+msgid "Advanced"
+msgstr "અદ્યતન"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:19
+#, fuzzy
+msgid "Export Playlist"
+msgstr "પ્લેલીસ્ટો ક્રમમાં ગોઠવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:28
+#, fuzzy
+msgid "Export"
+msgstr "આયાત"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:53
+#, fuzzy
+msgid "Select Format: "
+msgstr "વપરાશ માટે પસંદ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:87
+msgid "Select library location"
+msgstr "લાઈબ્રેરી સ્થાન પસંદ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:95
+msgid "Reset"
+msgstr "ફરીથી ગોઠવવું"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:50
+msgid "Preferences"
+msgstr "પસંદગીઓ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:55
+#, fuzzy
+msgid "Could not show preferences"
+msgstr "ટ્રાન્સકોડર બનાવી શક્યા નહિં"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:56
+#, fuzzy
+msgid "The preferences service could not be found."
+msgstr "અમુક ગીતો શોધી શક્યા નહિં."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:82
+msgid "New Smart Playlist"
+msgstr "નવું સ્માર્ટ પ્લેલીસ્ટ"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:109
+msgid "Browser on Left"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:110
+msgid "Show the artist/album browser to the left of the track list"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:113
+msgid "Browser on Top"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:114
+msgid "Show the artist/album browser above the track list"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:119
+#, fuzzy
+msgid "Show Browser"
+msgstr "કવર કલા બતાવો"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:120
+msgid "Show or hide the artist/album browser"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:1
+msgid "0"
+msgstr "0"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:2
+msgid "0 MB"
+msgstr "0 MB"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:3
+msgid "0:00"
+msgstr "0:00"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:4
+#, fuzzy
+msgid "<b>Al_bum Artist:</b>"
+msgstr "<b>કલાકાર (_A):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:5
+msgid "<b>Albu_m:</b>"
+msgstr "<b>આલ્બમ (_m):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:6
+msgid "<b>Album Cover:</b>"
+msgstr "<b>આલ્બમ કવર:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:7
+msgid "<b>Bitrate:</b>"
+msgstr "<b>બીટદર:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:8
+msgid "<b>Channels:</b>"
+msgstr "<b>ચેનલો:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:9
+msgid "<b>Details</b>"
+msgstr "<b>વિગતો</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:10
+msgid "<b>Duration:</b>"
+msgstr "<b>સમયગાળો:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:11
+msgid "<b>File name:</b>"
+msgstr "<b>ફાઈલ નામ:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:12
+msgid "<b>File size:</b>"
+msgstr "<b>ફાઈલ માપ:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:13
+msgid "<b>Imported on:</b>"
+msgstr "<b>પર આયાત થયેલ:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:14
+msgid "<b>Last played:</b>"
+msgstr "<b>છેલ્લે વગાડાયેલ:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:15
+msgid "<b>Location:</b>"
+msgstr "<b>સ્થાન:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:16
+msgid "<b>Play count:</b>"
+msgstr "<b>વગાડવાનો દર:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:17
+msgid "<b>Sample rate:</b>"
+msgstr "<b>નમૂના દર:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:18
+msgid "<b>Session Information</b>"
+msgstr "<b>સત્ર જાણકારી</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:19
+#, fuzzy
+msgid "<b>Track _Artist:</b>"
+msgstr "<b>કલાકાર (_A):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:20
+msgid "<b>Track _count:</b>"
+msgstr "<b>ટ્રેક ગણતરી (_c):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:21
+msgid "<b>Track _number:</b>"
+msgstr "<b>ટ્રેક નંબર (_n):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:22
+msgid "<b>Write Options</b>"
+msgstr "<b>લખવાના વિકલ્પો</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:23
+#, fuzzy
+msgid "<b>_Disc:</b>"
+msgstr "<b>કલાકાર (_A):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:24
+msgid "<b>_Genre:</b>"
+msgstr "<b>વર્ગ (_G):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:25
+msgid "<b>_Rating:</b>"
+msgstr "<b>ક્રમાંકન (_R):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:26
+msgid "<b>_Title:</b>"
+msgstr "<b>શીર્ષક (_T):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:27
+msgid "<b>_Year:</b>"
+msgstr "<b>વર્ષ (_Y):</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:28
+#, fuzzy
+msgid "<big><b>Import Media to Library</b></big>"
+msgstr "<big><b>લાઈબ્રેરીમાંથી મ્યુઝીક આયાત કરો</b></big>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:29
+msgid "Apply common field values to all tracks"
+msgstr "બધા ટ્રેકોને સામાન્ય ક્ષેત્ર કિંમતો લાગુ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:30
+msgid "Artwork"
+msgstr "કલાકારીગીરી"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:31
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:88
+msgid "Back"
+msgstr "પાછળ"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:32
+msgid "Choose an import source:"
+msgstr "આયાત સ્રોત પસંદ કરો:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:33
+msgid "Copy to all"
+msgstr "બધું નકલ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:35
+msgid "Disc Options"
+msgstr "ડિસ્ક વિકલ્પો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:36
+msgid "Disc format:"
+msgstr "ડિસ્ક બંધારણ:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:37
+msgid "Disc name:"
+msgstr "ડિસ્ક નામ:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:38
+msgid "Do not show this dialog again"
+msgstr "આ સંવાદ ફરી દર્શાવશો નહીં"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:39
+msgid "Eject disc after writing"
+msgstr "લખ્યા પછી ડિસ્ક બહાર કાઢો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:40
+msgid "Embed directly in song"
+msgstr "ગીતમાં સીધું જ જડો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:41
+msgid "Enter Next"
+msgstr "આગળ દાખલ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:42
+msgid "Enter the address of the file you would like to open:"
+msgstr "તમે જે ફાઈલ ખોલવા ઈચ્છો તેનું સરનામું દાખલ કરો:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:44
+msgid "Forward"
+msgstr "આગળ ધપાવો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:45
+#, fuzzy
+msgid "Import Media Source"
+msgstr "મ્યુઝીક સ્રોત આયાત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:46
+#, fuzzy
+msgid "Import Media to Library"
+msgstr "મ્યુઝીકને લાઈબ્રેરીમાં આયાત કરો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:47
+msgid "Metadata"
+msgstr "મેટાડેટા"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:49
+msgid "Open in editor"
+msgstr "સંપાદકમાં ખોલો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:50
+msgid "Playlist _Name: "
+msgstr "પ્લેલીસ્ટ નામ (_N): "
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:51
+msgid "Predefined Smart Playlists"
+msgstr "પૂર્વવ્યાખ્યાયિત ચપળ પ્લેલીસ્ટ"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:52
+msgid "Save to song directory"
+msgstr "ગીત ડિરેક્ટરીમાં સંગ્રહો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:53
+msgid "Seek to Position"
+msgstr "સ્થાને પહોંચો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:54
+msgid "Select for use"
+msgstr "વપરાશ માટે પસંદ કરો"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:56
+msgid "Write disc to:"
+msgstr "ડિસ્કમાં લખો:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:57
+msgid "Write speed:"
+msgstr "લખવાની ઝડપ:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:58
+#, fuzzy
+msgid ""
+"Your media library is empty. You may import new music and videos into your "
+"library now, or choose to do so later."
+msgstr ""
+"તમારી મ્યુઝીક લાઈબ્રેરી ખાલી છે. તમે નવા સંગીતને તમારી લાઈબ્રેરીમાં હવે આયાત કરશો, અથવા "
+"આવું કરવાનું પછીથી પસંદ કરશો."
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:59
+msgid "_Write"
+msgstr "લખો (_W)"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/DiscUsageDisplay.cs:189
+msgid ""
+"Insert\n"
+"Disc"
+msgstr ""
+"ડિસ્ક\n"
+"દાખલ કરો"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:140
+msgid "Idle"
+msgstr "આળસુ"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:141
+msgid "Contacting..."
+msgstr "સંપર્ક કરી રહ્યા છીએ..."
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:151
+msgid "Buffering"
+msgstr "બફરીંગ"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:159
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:148
+#, csharp-format
+msgid "{0} of {1}"
+msgstr "{1} માંનુ {0}"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:549
+msgid "Muted"
+msgstr "મૂંગુ કરેલ"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:551
+msgid "Full Volume"
+msgstr "પૂર્ણ અવાજ"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:134
+#, fuzzy
+msgid "Device Properties"
+msgstr "ગુણધર્મો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:158
+#, fuzzy
+msgid "Product"
+msgstr "પોડકાસ્ટ"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:159
+msgid "Vendor"
+msgstr "વિક્રેતા"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:236
+#, fuzzy, csharp-format
+msgid "Loading {0}"
+msgstr "લાવી રહ્યા છીએ"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:301
+#, csharp-format
+msgid ""
+"The {0} format is not supported by the device, and no converter was found to "
+"convert it."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:307
+msgid "File format conversion is not supported for this device."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs:46
+msgid "Synchronize"
+msgstr "સુમેળ કરો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs:47
+#, csharp-format
+msgid "Synchronize {0}"
+msgstr "{0} સુમેળ કરો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:67
+msgid "Audio"
+msgstr "ઓડિયો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:69
+#, fuzzy
+msgid "Other"
+msgstr "ક્રમ"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:70
+msgid "Free Space"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:96
+#, fuzzy
+msgid "None"
+msgstr "પૂરુ થયું"
+
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:55
+#, csharp-format
+msgid "{0} Properties"
+msgstr "{0} ગુણધર્મો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:78
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:81
+msgid "Device name"
+msgstr "ઉપકરણ નામ"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:99
+msgid "Encode to"
+msgstr "માં એનકોડ કરો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:109
+msgid "Capacity used"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:121
+msgid "Advanced details"
+msgstr "અદ્યતન વિગતો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:114
+#, fuzzy, csharp-format
+msgid "Sync {0}"
+msgstr "{0} સુમેળ કરો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:100
+msgid "Manually manage this device"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:101
+msgid ""
+"Manually managing your device means you can drag and drop items onto the "
+"device, and manually remove them."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:105
+msgid "Automatically sync the device when plugged in or the libraries change"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:106
+msgid ""
+"Begin synchronizing the device as soon as the device is plugged in or the "
+"libraries change."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:109
+#, fuzzy
+msgid "Sync Preferences"
+msgstr "પસંદગીઓ"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs:53
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:70
+#, fuzzy, csharp-format
+msgid "Delete From {0}"
+msgstr "{0} કાઢી નાંખો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/MusicGroupSource.cs:38
+#, fuzzy
+msgid "Music"
+msgstr "સંગીત (_M)"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:71
+#, csharp-format
+msgid "Eject {0}"
+msgstr "{0} બહાર કાઢો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:104
+#, fuzzy, csharp-format
+msgid "Ejecting {0}..."
+msgstr "{0} બહાર કાઢો"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:111
+#, fuzzy, csharp-format
+msgid "Could not eject {0}: {1}"
+msgstr "iPod ને બહાર કાઢી શક્યા નહિં"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/VideoGroupSource.cs:38
+msgid "Videos"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:91
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:92
+msgid "Rebuilding Database"
+msgstr "ડેટાબેઝ પુનઃબીલ્ડ કરી રહ્યા છીએ"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:93
+msgid "Scanning iPod..."
+msgstr "iPod સ્કેન કરી રહ્યા છીએ..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:128
+msgid "Processing Tracks..."
+msgstr "ટ્રેકો પર પ્રક્રિયા કરી રહ્યા છીએ..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:144
+#, fuzzy
+msgid "Ordering Tracks..."
+msgstr "ટ્રેકો પર પ્રક્રિયા કરી રહ્યા છીએ..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:215
+msgid "Saving new database..."
+msgstr "નવો ડેટાબેઝ સંગ્રહી રહ્યા છીએ..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:227
+msgid "Error rebuilding iPod database"
+msgstr "iPod ડેટાબેઝ પુનઃબીલ્ડ કરવામાં ક્ષતિ"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:87
+msgid "Device"
+msgstr "ઉપકરણ"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:88
+#, fuzzy
+msgid "Color"
+msgstr "બંધ કરો"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:89
+#, fuzzy
+msgid "Generation"
+msgstr "સમયગાળો"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:90
+msgid "Capacity"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:91
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:142
+msgid "Serial number"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:92
+#, fuzzy
+msgid "Produced on"
+msgstr "પોડકાસ્ટ અભિપ્રાય સ્તંભ"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:93
+#, fuzzy
+msgid "Firmware"
+msgstr "આગળ ધપાવો"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:97
+msgid "Capabilities"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:98
+#, fuzzy
+msgid "Supports cover art"
+msgstr "કવર કલા બતાવો"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:98
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:99
+#, fuzzy
+msgid "Yes"
+msgstr "વર્ષો"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:98
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:99
+msgid "No"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:99
+msgid "Supports photos"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:536
+#, fuzzy
+msgid "Syncing iPod"
+msgstr "iPod ને સુમેળ કરી રહ્યા છીએ"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:537
+#, fuzzy
+msgid "Preparing to synchronize..."
+msgstr "રેકોર્ડ કરવા માટે તૈયારી કરી રહ્યા છીએ"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:558
+#, fuzzy
+msgid "Updating..."
+msgstr "સુધારી રહ્યા છીએ"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:562
+msgid "Flushing to disk..."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:59
+msgid "Unable to read your iPod"
+msgstr "તમારું iPod વાંચવામાં અસમર્થ"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:75
+#, fuzzy
+msgid ""
+"You have used this iPod with a version of iTunes that saves a version of the "
+"song database for your iPod that is too new for Banshee to recognize.\n"
+"\n"
+"Banshee can rebuild your database, but some settings might be lost. Using "
+"Banshee and iTunes with the same iPod is not recommended."
+msgstr ""
+"તમે આ iPod ને iTunes ની આવૃત્તિ સાથે વાપર્યું છે કે જે તમારા iPod માટે ગીત ડેટાબેઝની આવૃત્તિ "
+"સંગ્રહે છે કે જે Banshee ને ઓળખવા માટે ખૂબ જ નવી છે.\n"
+"\n"
+"Banshee ક્યાં તો ડેટાબેઝ પુનઃબીલ્ડ કરી શકે અથવા તમારે Banshee દ્વારા આધારભૂત થશી શકે તે "
+"માટે નવી iTunes આવૃત્તિની રાહ જોવી પડે."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:86
+msgid "Learn more about Banshee's iPod support"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:94
+msgid ""
+"An iPod database could not be found on this device.\n"
+"\n"
+"Banshee can build a new database for you."
+msgstr ""
+"iPod ડેટાબેઝ આ ઉપકરણ પર શોધી શક્યા નહિં.\n"
+"\n"
+"Banshee તમારા માટે નવો ડેટાબેઝ બીલ્ડ કરી શકે."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:102
+msgid "What is the reason for this?"
+msgstr "આ શાના માટેનું કારણ છે?"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:115
+msgid "Your iPod is mounted read only. Banshee can not restore your iPod."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:123
+msgid "Rebuild iPod Database..."
+msgstr "iPod ડેટાબેઝ પુનઃબીલ્ડ કરો..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:131
+msgid "Confirm Rebuild iPod Database"
+msgstr "iPod ડેટાબેઝ પુનઃબીલ્ડ કરવાની ખાતરી કરો"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:137
+msgid ""
+"Rebuilding your iPod database may take some time. Also note that any "
+"playlists you have on your iPod will be lost.\n"
+"\n"
+"Are you sure you want to rebuild your iPod database?"
+msgstr ""
+"તમારો iPod ડેટાબેઝ પુનઃબીલ્ડ કરવાનું થોડો સમય લેશે. એ પણ નોંધ લો કે તમારા iPod પરના "
+"કોઈપણ પ્લેલીસ્ટો નષ્ટ થઈ જશે.\n"
+"\n"
+"શું તમે ખરેખર તમારો iPod ડેટાબેઝ પુનઃબીલ્ડ કરવા માંગો છો?"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:141
+msgid "Rebuild Database"
+msgstr "ડેટાબેઝ પુનઃબીલ્ડ કરો"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:155
+msgid "Rebuilding iPod Database..."
+msgstr "iPod ડેટાબેઝ પુનઃબીલ્ડ કરી રહ્યા છીએ..."
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:97
+#, fuzzy, csharp-format
+msgid "Audio Folder"
+msgid_plural "Audio Folders"
+msgstr[0] "_Audioscrobbler"
+msgstr[1] "_Audioscrobbler"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:103
+msgid "Required Folder Depth"
+msgstr "જરૂરી ફોલ્ડર ઊંડાઈ"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:76
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:115
+msgid "MTP Support Ignoring Device"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:77
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:116
+msgid "Banshee's MTP audio player support can only handle one device at a time."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:89
+#, fuzzy
+msgid "Error Initializing MTP Device Support"
+msgstr "ઓડિયો CD આધારનો આરંભ કરી રહ્યા છીએ"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:90
+msgid ""
+"There was an error intializing MTP device support.  See http://www.banshee-"
+"project.org/Guide/DAPs/MTP for more information."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:101
+msgid "Error Finding MTP Device Support"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:102
+msgid "An MTP device was detected, but Banshee was unable to load support for it."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:143
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:66
+msgid "Version"
+msgstr "આવૃત્તિ"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:144
+msgid "Battery level"
+msgstr ""
+
+#. user_event.Progress = (double)current / total;
+#. Translators: {0} is the name of the MTP audio device (eg Gabe's Zen Player), {1} is the
+#. current track being loaded, and {2} is the total # of tracks that will be loaded.
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:155
+#, fuzzy, csharp-format
+msgid "Loading {0} - {1} of {2}"
+msgstr "{1} નું {0} લાવી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:68
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:156
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:54
+msgid "Audio CD"
+msgstr "ઓડિયો સીડી"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:88
+#, csharp-format
+msgid "Track {0}"
+msgstr "ટ્રેક {0}"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:117
+msgid "Importing Audio CD"
+msgstr "ઓડિયો CD ની આયાત કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:118
+msgid "Initializing Drive"
+msgstr "ડ્રાઈવનો આરંભ કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:120
+#, csharp-format
+msgid ""
+"<i>{0}</i> is still being imported into the music library. Would you like to "
+"stop it?"
+msgstr "<i>{0}</i> એ હજુ પણ સંગીત લાઈબ્રેરીમાં આયાત થી રહ્યું છે. શું તમે તેને અટકાવવા માંગો છો?"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:239
+msgid "Cannot Import CD"
+msgstr "CD ને આયાત કરી શકતા નથી"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:160
+#, fuzzy
+msgid "Audio CD Importing"
+msgstr "આયાત કરવાનું"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:162
+#, fuzzy
+msgid "_Import format"
+msgstr "આઉટપુટ બંધારણ (_u):"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:166
+msgid "_Automatically import audio CDs when inserted"
+msgstr ""
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:167
+msgid ""
+"When an audio CD is inserted, automatically begin importing it if metadata "
+"can be found and it is not already in the library."
+msgstr ""
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:171
+msgid "_Eject when done importing"
+msgstr ""
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:172
+msgid "When an audio CD has been imported, automatically eject it."
+msgstr ""
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:175
+msgid "Use error correction when importing"
+msgstr "જ્યારે આયાત કરી રહ્યા હોય ત્યારે ક્ષતિ સુધારો વાપરો"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:176
+msgid ""
+"Error correction tries to work around problem areas on a disc, such as "
+"surface scratches, but will slow down importing substantially."
+msgstr ""
+"ક્ષતિ સુધારો ડિસ્ક પરની સમસ્યાઓ સુધારવાનો પ્રયાસ કરે છે, જેમ કે સપાટી પરના ઘસારાઓ, પરંતુ "
+"તે આયાત કરવાનું પછીથી ધીમું કરી નાંખશે."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:244
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:412
+msgid "Import CD"
+msgstr "CD આયાત કરો"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:245
+#, fuzzy
+msgid "Import this audio CD to the library"
+msgstr "ઓડિયો CD ને લાઈબ્રેરીમાં આયાત કરો"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:251
+#, fuzzy
+msgid "Duplicate CD"
+msgstr "CD લખો"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:252
+#, fuzzy
+msgid "Duplicate this audio CD"
+msgstr "પસંદગીને ઓડિયો CD માં લખો"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:123
+msgid "Searching for CD metadata..."
+msgstr "CD મેટાડેટા માટે શોધી રહ્યા છીએ..."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:156
+msgid "Could not fetch metadata for CD."
+msgstr "CD માટે મેટાડેટા મેળવી શક્યા નહિં."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:184
+msgid "Automatic import off since this album is already in the Music Library."
+msgstr ""
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:207
+#, fuzzy
+msgid "Could not import CD"
+msgstr "ટ્રેકો આયાત કરી શક્યા નહિં"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:224
+#, fuzzy
+msgid "Could not duplicate audio CD"
+msgstr "ઓડિયો CD વાંચી શક્યા નહિં"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:336
+#, fuzzy
+msgid "Ejecting audio CD..."
+msgstr "ઓડિયો CD ની આયાત કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:354
+#, fuzzy, csharp-format
+msgid "Could not eject audio CD: {0}"
+msgstr "iPod ને બહાર કાઢી શક્યા નહિં"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:387
+#, fuzzy
+msgid "Eject Disc"
+msgstr "CD બહાર નીકાળો"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:411
+#, csharp-format
+msgid "Import ‟{0}”"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:84
+msgid "_Bookmarks"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:87
+msgid "_Add Bookmark"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:88
+msgid "Bookmark the Position in the Current Track"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:100
+#, fuzzy
+msgid "_Remove Bookmark"
+msgstr "દૂર કરો (_R)"
+
+#. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
+#. (possibly more than two digits) and {2} is seconds (between 00 and 60).
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:210
+#, csharp-format
+msgid "{0} ({1}:{2:00})"
+msgstr ""
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:83
+msgid "Downloading Cover Art"
+msgstr "કવર કલા ડાઉનલોડ કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:112
+#, fuzzy
+msgid "Preparing..."
+msgstr "પ્રક્રિયા કરી રહ્યા છીએ..."
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:141
+#, fuzzy, csharp-format
+msgid "{0} - {1}"
+msgstr "{1} માંનુ {0}"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:105
+#, fuzzy
+msgid "_Cover Art"
+msgstr "કવર કલા બતાવો (_A)"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:106
+#, fuzzy
+msgid "Manage cover art"
+msgstr "કવર કલા બતાવો"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:108
+#, fuzzy
+msgid "_Download Cover Art"
+msgstr "કવર કલા ડાઉનલોડ કરો"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:109
+#, fuzzy
+msgid "Download cover art for all tracks"
+msgstr "કવર કલા ડાઉનલોડ કરો"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:41
+msgid "Shared Music"
+msgstr "વહેંચાયેલ મ્યુઝીક"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:73
+msgid "Disconnected from music share"
+msgstr "મ્યુઝીક વહેંચણીમાંથી જોડાણ તૂટી ગયું"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:74
+msgid "Unable to connect to music share"
+msgstr "મ્યુઝીક વહેંચણીમાં જોડાવામાં અસમર્થ"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:101
+msgid ""
+"iTunes® 7 introduced new compatibility issues and currently only works with "
+"other iTunes® 7 clients.\n"
+"\n"
+"No third-party clients can connect to iTunes® music shares anymore. This is "
+"an intentional limitation by Apple in iTunes® 7 and we apologize for the "
+"unfortunate inconvenience."
+msgstr ""
+"iTunes® 7 નવા સુસંગતતા મુદ્દાઓ પરિચયમાં લાવે છે અને વર્તમાનમાં માત્ર અન્ય iTunes® 7 "
+"ક્લાઈન્ટો સાથે જ કામ કરે છે.\n"
+"\n"
+"કોઈ ત્રીજી-વ્યક્તિ ક્લાઈન્ટો iTunes® મ્યુઝીક વહેંચણીઓ સાથે હવે ક્યારેય જોડાઈ શકે નહિં. આ "
+"Apple દ્વારા iTunes® 7 માં મૂકાયેલ હેતુસરની મર્યાદા છે અને અમે અજાણીતી ખલેલ માટે દિલગીર "
+"છીએ."
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:111
+msgid "Common reasons for connection failures:"
+msgstr "જોડાણ નિષ્ફળતાઓ માટેના સામાન્ય કારણો:"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:117
+msgid "The provided login credentials are invalid"
+msgstr "પૂરી પાડવામાં આવેલ પ્રવેશ જાણકારીઓ અયોગ્ય છે"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:118
+msgid "The login process was canceled"
+msgstr "પ્રવેશ પ્રક્રિયા રદ થઈ હતી"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:119
+msgid "Too many users are connected to this share"
+msgstr "ઘણા બધા વપરાશકર્તાઓ આ વહેંચણી સાથે જોડાયેલ છે"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:121
+msgid "You are no longer connected to this music share"
+msgstr "તમે આ મ્યુઝીક વહેંચણી સાથે લાંબા સમય સુધી જોડાયેલ રહી શકો નહિં"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:125
+msgid "Try connecting again"
+msgstr "ફરીથી જોડાવાનો પ્રયાસ કરો"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:139
+msgid "The music share is hosted by iTunes® 7"
+msgstr "મ્યુઝીક વહેંચણી એ iTunes® 7 દ્વારા યજમાનિત થયેલ છે"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:47
+msgid "Login to Music Share"
+msgstr "મ્યુઝીક વહેંચણીમાં પ્રવેશ કરો"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:80
+msgid "Authentication Required"
+msgstr "પ્રમાણિત કરવું જરૂરી છે"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:104
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:57
+msgid "Username:"
+msgstr "વપરાશકર્તાનામ:"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:112
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:64
+msgid "Password:"
+msgstr "પાસવર્ડ:"
+
+#. Translators: this is a verb used as a button label, not a noun
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:124
+msgid "Login"
+msgstr "પ્રવેશ"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:59
+#, fuzzy
+msgid "Music Share"
+msgstr "મ્યુઝીક વહેંચણી"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:63
+msgid "Disconnect"
+msgstr "જોડાણ તોડો"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:105
+#, csharp-format
+msgid "Connecting to {0}"
+msgstr "{0} સાથે જોડાઈ રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:199
+#, fuzzy, csharp-format
+msgid "Logging in to {0}."
+msgstr "{0} માં પ્રવેશી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:235
+#, fuzzy, csharp-format
+msgid "Loading {0} track."
+msgid_plural "Loading {0} tracks."
+msgstr[0] "{1} નું {0} લાવી રહ્યા છીએ"
+msgstr[1] "{1} નું {0} લાવી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:257
+#, fuzzy
+msgid "Loading playlists"
+msgstr "પ્લેલીસ્ટો ક્રમમાં ગોઠવો"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:58
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:59
+msgid "File System Queue"
+msgstr ""
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:72
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:89
+msgid "Clear"
+msgstr "સાફ"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:73
+msgid "Remove all tracks from the file system queue"
+msgstr ""
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:79
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:96
+msgid "Clear on Quit"
+msgstr ""
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:80
+msgid "Clear the file system queue when quitting"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSourceContents.cs:62
+msgid "Not Set"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:57
+msgid "Radio"
+msgstr "રેડિયો"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:68
+msgid "Add Station"
+msgstr "સ્ટેશન ઉમેરો"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:69
+#, fuzzy
+msgid "Add a new Internet Radio station or playlist"
+msgstr "નવું રેડિયો સ્ટેશન ઉમેરો"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:82
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:64
+#, fuzzy
+msgid "Edit Station"
+msgstr "રેડિયો સ્ટેશનમાં ફેરફાર કરો"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:131
+msgid "Station"
+msgstr "સ્ટેશન"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:132
+#, fuzzy
+msgid "Creator"
+msgstr "સાફ"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:133
+msgid "Description"
+msgstr "વર્ણન"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:218
+msgid "Please provide a valid station URI"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:231
+msgid "Please provide a station genre"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:239
+msgid "Please provide a station title"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:67
+msgid "Add new radio station"
+msgstr "નવું રેડિયો સ્ટેશન ઉમેરો"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:68
+msgid "Edit radio station"
+msgstr "રેડિયો સ્ટેશનમાં ફેરફાર કરો"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:97
+#, fuzzy
+msgid ""
+"Enter the Genre, Title and URL of the radio station you wish to add. A "
+"description is optional."
+msgstr "તમે જે રેડિયો સ્ટેશન ઉમેરવા માંગો છો તેનું જૂથ, શીર્ષક અને URL દાખલ કરો. વર્ણન વૈકલ્પિક છે."
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:118
+#, fuzzy
+msgid "Station Genre:"
+msgstr "સ્ટેશન જૂથ:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:120
+#, fuzzy
+msgid "Station Name:"
+msgstr "સ્ટેશન શીર્ષક:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:121
+msgid "Stream URL:"
+msgstr "સ્ટ્રીમ URL:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:122
+#, fuzzy
+msgid "Station Creator:"
+msgstr "સ્ટેશન જૂથ:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:123
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:74
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:87
+msgid "Description:"
+msgstr "વર્ણન:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:128
+#: ../src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:48
+#, fuzzy
+msgid "Rating:"
+msgstr "ક્રમાંકન"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:125
+msgid "_Last.fm"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:126
+msgid "Configure the Audioscrobbler plugin"
+msgstr "Audioscrobbler પ્લગઈન રૂપરેખાંકિત કરો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:129
+#, fuzzy
+msgid "Visit _User Profile Page"
+msgstr "વપરાશકર્તા રૂપરેખા પાનાંની મુલાકાત લો (_u)"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:130
+#, fuzzy
+msgid "Visit Your Last.fm Profile Page"
+msgstr "વપરાશકર્તા રૂપરેખા પાનાંની મુલાકાત લો (_u)"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:133
+msgid "_Configure..."
+msgstr "રૂપરેખાંકિત કરો (_C)..."
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:134
+msgid "Configure the Last.fm Extension"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:139
+#, fuzzy
+msgid "_Enable Song Reporting"
+msgstr "ગીત અહેવાલીકરણ સક્રિય કરો (_E)"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:140
+msgid "Enable song reporting"
+msgstr "ગીત અહેવાલીકરણ સક્રિય કરો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:66
+#, fuzzy
+msgid "_Add Station"
+msgstr "સ્ટેશન ઉમેરો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:67
+#, fuzzy
+msgid "Add a new Last.fm radio station"
+msgstr "નવું રેડિયો સ્ટેશન ઉમેરો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:74
+#, fuzzy
+msgid "Connect"
+msgstr "જોડાણ તોડો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:79
+#, fuzzy
+msgid "Sort Stations by"
+msgstr "દૂરસ્થ સ્ટેશનો બતાવો"
+
+#. Translators: {0} is a type of Last.fm station, eg "Fans of" or "Similar to".
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:85
+#, fuzzy, csharp-format
+msgid "Listen to {0} Station"
+msgstr "રેડિયો સ્ટેશનમાં ફેરફાર કરો"
+
+#. Translators: {0} is a type of Last.fm station, eg "Fans of" or "Similar to".
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:87
+#, csharp-format
+msgid "Listen to the Last.fm {0} station for this artist"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:92
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:126
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:151
+msgid "View on Last.fm"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:93
+msgid "View this artist's Last.fm page"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:96
+msgid "View Artist on Wikipedia"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:97
+msgid "Find this artist on Wikipedia"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:104
+msgid "View Artist's Videos"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:105
+#, fuzzy
+msgid "Find videos by this artist"
+msgstr "આ કલાકાર છે"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:108
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:109
+msgid "Fans of"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:113
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:114
+#, fuzzy
+msgid "Similar to"
+msgstr "સુધી મર્યાદા (_L)"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:118
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:134
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:155
+#, fuzzy
+msgid "Recommend to"
+msgstr "આગ્રહણીય કલાકારો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:119
+#, fuzzy
+msgid "Recommend this artist to someone"
+msgstr "આગ્રહણીય કલાકારો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:127
+#, fuzzy
+msgid "View this album's Last.fm page"
+msgstr "Banshee last.fm જૂથ પાનાંની મુલાકાત લો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:135
+#, fuzzy
+msgid "Recommend this album to someone"
+msgstr "આગ્રહણીય કલાકારો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:142
+#, fuzzy
+msgid "Love Track"
+msgstr "ટ્રેક"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:143
+msgid "Mark current track as loved"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:147
+#, fuzzy
+msgid "Ban Track"
+msgstr "ટ્રેક"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:148
+msgid "Mark current track as banned"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:152
+#, fuzzy
+msgid "View this track's Last.fm page"
+msgstr "Banshee last.fm જૂથ પાનાંની મુલાકાત લો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:156
+#, fuzzy
+msgid "Recommend this track to someone"
+msgstr "આગ્રહણીય કલાકારો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:166
+#, fuzzy
+msgid "Station Name"
+msgstr "ગીત નામ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:171
+#, fuzzy
+msgid "Total Play Count"
+msgstr "રમત ગણતરી"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:176
+#, fuzzy
+msgid "Station Type"
+msgstr "સ્ટેશન શીર્ષક:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:258
+#, csharp-format
+msgid "http://last.fm/music/{0}"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:266
+#, csharp-format
+msgid "http://last.fm/music/{0}/{1}"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:274
+#, csharp-format
+msgid "http://last.fm/music/{0}/_/{1}"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:282
+#, csharp-format
+msgid "http://www.last.fm/music/{0}/+videos"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:290
+#, csharp-format
+msgid "http://en.wikipedia.org/wiki/{0}"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:324
+#, fuzzy, csharp-format
+msgid "Fans of {0}"
+msgstr "{0} માટે ટેગો સંગ્રહી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:345
+#, fuzzy, csharp-format
+msgid "Similar to {0}"
+msgstr "{0} અટકાવો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:124
+msgid "Recently Loved Tracks"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:125
+#, fuzzy
+msgid "Recently Played Tracks"
+msgstr "એકદમ છેલ્લે રમાયેલ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:126
+#, fuzzy
+msgid "My Top Artists"
+msgstr "કલાકાર"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:206
+#, csharp-format
+msgid "{0} plays"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:106
+#, fuzzy
+msgid "Edit Last.fm Settings"
+msgstr "રેડિયો સ્ટેશનમાં ફેરફાર કરો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:324
+#, fuzzy
+msgid "Account Settings"
+msgstr "ખાતા નામ:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:326
+msgid "Join Last.fm"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:72
+#, fuzzy
+msgid "New Station"
+msgstr "સ્ટેશન"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:57
+#, fuzzy
+msgid "Last.fm Station"
+msgstr "Last.fm પાસવર્ડ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:150
+#, fuzzy
+msgid "Edit Last.fm Station"
+msgstr "રેડિયો સ્ટેશનમાં ફેરફાર કરો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:151
+msgid "Delete Last.fm Station"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:237
+#, csharp-format
+msgid "Tuning Last.fm to {0}."
+msgstr ""
+
+#. Translators: {0} is an error message sentence from RadioConnection.cs.
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:247
+#, fuzzy, csharp-format
+msgid "Failed to tune in station. {0}"
+msgstr "રેડિયો સ્ટેશનો લાવવામાં નિષ્ફળ: "
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:346
+#, fuzzy, csharp-format
+msgid "Getting new songs for {0}."
+msgstr "{0} માંથી ગીતો દૂર કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:353
+#, fuzzy, csharp-format
+msgid "No new songs available for {0}."
+msgstr "કોઈ વર્ણન ઉપલબ્ધ નથી"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:379
+#, fuzzy, csharp-format
+msgid "Failed to get new songs for {0}."
+msgstr "{0} અનમાઉન્ટ કરવામાં નિષ્ફળ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:440
+#, csharp-format
+msgid "{0} song played"
+msgid_plural "{0} songs played"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:560
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:83
+#, fuzzy
+msgid "Recommended"
+msgstr "આગ્રહણીય કલાકારો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:561
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:92
+#, fuzzy
+msgid "Personal"
+msgstr "આવૃત્તિ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:562
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:101
+msgid "Loved"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:563
+#, fuzzy
+msgid "Banshee Group"
+msgstr "Banshee"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:564
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:110
+msgid "Neighbors"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:84
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:93
+msgid "For User:"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:102
+msgid "By User:"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:111
+msgid "Of User:"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:119
+msgid "Group"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:120
+#, fuzzy
+msgid "Group Name:"
+msgstr "ખાતા નામ:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:128
+#, fuzzy
+msgid "Tag"
+msgstr "અગાઉ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:129
+#, fuzzy
+msgid "Tag Name:"
+msgstr "ગીત નામ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:137
+#, fuzzy
+msgid "Fan"
+msgstr "કોઈપણ"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:138
+msgid "Fans of:"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:146
+msgid "Similar"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:147
+#, fuzzy
+msgid "Similar to:"
+msgstr "સુધી મર્યાદા (_L)"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationActions.cs:66
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationActions.cs:67
+msgid "Show Recommendations"
+msgstr "આગ્રહો બતાવો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:79
+#, csharp-format
+msgid "Top Albums by {0}"
+msgstr "{0} પ્રમાણે ટોચના ટ્રેકો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:80
+#, csharp-format
+msgid "Top Tracks by {0}"
+msgstr "{0} પ્રમાણે ટોચના ટ્રેકો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:161
+msgid "Recommended Artists"
+msgstr "આગ્રહણીય કલાકારો"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:188
+msgid "No similar artists found"
+msgstr "કોઈ આવા કલાકારો મળ્યા નહિં"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/SimilarArtistTile.cs:60
+#, fuzzy, csharp-format
+msgid "{0}% Similarity"
+msgstr "{0}% સરખાપણું"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/SimilarArtistTile.cs:62
+#, fuzzy
+msgid "Unknown Similarity"
+msgstr "અજાણ્યો કલાકાર"
+
+#: ../src/Extensions/Banshee.Lastfm/Resources/lastfm.glade.h:1
+#, fuzzy
+msgid "Station _Type:"
+msgstr "સ્ટેશન શીર્ષક:"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeService.cs:25
+#, fuzzy
+msgid "_Mini Mode"
+msgstr "Mini mode"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:73
+msgid "Banshee Music Player"
+msgstr "Banshee મ્યુઝીક પ્લેયર"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:136
+msgid "Switch back to full mode"
+msgstr "સંપૂર્ણ સ્થિતિમાં બદલાઈ જાવ"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:137
+msgid "Change repeat playback mode"
+msgstr "પુનરાવર્તીય પ્લેબેક સ્થિતિ બદલો"
+
+#: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:1
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:64
+msgid "Banshee"
+msgstr "Banshee"
+
+#: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:2
+msgid "Current source:"
+msgstr "વર્તમાન સ્રોત:"
+
+#: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:3
+msgid "Full Mode"
+msgstr "સંપૂર્ણ સ્થિતિ"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:116
+msgid "_Close"
+msgstr "બંધ કરો (_C)"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:117
+msgid "Close"
+msgstr "બંધ કરો"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:123
+#, fuzzy
+msgid "_Show Notifications"
+msgstr "સૂચનો બતાવો"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:124
+#, fuzzy
+msgid "Show notifications when item changes"
+msgstr "જ્યારે ગીત બદલાય ત્યારે સૂચનો બતાવો"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:297
+msgid "Still Running"
+msgstr "હજુ પણ ચાલી રહ્યું છે"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:298
+msgid ""
+"Banshee was closed to the notification area. Use the <i>Quit</i> option to "
+"end your session."
+msgstr ""
+"Banshee સૂચન વિસ્તારમાં બંધ થયું હતું. તમારા સત્રનો અંત કરવા માટે <i>બહાર નીકળો</i> "
+"વિકલ્પ વાપરો."
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:402
+#: ../src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:52
+msgid "Now Playing"
+msgstr "હમણાં વગાડી રહ્યા છે"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:407
+msgid "Skip this item"
+msgstr ""
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:413
+msgid "Cannot show notification"
+msgstr "સૂચન બતાવી શકતા નથી"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:62
+#, fuzzy
+msgid "Play Queue"
+msgstr "સ્થાનિક કતાર"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:68
+msgid "Remove From Play Queue"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:82
+#, fuzzy
+msgid "Add to Play Queue"
+msgstr "પ્લેલીસ્ટમાં ઉમેરો (_t)"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:83
+#, fuzzy
+msgid "Append selected songs to the play queue"
+msgstr "પસંદિત ગીતોને પ્લેલીસ્ટમાં ઉમેરો કે પસંદગીમાંથી નવું પ્લેલીસ્ટ બનાવો"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:90
+msgid "Remove all tracks from the play queue"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:97
+msgid "Clear the play queue when quitting"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:69
+#, fuzzy, csharp-format
+msgid "All Podcasts ({0})"
+msgstr "બધી પોડકાસ્ટ સુધારો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:96
+msgid "Podcasts"
+msgstr "પોડકાસ્ટ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:158
+#, fuzzy
+msgid "Downloading"
+msgstr "ડાઉનલોડ કરો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:159
+#, fuzzy
+msgid "Waiting to download"
+msgstr "ડાઉનલોડનો આરંભ કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:160
+#, fuzzy
+msgid "Download paused"
+msgstr "ડાઉનલોડ નિષ્ફળ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:161
+#, fuzzy
+msgid "Download failed"
+msgstr "ડાઉનલોડ નિષ્ફળ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:164
+#, fuzzy
+msgid "Downloaded"
+msgstr "ડાઉનલોડ કરો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:165
+msgid "Stream Available"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:167
+msgid "New"
+msgstr "નવું"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:169
+#, fuzzy
+msgid "Watched"
+msgstr "સરખાવો (_M)"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:170
+#, fuzzy
+msgid "Heard"
+msgstr "નહિં સંભળાયેલ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:111
+#, fuzzy
+msgid "Never updated"
+msgstr "ક્યારેય નહિં વગાડેલ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:113
+#, fuzzy, csharp-format
+msgid "Updated at {0}"
+msgstr "\"{0}\" સુધારી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:115
+#, fuzzy, csharp-format
+msgid "Updated {0}"
+msgstr "\"{0}\" સુધારી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:57
+msgid "New Items"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:58
+msgid "All Items"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:59
+msgid "Old Items"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:46
+#, fuzzy
+msgid "Downloads"
+msgstr "ડાઉનલોડ કરો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:50
+#, fuzzy
+msgid "Downloading Podcast(s)"
+msgstr "ફાઈલો ડાઉનલોડ કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:51
+#, fuzzy
+msgid "Initializing..."
+msgstr "ટ્રાન્સકોડરનો આરંભ કરી રહ્યા છીએ..."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:52
+#, fuzzy
+msgid "Cancel all podcast downloads?"
+msgstr "ડાઉનલોડ રદ કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:120
+#, fuzzy, csharp-format
+msgid "Currently transfering {0} file at {1} KB/s"
+msgid_plural "Currently transfering {0} files at {1} KB/s"
+msgstr[0] ""
+"વર્તમાનમાં 1 ફાઈલ {0} kB/s ઝડપે પરિવહન કરી રહ્યા છીએવર્તમાનમાં {1} ફાઈલો {0} kB/s "
+"ઝડપે પરિવહન કરી રહ્યા છીએ"
+msgstr[1] ""
+"વર્તમાનમાં 1 ફાઈલ {0} kB/s ઝડપે પરિવહન કરી રહ્યા છીએવર્તમાનમાં {1} ફાઈલો {0} kB/s "
+"ઝડપે પરિવહન કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:133
+msgid "Canceling Downloads"
+msgstr "ડાઉનલોડ રદ કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:135
+#, fuzzy
+msgid "Waiting for downloads to terminate..."
+msgstr "ડાઉનલોડને બંધ થવા માટે રાહ જોઈ રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:68
+msgid "Update Podcasts"
+msgstr "પોડકાસ્ટ સુધારો"
+
+#. "<control><shift>U",
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:69
+#, fuzzy
+msgid "Refresh All Podcasts"
+msgstr "બધી પોડકાસ્ટ સુધારો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:74
+msgid "Subscribe to Podcast"
+msgstr "પોડકાસ્ટમાં ઉમેદવારી નોંધાવો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:75
+#, fuzzy
+msgid "Subscribe to a new podcast"
+msgstr "નવા પોડકાસ્ટમાં ઉમેદવારી નોંધાવો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:86
+msgid "Unsubscribe and Delete"
+msgstr ""
+
+#. Translators: this is a verb used as a button name, not a noun
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:93
+#, fuzzy
+msgid "Check for New Episodes"
+msgstr "ભાગ(ઓ) દૂર કરો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:99
+#, fuzzy
+msgid "Download All Episodes"
+msgstr "બધા ભાગો ડાઉનલોડ કરો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:105
+#, fuzzy
+msgid "Visit Podcast Homepage"
+msgstr "પોડકાસ્ટ એલીની મુલાકાત લો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:111
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:153
+msgid "Properties"
+msgstr "ગુણધર્મો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:117
+msgid "Mark as New"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:123
+msgid "Mark as Old"
+msgstr ""
+
+#. Translators: this is a verb used as a button name, not a noun
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:129
+#, fuzzy
+msgid "Download Podcast(s)"
+msgstr "નહિં સંભળાયેલ પોડકાસ્ટ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:135
+#, fuzzy
+msgid "Cancel Download"
+msgstr "ડાઉનલોડ રદ કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:141
+#, fuzzy
+msgid "Remove Downloaded File(s)"
+msgstr "ફાઈલો ડાઉનલોડ કરી રહ્યા છીએ"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:147
+#, fuzzy
+msgid "Visit Website"
+msgstr "દૃશ્યતા"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:260
+msgid "Invalid URL"
+msgstr "અયોગ્ય URL"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:261
+#, fuzzy
+msgid "Podcast URL is invalid."
+msgstr "પોડકાસ્ટ અભિપ્રાય URL અયોગ્ય છે."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:78
+#, fuzzy
+msgid "Last updated:"
+msgstr "છેલ્લે સુધારેલ:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:82
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:83
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:146
+msgid "URL:"
+msgstr "URL:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:86
+msgid "When feed is updated:"
+msgstr "જ્યારે અભિપ્રાય સુધારાય છે:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:102
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:103
+msgid "No description available"
+msgstr "કોઈ વર્ણન ઉપલબ્ધ નથી"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:75
+msgid "Podcast:"
+msgstr "પોડકાસ્ટ:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:79
+msgid "Date:"
+msgstr "તારીખ:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:61
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:170
+msgid "Subscribe"
+msgstr "ઉમેદવારી નોંધાવો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:92
+msgid "Subscribe to New Podcast"
+msgstr "નવા પોડકાસ્ટમાં ઉમેદવારી નોંધાવો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:100
+#, fuzzy
+msgid "Please enter the URL of the podcast to which you would like to subscribe."
+msgstr "મહેરબાની કરીને પોડકાસ્ટની URL દાખલ કરો કે જેમાં તમે ઉમેદવારી નોંધાવી રહ્યા છો."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:112
+msgid "When new episodes are available:  "
+msgstr "જ્યારે નવા ભાગો ઉપલબ્ધ હોય:  "
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:41
+msgid "Download all episodes"
+msgstr "બધા ભાગો ડાઉનલોડ કરો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:42
+msgid "Download the most recent episode"
+msgstr "એકદમ છેલ્લો ભાગ ડાઉનલોડ કરો"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:43
+msgid "Let me decide which episodes to download"
+msgstr "મને નક્કી કરવા દો કે કયા ભાગો ડાઉનલોડ કરવા છે"
+
+#: ../src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs:40
+msgid "Sample"
+msgstr ""
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:59
+msgid "Show SQL Console"
+msgstr ""
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:64
+msgid "Start SQL Monitoring"
+msgstr ""
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:69
+msgid "Stop SQL Monitoring"
+msgstr ""
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:465
+#, csharp-format
+msgid "Hide {0}"
+msgstr "{0} છુપાવો"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:52
+msgid "Banshee Encountered a Fatal Error"
+msgstr "Banshee ને ઘાતક ભૂલ મળી આવી"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:89
+msgid "Error Details"
+msgstr "ક્ષતિ વિગતો"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:133
+msgid "An unhandled exception was thrown: "
+msgstr "એક અનિયંત્રિત અપવાદ ફેકાયો હતો: "
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:58
+msgid "Assembly Version Information"
+msgstr "એસેમ્બલી આવૃત્તિ જાણકારી"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:64
+msgid "Assembly Name"
+msgstr "એસેમ્બલી નામ"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:61
+msgid "bytes"
+msgstr ""
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:62
+msgid "KB"
+msgstr ""
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:86
+#, fuzzy
+msgid "Condition:"
+msgstr "રૂપરેખાંકન"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:104
+msgid "_Match"
+msgstr "સરખાવો (_M)"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:111
+msgid "all"
+msgstr "બધું"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:112
+msgid "any"
+msgstr "કોઈપણ"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:117
+msgid "of the following:"
+msgstr "નીચેનામાંનુ:"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:58
+msgid "_Limit to"
+msgstr "સુધી મર્યાદા (_L)"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:82
+msgid "selected by"
+msgstr "દ્વારા પસંદિત"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs:42
+msgid "ago"
+msgstr "અગાઉ"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:59
+#, fuzzy
+msgid "seconds"
+msgstr "સેકન્ડો"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:62
+#, fuzzy
+msgid "days"
+msgstr "દિવસો"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:63
+#, fuzzy
+msgid "weeks"
+msgstr "અઠવાડિયાઓ"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:64
+#, fuzzy
+msgid "months"
+msgstr "મહિનો"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:65
+#, fuzzy
+msgid "years"
+msgstr "વર્ષો"
+
+#. public static readonly Operator Equal              = new Operator ("equals", "= {0}", "==", "=", ":");
+#. public static readonly Operator NotEqual           = new Operator ("notEqual", "!= {0}", true, "!=", "!:");
+#. public static readonly Operator LessThanEqual      = new Operator ("lessThanEquals", "<= {0}", "<=");
+#. public static readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", ">= {0}", ">=");
+#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:47
+#, fuzzy
+msgid "before"
+msgstr "એ પહેલાં છે"
+
+#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:48
+#, fuzzy
+msgid "after"
+msgstr "એ પછી છે"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:41
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:43
+msgid "is"
+msgstr "છે"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:42
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:44
+msgid "is not"
+msgstr "છે નથી"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:43
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:47
+msgid "at most"
+msgstr ""
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:44
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:46
+#, fuzzy
+msgid "at least"
+msgstr "ઓછામાં ઓછું છે"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:45
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:45
+msgid "less than"
+msgstr "કરતાં ઓચુ"
+
+#. The SQL operators in these Operators are reversed from normal on purpose
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:46
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:44
+msgid "more than"
+msgstr "કરતાં વધુ"
+
+#: ../src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs:41
+msgid "empty"
+msgstr ""
+
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:88
+#, fuzzy, csharp-format
+msgid "{0} ago"
+msgstr "{0} MB"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:41
+msgid "contains"
+msgstr "સમાવે છે"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:42
+#, fuzzy
+msgid "doesn't contain"
+msgstr "સમાવતું નથી"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:45
+msgid "starts with"
+msgstr "થી શરૂ થાય"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:46
+msgid "ends with"
+msgstr "થી અંત થાય છે"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:49
+msgid "Log in to Last.fm"
+msgstr ""
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:76
+msgid "Last.fm Account Login"
+msgstr "Last.fm ખાતા પ્રવેશ"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:79
+msgid "Please enter your Last.fm account credentials."
+msgstr "મહેરબાની કરીને તમારા Last.fm ખાતાની વિગતો દાખલ કરો."
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:105
+msgid "Save and Log In"
+msgstr ""
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:113
+msgid "Sign up for Last.fm"
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:439
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:458
+msgid "Last.fm username or password is invalid."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:301
+msgid "Failed to Login to Last.fm"
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:302
+msgid "Either your username or password is invalid."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:440
+msgid "There is not enough content to play this station."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:441
+msgid "This group does not have enough members for radio."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:442
+msgid "This artist does not have enough fans for radio."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:443
+msgid "This station is not available."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:444
+msgid "This station is only available to subscribers."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:445
+msgid "There are not enough neighbours for this station."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:446
+msgid "The streaming system is offline for maintenance, please try again later."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:447
+msgid "There was an unknown error."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:455
+msgid "Not connected to Last.fm."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:456
+msgid "Account details are needed before you can connect to Last.fm"
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:457
+msgid "No network connection detected."
+msgstr ""
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:459
+#, fuzzy
+msgid "Connecting to Last.fm."
+msgstr "{0} સાથે જોડાઈ રહ્યા છીએ"
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:460
+msgid "Connected to Last.fm."
+msgstr ""
+
+#: ../src/Libraries/Migo/Migo.Syndication/Feed.cs:149
+#, fuzzy
+msgid "Unknown Podcast"
+msgstr "અજાણ્યો કલાકાર"
+
