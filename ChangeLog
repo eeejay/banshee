@@ -1,5 +1,18 @@
 2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadManagerInterface.cs:
+	Slightly more useful job status, shows how many total downloads in the job
+
+	* src/Libraries/Mtp/Mtp/Track.cs: Hack around .m4v issue.
+
+	* build/m4/banshee/dap-mtp.m4:
+	* NEWS: Don't allow libmtp8 for now, and clarify how packages need to
+	require libmtp (to ensure users have the same version the package was
+	compiled against).
+
+2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Create a
 	HyenaSqliteCommand to reuse for adding tracks to playlists - should be
 	faster.

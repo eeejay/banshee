@@ -9,9 +9,13 @@ AC_DEFUN([BANSHEE_CHECK_DAP_MTP],
 	PKG_CHECK_MODULES(LIBMTP,
 		libmtp >= $LIBMTP_REQUIRED,
 		enable_libmtp="$enable_libmtp", enable_libmtp=no)
+
+	PKG_CHECK_MODULES(LIBMTP,
+		libmtp < 0.3.0,
+		enable_libmtp="$enable_libmtp", enable_libmtp=no)
 		
 	if test "x$enable_mtp" = "xyes" -a "x$enable_libmtp" = "xno"; then
-		AC_MSG_ERROR([libmtp was not found or is not up to date. Please install libmtp of at least version $LIBMTP_REQUIRED, or disable MTP support by passing --disable-mtp])
+		AC_MSG_ERROR([libmtp was not found or is not up to date. Please install libmtp of at least version $LIBMTP_REQUIRED and less than 0.3.0, or disable MTP support by passing --disable-mtp])
 	fi
 
 	if test "x$enable_libmtp" = "xyes"; then

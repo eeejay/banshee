@@ -102,10 +102,10 @@ namespace Banshee.Podcasting.Gui
             }
         }
         
-        public void UpdateStatus (int downloads, long bytesPerSecond)
+        public void UpdateStatus (int downloading, int remaining, int completed, long bytesPerSecond)
         {
-            if (downloads < 0) {
-                throw new ArgumentException ("downloads:  Must be positive.");                
+            if (downloading < 0) {
+                throw new ArgumentException ("downloading:  Must be positive.");                
             } else if (bytesPerSecond < 0) {
                 bytesPerSecond = 0;
             }
@@ -114,14 +114,14 @@ namespace Banshee.Podcasting.Gui
                 if (canceled || cancelRequested || disposed) {
                     return;
                 }
-                
-                Status = String.Format (
-                    Catalog.GetPluralString (
-                        "Currently transfering {0} file at {1} KB/s",            
-                        "Currently transfering {0} files at {1} KB/s",
-                        downloads
-                    ), downloads, (bytesPerSecond / 1000)            
-                );                 
+
+                int total = remaining + completed;
+                string fmt = Catalog.GetPluralString (
+                        "Currently transfering {0} file at {1} KB/s",
+                        "Currently transfering {0} of {2} files at {1} KB/s", total
+                );
+
+                Status = String.Format (fmt, downloading, (bytesPerSecond / 1024), total);
             }
         }   
         

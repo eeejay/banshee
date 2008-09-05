@@ -139,7 +139,7 @@ namespace Banshee.Podcasting.Gui
             Application.Invoke (delegate {            
                 lock (sync) {
                     if (downloadJob != null) {
-                        downloadJob.UpdateStatus (args.RunningTasks, args.BytesPerSecond);
+                        downloadJob.UpdateStatus (args.RunningTasks, args.RemainingTasks, args.CompletedTasks, args.BytesPerSecond);
                     }
                 }             
             });            
