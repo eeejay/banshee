@@ -60,6 +60,11 @@
   <language code="gl" name="Galego">
     <person>Ignacio Casal Quinteiro</person>
   </language>
+  <language code="gu" name="Gujarati">
+    <person>Christopher Orr</person>
+    <person>Ankit Patel</person>
+    <person>Krunali Patel</person>
+  </language>
   <language code="he" name="Hebrew">
     <person>Mark Krapivner</person>
   </language>
