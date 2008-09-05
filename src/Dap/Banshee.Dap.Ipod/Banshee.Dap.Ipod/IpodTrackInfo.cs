@@ -62,20 +62,32 @@ namespace Banshee.Dap.Ipod
                 this.track = ((IpodTrackInfo)track).IpodTrack;
                 LoadFromIpodTrack ();
             } else {
-                Uri = track.Uri;
+                AlbumArtist = track.AlbumArtist;
                 AlbumTitle = track.AlbumTitle;
                 ArtistName = track.ArtistName;
-                TrackTitle = track.TrackTitle;
-                Genre = track.Genre;
-                Duration = track.Duration;
-                rating = track.Rating;
-                PlayCount = track.PlayCount;
-                LastPlayed = track.LastPlayed;
+                BitRate = track.BitRate;
+                Bpm = track.Bpm;
+                Comment = track.Comment;
+                Composer = track.Composer;
+                Conductor = track.Conductor;
+                Copyright = track.Copyright;
                 DateAdded = track.DateAdded;
+                DiscCount = track.DiscCount;
+                DiscNumber = track.DiscNumber;
+                Duration = track.Duration;
+                FileSize = track.FileSize;
+                Genre = track.Genre;
+                Grouping = track.Grouping;
+                IsCompilation = track.IsCompilation ;
+                LastPlayed = track.LastPlayed;
+                LastSkipped = track.LastSkipped;
+                PlayCount = track.PlayCount;
+                ReleaseDate = track.ReleaseDate;
+                SkipCount = track.SkipCount;
                 TrackCount = track.TrackCount;
                 TrackNumber = track.TrackNumber;
+                TrackTitle = track.TrackTitle;
                 Year = track.Year;
-                FileSize = track.FileSize;
                 MediaAttributes = track.MediaAttributes;
             }
             
@@ -90,21 +102,31 @@ namespace Banshee.Dap.Ipod
                 Uri = null;
             }
 
+            ExternalId = track.Id;
             ipod_id = (int)track.Id;
             
-            Duration = track.Duration;
-            PlayCount = track.PlayCount;
-            LastPlayed = track.LastPlayed;
-            DateAdded = track.DateAdded;
-            TrackCount = track.TotalTracks;
-            TrackNumber = track.TrackNumber;
-            Year = track.Year;
-            FileSize = track.Size;
-            
+            AlbumArtist = track.AlbumArtist;
             AlbumTitle = String.IsNullOrEmpty (track.Album) ? null : track.Album;
             ArtistName = String.IsNullOrEmpty (track.Artist) ? null : track.Artist;
-            TrackTitle = String.IsNullOrEmpty (track.Title) ? null : track.Title;
+            BitRate = track.BitRate;
+            Bpm = (int)track.BPM;
+            Comment = track.Comment;
+            Composer = track.Composer;
+            DateAdded = track.DateAdded;
+            DiscCount = track.TotalDiscs;
+            DiscNumber = track.DiscNumber;
+            Duration = track.Duration;
+            FileSize = track.Size;
             Genre = String.IsNullOrEmpty (track.Genre) ? null : track.Genre;
+            Grouping = track.Grouping;
+            IsCompilation = track.IsCompilation;
+            LastPlayed = track.LastPlayed;
+            PlayCount = track.PlayCount;
+            TrackCount = track.TotalTracks;
+            TrackNumber = track.TrackNumber;
+            TrackTitle = String.IsNullOrEmpty (track.Title) ? null : track.Title;
+            //ReleaseDate = track.DateReleased;
+            Year = track.Year;
             
             switch (track.Rating) {
                 case IPod.TrackRating.One:   rating = 1; break;
@@ -154,7 +176,8 @@ namespace Banshee.Dap.Ipod
         
         public void CommitToIpod (IPod.Device device)
         {
-            IPod.Track track = device.TrackDatabase.CreateTrack ();
+            track = track ?? device.TrackDatabase.CreateTrack ();
+            ExternalId = track.Id;
 
             try {
                 track.Uri = new Uri (Uri.AbsoluteUri);
@@ -163,29 +186,29 @@ namespace Banshee.Dap.Ipod
                 device.TrackDatabase.RemoveTrack (track);
             }
             
-            track.Duration = Duration;
-            track.PlayCount = PlayCount;
-            track.LastPlayed = LastPlayed;
+            track.AlbumArtist = AlbumArtist;
+            track.BitRate = BitRate;
+            track.BPM = (short)Bpm;
+            track.Comment = Comment;
+            track.Composer = Composer;
             track.DateAdded = DateAdded;
+            track.TotalDiscs = DiscCount;
+            track.DiscNumber = DiscNumber;
+            track.Duration = Duration;
+            track.Size = (int)FileSize;
+            track.Grouping = Grouping;
+            track.IsCompilation = IsCompilation;
+            track.LastPlayed = LastPlayed;
+            track.PlayCount = PlayCount;
             track.TotalTracks = TrackCount;
             track.TrackNumber = TrackNumber;
             track.Year = Year;
+            //track.DateReleased = ReleaseDate;
             
-            if (!String.IsNullOrEmpty (AlbumTitle)) {
-                track.Album = AlbumTitle;
-            }
-            
-            if (!String.IsNullOrEmpty (ArtistName)) {
-                track.Artist = ArtistName;
-            }
-            
-            if (!String.IsNullOrEmpty (TrackTitle)) {
-                track.Title = TrackTitle;
-            }
-            
-            if (!String.IsNullOrEmpty (Genre)) {
-                track.Genre = Genre;
-            }
+            track.Album = AlbumTitle;
+            track.Artist = ArtistName;
+            track.Title = TrackTitle;
+            track.Genre = Genre;
             
             switch (Rating) {
                 case 1: track.Rating = IPod.TrackRating.Zero; break;
@@ -195,25 +218,32 @@ namespace Banshee.Dap.Ipod
                 case 5: track.Rating = IPod.TrackRating.Five; break;
                 default: track.Rating = IPod.TrackRating.Zero; break;
             }
+
+            if (HasAttribute (TrackMediaAttributes.Podcast)) {
+                //track.Description = ..
+                //track.Category = ..
+                //track.RememberPosition = true;
+                //track.NotPlayedMark = track.PlayCount == 0;
+            }
             
-            if ((MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
-                if ((MediaAttributes & TrackMediaAttributes.Music) != 0) {
-                    track.Type = IPod.MediaType.MusicVideo;
-                } else if ((MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
+            if (HasAttribute (TrackMediaAttributes.VideoStream)) {
+                if (HasAttribute (TrackMediaAttributes.Podcast)) {
                     track.Type = IPod.MediaType.VideoPodcast;
-                } else if ((MediaAttributes & TrackMediaAttributes.Movie) != 0) {
+                } else if (HasAttribute (TrackMediaAttributes.Music)) {
+                    track.Type = IPod.MediaType.MusicVideo;
+                } else if (HasAttribute (TrackMediaAttributes.Movie)) {
                     track.Type = IPod.MediaType.Movie;
-                } else if ((MediaAttributes & TrackMediaAttributes.TvShow) != 0) {
+                } else if (HasAttribute (TrackMediaAttributes.TvShow)) {
                     track.Type = IPod.MediaType.TVShow;
                 } else {
                     track.Type = IPod.MediaType.Video;
                 }
             } else {
-                if ((MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
+                if (HasAttribute (TrackMediaAttributes.Podcast)) {
                     track.Type = IPod.MediaType.Podcast;
-                } else if ((MediaAttributes & TrackMediaAttributes.AudioBook) != 0) {
+                } else if (HasAttribute (TrackMediaAttributes.AudioBook)) {
                     track.Type = IPod.MediaType.Audiobook;
-                } else if ((MediaAttributes & TrackMediaAttributes.Music) != 0) {
+                } else if (HasAttribute (TrackMediaAttributes.Music)) {
                     track.Type = IPod.MediaType.Audio;
                 } else {
                     track.Type = IPod.MediaType.Audio;

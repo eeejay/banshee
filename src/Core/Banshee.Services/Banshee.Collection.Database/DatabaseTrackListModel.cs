@@ -199,7 +199,7 @@ namespace Banshee.Collection.Database
             }
         }
 
-        protected virtual void UpdateUnfilteredAggregates ()
+        public virtual void UpdateUnfilteredAggregates ()
         {
             HyenaSqliteCommand count_command = new HyenaSqliteCommand (String.Format (
                 "SELECT COUNT(*), SUM(CoreTracks.FileSize) {0}", UnfilteredQuery

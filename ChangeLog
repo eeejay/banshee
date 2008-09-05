@@ -1,3 +1,40 @@
+2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Make UpdateUnfilteredAggregates public so we can get an accurate count
+	without doing a full reload.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs: Support
+	getting an accurate count before having reloaded the track model via a new
+	UpdateCounts method.
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Handle loading
+	playlists when the device is plugged in, and syncing them.  Podcast
+	playlists are still TODO - will require changes to ipod-sharp.
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs: Do a better,
+	more complete job of syncing metadata between TrackInfos and IPod.Track.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Call SyncPlaylists on the
+	dap source when syncing.  Not a great API, but needed atm at least to tell
+	the iPod support it needs to save the playlists even if (possibly) zero
+	tracks were added/removed.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Remove playlists too when
+	removing smart playlists.  Remove warning about playlists.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs: Handle syncing all
+	playlists from a library to the device.
+
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Fix bug
+	where we listened for TracksChanged etc events on our PrimarySource even
+	before we were saved/had an id (BGO #550921).
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackMediaAttributes.cs: Add
+	comments.
+
 2008-09-04  Brad Taylor  <brad@getcoded.net>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:

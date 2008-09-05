@@ -34,14 +34,14 @@ namespace Banshee.Collection
     public enum TrackMediaAttributes
     {
         None = (0 << 0),
-        AudioStream = (1 << 0),
-        VideoStream = (1 << 1),
-        Music = (1 << 2),
-        AudioBook = (1 << 3),
-        Podcast = (1 << 4),
-        TvShow = (1 << 5),
-        Movie = (1 << 6),
+        AudioStream = (1 << 0), // 1
+        VideoStream = (1 << 1), // 2
+        Music = (1 << 2),       // 4
+        AudioBook = (1 << 3),   // 8
+        Podcast = (1 << 4),     // 16
+        TvShow = (1 << 5),      // 32
+        Movie = (1 << 6),       // 64
         
-        Default = AudioStream | Music
+        Default = AudioStream | Music // 5
     }
 }

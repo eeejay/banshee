@@ -150,6 +150,15 @@ namespace Banshee.Playlist
 
 #region AbstractPlaylist overrides
 
+        protected override void AfterInitialized ()
+        {
+            base.AfterInitialized ();
+            if (PrimarySource != null) {
+                PrimarySource.TracksChanged += HandleTracksChanged;
+                PrimarySource.TracksDeleted += HandleTracksDeleted;
+            }
+        }
+
         protected override void Update ()
         {
             ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (
@@ -211,7 +220,7 @@ namespace Banshee.Playlist
                 ));
             }
 
-            Remove ();
+            ThreadAssist.ProxyToMain (Remove);
             return true;
         }
 
@@ -361,17 +370,6 @@ namespace Banshee.Playlist
                         DELETE FROM CorePlaylists WHERE IsTemporary = 1;
                     COMMIT TRANSACTION"
                 );
-            }
-        }
-
-        public override void SetParentSource (Source parent)
-        {
-            base.SetParentSource (parent);
-
-            PrimarySource primary = parent as PrimarySource;
-            if (primary != null) {
-                primary.TracksChanged += HandleTracksChanged;
-                primary.TracksDeleted += HandleTracksDeleted;
             }
         }
         

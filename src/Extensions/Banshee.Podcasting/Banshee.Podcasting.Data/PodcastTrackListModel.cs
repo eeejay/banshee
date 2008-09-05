@@ -74,7 +74,7 @@ namespace Banshee.Podcasting.Gui
                 : GetSort (SortColumn.SortKey, SortColumn.SortType == Hyena.Data.SortType.Ascending);
         }
         
-        protected override void UpdateUnfilteredAggregates ()
+        public override void UpdateUnfilteredAggregates ()
         {
             HyenaSqliteCommand count_command = new HyenaSqliteCommand (String.Format (
                 "SELECT COUNT(*) {0} AND PodcastItems.IsRead = 0", UnfilteredQuery

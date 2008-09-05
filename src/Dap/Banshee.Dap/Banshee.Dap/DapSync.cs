@@ -257,6 +257,7 @@ namespace Banshee.Dap
             foreach (DapLibrarySync library_sync in library_syncs) {
                 library_sync.Sync ();
             }
+            dap.SyncPlaylists ();
         }
     }
 }

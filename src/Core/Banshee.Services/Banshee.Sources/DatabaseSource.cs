@@ -79,6 +79,13 @@ namespace Banshee.Sources
         {
         }
 
+        public void UpdateCounts ()
+        {
+            DatabaseTrackModel.UpdateUnfilteredAggregates ();
+            ever_counted = true;
+            OnUpdated ();
+        }
+
         public abstract void Save ();
 
         protected override void Initialize ()
@@ -131,6 +138,12 @@ namespace Banshee.Sources
             }
 
             reload_limiter = new RateLimiter (RateLimitedReload);
+        }
+
+        protected virtual void AfterInitialized ()
+        {
+            DatabaseTrackModel.Initialize (TrackCache);
+            OnSetupComplete ();
         }
 
         protected virtual void InitializeTrackModel ()
@@ -189,7 +202,7 @@ namespace Banshee.Sources
 #region Public Properties
 
         public override int Count {
-            get { return ever_reloaded ? DatabaseTrackModel.UnfilteredCount : SavedCount; }
+            get { return ever_counted ? DatabaseTrackModel.UnfilteredCount : SavedCount; }
         }
 
         public override int FilteredCount {
@@ -347,7 +360,7 @@ namespace Banshee.Sources
 
         public virtual void Reload ()
         {
-            ever_reloaded = true;
+            ever_counted = ever_reloaded = true;
             reload_limiter.Execute ();
         }
 
@@ -551,13 +564,7 @@ namespace Banshee.Sources
             }
         }
 
-        protected virtual void AfterInitialized ()
-        {
-            DatabaseTrackModel.Initialize (TrackCache);
-            OnSetupComplete ();
-        }
-
-        private bool ever_reloaded = false;
+        private bool ever_reloaded = false, ever_counted = false;
         public override void Activate ()
         {
             if (!ever_reloaded)

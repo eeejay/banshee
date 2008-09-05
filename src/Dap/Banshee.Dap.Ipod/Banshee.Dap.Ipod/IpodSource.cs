@@ -37,10 +37,12 @@ using IPod;
 using Hyena;
 using Banshee.Base;
 using Banshee.ServiceStack;
+using Banshee.Sources;
 using Banshee.Dap;
 using Banshee.Hardware;
 using Banshee.Collection.Database;
 using Banshee.Library;
+using Banshee.Playlist;
 
 using Banshee.Dap.Gui;
 
@@ -101,7 +103,7 @@ namespace Banshee.Dap.Ipod
 
         public override void Dispose ()
         {
-            ThreadAssist.ProxyToMain (delegate { DestroyUnsupportedView (); });
+            ThreadAssist.ProxyToMain (DestroyUnsupportedView);
             CancelSyncThread ();
             base.Dispose ();
         }
@@ -207,6 +209,24 @@ namespace Banshee.Dap.Ipod
                     } catch (Exception e) {
                         Log.Exception (e);
                     }
+                }
+
+                string insert_sql = @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
+                        SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND ExternalID = ?";
+                foreach (IPod.Playlist playlist in ipod_device.TrackDatabase.Playlists) {
+                    if (playlist.IsOnTheGo) { // || playlist.IsPodcast) {
+                        Console.WriteLine ("have playlist {0} with {1} items but ignoring b/c otg or podcast", playlist.Name, playlist.Tracks.Count);
+                        continue;
+                    }
+                    PlaylistSource pl_src = new PlaylistSource (playlist.Name, this.DbId);
+                    pl_src.Save ();
+                    // We use the IPod.Track.Id here b/c we just shoved it into ExternalID above when we loaded
+                    // the tracks, however when we sync, the Track.Id values may/will change.
+                    foreach (IPod.Track track in playlist.Tracks) {
+                        ServiceManager.DbConnection.Execute (insert_sql, pl_src.DbId, this.DbId, track.Id);
+                    }
+                    pl_src.UpdateCounts ();
+                    AddChildSource (pl_src);
                 }
             }
             
@@ -413,6 +433,11 @@ namespace Banshee.Dap.Ipod
             }
         }
 
+        public override void SyncPlaylists ()
+        {
+            QueueSync ();
+        }
+
         private void QueueSync ()
         {
             lock (sync_timeout_mutex) {
@@ -489,10 +514,13 @@ namespace Banshee.Dap.Ipod
                 
                 try {
                     track.CommitToIpod (ipod_device);
+                    tracks_map[track.TrackId] = track;
                 } catch (Exception e) {
                     Log.Exception ("Cannot save track to iPod", e);
                 }
             }
+
+            // TODO sync updated metadata to changed tracks
             
             while (tracks_to_remove.Count > 0) {
                 IpodTrackInfo track = null;
@@ -511,7 +539,40 @@ namespace Banshee.Dap.Ipod
                 } catch (Exception e) {
                     Log.Exception ("Cannot remove track from iPod", e);
                 }
-            } 
+            }
+
+            // Remove playlists on the device
+            List<IPod.Playlist> device_playlists = new List<IPod.Playlist> (ipod_device.TrackDatabase.Playlists);
+            foreach (IPod.Playlist playlist in device_playlists) {
+                if (!playlist.IsOnTheGo) { // && !playlist.IsPodcast) {
+                    ipod_device.TrackDatabase.RemovePlaylist (playlist);
+                }
+            }
+            device_playlists.Clear ();
+
+            // Add playlists from Banshee to the device
+            foreach (Source child in Children) {
+                PlaylistSource from = child as PlaylistSource;
+                if (from != null && from.Count > 0) {
+                    IPod.Playlist playlist = ipod_device.TrackDatabase.CreatePlaylist (from.Name);
+                    foreach (int track_id in ServiceManager.DbConnection.QueryEnumerable<int> (String.Format (
+                        "SELECT CoreTracks.TrackID FROM CoreTracks{0} WHERE {1}",
+                        from.DatabaseTrackModel.JoinFragment, from.DatabaseTrackModel.Condition)))
+                    {
+                        playlist.AddTrack (tracks_map[track_id].IpodTrack);
+                    }
+                }
+            }
+
+            // Sync podcast playlist
+            /*IPod.Playlist podcast_playlist = GetPodcastPlaylist ();
+            podcast_playlist.Clear ();
+            foreach (int track_id in ServiceManager.DbConnection.QueryEnumerable<int> (
+                "SELECT CoreTracks.TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND (Attributes & ?) != 0",
+                DbId, (int)Banshee.Collection.TrackMediaAttributes.Podcast))
+            {
+                podcast_playlist.AddTrack (tracks_map[track_id].IpodTrack);
+            }*/
             
             try {
                 ipod_device.TrackDatabase.SaveStarted += OnIpodDatabaseSaveStarted;
@@ -526,6 +587,19 @@ namespace Banshee.Dap.Ipod
                 ipod_device.TrackDatabase.SaveProgressChanged -= OnIpodDatabaseSaveProgressChanged;
             }
         }
+
+        /*private IPod.Playlist GetPodcastPlaylist ()
+        {
+            foreach (IPod.Playlist playlist in ipod_device.TrackDatabase.Playlists) {
+                if (playlist.IsPodcast) {
+                    return playlist;
+                }
+            }
+
+            IPod.Playlist podcast_playlist= ipod_device.TrackDatabase.CreatePlaylist (Catalog.GetString ("Podcasts"));
+            podcast_playlist.IsPodcast = true;
+            return podcast_playlist;
+        }*/
         
         private UserJob sync_user_job;
         

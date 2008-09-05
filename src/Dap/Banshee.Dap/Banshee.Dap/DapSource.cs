@@ -39,6 +39,7 @@ using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection;
+using Banshee.Playlist;
 using Banshee.Collection.Database;
 using Banshee.Hardware;
 using Banshee.MediaEngine;
@@ -94,7 +95,7 @@ namespace Banshee.Dap
 
         public override void Dispose ()
         {
-            PurgeBuiltinSmartPlaylists ();
+            PurgeTemporaryPlaylists ();
             PurgeTracks ();
             
             if (dap_info_bar != null) {
@@ -109,13 +110,22 @@ namespace Banshee.Dap
             dap_properties_display = null;*/
         }
         
-        private void PurgeBuiltinSmartPlaylists ()
+        private void PurgeTemporaryPlaylists ()
         {
             ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
                 BEGIN TRANSACTION;
                     DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID IN
                         (SELECT SmartPlaylistID FROM CoreSmartPlaylists WHERE PrimarySourceID = ?);
                     DELETE FROM CoreSmartPlaylists WHERE PrimarySourceID = ?;   
+                COMMIT TRANSACTION",
+                DbId, DbId
+            ));
+
+            ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
+                BEGIN TRANSACTION;
+                    DELETE FROM CorePlaylistEntries WHERE PlaylistID IN
+                        (SELECT PlaylistID FROM CorePlaylists WHERE PrimarySourceID = ?);
+                    DELETE FROM CorePlaylists WHERE PrimarySourceID = ?;   
                 COMMIT TRANSACTION",
                 DbId, DbId
             ));
@@ -126,11 +136,15 @@ namespace Banshee.Dap
             OnUpdated ();
         }
 
+        public virtual void SyncPlaylists ()
+        {
+        }
+
 #region Source
 
         protected override void Initialize ()
         {
-            PurgeBuiltinSmartPlaylists ();
+            PurgeTemporaryPlaylists ();
             
             base.Initialize ();
             
@@ -192,14 +206,14 @@ namespace Banshee.Dap
             }
         }
         
-        public override void AddChildSource (Source child)
+        /*public override void AddChildSource (Source child)
         {
             if (child is Banshee.Playlist.AbstractPlaylistSource && !(child is MediaGroupSource)) {
                 Log.Information ("Note: playlists added to digital audio players within Banshee are not yet saved to the device.", true);
             }
             
             base.AddChildSource (child);
-        }
+        }*/
 
         // Force to zero so that count doesn't show up
         public override int Count {
@@ -250,6 +264,17 @@ namespace Banshee.Dap
                 }
             } catch (Exception e) {
                 Log.Exception (e);
+            }
+        }
+
+        public void RemovePlaylists ()
+        {
+            // First remove any playlists on the device
+            List<Source> children = new List<Source> (sync.Dap.Children);
+            foreach (Source child in children) {
+                if (child is AbstractPlaylistSource && !(child is MediaGroupSource)) {
+                    (child as IUnmapableSource).Unmap ();
+                }
             }
         }
 

@@ -75,26 +75,19 @@ namespace Banshee.Dap
         
         #endregion
         
-        private string [] SyncPlaylistIds {
+        public string [] SyncPlaylistIds {
             get { return playlist_ids.Get (); }
         }
         
-        List<AbstractPlaylistSource> sync_playlists;
-        private IList<AbstractPlaylistSource> SyncPlaylists {
-            get {
-                if (sync_playlists == null) {
-                    sync_playlists = new List<AbstractPlaylistSource> ();
-                    foreach (string id in SyncPlaylistIds) {
-                        foreach (Source src in library.Children) {
-                            if (src.UniqueId == id) {
-                                sync_playlists.Add (src as AbstractPlaylistSource);
-                                break;
-                            }
-                        }
-                    }
+        private IList<AbstractPlaylistSource> GetSyncPlaylists ()
+        {
+            List<AbstractPlaylistSource> playlists = new List<AbstractPlaylistSource> ();
+            foreach (Source child in library.Children) {
+                if (child is AbstractPlaylistSource) {
+                    playlists.Add (child as AbstractPlaylistSource);
                 }
-                return sync_playlists;
             }
+            return playlists;
         }
 
         internal string SmartPlaylistId {
@@ -175,7 +168,7 @@ namespace Banshee.Dap
         {
             if (SyncEntireLibrary) {
                 sync_src.ConditionTree = null;
-            } else if (SyncPlaylistIds.Length > 0) {
+            }/* else if (SyncPlaylistIds.Length > 0) {
                 QueryListNode playlists_node = new QueryListNode (Keyword.Or);
                 foreach (AbstractPlaylistSource src in SyncPlaylists) {
                     if (src is PlaylistSource) {
@@ -185,7 +178,7 @@ namespace Banshee.Dap
                     }
                 }
                 sync_src.ConditionTree = playlists_node;
-            }
+            }*/
             sync_src.RefreshAndReload ();
             to_add.RefreshAndReload ();
             to_remove.RefreshAndReload ();
@@ -211,41 +204,32 @@ namespace Banshee.Dap
                     sync.Dap.AddAllTracks (to_add);
                 }
 
+                if (library.SupportsPlaylists) {
+                    sync.Dap.RemovePlaylists ();
+
+                    // Then create the playlists, taking snapshots of smart playlists and saving them
+                    // as normal playlists
+                    IList<AbstractPlaylistSource> playlists = GetSyncPlaylists ();
+                    foreach (AbstractPlaylistSource from in playlists) {
+                        PlaylistSource to = new PlaylistSource (from.Name, sync.Dap.DbId);
+                        to.Save ();
+
+                        ServiceManager.DbConnection.Execute (
+                            String.Format (
+                                @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
+                                    SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND MetadataHash IN (
+                                        SELECT MetadataHash FROM CoreTracks{0} WHERE {1})",
+                                from.DatabaseTrackModel.JoinFragment, from.DatabaseTrackModel.Condition),
+                            to.DbId, sync.Dap.DbId
+                        );
+                        to.DatabaseTrackModel.UpdateUnfilteredAggregates ();
+                        sync.Dap.AddChildSource (to);
+                    }
+                }
+
                 CalculateSync ();
                 sync.OnUpdated ();
             }
-            //sync.Dap.AddAllTracks (to_add);
-
-            // Sync Playlists
-            /*
-            // Remove all playlists
-            foreach (Source child in sync.Dap.Children) {
-                if (child is AbstractPlaylistSource && !(child is MediaGroupSource)) {
-                    (child as IUnmapableSource).Unmap ();
-                }
-            }
-            
-            if (!SyncEntireLibrary && SyncPlaylistIds.Length == 0) {
-                return;
-            }
-
-            foreach (AbstractPlaylistSource src in SyncPlaylists) {
-                SyncPlaylist (src);
-            }*/
         }
-        
-        /*private void SyncPlaylist (AbstractPlaylistSource from)
-        {
-            PlaylistSource to = new PlaylistSource (from.Name, sync.Dap.DbId);
-            to.Save ();
-
-            ServiceManager.DbConnection.Execute (
-                @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
-                    SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND MetadataHash IN (
-                        SELECT t.MetadataHash FROM CoreTracks t, CorePlaylistEntries e
-                            WHERE t.TrackID = e.TrackID AND e.PlaylistID = ?)",
-                to.DbId, sync.Dap.DbId, from.DbId
-            );
-        }*/
     }
 }

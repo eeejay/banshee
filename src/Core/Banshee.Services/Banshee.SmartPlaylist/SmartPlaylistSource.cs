@@ -275,6 +275,17 @@ namespace Banshee.SmartPlaylist
 
 #region AbstractPlaylist overrides
 
+        protected override void AfterInitialized ()
+        {
+            base.AfterInitialized ();
+
+            if (PrimarySource != null) {
+                PrimarySource.TracksAdded += HandleTracksAdded;
+                PrimarySource.TracksChanged += HandleTracksChanged;
+                PrimarySource.TracksDeleted += HandleTracksDeleted;
+            }
+        }
+
         protected override void Create ()
         {
             DbId = ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
@@ -410,7 +421,7 @@ namespace Banshee.SmartPlaylist
                 ));
             }
 
-            Remove ();
+            ThreadAssist.ProxyToMain (Remove);
             return true;
         }
 
@@ -466,13 +477,6 @@ namespace Banshee.SmartPlaylist
         public override void SetParentSource (Source parent)
         {
             base.SetParentSource (parent);
-
-            PrimarySource primary = parent as PrimarySource;
-            if (primary != null) {
-                primary.TracksAdded += HandleTracksAdded;
-                primary.TracksChanged += HandleTracksChanged;
-                primary.TracksDeleted += HandleTracksDeleted;
-            }
         }
 
 #endregion
