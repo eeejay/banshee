@@ -1,3 +1,9 @@
+2008-09-04  Brad Taylor  <brad@getcoded.net>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	Fix the build under Mono 1.2.6.  For some reason, it doesn't like the
+	anonymous delegate that was here.
+
 2008-09-04  Aaron Bockover  <abock@gnome.org>
 
 	* *.csproj: fixups
