@@ -211,6 +211,9 @@ namespace Banshee.Dap
                     // as normal playlists
                     IList<AbstractPlaylistSource> playlists = GetSyncPlaylists ();
                     foreach (AbstractPlaylistSource from in playlists) {
+                        if (from.Count == 0) {
+                            continue;
+                        }
                         PlaylistSource to = new PlaylistSource (from.Name, sync.Dap.DbId);
                         to.Save ();
 
@@ -222,7 +225,7 @@ namespace Banshee.Dap
                                 from.DatabaseTrackModel.JoinFragment, from.DatabaseTrackModel.Condition),
                             to.DbId, sync.Dap.DbId
                         );
-                        to.DatabaseTrackModel.UpdateUnfilteredAggregates ();
+                        to.UpdateCounts ();
                         sync.Dap.AddChildSource (to);
                     }
                 }

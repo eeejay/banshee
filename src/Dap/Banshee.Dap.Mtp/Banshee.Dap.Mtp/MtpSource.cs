@@ -34,12 +34,14 @@ using Mono.Unix;
 using Hyena;
 using Hyena.Collections;
 using Mtp;
+using MTP = Mtp;
 
 using Banshee.Base;
 using Banshee.Dap;
 using Banshee.ServiceStack;
 using Banshee.Library;
 using Banshee.Sources;
+using Banshee.Playlist;
 using Banshee.Configuration;
 using Banshee.Collection;
 using Banshee.Collection.Database;
@@ -172,6 +174,21 @@ namespace Banshee.Dap.Mtp
                         track_map[track.TrackId] = mtp_track;
                     }
                 }
+
+                Hyena.Data.Sqlite.HyenaSqliteCommand insert_cmd = new Hyena.Data.Sqlite.HyenaSqliteCommand (
+                    @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
+                        SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND ExternalID = ?");
+                foreach (MTP.Playlist playlist in mtp_device.GetPlaylists ()) {
+                    PlaylistSource pl_src = new PlaylistSource (playlist.Name, this.DbId);
+                    pl_src.Save ();
+                    // TODO a transaction would make sense here (when the threading issue is fixed)
+                    foreach (int id in playlist.TrackIds) {
+                        ServiceManager.DbConnection.Execute (insert_cmd, pl_src.DbId, this.DbId, id);
+                    }
+                    pl_src.UpdateCounts ();
+                    AddChildSource (pl_src);
+                }
+
             } catch (Exception e) {
                 Log.Exception (e);
             }
@@ -194,6 +211,33 @@ namespace Banshee.Dap.Mtp
                 throw new Exception ("Error copying track from MTP device");
             }
         }
+
+        public override void SyncPlaylists ()
+        {
+            lock (mtp_device) {
+                List<MTP.Playlist> device_playlists = new List<MTP.Playlist> (mtp_device.GetPlaylists ());
+                foreach (MTP.Playlist playlist in device_playlists) {
+                    playlist.Remove ();
+                }
+                device_playlists.Clear ();
+    
+                // Add playlists from Banshee to the device
+                foreach (Source child in Children) {
+                    PlaylistSource from = child as PlaylistSource;
+                    if (from != null && from.Count > 0) {
+                        MTP.Playlist playlist = new MTP.Playlist (mtp_device, from.Name);
+                        foreach (int track_id in ServiceManager.DbConnection.QueryEnumerable<int> (String.Format (
+                            "SELECT CoreTracks.ExternalID FROM CoreTracks{0} WHERE {1}",
+                            from.DatabaseTrackModel.JoinFragment, from.DatabaseTrackModel.Condition)))
+                        {
+                            playlist.AddTrack (track_id);
+                        }
+                        playlist.Save ();
+                    }
+                }
+            }
+        }
+
 
         public override bool CanRename {
             get { return !(IsAdding || IsDeleting); }
@@ -229,25 +273,25 @@ namespace Banshee.Dap.Mtp
 
         public override long BytesUsed {
             get {
-				long count = 0;
+                long count = 0;
                 lock (mtp_device) {
                     foreach (DeviceStorage s in mtp_device.GetStorage ()) {
                         count += (long) s.MaxCapacity - (long) s.FreeSpaceInBytes;
                     }
                 }
-				return count;
+                return count;
             }
         }
         
         public override long BytesCapacity {
             get {
-				long count = 0;
+                long count = 0;
                 lock (mtp_device) {
                     foreach (DeviceStorage s in mtp_device.GetStorage ()) {
                         count += (long) s.MaxCapacity;
                     }
                 }
-				return count;
+                return count;
             }
         }
 
@@ -262,7 +306,6 @@ namespace Banshee.Dap.Mtp
 
             Track mtp_track = TrackInfoToMtpTrack (track, fromUri);
             bool video = (track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0;
-            Console.WriteLine ("Sending file {0}, is video? {1}", fromUri.LocalPath, video);
             lock (mtp_device) {
                 mtp_device.UploadTrack (fromUri.LocalPath, mtp_track, GetFolderForTrack (track), OnUploadProgress);
             }
@@ -302,12 +345,13 @@ namespace Banshee.Dap.Mtp
 
         private Folder GetFolderForTrack (TrackInfo track)
         {
-            if (track.HasAttribute (TrackMediaAttributes.Podcast))
+            if (track.HasAttribute (TrackMediaAttributes.Podcast)) {
                 return mtp_device.PodcastFolder;
-            else if (track.HasAttribute (TrackMediaAttributes.VideoStream))
+            } else if (track.HasAttribute (TrackMediaAttributes.VideoStream)) {
                 return mtp_device.VideoFolder;
-            else
+            } else {
                 return mtp_device.MusicFolder;
+            }
         }
 
         private int OnUploadProgress (ulong sent, ulong total, IntPtr data)
@@ -330,7 +374,7 @@ namespace Banshee.Dap.Mtp
                 if (album_cache.ContainsKey (key)) {
                     Album album = album_cache[key];
                     album.RemoveTrack (mtp_track);
-                    if (album.TrackCount == 0) {
+                    if (album.Count == 0) {
                         album.Remove ();
                         album_cache.Remove (key);
                     }
@@ -356,7 +400,6 @@ namespace Banshee.Dap.Mtp
             }
 
             ServiceManager.SourceManager.RemoveSource (this);
-
             mtp_device = null;
             mtp_source = null;
         }

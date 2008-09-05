@@ -175,26 +175,38 @@ namespace Mtp
 
 			List<Track> tracks = new List<Track>();
 			
-			while (ptr != IntPtr.Zero)
-			{
+			while (ptr != IntPtr.Zero) {
 				TrackStruct track = (TrackStruct)Marshal.PtrToStructure(ptr, typeof(TrackStruct));
 				Track.DestroyTrack (ptr);
-				tracks.Add(new Track(track, this));
+				tracks.Add (new Track (track, this));
 				ptr = track.next;
 			}
 			
 			return tracks;
 		}
 
+        public List<Playlist> GetPlaylists ()
+        {
+            List<Playlist> playlists = new List<Playlist> ();
+
+			IntPtr ptr = Playlist.LIBMTP_Get_Playlist_List (Handle);
+			while (ptr != IntPtr.Zero) {
+				PlaylistStruct d = (PlaylistStruct)Marshal.PtrToStructure(ptr, typeof(PlaylistStruct));
+				playlists.Add (new Playlist (this, d));
+				ptr = d.next;
+			}
+			
+            return playlists;
+        }
+
         public List<Album> GetAlbums ()
         {
             List<Album> albums = new List<Album> ();
 
 			IntPtr ptr = Album.LIBMTP_Get_Album_List (Handle);
-			while (ptr != IntPtr.Zero)
-			{
+			while (ptr != IntPtr.Zero) {
 				AlbumStruct d = (AlbumStruct)Marshal.PtrToStructure(ptr, typeof(AlbumStruct));
-				albums.Add (new Album(this, d));
+				albums.Add (new Album (this, d));
 				ptr = d.next;
 			}
 			
@@ -205,10 +217,9 @@ namespace Mtp
 		{
 			List<DeviceStorage> storages = new List<DeviceStorage>();
 			IntPtr ptr = device.storage;
-			while (ptr != IntPtr.Zero)
-			{
+			while (ptr != IntPtr.Zero) {
 				DeviceStorage storage = (DeviceStorage)Marshal.PtrToStructure(ptr, typeof(DeviceStorage));
-				storages.Add(storage);
+				storages.Add (storage);
 				ptr = storage.Next;
 			}
 			return storages;

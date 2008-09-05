@@ -185,7 +185,6 @@ namespace Banshee.Sources
 
         public void RemoveSource (Source source, bool recursivelyDispose)
         {
-            Banshee.Base.ThreadAssist.AssertInMainThread ();
             if(source == null || !ContainsSource (source)) {
                 return;
             }
@@ -211,16 +210,18 @@ namespace Banshee.Sources
                 }
             }
 
-            if(source == active_source) {
-                SetActiveSource(default_source);
-            }
-                
-            SourceEventHandler handler = SourceRemoved;
-            if(handler != null) {
-                SourceEventArgs args = new SourceEventArgs();
-                args.Source = source;
-                handler(args);
-            }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                if(source == active_source) {
+                    SetActiveSource(default_source);
+                }
+
+                SourceEventHandler handler = SourceRemoved;
+                if(handler != null) {
+                    SourceEventArgs args = new SourceEventArgs();
+                    args.Source = source;
+                    handler(args);
+                }
+            });
         }
         
         public void RemoveSource(Type type)

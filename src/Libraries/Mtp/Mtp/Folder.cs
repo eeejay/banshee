@@ -112,6 +112,11 @@ namespace Mtp
 		{
 			MtpDevice.DeleteObject(device.Handle, FolderId);
 		}
+
+        public override string ToString ()
+        {
+            return String.Format ("{0} (id {1}, parent id {2})", Name, FolderId, ParentId);
+        }
 		
 		internal static List<Folder> GetRootFolders (MtpDevice device)
 		{

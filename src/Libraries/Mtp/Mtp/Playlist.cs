@@ -32,36 +32,88 @@ using System.Runtime.InteropServices;
 
 namespace Mtp
 {
+    public sealed class Playlist : AbstractTrackList
+    {
+        private PlaylistStruct playlist;
+
+        public override uint Count {
+            get { return playlist.no_tracks; }
+            protected set { playlist.no_tracks = value; }
+        }
+
+        public override string Name {
+            get { return playlist.Name; }
+            set { playlist.Name = value; }
+        }
+
+        protected override IntPtr TracksPtr {
+            get { return playlist.tracks; }
+            set { playlist.tracks = value; }
+        }
+
+        public Playlist (MtpDevice device, string name) : base (device, name)
+        {
+            this.playlist = new PlaylistStruct ();
+            TracksPtr = IntPtr.Zero;
+            Name = name;
+            Count = 0;
+        }
+
+        internal Playlist (MtpDevice device, PlaylistStruct playlist) : base (device, playlist.tracks, playlist.no_tracks)
+        {
+            this.playlist = playlist;
+        }
+
+        protected override int Create ()
+        {
+            // TODO replace 0 w/ the folder id of the playlists folder?
+            return LIBMTP_Create_New_Playlist (Device.Handle, ref playlist, Device.PlaylistFolder.FolderId);
+        }
+
+        protected override int Update ()
+        {
+            return LIBMTP_Update_Playlist (Device.Handle, ref playlist);
+        }
+
+        public void Remove ()
+        {
+            MtpDevice.LIBMTP_Delete_Object(Device.Handle, playlist.playlist_id);
+        }
+
         // Playlist Management
         [DllImport("libmtp.dll")]
-		private static extern IntPtr LIBMTP_new_playlist_t (); // LIBMTP_playlist_t*
+        internal static extern IntPtr LIBMTP_new_playlist_t (); // LIBMTP_playlist_t*
 
-		[DllImport("libmtp.dll")]
-		private static extern void LIBMTP_destroy_playlist_t (ref Playlist playlist);
+        [DllImport("libmtp.dll")]
+        internal static extern void LIBMTP_destroy_playlist_t (ref PlaylistStruct playlist);
 
-		[DllImport("libmtp.dll")]
-		private static extern IntPtr LIBMTP_Get_Playlist_List (MtpDeviceHandle handle); // LIBMTP_playlist_t*
+        [DllImport("libmtp.dll")]
+        internal static extern IntPtr LIBMTP_Get_Playlist_List (MtpDeviceHandle handle); // LIBMTP_playlist_t*
 
-		[DllImport("libmtp.dll")]
-		private static extern IntPtr LIBMTP_Get_Playlist (MtpDeviceHandle handle, uint playlistId); // LIBMTP_playlist_t*
+        [DllImport("libmtp.dll")]
+        internal static extern IntPtr LIBMTP_Get_Playlist (MtpDeviceHandle handle, uint playlistId); // LIBMTP_playlist_t*
 
-		[DllImport("libmtp.dll")]
-		private static extern int LIBMTP_Create_New_Playlist (MtpDeviceHandle handle, ref Playlist metadata, uint parentHandle);
+        [DllImport("libmtp.dll")]
+        internal static extern int LIBMTP_Create_New_Playlist (MtpDeviceHandle handle, ref PlaylistStruct metadata, uint parentHandle);
 
-		[DllImport("libmtp.dll")]
-		private static extern int LIBMTP_Update_Playlist (MtpDeviceHandle handle, ref Playlist playlist);
+        [DllImport("libmtp.dll")]
+        internal static extern int LIBMTP_Update_Playlist (MtpDeviceHandle handle, ref PlaylistStruct playlist);
+    }
 
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct Playlist
+	internal struct PlaylistStruct
 	{
-		int playlist_id;
-		[MarshalAs(UnmanagedType.LPStr)] string name;
-		IntPtr tracks; // int*
-		int no_tracks;
-		IntPtr next;   // LIBMTP_playlist_t*
+		public uint playlist_id;
+
+		[MarshalAs(UnmanagedType.LPStr)]
+        public string Name;
+
+		public IntPtr tracks; // int*
+		public uint no_tracks;
+		public IntPtr next;   // LIBMTP_playlist_t*
 		
 		
-		public Playlist? Next
+		/*public Playlist? Next
 		{
 			get
 			{
@@ -69,6 +121,6 @@ namespace Mtp
 					return null;
 				return (Playlist)Marshal.PtrToStructure(next, typeof(Playlist));
 			}
-		}
+		}*/
 	}
 }

@@ -33,26 +33,15 @@ using System.Runtime.InteropServices;
 
 namespace Mtp
 {
-	public class Album
+	public class Album : AbstractTrackList
 	{
 		private AlbumStruct album;
-		private MtpDevice device;
-        private bool saved;
-        private List<int> track_ids;
 
         public uint AlbumId {
-            get { return saved ? album.album_id : 0; }
+            get { return Saved ? album.album_id : 0; }
         }
 
-        public List<int> TrackIds {
-            get { return track_ids; }
-        }
-
-        public bool Saved {
-            get { return saved; }
-        }
-
-        public string Name {
+        public override string Name {
             get { return album.name; }
             set {
                 album.name = value;
@@ -73,119 +62,79 @@ namespace Mtp
             }
         }
 
-        public uint TrackCount {
+        public override uint Count {
             get { return album.no_tracks; }
-            set {
+            protected set {
                 album.no_tracks = value;
             }
         }
 
-        public Album (MtpDevice device, string name, string artist, string genre)
+        protected override IntPtr TracksPtr {
+            get { return album.tracks; }
+            set { album.tracks = value; }
+        }
+
+        public Album (MtpDevice device, string name, string artist, string genre) : base (device, name)
         {
-            this.device = device;
             this.album = new AlbumStruct ();
-            this.album.tracks = IntPtr.Zero;
+            TracksPtr = IntPtr.Zero;
             Name = name;
             Artist = artist;
             Genre = genre;
-            TrackCount = 0;
-            track_ids = new List<int> ();
+            Count = 0;
         }
 
-        internal Album (MtpDevice device, AlbumStruct album)
+        internal Album (MtpDevice device, AlbumStruct album) : base (device, album.tracks, album.no_tracks)
         {
-            this.device = device;
             this.album = album;
-            this.saved = true;
-
-            if (album.tracks != IntPtr.Zero) {
-                int [] vals = new int [TrackCount];
-                Marshal.Copy ((IntPtr)album.tracks, (int[])vals, 0, (int)TrackCount);
-                track_ids = new List<int> (vals);
-            } else {
-                track_ids = new List<int> ();
-            }
         }
-        
-        public void Save ()
+
+        public override void Save ()
         {
             Save (null, 0, 0);
         }
 
         public void Save (byte [] cover_art, uint width, uint height)
         {
-            TrackCount = (uint) track_ids.Count;
+            base.Save ();
+            if (Saved) {
+                if (cover_art == null) {
+                    return;
+                }
+                
+                FileSampleData cover = new FileSampleData ();
+                cover.data = Marshal.AllocHGlobal (Marshal.SizeOf (typeof (byte)) * cover_art.Length);
+                Marshal.Copy (cover_art, 0, cover.data, cover_art.Length);
+                cover.size = (ulong)cover_art.Length;
+                cover.width = width;
+                cover.height = height;
+                cover.filetype = FileType.JPEG;
 
-            if (album.tracks != IntPtr.Zero) {
-                Marshal.FreeHGlobal (album.tracks);
-                album.tracks = IntPtr.Zero;
+                if (FileSample.LIBMTP_Send_Representative_Sample (Device.Handle, AlbumId, ref cover) != 0) {
+                    //Console.WriteLine ("failed to send representative sample file");
+                }
+                Marshal.FreeHGlobal (cover.data);
             }
-
-            if (TrackCount == 0) {
-                album.tracks = IntPtr.Zero;
-            } else {
-                album.tracks = Marshal.AllocHGlobal (Marshal.SizeOf (typeof (int)) * (int)TrackCount);
-                Marshal.Copy (track_ids.ToArray (), 0, album.tracks, (int)TrackCount);
-            }
-
-            if (saved) {
-                saved = LIBMTP_Update_Album (device.Handle, ref album) == 0;
-            } else {
-                saved = LIBMTP_Create_New_Album (device.Handle, ref album, 0) == 0;
-            }
-
-            if (album.tracks != IntPtr.Zero) {
-                Marshal.FreeHGlobal (album.tracks);
-                album.tracks = IntPtr.Zero;
-            }
-
-            if (!saved)
-                return;
-
-            if (cover_art == null) {
-                return;
-            }
-            
-            FileSampleData cover = new FileSampleData ();
-            cover.data = Marshal.AllocHGlobal (Marshal.SizeOf (typeof (byte)) * cover_art.Length);
-            Marshal.Copy (cover_art, 0, cover.data, cover_art.Length);
-            cover.size = (ulong)cover_art.Length;
-            cover.width = width;
-            cover.height = height;
-            cover.filetype = FileType.JPEG;
-
-            if (FileSample.LIBMTP_Send_Representative_Sample (device.Handle, AlbumId, ref cover) != 0) {
-                //Console.WriteLine ("failed to send representative sample file");
-            }
-            Marshal.FreeHGlobal (cover.data);
         }
 
-        public void AddTrack (Track track)
+        protected override int Create ()
         {
-            track_ids.Add ((int)track.FileId);
-            TrackCount++;
+            return LIBMTP_Create_New_Album (Device.Handle, ref album, 0);
         }
 
-        public void RemoveTrack (Track track)
+        protected override int Update ()
         {
-            track_ids.Remove ((int)track.FileId);
-            TrackCount--;
+            return LIBMTP_Update_Album (Device.Handle, ref album);
         }
-
-        public void ClearTracks ()
-        {
-            track_ids.Clear ();
-            TrackCount = 0;
-        }
-
+        
         public void Remove ()
         {
-			MtpDevice.LIBMTP_Delete_Object(device.Handle, AlbumId);
+			MtpDevice.LIBMTP_Delete_Object(Device.Handle, AlbumId);
         }
 
         public override string ToString ()
         {
-            return String.Format ("Album < Id: {4}, '{0}' by '{1}', genre '{2}', tracks {3} >", Name, Artist, Genre, TrackCount, AlbumId);
+            return String.Format ("Album < Id: {4}, '{0}' by '{1}', genre '{2}', tracks {3} >", Name, Artist, Genre, Count, AlbumId);
         }
 
         public static Album GetById (MtpDevice device, uint id)

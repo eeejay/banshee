@@ -3,6 +3,7 @@ TARGET = library
 LINK = $(REF_MTP)
 
 SOURCES =  \
+	Mtp/AbstractTrackList.cs \
 	Mtp/Album.cs \
 	Mtp/Error.cs \
 	Mtp/ErrorCode.cs \
@@ -10,6 +11,7 @@ SOURCES =  \
 	Mtp/FileType.cs \
 	Mtp/Folder.cs \
 	Mtp/MtpDevice.cs \
+	Mtp/Playlist.cs \
 	Mtp/Track.cs
 
 if ENABLE_MTP

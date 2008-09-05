@@ -211,8 +211,9 @@ namespace Banshee.Dap.Ipod
                     }
                 }
 
-                string insert_sql = @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
-                        SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND ExternalID = ?";
+                Hyena.Data.Sqlite.HyenaSqliteCommand insert_cmd = new Hyena.Data.Sqlite.HyenaSqliteCommand (
+                    @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
+                        SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND ExternalID = ?");
                 foreach (IPod.Playlist playlist in ipod_device.TrackDatabase.Playlists) {
                     if (playlist.IsOnTheGo) { // || playlist.IsPodcast) {
                         Console.WriteLine ("have playlist {0} with {1} items but ignoring b/c otg or podcast", playlist.Name, playlist.Tracks.Count);
@@ -223,7 +224,7 @@ namespace Banshee.Dap.Ipod
                     // We use the IPod.Track.Id here b/c we just shoved it into ExternalID above when we loaded
                     // the tracks, however when we sync, the Track.Id values may/will change.
                     foreach (IPod.Track track in playlist.Tracks) {
-                        ServiceManager.DbConnection.Execute (insert_sql, pl_src.DbId, this.DbId, track.Id);
+                        ServiceManager.DbConnection.Execute (insert_cmd, pl_src.DbId, this.DbId, track.Id);
                     }
                     pl_src.UpdateCounts ();
                     AddChildSource (pl_src);

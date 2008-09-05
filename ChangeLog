@@ -1,5 +1,36 @@
 2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Create a
+	HyenaSqliteCommand to reuse for adding tracks to playlists - should be
+	faster.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Load and save
+	playlists on MTP devices.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpTrackInfo.cs: Save the
+	Mtp.Track's ID in the ExternalID column, cleanup cruft.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs: Don't add empty
+	playlists to devices.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceManager.cs: Fix
+	gui-thread issue.
+
+	* src/Libraries/Mtp/Mtp/Folder.cs: Override ToString for debugging.
+
+	* src/Libraries/Mtp/Mtp/Album.cs: Factor a lot of code that's useful for
+	the Playlist class into AbstractTrackList, subclass from it.
+
+	* src/Libraries/Mtp/Makefile.am:
+	* src/Libraries/Mtp/Mtp/AbstractTrackList.cs: Factored out code from Album
+
+	* src/Libraries/Mtp/Mtp/MtpDevice.cs: Add GetPlaylists () method.
+
+	* src/Libraries/Mtp/Mtp/Playlist.cs: Subclass from AbstractTrackList,
+	implement required methods, add to build.
+
+2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
 	Make UpdateUnfilteredAggregates public so we can get an accurate count

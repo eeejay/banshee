@@ -53,18 +53,20 @@ namespace Banshee.Dap.Mtp
         }
         
         public MtpTrackInfo (MtpDevice device, Track file) : base()
-		{
+        {
             this.file = file;
-			
-			AlbumTitle = file.Album;
+            ExternalId = file.FileId;
+            
+            AlbumTitle = file.Album;
             ArtistName = file.Artist;
             Duration = TimeSpan.FromMilliseconds (file.Duration);
             Genre = file.Genre;
             PlayCount = file.UseCount < 0 ? 0 : (int) file.UseCount;
-            rating = file.Rating < 0 ? 0 : (file.Rating / 20);
+            Rating = file.Rating < 0 ? 0 : (file.Rating / 20);
             TrackTitle = file.Title;
             TrackNumber = file.TrackNumber < 0 ? 0 : (int)file.TrackNumber;
             Year = file.Year;
+            BitRate = (int)file.Bitrate;
             FileSize = (long)file.FileSize;
 
             MediaAttributes = TrackMediaAttributes.AudioStream;
@@ -73,67 +75,35 @@ namespace Banshee.Dap.Mtp
                 SetAttributeIf (file.InFolder (device.MusicFolder), TrackMediaAttributes.Music);
                 SetAttributeIf (file.InFolder (device.VideoFolder), TrackMediaAttributes.VideoStream);
             }
-            // TODO set VideoStream for video podcast episodes
-            /*Profile profile = ServiceManager.Get<MediaProfileManager> ().GetProfileForExtension (System.IO.Path.GetExtension (file.FileName));
-            if (profile != null) {
-                profile.
-            }*/
-
+            
             // This can be implemented if there's enough people requesting it
             CanPlay = false;
             CanSaveToDatabase = true;
             //NeedSync = false;
 
             // TODO detect if this is a video file and set the MediaAttributes appropriately?
+            /*Profile profile = ServiceManager.Get<MediaProfileManager> ().GetProfileForExtension (System.IO.Path.GetExtension (file.FileName));
+            if (profile != null) {
+                profile.
+            }*/
 
-			// Set a URI even though it's not actually accessible through normal API's.
-			Uri = new SafeUri (GetPathFromMtpTrack (file));
+            // Set a URI even though it's not actually accessible through normal API's.
+            Uri = new SafeUri (GetPathFromMtpTrack (file));
         }
 
         internal static void ToMtpTrack (TrackInfo track, Track f)
         {
-			f.Album = track.AlbumTitle;
-			f.Artist = track.ArtistName;
-			f.Duration = (uint)track.Duration.TotalMilliseconds;
-			f.Genre = track.Genre;
-			f.Rating = (ushort)(track.Rating * 20);
-			f.Title = track.TrackTitle;
-			f.TrackNumber = (ushort)track.TrackNumber;
-			f.UseCount = (uint)track.PlayCount;
+            f.Album = track.AlbumTitle;
+            f.Artist = track.ArtistName;
+            f.Duration = (uint)track.Duration.TotalMilliseconds;
+            f.Genre = track.Genre;
+            f.Rating = (ushort)(track.Rating * 20);
+            f.Title = track.TrackTitle;
+            f.TrackNumber = (ushort)track.TrackNumber;
+            f.UseCount = (uint)track.PlayCount;
             f.Year = track.Year;
-		}
-        
-        /*public override bool Equals (object o)
-        {
-            MtpDapTrackInfo dapInfo = o as MtpDapTrackInfo;
-            return dapInfo == null ? false : Equals(dapInfo);
+            //f.Bitrate = (uint)track.BitRate;
+            f.FileSize = (ulong)track.FileSize;
         }
-        
-        // FIXME: Is this enough? Does it matter if i just match metadata?
-        public bool Equals(MtpDapTrackInfo info)
-        {
-			return this.file.Equals(info.file);
-            return info == null ? false
-             : this.album == info.album
-             && this.artist == info.artist
-             && this.title == info.title
-             && this.track_number == info.track_number;
-        }
-        
-        public override int GetHashCode ()
-        {
-            int result = 0;
-            result ^= (int)track_number;
-            if(album != null) result ^= album.GetHashCode();
-            if(artist != null) result ^= artist.GetHashCode();
-            if(title != null) result ^= title.GetHashCode();
-            
-            return result;
-        }*/
-        
-		/*protected override void WriteUpdate ()
-		{
-			OnChanged();
-		}*/
     }
 }
