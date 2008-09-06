@@ -311,12 +311,16 @@ namespace Banshee.Collection.Database
 
         public override int IndexOf (TrackInfo track)
         {
-            return (int) cache.IndexOf (track as DatabaseTrackInfo);
+            lock (this) {
+                return (int) cache.IndexOf (track as DatabaseTrackInfo);
+            }
         }
 
         public int IndexOfFirst (TrackInfo track)
         {
-            return IndexOf (cache.GetSingle ("AND MetadataHash = ? ORDER BY OrderID", track.MetadataHash));
+            lock (this) {
+                return IndexOf (cache.GetSingle ("AND MetadataHash = ? ORDER BY OrderID", track.MetadataHash));
+            }
         }
 
         private DateTime random_began_at = DateTime.MinValue;

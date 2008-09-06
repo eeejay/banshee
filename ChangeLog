@@ -1,5 +1,12 @@
 2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Fix from Bertrand Lorentz (also applied to new FirstIndexOf method by me)
+	fixing race condition that caused the Next button to not work half the
+	time when you had a filter active (BGO #544415).
+
+2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This commit adds playlist support to USB Mass Storage players, and fixes a
 	bug that causes very slow initial loading of their tracks.
 
