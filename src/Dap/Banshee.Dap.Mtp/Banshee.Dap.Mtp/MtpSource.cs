@@ -192,6 +192,7 @@ namespace Banshee.Dap.Mtp
             } catch (Exception e) {
                 Log.Exception (e);
             }
+            OnTracksAdded ();
         }
 
         public override void Import ()

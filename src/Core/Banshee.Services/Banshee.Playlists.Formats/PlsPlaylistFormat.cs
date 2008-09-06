@@ -48,7 +48,8 @@ namespace Banshee.Playlists.Formats
         }
         
         public static readonly PlaylistFormatDescription FormatDescription = new PlaylistFormatDescription(
-            typeof(PlsPlaylistFormat), MagicHandler, Catalog.GetString("Shoutcast Playlist version 2 (*.pls)"), "pls");
+            typeof(PlsPlaylistFormat), MagicHandler, Catalog.GetString("Shoutcast Playlist version 2 (*.pls)"),
+            "pls", new string [] {"audio/x-scpls"});
         
         public static bool MagicHandler(StreamReader reader)
         {

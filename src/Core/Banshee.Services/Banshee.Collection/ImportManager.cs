@@ -81,13 +81,6 @@ namespace Banshee.Collection
                 return null;   
             }
             
-            protected override void OnFinished ()
-            {
-                base.OnFinished ();
-                manager.DestroyUserJob ();
-                manager.OnImportFinished ();
-            }
-            
             public void Reset ()
             {
                 processed_count = 0;
@@ -107,7 +100,6 @@ namespace Banshee.Collection
         private uint timer_id;
         
         public event ImportEventHandler ImportRequested;
-        public event EventHandler ImportFinished;
         
         public ImportManager ()
         {
@@ -251,12 +243,10 @@ namespace Banshee.Collection
             }
         }
         
-        protected virtual void OnImportFinished ()
+        protected override void OnFinished ()
         {
-            EventHandler handler = ImportFinished;
-            if (handler != null) {
-                handler (this, EventArgs.Empty);
-            }
+            DestroyUserJob ();
+            base.OnFinished ();
         }
         
 #endregion

@@ -255,9 +255,9 @@ namespace Banshee.Dap
                 PurgeTracks ();
                 SetStatus (String.Format (Catalog.GetString ("Loading {0}"), Name), false);
                 LoadFromDevice ();
-                OnTracksAdded ();
                 HideStatus ();
 
+                sync.DapLoaded ();
                 sync.CalculateSync ();
                 if (sync.AutoSync) {
                     sync.Sync ();
@@ -313,6 +313,11 @@ namespace Banshee.Dap
         protected void AddDapProperty (string key, string val)
         {
             dap_properties.Add (new DapProperty (key, val));
+        }
+
+        protected void AddYesNoDapProperty (string key, bool val)
+        {
+            AddDapProperty (key, val ? Catalog.GetString ("Yes") : Catalog.GetString ("No"));
         }
 
         public IEnumerable<DapProperty> DapProperties {

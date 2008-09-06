@@ -43,6 +43,9 @@ using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Hardware;
 
+using Banshee.Playlists.Formats;
+using Banshee.Playlist;
+
 namespace Banshee.Dap.MassStorage
 {
     public class MassStorageSource : DapSource
@@ -103,6 +106,8 @@ namespace Banshee.Dap.MassStorage
                 AddDapProperty (Catalog.GetString ("Required Folder Depth"), FolderDepth.ToString ());
             }
 
+            AddYesNoDapProperty (Catalog.GetString ("Supports Playlists"), PlaylistTypes.Count > 0);
+
             /*if (AcceptableMimeTypes.Length > 0) {
                 AddDapProperty (String.Format (
                     Catalog.GetPluralString ("Audio Format", "Audio Formats", PlaybackFormats.Length), PlaybackFormats.Length),
@@ -111,15 +116,51 @@ namespace Banshee.Dap.MassStorage
             }*/
         }
 
+        private DatabaseImportManager importer;
         // WARNING: This will be called from a thread!
         protected override void LoadFromDevice ()
         {
-            DatabaseImportManager importer = new DatabaseImportManager (this);
+            importer = new DatabaseImportManager (this);
             importer.KeepUserJobHidden = true;
             importer.Threaded = false; // We are already threaded
+            importer.Finished += OnImportFinished;
 
             foreach (string audio_folder in BaseDirectories) {
                 importer.Enqueue (audio_folder);
+            }
+        }
+
+        private void OnImportFinished (object o, EventArgs args)
+        {
+            importer.Finished -= OnImportFinished;
+
+            if (!CanSyncPlaylists) {
+                return;
+            }
+
+            Hyena.Data.Sqlite.HyenaSqliteCommand insert_cmd = new Hyena.Data.Sqlite.HyenaSqliteCommand (
+                "INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES (?, ?)");
+            int [] psources = new int [] {DbId};
+            foreach (string playlist_path in PlaylistFiles) {
+                IPlaylistFormat loaded_playlist = PlaylistFileUtil.Load (playlist_path, new Uri (BaseDirectory));
+                if (loaded_playlist == null)
+                    continue;
+
+                PlaylistSource playlist = new PlaylistSource (System.IO.Path.GetFileNameWithoutExtension (playlist_path), DbId);
+                playlist.Save ();
+                //Hyena.Data.Sqlite.HyenaSqliteCommand.LogAll = true;
+                foreach (Dictionary<string, object> element in loaded_playlist.Elements) {
+                    string track_path = (element["uri"] as Uri).LocalPath;
+                    int track_id = DatabaseTrackInfo.GetTrackIdForUri (track_path, Paths.MakePathRelative (track_path, BaseDirectory), psources);
+                    if (track_id == 0) {
+                        Log.DebugFormat ("Failed to find track {0} in DAP library to load it into playlist {1}", track_path, playlist_path);
+                    } else {
+                        ServiceManager.DbConnection.Execute (insert_cmd, playlist.DbId, track_id);
+                    }
+                }
+                //Hyena.Data.Sqlite.HyenaSqliteCommand.LogAll = false;
+                playlist.UpdateCounts ();
+                AddChildSource (playlist);
             }
         }
 
@@ -167,6 +208,113 @@ namespace Banshee.Dap.MassStorage
         protected string IsAudioPlayerPath {
             get { return System.IO.Path.Combine (volume.MountPoint, ".is_audio_player"); }
         }
+
+        #region Properties and Methods for Supporting Syncing of Playlists
+
+        private string playlists_path;
+        private string PlaylistsPath {
+            get {
+                if (playlists_path == null) {
+                    if (MediaCapabilities == null || MediaCapabilities.PlaylistPath == null) {
+                        playlists_path = WritePath;
+                    } else {
+                        playlists_path = System.IO.Path.Combine (WritePath, MediaCapabilities.PlaylistPath);
+                        playlists_path = playlists_path.Replace ("%File", String.Empty);
+                    }
+
+                    if (!Directory.Exists (playlists_path)) {
+                        Directory.Create (playlists_path);
+                    }
+                }
+                return playlists_path;
+            }
+        }
+
+        private string [] playlist_formats;
+        private string [] PlaylistFormats {
+            get {
+                if (playlist_formats == null && SupportsPlaylists && MediaCapabilities != null) {
+                    playlist_formats = MediaCapabilities.PlaylistFormats;
+                }
+                return playlist_formats;
+            }
+            set { playlist_formats = value; }
+        }
+
+        private List<PlaylistFormatDescription> playlist_types;
+        private IList<PlaylistFormatDescription> PlaylistTypes  {
+            get {
+                if (playlist_types == null) {
+                    playlist_types = new List<PlaylistFormatDescription> ();
+                    if (PlaylistFormats != null) {
+                        foreach (PlaylistFormatDescription desc in Banshee.Playlist.PlaylistFileUtil.ExportFormats) {
+                            foreach (string mimetype in desc.MimeTypes) {
+                                if (Array.IndexOf (PlaylistFormats, mimetype) != -1) {
+                                    playlist_types.Add (desc);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                SupportsPlaylists = CanSyncPlaylists;
+                return playlist_types;
+            }
+        }
+
+        private IEnumerable<string> PlaylistFiles {
+            get {
+                foreach (string file_name in Directory.GetFiles (PlaylistsPath)) {
+                    foreach (PlaylistFormatDescription desc in playlist_types) {
+                        if (file_name.EndsWith (desc.FileExtension)) {
+                            yield return file_name;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool CanSyncPlaylists {
+            get {
+                return PlaylistsPath != null && playlist_types.Count > 0;
+            }
+        }
+
+        public override void SyncPlaylists ()
+        {
+            if (!CanSyncPlaylists) {
+                return;
+            }
+
+            foreach (string file_name in PlaylistFiles) {
+                Banshee.IO.File.Delete (new SafeUri (file_name));
+            }
+
+            // Add playlists from Banshee to the device
+            PlaylistFormatBase playlist_format = null;
+            List<Source> children = new List<Source> (Children);
+            foreach (Source child in children) {
+                PlaylistSource from = child as PlaylistSource;
+                if (from != null) {
+                    from.Reload ();
+                    if (playlist_format == null) {
+                         playlist_format = Activator.CreateInstance (PlaylistTypes[0].Type) as PlaylistFormatBase;
+                    }
+
+                    SafeUri playlist_path = new SafeUri (System.IO.Path.Combine (
+                        PlaylistsPath, String.Format ("{0}.{1}", from.Name, PlaylistTypes[0].FileExtension)));
+
+                    System.IO.Stream stream = Banshee.IO.File.OpenWrite (playlist_path, true);
+                    playlist_format.BaseUri = new Uri (BaseDirectory);
+                    playlist_format.Save (stream, from);
+                    stream.Close ();
+                }
+            }
+        }
+
+        #endregion
         
         public override long BytesUsed {
             get { return BytesCapacity - volume.Available; }
@@ -351,10 +499,20 @@ namespace Banshee.Dap.MassStorage
                     case "folder_depth":
                         FolderDepth = Int32.Parse (val);
                         break;
+    
+                    case "playlist_format":
+                        PlaylistFormats = val.Split(',');
+                        for (int i = 0; i < PlaylistFormats.Length; i++) {
+                            PlaylistFormats[i] = PlaylistFormats[i].Trim ();
+                        }
+                        break;
+
+                    case "playlist_path":
+                        playlists_path = System.IO.Path.Combine (WritePath, val);
+                        playlists_path = playlists_path.Replace ("%File", String.Empty);
+                        break;
 
                     case "input_formats":
-                    case "playlist_format":
-                    case "playlist_path":
                     default:
                         Log.DebugFormat ("Unsupported .is_audio_player key: {0}", key);
                         break;

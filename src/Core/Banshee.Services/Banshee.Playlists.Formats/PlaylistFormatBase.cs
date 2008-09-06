@@ -110,7 +110,13 @@ namespace Banshee.Playlists.Formats
         
         public virtual Uri BaseUri {
             get { return base_uri; }
-            set { base_uri = value; }
+            set {
+                string abs_uri = value.AbsoluteUri;
+                if (abs_uri[abs_uri.Length - 1] != System.IO.Path.DirectorySeparatorChar) {
+                    value = new Uri (abs_uri + System.IO.Path.DirectorySeparatorChar);
+                }
+                base_uri = value;
+            }
         }
     }
 }

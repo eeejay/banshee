@@ -135,6 +135,12 @@ namespace Banshee.Dap
             //OnEnabledChanged (null);
         }
 
+        private bool dap_loaded = false;
+        public void DapLoaded ()
+        {
+            dap_loaded = true;
+        }
+
         private void BuildSyncLists ()
         {
             int i = 0;
@@ -175,7 +181,7 @@ namespace Banshee.Dap
 
         private void OnDapChanged (Source sender, TrackEventArgs args)
         {
-            if (!AutoSync) {
+            if (!AutoSync && dap_loaded && !Syncing) {
                 foreach (DapLibrarySync lib_sync in library_syncs) {
                     lib_sync.CalculateSync ();
                 }
@@ -254,10 +260,19 @@ namespace Banshee.Dap
 
         private void RateLimitedSync ()
         {
+            syncing = true;
+            
             foreach (DapLibrarySync library_sync in library_syncs) {
                 library_sync.Sync ();
             }
             dap.SyncPlaylists ();
+
+            syncing = false;
+        }
+
+        private bool syncing = false;
+        public bool Syncing {
+            get { return syncing; }
         }
     }
 }

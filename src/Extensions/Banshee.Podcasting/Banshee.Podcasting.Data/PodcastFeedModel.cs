@@ -48,10 +48,9 @@ namespace Banshee.Podcasting.Gui
         {
             ReloadFragmentFormat = @"
                 FROM PodcastSyndications WHERE FeedID IN
-                    (SELECT FeedID FROM PodcastItems
-                        WHERE ItemID IN
-                            (SELECT CoreTracks.ExternalID FROM CoreTracks, CoreCache{0}
-                                WHERE CoreCache.ModelID = {1} AND CoreCache.ItemId = {2}))
+                    (SELECT DISTINCT FeedID FROM PodcastItems, CoreTracks, PodcastEnclosures, CoreCache{0}
+                        WHERE PodcastItems.ItemID = CoreTracks.ExternalID AND PodcastEnclosures.ItemID = PodcastItems.ItemID AND 
+                        CoreCache.ModelID = {1} AND CoreCache.ItemId = {2} {3})
                     ORDER BY lower(Title)";
         }
         

@@ -106,7 +106,24 @@ namespace Banshee.Playlist
         }
         
         public static string [] ImportPlaylist (string playlistUri)
-        {            
+        {
+            return ImportPlaylist (playlistUri, null);
+        }
+
+        public static string [] ImportPlaylist (string playlistUri, Uri baseUri)
+        {
+            IPlaylistFormat playlist = Load (playlistUri, baseUri);
+            List<string> uris = new List<string> ();
+            if (playlist != null) {
+                foreach (Dictionary<string, object> element in playlist.Elements) {
+                    uris.Add (((Uri)element["uri"]).AbsoluteUri);
+                }
+            }
+            return uris.ToArray ();
+        }
+
+        public static IPlaylistFormat Load (string playlistUri, Uri baseUri)
+        {
             PlaylistFormatDescription [] formats = PlaylistFileUtil.ExportFormats;            
             
             // If the file has an extenstion, rearrange the format array so that the 
@@ -131,22 +148,17 @@ namespace Banshee.Playlist
                 }
             }
             
-            List<string> uris = new List<string> ();
-                
             foreach (PlaylistFormatDescription format in formats) {
                 try {
                     IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance (format.Type);
+                    playlist.BaseUri = baseUri;
                     playlist.Load (Banshee.IO.File.OpenRead (new SafeUri (playlistUri)), true);
-                    foreach (Dictionary<string, object> element in playlist.Elements) {
-                        uris.Add (((Uri)element["uri"]).AbsoluteUri);
-                    }
-                    break;
-                } catch (InvalidPlaylistException) {                    
-                    continue;
-                }      
+                    return playlist;
+                } catch (InvalidPlaylistException) {
+                }
             }
         
-            return uris.ToArray ();
+            return null;
         }
         
         public static void ImportPlaylistToLibrary (string path)
@@ -190,7 +202,7 @@ namespace Banshee.Playlist
         {
             try {
                 importer = new LibraryImportManager ();
-                importer.ImportFinished += CreatePlaylist;
+                importer.Finished += CreatePlaylist;
                 importer.Enqueue (uris);
             } catch (PlaylistImportCanceledException e) {
                 Hyena.Log.Exception (e);

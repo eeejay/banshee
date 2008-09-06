@@ -97,8 +97,8 @@ namespace Banshee.Dap.Ipod
             string [] capabilities = new string [ipod_device.ModelInfo.Capabilities.Count];
             ipod_device.ModelInfo.Capabilities.CopyTo (capabilities, 0);
             AddDapProperty (Catalog.GetString ("Capabilities"), String.Join (", ", capabilities));
-            AddDapProperty (Catalog.GetString ("Supports cover art"), ipod_device.ModelInfo.AlbumArtSupported ? Catalog.GetString ("Yes") : Catalog.GetString ("No"));
-            AddDapProperty (Catalog.GetString ("Supports photos"), ipod_device.ModelInfo.PhotosSupported ? Catalog.GetString ("Yes") : Catalog.GetString ("No"));
+            AddYesNoDapProperty (Catalog.GetString ("Supports cover art"), ipod_device.ModelInfo.AlbumArtSupported);
+            AddYesNoDapProperty (Catalog.GetString ("Supports photos"), ipod_device.ModelInfo.PhotosSupported);
         }
 
         public override void Dispose ()
@@ -135,6 +135,7 @@ namespace Banshee.Dap.Ipod
         {
             LoadIpod ();
             LoadFromDevice (false);
+            OnTracksAdded ();
         }
 
         private void LoadIpod ()

@@ -1,5 +1,57 @@
 2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	This commit adds playlist support to USB Mass Storage players, and fixes a
+	bug that causes very slow initial loading of their tracks.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:
+	Fix model so that it's filtered by the filters before it.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Add playlist support, respecting the HAL
+	portable_audio_player.playlist_format and playlist_path keys.
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Add helper
+	AddYesNoDapProperty method and use it.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Call OnTracksAdded
+	manually after loading the tracks off the device.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Don't reload the models when
+	the dap isn't yet loaded, or when we're syncing.
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistFormatDescription.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlsPlaylistFormat.cs:
+	Add a MimeType property to the description objects.
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistFormatBase.cs:
+	In the BaseUri setter, make sure it ends with a directory separator char,
+	and if not, fix it.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs: Add a
+	new Load method, factored out from the ImportPlaylist method.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	ImportFinished renamed to Finished because uses the QueuePipeline event
+	now. Allow setting the BaseUri in the Load/Import methods.
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Fix
+	painful bug caused by the pipelining of the importer.  The track
+	processing element would sometimes (often) have zero items left when the
+	scanning element was still working, but we were raising ImportFinished
+	when that happened, instead of waiting for all elements in the pipeline to
+	be finished (BGO #548254).
+
+	* src/Libraries/Hyena/Hyena.Collections/QueuePipelineElement.cs: Add a
+	Finished event.
+
+	* src/Libraries/Hyena/Hyena.Collections/QueuePipeline.cs: Add a finished
+	event, raised when all elements in the pipeline are finished.
+
+2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadManagerInterface.cs:
 	Slightly more useful job status, shows how many total downloads in the job

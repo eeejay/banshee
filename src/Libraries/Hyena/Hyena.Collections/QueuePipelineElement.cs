@@ -37,6 +37,11 @@ namespace Hyena.Collections
         private class ElementProcessCanceledException : ApplicationException
         {
         }
+
+        #pragma warning disable 0067
+        // FIXME: This is to mute gmcs: https://bugzilla.novell.com/show_bug.cgi?id=360455
+        public event EventHandler Finished;
+        #pragma warning restore 0067
     
         private Queue<T> queue = new Queue<T> ();
         private object monitor = new object ();
@@ -51,6 +56,11 @@ namespace Hyena.Collections
         {
             lock (this) {
                 canceled = false;
+            }
+            
+            EventHandler handler = Finished;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
             }
         }
         

@@ -37,14 +37,16 @@ namespace Banshee.Playlists.Formats
         private Type type;
         private string name;
         private string extension;
+        private string [] mimetypes;
         private PlaylistFormatMagicHandler magic_handler;
         
-        public PlaylistFormatDescription(Type type, PlaylistFormatMagicHandler magic_handler, string name, string extension)
+        public PlaylistFormatDescription(Type type, PlaylistFormatMagicHandler magic_handler, string name, string extension, string [] mimetypes)
         {
             this.type = type;
             this.magic_handler = magic_handler;
             this.name = name;
             this.extension = extension;
+            this.mimetypes = mimetypes;
         }
         
         public Type Type {
@@ -61,6 +63,10 @@ namespace Banshee.Playlists.Formats
         
         public string FileExtension {
             get { return extension; }
+        }
+
+        public string [] MimeTypes {
+            get { return mimetypes; }
         }
     }
 }

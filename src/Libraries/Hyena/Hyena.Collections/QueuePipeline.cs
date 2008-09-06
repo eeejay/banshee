@@ -32,6 +32,13 @@ namespace Hyena.Collections
 {
     public class QueuePipeline <T> where T : class
     {
+        #pragma warning disable 0067
+        // FIXME: This is to mute gmcs: https://bugzilla.novell.com/show_bug.cgi?id=360455
+        public event EventHandler Finished;
+        #pragma warning restore 0067
+
+        private object sync = new object ();
+        
         private QueuePipelineElement<T> first_element;
         internal QueuePipelineElement<T> FirstElement {
             get { return first_element; }
@@ -43,14 +50,15 @@ namespace Hyena.Collections
         
         public void AddElement (QueuePipelineElement<T> element)
         {
-            lock (this) {
+            element.Finished += OnElementFinished;
+            lock (sync) {
                 if (first_element == null) {
                     first_element = element;
                     return;
                 }
             
                 QueuePipelineElement<T> current = first_element;
-                
+
                 while (current != null) {
                     if (current.NextElement == null) {
                         current.NextElement = element;
@@ -75,6 +83,34 @@ namespace Hyena.Collections
         {
             if (first_element != null) {
                 first_element.Cancel ();
+            }
+        }
+
+        private void OnElementFinished (object o, EventArgs args)
+        {
+            bool any_processing = false;
+
+            lock (sync) {
+                QueuePipelineElement<T> element = FirstElement;
+                while (element != null) {
+                    any_processing |= element.Processing;
+                    if (any_processing) {
+                        break;
+                    }
+                    element = element.NextElement;
+                }
+            }
+
+            if (!any_processing) {
+                OnFinished ();
+            }
+        }
+
+        protected virtual void OnFinished ()
+        {
+            EventHandler handler = Finished;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
             }
         }
     }

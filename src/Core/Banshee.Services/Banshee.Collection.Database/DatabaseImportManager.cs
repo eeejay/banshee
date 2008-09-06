@@ -239,10 +239,10 @@ namespace Banshee.Collection.Database
             counts.Clear ();
         }
 
-        protected override void OnImportFinished ()
+        protected override void OnFinished ()
         {
             NotifyAllSources ();
-            base.OnImportFinished ();
+            base.OnFinished ();
         }
     }
 }
