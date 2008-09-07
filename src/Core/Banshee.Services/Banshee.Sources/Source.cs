@@ -170,36 +170,32 @@ namespace Banshee.Sources
         
         public virtual void AddChildSource (Source child)
         {
-            ThreadAssist.ProxyToMain (delegate {
-                lock (Children) {
-                    if (!child_sources.Contains (child)) {
-                        child.SetParentSource (this);
-                        child_sources.Add (child);
-                        OnChildSourceAdded (child);
-                    }
+            lock (Children) {
+                if (!child_sources.Contains (child)) {
+                    child.SetParentSource (this);
+                    child_sources.Add (child);
+                    OnChildSourceAdded (child);
                 }
-            });
+            }
         }
 
         public virtual void RemoveChildSource (Source child)
         {
-            ThreadAssist.ProxyToMain (delegate {
-                lock (Children) {
-                    if (child.Children.Count > 0) {
-                        child.ClearChildSources ();
-                    }
-                    
-                    child_sources.Remove (child);
-                    
-                    if (ServiceManager.SourceManager.ActiveSource == child) {
-                        if (CanActivate) {
-                            ServiceManager.SourceManager.SetActiveSource (this);
-                        }
-                    }
-                    
-                    OnChildSourceRemoved (child);
+            lock (Children) {
+                if (child.Children.Count > 0) {
+                    child.ClearChildSources ();
                 }
-            });
+                
+                child_sources.Remove (child);
+                
+                if (ServiceManager.SourceManager.ActiveSource == child) {
+                    if (CanActivate) {
+                        ServiceManager.SourceManager.SetActiveSource (this);
+                    }
+                }
+                
+                OnChildSourceRemoved (child);
+            }
         }
         
         public virtual void ClearChildSources ()
@@ -396,22 +392,26 @@ namespace Banshee.Sources
     
         protected virtual void OnChildSourceAdded (Source source)
         {
-            SourceEventHandler handler = ChildSourceAdded;
-            if (handler != null) {
-                SourceEventArgs args = new SourceEventArgs ();
-                args.Source = source;
-                handler (args);
-            }
+            ThreadAssist.ProxyToMain (delegate {
+                SourceEventHandler handler = ChildSourceAdded;
+                if (handler != null) {
+                    SourceEventArgs args = new SourceEventArgs ();
+                    args.Source = source;
+                    handler (args);
+                }
+            });
         }
         
         protected virtual void OnChildSourceRemoved (Source source)
         {
-            SourceEventHandler handler = ChildSourceRemoved;
-            if (handler != null) {
-                SourceEventArgs args = new SourceEventArgs ();
-                args.Source = source;
-                handler (args);
-            }
+            ThreadAssist.ProxyToMain (delegate {
+                SourceEventHandler handler = ChildSourceRemoved;
+                if (handler != null) {
+                    SourceEventArgs args = new SourceEventArgs ();
+                    args.Source = source;
+                    handler (args);
+                }
+            });
         }
         
         protected virtual void OnUpdated ()
