@@ -1,5 +1,10 @@
 2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PersistentWindowController.cs:
+	Fix NRE (BGO #550918).
+
+2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add a
 	StorageName property that defaults to 'Drive', and is used for the
 	DeleteFromDrive action's label.

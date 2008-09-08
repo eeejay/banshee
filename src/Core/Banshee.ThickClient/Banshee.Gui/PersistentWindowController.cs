@@ -161,6 +161,9 @@ namespace Banshee.Gui
 
         private void InnerSave ()
         {
+            if (window == null || window.GdkWindow == null)
+                return;
+
             int x, y, width, height;
 
             if ((window.GdkWindow.State & Gdk.WindowState.Maximized) != 0) {
