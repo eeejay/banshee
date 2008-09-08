@@ -112,6 +112,7 @@ namespace Banshee.Dap.Ipod
         protected override void Eject ()
         {
             base.Eject ();
+            CancelSyncThread ();
             if (ipod_device.CanUnmount) {
                 ipod_device.Unmount ();
             }
@@ -438,10 +439,9 @@ namespace Banshee.Dap.Ipod
 
         public override void SyncPlaylists ()
         {
-            if (sync_thread_wait == null) {
-                PerformSyncThreadCycle ();
-            } else {
-                QueueSync ();
+            if (Monitor.TryEnter (sync_mutex)) {
+                PerformSync ();
+                Monitor.Exit (sync_mutex);
             }
         }
 
@@ -458,11 +458,16 @@ namespace Banshee.Dap.Ipod
         
         private void CancelSyncThread ()
         {
+            Thread thread = sync_thread;
             lock (sync_mutex) {
                 if (sync_thread != null && sync_thread_wait != null) {
                     sync_thread_dispose = true;
                     sync_thread_wait.Set ();
                 }
+            }
+
+            if (thread != null) {
+                thread.Join ();
             }
         }
         

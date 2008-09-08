@@ -1,5 +1,12 @@
 2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Fix threading
+	issues with syncing playlists on eject/dispose.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Fix typo in comment
+
+2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Don't add duplicate tracks
 	to devices.
 
