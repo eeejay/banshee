@@ -95,20 +95,21 @@ namespace Muinshee
 
         private void InitPlayQueue (PlayQueueSource play_queue)
         {
-            actions = new MuinsheeActions (play_queue);
-            actions.Actions.AddActionGroup (actions);
-            ServiceManager.SourceManager.SetActiveSource (play_queue);
-            play_queue.TrackModel.Reloaded += HandleTrackModelReloaded;
+            if (actions == null) {
+                actions = new MuinsheeActions (play_queue);
+                actions.Actions.AddActionGroup (actions);
+                ServiceManager.SourceManager.SetActiveSource (play_queue);
+                play_queue.TrackModel.Reloaded += HandleTrackModelReloaded;
 
-            BuildPrimaryLayout ();
-            ConnectEvents ();
+                BuildPrimaryLayout ();
+                ConnectEvents ();
 
-            // FIXME
-            //AddAccelGroup (ActionService.UIManager.AccelGroup);
+                AddAccelGroup (ActionService.UIManager.AccelGroup);
 
-            track_view.SetModel (play_queue.TrackModel);
+                track_view.SetModel (play_queue.TrackModel);
 
-            Show ();
+                Show ();
+            }
         }
 
 #region System Overrides 
@@ -236,22 +237,6 @@ namespace Muinshee
         
 #endregion
         
-#region Gtk.Window Overrides
-
-        private bool accel_group_active = true;
-
-        private void OnEntryFocusOutEvent (object o, FocusOutEventArgs args)
-        {
-            if (!accel_group_active) {
-                AddAccelGroup (ActionService.UIManager.AccelGroup);
-                accel_group_active = true;
-            }
-
-            (o as Widget).FocusOutEvent -= OnEntryFocusOutEvent;
-        }
-
-#endregion
-
 #region Helper Functions
 
         private void HandleTrackModelReloaded (object sender, EventArgs args)

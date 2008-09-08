@@ -1,5 +1,12 @@
 2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Muinshee/Resources/GlobalUI.xml:
+	* src/Clients/Muinshee/Muinshee/PlayerInterface.cs: Add the Play
+	Song/Album items to the Media menu, and add the AccelGroup to the main
+	window so that s and a (and other accels) work.
+
+2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PersistentWindowController.cs:
 	Don't set the events mask for the controlled window to all - not needed.
 

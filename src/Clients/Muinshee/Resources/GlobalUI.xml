@@ -1,4 +1,13 @@
 <ui>
+  <menubar name="MainMenu" action="MainMenuAction">
+    <menu name="MediaMenu" action="MediaMenuAction">
+      <placeholder name="BelowOpenLocation">
+        <menuitem action="PlaySongAction"/>
+        <menuitem action="PlayAlbumAction"/>
+      </placeholder>
+    </menu>
+  </menubar>
+
   <toolbar name="MuinsheeHeaderToolbar">
     <toolitem action="PlayPauseAction"/>
     <toolitem action="PreviousAction"/>
