@@ -52,8 +52,6 @@ namespace Banshee.Gui
             this.window = window;
             this.options = options;
 
-            window.Events = Gdk.EventMask.AllEventsMask;
-
             WidthSchema = new SchemaEntry<int>(
                 configNameSpace, "width",
                 defaultWidth,
