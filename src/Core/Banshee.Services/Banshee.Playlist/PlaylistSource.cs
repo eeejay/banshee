@@ -188,19 +188,20 @@ namespace Banshee.Playlist
 
 #region DatabaseSource overrides
 
-        // We can delete tracks only if our parent can
-        public override bool CanDeleteTracks {
-            get {
-                DatabaseSource ds = Parent as DatabaseSource;
-                return ds != null && ds.CanDeleteTracks;
-            }
-        }
-
         // We can add tracks only if our parent can
         public override bool CanAddTracks {
             get {
                 DatabaseSource ds = Parent as DatabaseSource;
                 return ds != null ? ds.CanAddTracks : base.CanAddTracks;
+            }
+        }
+
+        // We can remove tracks only if our parent can
+        public override bool CanRemoveTracks {
+            get {
+                return (Parent is PrimarySource)
+                    ? !(Parent as PrimarySource).PlaylistsReadOnly
+                    : true;
             }
         }
 
@@ -222,14 +223,6 @@ namespace Banshee.Playlist
 
             ThreadAssist.ProxyToMain (Remove);
             return true;
-        }
-
-        public virtual bool CanUnmap {
-            get { return true; }
-        }
-
-        public virtual bool ConfirmBeforeUnmap {
-            get { return true; }
         }
 
 #endregion

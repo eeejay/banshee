@@ -160,11 +160,27 @@ namespace Banshee.Playlist
         }
 
         public override bool CanRename {
-            get { return true; }
+            get { return (Parent is PrimarySource) ? !(Parent as PrimarySource).PlaylistsReadOnly : true; }
         }
 
         public override bool CanSearch {
             get { return true; }
+        }
+
+        public virtual bool CanUnmap {
+            get { return (Parent is PrimarySource) ? !(Parent as PrimarySource).PlaylistsReadOnly : true; }
+        }
+
+        public bool ConfirmBeforeUnmap {
+            get { return true; }
+        }
+
+        // We can delete tracks only if our parent can
+        public override bool CanDeleteTracks {
+            get {
+                DatabaseSource ds = Parent as DatabaseSource;
+                return ds != null && ds.CanDeleteTracks;
+            }
         }
 
         public override void Save ()

@@ -358,8 +358,9 @@ namespace Banshee.Gui
                 UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
                 UpdateAction ("RefreshSmartPlaylistAction", smart_playlist != null && smart_playlist.CanRefresh, true, source);
 
-                UpdateAction ("NewPlaylistAction", primary_source != null && primary_source.SupportsPlaylists, true, source);
-                UpdateAction ("NewSmartPlaylistAction", primary_source != null && primary_source.SupportsPlaylists, true, source);
+                bool playlists_writable = primary_source != null && primary_source.SupportsPlaylists && !primary_source.PlaylistsReadOnly;
+                UpdateAction ("NewPlaylistAction", playlists_writable, true, source);
+                UpdateAction ("NewSmartPlaylistAction", playlists_writable, true, source);
                 /*UpdateAction ("NewSmartPlaylistFromSearchAction", (source is LibrarySource || source.Parent is LibrarySource),
                         !String.IsNullOrEmpty (source.FilterQuery), source);*/
                     

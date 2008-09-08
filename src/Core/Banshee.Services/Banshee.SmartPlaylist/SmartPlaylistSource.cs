@@ -425,14 +425,6 @@ namespace Banshee.SmartPlaylist
             return true;
         }
 
-        public virtual bool CanUnmap {
-            get { return true; }
-        }
-
-        public bool ConfirmBeforeUnmap {
-            get { return true; }
-        }
-
         public bool CanRefresh {
             get { return QueryOrder == BansheeQuery.RandomOrder; }
         }

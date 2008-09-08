@@ -205,7 +205,8 @@ namespace Banshee.Dap
 
         private IEnumerable<LibrarySource> Libraries {
             get {
-                foreach (Source source in ServiceManager.SourceManager.Sources) {
+                List<Source> sources = new List<Source> (ServiceManager.SourceManager.Sources);
+                foreach (Source source in sources) {
                     if (source is LibrarySource) {
                         yield return source as LibrarySource;
                     }

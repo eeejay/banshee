@@ -130,9 +130,13 @@ namespace Banshee.Sources
         }
 
         private bool supports_playlists = true;
-        public bool SupportsPlaylists {
+        public virtual bool SupportsPlaylists {
             get { return supports_playlists; }
             protected set { supports_playlists = value; }
+        }
+
+        public virtual bool PlaylistsReadOnly {
+            get { return false; }
         }
 
         public ErrorSource ErrorSource {

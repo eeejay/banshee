@@ -1,3 +1,19 @@
+2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Fix things up so that when Sync is enabled for a device the user cannot
+	DnD tracks or sources onto it, can't create playlists, can't modify
+	playlists on the device, etc.
+
 2008-09-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:

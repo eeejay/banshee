@@ -233,7 +233,7 @@ namespace Banshee.Dap.MassStorage
         private string [] playlist_formats;
         private string [] PlaylistFormats {
             get {
-                if (playlist_formats == null && SupportsPlaylists && MediaCapabilities != null) {
+                if (playlist_formats == null && MediaCapabilities != null) {
                     playlist_formats = MediaCapabilities.PlaylistFormats;
                 }
                 return playlist_formats;
@@ -258,7 +258,7 @@ namespace Banshee.Dap.MassStorage
                     }
                 }
                 
-                SupportsPlaylists = CanSyncPlaylists;
+                SupportsPlaylists &= CanSyncPlaylists;
                 return playlist_types;
             }
         }

@@ -456,6 +456,22 @@ namespace Banshee.Dap
         public override long BytesAvailable {
             get { return BytesCapacity - BytesUsed - Math.Max (0, BytesReserved - BytesData); }
         }
+
+        public override bool CanRemoveTracks {
+            get { return base.CanRemoveTracks && !Sync.Enabled; }
+        }
+
+        public override bool CanDeleteTracks {
+            get { return base.CanDeleteTracks && !Sync.Enabled; }
+        }
+
+        public override bool CanAddTracks {
+            get { return base.CanAddTracks && !Sync.Enabled; }
+        }
+
+        public override bool PlaylistsReadOnly {
+            get { return Sync.Enabled || IsReadOnly; }
+        }
             
         private Banshee.Configuration.SchemaEntry<long> space_for_data;
 #endregion
