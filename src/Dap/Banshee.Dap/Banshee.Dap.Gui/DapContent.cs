@@ -44,7 +44,7 @@ namespace Banshee.Dap.Gui
         private DapSource dap;
 
         private VBox vbox;
-        private WrapLabel dap_stats;
+        //private WrapLabel dap_stats;
 
         public DapContent (DapSource source) : base (source)
         {
@@ -70,20 +70,20 @@ namespace Banshee.Dap.Gui
             
             vbox.PackStart (new Banshee.Preferences.Gui.NotebookPage (dap.Preferences), false, false, 0);
 
-            vbox.PackStart (new HSeparator (), false, false, 0);
+            //vbox.PackStart (new HSeparator (), false, false, 0);
 
-            dap_stats = new WrapLabel ();
+            /*dap_stats = new WrapLabel ();
             dap.Sync.Updated += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateStatus); };
             dap_stats.Text = dap.Sync.ToString ();
-            vbox.PackStart (dap_stats, false, false, 0);
+            vbox.PackStart (dap_stats, false, false, 0);*/
             
             ShowAll ();
         }
 
-        private void UpdateStatus ()
+        /*private void UpdateStatus ()
         {
-            dap_stats.Text = dap.Sync.ToString ();
-        }
+            //dap_stats.Text = dap.Sync.ToString ();
+        }*/
 
         private void BuildActions ()
         {

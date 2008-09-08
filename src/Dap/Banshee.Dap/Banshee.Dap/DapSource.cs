@@ -285,6 +285,15 @@ namespace Banshee.Dap
         {
         }
 
+        protected override void Eject ()
+        {
+            if (!Sync.Enabled) {
+                // If sync isn't enabled, then make sure we've written saved our playlists
+                // Track transfers happen immediately, but playlists saves don't
+                SyncPlaylists ();
+            }
+        }
+
         private void AttemptToAddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
         {
             if (BytesAvailable - Banshee.IO.File.GetSize (fromUri) >= 0) {

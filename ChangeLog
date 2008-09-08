@@ -1,5 +1,22 @@
 2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Set the PlayCount of items to zero when marked new and 1 when marked read,
+	and add PlayCount = 0 as a SyncCondition so that only new items are synced.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Call SyncPlaylists when
+	ejecting and Sync not enabled, because while tracks are transferred
+	immeidately when you DnD them etc, playlists aren't saved.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs: Remove the testing
+	status label and hrule.
+
+2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Networking/Network.cs: Have the
 	disable-network-features preference take effect immediately.
 

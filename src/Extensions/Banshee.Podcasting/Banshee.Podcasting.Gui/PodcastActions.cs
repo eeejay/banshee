@@ -459,6 +459,11 @@ namespace Banshee.Podcasting.Gui
                 if (track.Item.IsRead != markRead) {
                     track.Item.IsRead = markRead;
                     track.Item.Save ();
+
+                    if (track.Item.IsRead ^ track.PlayCount > 0) {
+                        track.PlayCount = track.Item.IsRead ? 1 : 0;
+                        track.Save (false);
+                    }
                     any = true;
                 }
             }

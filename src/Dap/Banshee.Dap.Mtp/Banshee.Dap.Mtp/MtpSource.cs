@@ -390,9 +390,14 @@ namespace Banshee.Dap.Mtp
             return f;
         }
 
+        private bool disposed = false;
         public override void Dispose ()
         {
-			base.Dispose ();
+            if (disposed)
+                return;
+
+            disposed = true;
+            base.Dispose ();
 
             if (mtp_device != null) {
                 lock (mtp_device) {
@@ -407,6 +412,7 @@ namespace Banshee.Dap.Mtp
 
         protected override void Eject ()
         {
+            base.Eject ();
             Dispose ();
         }
 

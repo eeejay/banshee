@@ -110,7 +110,8 @@ namespace Banshee.Dap.Ipod
 
         // WARNING: This will be called from a thread!
         protected override void Eject ()
-        {   
+        {
+            base.Eject ();
             if (ipod_device.CanUnmount) {
                 ipod_device.Unmount ();
             }
@@ -437,7 +438,11 @@ namespace Banshee.Dap.Ipod
 
         public override void SyncPlaylists ()
         {
-            QueueSync ();
+            if (sync_thread_wait == null) {
+                PerformSyncThreadCycle ();
+            } else {
+                QueueSync ();
+            }
         }
 
         private void QueueSync ()

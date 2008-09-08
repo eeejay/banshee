@@ -412,6 +412,7 @@ namespace Banshee.Dap.MassStorage
 
         protected override void Eject ()
         {
+            base.Eject ();
             if (volume.CanUnmount) {
                 volume.Unmount ();
             }

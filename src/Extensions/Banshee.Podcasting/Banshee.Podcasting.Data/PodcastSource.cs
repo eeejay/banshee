@@ -98,7 +98,7 @@ namespace Banshee.Podcasting.Gui
             this.baseDirectory = baseDirectory;
             MediaTypes = TrackMediaAttributes.Podcast;
             NotMediaTypes = TrackMediaAttributes.AudioBook;
-            SyncCondition = "substr(CoreTracks.Uri, 0, 4) != 'http'";
+            SyncCondition = "(substr(CoreTracks.Uri, 0, 4) != 'http' AND CoreTracks.PlayCount = 0)";
 
             // For now..
             SupportsPlaylists = false;
