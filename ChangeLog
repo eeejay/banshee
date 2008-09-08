@@ -1,3 +1,10 @@
+2008-09-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Backends/Banshee.NowPlaying.X11/libbnpx11/Makefile.am:
+	* libbanshee/Makefile.am:
+	* build/build.rules.mk: Some build fixes to allow parallel build with
+	"make -j2" (BGO #546944).
+
 2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Create GUI objects on the

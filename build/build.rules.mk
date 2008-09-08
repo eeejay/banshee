@@ -37,6 +37,8 @@ all: $(ASSEMBLY_FILE) theme-icons
 build-debug:
 	@echo $(DEP_LINK)
 
+$(ASSEMBLY_FILE).mdb: $(ASSEMBLY_FILE)
+
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	@mkdir -p $(top_builddir)/bin
 	@colors=no; \

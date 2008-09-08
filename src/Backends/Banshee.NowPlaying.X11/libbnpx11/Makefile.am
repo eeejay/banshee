@@ -13,9 +13,9 @@ noinst_HEADERS = bacon-resize.h
 
 all: $(top_builddir)/bin/libbnpx11.so
 
-$(top_builddir)/bin/libbnpx11.so: .libs/libbnpx11.so
+$(top_builddir)/bin/libbnpx11.so: libbnpx11.la
 	mkdir -p $(top_builddir)/bin
-	cp -f $< $@
+	cp -f .libs/libbnpx11.so $@
 
 CLEANFILES = $(top_builddir)/bin/libbnpx11.so
 

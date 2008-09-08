@@ -43,9 +43,9 @@ libbanshee_la_LIBADD = \
 
 all: $(top_builddir)/bin/libbanshee.so
 
-$(top_builddir)/bin/libbanshee.so: .libs/libbanshee.so	
+$(top_builddir)/bin/libbanshee.so: libbanshee.la
 	mkdir -p $(top_builddir)/bin
-	cp -f $< $@
+	cp -f .libs/libbanshee.so $@
 
 CLEANFILES = $(top_builddir)/bin/libbanshee.so
 MAINTAINERCLEANFILES = Makefile.in
