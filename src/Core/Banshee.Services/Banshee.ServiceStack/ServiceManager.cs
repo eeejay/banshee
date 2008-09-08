@@ -237,7 +237,7 @@ namespace Banshee.ServiceStack
         
         private static void DelayedInitialize (IService service)
         {
-            if (have_client && !delayed_initialized && service is IDelayedInitializeService) {
+            if (have_client && service is IDelayedInitializeService) {
                 ((IDelayedInitializeService)service).DelayedInitialize ();
             }
         }
