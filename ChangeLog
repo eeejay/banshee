@@ -1,3 +1,8 @@
+2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs: Fix NRE
+	in icon code (BGO #551302).
+
 2008-09-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Fix deadlock hang

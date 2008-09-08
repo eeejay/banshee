@@ -198,7 +198,7 @@ namespace Banshee.Gui.Widgets
                 UpdateIcons ();
             } else {
                 for (int i = 0; i < job.IconNames.Length; i++) {
-                    if (!icon_names[i].Equals (job.IconNames[i])) {
+                    if (icon_names[i] != job.IconNames[i]) {
                         UpdateIcons ();
                         break;
                     }
