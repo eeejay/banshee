@@ -97,22 +97,31 @@ namespace Banshee.Networking
         {
             try {
                 if(new_state != current_state && (new_state == State.Connected || new_state == State.Disconnected)) {
+                    bool was_connected = Connected;
                     current_state = new_state;
-                    
-                    NetworkStateChangedHandler handler = StateChanged;
-                    if(handler != null) {
-                        NetworkStateChangedArgs state_changed_args = new NetworkStateChangedArgs();
-                        state_changed_args.Connected = Connected;
-                        handler(this, state_changed_args);
+
+                    if (Connected != was_connected) {
+                        OnStateChanged ();
                     }
                     
-                    if(Connected) {
-                        Log.Debug("Network Connection Established", "Connected");
-                    } else {
-                        Log.Debug("Network Connection Unavailable", "Disconnected");
-                    }
                 }
             } catch(Exception) {
+            }
+        }
+
+        private void OnStateChanged ()
+        {
+            NetworkStateChangedHandler handler = StateChanged;
+            if(handler != null) {
+                NetworkStateChangedArgs state_changed_args = new NetworkStateChangedArgs();
+                state_changed_args.Connected = Connected;
+                handler(this, state_changed_args);
+            }
+            
+            if(Connected) {
+                Log.Debug("Network Connection Established", "Connected");
+            } else {
+                Log.Debug("Network Connection Unavailable", "Disconnected");
             }
         }
         
@@ -140,7 +149,13 @@ namespace Banshee.Networking
             disable_internet_access_preference = service["general"]["misc"].Add (new SchemaPreference<bool> (DisableInternetAccess, 
                 Catalog.GetString ("_Disable features requiring Internet access"),
                 Catalog.GetString ("Some features require a broadband Internet connection such as Last.fm or cover art fetching"),
-                delegate { disable_internet_access = DisableInternetAccess.Get (); }
+                delegate {
+                    bool was_connected = Connected;
+                    disable_internet_access = DisableInternetAccess.Get ();
+                    if (Connected != was_connected) {
+                        OnStateChanged ();
+                    }
+                }
             ));
         }
         

@@ -1,5 +1,10 @@
 2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Networking/Network.cs: Have the
+	disable-network-features preference take effect immediately.
+
+2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
 	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:
@@ -111,14 +116,14 @@
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Fix deadlock hang
 	triggered by Last.fm (BGO #551175).
 
-2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
+2008-09-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
 	Fix from Bertrand Lorentz (also applied to new FirstIndexOf method by me)
 	fixing race condition that caused the Next button to not work half the
 	time when you had a filter active (BGO #544415).
 
-2008-09-05  Gabriel Burt  <gabriel.burt@gmail.com>
+2008-09-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit adds playlist support to USB Mass Storage players, and fixes a
 	bug that causes very slow initial loading of their tracks.
