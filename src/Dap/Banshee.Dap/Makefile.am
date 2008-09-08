@@ -22,7 +22,8 @@ SOURCES =  \
 
 RESOURCES =  \
 	Banshee.Dap.addin.xml \
-	Resources/ActiveSourceUI.xml
+	Resources/ActiveSourceUI.xml \
+	Resources/GlobalUI.xml
 
 include $(top_srcdir)/build/build.mk
 

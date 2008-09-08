@@ -56,6 +56,8 @@ namespace Banshee.Gui
             set { source_view = value; }
         }
 
+        public event Action<Source> Updated;
+
         public Source ActionSource {
             get { return ((SourceView == null) ? null :  SourceView.HighlightedSource) ?? ActiveSource; }
         }
@@ -375,6 +377,11 @@ namespace Banshee.Gui
             
             if (source != null) {
                 UpdateAction ("SortChildrenAction", source.Children.Count > 1, true, null);
+            }
+
+            Action<Source> handler = Updated;
+            if (handler != null) {
+                handler (source);
             }
         }
 

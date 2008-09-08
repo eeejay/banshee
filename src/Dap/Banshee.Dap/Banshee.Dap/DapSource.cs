@@ -188,7 +188,10 @@ namespace Banshee.Dap
             AddChildSource (podcast_group_source = new PodcastGroupSource (this));
 
             BuildPreferences ();
-            Properties.Set<Banshee.Sources.Gui.ISourceContents> ("Nereid.SourceContents", new DapContent (this));
+
+            ThreadAssist.ProxyToMain (delegate {
+                Properties.Set<Banshee.Sources.Gui.ISourceContents> ("Nereid.SourceContents", new DapContent (this));
+            });
         }
 
         private void BuildPreferences ()

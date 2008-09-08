@@ -1,5 +1,24 @@
 2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Create GUI objects on the
+	GUI thread.
+
+	* src/Dap/Banshee.Dap/Makefile.am:
+	* src/Dap/Banshee.Dap/Resources/ActiveSourceUI.xml:
+	* src/Dap/Banshee.Dap/Resources/GlobalUI.xml: Move the Sync context menu
+	item to GlobalUI.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs: Make the DapActions
+	static and work for multiple DapSources, including updating properly when
+	right-clicked on even if not the ActiveSource.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Add an event
+	for when we update the actions, so that other action groups or code that
+	needs to update them for right-click context menus can easily do that.
+
+2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Clients/Muinshee/Resources/GlobalUI.xml:
 	* src/Clients/Muinshee/Muinshee/PlayerInterface.cs: Add the Play
 	Song/Album items to the Media menu, and add the AccelGroup to the main

@@ -32,36 +32,70 @@ using Gtk;
 
 using Banshee.Dap;
 using Banshee.Gui;
+using Banshee.ServiceStack;
 
 namespace Banshee.Dap.Gui
 {
     public class DapActions : BansheeActionGroup
     {
-        private DapSource dap;
-        public DapActions (DapSource dap) : base ("dap")
+        private DapSource previous_dap = null;
+        private DapSource Dap {
+            get { return Actions.SourceActions.ActionSource as DapSource; }
+        }
+
+        public DapActions () : base ("dap")
         {
-            this.dap = dap;
             AddImportant (
                 new ActionEntry ("SyncDapAction", null,
                     Catalog.GetString ("Synchronize"), null,
-                    String.Format (Catalog.GetString ("Synchronize {0}"), dap.Name), OnSyncDap)
+                    String.Empty, OnSyncDap)
             );
+
+            AddUiFromFile ("GlobalUI.xml");
             
             this["SyncDapAction"].IconName = Stock.Refresh;
-            UpdateActions ();
-            dap.Sync.Updated += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
+            ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
+            Actions.SourceActions.Updated += delegate { UpdateActions (); };
+            OnActiveSourceChanged (null);
+
+            Register ();
+        }
+
+        private void OnActiveSourceChanged (EventArgs args)
+        {
+            if (previous_dap != null) {
+                previous_dap.Sync.Updated -= OnSyncUpdated;
+            }
+            
+            previous_dap = ActiveSource as DapSource;
+
+            if (previous_dap != null) {
+                previous_dap.Sync.Updated += OnSyncUpdated;
+            }
+        }
+
+        private void OnSyncUpdated (DapSync sync)
+        {
+            Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions);
         }
 
         private void UpdateActions ()
         {
-            UpdateAction ("SyncDapAction", dap.Sync.Enabled && !dap.Sync.AutoSync);
+            DapSource dap = Dap;
+            if (dap != null) {
+                UpdateAction ("SyncDapAction", dap.Sync.Enabled && !dap.Sync.AutoSync);
+                this["SyncDapAction"].Label = String.Format (Catalog.GetString ("Synchronize {0}"), dap.Name);
+            }
         }
 
         private void OnSyncDap (object o, EventArgs args)
         {
-            Banshee.Base.ThreadAssist.SpawnFromMain (delegate {
-                dap.Sync.Sync ();
-            });
+            DapSource dap = Dap;
+            if (dap != null) {
+                Banshee.Base.ThreadAssist.SpawnFromMain (delegate {
+                    dap.Sync.Sync ();
+                });
+            }
         }
     }
 }

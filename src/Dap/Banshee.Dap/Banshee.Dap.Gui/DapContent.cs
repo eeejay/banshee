@@ -42,7 +42,6 @@ namespace Banshee.Dap.Gui
     public class DapContent : DapPropertiesDisplay
     {
         private DapSource dap;
-        private DapActions actions;
 
         private VBox vbox;
         private WrapLabel dap_stats;
@@ -88,8 +87,11 @@ namespace Banshee.Dap.Gui
 
         private void BuildActions ()
         {
-            actions = new DapActions (dap);
-            dap.Properties.Set<Banshee.Gui.BansheeActionGroup> ("ActiveSourceActions", actions);
+            if (actions == null) {
+                actions = new DapActions ();
+            }
         }
+
+        private static Banshee.Gui.BansheeActionGroup actions;
     }
 }
