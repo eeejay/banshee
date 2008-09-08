@@ -1,5 +1,11 @@
 2008-09-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:
+	http URLs in ASX files are in fact mmsh URLs. Patch by Félix Velasco with
+	a suggestion from Gabriel (BGO #545646).
+
+2008-09-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Fix a crash
 	triggered by DAAP errors (BGO #549192).
 

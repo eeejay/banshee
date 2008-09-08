@@ -107,7 +107,12 @@ namespace Banshee.Playlists.Formats
                             element["title"] = xml_reader.Value;
                             break;
                         case "ref":
-                            element["uri"] = ResolveUri(xml_reader["HREF"] ?? xml_reader["href"]);
+                            // asf links say they are http, but are mmsh instead
+                            string uri_aux = xml_reader["HREF"] ?? xml_reader["href"];
+                            if (uri_aux.StartsWith("http", StringComparison.CurrentCultureIgnoreCase))
+                                uri_aux = "mmsh" + uri_aux.Substring(4);
+
+                            element["uri"] = ResolveUri(uri_aux);
                             break;
                         case "duration":
                             try {
