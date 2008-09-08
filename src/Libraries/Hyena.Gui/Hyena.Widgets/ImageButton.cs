@@ -49,7 +49,7 @@ namespace Hyena.Widgets
             HBox hbox = new HBox ();
             hbox.Spacing = 2;
             hbox.PackStart (image, false, false, 0);
-            hbox.PackStart (label, false, false, 0);
+            hbox.PackStart (label, true, true, 0);
 
             Child = hbox;
             CanDefault = true;

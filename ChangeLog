@@ -1,5 +1,10 @@
 2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ImageButton.cs: Fill and expand
+	the label so that it's centered (BGO #551436).
+
+2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Fix threading
 	issues with syncing playlists on eject/dispose.
 
