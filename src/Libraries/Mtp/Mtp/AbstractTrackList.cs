@@ -75,7 +75,6 @@ namespace Mtp
         public virtual void Save ()
         {
             Count = (uint) track_ids.Count;
-            Console.WriteLine ("saving {0} {1} with {2} tracks", this.GetType(), this.Name, this.Count);
 
             if (TracksPtr != IntPtr.Zero) {
                 Marshal.FreeHGlobal (TracksPtr);

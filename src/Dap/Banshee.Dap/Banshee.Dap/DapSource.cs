@@ -294,10 +294,17 @@ namespace Banshee.Dap
             }
         }
 
+        HyenaSqliteCommand track_on_dap_query = new HyenaSqliteCommand (
+            "SELECT TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND MetadataHash = ? LIMIT 1");
+
         private void AttemptToAddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
         {
+            // Ensure there's enouch space
             if (BytesAvailable - Banshee.IO.File.GetSize (fromUri) >= 0) {
-                AddTrackToDevice (track, fromUri);
+                // Ensure it's not already on the device
+                if (ServiceManager.DbConnection.Query<int> (track_on_dap_query, DbId, track.MetadataHash) == 0) {
+                    AddTrackToDevice (track, fromUri);
+                }
             }
         }
         

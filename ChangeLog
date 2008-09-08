@@ -1,5 +1,12 @@
 2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Don't add duplicate tracks
+	to devices.
+
+	* src/Libraries/Mtp/Mtp/AbstractTrackList.cs: Remove random WriteLine.
+
+2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
 	Set the PlayCount of items to zero when marked new and 1 when marked read,
