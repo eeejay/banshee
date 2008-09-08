@@ -228,6 +228,10 @@ namespace Banshee.Gui
                     UpdateAction ("TrackPropertiesAction", in_database, has_selection, source);
                     UpdateAction ("RateTracksAction", in_database, has_selection, null);
                     UpdateAction ("AddToPlaylistAction", in_database && primary_source != null && primary_source.SupportsPlaylists, has_selection, null);
+
+                    if (primary_source != null) {
+                        this["DeleteTracksFromDriveAction"].Label = String.Format (Catalog.GetString ("_Delete From {0}"), primary_source.StorageName);
+                    }
                 }
             } else {
                 Sensitive = Visible = false;

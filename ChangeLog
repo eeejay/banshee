@@ -1,5 +1,27 @@
 2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add a
+	StorageName property that defaults to 'Drive', and is used for the
+	DeleteFromDrive action's label.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs: When the Name
+	property is set, set the StorageName too, so that the DeleteFromDrive
+	action's label is still 'Delete From iPod' etc.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Clarify a couple error
+	messages.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Don't
+	inherit action Label and IconName overrides from sources' parents since
+	that can lead to strange things.  Fixes bug with the UnmapSourceAction's
+	IconName being the eject icon for playlists under DapSources (BGO #549183)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Use the
+	StorageName property on the PrimarySource to set the DeleteFromDrive
+	label.
+
+2008-09-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs: Fix NRE
 	in icon code (BGO #551302).
 

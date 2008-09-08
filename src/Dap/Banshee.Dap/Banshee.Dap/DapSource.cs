@@ -338,13 +338,13 @@ namespace Banshee.Dap
                 string format = System.IO.Path.GetExtension (track.Uri.LocalPath);
                 format = String.IsNullOrEmpty (format) ? Catalog.GetString ("Unknown") : format.Substring (1);
                 throw new ApplicationException (String.Format (Catalog.GetString (
-                    "The {0} format is not supported by the device, and no converter was found to convert it."), format));
+                    "The {0} format is not supported by the device, and no converter was found to convert it"), format));
             }
 
             TranscoderService transcoder = ServiceManager.Get<TranscoderService> ();
             if (transcoder == null) {
                 throw new ApplicationException (Catalog.GetString (
-                    "File format conversion is not supported for this device."));
+                    "File format conversion support is not available"));
             }
             
             transcoder.Enqueue (track, PreferredConfiguration, OnTrackTranscoded, OnTrackTranscodeCancelled);

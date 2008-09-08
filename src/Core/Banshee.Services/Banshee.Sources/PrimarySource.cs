@@ -207,6 +207,13 @@ namespace Banshee.Sources
         {
         }
 
+        // Translators: this is a noun, referring to the harddisk
+        private string storage_name = Catalog.GetString ("Drive");
+        public string StorageName {
+            get { return storage_name; }
+            protected set { storage_name = value; }
+        }
+
         public override bool? AutoExpand {
             get { return ExpandedSchema.Get (); }
         }

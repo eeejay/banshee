@@ -67,7 +67,7 @@ namespace Banshee.Dap
             get { return base.Name; }
             set {
                 base.Name = value;
-                Properties.SetString ("DeleteTracksActionLabel", String.Format (Catalog.GetString ("Delete From {0}"), value));
+                StorageName = value;
                 Properties.SetString ("UnmapSourceActionLabel", String.Format (Catalog.GetString ("Eject {0}"), value));
             }
         }
