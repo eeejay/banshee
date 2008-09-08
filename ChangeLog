@@ -1,5 +1,10 @@
 2008-09-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Fix a crash
+	triggered by DAAP errors (BGO #549192).
+
+2008-09-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
 	Handle relative paths as parameters on the command line (BGO #537600).
 

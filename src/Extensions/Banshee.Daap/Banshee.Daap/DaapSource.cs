@@ -115,7 +115,9 @@ namespace Banshee.Daap
                         ThreadAssist.ProxyToMain (PromptLogin);
                     }
                 } catch(Exception e) {
-                    ShowErrorView (DaapErrorType.BrokenAuthentication);
+                    ThreadAssist.ProxyToMain (delegate {
+                        ShowErrorView (DaapErrorType.BrokenAuthentication);
+                    });
                     Hyena.Log.Exception (e);
                 }
                
