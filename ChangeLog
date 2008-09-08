@@ -1,5 +1,10 @@
 2008-09-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Handle relative paths as parameters on the command line (BGO #537600).
+
+2008-09-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Fix
 	an incorrect condition, so that DelayedInitialize is called on extensions
 	that are enabled through the banshee UI (BGO #550555).

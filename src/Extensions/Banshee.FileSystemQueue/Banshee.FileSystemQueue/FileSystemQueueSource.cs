@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.IO;
 using Mono.Unix;
 using Gtk;
 
@@ -94,7 +95,14 @@ namespace Banshee.FileSystemQueue
             play_enqueued = ApplicationContext.CommandLine.Contains ("play-enqueued");
             
             foreach (string path in ApplicationContext.CommandLine.Files) {
-                Enqueue (path);
+                // If it looks like a URI with a protocol, leave it as is
+                if (System.Text.RegularExpressions.Regex.IsMatch (path, "^\\w+\\:\\/")) {
+                    Log.DebugFormat ("URI file : {0}", path);
+                    Enqueue (path);
+                } else {
+                    Log.DebugFormat ("Relative file : {0} -> {1}", path, Path.GetFullPath (path));
+                    Enqueue (Path.GetFullPath (path));
+                }
             }
         }
         
