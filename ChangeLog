@@ -1,5 +1,9 @@
 2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Resources/contributors.xml: Add David.
+
+2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Patch from David Spreen adding cover art support to Mass Storage DAPs.
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
