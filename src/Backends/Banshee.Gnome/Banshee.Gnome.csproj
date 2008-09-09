@@ -56,6 +56,7 @@
     <Compile Include="Banshee.GnomeBackend\Brasero.cs" />
     <Compile Include="Banshee.GnomeBackend\DiscDuplicator.cs" />
     <Compile Include="Banshee.GnomeBackend\GnomeScreensaverManager.cs" />
+    <Compile Include="Banshee.GnomeBackend\DefaultApplicationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Gnome.addin.xml" />

@@ -38,6 +38,7 @@ SOURCES =  \
 	Banshee.Collection/SelectAllSelection.cs \
 	Banshee.Collection/TrackListModel.cs \
 	Banshee.Configuration/DatabaseConfigurationClient.cs \
+	Banshee.Configuration/DefaultApplicationHelper.cs \
 	Banshee.Database/BansheeDbConnection.cs \
 	Banshee.Database/BansheeDbFormatMigrator.cs \
 	Banshee.Database/BansheeModelCache.cs \

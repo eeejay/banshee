@@ -40,6 +40,10 @@
   <ExtensionPoint path="/Banshee/Platform/HardwareDeviceProvider">
     <ExtensionNode name="HardwareDeviceProvider"/>
   </ExtensionPoint>
+
+  <ExtensionPoint path="/Banshee/Platform/DefaultApplicationHelper">
+    <ExtensionNode name="Helper"/>
+  </ExtensionPoint>
   
   <ExtensionPoint path="/Banshee/Platform/DiscDuplicator">
     <ExtensionNode name="DiscDuplicator"/>

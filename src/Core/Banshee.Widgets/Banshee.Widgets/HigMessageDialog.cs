@@ -150,16 +150,30 @@ namespace Banshee.Widgets
         {
             AddButton (ok_caption, Gtk.ResponseType.Ok, false);
         }
+
+        public Gtk.Button AddCustomButton (string message, Gtk.ResponseType response, bool isDefault)
+        {
+            Gtk.Button button = new Gtk.Button ();
+            button.Label = message;
+            button.CanDefault = true;
+            button.Show ();
+            AddButton (button, response, isDefault);
+            return button;
+        }
         
-        public void AddButton (string stock_id, Gtk.ResponseType response, bool is_default)
+        public void AddButton (string stock_id, Gtk.ResponseType response, bool isDefault)
         {
             Gtk.Button button = new Gtk.Button (stock_id);
             button.CanDefault = true;
             button.Show ();
+            AddButton (button, response, isDefault);
+        }
 
+        private void AddButton (Gtk.Button button, Gtk.ResponseType response, bool isDefault)
+        {
             AddActionWidget (button, response);
 
-            if (is_default) {
+            if (isDefault) {
                 DefaultResponse = response;
                 button.AddAccelerator ("activate",
                                accel_group,

@@ -227,6 +227,7 @@
     <Compile Include="Banshee.ServiceStack\IRegisterOnDemandService.cs" />
     <Compile Include="Banshee.Web\HttpRequest.cs" />
     <Compile Include="Banshee.Collection.Indexer\CollectionIndexer.cs" />
+    <Compile Include="Banshee.Configuration\DefaultApplicationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />

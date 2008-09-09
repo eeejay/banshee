@@ -266,6 +266,12 @@ namespace Banshee.Gui
             
             Application.PushClient (this);
             Application.Run ();
+
+            if (!Banshee.Configuration.DefaultApplicationHelper.NeverAsk && Banshee.Configuration.DefaultApplicationHelper.HaveHelper) {
+                Application.ClientStarted += delegate {
+                    Banshee.Gui.Dialogs.DefaultApplicationHelperDialog.RunIfAppropriate ();
+                };
+            }
             
             Log.Notify += OnLogNotify;
         }

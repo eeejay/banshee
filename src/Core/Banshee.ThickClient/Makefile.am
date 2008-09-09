@@ -36,6 +36,7 @@ SOURCES =  \
 	Banshee.Gui.Dialogs/AboutDialog.cs \
 	Banshee.Gui.Dialogs/BansheeDialog.cs \
 	Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs \
+	Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs \
 	Banshee.Gui.Dialogs/ErrorListDialog.cs \
 	Banshee.Gui.Dialogs/ExtensionManagerDialog.cs \
 	Banshee.Gui.Dialogs/FileChooserDialog.cs \

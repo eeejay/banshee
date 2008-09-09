@@ -63,11 +63,15 @@ namespace Banshee.GnomeBackend
             string hash_key = String.Format ("{0}{1}", @namespace, part);
             lock (((ICollection)key_table).SyncRoot) {
                 if (!key_table.ContainsKey (hash_key)) {
+                    part = part.Replace ('/', '_');
                     if (@namespace == null) {
-                        key_table.Add (hash_key, String.Format ("{0}{1}", base_key, StringUtil.CamelCaseToUnderCase (part.Replace ('/', '_'))));
+                        key_table.Add (hash_key, String.Format ("{0}{1}", base_key, StringUtil.CamelCaseToUnderCase (part)));
+                    } else if (@namespace.StartsWith ("/")) {
+                        key_table.Add (hash_key, String.Format ("{0}{1}{2}", @namespace,
+                            @namespace.EndsWith ("/") ? String.Empty : "/", StringUtil.CamelCaseToUnderCase (part)));
                     } else {
                         key_table.Add (hash_key, String.Format ("{0}{1}",
-                            base_key, StringUtil.CamelCaseToUnderCase (String.Format ("{0}/{1}", @namespace.Replace (".", "/"), part.Replace ('/', '_')))
+                            base_key, StringUtil.CamelCaseToUnderCase (String.Format ("{0}/{1}", @namespace.Replace (".", "/"), part))
                         ));
                     }
                 }

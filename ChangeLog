@@ -1,3 +1,40 @@
+2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: When the
+	client is started and if appropriate, pop up a dialog asking if the user
+	wants to set Banshee as the default media player.
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.csproj:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs:
+	New dialog asking the user if they want to set Banshee as the default, and
+	with a checkbox to remember the decision.
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml: Add extension
+	point for DefaultApplicationHelpers.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.csproj:
+	* src/Core/Banshee.Services/Banshee.Configuration/DefaultApplicationHelper.cs:
+	New static class that loads DefaultApplicationHelper backends (only one
+	for GNOME exists atm), provides a simple API, and contains the
+	SchemaEntrys for remembering the users previous choice in the matter.
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/HigMessageDialog.cs: Add
+	a convenience method for adding a custom Button.
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GConfConfigurationClient.cs:
+	Handle the namespace already being absolute (starting in '/') by not
+	prepending it with /app/banshee-1/.
+
+	* src/Backends/Banshee.Gnome/Banshee.Gnome.addin.xml:
+	* src/Backends/Banshee.Gnome/Banshee.Gnome.csproj:
+	* src/Backends/Banshee.Gnome/Makefile.am:
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/DefaultApplicationHelper.cs:
+	GNOME specific backend to the DefaultApplicationHelper extension point.
+	Sets Banshee as the default handler for several uri schems, for audio
+	devices, cds, and media in general.
+
 2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* data/banshee-1.desktop.in.in: Patch from Pacho Ramos removing deprecated

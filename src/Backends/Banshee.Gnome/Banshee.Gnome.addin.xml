@@ -25,6 +25,10 @@
   <Extension path="/Banshee/Platform/DiscDuplicator">
     <DiscDuplicator class="Banshee.GnomeBackend.DiscDuplicator"/>
   </Extension>
+
+  <Extension path="/Banshee/Platform/DefaultApplicationHelper">
+    <Helper class="Banshee.GnomeBackend.DefaultApplicationHelper"/>
+  </Extension>
   
   <Extension path="/Banshee/NowPlaying/ScreensaverManager">
     <ScreensaverManager class="Banshee.GnomeBackend.GnomeScreensaverManager"/>
