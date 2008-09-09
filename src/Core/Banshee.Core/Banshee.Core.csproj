@@ -8,6 +8,7 @@
     <OutputType>Library</OutputType>
     <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
     <AssemblyName>Banshee.Core</AssemblyName>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -97,6 +98,7 @@
     <Compile Include="Banshee.Kernel\DelegateJob.cs" />
     <Compile Include="Banshee.Collection\CacheableItem.cs" />
     <Compile Include="Banshee.IO\DirectoryScannerPipelineElement.cs" />
+    <Compile Include="Banshee.Configuration\MemoryConfigurationClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">

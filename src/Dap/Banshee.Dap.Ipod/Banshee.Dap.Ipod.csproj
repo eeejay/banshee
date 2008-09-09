@@ -7,6 +7,7 @@
     <ProjectGuid>{371ECE68-8D0F-4AFE-AC8F-147167AE3674}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Banshee.Dap.Ipod</AssemblyName>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

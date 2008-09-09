@@ -95,7 +95,8 @@ namespace Banshee.Configuration
         
         private IDataReader Get (string namespce, string key)
         {
-            return connection.Query (select_value_command, MakeKey (namespce, key));
+            return connection.Query (select_value_command, 
+                Banshee.Configuration.MemoryConfigurationClient.MakeKey (namespce, key));
         }
 
         public void Set <T> (SchemaEntry<T> entry, T value)
@@ -110,21 +111,14 @@ namespace Banshee.Configuration
 
         public void Set <T> (string namespce, string key, T value)
         {
-            if (connection.Query<int> (select_id_command, MakeKey (namespce, key)) > 0) {
-                connection.Execute (update_command, value.ToString (), MakeKey (namespce, key));
+            string fq_key = Banshee.Configuration.MemoryConfigurationClient.MakeKey (namespce, key);
+            if (connection.Query<int> (select_id_command, fq_key) > 0) {
+                connection.Execute (update_command, value.ToString (), fq_key);
             } else {
-                connection.Execute (insert_command, MakeKey (namespce, key), value.ToString ());
+                connection.Execute (insert_command, fq_key, value.ToString ());
             }
         }
-        
-        private static string MakeKey (string namespce, string key)
-        {
-            return String.Format (
-                "{0}{1}{2}",
-                namespce, String.IsNullOrEmpty (namespce) ? String.Empty : ".", key
-            );
-        }
-        
+
         protected virtual string TableName {
             get { return "CoreConfiguration"; }
         }

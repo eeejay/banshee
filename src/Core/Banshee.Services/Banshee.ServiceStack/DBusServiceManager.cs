@@ -42,6 +42,7 @@ namespace Banshee.ServiceStack
     public class DBusServiceManager : IService
     {
         public const string ObjectRoot = "/org/bansheeproject/Banshee";
+        private Dictionary<object, ObjectPath> registered_objects = new Dictionary<object, ObjectPath> ();
         
         public DBusServiceManager ()
         {
@@ -96,23 +97,41 @@ namespace Banshee.ServiceStack
             return paths.ToArray ();
         }
         
-        public void RegisterObject (IDBusExportable o)
+        public ObjectPath RegisterObject (IDBusExportable o)
         {
-            RegisterObject (o, MakeObjectPath (o));
+            return RegisterObject (o, MakeObjectPath (o));
         }
         
-        public void RegisterObject (object o, string objectName)
+        public ObjectPath RegisterObject (object o, string objectName)
         {
+            ObjectPath path = null;
+            
             if (DBusConnection.Enabled && Bus.Session != null) {
+                lock (registered_objects) {
+                    registered_objects.Add (o, path = new ObjectPath (objectName));
+                }
                 #pragma warning disable 0618
-                Bus.Session.Register (DBusConnection.BusName, new ObjectPath (objectName), o);
+                Bus.Session.Register (DBusConnection.BusName, path, o);
                 #pragma warning restore 0618
             }
+            
+            return path;
         }
 
         public void UnregisterObject (object o)
         {
-            //TODO: unregistering objects with managed dbus
+            ObjectPath path = null;
+            lock (registered_objects) {
+                if (!registered_objects.TryGetValue (o, out path)) {
+                    Log.WarningFormat ("Unable to unregister DBus object {0}, does not appear to be registered", 
+                        o.GetType ());
+                    return;
+                }
+                
+                registered_objects.Remove (o);
+            }
+        
+            Bus.Session.Unregister (path);
         }
         
         public static T FindInstance<T> (string objectPath) where T : class

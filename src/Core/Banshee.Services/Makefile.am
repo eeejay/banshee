@@ -23,6 +23,9 @@ SOURCES =  \
 	Banshee.Collection.Database/IDatabaseTrackModelProvider.cs \
 	Banshee.Collection.Database/QueryFilterInfo.cs \
 	Banshee.Collection.Indexer/CollectionIndexer.cs \
+	Banshee.Collection.Indexer/CollectionIndexerService.cs \
+	Banshee.Collection.Indexer/ICollectionIndexer.cs \
+	Banshee.Collection.Indexer/ICollectionIndexerService.cs \
 	Banshee.Collection/AlbumListModel.cs \
 	Banshee.Collection/ArtistListModel.cs \
 	Banshee.Collection/BansheeListModel.cs \

@@ -1,10 +1,10 @@
 //
-// ITrackModelSource.cs
+// ICollectionIndexer.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,29 +28,26 @@
 
 using System;
 using System.Collections.Generic;
-
 using NDesk.DBus;
 
-using Banshee.Collection;
+using Banshee.ServiceStack;
 
-namespace Banshee.Sources
+namespace Banshee.Collection.Indexer
 {
-    public interface ITrackModelSource : ISource
+    public delegate void IndexingFinishedHandler ();
+    
+    [Interface ("org.bansheeproject.Banshee.CollectionIndexer")]
+    public interface ICollectionIndexer : IService, IDBusExportable
     {
-        TrackListModel TrackModel { get; }
-
-        void Reload ();
-        bool HasDependencies { get; }
-
-        void RemoveSelectedTracks ();
-        void DeleteSelectedTracks ();
-
-        bool CanAddTracks { get; }
-        bool CanRemoveTracks { get; }
-        bool CanDeleteTracks { get; }
-        bool ConfirmRemoveTracks { get; }
+        event IndexingFinishedHandler IndexingFinished;
+            
+        void Start ();
+        void Dispose ();
         
-        bool ShowBrowser { get; }
-        bool Indexable { get; }
+        int GetModelCounts ();
+        int GetModelResultsCount (int modelIndex);
+        IDictionary<string, object> GetResult (int modelIndex, int itemIndex);
+        
+        bool SaveToXml (string path);
     }
 }

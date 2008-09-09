@@ -32,6 +32,7 @@ SOURCES =  \
 	Banshee.Configuration.Schema/LibrarySchema.cs \
 	Banshee.Configuration/ConfigurationClient.cs \
 	Banshee.Configuration/IConfigurationClient.cs \
+	Banshee.Configuration/MemoryConfigurationClient.cs \
 	Banshee.Configuration/SchemaEntry.cs \
 	Banshee.Configuration/XmlConfigurationClient.cs \
 	Banshee.I18n/AssemblyCatalogAttribute.cs \

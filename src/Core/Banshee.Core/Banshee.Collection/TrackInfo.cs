@@ -459,12 +459,20 @@ namespace Banshee.Collection
             }
         }
         
+#region Exportable Properties
+        
         public static void ExportableMerge (TrackInfo source, TrackInfo dest)
         {
-            foreach (PropertyInfo property in typeof (TrackInfo).GetProperties (BindingFlags.Public | BindingFlags.Instance)) {
+            // Use the high level TrackInfo type if the source and dest types differ
+            Type type = dest.GetType ();
+            if (source.GetType () != type) {
+                type = typeof (TrackInfo);
+            }
+            
+            foreach (KeyValuePair<string, PropertyInfo> iter in GetExportableProperties (type)) {
                 try {
-                    object [] exportable_attrs = property.GetCustomAttributes (typeof (TrackInfo.ExportableAttribute), true);
-                    if (exportable_attrs != null && exportable_attrs.Length > 0 && property.CanWrite) {
+                    PropertyInfo property = iter.Value;
+                    if (property.CanWrite && property.CanRead) {
                         property.SetValue (dest, property.GetValue (source, null), null);
                     }
                 } catch (Exception e) {
@@ -472,23 +480,14 @@ namespace Banshee.Collection
                 }
             }
         }
-
-        // Generates a{sv} of self according to http://wiki.xmms2.xmms.se/index.php/Media_Player_Interfaces#.22Metadata.22
+        
         public IDictionary<string, object> GenerateExportable ()
         {
             Dictionary<string, object> dict = new Dictionary<string, object> ();
-            
-            foreach (PropertyInfo property in GetType ().GetProperties (BindingFlags.Public | BindingFlags.Instance)) {
-                object [] exportable_attrs = property.GetCustomAttributes (typeof (TrackInfo.ExportableAttribute), true);
-                if (exportable_attrs == null || exportable_attrs.Length == 0) {
-                    continue;
-                }
-                
-                string export_name = ((ExportableAttribute)exportable_attrs[0]).ExportName
-                    ?? StringUtil.CamelCaseToUnderCase (property.Name, '-');
-                
-                object value = property.GetValue (this, null);
-                if (String.IsNullOrEmpty (export_name) || value == null) {
+
+            foreach (KeyValuePair<string, PropertyInfo> property in GetExportableProperties (GetType ())) {
+                object value = property.Value.GetValue (this, null);
+                if (value == null) {
                     continue;
                 }
                 
@@ -508,14 +507,115 @@ namespace Banshee.Collection
                     value is float || value is double ||
                     value is bool || value is string)) {
                     Log.WarningFormat ("Invalid property in {0} marked as [Exportable]: ({1} is a {2})", 
-                        property.DeclaringType, property.Name, value.GetType ());
+                        property.Value.DeclaringType, property.Value.Name, value.GetType ());
                     continue;
                 }
                 
-                dict.Add (export_name, value);
+                dict.Add (property.Key, value);
             }
             
             return dict;
         }
+        
+        private static Dictionary<Type, Dictionary<string, PropertyInfo>> exportable_properties;
+        private static object exportable_properties_mutex = new object ();
+        
+        private static void FindExportableProperties (Type type)
+        {
+            lock (exportable_properties_mutex) {
+                if (exportable_properties == null) {
+                    exportable_properties = new Dictionary<Type, Dictionary<string, PropertyInfo>> ();
+                } else if (exportable_properties.ContainsKey (type)) {
+                    return;
+                }
+                
+                // Build a stack of types to reflect
+                Stack<Type> probe_types = new Stack<Type> ();
+                Type probe_type = type;
+                while (probe_type != null) {
+                    probe_types.Push (probe_type);
+                    if (probe_type == typeof (TrackInfo)) {
+                        break;
+                    }
+                    probe_type = probe_type.BaseType;
+                }
+            
+                // Iterate through all types
+                while (probe_types.Count > 0) {
+                    probe_type = probe_types.Pop ();
+                    if (exportable_properties.ContainsKey (probe_type)) {
+                        continue;
+                    }
+                    
+                    Dictionary<string, PropertyInfo> properties = null;
+                    
+                    // Reflect the type for exportable properties
+                    foreach (PropertyInfo property in probe_type.GetProperties (BindingFlags.Public | BindingFlags.Instance)) {
+                        if (property.DeclaringType != probe_type) {
+                            continue;
+                        }
+                        
+                        object [] exportable_attrs = property.GetCustomAttributes (typeof (ExportableAttribute), true);
+                        if (exportable_attrs == null || exportable_attrs.Length == 0) {
+                            continue;
+                        }
+                        
+                        string export_name = ((ExportableAttribute)exportable_attrs[0]).ExportName
+                            ?? StringUtil.CamelCaseToUnderCase (property.Name, '-');
+                        
+                        if (String.IsNullOrEmpty (export_name) || (properties != null && properties.ContainsKey (export_name))) {
+                            continue;
+                        }
+                        
+                        if (properties == null) {
+                            properties = new Dictionary<string, PropertyInfo> ();
+                            exportable_properties.Add (probe_type, properties);
+                        }
+                        
+                        properties.Add (export_name, property);
+                    }
+                    
+                    // Merge properties in the type hierarchy through linking or aggregation
+                    Type parent_type = probe_type.BaseType;
+                    bool link = !exportable_properties.ContainsKey (probe_type);
+                    
+                    while (parent_type != null) {
+                        Dictionary<string, PropertyInfo> parent_properties = null;
+                        if (!exportable_properties.TryGetValue (parent_type, out parent_properties)) {
+                            parent_type = parent_type.BaseType;
+                            continue;
+                        }
+                        
+                        if (link) {
+                            // Link entire property set between types
+                            exportable_properties.Add (probe_type, parent_properties);
+                            return;
+                        } else {
+                            // Aggregate properties in parent sets
+                            foreach (KeyValuePair<string, PropertyInfo> parent_property in parent_properties) {
+                                properties.Add (parent_property.Key, parent_property.Value);
+                            }
+                        }
+                        
+                        parent_type = parent_type.BaseType;
+                    }
+                }
+            }
+        }
+        
+        private static IEnumerable<KeyValuePair<string, PropertyInfo>> GetExportableProperties (Type type)
+        {
+            FindExportableProperties (type);
+            
+            Dictionary<string, PropertyInfo> properties = null;
+            if (exportable_properties.TryGetValue (type, out properties)) {
+                foreach (KeyValuePair<string, PropertyInfo> property in properties) {
+                    yield return property;
+                }
+            }
+        }
+        
+#endregion
+
     }
 }

@@ -491,6 +491,10 @@ namespace Banshee.Lastfm.Radio
         public bool ShowBrowser {
             get { return false; }
         }
+        
+        public bool Indexable {
+            get { return false; }
+        }
 
 #endregion
 

@@ -48,6 +48,7 @@ namespace Banshee.Gui
         private static Type client_type;
 
         private static string user_gtkrc = Path.Combine (Paths.ApplicationData, "gtkrc"); 
+        
         public static void Startup<T> (string [] args) where T : GtkBaseClient
         {
             if (CheckHelpVersion ()) {
@@ -235,6 +236,8 @@ namespace Banshee.Gui
         {
             // Set the process name so system process listings and commands are pretty
             PlatformHacks.TrySetProcessName (Application.InternalName);
+            
+            Application.Initialize ();
             
             // Initialize GTK
             Gtk.Application.Init ();

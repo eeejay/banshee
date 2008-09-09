@@ -84,5 +84,25 @@ namespace Banshee.ServiceStack
             Log.DebugFormat ("NDesk.DBus.Bus.Session.RequestName ('{0}') => {1}", BusName, name_reply);
             return name_reply;
         }
+        
+        private static GLib.MainLoop mainloop;
+        
+        public static void RunMainLoop ()
+        {
+            if (mainloop == null) {
+                mainloop = new GLib.MainLoop ();
+            }
+            
+            if (!mainloop.IsRunning) {
+                mainloop.Run ();
+            }
+        }
+        
+        public static void QuitMainLoop ()
+        {
+            if (mainloop != null && mainloop.IsRunning) {
+                mainloop.Quit ();
+            }
+        }
     }
 }

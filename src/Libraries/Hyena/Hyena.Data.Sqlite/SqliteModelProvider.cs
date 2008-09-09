@@ -574,7 +574,7 @@ namespace Hyena.Data.Sqlite
         protected virtual HyenaSqliteCommand SelectRangeCommand {
             get {
                 if (select_range_command == null) {
-                    select_command = new HyenaSqliteCommand (
+                    select_range_command = new HyenaSqliteCommand (
                         String.Format (
                             "SELECT {0} FROM {1}{2}{3} LIMIT ?, ?",
                             Select, From,

@@ -79,6 +79,10 @@ namespace Banshee.Library
         public override string BaseDirectory {
             get { return Paths.CachedLibraryLocation; }
         }
+        
+        public override bool Indexable {
+            get { return true; }
+        }
 
         /*public override void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, UserJob job)
         {

@@ -54,6 +54,24 @@ namespace Banshee.Collection.Database
 
         private BansheeModelCache<T> cache;
         
+        public static CachedList<DatabaseTrackInfo> CreateFromSourceModel (DatabaseTrackListModel model)
+        {
+            CachedList<DatabaseTrackInfo> list = new CachedList<DatabaseTrackInfo> (DatabaseTrackInfo.Provider);
+
+            HyenaSqliteCommand model_cache_command = new HyenaSqliteCommand (String.Format (@"
+                INSERT INTO CoreCache (ModelID, ItemID)
+                    SELECT ?, CoreTracks.TrackID {0}", model.UnfilteredQuery
+            ));
+            
+            lock (model) {
+                ServiceManager.DbConnection.Execute (model_cache_command, list.CacheId);
+            }
+
+            list.cache.UpdateAggregates ();
+
+            return list;  
+        }
+        
         public static CachedList<DatabaseTrackInfo> CreateFromModel (DatabaseTrackListModel model)
         {
             Selection selection = new Selection ();
@@ -83,7 +101,6 @@ namespace Banshee.Collection.Database
             }
 
             list.cache.UpdateAggregates ();
-
             return list;
         }
 
@@ -91,10 +108,10 @@ namespace Banshee.Collection.Database
         {
             string uuid = NextCacheId ();
             cache = new BansheeModelCache <T> (ServiceManager.DbConnection, uuid, CacheableDatabaseModel.Instance, provider);
-            Clear ();
+            Dispose ();
         }
 
-        public void Clear ()
+        public void Dispose ()
         {
             ServiceManager.DbConnection.Execute ("DELETE FROM CoreCache WHERE ModelId = ?", CacheId);
         }

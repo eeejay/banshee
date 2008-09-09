@@ -111,8 +111,8 @@ namespace Migo.Syndication
         }
 
         //private bool canceled;
-        private bool deleted; 
-        private bool updating;
+        //private bool deleted; 
+        //private bool updating;
         
         //private ManualResetEvent updatingHandle = new ManualResetEvent (true);
         
@@ -510,12 +510,12 @@ namespace Migo.Syndication
         public void Delete (bool deleteEnclosures)
         {
             lock (sync) {
-                if (deleted)
-                    return;
+                //if (deleted)
+                //    return;
                 
-                if (updating) {
-                    Manager.CancelUpdate (this);                 
-                }
+                //if (updating) {
+                //    Manager.CancelUpdate (this);                 
+                //}
 
                 foreach (FeedItem item in Items) {
                     item.Delete (deleteEnclosures);

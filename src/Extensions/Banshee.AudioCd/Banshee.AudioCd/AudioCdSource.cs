@@ -312,6 +312,10 @@ namespace Banshee.AudioCd
             get { return false; }
         }
 
+        public bool Indexable {
+            get { return false; }
+        }
+
 #endregion
 
 #region IUnmapableSource Implementation

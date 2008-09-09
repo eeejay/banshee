@@ -59,7 +59,33 @@ namespace Banshee.ServiceStack
         public static event EventHandler StartupFinished;
         public static event ServiceStartedHandler ServiceStarted;
         
-        static ServiceManager ()
+        public static void Initialize ()
+        {
+            Application.ClientStarted += OnClientStarted;
+        }
+        
+        public static void InitializeAddins ()
+        {
+            AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
+                ? "." : Paths.ApplicationData);
+            
+            IProgressStatus monitor = ApplicationContext.CommandLine.Contains ("debug-addins")
+                ? new ConsoleProgressStatus (true)
+                : null;
+        
+            if (ApplicationContext.Debugging) {
+                AddinManager.Registry.Rebuild (monitor);
+            } else {
+                AddinManager.Registry.Update (monitor);
+            }
+        }
+           
+        public static void RegisterAddinServices ()
+        {
+            extension_nodes = AddinManager.GetExtensionNodes ("/Banshee/ServiceManager/Service");
+        }
+        
+        public static void RegisterDefaultServices ()
         {
             RegisterService<DBusServiceManager> ();
             RegisterService<DBusCommandService> ();
@@ -74,23 +100,15 @@ namespace Banshee.ServiceStack
             RegisterService<LibraryImportManager> ();
             RegisterService<UserJobManager> ();
             RegisterService<Banshee.Hardware.HardwareManager> ();
-            
-            AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled") 
-                ? "." : Paths.ApplicationData);
-            
-            IProgressStatus monitor = ApplicationContext.CommandLine.Contains ("debug-addins")
-                ? new ConsoleProgressStatus (true)
-                : null;
+            RegisterService<Banshee.Collection.Indexer.CollectionIndexerService> ();
+        }
         
-            if (ApplicationContext.Debugging) {
-                AddinManager.Registry.Rebuild (monitor);
-            } else {
-                AddinManager.Registry.Update (monitor);
-            }
-            
-            extension_nodes = AddinManager.GetExtensionNodes ("/Banshee/ServiceManager/Service");
-
-            Application.ClientStarted += OnClientStarted;
+        public static void DefaultInitialize ()
+        {
+            Initialize ();
+            InitializeAddins ();
+            RegisterDefaultServices ();
+            RegisterAddinServices ();
         }
 
         private static void OnClientStarted (Client client)
@@ -109,11 +127,15 @@ namespace Banshee.ServiceStack
                     RegisterService (type);
                 }
                 
-                foreach (TypeExtensionNode node in extension_nodes) {
-                    StartExtension (node);
+                if (extension_nodes != null) {
+                    foreach (TypeExtensionNode node in extension_nodes) {
+                        StartExtension (node);
+                    }
                 }
                 
-                AddinManager.AddExtensionNodeHandler ("/Banshee/ServiceManager/Service", OnExtensionChanged);
+                if (AddinManager.IsInitialized) {
+                    AddinManager.AddExtensionNodeHandler ("/Banshee/ServiceManager/Service", OnExtensionChanged);
+                }
                 
                 is_initialized = true;
                 
@@ -351,7 +373,7 @@ namespace Banshee.ServiceStack
         }
         
         public static DBusServiceManager DBusServiceManager {
-            get { return (DBusServiceManager)Get ("DBusServiceManager"); }
+            get { return Get<DBusServiceManager> (); }
         }
                 
         public static BansheeDbConnection DbConnection {

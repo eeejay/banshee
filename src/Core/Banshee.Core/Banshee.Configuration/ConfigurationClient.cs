@@ -45,20 +45,24 @@ namespace Banshee.Configuration
                     return;
                 }
                 
-                foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes (
-                    "/Banshee/Platform/ConfigurationClient")) {
-                    try {
-                        client = (IConfigurationClient)node.CreateInstance (typeof (IConfigurationClient));
-                        if (client != null) {
-                            break;
+                if (AddinManager.IsInitialized) {
+                    foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes (
+                        "/Banshee/Platform/ConfigurationClient")) {
+                        try {
+                            client = (IConfigurationClient)node.CreateInstance (typeof (IConfigurationClient));
+                            if (client != null) {
+                                break;
+                            }
+                        } catch (Exception e) {
+                            Log.Warning ("Configuration client extension failed to load", e.Message);
                         }
-                    } catch (Exception e) {
-                        Log.Warning ("Configuration client extension failed to load", e.Message);
                     }
-                }
-                
-                if (client == null) {
-                    client = new XmlConfigurationClient ();
+                    
+                    if (client == null) {
+                        client = new XmlConfigurationClient ();
+                    }
+                } else {
+                    client = new MemoryConfigurationClient ();
                 }
                 
                 Log.DebugFormat ("Configuration client extension loaded ({0})", client.GetType ().FullName);

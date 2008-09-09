@@ -226,6 +226,9 @@
     <Compile Include="Banshee.Collection\MoveOnInfoSaveJob.cs" />
     <Compile Include="Banshee.ServiceStack\IRegisterOnDemandService.cs" />
     <Compile Include="Banshee.Web\HttpRequest.cs" />
+    <Compile Include="Banshee.Collection.Indexer\CollectionIndexerService.cs" />
+    <Compile Include="Banshee.Collection.Indexer\ICollectionIndexerService.cs" />
+    <Compile Include="Banshee.Collection.Indexer\ICollectionIndexer.cs" />
     <Compile Include="Banshee.Collection.Indexer\CollectionIndexer.cs" />
     <Compile Include="Banshee.Configuration\DefaultApplicationHelper.cs" />
   </ItemGroup>

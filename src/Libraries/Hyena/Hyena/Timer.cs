@@ -47,7 +47,7 @@ namespace Hyena
 
         public void WriteElapsed (string message)
         {
-            Console.WriteLine ("{0} {1} {2}", label, message, ElapsedTime);
+            Console.Error.WriteLine ("{0} {1} {2}", label, message, ElapsedTime);
         }
 
         public void Dispose ()

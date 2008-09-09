@@ -29,11 +29,13 @@
 using System;
 
 using NDesk.DBus;
-
 using Hyena;
+
 using Banshee.Base;
+using Banshee.Database;
 using Banshee.ServiceStack;
-using Banshee.Library;
+using Banshee.Sources;
+using Banshee.Collection.Indexer;
 
 namespace Beroe
 {
@@ -46,10 +48,10 @@ namespace Beroe
             }
             
             if (!DBusConnection.Enabled) {
-                Error ("All commands ignored, DBus support is disabled");
+                Log.Error ("All commands ignored, DBus support is disabled");
                 return;
             } else if (DBusConnection.InstanceAlreadyRunning) {
-                Error ("Banshee is already running");
+                Log.Error ("Banshee is already running");
                 return;
             }
             
@@ -58,24 +60,19 @@ namespace Beroe
         
         private static void Startup ()
         {
-            /*ThreadAssist.InitializeMainThread ();
+            ThreadAssist.InitializeMainThread ();
             
             ServiceManager.Initialize ();
-            ServiceManager.RegisterService<Banshee.Database.BansheeDbConnection> ();
-            ServiceManager.RegisterService<Banshee.Sources.SourceManager> ();
+            ServiceManager.RegisterService<DBusServiceManager> ();
+            ServiceManager.RegisterService<BansheeDbConnection> ();
+            ServiceManager.RegisterService<SourceManager> ();
+            ServiceManager.RegisterService<CollectionIndexerService> ();
             ServiceManager.Run ();
             
-            ServiceManager.SourceManager.AddSource (new MusicLibrarySource (), true);
-            ServiceManager.SourceManager.AddSource (new VideoLibrarySource (), false);
+            ServiceManager.SourceManager.AddSource (new Banshee.Library.MusicLibrarySource ());
+            ServiceManager.SourceManager.AddSource (new Banshee.Library.VideoLibrarySource ());
             
-            while (true) {
-                System.Threading.Thread.Sleep (100);
-            }*/
-        }
-        
-        private static void Error (string error, params object [] args)
-        {
-            Console.WriteLine ("Error: {0}", String.Format (error, args));
+            DBusConnection.RunMainLoop ();
         }
     }
 }

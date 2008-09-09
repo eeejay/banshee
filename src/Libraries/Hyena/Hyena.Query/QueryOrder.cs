@@ -61,6 +61,7 @@ namespace Hyena.Query
             this.name = name;
             this.label = label;
             this.order_sql = order_sql;
+            this.field = field;
         }
 
         public string ToSql ()

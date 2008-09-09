@@ -255,6 +255,10 @@ namespace Banshee.Sources
             get { return true; }
         }
 
+        public virtual bool Indexable {
+            get { return false; }
+        }
+
         private int saved_count;
         protected int SavedCount {
             get { return saved_count; }

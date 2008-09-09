@@ -1,3 +1,83 @@
+2008-09-09  Aaron Bockover  <abock@gnome.org>
+
+	This commit implements the first pass at providing a mechanism for
+	third party applications to query and index Banshee's collection in
+	a safe way - both in process and over DBus. This is for you, GNOME Do.
+	Still incomplete, but soon to be there. Lots already working. Yay.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	Factory service for creating indexers; accessible internally or over DBus
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexer.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Collection indexer implementation; allows snapshotting a track model
+	and iterating over it to request tracks internally or over DBus; will
+	be the object for third party applications to use to query/index Banshee's
+	collection (GNOME Do, Beagle, Tangerine...)
+
+	* src/Clients/Beroe/Beroe/Client.cs: A small standalone client that 
+	boots only enough services to run the collection indexer service so
+	applications can read the collection even if Banshee may not already 
+	be running
+	
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Finish
+	implementing the exportable reflector, cache reflection results for faster
+	subsequent exports; support property aggregation and set linking through
+	the type hirearchy so all properties marked as exportable are handled
+	regardless of the defining type; used for exporting/serializing objects
+	over DBus and for merging different track objects (track editor)
+	
+	* src/Core/Banshee.Services/Banshee.Sources/ITrackModelSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	Implement/Added ITrackModelSource.Indexable property
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Split the service manager initialization/registration chunks into separate
+	methods so clients can have more control over which services they will
+	depend on
+	
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:
+	Call the new startup methods on the service manager in a new Initialize
+	method that clients can use
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Call
+	Application.Initialize
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusConnection.cs:
+	Added GLib mainloop support for clients that may strictly do DBus (Beroe)
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Implemented object unregistering
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/CachedList.cs:
+	Implement a method to snapshot the origin model into a cache model
+	
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Made UnfilteredQuery property public
+
+	* src/Core/Banshee.Core/Banshee.Configuration/MemoryConfigurationClient.cs:
+	Implemented a configuration client that stores everything to memory
+	and does not persist
+
+	* src/Core/Banshee.Services/Banshee.Configuration/DatabaseConfigurationClient.cs:
+	Small fixes/optimization
+
+	* src/Core/Banshee.Core/Banshee.Configuration/ConfigurationClient.cs:
+	Make MemoryConfigurationClient the default client if Mono.Addins is
+	not initialized, otherwise clients are loaded from extensions, and 
+	the XmlConfigurationClient is the fallback	
+
+	* src/Libraries/Hyena/Hyena/Timer.cs: Output the timer to stderr
+
+	* src/Libraries/Hyena/Hyena.Query/QueryOrder.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs:
+	* src/Libraries/Migo/Migo.Syndication/Feed.cs:
+	* build/build.rules.mk: Build fixes for gmcs 2.0
+
 2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:

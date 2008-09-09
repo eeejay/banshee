@@ -71,6 +71,11 @@ namespace Banshee.ServiceStack
         private static Stack<Client> running_clients = new Stack<Client> ();
         private static bool shutting_down;
 
+        public static void Initialize ()
+        {
+            ServiceManager.DefaultInitialize ();
+        }
+
         public static void Run ()
         {
             Banshee.Base.PlatformHacks.TrapMonoJitSegv ();
