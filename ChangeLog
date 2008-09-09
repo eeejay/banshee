@@ -1,3 +1,24 @@
+2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Don't set the active source to the FSQ until it's done importing and
+	actually imported something.  Prevents it from popping up when OPML files
+	are passed in.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Fix copyright header, handle OPML files passed in on the command line (or
+	by Firefox from the Miro Guide, say).
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/DefaultApplicationHelper.cs:
+	Refactor a bit.
+
+	* src/Libraries/Migo/Migo.Syndication/OpmlParser.cs: Patch from Brandan
+	Lloyd, cleaned up and modified slightly by me, for actually parsing feed
+	URLs out of OPML files.
+
+	* data/banshee-1.desktop.in.in:
+	* data/mimetypes.txt: Add x-miro/x-democracy mimetypes.
+
 2008-09-09  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:

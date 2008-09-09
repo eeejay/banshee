@@ -1,4 +1,5 @@
 # Note: run perl mimetypes.pl to resort this list, remove duplicates, and generate a ; separated list suitable for the .desktop file
+#application/x-bittorrent
 #x-content/audio-dvd
 #x-content/video-blueray
 #x-content/video-dvd
@@ -12,12 +13,14 @@ application/sdp
 application/smil
 application/vnd.rn-realmedia
 application/x-ape
+application/x-democracy
 application/x-extension-m4a
 application/x-extension-mp4
 application/x-flac
 application/x-flash-video
 application/x-id3
 application/x-matroska
+application/x-miro
 application/x-musepack
 application/x-netshow-channel
 application/x-ogg
@@ -101,6 +104,7 @@ video/mp4
 video/mp4v-es
 video/mpeg
 video/msvideo
+video/ogg
 video/quicktime
 video/vivo
 video/vnd.divx
@@ -124,8 +128,7 @@ video/x-ms-wvx
 video/x-msvideo
 video/x-nsv
 video/x-ogm+ogg
-video/x-theora+ogg
 video/x-theora
-video/ogg
+video/x-theora+ogg
 x-content/audio-cdda
 x-content/audio-player

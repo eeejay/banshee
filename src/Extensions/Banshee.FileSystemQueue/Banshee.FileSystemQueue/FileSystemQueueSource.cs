@@ -106,8 +106,6 @@ namespace Banshee.FileSystemQueue
             }
         }
         
-        uint source_activate_id = 0;
-        
         public void Enqueue (string path)
         {
             lock (this) {
@@ -129,17 +127,17 @@ namespace Banshee.FileSystemQueue
                             }
                         });
                     };
+
+                    importer.Finished += delegate {
+                        if (visible) {
+                            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                                ServiceManager.SourceManager.SetActiveSource (this);
+                            });
+                        }
+                    };
                 }
             
                 importer.Enqueue (path);
-                
-                if (source_activate_id == 0) {
-                    source_activate_id = GLib.Timeout.Add (500, delegate {
-                        ServiceManager.SourceManager.SetActiveSource (this);
-                        source_activate_id = 0;
-                        return false;
-                    });
-                }
             }
         }
         

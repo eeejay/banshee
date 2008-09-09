@@ -3,8 +3,10 @@
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
+//   Brandan Lloyd
 //
 // Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2008 Brandan Lloyd
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -35,139 +37,54 @@ namespace Migo.Syndication
     public class OpmlParser
     {
         private XmlDocument doc;
-        //private XmlNamespaceManager ns_mgr;
-        
-        public OpmlParser (string url, string xml)
+        private System.Collections.Generic.List<string> feeds = null;
+
+        public OpmlParser (string xml, bool fromFile)
         {
             doc = new XmlDocument ();
             try {
-                doc.LoadXml (xml);
-                //ns_mgr = XmlUtils.GetNamespaceManager (doc);
+                if (fromFile) {
+                    doc.Load (xml);
+                } else {
+                    doc.LoadXml (xml);
+                }
             } catch (XmlException) {
-                throw new FormatException ("Invalid xml document.");                                  
+                throw new FormatException ("Invalid xml document.");
             }
             VerifyOpml ();
         }
-        
-        public OpmlParser (string url, XmlDocument doc)
-        {
-            this.doc = doc;
-            //ns_mgr = XmlUtils.GetNamespaceManager (doc);
-            VerifyOpml ();
-        }
-    
-        /*public Feed CreateFeed ()
-        {
-            return UpdateFeed (new Feed ());
-        }
-        
-        public Feed UpdateFeed (Feed feed)
-        {
-            try {
-                feed.Title            = XmlUtils.GetXmlNodeText (doc, "/rss/channel/title");
-                feed.Description      = XmlUtils.GetXmlNodeText (doc, "/rss/channel/description");
-                feed.Copyright        = XmlUtils.GetXmlNodeText (doc, "/rss/channel/copyright");
-                feed.ImageUrl         = XmlUtils.GetXmlNodeText (doc, "/rss/channel/itunes:image/@href", ns_mgr);
-                if (String.IsNullOrEmpty (feed.ImageUrl)) {
-                    feed.ImageUrl = XmlUtils.GetXmlNodeText (doc, "/rss/channel/image/url");
+
+        public IEnumerable<string> Feeds {
+            get {
+                if (null == feeds) {
+                    feeds = new List<string> ();
+                    GetFeeds (doc.SelectSingleNode ("/opml/body"));
                 }
-                feed.Interval         = XmlUtils.GetInt64 (doc, "/rss/channel/interval"); 
-                feed.Language         = XmlUtils.GetXmlNodeText (doc, "/rss/channel/language");
-                feed.LastBuildDate    = XmlUtils.GetRfc822DateTime (doc, "/rss/channel/lastBuildDate");
-                feed.Link             = XmlUtils.GetXmlNodeText (doc, "/rss/channel/link"); 
-                feed.PubDate          = XmlUtils.GetRfc822DateTime (doc, "/rss/channel/pubDate");
-                feed.Ttl              = XmlUtils.GetInt64 (doc, "/rss/channel/ttl");
-                feed.Keywords         = XmlUtils.GetXmlNodeText (doc, "/rss/channel/itunes:keywords", ns_mgr);
-                feed.Category         = XmlUtils.GetXmlNodeText (doc, "/rss/channel/itunes:category/@text", ns_mgr);
-                
-                return feed;
-            } catch (Exception e) {
-                 Hyena.Log.Exception (e);
-            }
-             
-            return null;
-        }
-        
-        public IEnumerable<FeedItem> GetFeedItems (Feed feed)
-        {
-            XmlNodeList nodes = null;
-            try {
-                nodes = doc.SelectNodes ("//item");
-            } catch (Exception e) {
-                Hyena.Log.Exception (e);
-            }
-            
-            if (nodes != null) {
-                foreach (XmlNode node in nodes) {
-                    FeedItem item = null;
-                    
-                    try {
-                        item = ParseItem (node);
-                    } catch (Exception e) {
-                        Hyena.Log.Exception (e);
-                    }
-                    
-                    if (item != null) {
-                        item.Feed = feed;
-                        yield return item;
-                    }
-                }
+                return feeds;
             }
         }
-        
-        public FeedItem ParseItem (XmlNode node)
+
+        private void GetFeeds (XmlNode baseNode)
         {
-            try {
-                FeedItem item = new FeedItem ();
-                item.Description = XmlUtils.GetXmlNodeText (node, "description");                        
-                item.Title = XmlUtils.GetXmlNodeText (node, "title");                        
-            
-                if (String.IsNullOrEmpty (item.Description) && String.IsNullOrEmpty (item.Title)) {
-                    throw new FormatException ("node:  Either 'title' or 'description' node must exist.");
+            XmlNodeList nodes = baseNode.SelectNodes ("./outline");
+            foreach (XmlNode node in nodes) {
+                if (node.Attributes["xmlUrl"] != null) {
+                    feeds.Add (node.Attributes["xmlUrl"].Value);
                 }
-                
-                item.Author            = XmlUtils.GetXmlNodeText (node, "author");
-                item.Comments          = XmlUtils.GetXmlNodeText (node, "comments");
-                item.Guid              = XmlUtils.GetXmlNodeText (node, "guid");
-                item.Link              = XmlUtils.GetXmlNodeText (node, "link");
-                item.Modified          = XmlUtils.GetRfc822DateTime (node, "dcterms:modified");
-                item.PubDate           = XmlUtils.GetRfc822DateTime (node, "pubDate");
-                
-                item.Enclosure = ParseEnclosure (node);
-                
-                return item;
-             } catch (Exception e) {
-                 Hyena.Log.Exception (e);
-             }
-             
-             return null;
+
+                // Parse outline nodes recursively.
+                GetFeeds (node);
+            }
         }
-        
-        public FeedEnclosure ParseEnclosure (XmlNode node)
-        {
-            try {
-                FeedEnclosure enclosure = new FeedEnclosure ();
-                enclosure.Url = XmlUtils.GetXmlNodeText (node, "enclosure/@url");
-                enclosure.FileSize = Math.Max (0, XmlUtils.GetInt64 (node, "enclosure/@length"));
-                enclosure.MimeType = XmlUtils.GetXmlNodeText (node, "enclosure/@type");
-                enclosure.Duration = XmlUtils.GetItunesDuration (node, ns_mgr);
-                enclosure.Keywords = XmlUtils.GetXmlNodeText (node, "itunes:keywords", ns_mgr);
-                return enclosure;
-             } catch (Exception e) {
-                 Hyena.Log.Exception (e);
-             }
-             
-             return null;
-        }*/
-        
+
         private void VerifyOpml ()
-        {            
+        {
             if (doc.SelectSingleNode ("/opml") == null)
                 throw new FormatException ("Invalid OPML document.");
-                
+
             if (doc.SelectSingleNode ("/opml/head") == null)
                 throw new FormatException ("Invalid OPML document.");
-                
+
             if (doc.SelectSingleNode ("/opml/body") == null)
                 throw new FormatException ("Invalid OPML document.");
         }

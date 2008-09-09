@@ -72,10 +72,18 @@ namespace Banshee.GnomeBackend
             //Add ("/desktop/gnome/volume_manager", "autoplay_vcd_command", "{0} --device=%d");
             
             foreach (string uri_scheme in uri_schemes) {
-                Add (String.Format ("/desktop/gnome/url-handlers/{0}", uri_scheme), "command", "{0} \"%s\"");
-                Add (String.Format ("/desktop/gnome/url-handlers/{0}", uri_scheme), "enabled", true);
-                Add (String.Format ("/desktop/gnome/url-handlers/{0}", uri_scheme), "needs_terminal", false);
+                string ns = String.Format ("/desktop/gnome/url-handlers/{0}", uri_scheme);
+                Add (ns, "command", "{0} \"%s\"");
+                Add (ns, "enabled", true);
+                Add (ns, "needs_terminal", false);
             }
+
+            // TODO set us as handler in Firefox?
+            // browser.audioFeeds.handler.default = client
+            // browser.audioFeeds.handlers.application = /usr/local/bin/banshee-1
+            //
+            // browser.videoFeeds.handler.default = client
+            // browser.videoFeeds.handlers.application = /usr/local/bin/banshee-1
         }
 
         public bool IsDefault {
