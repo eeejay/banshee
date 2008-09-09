@@ -276,10 +276,12 @@ namespace Banshee.NotificationArea
         {
             if (rating_menu_item.Visible) {
                 TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
-                if (track is DatabaseTrackInfo) {
-                    (track as DatabaseTrackInfo).Refresh ();
+                if (track != null) {
+                    if (track is DatabaseTrackInfo) {
+                        (track as DatabaseTrackInfo).Refresh ();
+                    }
+                    rating_menu_item.Reset (track.Rating);
                 }
-                rating_menu_item.Reset (track.Rating);
             }
             menu.Popup (null, null, notif_area.PositionMenu, 3, Gtk.Global.CurrentEventTime);
         }

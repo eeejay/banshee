@@ -1,3 +1,8 @@
+2008-09-09  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Fix a crash after executing "banshee-1 --stop" (BGO #550777).
+
 2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: When the
