@@ -1,5 +1,11 @@
 2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
+	Patch from Bertrand Lorentz working around crasher caused by brokenness in
+	DatabaseConfigurationClient with respect to dates (BGO #538354).
+
+2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistParser.cs:
 	Patch from Eric Butler, fixed up HACKING-wise by myself, adding support
 	for HTTP auth in URLs for Internet Radio stations (BGO #548044).

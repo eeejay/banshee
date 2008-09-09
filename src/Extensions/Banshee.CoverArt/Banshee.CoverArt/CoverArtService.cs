@@ -161,8 +161,14 @@ namespace Banshee.CoverArt
                 DateTime last_scan = DateTime.MinValue;
                 
                 if (!force) {
-                    last_scan = DatabaseConfigurationClient.Client.Get<DateTime> ("last_cover_art_scan",
-                                                                                  DateTime.MinValue);
+                    try {
+                        last_scan = DatabaseConfigurationClient.Client.Get<DateTime> ("last_cover_art_scan",
+                                                                                      DateTime.MinValue);
+                    } catch (FormatException) {
+                        Log.Warning ("last_cover_art_scan is malformed, resetting to default value");
+                        DatabaseConfigurationClient.Client.Set<DateTime> ("last_cover_art_scan",
+                                                                          DateTime.MinValue);
+                    }
                 }
                 job = new CoverArtJob (last_scan);
                 job.Finished += delegate {
