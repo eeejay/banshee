@@ -1,3 +1,10 @@
+2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: 
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Fix bug with
+	improperly getting the Uri of some tracks when fetching cover art (BGO
+	#546234).
+
 2008-09-09  Aaron Bockover  <abock@gnome.org>
 
 	This commit implements the first pass at providing a mechanism for

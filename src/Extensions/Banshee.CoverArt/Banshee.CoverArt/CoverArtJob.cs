@@ -29,7 +29,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Threading;
 
@@ -68,7 +67,7 @@ namespace Banshee.CoverArt
                         LastAttempt > ? OR Downloaded = 1)");
 
         private static HyenaSqliteCommand select_query = new HyenaSqliteCommand (@"
-            SELECT DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri
+            SELECT DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri, CoreTracks.UriType
             FROM CoreTracks, CoreArtists, CoreAlbums
             WHERE
                 CoreTracks.PrimarySourceID = ? AND
@@ -100,11 +99,11 @@ namespace Banshee.CoverArt
             Scheduler.Schedule (this, JobPriority.Lowest);
         }
 
-        private IDataReader RunQuery ()
+        private HyenaDataReader RunQuery ()
         {
-            return ServiceManager.DbConnection.Query (select_query,
+            return new HyenaDataReader (ServiceManager.DbConnection.Query (select_query,
                 ServiceManager.SourceManager.MusicLibrary.DbId, last_scan, last_scan - retry_every, BatchSize
-            );
+            ));
         }
         
         public void Run ()
@@ -123,18 +122,18 @@ namespace Banshee.CoverArt
                         break;
                     }
 
-                    using (IDataReader reader = RunQuery ()) {
+                    using (HyenaDataReader reader = RunQuery ()) {
                         while (reader.Read ()) {
                             if (IsCancelRequested) {
                                 Finish ();
                                 return;
                             }
                             
-                            track.AlbumTitle = reader.GetString (1);
-                            track.ArtistName = reader.GetString (2);
+                            track.AlbumTitle = reader.Get<string> (1);
+                            track.ArtistName = reader.Get<string> (2);
                             track.PrimarySource = ServiceManager.SourceManager.MusicLibrary;
-                            track.Uri = track.PrimarySource.UriToSafeUri (reader.GetString (3));
-                            track.AlbumId = Convert.ToInt32 (reader[0]);
+                            track.Uri = track.PrimarySource.UriAndTypeToSafeUri (reader.Get<TrackUriType> (4), reader.Get<string> (3));
+                            track.AlbumId = reader.Get<int> (0);
                             //Console.WriteLine ("have album {0}/{1} for track uri {2}", track.AlbumId, track.AlbumTitle, track.Uri);
 
                             Progress = (double) current / (double) total;
