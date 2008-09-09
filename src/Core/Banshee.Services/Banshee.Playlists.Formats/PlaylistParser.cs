@@ -45,32 +45,47 @@ namespace Banshee.Playlists.Formats
         };
         
         private List<Dictionary<string, object>> elements;
-        private Uri base_uri = new Uri(Environment.CurrentDirectory);
+        private Uri base_uri = new Uri (Environment.CurrentDirectory);
         
-        public PlaylistParser()
+        public PlaylistParser ()
         {
         }
         
-        public bool Parse(SafeUri uri)
+        public bool Parse (SafeUri uri)
         {
-            lock(this) {
+            lock (this) {
                 elements = null;
                 Stream stream = null;
                 
-                if(uri.Scheme == "file") {
-                    stream = Banshee.IO.File.OpenRead(uri);
-                } else if(uri.Scheme == "http") {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri.AbsoluteUri);
+                if (uri.Scheme == "file") {
+                    stream = Banshee.IO.File.OpenRead (uri);
+                } else if (uri.Scheme == "http") {
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create (uri.AbsoluteUri);
                     request.UserAgent = Banshee.Web.Browser.UserAgent;
                     request.KeepAlive = false;
                     request.Timeout = 5 * 1000;
                     request.AllowAutoRedirect = true;
+
+                    // Parse out and set credentials, if any
+                    string user_info = new Uri (uri.AbsoluteUri).UserInfo;
+                    if (!String.IsNullOrEmpty (user_info)) {
+                        string username = String.Empty;
+                        string password = String.Empty;
+                        int cIndex = user_info.IndexOf (":");
+                        if (cIndex != -1) {
+                            username = user_info.Substring (0, cIndex);
+                            password = user_info.Substring (cIndex + 1);
+                        } else {
+                            username = user_info;
+                        }
+                        request.Credentials = new NetworkCredential (username, password);
+                    }
             
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    Stream web_stream = response.GetResponseStream();
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
+                    Stream web_stream = response.GetResponseStream ();
                     
                     try {
-                        stream = new MemoryStream();
+                        stream = new MemoryStream ();
 
                         byte [] buffer = new byte[4096];
                         int read;
@@ -79,16 +94,16 @@ namespace Banshee.Playlists.Formats
                         // it's probably not a playlist. This kind of sucks,
                         // but it should work until someone can prove otherwise
                         
-                        read = web_stream.Read(buffer, 0, buffer.Length);
-                        if(read >= buffer.Length - 1) {
-                            throw new InvalidPlaylistException();
+                        read = web_stream.Read (buffer, 0, buffer.Length);
+                        if (read >= buffer.Length - 1) {
+                            throw new InvalidPlaylistException ();
                         }
                         
-                        stream.Write(buffer, 0, read);
+                        stream.Write (buffer, 0, read);
                         stream.Position = 0;
                     } finally {
-                        web_stream.Close();
-                        response.Close();
+                        web_stream.Close ();
+                        response.Close ();
                     }
                 } else {
                     Hyena.Log.DebugFormat ("Not able to parse playlist at {0}", uri);
@@ -97,24 +112,24 @@ namespace Banshee.Playlists.Formats
                                   
                 PlaylistFormatDescription matching_format = null;
 
-                foreach(PlaylistFormatDescription format in playlist_formats) {
+                foreach (PlaylistFormatDescription format in playlist_formats) {
                     stream.Position = 0;
                     
-                    StreamReader reader = new StreamReader(stream);
-                    if(format.MagicHandler(reader)) {
+                    StreamReader reader = new StreamReader (stream);
+                    if (format.MagicHandler (reader)) {
                         matching_format = format;
                         break;
                     }
                 }
 
-                if(matching_format == null) {
+                if (matching_format == null) {
                     return false;
                 }
 
                 stream.Position = 0;
-                IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance(matching_format.Type);
+                IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance (matching_format.Type);
                 playlist.BaseUri = BaseUri;
-                playlist.Load(stream, false);
+                playlist.Load (stream, false);
                 stream.Dispose ();
                 
                 elements = playlist.Elements;

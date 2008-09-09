@@ -1,5 +1,11 @@
 2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistParser.cs:
+	Patch from Eric Butler, fixed up HACKING-wise by myself, adding support
+	for HTTP auth in URLs for Internet Radio stations (BGO #548044).
+
+2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Resources/contributors.xml: Add David.
 
 2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
