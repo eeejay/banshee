@@ -33,8 +33,11 @@ namespace Banshee.Hardware
 {
     public interface IDeviceMediaCapabilities
     {
+        int CoverArtSize { get; }
         int FolderDepth { get; }
         string [] AudioFolders { get; }
+        string CoverArtFileType { get; }
+        string CoverArtFileName { get; }		
         string [] PlaylistFormats { get; }
         string PlaylistPath { get; }
         string [] PlaybackMimeTypes { get; }

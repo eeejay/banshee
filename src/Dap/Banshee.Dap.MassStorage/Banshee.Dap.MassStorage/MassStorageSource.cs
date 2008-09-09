@@ -50,6 +50,7 @@ namespace Banshee.Dap.MassStorage
 {
     public class MassStorageSource : DapSource
     {
+        private Banshee.Collection.Gui.ArtworkManager artwork_manager = ServiceManager.Get<Banshee.Collection.Gui.ArtworkManager> ();
         protected IVolume volume;
 
         public override void DeviceInitialize (IDevice device)
@@ -380,6 +381,39 @@ namespace Banshee.Dap.MassStorage
             set { folder_depth = value; }
         }
 
+        private int cover_art_size = -1;
+        protected int CoverArtSize {
+            get {
+                if (cover_art_size == -1) {
+                    cover_art_size = HasMediaCapabilities ? MediaCapabilities.CoverArtSize : 0;
+                }
+                return cover_art_size;
+            }
+            set { cover_art_size = value; }
+        }
+
+        private string cover_art_file_name = null;
+        protected string CoverArtFileName {
+            get {
+                if (cover_art_file_name == null) {
+                    cover_art_file_name = HasMediaCapabilities ? MediaCapabilities.CoverArtFileName : null;
+                }
+                return cover_art_file_name;
+            }
+            set { cover_art_file_name = value; }
+        }
+
+        private string cover_art_file_type = null;
+        protected string CoverArtFileType {
+            get {
+                if (cover_art_file_type == null) {
+                    cover_art_file_type = HasMediaCapabilities ? MediaCapabilities.CoverArtFileType : null;
+            }
+                return cover_art_file_type;
+            }
+            set { cover_art_file_type = value; }
+        }
+
         protected override void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
         {
             if (track.PrimarySourceId == DbId)
@@ -398,6 +432,46 @@ namespace Banshee.Dap.MassStorage
                 copied_track.PrimarySource = this;
                 copied_track.Uri = new_uri;
                 copied_track.Save (false);
+            }
+
+            if (CoverArtSize > -1 && !String.IsNullOrEmpty (CoverArtFileType) && 
+                    !String.IsNullOrEmpty (CoverArtFileName) && FolderDepth > 0) {
+                SafeUri cover_uri = new SafeUri (System.IO.Path.Combine (System.IO.Path.GetDirectoryName (new_uri.LocalPath),
+                                                                         CoverArtFileName));
+                string coverart_id;
+                if (track.HasAttribute (TrackMediaAttributes.Podcast)) {
+                    coverart_id = String.Format ("podcast-{0}", Banshee.Base.CoverArtSpec.EscapePart (track.AlbumTitle));
+                } else {
+                    coverart_id = track.ArtworkId;
+                }                
+                
+                if (!File.Exists (cover_uri) && CoverArtSpec.CoverExists (coverart_id)) {       
+                    Gdk.Pixbuf pic = null;
+                    
+                    if (CoverArtSize == 0) {
+                        if (CoverArtFileType == "jpg" || CoverArtFileType == "jpeg") {                        
+                            SafeUri local_cover_uri = new SafeUri (Banshee.Base.CoverArtSpec.GetPath (coverart_id));
+                            Banshee.IO.File.Copy (local_cover_uri, cover_uri, false);
+                        } else {
+                            pic = artwork_manager.Lookup (coverart_id);
+                        }
+                    } else {
+                        pic = artwork_manager.LookupScale (coverart_id, CoverArtSize);
+                    }
+
+                    if (pic != null) {
+                        try {                        
+                            byte [] bytes = pic.SaveToBuffer (CoverArtFileType);
+                            System.IO.Stream cover_art_file = File.OpenWrite (cover_uri, true);
+                            cover_art_file.Write (bytes, 0, bytes.Length);
+                            cover_art_file.Close ();
+                        } catch (GLib.GException){
+                            Log.DebugFormat ("Could convert cover art to {0}, unsupported filetype?", CoverArtFileType);
+                        } finally {
+                            pic.Dispose ();
+                        }
+                    }
+                }
             }
         }
 
@@ -491,7 +565,7 @@ namespace Banshee.Dap.MassStorage
                         break;
 
                     case "output_formats":
-                        AcceptableMimeTypes = val.Split(',');
+                        AcceptableMimeTypes = val.Split (',');
                         for (int i = 0; i < AcceptableMimeTypes.Length; i++) {
                             AcceptableMimeTypes[i] = AcceptableMimeTypes[i].Trim ();
                         }
@@ -502,7 +576,7 @@ namespace Banshee.Dap.MassStorage
                         break;
     
                     case "playlist_format":
-                        PlaylistFormats = val.Split(',');
+                        PlaylistFormats = val.Split (',');
                         for (int i = 0; i < PlaylistFormats.Length; i++) {
                             PlaylistFormats[i] = PlaylistFormats[i].Trim ();
                         }
@@ -511,6 +585,18 @@ namespace Banshee.Dap.MassStorage
                     case "playlist_path":
                         playlists_path = System.IO.Path.Combine (WritePath, val);
                         playlists_path = playlists_path.Replace ("%File", String.Empty);
+                        break;
+
+                    case "cover_art_file_type":
+                        CoverArtFileType = val.ToLower ();
+                        break;
+
+                    case "cover_art_file_name":
+                        CoverArtFileName = val;
+                        break;
+
+                    case "cover_art_size":
+                        CoverArtSize = Int32.Parse (val);
                         break;
 
                     case "input_formats":

@@ -42,12 +42,26 @@ namespace Banshee.HalBackend
             this.device = device;
         }
 
+        private int? cover_art_size;
+        public int CoverArtSize {
+            get {
+                if (cover_art_size == null) {
+                    if (device.PropertyExists ("portable_audio_player.cover_art_size")) {
+                        cover_art_size = device.GetPropertyInteger ("portable_audio_player.cover_art_size");
+                    } else {
+                        cover_art_size = -1;
+                    }
+                }
+                return cover_art_size.Value;
+            }
+        }		
+
         private int? folder_depth;
         public int FolderDepth {
             get {
                 if (folder_depth == null) {
-                    if (device.PropertyExists("portable_audio_player.folder_depth")) {
-                        folder_depth = device.GetPropertyInteger("portable_audio_player.folder_depth");
+                    if (device.PropertyExists ("portable_audio_player.folder_depth")) {
+                        folder_depth = device.GetPropertyInteger ("portable_audio_player.folder_depth");
                     } else {
                         folder_depth = -1;
                     }
@@ -69,6 +83,30 @@ namespace Banshee.HalBackend
                 return audio_folders;
             }
         }
+
+        private string cover_art_file_name;
+        public string CoverArtFileName {
+            get {
+                if (cover_art_file_name == null) {
+                    if (device.PropertyExists ("portable_audio_player.cover_art_file_name")) {
+                        cover_art_file_name = device["portable_audio_player.cover_art_file_name"];
+                    }
+                }
+                return cover_art_file_name;
+            }
+        }
+
+        private string cover_art_file_type;
+        public string CoverArtFileType {
+            get {
+                if (cover_art_file_type == null) {
+                    if (device.PropertyExists ("portable_audio_player.cover_art_file_type")) {
+                        cover_art_file_name = device["portable_audio_player.cover_art_file_type"];
+                    }
+                }
+                return cover_art_file_type;
+            }
+        }		
 
         private string [] playlist_formats;
         public string [] PlaylistFormats {
