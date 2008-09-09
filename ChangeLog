@@ -1,5 +1,10 @@
 2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* data/banshee-1.desktop.in.in: Patch from Pacho Ramos removing deprecated
+	Encoding field and Application category (BGO #550449).
+
+2008-09-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/ImageButton.cs: Fill and expand
 	the label so that it's centered (BGO #551436).
 
