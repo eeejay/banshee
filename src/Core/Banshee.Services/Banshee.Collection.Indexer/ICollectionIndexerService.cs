@@ -33,13 +33,14 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Indexer
 {
-    public delegate void CollectionChangedHandler ();
-
     [Interface ("org.bansheeproject.Banshee.CollectionIndexerService")]
     public interface ICollectionIndexerService : IService, IDBusExportable
     {
+        event Action CollectionChanged;
+    
         void Shutdown ();
         ObjectPath CreateIndexer ();
         string [] GetAvailableExportFields ();
+        bool HasCollectionChanged (int count, long time);
     }
 }

@@ -31,19 +31,45 @@ using System.Collections.Generic;
 
 using NDesk.DBus;
 
+using Hyena.Query;
+using Hyena.Data.Sqlite;
+
+using Banshee.Library;
+using Banshee.Sources;
 using Banshee.ServiceStack;
+using Banshee.Collection.Database;
 
 namespace Banshee.Collection.Indexer
 {
-    public class CollectionIndexerService : ICollectionIndexerService
+    public class CollectionIndexerService : ICollectionIndexerService, IDisposable
     {
+        private List<LibrarySource> libraries = new List<LibrarySource> ();
         private string [] available_export_fields;
         private int open_indexers;
+        
+        public event Action CollectionChanged;
         
         private Action shutdown_handler;
         public Action ShutdownHandler {
             get { return shutdown_handler; }
             set { shutdown_handler = value; }
+        }
+        
+        public CollectionIndexerService ()
+        {
+            ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
+            ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
+        
+            foreach (Source source in ServiceManager.SourceManager.Sources) {
+                MonitorLibrary (source as LibrarySource);
+            }
+        }
+        
+        public void Dispose ()
+        {
+            while (libraries.Count > 0) {
+                UnmonitorLibrary (libraries[0]);
+            }
         }
         
         public void Shutdown ()
@@ -79,6 +105,32 @@ namespace Banshee.Collection.Indexer
             }
         }
         
+        public bool HasCollectionChanged (int count, long time)
+        {
+            lock (this) {
+                int total_count = 0;
+                long last_updated = 0;
+                
+                foreach (LibrarySource library in libraries) {
+                    total_count += library.Count;
+                }
+                
+                if (count != total_count) {
+                    return true;
+                }
+                
+                foreach (LibrarySource library in libraries) {
+                    string query = String.Format ("SELECT MAX(CoreTracks.DateUpdatedStamp) {0}",
+                         ((DatabaseTrackListModel)library.TrackModel).UnfilteredQuery);
+                    using (HyenaDataReader reader = new HyenaDataReader (ServiceManager.DbConnection.Query (query))) {
+                        last_updated = Math.Max (last_updated, reader.Get<long> (0));
+                    }
+                }
+                
+                return last_updated > time;
+            }
+        }
+        
         public string [] GetAvailableExportFields ()
         {
             lock (this) {
@@ -95,6 +147,67 @@ namespace Banshee.Collection.Indexer
                 
                 available_export_fields = fields.ToArray ();
                 return available_export_fields;
+            }
+        }
+        
+        private void MonitorLibrary (LibrarySource library)
+        {
+            if (library == null || !library.Indexable || libraries.Contains (library)) {
+                return;
+            }
+            
+            libraries.Add (library);
+            
+            library.TracksAdded += OnLibraryChanged;
+            library.TracksDeleted += OnLibraryChanged;
+            library.TracksChanged += OnLibraryChanged;
+        }
+        
+        private void UnmonitorLibrary (LibrarySource library)
+        {
+            if (library == null || !libraries.Contains (library)) {
+                return;
+            }
+            
+            library.TracksAdded -= OnLibraryChanged;
+            library.TracksDeleted -= OnLibraryChanged;
+            library.TracksChanged -= OnLibraryChanged;
+            
+            libraries.Remove (library);
+        }
+        
+        private void OnSourceAdded (SourceAddedArgs args)
+        {
+            MonitorLibrary (args.Source as LibrarySource);
+        }
+        
+        private void OnSourceRemoved (SourceEventArgs args)
+        {
+            UnmonitorLibrary (args.Source as LibrarySource);
+        }
+        
+        private void OnLibraryChanged (object o, TrackEventArgs args)
+        {
+            if (args.ChangedFields == null) {
+                OnCollectionChanged ();
+                return;
+            }
+            
+            foreach (Hyena.Query.QueryField field in args.ChangedFields) {
+                if (field != Banshee.Query.BansheeQuery.LastPlayedField ||
+                    field != Banshee.Query.BansheeQuery.LastSkippedField &&
+                    field != Banshee.Query.BansheeQuery.PlayCountField &&
+                    field != Banshee.Query.BansheeQuery.SkipCountField) {
+                    OnCollectionChanged ();
+                }
+            }
+        }
+        
+        private void OnCollectionChanged ()
+        {
+            Action handler = CollectionChanged;
+            if (handler != null) {
+                handler ();
             }
         }
         

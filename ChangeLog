@@ -1,5 +1,16 @@
 2008-09-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	Implemented HasCollectionChanged and a signal for listening to live
+	collection changes; these facilities are useful for third parties to
+	know whether or not they should actually create a new index
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Use LibrarySource, not DatabaseSource
+
+2008-09-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Halie/Halie/Client.cs: If an IIndexerClient is located
 	on the bus, tell that client to reboot with any command line arguments
 	passed, and exit, deferring the invocation

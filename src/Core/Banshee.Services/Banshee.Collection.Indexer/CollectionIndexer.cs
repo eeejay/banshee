@@ -100,10 +100,10 @@ namespace Banshee.Collection.Indexer
                 DisposeModels ();
                 
                 foreach (Source source in ServiceManager.SourceManager.Sources) {
-                    DatabaseSource db_source = source as DatabaseSource;
-                    if (db_source != null && db_source.Indexable) {
+                    LibrarySource library = source as LibrarySource;
+                    if (library != null && library.Indexable) {
                         model_caches.Add (CachedList<DatabaseTrackInfo>.CreateFromSourceModel (
-                            (DatabaseTrackListModel)db_source.TrackModel));
+                            (DatabaseTrackListModel)library.TrackModel));
                     }
                 }
             }
