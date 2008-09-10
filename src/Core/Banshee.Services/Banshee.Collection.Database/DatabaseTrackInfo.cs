@@ -273,10 +273,7 @@ namespace Banshee.Collection.Database
                     
             if (input != null)
                 input = input.Trim ();
-                
-            if (input == String.Empty)
-                return null;
-                
+            
             if (input == old_val)
                 return null;
             

@@ -1,3 +1,9 @@
+2008-09-10  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Patch from Andrés G. Aragoneses to allow emptying the artist and album
+	fields (BGO #549414).
+
 2008-09-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
