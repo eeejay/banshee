@@ -26,6 +26,7 @@ SOURCES =  \
 	Banshee.Collection.Indexer/CollectionIndexerService.cs \
 	Banshee.Collection.Indexer/ICollectionIndexer.cs \
 	Banshee.Collection.Indexer/ICollectionIndexerService.cs \
+	Banshee.Collection.Indexer/IIndexerClient.cs \
 	Banshee.Collection/AlbumListModel.cs \
 	Banshee.Collection/ArtistListModel.cs \
 	Banshee.Collection/BansheeListModel.cs \

@@ -31,6 +31,8 @@
     <Compile Include="Mtp\Folder.cs" />
     <Compile Include="Mtp\MtpDevice.cs" />
     <Compile Include="Mtp\Track.cs" />
+    <Compile Include="Mtp\AbstractTrackList.cs" />
+    <Compile Include="Mtp\Playlist.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

@@ -39,8 +39,13 @@ using Banshee.Streaming;
 
 namespace Banshee.Collection
 {
+    // WARNING: Be extremely careful when changing property names flagged with [Exportable]!
+    // There are third party applications depending on them!
+
     public class TrackInfo : CacheableItem, ITrackInfo
     {
+        public const string ExportVersion = "1.0";
+    
         public class ExportableAttribute : Attribute
         {
             private string export_name;

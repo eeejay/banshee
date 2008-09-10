@@ -1,5 +1,47 @@
 2008-09-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Halie/Halie/Client.cs: If an IIndexerClient is located
+	on the bus, tell that client to reboot with any command line arguments
+	passed, and exit, deferring the invocation
+
+	* src/Clients/Beroe/Beroe/IndexerClient.cs: Made a real client, expose
+	as IIndexerClient on DBus, and support booting into a separate Banshee
+	process if desired (i.e. someone opens an MP3 file in nautilus while the
+	indexer client process is running, this still respects the users action)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: If 
+	--indexer is passed, run the Beroe indexer client assembly
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	Support shutting down
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/IIndexerClient.cs:
+	Interface for the indexer client with the RebootWhenFinished method
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Print some debugging info, use TrackInfo.ExportVersion
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Added
+	ExportVersion field
+
+2008-09-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Halie/Halie/Client.cs: Do not present the UI if the 
+	indexer argument is passed
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Run
+	Beroe if an indexer argument is present and Banshee is not already
+	running
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Use TrackInfo.ExportVersion in the output
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Added an 
+	ExportVersion field
+
+2008-09-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
 	Implement GetAvailableExportFields method

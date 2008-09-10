@@ -37,6 +37,7 @@ using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.PlaybackController;
+using Banshee.Collection.Indexer;
 
 namespace Halie
 {
@@ -69,10 +70,19 @@ namespace Halie
                 return;
             }
             
+            IIndexerClient indexer = DBusServiceManager.FindInstance<IIndexerClient> ("/IndexerClient");
+            try {
+                indexer.Hello ();
+                indexer.RebootWhenFinished (Environment.GetCommandLineArgs ());
+                Log.Warning ("The Banshee indexer is currently running. Banshee will be started when the indexer finishes.");
+                return;
+            } catch {
+            }
+            
             command = DBusServiceManager.FindInstance<DBusCommandService> ("/DBusCommandService");
             hide_field = ApplicationContext.CommandLine.Contains ("hide-field");
             
-            bool present = HandlePlayerCommands ();
+            bool present = HandlePlayerCommands () && !ApplicationContext.CommandLine.Contains ("indexer");
             HandleWindowCommands (present);
             HandleFiles ();
         }
@@ -89,7 +99,6 @@ namespace Halie
                     case "show":
                     case "present": present = true; break;
                     case "hide": window.Hide (); break;
-                        
                 }
             }
             

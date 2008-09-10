@@ -37,59 +37,65 @@ namespace Banshee.Collection.Indexer
 {
     public class CollectionIndexerService : ICollectionIndexerService
     {
-        private List<TrackListModel> models = new List<TrackListModel> ();
         private string [] available_export_fields;
+        private int open_indexers;
         
-        public void AddModel (TrackListModel model)
-        {
-            models.Add (model);
+        private Action shutdown_handler;
+        public Action ShutdownHandler {
+            get { return shutdown_handler; }
+            set { shutdown_handler = value; }
         }
         
-        public IEnumerable<IDictionary<string, object>> CreateIndex ()
+        public void Shutdown ()
         {
-            yield break;
-        }
-        
-        public IEnumerable<IDictionary<string, object>> GenerateExportable ()
-        {
-            foreach (TrackListModel model in models) {
-                model.Reload ();
-                for (int i = 0, n = model.Count; i < n; i++) {
-                    yield return model[i].GenerateExportable ();
+            lock (this) {
+                if (open_indexers == 0 && shutdown_handler != null) {
+                    shutdown_handler ();
                 }
             }
         }
         
         public ICollectionIndexer CreateIndexer ()
         {
-            return new CollectionIndexer (null);
+            lock (this) {
+                return new CollectionIndexer (null);
+            }
         }
         
         internal void DisposeIndexer (CollectionIndexer indexer)
         {
-            ServiceManager.DBusServiceManager.UnregisterObject (indexer);
+            lock (this) {
+                ServiceManager.DBusServiceManager.UnregisterObject (indexer);
+                open_indexers--;
+            }
         }
         
         ObjectPath ICollectionIndexerService.CreateIndexer ()
         {
-            return ServiceManager.DBusServiceManager.RegisterObject (new CollectionIndexer (this));
+            lock (this) {
+                ObjectPath path = ServiceManager.DBusServiceManager.RegisterObject (new CollectionIndexer (this));
+                open_indexers++;
+                return path;
+            }
         }
         
         public string [] GetAvailableExportFields ()
         {
-            if (available_export_fields != null) {
+            lock (this) {
+                if (available_export_fields != null) {
+                    return available_export_fields;
+                }
+                
+                List<string> fields = new List<string> ();
+                
+                foreach (KeyValuePair<string, System.Reflection.PropertyInfo> field in TrackInfo.GetExportableProperties (
+                    typeof (Banshee.Collection.Database.DatabaseTrackInfo))) {
+                    fields.Add (field.Key);
+                }
+                
+                available_export_fields = fields.ToArray ();
                 return available_export_fields;
             }
-            
-            List<string> fields = new List<string> ();
-            
-            foreach (KeyValuePair<string, System.Reflection.PropertyInfo> field in TrackInfo.GetExportableProperties (
-                typeof (Banshee.Collection.Database.DatabaseTrackInfo))) {
-                fields.Add (field.Key);
-            }
-            
-            available_export_fields = fields.ToArray ();
-            return available_export_fields;
         }
         
         IDBusExportable IDBusExportable.Parent { 

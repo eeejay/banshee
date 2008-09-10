@@ -65,6 +65,13 @@ namespace Banshee.Gui
                 Gdk.Global.NotifyStartupComplete ();
                 return;
             }
+            
+            // Run the indexer client
+            if (ApplicationContext.CommandLine.Contains ("indexer")) {
+                AppDomain.CurrentDomain.ExecuteAssembly (Path.Combine (Path.GetDirectoryName (
+                    Assembly.GetEntryAssembly ().Location), "Beroe.exe"));
+                return;
+            }
                     
             Hyena.Log.InformationFormat ("Running Banshee {0}", Application.Version);
             

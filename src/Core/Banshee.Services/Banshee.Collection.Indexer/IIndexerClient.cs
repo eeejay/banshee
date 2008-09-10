@@ -1,5 +1,5 @@
 //
-// ICollectionIndexer.cs
+// IIndexerClient.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -33,13 +33,10 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Indexer
 {
-    public delegate void CollectionChangedHandler ();
-
-    [Interface ("org.bansheeproject.Banshee.CollectionIndexerService")]
-    public interface ICollectionIndexerService : IService, IDBusExportable
+    [Interface ("org.bansheeproject.Banshee.IndexerClient")]
+    public interface IIndexerClient : IDBusExportable
     {
-        void Shutdown ();
-        ObjectPath CreateIndexer ();
-        string [] GetAvailableExportFields ();
+        void Hello ();
+        void RebootWhenFinished (string [] args);
     }
 }

@@ -39,7 +39,7 @@ using Banshee.Collection.Indexer;
 
 namespace Beroe
 {
-    public static class Client
+    public class IndexerClient : Client, IIndexerClient
     {
         public static void Main ()
         {
@@ -67,12 +67,61 @@ namespace Beroe
             ServiceManager.RegisterService<BansheeDbConnection> ();
             ServiceManager.RegisterService<SourceManager> ();
             ServiceManager.RegisterService<CollectionIndexerService> ();
+            ServiceManager.RegisterService<IndexerClient> ();
             ServiceManager.Run ();
             
+            ServiceManager.Get<IndexerClient> ().Run ();
+        }
+        
+        private string [] reboot_args;
+        
+        public void Run ()
+        {
+            ServiceManager.Get<CollectionIndexerService> ().ShutdownHandler = DBusConnection.QuitMainLoop;
+        
             ServiceManager.SourceManager.AddSource (new Banshee.Library.MusicLibrarySource ());
             ServiceManager.SourceManager.AddSource (new Banshee.Library.VideoLibrarySource ());
             
             DBusConnection.RunMainLoop ();
+            
+            ServiceManager.Shutdown ();
+            
+            if (reboot_args != null) {
+                Log.Debug ("Rebooting");
+                
+                System.Text.StringBuilder builder = new System.Text.StringBuilder ();
+                foreach (string arg in reboot_args) {
+                    builder.AppendFormat ("\"{0}\" ", arg);
+                }
+                
+                // FIXME: Lame
+                System.Diagnostics.Process.Start ("banshee-1", builder.ToString ());
+            }
+        }
+        
+        public void Hello ()
+        {
+            Log.Debug ("Received a Hello over DBus");
+        }
+        
+        public void RebootWhenFinished (string [] args)
+        {
+            lock (this) {
+                Log.Debug ("Banshee will be started when the indexer finishes");
+                reboot_args = args;
+            }
+        }
+        
+        IDBusExportable IDBusExportable.Parent {
+            get { return null; }
+        }
+        
+        string IService.ServiceName {
+            get { return "IndexerClient"; }
+        }
+
+        public override string ClientId {
+            get { return "BeroeIndexerClient"; }
         }
     }
 }

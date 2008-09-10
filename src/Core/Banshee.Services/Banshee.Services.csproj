@@ -232,6 +232,7 @@
     <Compile Include="Banshee.Collection.Indexer\ICollectionIndexer.cs" />
     <Compile Include="Banshee.Collection.Indexer\CollectionIndexer.cs" />
     <Compile Include="Banshee.Configuration\DefaultApplicationHelper.cs" />
+    <Compile Include="Banshee.Collection.Indexer\IIndexerClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />

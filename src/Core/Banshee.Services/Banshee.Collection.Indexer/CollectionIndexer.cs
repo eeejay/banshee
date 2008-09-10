@@ -119,7 +119,9 @@ namespace Banshee.Collection.Indexer
         public void SaveToXml (string path)
         {
             lock (this) {
+                uint timer_id = Hyena.Log.DebugTimerStart ();
                 bool success = false;
+                
                 try {
                     XmlTextWriter writer = new XmlTextWriter (path, System.Text.Encoding.UTF8);
                     writer.Formatting = Formatting.Indented;
@@ -130,7 +132,7 @@ namespace Banshee.Collection.Indexer
                     
                     writer.WriteStartElement ("banshee-collection");
                     writer.WriteStartAttribute ("version");
-                    writer.WriteString ("1.0");
+                    writer.WriteString (TrackInfo.ExportVersion);
                     writer.WriteEndAttribute ();
                    
                     for (int i = 0; i < model_caches.Count; i++) { 
@@ -180,6 +182,8 @@ namespace Banshee.Collection.Indexer
                 } catch (Exception e) {
                     Log.Exception (e);
                 }
+                
+                Hyena.Log.DebugTimerPrint (timer_id, "CollectionIndexer.SaveToXml: {0}");
                 
                 SaveToXmlFinishedHandler handler = save_to_xml_finished;
                 if (handler != null) {
