@@ -145,6 +145,11 @@ namespace Banshee.Collection
             get { return uri; }
             set { uri = value; }
         }
+        
+        [Exportable]
+        public string LocalPath {
+            get { return Uri == null || !Uri.IsLocalPath ? null : Uri.LocalPath; }
+        }
 
         [Exportable]
         public SafeUri MoreInfoUri {
@@ -481,11 +486,42 @@ namespace Banshee.Collection
             }
         }
         
+        public static IEnumerable<KeyValuePair<string, PropertyInfo>> GetExportableProperties (Type type)
+        {
+            FindExportableProperties (type);
+            
+            Dictionary<string, PropertyInfo> properties = null;
+            if (exportable_properties.TryGetValue (type, out properties)) {
+                foreach (KeyValuePair<string, PropertyInfo> property in properties) {
+                    yield return property;
+                }
+            }
+        }
+        
         public IDictionary<string, object> GenerateExportable ()
+        {
+            return GenerateExportable (null);
+        }
+        
+        public IDictionary<string, object> GenerateExportable (string [] fields)
         {
             Dictionary<string, object> dict = new Dictionary<string, object> ();
 
             foreach (KeyValuePair<string, PropertyInfo> property in GetExportableProperties (GetType ())) {
+                if (fields != null) {
+                    bool found = false;
+                    foreach (string field in fields) {
+                        if (field == property.Key) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!found) {
+                        continue;
+                    }
+                }
+                
                 object value = property.Value.GetValue (this, null);
                 if (value == null) {
                     continue;
@@ -500,15 +536,18 @@ namespace Banshee.Collection
                     value = ((SafeUri)value).AbsoluteUri;
                 } else if (value is TrackMediaAttributes) {
                     value = value.ToString ();
-                } else if (!(
-                    value is ushort || value is short || 
-                    value is uint || value is int ||
-                    value is ulong || value is long ||
-                    value is float || value is double ||
-                    value is bool || value is string)) {
+                } else if (!(value.GetType ().IsPrimitive || value is string)) {
                     Log.WarningFormat ("Invalid property in {0} marked as [Exportable]: ({1} is a {2})", 
                         property.Value.DeclaringType, property.Value.Name, value.GetType ());
                     continue;
+                }
+                
+                // A bit lame
+                if (!(value is string)) {
+                    string str_value = value.ToString ();
+                    if (str_value == "0" || str_value == "0.0") {
+                        continue;
+                    }
                 }
                 
                 dict.Add (property.Key, value);
@@ -532,12 +571,18 @@ namespace Banshee.Collection
                 // Build a stack of types to reflect
                 Stack<Type> probe_types = new Stack<Type> ();
                 Type probe_type = type;
+                bool is_track_info = false;
                 while (probe_type != null) {
                     probe_types.Push (probe_type);
                     if (probe_type == typeof (TrackInfo)) {
+                        is_track_info = true;
                         break;
                     }
                     probe_type = probe_type.BaseType;
+                }
+                
+                if (!is_track_info) {
+                    throw new ArgumentException ("Type must derive from Banshee.Collection.TrackInfo", "type");
                 }
             
                 // Iterate through all types
@@ -599,18 +644,6 @@ namespace Banshee.Collection
                         
                         parent_type = parent_type.BaseType;
                     }
-                }
-            }
-        }
-        
-        private static IEnumerable<KeyValuePair<string, PropertyInfo>> GetExportableProperties (Type type)
-        {
-            FindExportableProperties (type);
-            
-            Dictionary<string, PropertyInfo> properties = null;
-            if (exportable_properties.TryGetValue (type, out properties)) {
-                foreach (KeyValuePair<string, PropertyInfo> property in properties) {
-                    yield return property;
                 }
             }
         }

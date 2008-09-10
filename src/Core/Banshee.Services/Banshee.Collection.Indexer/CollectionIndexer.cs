@@ -27,10 +27,13 @@
 //
 
 using System;
+using System.Xml;
+using System.Threading;
 using System.Collections.Generic;
 
 using Hyena;
 
+using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Library;
 using Banshee.ServiceStack;
@@ -45,11 +48,18 @@ namespace Banshee.Collection.Indexer
         
         private CollectionIndexerService service;
         private List<CachedList<DatabaseTrackInfo>> model_caches = new List<CachedList<DatabaseTrackInfo>> ();
+        private string [] export_fields;
         
         private event IndexingFinishedHandler indexing_finished;
         event IndexingFinishedHandler ICollectionIndexer.IndexingFinished {
             add { indexing_finished += value; }
             remove { indexing_finished -= value; }
+        }
+        
+        private event SaveToXmlFinishedHandler save_to_xml_finished;
+        event SaveToXmlFinishedHandler ICollectionIndexer.SaveToXmlFinished {
+            add { save_to_xml_finished += value; }
+            remove { save_to_xml_finished -= value; }
         }
         
         public event EventHandler IndexingFinished;
@@ -77,7 +87,14 @@ namespace Banshee.Collection.Indexer
             model_caches.Clear ();
         }
         
-        public void Start ()
+        public void SetExportFields (string [] fields)
+        {
+            lock (this) {
+                export_fields = fields;
+            }
+        }
+        
+        public void Index ()
         {
             lock (this) {
                 DisposeModels ();
@@ -94,11 +111,86 @@ namespace Banshee.Collection.Indexer
             OnIndexingFinished ();
         }
         
-        public bool SaveToXml (string path)
+        void ICollectionIndexer.Index ()
+        {
+            ThreadPool.QueueUserWorkItem (delegate { Index (); });
+        }
+        
+        public void SaveToXml (string path)
         {
             lock (this) {
-                return false;
+                bool success = false;
+                try {
+                    XmlTextWriter writer = new XmlTextWriter (path, System.Text.Encoding.UTF8);
+                    writer.Formatting = Formatting.Indented;
+                    writer.Indentation = 2;
+                    writer.IndentChar = ' ';
+                    
+                    writer.WriteStartDocument (true);
+                    
+                    writer.WriteStartElement ("banshee-collection");
+                    writer.WriteStartAttribute ("version");
+                    writer.WriteString ("1.0");
+                    writer.WriteEndAttribute ();
+                   
+                    for (int i = 0; i < model_caches.Count; i++) { 
+                        CachedList<DatabaseTrackInfo> model = model_caches[i];
+                        if (model.Count <= 0) {
+                            continue;
+                        }
+                        
+                        writer.WriteStartElement ("model");
+                        for (int j = 0; j < model.Count; j++) {
+                            writer.WriteStartElement ("item");
+                            
+                            foreach (KeyValuePair<string, object> item in model[j].GenerateExportable (export_fields)) {
+                                string type = "string";
+                                if      (item.Value is Boolean) type = "bool";
+                                else if (item.Value is Byte)    type = "byte";
+                                else if (item.Value is SByte)   type = "sbyte";
+                                else if (item.Value is Int16)   type = "short";
+                                else if (item.Value is UInt16)  type = "ushort";
+                                else if (item.Value is Int32)   type = "int";
+                                else if (item.Value is UInt32)  type = "uint";
+                                else if (item.Value is Int64)   type = "long";
+                                else if (item.Value is UInt64)  type = "ulong";
+                                else if (item.Value is Char)    type = "char";
+                                else if (item.Value is Double)  type = "double";
+                                else if (item.Value is Single)  type = "float";
+                                
+                                writer.WriteStartElement (item.Key);
+                                writer.WriteStartAttribute ("type");
+                                writer.WriteString (type);
+                                writer.WriteEndAttribute ();
+                                writer.WriteString (item.Value.ToString ());
+                                writer.WriteEndElement ();
+                            }
+                            
+                            writer.WriteEndElement ();
+                        }
+                        
+                        writer.WriteEndElement ();
+                    }
+                    
+                    writer.WriteEndElement ();
+                    writer.WriteEndDocument ();
+                    writer.Close ();
+                    
+                    success = true;
+                } catch (Exception e) {
+                    Log.Exception (e);
+                }
+                
+                SaveToXmlFinishedHandler handler = save_to_xml_finished;
+                if (handler != null) {
+                    handler (success, path);
+                }
             }
+        }
+        
+        void ICollectionIndexer.SaveToXml (string path)
+        {   
+            ThreadPool.QueueUserWorkItem (delegate { SaveToXml (path); });
         }
         
         public IDictionary<string, object> GetResult (int modelIndex, int itemIndex)
@@ -114,7 +206,7 @@ namespace Banshee.Collection.Indexer
                     throw new IndexOutOfRangeException ("itemIndex");
                 }
                 
-                return model[modelIndex].GenerateExportable ();
+                return model[modelIndex].GenerateExportable (export_fields);
             }
         }
         

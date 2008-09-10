@@ -38,6 +38,7 @@ namespace Banshee.Collection.Indexer
     public class CollectionIndexerService : ICollectionIndexerService
     {
         private List<TrackListModel> models = new List<TrackListModel> ();
+        private string [] available_export_fields;
         
         public void AddModel (TrackListModel model)
         {
@@ -72,6 +73,23 @@ namespace Banshee.Collection.Indexer
         ObjectPath ICollectionIndexerService.CreateIndexer ()
         {
             return ServiceManager.DBusServiceManager.RegisterObject (new CollectionIndexer (this));
+        }
+        
+        public string [] GetAvailableExportFields ()
+        {
+            if (available_export_fields != null) {
+                return available_export_fields;
+            }
+            
+            List<string> fields = new List<string> ();
+            
+            foreach (KeyValuePair<string, System.Reflection.PropertyInfo> field in TrackInfo.GetExportableProperties (
+                typeof (Banshee.Collection.Database.DatabaseTrackInfo))) {
+                fields.Add (field.Key);
+            }
+            
+            available_export_fields = fields.ToArray ();
+            return available_export_fields;
         }
         
         IDBusExportable IDBusExportable.Parent { 

@@ -39,5 +39,6 @@ namespace Banshee.Collection.Indexer
     public interface ICollectionIndexerService : IService, IDBusExportable
     {
         ObjectPath CreateIndexer ();
+        string [] GetAvailableExportFields ();
     }
 }

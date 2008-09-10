@@ -35,19 +35,23 @@ using Banshee.ServiceStack;
 namespace Banshee.Collection.Indexer
 {
     public delegate void IndexingFinishedHandler ();
+    public delegate void SaveToXmlFinishedHandler (bool success, string path);
     
     [Interface ("org.bansheeproject.Banshee.CollectionIndexer")]
     public interface ICollectionIndexer : IService, IDBusExportable
     {
         event IndexingFinishedHandler IndexingFinished;
-            
-        void Start ();
+        event SaveToXmlFinishedHandler SaveToXmlFinished;
+        
+        void Index ();
         void Dispose ();
+        
+        void SetExportFields (string [] fields);
         
         int GetModelCounts ();
         int GetModelResultsCount (int modelIndex);
         IDictionary<string, object> GetResult (int modelIndex, int itemIndex);
         
-        bool SaveToXml (string path);
+        void SaveToXml (string path);
     }
 }

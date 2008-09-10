@@ -1,3 +1,18 @@
+2008-09-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	Implement GetAvailableExportFields method
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexer.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Implement SaveToXml; added SetExportFields; added SaveToXmlFinished event
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Support exporting
+	only certain fields; make GetExportableProperties public; since 
+	GetExportableProperties is now public, enforce type derivation; do not
+	export 0 value fields
+
 2008-09-10  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
