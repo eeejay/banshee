@@ -64,6 +64,15 @@ namespace Banshee.Collection.Gui
                 }
             };
         }
+
+        private static TargetEntry [] source_targets = new TargetEntry [] {
+            ListViewDragDropTarget.ModelSelection,
+            Banshee.Gui.DragDrop.DragDropTarget.UriList
+        };
+
+        protected override TargetEntry [] DragDropSourceEntries {
+            get { return source_targets; }
+        }
         
         protected override bool OnKeyPressEvent (Gdk.EventKey press)
         {
@@ -120,8 +129,17 @@ namespace Banshee.Collection.Gui
 
         protected override void OnDragDataGet (Gdk.DragContext context, SelectionData selection_data, uint info, uint time)
         {
-            if (info != (int)ListViewDragDropTarget.TargetType.ModelSelection || Selection.Count <= 0) {
-                return;
+            if (info == Banshee.Gui.DragDrop.DragDropTarget.UriList.Info) {
+                ITrackModelSource track_source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
+                if (track_source != null) {
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder ();
+                    foreach (TrackInfo track in track_source.TrackModel.SelectedItems) {
+                        sb.Append (track.Uri);
+                        sb.Append ("\r\n");
+                    }
+                    byte [] data = System.Text.Encoding.UTF8.GetBytes (sb.ToString ());
+                    selection_data.Set (context.Targets[0], 8, data, data.Length);
+                }
             }
         }
 

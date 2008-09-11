@@ -260,6 +260,7 @@ namespace Banshee.ServiceStack
         private static void DelayedInitialize (IService service)
         {
             if (have_client && service is IDelayedInitializeService) {
+                Log.DebugFormat ("Delayed Initializating {0}", service);
                 ((IDelayedInitializeService)service).DelayedInitialize ();
             }
         }

@@ -49,7 +49,11 @@ namespace Hyena.Data.Gui
             ListViewDragDropTarget.ModelSelection
         };
         
-        protected static TargetEntry [] DragDropDestEntries {
+        protected virtual TargetEntry [] DragDropDestEntries {
+            get { return drag_drop_dest_entries; }
+        }
+
+        protected virtual TargetEntry [] DragDropSourceEntries {
             get { return drag_drop_dest_entries; }
         }
         
@@ -94,7 +98,7 @@ namespace Hyena.Data.Gui
         {
             if (ForceDragSourceSet || Reorderable) {
                 Gtk.Drag.SourceSet (this, Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask, 
-                    DragDropDestEntries, Gdk.DragAction.Copy | Gdk.DragAction.Move);
+                    DragDropSourceEntries, Gdk.DragAction.Copy | Gdk.DragAction.Move);
             } else {
                 Gtk.Drag.SourceUnset (this);
             }

@@ -1,3 +1,16 @@
+2008-09-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BaseTrackListView.cs:
+	Add UriList as a DragDropSource and handle setting the data when such
+	DragDataGet requests come in, meaning DnD to nautilus works again (BGO
+	#535128).
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Add a
+	debug message.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	Allow overriding the DnD Drag and SourceEntries.
+
 2008-09-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
