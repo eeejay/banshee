@@ -1,5 +1,15 @@
 2008-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexer.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Use Hyena.Action instead of System.Action
+
+	* src/Libraries/Hyena/Hyena/Delegates.cs: Implement Hyena.Action delegate
+
+2008-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Halie/Halie/Client.cs: Moved the indexer reboot hint to 
 	the booter client
 

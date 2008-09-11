@@ -128,6 +128,7 @@
     <Compile Include="Hyena.Json\Deserializer.cs" />
     <Compile Include="Hyena.Json\IJsonCollection.cs" />
     <Compile Include="Hyena.Json\Tests\DeserializerTests.cs" />
+    <Compile Include="Hyena\Delegates.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

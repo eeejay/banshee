@@ -51,8 +51,8 @@ namespace Banshee.Collection.Indexer
         private List<CachedList<DatabaseTrackInfo>> model_caches = new List<CachedList<DatabaseTrackInfo>> ();
         private string [] export_fields;
         
-        private event Action indexing_finished;
-        event Action ICollectionIndexer.IndexingFinished {
+        private event Hyena.Action indexing_finished;
+        event Hyena.Action ICollectionIndexer.IndexingFinished {
             add { indexing_finished += value; }
             remove { indexing_finished -= value; }
         }
@@ -240,7 +240,7 @@ namespace Banshee.Collection.Indexer
                 handler (this, EventArgs.Empty);
             }
         
-            Action dbus_handler = indexing_finished;
+            Hyena.Action dbus_handler = indexing_finished;
             if (dbus_handler != null) {
                 dbus_handler ();
             }

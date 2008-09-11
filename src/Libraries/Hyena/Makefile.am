@@ -96,6 +96,7 @@ SOURCES =  \
 	Hyena/ConsoleCrayon.cs \
 	Hyena/CryptoUtil.cs \
 	Hyena/DateTimeUtil.cs \
+	Hyena/Delegates.cs \
 	Hyena/IUndoAction.cs \
 	Hyena/Log.cs \
 	Hyena/StringUtil.cs \

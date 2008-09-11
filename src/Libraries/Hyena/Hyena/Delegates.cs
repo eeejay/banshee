@@ -1,5 +1,5 @@
 //
-// ICollectionIndexer.cs
+// Delegates.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -26,31 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-using System;
-using System.Collections.Generic;
-using NDesk.DBus;
-
-using Banshee.ServiceStack;
-
-namespace Banshee.Collection.Indexer
+namespace Hyena
 {
-    public delegate void SaveToXmlFinishedHandler (bool success, string path);
-    
-    [Interface ("org.bansheeproject.CollectionIndexer.Indexer")]
-    public interface ICollectionIndexer : IService, IDBusExportable
-    {
-        event Hyena.Action IndexingFinished;
-        event SaveToXmlFinishedHandler SaveToXmlFinished;
-        
-        void Index ();
-        void Dispose ();
-        
-        void SetExportFields (string [] fields);
-        
-        int GetModelCounts ();
-        int GetModelResultsCount (int modelIndex);
-        IDictionary<string, object> GetResult (int modelIndex, int itemIndex);
-        
-        void SaveToXml (string path);
-    }
+    public delegate void Action ();
 }
