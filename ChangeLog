@@ -1,5 +1,20 @@
 2008-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Beroe/Beroe/IndexerClient.cs: Call 
+	IndexerService.RegisterCleanupAndShutdown to notify any connected client
+	using the indexer that it should release it and let the user use Banshee
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	Added CleanupAndShutdown event for the DBus interface and a method
+	for the client to trigger the raising of the event
+
+	* src/generate-dbus-docs: Stupid script to dump DBus interfaces to an
+	HTML blob that I can update on the web site:
+	http://banshee-project.org/contribute/write-code/dbus-interfaces/
+
+2008-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexer.cs:
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:

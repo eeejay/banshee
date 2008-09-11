@@ -49,6 +49,7 @@ namespace Banshee.Collection.Indexer
         private int open_indexers;
         
         public event Hyena.Action CollectionChanged;
+        public event Hyena.Action CleanupAndShutdown;
         
         private Hyena.Action shutdown_handler;
         public Hyena.Action ShutdownHandler {
@@ -206,6 +207,14 @@ namespace Banshee.Collection.Indexer
                     field != Banshee.Query.BansheeQuery.SkipCountField) {
                     OnCollectionChanged ();
                 }
+            }
+        }
+        
+        public void RequestCleanupAndShutdown ()
+        {
+            Hyena.Action handler = CleanupAndShutdown;
+            if (handler != null) {
+                handler ();
             }
         }
         

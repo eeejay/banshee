@@ -37,6 +37,8 @@ namespace Banshee.Collection.Indexer
     public interface ICollectionIndexerService : IService, IDBusExportable
     {
         event Hyena.Action CollectionChanged;
+        event Hyena.Action CleanupAndShutdown;
+        
         void Hello ();
         void Shutdown ();
         ObjectPath CreateIndexer ();

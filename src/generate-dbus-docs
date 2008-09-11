@@ -1,0 +1,12 @@
+#!/bin/bash
+
+files=$(grep -ERl '^[\t ]+\[Interface.*\("org.banshee' Core/* | grep -v .svn)
+
+for file in $files; do 
+	start_at=$(grep -En '^namespace {1}.*' $file | head -n1 | cut -f1 -d:)
+	echo "<h4><a href=\"http://svn.gnome.org/svn/banshee/trunk/banshee/src/$file\">$file</a></h4>"
+	echo "<pre>"
+	tail -n+$start_at < $file | tail -n+3 | head -n-1 | sed -r 's,^[ ]{4},,g'
+	echo "</pre>"
+done
+

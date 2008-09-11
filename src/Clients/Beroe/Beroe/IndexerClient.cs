@@ -112,8 +112,9 @@ namespace Beroe
         public void RebootWhenFinished (string [] args)
         {
             lock (this) {
-                Log.Debug ("Banshee will be started when the indexer finishes");
+                Log.Debug ("Banshee will be started when the indexer finishes. Notifying indexer that it should hurry!");
                 reboot_args = args;
+                ServiceManager.Get<CollectionIndexerService> ().RequestCleanupAndShutdown ();
             }
         }
         
