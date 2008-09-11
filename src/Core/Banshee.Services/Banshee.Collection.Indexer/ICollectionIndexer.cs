@@ -34,13 +34,12 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Indexer
 {
-    public delegate void IndexingFinishedHandler ();
     public delegate void SaveToXmlFinishedHandler (bool success, string path);
     
     [Interface ("org.bansheeproject.Banshee.CollectionIndexer")]
     public interface ICollectionIndexer : IService, IDBusExportable
     {
-        event IndexingFinishedHandler IndexingFinished;
+        event Action IndexingFinished;
         event SaveToXmlFinishedHandler SaveToXmlFinished;
         
         void Index ();

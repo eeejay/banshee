@@ -72,6 +72,11 @@ namespace Banshee.Collection.Indexer
             }
         }
         
+        void ICollectionIndexerService.Hello ()
+        {
+            Hyena.Log.DebugFormat ("Hello called on {0}", GetType ());
+        }
+        
         public void Shutdown ()
         {
             lock (this) {
@@ -120,11 +125,9 @@ namespace Banshee.Collection.Indexer
                 }
                 
                 foreach (LibrarySource library in libraries) {
-                    string query = String.Format ("SELECT MAX(CoreTracks.DateUpdatedStamp) {0}",
-                         ((DatabaseTrackListModel)library.TrackModel).UnfilteredQuery);
-                    using (HyenaDataReader reader = new HyenaDataReader (ServiceManager.DbConnection.Query (query))) {
-                        last_updated = Math.Max (last_updated, reader.Get<long> (0));
-                    }
+                    last_updated = Math.Max (last_updated, ServiceManager.DbConnection.Query<long> (
+                        String.Format ("SELECT MAX(CoreTracks.DateUpdatedStamp) {0}",
+                            library.DatabaseTrackModel.UnfilteredQuery)));
                 }
                 
                 return last_updated > time;

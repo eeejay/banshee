@@ -1,3 +1,13 @@
+2008-09-10  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	Fixed query, implemented Hello
+	
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexer.cs:
+	Use the Action delegate
+
 2008-09-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BaseTrackListView.cs:
