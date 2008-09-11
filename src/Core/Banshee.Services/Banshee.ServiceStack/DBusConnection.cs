@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 using NDesk.DBus;
 using org.freedesktop.DBus;
@@ -38,16 +39,20 @@ namespace Banshee.ServiceStack
 {
     public static class DBusConnection
     {
-        public const string BusName = "org.bansheeproject.Banshee";
+        private const string BusPrefix = "org.bansheeproject";
+        public const string DefaultServiceName = "Banshee";
+        public const string DefaultBusName=  "org.bansheeproject.Banshee";
         
+        private static List<string> active_connections = new List<string> (); 
+    
+        public static string MakeBusName (string serviceName)
+        {
+            return String.Format ("{0}.{1}", BusPrefix, serviceName);
+        }
+    
         private static bool enabled;
         public static bool Enabled {
             get { return enabled; }
-        }
-        
-        private static bool instance_already_running;
-        public static bool InstanceAlreadyRunning {
-            get { return instance_already_running; }
         }
         
         private static bool connect_tried;
@@ -55,7 +60,21 @@ namespace Banshee.ServiceStack
             get { return connect_tried; }
         }
         
+        public static bool ApplicationInstanceAlreadyRunning {
+            get { return !ServiceIsConnected (DefaultServiceName); }
+        }
+        
+        public static bool ServiceIsConnected (string service)
+        {
+            return active_connections.Contains (service);   
+        }
+        
         public static void Connect ()
+        {
+            Connect (DefaultServiceName);
+        }
+        
+        public static void Connect (string serviceName)
         {
             connect_tried = true;
             
@@ -65,14 +84,16 @@ namespace Banshee.ServiceStack
             }
             
             try {
-                instance_already_running = Connect (true) != RequestNameReply.PrimaryOwner;
+                if (Connect (serviceName, true) == RequestNameReply.PrimaryOwner) {
+                    active_connections.Add (serviceName);
+                }
             } catch {
                 Log.Warning ("DBus support could not be started. Disabling for this session.");
                 enabled = false;
             }
         }
         
-        public static RequestNameReply Connect (bool init)
+        private static RequestNameReply Connect (string serviceName, bool init)
         {
             connect_tried = true;
             
@@ -80,8 +101,9 @@ namespace Banshee.ServiceStack
                 BusG.Init ();
             }
             
-            RequestNameReply name_reply = Bus.Session.RequestName (BusName);
-            Log.DebugFormat ("NDesk.DBus.Bus.Session.RequestName ('{0}') => {1}", BusName, name_reply);
+            string bus_name = MakeBusName (serviceName);
+            RequestNameReply name_reply = Bus.Session.RequestName (bus_name);
+            Log.DebugFormat ("Bus.Session.RequestName ('{0}') replied with {1}", bus_name, name_reply);
             return name_reply;
         }
         

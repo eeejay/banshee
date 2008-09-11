@@ -44,13 +44,6 @@ namespace Banshee.ServiceStack
         public const string ObjectRoot = "/org/bansheeproject/Banshee";
         private Dictionary<object, ObjectPath> registered_objects = new Dictionary<object, ObjectPath> ();
         
-        public DBusServiceManager ()
-        {
-            if (!DBusConnection.ConnectTried) {
-                DBusConnection.Connect ();
-            }
-        }
-        
         public static string MakeDBusSafeString (string str)
         {
             return str == null ? String.Empty : Regex.Replace (str, @"[^A-Za-z0-9]*", String.Empty);
@@ -99,10 +92,20 @@ namespace Banshee.ServiceStack
         
         public ObjectPath RegisterObject (IDBusExportable o)
         {
-            return RegisterObject (o, MakeObjectPath (o));
+            return RegisterObject (DBusConnection.DefaultServiceName, o);
+        }
+        
+        public ObjectPath RegisterObject (string serviceName, IDBusExportable o)
+        {
+            return RegisterObject (serviceName, o, MakeObjectPath (o));
         }
         
         public ObjectPath RegisterObject (object o, string objectName)
+        {
+            return RegisterObject (DBusConnection.DefaultServiceName, o, objectName);
+        }
+        
+        public ObjectPath RegisterObject (string serviceName, object o, string objectName)
         {
             ObjectPath path = null;
             
@@ -111,7 +114,7 @@ namespace Banshee.ServiceStack
                     registered_objects.Add (o, path = new ObjectPath (objectName));
                 }
                 #pragma warning disable 0618
-                Bus.Session.Register (DBusConnection.BusName, path, o);
+                Bus.Session.Register (DBusConnection.MakeBusName (serviceName), path, o);
                 #pragma warning restore 0618
             }
             
@@ -136,7 +139,12 @@ namespace Banshee.ServiceStack
         
         public static T FindInstance<T> (string objectPath) where T : class
         {
-            if (!DBusConnection.Enabled || !Bus.Session.NameHasOwner (DBusConnection.BusName)) {
+            return FindInstance<T> (DBusConnection.DefaultBusName, objectPath);
+        }
+        
+        public static T FindInstance<T> (string busName, string objectPath) where T : class
+        {
+            if (!DBusConnection.Enabled || !Bus.Session.NameHasOwner (busName)) {
                 return null;
             }
             
@@ -145,7 +153,7 @@ namespace Banshee.ServiceStack
                 full_object_path = ObjectRoot + objectPath;
             }
 
-            return Bus.Session.GetObject<T> (DBusConnection.BusName, new ObjectPath (full_object_path));
+            return Bus.Session.GetObject<T> (busName, new ObjectPath (full_object_path));
         }
         
         string IService.ServiceName {

@@ -65,7 +65,7 @@ namespace Halie
             if (!DBusConnection.Enabled) {
                 Error ("All commands ignored, DBus support is disabled");
                 return;
-            } else if (!DBusConnection.InstanceAlreadyRunning) {
+            } else if (!DBusConnection.ApplicationInstanceAlreadyRunning) {
                 Error ("Banshee does not seem to be running");
                 return;
             }

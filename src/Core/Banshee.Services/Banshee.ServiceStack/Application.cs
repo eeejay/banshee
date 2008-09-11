@@ -82,6 +82,10 @@ namespace Banshee.ServiceStack
             
             Catalog.Init (Application.InternalName, System.IO.Path.Combine (
                 Banshee.Base.Paths.InstalledApplicationDataRoot, "locale"));
+                
+            if (!DBusConnection.ConnectTried) {
+                DBusConnection.Connect ();
+            }
 
             ServiceManager.Run ();
 

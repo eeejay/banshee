@@ -50,7 +50,7 @@ namespace Beroe
             if (!DBusConnection.Enabled) {
                 Log.Error ("All commands ignored, DBus support is disabled");
                 return;
-            } else if (DBusConnection.InstanceAlreadyRunning) {
+            } else if (DBusConnection.ApplicationInstanceAlreadyRunning) {
                 Log.Error ("Banshee is already running");
                 return;
             }

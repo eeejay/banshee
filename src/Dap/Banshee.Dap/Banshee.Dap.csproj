@@ -73,6 +73,9 @@
     <EmbeddedResource Include="Resources\ActiveSourceUI.xml">
       <LogicalName>ActiveSourceUI.xml</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GlobalUI.xml">
+      <LogicalName>GlobalUI.xml</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

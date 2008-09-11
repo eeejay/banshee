@@ -1,3 +1,26 @@
+2008-09-11  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Booter: New client to take care of the booting of other
+	clients based on the crazy boot sequence logic (to be added)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Moved
+	the non-GUI related boot logic to the new Booter client
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:
+	Call DBusConnection.Connect
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusConnection.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Refactored slightly to allow for the use of multiple busses
+	
+	* src/Clients/Halie/Halie/Client.cs:
+	* src/Clients/Beroe/Beroe/IndexerClient.cs: Updated to reflect small API
+	change in DBusConnection
+
+	* build/build.environment.mk:
+	* Banshee.sln:
+	* configure.ac: Add Booter
+
 2008-09-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
