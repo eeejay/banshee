@@ -70,15 +70,6 @@ namespace Halie
                 return;
             }
             
-            IIndexerClient indexer = DBusServiceManager.FindInstance<IIndexerClient> ("/IndexerClient");
-            try {
-                indexer.Hello ();
-                indexer.RebootWhenFinished (Environment.GetCommandLineArgs ());
-                Log.Warning ("The Banshee indexer is currently running. Banshee will be started when the indexer finishes.");
-                return;
-            } catch {
-            }
-            
             command = DBusServiceManager.FindInstance<DBusCommandService> ("/DBusCommandService");
             hide_field = ApplicationContext.CommandLine.Contains ("hide-field");
             

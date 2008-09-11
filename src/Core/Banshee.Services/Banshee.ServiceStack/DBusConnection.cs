@@ -42,7 +42,12 @@ namespace Banshee.ServiceStack
         private const string BusPrefix = "org.bansheeproject";
         public const string DefaultServiceName = "Banshee";
         public const string DefaultBusName=  "org.bansheeproject.Banshee";
-        
+    
+        static DBusConnection ()
+        {
+            enabled = !ApplicationContext.CommandLine.Contains ("disable-dbus");
+        }
+                    
         private static List<string> active_connections = new List<string> (); 
     
         public static string MakeBusName (string serviceName)
@@ -61,7 +66,7 @@ namespace Banshee.ServiceStack
         }
         
         public static bool ApplicationInstanceAlreadyRunning {
-            get { return !ServiceIsConnected (DefaultServiceName); }
+            get { return Bus.Session.NameHasOwner (DefaultBusName); }
         }
         
         public static bool ServiceIsConnected (string service)
@@ -69,28 +74,46 @@ namespace Banshee.ServiceStack
             return active_connections.Contains (service);   
         }
         
-        public static void Connect ()
+        public static void Disconnect (string serviceName)
         {
-            Connect (DefaultServiceName);
+            if (active_connections.Contains (serviceName)) {
+                active_connections.Remove (serviceName);
+            }
+            
+            Bus.Session.ReleaseName (MakeBusName (serviceName));
         }
         
-        public static void Connect (string serviceName)
+        public static bool Connect ()
+        {
+            return Connect (DefaultServiceName);
+        }
+        
+        public static bool Connect (string serviceName)
         {
             connect_tried = true;
             
-            enabled = !ApplicationContext.CommandLine.Contains ("disable-dbus");
             if (!enabled) {
-                return;
+                return false;
             }
+            
+            Console.WriteLine ("ATTEMPTING TO CONNECT: {0}", serviceName);
             
             try {
                 if (Connect (serviceName, true) == RequestNameReply.PrimaryOwner) {
                     active_connections.Add (serviceName);
+                    return true;
                 }
             } catch {
                 Log.Warning ("DBus support could not be started. Disabling for this session.");
                 enabled = false;
             }
+            
+            return false;
+        }
+        
+        public static bool NameHasOwner (string serviceName)
+        {
+            return Bus.Session.NameHasOwner (MakeBusName (serviceName));
         }
         
         private static RequestNameReply Connect (string serviceName, bool init)

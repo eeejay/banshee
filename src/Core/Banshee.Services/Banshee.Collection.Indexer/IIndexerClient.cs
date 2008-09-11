@@ -33,7 +33,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Indexer
 {
-    [Interface ("org.bansheeproject.Banshee.IndexerClient")]
+    [Interface ("org.bansheeproject.CollectionIndexer.Client")]
     public interface IIndexerClient : IDBusExportable
     {
         void Hello ();

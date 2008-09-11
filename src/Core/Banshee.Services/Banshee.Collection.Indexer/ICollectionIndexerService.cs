@@ -33,7 +33,7 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Indexer
 {
-    [Interface ("org.bansheeproject.Banshee.CollectionIndexerService")]
+    [Interface ("org.bansheeproject.CollectionIndexer.Service")]
     public interface ICollectionIndexerService : IService, IDBusExportable
     {
         event Action CollectionChanged;

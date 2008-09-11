@@ -1,5 +1,33 @@
 2008-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Halie/Halie/Client.cs: Moved the indexer reboot hint to 
+	the booter client
+
+	* src/Clients/Booter/Booter/Entry.cs: Finished implementing the new 
+	boot sequence
+
+	* src/Clients/Beroe/Beroe/IndexerClient.cs: DBus fixes
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusConnection.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DBusServiceManager.cs:
+	Support registering and finding objects on multiple busses without 
+	horribly breaking API
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexer.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/IIndexerClient.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Register the indexer stuff on a new bus so it can be activated without
+	spawning the thick client: org.bansheeproject.CollectionIndexer
+
+	* configure.ac:
+	* data/Makefile.am: 
+	* data/org.bansheeproject.CollectionIndexer.service.in: Add the new 
+	activatable service
+
+2008-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Booter: New client to take care of the booting of other
 	clients based on the crazy boot sequence logic (to be added)
 

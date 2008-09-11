@@ -30,6 +30,7 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Reflection;
     
 using NDesk.DBus;
 using org.freedesktop.DBus;
@@ -39,6 +40,15 @@ using Banshee.Base;
 
 namespace Banshee.ServiceStack
 {
+    public class DBusExportableAttribute : Attribute
+    {
+        private string service_name;
+        public string ServiceName {
+            get { return service_name; }
+            set { service_name = value; }
+        }
+    }
+
     public class DBusServiceManager : IService
     {
         public const string ObjectRoot = "/org/bansheeproject/Banshee";
@@ -110,11 +120,24 @@ namespace Banshee.ServiceStack
             ObjectPath path = null;
             
             if (DBusConnection.Enabled && Bus.Session != null) {
+                object [] attrs = o.GetType ().GetCustomAttributes (typeof (DBusExportableAttribute), true);
+                if (attrs != null && attrs.Length > 0) {
+                    DBusExportableAttribute dbus_attr = (DBusExportableAttribute)attrs[0];
+                    if (!String.IsNullOrEmpty (dbus_attr.ServiceName)) {
+                        serviceName = dbus_attr.ServiceName;
+                    }
+                }
+            
                 lock (registered_objects) {
                     registered_objects.Add (o, path = new ObjectPath (objectName));
                 }
+                
+                string bus_name = DBusConnection.MakeBusName (serviceName);
+                
+                Log.DebugFormat ("Registering remote object {0} ({1}) on {2}", path, o.GetType (), bus_name);
+                
                 #pragma warning disable 0618
-                Bus.Session.Register (DBusConnection.MakeBusName (serviceName), path, o);
+                Bus.Session.Register (bus_name, path, o);
                 #pragma warning restore 0618
             }
             
@@ -139,11 +162,17 @@ namespace Banshee.ServiceStack
         
         public static T FindInstance<T> (string objectPath) where T : class
         {
-            return FindInstance<T> (DBusConnection.DefaultBusName, objectPath);
+            return FindInstance<T> (DBusConnection.DefaultBusName, true, objectPath);
         }
         
-        public static T FindInstance<T> (string busName, string objectPath) where T : class
+        public static T FindInstance<T> (string serviceName, string objectPath) where T : class
         {
+            return FindInstance<T> (serviceName, false, objectPath);
+        }
+        
+        public static T FindInstance<T> (string serviceName, bool isFullBusName, string objectPath) where T : class
+        {
+            string busName = isFullBusName ? serviceName : DBusConnection.MakeBusName (serviceName);
             if (!DBusConnection.Enabled || !Bus.Session.NameHasOwner (busName)) {
                 return null;
             }

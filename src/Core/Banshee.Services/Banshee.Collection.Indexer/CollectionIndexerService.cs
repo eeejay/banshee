@@ -41,6 +41,7 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Collection.Indexer
 {
+    [DBusExportable (ServiceName = "CollectionIndexer")]
     public class CollectionIndexerService : ICollectionIndexerService, IDisposable
     {
         private List<LibrarySource> libraries = new List<LibrarySource> ();
@@ -57,6 +58,8 @@ namespace Banshee.Collection.Indexer
         
         public CollectionIndexerService ()
         {
+            DBusConnection.Connect ("CollectionIndexer");
+            
             ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
             ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
         

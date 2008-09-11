@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.bansheeproject.CollectionIndexer
+Exec=@expanded_bindir@/banshee-1 --indexer
+

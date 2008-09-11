@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Diagnostics;
 
 using NDesk.DBus;
 using Hyena;
@@ -39,19 +40,19 @@ using Banshee.Collection.Indexer;
 
 namespace Beroe
 {
+    [DBusExportable (ServiceName = "CollectionIndexer")]
     public class IndexerClient : Client, IIndexerClient
     {
         public static void Main ()
         {
-            if (!DBusConnection.ConnectTried) {
-                DBusConnection.Connect ();
-            }
-            
             if (!DBusConnection.Enabled) {
                 Log.Error ("All commands ignored, DBus support is disabled");
                 return;
             } else if (DBusConnection.ApplicationInstanceAlreadyRunning) {
                 Log.Error ("Banshee is already running");
+                return;
+            } else if (DBusConnection.NameHasOwner ("CollectionIndexer")) {
+                Log.Error ("Another indexer is already running");
                 return;
             }
             
@@ -94,8 +95,12 @@ namespace Beroe
                     builder.AppendFormat ("\"{0}\" ", arg);
                 }
                 
-                // FIXME: Lame
-                System.Diagnostics.Process.Start ("banshee-1", builder.ToString ());
+                // FIXME: Using Process.Start sucks, but DBus doesn't let you specify 
+                // extra command line arguments
+                DBusConnection.Disconnect ("CollectionIndexer");
+                Process.Start ("banshee-1", builder.ToString ());
+                // Bus.Session.StartServiceByName (DBusConnection.DefaultBusName);
+                // Bus.Session.Iterate ();
             }
         }
         

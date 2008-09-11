@@ -116,6 +116,7 @@ build/pkg-config/Makefile
 
 data/Makefile
 data/org.bansheeproject.Banshee.service
+data/org.bansheeproject.CollectionIndexer.service
 data/audio-profiles/Makefile
 data/icon-theme-hicolor/Makefile
 

@@ -42,6 +42,7 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Collection.Indexer
 {
+    [DBusExportable (ServiceName = "CollectionIndexer")]
     public class CollectionIndexer : ICollectionIndexer, IDisposable
     {
         private static int instance_count = 0;

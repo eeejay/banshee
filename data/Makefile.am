@@ -11,7 +11,9 @@ desktop_DATA=$(desktop_in_files:.desktop.in.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
 
-dbusservice_in_files = org.bansheeproject.Banshee.service.in
+dbusservice_in_files = \
+	org.bansheeproject.Banshee.service.in \
+	org.bansheeproject.CollectionIndexer.service.in
 dbusservicedir = $(datadir)/dbus-1/services
 dbusservice_DATA = $(dbusservice_in_files:.service.in=.service)
 

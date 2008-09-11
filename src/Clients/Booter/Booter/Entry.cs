@@ -26,17 +26,46 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+//
+// Crazy Banshee Boot Procedure
+//
+//    [Exec or DBus Activation] <---------------------------------------------------------.
+//                |                                                                       |
+//                v                                                                       |
+//    [Bootloader (Banshee.exe)]                                                          |
+//                |                                                                       |
+//                v                   yes                                                 |
+//    <org.bansheeproject.Banshee?> -------> [Load DBus Proxy Client (Halie.exe)] -----.  |
+//                |no                                                                  |  |
+//                v                             yes                                    |  |
+//    <org.bansheeproject.CollectionIndexer?> -------> [Tell Indexer to Reboot] -----/IPC/'
+//                |no                                                                  |
+//                v                        yes                                         |
+//    <command line contains --indexer?> -------> [Load Indexer Client (Beroe.exe)]    |
+//                |no                                                                  |
+//                v                          yes                                       |
+//    <command line contains --client=XYZ> -------> [Load XYZ Client]                  |
+//                |no                                                                  |
+//                v                                                                    |
+//    [Load Primary Interface Client (Nereid.exe)] <-----------------------------------'
+//
+
 using System;
 using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 using Mono.Unix;
 
+using NDesk.DBus;
+
+using Hyena;
 using Hyena.CommandLine;
 
 using Banshee.Base;
 using Banshee.ServiceStack;
+using Banshee.Collection.Indexer;
 
 namespace Booter
 {
@@ -47,29 +76,51 @@ namespace Booter
             if (CheckHelpVersion ()) {
                 return;
             }
-        
-            bool gui_notify_startup = false;
-            string client_assembly_name = "Nereid";
-            
-            if (ApplicationContext.CommandLine.Contains ("client")) {
-                client_assembly_name = ApplicationContext.CommandLine["client"];
-            }
-        
-            DBusConnection.Connect ();
             
             if (DBusConnection.ApplicationInstanceAlreadyRunning) {
-                client_assembly_name = "Halie"; // DBus Command/Query/File Proxy Client
-                gui_notify_startup = true;
+                // DBus Command/Query/File Proxy Client
+                BootClient ("Halie"); 
+                NotifyStartupComplete ();
+            } else if (DBusConnection.NameHasOwner ("CollectionIndexer")) {
+                // Tell the existing indexer to start Banshee when it's done
+                IIndexerClient indexer = DBusServiceManager.FindInstance<IIndexerClient> ("CollectionIndexer", "/IndexerClient");
+                try {
+                    indexer.Hello ();
+                    indexer.RebootWhenFinished (Environment.GetCommandLineArgs ());
+                    Log.Warning ("The Banshee indexer is currently running. Banshee will be started when the indexer finishes.");
+                } catch (Exception e) {
+                    Log.Exception ("CollectionIndexer found on the Bus, but doesn't say Hello", e);
+                }
             } else if (ApplicationContext.CommandLine.Contains ("indexer")) {
-                client_assembly_name = "Beroe"; // Indexer Client
+                // Indexer Client
+                BootClient ("Beroe");
+            } else if (ApplicationContext.CommandLine.Contains ("client")) {
+                BootClient (Path.GetFileNameWithoutExtension (ApplicationContext.CommandLine["client"]));
+            } else {
+                BootClient ("Nereid");
             }
-            
+        }
+        
+        private static void BootClient (string clientName)
+        {
             AppDomain.CurrentDomain.ExecuteAssembly (Path.Combine (Path.GetDirectoryName (
-                Assembly.GetEntryAssembly ().Location), String.Format ("{0}.exe", client_assembly_name)));
-                
-            if (gui_notify_startup) {
-                // Gdk.Global.InitCheck (ref args);
-                // Gdk.Global.NotifyStartupComplete ();
+                Assembly.GetEntryAssembly ().Location), String.Format ("{0}.exe", clientName)));
+        }
+        
+        [DllImport ("libgdk-x11-2.0.so.0")]
+        private static extern bool gdk_init_check (IntPtr argc, IntPtr argv);
+        
+        [DllImport ("libgdk-x11-2.0.so.0")]
+        private static extern void gdk_notify_startup_complete ();
+        
+        private static void NotifyStartupComplete ()
+        {
+            try {
+                if (gdk_init_check (IntPtr.Zero, IntPtr.Zero)) {
+                    gdk_notify_startup_complete ();
+                }
+            } catch (Exception e) {
+                Hyena.Log.Exception ("Problem with NotifyStartupComplete", e);
             }
         }
 

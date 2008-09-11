@@ -36,7 +36,7 @@ namespace Banshee.Collection.Indexer
 {
     public delegate void SaveToXmlFinishedHandler (bool success, string path);
     
-    [Interface ("org.bansheeproject.Banshee.CollectionIndexer")]
+    [Interface ("org.bansheeproject.CollectionIndexer.Indexer")]
     public interface ICollectionIndexer : IService, IDBusExportable
     {
         event Action IndexingFinished;
