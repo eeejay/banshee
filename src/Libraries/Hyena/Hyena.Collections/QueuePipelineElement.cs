@@ -32,12 +32,12 @@ using System.Collections.Generic;
 
 namespace Hyena.Collections
 {
+    internal class ElementProcessCanceledException : ApplicationException
+    {
+    }
+
     public abstract class QueuePipelineElement<T> where T : class
     {
-        private class ElementProcessCanceledException : ApplicationException
-        {
-        }
-
         #pragma warning disable 0067
         // FIXME: This is to mute gmcs: https://bugzilla.novell.com/show_bug.cgi?id=360455
         public event EventHandler Finished;

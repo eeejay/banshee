@@ -110,7 +110,7 @@ namespace Banshee.Lastfm.Recommendations
 
         private void UpdateVisibility ()
         {
-            bool source_is_playback_source = (ServiceManager.SourceManager.ActiveSource == ServiceManager.PlaybackController.Source);
+            bool source_is_playback_source = (ServiceManager.SourceManager.ActiveSource as Banshee.Sources.ITrackModelSource) == ServiceManager.PlaybackController.Source;
             pane.ShowWhenReady = ShowSchema.Get () && source_is_playback_source;
             if (!source_is_playback_source) {
                 pane.HideWithTimeout ();

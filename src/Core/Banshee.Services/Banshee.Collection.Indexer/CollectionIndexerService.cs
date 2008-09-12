@@ -119,7 +119,6 @@ namespace Banshee.Collection.Indexer
         {
             lock (this) {
                 int total_count = 0;
-                long last_updated = 0;
                 
                 foreach (LibrarySource library in libraries) {
                     total_count += library.Count;
