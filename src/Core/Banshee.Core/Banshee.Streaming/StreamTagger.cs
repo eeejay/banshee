@@ -112,6 +112,8 @@ namespace Banshee.Streaming
             track.Uri = new SafeUri (file.Name);
             track.MimeType = file.MimeType;
             track.FileSize = Banshee.IO.File.GetSize (track.Uri);
+            track.FileModifiedStamp = Banshee.IO.File.GetModifiedTime (track.Uri);
+            track.LastSyncedStamp = DateTime.Now;
             track.BitRate  = file.Properties.AudioBitrate;
             track.Duration = file.Properties.Duration;
             

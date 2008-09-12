@@ -84,6 +84,7 @@
     </menu>
     
     <menu name="ToolsMenu" action="ToolsMenuAction">
+      <menuitem name="Rescan" action="RescanAction"/>
     </menu>
 
     <menu name="HelpMenu" action="HelpMenuAction">

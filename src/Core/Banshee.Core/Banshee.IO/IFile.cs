@@ -39,6 +39,7 @@ namespace Banshee.IO
         void Move (SafeUri from, SafeUri to);
         void Copy (SafeUri from, SafeUri to, bool overwrite);
         long GetSize (SafeUri uri);
+        long GetModifiedTime (SafeUri uri);
         
         System.IO.Stream OpenRead (SafeUri uri);
         System.IO.Stream OpenWrite (SafeUri uri, bool overwrite);

@@ -43,7 +43,7 @@ namespace Banshee.IO
     	{
     	    return Provider.File.Exists (uri);
     	}
-
+        
     	public static void Move (SafeUri from, SafeUri to)
     	{
     	    Provider.File.Move (from, to);
@@ -58,6 +58,11 @@ namespace Banshee.IO
     	{
     	    return Provider.File.GetSize (uri);
     	}
+
+        public static long GetModifiedTime (SafeUri uri)
+        {
+            return Provider.File.GetModifiedTime (uri);
+        }
 
     	public static System.IO.Stream OpenRead (SafeUri uri)
     	{

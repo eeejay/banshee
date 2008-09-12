@@ -346,6 +346,18 @@ namespace Banshee.Collection.Database
             get { return base.FileSize; }
             set { base.FileSize = value; }
         }
+
+        [DatabaseColumn]
+        public override long FileModifiedStamp {
+            get { return base.FileModifiedStamp; }
+            set { base.FileModifiedStamp = value; }
+        }
+
+        [DatabaseColumn]
+        public override DateTime LastSyncedStamp {
+            get { return base.LastSyncedStamp; }
+            set { base.LastSyncedStamp = value; }
+        }
         
         [DatabaseColumn ("Attributes")]
         public override TrackMediaAttributes MediaAttributes {

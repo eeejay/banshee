@@ -40,6 +40,7 @@ namespace Banshee.IO.Unix
         private Stat buf;
         private bool is_directory;
         private bool is_regular_file;
+        private long mtime;
         
         internal FileStat (string path)
         {
@@ -49,6 +50,7 @@ namespace Banshee.IO.Unix
             is_directory &= (buf.st_mode & FilePermissions.S_IFDIR) == FilePermissions.S_IFDIR;
             // FIXME: workaround for http://bugzilla.ximian.com/show_bug.cgi?id=76966
             is_directory &= ! ((buf.st_mode & FilePermissions.S_IFSOCK) == FilePermissions.S_IFSOCK);
+            mtime = buf.st_mtime;
         }
         
         internal bool IsDirectory {
@@ -57,6 +59,10 @@ namespace Banshee.IO.Unix
         
         internal bool IsRegularFile {
             get { return is_regular_file; }
+        }
+
+        internal long MTime {
+            get { return mtime; }
         }
     }
 
@@ -73,7 +79,7 @@ namespace Banshee.IO.Unix
             FileStat stat = new FileStat (uri.LocalPath);
             return stat.IsRegularFile && !stat.IsDirectory;
         }
-        
+
         public void Move (SafeUri from, SafeUri to)
         {
             Mono.Unix.Native.Stdlib.rename (from.LocalPath, to.LocalPath);
@@ -105,6 +111,12 @@ namespace Banshee.IO.Unix
             } catch {
                 return -1;
             }
+        }
+
+        public long GetModifiedTime (SafeUri uri)
+        {
+            FileStat stat = new FileStat (uri.LocalPath);
+            return stat.MTime;
         }
     }
 }

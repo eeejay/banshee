@@ -52,39 +52,21 @@ namespace Banshee.Collection
             {
                 this.manager = manager;
             }
-        
-            private int processed_count;
-            public int ProcessedCount {
-                get { return processed_count; }
-            }
-            
-            private int total_count;
-            public int TotalCount {
-                get { return total_count; }
-            }
-            
+
             public override void Enqueue (string item)
             {
-                total_count++;
-                manager.UpdateScannerProgress ();
                 base.Enqueue (item);
+                manager.UpdateScannerProgress ();
             }
         
             protected override string ProcessItem (string item)
             {
                 try {
                     manager.OnImportRequested (item);
-                    processed_count++;
                 } catch (Exception e) {
                     Hyena.Log.Exception (e);
                 }
                 return null;   
-            }
-            
-            public void Reset ()
-            {
-                processed_count = 0;
-                total_count = 0;
             }
         }
         
@@ -160,8 +142,6 @@ namespace Banshee.Collection
                 if (!KeepUserJobHidden) {
                     user_job.Register ();
                 }
-                
-                import_element.Reset ();
             }
         }
         
@@ -179,8 +159,6 @@ namespace Banshee.Collection
                 user_job.CancelRequested -= OnCancelRequested;
                 user_job.Finish ();
                 user_job = null;
-                    
-                import_element.Reset ();
             }
         }
         

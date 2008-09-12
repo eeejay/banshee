@@ -93,7 +93,7 @@ namespace Hyena.Collections
             lock (sync) {
                 QueuePipelineElement<T> element = FirstElement;
                 while (element != null) {
-                    any_processing |= element.Processing;
+                    any_processing |= element.Processing || element.ProcessedCount < element.TotalCount;
                     if (any_processing) {
                         break;
                     }

@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 21;
+        protected const int CURRENT_VERSION = 22;
         protected const int CURRENT_METADATA_VERSION = 4;
         
 #region Migration Driver
@@ -537,6 +537,19 @@ namespace Banshee.Database
         
 #endregion
 
+#region Version 22
+
+        [DatabaseVersion (22)]
+        private bool Migrate_22 ()
+        {
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN LastSyncedStamp INTEGER DEFAULT NULL");
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN FileModifiedStamp INTEGER DEFAULT NULL");
+            Execute ("UPDATE CoreTracks SET LastSyncedStamp = DateAddedStamp;");
+            return true;
+        }
+        
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -623,7 +636,9 @@ namespace Banshee.Database
                     DateAddedStamp      INTEGER,
                     DateUpdatedStamp    INTEGER,
                     MetadataHash        TEXT,
-                    BPM                 INTEGER
+                    BPM                 INTEGER,
+                    LastSyncedStamp     INTEGER,
+                    FileModifiedStamp   INTEGER
                 )
             ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
             Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri)");
@@ -797,7 +812,7 @@ namespace Banshee.Database
                         NULL,
                         DateAddedStamp,
                         DateAddedStamp,
-                        NULL, NULL
+                        NULL, NULL, DateAddedStamp, NULL
                         FROM Tracks
             ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
 

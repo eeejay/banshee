@@ -41,14 +41,25 @@ namespace Hyena.Collections
         #pragma warning disable 0067
         // FIXME: This is to mute gmcs: https://bugzilla.novell.com/show_bug.cgi?id=360455
         public event EventHandler Finished;
+        public event EventHandler ProcessedItem;
         #pragma warning restore 0067
-    
+
         private Queue<T> queue = new Queue<T> ();
         private object monitor = new object ();
         private AutoResetEvent thread_wait;
         private bool processing = false;
         private bool threaded = true;
         private bool canceled = false;
+
+        private int processed_count;
+        public int ProcessedCount {
+            get { return processed_count; }
+        }
+        
+        private int total_count;
+        public int TotalCount {
+            get { return total_count; }
+        }
         
         protected abstract T ProcessItem (T item);
         
@@ -57,8 +68,21 @@ namespace Hyena.Collections
             lock (this) {
                 canceled = false;
             }
+
+            lock (queue) {
+                total_count = 0;
+                processed_count = 0;
+            }
             
             EventHandler handler = Finished;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
+        }
+
+        protected void OnProcessedItem ()
+        {
+            EventHandler handler = ProcessedItem;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
@@ -68,6 +92,8 @@ namespace Hyena.Collections
         {
             lock (queue) {
                 queue.Clear ();
+                total_count = 0;
+                processed_count = 0;
             }
         }
         
@@ -76,6 +102,7 @@ namespace Hyena.Collections
             lock (this) {                
                 lock (queue) {
                     queue.Enqueue (item);
+                    total_count++;
                 }
                 
                 if (!threaded) {
@@ -120,15 +147,16 @@ namespace Hyena.Collections
                         T item = null;
                         lock (queue) {
                             item = queue.Dequeue ();
+                            processed_count++;
                         }
                         
                         EnqueueDownstream (ProcessItem (item));
+                        OnProcessedItem ();
                     }
                 } catch (ElementProcessCanceledException) {
                     OnCanceled ();
                 }
-                
-                
+
                 lock (this) {
                     processing = false;
                 }

@@ -1,3 +1,46 @@
+2008-09-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	Rescan action that triggers rescan of the Music Library folder.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Remove unnecessary DateAdded set.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Add
+	FileModifiedStamp and LastSyncedStamp properties.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.csproj:
+	* src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs: New file
+	that scans all files in a Library's BaseDirectory, importing new items,
+	removing items no longer on disk, and identifying items that were renamed.
+
+	* src/Libraries/Hyena/Hyena.Collections/QueuePipelineElement.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Factor a
+	lot of the counting of the ImportElement up into QueuePipelineElement.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add the LastSynced and FileModified columns.
+
+	* src/Core/Banshee.Core/Banshee.IO.SystemIO/File.cs:
+	* src/Core/Banshee.Core/Banshee.IO/File.cs:
+	* src/Core/Banshee.Core/Banshee.IO/IFile.cs:
+	* src/Backends/Banshee.Unix/Banshee.IO.Unix/File.cs: Add GetModifiedTime
+	method.
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Set
+	FileModified and LastSynced stamps.
+
+	* src/Libraries/Hyena/Hyena.Collections/QueuePipeline.cs: Make sure no
+	elements still have items left to process when considering if the pipeline
+	is finished/empty.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Add
+	CreateFetchCommand method that returns a HyenaSqliteCommand useful for
+	fetching items from a model with a custom condition/limit/order.
+
 2008-09-11  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs: Do

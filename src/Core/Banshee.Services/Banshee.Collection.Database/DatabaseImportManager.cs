@@ -189,8 +189,6 @@ namespace Banshee.Collection.Database
                 TagLib.File file = StreamTagger.ProcessUri (uri);
                 track = new DatabaseTrackInfo ();
                 StreamTagger.TrackInfoMerge (track, file);
-                
-                track.DateAdded = DateTime.Now;
                 track.PrimarySource = trackPrimarySourceChooser (track);
 
                 if (track.PrimarySource is Banshee.Library.LibrarySource) {

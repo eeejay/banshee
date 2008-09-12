@@ -383,12 +383,17 @@ namespace Hyena.Data.Sqlite
         
         public IEnumerable<T> FetchAllMatching (string condition, params object [] vals)
         {
-            HyenaSqliteCommand fetch_matching_command = new HyenaSqliteCommand (String.Format ("{0} AND {1}", SelectCommand.Text, condition));
+            HyenaSqliteCommand fetch_matching_command = CreateFetchCommand (condition);
             using (IDataReader reader = connection.Query (fetch_matching_command, vals)) {
                 while (reader.Read ()) {
                     yield return Load (reader);
                 }
             }
+        }
+
+        public HyenaSqliteCommand CreateFetchCommand (string condition)
+        {
+            return new HyenaSqliteCommand (String.Format ("{0} AND {1}", SelectCommand.Text, condition));
         }
         
         public IEnumerable<T> FetchRange (int offset, int limit)

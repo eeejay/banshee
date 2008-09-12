@@ -62,6 +62,7 @@ namespace Banshee.Collection
         private SafeUri more_info_uri;
         private string mimetype;
         private long filesize;
+        private long file_mtime;
 
         private string artist_name;
         private string album_title;
@@ -89,6 +90,7 @@ namespace Banshee.Collection
         private TimeSpan duration;
         private DateTime release_date;
         private DateTime date_added;
+        private DateTime last_synced;
 
         private int play_count;
         private int skip_count;
@@ -172,6 +174,16 @@ namespace Banshee.Collection
         public virtual long FileSize {
             get { return filesize; }
             set { filesize = value; }
+        }
+
+        public virtual long FileModifiedStamp {
+            get { return file_mtime; }
+            set { file_mtime = value; }
+        }
+
+        public virtual DateTime LastSyncedStamp {
+            get { return last_synced; }
+            set { last_synced = value; }
         }
 
         [Exportable (ExportName = "artist")]

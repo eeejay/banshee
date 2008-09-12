@@ -63,6 +63,11 @@ namespace Banshee.IO.SystemIO
                 return -1;
             }
         }
+
+        public long GetModifiedTime (SafeUri uri)
+        {
+            return Hyena.DateTimeUtil.FromDateTime (new System.IO.FileInfo (uri.LocalPath).LastWriteTime);
+        }
         
         public System.IO.Stream OpenRead (SafeUri uri)
         {
