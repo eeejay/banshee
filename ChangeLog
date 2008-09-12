@@ -1,5 +1,12 @@
 2008-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	Split HasCollectionChanged method to HasCollectionCountChanged and 
+	HasCollectionLastModifiedChanged methods
+
+2008-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
 	Implement playlist loading into the FSQ
 

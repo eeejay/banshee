@@ -114,7 +114,8 @@ namespace Banshee.Collection.Indexer
             }
         }
         
-        public bool HasCollectionChanged (int count, long time)
+        
+        public bool HasCollectionCountChanged (int count)
         {
             lock (this) {
                 int total_count = 0;
@@ -124,10 +125,15 @@ namespace Banshee.Collection.Indexer
                     total_count += library.Count;
                 }
                 
-                if (count != total_count) {
-                    return true;
-                }
-                
+                return count != total_count;
+            }
+        }
+        
+        public bool HasCollectionLastModifiedChanged (int time)
+        {
+            lock (this) {
+                long last_updated = 0;
+
                 foreach (LibrarySource library in libraries) {
                     last_updated = Math.Max (last_updated, ServiceManager.DbConnection.Query<long> (
                         String.Format ("SELECT MAX(CoreTracks.DateUpdatedStamp) {0}",
