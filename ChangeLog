@@ -1,5 +1,13 @@
 2008-09-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs: Do
+	not display the two version strings if they are the same; Wiki->Website
+	string update
+
+	* configure.ac: Bump version to 1.3.0
+
+2008-09-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Beroe/Beroe/IndexerClient.cs: Call 
 	IndexerService.RegisterCleanupAndShutdown to notify any connected client
 	using the indexer that it should release it and let the user use Banshee

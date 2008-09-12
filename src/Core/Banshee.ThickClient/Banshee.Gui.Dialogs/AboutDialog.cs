@@ -83,9 +83,11 @@ namespace Banshee.Gui.Dialogs
             // yet though since it breaks stuff for other people. 
             Name = "Banshee";
             Logo = Gdk.Pixbuf.LoadFromResource (ApplicationContext.Debugging ? /*"jcastro.png"*/ "banshee-logo.png" : "banshee-logo.png");
-            Version = String.Format ("{0} ({1})", 
-                Banshee.ServiceStack.Application.DisplayVersion, 
-                Banshee.ServiceStack.Application.Version);
+            Version = Banshee.ServiceStack.Application.DisplayVersion == Banshee.ServiceStack.Application.Version 
+                ? Banshee.ServiceStack.Application.DisplayVersion
+                : String.Format ("{0} ({1})", 
+                    Banshee.ServiceStack.Application.DisplayVersion, 
+                    Banshee.ServiceStack.Application.Version);
             Comments = Catalog.GetString ("Extraordinary Multimedia Management and Playback");
             Copyright = Catalog.GetString (
                 "Copyright \u00a9 2005\u20132008 Novell, Inc.\n" + 
@@ -93,7 +95,7 @@ namespace Banshee.Gui.Dialogs
             );
             
             Website = "http://banshee-project.org/";
-            WebsiteLabel = Catalog.GetString ("Banshee Wiki");
+            WebsiteLabel = Catalog.GetString ("Banshee Website");
 
             Authors = authors.ToArray ();
             Artists = ProductInformation.Artists;
