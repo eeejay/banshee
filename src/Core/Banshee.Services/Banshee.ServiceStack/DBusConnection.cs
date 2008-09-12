@@ -96,8 +96,6 @@ namespace Banshee.ServiceStack
                 return false;
             }
             
-            Console.WriteLine ("ATTEMPTING TO CONNECT: {0}", serviceName);
-            
             try {
                 if (Connect (serviceName, true) == RequestNameReply.PrimaryOwner) {
                     active_connections.Add (serviceName);
