@@ -36,6 +36,7 @@ src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs
 src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs
 src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs
 src/Core/Banshee.Services/Banshee.Collection/MoveOnInfoSaveJob.cs
+src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs
 src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs
 src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs
 src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs
