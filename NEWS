@@ -101,20 +101,20 @@ DEPENDENCIES
     * NDesk DBus (ndesk-dbus) 0.5
     * NDesk DBus GLib (ndesk-dbus-glib) 0.3
     * Mono.Addins (mono-addins) 0.3.1
-    * TagLib# (taglib-sharp) 2.0
+    * TagLib# (taglib-sharp) 2.0.3.0
 
     * Required to build default feature stack:
       * libmtp >= 0.2.0 and < 0.3.0 (0.2.6 recommended)
         * Note to packagers: since libmtp has different .so files for
           different versions, you need to require in your package the same
           version of libmtp you used to build Banshee.
-      * ipod-sharp >= 0.8.0
-      * mono-zeroconf >= 0.7.3
+      * ipod-sharp >= 0.8.1
+      * mono-zeroconf >= 0.8.0
       * boo >= 0.8.1
 
     * Run-time requirements for default feature stack:
-      * PodSleuth 
-      * Brasero
+      * PodSleuth (0.6.3)
+      * Brasero   (0.8.1)
       * Avahi
 
     Please note that for openSUSE, all of the dependencies above can be 
