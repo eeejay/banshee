@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.2.1 - Released August 12, 2008
+WELCOME TO BANSHEE 1.3.0 - Released September 11, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,7 +10,7 @@ WELCOME TO BANSHEE 1.2.1 - Released August 12, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/download/archives/1.2.1/
+  * Learn More: http://banshee-project.org/download/archives/1.3.0/
 
 
 ===============================================================================
@@ -36,9 +36,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 1.2.1 Tarballs:
-      http://download.banshee-project.org/banshee/banshee-1-1.2.1.tar.bz2
-      http://download.banshee-project.org/banshee/banshee-1-1.2.1.tar.gz
+    * Banshee 1.3.0 Tarballs:
+      http://download.banshee-project.org/banshee/banshee-1-1.3.0.tar.bz2
+      http://download.banshee-project.org/banshee/banshee-1-1.3.0.tar.gz
 
 Packages
 --------
@@ -51,8 +51,8 @@ Packages
 ChangeLogs & Checksums
 ----------------------
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.2.1.changes
-	* http://download.banshee-project.org/banshee/banshee-1-1.2.1.sha1sum
+    * http://download.banshee-project.org/banshee/banshee-1-1.3.0.changes
+	* http://download.banshee-project.org/banshee/banshee-1-1.3.0.sha1sum
 
 
 ===============================================================================
@@ -101,7 +101,7 @@ DEPENDENCIES
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.2.1 builds on the successful Banshee 1.2 release, adding better 
+    Banshee 1.3.0 builds on the successful Banshee 1.2 release, adding better 
     translation coverage, several bug fixes, and a couple new features.
 
     Big features and bug fixes in this release include:
@@ -133,7 +133,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.2.1
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.3.0
 
 
 ===============================================================================
