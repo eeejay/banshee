@@ -1,3 +1,13 @@
+2008-09-11  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Implement playlist loading into the FSQ
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	Allow playlist importing to work against any PrimarySource
+
+	* configure.ac: Disable the DEVEL_BUILD
+
 2008-09-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* build/m4/banshee/dap-ipod.m4: Bump ipod-sharp to 0.8.1

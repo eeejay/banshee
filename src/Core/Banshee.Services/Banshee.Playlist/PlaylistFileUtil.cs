@@ -12,9 +12,9 @@ using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Database;
 using Banshee.Sources;
-using Banshee.Library;
 using Banshee.Playlists.Formats;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 
 namespace Banshee.Playlist
 {
@@ -121,6 +121,20 @@ namespace Banshee.Playlist
             }
             return uris.ToArray ();
         }
+        
+        public static bool PathHasPlaylistExtension (string playlistUri)
+        {
+            if (System.IO.Path.HasExtension (playlistUri)) {
+                string extension = System.IO.Path.GetExtension (playlistUri).ToLower ();
+                foreach (PlaylistFormatDescription format in PlaylistFileUtil.ExportFormats) {
+                    if (extension.Equals ("." + format.FileExtension)) {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
 
         public static IPlaylistFormat Load (string playlistUri, Uri baseUri)
         {
@@ -163,6 +177,11 @@ namespace Banshee.Playlist
         
         public static void ImportPlaylistToLibrary (string path)
         {
+            ImportPlaylistToLibrary (path, ServiceManager.SourceManager.MusicLibrary, null);
+        }
+        
+        public static void ImportPlaylistToLibrary (string path, PrimarySource source, DatabaseImportManager importer)
+        {
             try {
                 SafeUri uri = new SafeUri (path);
                 PlaylistParser parser = new PlaylistParser ();
@@ -177,7 +196,9 @@ namespace Banshee.Playlist
                         uris.Add (((Uri)element["uri"]).LocalPath);
                     }
                     
-                    ImportPlaylistWorker worker = new ImportPlaylistWorker (System.IO.Path.GetFileNameWithoutExtension (uri.LocalPath), uris.ToArray ());
+                    ImportPlaylistWorker worker = new ImportPlaylistWorker (
+                        System.IO.Path.GetFileNameWithoutExtension (uri.LocalPath), 
+                        uris.ToArray (), source, importer);
                     worker.Import ();
                 }
             } catch (Exception e) {
@@ -190,18 +211,24 @@ namespace Banshee.Playlist
     {
         private string [] uris;
         private string name;
-        private LibraryImportManager importer;
         
-        public ImportPlaylistWorker (string name, string [] uris)
+        private PrimarySource source;
+        private DatabaseImportManager importer;
+        
+        public ImportPlaylistWorker (string name, string [] uris, PrimarySource source, DatabaseImportManager importer)
         {
             this.name = name;
             this.uris = uris;
+            this.source = source;
+            this.importer = importer;
         }
         
         public void Import ()
         {
             try {
-                importer = new LibraryImportManager ();
+                if (importer == null) {
+                    importer = new Banshee.Library.LibraryImportManager ();
+                }
                 importer.Finished += CreatePlaylist;
                 importer.Enqueue (uris);
             } catch (PlaylistImportCanceledException e) {
@@ -212,16 +239,17 @@ namespace Banshee.Playlist
         private void CreatePlaylist (object o, EventArgs args)
         {
             try {
-                PlaylistSource playlist = new PlaylistSource (name, ServiceManager.SourceManager.MusicLibrary.DbId);
+                PlaylistSource playlist = new PlaylistSource (name, source.DbId);
                 playlist.Save ();
-                ServiceManager.SourceManager.MusicLibrary.AddChildSource (playlist);
+                source.AddChildSource (playlist);
 
                 HyenaSqliteCommand insert_command = new HyenaSqliteCommand (String.Format (
                     @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES ({0}, ?)", playlist.DbId));
 
                 //ServiceManager.DbConnection.BeginTransaction ();
                 foreach (string uri in uris) {
-                    int track_id = LibrarySource.GetTrackIdForUri (uri);
+                    // FIXME: Does the following call work if the source is just a PrimarySource (not LibrarySource)?
+                    int track_id = Banshee.Library.LibrarySource.GetTrackIdForUri (uri);
                     if (track_id > 0) {
                         ServiceManager.DbConnection.Execute (insert_command, track_id);
                     }

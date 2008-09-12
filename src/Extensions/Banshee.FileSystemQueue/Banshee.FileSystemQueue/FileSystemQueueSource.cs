@@ -39,6 +39,8 @@ using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Configuration;
+using Banshee.Kernel;
+using Banshee.Playlist;
 
 using Banshee.Gui;
 
@@ -137,7 +139,11 @@ namespace Banshee.FileSystemQueue
                     };
                 }
             
-                importer.Enqueue (path);
+                if (PlaylistFileUtil.PathHasPlaylistExtension (path)) {
+                    PlaylistFileUtil.ImportPlaylistToLibrary (path, this, importer);
+                } else {
+                    importer.Enqueue (path);
+                }
             }
         }
         
