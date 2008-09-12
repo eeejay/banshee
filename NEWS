@@ -55,11 +55,19 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
       * Banshee will now ask if it should be the default media player
 
+      * Support for BPM, Grouping, BitRate, Conductor, DiscCount, and
+        IsCompilation reading, writing, columns, and searching.
+
     Notable bug fixes:
 
       * Drag and Drop to Nautilus works again (BGO #535128) 
       * Improved support for dark themes (BGO #544840)
-
+      * Improved ASX support (BGO #545646)
+      * Fix performance bug with loading USB Mass Storage DAPs (BGO #548254)
+      * Fix bug with the DAP usage bar being filtered (BGO #537366)
+      * Fix performance issue with album and podcast browsers (BGO #547628)
+      * Fix lots of threading/freezing issues
+      * Fix lots of avoidable crashes
       * 64 bugs were closed since 1.2.1
 
 
