@@ -74,6 +74,8 @@ namespace Banshee.GnomeBackend
                             base_key, StringUtil.CamelCaseToUnderCase (String.Format ("{0}/{1}", @namespace.Replace (".", "/"), part))
                         ));
                     }
+
+                    key_table[hash_key] = key_table[hash_key].Replace (' ', '_');
                 }
                 
                 return key_table[hash_key];

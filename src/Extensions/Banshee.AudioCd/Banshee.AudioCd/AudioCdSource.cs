@@ -48,8 +48,7 @@ namespace Banshee.AudioCd
         private AudioCdService service;
         private AudioCdDiscModel disc_model;
         private SourceMessage query_message;
-        
-        
+
         public AudioCdSource (AudioCdService service, AudioCdDiscModel discModel) 
             : base (Catalog.GetString ("Audio CD"), discModel.Title, 400)
         {

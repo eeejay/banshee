@@ -1,5 +1,13 @@
 2008-09-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Whitespace.
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GConfConfigurationClient.cs:
+	Replace all whitespace with underscores to prevent an invalid key/crash.
+
+2008-09-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.PlayQueue/Makefile.am:
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue.csproj:
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
