@@ -73,7 +73,9 @@ namespace Banshee.RemoteAudio
   
         public void Dispose ()
         {
-            browser.Dispose ();
+            if (browser != null) {
+                browser.Dispose ();
+            }
         }
         
         string Banshee.ServiceStack.IService.ServiceName {

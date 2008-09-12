@@ -1,3 +1,8 @@
+2008-09-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteAudioService.cs:
+	Avoid NRE when disposing if the network isn't connected.
+
 2008-09-12  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
