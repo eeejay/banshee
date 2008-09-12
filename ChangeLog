@@ -1,5 +1,19 @@
 2008-09-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.PlayQueue/Makefile.am:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue.csproj:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:
+	Separate out the PlayQueue actions into their own subclass of
+	BansheeActionGroup, so they are disposed of properly when the plugin is,
+	etc (BGO #552005).  Also, don't show Add to Play Queue action when in the
+	play queue iteslf (BGO #551672).
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Check
+	whether the action group is already registered before [un]registering.
+
+2008-09-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteAudioService.cs:
 	Avoid NRE when disposing if the network isn't connected.
 

@@ -68,12 +68,16 @@ namespace Banshee.Gui
 
         public void Register ()
         {
-            Actions.AddActionGroup (this);
+            if (Actions.FindActionGroup (this.Name) == null) {
+                Actions.AddActionGroup (this);
+            }
         }
 
         public void UnRegister ()
         {
-            Actions.RemoveActionGroup (this);
+            if (Actions.FindActionGroup (this.Name) != null) {
+                Actions.RemoveActionGroup (this);
+            }
         }
 
         public override void Dispose ()

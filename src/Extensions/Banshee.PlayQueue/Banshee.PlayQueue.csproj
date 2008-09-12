@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banshee.PlayQueue\PlayQueueSource.cs" />
+    <Compile Include="Banshee.PlayQueue\PlayQueueActions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ActiveSourceUI.xml">

@@ -29,7 +29,6 @@
 using System;
 
 using Mono.Unix;
-using Gtk;
 
 using Hyena.Data.Sqlite;
 
@@ -53,8 +52,8 @@ namespace Banshee.PlayQueue
 
         private ITrackModelSource prior_playback_source;
         private DatabaseTrackInfo playing_track;
-        private bool actions_loaded = false;
-
+        private PlayQueueActions actions;
+        
         protected override bool HasArtistAlbum {
             get { return false; }
         }
@@ -70,7 +69,7 @@ namespace Banshee.PlayQueue
             Properties.SetString ("Icon.Name", "source-playlist");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
             
-            ((DatabaseTrackListModel)TrackModel).ForcedSortQuery = "CorePlaylistEntries.ViewOrder ASC, CorePlaylistEntries.EntryID ASC";
+            DatabaseTrackModel.ForcedSortQuery = "CorePlaylistEntries.ViewOrder ASC, CorePlaylistEntries.EntryID ASC";
             
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent);
             ServiceManager.PlaybackController.Transition += OnCanonicalPlaybackControllerTransition;
@@ -79,37 +78,10 @@ namespace Banshee.PlayQueue
             
             // TODO change this Gtk.Action code so that the actions can be removed.  And so this
             // class doesn't depend on Gtk/ThickClient.
-            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
-            uia_service.TrackActions.Add (new ActionEntry [] {
-                new ActionEntry ("AddToPlayQueueAction", Stock.Add,
-                    Catalog.GetString ("Add to Play Queue"), "q",
-                    Catalog.GetString ("Append selected songs to the play queue"),
-                    OnAddToPlayQueue)
-            });
-            
-            uia_service.GlobalActions.AddImportant (
-                new ActionEntry ("ClearPlayQueueAction", Stock.Clear,
-                    Catalog.GetString ("Clear"), null,
-                    Catalog.GetString ("Remove all tracks from the play queue"),
-                    OnClearPlayQueue)
-            );
-            
-            uia_service.GlobalActions.Add (new ToggleActionEntry [] {
-                new ToggleActionEntry ("ClearPlayQueueOnQuitAction", null,
-                    Catalog.GetString ("Clear on Quit"), null, 
-                    Catalog.GetString ("Clear the play queue when quitting"), 
-                    OnClearPlayQueueOnQuit, ClearOnQuitSchema.Get ())
-            });
-            
-            uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
+            actions = new PlayQueueActions (this);
             
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/PlayQueueContextMenu");
-            
-            actions_loaded = true;
-            
-            UpdateActions ();
-            ServiceManager.SourceManager.ActiveSourceChanged += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
 
             // TODO listen to all primary sources, and handle transient primary sources
             ServiceManager.SourceManager.MusicLibrary.TracksChanged += HandleTracksChanged;
@@ -126,7 +98,6 @@ namespace Banshee.PlayQueue
             };
             
             Reload ();
-
             SetAsPlaybackSourceUnlessPlaying ();
         }
         
@@ -138,12 +109,23 @@ namespace Banshee.PlayQueue
             }
         }
 
+        public void Clear ()
+        {
+            playing_track = null;
+            RemoveTrackRange (DatabaseTrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
+            Reload ();
+        }
+
         public void Dispose ()
         {
             ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
 
+            if (actions != null) {
+                actions.Dispose ();
+            }
+
             if (ClearOnQuitSchema.Get ()) {
-                OnClearPlayQueue (this, EventArgs.Empty);
+                Clear ();
             }
         }
         
@@ -169,15 +151,6 @@ namespace Banshee.PlayQueue
             SetAsPlaybackSourceUnlessPlaying ();
         }
         
-        protected override void OnUpdated ()
-        {
-            if (actions_loaded) {
-                UpdateActions ();
-            }
-            
-            base.OnUpdated ();
-        }
-        
         private void OnCanonicalPlaybackControllerTransition (object o, EventArgs args)
         {
             if (Count > 0) {
@@ -198,44 +171,7 @@ namespace Banshee.PlayQueue
                 }
             }
         }
-        
-        private void OnAddToPlayQueue (object o, EventArgs args)
-        {
-            AddSelectedTracks (ServiceManager.SourceManager.ActiveSource);
-        }
-        
-        private void OnClearPlayQueue (object o, EventArgs args)
-        {
-            playing_track = null;
-            RemoveTrackRange ((DatabaseTrackListModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
-            Reload ();
-        }
-        
-        private void OnClearPlayQueueOnQuit (object o, EventArgs args)
-        {
-            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
-            if (uia_service == null) {
-                return;
-            }
-            
-            ToggleAction action = (ToggleAction)uia_service.GlobalActions["ClearPlayQueueOnQuitAction"];
-            ClearOnQuitSchema.Set (action.Active);
-        }
-        
-        private void UpdateActions ()
-        {   
-            InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
-            if (uia_service == null) {
-                return;
-            }
-            
-            Source source = ServiceManager.SourceManager.ActiveSource;
-            bool in_db = (source != null && source.Parent is DatabaseSource) || source is DatabaseSource;
-            
-            uia_service.GlobalActions.UpdateAction ("ClearPlayQueueAction", true, Count > 0);
-            uia_service.TrackActions.UpdateAction ("AddToPlayQueueAction", in_db, true);
-        }
-        
+
         void IBasicPlaybackController.First ()
         {
             ((IBasicPlaybackController)this).Next (false);

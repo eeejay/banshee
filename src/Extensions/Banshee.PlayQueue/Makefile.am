@@ -3,7 +3,9 @@ TARGET = library
 LINK = $(REF_EXTENSION_PLAYQUEUE)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
-SOURCES = Banshee.PlayQueue/PlayQueueSource.cs 
+SOURCES =  \
+	Banshee.PlayQueue/PlayQueueActions.cs \
+	Banshee.PlayQueue/PlayQueueSource.cs 
 
 RESOURCES =  \
 	Banshee.PlayQueue.addin.xml \
