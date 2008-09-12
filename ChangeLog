@@ -1,5 +1,9 @@
 2008-09-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* build/m4/banshee/dap-ipod.m4: Bump ipod-sharp to 0.8.1
+
+2008-09-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
 	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
 	Rescan action that triggers rescan of the Music Library folder.
