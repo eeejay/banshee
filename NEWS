@@ -41,7 +41,9 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
         applications like GNOME Do, Beagle, and Tangerine to create their
         own queryable indexes of Banshee's collection, or query Banshee's
         collection in real time
-   
+
+      * Flat-file playlists can now be opened from the command line/nautilus
+
       * Podcasting improvements
 
       * New flashy Now Playing UI for displaying cover art
