@@ -18,8 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beroe", "src\Clients\Beroe\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Halie", "src\Clients\Halie\Halie.csproj", "{B574AEB0-59F1-4FB7-A91A-8E5A651970CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beroe", "src\Clients\Beroe\Beroe.csproj", "{E0E10333-9B05-4463-8A15-6738C186BF87}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booter", "src\Clients\Booter\Booter.csproj", "{4B890CB0-F5C8-4B1B-A1B8-3813BF5126C0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{48EA1A64-29EE-4555-9E79-49453EB51976}"
