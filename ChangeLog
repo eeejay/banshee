@@ -1,3 +1,8 @@
+2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Allow shrinking selections with the shift-key pressed (BGO #535561).
+
 2008-09-15  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Use the

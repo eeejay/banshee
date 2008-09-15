@@ -379,11 +379,6 @@ namespace Hyena.Data.Gui
             
             ProxyEventToCell (evnt, true);
             
-            if (Selection != null && evnt.Button == 1 && evnt.Type != Gdk.EventType.TwoButtonPress && 
-                (evnt.State & Gdk.ModifierType.ControlMask) == 0 && Selection.Contains (row_index)) {
-                return true;
-            }
-
             object item = model[row_index];
             if (item == null) {
                 return true;
