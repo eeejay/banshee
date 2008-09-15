@@ -51,6 +51,11 @@ namespace Hyena.Widgets
         private Cairo.Color fill_color;
         private bool draw_border = true;
         private Pattern fill_pattern;
+
+        // Ugh, this is to avoid the GLib.MissingIntPtrCtorException seen by some; BGO #552169
+        protected RoundedFrame (IntPtr ptr) : base (ptr)
+        {
+        }
         
         public RoundedFrame ()
         {

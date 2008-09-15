@@ -56,6 +56,11 @@ namespace Banshee.Dap.Gui
                 return large_icon;
             }
         }
+
+        // Ugh, this is to avoid the GLib.MissingIntPtrCtorException seen by some; BGO #552169
+        protected DapPropertiesDisplay (IntPtr ptr) : base (ptr)
+        {
+        }
         
         public DapPropertiesDisplay (DapSource source)
         {

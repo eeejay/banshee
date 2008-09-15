@@ -1,3 +1,11 @@
+2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDisplay.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Add protected
+	IntPtr ctor to avoid GLib.MissingIntPtrCtorException I don't honestly
+	understand (BGO #552169).
+
 2008-09-15  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Beroe/Beroe/IndexerClient.cs: Support a --client option to

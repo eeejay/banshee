@@ -46,6 +46,11 @@ namespace Banshee.Dap.Gui
         private VBox vbox;
         //private WrapLabel dap_stats;
 
+        // Ugh, this is to avoid the GLib.MissingIntPtrCtorException seen by some; BGO #552169
+        protected DapContent (IntPtr ptr) : base (ptr)
+        {
+        }
+
         public DapContent (DapSource source) : base (source)
         {
             dap = source;
