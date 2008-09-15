@@ -55,7 +55,7 @@ namespace Banshee.Lastfm.Radio
         [Widget] private Gtk.Button ok_button;
 
         public StationEditor (LastfmSource lastfm, StationSource source) : base (dialog_name, new Glade.XML (
-            System.Reflection.Assembly.GetExecutingAssembly (), dialog_resource, dialog_name, "banshee"))
+            System.Reflection.Assembly.GetExecutingAssembly (), dialog_resource, dialog_name, Banshee.ServiceStack.Application.InternalName))
         {
             this.lastfm = lastfm;
             this.source = source;
@@ -65,7 +65,7 @@ namespace Banshee.Lastfm.Radio
         }
     
         public StationEditor (LastfmSource lastfm) : base (dialog_name, new Glade.XML (
-            System.Reflection.Assembly.GetExecutingAssembly (), dialog_resource, dialog_name, "banshee"))
+            System.Reflection.Assembly.GetExecutingAssembly (), dialog_resource, dialog_name, Banshee.ServiceStack.Application.InternalName))
         {
             this.lastfm = lastfm;
             Initialize ();

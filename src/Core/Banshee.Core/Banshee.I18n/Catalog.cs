@@ -75,6 +75,7 @@ namespace Banshee.I18n
             IntPtr domain_ptr = domain == null ? IntPtr.Zero : UnixMarshal.StringToHeap (domain);
             
             if (domain == null) {
+                // FIXME banshee-1?
                 IntPtr ptr = UnixMarshal.StringToHeap ("banshee");
                 UnixMarshal.FreeHeap (ptr);
             }

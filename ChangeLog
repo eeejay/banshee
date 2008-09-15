@@ -1,3 +1,11 @@
+2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:
+	Apply the translation domain fix here too.
+
+	* src/Core/Banshee.Core/Banshee.I18n/Catalog.cs: Add a note about the
+	hardcoded "banshee" for if/when we use this class.
+
 2008-09-15  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/GladeWindow.cs: Set
