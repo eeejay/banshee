@@ -30,6 +30,7 @@ using System;
 using System.Collections.Generic;
 
 using Gtk;
+using Hyena.Gui;
 
 using Banshee.Collection;
 
@@ -61,10 +62,12 @@ namespace Banshee.Gui.TrackEditor
         }
         
         private List<FieldSlot> field_slots = new List<FieldSlot> ();
+        private object tooltip_host;
         
         public FieldPage ()
         {
             Spacing = EditorUtilities.RowSpacing;
+            tooltip_host = TooltipSetter.CreateHost ();
         }
         
         public void Initialize (TrackEditorDialog dialog)
@@ -93,27 +96,27 @@ namespace Banshee.Gui.TrackEditor
             get { return PageType.Edit; }
         }
     
-        public void AddField (Box parent, Widget field, FieldLabelClosure labelClosure, 
+        public void AddField (Box parent, Widget field, string syncTooltip, FieldLabelClosure labelClosure, 
             FieldValueClosure readClosure, FieldValueClosure writeClosure)
         {
-            AddField (parent, EditorUtilities.CreateLabel (String.Empty), field, 
+            AddField (parent, EditorUtilities.CreateLabel (String.Empty), field, syncTooltip,
                 labelClosure, readClosure, writeClosure, FieldOptions.None);
         }
         
-        public void AddField (Box parent, Widget field, FieldLabelClosure labelClosure, 
+        public void AddField (Box parent, Widget field, string syncTooltip, FieldLabelClosure labelClosure, 
             FieldValueClosure readClosure, FieldValueClosure writeClosure, FieldOptions options)
         {
-            AddField (parent, EditorUtilities.CreateLabel (String.Empty), field, 
+            AddField (parent, EditorUtilities.CreateLabel (String.Empty), field, syncTooltip,
                 labelClosure, readClosure, writeClosure, options);
         }
         
-        public void AddField (Box parent, Widget label, Widget field, FieldLabelClosure labelClosure, 
-            FieldValueClosure readClosure, FieldValueClosure writeClosure)
+        public void AddField (Box parent, Widget label, Widget field, string syncTooltip, 
+            FieldLabelClosure labelClosure, FieldValueClosure readClosure, FieldValueClosure writeClosure)
         {
-            AddField (parent, label, field, labelClosure, readClosure, writeClosure, FieldOptions.None);
+            AddField (parent, label, field, syncTooltip, labelClosure, readClosure, writeClosure, FieldOptions.None);
         }
         
-        public void AddField (Box parent, Widget label, Widget field, FieldLabelClosure labelClosure, 
+        public void AddField (Box parent, Widget label, Widget field, string syncTooltip, FieldLabelClosure labelClosure, 
             FieldValueClosure readClosure, FieldValueClosure writeClosure, FieldOptions options)
         {
             FieldSlot slot = new FieldSlot ();
@@ -125,6 +128,9 @@ namespace Banshee.Gui.TrackEditor
             slot.WriteClosure = writeClosure;
             if (MultipleTracks && (options & FieldOptions.NoSync) == 0) {
                 slot.SyncButton = new SyncButton ();
+                if (syncTooltip != null) {
+                    TooltipSetter.Set (tooltip_host, slot.SyncButton, syncTooltip);
+                }
                 slot.SyncButton.Clicked += delegate {
                     dialog.ForeachNonCurrentTrack (delegate (EditorTrackInfo track) {
                         slot.WriteClosure (track, slot.Field);

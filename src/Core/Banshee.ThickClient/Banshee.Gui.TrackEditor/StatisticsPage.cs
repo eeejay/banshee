@@ -124,8 +124,10 @@ namespace Banshee.Gui.TrackEditor
                 }
                 
                 foreach (TagLib.ICodec codec in file.Properties.Codecs) {
-                    AddItem (String.Format (Catalog.GetString ("{0} Codec:"), 
-                        codec.MediaTypes.ToString ()), codec.Description);
+                    if (codec != null) {
+                        AddItem (String.Format (Catalog.GetString ("{0} Codec:"), 
+                            codec.MediaTypes.ToString ()), codec.Description);
+                    }
                 }
                 
                 AddItem ("Container Formats:", file.TagTypes.ToString ());

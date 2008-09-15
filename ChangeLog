@@ -1,3 +1,19 @@
+2008-09-15  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Use the
+	new editor, even though I still haven't finished implementing save
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	Support setting a tooltip on the sync buttons
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Fix a crasher/NRE
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
+	Add tooltips
+
 2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs: Bring

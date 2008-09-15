@@ -47,12 +47,14 @@ namespace Banshee.Gui.TrackEditor
         protected override void AddFields ()
         {
             AddField (this, new TextEntry (), 
+                Catalog.GetString ("Set all composers to this value"),
                 delegate { return Catalog.GetString ("Composer:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.Composer; },
                 delegate (EditorTrackInfo track, Widget widget) {  track.Composer = ((TextEntry)widget).Text; }
             );
             
             AddField (this, new TextEntry (), 
+                Catalog.GetString ("Set all conductors to this value"),
                 delegate { return Catalog.GetString ("Conductor:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.Conductor; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Conductor = ((TextEntry)widget).Text; }
@@ -64,12 +66,14 @@ namespace Banshee.Gui.TrackEditor
             PackStart (box, false, false, 0);
             
             AddField (box, new TextEntry (), 
+                Catalog.GetString ("Set all groupings to this value"),
                 delegate { return Catalog.GetString ("Grouping:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.Grouping; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Grouping = ((TextEntry)widget).Text; }
             );
             
             AddField (box, new SpinButtonEntry (0, 500, 1), 
+                Catalog.GetString ("Set all beats per minute to this value"),
                 delegate { return Catalog.GetString ("Beats Per Minute:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((SpinButtonEntry)widget).Value = track.Bpm; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Bpm = (int)((SpinButtonEntry)widget).Value; },
@@ -77,12 +81,14 @@ namespace Banshee.Gui.TrackEditor
             );
             
             AddField (this, new TextEntry (), 
+                Catalog.GetString ("Set all copyrights to this value"),
                 delegate { return Catalog.GetString ("Copyright:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.Copyright; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Copyright = ((TextEntry)widget).Text; }
             );
             
             AddField (this, new TextViewEntry (), 
+                Catalog.GetString ("Set all comments to this value"),
                 delegate { return Catalog.GetString ("Comment:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextViewEntry)widget).Text = track.Comment; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Comment = ((TextViewEntry)widget).Text; }
