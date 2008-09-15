@@ -34,7 +34,7 @@ using Banshee.ServiceStack;
 namespace Banshee.Collection.Indexer
 {
     [Interface ("org.bansheeproject.CollectionIndexer.Service")]
-    public interface ICollectionIndexerService : IService, IDBusExportable
+    public interface ICollectionIndexerService : IService
     {
         event Hyena.Action CollectionChanged;
         event Hyena.Action CleanupAndShutdown;

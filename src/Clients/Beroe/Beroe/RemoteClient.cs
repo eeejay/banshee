@@ -37,11 +37,15 @@ namespace Beroe
         private bool indexer_running;
         private bool shutdown_requested;
         
+        public RemoteClient ()
+        {
+            ShowDebugMessages = true;
+        }
+        
         protected override void ResetState ()
         {
             lock (shutdown_mutex) {
                 if (indexer_running) {
-                    Console.WriteLine ("Triggering reset");
                     shutdown_requested = true;
                 }
             }
@@ -55,7 +59,7 @@ namespace Beroe
             }
             
             int i = 0;
-            Console.Write ("UPDATING INDEX... ");
+            Console.Write ("Updating Index... ");
             while (i++ < 20 && !Shutdown) {
                 Console.Write ("{0} ", i);
                 System.Threading.Thread.Sleep (1000);

@@ -42,7 +42,7 @@ using Banshee.Collection.Database;
 namespace Banshee.Collection.Indexer
 {
     [DBusExportable (ServiceName = "CollectionIndexer")]
-    public class CollectionIndexerService : ICollectionIndexerService, IDisposable
+    public class CollectionIndexerService : ICollectionIndexerService, IDBusExportable, IDisposable
     {
         private List<LibrarySource> libraries = new List<LibrarySource> ();
         private string [] available_export_fields;

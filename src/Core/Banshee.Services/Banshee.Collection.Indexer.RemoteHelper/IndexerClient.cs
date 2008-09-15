@@ -29,6 +29,8 @@
 using System;
 using System.Threading;
 
+using Hyena;
+
 using NDesk.DBus;
 using org.freedesktop.DBus;
 
@@ -48,16 +50,18 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         private bool listening;
         private ICollectionIndexerService service;
         private bool cleanup_and_shutdown;
-        private ManualResetEvent indexer_reset_event = new ManualResetEvent (true);
         
         public void Start ()
         {
+            Debug ("Acquiring org.freedesktop.DBus session instance");
             session_bus = Bus.Session.GetObject<IBus> ("org.freedesktop.DBus", new ObjectPath ("/org/freedesktop/DBus"));
             session_bus.NameOwnerChanged += OnBusNameOwnerChanged;
             
             if (Bus.Session.NameHasOwner (indexer_bus_name)) {
+                Debug ("{0} is already started", indexer_bus_name);
                 ConnectToIndexerService ();
             } else {
+                Debug ("Starting {0}", indexer_bus_name);
                 Bus.Session.StartServiceByName (indexer_bus_name);
             }
         }
@@ -65,6 +69,7 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         private void OnBusNameOwnerChanged (string name, string oldOwner, string newOwner)
         {
             if (name == indexer_bus_name) {
+                Debug ("NameOwnerChanged: {0}, '{1}' => '{2}'", name, oldOwner, newOwner);
                 if (String.IsNullOrEmpty (newOwner)) {
                     // Do not disconnect since we're already disconnected
                     ResetInternalState ();
@@ -78,11 +83,15 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         {
             if (HasCollectionChanged) {
                 ThreadPool.QueueUserWorkItem (delegate {
+                    Debug ("Running indexer");
+                    
                     try {
                         UpdateIndex ();
                     } catch (Exception e) {
                         Console.Error.WriteLine (e);
                     }
+                    
+                    Debug ("Indexer finished");
                     
                     if (!ApplicationAvailable || !listening) {
                         DisconnectFromIndexerService ();
@@ -96,9 +105,12 @@ namespace Banshee.Collection.Indexer.RemoteHelper
             DisconnectFromIndexerService ();
             ResolveIndexerService ();
             
+            Debug ("Connected to {0}", service_interface);
+            
             service.CleanupAndShutdown += OnCleanupAndShutdown;
             
             if (ApplicationAvailable) {
+                Debug ("Listening to service's CollectionChanged signal (full-app is running)");
                 listening = true;
                 service.CollectionChanged += OnCollectionChanged;
             }
@@ -111,6 +123,8 @@ namespace Banshee.Collection.Indexer.RemoteHelper
             if (service == null) {
                 return;
             }
+            
+            Debug ("Disconnecting from service");
             
             if (listening) {
                 try {
@@ -131,6 +145,7 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         
         private void ResetInternalState ()
         {
+            Debug ("Resetting internal state - service is no longer available or not needed");
             service = null;
             listening = false;
             cleanup_and_shutdown = false;
@@ -143,6 +158,7 @@ namespace Banshee.Collection.Indexer.RemoteHelper
             
             while (attempts++ < 4) {
                 try {
+                    Debug ("Resolving {0} (attempt {1})", service_interface, attempts);
                     service = Bus.Session.GetObject<ICollectionIndexerService> (indexer_bus_name, service_path);
                     service.Hello ();
                     return;
@@ -163,11 +179,21 @@ namespace Banshee.Collection.Indexer.RemoteHelper
             cleanup_and_shutdown = true;
         }
         
+        protected void Debug (string message, params object [] args)
+        {
+            Log.DebugFormat (message, args);
+        }
+        
         protected abstract bool HasCollectionChanged { get; }
         
         protected abstract void UpdateIndex ();
         
         protected abstract void ResetState ();
+        
+        public bool ShowDebugMessages {
+            get { return Log.Debugging; }
+            set { Log.Debugging = value; }
+        }
         
         protected bool CleanupAndShutdown {
             get { return cleanup_and_shutdown; }

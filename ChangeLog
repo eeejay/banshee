@@ -1,3 +1,16 @@
+2008-09-15  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Beroe/Beroe/RemoteClient.cs: Turn debugging on
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/IndexerClient.cs:
+	Add debug messages
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexer.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Moved internal interfaces from the DBus interface to the implementations
+
 2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs:
