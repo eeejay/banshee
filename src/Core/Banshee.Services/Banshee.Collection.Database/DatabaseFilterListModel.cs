@@ -197,10 +197,12 @@ namespace Banshee.Collection.Database
             }
         }
 
-        public override void InvalidateCache ()
+        public override void InvalidateCache (bool notify)
         {
             cache.Clear ();
-            OnReloaded ();
+            if (notify) {
+                OnReloaded ();
+            }
         }
         
         public abstract string FilterColumn { get; }

@@ -577,9 +577,9 @@ namespace Banshee.Sources
         
         public override void Deactivate ()
         {
-            DatabaseTrackModel.InvalidateCache ();
+            DatabaseTrackModel.InvalidateCache (false);
             foreach (IFilterListModel filter in AvailableFilters) {
-                filter.InvalidateCache ();
+                filter.InvalidateCache (false);
             }
         }
 
@@ -638,10 +638,10 @@ namespace Banshee.Sources
 
         protected void InvalidateCaches ()
         {
-            track_model.InvalidateCache ();
+            track_model.InvalidateCache (true);
 
             foreach (IFilterListModel filter in CurrentFilters) {
-                filter.InvalidateCache ();
+                filter.InvalidateCache (true);
             }
         }
 

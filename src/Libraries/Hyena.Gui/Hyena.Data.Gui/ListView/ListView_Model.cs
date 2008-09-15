@@ -69,19 +69,19 @@ namespace Hyena.Data.Gui
 
         private void RefreshViewForModel (double? vpos)
         {
+            if (Model == null) {
+                return;
+            }
+
             UpdateAdjustments ();
 
             if (vpos != null) {
                 ScrollTo ((double) vpos);
-            } else {
-                if (Model.Count <= RowsInView) {
-                    // If our view fits all rows at once, make sure we're scrolled to the top
-                    ScrollTo (0.0);
-                } else {
-                    if (vadjustment != null) {
-                        ScrollTo (vadjustment.Value);
-                    }
-                }
+            } else if (Model.Count <= RowsInView) {
+                // If our view fits all rows at once, make sure we're scrolled to the top
+                ScrollTo (0.0);
+            } else if (vadjustment != null) {
+                ScrollTo (vadjustment.Value);
             }
             
             if (Model != null && Selection != null) {

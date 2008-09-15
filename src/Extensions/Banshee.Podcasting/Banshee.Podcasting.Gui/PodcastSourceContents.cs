@@ -123,10 +123,10 @@ namespace Banshee.Podcasting.Gui
         {
             //Console.WriteLine ("PSC.reset_source 1");
             source = null;
-            track_view.SetModel (null);
-            unheard_view.SetModel (null);
-            download_view.SetModel (null);
-            feed_view.SetModel (null);
+            SetModel (track_view, null);
+            SetModel (unheard_view, null);
+            SetModel (download_view, null);
+            SetModel (feed_view, null);
             track_view.HeaderVisible = false;
             //Console.WriteLine ("PSC.reset_source 2");
         }

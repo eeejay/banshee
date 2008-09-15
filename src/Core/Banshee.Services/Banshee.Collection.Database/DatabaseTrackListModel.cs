@@ -177,13 +177,15 @@ namespace Banshee.Collection.Database
             OnCleared ();
         }
 
-        public void InvalidateCache ()
+        public void InvalidateCache (bool notify)
         {
             if (cache == null) {
                 Log.ErrorFormat ("Called invalidate cache for {0}'s track model, but cache is null", source);
             } else {
                 cache.Clear ();
-                OnReloaded ();
+                if (notify) {
+                    OnReloaded ();
+                }
             }
         }
 

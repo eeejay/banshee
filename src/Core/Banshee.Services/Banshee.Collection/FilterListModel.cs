@@ -89,7 +89,7 @@ namespace Banshee.Collection
             protected set { filter_label = value; }
         }
         
-        public virtual void InvalidateCache ()
+        public virtual void InvalidateCache (bool notify)
         {
         }
 

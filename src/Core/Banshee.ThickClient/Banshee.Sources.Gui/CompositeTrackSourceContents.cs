@@ -146,10 +146,10 @@ namespace Banshee.Sources.Gui
         public override void ResetSource ()
         {
             source = null;
-            track_view.SetModel (null);
-            artist_view.SetModel (null);
-            album_view.SetModel (null);
-            // genre_view.SetModel (null);
+            SetModel (track_view, null);
+            SetModel (artist_view, null);
+            SetModel (album_view, null);
+            // SetModel (genre_view, null);
             track_view.HeaderVisible = false;
         }
 

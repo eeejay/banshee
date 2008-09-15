@@ -1,5 +1,19 @@
 2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastSourceContents.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseFilterListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/IFilterListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/FilterListModel.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs: Fix
+	issue with the ListViews getting scrolled to the top of the list every
+	time you switched sources (BGO #551970).
+
+2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:
 	Apply the translation domain fix here too.
 

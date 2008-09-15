@@ -327,9 +327,15 @@ namespace Banshee.Sources.Gui
             if (view.Model != null) {
                 model_positions[view.Model] = view.Vadjustment.Value;
             }
+
+            if (model == null) {
+                view.SetModel (null);
+                return;
+            }
             
-            if (!model_positions.ContainsKey (model))
-                    model_positions[model] = 0.0;
+            if (!model_positions.ContainsKey (model)) {
+                model_positions[model] = 0.0;
+            }
             
             view.SetModel (model, model_positions[model]);
         }
