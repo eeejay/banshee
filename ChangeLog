@@ -1,3 +1,16 @@
+2008-09-15  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Beroe/Beroe/IndexerClient.cs: Support a --client option to
+	run the fake indexer client
+
+	* src/Clients/Beroe/Beroe/RemoteClient.cs: An example client indexer
+	that doesn't really do anything
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/IndexerClient.cs:
+	First pass at a wrapper implementing the proper logic for interacting
+	with the Banshee indexer and respecting the boot sequence and client
+	startup hints
+
 2008-09-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:

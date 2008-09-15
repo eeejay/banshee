@@ -48,6 +48,9 @@ namespace Beroe
             if (!DBusConnection.Enabled) {
                 Log.Error ("All commands ignored, DBus support is disabled");
                 return;
+            } else if (ApplicationContext.CommandLine.Contains ("client")) {
+                ActAsRemoteClient ();
+                return;
             } else if (DBusConnection.ApplicationInstanceAlreadyRunning) {
                 Log.Error ("Banshee is already running");
                 return;
@@ -57,6 +60,16 @@ namespace Beroe
             }
             
             Startup ();
+        }
+        
+        private static void ActAsRemoteClient ()
+        {
+            BusG.Init ();
+        
+            RemoteClient remote_client = new RemoteClient ();
+            remote_client.Start ();
+            
+            DBusConnection.RunMainLoop ();
         }
         
         private static void Startup ()
