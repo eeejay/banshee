@@ -1,3 +1,8 @@
+2008-09-15  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/GladeWindow.cs: Set
+	the proper translation domain when loading glade XML files (BGO #536268).
+
 2008-09-15  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Beroe/Beroe/IndexerClient.cs: Call ForceShutdown on the
