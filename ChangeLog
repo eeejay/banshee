@@ -1,5 +1,11 @@
 2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs: Bring
+	back logic that scrolls to the first selected item when the view is
+	refreshed unless it's already in the view (BGO #551970).
+
+2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastSourceContents.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CompositeTrackSourceContents.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
@@ -10,7 +16,7 @@
 	* src/Core/Banshee.Services/Banshee.Collection/FilterListModel.cs:
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs: Fix
 	issue with the ListViews getting scrolled to the top of the list every
-	time you switched sources (BGO #551970).
+	time you switched sources.
 
 2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
