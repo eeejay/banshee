@@ -90,6 +90,14 @@ namespace Banshee.Collection.Indexer
             }
         }
         
+        public void ForceShutdown ()
+        {
+            Dispose ();
+            if (shutdown_handler != null) {
+                shutdown_handler ();
+            }
+        }
+        
         public ICollectionIndexer CreateIndexer ()
         {
             lock (this) {

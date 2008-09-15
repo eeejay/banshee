@@ -1,5 +1,14 @@
 2008-09-15  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Beroe/Beroe/IndexerClient.cs: Call ForceShutdown on the
+	collection indexer service after 2.5 seconds to kick off anyone that
+	did not respect the CleanupAndShutdown signal
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	Implemented a ForceShutdown method
+
+2008-09-15  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Beroe/Beroe/RemoteClient.cs: Turn debugging on
 
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/IndexerClient.cs:

@@ -128,6 +128,10 @@ namespace Beroe
                 Log.Debug ("Banshee will be started when the indexer finishes. Notifying indexer that it should hurry!");
                 reboot_args = args;
                 ServiceManager.Get<CollectionIndexerService> ().RequestCleanupAndShutdown ();
+                GLib.Timeout.Add (2500, delegate {
+                    ServiceManager.Get<CollectionIndexerService> ().ForceShutdown ();
+                    return false;
+                });
             }
         }
         
