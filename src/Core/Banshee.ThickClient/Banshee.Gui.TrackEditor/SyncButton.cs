@@ -31,9 +31,9 @@ using Gtk;
 
 namespace Banshee.Gui.TrackEditor
 {
-    public class SyncButton : Button
+    public class SyncButton : Hyena.Widgets.PulsingButton
     {
-        public SyncButton ()
+        public SyncButton () : base ()
         {
             Image image = new Image (Stock.Copy, IconSize.Menu);
             Add (image);

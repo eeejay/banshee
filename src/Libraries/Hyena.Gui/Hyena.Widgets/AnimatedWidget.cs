@@ -139,11 +139,11 @@ namespace Hyena.Widgets
             }
             
             if (horizontal) {
-                Width = Choreographer.Compose (percent, widget_alloc.Width + StartPadding + EndPadding, Easing);
+                Width = Choreographer.PixelCompose (percent, widget_alloc.Width + StartPadding + EndPadding, Easing);
                 Height = widget_alloc.Height;
             } else {
                 Width = widget_alloc.Width;
-                Height = Choreographer.Compose (percent, widget_alloc.Height + StartPadding + EndPadding, Easing);
+                Height = Choreographer.PixelCompose (percent, widget_alloc.Height + StartPadding + EndPadding, Easing);
             }
             
             requisition.Width = Width;

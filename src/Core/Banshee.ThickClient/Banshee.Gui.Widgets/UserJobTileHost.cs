@@ -32,6 +32,8 @@ using System.Collections.Generic;
 using Gtk;
 
 using Hyena.Widgets;
+using Hyena.Gui.Theatrics;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
 

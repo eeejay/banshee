@@ -34,6 +34,7 @@ using Mono.Addins;
 using Gtk;
 
 using Hyena.Gui;
+using Hyena.Widgets;
 
 using Banshee.Collection;
 using Banshee.Collection.Database;
@@ -85,7 +86,7 @@ namespace Banshee.Gui.TrackEditor
     
         private Button nav_backward_button;
         private Button nav_forward_button;
-        private Button sync_all_button;
+        private PulsingButton sync_all_button;
         
         private EditorMode mode;
         
@@ -234,11 +235,28 @@ namespace Banshee.Gui.TrackEditor
             button_box.Spacing = 6;
                        
             if (TrackCount > 1) {
-                sync_all_button = new Button ();
+                sync_all_button = new PulsingButton ();
+                sync_all_button.FocusInEvent += delegate {
+                    ForeachSyncButton (delegate (SyncButton button) {
+                        button.StartPulsing ();
+                    });
+                };
+                sync_all_button.FocusOutEvent += delegate {
+                    ForeachSyncButton (delegate (SyncButton button) {
+                        button.StopPulsing ();
+                    });
+                };
+                sync_all_button.StateChanged += delegate {
+                    ForeachSyncButton (delegate (SyncButton button) {
+                        if (sync_all_button.State == StateType.Prelight) {
+                            button.StartPulsing ();
+                        } else {
+                            button.StopPulsing ();
+                        }
+                    });
+                };
                 sync_all_button.Clicked += delegate {
-                    for (int i = 0; i < notebook.NPages; i++) {
-                        InvokeFieldSync (notebook.GetNthPage (i) as Container);
-                    }        
+                    InvokeFieldSync ();
                 };
                 
                 Alignment alignment = new Alignment (0.5f, 0.5f, 0.0f, 0.0f);
@@ -267,7 +285,16 @@ namespace Banshee.Gui.TrackEditor
             button_box.ShowAll ();
         }
         
-        private void InvokeFieldSync (Container container)
+        private delegate void SyncButtonAction (SyncButton button);
+        
+        private void ForeachSyncButton (SyncButtonAction action)
+        {
+            for (int i = 0; i < notebook.NPages; i++) {
+                ForeachSyncButton (notebook.GetNthPage (i) as Container, action);
+            }     
+        }
+        
+        private void ForeachSyncButton (Container container, SyncButtonAction action)
         {
             if (container == null) {
                 return;
@@ -276,14 +303,21 @@ namespace Banshee.Gui.TrackEditor
             foreach (Widget child in container.Children) {
                 SyncButton sync = child as SyncButton;
                 if (sync != null) {
-                    sync.Click ();
+                    action (sync);
                 } else {
                     Container child_container = child as Container;
                     if (child_container != null) {
-                        InvokeFieldSync (child_container);
+                        ForeachSyncButton (child_container, action);
                     }
                 }
             }
+        }
+        
+        private void InvokeFieldSync ()
+        {
+            ForeachSyncButton (delegate (SyncButton button) {
+                button.Click ();
+            });
         }
         
         private int action_area_children_allocated = 0;
@@ -447,6 +481,75 @@ namespace Banshee.Gui.TrackEditor
         public bool CanGoForward {
             get { return current_track_index >= 0 && current_track_index < TrackCount - 1; }
         }
+
+#endregion
+
+#region Saving
+        
+       /* private void OnSaveButtonClicked (object o, EventArgs args)
+        {
+            List<int> primary_sources = new List<int> ();
+            
+            // TODO wrap in db transaction
+            try {
+                DatabaseTrackInfo.NotifySaved = false;
+
+                primary_sources.Clear ();
+                foreach (EditorTrack track in TrackSet) {
+                    SaveTrack (track);
+
+                    if (track.Track is DatabaseTrackInfo) {
+                        int id = (track.Track as DatabaseTrackInfo).PrimarySourceId;
+                        if (!primary_sources.Contains (id)) {
+                            primary_sources.Add (id);
+                        }
+                    }
+                }
+                
+                EventHandler handler = Saved;
+                if (handler != null) {
+                    handler (this, new EventArgs ());
+                }
+
+                // Finally, notify the affected primary sources
+                foreach (int id in primary_sources) {
+                    PrimarySource.GetById (id).NotifyTracksChanged ();
+                }
+            } finally {
+                DatabaseTrackInfo.NotifySaved = true;
+            }
+            
+            Window.Destroy ();
+        }
+        
+        private void SaveTrack (EditorTrack track)
+        {
+            track.Save ();
+            
+            track.Track.Save ();
+                
+            if (LibrarySchema.WriteMetadata.Get ()) {
+                SaveToFile (track);
+            }
+
+            if (LibrarySchema.MoveOnInfoSave.Get ()) {
+                MoveSavedFile (track);
+            }
+
+            if (track.Track == ServiceManager.PlayerEngine.CurrentTrack) {
+                ServiceManager.PlayerEngine.TrackInfoUpdated ();
+            }
+        }
+        
+        private void SaveToFile (EditorTrack track)
+        {
+            Banshee.Kernel.Scheduler.Schedule (new SaveTrackMetadataJob (track.Track), Banshee.Kernel.JobPriority.Highest);
+        }
+
+        private void MoveSavedFile (EditorTrack track)
+        {
+            Banshee.Kernel.Scheduler.Schedule (new MoveOnInfoSaveJob (track.Track), Banshee.Kernel.JobPriority.Highest);
+        }*/
 
 #endregion
 

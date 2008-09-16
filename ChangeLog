@@ -1,3 +1,30 @@
+2008-09-16  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	When the mouse is over the sync all button, tell all the other sync
+	buttons to start pulsing
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SyncButton.cs:
+	Extend PulsingButton instead of Button
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/PulsingButton.cs: New button that
+	pulses, it's hot
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Tests/ChoreographerTests.cs:
+	Unit tests for the choreographer compositions
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Choreographer.cs: Factored
+	out the scaling and pixel rounded from the core compose functions into
+	separate methods
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Pulsator.cs: Small Actor<T>
+	wrapper that implements pulsing logic
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedWidget.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/AnimatedBox.cs: Updated for
+	API changes in Choreographer
+
 2008-09-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/Models/ListModel.cs:

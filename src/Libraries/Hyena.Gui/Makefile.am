@@ -31,8 +31,10 @@ SOURCES =  \
 	Hyena.Gui.Dialogs/VersionInformationDialog.cs \
 	Hyena.Gui.Theatrics/Actor.cs \
 	Hyena.Gui.Theatrics/Choreographer.cs \
+	Hyena.Gui.Theatrics/Pulsator.cs \
 	Hyena.Gui.Theatrics/SingleActorStage.cs \
 	Hyena.Gui.Theatrics/Stage.cs \
+	Hyena.Gui.Theatrics/Tests/ChoreographerTests.cs \
 	Hyena.Gui.Theming/GtkColors.cs \
 	Hyena.Gui.Theming/GtkTheme.cs \
 	Hyena.Gui.Theming/Theme.cs \
@@ -74,6 +76,7 @@ SOURCES =  \
 	Hyena.Widgets/ImageButton.cs \
 	Hyena.Widgets/MenuButton.cs \
 	Hyena.Widgets/MessageBar.cs \
+	Hyena.Widgets/PulsingButton.cs \
 	Hyena.Widgets/RatingEntry.cs \
 	Hyena.Widgets/RatingMenuItem.cs \
 	Hyena.Widgets/RoundedFrame.cs \

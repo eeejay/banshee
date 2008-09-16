@@ -114,8 +114,8 @@ namespace Hyena.Widgets
                 border_state = AnimationState.Idle;
             } else {
                 double percent = border_state == AnimationState.Coming ? Percent : 1.0 - Percent;
-                start_border = Choreographer.Compose (percent, start_padding, border_easing);
-                end_border = Choreographer.Compose (percent, end_padding, border_easing);
+                start_border = Choreographer.PixelCompose (percent, start_padding, border_easing);
+                end_border = Choreographer.PixelCompose (percent, end_padding, border_easing);
             }
             QueueResizeNoRedraw ();
         }
