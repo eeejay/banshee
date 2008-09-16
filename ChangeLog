@@ -1,3 +1,88 @@
+2008-09-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/Models/ListModel.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/Models/FilterableListModel.cs:
+	Comment out unused classes; should probably be removed.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistDefinition.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:
+	Update to use new DatabaseSource ctor that takes a PrimarySource, not its DbId.
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:
+	Use new ctor, and explicitly set TrackModel.CanReorder to true.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/PersistentColumnController.cs:
+	Persist on a per-source basis the sort column/direction (BGO #524656).
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/BaseTrackListView.cs:
+	Set IsEverReordereable to true; but whether the TrackList is actually
+	reorderable also depends on the IsReorderable property, which is set
+	automatically if the SortColumn's SortType is None (BGO #551969).
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Added logic to ignore Sort requests if we already are sorted by the
+	current key/direction.  Also, return true/false based on whether a new
+	sort was applied (and therefore the model should be Reloaded).  Move the
+	logic that iterates through None/Asc/Desc and that sets the initial
+	direction to Asc when sorting by a different column into the ListView.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Rename
+	ConfigurationId property to ParentConfigurationId, and add a new
+	ConfigurationId property that is actually unique to this source.
+
+	* src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs:
+	* src/Libraries/Hyena/Hyena.Data/IListModel.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListViewTestModule.cs:
+	Add CanReorder property.
+
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs: Remove
+	some more columns from the default (music) column list, and set a default
+	sort-column.
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GConfConfigurationClient.cs:
+	Replace / chars in the namespace with _ for .-separated keys.
+
+	* src/Libraries/Hyena/Hyena.Data/ISortable.cs: Change Sort to return bool.
+
+	* src/Libraries/Hyena/Hyena.Data/ISortableColumn.cs: Add Id getter.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnController.cs: Add
+	SortColumn property, used to get access to the currently-sorted-by column.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs:
+	Replace Reorderable property into IsReorderable and IsEverReorderable,
+	both of which must be set to true for the ListView to turn be a drag
+	source/drop dest (overridable as before w/ the Force* properties).
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Reorderable renamed to IsReorderable.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Moved the logic for iterating through None/Asc/Desc here from
+	DatabaseTrackListModel.cs.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Model.cs: When
+	setting the ListView's model, update the sort column, since it is
+	remembered on a per-source basis now.
+
 2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Change the

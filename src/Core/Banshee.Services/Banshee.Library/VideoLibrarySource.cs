@@ -50,6 +50,11 @@ namespace Banshee.Library
                   <remove-default column=""DiscColumn"" />
                   <remove-default column=""AlbumColumn"" />
                   <remove-default column=""ComposerColumn"" />
+                  <remove-default column=""AlbumArtistColumn"" />
+                  <remove-default column=""ConductorColumn"" />
+                  <remove-default column=""ComposerColumn"" />
+                  <remove-default column=""BpmColumn"" />
+                  <sort-column direction=""asc"">track_title</sort-column>
                   <column modify-default=""ArtistColumn"">
                     <title>{0}</title>
                   </column>

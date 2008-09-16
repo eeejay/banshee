@@ -41,7 +41,7 @@ namespace Banshee.Podcasting.Gui
 {           
     // It would be cool to move the filtering functionality to an external class 
     // that could be applied to models directly, or chained together before being applied. 
-    public class FilterableListModel<T> : ListModel<T>
+    /*public class FilterableListModel<T> : ListModel<T>
     {
         private Predicate<T> filter;
         private List<T> filteredList;
@@ -152,4 +152,5 @@ namespace Banshee.Podcasting.Gui
             }
         }
     }
+    */
 }

@@ -70,6 +70,7 @@ namespace Banshee.GnomeBackend
                         key_table.Add (hash_key, String.Format ("{0}{1}{2}", @namespace,
                             @namespace.EndsWith ("/") ? String.Empty : "/", StringUtil.CamelCaseToUnderCase (part)));
                     } else {
+                        @namespace = @namespace.Replace ('/', '_');
                         key_table.Add (hash_key, String.Format ("{0}{1}",
                             base_key, StringUtil.CamelCaseToUnderCase (String.Format ("{0}/{1}", @namespace.Replace (".", "/"), part))
                         ));

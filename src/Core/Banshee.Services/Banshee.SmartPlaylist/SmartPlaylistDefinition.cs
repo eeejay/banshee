@@ -73,7 +73,7 @@ namespace Banshee.SmartPlaylist
                 Name,
                 UserQueryParser.Parse (Condition, BansheeQuery.FieldSet),
                 Order, Limit, LimitNumber,
-                primary_source.DbId
+                primary_source
             );
         }
     }

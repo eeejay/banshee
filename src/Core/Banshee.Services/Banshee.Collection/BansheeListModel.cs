@@ -97,5 +97,11 @@ namespace Banshee.Collection
         public T FocusedItem {
             get { return Selection.FocusedIndex == -1 ? default(T) : this[Selection.FocusedIndex]; }
         }
+
+        private bool can_reorder = false;
+        public bool CanReorder {
+            get { return can_reorder; }
+            set { can_reorder = value; }
+        }
     }
 }

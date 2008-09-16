@@ -135,31 +135,26 @@ namespace Banshee.Collection.Database
                 : BansheeQuery.GetSort (SortColumn.SortKey, SortColumn.SortType == SortType.Ascending);
         }
 
-        public void Sort (ISortableColumn column)
+        private SortType last_sort_type = SortType.None;
+        public bool Sort (ISortableColumn column)
         {
             lock (this) {
                 if (forced_sort_query) {
-                    return;
+                    return false;
                 }
-                
-                if (sort_column == column && sort_column != null) {
-                    switch (sort_column.SortType) {
-                        case SortType.Ascending:    sort_column.SortType = SortType.Descending; break;
-                        case SortType.Descending:   sort_column.SortType = SortType.None; break;
-                        case SortType.None:         sort_column.SortType = SortType.Ascending; break;
-                    }
+
+                // Don't sort by the same column and the same sort-type more than once
+                if (sort_column != null && sort_column == column && column.SortType == last_sort_type) {
+                    return false;
                 }
-                
-                // If we're switching from a different column, or we aren't in a playlist, make sure sort type isn't None
-                if (sort_column != null && (sort_column != column || !(source is Banshee.Playlist.PlaylistSource)) && sort_column.SortType == SortType.None) {
-                    sort_column.SortType = SortType.Ascending;
-                }
-                
+
+                last_sort_type = column.SortType;
                 sort_column = column;
-            
+
                 GenerateSortQueryPart ();
                 cache.Clear ();
             }
+            return true;
         }
 
         private void HandleCacheAggregatesUpdated (IDataReader reader)

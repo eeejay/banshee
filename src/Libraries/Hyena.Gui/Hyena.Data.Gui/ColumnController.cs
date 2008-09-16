@@ -36,6 +36,7 @@ namespace Hyena.Data.Gui
     {
         private List<Column> columns = new List<Column> ();
         private ISortableColumn default_sort_column;
+        private ISortableColumn sort_column;
         
         protected List<Column> Columns {
             get { return columns; }
@@ -181,6 +182,11 @@ namespace Hyena.Data.Gui
         public ISortableColumn DefaultSortColumn {
             get { return default_sort_column; }
             set { default_sort_column = value; }
+        }
+
+        public virtual ISortableColumn SortColumn {
+            get { return sort_column; }
+            set { sort_column = value;}
         }
         
         public int Count {

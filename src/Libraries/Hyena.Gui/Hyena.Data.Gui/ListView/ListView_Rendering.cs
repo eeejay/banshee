@@ -279,7 +279,7 @@ namespace Hyena.Data.Gui
         
         private void PaintReorderLine (int row_index, Rectangle single_list_alloc)
         {
-            if (row_index == drag_reorder_row_index && Reorderable) {
+            if (row_index == drag_reorder_row_index && IsReorderable) {
                 cairo_context.Save ();
                 cairo_context.LineWidth = 1.0;
                 cairo_context.Antialias = Cairo.Antialias.None;

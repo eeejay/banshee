@@ -55,7 +55,7 @@ namespace Banshee.Podcasting.Gui
         public abstract int Compare (T lhs, T rhs);
     }
 
-    public class ListModel<T> : BansheeListModel<T>, ISortable
+    /*public class ListModel<T> : BansheeListModel<T>, ISortable
     {
         private ISortableColumn sortColumn;
         
@@ -213,5 +213,5 @@ namespace Banshee.Podcasting.Gui
                 Sort ();
             }         
         }
-    }
+    }*/
 }

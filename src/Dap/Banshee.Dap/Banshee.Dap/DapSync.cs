@@ -109,7 +109,7 @@ namespace Banshee.Dap
 
         private void BuildPreferences ()
         {
-            conf_ns = String.Format ("{0}.{1}", dap.ConfigurationId, "sync");
+            conf_ns = String.Format ("{0}.{1}", dap.ParentConfigurationId, "sync");
             
             manually_manage = dap.CreateSchema<bool> (conf_ns, "enabled", true,
                 Catalog.GetString ("Manually manage this device"),

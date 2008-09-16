@@ -334,7 +334,7 @@ namespace Banshee.Gui
         private void OnAddToNewPlaylist (object o, EventArgs args)
         {
             // TODO generate name based on the track selection, or begin editing it
-            PlaylistSource playlist = new PlaylistSource ("New Playlist", ActivePrimarySource.DbId);
+            PlaylistSource playlist = new PlaylistSource ("New Playlist", ActivePrimarySource);
             playlist.Save ();
             playlist.PrimarySource.AddChildSource (playlist);
             ThreadAssist.SpawnFromMain (delegate {

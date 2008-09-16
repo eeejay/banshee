@@ -543,9 +543,20 @@ namespace Banshee.Sources
         public virtual int Count {
             get { return 0; }
         }
-        
+
+        private string parent_conf_id;
+        public string ParentConfigurationId {
+            get {
+                if (parent_conf_id == null) {
+                    parent_conf_id = (Parent ?? this).UniqueId.Replace ('.', '_');
+                }
+                return parent_conf_id;
+            }
+        }
+
+        private string conf_id;
         public string ConfigurationId {
-            get { return (Parent == null ? UniqueId : Parent.UniqueId).Replace ('.', '_'); }
+            get { return conf_id ?? conf_id = UniqueId.Replace ('.', '_'); }
         }
 
         public virtual int FilteredCount { get { return Count; } }
@@ -568,8 +579,8 @@ namespace Banshee.Sources
         }
         
         public virtual int CurrentStatusFormat {
-            get { return ConfigurationClient.Get<int> (String.Format ("sources.{0}", ConfigurationId), "status_format", 0); }
-            set { ConfigurationClient.Set<int> (String.Format ("sources.{0}", ConfigurationId), "status_format", value); }
+            get { return ConfigurationClient.Get<int> (String.Format ("sources.{0}", ParentConfigurationId), "status_format", 0); }
+            set { ConfigurationClient.Set<int> (String.Format ("sources.{0}", ParentConfigurationId), "status_format", value); }
         }
         
         public SchemaEntry<T> CreateSchema<T> (string name)
@@ -579,12 +590,12 @@ namespace Banshee.Sources
         
         public SchemaEntry<T> CreateSchema<T> (string name, T defaultValue, string shortDescription, string longDescription)
         {
-            return new SchemaEntry<T> (String.Format ("sources.{0}", ConfigurationId), name, defaultValue, shortDescription, longDescription); 
+            return new SchemaEntry<T> (String.Format ("sources.{0}", ParentConfigurationId), name, defaultValue, shortDescription, longDescription); 
         }
         
         public SchemaEntry<T> CreateSchema<T> (string ns, string name, T defaultValue, string shortDescription, string longDescription)
         {
-            return new SchemaEntry<T> (String.Format ("sources.{0}.{1}", ConfigurationId, ns), name, defaultValue, shortDescription, longDescription); 
+            return new SchemaEntry<T> (String.Format ("sources.{0}.{1}", ParentConfigurationId, ns), name, defaultValue, shortDescription, longDescription); 
         }
         
         public void CycleStatusFormat ()

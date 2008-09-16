@@ -69,9 +69,16 @@ namespace Banshee.Sources
         }
 
         private RateLimiter reload_limiter;
-        
-        public DatabaseSource (string generic_name, string name, string id, int order) : base (generic_name, name, order, id)
+
+        public DatabaseSource (string generic_name, string name, string id, int order) : this (generic_name, name, id, order, null)
         {
+        }
+        
+        public DatabaseSource (string generic_name, string name, string id, int order, Source parent) : base (generic_name, name, order, id)
+        {
+            if (parent != null) {
+                SetParentSource (parent);
+            }
             DatabaseSourceInitialize ();
         }
 

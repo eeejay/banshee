@@ -125,6 +125,8 @@ namespace Banshee.Sources
         public override int Count {
             get { return messages.Count; }
         }
+
+        public bool CanReorder { get { return false; } }
         
         public virtual bool CanUnmap {
             get { return true; }

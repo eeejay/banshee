@@ -209,7 +209,7 @@ namespace Banshee.Sources.Gui
                 
                 if (final_drag_source == NewPlaylistSource) {
                     PlaylistSource playlist = new PlaylistSource (Catalog.GetString ("New Playlist"), 
-                        (new_playlist_parent as PrimarySource).DbId);
+                        (new_playlist_parent as PrimarySource));
                     playlist.Save ();
                     playlist.PrimarySource.AddChildSource (playlist);
                     drop_source = playlist;

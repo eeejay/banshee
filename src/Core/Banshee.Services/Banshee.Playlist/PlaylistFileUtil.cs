@@ -239,7 +239,7 @@ namespace Banshee.Playlist
         private void CreatePlaylist (object o, EventArgs args)
         {
             try {
-                PlaylistSource playlist = new PlaylistSource (name, source.DbId);
+                PlaylistSource playlist = new PlaylistSource (name, source);
                 playlist.Save ();
                 source.AddChildSource (playlist);
 

@@ -107,17 +107,17 @@ namespace Banshee.Playlist
 
 #region Constructors
 
-        public PlaylistSource (string name, int primarySourceId) : base (generic_name, name, primarySourceId)
+        public PlaylistSource (string name, PrimarySource parent) : base (generic_name, name, parent)
         {
             SetProperties ();
         }
 
-        protected PlaylistSource (string name, int dbid, int primarySourceId) : this (name, dbid, -1, 0, primarySourceId, 0, false)
+        protected PlaylistSource (string name, int dbid, PrimarySource parent) : this (name, dbid, -1, 0, parent, 0, false)
         {
         }
 
-        protected PlaylistSource (string name, int dbid, int sortColumn, int sortType, int primarySourceId, int count, bool is_temp)
-            : base (generic_name, name, dbid, sortColumn, sortType, primarySourceId, is_temp)
+        protected PlaylistSource (string name, int dbid, int sortColumn, int sortType, PrimarySource parent, int count, bool is_temp)
+            : base (generic_name, name, dbid, sortColumn, sortType, parent, is_temp)
         {
             SetProperties ();
             SavedCount = count;
@@ -157,6 +157,8 @@ namespace Banshee.Playlist
                 PrimarySource.TracksChanged += HandleTracksChanged;
                 PrimarySource.TracksDeleted += HandleTracksDeleted;
             }
+
+            TrackModel.CanReorder = true;
         }
 
         protected override void Update ()
@@ -336,16 +338,16 @@ namespace Banshee.Playlist
             }
         }
 
-        public static IEnumerable<PlaylistSource> LoadAll (int primary_id)
+        public static IEnumerable<PlaylistSource> LoadAll (PrimarySource parent)
         {
             ClearTemporary ();
             using (HyenaDataReader reader = new HyenaDataReader (ServiceManager.DbConnection.Query (
                 @"SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID, CachedCount, IsTemporary FROM CorePlaylists 
-                    WHERE Special = 0 AND PrimarySourceID = ?", primary_id))) {
+                    WHERE Special = 0 AND PrimarySourceID = ?", parent.DbId))) {
                 while (reader.Read ()) {
                     yield return new PlaylistSource (
                         reader.Get<string> (1), reader.Get<int> (0),
-                        reader.Get<int> (2), reader.Get<int> (3), reader.Get<int> (4),
+                        reader.Get<int> (2), reader.Get<int> (3), parent,
                         reader.Get<int> (5), reader.Get<bool> (6)
                     );
                 }

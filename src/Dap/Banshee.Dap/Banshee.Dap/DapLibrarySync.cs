@@ -117,7 +117,7 @@ namespace Banshee.Dap
 
         private void BuildPreferences ()
         {
-            conf_ns = String.Format ("{0}.{1}", sync.ConfigurationNamespace, library.ConfigurationId);
+            conf_ns = String.Format ("{0}.{1}", sync.ConfigurationNamespace, library.ParentConfigurationId);
             
             enabled = sync.Dap.CreateSchema<bool> (conf_ns, "enabled", true,
                 String.Format (Catalog.GetString ("Sync {0}"), library.Name), "");
@@ -135,14 +135,14 @@ namespace Banshee.Dap
         private void BuildSyncLists ()
         {
             // This smart playlist is the list of items we want on the device - nothing more, nothing less
-            sync_src = new SmartPlaylistSource ("sync_list", library.DbId);
+            sync_src = new SmartPlaylistSource ("sync_list", library);
             sync_src.IsTemporary = true;
             sync_src.Save ();
             sync_src.AddCondition (library.AttributesCondition);
             sync_src.AddCondition (library.SyncCondition);
 
             // This is the same as the previous list with the items that are already on the device removed
-            to_add = new SmartPlaylistSource ("to_add", library.DbId);
+            to_add = new SmartPlaylistSource ("to_add", library);
             to_add.IsTemporary = true;
             to_add.Save ();
             to_add.ConditionTree = UserQueryParser.Parse (String.Format ("smartplaylistid:{0}", sync_src.DbId),
@@ -152,7 +152,7 @@ namespace Banshee.Dap
             ));
 
             // Any items on the device that aren't in the sync lists need to be removed
-            to_remove = new SmartPlaylistSource ("to_remove", sync.Dap.DbId);
+            to_remove = new SmartPlaylistSource ("to_remove", sync.Dap);
             to_remove.IsTemporary = true;
             to_remove.Save ();
             to_remove.AddCondition (library.AttributesCondition);
@@ -214,7 +214,7 @@ namespace Banshee.Dap
                         if (from.Count == 0) {
                             continue;
                         }
-                        PlaylistSource to = new PlaylistSource (from.Name, sync.Dap.DbId);
+                        PlaylistSource to = new PlaylistSource (from.Name, sync.Dap);
                         to.Save ();
 
                         ServiceManager.DbConnection.Execute (

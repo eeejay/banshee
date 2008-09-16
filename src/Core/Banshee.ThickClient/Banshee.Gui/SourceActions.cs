@@ -176,7 +176,7 @@ namespace Banshee.Gui
 
         private void OnNewPlaylist (object o, EventArgs args)
         {
-            PlaylistSource playlist = new PlaylistSource ("New Playlist", ActivePrimarySource.DbId);
+            PlaylistSource playlist = new PlaylistSource ("New Playlist", ActivePrimarySource);
             playlist.Save ();
             playlist.PrimarySource.AddChildSource (playlist);
             playlist.NotifyUser ();

@@ -127,19 +127,22 @@ namespace Banshee.Playlist
             }
         }
 
-        public AbstractPlaylistSource (string generic_name, string name, int primarySourceId) : base ()
+        public AbstractPlaylistSource (string generic_name, string name, PrimarySource parent) : base ()
         {
             GenericName = generic_name;
             Name = name;
-            primary_source_id = primarySourceId;
+            if (parent != null) {
+                primary_source_id = parent.DbId;
+                SetParentSource (parent);
+            }
         }
 
-        public AbstractPlaylistSource (string generic_name, string name, int dbid, int sortColumn, int sortType, int primarySourceId, bool is_temp)
-            : base (generic_name, name, dbid.ToString (), 500)
+        public AbstractPlaylistSource (string generic_name, string name, int dbid, int sortColumn, int sortType, PrimarySource parent, bool is_temp)
+            : base (generic_name, name, dbid.ToString (), 500, parent)
         {
+            primary_source_id = parent.DbId;
             DbId = dbid;
             IsTemporary = is_temp;
-            this.primary_source_id = primarySourceId;
             AfterInitialized ();
         }
 

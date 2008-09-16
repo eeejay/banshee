@@ -147,7 +147,7 @@ namespace Banshee.Dap.MassStorage
                 if (loaded_playlist == null)
                     continue;
 
-                PlaylistSource playlist = new PlaylistSource (System.IO.Path.GetFileNameWithoutExtension (playlist_path), DbId);
+                PlaylistSource playlist = new PlaylistSource (System.IO.Path.GetFileNameWithoutExtension (playlist_path), this);
                 playlist.Save ();
                 //Hyena.Data.Sqlite.HyenaSqliteCommand.LogAll = true;
                 foreach (Dictionary<string, object> element in loaded_playlist.Elements) {

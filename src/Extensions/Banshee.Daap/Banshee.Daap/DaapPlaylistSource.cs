@@ -56,7 +56,7 @@ namespace Banshee.Daap
             get { return parent.Database; }
         }
         
-        public DaapPlaylistSource (DAAP.Playlist playlist, DaapSource parent) : base (playlist.Name, parent.DbId)
+        public DaapPlaylistSource (DAAP.Playlist playlist, DaapSource parent) : base (playlist.Name, parent)
         {
             this.parent = parent;
             Save ();

@@ -222,7 +222,7 @@ namespace Banshee.Dap.Ipod
                         Console.WriteLine ("have playlist {0} with {1} items but ignoring b/c otg or podcast", playlist.Name, playlist.Tracks.Count);
                         continue;
                     }
-                    PlaylistSource pl_src = new PlaylistSource (playlist.Name, this.DbId);
+                    PlaylistSource pl_src = new PlaylistSource (playlist.Name, this);
                     pl_src.Save ();
                     // We use the IPod.Track.Id here b/c we just shoved it into ExternalID above when we loaded
                     // the tracks, however when we sync, the Track.Id values may/will change.

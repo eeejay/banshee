@@ -30,7 +30,7 @@ namespace Hyena.Data
 {
     public interface ISortable
     {
-        void Sort (ISortableColumn column);
+        bool Sort (ISortableColumn column);
         ISortableColumn SortColumn { get; }
     }
 }

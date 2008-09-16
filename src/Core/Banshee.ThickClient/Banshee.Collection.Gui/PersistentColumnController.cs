@@ -29,6 +29,7 @@
 using System;
 using System.Collections.Generic;
 
+using Hyena.Data;
 using Hyena.Data.Gui;
 using Banshee.Sources;
 using Banshee.Configuration;
@@ -42,7 +43,7 @@ namespace Banshee.Collection.Gui
         private bool pending_changes;
         private uint timer_id = 0;
         
-        private string source_id;
+        private string source_id, unique_source_id;
         private Source source;
         public Source Source {
             get { return source; }
@@ -56,11 +57,12 @@ namespace Banshee.Collection.Gui
                 }
                 
                 source = value;
-                source_id = null;
+                source_id = unique_source_id = null;
                 
                 if (source != null) {
                     // If we have a parent, use their UniqueId so all children of a parent persist the same columns
-                    source_id = source.ConfigurationId;
+                    source_id = source.ParentConfigurationId;
+                    unique_source_id = source.ConfigurationId;
                     Load ();
                 }
             }
@@ -103,11 +105,36 @@ namespace Banshee.Collection.Gui
                     
                     return a_order.CompareTo (b_order);
                 });
-                
+
+                string sort_ns = String.Format ("{0}.{1}.{2}", root_namespace, unique_source_id, "sort");
+                string sort_column_id = ConfigurationClient.Get<string> (sort_ns, "column", null);
+                if (sort_column_id != null) {
+                    ISortableColumn sort_column = null;
+                    foreach (Column column in this) {
+                        if (column.Id == sort_column_id) {
+                            sort_column = column as ISortableColumn;
+                            break;
+                        }
+                    }
+
+                    if (sort_column != null) {
+                        int sort_dir = ConfigurationClient.Get<int> (sort_ns, "direction", 0);
+                        SortType sort_type = sort_dir == 0 ? SortType.None : sort_dir == 1 ? SortType.Ascending : SortType.Descending;
+                        sort_column.SortType = sort_type;
+                        base.SortColumn = sort_column;
+                    }
+                } else {
+                    base.SortColumn = null;
+                }
+
                 loaded = true;
             }
             
             OnUpdated ();
+        }
+
+        public override ISortableColumn SortColumn {
+            set { base.SortColumn = value; Save (); }
         }
         
         public void Save ()
@@ -142,6 +169,12 @@ namespace Banshee.Collection.Gui
                     if (Columns[i].Id != null) {
                         Save (Columns[i], i);
                     }
+                }
+
+                if (SortColumn != null) {
+                    string ns = String.Format ("{0}.{1}.{2}", root_namespace, unique_source_id, "sort");
+                    ConfigurationClient.Set<string> (ns, "column", SortColumn.Id);
+                    ConfigurationClient.Set<int> (ns, "direction", (int)SortColumn.SortType);
                 }
             }
         }

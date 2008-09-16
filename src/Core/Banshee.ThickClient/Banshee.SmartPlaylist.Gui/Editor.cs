@@ -211,7 +211,7 @@ namespace Banshee.SmartPlaylist
                 ThreadAssist.Spawn (delegate {
                     //Console.WriteLine ("Name = {0}, Cond = {1}, OrderAndLimit = {2}", name, condition, order_by, limit_number);
                     if (playlist == null) {
-                        playlist = new SmartPlaylistSource (name, primary_source.DbId);
+                        playlist = new SmartPlaylistSource (name, primary_source);
 
                         playlist.ConditionTree = condition_tree;
                         playlist.QueryOrder = order;

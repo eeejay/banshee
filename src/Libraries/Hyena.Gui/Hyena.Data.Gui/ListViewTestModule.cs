@@ -107,6 +107,10 @@ namespace Hyena.Data.Gui
             public int Count {
                 get { return store.Count; }
             }
+
+            public bool CanReorder {
+                get { return false; }
+            }
             
             public ModelItem this[int index] {
                 get { return store[index]; }

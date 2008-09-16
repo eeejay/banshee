@@ -179,7 +179,7 @@ namespace Banshee.Dap.Mtp
                     @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
                         SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND ExternalID = ?");
                 foreach (MTP.Playlist playlist in mtp_device.GetPlaylists ()) {
-                    PlaylistSource pl_src = new PlaylistSource (playlist.Name, this.DbId);
+                    PlaylistSource pl_src = new PlaylistSource (playlist.Name, this);
                     pl_src.Save ();
                     // TODO a transaction would make sense here (when the threading issue is fixed)
                     foreach (int id in playlist.TrackIds) {

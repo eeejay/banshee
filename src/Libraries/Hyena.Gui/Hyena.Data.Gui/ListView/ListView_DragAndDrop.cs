@@ -57,11 +57,21 @@ namespace Hyena.Data.Gui
             get { return drag_drop_dest_entries; }
         }
         
-        private bool reorderable = false;
-        public bool Reorderable {
-            get { return reorderable; }
+        private bool is_reorderable = false;
+        public bool IsReorderable {
+            get { return is_reorderable && IsEverReorderable; }
             set {
-                reorderable = value;
+                is_reorderable = value;
+                OnDragSourceSet ();
+                OnDragDestSet ();
+            }
+        }
+
+        private bool is_ever_reorderable = false;
+        public bool IsEverReorderable {
+            get { return is_ever_reorderable; }
+            set {
+                is_ever_reorderable = value;
                 OnDragSourceSet ();
                 OnDragDestSet ();
             }
@@ -87,7 +97,7 @@ namespace Hyena.Data.Gui
         
         protected virtual void OnDragDestSet ()
         {
-            if (ForceDragDestSet || Reorderable) {
+            if (ForceDragDestSet || IsReorderable) {
                 Gtk.Drag.DestSet (this, DestDefaults.All, DragDropDestEntries, Gdk.DragAction.Move);
             } else {
                 Gtk.Drag.DestUnset (this);
@@ -96,7 +106,7 @@ namespace Hyena.Data.Gui
         
         protected virtual void OnDragSourceSet ()
         {
-            if (ForceDragSourceSet || Reorderable) {
+            if (ForceDragSourceSet || IsReorderable) {
                 Gtk.Drag.SourceSet (this, Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask, 
                     DragDropSourceEntries, Gdk.DragAction.Copy | Gdk.DragAction.Move);
             } else {
@@ -139,7 +149,7 @@ namespace Hyena.Data.Gui
         
         protected override bool OnDragMotion (Gdk.DragContext context, int x, int y, uint time)
         {
-            if (!Reorderable) {
+            if (!IsReorderable) {
                 StopDragScroll ();
                 drag_reorder_row_index = -1;
                 drag_reorder_motion_y = -1;

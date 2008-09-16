@@ -446,7 +446,7 @@ namespace Banshee.Sources.Gui
             get {
                 return new_playlist_source ??
                     new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"), 
-                        ServiceManager.SourceManager.MusicLibrary.DbId);
+                        ServiceManager.SourceManager.MusicLibrary);
             }
         }
 

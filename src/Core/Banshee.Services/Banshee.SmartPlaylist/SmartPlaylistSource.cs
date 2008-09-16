@@ -190,13 +190,13 @@ namespace Banshee.SmartPlaylist
 
 #region Constructors
 
-        public SmartPlaylistSource (string name, int primarySourceId) : base (generic_name, name, primarySourceId)
+        public SmartPlaylistSource (string name, PrimarySource parent) : base (generic_name, name, parent)
         {
             SetProperties ();
         }
 
-        public SmartPlaylistSource (string name, QueryNode condition, QueryOrder order, QueryLimit limit, IntegerQueryValue limit_value, int primarySourceId)
-            : this (name, primarySourceId)
+        public SmartPlaylistSource (string name, QueryNode condition, QueryOrder order, QueryLimit limit, IntegerQueryValue limit_value, PrimarySource parent)
+            : this (name, parent)
         {
             ConditionTree = condition;
             QueryOrder = order;
@@ -208,8 +208,8 @@ namespace Banshee.SmartPlaylist
         }
 
         // For existing smart playlists that we're loading from the database
-        protected SmartPlaylistSource (int dbid, string name, string condition_xml, string order_by, string limit_number, string limit_criterion, int primarySourceId, int count, bool is_temp) :
-            base (generic_name, name, dbid, -1, 0, primarySourceId, is_temp)
+        protected SmartPlaylistSource (int dbid, string name, string condition_xml, string order_by, string limit_number, string limit_criterion, PrimarySource parent, int count, bool is_temp) :
+            base (generic_name, name, dbid, -1, 0, parent, is_temp)
         {
             ConditionXml = condition_xml;
             QueryOrder = BansheeQuery.FindOrder (order_by);
@@ -482,12 +482,12 @@ namespace Banshee.SmartPlaylist
             return sql;
         }
 
-        public static IEnumerable<SmartPlaylistSource> LoadAll (int primary_id)
+        public static IEnumerable<SmartPlaylistSource> LoadAll (PrimarySource parent)
         {
             ClearTemporary ();
             using (HyenaDataReader reader = new HyenaDataReader (ServiceManager.DbConnection.Query (
                 @"SELECT SmartPlaylistID, Name, Condition, OrderBy, LimitNumber, LimitCriterion, PrimarySourceID, CachedCount, IsTemporary
-                    FROM CoreSmartPlaylists WHERE PrimarySourceID = ?", primary_id))) {
+                    FROM CoreSmartPlaylists WHERE PrimarySourceID = ?", parent.DbId))) {
                 while (reader.Read ()) {
                     SmartPlaylistSource playlist = null;
                     try {
@@ -495,7 +495,7 @@ namespace Banshee.SmartPlaylist
                             reader.Get<int> (0), reader.Get<string> (1),
                             reader.Get<string> (2), reader.Get<string> (3),
                             reader.Get<string> (4), reader.Get<string> (5),
-                            reader.Get<int> (6), reader.Get<int> (7), reader.Get<bool> (8)
+                            parent, reader.Get<int> (7), reader.Get<bool> (8)
                         );
                     } catch (Exception e) {
                         Log.Warning ("Ignoring Smart Playlist", String.Format ("Caught error: {0}", e), false);

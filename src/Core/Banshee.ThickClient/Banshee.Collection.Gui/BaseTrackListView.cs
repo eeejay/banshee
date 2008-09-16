@@ -54,7 +54,7 @@ namespace Banshee.Collection.Gui
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
             
             ForceDragSourceSet = true;
-            Reorderable = true;
+            IsEverReorderable = true;
             
             RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
                 ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;

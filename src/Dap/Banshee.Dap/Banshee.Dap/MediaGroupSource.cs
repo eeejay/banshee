@@ -42,7 +42,7 @@ namespace Banshee.Dap
     {
         private DapSource parent;
         
-        public MediaGroupSource (DapSource parent, string name) : base (name, parent.DbId)
+        public MediaGroupSource (DapSource parent, string name) : base (name, parent)
         {
             this.parent = parent;
             

@@ -243,12 +243,12 @@ namespace Banshee.Sources
             primary_sources[DbId] = this;
             
             // Load our playlists and smart playlists
-            foreach (PlaylistSource pl in PlaylistSource.LoadAll (DbId)) {
+            foreach (PlaylistSource pl in PlaylistSource.LoadAll (this)) {
                 AddChildSource (pl);
             }
 
             int sp_count = 0;
-            foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll (DbId)) {
+            foreach (SmartPlaylistSource pl in SmartPlaylistSource.LoadAll (this)) {
                 AddChildSource (pl);
                 sp_count++;
             }
@@ -274,7 +274,7 @@ namespace Banshee.Sources
             }
 
             expanded_schema = new SchemaEntry<bool> (
-                String.Format ("sources.{0}", ConfigurationId), "expanded", true, "Is source expanded", "Is source expanded"
+                String.Format ("sources.{0}", ParentConfigurationId), "expanded", true, "Is source expanded", "Is source expanded"
             );
         }
 

@@ -58,7 +58,7 @@ namespace Banshee.PlayQueue
             get { return false; }
         }
         
-        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), 0)
+        public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null)
         {
             BindToDatabase ();
             TypeUniqueId = DbId.ToString ();
@@ -70,6 +70,7 @@ namespace Banshee.PlayQueue
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Play Queue"));
             
             DatabaseTrackModel.ForcedSortQuery = "CorePlaylistEntries.ViewOrder ASC, CorePlaylistEntries.EntryID ASC";
+            DatabaseTrackModel.CanReorder = true;
             
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent);
             ServiceManager.PlaybackController.Transition += OnCanonicalPlaybackControllerTransition;
