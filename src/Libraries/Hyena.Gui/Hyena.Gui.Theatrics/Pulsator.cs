@@ -66,6 +66,10 @@ namespace Hyena.Gui.Theatrics
             get { return stage != null && stage.Contains (Target); }
         }
         
+        public bool Stopping {
+            get { return !IsPulsing ? true : stage[Target].CanExpire; }
+        }
+        
         #pragma warning disable 0067
         // FIXME: This is to mute gmcs: https://bugzilla.novell.com/show_bug.cgi?id=360455
         public event EventHandler Pulse;
