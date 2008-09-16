@@ -1,5 +1,12 @@
 2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Change the
+	ToggleVisibility method to Present the window if the window is minimized,
+	hidden in the tray, or simply not the focused window.  Iff it is the
+	active window, hide it (BGO #551916).
+
+2008-09-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
 	Allow shrinking selections with the shift-key pressed (BGO #535561).
 
