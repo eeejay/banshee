@@ -1,5 +1,16 @@
 2008-09-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Removed
+	commented out invocation of the old editor
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs:
+	Removed the old editor implementation
+
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Removed
+	the old track editor and the obsolete/legacy burner options dialogs
+
+2008-09-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
 	Iterate over all ICanUndo's and disconnect/connect the adapters when
 	loading new tracks; factored out the ForeachSyncButton methods into

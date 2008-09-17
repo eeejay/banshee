@@ -286,8 +286,7 @@ namespace Banshee.Gui
                 
                 if (handler != null) {
                     handler ();
-                } else {  
-                    // new Banshee.Gui.Dialogs.TrackEditor (current_source.TrackModel.SelectedItems);
+                } else {
                     Banshee.Gui.TrackEditor.TrackEditorDialog.RunEdit (current_source.TrackModel);
                 }
             }

@@ -116,7 +116,6 @@
     <Compile Include="Banshee.Gui.Dialogs\AboutDialog.cs" />
     <Compile Include="Banshee.Gui.Dialogs\OpenLocationDialog.cs" />
     <Compile Include="Banshee.Collection.Gui\ColumnCellDuration.cs" />
-    <Compile Include="Banshee.Gui.Dialogs\TrackEditor.cs" />
     <Compile Include="Banshee.Collection.Gui\ArtworkRenderer.cs" />
     <Compile Include="Banshee.Gui\TrackActions.cs" />
     <Compile Include="Banshee.Gui.Widgets\ArtworkPopup.cs" />
