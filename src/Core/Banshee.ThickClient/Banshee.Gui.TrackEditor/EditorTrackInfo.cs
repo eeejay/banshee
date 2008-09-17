@@ -45,6 +45,12 @@ namespace Banshee.Gui.TrackEditor
             TrackInfo.ExportableMerge (source_track, this);
         }
         
+        private bool changed;
+        public bool Changed {
+            get { return changed; }
+            set { changed = value; }
+        }
+        
         private int editor_index;
         public int EditorIndex {
             get { return editor_index; }

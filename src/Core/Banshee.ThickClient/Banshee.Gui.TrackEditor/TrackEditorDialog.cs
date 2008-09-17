@@ -36,9 +36,12 @@ using Gtk;
 using Hyena.Gui;
 using Hyena.Widgets;
 
+using Banshee.Kernel;
+using Banshee.Sources;
+using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Collection.Database;
-using Banshee.ServiceStack;
+using Banshee.Configuration.Schema;
 
 using Banshee.Widgets;
 using Banshee.Gui.Dialogs;
@@ -48,89 +51,6 @@ namespace Banshee.Gui.TrackEditor
 {
     public class TrackEditorDialog : BansheeDialog
     {
-        public static void RunEdit (TrackListModel model)
-        {
-            Run (model, EditorMode.Edit);
-        }
-        
-        public static void RunView (TrackListModel model)
-        {
-            Run (model, EditorMode.View);
-        }
-        
-        public static void Run (TrackListModel model, EditorMode mode)
-        {
-            TrackEditorDialog track_editor = new TrackEditorDialog (model, mode);
-            track_editor.Response += delegate (object o, ResponseArgs args) {
-                if (args.ResponseId == ResponseType.Ok) {
-                    track_editor.Save ();
-                } else if (track_editor.ChangesMade) {
-                    HigMessageDialog message_dialog = new HigMessageDialog (
-                        track_editor, DialogFlags.Modal, MessageType.Warning, ButtonsType.None, 
-                        
-                        String.Format (Catalog.GetPluralString (
-                            "Save the changes made to the open track?",
-                            "Save the changes made to the {0} open tracks?",
-                            track_editor.TrackCount), track_editor.TrackCount),
-                            
-                        String.Empty
-                    );
-                    
-                    UpdateCancelMessage (track_editor, message_dialog);
-                    uint timeout = 0;
-                    timeout = GLib.Timeout.Add (1000, delegate {
-                        bool result = UpdateCancelMessage (track_editor, message_dialog);
-                        if (!result) {
-                            timeout = 0;
-                        }
-                        return result;
-                    });
-                    
-                    message_dialog.AddButton (Catalog.GetString ("Close _without Saving"), ResponseType.Close, false);
-                    message_dialog.AddButton (Stock.Cancel, ResponseType.Cancel, false);
-                    message_dialog.AddButton (Stock.Save, ResponseType.Ok, true);
-                    
-                    try {
-                        switch ((ResponseType)message_dialog.Run ()) {
-                            case ResponseType.Ok:
-                                track_editor.Save ();
-                                break;
-                            case ResponseType.Close:
-                                break;
-                            case ResponseType.Cancel:
-                            case ResponseType.DeleteEvent:
-                                return;
-                        }
-                    } finally {
-                        if (timeout > 0) {
-                            GLib.Source.Remove (timeout);
-                        }
-                        message_dialog.Destroy ();
-                    }
-                }
-                
-                track_editor.Destroy ();
-            };
-            
-            track_editor.Run ();
-        }
-        
-        private static bool UpdateCancelMessage (TrackEditorDialog trackEditor, HigMessageDialog messageDialog)
-        {
-            if (messageDialog == null) {
-                return false;
-            }
-            
-            messageDialog.MessageLabel.Text = String.Format (Catalog.GetString (
-                "If you don't save, changes from the last {0} will be permanently lost."),
-                Banshee.Sources.DurationStatusFormatters.ApproximateVerboseFormatter (
-                    DateTime.Now - trackEditor.first_change_time
-                )
-            );
-            
-            return messageDialog.IsMapped;
-        }
-    
         public delegate void EditorTrackOperationClosure (EditorTrackInfo track);
     
         private VBox main_vbox;
@@ -171,7 +91,7 @@ namespace Banshee.Gui.TrackEditor
         
         public event EventHandler Navigated;
         
-        public TrackEditorDialog (TrackListModel model, EditorMode mode) : base (Catalog.GetString ("Track Editor"))
+        private TrackEditorDialog (TrackListModel model, EditorMode mode) : base (Catalog.GetString ("Track Editor"))
         {
             this.mode = mode;
             
@@ -505,11 +425,21 @@ namespace Banshee.Gui.TrackEditor
         
         public EditorTrackInfo LoadTrack (int index)
         {
+            return LoadTrack (index, true);
+        }
+        
+        public EditorTrackInfo LoadTrack (int index, bool alwaysLoad)
+        {
             TrackInfo source_track;
-            return LoadTrack (index, out source_track);
+            return LoadTrack (index, alwaysLoad, out source_track);
         }
         
         private EditorTrackInfo LoadTrack (int index, out TrackInfo sourceTrack)
+        {
+            return LoadTrack (index, true, out sourceTrack);
+        }
+        
+        private EditorTrackInfo LoadTrack (int index, bool alwaysLoad, out TrackInfo sourceTrack)
         {
             sourceTrack = GetTrack (index);
             EditorTrackInfo editor_track = null;
@@ -519,7 +449,7 @@ namespace Banshee.Gui.TrackEditor
                 return null;
             }
             
-            if (!edit_map.TryGetValue (sourceTrack, out editor_track)) {
+            if (!edit_map.TryGetValue (sourceTrack, out editor_track) && alwaysLoad) {
                 editor_track = new EditorTrackInfo (sourceTrack);
                 editor_track.EditorIndex = index;
                 editor_track.EditorCount = TrackCount;
@@ -580,48 +510,30 @@ namespace Banshee.Gui.TrackEditor
 
 #region Saving
 
-        protected override bool OnDeleteEvent (Gdk.Event evnt)
-        {
-            return true;
-            //return base.OnDeleteEvent (evnt);
-        }
-
-
-        protected override void OnResponse (ResponseType response_id)
-        {
-            base.OnResponse (response_id);
-        }
-
-
         public void Save ()
-        {
-            Console.WriteLine ("If this were implemented, your data would now be saved.");
-        }
-
-        
-       /* private void OnSaveButtonClicked (object o, EventArgs args)
         {
             List<int> primary_sources = new List<int> ();
             
-            // TODO wrap in db transaction
+            // TODO: wrap in db transaction
             try {
                 DatabaseTrackInfo.NotifySaved = false;
 
-                primary_sources.Clear ();
-                foreach (EditorTrack track in TrackSet) {
+                for (int i = 0; i < TrackCount; i++) {
+                    // Save any tracks that were actually loaded into the editor
+                    EditorTrackInfo track = LoadTrack (i, false);
+                    if (track == null || track.SourceTrack == null) {
+                        continue;
+                    }
+                    
                     SaveTrack (track);
-
-                    if (track.Track is DatabaseTrackInfo) {
-                        int id = (track.Track as DatabaseTrackInfo).PrimarySourceId;
+                    
+                    if (track.SourceTrack is DatabaseTrackInfo) {
+                        // If the source track is from the database, save its parent for notification later
+                        int id = (track.SourceTrack as DatabaseTrackInfo).PrimarySourceId;
                         if (!primary_sources.Contains (id)) {
                             primary_sources.Add (id);
                         }
                     }
-                }
-                
-                EventHandler handler = Saved;
-                if (handler != null) {
-                    handler (this, new EventArgs ());
                 }
 
                 // Finally, notify the affected primary sources
@@ -631,39 +543,137 @@ namespace Banshee.Gui.TrackEditor
             } finally {
                 DatabaseTrackInfo.NotifySaved = true;
             }
-            
-            Window.Destroy ();
         }
         
-        private void SaveTrack (EditorTrack track)
+        private void SaveTrack (EditorTrackInfo track)
         {
-            track.Save ();
-            
-            track.Track.Save ();
+            TrackInfo.ExportableMerge (track, track.SourceTrack);
+            track.SourceTrack.Save ();
                 
             if (LibrarySchema.WriteMetadata.Get ()) {
-                SaveToFile (track);
+                SaveToFile (track.SourceTrack);
             }
 
             if (LibrarySchema.MoveOnInfoSave.Get ()) {
-                MoveSavedFile (track);
+                MoveSavedFile (track.SourceTrack);
             }
 
-            if (track.Track == ServiceManager.PlayerEngine.CurrentTrack) {
+            if (track.SourceTrack == ServiceManager.PlayerEngine.CurrentTrack) {
                 ServiceManager.PlayerEngine.TrackInfoUpdated ();
             }
         }
         
-        private void SaveToFile (EditorTrack track)
+        private void SaveToFile (TrackInfo track)
         {
-            Banshee.Kernel.Scheduler.Schedule (new SaveTrackMetadataJob (track.Track), Banshee.Kernel.JobPriority.Highest);
+            Scheduler.Schedule (new Banshee.Streaming.SaveTrackMetadataJob (track), JobPriority.Highest);
         }
 
-        private void MoveSavedFile (EditorTrack track)
+        private void MoveSavedFile (TrackInfo track)
         {
-            Banshee.Kernel.Scheduler.Schedule (new MoveOnInfoSaveJob (track.Track), Banshee.Kernel.JobPriority.Highest);
-        }*/
+            Scheduler.Schedule (new MoveOnInfoSaveJob (track), JobPriority.Highest);
+        }
 
+#endregion
+
+#region Static Helpers
+
+        public static void RunEdit (TrackListModel model)
+        {
+            Run (model, EditorMode.Edit);
+        }
+        
+        public static void RunView (TrackListModel model)
+        {
+            Run (model, EditorMode.View);
+        }
+        
+        public static void Run (TrackListModel model, EditorMode mode)
+        {
+            TrackEditorDialog track_editor = new TrackEditorDialog (model, mode);
+            track_editor.Response += delegate (object o, ResponseArgs args) {
+                if (args.ResponseId == ResponseType.Ok) {
+                    track_editor.Save ();
+                } else if (track_editor.ChangesMade) {
+                    int changed_count = 0;
+                    for (int i = 0; i < track_editor.TrackCount; i++) {
+                        EditorTrackInfo track = track_editor.LoadTrack (i, false);
+                        if (track != null && track.Changed) {
+                            changed_count++;
+                        }
+                    }
+                    
+                    if (changed_count == 0) {
+                        // Shouldn't ever reach this
+                        track_editor.Destroy ();
+                        return;
+                    }
+                
+                    HigMessageDialog message_dialog = new HigMessageDialog (
+                        track_editor, DialogFlags.Modal, MessageType.Warning, ButtonsType.None, 
+                        
+                        String.Format (Catalog.GetPluralString (
+                            "Save the changes made to the open track?",
+                            "Save the changes made to {0} of {1} open tracks?",
+                            track_editor.TrackCount), changed_count, track_editor.TrackCount),
+                            
+                        String.Empty
+                    );
+                    
+                    UpdateCancelMessage (track_editor, message_dialog);
+                    uint timeout = 0;
+                    timeout = GLib.Timeout.Add (1000, delegate {
+                        bool result = UpdateCancelMessage (track_editor, message_dialog);
+                        if (!result) {
+                            timeout = 0;
+                        }
+                        return result;
+                    });
+                    
+                    message_dialog.AddButton (Catalog.GetString ("Close _without Saving"), ResponseType.Close, false);
+                    message_dialog.AddButton (Stock.Cancel, ResponseType.Cancel, false);
+                    message_dialog.AddButton (Stock.Save, ResponseType.Ok, true);
+                    
+                    try {
+                        switch ((ResponseType)message_dialog.Run ()) {
+                            case ResponseType.Ok:
+                                track_editor.Save ();
+                                break;
+                            case ResponseType.Close:
+                                break;
+                            case ResponseType.Cancel:
+                            case ResponseType.DeleteEvent:
+                                return;
+                        }
+                    } finally {
+                        if (timeout > 0) {
+                            GLib.Source.Remove (timeout);
+                        }
+                        message_dialog.Destroy ();
+                    }
+                }
+                
+                track_editor.Destroy ();
+            };
+            
+            track_editor.Run ();
+        }
+        
+        private static bool UpdateCancelMessage (TrackEditorDialog trackEditor, HigMessageDialog messageDialog)
+        {
+            if (messageDialog == null) {
+                return false;
+            }
+            
+            messageDialog.MessageLabel.Text = String.Format (Catalog.GetString (
+                "If you don't save, changes from the last {0} will be permanently lost."),
+                Banshee.Sources.DurationStatusFormatters.ApproximateVerboseFormatter (
+                    DateTime.Now - trackEditor.first_change_time
+                )
+            );
+            
+            return messageDialog.IsMapped;
+        }
+    
 #endregion
 
     }

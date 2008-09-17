@@ -88,6 +88,8 @@ namespace Banshee.Gui.TrackEditor
                 return;
             }
             
+            current_track.Changed = true;
+            
             EventHandler handler = Changed;
             if (handler != null) {
                 handler (this, EventArgs.Empty);

@@ -1,5 +1,18 @@
 2008-09-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	Set the Changed property on the current track in the Changed event
+	
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorTrackInfo.cs:
+	Added a Changed property
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Implemented saving finally, it should work. Test it. File bugs. Made the
+	message in the confirm cancel dialog slicker by showing the number of
+	changed out of the total tracks
+
+2008-09-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
 	Use the new static override in DurationStatusFormatters
 
