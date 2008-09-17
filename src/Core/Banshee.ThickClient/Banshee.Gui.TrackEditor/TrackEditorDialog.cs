@@ -40,6 +40,7 @@ using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.ServiceStack;
 
+using Banshee.Widgets;
 using Banshee.Gui.Dialogs;
 using Banshee.Collection.Gui;
 
@@ -60,11 +61,74 @@ namespace Banshee.Gui.TrackEditor
         public static void Run (TrackListModel model, EditorMode mode)
         {
             TrackEditorDialog track_editor = new TrackEditorDialog (model, mode);
-            try {
-                track_editor.Run ();
-            } finally {
+            track_editor.Response += delegate (object o, ResponseArgs args) {
+                if (args.ResponseId == ResponseType.Ok) {
+                    track_editor.Save ();
+                } else if (track_editor.ChangesMade) {
+                    HigMessageDialog message_dialog = new HigMessageDialog (
+                        track_editor, DialogFlags.Modal, MessageType.Warning, ButtonsType.None, 
+                        
+                        String.Format (Catalog.GetPluralString (
+                            "Save the changes made to the open track?",
+                            "Save the changes made to the {0} open tracks?",
+                            track_editor.TrackCount), track_editor.TrackCount),
+                            
+                        String.Empty
+                    );
+                    
+                    UpdateCancelMessage (track_editor, message_dialog);
+                    uint timeout = 0;
+                    timeout = GLib.Timeout.Add (1000, delegate {
+                        bool result = UpdateCancelMessage (track_editor, message_dialog);
+                        if (!result) {
+                            timeout = 0;
+                        }
+                        return result;
+                    });
+                    
+                    message_dialog.AddButton (Catalog.GetString ("Close _without Saving"), ResponseType.Close, false);
+                    message_dialog.AddButton (Stock.Cancel, ResponseType.Cancel, false);
+                    message_dialog.AddButton (Stock.Save, ResponseType.Ok, true);
+                    
+                    try {
+                        switch ((ResponseType)message_dialog.Run ()) {
+                            case ResponseType.Ok:
+                                track_editor.Save ();
+                                break;
+                            case ResponseType.Close:
+                                break;
+                            case ResponseType.Cancel:
+                            case ResponseType.DeleteEvent:
+                                return;
+                        }
+                    } finally {
+                        if (timeout > 0) {
+                            GLib.Source.Remove (timeout);
+                        }
+                        message_dialog.Destroy ();
+                    }
+                }
+                
                 track_editor.Destroy ();
+            };
+            
+            track_editor.Run ();
+        }
+        
+        private static bool UpdateCancelMessage (TrackEditorDialog trackEditor, HigMessageDialog messageDialog)
+        {
+            if (messageDialog == null) {
+                return false;
             }
+            
+            messageDialog.MessageLabel.Text = String.Format (Catalog.GetString (
+                "If you don't save, changes from the last {0} will be permanently lost."),
+                Banshee.Sources.DurationStatusFormatters.ApproximateVerboseFormatter (
+                    DateTime.Now - trackEditor.first_change_time
+                )
+            );
+            
+            return messageDialog.IsMapped;
         }
     
         public delegate void EditorTrackOperationClosure (EditorTrackInfo track);
@@ -78,6 +142,19 @@ namespace Banshee.Gui.TrackEditor
         private Label header_album_label;
         private Label edit_notif_label;
         private object tooltip_host;
+        
+        private DateTime first_change_time;
+        private bool changes_made;
+        public bool ChangesMade {
+            get { return changes_made; }
+            private set {
+                if (!changes_made && value) {
+                    first_change_time = DateTime.Now;
+                }
+                
+                changes_made = value;
+            }
+        }
         
         private Notebook notebook;
         public Notebook Notebook {
@@ -205,6 +282,7 @@ namespace Banshee.Gui.TrackEditor
                         page.Initialize (this);
                         page.Widget.Show ();
                     }
+                    page.Changed += OnPageChanged;
                 } catch (Exception e) {
                     Hyena.Log.Exception ("Invalid NotebookPage extension node. Should implement ITrackEditorPage.", e);
                 }
@@ -342,6 +420,11 @@ namespace Banshee.Gui.TrackEditor
             
             sync_all_button.WidthRequest = (children[1].Allocation.X + 
                 children[1].Allocation.Width) - children[0].Allocation.X - 1;
+        }
+        
+        private void OnPageChanged (object o, EventArgs args)
+        {
+            ChangesMade = true;
         }
 
 #endregion
@@ -496,6 +579,25 @@ namespace Banshee.Gui.TrackEditor
 #endregion
 
 #region Saving
+
+        protected override bool OnDeleteEvent (Gdk.Event evnt)
+        {
+            return true;
+            //return base.OnDeleteEvent (evnt);
+        }
+
+
+        protected override void OnResponse (ResponseType response_id)
+        {
+            base.OnResponse (response_id);
+        }
+
+
+        public void Save ()
+        {
+            Console.WriteLine ("If this were implemented, your data would now be saved.");
+        }
+
         
        /* private void OnSaveButtonClicked (object o, EventArgs args)
         {

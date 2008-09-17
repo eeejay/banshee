@@ -34,8 +34,6 @@ namespace Banshee.Collection.Gui
 {
     public class ColumnCellDuration : ColumnCellText
     {
-        private System.Text.StringBuilder builder = new System.Text.StringBuilder ();
-    
         public ColumnCellDuration (string property, bool expand) : base (property, expand)
         {
             Alignment = Pango.Alignment.Right;
@@ -56,9 +54,7 @@ namespace Banshee.Collection.Gui
                     return String.Empty;
                 }
                 
-                builder.Remove (0, builder.Length);
-                Banshee.Sources.DurationStatusFormatters.ConfusingPreciseFormatter (builder, TimeSpan.FromSeconds (seconds));
-                return builder.ToString ();
+                return Banshee.Sources.DurationStatusFormatters.ConfusingPreciseFormatter (TimeSpan.FromSeconds (seconds));
             }
         }
     }

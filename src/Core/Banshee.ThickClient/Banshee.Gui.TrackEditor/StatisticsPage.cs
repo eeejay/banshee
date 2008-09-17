@@ -38,6 +38,8 @@ namespace Banshee.Gui.TrackEditor
         private CellRendererText name_renderer;
         private ListStore model;
         private TreeView view;
+        
+        public event EventHandler Changed;
 
         public StatisticsPage ()
         {

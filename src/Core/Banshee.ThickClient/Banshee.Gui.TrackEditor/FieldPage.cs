@@ -41,6 +41,8 @@ namespace Banshee.Gui.TrackEditor
         public delegate string FieldLabelClosure (EditorTrackInfo track, Widget widget);
         public delegate void FieldValueClosure (EditorTrackInfo track, Widget widget);
         
+        public event EventHandler Changed;
+        
         private TrackEditorDialog dialog;
         protected TrackEditorDialog Dialog {
             get { return dialog; }
@@ -78,6 +80,18 @@ namespace Banshee.Gui.TrackEditor
         
         protected virtual void AddFields ()
         {
+        }
+        
+        protected virtual void OnChanged ()
+        {
+            if (current_track == null) {
+                return;
+            }
+            
+            EventHandler handler = Changed;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
         }
         
         public virtual bool MultipleTracks {
@@ -150,6 +164,7 @@ namespace Banshee.Gui.TrackEditor
             IEditorField editor_field = field as IEditorField;
             if (editor_field != null) {
                 editor_field.Changed += delegate {
+                    OnChanged ();
                     if (CurrentTrack != null) {
                         slot.WriteClosure (CurrentTrack, slot.Field);
                     }

@@ -1,5 +1,31 @@
 2008-09-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
+	Use the new static override in DurationStatusFormatters
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	Implement Changed event, raise when fields actually change
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ITrackEditorPage.cs:
+	Add Changed event
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/HelpPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Implement Change event, do not raise, because um, nothing is editable here
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Open a confirmation dialog when the user tries to cancel and has made
+	changes
+
+	* src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:
+	Added a new duration formatter, ApproximateVerboseFormatter and added
+	overrides that do not require a StringBuilder
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/HigMessageDialog.cs: Expose
+	MessageLabel so it can be edited after the fact
+
+2008-09-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
 	Added logic to make focus and prelight play nice when doing the pulsing
 

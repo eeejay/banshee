@@ -38,12 +38,23 @@ namespace Banshee.Sources
     public delegate void DurationStatusFormatHandler (StringBuilder builder, TimeSpan span);
     
     public class DurationStatusFormatters : List<DurationStatusFormatHandler>
-    {       
+    {
+        private static StringBuilder default_builder = new StringBuilder ();
+        
         public DurationStatusFormatters ()
         {
             Add (AwesomeConciseFormatter);
             Add (AnnoyingPreciseFormatter);
             Add (ConfusingPreciseFormatter);
+        }
+        
+        public static string AwesomeConciseFormatter (TimeSpan span)
+        {
+            lock (default_builder) {
+                default_builder.Remove (0, default_builder.Length);
+                AwesomeConciseFormatter (default_builder, span);
+                return default_builder.ToString ();
+            }
         }
         
         public static void AwesomeConciseFormatter (StringBuilder builder, TimeSpan span)
@@ -63,6 +74,15 @@ namespace Banshee.Sources
             }
         }
         
+        public static string AnnoyingPreciseFormatter (TimeSpan span)
+        {
+            lock (default_builder) {
+                default_builder.Remove (0, default_builder.Length);
+                AnnoyingPreciseFormatter (default_builder, span);
+                return default_builder.ToString ();
+            }
+        }
+        
         public static void AnnoyingPreciseFormatter (StringBuilder builder, TimeSpan span)
         {
             if (span.Days > 0) {
@@ -71,13 +91,22 @@ namespace Banshee.Sources
             }
             
             if (span.Hours > 0) {
-                builder.AppendFormat(Catalog.GetPluralString ("{0} hour", "{0} hours", span.Hours), span.Hours);
+                builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", span.Hours), span.Hours);
                 builder.Append (", ");
             }
 
             builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", span.Minutes), span.Minutes);
             builder.Append (", ");
             builder.AppendFormat (Catalog.GetPluralString ("{0} second", "{0} seconds", span.Seconds), span.Seconds);
+        }
+        
+        public static string ConfusingPreciseFormatter (TimeSpan span)
+        {
+            lock (default_builder) {
+                default_builder.Remove (0, default_builder.Length);
+                ConfusingPreciseFormatter (default_builder, span);
+                return default_builder.ToString ();
+            }
         }
         
         public static void ConfusingPreciseFormatter (StringBuilder builder, TimeSpan span)
@@ -92,6 +121,28 @@ namespace Banshee.Sources
                 builder.AppendFormat ("{0}:{1:00}", span.Minutes, span.Seconds);
             } else {
                 builder.AppendFormat ("{0:00}:{1:00}", span.Minutes, span.Seconds);
+            }
+        }
+        
+        public static string ApproximateVerboseFormatter (TimeSpan span)
+        {
+            lock (default_builder) {
+                default_builder.Remove (0, default_builder.Length);
+                ApproximateVerboseFormatter (default_builder, span);
+                return default_builder.ToString ();
+            }
+        }
+        
+        public static void ApproximateVerboseFormatter (StringBuilder builder, TimeSpan span)
+        {
+            if (span.Days > 0) {
+                builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", span.Days), span.Days);
+            } if (span.Hours > 0) {
+                builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", span.Hours), span.Hours);
+            } else if (span.Minutes > 0) {
+                builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", span.Minutes), span.Minutes);
+            } else {
+                builder.AppendFormat (Catalog.GetPluralString ("{0} second", "{0} seconds", span.Seconds), span.Seconds);
             }
         }
     }
