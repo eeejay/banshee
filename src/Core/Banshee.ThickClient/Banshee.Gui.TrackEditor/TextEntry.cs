@@ -31,8 +31,20 @@ using Gtk;
 
 namespace Banshee.Gui.TrackEditor
 {
-    public class TextEntry : Entry, IEditorField
+    public class TextEntry : Entry, IEditorField, ICanUndo
     {
+        private EditorEntryUndoAdapter undo_adapter = new EditorEntryUndoAdapter ();
+        
+        public void DisconnectUndo ()
+        {
+            undo_adapter.DisconnectUndo ();
+        }
+        
+        public void ConnectUndo (EditorTrackInfo track)
+        {
+            undo_adapter.ConnectUndo (this, track);
+        }
+        
         public new string Text {
             get { return base.Text; }
             set { base.Text = value ?? String.Empty; }

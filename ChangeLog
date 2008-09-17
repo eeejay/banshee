@@ -1,5 +1,28 @@
 2008-09-17  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Iterate over all ICanUndo's and disconnect/connect the adapters when
+	loading new tracks; factored out the ForeachSyncButton methods into
+	a generic ForeachWidget method taking a generic closure
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorEntryUndoAdapter.cs:
+	Implement a one-to-many adapter for entry undo adapters; this allows entry
+	undo adapters to be adapted on a per-track basis to each editor field
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ICanUndo.cs: 
+	Interface for fields that support undo/redo
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/GenreEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TitleEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TextEntry.cs:
+	Implement ICanUndo by way of EditorEntryUndoAdapter
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/EntryUndoAdapter.cs: Added 
+	Connect and Disconnect methods so multiple adapters can listen on the
+	same widget
+
+2008-09-17  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
 	Set the Changed property on the current track in the Changed event
 	

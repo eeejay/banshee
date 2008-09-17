@@ -50,6 +50,7 @@ SOURCES =  \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
 	Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs \
+	Banshee.Gui.TrackEditor/EditorEntryUndoAdapter.cs \
 	Banshee.Gui.TrackEditor/EditorMode.cs \
 	Banshee.Gui.TrackEditor/EditorTrackInfo.cs \
 	Banshee.Gui.TrackEditor/EditorUtilities.cs \
@@ -58,6 +59,7 @@ SOURCES =  \
 	Banshee.Gui.TrackEditor/FieldPage.cs \
 	Banshee.Gui.TrackEditor/GenreEntry.cs \
 	Banshee.Gui.TrackEditor/HelpPage.cs \
+	Banshee.Gui.TrackEditor/ICanUndo.cs \
 	Banshee.Gui.TrackEditor/IEditorField.cs \
 	Banshee.Gui.TrackEditor/ITrackEditorPage.cs \
 	Banshee.Gui.TrackEditor/LyricsPage.cs \

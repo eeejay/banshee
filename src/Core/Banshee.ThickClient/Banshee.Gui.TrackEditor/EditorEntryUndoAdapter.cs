@@ -1,5 +1,5 @@
 //
-// GenreEntry.cs
+// EditorEntryUndoAdapter.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,47 +27,39 @@
 //
 
 using System;
+using System.Collections.Generic;
+
 using Gtk;
-
 using Hyena.Gui;
-
-using Banshee.ServiceStack;
-using Banshee.Collection.Database;
 
 namespace Banshee.Gui.TrackEditor
 {
-    public class GenreEntry : ComboBoxEntry, ICanUndo
+    public class EditorEntryUndoAdapter
     {
-        private ListStore genre_model;
-        private EditorEntryUndoAdapter undo_adapter = new EditorEntryUndoAdapter ();
-        
-        public GenreEntry ()
+        private Dictionary<EditorTrackInfo, EntryUndoAdapter> undo_adapters 
+            = new Dictionary<EditorTrackInfo, EntryUndoAdapter> ();
+        private EntryUndoAdapter current_adapter;
+
+        public void DisconnectUndo ()
         {
-            genre_model = new ListStore (typeof (string));
-            Model = genre_model;
-            TextColumn = 0;
-        
-            foreach (string genre in ServiceManager.DbConnection.QueryEnumerable<string> (
-                "SELECT DISTINCT Genre FROM CoreTracks ORDER BY Genre")) {
-                if (!String.IsNullOrEmpty (genre)) {
-                    genre_model.AppendValues (genre);
-                }
+            if (current_adapter != null) {
+                current_adapter.Disconnect ();
+                current_adapter = null;
             }
         }
         
-        public void DisconnectUndo ()
+        public void ConnectUndo (Entry entry, EditorTrackInfo track)
         {
-            undo_adapter.DisconnectUndo ();
-        }
+            DisconnectUndo ();
         
-        public void ConnectUndo (EditorTrackInfo track)
-        {
-            undo_adapter.ConnectUndo (Entry, track);
-        }
-        
-        public string Value {
-            get { return Entry.Text; }
-            set { Entry.Text = value ?? String.Empty; }
+            if (undo_adapters.ContainsKey (track)) {
+                current_adapter = undo_adapters[track];
+            } else {
+                current_adapter = new EntryUndoAdapter (entry);
+                undo_adapters.Add (track, current_adapter);
+            }
+            
+            current_adapter.Connect ();
         }
     }
 }

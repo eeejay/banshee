@@ -42,11 +42,22 @@ namespace Hyena.Gui
         public EntryUndoAdapter(Entry entry)
         {
             this.entry = entry;
-
+        }
+        
+        public void Connect ()
+        {
             entry.KeyPressEvent += OnKeyPressEvent;
             entry.TextDeleted += OnTextDeleted;
             entry.TextInserted += OnTextInserted;
             entry.PopulatePopup += OnPopulatePopup;
+        }
+        
+        public void Disconnect ()
+        {
+            entry.KeyPressEvent -= OnKeyPressEvent;
+            entry.TextDeleted -= OnTextDeleted;
+            entry.TextInserted -= OnTextInserted;
+            entry.PopulatePopup -= OnPopulatePopup;
         }
 
         private void OnKeyPressEvent(object o, KeyPressEventArgs args)

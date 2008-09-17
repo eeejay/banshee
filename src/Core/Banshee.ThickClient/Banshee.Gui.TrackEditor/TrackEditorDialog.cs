@@ -235,7 +235,7 @@ namespace Banshee.Gui.TrackEditor
             if (TrackCount > 1) {
                 sync_all_button = new PulsingButton ();
                 sync_all_button.FocusInEvent += delegate {
-                    ForeachSyncButton (delegate (SyncButton button) {
+                    ForeachWidget<SyncButton> (delegate (SyncButton button) {
                         button.StartPulsing ();
                     });
                 };
@@ -245,7 +245,7 @@ namespace Banshee.Gui.TrackEditor
                         return;
                     }
                     
-                    ForeachSyncButton (delegate (SyncButton button) {
+                    ForeachWidget<SyncButton> (delegate (SyncButton button) {
                         button.StopPulsing ();
                     });
                 };
@@ -255,7 +255,7 @@ namespace Banshee.Gui.TrackEditor
                         return;
                     }
                 
-                    ForeachSyncButton (delegate (SyncButton button) {
+                    ForeachWidget<SyncButton> (delegate (SyncButton button) {
                         if (sync_all_button.State == StateType.Prelight) {
                             button.StartPulsing ();
                         } else {
@@ -294,29 +294,29 @@ namespace Banshee.Gui.TrackEditor
             button_box.ShowAll ();
         }
         
-        private delegate void SyncButtonAction (SyncButton button);
+        private delegate void WidgetAction<T> (T widget) where T : class;
         
-        private void ForeachSyncButton (SyncButtonAction action)
+        private void ForeachWidget<T> (WidgetAction<T> action) where T : class
         {
             for (int i = 0; i < notebook.NPages; i++) {
-                ForeachSyncButton (notebook.GetNthPage (i) as Container, action);
+                ForeachWidget (notebook.GetNthPage (i) as Container, action);
             }     
         }
         
-        private void ForeachSyncButton (Container container, SyncButtonAction action)
+        private void ForeachWidget<T> (Container container, WidgetAction<T> action) where T : class
         {
             if (container == null) {
                 return;
             }
             
             foreach (Widget child in container.Children) {
-                SyncButton sync = child as SyncButton;
-                if (sync != null) {
-                    action (sync);
+                T widget = child as T;
+                if (widget != null) {
+                    action (widget);
                 } else {
                     Container child_container = child as Container;
                     if (child_container != null) {
-                        ForeachSyncButton (child_container, action);
+                        ForeachWidget<T> (child_container, action);
                     }
                 }
             }
@@ -324,7 +324,7 @@ namespace Banshee.Gui.TrackEditor
         
         private void InvokeFieldSync ()
         {
-            ForeachSyncButton (delegate (SyncButton button) {
+            ForeachWidget<SyncButton> (delegate (SyncButton button) {
                 button.Click ();
             });
         }
@@ -398,9 +398,19 @@ namespace Banshee.Gui.TrackEditor
                 header_image_frame.ShadowType = ShadowType.In;
             }
             
+            // Disconnect all the undo adapters
+            ForeachWidget<ICanUndo> (delegate (ICanUndo undoable) {
+                undoable.Disconnect ();
+            });
+            
             foreach (ITrackEditorPage page in pages) {
                 page.LoadTrack (editor_track);
             }
+            
+            // Connect all the undo adapters
+            ForeachWidget<ICanUndo> (delegate (ICanUndo undoable) {
+                undoable.ConnectUndo (editor_track);
+            });
             
             // Update Navigation
             if (TrackCount > 0 && nav_backward_button != null && nav_forward_button != null) {

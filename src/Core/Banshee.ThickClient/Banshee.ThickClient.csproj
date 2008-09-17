@@ -211,6 +211,8 @@
     <Compile Include="Banshee.Gui.TrackEditor\SyncButton.cs" />
     <Compile Include="Banshee.Preferences.Gui\DescriptionLabel.cs" />
     <Compile Include="Banshee.Gui.Dialogs\DefaultApplicationHelperDialog.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\ICanUndo.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\EditorEntryUndoAdapter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

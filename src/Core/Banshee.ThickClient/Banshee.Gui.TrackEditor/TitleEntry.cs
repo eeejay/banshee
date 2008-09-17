@@ -31,7 +31,7 @@ using Gtk;
 
 namespace Banshee.Gui.TrackEditor
 {
-    public class TitleEntry : HBox, IEditorField
+    public class TitleEntry : HBox, IEditorField, ICanUndo
     {
         public event EventHandler Changed;
         
@@ -70,6 +70,16 @@ namespace Banshee.Gui.TrackEditor
                 forward_button.Clicked += delegate { dialog.NavigateForward (); };
                 PackStart (forward_button, false, false, 0);
             }
+        }
+        
+        public void ConnectUndo (EditorTrackInfo track)
+        {
+            entry.ConnectUndo (track);
+        }
+        
+        public void DisconnectUndo ()
+        {
+            entry.DisconnectUndo ();
         }
                 
         private void OnChanged (object o, EventArgs args)

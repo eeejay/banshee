@@ -1,5 +1,5 @@
 //
-// GenreEntry.cs
+// ICanUndo.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,47 +27,12 @@
 //
 
 using System;
-using Gtk;
-
-using Hyena.Gui;
-
-using Banshee.ServiceStack;
-using Banshee.Collection.Database;
 
 namespace Banshee.Gui.TrackEditor
 {
-    public class GenreEntry : ComboBoxEntry, ICanUndo
+    public interface ICanUndo
     {
-        private ListStore genre_model;
-        private EditorEntryUndoAdapter undo_adapter = new EditorEntryUndoAdapter ();
-        
-        public GenreEntry ()
-        {
-            genre_model = new ListStore (typeof (string));
-            Model = genre_model;
-            TextColumn = 0;
-        
-            foreach (string genre in ServiceManager.DbConnection.QueryEnumerable<string> (
-                "SELECT DISTINCT Genre FROM CoreTracks ORDER BY Genre")) {
-                if (!String.IsNullOrEmpty (genre)) {
-                    genre_model.AppendValues (genre);
-                }
-            }
-        }
-        
-        public void DisconnectUndo ()
-        {
-            undo_adapter.DisconnectUndo ();
-        }
-        
-        public void ConnectUndo (EditorTrackInfo track)
-        {
-            undo_adapter.ConnectUndo (Entry, track);
-        }
-        
-        public string Value {
-            get { return Entry.Text; }
-            set { Entry.Text = value ?? String.Empty; }
-        }
+        void DisconnectUndo ();
+        void ConnectUndo (EditorTrackInfo track);
     }
 }
