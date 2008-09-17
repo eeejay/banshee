@@ -241,12 +241,22 @@ namespace Banshee.Gui.TrackEditor
                         button.StartPulsing ();
                     });
                 };
+                
                 sync_all_button.FocusOutEvent += delegate {
+                    if (sync_all_button.State == StateType.Prelight) {
+                        return;
+                    }
+                    
                     ForeachSyncButton (delegate (SyncButton button) {
                         button.StopPulsing ();
                     });
                 };
+                
                 sync_all_button.StateChanged += delegate {
+                    if (sync_all_button.HasFocus) {
+                        return;
+                    }
+                
                     ForeachSyncButton (delegate (SyncButton button) {
                         if (sync_all_button.State == StateType.Prelight) {
                             button.StartPulsing ();
@@ -255,6 +265,7 @@ namespace Banshee.Gui.TrackEditor
                         }
                     });
                 };
+                
                 sync_all_button.Clicked += delegate {
                     InvokeFieldSync ();
                 };

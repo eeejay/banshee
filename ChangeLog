@@ -1,3 +1,8 @@
+2008-09-17  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Added logic to make focus and prelight play nice when doing the pulsing
+
 2008-09-16  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui.Theatrics/Pulsator.cs: Added a 
