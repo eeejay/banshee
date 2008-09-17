@@ -400,7 +400,7 @@ namespace Banshee.Gui.TrackEditor
             
             // Disconnect all the undo adapters
             ForeachWidget<ICanUndo> (delegate (ICanUndo undoable) {
-                undoable.Disconnect ();
+                undoable.DisconnectUndo ();
             });
             
             foreach (ITrackEditorPage page in pages) {
