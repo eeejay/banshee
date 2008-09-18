@@ -1,3 +1,11 @@
+2008-09-18  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/LinkLabel.cs: Implement
+	proper size allocation and requisitioning, read the focus style properties
+	from a GtkCheckButton on style set, and properly render the checkbutton
+	focus style; fixes spacing/padding/theme issues with focus (was the 
+	button style before, at the wrong offset/padding)
+
 2008-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:

@@ -29,6 +29,8 @@
 using System;
 using Gtk;
 
+using Hyena.Gui;
+
 namespace Banshee.Widgets
 {
     public class LinkLabel : EventBox
@@ -46,6 +48,11 @@ namespace Banshee.Widgets
         private bool selectable;
         private UriOpenHandler open_handler;
         private Gdk.Color link_color;
+        
+        private bool interior_focus;
+        private int focus_width;
+        private int focus_padding;
+        private int padding;
         
         public event EventHandler Clicked; 
         
@@ -69,7 +76,20 @@ namespace Banshee.Widgets
             
             Add(label);
         }
-        
+
+        protected override void OnStyleSet (Style previous_style)
+        {
+            base.OnStyleSet (previous_style);
+            
+            CheckButton check = new CheckButton ();
+            check.EnsureStyle ();
+            
+            interior_focus = GtkUtilities.StyleGetProperty<bool> (check, "interior-focus", false);
+            focus_width = GtkUtilities.StyleGetProperty<int> (check, "focus-line-width", -1);
+            focus_padding = GtkUtilities.StyleGetProperty<int> (check, "focus-padding", -1);
+            padding = interior_focus ? focus_width + focus_padding : 0;
+        }
+
         protected virtual void OnClicked()
         {
             if(uri != null && Open != null) {
@@ -91,15 +111,8 @@ namespace Banshee.Widgets
             if(evnt.Window == GdkWindow && HasFocus) {
                 int layout_width = 0, layout_height = 0;
                 label.Layout.GetPixelSize(out layout_width, out layout_height);
-                
-                int layout_x = evnt.Area.X + ((int)(evnt.Area.Width * label.Xalign) - 
-                    (int)(layout_width * label.Xalign));
-                int layout_y = evnt.Area.Y + ((int)(evnt.Area.Height * label.Yalign) - 
-                    (int)(layout_height * label.Yalign));
-               
-                Style.PaintFocus(Style, GdkWindow, State, evnt.Area, 
-                    this, "button", layout_x, layout_y, 
-                    layout_width, layout_height);
+                Style.PaintFocus (Style, GdkWindow, State, evnt.Area, this, "checkbutton", 
+                    0, 0, layout_width + 2 * padding, layout_height + 2 * padding);
             }
             
             if(Child != null) {
@@ -109,6 +122,46 @@ namespace Banshee.Widgets
             return false;
         }
         
+        protected override void OnSizeRequested (ref Requisition requisition)
+        {
+            if (label == null) {
+                base.OnSizeRequested (ref requisition);
+                return;
+            }
+            
+            requisition.Width = 0;
+            requisition.Height = 0;
+                
+            Requisition child_requisition = label.SizeRequest ();
+            requisition.Width = Math.Max (requisition.Width, child_requisition.Width);
+            requisition.Height += child_requisition.Height;
+            
+            requisition.Width += ((int)BorderWidth + padding) * 2;
+            requisition.Height += ((int)BorderWidth + padding) * 2;
+            
+            base.OnSizeRequested (ref requisition);
+        }
+
+        protected override void OnSizeAllocated (Gdk.Rectangle allocation)
+        {
+            base.OnSizeAllocated (allocation);
+            
+            Gdk.Rectangle child_allocation = new Gdk.Rectangle ();
+            
+            if (label == null || !label.Visible) {
+                return;
+            }
+            
+            int total_padding = (int)BorderWidth + padding;
+            
+            child_allocation.X = total_padding;
+            child_allocation.Y = total_padding;
+            child_allocation.Width = (int)Math.Max (1, Allocation.Width - 2 * total_padding);
+            child_allocation.Height = (int)Math.Max (1, Allocation.Height - 2 * total_padding);
+            
+            label.SizeAllocate (child_allocation);
+        }
+
         protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
         {
             if(evnt.Button == 1) {
