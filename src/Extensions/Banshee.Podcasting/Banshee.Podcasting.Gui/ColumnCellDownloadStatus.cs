@@ -50,16 +50,15 @@ namespace Banshee.Podcasting.Gui
         {
         }
     
-        protected override string Text {
-            get {
-                DownloadedStatusFilter val = (DownloadedStatusFilter) BoundObject;
-                switch (val) {
-                    case DownloadedStatusFilter.Downloaded:       return Catalog.GetString ("Downloaded");
-                    case DownloadedStatusFilter.Both:             return Catalog.GetString ("All Items");
-                    case DownloadedStatusFilter.NotDownloaded:    return Catalog.GetString ("Not Downloaded");
-                }
-                return String.Empty;
+        protected override string GetText (object obj)
+        {
+            DownloadedStatusFilter val = (DownloadedStatusFilter) obj;
+            switch (val) {
+                case DownloadedStatusFilter.Downloaded:       return Catalog.GetString ("Downloaded");
+                case DownloadedStatusFilter.Both:             return Catalog.GetString ("All Items");
+                case DownloadedStatusFilter.NotDownloaded:    return Catalog.GetString ("Not Downloaded");
             }
+            return String.Empty;
         }
     }
 }

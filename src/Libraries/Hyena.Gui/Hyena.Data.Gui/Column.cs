@@ -43,8 +43,8 @@ namespace Hyena.Data.Gui
         
         private int minWidth = 0;
         private int maxWidth = Int32.MaxValue;
-        private double minRelativeWidth = 0;
-        private double relativeWidth = 0;
+        //private double minRelativeWidth = 0;
+        //private double relativeWidth = 0;
         
         public Column (ColumnDescription description) :
             this (description, new ColumnCellText (description.Property, true))
@@ -93,14 +93,6 @@ namespace Hyena.Data.Gui
         
         public void PackStart (ColumnCell cell)
         {
-            ISizeRequestCell sr_cell = cell as ISizeRequestCell;
-            if (sr_cell != null && sr_cell.RestrictSize) {
-                int w, h;
-                sr_cell.GetSize (out w, out h);
-                MinWidth = w;
-                MaxWidth = w;
-            }
-            
             cells.Insert (0, cell);
         }
         
@@ -138,26 +130,72 @@ namespace Hyena.Data.Gui
             get { return header_cell; }
             set { header_cell = value; }
         }
+
+        public void CalculateWidths (Pango.Layout layout, bool headerVisible, int headerHeight)
+        {
+            bool min_was_zero = MinWidth == 0;
+            bool was_size_req = false;
+            ISizeRequestCell sr_cell = cells[0] as ISizeRequestCell;
+            if (sr_cell != null && sr_cell.RestrictSize) {
+                int min_w, max_w;
+                sr_cell.GetWidthRange (layout, out min_w, out max_w);
+                MinWidth = min_w == -1 ? MinWidth : min_w;
+                MaxWidth = max_w == -1 ? MaxWidth : max_w;
+                was_size_req = true;
+            }
+
+            if (headerVisible && (min_was_zero || was_size_req) && !String.IsNullOrEmpty (Title)) {
+                int w, h;
+                layout.SetText (Title);
+                //column_layout.SetText ("\u2026"); // ellipsis char
+                layout.GetPixelSize (out w, out h);
+
+                // Pretty sure the 3* is needed here only b/c of the " - 8" in ColumnCellText;
+                // See TODO there
+                w += 3 * ColumnHeaderCellText.Spacing;
+                if (this is ISortableColumn) {
+                    w += ColumnHeaderCellText.GetArrowWidth (headerHeight);
+                }
+
+                MinWidth = Math.Max (MinWidth, w);
+
+                // If the min/max are sufficiently close (arbitrarily choosen as < 8px) then
+                // make them equal, so that the column doesn't appear resizable but in reality is on barely.
+                if (MaxWidth - MinWidth < 8) {
+                    MinWidth = MaxWidth;
+                }
+            }
+        }
         
         public int MinWidth {
             get { return minWidth; }
-            set { minWidth = value; }
+            set {
+                minWidth = value;
+                if (value > maxWidth) {
+                    maxWidth = value;
+                }
+            }
         }
 
-        internal double MinRelativeWidth {
+        /*internal double MinRelativeWidth {
             get { return minRelativeWidth; }
             set { minRelativeWidth = value; }
-        }
+        }*/
         
         public int MaxWidth {
             get { return maxWidth; }
-            set { maxWidth = value; }
+            set {
+                maxWidth = value;
+                if (value < minWidth) {
+                    minWidth = value;
+                }
+            }
         }
 
-        public double RelativeWidth {
+        /*public double RelativeWidth {
             get { return relativeWidth; }
             set { relativeWidth = value; }
-        }
+        }*/
 
         public string Id {
             get { return StringUtil.CamelCaseToUnderCase (GetCell (0).Property); }

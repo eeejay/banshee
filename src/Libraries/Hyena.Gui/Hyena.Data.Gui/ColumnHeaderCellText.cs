@@ -38,8 +38,8 @@ namespace Hyena.Data.Gui
         
         private DataHandler data_handler;
         private bool has_sort;
-        
-        public ColumnHeaderCellText (DataHandler data_handler) : base(null, true)
+
+        public ColumnHeaderCellText (DataHandler data_handler) : base (null, true)
         {
             this.data_handler = data_handler;
         }
@@ -51,26 +51,33 @@ namespace Hyena.Data.Gui
             }
             
             if (!has_sort) {
-                base.Render (context, state, cellWidth - 10, cellHeight);
+                base.Render (context, state, cellWidth, cellHeight);
                 return;
             }
-            
-            Gdk.Rectangle alloc = new Gdk.Rectangle ();
-            alloc.Width = (int)(cellHeight / 3.0);
-            alloc.Height = (int)((double)alloc.Width / 1.6);
-            alloc.X = (int)cellWidth - alloc.Width - 10;
-            alloc.Y = ((int)cellHeight - alloc.Height) / 2;
-            
-            base.Render (context, state, cellWidth - 2 * alloc.Width - 10, cellHeight);
-            
+
+            Gdk.Rectangle arrow_alloc = new Gdk.Rectangle ();
+            arrow_alloc.Width = (int)(cellHeight / 3.0);
+            arrow_alloc.Height = (int)((double)arrow_alloc.Width / 1.6);
+            arrow_alloc.X = (int)cellWidth - arrow_alloc.Width - Spacing;
+            arrow_alloc.Y = ((int)cellHeight - arrow_alloc.Height) / 2;
+
+            double textWidth = arrow_alloc.X - Spacing;
+            if (textWidth > 0) {
+                context.Context.Rectangle (0, 0, textWidth, cellHeight);
+                context.Context.Clip ();
+                base.Render (context, state, textWidth, cellHeight);
+                context.Context.ResetClip ();
+            }
+
             SortType sort_type = ((ISortableColumn)data_handler ()).SortType;
             if (sort_type != SortType.None) {
-                context.Theme.DrawArrow (context.Context, alloc, sort_type);
+                context.Theme.DrawArrow (context.Context, arrow_alloc, sort_type);
             }
         }
         
-        protected override string Text {
-            get { return data_handler ().Title; }
+        protected override string GetText (object obj)
+        {
+            return data_handler ().Title;
         }
         
         public bool HasSort {
@@ -78,15 +85,9 @@ namespace Hyena.Data.Gui
             set { has_sort = value; }
         }
         
-        public int MinWidth {
-            get {
-                int min_width = data_handler ().MinWidth + 20;
-                if (HasSort) {
-                    min_width += 20;
-                }
-                return min_width;
-            }
+        public static int GetArrowWidth (int headerHeight)
+        {
+            return (int)(headerHeight / 3.0) + Spacing;
         }
-
     }
 }

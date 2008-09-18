@@ -53,27 +53,27 @@ namespace Banshee.Collection.Gui
             set { format = value; }
         }
         
-        protected override string Text {
-            get {
-                if (BoundObject == null)
-                    return String.Empty;
-
-                DateTime dt = (DateTime) BoundObject;
-                
-                if (dt == DateTime.MinValue)
-                    return String.Empty;
-
-                switch (Format)
-                {
-                case DateTimeFormat.Long:         return dt.ToString ();
-                case DateTimeFormat.ShortDate:    return dt.ToShortDateString ();
-                case DateTimeFormat.LongDate:     return dt.ToLongDateString ();
-                case DateTimeFormat.ShortTime:    return dt.ToShortTimeString ();
-                case DateTimeFormat.LongTime:     return dt.ToLongTimeString ();
-                }
-                
+        protected override string GetText (object obj)
+        {
+            if (obj == null) {
                 return String.Empty;
             }
+
+            DateTime dt = (DateTime) obj;
+            
+            if (dt == DateTime.MinValue) {
+                return String.Empty;
+            }
+
+            switch (Format) {
+            case DateTimeFormat.Long:         return dt.ToString ();
+            case DateTimeFormat.ShortDate:    return dt.ToShortDateString ();
+            case DateTimeFormat.LongDate:     return dt.ToLongDateString ();
+            case DateTimeFormat.ShortTime:    return dt.ToShortTimeString ();
+            case DateTimeFormat.LongTime:     return dt.ToLongTimeString ();
+            }
+            
+            return String.Empty;
         }
     }
 }

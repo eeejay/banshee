@@ -38,18 +38,19 @@ namespace Banshee.Collection.Gui
         public ColumnCellFileSize (string property, bool expand) : base (property, expand)
         {
             Alignment = Pango.Alignment.Right;
+            SetMinMaxStrings ((long)1023, (long)(1024 * 1024 * 575.5));
         }
         
-        protected override string Text {
-            get {
-                if (BoundObject == null)
-                    return String.Empty;
-
-                long bytes = (long) BoundObject;
-                return bytes <= 0
-                    ? String.Empty
-                    : new FileSizeQueryValue (bytes).ToUserQuery (true);
+        protected override string GetText (object obj)
+        {
+            if (obj == null) {
+                return String.Empty;
             }
+
+            long bytes = (long) obj;
+            return bytes <= 0
+                ? String.Empty
+                : new FileSizeQueryValue (bytes).ToUserQuery (true);
         }
     }
 }

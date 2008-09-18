@@ -1,3 +1,75 @@
+2008-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPublished.cs:
+	Use the new SetMinMaxStrings method in ColumnCellText to define the
+	min/max widths for these columns.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellQueryText.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDateTime.cs:
+	Update to new ColumnCellText API, replacing the Text property with a
+	GetText method so we can get the text for any arbitrary object (the
+	min/max strings, for example) instead of just the bound object.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Add ShortLabels
+	for a few fields, and make sorting by Grouping the same as sorting by
+	track.
+
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Add a ShortLabel property
+	that default to the value of Label.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/XmlColumnController.cs:
+	Only set the min/max widths if they were actually specified in the XML.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellFileSize.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackNumber.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPositiveInt.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDuration.cs:
+	Use the new SetMinMaxStrings method and change to the new GetText method.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Set the Uri column to ellipsize in the middle of the string, and change
+	the ColumnCellPositiveInt columns to use its new ctor to specify the
+	min/max number of digits (eg always 4 for Year).  Use the QueryFields'
+	ShortLabel property for the column Title.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs: Add
+	static GetArrowWidth method and get rid of MinWidth property.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ISizeRequestCell.cs: Replace
+	GetSize method with GetWidthRange.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: Add CalculateWidths
+	method that is passed a Pango.Layout so we can calculate an accurate
+	Min/Max width for a column
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/IHeaderCell.cs: Get rid of
+	MinWidth property.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs: Call
+	column.CalculateWidths before accessing the Min/MaxWidth properties.  When
+	resizing a column, don't let it be resized bigger than the MaxWidth.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Handle escape key to stop column moving/DnD.  Reorder conditional to avoid
+	iterating over all columns to see if there is a resizable column at the x
+	position every time MotionEvent is fired - no need to do that unless the
+	motion was inside the header. 
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Replace Text
+	property that returned the BoundObject with a GetText method that takes
+	any object.  Add protected SetMinMaxStrings method that subclasses can
+	use to specify objects, which are converted to strings using GetText and
+	then their width retrieved using the Pango.Layout passed to GetWidthRange.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellRating.cs: Set the Xpad
+	to 0 - there previously was too much padding on the left/right.  And
+	replace GetSize and GetWidthRange.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellCheckBox.cs: Replace
+	GetSize with GetWidthRange.
+
 2008-09-18  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:

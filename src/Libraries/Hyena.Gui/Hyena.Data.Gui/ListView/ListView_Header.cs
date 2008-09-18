@@ -92,14 +92,7 @@ namespace Hyena.Data.Gui
                 }
                 
                 // If we don't already have a MinWidth set, use the width of our Title text
-                if (column.MinWidth == 0) {
-                    int w;
-                    int h;
-                    column_layout.SetText (column.Title);
-                    column_layout.GetPixelSize (out w, out h);
-                    column.MinWidth = w;
-                }
-                
+                column.CalculateWidths (column_layout, HeaderVisible, HeaderHeight);
                 column_cache[i] = new CachedColumn ();
                 column_cache[i].Column = column;
                 column_cache[i].Index = i;
@@ -166,17 +159,16 @@ namespace Hyena.Data.Gui
                         }
                     }
                 }
-                
-                int min_width = column_cache[i].Column.MinWidth;
-                IHeaderCell header_cell = column_cache[i].Column.HeaderCell as IHeaderCell;
-                if (header_cell != null) {
-                    min_width = header_cell.MinWidth;
-                }
-                min_header_width += column_cache[i].MinWidth = Math.Max (min_width, column_cache[i].Column.MinWidth);
-                column_cache[i].MaxWidth = Math.Max (column_cache[i].Column.MaxWidth, column_cache[i].MinWidth);
+
+                column_cache[i].Column.CalculateWidths (column_layout, HeaderVisible, HeaderHeight);
+                column_cache[i].MaxWidth = column_cache[i].Column.MaxWidth;
+                column_cache[i].MinWidth = column_cache[i].Column.MinWidth;
+                min_header_width += column_cache[i].MinWidth;
             }
-            
-            if (min_header_width >= header_interaction_alloc.Width) {
+
+            if (column_cache.Length == 1) {
+                column_cache[0].Column.Width = 1.0;
+            } else if (min_header_width >= header_interaction_alloc.Width) {
                 header_width = min_header_width;
                 resizable = false;
                 for (int i = 0; i < column_cache.Length; i++) {
@@ -313,9 +305,15 @@ namespace Hyena.Data.Gui
         {
             CachedColumn resizing_column = column_cache[resizing_column_index];
             double resize_delta = x - resizing_column.ResizeX2;
-            
+
+            // Make sure the resize_delta won't make us smaller than the min
             if (resizing_column.Width + resize_delta < resizing_column.MinWidth) {
                 resize_delta = resizing_column.MinWidth - resizing_column.Width;
+            }
+
+            // Make sure the resize_delta won't make us bigger than the max
+            if (resizing_column.Width + resize_delta > resizing_column.MaxWidth) {
+                resize_delta = resizing_column.MaxWidth - resizing_column.Width;
             }
             
             if (resize_delta == 0) {
@@ -339,7 +337,8 @@ namespace Hyena.Data.Gui
             if (resize_delta > total_elastic_width) {
                 resize_delta = total_elastic_width;
             }
-            
+
+            // Convert to a proprotional width
             resize_delta = sign * resize_delta / (double)header_width;
             
             for (int i = resizing_column_index + 1; i < column_cache.Length; i++) {
@@ -347,7 +346,7 @@ namespace Hyena.Data.Gui
             }
             
             resizing_column.Column.Width += resize_delta;
-        
+
             RegenerateColumnCache ();
             QueueDraw ();
         }
@@ -369,7 +368,7 @@ namespace Hyena.Data.Gui
                     return column_cache[i].Column;
                 }
             }
-            
+
             return null;
         }
         

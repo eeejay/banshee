@@ -61,6 +61,12 @@ namespace Hyena.Query
             set { label = value; }
         }
 
+        private string short_label;
+        public string ShortLabel {
+            get { return short_label ?? label; }
+            set { short_label = value; }
+        }
+
         private string [] aliases;
         public string [] Aliases {
             get { return aliases; }

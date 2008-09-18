@@ -87,10 +87,9 @@ namespace Hyena.Data.Gui
             return true;
         }
         
-        public void GetSize (out int width, out int height)
+        public void GetWidthRange (Pango.Layout layout, out int min, out int max)
         {
-            width = 2 * Xpad + Size;
-            height = 2 * Ypad + Size;
+            min = max = 2 * Xpad + Size;
         }
         
         private bool restrict_size = true;

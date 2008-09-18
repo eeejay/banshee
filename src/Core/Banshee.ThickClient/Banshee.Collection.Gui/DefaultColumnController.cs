@@ -109,22 +109,31 @@ namespace Banshee.Collection.Gui
             genre_column        = CreateText (BansheeQuery.GenreField, 0.25);
 
             duration_column     = Create (BansheeQuery.DurationField, 0.10, true, new ColumnCellDuration (null, true));
-            year_column         = Create (BansheeQuery.YearField, 0.15, false, new ColumnCellPositiveInt (null, true));
+            year_column         = Create (BansheeQuery.YearField, 0.15, false, new ColumnCellPositiveInt (null, true, 4, 4));
             file_size_column    = Create (BansheeQuery.FileSizeField, 0.15, false, new ColumnCellFileSize (null, true));
             track_count_column  = Create (BansheeQuery.TrackCountField, 0.10, false, new ColumnCellTrackNumber (null, true));
-            disc_column         = Create (BansheeQuery.DiscField, 0.10, false, new ColumnCellPositiveInt (null, true));
-            disc_count_column   = Create (BansheeQuery.DiscCountField, 0.10, false, new ColumnCellPositiveInt (null, true));
-            bpm_column          = Create (BansheeQuery.BpmField, 0.10, false, new ColumnCellPositiveInt (null, true));
-            bitrate_column      = Create (BansheeQuery.BitRateField, 0.10, false, new ColumnCellPositiveInt (null, true));
+            disc_column         = Create (BansheeQuery.DiscField, 0.10, false, new ColumnCellPositiveInt (null, true, 1, 2));
+            disc_count_column   = Create (BansheeQuery.DiscCountField, 0.10, false, new ColumnCellPositiveInt (null, true, 1, 2));
+            bpm_column          = Create (BansheeQuery.BpmField, 0.10, false, new ColumnCellPositiveInt (null, true, 3, 3));
+
+            ColumnCellPositiveInt br_cell = new ColumnCellPositiveInt (null, true, 3, 3);
+            br_cell.TextFormat = Catalog.GetString ("{0} kbps");
+            bitrate_column      = Create (BansheeQuery.BitRateField, 0.10, false, br_cell);
+            
             rating_column       = Create (BansheeQuery.RatingField, 0.15, false, new ColumnCellRating (null, true));
 
             composer_column     = CreateText (BansheeQuery.ComposerField, 0.25);
             conductor_column    = CreateText (BansheeQuery.ConductorField, 0.25);
             grouping_column     = CreateText (BansheeQuery.GroupingField, 0.25);
             comment_column      = CreateText (BansheeQuery.CommentField, 0.25);
-            play_count_column   = CreateText (BansheeQuery.PlayCountField, 0.15);
-            skip_count_column   = CreateText (BansheeQuery.SkipCountField, 0.15);
-            uri_column          = CreateText (BansheeQuery.UriField, 0.15);
+            play_count_column   = Create (BansheeQuery.PlayCountField, 0.15, false, new ColumnCellPositiveInt (null, true, 2, 5));
+            skip_count_column   = Create (BansheeQuery.SkipCountField, 0.15, false, new ColumnCellPositiveInt (null, true, 2, 5));
+
+            // Construct the URI column specially b/c we want to ellipsize in the middle of the text
+            ColumnCellText uri_cell = new ColumnCellText (BansheeQuery.UriField.PropertyName, true);
+            uri_cell.EllipsizeMode = Pango.EllipsizeMode.Start;
+            uri_column          = Create (BansheeQuery.UriField, 0.15, false, uri_cell);
+            
             mime_type_column    = CreateText (BansheeQuery.MimeTypeField, 0.15);
 
             last_played_column  = Create (BansheeQuery.LastPlayedField, 0.15, false, new ColumnCellDateTime (null, true));
@@ -146,7 +155,7 @@ namespace Banshee.Collection.Gui
         {
             cell.Property = field.PropertyName;
             SortableColumn col = new SortableColumn (
-                field.Label,
+                field.ShortLabel,
                 cell,
                 width, field.Name, visible
             );

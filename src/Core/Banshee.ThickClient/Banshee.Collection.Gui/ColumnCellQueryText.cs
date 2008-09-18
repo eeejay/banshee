@@ -40,11 +40,10 @@ namespace Banshee.Collection.Gui
             this.blank = blank;
         }
         
-        protected override string Text {
-            get { 
-                string text = base.Text;
-                return String.IsNullOrEmpty (text) ? blank : text;
-            }
+        protected override string GetText (object obj)
+        {
+            string text = base.GetText (obj);
+            return String.IsNullOrEmpty (text) ? blank : text;
         }
     }
 }

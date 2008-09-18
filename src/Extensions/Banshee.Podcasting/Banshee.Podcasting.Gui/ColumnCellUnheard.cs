@@ -50,16 +50,15 @@ namespace Banshee.Podcasting.Gui
         {
         }
     
-        protected override string Text {
-            get {
-                OldNewFilter val = (OldNewFilter) BoundObject;
-                switch (val) {
-                    case OldNewFilter.New:    return Catalog.GetString ("New Items");
-                    case OldNewFilter.Both:   return Catalog.GetString ("All Items");
-                    case OldNewFilter.Old:    return Catalog.GetString ("Old Items");
-                }
-                return String.Empty;
+        protected override string GetText (object obj)
+        {
+            OldNewFilter val = (OldNewFilter) obj;
+            switch (val) {
+                case OldNewFilter.New:    return Catalog.GetString ("New Items");
+                case OldNewFilter.Both:   return Catalog.GetString ("All Items");
+                case OldNewFilter.Old:    return Catalog.GetString ("Old Items");
             }
+            return String.Empty;
         }
     }
 }

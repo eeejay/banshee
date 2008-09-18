@@ -36,16 +36,16 @@ namespace Banshee.Collection.Gui
     {
         public ColumnCellTrackNumber (string property, bool expand) : base (property, expand)
         {
+            SetMinMaxStrings (99, 999);
         }
         
-        protected override string Text {
-            get {
-                if (BoundObject == null || (int) BoundObject == 0) {
-                    return String.Empty;
-                }
-
-                return BoundObject.ToString ();
+        protected override string GetText (object obj)
+        {
+            if (obj == null || (int) obj == 0) {
+                return String.Empty;
             }
+
+            return obj.ToString ();
         }
     }
 }

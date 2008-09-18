@@ -44,6 +44,7 @@ namespace Hyena.Data.Gui
         
         public ColumnCellRating (string property, bool expand) : base (property, expand)
         {
+            Xpad = 0;
         }
             
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
@@ -98,10 +99,9 @@ namespace Hyena.Data.Gui
             return true;
         }
         
-        public void GetSize (out int width, out int height)
+        public void GetWidthRange (Pango.Layout layout, out int min, out int max)
         {
-            width = renderer.Width;
-            height = renderer.Height;
+            min = max = renderer.Width;
         }
         
         private int RatingFromPosition (double x)

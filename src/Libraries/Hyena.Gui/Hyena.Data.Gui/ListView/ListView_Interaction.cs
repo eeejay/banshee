@@ -188,6 +188,10 @@ namespace Hyena.Data.Gui
                 case Gdk.Key.KP_Enter:
                     handled = ActivateSelection ();
                     break;
+
+                case Gdk.Key.Escape:
+                    handled = CancelColumnDrag ();
+                    break;
                 
                 case Gdk.Key.space:
                     if (Selection != null && Selection.FocusedIndex != 1) {
@@ -343,7 +347,7 @@ namespace Hyena.Data.Gui
             }
             
             Gtk.Drag.SourceUnset (this);
-            
+
             Column column = GetColumnForResizeHandle (x);
             if (column != null) {
                 resizing_column_index = GetCachedColumnForColumn (column).Index;
@@ -435,12 +439,8 @@ namespace Hyena.Data.Gui
                 GdkWindow.Cursor = null;
                 return true;
             }
-            
-            if (pressed_column_index >= 0 && pressed_column_is_dragging) {
-                pressed_column_is_dragging = false;
-                pressed_column_index = -1;
-                GdkWindow.Cursor = null;
-                QueueDraw ();
+
+            if (CancelColumnDrag ()) {
                 return true;
             }
             
@@ -454,7 +454,7 @@ namespace Hyena.Data.Gui
 
             return true;
         }
-        
+
         private bool OnHeaderButtonRelease (Gdk.EventButton evnt)
         {
             if (pressed_column_index >= 0 && pressed_column_index < column_cache.Length) {
@@ -540,9 +540,9 @@ namespace Hyena.Data.Gui
             if (OnMotionNotifyEvent (x)) {
                 return true;
             }
-            
-            GdkWindow.Cursor = (resizing_column_index >= 0 || GetColumnForResizeHandle (x) != null) &&
-                header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) 
+
+            GdkWindow.Cursor = header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) && 
+                (resizing_column_index >= 0 || GetColumnForResizeHandle (x) != null)
                 ? resize_x_cursor 
                 : null;
             
@@ -575,9 +575,11 @@ namespace Hyena.Data.Gui
                     // Moving from right to left
                     reorder = pressed_column_x_drag <= swap_column_c.X1 + swap_column_c.Width / 2;
                 } else if (swap_column_c.Index > pressed_column_index) {
-                    // Moving from left to right
-                    reorder = pressed_column_x_drag + column_cache[pressed_column_index].Width >= 
-                        swap_column_c.X1 + swap_column_c.Width / 2;
+                    if (column_cache.Length > pressed_column_index && pressed_column_index >= 0) {
+                        // Moving from left to right
+                        reorder = pressed_column_x_drag + column_cache[pressed_column_index].Width >= 
+                            swap_column_c.X1 + swap_column_c.Width / 2;
+                    }
                 }
                 
                 if (reorder) {
@@ -628,6 +630,18 @@ namespace Hyena.Data.Gui
                     handler (this, new RowActivatedArgs<T> (Selection.FocusedIndex, model[Selection.FocusedIndex]));
                 }
             }
+        }
+
+        private bool CancelColumnDrag ()
+        {
+            if (pressed_column_index >= 0 && pressed_column_is_dragging) {
+                pressed_column_is_dragging = false;
+                pressed_column_index = -1;
+                GdkWindow.Cursor = null;
+                QueueDraw ();
+                return true;
+            }
+            return false;
         }
         
         protected int GetRowAtY (int y)

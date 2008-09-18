@@ -151,8 +151,7 @@ namespace Banshee.Query
 
         public static QueryField BpmField = new QueryField (
             "bpm", "Bpm",
-            // Translators: noun
-            Catalog.GetString ("BPM"), "CoreTracks.BPM", typeof(NaturalIntegerQueryValue),
+            Catalog.GetString ("Beats per Minute"), "CoreTracks.BPM", typeof(NaturalIntegerQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("bpm"),
             "bpm"
@@ -320,6 +319,15 @@ namespace Banshee.Query
             BpmField, BitRateField, DateAddedField, PlaylistField, SmartPlaylistField
         );
 
+        // Type Initializer
+        static BansheeQuery ()
+        {
+            // Translators: noun
+            BpmField.ShortLabel         = Catalog.GetString ("BPM");
+            SkipCountField.ShortLabel   = Catalog.GetString ("Skips");
+            PlayCountField.ShortLabel   = Catalog.GetString ("Plays");
+        }
+
         private const string default_sort = @"CoreAlbums.ArtistNameLowered ASC, CoreAlbums.TitleLowered ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC";
         public static string GetSort (string key)
         {
@@ -334,6 +342,7 @@ namespace Banshee.Query
             string column = null;
             switch (key.ToLower ()) {
                 case "track":
+                case "grouping":
                     sort_query = String.Format (@"
                         CoreAlbums.ArtistNameLowered ASC, 
                         CoreAlbums.TitleLowered ASC, 
@@ -389,7 +398,6 @@ namespace Banshee.Query
                 case "bitrate":
                 case "bpm":
                 case "conductor":
-                case "grouping":
                 case "trackcount":
                 case "disc":
                 case "disccount":

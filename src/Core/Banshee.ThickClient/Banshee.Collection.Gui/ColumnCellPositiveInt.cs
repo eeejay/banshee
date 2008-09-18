@@ -34,18 +34,19 @@ namespace Banshee.Collection.Gui
 {
     public class ColumnCellPositiveInt : ColumnCellText
     {
-        public ColumnCellPositiveInt (string property, bool expand) : base (property, expand)
+        public ColumnCellPositiveInt (string property, bool expand, int min_digits, int max_digits) : base (property, expand)
         {
+            SetMinMaxStrings ((int)Math.Pow (10, min_digits) - 1, (int)Math.Pow (10, max_digits) - 1);
         }
         
-        protected override string Text {
-            get {
-                if (BoundObject == null)
-                    return String.Empty;
-
-                int val = (int) BoundObject;
-                return val > 0 ? val.ToString () : String.Empty;
+        protected override string GetText (object obj)
+        {
+            if (obj == null) {
+                return String.Empty;
             }
+
+            int val = (int) obj;
+            return val > 0 ? val.ToString () : String.Empty;
         }
     }
 }

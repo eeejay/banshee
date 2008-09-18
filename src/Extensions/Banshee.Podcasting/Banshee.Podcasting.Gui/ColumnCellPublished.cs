@@ -35,6 +35,7 @@ namespace Banshee.Podcasting.Gui
         public ColumnCellPublished (string property, bool expand) : base (property, expand)
         {
             Format = Banshee.Collection.Gui.DateTimeFormat.ShortDate;
+            SetMinMaxStrings (new DateTime (2007, 12, 30));
         }
     }
 }

@@ -109,9 +109,9 @@ namespace Banshee.Collection.Gui
             
             string title = null;
             string sort_key = null;
-            double width = 0.0;
-            int max_width = 0;
-            int min_width = 0;
+            double width = -1;
+            int max_width = -1;
+            int min_width = -1;
             bool visible = true;
             
             string renderer_type = null;
@@ -181,8 +181,14 @@ namespace Banshee.Collection.Gui
                 Column column = sort_key == null
                     ? new Column (title, renderer, width, visible)
                     : new SortableColumn (title, renderer, width, sort_key, visible);
-                column.MaxWidth = max_width;
-                column.MinWidth = min_width;
+
+                if (max_width != -1) {
+                    column.MaxWidth = max_width;
+                }
+
+                if (min_width != -1) {
+                    column.MinWidth = min_width;
+                }
                 
                 Add (column);
             }

@@ -32,6 +32,5 @@ namespace Hyena.Data.Gui
 {
     public interface IHeaderCell
     {
-        int MinWidth { get; }
     }
 }
