@@ -166,7 +166,6 @@ namespace Banshee.NowPlaying
         {
             base.OnHidden ();
             DestroyControls ();
-            parent.RemoveNotification ("is-active", ParentActiveNotification);
         }
         
         private void OnScreenSizeChanged (object o, EventArgs args)
@@ -182,6 +181,7 @@ namespace Banshee.NowPlaying
                 parent.GdkWindow.SkipPagerHint = false;
                 parent.GdkWindow.SkipTaskbarHint = false;
                 Hide ();
+                parent.RemoveNotification ("is-active", ParentActiveNotification);
             } else {
                 parent.GdkWindow.SkipPagerHint = true;
                 parent.GdkWindow.SkipTaskbarHint = true;

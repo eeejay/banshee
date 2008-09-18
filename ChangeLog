@@ -1,5 +1,11 @@
 2008-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	Fix bug with not resetting the SkipTaskBar/Pager properties when the
+	fullscreen window is hidden (BGO #546866).
+
+2008-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:
 	Fix System.ArgumentOutOfRangeException (BGO #552820).
 
