@@ -250,25 +250,52 @@ namespace Hyena.Data.Gui
         
         protected virtual void OnColumnRightClicked (Column clickedColumn, int x, int y)
         {
-            Menu menu = new Menu ();
-            
-            if (clickedColumn.Id != null) { // FIXME: Also restrict if the column vis can't be changed
-                menu.Append (new ColumnHideMenuItem (clickedColumn));
-                menu.Append (new SeparatorMenuItem ());
-            }
-            
             Column [] columns = ColumnController.ToArray ();
             Array.Sort (columns, delegate (Column a, Column b) {
                 // Fully qualified type name to avoid Mono 1.2.4 bug
                 return System.String.Compare (a.Title, b.Title);
             });
             
-            foreach (Column column in columns) {
-                if (column.Id == null) {
+            uint items = 0;
+            
+            for (int i = 0; i < columns.Length; i++) {
+                if (columns[i].Id != null) {
+                    items++;
+                }
+            }
+            
+            uint max_items_per_column = 15;
+            if (items > max_items_per_column) {
+                if (items % 2 == 0 && items / 2 <= max_items_per_column) {
+                    max_items_per_column = items / 2;
+                }
+            }
+            
+            uint column_count = (uint)Math.Ceiling (items / (double)max_items_per_column);
+            
+            Menu menu = new Menu ();
+            uint row_offset = 2;
+            
+            if (clickedColumn.Id != null) { // FIXME: Also restrict if the column vis can't be changed
+                menu.Attach (new ColumnHideMenuItem (clickedColumn), 0, column_count, 0, 1);
+                menu.Attach (new SeparatorMenuItem (), 0, column_count, 1, 2);
+            }
+            
+            items = 0;
+            
+            for (uint i = 0, n = (uint)columns.Length, column = 0, row = 0; i < n; i++) {
+                if (columns[i].Id == null) {
                     continue;
                 }
                 
-                menu.Append (new ColumnToggleMenuItem (column));
+                row = items++ % max_items_per_column;
+                
+                menu.Attach (new ColumnToggleMenuItem (columns[i]), 
+                    column, column + 1, row + row_offset, row + 1 + row_offset);
+                
+                if (row == max_items_per_column - 1) {
+                    column++;
+                }
             }
             
             menu.ShowAll ();
@@ -457,14 +484,22 @@ namespace Hyena.Data.Gui
             }
         }
         
-        private class ColumnHideMenuItem : MenuItem
+        private class ColumnHideMenuItem : ImageMenuItem
         {
             private Column column;
             
-            public ColumnHideMenuItem (Column column) 
-                : base (String.Format (Catalog.GetString ("Hide {0}"), column.Title))
+            public ColumnHideMenuItem (Column column) : base ()
             {
                 this.column = column;
+                this.Image = new Image (Stock.Remove, IconSize.Menu);
+                
+                Label label = new Label ();
+                label.Xalign = 0.0f;
+                label.Markup = String.Format (Catalog.GetString ("Hide <i>{0}</i>"), 
+                    GLib.Markup.EscapeText (column.Title));
+                label.Show ();
+                
+                Add (label);
             }
             
             protected override void OnActivated ()

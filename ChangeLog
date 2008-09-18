@@ -1,5 +1,12 @@
 2008-09-18  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Break the column menu into multiple columns so it's easier to read and
+	navigate, hopefully avoiding crappy menu scrolling in GTK; make the
+	hide menu item have an icon and italicize the column name
+
+2008-09-18  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Widgets/Banshee.Widgets/LinkLabel.cs: Implement
 	proper size allocation and requisitioning, read the focus style properties
 	from a GtkCheckButton on style set, and properly render the checkbutton
