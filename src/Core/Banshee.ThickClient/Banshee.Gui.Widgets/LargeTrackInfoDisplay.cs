@@ -170,7 +170,7 @@ namespace Banshee.Gui.Widgets
             string second_line = line, third_line = line;
             int split_pos = line.LastIndexOf ("<span");
             if (split_pos >= 0) {
-                second_line = line.Substring (0, split_pos - 1) + "</span>";
+                second_line = line.Substring (0, Math.Max (0, split_pos - 1)) + "</span>";
                 third_line = String.Format ("<span color=\"{0}\">{1}",
                     CairoExtensions.ColorGetHex (TextColor, false),
                     line.Substring (split_pos, line.Length - split_pos));
