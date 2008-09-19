@@ -159,6 +159,7 @@ namespace Banshee.Collection.Gui
                 cell,
                 width, field.Name, visible
             );
+            col.LongTitle = field.Label;
             col.Field = field;
 
             return col;

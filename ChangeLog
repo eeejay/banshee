@@ -1,5 +1,17 @@
 2008-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Data/ColumnDescription.cs: Add a LongTitle
+	property.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Use the QueryField.ShortLabel in the ColumnDescription for the Title, and
+	set the LongTitle to the field's Label property.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs: Use
+	the LongTitle in the menus.
+
+2008-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPublished.cs:
 	Use the new SetMinMaxStrings method in ColumnCellText to define the
 	min/max widths for these columns.

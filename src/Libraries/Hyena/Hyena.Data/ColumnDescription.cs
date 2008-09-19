@@ -33,6 +33,7 @@ namespace Hyena.Data
     public class ColumnDescription
     {
         private string title;
+        private string long_title;
         private double width;
         private bool visible;
         private string property;
@@ -48,6 +49,7 @@ namespace Hyena.Data
         {
             this.property = property;
             this.title = title;
+            this.long_title = title;
             this.width = width;
             this.visible = visible;
         }
@@ -71,6 +73,11 @@ namespace Hyena.Data
         public string Title {
             get { return title; }
             set { title = value; }
+        }
+
+        public string LongTitle {
+            get { return long_title; }
+            set { long_title = value; }
         }
         
         public double Width {

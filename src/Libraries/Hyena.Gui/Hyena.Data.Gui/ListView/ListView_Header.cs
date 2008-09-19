@@ -464,7 +464,7 @@ namespace Hyena.Data.Gui
             private Column column;
             private bool ready = false;
             
-            public ColumnToggleMenuItem (Column column) : base (column.Title ?? String.Empty)
+            public ColumnToggleMenuItem (Column column) : base (column.LongTitle ?? String.Empty)
             {
                 this.column = column;
                 Active = column.Visible; 
@@ -495,7 +495,7 @@ namespace Hyena.Data.Gui
                 Label label = new Label ();
                 label.Xalign = 0.0f;
                 label.Markup = String.Format (Catalog.GetString ("Hide <i>{0}</i>"), 
-                    GLib.Markup.EscapeText (column.Title));
+                    GLib.Markup.EscapeText (column.LongTitle));
                 label.Show ();
                 
                 Add (label);
