@@ -389,32 +389,43 @@ namespace Hyena.Data.Gui
             }
 
             if (evnt.Button == 1 && evnt.Type == Gdk.EventType.TwoButtonPress) {
+                // Double clicked
                 OnRowActivated ();
             } else if (Selection != null) {
                 if ((evnt.State & Gdk.ModifierType.ControlMask) != 0) {
                     if (evnt.Button == 3) {
+                        // Right clicked with ctrl pressed, so make sure row selected
                         if (!Selection.Contains (row_index)) {
                             Selection.Select (row_index);
                         }
                     } else {
+                        // Normal ctrl-click, so toggle
                         Selection.ToggleSelect (row_index);
                     }
                 } else if ((evnt.State & Gdk.ModifierType.ShiftMask) != 0) {
+                    // Shift-click, so select from first-row-selected (if any) to the current row
                     Selection.SelectFromFirst (row_index, true);
                 } else {
                     if (evnt.Button == 3) {
+                        // Normal right-click, make sure row is only row selected
                         if (!Selection.Contains (row_index)) {
                             Selection.Clear (false);
                             Selection.Select (row_index);
                         }
                     } else {
-                        Selection.Clear (false);
-                        Selection.Select (row_index);
+                        // Normal click, if row not already selected, select only it right now,
+                        // but if it's already selected, wait until the Release to unselect any others so that
+                        // drag and drop of 2+ items works.
+                        if (!Selection.Contains (row_index)) {
+                            Selection.Clear (false);
+                            Selection.Select (row_index);
+                        }
                     }
                 }
 
                 FocusRow (row_index);
 
+                // Now that we've worked out the selections, open the context menu
                 if (evnt.Button == 3) {
                     OnPopupMenu ();
                 }
@@ -440,7 +451,9 @@ namespace Hyena.Data.Gui
                 return true;
             }
 
-            if (CancelColumnDrag ()) {
+            if (pressed_column_drag_started) {
+                CancelColumnDrag ();
+                pressed_column_drag_started = false;
                 return true;
             }
             
@@ -513,10 +526,14 @@ namespace Hyena.Data.Gui
                 return true;
             }
             
-            if (Selection != null && Selection.Contains (row_index) && Selection.Count > 1) {
-                Selection.Clear (false);
-                Selection.Select (row_index);
-                FocusRow (row_index);
+            //if (Selection != null && Selection.Contains (row_index) && Selection.Count > 1) {
+            if (Selection != null && evnt.Button == 1 && Hyena.Gui.GtkUtilities.NoImportantModifiersAreSet ()) {
+                if (Selection.Count > 1) {
+                    Selection.Clear (false);
+                    Selection.Select (row_index);
+                    FocusRow (row_index);
+                    InvalidateList ();    
+                }
             }
             
             return true;
@@ -531,6 +548,7 @@ namespace Hyena.Data.Gui
             if (pressed_column_index >= 0 && !pressed_column_is_dragging && 
                 Gtk.Drag.CheckThreshold (this, pressed_column_x_start, 0, x, 0)) {
                 pressed_column_is_dragging = true;
+                pressed_column_drag_started = true;
                 InvalidateHeader ();
                 InvalidateList ();
             }

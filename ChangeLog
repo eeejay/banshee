@@ -1,3 +1,11 @@
+2008-09-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Fix bug I introduced the other day with not being able to DnD more than
+	one track because all but the pointed-to track would get unselected when
+	you tried to drag (BGO #552715).
+
 2008-09-19  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Patch from

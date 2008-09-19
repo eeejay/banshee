@@ -66,6 +66,7 @@ namespace Hyena.Data.Gui
         private int pressed_column_x_drag = -1;
         private int pressed_column_x_start_hadjustment = -1;
         private bool pressed_column_is_dragging = false;
+        private bool pressed_column_drag_started = false;
         
         private Pango.Layout column_layout;
         
