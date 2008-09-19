@@ -2,6 +2,7 @@
 # Please keep this file in alphabetical order; run ./sort-potfiles
 # after adding files here.
 [encoding: UTF-8]
+
 data/audio-profiles/base.xml.in
 data/audio-profiles/flac.xml.in
 data/audio-profiles/mp3-lame.xml.in
@@ -64,6 +65,8 @@ src/Core/Banshee.Services/Banshee.Sources/Source.cs
 src/Core/Banshee.Services/Banshee.Web/Browser.cs
 src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs
+src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDiscAndCount.cs
+src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackAndCount.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs
 src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs
@@ -73,7 +76,6 @@ src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs
-src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/TrackEditor.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs
@@ -157,6 +159,7 @@ src/Extensions/Banshee.MiniMode/Resources/minimode.glade
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs
 src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs
+src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs
