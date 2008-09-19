@@ -119,7 +119,7 @@ namespace Banshee.Gui
                     }),
                  
                 new ActionEntry ("VersionInformationAction", null,
-                    Catalog.GetString ("_Version Information..."), null,
+                    Catalog.GetString ("_Version Information"), null,
                     Catalog.GetString ("View detailed version and configuration information"), OnVersionInformation),
                     
                 new ActionEntry("AboutAction", "gtk-about", OnAbout)
