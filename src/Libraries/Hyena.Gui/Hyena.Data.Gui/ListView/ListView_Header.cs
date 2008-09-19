@@ -463,12 +463,26 @@ namespace Hyena.Data.Gui
         {
             private Column column;
             private bool ready = false;
+            private Label label;
             
-            public ColumnToggleMenuItem (Column column) : base (column.LongTitle ?? String.Empty)
+            public ColumnToggleMenuItem (Column column) : base ()
             {
                 this.column = column;
                 Active = column.Visible; 
                 ready = true;
+                
+                label = new Label ();
+                label.Xalign = 0.0f;
+                label.Text = column.LongTitle ?? String.Empty;
+                label.Show ();
+                
+                Add (label);
+            }
+                        
+            protected override void OnStyleSet (Style previousStyle)
+            {
+                base.OnStyleSet (previousStyle);
+                label.ModifyFg (StateType.Prelight, label.Style.Foreground (StateType.Selected));
             }
             
             protected override void OnActivated ()
@@ -486,19 +500,26 @@ namespace Hyena.Data.Gui
         private class ColumnHideMenuItem : ImageMenuItem
         {
             private Column column;
+            private Label label;
             
             public ColumnHideMenuItem (Column column) : base ()
             {
                 this.column = column;
                 this.Image = new Image (Stock.Remove, IconSize.Menu);
                 
-                Label label = new Label ();
+                label = new Label ();
                 label.Xalign = 0.0f;
                 label.Markup = String.Format (Catalog.GetString ("Hide <i>{0}</i>"), 
                     GLib.Markup.EscapeText (column.LongTitle));
                 label.Show ();
                 
                 Add (label);
+            }
+            
+            protected override void OnStyleSet (Style previousStyle)
+            {
+                base.OnStyleSet (previousStyle);
+                label.ModifyFg (StateType.Prelight, label.Style.Foreground (StateType.Selected));
             }
             
             protected override void OnActivated ()
