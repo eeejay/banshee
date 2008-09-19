@@ -482,7 +482,7 @@ namespace Hyena.Data.Gui
             protected override void OnStyleSet (Style previousStyle)
             {
                 base.OnStyleSet (previousStyle);
-                label.ModifyFg (StateType.Prelight, label.Style.Foreground (StateType.Selected));
+                label.ModifyFg (StateType.Prelight, Style.Foreground (StateType.Selected));
             }
             
             protected override void OnActivated ()
@@ -519,7 +519,7 @@ namespace Hyena.Data.Gui
             protected override void OnStyleSet (Style previousStyle)
             {
                 base.OnStyleSet (previousStyle);
-                label.ModifyFg (StateType.Prelight, label.Style.Foreground (StateType.Selected));
+                label.ModifyFg (StateType.Prelight, Style.Foreground (StateType.Selected));
             }
             
             protected override void OnActivated ()
