@@ -257,10 +257,10 @@ namespace Hyena.Data.Gui
             }
             
             uint max_items_per_column = 15;
-            if (items > max_items_per_column) {
-                if (items % 2 == 0 && items / 2 <= max_items_per_column) {
-                    max_items_per_column = items / 2;
-                }
+            if (items >= max_items_per_column * 2) {
+                max_items_per_column = (uint)Math.Ceiling (items / 3.0);
+            } else if (items >= max_items_per_column) {
+                max_items_per_column = (uint)Math.Ceiling (items / 2.0);
             }
             
             uint column_count = (uint)Math.Ceiling (items / (double)max_items_per_column);

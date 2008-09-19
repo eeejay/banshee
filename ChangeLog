@@ -1,6 +1,12 @@
 2008-09-18  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Fix math for choosing the number of rows to influence the number of
+	columns for aesthetic column menu
+
+2008-09-18  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
 	Force the foreground color of embedded menu labels in the prelight state
 	to use the foreground color from the selected state (BGO #524897)
 
