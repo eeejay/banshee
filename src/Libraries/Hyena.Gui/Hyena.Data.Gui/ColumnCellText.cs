@@ -48,6 +48,7 @@ namespace Hyena.Data.Gui
         private int text_width;
         private int text_height;
         private string text_format = null;
+        protected string MinString, MaxString;
         
         public ColumnCellText (string property, bool expand) : base (property, expand)
         {
@@ -61,8 +62,8 @@ namespace Hyena.Data.Gui
         protected void SetMinMaxStrings (object min, object max)
         {
             // Set the min/max strings from the min/max objects
-            min_string = GetText (min);
-            max_string = GetText (max);
+            MinString = GetText (min);
+            MaxString = GetText (max);
             RestrictSize = true;
         }
     
@@ -101,9 +102,6 @@ namespace Hyena.Data.Gui
         {
             return obj == null ? String.Empty : obj.ToString ();
         }
-
-        private string min_string;
-        private string max_string;
         
         protected int TextWidth {
             get { return text_width; }
@@ -156,18 +154,18 @@ namespace Hyena.Data.Gui
             int height;
             min = max = -1;
             
-            if (!String.IsNullOrEmpty (min_string)) {
-                layout.SetText (min_string);
+            if (!String.IsNullOrEmpty (MinString)) {
+                layout.SetText (MinString);
                 layout.GetPixelSize (out min, out height);
                 min += 2*Spacing;
-                //Console.WriteLine ("for {0} got min {1} for {2}", this, min, min_string);
+                //Console.WriteLine ("for {0} got min {1} for {2}", this, min, MinString);
             }
 
-            if (!String.IsNullOrEmpty (max_string)) {
-                layout.SetText (max_string);
+            if (!String.IsNullOrEmpty (MaxString)) {
+                layout.SetText (MaxString);
                 layout.GetPixelSize (out max, out height);
                 max += 2*Spacing;
-                //Console.WriteLine ("for {0} got max {1} for {2}", this, max, max_string);
+                //Console.WriteLine ("for {0} got max {1} for {2}", this, max, MaxString);
             }
         }
         

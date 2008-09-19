@@ -135,7 +135,7 @@
     <Compile Include="Banshee.Sources.Gui\CellEditEntry.cs" />
     <Compile Include="Banshee.Sources.Gui\SourceRowRenderer.cs" />
     <Compile Include="Banshee.Sources.Gui\SourceView_DragAndDrop.cs" />
-    <Compile Include="Banshee.Collection.Gui\ColumnCellTrackNumber.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellTrackAndCount.cs" />
     <Compile Include="Banshee.Query.Gui\BansheeQueryBox.cs" />
     <Compile Include="Banshee.Query.Gui\RatingQueryValueEntry.cs" />
     <Compile Include="Banshee.Query.Gui\PlaylistQueryValueEntry.cs" />
@@ -212,6 +212,8 @@
     <Compile Include="Banshee.Gui.Dialogs\DefaultApplicationHelperDialog.cs" />
     <Compile Include="Banshee.Gui.TrackEditor\ICanUndo.cs" />
     <Compile Include="Banshee.Gui.TrackEditor\EditorEntryUndoAdapter.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellTrackNumber.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellDiscAndCount.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

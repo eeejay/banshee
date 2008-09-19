@@ -3,6 +3,7 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
 // Copyright (C) 2007-2008 Novell, Inc.
 //
@@ -78,15 +79,14 @@ namespace Banshee.Collection.Gui
                 ComposerColumn,
                 PlayCountColumn,
                 SkipCountColumn,
-                DiscColumn,
                 LastPlayedColumn,
                 LastSkippedColumn,
                 DateAddedColumn,
                 UriColumn,
                 MimeTypeColumn,
                 AlbumArtistColumn,
-                TrackCountColumn,
-                DiscCountColumn,
+                TrackNumberAndCountColumn,
+                DiscNumberAndCountColumn,
                 BpmColumn,
                 BitRateColumn,
                 ConductorColumn,
@@ -100,6 +100,8 @@ namespace Banshee.Collection.Gui
 
             // Visible-by-default column
             track_column        = Create (BansheeQuery.TrackNumberField, 0.10, true, new ColumnCellTrackNumber (null, true));
+            track_column.Title = String.Empty; // don't show any text in the header for this column, so it can be smaller
+            
             title_column        = CreateText (BansheeQuery.TitleField, 0.25, true);
             artist_column       = CreateText (BansheeQuery.ArtistField, 0.225, true);
             album_column        = CreateText (BansheeQuery.AlbumField, 0.225, true);
@@ -107,21 +109,28 @@ namespace Banshee.Collection.Gui
             // Others
             album_artist_column = CreateText (BansheeQuery.AlbumArtistField, 0.225);
             genre_column        = CreateText (BansheeQuery.GenreField, 0.25);
-
             duration_column     = Create (BansheeQuery.DurationField, 0.10, true, new ColumnCellDuration (null, true));
             year_column         = Create (BansheeQuery.YearField, 0.15, false, new ColumnCellPositiveInt (null, true, 4, 4));
             file_size_column    = Create (BansheeQuery.FileSizeField, 0.15, false, new ColumnCellFileSize (null, true));
-            track_count_column  = Create (BansheeQuery.TrackCountField, 0.10, false, new ColumnCellTrackNumber (null, true));
-            disc_column         = Create (BansheeQuery.DiscField, 0.10, false, new ColumnCellPositiveInt (null, true, 1, 2));
-            disc_count_column   = Create (BansheeQuery.DiscCountField, 0.10, false, new ColumnCellPositiveInt (null, true, 1, 2));
             bpm_column          = Create (BansheeQuery.BpmField, 0.10, false, new ColumnCellPositiveInt (null, true, 3, 3));
 
+            // Set the property to null on these so that the object passed in is the actual bound TrackInfo
+            track_combined_column = Create (BansheeQuery.TrackNumberField, 0.10, false, new ColumnCellTrackAndCount (null, true));
+            track_combined_column.Property = null;
+            track_combined_column.Id = "track_and_count";
+            track_combined_column.Title = Catalog.GetString ("Track #");
+            track_combined_column.LongTitle = Catalog.GetString ("Track & Count");
+            
+            disc_combined_column = Create (BansheeQuery.DiscNumberField, 0.10, false, new ColumnCellDiscAndCount (null, true));
+            disc_combined_column.Property = null;
+            disc_combined_column.Title = Catalog.GetString ("Disc #");
+            disc_combined_column.LongTitle = Catalog.GetString ("Disc & Count");
+
             ColumnCellPositiveInt br_cell = new ColumnCellPositiveInt (null, true, 3, 3);
-            br_cell.TextFormat = Catalog.GetString ("{0} kbps");
+            br_cell.TextFormat  = Catalog.GetString ("{0} kbps");
             bitrate_column      = Create (BansheeQuery.BitRateField, 0.10, false, br_cell);
             
             rating_column       = Create (BansheeQuery.RatingField, 0.15, false, new ColumnCellRating (null, true));
-
             composer_column     = CreateText (BansheeQuery.ComposerField, 0.25);
             conductor_column    = CreateText (BansheeQuery.ConductorField, 0.25);
             grouping_column     = CreateText (BansheeQuery.GroupingField, 0.25);
@@ -232,9 +241,9 @@ namespace Banshee.Collection.Gui
             get { return skip_count_column; }
         }
         
-        private SortableColumn disc_column;
-        public SortableColumn DiscColumn {
-            get { return disc_column; }
+        private SortableColumn disc_combined_column;
+        public SortableColumn DiscNumberAndCountColumn {
+            get { return disc_combined_column; }
         }
         
         private SortableColumn rating_column;
@@ -267,14 +276,9 @@ namespace Banshee.Collection.Gui
             get { return album_artist_column; }
         }
         
-        private SortableColumn track_count_column;
-        public SortableColumn TrackCountColumn {
-            get { return track_count_column; }
-        }
-        
-        private SortableColumn disc_count_column;
-        public SortableColumn DiscCountColumn {
-            get { return disc_count_column; }
+        private SortableColumn track_combined_column;
+        public SortableColumn TrackNumberAndCountColumn {
+            get { return track_combined_column; }
         }
         
         private SortableColumn bpm_column;

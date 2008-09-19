@@ -115,7 +115,7 @@ namespace Banshee.Query
             "on", "album", "from", "albumtitle"
         );
 
-        public static QueryField DiscField = new QueryField (
+        public static QueryField DiscNumberField = new QueryField (
             "disc", "DiscNumber",
             Catalog.GetString ("Disc"), "CoreTracks.Disc", typeof(NaturalIntegerQueryValue),
             // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
@@ -134,7 +134,7 @@ namespace Banshee.Query
         public static QueryField TrackNumberField = new QueryField (
             "track", "TrackNumber",
             // Translators: noun
-            Catalog.GetString ("Track"), "CoreTracks.TrackNumber", typeof(NaturalIntegerQueryValue),
+            Catalog.GetString ("Track Number"), "CoreTracks.TrackNumber", typeof(NaturalIntegerQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "#", Catalog.GetString ("track"), Catalog.GetString ("trackno"), Catalog.GetString ("tracknum"),
             "track", "trackno", "tracknum"
@@ -313,7 +313,7 @@ namespace Banshee.Query
 #endregion
 
         public static QueryFieldSet FieldSet = new QueryFieldSet (
-            ArtistField, AlbumField, AlbumArtistField, TitleField, TrackNumberField, TrackCountField, DiscField, DiscCountField,
+            ArtistField, AlbumField, AlbumArtistField, TitleField, TrackNumberField, TrackCountField, DiscNumberField, DiscCountField,
             YearField, GenreField, ComposerField, ConductorField, GroupingField, CommentField, RatingField, PlayCountField,
             SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField, LastSkippedField,
             BpmField, BitRateField, DateAddedField, PlaylistField, SmartPlaylistField
@@ -384,6 +384,14 @@ namespace Banshee.Query
                     sort_query = "RANDOM ()";
                     break;
 
+                case "disc":
+                    sort_query = String.Format (@"
+                        CoreAlbums.ArtistNameLowered ASC, 
+                        CoreAlbums.TitleLowered ASC, 
+                        CoreTracks.Disc {0},
+                        CoreTracks.TrackNumber ASC", ascDesc);
+                    break;
+
                 // FIXME hacks to aid in migration of these sort keys to actually
                 // using the QueryField (or at least their .Names)
                 case "lastplayed":
@@ -399,7 +407,6 @@ namespace Banshee.Query
                 case "bpm":
                 case "conductor":
                 case "trackcount":
-                case "disc":
                 case "disccount":
                 case "genre":
                 case "duration":

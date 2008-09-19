@@ -197,8 +197,10 @@ namespace Hyena.Data.Gui
             set { relativeWidth = value; }
         }*/
 
+        private string id;
         public string Id {
-            get { return StringUtil.CamelCaseToUnderCase (GetCell (0).Property); }
+            get { return id ?? id = StringUtil.CamelCaseToUnderCase (GetCell (0).Property); }
+            set { id = value; }
         }
     }
 }

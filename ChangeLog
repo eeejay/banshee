@@ -1,3 +1,26 @@
+2008-09-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.csproj:
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackAndCount.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDiscAndCount.cs:
+	New classes for N of M columns for track/disc #/count.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Make the track # column have no title in its header, and get rid of the
+	disc/track count and disc # columns, replacing them with two new ones from
+	the new classes.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Rename
+	DiscField to DiscNumberField, and sort the disc sort-key similar to how
+	track# is sorted.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: Allow setting the Id.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Allow setting
+	the min/max strings directly.  Used by two new columns to avoid creating
+	TrackInfo objects just to set the min/max strings.
+
 2008-09-18  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:

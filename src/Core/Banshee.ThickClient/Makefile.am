@@ -14,12 +14,14 @@ SOURCES =  \
 	Banshee.Collection.Gui/BaseTrackListView.cs \
 	Banshee.Collection.Gui/ColumnCellAlbum.cs \
 	Banshee.Collection.Gui/ColumnCellDateTime.cs \
+	Banshee.Collection.Gui/ColumnCellDiscAndCount.cs \
 	Banshee.Collection.Gui/ColumnCellDuration.cs \
 	Banshee.Collection.Gui/ColumnCellFileSize.cs \
 	Banshee.Collection.Gui/ColumnCellPositiveInt.cs \
 	Banshee.Collection.Gui/ColumnCellQueryText.cs \
 	Banshee.Collection.Gui/ColumnCellStatusIndicator.cs \
 	Banshee.Collection.Gui/ColumnCellTrack.cs \
+	Banshee.Collection.Gui/ColumnCellTrackAndCount.cs \
 	Banshee.Collection.Gui/ColumnCellTrackNumber.cs \
 	Banshee.Collection.Gui/DefaultColumnController.cs \
 	Banshee.Collection.Gui/PersistentColumnController.cs \
