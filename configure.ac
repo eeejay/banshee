@@ -225,11 +225,11 @@ ${PACKAGE}-${VERSION}
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "
 
-#    Unfinished, unstable, under development components:
-#    Moonlight Effects: ${enable_moonlight}
-#    Remote Audio:      ${enable_remote_audio}
-#      MediaWeb:        ${enable_mediaweb}
-#      Torrent Podcasts:${enable_torrent}
+# Unstable/in-development features; only show them if they were manually enabled
+if test "x$enable_moonlight" = "xyes";    then echo "    Moonlight Effects: ${enable_moonlight}"; fi
+if test "x$enable_remote_audio" = "xyes"; then echo "    Remote Audio:      ${enable_remote_audio}"; fi
+if test "x$enable_mediaweb" = "xyes";     then echo "    MediaWeb:          ${enable_mediaweb}"; fi
+if test "x$enable_torrent" = "xyes";      then echo "    Torrent Podcasts:  ${enable_torrent}"; fi
 
 if test -d ${expanded_libdir}/${PACKAGE}; then
 	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/${PACKAGE}"

@@ -1,3 +1,15 @@
+2008-09-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.MediaWeb/Banshee.MediaWeb/MediaWebSource.cs:
+	* src/Extensions/Banshee.MediaWeb/Banshee.MediaWeb/MediaWebView.cs: Add
+	debugging, and send to hulu not miroguide.com b/c the later doensn't work
+	atm due to SSL certs.
+
+	* configure.ac: Echo any manually-enabled unstable/unfinished features.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:
+	Currently transferring => Transferring
+
 2008-09-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:

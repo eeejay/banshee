@@ -44,16 +44,13 @@ namespace Banshee.MediaWeb
 {
     public class MediaWebSource : Source, IDisposable
     {
-        protected override string TypeUniqueId {
-            get { return "media-web-source"; }
-        }
-
         private MediaWebView view;
         
         // FIXME avoiding new translated strings, for the moment
         //public MediaWebSource () : base (Catalog.GetString ("Media Web"), Catalog.GetString ("Media Web"), 30)
-        public MediaWebSource () : base ("Media Web", "Media Web", 30)
+        public MediaWebSource () : base ("Browser", "Browser", 30)
         {
+            TypeUniqueId = "media-web-source";
             view = new MediaWebView ();
         
             Properties.SetString ("Icon.Name", "applications-internet");

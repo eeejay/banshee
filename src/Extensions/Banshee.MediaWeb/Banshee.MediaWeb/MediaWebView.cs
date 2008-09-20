@@ -32,6 +32,8 @@ using Gtk;
 
 using WebKit;
 
+using Hyena;
+
 using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
@@ -58,16 +60,32 @@ namespace Banshee.MediaWeb
 
         public MediaWebView () : base ()
         {
+            this.ConsoleMessage += delegate (object o, ConsoleMessageArgs args)
+            {
+                Log.Debug (args.Message);
+            };
+
+            this.LoadProgressChanged += delegate (object o, LoadProgressChangedArgs args)
+            {
+                Log.DebugFormat ("LoadProgress: {0}", args.Progress);
+            };
+            
             //this.LoadHtmlString ("<html><body><i>fooooo!</i></body></html>", "/");
             //this.MarkTextMatches ("fo", false, 999);
-            //ExecuteScript ("document.location = \"http://www.miroguide.com/\";");
-            //ExecuteScript ("document.location = \"http://www.hulu.com/watch/24057/the-daily-show-with-jon-stewart-tue-jun-24-2008#s-p1-so-i0\";");
-            //ExecuteScript ("document.location = \"http://www.google.com/\";");
-            ExecuteScript ("document.location = \"http://http://www.thedailyshow.com/\";");
+        }
+
+        private void OpenUrl (string uri)
+        {
+            Hyena.Log.DebugFormat ("MediaWeb.View Opening {0}", uri);
+            //Open (uri);
+            ExecuteScript (String.Format ("document.location = \"{0}\";", uri));
+            //LoadHtmlString ("<b>hi!!</b>", "");
         }
 
         bool Banshee.Sources.Gui.ISourceContents.SetSource (ISource source)
         {
+            //OpenUrl ("http://www.miroguide.com/");
+            OpenUrl ("http://www.hulu.com/watch/24057/the-daily-show-with-jon-stewart-tue-jun-24-2008#s-p1-so-i0");
             return true;
         }
 
