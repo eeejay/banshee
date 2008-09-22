@@ -44,6 +44,9 @@ namespace Banshee.AudioCd
 {
     public class AudioCdDiscModel : MemoryTrackListModel
     {
+        // 44.1 kHz sample rate * 16 bit channel resolution * 2 channels (stereo)
+        private const long PCM_FACTOR = 176400;
+    
         private IDiscVolume volume;
         
         public event EventHandler MetadataQueryStarted;
@@ -60,6 +63,11 @@ namespace Banshee.AudioCd
         private TimeSpan duration;
         public TimeSpan Duration {
             get { return duration; }
+        }
+        
+        private long file_size;
+        public long FileSize {
+            get { return file_size; }
         }
         
         public AudioCdDiscModel (IDiscVolume volume)
@@ -85,10 +93,12 @@ namespace Banshee.AudioCd
                 track.Duration = TimeSpan.FromSeconds (mb_disc.TrackDurations[i]);
                 track.ArtistName = Catalog.GetString ("Unknown Artist");
                 track.AlbumTitle = Catalog.GetString ("Unknown Album");
-                track.TrackTitle = String.Format(Catalog.GetString ("Track {0}"), track.TrackNumber);
+                track.TrackTitle = String.Format (Catalog.GetString ("Track {0}"), track.TrackNumber);
+                track.FileSize = mb_disc.TrackDurations[i] * PCM_FACTOR;
                 Add (track);
                 
                 duration += track.Duration;
+                file_size += track.FileSize;
             }
             
             EnabledCount = Count;

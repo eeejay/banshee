@@ -91,7 +91,8 @@ namespace Banshee.Gui.TrackEditor
         
         public event EventHandler Navigated;
         
-        private TrackEditorDialog (TrackListModel model, EditorMode mode) : base (Catalog.GetString ("Track Editor"))
+        private TrackEditorDialog (TrackListModel model, EditorMode mode) : base (
+            mode == EditorMode.Edit ? Catalog.GetString ("Track Editor") : Catalog.GetString ("Track Properties"))
         {
             this.mode = mode;
             

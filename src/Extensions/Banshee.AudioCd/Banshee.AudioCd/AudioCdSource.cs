@@ -43,7 +43,8 @@ using Banshee.Gui;
 
 namespace Banshee.AudioCd
 {
-    public class AudioCdSource : Source, ITrackModelSource, IUnmapableSource, IDurationAggregator, IDisposable
+    public class AudioCdSource : Source, ITrackModelSource, IUnmapableSource, 
+        IDurationAggregator, IFileSizeAggregator, IDisposable
     {
         private AudioCdService service;
         private AudioCdDiscModel disc_model;
@@ -75,6 +76,10 @@ namespace Banshee.AudioCd
         
         public TimeSpan Duration {
             get { return disc_model.Duration; }
+        }
+        
+        public long FileSize {
+            get { return disc_model.FileSize; }
         }
         
         public bool DiscIsPlaying {

@@ -82,7 +82,9 @@ namespace Banshee.Gui.TrackEditor
                         return taglib_file;
                     }
                 } catch (Exception e) {
-                    Hyena.Log.Exception ("Cannot load TagLib file", e);
+                    if (Uri.Scheme == "file") {
+                        Hyena.Log.Exception ("Cannot load TagLib file", e);
+                    }
                 }
                 
                 taglib_file_exists = false;

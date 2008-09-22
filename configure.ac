@@ -232,6 +232,7 @@ if test "x$enable_mediaweb" = "xyes";     then echo "    MediaWeb:          ${en
 if test "x$enable_torrent" = "xyes";      then echo "    Torrent Podcasts:  ${enable_torrent}"; fi
 
 if test -d ${expanded_libdir}/${PACKAGE}; then
+	echo
 	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/${PACKAGE}"
 	echo "         Remove the existing install before installing this build."
 	echo "         Installing over an existing install will cause conflicts!"

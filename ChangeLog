@@ -1,3 +1,18 @@
+2008-09-22  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Compute the PCM file size for each track, set it on AudioCdTrackInfo, 
+	and aggregate these values into a disc size
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: 
+	Implement IFileSizeAggregator and report the disc size
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorTrackInfo.cs:
+	Only dump the taglib read exception if the URI scheme is file
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Show either an Editor or Properties title based on the editor mode
+
 2008-09-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
