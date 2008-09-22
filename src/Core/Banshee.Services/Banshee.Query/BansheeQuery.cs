@@ -63,7 +63,7 @@ namespace Banshee.Query
             CreateQueryOrder ("Album",      asc,  Catalog.GetString ("Album"), AlbumField),
             CreateQueryOrder ("Artist",     asc,  Catalog.GetString ("Artist"), ArtistField),
             // Translators: noun
-            CreateQueryOrder ("Title",      asc,  Catalog.GetString ("Title"), TitleField),
+            CreateQueryOrder ("Title",      asc,  Catalog.GetString ("Name"), TitleField),
             CreateQueryOrder ("Genre",      asc,  Catalog.GetString ("Genre"), GenreField),
             null,
             CreateQueryOrder ("Rating",     desc, Catalog.GetString ("Highest Rating"), RatingField),
@@ -168,7 +168,7 @@ namespace Banshee.Query
 
         public static QueryField TitleField = new QueryField (
             "title", "TrackTitle",
-            Catalog.GetString ("Title"), "CoreTracks.TitleLowered", true,
+            Catalog.GetString ("Name"), "CoreTracks.TitleLowered", true,
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("title"), Catalog.GetString ("titled"), Catalog.GetString ("name"), Catalog.GetString ("named"),
             "title", "titled", "name", "named"

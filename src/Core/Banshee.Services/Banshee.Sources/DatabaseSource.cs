@@ -276,6 +276,14 @@ namespace Banshee.Sources
         {
             return CanAddTracks && source != this;
         }
+                
+        public override bool HasViewableTrackProperties {
+            get { return true; }
+        }
+        
+        public override bool HasEditableTrackProperties {
+            get { return true; }
+        }
 
 #endregion
         

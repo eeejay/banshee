@@ -70,10 +70,14 @@ namespace Banshee.Gui
                 new ActionEntry("SelectNoneAction", null,
                     Catalog.GetString("Select _None"), "<control><shift>A",
                     Catalog.GetString("Unselect all tracks"), OnSelectNone),
-
-                new ActionEntry ("TrackPropertiesAction", Stock.Edit,
+                    
+                new ActionEntry ("TrackEditorAction", Stock.Edit,
                     Catalog.GetString ("_Edit Track Information"), "E",
-                    Catalog.GetString ("Edit information on selected tracks"), OnTrackProperties),
+                    Catalog.GetString ("Edit information on selected tracks"), OnTrackEditor),
+
+                new ActionEntry ("TrackPropertiesAction", Stock.Properties,
+                    Catalog.GetString ("Properties"), null,
+                    Catalog.GetString ("View information on selected tracks"), OnTrackProperties),
 
                 new ActionEntry ("AddToPlaylistAction", null,
                     Catalog.GetString ("Add _to Playlist"), null,
@@ -225,7 +229,8 @@ namespace Banshee.Gui
                     UpdateAction ("DeleteTracksFromDriveAction", is_track_source && track_source.CanDeleteTracks, has_selection, source);
                     UpdateAction ("RemoveTracksFromLibraryAction", source.Parent is LibrarySource, has_selection, null);
                     
-                    UpdateAction ("TrackPropertiesAction", in_database, has_selection, source);
+                    UpdateAction ("TrackPropertiesAction", in_database && source.HasViewableTrackProperties, has_selection, source);
+                    UpdateAction ("TrackEditorAction", in_database && source.HasEditableTrackProperties, has_selection, source);
                     UpdateAction ("RateTracksAction", in_database, has_selection, null);
                     UpdateAction ("AddToPlaylistAction", in_database && primary_source != null &&
                             primary_source.SupportsPlaylists && !primary_source.PlaylistsReadOnly, has_selection, null);
@@ -276,19 +281,32 @@ namespace Banshee.Gui
             ShowContextMenu ("/TrackContextMenu");
         }
 
+        private bool RunSourceOverrideHandler (string sourceOverrideHandler)
+        {
+            Source source = current_source as Source;
+            InvokeHandler handler = source != null 
+                ? source.GetInheritedProperty<InvokeHandler> (sourceOverrideHandler) 
+                : null;
+            
+            if (handler != null) {
+                handler ();
+                return true;
+            }
+            
+            return false;
+        }
+
         private void OnTrackProperties (object o, EventArgs args)
         {
-            if (current_source != null) {
-                Source source = current_source as Source;
-                InvokeHandler handler = source != null 
-                    ? source.GetInheritedProperty<InvokeHandler> ("TrackPropertiesActionHandler") 
-                    : null;
-                
-                if (handler != null) {
-                    handler ();
-                } else {
-                    Banshee.Gui.TrackEditor.TrackEditorDialog.RunEdit (current_source.TrackModel);
-                }
+            if (current_source != null && !RunSourceOverrideHandler ("TrackPropertiesActionHandler")) {
+                Banshee.Gui.TrackEditor.TrackEditorDialog.RunView (current_source.TrackModel);
+            }
+        }
+        
+        private void OnTrackEditor (object o, EventArgs args)
+        {
+            if (current_source != null && !RunSourceOverrideHandler ("TrackEditorActionHandler")) {
+                Banshee.Gui.TrackEditor.TrackEditorDialog.RunEdit (current_source.TrackModel);
             }
         }
 

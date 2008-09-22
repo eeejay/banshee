@@ -76,8 +76,8 @@ namespace Banshee.InternetRadio
             Properties.Set<bool> ("Nereid.SourceContentsPropagate", true);
             Properties.Set<ISourceContents> ("Nereid.SourceContents", source_contents);
             
-            Properties.SetString ("TrackPropertiesActionLabel", Catalog.GetString ("Edit Station"));
-            Properties.Set<InvokeHandler> ("TrackPropertiesActionHandler", delegate {
+            Properties.SetString ("TrackEditorActionLabel", Catalog.GetString ("Edit Station"));
+            Properties.Set<InvokeHandler> ("TrackEditorActionHandler", delegate {
                 ITrackModelSource active_track_model_source =
                     (ITrackModelSource) ServiceManager.SourceManager.ActiveSource;
 
@@ -263,6 +263,10 @@ namespace Banshee.InternetRadio
         }
         
         protected override bool HasArtistAlbum {
+            get { return false; }
+        }
+        
+        public override bool HasViewableTrackProperties {
             get { return false; }
         }
     }

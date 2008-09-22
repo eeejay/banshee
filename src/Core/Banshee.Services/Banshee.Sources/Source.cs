@@ -485,6 +485,14 @@ namespace Banshee.Sources
         public virtual bool HasProperties {
             get { return false; }
         }
+        
+        public virtual bool HasViewableTrackProperties {
+            get { return false; }
+        }
+        
+        public virtual bool HasEditableTrackProperties {
+            get { return false; }
+        }
 
         public virtual string Name {
             get { return properties.Get<string> ("Name"); }
