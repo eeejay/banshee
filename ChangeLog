@@ -5,7 +5,7 @@
 	audio CD track information again before ripping (BGO #532467).
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Don't require
-	the source to have a DatabaseTrackListModel to view/edit props/
+	the source to have a DatabaseTrackListModel to view/edit props
 
 2008-09-22  Aaron Bockover  <abock@gnome.org>
 
