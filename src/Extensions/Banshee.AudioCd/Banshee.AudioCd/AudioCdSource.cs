@@ -257,6 +257,14 @@ namespace Banshee.AudioCd
         public override int Count {
             get { return disc_model.Count; }
         }
+
+        public override bool HasEditableTrackProperties {
+            get { return true; }
+        }
+
+        public override bool HasViewableTrackProperties {
+            get { return true; }
+        }
         
 #endregion
         

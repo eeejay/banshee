@@ -229,8 +229,8 @@ namespace Banshee.Gui
                     UpdateAction ("DeleteTracksFromDriveAction", is_track_source && track_source.CanDeleteTracks, has_selection, source);
                     UpdateAction ("RemoveTracksFromLibraryAction", source.Parent is LibrarySource, has_selection, null);
                     
-                    UpdateAction ("TrackPropertiesAction", in_database && source.HasViewableTrackProperties, has_selection, source);
-                    UpdateAction ("TrackEditorAction", in_database && source.HasEditableTrackProperties, has_selection, source);
+                    UpdateAction ("TrackPropertiesAction", source.HasViewableTrackProperties, has_selection, source);
+                    UpdateAction ("TrackEditorAction", source.HasEditableTrackProperties, has_selection, source);
                     UpdateAction ("RateTracksAction", in_database, has_selection, null);
                     UpdateAction ("AddToPlaylistAction", in_database && primary_source != null &&
                             primary_source.SupportsPlaylists && !primary_source.PlaylistsReadOnly, has_selection, null);

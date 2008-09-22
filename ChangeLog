@@ -1,3 +1,12 @@
+2008-09-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Override HasViewable/EditableTrackProperties to true so can finally edit
+	audio CD track information again before ripping (BGO #532467).
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Don't require
+	the source to have a DatabaseTrackListModel to view/edit props/
+
 2008-09-22  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
