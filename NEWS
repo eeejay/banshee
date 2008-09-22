@@ -37,7 +37,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
     Notable bug fixes:
 
       * Remember sorting per source (BGO #524656)
-      * Audio CD crasher (BGO #)
+      * Audio CD crasher
       * Dialogs' translation domain properly set (BGO #536268)
       * Fix recent regression where the ListView scrolled to the 
         top when you switched sources.
