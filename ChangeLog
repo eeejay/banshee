@@ -1,5 +1,12 @@
 2008-09-22  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Only draw the header separator if the column can be resized, or a previous
+	header separator has already been drawn - this allows leading columns
+	to appear as one column
+
+2008-09-22  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
 	Disable viewing read only properties
 

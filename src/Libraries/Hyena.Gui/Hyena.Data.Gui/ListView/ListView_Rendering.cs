@@ -116,6 +116,8 @@ namespace Hyena.Data.Gui
             cell_context.Sensitive = true;
             cell_context.TextAsForeground = true;
 
+            bool have_drawn_separator = false;
+
             for (int ci = 0; ci < column_cache.Length; ci++) {
                 if (pressed_column_is_dragging && pressed_column_index == ci) {
                     continue;
@@ -123,19 +125,19 @@ namespace Hyena.Data.Gui
                 
                 cell_area.X = column_cache[ci].X1 + Theme.TotalBorderWidth + header_rendering_alloc.X - HadjustmentValue;
                 cell_area.Width = column_cache[ci].Width;
-                PaintHeaderCell (cell_area, ci, false);
+                PaintHeaderCell (cell_area, ci, false, ref have_drawn_separator);
             }
             
             if (pressed_column_is_dragging && pressed_column_index >= 0) {
                 cell_area.X = pressed_column_x_drag + Allocation.X - HadjustmentValue;
                 cell_area.Width = column_cache[pressed_column_index].Width;
-                PaintHeaderCell (cell_area, pressed_column_index, true);
+                PaintHeaderCell (cell_area, pressed_column_index, true, ref have_drawn_separator);
             }
             
             cairo_context.ResetClip ();
         }
         
-        private void PaintHeaderCell (Rectangle area, int ci, bool dragging)
+        private void PaintHeaderCell (Rectangle area, int ci, bool dragging, ref bool have_drawn_separator)
         {
             if (ci < 0 || column_cache.Length <= ci)
                 return;
@@ -166,7 +168,9 @@ namespace Hyena.Data.Gui
                 cairo_context.Restore ();
             }
             
-            if (!dragging && ci < column_cache.Length - 1) {
+            if (!dragging && ci < column_cache.Length - 1 && (have_drawn_separator || 
+                column_cache[ci].MaxWidth != column_cache[ci].MinWidth)) {
+                have_drawn_separator = true;
                 Theme.DrawHeaderSeparator (cairo_context, area, area.Right);
             }
         }
