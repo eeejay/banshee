@@ -1,13 +1,21 @@
 <Type Name="ColumnCellText" FullName="Hyena.Data.Gui.ColumnCellText">
-  <TypeSignature Language="C#" Value="public class ColumnCellText : Hyena.Data.Gui.ColumnCell" />
+  <TypeSignature Language="C#" Value="public class ColumnCellText : Hyena.Data.Gui.ColumnCell, Hyena.Data.Gui.ISizeRequestCell, Hyena.Data.Gui.ITextCell" />
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.Data.Gui.ColumnCell</BaseTypeName>
   </Base>
-  <Interfaces />
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Hyena.Data.Gui.ISizeRequestCell</InterfaceName>
+    </Interface>
+    <Interface>
+      <InterfaceName>Hyena.Data.Gui.ITextCell</InterfaceName>
+    </Interface>
+  </Interfaces>
   <Docs>
     <summary>To be added.</summary>
     <remarks>To be added.</remarks>
@@ -23,31 +31,26 @@
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="property" Type="System.String" /><Parameter Name="expand" Type="System.Boolean" /></Parameters>
       <Docs><param name="property">To be added.</param><param name="expand">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="EllipsizeMode">
-      <MemberSignature Language="C#" Value="public virtual Pango.EllipsizeMode EllipsizeMode { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Alignment"><MemberSignature Language="C#" Value="protected Pango.Alignment Alignment { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Pango.Alignment</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="EllipsizeMode">
+      <MemberSignature Language="C#" Value="public virtual Pango.EllipsizeMode EllipsizeMode { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Pango.EllipsizeMode</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="FontWeight">
-      <MemberSignature Language="C#" Value="public virtual Pango.Weight FontWeight { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FontWeight">
+      <MemberSignature Language="C#" Value="public virtual Pango.Weight FontWeight { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Pango.Weight</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Text">
-      <MemberSignature Language="C#" Value="protected virtual string Text { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TextHeight">
-      <MemberSignature Language="C#" Value="protected int TextHeight { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="GetText"><MemberSignature Language="C#" Value="protected virtual string GetText (object obj);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters><Parameter Name="obj" Type="System.Object" /></Parameters><Docs><param name="obj">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetWidthRange"><MemberSignature Language="C#" Value="public void GetWidthRange (Pango.Layout layout, out int min, out int max);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="layout" Type="Pango.Layout" /><Parameter Name="min" Type="System.Int32&amp;" RefType="out" /><Parameter Name="max" Type="System.Int32&amp;" RefType="out" /></Parameters><Docs><param name="layout">To be added.</param><param name="min">To be added.</param><param name="max">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="MaxString"><MemberSignature Language="C#" Value="protected string MaxString;" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="MinString"><MemberSignature Language="C#" Value="protected string MinString;" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Opacity"><MemberSignature Language="C#" Value="public virtual double Opacity { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Double</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="RestrictSize"><MemberSignature Language="C#" Value="public bool RestrictSize { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="SetMinMaxStrings"><MemberSignature Language="C#" Value="protected void SetMinMaxStrings (object min_max);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="min_max" Type="System.Object" /></Parameters><Docs><param name="min_max">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="SetMinMaxStrings"><MemberSignature Language="C#" Value="protected void SetMinMaxStrings (object min, object max);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="min" Type="System.Object" /><Parameter Name="max" Type="System.Object" /></Parameters><Docs><param name="min">To be added.</param><param name="max">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="TextFormat"><MemberSignature Language="C#" Value="public string TextFormat { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="TextHeight">
+      <MemberSignature Language="C#" Value="protected int TextHeight { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TextWidth">
-      <MemberSignature Language="C#" Value="protected int TextWidth { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="TextWidth">
+      <MemberSignature Language="C#" Value="protected int TextWidth { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

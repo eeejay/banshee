@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.Alignment</BaseTypeName>
@@ -13,108 +14,44 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
+    
+    
+    
+    
+    
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public MessageBar ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ButtonClicked">
-      <MemberSignature Language="C#" Value="public event EventHandler ButtonClicked;" />
-      <MemberType>Event</MemberType>
-      <ReturnValue>
-        <ReturnType>System.EventHandler</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ButtonLabel">
-      <MemberSignature Language="C#" Value="public string ButtonLabel { set; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ButtonUseStock">
-      <MemberSignature Language="C#" Value="public bool ButtonUseStock { set; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="CloseClicked">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddButton"><MemberSignature Language="C#" Value="public void AddButton (Gtk.Button button);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="button" Type="Gtk.Button" /></Parameters><Docs><param name="button">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ClearButtons"><MemberSignature Language="C#" Value="public void ClearButtons ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="CloseClicked">
       <MemberSignature Language="C#" Value="public event EventHandler CloseClicked;" />
       <MemberType>Event</MemberType>
-      <ReturnValue>
-        <ReturnType>System.EventHandler</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Message">
-      <MemberSignature Language="C#" Value="public string Message { set; };" />
+      <ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Message">
+      <MemberSignature Language="C#" Value="public string Message { set; }" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Pixbuf">
-      <MemberSignature Language="C#" Value="public Gdk.Pixbuf Pixbuf { set; };" />
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Pixbuf">
+      <MemberSignature Language="C#" Value="public Gdk.Pixbuf Pixbuf { set; }" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>Gdk.Pixbuf</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ShowCloseButton">
-      <MemberSignature Language="C#" Value="public bool ShowCloseButton { set; };" />
+      <ReturnValue><ReturnType>Gdk.Pixbuf</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="RemoveButton"><MemberSignature Language="C#" Value="public void RemoveButton (Gtk.Button button);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="button" Type="Gtk.Button" /></Parameters><Docs><param name="button">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ShowCloseButton">
+      <MemberSignature Language="C#" Value="public bool ShowCloseButton { set; }" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Spinning">
-      <MemberSignature Language="C#" Value="public bool Spinning { set; get; };" />
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Spinning">
+      <MemberSignature Language="C#" Value="public bool Spinning { set; get; }" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

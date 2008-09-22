@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
@@ -12,35 +13,23 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
     <Member MemberName="Execute">
       <MemberSignature Language="C#" Value="Execute" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.Data.Sqlite.HyenaCommandType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="Reader">
+      <ReturnValue><ReturnType>Hyena.Data.Sqlite.HyenaCommandType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Reader">
       <MemberSignature Language="C#" Value="Reader" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.Data.Sqlite.HyenaCommandType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
-    <Member MemberName="Scalar">
+      <ReturnValue><ReturnType>Hyena.Data.Sqlite.HyenaCommandType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Scalar">
       <MemberSignature Language="C#" Value="Scalar" />
       <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Hyena.Data.Sqlite.HyenaCommandType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-      </Docs>
-    </Member>
+      <ReturnValue><ReturnType>Hyena.Data.Sqlite.HyenaCommandType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

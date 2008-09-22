@@ -1,0 +1,210 @@
+<Type Name="CompositeUtils" FullName="Hyena.Gui.CompositeUtils">
+  <TypeSignature Language="C#" Value="public static class CompositeUtils" />
+  <AssemblyInfo>
+    <AssemblyName>Hyena.Gui</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="ChangeProperty">
+      <MemberSignature Language="C#" Value="public static void ChangeProperty (Gdk.Window win, Gdk.Atom property, Gdk.Atom type, Gdk.PropMode mode, byte[] data);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="win" Type="Gdk.Window" />
+        <Parameter Name="property" Type="Gdk.Atom" />
+        <Parameter Name="type" Type="Gdk.Atom" />
+        <Parameter Name="mode" Type="Gdk.PropMode" />
+        <Parameter Name="data" Type="System.Byte[]" />
+      </Parameters>
+      <Docs>
+        <param name="win">To be added.</param>
+        <param name="property">To be added.</param>
+        <param name="type">To be added.</param>
+        <param name="mode">To be added.</param>
+        <param name="data">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ChangeProperty">
+      <MemberSignature Language="C#" Value="public static void ChangeProperty (Gdk.Window win, Gdk.Atom property, Gdk.Atom type, Gdk.PropMode mode, uint[] data);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="win" Type="Gdk.Window" />
+        <Parameter Name="property" Type="Gdk.Atom" />
+        <Parameter Name="type" Type="Gdk.Atom" />
+        <Parameter Name="mode" Type="Gdk.PropMode" />
+        <Parameter Name="data" Type="System.UInt32[]" />
+      </Parameters>
+      <Docs>
+        <param name="win">To be added.</param>
+        <param name="property">To be added.</param>
+        <param name="type">To be added.</param>
+        <param name="mode">To be added.</param>
+        <param name="data">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetRgbaColormap">
+      <MemberSignature Language="C#" Value="public static Gdk.Colormap GetRgbaColormap (Gdk.Screen screen);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Gdk.Colormap</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="screen" Type="Gdk.Screen" />
+      </Parameters>
+      <Docs>
+        <param name="screen">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetRgbaVisual">
+      <MemberSignature Language="C#" Value="public static Gdk.Visual GetRgbaVisual (Gdk.Screen screen);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Gdk.Visual</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="screen" Type="Gdk.Screen" />
+      </Parameters>
+      <Docs>
+        <param name="screen">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="InputShapeCombineMask">
+      <MemberSignature Language="C#" Value="public static void InputShapeCombineMask (Gtk.Widget w, Gdk.Pixmap shape_mask, int offset_x, int offset_y);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="w" Type="Gtk.Widget" />
+        <Parameter Name="shape_mask" Type="Gdk.Pixmap" />
+        <Parameter Name="offset_x" Type="System.Int32" />
+        <Parameter Name="offset_y" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="w">To be added.</param>
+        <param name="shape_mask">To be added.</param>
+        <param name="offset_x">To be added.</param>
+        <param name="offset_y">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="IsComposited">
+      <MemberSignature Language="C#" Value="public static bool IsComposited (Gdk.Screen screen);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="screen" Type="Gdk.Screen" />
+      </Parameters>
+      <Docs>
+        <param name="screen">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetRgbaColormap">
+      <MemberSignature Language="C#" Value="public static bool SetRgbaColormap (Gtk.Widget w);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="w" Type="Gtk.Widget" />
+      </Parameters>
+      <Docs>
+        <param name="w">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SetWinOpacity">
+      <MemberSignature Language="C#" Value="public static void SetWinOpacity (Gtk.Window win, double opacity);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="win" Type="Gtk.Window" />
+        <Parameter Name="opacity" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="win">To be added.</param>
+        <param name="opacity">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="SupportsHint">
+      <MemberSignature Language="C#" Value="public static bool SupportsHint (Gdk.Screen screen, string name);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="screen" Type="Gdk.Screen" />
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="screen">To be added.</param>
+        <param name="name">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

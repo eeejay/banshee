@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.Gui.Theming.Theme</BaseTypeName>
@@ -13,17 +14,11 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName=".ctor">
+    
+  <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public GtkTheme (Gtk.Widget widget);" />
       <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="widget" Type="Gtk.Widget" />
-      </Parameters>
-      <Docs>
-        <param name="widget">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-  </Members>
+      <Parameters><Parameter Name="widget" Type="Gtk.Widget" /></Parameters>
+      <Docs><param name="widget">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="GetCairoTextMidColor"><MemberSignature Language="C#" Value="public static Cairo.Color GetCairoTextMidColor (Gtk.Widget widget);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Cairo.Color</ReturnType></ReturnValue><Parameters><Parameter Name="widget" Type="Gtk.Widget" /></Parameters><Docs><param name="widget">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetGdkTextMidColor"><MemberSignature Language="C#" Value="public static Gdk.Color GetGdkTextMidColor (Gtk.Widget widget);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Gdk.Color</ReturnType></ReturnValue><Parameters><Parameter Name="widget" Type="Gtk.Widget" /></Parameters><Docs><param name="widget">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

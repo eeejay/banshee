@@ -1,0 +1,84 @@
+<Type Name="Choreographer" FullName="Hyena.Gui.Theatrics.Choreographer">
+  <TypeSignature Language="C#" Value="public static class Choreographer" />
+  <AssemblyInfo>
+    <AssemblyName>Hyena.Gui</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Compose">
+      <MemberSignature Language="C#" Value="public static double Compose (double percent, Hyena.Gui.Theatrics.Easing easing);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="percent" Type="System.Double" />
+        <Parameter Name="easing" Type="Hyena.Gui.Theatrics.Easing" />
+      </Parameters>
+      <Docs>
+        <param name="percent">To be added.</param>
+        <param name="easing">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Compose">
+      <MemberSignature Language="C#" Value="public static double Compose (double percent, double scale, Hyena.Gui.Theatrics.Easing easing);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="percent" Type="System.Double" />
+        <Parameter Name="scale" Type="System.Double" />
+        <Parameter Name="easing" Type="Hyena.Gui.Theatrics.Easing" />
+      </Parameters>
+      <Docs>
+        <param name="percent">To be added.</param>
+        <param name="scale">To be added.</param>
+        <param name="easing">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PixelCompose">
+      <MemberSignature Language="C#" Value="public static int PixelCompose (double percent, int size, Hyena.Gui.Theatrics.Easing easing);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="percent" Type="System.Double" />
+        <Parameter Name="size" Type="System.Int32" />
+        <Parameter Name="easing" Type="Hyena.Gui.Theatrics.Easing" />
+      </Parameters>
+      <Docs>
+        <param name="percent">To be added.</param>
+        <param name="size">To be added.</param>
+        <param name="easing">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

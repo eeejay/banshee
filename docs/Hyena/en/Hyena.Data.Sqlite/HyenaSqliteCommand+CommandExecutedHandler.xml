@@ -1,0 +1,23 @@
+<Type Name="HyenaSqliteCommand+CommandExecutedHandler" FullName="Hyena.Data.Sqlite.HyenaSqliteCommand+CommandExecutedHandler">
+  <TypeSignature Language="C#" Value="public delegate void HyenaSqliteCommand.CommandExecutedHandler(object o, CommandExecutedArgs args);" />
+  <AssemblyInfo>
+    <AssemblyName>Hyena</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="o" Type="System.Object" />
+    <Parameter Name="args" Type="Hyena.Data.Sqlite.CommandExecutedArgs" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="o">To be added.</param>
+    <param name="args">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

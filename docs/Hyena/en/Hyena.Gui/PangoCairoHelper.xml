@@ -1,0 +1,117 @@
+<Type Name="PangoCairoHelper" FullName="Hyena.Gui.PangoCairoHelper">
+  <TypeSignature Language="C#" Value="public static class PangoCairoHelper" />
+  <AssemblyInfo>
+    <AssemblyName>Hyena.Gui</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="ContextSetResolution">
+      <MemberSignature Language="C#" Value="public static void ContextSetResolution (Pango.Context context, double dpi);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="context" Type="Pango.Context" />
+        <Parameter Name="dpi" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="context">To be added.</param>
+        <param name="dpi">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="CreateLayout">
+      <MemberSignature Language="C#" Value="public static Pango.Layout CreateLayout (Cairo.Context cr);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Pango.Layout</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="cr" Type="Cairo.Context" />
+      </Parameters>
+      <Docs>
+        <param name="cr">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LayoutGetContext">
+      <MemberSignature Language="C#" Value="public static Pango.Context LayoutGetContext (Pango.Layout layout);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Pango.Context</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="layout" Type="Pango.Layout" />
+      </Parameters>
+      <Docs>
+        <param name="layout">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="LayoutPath">
+      <MemberSignature Language="C#" Value="public static void LayoutPath (Cairo.Context cr, Pango.Layout layout, bool iUnderstandThePerformanceImplications);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="cr" Type="Cairo.Context" />
+        <Parameter Name="layout" Type="Pango.Layout" />
+        <Parameter Name="iUnderstandThePerformanceImplications" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="cr">To be added.</param>
+        <param name="layout">To be added.</param>
+        <param name="iUnderstandThePerformanceImplications">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ShowLayout">
+      <MemberSignature Language="C#" Value="public static void ShowLayout (Cairo.Context cr, Pango.Layout layout);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="cr" Type="Cairo.Context" />
+        <Parameter Name="layout" Type="Pango.Layout" />
+      </Parameters>
+      <Docs>
+        <param name="cr">To be added.</param>
+        <param name="layout">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

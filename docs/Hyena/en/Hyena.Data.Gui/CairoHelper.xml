@@ -16,9 +16,18 @@
     <Member MemberName="CreateCairoDrawable">
       <MemberSignature Language="C#" Value="public static Cairo.Context CreateCairoDrawable (Gdk.Drawable drawable);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>Cairo.Context</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="drawable" Type="Gdk.Drawable" /></Parameters>
-      <Docs><param name="drawable">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>Cairo.Context</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="drawable" Type="Gdk.Drawable" />
+      </Parameters>
+      <Docs>
+        <param name="drawable">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
 </Type>

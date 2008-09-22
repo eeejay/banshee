@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Hyena.Gui</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.Data.ColumnDescription</BaseTypeName>
@@ -34,71 +35,61 @@
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="description" Type="Hyena.Data.ColumnDescription" /></Parameters>
       <Docs><param name="description">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName=".ctor">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Column (Hyena.Data.ColumnDescription description, Hyena.Data.Gui.ColumnCell cell);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="description" Type="Hyena.Data.ColumnDescription" /><Parameter Name="cell" Type="Hyena.Data.Gui.ColumnCell" /></Parameters>
       <Docs><param name="description">To be added.</param><param name="cell">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName=".ctor">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Column (string title, Hyena.Data.Gui.ColumnCell cell, double width);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="title" Type="System.String" /><Parameter Name="cell" Type="Hyena.Data.Gui.ColumnCell" /><Parameter Name="width" Type="System.Double" /></Parameters>
       <Docs><param name="title">To be added.</param><param name="cell">To be added.</param><param name="width">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName=".ctor">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Column (Hyena.Data.Gui.ColumnCell header_cell, string title, Hyena.Data.Gui.ColumnCell cell, double width);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="header_cell" Type="Hyena.Data.Gui.ColumnCell" /><Parameter Name="title" Type="System.String" /><Parameter Name="cell" Type="Hyena.Data.Gui.ColumnCell" /><Parameter Name="width" Type="System.Double" /></Parameters>
       <Docs><param name="header_cell">To be added.</param><param name="title">To be added.</param><param name="cell">To be added.</param><param name="width">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetCell">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public Column (string title, Hyena.Data.Gui.ColumnCell cell, double width, bool visible);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="title" Type="System.String" /><Parameter Name="cell" Type="Hyena.Data.Gui.ColumnCell" /><Parameter Name="width" Type="System.Double" /><Parameter Name="visible" Type="System.Boolean" /></Parameters><Docs><param name="title">To be added.</param><param name="cell">To be added.</param><param name="width">To be added.</param><param name="visible">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public Column (Hyena.Data.Gui.ColumnCell header_cell, string title, Hyena.Data.Gui.ColumnCell cell, double width, bool visible);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="header_cell" Type="Hyena.Data.Gui.ColumnCell" /><Parameter Name="title" Type="System.String" /><Parameter Name="cell" Type="Hyena.Data.Gui.ColumnCell" /><Parameter Name="width" Type="System.Double" /><Parameter Name="visible" Type="System.Boolean" /></Parameters><Docs><param name="header_cell">To be added.</param><param name="title">To be added.</param><param name="cell">To be added.</param><param name="width">To be added.</param><param name="visible">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public Column (Hyena.Data.Gui.ColumnCell header_cell, string title, Hyena.Data.Gui.ColumnCell cell, double width, bool visible, int minWidth, int maxWidth);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="header_cell" Type="Hyena.Data.Gui.ColumnCell" /><Parameter Name="title" Type="System.String" /><Parameter Name="cell" Type="Hyena.Data.Gui.ColumnCell" /><Parameter Name="width" Type="System.Double" /><Parameter Name="visible" Type="System.Boolean" /><Parameter Name="minWidth" Type="System.Int32" /><Parameter Name="maxWidth" Type="System.Int32" /></Parameters><Docs><param name="header_cell">To be added.</param><param name="title">To be added.</param><param name="cell">To be added.</param><param name="width">To be added.</param><param name="visible">To be added.</param><param name="minWidth">To be added.</param><param name="maxWidth">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="CalculateWidths"><MemberSignature Language="C#" Value="public void CalculateWidths (Pango.Layout layout, bool headerVisible, int headerHeight);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="layout" Type="Pango.Layout" /><Parameter Name="headerVisible" Type="System.Boolean" /><Parameter Name="headerHeight" Type="System.Int32" /></Parameters><Docs><param name="layout">To be added.</param><param name="headerVisible">To be added.</param><param name="headerHeight">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ClearCells"><MemberSignature Language="C#" Value="public void ClearCells ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetCell">
       <MemberSignature Language="C#" Value="public Hyena.Data.Gui.ColumnCell GetCell (int index);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.Data.Gui.ColumnCell</ReturnType></ReturnValue>
       <Parameters><Parameter Name="index" Type="System.Int32" /></Parameters>
       <Docs><param name="index">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="HeaderCell">
-      <MemberSignature Language="C#" Value="public Hyena.Data.Gui.ColumnCell HeaderCell { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="HeaderCell">
+      <MemberSignature Language="C#" Value="public Hyena.Data.Gui.ColumnCell HeaderCell { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Hyena.Data.Gui.ColumnCell</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Id"><MemberSignature Language="C#" Value="public string Id { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IsVisible">
-      <MemberSignature Language="C#" Value="public bool IsVisible { set; get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="MinWidth">
-      <MemberSignature Language="C#" Value="public int MinWidth { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Id"><MemberSignature Language="C#" Value="public string Id { set; get; }" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="MaxWidth"><MemberSignature Language="C#" Value="public int MaxWidth { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="MinWidth">
+      <MemberSignature Language="C#" Value="public int MinWidth { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="PackEnd">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PackEnd">
       <MemberSignature Language="C#" Value="public void PackEnd (Hyena.Data.Gui.ColumnCell cell);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="cell" Type="Hyena.Data.Gui.ColumnCell" /></Parameters>
       <Docs><param name="cell">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="PackStart">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PackStart">
       <MemberSignature Language="C#" Value="public void PackStart (Hyena.Data.Gui.ColumnCell cell);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="cell" Type="Hyena.Data.Gui.ColumnCell" /></Parameters>
       <Docs><param name="cell">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="RelativeWidth">
-      <MemberSignature Language="C#" Value="public double RelativeWidth { set; get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Double</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="System.Collections.Generic.IEnumerable&lt;Hyena.Data.Gui.ColumnCell&gt;.GetEnumerator">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="RemoveCell"><MemberSignature Language="C#" Value="public void RemoveCell (int index);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="index" Type="System.Int32" /></Parameters><Docs><param name="index">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="System.Collections.Generic.IEnumerable&lt;Hyena.Data.Gui.ColumnCell&gt;.GetEnumerator">
       <MemberSignature Language="C#" Value="System.Collections.Generic.IEnumerator&lt;Hyena.Data.Gui.ColumnCell&gt; IEnumerable&lt;ColumnCell&gt;.GetEnumerator ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Collections.Generic.IEnumerator&lt;Hyena.Data.Gui.ColumnCell&gt;</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="System.Collections.IEnumerable.GetEnumerator">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="System.Collections.IEnumerable.GetEnumerator">
       <MemberSignature Language="C#" Value="System.Collections.IEnumerator IEnumerable.GetEnumerator ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Collections.IEnumerator</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

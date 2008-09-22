@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.EventArgs</BaseTypeName>
@@ -23,31 +24,31 @@
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="propertyName" Type="System.String" /><Parameter Name="added" Type="System.Boolean" /><Parameter Name="removed" Type="System.Boolean" /><Parameter Name="oldValue" Type="System.Object" /><Parameter Name="newValue" Type="System.Object" /></Parameters>
       <Docs><param name="propertyName">To be added.</param><param name="added">To be added.</param><param name="removed">To be added.</param><param name="oldValue">To be added.</param><param name="newValue">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Added">
-      <MemberSignature Language="C#" Value="public bool Added { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Added">
+      <MemberSignature Language="C#" Value="public bool Added { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="NewValue">
-      <MemberSignature Language="C#" Value="public object NewValue { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="NewValue">
+      <MemberSignature Language="C#" Value="public object NewValue { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Object</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="OldValue">
-      <MemberSignature Language="C#" Value="public object OldValue { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="OldValue">
+      <MemberSignature Language="C#" Value="public object OldValue { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Object</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="PropertyName">
-      <MemberSignature Language="C#" Value="public string PropertyName { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PropertyName">
+      <MemberSignature Language="C#" Value="public string PropertyName { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Removed">
-      <MemberSignature Language="C#" Value="public bool Removed { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Removed">
+      <MemberSignature Language="C#" Value="public bool Removed { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -18,38 +19,27 @@
     
     
     
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public QueryOrder (string name, string label, string order_sql);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="label" Type="System.String" /><Parameter Name="order_sql" Type="System.String" /></Parameters>
-      <Docs><param name="name">To be added.</param><param name="label">To be added.</param><param name="order_sql">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Label">
-      <MemberSignature Language="C#" Value="public string Label { set; get; };" />
+    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public QueryOrder (string name, string label, string order_sql, Hyena.Query.QueryField field);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="label" Type="System.String" /><Parameter Name="order_sql" Type="System.String" /><Parameter Name="field" Type="Hyena.Query.QueryField" /></Parameters><Docs><param name="name">To be added.</param><param name="label">To be added.</param><param name="order_sql">To be added.</param><param name="field">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Field"><MemberSignature Language="C#" Value="public Hyena.Query.QueryField Field { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Hyena.Query.QueryField</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Label">
+      <MemberSignature Language="C#" Value="public string Label { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Name">
-      <MemberSignature Language="C#" Value="public string Name { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="OrderSql">
-      <MemberSignature Language="C#" Value="public string OrderSql { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="OrderSql">
+      <MemberSignature Language="C#" Value="public string OrderSql { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="PruneSql">
-      <MemberSignature Language="C#" Value="public string PruneSql (Hyena.Query.QueryLimit limit, Hyena.Query.IntegerQueryValue limit_value);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="limit" Type="Hyena.Query.QueryLimit" /><Parameter Name="limit_value" Type="Hyena.Query.IntegerQueryValue" /></Parameters>
-      <Docs><param name="limit">To be added.</param><param name="limit_value">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ToSql">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToSql">
       <MemberSignature Language="C#" Value="public string ToSql ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

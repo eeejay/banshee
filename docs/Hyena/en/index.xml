@@ -1,37 +1,37 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Hyena" Version="0.90.1.25402">
+    <Assembly Name="Hyena" Version="1.3.1.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCompany("Novell, Inc")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCompany("Novell, Inc.")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCopyright("Copyright (C) Novell, Aaron Bockover")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCopyright("Copyright (C) 2005-2008 Novell, 2005 Aaron Bockover")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyDescription("Banshee Music Player")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyDescription("Banshee Media Player")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyTitle("Banshee")</AttributeName>
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Hyena.Gui" Version="0.90.1.25402">
+    <Assembly Name="Hyena.Gui" Version="1.3.1.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCompany("Novell, Inc")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCompany("Novell, Inc.")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyCopyright("Copyright (C) Novell, Aaron Bockover")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyCopyright("Copyright (C) 2005-2008 Novell, 2005 Aaron Bockover")</AttributeName>
         </Attribute>
         <Attribute>
-          <AttributeName>System.Reflection.AssemblyDescription("Banshee Music Player")</AttributeName>
+          <AttributeName>System.Reflection.AssemblyDescription("Banshee Media Player")</AttributeName>
         </Attribute>
         <Attribute>
           <AttributeName>System.Reflection.AssemblyTitle("Banshee")</AttributeName>
@@ -43,6 +43,7 @@
   <Copyright>To be added.</Copyright>
   <Types>
     <Namespace Name="Hyena">
+      <Type Name="Action" />
       <Type Name="ConsoleCrayon" />
       <Type Name="CryptoUtil" />
       <Type Name="DateTimeUtil" />
@@ -57,12 +58,21 @@
       <Type Name="UndoManager" />
     </Namespace>
     <Namespace Name="Hyena.Collections">
+      <Type Name="CollectionExtensions" />
       <Type Name="IntervalHeap`1" DisplayName="IntervalHeap&lt;T&gt;" />
       <Type Name="IStackProvider`1" DisplayName="IStackProvider&lt;T&gt;" />
+      <Type Name="QueuePipeline`1" DisplayName="QueuePipeline&lt;T&gt;" />
+      <Type Name="QueuePipelineElement`1" DisplayName="QueuePipelineElement&lt;T&gt;" />
       <Type Name="RangeCollection" />
       <Type Name="RangeCollection+Range" />
       <Type Name="Selection" />
       <Type Name="SelectionProxy" />
+      <Type Name="WriteLineElement`1" DisplayName="WriteLineElement&lt;T&gt;" />
+    </Namespace>
+    <Namespace Name="Hyena.Collections.Tests">
+      <Type Name="IntervalHeapTests" />
+      <Type Name="QueuePipelineTests" />
+      <Type Name="RangeCollectionTests" />
     </Namespace>
     <Namespace Name="Hyena.CommandLine">
       <Type Name="CommandLineParser" />
@@ -74,12 +84,15 @@
       <Type Name="ArrayModelCache`1" DisplayName="ArrayModelCache&lt;T&gt;" />
       <Type Name="ColumnDescription" />
       <Type Name="DictionaryModelCache`1" DisplayName="DictionaryModelCache&lt;T&gt;" />
+      <Type Name="ICacheableItem" />
       <Type Name="ICacheableModel" />
       <Type Name="ICareAboutView" />
       <Type Name="IFilterable" />
+      <Type Name="IListModel" />
       <Type Name="IListModel`1" DisplayName="IListModel&lt;T&gt;" />
       <Type Name="IObjectListModel" />
       <Type Name="IPropertyStoreExpose" />
+      <Type Name="ISelectable" />
       <Type Name="ISortable" />
       <Type Name="ISortableColumn" />
       <Type Name="ModelCache`1" DisplayName="ModelCache&lt;T&gt;" />
@@ -94,45 +107,45 @@
       <Type Name="CellContext" />
       <Type Name="Column" />
       <Type Name="ColumnCell" />
+      <Type Name="ColumnCellCheckBox" />
+      <Type Name="ColumnCellRating" />
       <Type Name="ColumnCellText" />
       <Type Name="ColumnCellText+DataHandler" />
       <Type Name="ColumnController" />
       <Type Name="ColumnHeaderCellText" />
       <Type Name="ColumnHeaderCellText+DataHandler" />
       <Type Name="IHeaderCell" />
+      <Type Name="IInteractiveCell" />
+      <Type Name="IListView" />
+      <Type Name="IListView`1" DisplayName="IListView&lt;T&gt;" />
+      <Type Name="ISizeRequestCell" />
+      <Type Name="ITextCell" />
       <Type Name="ListView`1" DisplayName="ListView&lt;T&gt;" />
-      <Type Name="ListViewGraphics" />
+      <Type Name="ListViewBase" />
+      <Type Name="ListViewDragDropTarget" />
+      <Type Name="ListViewDragDropTarget+TargetType" />
+      <Type Name="ListViewRowHeightHandler" />
+      <Type Name="ListViewTestModule" />
       <Type Name="ObjectListView" />
       <Type Name="RowActivatedArgs`1" DisplayName="RowActivatedArgs&lt;T&gt;" />
       <Type Name="RowActivatedHandler`1" DisplayName="RowActivatedHandler&lt;T&gt;" />
       <Type Name="SortableColumn" />
     </Namespace>
     <Namespace Name="Hyena.Data.Query">
-      <Type Name="FileSizeQueryValue" />
-      <Type Name="IntegerQueryValue" />
-      <Type Name="Keyword" />
-      <Type Name="Operator" />
-      <Type Name="QueryField" />
-      <Type Name="QueryFieldSet" />
-      <Type Name="QueryListNode" />
-      <Type Name="QueryNode" />
-      <Type Name="QueryParser" />
-      <Type Name="QueryTermNode" />
-      <Type Name="QueryToken" />
-      <Type Name="QueryValue" />
-      <Type Name="RelativeDateFactor" />
-      <Type Name="StringQueryValue" />
-      <Type Name="TokenID" />
-      <Type Name="UserQueryParser" />
-      <Type Name="XmlQueryParser" />
     </Namespace>
     <Namespace Name="Hyena.Data.Sqlite">
+      <Type Name="AbstractDatabaseColumn" />
       <Type Name="AbstractDatabaseColumnAttribute" />
+      <Type Name="CommandExecutedArgs" />
+      <Type Name="DatabaseColumn" />
       <Type Name="DatabaseColumnAttribute" />
       <Type Name="DatabaseColumnConstraints" />
       <Type Name="DbColumn" />
+      <Type Name="ExecutingEventArgs" />
       <Type Name="HyenaCommandType" />
+      <Type Name="HyenaDataReader" />
       <Type Name="HyenaSqliteCommand" />
+      <Type Name="HyenaSqliteCommand+CommandExecutedHandler" />
       <Type Name="HyenaSqliteConnection" />
       <Type Name="ICacheableDatabaseModel" />
       <Type Name="SqliteModelCache`1" DisplayName="SqliteModelCache&lt;T&gt;" />
@@ -140,13 +153,26 @@
       <Type Name="SqliteModelProvider`1" DisplayName="SqliteModelProvider&lt;T&gt;" />
       <Type Name="VirtualDatabaseColumnAttribute" />
     </Namespace>
+    <Namespace Name="Hyena.Data.Sqlite.Tests">
+      <Type Name="SqliteCommandTests" />
+      <Type Name="SqliteModelProviderTests" />
+    </Namespace>
     <Namespace Name="Hyena.Gui">
       <Type Name="CairoCorners" />
       <Type Name="CairoExtensions" />
       <Type Name="CleanRoomStartup" />
       <Type Name="CleanRoomStartup+StartupInvocationHandler" />
+      <Type Name="CompositeUtils" />
+      <Type Name="Contrast" />
+      <Type Name="ContrastPaletteColor" />
       <Type Name="EntryUndoAdapter" />
       <Type Name="GtkUtilities" />
+      <Type Name="GtkWorkarounds" />
+      <Type Name="PangoCairoHelper" />
+      <Type Name="RatingRenderer" />
+      <Type Name="ShadingTestWindow" />
+      <Type Name="TestModuleRunner" />
+      <Type Name="TooltipSetter" />
     </Namespace>
     <Namespace Name="Hyena.Gui.Dialogs">
       <Type Name="ExceptionDialog" />
@@ -154,9 +180,15 @@
     </Namespace>
     <Namespace Name="Hyena.Gui.Theatrics">
       <Type Name="Actor`1" DisplayName="Actor&lt;T&gt;" />
+      <Type Name="Choreographer" />
+      <Type Name="Easing" />
+      <Type Name="Pulsator`1" DisplayName="Pulsator&lt;T&gt;" />
       <Type Name="SingleActorStage" />
       <Type Name="Stage`1" DisplayName="Stage&lt;T&gt;" />
       <Type Name="Stage`1+ActorStepHandler" DisplayName="Stage&lt;T&gt;+ActorStepHandler" />
+    </Namespace>
+    <Namespace Name="Hyena.Gui.Theatrics.Tests">
+      <Type Name="ChoreographerTests" />
     </Namespace>
     <Namespace Name="Hyena.Gui.Theming">
       <Type Name="GtkColorClass" />
@@ -164,6 +196,16 @@
       <Type Name="GtkTheme" />
       <Type Name="Theme" />
       <Type Name="ThemeContext" />
+    </Namespace>
+    <Namespace Name="Hyena.Json">
+      <Type Name="Deserializer" />
+      <Type Name="IJsonCollection" />
+      <Type Name="JsonArray" />
+      <Type Name="JsonObject" />
+    </Namespace>
+    <Namespace Name="Hyena.Json.Tests">
+      <Type Name="DeserializerTests" />
+      <Type Name="TokenizerTests" />
     </Namespace>
     <Namespace Name="Hyena.Query">
       <Type Name="AliasedObjectSet`1" DisplayName="AliasedObjectSet&lt;T&gt;" />
@@ -174,6 +216,7 @@
       <Type Name="IntegerKeyedObjectQueryValue`1" DisplayName="IntegerKeyedObjectQueryValue&lt;T&gt;" />
       <Type Name="IntegerQueryValue" />
       <Type Name="Keyword" />
+      <Type Name="NullQueryValue" />
       <Type Name="Operator" />
       <Type Name="QueryField" />
       <Type Name="QueryFieldSet" />
@@ -187,7 +230,10 @@
       <Type Name="QueryToken" />
       <Type Name="QueryValue" />
       <Type Name="RelativeDateFactor" />
+      <Type Name="RelativeTimeSpanQueryValue" />
       <Type Name="StringQueryValue" />
+      <Type Name="TimeFactor" />
+      <Type Name="TimeSpanQueryValue" />
       <Type Name="TokenID" />
       <Type Name="UserQueryParser" />
       <Type Name="XmlQueryParser" />
@@ -196,12 +242,19 @@
       <Type Name="DateQueryValueEntry" />
       <Type Name="FileSizeQueryValueEntry" />
       <Type Name="IntegerQueryValueEntry" />
+      <Type Name="NullQueryValueEntry" />
       <Type Name="QueryBox" />
+      <Type Name="QueryDebugger" />
       <Type Name="QueryLimitBox" />
       <Type Name="QueryTermBox" />
       <Type Name="QueryTermsBox" />
       <Type Name="QueryValueEntry" />
+      <Type Name="RelativeTimeSpanQueryValueEntry" />
       <Type Name="StringQueryValueEntry" />
+      <Type Name="TimeSpanQueryValueEntry" />
+    </Namespace>
+    <Namespace Name="Hyena.Query.Tests">
+      <Type Name="QueryTests" />
     </Namespace>
     <Namespace Name="Hyena.SExpEngine">
       <Type Name="ArithmeticFunctionSet" />
@@ -235,11 +288,33 @@
       <Type Name="UtilityFunctionSet" />
       <Type Name="VoidLiteral" />
     </Namespace>
+    <Namespace Name="Hyena.Tests">
+      <Type Name="CryptoUtilTests" />
+      <Type Name="StringUtilTests" />
+      <Type Name="TestBase" />
+      <Type Name="Transform`2" DisplayName="Transform&lt;F,To&gt;" />
+      <Type Name="TransformPair`2" DisplayName="TransformPair&lt;F,T&gt;" />
+    </Namespace>
     <Namespace Name="Hyena.Widgets">
+      <Type Name="AnimatedBox" />
+      <Type Name="AnimatedHBox" />
       <Type Name="AnimatedImage" />
+      <Type Name="AnimatedVBox" />
+      <Type Name="Blocking" />
+      <Type Name="ComplexMenuItem" />
+      <Type Name="ImageButton" />
+      <Type Name="MenuButton" />
       <Type Name="MessageBar" />
+      <Type Name="PulsingButton" />
+      <Type Name="RatingEntry" />
+      <Type Name="RatingMenuItem" />
       <Type Name="RoundedFrame" />
       <Type Name="ScrolledWindow" />
+      <Type Name="SegmentedBar" />
+      <Type Name="SegmentedBar+BarValueFormatHandler" />
+      <Type Name="SegmentedBar+Segment" />
+      <Type Name="SmoothScrolledWindow" />
+      <Type Name="WrapLabel" />
     </Namespace>
   </Types>
   <Title>Untitled</Title>

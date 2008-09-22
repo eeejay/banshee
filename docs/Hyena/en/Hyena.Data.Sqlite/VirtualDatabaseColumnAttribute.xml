@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Hyena</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.Data.Sqlite.AbstractDatabaseColumnAttribute</BaseTypeName>
@@ -26,21 +27,21 @@
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="column_name" Type="System.String" /><Parameter Name="target_table" Type="System.String" /><Parameter Name="local_key" Type="System.String" /><Parameter Name="foreign_key" Type="System.String" /></Parameters>
       <Docs><param name="column_name">To be added.</param><param name="target_table">To be added.</param><param name="local_key">To be added.</param><param name="foreign_key">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ForeignKey">
-      <MemberSignature Language="C#" Value="public string ForeignKey { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ForeignKey">
+      <MemberSignature Language="C#" Value="public string ForeignKey { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="LocalKey">
-      <MemberSignature Language="C#" Value="public string LocalKey { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="LocalKey">
+      <MemberSignature Language="C#" Value="public string LocalKey { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TargetTable">
-      <MemberSignature Language="C#" Value="public string TargetTable { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="TargetTable">
+      <MemberSignature Language="C#" Value="public string TargetTable { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>
