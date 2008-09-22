@@ -38,6 +38,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
       * Remember sorting per source (BGO #524656)
       * Audio CD crasher
+      * Allow editing Audio CDs' track info before ripping (BGO #532467)
       * Dialogs' translation domain properly set (BGO #536268)
       * Fix recent regression where the ListView scrolled to the 
         top when you switched sources.
